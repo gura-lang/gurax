@@ -5,7 +5,7 @@
 
 Gurax_BeginModuleScope(sdl)
 
-// sdl.SDL_Init(flags:Number)
+// sdl.SDL_Init(flags as Number)
 Gurax_DeclareFunctionAlias(SDL_Init_gurax, "SDL_Init")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -25,7 +25,7 @@ Gurax_ImplementFunctionEx(SDL_Init_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_InitSubSystem(flags:Number)
+// sdl.SDL_InitSubSystem(flags as Number)
 Gurax_DeclareFunctionAlias(SDL_InitSubSystem_gurax, "SDL_InitSubSystem")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -45,7 +45,7 @@ Gurax_ImplementFunctionEx(SDL_InitSubSystem_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_QuitSubSystem(flags:Number)
+// sdl.SDL_QuitSubSystem(flags as Number)
 Gurax_DeclareFunctionAlias(SDL_QuitSubSystem_gurax, "SDL_QuitSubSystem")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -65,7 +65,7 @@ Gurax_ImplementFunctionEx(SDL_QuitSubSystem_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_WasInit(flags:Number)
+// sdl.SDL_WasInit(flags as Number)
 Gurax_DeclareFunctionAlias(SDL_WasInit_gurax, "SDL_WasInit")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -101,7 +101,7 @@ Gurax_ImplementFunctionEx(SDL_Quit_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_SetHintWithPriority(name:String, value:String, priority:Number)
+// sdl.SDL_SetHintWithPriority(name as String, value as String, priority as Number)
 Gurax_DeclareFunctionAlias(SDL_SetHintWithPriority_gurax, "SDL_SetHintWithPriority")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -125,7 +125,7 @@ Gurax_ImplementFunctionEx(SDL_SetHintWithPriority_gurax, processor_gurax, argume
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_SetHint(name:String, value:String)
+// sdl.SDL_SetHint(name as String, value as String)
 Gurax_DeclareFunctionAlias(SDL_SetHint_gurax, "SDL_SetHint")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -147,7 +147,7 @@ Gurax_ImplementFunctionEx(SDL_SetHint_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_GetHint(name:String)
+// sdl.SDL_GetHint(name as String)
 Gurax_DeclareFunctionAlias(SDL_GetHint_gurax, "SDL_GetHint")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -167,7 +167,7 @@ Gurax_ImplementFunctionEx(SDL_GetHint_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GetHintBoolean(name:String, default_value:Bool)
+// sdl.SDL_GetHintBoolean(name as String, default_value as Bool)
 Gurax_DeclareFunctionAlias(SDL_GetHintBoolean_gurax, "SDL_GetHintBoolean")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -237,7 +237,7 @@ Gurax_ImplementFunctionEx(SDL_ClearError_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_Error(code:Number)
+// sdl.SDL_Error(code as Number)
 Gurax_DeclareFunctionAlias(SDL_Error_gurax, "SDL_Error")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -257,7 +257,7 @@ Gurax_ImplementFunctionEx(SDL_Error_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_LogSetAllPriority(priority:Number)
+// sdl.SDL_LogSetAllPriority(priority as Number)
 Gurax_DeclareFunctionAlias(SDL_LogSetAllPriority_gurax, "SDL_LogSetAllPriority")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -277,7 +277,7 @@ Gurax_ImplementFunctionEx(SDL_LogSetAllPriority_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_LogSetPriority(category:Number, priority:Number)
+// sdl.SDL_LogSetPriority(category as Number, priority as Number)
 Gurax_DeclareFunctionAlias(SDL_LogSetPriority_gurax, "SDL_LogSetPriority")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -299,7 +299,7 @@ Gurax_ImplementFunctionEx(SDL_LogSetPriority_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_LogGetPriority(category:Number)
+// sdl.SDL_LogGetPriority(category as Number)
 Gurax_DeclareFunctionAlias(SDL_LogGetPriority_gurax, "SDL_LogGetPriority")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -416,7 +416,7 @@ Gurax_ImplementFunctionEx(SDL_GetNumVideoDrivers_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetVideoDriver(index:Number)
+// sdl.SDL_GetVideoDriver(index as Number)
 Gurax_DeclareFunctionAlias(SDL_GetVideoDriver_gurax, "SDL_GetVideoDriver")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -436,7 +436,7 @@ Gurax_ImplementFunctionEx(SDL_GetVideoDriver_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_VideoInit(driver_name:String)
+// sdl.SDL_VideoInit(driver_name as String)
 Gurax_DeclareFunctionAlias(SDL_VideoInit_gurax, "SDL_VideoInit")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -504,7 +504,7 @@ Gurax_ImplementFunctionEx(SDL_GetNumVideoDisplays_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetDisplayName(displayIndex:Number)
+// sdl.SDL_GetDisplayName(displayIndex as Number)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayName_gurax, "SDL_GetDisplayName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -524,7 +524,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayName_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GetDisplayBounds(displayIndex:Number)
+// sdl.SDL_GetDisplayBounds(displayIndex as Number)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayBounds_gurax, "SDL_GetDisplayBounds")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -545,7 +545,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayBounds_gurax, processor_gurax, argument_
 	return new Value_SDL_Rect(rect);
 }
 
-// sdl.SDL_GetDisplayUsableBounds(displayIndex:Number)
+// sdl.SDL_GetDisplayUsableBounds(displayIndex as Number)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayUsableBounds_gurax, "SDL_GetDisplayUsableBounds")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -566,7 +566,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayUsableBounds_gurax, processor_gurax, arg
 	return new Value_SDL_Rect(rect);
 }
 
-// sdl.SDL_GetDisplayDPI(displayIndex:Number)
+// sdl.SDL_GetDisplayDPI(displayIndex as Number)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayDPI_gurax, "SDL_GetDisplayDPI")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -587,7 +587,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayDPI_gurax, processor_gurax, argument_gur
 	return Value_Tuple::Create(new Value_Number(ddpi), new Value_Number(hdpi), new Value_Number(vdpi));
 }
 
-// sdl.SDL_GetDisplayOrientation(displayIndex:Number)
+// sdl.SDL_GetDisplayOrientation(displayIndex as Number)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayOrientation_gurax, "SDL_GetDisplayOrientation")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -607,7 +607,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayOrientation_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetNumDisplayModes(displayIndex:Number)
+// sdl.SDL_GetNumDisplayModes(displayIndex as Number)
 Gurax_DeclareFunctionAlias(SDL_GetNumDisplayModes_gurax, "SDL_GetNumDisplayModes")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -627,7 +627,7 @@ Gurax_ImplementFunctionEx(SDL_GetNumDisplayModes_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetDisplayMode(displayIndex:Number, modeIndex:Number)
+// sdl.SDL_GetDisplayMode(displayIndex as Number, modeIndex as Number)
 Gurax_DeclareFunctionAlias(SDL_GetDisplayMode_gurax, "SDL_GetDisplayMode")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -650,7 +650,7 @@ Gurax_ImplementFunctionEx(SDL_GetDisplayMode_gurax, processor_gurax, argument_gu
 	return new Value_SDL_DisplayMode(mode);
 }
 
-// sdl.SDL_GetDesktopDisplayMode(displayIndex:Number)
+// sdl.SDL_GetDesktopDisplayMode(displayIndex as Number)
 Gurax_DeclareFunctionAlias(SDL_GetDesktopDisplayMode_gurax, "SDL_GetDesktopDisplayMode")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -671,7 +671,7 @@ Gurax_ImplementFunctionEx(SDL_GetDesktopDisplayMode_gurax, processor_gurax, argu
 	return new Value_SDL_DisplayMode(mode);
 }
 
-// sdl.SDL_GetCurrentDisplayMode(displayIndex:Number)
+// sdl.SDL_GetCurrentDisplayMode(displayIndex as Number)
 Gurax_DeclareFunctionAlias(SDL_GetCurrentDisplayMode_gurax, "SDL_GetCurrentDisplayMode")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -692,7 +692,7 @@ Gurax_ImplementFunctionEx(SDL_GetCurrentDisplayMode_gurax, processor_gurax, argu
 	return new Value_SDL_DisplayMode(mode);
 }
 
-// sdl.SDL_GetWindowDisplayIndex(window:SDL_Window)
+// sdl.SDL_GetWindowDisplayIndex(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowDisplayIndex_gurax, "SDL_GetWindowDisplayIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -713,7 +713,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowDisplayIndex_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetWindowDisplayMode(window:SDL_Window, mode:SDL_DisplayMode)
+// sdl.SDL_SetWindowDisplayMode(window as SDL_Window, mode as SDL_DisplayMode)
 Gurax_DeclareFunctionAlias(SDL_SetWindowDisplayMode_gurax, "SDL_SetWindowDisplayMode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -737,7 +737,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowDisplayMode_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetWindowDisplayMode(window:SDL_Window, mode:SDL_DisplayMode)
+// sdl.SDL_GetWindowDisplayMode(window as SDL_Window, mode as SDL_DisplayMode)
 Gurax_DeclareFunctionAlias(SDL_GetWindowDisplayMode_gurax, "SDL_GetWindowDisplayMode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -761,7 +761,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowDisplayMode_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetWindowPixelFormat(window:SDL_Window)
+// sdl.SDL_GetWindowPixelFormat(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowPixelFormat_gurax, "SDL_GetWindowPixelFormat")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -782,7 +782,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowPixelFormat_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_CreateWindow(title:String, x:Number, y:Number, w:Number, h:Number, flags:Number)
+// sdl.SDL_CreateWindow(title as String, x as Number, y as Number, w as Number, h as Number, flags as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateWindow_gurax, "SDL_CreateWindow")
 {
 	Declare(VTYPE_SDL_Window, Flag::None);
@@ -813,7 +813,7 @@ Gurax_ImplementFunctionEx(SDL_CreateWindow_gurax, processor_gurax, argument_gura
 	return new Value_SDL_Window(rtn);
 }
 
-// sdl.SDL_GetWindowID(window:SDL_Window)
+// sdl.SDL_GetWindowID(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowID_gurax, "SDL_GetWindowID")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -834,7 +834,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowID_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetWindowFromID(id:Number)
+// sdl.SDL_GetWindowFromID(id as Number)
 Gurax_DeclareFunctionAlias(SDL_GetWindowFromID_gurax, "SDL_GetWindowFromID")
 {
 	Declare(VTYPE_SDL_Window, Flag::None);
@@ -855,7 +855,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowFromID_gurax, processor_gurax, argument_g
 	return new Value_SDL_Window(rtn);
 }
 
-// sdl.SDL_GetWindowFlags(window:SDL_Window)
+// sdl.SDL_GetWindowFlags(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowFlags_gurax, "SDL_GetWindowFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -876,7 +876,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowFlags_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetWindowTitle(window:SDL_Window, title:String)
+// sdl.SDL_SetWindowTitle(window as SDL_Window, title as String)
 Gurax_DeclareFunctionAlias(SDL_SetWindowTitle_gurax, "SDL_SetWindowTitle")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -899,7 +899,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowTitle_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowTitle(window:SDL_Window)
+// sdl.SDL_GetWindowTitle(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowTitle_gurax, "SDL_GetWindowTitle")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -920,7 +920,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowTitle_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_SetWindowIcon(window:SDL_Window, icon:SDL_Surface)
+// sdl.SDL_SetWindowIcon(window as SDL_Window, icon as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_SetWindowIcon_gurax, "SDL_SetWindowIcon")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -944,7 +944,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowIcon_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_SetWindowPosition(window:SDL_Window, x:Number, y:Number)
+// sdl.SDL_SetWindowPosition(window as SDL_Window, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowPosition_gurax, "SDL_SetWindowPosition")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -969,7 +969,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowPosition_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowPosition(window:SDL_Window)
+// sdl.SDL_GetWindowPosition(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowPosition_gurax, "SDL_GetWindowPosition")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -991,7 +991,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowPosition_gurax, processor_gurax, argument
 	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 }
 
-// sdl.SDL_SetWindowSize(window:SDL_Window, w:Number, h:Number)
+// sdl.SDL_SetWindowSize(window as SDL_Window, w as Number, h as Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowSize_gurax, "SDL_SetWindowSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1016,7 +1016,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowSize_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowSize(window:SDL_Window)
+// sdl.SDL_GetWindowSize(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowSize_gurax, "SDL_GetWindowSize")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1038,7 +1038,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSize_gurax, processor_gurax, argument_gur
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 }
 
-// sdl.SDL_GetWindowBordersSize(window:SDL_Window)
+// sdl.SDL_GetWindowBordersSize(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowBordersSize_gurax, "SDL_GetWindowBordersSize")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1060,7 +1060,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowBordersSize_gurax, processor_gurax, argum
 	return Value_Tuple::Create(new Value_Number(top), new Value_Number(left), new Value_Number(bottom), new Value_Number(right));
 }
 
-// sdl.SDL_SetWindowMinimumSize(window:SDL_Window, min_w:Number, min_h:Number)
+// sdl.SDL_SetWindowMinimumSize(window as SDL_Window, min_w as Number, min_h as Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowMinimumSize_gurax, "SDL_SetWindowMinimumSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1085,7 +1085,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowMinimumSize_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowMinimumSize(window:SDL_Window)
+// sdl.SDL_GetWindowMinimumSize(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowMinimumSize_gurax, "SDL_GetWindowMinimumSize")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1107,7 +1107,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMinimumSize_gurax, processor_gurax, argum
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 }
 
-// sdl.SDL_SetWindowMaximumSize(window:SDL_Window, max_w:Number, max_h:Number)
+// sdl.SDL_SetWindowMaximumSize(window as SDL_Window, max_w as Number, max_h as Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowMaximumSize_gurax, "SDL_SetWindowMaximumSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1132,7 +1132,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowMaximumSize_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowMaximumSize(window:SDL_Window)
+// sdl.SDL_GetWindowMaximumSize(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowMaximumSize_gurax, "SDL_GetWindowMaximumSize")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1154,7 +1154,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowMaximumSize_gurax, processor_gurax, argum
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 }
 
-// sdl.SDL_SetWindowBordered(window:SDL_Window, bordered:Bool)
+// sdl.SDL_SetWindowBordered(window as SDL_Window, bordered as Bool)
 Gurax_DeclareFunctionAlias(SDL_SetWindowBordered_gurax, "SDL_SetWindowBordered")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1177,7 +1177,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowBordered_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_SetWindowResizable(window:SDL_Window, resizable:Bool)
+// sdl.SDL_SetWindowResizable(window as SDL_Window, resizable as Bool)
 Gurax_DeclareFunctionAlias(SDL_SetWindowResizable_gurax, "SDL_SetWindowResizable")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1200,7 +1200,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowResizable_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_ShowWindow(window:SDL_Window)
+// sdl.SDL_ShowWindow(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_ShowWindow_gurax, "SDL_ShowWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1221,7 +1221,7 @@ Gurax_ImplementFunctionEx(SDL_ShowWindow_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_HideWindow(window:SDL_Window)
+// sdl.SDL_HideWindow(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_HideWindow_gurax, "SDL_HideWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1242,7 +1242,7 @@ Gurax_ImplementFunctionEx(SDL_HideWindow_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_RaiseWindow(window:SDL_Window)
+// sdl.SDL_RaiseWindow(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_RaiseWindow_gurax, "SDL_RaiseWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1263,7 +1263,7 @@ Gurax_ImplementFunctionEx(SDL_RaiseWindow_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_MaximizeWindow(window:SDL_Window)
+// sdl.SDL_MaximizeWindow(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_MaximizeWindow_gurax, "SDL_MaximizeWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1284,7 +1284,7 @@ Gurax_ImplementFunctionEx(SDL_MaximizeWindow_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_MinimizeWindow(window:SDL_Window)
+// sdl.SDL_MinimizeWindow(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_MinimizeWindow_gurax, "SDL_MinimizeWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1305,7 +1305,7 @@ Gurax_ImplementFunctionEx(SDL_MinimizeWindow_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_RestoreWindow(window:SDL_Window)
+// sdl.SDL_RestoreWindow(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_RestoreWindow_gurax, "SDL_RestoreWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1326,7 +1326,7 @@ Gurax_ImplementFunctionEx(SDL_RestoreWindow_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_SetWindowFullscreen(window:SDL_Window, flags:Number)
+// sdl.SDL_SetWindowFullscreen(window as SDL_Window, flags as Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowFullscreen_gurax, "SDL_SetWindowFullscreen")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1349,7 +1349,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowFullscreen_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetWindowSurface(window:SDL_Window)
+// sdl.SDL_GetWindowSurface(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowSurface_gurax, "SDL_GetWindowSurface")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -1371,7 +1371,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowSurface_gurax, processor_gurax, argument_
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_UpdateWindowSurface(window:SDL_Window)
+// sdl.SDL_UpdateWindowSurface(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_UpdateWindowSurface_gurax, "SDL_UpdateWindowSurface")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1392,7 +1392,7 @@ Gurax_ImplementFunctionEx(SDL_UpdateWindowSurface_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_UpdateWindowSurfaceRects(window:SDL_Window, rects[]:SDL_Rect)
+// sdl.SDL_UpdateWindowSurfaceRects(window as SDL_Window, rects[] as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_UpdateWindowSurfaceRects_gurax, "SDL_UpdateWindowSurfaceRects")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1416,7 +1416,7 @@ Gurax_ImplementFunctionEx(SDL_UpdateWindowSurfaceRects_gurax, processor_gurax, a
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_SetWindowGrab(window:SDL_Window, grabbed:Bool)
+// sdl.SDL_SetWindowGrab(window as SDL_Window, grabbed as Bool)
 Gurax_DeclareFunctionAlias(SDL_SetWindowGrab_gurax, "SDL_SetWindowGrab")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1439,7 +1439,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowGrab_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetWindowGrab(window:SDL_Window)
+// sdl.SDL_GetWindowGrab(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowGrab_gurax, "SDL_GetWindowGrab")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -1477,7 +1477,7 @@ Gurax_ImplementFunctionEx(SDL_GetGrabbedWindow_gurax, processor_gurax, argument_
 	return new Value_SDL_Window(rtn);
 }
 
-// sdl.SDL_SetWindowBrightness(window:SDL_Window, brightness:Number)
+// sdl.SDL_SetWindowBrightness(window as SDL_Window, brightness as Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowBrightness_gurax, "SDL_SetWindowBrightness")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1500,7 +1500,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowBrightness_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetWindowBrightness(window:SDL_Window)
+// sdl.SDL_GetWindowBrightness(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowBrightness_gurax, "SDL_GetWindowBrightness")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1521,7 +1521,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowBrightness_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetWindowOpacity(window:SDL_Window, opacity:Number)
+// sdl.SDL_SetWindowOpacity(window as SDL_Window, opacity as Number)
 Gurax_DeclareFunctionAlias(SDL_SetWindowOpacity_gurax, "SDL_SetWindowOpacity")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1544,7 +1544,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowOpacity_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetWindowOpacity(window:SDL_Window)
+// sdl.SDL_GetWindowOpacity(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowOpacity_gurax, "SDL_GetWindowOpacity")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1566,7 +1566,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowOpacity_gurax, processor_gurax, argument_
 	return new Value_Number(out_opacity);
 }
 
-// sdl.SDL_SetWindowModalFor(modal_window:SDL_Window, parent_window:SDL_Window)
+// sdl.SDL_SetWindowModalFor(modal_window as SDL_Window, parent_window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_SetWindowModalFor_gurax, "SDL_SetWindowModalFor")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1590,7 +1590,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowModalFor_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetWindowInputFocus(window:SDL_Window)
+// sdl.SDL_SetWindowInputFocus(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_SetWindowInputFocus_gurax, "SDL_SetWindowInputFocus")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1611,7 +1611,7 @@ Gurax_ImplementFunctionEx(SDL_SetWindowInputFocus_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_DestroyWindow(window:SDL_Window:nil)
+// sdl.SDL_DestroyWindow(window:nil as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_DestroyWindow_gurax, "SDL_DestroyWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1679,7 +1679,7 @@ Gurax_ImplementFunctionEx(SDL_DisableScreenSaver_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GL_LoadLibrary(path:String)
+// sdl.SDL_GL_LoadLibrary(path as String)
 Gurax_DeclareFunctionAlias(SDL_GL_LoadLibrary_gurax, "SDL_GL_LoadLibrary")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1715,7 +1715,7 @@ Gurax_ImplementFunctionEx(SDL_GL_UnloadLibrary_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GL_ExtensionSupported(extension:String)
+// sdl.SDL_GL_ExtensionSupported(extension as String)
 Gurax_DeclareFunctionAlias(SDL_GL_ExtensionSupported_gurax, "SDL_GL_ExtensionSupported")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -1751,7 +1751,7 @@ Gurax_ImplementFunctionEx(SDL_GL_ResetAttributes_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GL_SetAttribute(attr:Number, value:Number)
+// sdl.SDL_GL_SetAttribute(attr as Number, value as Number)
 Gurax_DeclareFunctionAlias(SDL_GL_SetAttribute_gurax, "SDL_GL_SetAttribute")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1773,7 +1773,7 @@ Gurax_ImplementFunctionEx(SDL_GL_SetAttribute_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GL_GetAttribute(attr:Number)
+// sdl.SDL_GL_GetAttribute(attr as Number)
 Gurax_DeclareFunctionAlias(SDL_GL_GetAttribute_gurax, "SDL_GL_GetAttribute")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1794,7 +1794,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetAttribute_gurax, processor_gurax, argument_g
 	return new Value_Number(value);
 }
 
-// sdl.SDL_GL_CreateContext(window:SDL_Window)
+// sdl.SDL_GL_CreateContext(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GL_CreateContext_gurax, "SDL_GL_CreateContext")
 {
 	Declare(VTYPE_SDL_GLContext, Flag::None);
@@ -1816,7 +1816,7 @@ Gurax_ImplementFunctionEx(SDL_GL_CreateContext_gurax, processor_gurax, argument_
 	return new Value_SDL_GLContext(rtn);
 }
 
-// sdl.SDL_GL_MakeCurrent(window:SDL_Window, context:SDL_GLContext)
+// sdl.SDL_GL_MakeCurrent(window as SDL_Window, context as SDL_GLContext)
 Gurax_DeclareFunctionAlias(SDL_GL_MakeCurrent_gurax, "SDL_GL_MakeCurrent")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1874,7 +1874,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetCurrentContext_gurax, processor_gurax, argum
 	return new Value_SDL_GLContext(rtn);
 }
 
-// sdl.SDL_GL_GetDrawableSize(window:SDL_Window)
+// sdl.SDL_GL_GetDrawableSize(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GL_GetDrawableSize_gurax, "SDL_GL_GetDrawableSize")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1896,7 +1896,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetDrawableSize_gurax, processor_gurax, argumen
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 }
 
-// sdl.SDL_GL_SetSwapInterval(interval:Number)
+// sdl.SDL_GL_SetSwapInterval(interval as Number)
 Gurax_DeclareFunctionAlias(SDL_GL_SetSwapInterval_gurax, "SDL_GL_SetSwapInterval")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1932,7 +1932,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetSwapInterval_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GL_SwapWindow(window:SDL_Window)
+// sdl.SDL_GL_SwapWindow(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GL_SwapWindow_gurax, "SDL_GL_SwapWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1953,7 +1953,7 @@ Gurax_ImplementFunctionEx(SDL_GL_SwapWindow_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GL_DeleteContext(context:SDL_GLContext)
+// sdl.SDL_GL_DeleteContext(context as SDL_GLContext)
 Gurax_DeclareFunctionAlias(SDL_GL_DeleteContext_gurax, "SDL_GL_DeleteContext")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1990,7 +1990,7 @@ Gurax_ImplementFunctionEx(SDL_GetNumRenderDrivers_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetRenderDriverInfo(index:Number)
+// sdl.SDL_GetRenderDriverInfo(index as Number)
 Gurax_DeclareFunctionAlias(SDL_GetRenderDriverInfo_gurax, "SDL_GetRenderDriverInfo")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2011,7 +2011,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDriverInfo_gurax, processor_gurax, argume
 	return new Value_SDL_RendererInfo(info);
 }
 
-// sdl.SDL_CreateWindowAndRenderer(width:Number, height:Number, window_flags:Number)
+// sdl.SDL_CreateWindowAndRenderer(width as Number, height as Number, window_flags as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateWindowAndRenderer_gurax, "SDL_CreateWindowAndRenderer")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2037,7 +2037,7 @@ Gurax_ImplementFunctionEx(SDL_CreateWindowAndRenderer_gurax, processor_gurax, ar
 	return Value_Tuple::Create(new Value_SDL_Window(window), new Value_SDL_Renderer(renderer));
 }
 
-// sdl.SDL_CreateRenderer(window:SDL_Window, index:Number, flags:Number)
+// sdl.SDL_CreateRenderer(window as SDL_Window, index as Number, flags as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateRenderer_gurax, "SDL_CreateRenderer")
 {
 	Declare(VTYPE_SDL_Renderer, Flag::None);
@@ -2063,7 +2063,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRenderer_gurax, processor_gurax, argument_gu
 	return new Value_SDL_Renderer(rtn);
 }
 
-// sdl.SDL_CreateSoftwareRenderer(surface:SDL_Surface)
+// sdl.SDL_CreateSoftwareRenderer(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_CreateSoftwareRenderer_gurax, "SDL_CreateSoftwareRenderer")
 {
 	Declare(VTYPE_SDL_Renderer, Flag::None);
@@ -2085,7 +2085,7 @@ Gurax_ImplementFunctionEx(SDL_CreateSoftwareRenderer_gurax, processor_gurax, arg
 	return new Value_SDL_Renderer(rtn);
 }
 
-// sdl.SDL_GetRenderer(window:SDL_Window)
+// sdl.SDL_GetRenderer(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetRenderer_gurax, "SDL_GetRenderer")
 {
 	Declare(VTYPE_SDL_Renderer, Flag::None);
@@ -2107,7 +2107,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderer_gurax, processor_gurax, argument_gurax
 	return new Value_SDL_Renderer(rtn);
 }
 
-// sdl.SDL_GetRendererInfo(renderer:SDL_Renderer)
+// sdl.SDL_GetRendererInfo(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_GetRendererInfo_gurax, "SDL_GetRendererInfo")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2129,7 +2129,7 @@ Gurax_ImplementFunctionEx(SDL_GetRendererInfo_gurax, processor_gurax, argument_g
 	return new Value_SDL_RendererInfo(info);
 }
 
-// sdl.SDL_GetRendererOutputSize(renderer:SDL_Renderer)
+// sdl.SDL_GetRendererOutputSize(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_GetRendererOutputSize_gurax, "SDL_GetRendererOutputSize")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2151,7 +2151,7 @@ Gurax_ImplementFunctionEx(SDL_GetRendererOutputSize_gurax, processor_gurax, argu
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 }
 
-// sdl.SDL_CreateTexture(renderer:SDL_Renderer, format:Number, access:Number, w:Number, h:Number)
+// sdl.SDL_CreateTexture(renderer as SDL_Renderer, format as Number, access as Number, w as Number, h as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateTexture_gurax, "SDL_CreateTexture")
 {
 	Declare(VTYPE_SDL_Texture, Flag::None);
@@ -2181,7 +2181,7 @@ Gurax_ImplementFunctionEx(SDL_CreateTexture_gurax, processor_gurax, argument_gur
 	return new Value_SDL_Texture(rtn);
 }
 
-// sdl.SDL_CreateTextureFromSurface(renderer:SDL_Renderer, surface:SDL_Surface)
+// sdl.SDL_CreateTextureFromSurface(renderer as SDL_Renderer, surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_CreateTextureFromSurface_gurax, "SDL_CreateTextureFromSurface")
 {
 	Declare(VTYPE_SDL_Texture, Flag::None);
@@ -2206,7 +2206,7 @@ Gurax_ImplementFunctionEx(SDL_CreateTextureFromSurface_gurax, processor_gurax, a
 	return new Value_SDL_Texture(rtn);
 }
 
-// sdl.SDL_QueryTexture(texture:SDL_Texture)
+// sdl.SDL_QueryTexture(texture as SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_QueryTexture_gurax, "SDL_QueryTexture")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2229,7 +2229,7 @@ Gurax_ImplementFunctionEx(SDL_QueryTexture_gurax, processor_gurax, argument_gura
 	return Value_Tuple::Create(new Value_Number(format), new Value_Number(access), new Value_Number(w), new Value_Number(h));
 }
 
-// sdl.SDL_SetTextureColorMod(texture:SDL_Texture, r:Number, g:Number, b:Number)
+// sdl.SDL_SetTextureColorMod(texture as SDL_Texture, r as Number, g as Number, b as Number)
 Gurax_DeclareFunctionAlias(SDL_SetTextureColorMod_gurax, "SDL_SetTextureColorMod")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2256,7 +2256,7 @@ Gurax_ImplementFunctionEx(SDL_SetTextureColorMod_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetTextureColorMod(texture:SDL_Texture)
+// sdl.SDL_GetTextureColorMod(texture as SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_GetTextureColorMod_gurax, "SDL_GetTextureColorMod")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2278,7 +2278,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureColorMod_gurax, processor_gurax, argumen
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 }
 
-// sdl.SDL_SetTextureAlphaMod(texture:SDL_Texture, alpha:Number)
+// sdl.SDL_SetTextureAlphaMod(texture as SDL_Texture, alpha as Number)
 Gurax_DeclareFunctionAlias(SDL_SetTextureAlphaMod_gurax, "SDL_SetTextureAlphaMod")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2301,7 +2301,7 @@ Gurax_ImplementFunctionEx(SDL_SetTextureAlphaMod_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetTextureAlphaMod(texture:SDL_Texture)
+// sdl.SDL_GetTextureAlphaMod(texture as SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_GetTextureAlphaMod_gurax, "SDL_GetTextureAlphaMod")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2323,7 +2323,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureAlphaMod_gurax, processor_gurax, argumen
 	return new Value_Number(alpha);
 }
 
-// sdl.SDL_SetTextureBlendMode(texture:SDL_Texture, blendMode:Number)
+// sdl.SDL_SetTextureBlendMode(texture as SDL_Texture, blendMode as Number)
 Gurax_DeclareFunctionAlias(SDL_SetTextureBlendMode_gurax, "SDL_SetTextureBlendMode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2346,7 +2346,7 @@ Gurax_ImplementFunctionEx(SDL_SetTextureBlendMode_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetTextureBlendMode(texture:SDL_Texture)
+// sdl.SDL_GetTextureBlendMode(texture as SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_GetTextureBlendMode_gurax, "SDL_GetTextureBlendMode")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2368,7 +2368,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureBlendMode_gurax, processor_gurax, argume
 	return new Value_Number(blendMode);
 }
 
-// sdl.SDL_SetTextureScaleMode(texture:SDL_Texture, scaleMode:Number)
+// sdl.SDL_SetTextureScaleMode(texture as SDL_Texture, scaleMode as Number)
 Gurax_DeclareFunctionAlias(SDL_SetTextureScaleMode_gurax, "SDL_SetTextureScaleMode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2391,7 +2391,7 @@ Gurax_ImplementFunctionEx(SDL_SetTextureScaleMode_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetTextureScaleMode(texture:SDL_Texture)
+// sdl.SDL_GetTextureScaleMode(texture as SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_GetTextureScaleMode_gurax, "SDL_GetTextureScaleMode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2413,7 +2413,7 @@ Gurax_ImplementFunctionEx(SDL_GetTextureScaleMode_gurax, processor_gurax, argume
 	return new Value_Number(scaleMode);
 }
 
-// sdl.SDL_UpdateTexture(texture:SDL_Texture, rect:SDL_Rect:nil, pixels:Pointer, pitch:Number)
+// sdl.SDL_UpdateTexture(texture as SDL_Texture, rect:nil as SDL_Rect, pixels as Pointer, pitch as Number)
 Gurax_DeclareFunctionAlias(SDL_UpdateTexture_gurax, "SDL_UpdateTexture")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2440,7 +2440,7 @@ Gurax_ImplementFunctionEx(SDL_UpdateTexture_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_UpdateYUVTexture(texture:SDL_Texture, rect:SDL_Rect:nil, Yplane:Pointer, Ypitch:Number, Uplane:Pointer, Upitch:Number, Vplane:Pointer, Vpitch:Number)
+// sdl.SDL_UpdateYUVTexture(texture as SDL_Texture, rect:nil as SDL_Rect, Yplane as Pointer, Ypitch as Number, Uplane as Pointer, Upitch as Number, Vplane as Pointer, Vpitch as Number)
 Gurax_DeclareFunctionAlias(SDL_UpdateYUVTexture_gurax, "SDL_UpdateYUVTexture")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2475,7 +2475,7 @@ Gurax_ImplementFunctionEx(SDL_UpdateYUVTexture_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_LockTexture(texture:SDL_Texture, rect:SDL_Rect:nil)
+// sdl.SDL_LockTexture(texture as SDL_Texture, rect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_LockTexture_gurax, "SDL_LockTexture")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2510,7 +2510,7 @@ Gurax_ImplementFunctionEx(SDL_LockTexture_gurax, processor_gurax, argument_gurax
 	return Value_Tuple::Create(new Value_Array(pArray.release()), new Value_Number(pitch));
 }
 
-// sdl.SDL_LockTextureToSurface(texture:SDL_Texture, rect:SDL_Rect:nil)
+// sdl.SDL_LockTextureToSurface(texture as SDL_Texture, rect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_LockTextureToSurface_gurax, "SDL_LockTextureToSurface")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2534,7 +2534,7 @@ Gurax_ImplementFunctionEx(SDL_LockTextureToSurface_gurax, processor_gurax, argum
 	return new Value_SDL_Surface(surface);
 }
 
-// sdl.SDL_UnlockTexture(texture:SDL_Texture)
+// sdl.SDL_UnlockTexture(texture as SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_UnlockTexture_gurax, "SDL_UnlockTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2555,7 +2555,7 @@ Gurax_ImplementFunctionEx(SDL_UnlockTexture_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_RenderTargetSupported(renderer:SDL_Renderer)
+// sdl.SDL_RenderTargetSupported(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderTargetSupported_gurax, "SDL_RenderTargetSupported")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -2576,7 +2576,7 @@ Gurax_ImplementFunctionEx(SDL_RenderTargetSupported_gurax, processor_gurax, argu
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_SetRenderTarget(renderer:SDL_Renderer, texture:SDL_Texture)
+// sdl.SDL_SetRenderTarget(renderer as SDL_Renderer, texture as SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_SetRenderTarget_gurax, "SDL_SetRenderTarget")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2600,7 +2600,7 @@ Gurax_ImplementFunctionEx(SDL_SetRenderTarget_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetRenderTarget(renderer:SDL_Renderer)
+// sdl.SDL_GetRenderTarget(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_GetRenderTarget_gurax, "SDL_GetRenderTarget")
 {
 	Declare(VTYPE_SDL_Texture, Flag::None);
@@ -2622,7 +2622,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderTarget_gurax, processor_gurax, argument_g
 	return new Value_SDL_Texture(rtn);
 }
 
-// sdl.SDL_RenderSetLogicalSize(renderer:SDL_Renderer, w:Number, h:Number)
+// sdl.SDL_RenderSetLogicalSize(renderer as SDL_Renderer, w as Number, h as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderSetLogicalSize_gurax, "SDL_RenderSetLogicalSize")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2647,7 +2647,7 @@ Gurax_ImplementFunctionEx(SDL_RenderSetLogicalSize_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderGetLogicalSize(renderer:SDL_Renderer)
+// sdl.SDL_RenderGetLogicalSize(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderGetLogicalSize_gurax, "SDL_RenderGetLogicalSize")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2669,7 +2669,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetLogicalSize_gurax, processor_gurax, argum
 	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h));
 }
 
-// sdl.SDL_RenderSetIntegerScale(renderer:SDL_Renderer, enable:Bool)
+// sdl.SDL_RenderSetIntegerScale(renderer as SDL_Renderer, enable as Bool)
 Gurax_DeclareFunctionAlias(SDL_RenderSetIntegerScale_gurax, "SDL_RenderSetIntegerScale")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2692,7 +2692,7 @@ Gurax_ImplementFunctionEx(SDL_RenderSetIntegerScale_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderGetIntegerScale(renderer:SDL_Renderer)
+// sdl.SDL_RenderGetIntegerScale(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderGetIntegerScale_gurax, "SDL_RenderGetIntegerScale")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -2713,7 +2713,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetIntegerScale_gurax, processor_gurax, argu
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_RenderSetViewport(renderer:SDL_Renderer, rect:SDL_Rect:nil)
+// sdl.SDL_RenderSetViewport(renderer as SDL_Renderer, rect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderSetViewport_gurax, "SDL_RenderSetViewport")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2736,7 +2736,7 @@ Gurax_ImplementFunctionEx(SDL_RenderSetViewport_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderGetViewport(renderer:SDL_Renderer)
+// sdl.SDL_RenderGetViewport(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderGetViewport_gurax, "SDL_RenderGetViewport")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2758,7 +2758,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetViewport_gurax, processor_gurax, argument
 	return new Value_SDL_Rect(rect);
 }
 
-// sdl.SDL_RenderSetClipRect(renderer:SDL_Renderer, rect:SDL_Rect:nil)
+// sdl.SDL_RenderSetClipRect(renderer as SDL_Renderer, rect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderSetClipRect_gurax, "SDL_RenderSetClipRect")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2781,7 +2781,7 @@ Gurax_ImplementFunctionEx(SDL_RenderSetClipRect_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderGetClipRect(renderer:SDL_Renderer)
+// sdl.SDL_RenderGetClipRect(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderGetClipRect_gurax, "SDL_RenderGetClipRect")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2803,7 +2803,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetClipRect_gurax, processor_gurax, argument
 	return new Value_SDL_Rect(rect);
 }
 
-// sdl.SDL_RenderIsClipEnabled(renderer:SDL_Renderer)
+// sdl.SDL_RenderIsClipEnabled(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderIsClipEnabled_gurax, "SDL_RenderIsClipEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -2824,7 +2824,7 @@ Gurax_ImplementFunctionEx(SDL_RenderIsClipEnabled_gurax, processor_gurax, argume
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_RenderSetScale(renderer:SDL_Renderer, scaleX:Number, scaleY:Number)
+// sdl.SDL_RenderSetScale(renderer as SDL_Renderer, scaleX as Number, scaleY as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderSetScale_gurax, "SDL_RenderSetScale")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2849,7 +2849,7 @@ Gurax_ImplementFunctionEx(SDL_RenderSetScale_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderGetScale(renderer:SDL_Renderer)
+// sdl.SDL_RenderGetScale(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderGetScale_gurax, "SDL_RenderGetScale")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2871,7 +2871,7 @@ Gurax_ImplementFunctionEx(SDL_RenderGetScale_gurax, processor_gurax, argument_gu
 	return Value_Tuple::Create(new Value_Number(scaleX), new Value_Number(scaleY));
 }
 
-// sdl.SDL_SetRenderDrawColor(renderer:SDL_Renderer, r:Number, g:Number, b:Number, a:Number)
+// sdl.SDL_SetRenderDrawColor(renderer as SDL_Renderer, r as Number, g as Number, b as Number, a as Number)
 Gurax_DeclareFunctionAlias(SDL_SetRenderDrawColor_gurax, "SDL_SetRenderDrawColor")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2900,7 +2900,7 @@ Gurax_ImplementFunctionEx(SDL_SetRenderDrawColor_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetRenderDrawColor(renderer:SDL_Renderer)
+// sdl.SDL_GetRenderDrawColor(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_GetRenderDrawColor_gurax, "SDL_GetRenderDrawColor")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2922,7 +2922,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawColor_gurax, processor_gurax, argumen
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
 }
 
-// sdl.SDL_SetRenderDrawBlendMode(renderer:SDL_Renderer, blendMode:Number)
+// sdl.SDL_SetRenderDrawBlendMode(renderer as SDL_Renderer, blendMode as Number)
 Gurax_DeclareFunctionAlias(SDL_SetRenderDrawBlendMode_gurax, "SDL_SetRenderDrawBlendMode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2945,7 +2945,7 @@ Gurax_ImplementFunctionEx(SDL_SetRenderDrawBlendMode_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetRenderDrawBlendMode(renderer:SDL_Renderer)
+// sdl.SDL_GetRenderDrawBlendMode(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_GetRenderDrawBlendMode_gurax, "SDL_GetRenderDrawBlendMode")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -2967,7 +2967,7 @@ Gurax_ImplementFunctionEx(SDL_GetRenderDrawBlendMode_gurax, processor_gurax, arg
 	return new Value_Number(blendMode);
 }
 
-// sdl.SDL_RenderClear(renderer:SDL_Renderer)
+// sdl.SDL_RenderClear(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderClear_gurax, "SDL_RenderClear")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2988,7 +2988,7 @@ Gurax_ImplementFunctionEx(SDL_RenderClear_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawPoint(renderer:SDL_Renderer, x:Number, y:Number)
+// sdl.SDL_RenderDrawPoint(renderer as SDL_Renderer, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawPoint_gurax, "SDL_RenderDrawPoint")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3013,7 +3013,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPoint_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawPoints(renderer:SDL_Renderer, points[]:SDL_Point)
+// sdl.SDL_RenderDrawPoints(renderer as SDL_Renderer, points[] as SDL_Point)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawPoints_gurax, "SDL_RenderDrawPoints")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3037,7 +3037,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPoints_gurax, processor_gurax, argument_
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawLine(renderer:SDL_Renderer, x1:Number, y1:Number, x2:Number, y2:Number)
+// sdl.SDL_RenderDrawLine(renderer as SDL_Renderer, x1 as Number, y1 as Number, x2 as Number, y2 as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawLine_gurax, "SDL_RenderDrawLine")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3066,7 +3066,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLine_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawLines(renderer:SDL_Renderer, points[]:SDL_Point)
+// sdl.SDL_RenderDrawLines(renderer as SDL_Renderer, points[] as SDL_Point)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawLines_gurax, "SDL_RenderDrawLines")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3090,7 +3090,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLines_gurax, processor_gurax, argument_g
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawRect(renderer:SDL_Renderer, rect:SDL_Rect:nil)
+// sdl.SDL_RenderDrawRect(renderer as SDL_Renderer, rect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawRect_gurax, "SDL_RenderDrawRect")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3113,7 +3113,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRect_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawRects(renderer:SDL_Renderer, rects[]:SDL_Rect)
+// sdl.SDL_RenderDrawRects(renderer as SDL_Renderer, rects[] as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawRects_gurax, "SDL_RenderDrawRects")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3137,7 +3137,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRects_gurax, processor_gurax, argument_g
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_RenderFillRect(renderer:SDL_Renderer, rect:SDL_Rect:nil)
+// sdl.SDL_RenderFillRect(renderer as SDL_Renderer, rect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderFillRect_gurax, "SDL_RenderFillRect")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3160,7 +3160,7 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRect_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderFillRects(renderer:SDL_Renderer, rects[]:SDL_Rect)
+// sdl.SDL_RenderFillRects(renderer as SDL_Renderer, rects[] as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderFillRects_gurax, "SDL_RenderFillRects")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3184,7 +3184,7 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRects_gurax, processor_gurax, argument_g
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_RenderCopy(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect:nil, dstrect:SDL_Rect:nil)
+// sdl.SDL_RenderCopy(renderer as SDL_Renderer, texture as SDL_Texture, srcrect:nil as SDL_Rect, dstrect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_RenderCopy_gurax, "SDL_RenderCopy")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3212,7 +3212,7 @@ Gurax_ImplementFunctionEx(SDL_RenderCopy_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderCopyEx(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect:nil, dstrect:SDL_Rect:nil, angle:Number, center:SDL_Point:nil, flip:Number)
+// sdl.SDL_RenderCopyEx(renderer as SDL_Renderer, texture as SDL_Texture, srcrect:nil as SDL_Rect, dstrect:nil as SDL_Rect, angle as Number, center:nil as SDL_Point, flip as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderCopyEx_gurax, "SDL_RenderCopyEx")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3246,7 +3246,7 @@ Gurax_ImplementFunctionEx(SDL_RenderCopyEx_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawPointF(renderer:SDL_Renderer, x:Number, y:Number)
+// sdl.SDL_RenderDrawPointF(renderer as SDL_Renderer, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawPointF_gurax, "SDL_RenderDrawPointF")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3271,7 +3271,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPointF_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawPointsF(renderer:SDL_Renderer, points:SDL_FPoint, count:Number)
+// sdl.SDL_RenderDrawPointsF(renderer as SDL_Renderer, points as SDL_FPoint, count as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawPointsF_gurax, "SDL_RenderDrawPointsF")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3297,7 +3297,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawPointsF_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawLineF(renderer:SDL_Renderer, x1:Number, y1:Number, x2:Number, y2:Number)
+// sdl.SDL_RenderDrawLineF(renderer as SDL_Renderer, x1 as Number, y1 as Number, x2 as Number, y2 as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawLineF_gurax, "SDL_RenderDrawLineF")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3326,7 +3326,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLineF_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawLinesF(renderer:SDL_Renderer, points[]:SDL_FPoint)
+// sdl.SDL_RenderDrawLinesF(renderer as SDL_Renderer, points[] as SDL_FPoint)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawLinesF_gurax, "SDL_RenderDrawLinesF")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3350,7 +3350,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawLinesF_gurax, processor_gurax, argument_
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawRectF(renderer:SDL_Renderer, rect:SDL_FRect)
+// sdl.SDL_RenderDrawRectF(renderer as SDL_Renderer, rect as SDL_FRect)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawRectF_gurax, "SDL_RenderDrawRectF")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3374,7 +3374,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRectF_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderDrawRectsF(renderer:SDL_Renderer, rects[]:SDL_FRect)
+// sdl.SDL_RenderDrawRectsF(renderer as SDL_Renderer, rects[] as SDL_FRect)
 Gurax_DeclareFunctionAlias(SDL_RenderDrawRectsF_gurax, "SDL_RenderDrawRectsF")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3398,7 +3398,7 @@ Gurax_ImplementFunctionEx(SDL_RenderDrawRectsF_gurax, processor_gurax, argument_
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_RenderFillRectF(renderer:SDL_Renderer, rect:SDL_FRect)
+// sdl.SDL_RenderFillRectF(renderer as SDL_Renderer, rect as SDL_FRect)
 Gurax_DeclareFunctionAlias(SDL_RenderFillRectF_gurax, "SDL_RenderFillRectF")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3422,7 +3422,7 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRectF_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderFillRectsF(renderer:SDL_Renderer, rects[]:SDL_FRect)
+// sdl.SDL_RenderFillRectsF(renderer as SDL_Renderer, rects[] as SDL_FRect)
 Gurax_DeclareFunctionAlias(SDL_RenderFillRectsF_gurax, "SDL_RenderFillRectsF")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3446,7 +3446,7 @@ Gurax_ImplementFunctionEx(SDL_RenderFillRectsF_gurax, processor_gurax, argument_
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_RenderCopyF(renderer:SDL_Renderer, texture:SDL_Texture, srcrect:SDL_Rect:nil, dstrect:SDL_FRect)
+// sdl.SDL_RenderCopyF(renderer as SDL_Renderer, texture as SDL_Texture, srcrect:nil as SDL_Rect, dstrect as SDL_FRect)
 Gurax_DeclareFunctionAlias(SDL_RenderCopyF_gurax, "SDL_RenderCopyF")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3475,7 +3475,7 @@ Gurax_ImplementFunctionEx(SDL_RenderCopyF_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderReadPixels(renderer:SDL_Renderer, rect:SDL_Rect:nil, format:Number, pixels:Pointer, pitch:Number)
+// sdl.SDL_RenderReadPixels(renderer as SDL_Renderer, rect:nil as SDL_Rect, format as Number, pixels as Pointer, pitch as Number)
 Gurax_DeclareFunctionAlias(SDL_RenderReadPixels_gurax, "SDL_RenderReadPixels")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3508,7 +3508,7 @@ Gurax_ImplementFunctionEx(SDL_RenderReadPixels_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RenderPresent(renderer:SDL_Renderer)
+// sdl.SDL_RenderPresent(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderPresent_gurax, "SDL_RenderPresent")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3529,7 +3529,7 @@ Gurax_ImplementFunctionEx(SDL_RenderPresent_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_DestroyTexture(texture:SDL_Texture:nil)
+// sdl.SDL_DestroyTexture(texture:nil as SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_DestroyTexture_gurax, "SDL_DestroyTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3549,7 +3549,7 @@ Gurax_ImplementFunctionEx(SDL_DestroyTexture_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_DestroyRenderer(renderer:SDL_Renderer:nil)
+// sdl.SDL_DestroyRenderer(renderer:nil as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_DestroyRenderer_gurax, "SDL_DestroyRenderer")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3569,7 +3569,7 @@ Gurax_ImplementFunctionEx(SDL_DestroyRenderer_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_RenderFlush(renderer:SDL_Renderer)
+// sdl.SDL_RenderFlush(renderer as SDL_Renderer)
 Gurax_DeclareFunctionAlias(SDL_RenderFlush_gurax, "SDL_RenderFlush")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3590,7 +3590,7 @@ Gurax_ImplementFunctionEx(SDL_RenderFlush_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GL_UnbindTexture(texture:SDL_Texture)
+// sdl.SDL_GL_UnbindTexture(texture as SDL_Texture)
 Gurax_DeclareFunctionAlias(SDL_GL_UnbindTexture_gurax, "SDL_GL_UnbindTexture")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3611,7 +3611,7 @@ Gurax_ImplementFunctionEx(SDL_GL_UnbindTexture_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetPixelFormatName(format:Number)
+// sdl.SDL_GetPixelFormatName(format as Number)
 Gurax_DeclareFunctionAlias(SDL_GetPixelFormatName_gurax, "SDL_GetPixelFormatName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -3631,7 +3631,7 @@ Gurax_ImplementFunctionEx(SDL_GetPixelFormatName_gurax, processor_gurax, argumen
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_MasksToPixelFormatEnum(bpp:Number, Rmask:Number, Gmask:Number, Bmask:Number, Amask:Number)
+// sdl.SDL_MasksToPixelFormatEnum(bpp as Number, Rmask as Number, Gmask as Number, Bmask as Number, Amask as Number)
 Gurax_DeclareFunctionAlias(SDL_MasksToPixelFormatEnum_gurax, "SDL_MasksToPixelFormatEnum")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3659,7 +3659,7 @@ Gurax_ImplementFunctionEx(SDL_MasksToPixelFormatEnum_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_AllocFormat(pixel_format:Number)
+// sdl.SDL_AllocFormat(pixel_format as Number)
 Gurax_DeclareFunctionAlias(SDL_AllocFormat_gurax, "SDL_AllocFormat")
 {
 	Declare(VTYPE_SDL_PixelFormat, Flag::None);
@@ -3680,7 +3680,7 @@ Gurax_ImplementFunctionEx(SDL_AllocFormat_gurax, processor_gurax, argument_gurax
 	return new Value_SDL_PixelFormat(rtn);
 }
 
-// sdl.SDL_FreeFormat(format:SDL_PixelFormat:nil)
+// sdl.SDL_FreeFormat(format:nil as SDL_PixelFormat)
 Gurax_DeclareFunctionAlias(SDL_FreeFormat_gurax, "SDL_FreeFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3700,7 +3700,7 @@ Gurax_ImplementFunctionEx(SDL_FreeFormat_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_AllocPalette(ncolors:Number)
+// sdl.SDL_AllocPalette(ncolors as Number)
 Gurax_DeclareFunctionAlias(SDL_AllocPalette_gurax, "SDL_AllocPalette")
 {
 	Declare(VTYPE_SDL_Palette, Flag::None);
@@ -3721,7 +3721,7 @@ Gurax_ImplementFunctionEx(SDL_AllocPalette_gurax, processor_gurax, argument_gura
 	return new Value_SDL_Palette(rtn);
 }
 
-// sdl.SDL_SetPixelFormatPalette(format:SDL_PixelFormat, palette:SDL_Palette)
+// sdl.SDL_SetPixelFormatPalette(format as SDL_PixelFormat, palette as SDL_Palette)
 Gurax_DeclareFunctionAlias(SDL_SetPixelFormatPalette_gurax, "SDL_SetPixelFormatPalette")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3745,7 +3745,7 @@ Gurax_ImplementFunctionEx(SDL_SetPixelFormatPalette_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetPaletteColors(palette:SDL_Palette, colors[]:SDL_Color, firstcolor:Number)
+// sdl.SDL_SetPaletteColors(palette as SDL_Palette, colors[] as SDL_Color, firstcolor as Number)
 Gurax_DeclareFunctionAlias(SDL_SetPaletteColors_gurax, "SDL_SetPaletteColors")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3771,7 +3771,7 @@ Gurax_ImplementFunctionEx(SDL_SetPaletteColors_gurax, processor_gurax, argument_
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_FreePalette(palette:SDL_Palette:nil)
+// sdl.SDL_FreePalette(palette:nil as SDL_Palette)
 Gurax_DeclareFunctionAlias(SDL_FreePalette_gurax, "SDL_FreePalette")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3791,7 +3791,7 @@ Gurax_ImplementFunctionEx(SDL_FreePalette_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_MapRGB(format:SDL_PixelFormat, r:Number, g:Number, b:Number)
+// sdl.SDL_MapRGB(format as SDL_PixelFormat, r as Number, g as Number, b as Number)
 Gurax_DeclareFunctionAlias(SDL_MapRGB_gurax, "SDL_MapRGB")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3818,7 +3818,7 @@ Gurax_ImplementFunctionEx(SDL_MapRGB_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_MapRGBA(format:SDL_PixelFormat, r:Number, g:Number, b:Number, a:Number)
+// sdl.SDL_MapRGBA(format as SDL_PixelFormat, r as Number, g as Number, b as Number, a as Number)
 Gurax_DeclareFunctionAlias(SDL_MapRGBA_gurax, "SDL_MapRGBA")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3847,7 +3847,7 @@ Gurax_ImplementFunctionEx(SDL_MapRGBA_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetRGB(pixel:Number, format:SDL_PixelFormat)
+// sdl.SDL_GetRGB(pixel as Number, format as SDL_PixelFormat)
 Gurax_DeclareFunctionAlias(SDL_GetRGB_gurax, "SDL_GetRGB")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3871,7 +3871,7 @@ Gurax_ImplementFunctionEx(SDL_GetRGB_gurax, processor_gurax, argument_gurax)
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 }
 
-// sdl.SDL_GetRGBA(pixel:Number, format:SDL_PixelFormat)
+// sdl.SDL_GetRGBA(pixel as Number, format as SDL_PixelFormat)
 Gurax_DeclareFunctionAlias(SDL_GetRGBA_gurax, "SDL_GetRGBA")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3895,7 +3895,7 @@ Gurax_ImplementFunctionEx(SDL_GetRGBA_gurax, processor_gurax, argument_gurax)
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b), new Value_Number(a));
 }
 
-// sdl.SDL_HasIntersection(A:SDL_Rect, B:SDL_Rect)
+// sdl.SDL_HasIntersection(A as SDL_Rect, B as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_HasIntersection_gurax, "SDL_HasIntersection")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -3919,7 +3919,7 @@ Gurax_ImplementFunctionEx(SDL_HasIntersection_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_IntersectRect(A:SDL_Rect, B:SDL_Rect)
+// sdl.SDL_IntersectRect(A as SDL_Rect, B as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_IntersectRect_gurax, "SDL_IntersectRect")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3944,7 +3944,7 @@ Gurax_ImplementFunctionEx(SDL_IntersectRect_gurax, processor_gurax, argument_gur
 	return new Value_SDL_Rect(result);
 }
 
-// sdl.SDL_UnionRect(A:SDL_Rect, B:SDL_Rect)
+// sdl.SDL_UnionRect(A as SDL_Rect, B as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_UnionRect_gurax, "SDL_UnionRect")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3969,7 +3969,7 @@ Gurax_ImplementFunctionEx(SDL_UnionRect_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Rect(result);
 }
 
-// sdl.SDL_IntersectRectAndLine(rect:SDL_Rect, X1:Number, Y1:Number, X2:Number, Y2:Number)
+// sdl.SDL_IntersectRectAndLine(rect as SDL_Rect, X1 as Number, Y1 as Number, X2 as Number, Y2 as Number)
 Gurax_DeclareFunctionAlias(SDL_IntersectRectAndLine_gurax, "SDL_IntersectRectAndLine")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3998,7 +3998,7 @@ Gurax_ImplementFunctionEx(SDL_IntersectRectAndLine_gurax, processor_gurax, argum
 	return Value_Tuple::Create(new Value_Number(X1), new Value_Number(Y1), new Value_Number(X2), new Value_Number(Y2));
 }
 
-// sdl.SDL_CreateRGBSurface(flags:Number, width:Number, height:Number, depth:Number, Rmask:Number, Gmask:Number, Bmask:Number, Amask:Number)
+// sdl.SDL_CreateRGBSurface(flags as Number, width as Number, height as Number, depth as Number, Rmask as Number, Gmask as Number, Bmask as Number, Amask as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateRGBSurface_gurax, "SDL_CreateRGBSurface")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4033,7 +4033,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurface_gurax, processor_gurax, argument_
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_CreateRGBSurfaceWithFormat(flags:Number, width:Number, height:Number, depth:Number, format:Number)
+// sdl.SDL_CreateRGBSurfaceWithFormat(flags as Number, width as Number, height as Number, depth as Number, format as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateRGBSurfaceWithFormat_gurax, "SDL_CreateRGBSurfaceWithFormat")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4062,7 +4062,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceWithFormat_gurax, processor_gurax,
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_CreateRGBSurfaceFrom(pixels:Pointer, width:Number, height:Number, depth:Number, pitch:Number, Rmask:Number, Gmask:Number, Bmask:Number, Amask:Number)
+// sdl.SDL_CreateRGBSurfaceFrom(pixels as Pointer, width as Number, height as Number, depth as Number, pitch as Number, Rmask as Number, Gmask as Number, Bmask as Number, Amask as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateRGBSurfaceFrom_gurax, "SDL_CreateRGBSurfaceFrom")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4103,7 +4103,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceFrom_gurax, processor_gurax, argum
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_CreateRGBSurfaceWithFormatFrom(pixels:Pointer, width:Number, height:Number, depth:Number, pitch:Number, format:Number)
+// sdl.SDL_CreateRGBSurfaceWithFormatFrom(pixels as Pointer, width as Number, height as Number, depth as Number, pitch as Number, format as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateRGBSurfaceWithFormatFrom_gurax, "SDL_CreateRGBSurfaceWithFormatFrom")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4138,7 +4138,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceWithFormatFrom_gurax, processor_gu
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_CreateRGBSurfaceFromImage(image:Image)
+// sdl.SDL_CreateRGBSurfaceFromImage(image as Image)
 Gurax_DeclareFunctionAlias(SDL_CreateRGBSurfaceFromImage_gurax, "SDL_CreateRGBSurfaceFromImage")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4157,7 +4157,7 @@ Gurax_ImplementFunctionEx(SDL_CreateRGBSurfaceFromImage_gurax, processor_gurax, 
 	return Value_SDL_Surface::Create(image.Reference());
 }
 
-// sdl.SDL_FreeSurface(surface:SDL_Surface:nil)
+// sdl.SDL_FreeSurface(surface:nil as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_FreeSurface_gurax, "SDL_FreeSurface")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4177,7 +4177,7 @@ Gurax_ImplementFunctionEx(SDL_FreeSurface_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_SetSurfacePalette(surface:SDL_Surface, palette:SDL_Palette)
+// sdl.SDL_SetSurfacePalette(surface as SDL_Surface, palette as SDL_Palette)
 Gurax_DeclareFunctionAlias(SDL_SetSurfacePalette_gurax, "SDL_SetSurfacePalette")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4201,7 +4201,7 @@ Gurax_ImplementFunctionEx(SDL_SetSurfacePalette_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_LockSurface(surface:SDL_Surface)
+// sdl.SDL_LockSurface(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_LockSurface_gurax, "SDL_LockSurface")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4222,7 +4222,7 @@ Gurax_ImplementFunctionEx(SDL_LockSurface_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_UnlockSurface(surface:SDL_Surface)
+// sdl.SDL_UnlockSurface(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_UnlockSurface_gurax, "SDL_UnlockSurface")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4243,7 +4243,7 @@ Gurax_ImplementFunctionEx(SDL_UnlockSurface_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_LoadBMP(file:String)
+// sdl.SDL_LoadBMP(file as String)
 Gurax_DeclareFunctionAlias(SDL_LoadBMP_gurax, "SDL_LoadBMP")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4264,7 +4264,7 @@ Gurax_ImplementFunctionEx(SDL_LoadBMP_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_LoadBMP_RW(src:SDL_RWops, freesrc:Number)
+// sdl.SDL_LoadBMP_RW(src as SDL_RWops, freesrc as Number)
 Gurax_DeclareFunctionAlias(SDL_LoadBMP_RW_gurax, "SDL_LoadBMP_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4288,7 +4288,7 @@ Gurax_ImplementFunctionEx(SDL_LoadBMP_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_SaveBMP(surface:SDL_Surface, file:String)
+// sdl.SDL_SaveBMP(surface as SDL_Surface, file as String)
 Gurax_DeclareFunctionAlias(SDL_SaveBMP_gurax, "SDL_SaveBMP")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4311,7 +4311,7 @@ Gurax_ImplementFunctionEx(SDL_SaveBMP_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SaveBMP_RW(surface:SDL_Surface, dst:SDL_RWops, freedst:Bool)
+// sdl.SDL_SaveBMP_RW(surface as SDL_Surface, dst as SDL_RWops, freedst as Bool)
 Gurax_DeclareFunctionAlias(SDL_SaveBMP_RW_gurax, "SDL_SaveBMP_RW")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4337,7 +4337,7 @@ Gurax_ImplementFunctionEx(SDL_SaveBMP_RW_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetSurfaceRLE(surface:SDL_Surface, flag:Bool)
+// sdl.SDL_SetSurfaceRLE(surface as SDL_Surface, flag as Bool)
 Gurax_DeclareFunctionAlias(SDL_SetSurfaceRLE_gurax, "SDL_SetSurfaceRLE")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4360,7 +4360,7 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceRLE_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetColorKey(surface:SDL_Surface, flag:Bool, key:Number)
+// sdl.SDL_SetColorKey(surface as SDL_Surface, flag as Bool, key as Number)
 Gurax_DeclareFunctionAlias(SDL_SetColorKey_gurax, "SDL_SetColorKey")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4385,7 +4385,7 @@ Gurax_ImplementFunctionEx(SDL_SetColorKey_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HasColorKey(surface:SDL_Surface)
+// sdl.SDL_HasColorKey(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_HasColorKey_gurax, "SDL_HasColorKey")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -4406,7 +4406,7 @@ Gurax_ImplementFunctionEx(SDL_HasColorKey_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_GetColorKey(surface:SDL_Surface)
+// sdl.SDL_GetColorKey(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_GetColorKey_gurax, "SDL_GetColorKey")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4428,7 +4428,7 @@ Gurax_ImplementFunctionEx(SDL_GetColorKey_gurax, processor_gurax, argument_gurax
 	return new Value_Number(key);
 }
 
-// sdl.SDL_SetSurfaceColorMod(surface:SDL_Surface, r:Number, g:Number, b:Number)
+// sdl.SDL_SetSurfaceColorMod(surface as SDL_Surface, r as Number, g as Number, b as Number)
 Gurax_DeclareFunctionAlias(SDL_SetSurfaceColorMod_gurax, "SDL_SetSurfaceColorMod")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4455,7 +4455,7 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceColorMod_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetSurfaceColorMod(surface:SDL_Surface)
+// sdl.SDL_GetSurfaceColorMod(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_GetSurfaceColorMod_gurax, "SDL_GetSurfaceColorMod")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4477,7 +4477,7 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceColorMod_gurax, processor_gurax, argumen
 	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 }
 
-// sdl.SDL_SetSurfaceAlphaMod(surface:SDL_Surface, alpha:Number)
+// sdl.SDL_SetSurfaceAlphaMod(surface as SDL_Surface, alpha as Number)
 Gurax_DeclareFunctionAlias(SDL_SetSurfaceAlphaMod_gurax, "SDL_SetSurfaceAlphaMod")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4500,7 +4500,7 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceAlphaMod_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetSurfaceAlphaMod(surface:SDL_Surface)
+// sdl.SDL_GetSurfaceAlphaMod(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_GetSurfaceAlphaMod_gurax, "SDL_GetSurfaceAlphaMod")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4522,7 +4522,7 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceAlphaMod_gurax, processor_gurax, argumen
 	return new Value_Number(alpha);
 }
 
-// sdl.SDL_SetSurfaceBlendMode(surface:SDL_Surface, blendMode:Number)
+// sdl.SDL_SetSurfaceBlendMode(surface as SDL_Surface, blendMode as Number)
 Gurax_DeclareFunctionAlias(SDL_SetSurfaceBlendMode_gurax, "SDL_SetSurfaceBlendMode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4545,7 +4545,7 @@ Gurax_ImplementFunctionEx(SDL_SetSurfaceBlendMode_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetSurfaceBlendMode(surface:SDL_Surface)
+// sdl.SDL_GetSurfaceBlendMode(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_GetSurfaceBlendMode_gurax, "SDL_GetSurfaceBlendMode")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4567,7 +4567,7 @@ Gurax_ImplementFunctionEx(SDL_GetSurfaceBlendMode_gurax, processor_gurax, argume
 	return new Value_Number(blendMode);
 }
 
-// sdl.SDL_SetClipRect(surface:SDL_Surface, rect:SDL_Rect:nil)
+// sdl.SDL_SetClipRect(surface as SDL_Surface, rect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_SetClipRect_gurax, "SDL_SetClipRect")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -4590,7 +4590,7 @@ Gurax_ImplementFunctionEx(SDL_SetClipRect_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_GetClipRect(surface:SDL_Surface)
+// sdl.SDL_GetClipRect(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_GetClipRect_gurax, "SDL_GetClipRect")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4612,7 +4612,7 @@ Gurax_ImplementFunctionEx(SDL_GetClipRect_gurax, processor_gurax, argument_gurax
 	return new Value_SDL_Rect(rect);
 }
 
-// sdl.SDL_DuplicateSurface(surface:SDL_Surface)
+// sdl.SDL_DuplicateSurface(surface as SDL_Surface)
 Gurax_DeclareFunctionAlias(SDL_DuplicateSurface_gurax, "SDL_DuplicateSurface")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4634,7 +4634,7 @@ Gurax_ImplementFunctionEx(SDL_DuplicateSurface_gurax, processor_gurax, argument_
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_ConvertSurface(src:SDL_Surface, fmt:SDL_PixelFormat, flags:Number)
+// sdl.SDL_ConvertSurface(src as SDL_Surface, fmt as SDL_PixelFormat, flags as Number)
 Gurax_DeclareFunctionAlias(SDL_ConvertSurface_gurax, "SDL_ConvertSurface")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4661,7 +4661,7 @@ Gurax_ImplementFunctionEx(SDL_ConvertSurface_gurax, processor_gurax, argument_gu
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_ConvertSurfaceFormat(src:SDL_Surface, pixel_format:Number, flags:Number)
+// sdl.SDL_ConvertSurfaceFormat(src as SDL_Surface, pixel_format as Number, flags as Number)
 Gurax_DeclareFunctionAlias(SDL_ConvertSurfaceFormat_gurax, "SDL_ConvertSurfaceFormat")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -4687,7 +4687,7 @@ Gurax_ImplementFunctionEx(SDL_ConvertSurfaceFormat_gurax, processor_gurax, argum
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.SDL_ConvertPixels(width:Number, height:Number, src_format:Number, src:Pointer, src_pitch:Number, dst_format:Number, dst:Pointer, dst_pitch:Number)
+// sdl.SDL_ConvertPixels(width as Number, height as Number, src_format as Number, src as Pointer, src_pitch as Number, dst_format as Number, dst as Pointer, dst_pitch as Number)
 Gurax_DeclareFunctionAlias(SDL_ConvertPixels_gurax, "SDL_ConvertPixels")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4725,7 +4725,7 @@ Gurax_ImplementFunctionEx(SDL_ConvertPixels_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_FillRect(dst:SDL_Surface, rect:SDL_Rect:nil, color:Number)
+// sdl.SDL_FillRect(dst as SDL_Surface, rect:nil as SDL_Rect, color as Number)
 Gurax_DeclareFunctionAlias(SDL_FillRect_gurax, "SDL_FillRect")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4750,7 +4750,7 @@ Gurax_ImplementFunctionEx(SDL_FillRect_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_FillRects(dst:SDL_Surface, rects:SDL_Rect:nil, count:Number, color:Number)
+// sdl.SDL_FillRects(dst as SDL_Surface, rects:nil as SDL_Rect, count as Number, color as Number)
 Gurax_DeclareFunctionAlias(SDL_FillRects_gurax, "SDL_FillRects")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4777,7 +4777,7 @@ Gurax_ImplementFunctionEx(SDL_FillRects_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_BlitSurface(src:SDL_Surface, srcrect:SDL_Rect:nil, dst:SDL_Surface, dstrect:SDL_Rect:nil)
+// sdl.SDL_BlitSurface(src as SDL_Surface, srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_BlitSurface_gurax, "SDL_BlitSurface")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4805,7 +4805,7 @@ Gurax_ImplementFunctionEx(SDL_BlitSurface_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_UpperBlit(src:SDL_Surface, srcrect:SDL_Rect:nil, dst:SDL_Surface, dstrect:SDL_Rect:nil)
+// sdl.SDL_UpperBlit(src as SDL_Surface, srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_UpperBlit_gurax, "SDL_UpperBlit")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4833,7 +4833,7 @@ Gurax_ImplementFunctionEx(SDL_UpperBlit_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_LowerBlit(src:SDL_Surface, srcrect:SDL_Rect:nil, dst:SDL_Surface, dstrect:SDL_Rect:nil)
+// sdl.SDL_LowerBlit(src as SDL_Surface, srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_LowerBlit_gurax, "SDL_LowerBlit")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4861,7 +4861,7 @@ Gurax_ImplementFunctionEx(SDL_LowerBlit_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SoftStretch(src:SDL_Surface, srcrect:SDL_Rect:nil, dst:SDL_Surface, dstrect:SDL_Rect:nil)
+// sdl.SDL_SoftStretch(src as SDL_Surface, srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_SoftStretch_gurax, "SDL_SoftStretch")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4889,7 +4889,7 @@ Gurax_ImplementFunctionEx(SDL_SoftStretch_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_BlitScaled(src:SDL_Surface, srcrect:SDL_Rect:nil, dst:SDL_Surface, dstrect:SDL_Rect:nil)
+// sdl.SDL_BlitScaled(src as SDL_Surface, srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_BlitScaled_gurax, "SDL_BlitScaled")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4917,7 +4917,7 @@ Gurax_ImplementFunctionEx(SDL_BlitScaled_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_UpperBlitScaled(src:SDL_Surface, srcrect:SDL_Rect:nil, dst:SDL_Surface, dstrect:SDL_Rect:nil)
+// sdl.SDL_UpperBlitScaled(src as SDL_Surface, srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_UpperBlitScaled_gurax, "SDL_UpperBlitScaled")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4945,7 +4945,7 @@ Gurax_ImplementFunctionEx(SDL_UpperBlitScaled_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_LowerBlitScaled(src:SDL_Surface, srcrect:SDL_Rect:nil, dst:SDL_Surface, dstrect:SDL_Rect:nil)
+// sdl.SDL_LowerBlitScaled(src as SDL_Surface, srcrect:nil as SDL_Rect, dst as SDL_Surface, dstrect:nil as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_LowerBlitScaled_gurax, "SDL_LowerBlitScaled")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4973,7 +4973,7 @@ Gurax_ImplementFunctionEx(SDL_LowerBlitScaled_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetYUVConversionMode(mode:Number)
+// sdl.SDL_SetYUVConversionMode(mode as Number)
 Gurax_DeclareFunctionAlias(SDL_SetYUVConversionMode_gurax, "SDL_SetYUVConversionMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5009,7 +5009,7 @@ Gurax_ImplementFunctionEx(SDL_GetYUVConversionMode_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetYUVConversionModeForResolution(width:Number, height:Number)
+// sdl.SDL_GetYUVConversionModeForResolution(width as Number, height as Number)
 Gurax_DeclareFunctionAlias(SDL_GetYUVConversionModeForResolution_gurax, "SDL_GetYUVConversionModeForResolution")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5031,7 +5031,7 @@ Gurax_ImplementFunctionEx(SDL_GetYUVConversionModeForResolution_gurax, processor
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetWindowWMInfo(window:SDL_Window)
+// sdl.SDL_GetWindowWMInfo(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_GetWindowWMInfo_gurax, "SDL_GetWindowWMInfo")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -5053,7 +5053,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowWMInfo_gurax, processor_gurax, argument_g
 	return new Value_SDL_SysWMinfo(info);
 }
 
-// sdl.SDL_SetClipboardText(text:String)
+// sdl.SDL_SetClipboardText(text as String)
 Gurax_DeclareFunctionAlias(SDL_SetClipboardText_gurax, "SDL_SetClipboardText")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5123,7 +5123,7 @@ Gurax_ImplementFunctionEx(SDL_PumpEvents_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_PeepEvents(events:SDL_Event, numevents:Number, action:Number, minType:Number, maxType:Number)
+// sdl.SDL_PeepEvents(events as SDL_Event, numevents as Number, action as Number, minType as Number, maxType as Number)
 Gurax_DeclareFunctionAlias(SDL_PeepEvents_gurax, "SDL_PeepEvents")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5152,7 +5152,7 @@ Gurax_ImplementFunctionEx(SDL_PeepEvents_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HasEvent(type:Number)
+// sdl.SDL_HasEvent(type as Number)
 Gurax_DeclareFunctionAlias(SDL_HasEvent_gurax, "SDL_HasEvent")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -5172,7 +5172,7 @@ Gurax_ImplementFunctionEx(SDL_HasEvent_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_HasEvents(minType:Number, maxType:Number)
+// sdl.SDL_HasEvents(minType as Number, maxType as Number)
 Gurax_DeclareFunctionAlias(SDL_HasEvents_gurax, "SDL_HasEvents")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -5194,7 +5194,7 @@ Gurax_ImplementFunctionEx(SDL_HasEvents_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_FlushEvent(type:Number)
+// sdl.SDL_FlushEvent(type as Number)
 Gurax_DeclareFunctionAlias(SDL_FlushEvent_gurax, "SDL_FlushEvent")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5214,7 +5214,7 @@ Gurax_ImplementFunctionEx(SDL_FlushEvent_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_FlushEvents(minType:Number, maxType:Number)
+// sdl.SDL_FlushEvents(minType as Number, maxType as Number)
 Gurax_DeclareFunctionAlias(SDL_FlushEvents_gurax, "SDL_FlushEvents")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5236,7 +5236,7 @@ Gurax_ImplementFunctionEx(SDL_FlushEvents_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_PollEvent(event:SDL_Event)
+// sdl.SDL_PollEvent(event as SDL_Event)
 Gurax_DeclareFunctionAlias(SDL_PollEvent_gurax, "SDL_PollEvent")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5257,7 +5257,7 @@ Gurax_ImplementFunctionEx(SDL_PollEvent_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_WaitEvent(event:SDL_Event)
+// sdl.SDL_WaitEvent(event as SDL_Event)
 Gurax_DeclareFunctionAlias(SDL_WaitEvent_gurax, "SDL_WaitEvent")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -5278,7 +5278,7 @@ Gurax_ImplementFunctionEx(SDL_WaitEvent_gurax, processor_gurax, argument_gurax)
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_WaitEventTimeout(event:SDL_Event, timeout:Number)
+// sdl.SDL_WaitEventTimeout(event as SDL_Event, timeout as Number)
 Gurax_DeclareFunctionAlias(SDL_WaitEventTimeout_gurax, "SDL_WaitEventTimeout")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -5301,7 +5301,7 @@ Gurax_ImplementFunctionEx(SDL_WaitEventTimeout_gurax, processor_gurax, argument_
 	return new Value_Number(rtn);
 }
 
-// sdl.SDL_PushEvent(event:SDL_Event)
+// sdl.SDL_PushEvent(event as SDL_Event)
 Gurax_DeclareFunctionAlias(SDL_PushEvent_gurax, "SDL_PushEvent")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5322,7 +5322,7 @@ Gurax_ImplementFunctionEx(SDL_PushEvent_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_EventState(type:Number, state:Number)
+// sdl.SDL_EventState(type as Number, state as Number)
 Gurax_DeclareFunctionAlias(SDL_EventState_gurax, "SDL_EventState")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5344,7 +5344,7 @@ Gurax_ImplementFunctionEx(SDL_EventState_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RegisterEvents(numevents:Number)
+// sdl.SDL_RegisterEvents(numevents as Number)
 Gurax_DeclareFunctionAlias(SDL_RegisterEvents_gurax, "SDL_RegisterEvents")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5416,7 +5416,7 @@ Gurax_ImplementFunctionEx(SDL_GetModState_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetModState(modstate:Number)
+// sdl.SDL_SetModState(modstate as Number)
 Gurax_DeclareFunctionAlias(SDL_SetModState_gurax, "SDL_SetModState")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5436,7 +5436,7 @@ Gurax_ImplementFunctionEx(SDL_SetModState_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GetKeyFromScancode(scancode:Number)
+// sdl.SDL_GetKeyFromScancode(scancode as Number)
 Gurax_DeclareFunctionAlias(SDL_GetKeyFromScancode_gurax, "SDL_GetKeyFromScancode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5456,7 +5456,7 @@ Gurax_ImplementFunctionEx(SDL_GetKeyFromScancode_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetScancodeFromKey(key:Number)
+// sdl.SDL_GetScancodeFromKey(key as Number)
 Gurax_DeclareFunctionAlias(SDL_GetScancodeFromKey_gurax, "SDL_GetScancodeFromKey")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5476,7 +5476,7 @@ Gurax_ImplementFunctionEx(SDL_GetScancodeFromKey_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetScancodeName(scancode:Number)
+// sdl.SDL_GetScancodeName(scancode as Number)
 Gurax_DeclareFunctionAlias(SDL_GetScancodeName_gurax, "SDL_GetScancodeName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -5496,7 +5496,7 @@ Gurax_ImplementFunctionEx(SDL_GetScancodeName_gurax, processor_gurax, argument_g
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GetScancodeFromName(name:String)
+// sdl.SDL_GetScancodeFromName(name as String)
 Gurax_DeclareFunctionAlias(SDL_GetScancodeFromName_gurax, "SDL_GetScancodeFromName")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5516,7 +5516,7 @@ Gurax_ImplementFunctionEx(SDL_GetScancodeFromName_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetKeyName(key:Number)
+// sdl.SDL_GetKeyName(key as Number)
 Gurax_DeclareFunctionAlias(SDL_GetKeyName_gurax, "SDL_GetKeyName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -5536,7 +5536,7 @@ Gurax_ImplementFunctionEx(SDL_GetKeyName_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GetKeyFromName(name:String)
+// sdl.SDL_GetKeyFromName(name as String)
 Gurax_DeclareFunctionAlias(SDL_GetKeyFromName_gurax, "SDL_GetKeyFromName")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5604,7 +5604,7 @@ Gurax_ImplementFunctionEx(SDL_StopTextInput_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_SetTextInputRect(rect?:SDL_Rect)
+// sdl.SDL_SetTextInputRect(rect? as SDL_Rect)
 Gurax_DeclareFunctionAlias(SDL_SetTextInputRect_gurax, "SDL_SetTextInputRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5640,7 +5640,7 @@ Gurax_ImplementFunctionEx(SDL_HasScreenKeyboardSupport_gurax, processor_gurax, a
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_IsScreenKeyboardShown(window:SDL_Window)
+// sdl.SDL_IsScreenKeyboardShown(window as SDL_Window)
 Gurax_DeclareFunctionAlias(SDL_IsScreenKeyboardShown_gurax, "SDL_IsScreenKeyboardShown")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -5729,7 +5729,7 @@ Gurax_ImplementFunctionEx(SDL_GetRelativeMouseState_gurax, processor_gurax, argu
 	return Value_Tuple::Create(new Value_Number(state), new Value_Number(x), new Value_Number(y));
 }
 
-// sdl.SDL_WarpMouseInWindow(window:SDL_Window, x:Number, y:Number)
+// sdl.SDL_WarpMouseInWindow(window as SDL_Window, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(SDL_WarpMouseInWindow_gurax, "SDL_WarpMouseInWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5754,7 +5754,7 @@ Gurax_ImplementFunctionEx(SDL_WarpMouseInWindow_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_WarpMouseGlobal(x:Number, y:Number)
+// sdl.SDL_WarpMouseGlobal(x as Number, y as Number)
 Gurax_DeclareFunctionAlias(SDL_WarpMouseGlobal_gurax, "SDL_WarpMouseGlobal")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5776,7 +5776,7 @@ Gurax_ImplementFunctionEx(SDL_WarpMouseGlobal_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SetRelativeMouseMode(enabled:Bool)
+// sdl.SDL_SetRelativeMouseMode(enabled as Bool)
 Gurax_DeclareFunctionAlias(SDL_SetRelativeMouseMode_gurax, "SDL_SetRelativeMouseMode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5796,7 +5796,7 @@ Gurax_ImplementFunctionEx(SDL_SetRelativeMouseMode_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_CaptureMouse(enabled:Bool)
+// sdl.SDL_CaptureMouse(enabled as Bool)
 Gurax_DeclareFunctionAlias(SDL_CaptureMouse_gurax, "SDL_CaptureMouse")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5832,7 +5832,7 @@ Gurax_ImplementFunctionEx(SDL_GetRelativeMouseMode_gurax, processor_gurax, argum
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_CreateCursor(data:Pointer, mask:Pointer, w:Number, h:Number, hot_x:Number, hot_y:Number)
+// sdl.SDL_CreateCursor(data as Pointer, mask as Pointer, w as Number, h as Number, hot_x as Number, hot_y as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateCursor_gurax, "SDL_CreateCursor")
 {
 	Declare(VTYPE_SDL_Cursor, Flag::None);
@@ -5863,7 +5863,7 @@ Gurax_ImplementFunctionEx(SDL_CreateCursor_gurax, processor_gurax, argument_gura
 	return new Value_SDL_Cursor(rtn);
 }
 
-// sdl.SDL_CreateColorCursor(surface:SDL_Surface, hot_x:Number, hot_y:Number)
+// sdl.SDL_CreateColorCursor(surface as SDL_Surface, hot_x as Number, hot_y as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateColorCursor_gurax, "SDL_CreateColorCursor")
 {
 	Declare(VTYPE_SDL_Cursor, Flag::None);
@@ -5889,7 +5889,7 @@ Gurax_ImplementFunctionEx(SDL_CreateColorCursor_gurax, processor_gurax, argument
 	return new Value_SDL_Cursor(rtn);
 }
 
-// sdl.SDL_CreateSystemCursor(id:Number)
+// sdl.SDL_CreateSystemCursor(id as Number)
 Gurax_DeclareFunctionAlias(SDL_CreateSystemCursor_gurax, "SDL_CreateSystemCursor")
 {
 	Declare(VTYPE_SDL_Cursor, Flag::None);
@@ -5910,7 +5910,7 @@ Gurax_ImplementFunctionEx(SDL_CreateSystemCursor_gurax, processor_gurax, argumen
 	return new Value_SDL_Cursor(rtn);
 }
 
-// sdl.SDL_SetCursor(cursor:SDL_Cursor)
+// sdl.SDL_SetCursor(cursor as SDL_Cursor)
 Gurax_DeclareFunctionAlias(SDL_SetCursor_gurax, "SDL_SetCursor")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5965,7 +5965,7 @@ Gurax_ImplementFunctionEx(SDL_GetDefaultCursor_gurax, processor_gurax, argument_
 	return new Value_SDL_Cursor(rtn);
 }
 
-// sdl.SDL_FreeCursor(cursor:SDL_Cursor:nil)
+// sdl.SDL_FreeCursor(cursor:nil as SDL_Cursor)
 Gurax_DeclareFunctionAlias(SDL_FreeCursor_gurax, "SDL_FreeCursor")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5985,7 +5985,7 @@ Gurax_ImplementFunctionEx(SDL_FreeCursor_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_ShowCursor(toggle:Number)
+// sdl.SDL_ShowCursor(toggle as Number)
 Gurax_DeclareFunctionAlias(SDL_ShowCursor_gurax, "SDL_ShowCursor")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6053,7 +6053,7 @@ Gurax_ImplementFunctionEx(SDL_NumJoysticks_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickNameForIndex(device_index:Number)
+// sdl.SDL_JoystickNameForIndex(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickNameForIndex_gurax, "SDL_JoystickNameForIndex")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -6073,7 +6073,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickNameForIndex_gurax, processor_gurax, argum
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_JoystickGetDevicePlayerIndex(device_index:Number)
+// sdl.SDL_JoystickGetDevicePlayerIndex(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetDevicePlayerIndex_gurax, "SDL_JoystickGetDevicePlayerIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6093,7 +6093,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetDevicePlayerIndex_gurax, processor_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetDeviceGUID(device_index:Number)
+// sdl.SDL_JoystickGetDeviceGUID(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceGUID_gurax, "SDL_JoystickGetDeviceGUID")
 {
 	Declare(VTYPE_SDL_JoystickGUID, Flag::None);
@@ -6113,7 +6113,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceGUID_gurax, processor_gurax, argu
 	return new Value_SDL_JoystickGUID(rtn);
 }
 
-// sdl.SDL_JoystickGetDeviceVendor(device_index:Number)
+// sdl.SDL_JoystickGetDeviceVendor(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceVendor_gurax, "SDL_JoystickGetDeviceVendor")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6133,7 +6133,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceVendor_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetDeviceProduct(device_index:Number)
+// sdl.SDL_JoystickGetDeviceProduct(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceProduct_gurax, "SDL_JoystickGetDeviceProduct")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6153,7 +6153,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceProduct_gurax, processor_gurax, a
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetDeviceProductVersion(device_index:Number)
+// sdl.SDL_JoystickGetDeviceProductVersion(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceProductVersion_gurax, "SDL_JoystickGetDeviceProductVersion")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6173,7 +6173,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceProductVersion_gurax, processor_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetDeviceType(device_index:Number)
+// sdl.SDL_JoystickGetDeviceType(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceType_gurax, "SDL_JoystickGetDeviceType")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6193,7 +6193,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceType_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetDeviceInstanceID(device_index:Number)
+// sdl.SDL_JoystickGetDeviceInstanceID(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceInstanceID_gurax, "SDL_JoystickGetDeviceInstanceID")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6213,7 +6213,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetDeviceInstanceID_gurax, processor_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickOpen(device_index:Number)
+// sdl.SDL_JoystickOpen(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickOpen_gurax, "SDL_JoystickOpen")
 {
 	Declare(VTYPE_SDL_Joystick, Flag::None);
@@ -6234,7 +6234,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickOpen_gurax, processor_gurax, argument_gura
 	return new Value_SDL_Joystick(rtn);
 }
 
-// sdl.SDL_JoystickFromInstanceID(instance_id:Number)
+// sdl.SDL_JoystickFromInstanceID(instance_id as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickFromInstanceID_gurax, "SDL_JoystickFromInstanceID")
 {
 	Declare(VTYPE_SDL_Joystick, Flag::None);
@@ -6255,7 +6255,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickFromInstanceID_gurax, processor_gurax, arg
 	return new Value_SDL_Joystick(rtn);
 }
 
-// sdl.SDL_JoystickFromPlayerIndex(player_index:Number)
+// sdl.SDL_JoystickFromPlayerIndex(player_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickFromPlayerIndex_gurax, "SDL_JoystickFromPlayerIndex")
 {
 	Declare(VTYPE_SDL_Joystick, Flag::None);
@@ -6276,7 +6276,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickFromPlayerIndex_gurax, processor_gurax, ar
 	return new Value_SDL_Joystick(rtn);
 }
 
-// sdl.SDL_JoystickName(joystick:SDL_Joystick)
+// sdl.SDL_JoystickName(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickName_gurax, "SDL_JoystickName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -6297,7 +6297,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickName_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_JoystickGetPlayerIndex(joystick:SDL_Joystick)
+// sdl.SDL_JoystickGetPlayerIndex(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetPlayerIndex_gurax, "SDL_JoystickGetPlayerIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6318,7 +6318,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetPlayerIndex_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickSetPlayerIndex(joystick:SDL_Joystick, player_index:Number)
+// sdl.SDL_JoystickSetPlayerIndex(joystick as SDL_Joystick, player_index as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickSetPlayerIndex_gurax, "SDL_JoystickSetPlayerIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6341,7 +6341,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickSetPlayerIndex_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_JoystickGetGUID(joystick:SDL_Joystick)
+// sdl.SDL_JoystickGetGUID(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetGUID_gurax, "SDL_JoystickGetGUID")
 {
 	Declare(VTYPE_SDL_JoystickGUID, Flag::None);
@@ -6362,7 +6362,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetGUID_gurax, processor_gurax, argument_g
 	return new Value_SDL_JoystickGUID(rtn);
 }
 
-// sdl.SDL_JoystickGetVendor(joystick:SDL_Joystick)
+// sdl.SDL_JoystickGetVendor(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetVendor_gurax, "SDL_JoystickGetVendor")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6383,7 +6383,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetVendor_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetProduct(joystick:SDL_Joystick)
+// sdl.SDL_JoystickGetProduct(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetProduct_gurax, "SDL_JoystickGetProduct")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6404,7 +6404,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetProduct_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetProductVersion(joystick:SDL_Joystick)
+// sdl.SDL_JoystickGetProductVersion(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetProductVersion_gurax, "SDL_JoystickGetProductVersion")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6425,7 +6425,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetProductVersion_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetType(joystick:SDL_Joystick)
+// sdl.SDL_JoystickGetType(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetType_gurax, "SDL_JoystickGetType")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6446,7 +6446,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetType_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetGUIDString(guid:SDL_JoystickGUID)
+// sdl.SDL_JoystickGetGUIDString(guid as SDL_JoystickGUID)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetGUIDString_gurax, "SDL_JoystickGetGUIDString")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -6468,7 +6468,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetGUIDString_gurax, processor_gurax, argu
 	return new Value_String(szGUID);
 }
 
-// sdl.SDL_JoystickGetGUIDFromString(pchGUID:String)
+// sdl.SDL_JoystickGetGUIDFromString(pchGUID as String)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetGUIDFromString_gurax, "SDL_JoystickGetGUIDFromString")
 {
 	Declare(VTYPE_SDL_JoystickGUID, Flag::None);
@@ -6488,7 +6488,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetGUIDFromString_gurax, processor_gurax, 
 	return new Value_SDL_JoystickGUID(rtn);
 }
 
-// sdl.SDL_JoystickGetAttached(joystick:SDL_Joystick)
+// sdl.SDL_JoystickGetAttached(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetAttached_gurax, "SDL_JoystickGetAttached")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -6509,7 +6509,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetAttached_gurax, processor_gurax, argume
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_JoystickInstanceID(joystick:SDL_Joystick)
+// sdl.SDL_JoystickInstanceID(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickInstanceID_gurax, "SDL_JoystickInstanceID")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6530,7 +6530,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickInstanceID_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickNumAxes(joystick:SDL_Joystick)
+// sdl.SDL_JoystickNumAxes(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickNumAxes_gurax, "SDL_JoystickNumAxes")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6551,7 +6551,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickNumAxes_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickNumBalls(joystick:SDL_Joystick)
+// sdl.SDL_JoystickNumBalls(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickNumBalls_gurax, "SDL_JoystickNumBalls")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6572,7 +6572,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickNumBalls_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickNumHats(joystick:SDL_Joystick)
+// sdl.SDL_JoystickNumHats(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickNumHats_gurax, "SDL_JoystickNumHats")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6593,7 +6593,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickNumHats_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickNumButtons(joystick:SDL_Joystick)
+// sdl.SDL_JoystickNumButtons(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickNumButtons_gurax, "SDL_JoystickNumButtons")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6630,7 +6630,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickUpdate_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_JoystickEventState(state:Number)
+// sdl.SDL_JoystickEventState(state as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickEventState_gurax, "SDL_JoystickEventState")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6650,7 +6650,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickEventState_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetAxis(joystick:SDL_Joystick, axis:Number)
+// sdl.SDL_JoystickGetAxis(joystick as SDL_Joystick, axis as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetAxis_gurax, "SDL_JoystickGetAxis")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6673,7 +6673,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetAxis_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetHat(joystick:SDL_Joystick, hat:Number)
+// sdl.SDL_JoystickGetHat(joystick as SDL_Joystick, hat as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetHat_gurax, "SDL_JoystickGetHat")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6696,7 +6696,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetHat_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickGetBall(joystick:SDL_Joystick, ball:Number)
+// sdl.SDL_JoystickGetBall(joystick as SDL_Joystick, ball as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetBall_gurax, "SDL_JoystickGetBall")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -6720,7 +6720,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetBall_gurax, processor_gurax, argument_g
 	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
 }
 
-// sdl.SDL_JoystickGetButton(joystick:SDL_Joystick, button:Number)
+// sdl.SDL_JoystickGetButton(joystick as SDL_Joystick, button as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickGetButton_gurax, "SDL_JoystickGetButton")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6743,7 +6743,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickGetButton_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickRumble(joystick:SDL_Joystick, low_frequency_rumble:Number, high_frequency_rumble:Number, duration_ms:Number)
+// sdl.SDL_JoystickRumble(joystick as SDL_Joystick, low_frequency_rumble as Number, high_frequency_rumble as Number, duration_ms as Number)
 Gurax_DeclareFunctionAlias(SDL_JoystickRumble_gurax, "SDL_JoystickRumble")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6770,7 +6770,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickRumble_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_JoystickClose(joystick:SDL_Joystick)
+// sdl.SDL_JoystickClose(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickClose_gurax, "SDL_JoystickClose")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6791,7 +6791,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickClose_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_JoystickCurrentPowerLevel(joystick:SDL_Joystick)
+// sdl.SDL_JoystickCurrentPowerLevel(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickCurrentPowerLevel_gurax, "SDL_JoystickCurrentPowerLevel")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6812,7 +6812,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickCurrentPowerLevel_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerAddMappingsFromRW(rw:SDL_RWops, freerw:Number)
+// sdl.SDL_GameControllerAddMappingsFromRW(rw as SDL_RWops, freerw as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerAddMappingsFromRW_gurax, "SDL_GameControllerAddMappingsFromRW")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6835,7 +6835,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerAddMappingsFromRW_gurax, processor_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerAddMapping(mappingString:String)
+// sdl.SDL_GameControllerAddMapping(mappingString as String)
 Gurax_DeclareFunctionAlias(SDL_GameControllerAddMapping_gurax, "SDL_GameControllerAddMapping")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6871,7 +6871,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerNumMappings_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerMappingForIndex(mapping_index:Number)
+// sdl.SDL_GameControllerMappingForIndex(mapping_index as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerMappingForIndex_gurax, "SDL_GameControllerMappingForIndex")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -6894,7 +6894,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMappingForIndex_gurax, processor_gur
 	return pValue.release();
 }
 
-// sdl.SDL_GameControllerMappingForGUID(guid:SDL_JoystickGUID)
+// sdl.SDL_GameControllerMappingForGUID(guid as SDL_JoystickGUID)
 Gurax_DeclareFunctionAlias(SDL_GameControllerMappingForGUID_gurax, "SDL_GameControllerMappingForGUID")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -6918,7 +6918,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMappingForGUID_gurax, processor_gura
 	return pValue.release();
 }
 
-// sdl.SDL_GameControllerMapping(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerMapping(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerMapping_gurax, "SDL_GameControllerMapping")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -6942,7 +6942,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMapping_gurax, processor_gurax, argu
 	return pValue.release();
 }
 
-// sdl.SDL_IsGameController(joystick_index:Number)
+// sdl.SDL_IsGameController(joystick_index as Number)
 Gurax_DeclareFunctionAlias(SDL_IsGameController_gurax, "SDL_IsGameController")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -6962,7 +6962,7 @@ Gurax_ImplementFunctionEx(SDL_IsGameController_gurax, processor_gurax, argument_
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_GameControllerNameForIndex(joystick_index:Number)
+// sdl.SDL_GameControllerNameForIndex(joystick_index as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerNameForIndex_gurax, "SDL_GameControllerNameForIndex")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -6982,7 +6982,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerNameForIndex_gurax, processor_gurax,
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GameControllerTypeForIndex(joystick_index:Number)
+// sdl.SDL_GameControllerTypeForIndex(joystick_index as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerTypeForIndex_gurax, "SDL_GameControllerTypeForIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7002,7 +7002,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerTypeForIndex_gurax, processor_gurax,
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerMappingForDeviceIndex(joystick_index:Number)
+// sdl.SDL_GameControllerMappingForDeviceIndex(joystick_index as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerMappingForDeviceIndex_gurax, "SDL_GameControllerMappingForDeviceIndex")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -7025,7 +7025,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerMappingForDeviceIndex_gurax, process
 	return pValue.release();
 }
 
-// sdl.SDL_GameControllerOpen(joystick_index:Number)
+// sdl.SDL_GameControllerOpen(joystick_index as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerOpen_gurax, "SDL_GameControllerOpen")
 {
 	Declare(VTYPE_SDL_GameController, Flag::None);
@@ -7046,7 +7046,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerOpen_gurax, processor_gurax, argumen
 	return new Value_SDL_GameController(rtn);
 }
 
-// sdl.SDL_GameControllerFromInstanceID(joyid:Number)
+// sdl.SDL_GameControllerFromInstanceID(joyid as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerFromInstanceID_gurax, "SDL_GameControllerFromInstanceID")
 {
 	Declare(VTYPE_SDL_GameController, Flag::None);
@@ -7067,7 +7067,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerFromInstanceID_gurax, processor_gura
 	return new Value_SDL_GameController(rtn);
 }
 
-// sdl.SDL_GameControllerFromPlayerIndex(player_index:Number)
+// sdl.SDL_GameControllerFromPlayerIndex(player_index as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerFromPlayerIndex_gurax, "SDL_GameControllerFromPlayerIndex")
 {
 	Declare(VTYPE_SDL_GameController, Flag::None);
@@ -7088,7 +7088,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerFromPlayerIndex_gurax, processor_gur
 	return new Value_SDL_GameController(rtn);
 }
 
-// sdl.SDL_GameControllerName(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerName(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerName_gurax, "SDL_GameControllerName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -7109,7 +7109,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerName_gurax, processor_gurax, argumen
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GameControllerGetType(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerGetType(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetType_gurax, "SDL_GameControllerGetType")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7130,7 +7130,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetType_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetPlayerIndex(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerGetPlayerIndex(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetPlayerIndex_gurax, "SDL_GameControllerGetPlayerIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7151,7 +7151,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetPlayerIndex_gurax, processor_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerSetPlayerIndex(gamecontroller:SDL_GameController, player_index:Number)
+// sdl.SDL_GameControllerSetPlayerIndex(gamecontroller as SDL_GameController, player_index as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerSetPlayerIndex_gurax, "SDL_GameControllerSetPlayerIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7174,7 +7174,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerSetPlayerIndex_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GameControllerGetVendor(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerGetVendor(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetVendor_gurax, "SDL_GameControllerGetVendor")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7195,7 +7195,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetVendor_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetProduct(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerGetProduct(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetProduct_gurax, "SDL_GameControllerGetProduct")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7216,7 +7216,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetProduct_gurax, processor_gurax, a
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetProductVersion(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerGetProductVersion(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetProductVersion_gurax, "SDL_GameControllerGetProductVersion")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7237,7 +7237,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetProductVersion_gurax, processor_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetAttached(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerGetAttached(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetAttached_gurax, "SDL_GameControllerGetAttached")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -7258,7 +7258,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetAttached_gurax, processor_gurax, 
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_GameControllerGetJoystick(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerGetJoystick(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetJoystick_gurax, "SDL_GameControllerGetJoystick")
 {
 	Declare(VTYPE_SDL_Joystick, Flag::None);
@@ -7280,7 +7280,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetJoystick_gurax, processor_gurax, 
 	return new Value_SDL_Joystick(rtn);
 }
 
-// sdl.SDL_GameControllerEventState(state:Number)
+// sdl.SDL_GameControllerEventState(state as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerEventState_gurax, "SDL_GameControllerEventState")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7316,7 +7316,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerUpdate_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_GameControllerGetAxisFromString(pchString:String)
+// sdl.SDL_GameControllerGetAxisFromString(pchString as String)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetAxisFromString_gurax, "SDL_GameControllerGetAxisFromString")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7336,7 +7336,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetAxisFromString_gurax, processor_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetStringForAxis(axis:Number)
+// sdl.SDL_GameControllerGetStringForAxis(axis as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetStringForAxis_gurax, "SDL_GameControllerGetStringForAxis")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -7356,7 +7356,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetStringForAxis_gurax, processor_gu
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GameControllerGetAxis(gamecontroller:SDL_GameController, axis:Number)
+// sdl.SDL_GameControllerGetAxis(gamecontroller as SDL_GameController, axis as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetAxis_gurax, "SDL_GameControllerGetAxis")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7379,7 +7379,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetAxis_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetButtonFromString(pchString:String)
+// sdl.SDL_GameControllerGetButtonFromString(pchString as String)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetButtonFromString_gurax, "SDL_GameControllerGetButtonFromString")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7399,7 +7399,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetButtonFromString_gurax, processor
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerGetStringForButton(button:Number)
+// sdl.SDL_GameControllerGetStringForButton(button as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetStringForButton_gurax, "SDL_GameControllerGetStringForButton")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -7419,7 +7419,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetStringForButton_gurax, processor_
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_GameControllerGetButton(gamecontroller:SDL_GameController, button:Number)
+// sdl.SDL_GameControllerGetButton(gamecontroller as SDL_GameController, button as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerGetButton_gurax, "SDL_GameControllerGetButton")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7442,7 +7442,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerGetButton_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerRumble(gamecontroller:SDL_GameController, low_frequency_rumble:Number, high_frequency_rumble:Number, duration_ms:Number)
+// sdl.SDL_GameControllerRumble(gamecontroller as SDL_GameController, low_frequency_rumble as Number, high_frequency_rumble as Number, duration_ms as Number)
 Gurax_DeclareFunctionAlias(SDL_GameControllerRumble_gurax, "SDL_GameControllerRumble")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7469,7 +7469,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerRumble_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GameControllerClose(gamecontroller:SDL_GameController)
+// sdl.SDL_GameControllerClose(gamecontroller as SDL_GameController)
 Gurax_DeclareFunctionAlias(SDL_GameControllerClose_gurax, "SDL_GameControllerClose")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7506,7 +7506,7 @@ Gurax_ImplementFunctionEx(SDL_NumSensors_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SensorGetDeviceName(device_index:Number)
+// sdl.SDL_SensorGetDeviceName(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceName_gurax, "SDL_SensorGetDeviceName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -7526,7 +7526,7 @@ Gurax_ImplementFunctionEx(SDL_SensorGetDeviceName_gurax, processor_gurax, argume
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_SensorGetDeviceType(device_index:Number)
+// sdl.SDL_SensorGetDeviceType(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceType_gurax, "SDL_SensorGetDeviceType")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7546,7 +7546,7 @@ Gurax_ImplementFunctionEx(SDL_SensorGetDeviceType_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SensorGetDeviceNonPortableType(device_index:Number)
+// sdl.SDL_SensorGetDeviceNonPortableType(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceNonPortableType_gurax, "SDL_SensorGetDeviceNonPortableType")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7566,7 +7566,7 @@ Gurax_ImplementFunctionEx(SDL_SensorGetDeviceNonPortableType_gurax, processor_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SensorGetDeviceInstanceID(device_index:Number)
+// sdl.SDL_SensorGetDeviceInstanceID(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceInstanceID_gurax, "SDL_SensorGetDeviceInstanceID")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7586,7 +7586,7 @@ Gurax_ImplementFunctionEx(SDL_SensorGetDeviceInstanceID_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SensorOpen(device_index:Number)
+// sdl.SDL_SensorOpen(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_SensorOpen_gurax, "SDL_SensorOpen")
 {
 	Declare(VTYPE_SDL_Sensor, Flag::None);
@@ -7607,7 +7607,7 @@ Gurax_ImplementFunctionEx(SDL_SensorOpen_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Sensor(rtn);
 }
 
-// sdl.SDL_SensorFromInstanceID(instance_id:Number)
+// sdl.SDL_SensorFromInstanceID(instance_id as Number)
 Gurax_DeclareFunctionAlias(SDL_SensorFromInstanceID_gurax, "SDL_SensorFromInstanceID")
 {
 	Declare(VTYPE_SDL_Sensor, Flag::None);
@@ -7628,7 +7628,7 @@ Gurax_ImplementFunctionEx(SDL_SensorFromInstanceID_gurax, processor_gurax, argum
 	return new Value_SDL_Sensor(rtn);
 }
 
-// sdl.SDL_SensorGetName(sensor:SDL_Sensor)
+// sdl.SDL_SensorGetName(sensor as SDL_Sensor)
 Gurax_DeclareFunctionAlias(SDL_SensorGetName_gurax, "SDL_SensorGetName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -7649,7 +7649,7 @@ Gurax_ImplementFunctionEx(SDL_SensorGetName_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_SensorGetType(sensor:SDL_Sensor)
+// sdl.SDL_SensorGetType(sensor as SDL_Sensor)
 Gurax_DeclareFunctionAlias(SDL_SensorGetType_gurax, "SDL_SensorGetType")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7670,7 +7670,7 @@ Gurax_ImplementFunctionEx(SDL_SensorGetType_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SensorGetNonPortableType(sensor:SDL_Sensor)
+// sdl.SDL_SensorGetNonPortableType(sensor as SDL_Sensor)
 Gurax_DeclareFunctionAlias(SDL_SensorGetNonPortableType_gurax, "SDL_SensorGetNonPortableType")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7691,7 +7691,7 @@ Gurax_ImplementFunctionEx(SDL_SensorGetNonPortableType_gurax, processor_gurax, a
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SensorGetInstanceID(sensor:SDL_Sensor)
+// sdl.SDL_SensorGetInstanceID(sensor as SDL_Sensor)
 Gurax_DeclareFunctionAlias(SDL_SensorGetInstanceID_gurax, "SDL_SensorGetInstanceID")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7712,7 +7712,7 @@ Gurax_ImplementFunctionEx(SDL_SensorGetInstanceID_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SensorClose(sensor:SDL_Sensor)
+// sdl.SDL_SensorClose(sensor as SDL_Sensor)
 Gurax_DeclareFunctionAlias(SDL_SensorClose_gurax, "SDL_SensorClose")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7765,7 +7765,7 @@ Gurax_ImplementFunctionEx(SDL_NumHaptics_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticName(device_index:Number)
+// sdl.SDL_HapticName(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticName_gurax, "SDL_HapticName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -7785,7 +7785,7 @@ Gurax_ImplementFunctionEx(SDL_HapticName_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_HapticOpen(device_index:Number)
+// sdl.SDL_HapticOpen(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticOpen_gurax, "SDL_HapticOpen")
 {
 	Declare(VTYPE_SDL_Haptic, Flag::None);
@@ -7806,7 +7806,7 @@ Gurax_ImplementFunctionEx(SDL_HapticOpen_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Haptic(rtn);
 }
 
-// sdl.SDL_HapticOpened(device_index:Number)
+// sdl.SDL_HapticOpened(device_index as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticOpened_gurax, "SDL_HapticOpened")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7826,7 +7826,7 @@ Gurax_ImplementFunctionEx(SDL_HapticOpened_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticIndex(haptic:SDL_Haptic)
+// sdl.SDL_HapticIndex(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticIndex_gurax, "SDL_HapticIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7880,7 +7880,7 @@ Gurax_ImplementFunctionEx(SDL_HapticOpenFromMouse_gurax, processor_gurax, argume
 	return new Value_SDL_Haptic(rtn);
 }
 
-// sdl.SDL_JoystickIsHaptic(joystick:SDL_Joystick)
+// sdl.SDL_JoystickIsHaptic(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_JoystickIsHaptic_gurax, "SDL_JoystickIsHaptic")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7901,7 +7901,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickIsHaptic_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticOpenFromJoystick(joystick:SDL_Joystick)
+// sdl.SDL_HapticOpenFromJoystick(joystick as SDL_Joystick)
 Gurax_DeclareFunctionAlias(SDL_HapticOpenFromJoystick_gurax, "SDL_HapticOpenFromJoystick")
 {
 	Declare(VTYPE_SDL_Haptic, Flag::None);
@@ -7923,7 +7923,7 @@ Gurax_ImplementFunctionEx(SDL_HapticOpenFromJoystick_gurax, processor_gurax, arg
 	return new Value_SDL_Haptic(rtn);
 }
 
-// sdl.SDL_HapticClose(haptic:SDL_Haptic)
+// sdl.SDL_HapticClose(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticClose_gurax, "SDL_HapticClose")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7944,7 +7944,7 @@ Gurax_ImplementFunctionEx(SDL_HapticClose_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_HapticNumEffects(haptic:SDL_Haptic)
+// sdl.SDL_HapticNumEffects(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticNumEffects_gurax, "SDL_HapticNumEffects")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7965,7 +7965,7 @@ Gurax_ImplementFunctionEx(SDL_HapticNumEffects_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticNumEffectsPlaying(haptic:SDL_Haptic)
+// sdl.SDL_HapticNumEffectsPlaying(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticNumEffectsPlaying_gurax, "SDL_HapticNumEffectsPlaying")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7986,7 +7986,7 @@ Gurax_ImplementFunctionEx(SDL_HapticNumEffectsPlaying_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticQuery(haptic:SDL_Haptic)
+// sdl.SDL_HapticQuery(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticQuery_gurax, "SDL_HapticQuery")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8007,7 +8007,7 @@ Gurax_ImplementFunctionEx(SDL_HapticQuery_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticNumAxes(haptic:SDL_Haptic)
+// sdl.SDL_HapticNumAxes(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticNumAxes_gurax, "SDL_HapticNumAxes")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8028,7 +8028,7 @@ Gurax_ImplementFunctionEx(SDL_HapticNumAxes_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticEffectSupported(haptic:SDL_Haptic, effect:SDL_HapticEffect)
+// sdl.SDL_HapticEffectSupported(haptic as SDL_Haptic, effect as SDL_HapticEffect)
 Gurax_DeclareFunctionAlias(SDL_HapticEffectSupported_gurax, "SDL_HapticEffectSupported")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8052,7 +8052,7 @@ Gurax_ImplementFunctionEx(SDL_HapticEffectSupported_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticNewEffect(haptic:SDL_Haptic, effect:SDL_HapticEffect)
+// sdl.SDL_HapticNewEffect(haptic as SDL_Haptic, effect as SDL_HapticEffect)
 Gurax_DeclareFunctionAlias(SDL_HapticNewEffect_gurax, "SDL_HapticNewEffect")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8076,7 +8076,7 @@ Gurax_ImplementFunctionEx(SDL_HapticNewEffect_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticUpdateEffect(haptic:SDL_Haptic, effect:Number, data:SDL_HapticEffect)
+// sdl.SDL_HapticUpdateEffect(haptic as SDL_Haptic, effect as Number, data as SDL_HapticEffect)
 Gurax_DeclareFunctionAlias(SDL_HapticUpdateEffect_gurax, "SDL_HapticUpdateEffect")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8102,7 +8102,7 @@ Gurax_ImplementFunctionEx(SDL_HapticUpdateEffect_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticRunEffect(haptic:SDL_Haptic, effect:Number, iterations:Number)
+// sdl.SDL_HapticRunEffect(haptic as SDL_Haptic, effect as Number, iterations as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticRunEffect_gurax, "SDL_HapticRunEffect")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8127,7 +8127,7 @@ Gurax_ImplementFunctionEx(SDL_HapticRunEffect_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticStopEffect(haptic:SDL_Haptic, effect:Number)
+// sdl.SDL_HapticStopEffect(haptic as SDL_Haptic, effect as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticStopEffect_gurax, "SDL_HapticStopEffect")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8150,7 +8150,7 @@ Gurax_ImplementFunctionEx(SDL_HapticStopEffect_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticDestroyEffect(haptic:SDL_Haptic, effect:Number)
+// sdl.SDL_HapticDestroyEffect(haptic as SDL_Haptic, effect as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticDestroyEffect_gurax, "SDL_HapticDestroyEffect")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8173,7 +8173,7 @@ Gurax_ImplementFunctionEx(SDL_HapticDestroyEffect_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_HapticGetEffectStatus(haptic:SDL_Haptic, effect:Number)
+// sdl.SDL_HapticGetEffectStatus(haptic as SDL_Haptic, effect as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticGetEffectStatus_gurax, "SDL_HapticGetEffectStatus")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8196,7 +8196,7 @@ Gurax_ImplementFunctionEx(SDL_HapticGetEffectStatus_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticSetGain(haptic:SDL_Haptic, gain:Number)
+// sdl.SDL_HapticSetGain(haptic as SDL_Haptic, gain as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticSetGain_gurax, "SDL_HapticSetGain")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8219,7 +8219,7 @@ Gurax_ImplementFunctionEx(SDL_HapticSetGain_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticSetAutocenter(haptic:SDL_Haptic, autocenter:Number)
+// sdl.SDL_HapticSetAutocenter(haptic as SDL_Haptic, autocenter as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticSetAutocenter_gurax, "SDL_HapticSetAutocenter")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8242,7 +8242,7 @@ Gurax_ImplementFunctionEx(SDL_HapticSetAutocenter_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticPause(haptic:SDL_Haptic)
+// sdl.SDL_HapticPause(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticPause_gurax, "SDL_HapticPause")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8263,7 +8263,7 @@ Gurax_ImplementFunctionEx(SDL_HapticPause_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticUnpause(haptic:SDL_Haptic)
+// sdl.SDL_HapticUnpause(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticUnpause_gurax, "SDL_HapticUnpause")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8284,7 +8284,7 @@ Gurax_ImplementFunctionEx(SDL_HapticUnpause_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticStopAll(haptic:SDL_Haptic)
+// sdl.SDL_HapticStopAll(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticStopAll_gurax, "SDL_HapticStopAll")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8305,7 +8305,7 @@ Gurax_ImplementFunctionEx(SDL_HapticStopAll_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticRumbleSupported(haptic:SDL_Haptic)
+// sdl.SDL_HapticRumbleSupported(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticRumbleSupported_gurax, "SDL_HapticRumbleSupported")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8326,7 +8326,7 @@ Gurax_ImplementFunctionEx(SDL_HapticRumbleSupported_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticRumbleInit(haptic:SDL_Haptic)
+// sdl.SDL_HapticRumbleInit(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticRumbleInit_gurax, "SDL_HapticRumbleInit")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8347,7 +8347,7 @@ Gurax_ImplementFunctionEx(SDL_HapticRumbleInit_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticRumblePlay(haptic:SDL_Haptic, strength:Number, length:Number)
+// sdl.SDL_HapticRumblePlay(haptic as SDL_Haptic, strength as Number, length as Number)
 Gurax_DeclareFunctionAlias(SDL_HapticRumblePlay_gurax, "SDL_HapticRumblePlay")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8372,7 +8372,7 @@ Gurax_ImplementFunctionEx(SDL_HapticRumblePlay_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_HapticRumbleStop(haptic:SDL_Haptic)
+// sdl.SDL_HapticRumbleStop(haptic as SDL_Haptic)
 Gurax_DeclareFunctionAlias(SDL_HapticRumbleStop_gurax, "SDL_HapticRumbleStop")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8409,7 +8409,7 @@ Gurax_ImplementFunctionEx(SDL_GetNumAudioDrivers_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetAudioDriver(index:Number)
+// sdl.SDL_GetAudioDriver(index as Number)
 Gurax_DeclareFunctionAlias(SDL_GetAudioDriver_gurax, "SDL_GetAudioDriver")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -8429,7 +8429,7 @@ Gurax_ImplementFunctionEx(SDL_GetAudioDriver_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_AUDIO_BITSIZE(format:Number)
+// sdl.SDL_AUDIO_BITSIZE(format as Number)
 Gurax_DeclareFunctionAlias(SDL_AUDIO_BITSIZE_gurax, "SDL_AUDIO_BITSIZE")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8449,7 +8449,7 @@ Gurax_ImplementFunctionEx(SDL_AUDIO_BITSIZE_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_AudioInit(driver_name:String)
+// sdl.SDL_AudioInit(driver_name as String)
 Gurax_DeclareFunctionAlias(SDL_AudioInit_gurax, "SDL_AudioInit")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8501,7 +8501,7 @@ Gurax_ImplementFunctionEx(SDL_GetCurrentAudioDriver_gurax, processor_gurax, argu
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_OpenAudio(desired:SDL_AudioSpec, obtained:SDL_AudioSpec)
+// sdl.SDL_OpenAudio(desired as SDL_AudioSpec, obtained as SDL_AudioSpec)
 Gurax_DeclareFunctionAlias(SDL_OpenAudio_gurax, "SDL_OpenAudio")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8525,7 +8525,7 @@ Gurax_ImplementFunctionEx(SDL_OpenAudio_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetNumAudioDevices(iscapture:Bool)
+// sdl.SDL_GetNumAudioDevices(iscapture as Bool)
 Gurax_DeclareFunctionAlias(SDL_GetNumAudioDevices_gurax, "SDL_GetNumAudioDevices")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8545,7 +8545,7 @@ Gurax_ImplementFunctionEx(SDL_GetNumAudioDevices_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetAudioDeviceName(index:Number, iscapture:Bool)
+// sdl.SDL_GetAudioDeviceName(index as Number, iscapture as Bool)
 Gurax_DeclareFunctionAlias(SDL_GetAudioDeviceName_gurax, "SDL_GetAudioDeviceName")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -8567,7 +8567,7 @@ Gurax_ImplementFunctionEx(SDL_GetAudioDeviceName_gurax, processor_gurax, argumen
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.SDL_OpenAudioDevice(device:String:nil, iscapture:Bool, desired:SDL_AudioSpec, obtained:SDL_AudioSpec, allowed_changes:Number)
+// sdl.SDL_OpenAudioDevice(device:nil as String, iscapture as Bool, desired as SDL_AudioSpec, obtained as SDL_AudioSpec, allowed_changes as Number)
 Gurax_DeclareFunctionAlias(SDL_OpenAudioDevice_gurax, "SDL_OpenAudioDevice")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -8615,7 +8615,7 @@ Gurax_ImplementFunctionEx(SDL_GetAudioStatus_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetAudioDeviceStatus(dev:Number)
+// sdl.SDL_GetAudioDeviceStatus(dev as Number)
 Gurax_DeclareFunctionAlias(SDL_GetAudioDeviceStatus_gurax, "SDL_GetAudioDeviceStatus")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8635,7 +8635,7 @@ Gurax_ImplementFunctionEx(SDL_GetAudioDeviceStatus_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_PauseAudio(pause_on:Bool)
+// sdl.SDL_PauseAudio(pause_on as Bool)
 Gurax_DeclareFunctionAlias(SDL_PauseAudio_gurax, "SDL_PauseAudio")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8655,7 +8655,7 @@ Gurax_ImplementFunctionEx(SDL_PauseAudio_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_PauseAudioDevice(dev:Number, pause_on:Bool)
+// sdl.SDL_PauseAudioDevice(dev as Number, pause_on as Bool)
 Gurax_DeclareFunctionAlias(SDL_PauseAudioDevice_gurax, "SDL_PauseAudioDevice")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8677,7 +8677,7 @@ Gurax_ImplementFunctionEx(SDL_PauseAudioDevice_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_BuildAudioCVT(cvt:SDL_AudioCVT, src_format:Number, src_channels:Number, src_rate:Number, dst_format:Number, dst_channels:Number, dst_rate:Number)
+// sdl.SDL_BuildAudioCVT(cvt as SDL_AudioCVT, src_format as Number, src_channels as Number, src_rate as Number, dst_format as Number, dst_channels as Number, dst_rate as Number)
 Gurax_DeclareFunctionAlias(SDL_BuildAudioCVT_gurax, "SDL_BuildAudioCVT")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8710,7 +8710,7 @@ Gurax_ImplementFunctionEx(SDL_BuildAudioCVT_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_ConvertAudio(cvt:SDL_AudioCVT)
+// sdl.SDL_ConvertAudio(cvt as SDL_AudioCVT)
 Gurax_DeclareFunctionAlias(SDL_ConvertAudio_gurax, "SDL_ConvertAudio")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8731,7 +8731,7 @@ Gurax_ImplementFunctionEx(SDL_ConvertAudio_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_AudioStreamPut(stream:SDL_AudioStream, buf:Pointer, len:Number)
+// sdl.SDL_AudioStreamPut(stream as SDL_AudioStream, buf as Pointer, len as Number)
 Gurax_DeclareFunctionAlias(SDL_AudioStreamPut_gurax, "SDL_AudioStreamPut")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8756,7 +8756,7 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamPut_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_AudioStreamGet(stream:SDL_AudioStream, buf:Pointer, len:Number)
+// sdl.SDL_AudioStreamGet(stream as SDL_AudioStream, buf as Pointer, len as Number)
 Gurax_DeclareFunctionAlias(SDL_AudioStreamGet_gurax, "SDL_AudioStreamGet")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8785,7 +8785,7 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamGet_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_AudioStreamAvailable(stream:SDL_AudioStream)
+// sdl.SDL_AudioStreamAvailable(stream as SDL_AudioStream)
 Gurax_DeclareFunctionAlias(SDL_AudioStreamAvailable_gurax, "SDL_AudioStreamAvailable")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8806,7 +8806,7 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamAvailable_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_AudioStreamFlush(stream:SDL_AudioStream)
+// sdl.SDL_AudioStreamFlush(stream as SDL_AudioStream)
 Gurax_DeclareFunctionAlias(SDL_AudioStreamFlush_gurax, "SDL_AudioStreamFlush")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8827,7 +8827,7 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamFlush_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_AudioStreamClear(stream:SDL_AudioStream)
+// sdl.SDL_AudioStreamClear(stream as SDL_AudioStream)
 Gurax_DeclareFunctionAlias(SDL_AudioStreamClear_gurax, "SDL_AudioStreamClear")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8848,7 +8848,7 @@ Gurax_ImplementFunctionEx(SDL_AudioStreamClear_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_FreeAudioStream(stream:SDL_AudioStream:nil)
+// sdl.SDL_FreeAudioStream(stream:nil as SDL_AudioStream)
 Gurax_DeclareFunctionAlias(SDL_FreeAudioStream_gurax, "SDL_FreeAudioStream")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8868,7 +8868,7 @@ Gurax_ImplementFunctionEx(SDL_FreeAudioStream_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_QueueAudio(dev:Number, data:Pointer, len:Number)
+// sdl.SDL_QueueAudio(dev as Number, data as Pointer, len as Number)
 Gurax_DeclareFunctionAlias(SDL_QueueAudio_gurax, "SDL_QueueAudio")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8892,7 +8892,7 @@ Gurax_ImplementFunctionEx(SDL_QueueAudio_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_DequeueAudio(dev:Number, data:Pointer, len:Number)
+// sdl.SDL_DequeueAudio(dev as Number, data as Pointer, len as Number)
 Gurax_DeclareFunctionAlias(SDL_DequeueAudio_gurax, "SDL_DequeueAudio")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8920,7 +8920,7 @@ Gurax_ImplementFunctionEx(SDL_DequeueAudio_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_GetQueuedAudioSize(dev:Number)
+// sdl.SDL_GetQueuedAudioSize(dev as Number)
 Gurax_DeclareFunctionAlias(SDL_GetQueuedAudioSize_gurax, "SDL_GetQueuedAudioSize")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -8940,7 +8940,7 @@ Gurax_ImplementFunctionEx(SDL_GetQueuedAudioSize_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_ClearQueuedAudio(dev:Number)
+// sdl.SDL_ClearQueuedAudio(dev as Number)
 Gurax_DeclareFunctionAlias(SDL_ClearQueuedAudio_gurax, "SDL_ClearQueuedAudio")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -8976,7 +8976,7 @@ Gurax_ImplementFunctionEx(SDL_LockAudio_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_LockAudioDevice(dev:Number)
+// sdl.SDL_LockAudioDevice(dev as Number)
 Gurax_DeclareFunctionAlias(SDL_LockAudioDevice_gurax, "SDL_LockAudioDevice")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9012,7 +9012,7 @@ Gurax_ImplementFunctionEx(SDL_UnlockAudio_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_UnlockAudioDevice(dev:Number)
+// sdl.SDL_UnlockAudioDevice(dev as Number)
 Gurax_DeclareFunctionAlias(SDL_UnlockAudioDevice_gurax, "SDL_UnlockAudioDevice")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9048,7 +9048,7 @@ Gurax_ImplementFunctionEx(SDL_CloseAudio_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_CloseAudioDevice(dev:Number)
+// sdl.SDL_CloseAudioDevice(dev as Number)
 Gurax_DeclareFunctionAlias(SDL_CloseAudioDevice_gurax, "SDL_CloseAudioDevice")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9116,7 +9116,7 @@ Gurax_ImplementFunctionEx(SDL_GetPerformanceFrequency_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_Delay(ms:Number)
+// sdl.SDL_Delay(ms as Number)
 Gurax_DeclareFunctionAlias(SDL_Delay_gurax, "SDL_Delay")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9136,7 +9136,7 @@ Gurax_ImplementFunctionEx(SDL_Delay_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_RemoveTimer(id:Number)
+// sdl.SDL_RemoveTimer(id as Number)
 Gurax_DeclareFunctionAlias(SDL_RemoveTimer_gurax, "SDL_RemoveTimer")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -9156,7 +9156,7 @@ Gurax_ImplementFunctionEx(SDL_RemoveTimer_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// sdl.SDL_RWFromFile(file:String, mode:String)
+// sdl.SDL_RWFromFile(file as String, mode as String)
 Gurax_DeclareFunctionAlias(SDL_RWFromFile_gurax, "SDL_RWFromFile")
 {
 	Declare(VTYPE_SDL_RWops, Flag::None);
@@ -9179,7 +9179,7 @@ Gurax_ImplementFunctionEx(SDL_RWFromFile_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_RWops(rtn);
 }
 
-// sdl.SDL_RWFromConstMem(mem:Pointer, size:Number)
+// sdl.SDL_RWFromConstMem(mem as Pointer, size as Number)
 Gurax_DeclareFunctionAlias(SDL_RWFromConstMem_gurax, "SDL_RWFromConstMem")
 {
 	Declare(VTYPE_SDL_RWops, Flag::None);
@@ -9219,7 +9219,7 @@ Gurax_ImplementFunctionEx(SDL_AllocRW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_RWops(rtn);
 }
 
-// sdl.SDL_FreeRW(area:SDL_RWops:nil)
+// sdl.SDL_FreeRW(area:nil as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_FreeRW_gurax, "SDL_FreeRW")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -9239,7 +9239,7 @@ Gurax_ImplementFunctionEx(SDL_FreeRW_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.SDL_RWsize(context:SDL_RWops)
+// sdl.SDL_RWsize(context as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_RWsize_gurax, "SDL_RWsize")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9260,7 +9260,7 @@ Gurax_ImplementFunctionEx(SDL_RWsize_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RWseek(context:SDL_RWops, offset:Number, whence:Number)
+// sdl.SDL_RWseek(context as SDL_RWops, offset as Number, whence as Number)
 Gurax_DeclareFunctionAlias(SDL_RWseek_gurax, "SDL_RWseek")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9285,7 +9285,7 @@ Gurax_ImplementFunctionEx(SDL_RWseek_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RWtell(context:SDL_RWops)
+// sdl.SDL_RWtell(context as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_RWtell_gurax, "SDL_RWtell")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9306,7 +9306,7 @@ Gurax_ImplementFunctionEx(SDL_RWtell_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RWread(context:SDL_RWops, ptr:Pointer, size:Number, maxnum:Number)
+// sdl.SDL_RWread(context as SDL_RWops, ptr as Pointer, size as Number, maxnum as Number)
 Gurax_DeclareFunctionAlias(SDL_RWread_gurax, "SDL_RWread")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9337,7 +9337,7 @@ Gurax_ImplementFunctionEx(SDL_RWread_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RWwrite(context:SDL_RWops, ptr:Pointer, size:Number, num:Number)
+// sdl.SDL_RWwrite(context as SDL_RWops, ptr as Pointer, size as Number, num as Number)
 Gurax_DeclareFunctionAlias(SDL_RWwrite_gurax, "SDL_RWwrite")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9364,7 +9364,7 @@ Gurax_ImplementFunctionEx(SDL_RWwrite_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_RWclose(context:SDL_RWops)
+// sdl.SDL_RWclose(context as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_RWclose_gurax, "SDL_RWclose")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9385,7 +9385,7 @@ Gurax_ImplementFunctionEx(SDL_RWclose_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_ReadU8(src:SDL_RWops)
+// sdl.SDL_ReadU8(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_ReadU8_gurax, "SDL_ReadU8")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9406,7 +9406,7 @@ Gurax_ImplementFunctionEx(SDL_ReadU8_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_ReadLE16(src:SDL_RWops)
+// sdl.SDL_ReadLE16(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_ReadLE16_gurax, "SDL_ReadLE16")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9427,7 +9427,7 @@ Gurax_ImplementFunctionEx(SDL_ReadLE16_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_ReadBE16(src:SDL_RWops)
+// sdl.SDL_ReadBE16(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_ReadBE16_gurax, "SDL_ReadBE16")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9448,7 +9448,7 @@ Gurax_ImplementFunctionEx(SDL_ReadBE16_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_ReadLE32(src:SDL_RWops)
+// sdl.SDL_ReadLE32(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_ReadLE32_gurax, "SDL_ReadLE32")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9469,7 +9469,7 @@ Gurax_ImplementFunctionEx(SDL_ReadLE32_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_ReadBE32(src:SDL_RWops)
+// sdl.SDL_ReadBE32(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_ReadBE32_gurax, "SDL_ReadBE32")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9490,7 +9490,7 @@ Gurax_ImplementFunctionEx(SDL_ReadBE32_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_ReadLE64(src:SDL_RWops)
+// sdl.SDL_ReadLE64(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_ReadLE64_gurax, "SDL_ReadLE64")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9511,7 +9511,7 @@ Gurax_ImplementFunctionEx(SDL_ReadLE64_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_ReadBE64(src:SDL_RWops)
+// sdl.SDL_ReadBE64(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(SDL_ReadBE64_gurax, "SDL_ReadBE64")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9532,7 +9532,7 @@ Gurax_ImplementFunctionEx(SDL_ReadBE64_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_WriteU8(dst:SDL_RWops, value:Number)
+// sdl.SDL_WriteU8(dst as SDL_RWops, value as Number)
 Gurax_DeclareFunctionAlias(SDL_WriteU8_gurax, "SDL_WriteU8")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9555,7 +9555,7 @@ Gurax_ImplementFunctionEx(SDL_WriteU8_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_WriteLE16(dst:SDL_RWops, value:Number)
+// sdl.SDL_WriteLE16(dst as SDL_RWops, value as Number)
 Gurax_DeclareFunctionAlias(SDL_WriteLE16_gurax, "SDL_WriteLE16")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9578,7 +9578,7 @@ Gurax_ImplementFunctionEx(SDL_WriteLE16_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_WriteBE16(dst:SDL_RWops, value:Number)
+// sdl.SDL_WriteBE16(dst as SDL_RWops, value as Number)
 Gurax_DeclareFunctionAlias(SDL_WriteBE16_gurax, "SDL_WriteBE16")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9601,7 +9601,7 @@ Gurax_ImplementFunctionEx(SDL_WriteBE16_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_WriteLE32(dst:SDL_RWops, value:Number)
+// sdl.SDL_WriteLE32(dst as SDL_RWops, value as Number)
 Gurax_DeclareFunctionAlias(SDL_WriteLE32_gurax, "SDL_WriteLE32")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9624,7 +9624,7 @@ Gurax_ImplementFunctionEx(SDL_WriteLE32_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_WriteBE32(dst:SDL_RWops, value:Number)
+// sdl.SDL_WriteBE32(dst as SDL_RWops, value as Number)
 Gurax_DeclareFunctionAlias(SDL_WriteBE32_gurax, "SDL_WriteBE32")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9647,7 +9647,7 @@ Gurax_ImplementFunctionEx(SDL_WriteBE32_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_WriteLE64(dst:SDL_RWops, value:Number)
+// sdl.SDL_WriteLE64(dst as SDL_RWops, value as Number)
 Gurax_DeclareFunctionAlias(SDL_WriteLE64_gurax, "SDL_WriteLE64")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9670,7 +9670,7 @@ Gurax_ImplementFunctionEx(SDL_WriteLE64_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_WriteBE64(dst:SDL_RWops, value:Number)
+// sdl.SDL_WriteBE64(dst as SDL_RWops, value as Number)
 Gurax_DeclareFunctionAlias(SDL_WriteBE64_gurax, "SDL_WriteBE64")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -9981,7 +9981,7 @@ Gurax_ImplementFunctionEx(SDL_SIMDGetAlignment_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.SDL_SIMDFree(ptr:Pointer:nil)
+// sdl.SDL_SIMDFree(ptr:nil as Pointer)
 Gurax_DeclareFunctionAlias(SDL_SIMDFree_gurax, "SDL_SIMDFree")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10034,7 +10034,7 @@ Gurax_ImplementFunctionEx(IMG_Linked_Version_gurax, processor_gurax, argument_gu
 	return new Value_SDL_version(*ver);
 }
 
-// sdl.IMG_Init(flags:Number)
+// sdl.IMG_Init(flags as Number)
 Gurax_DeclareFunctionAlias(IMG_Init_gurax, "IMG_Init")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -10086,7 +10086,7 @@ Gurax_ImplementFunctionEx(IMG_GetError_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.IMG_Load(file:String)
+// sdl.IMG_Load(file as String)
 Gurax_DeclareFunctionAlias(IMG_Load_gurax, "IMG_Load")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10107,7 +10107,7 @@ Gurax_ImplementFunctionEx(IMG_Load_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_Load_RW(src:SDL_RWops, freesrc:Number)
+// sdl.IMG_Load_RW(src as SDL_RWops, freesrc as Number)
 Gurax_DeclareFunctionAlias(IMG_Load_RW_gurax, "IMG_Load_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10131,7 +10131,7 @@ Gurax_ImplementFunctionEx(IMG_Load_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadTyped_RW(src:SDL_RWops, freesrc:Number, type:String)
+// sdl.IMG_LoadTyped_RW(src as SDL_RWops, freesrc as Number, type as String)
 Gurax_DeclareFunctionAlias(IMG_LoadTyped_RW_gurax, "IMG_LoadTyped_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10157,7 +10157,7 @@ Gurax_ImplementFunctionEx(IMG_LoadTyped_RW_gurax, processor_gurax, argument_gura
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadCUR_RW(src:SDL_RWops)
+// sdl.IMG_LoadCUR_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadCUR_RW_gurax, "IMG_LoadCUR_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10179,7 +10179,7 @@ Gurax_ImplementFunctionEx(IMG_LoadCUR_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadICO_RW(src:SDL_RWops)
+// sdl.IMG_LoadICO_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadICO_RW_gurax, "IMG_LoadICO_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10201,7 +10201,7 @@ Gurax_ImplementFunctionEx(IMG_LoadICO_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadBMP_RW(src:SDL_RWops)
+// sdl.IMG_LoadBMP_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadBMP_RW_gurax, "IMG_LoadBMP_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10223,7 +10223,7 @@ Gurax_ImplementFunctionEx(IMG_LoadBMP_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadPNM_RW(src:SDL_RWops)
+// sdl.IMG_LoadPNM_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadPNM_RW_gurax, "IMG_LoadPNM_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10245,7 +10245,7 @@ Gurax_ImplementFunctionEx(IMG_LoadPNM_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadXPM_RW(src:SDL_RWops)
+// sdl.IMG_LoadXPM_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadXPM_RW_gurax, "IMG_LoadXPM_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10267,7 +10267,7 @@ Gurax_ImplementFunctionEx(IMG_LoadXPM_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadXCF_RW(src:SDL_RWops)
+// sdl.IMG_LoadXCF_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadXCF_RW_gurax, "IMG_LoadXCF_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10289,7 +10289,7 @@ Gurax_ImplementFunctionEx(IMG_LoadXCF_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadPCX_RW(src:SDL_RWops)
+// sdl.IMG_LoadPCX_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadPCX_RW_gurax, "IMG_LoadPCX_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10311,7 +10311,7 @@ Gurax_ImplementFunctionEx(IMG_LoadPCX_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadGIF_RW(src:SDL_RWops)
+// sdl.IMG_LoadGIF_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadGIF_RW_gurax, "IMG_LoadGIF_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10333,7 +10333,7 @@ Gurax_ImplementFunctionEx(IMG_LoadGIF_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadJPG_RW(src:SDL_RWops)
+// sdl.IMG_LoadJPG_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadJPG_RW_gurax, "IMG_LoadJPG_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10355,7 +10355,7 @@ Gurax_ImplementFunctionEx(IMG_LoadJPG_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadTIF_RW(src:SDL_RWops)
+// sdl.IMG_LoadTIF_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadTIF_RW_gurax, "IMG_LoadTIF_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10377,7 +10377,7 @@ Gurax_ImplementFunctionEx(IMG_LoadTIF_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadPNG_RW(src:SDL_RWops)
+// sdl.IMG_LoadPNG_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadPNG_RW_gurax, "IMG_LoadPNG_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10399,7 +10399,7 @@ Gurax_ImplementFunctionEx(IMG_LoadPNG_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadTGA_RW(src:SDL_RWops)
+// sdl.IMG_LoadTGA_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadTGA_RW_gurax, "IMG_LoadTGA_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10421,7 +10421,7 @@ Gurax_ImplementFunctionEx(IMG_LoadTGA_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadLBM_RW(src:SDL_RWops)
+// sdl.IMG_LoadLBM_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadLBM_RW_gurax, "IMG_LoadLBM_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10443,7 +10443,7 @@ Gurax_ImplementFunctionEx(IMG_LoadLBM_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_LoadXV_RW(src:SDL_RWops)
+// sdl.IMG_LoadXV_RW(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_LoadXV_RW_gurax, "IMG_LoadXV_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -10465,7 +10465,7 @@ Gurax_ImplementFunctionEx(IMG_LoadXV_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.IMG_isCUR(src:SDL_RWops)
+// sdl.IMG_isCUR(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isCUR_gurax, "IMG_isCUR")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10486,7 +10486,7 @@ Gurax_ImplementFunctionEx(IMG_isCUR_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isICO(src:SDL_RWops)
+// sdl.IMG_isICO(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isICO_gurax, "IMG_isICO")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10507,7 +10507,7 @@ Gurax_ImplementFunctionEx(IMG_isICO_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isBMP(src:SDL_RWops)
+// sdl.IMG_isBMP(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isBMP_gurax, "IMG_isBMP")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10528,7 +10528,7 @@ Gurax_ImplementFunctionEx(IMG_isBMP_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isPNM(src:SDL_RWops)
+// sdl.IMG_isPNM(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isPNM_gurax, "IMG_isPNM")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10549,7 +10549,7 @@ Gurax_ImplementFunctionEx(IMG_isPNM_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isXPM(src:SDL_RWops)
+// sdl.IMG_isXPM(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isXPM_gurax, "IMG_isXPM")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10570,7 +10570,7 @@ Gurax_ImplementFunctionEx(IMG_isXPM_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isXCF(src:SDL_RWops)
+// sdl.IMG_isXCF(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isXCF_gurax, "IMG_isXCF")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10591,7 +10591,7 @@ Gurax_ImplementFunctionEx(IMG_isXCF_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isPCX(src:SDL_RWops)
+// sdl.IMG_isPCX(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isPCX_gurax, "IMG_isPCX")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10612,7 +10612,7 @@ Gurax_ImplementFunctionEx(IMG_isPCX_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isGIF(src:SDL_RWops)
+// sdl.IMG_isGIF(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isGIF_gurax, "IMG_isGIF")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10633,7 +10633,7 @@ Gurax_ImplementFunctionEx(IMG_isGIF_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isJPG(src:SDL_RWops)
+// sdl.IMG_isJPG(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isJPG_gurax, "IMG_isJPG")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10654,7 +10654,7 @@ Gurax_ImplementFunctionEx(IMG_isJPG_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isTIF(src:SDL_RWops)
+// sdl.IMG_isTIF(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isTIF_gurax, "IMG_isTIF")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10675,7 +10675,7 @@ Gurax_ImplementFunctionEx(IMG_isTIF_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isPNG(src:SDL_RWops)
+// sdl.IMG_isPNG(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isPNG_gurax, "IMG_isPNG")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10696,7 +10696,7 @@ Gurax_ImplementFunctionEx(IMG_isPNG_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isLBM(src:SDL_RWops)
+// sdl.IMG_isLBM(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isLBM_gurax, "IMG_isLBM")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10717,7 +10717,7 @@ Gurax_ImplementFunctionEx(IMG_isLBM_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.IMG_isXV(src:SDL_RWops)
+// sdl.IMG_isXV(src as SDL_RWops)
 Gurax_DeclareFunctionAlias(IMG_isXV_gurax, "IMG_isXV")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10754,7 +10754,7 @@ Gurax_ImplementFunctionEx(Mix_Linked_Version_gurax, processor_gurax, argument_gu
 	return new Value_SDL_version(*ver);
 }
 
-// sdl.Mix_Init(flags:Number)
+// sdl.Mix_Init(flags as Number)
 Gurax_DeclareFunctionAlias(Mix_Init_gurax, "Mix_Init")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10790,7 +10790,7 @@ Gurax_ImplementFunctionEx(Mix_Quit_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.Mix_OpenAudio(frequency:Number, format:Number, channels:Number, chunksize:Number)
+// sdl.Mix_OpenAudio(frequency as Number, format as Number, channels as Number, chunksize as Number)
 Gurax_DeclareFunctionAlias(Mix_OpenAudio_gurax, "Mix_OpenAudio")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10816,7 +10816,7 @@ Gurax_ImplementFunctionEx(Mix_OpenAudio_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_OpenAudioDevice(frequency:Number, format:Number, channels:Number, chunksize:Number, device:String, allowed_changes:Number)
+// sdl.Mix_OpenAudioDevice(frequency as Number, format as Number, channels as Number, chunksize as Number, device as String, allowed_changes as Number)
 Gurax_DeclareFunctionAlias(Mix_OpenAudioDevice_gurax, "Mix_OpenAudioDevice")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10846,7 +10846,7 @@ Gurax_ImplementFunctionEx(Mix_OpenAudioDevice_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_AllocateChannels(numchans:Number)
+// sdl.Mix_AllocateChannels(numchans as Number)
 Gurax_DeclareFunctionAlias(Mix_AllocateChannels_gurax, "Mix_AllocateChannels")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -10904,7 +10904,7 @@ Gurax_ImplementFunctionEx(Mix_QuerySpec_gurax, processor_gurax, argument_gurax)
 					new Value_Number(format), new Value_Number(channels));
 }
 
-// sdl.Mix_LoadWAV(file:String)
+// sdl.Mix_LoadWAV(file as String)
 Gurax_DeclareFunctionAlias(Mix_LoadWAV_gurax, "Mix_LoadWAV")
 {
 	Declare(VTYPE_Mix_Chunk, Flag::None);
@@ -10925,7 +10925,7 @@ Gurax_ImplementFunctionEx(Mix_LoadWAV_gurax, processor_gurax, argument_gurax)
 	return new Value_Mix_Chunk(rtn);
 }
 
-// sdl.Mix_LoadWAV_RW(src:SDL_RWops, freesrc:Number)
+// sdl.Mix_LoadWAV_RW(src as SDL_RWops, freesrc as Number)
 Gurax_DeclareFunctionAlias(Mix_LoadWAV_RW_gurax, "Mix_LoadWAV_RW")
 {
 	Declare(VTYPE_Mix_Chunk, Flag::None);
@@ -10949,7 +10949,7 @@ Gurax_ImplementFunctionEx(Mix_LoadWAV_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_Mix_Chunk(rtn);
 }
 
-// sdl.Mix_LoadMUS(file:String)
+// sdl.Mix_LoadMUS(file as String)
 Gurax_DeclareFunctionAlias(Mix_LoadMUS_gurax, "Mix_LoadMUS")
 {
 	Declare(VTYPE_Mix_Music, Flag::None);
@@ -10970,7 +10970,7 @@ Gurax_ImplementFunctionEx(Mix_LoadMUS_gurax, processor_gurax, argument_gurax)
 	return new Value_Mix_Music(rtn);
 }
 
-// sdl.Mix_LoadMUS_RW(src:SDL_RWops, freesrc:Number)
+// sdl.Mix_LoadMUS_RW(src as SDL_RWops, freesrc as Number)
 Gurax_DeclareFunctionAlias(Mix_LoadMUS_RW_gurax, "Mix_LoadMUS_RW")
 {
 	Declare(VTYPE_Mix_Music, Flag::None);
@@ -10994,7 +10994,7 @@ Gurax_ImplementFunctionEx(Mix_LoadMUS_RW_gurax, processor_gurax, argument_gurax)
 	return new Value_Mix_Music(rtn);
 }
 
-// sdl.Mix_LoadMUSType_RW(src:SDL_RWops, type:Number, freesrc:Number)
+// sdl.Mix_LoadMUSType_RW(src as SDL_RWops, type as Number, freesrc as Number)
 Gurax_DeclareFunctionAlias(Mix_LoadMUSType_RW_gurax, "Mix_LoadMUSType_RW")
 {
 	Declare(VTYPE_Mix_Music, Flag::None);
@@ -11020,7 +11020,7 @@ Gurax_ImplementFunctionEx(Mix_LoadMUSType_RW_gurax, processor_gurax, argument_gu
 	return new Value_Mix_Music(rtn);
 }
 
-// sdl.Mix_FreeChunk(chunk:Mix_Chunk:nil)
+// sdl.Mix_FreeChunk(chunk:nil as Mix_Chunk)
 Gurax_DeclareFunctionAlias(Mix_FreeChunk_gurax, "Mix_FreeChunk")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11040,7 +11040,7 @@ Gurax_ImplementFunctionEx(Mix_FreeChunk_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.Mix_FreeMusic(music:Mix_Music:nil)
+// sdl.Mix_FreeMusic(music:nil as Mix_Music)
 Gurax_DeclareFunctionAlias(Mix_FreeMusic_gurax, "Mix_FreeMusic")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11076,7 +11076,7 @@ Gurax_ImplementFunctionEx(Mix_GetNumChunkDecoders_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_GetChunkDecoder(index:Number)
+// sdl.Mix_GetChunkDecoder(index as Number)
 Gurax_DeclareFunctionAlias(Mix_GetChunkDecoder_gurax, "Mix_GetChunkDecoder")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -11096,7 +11096,7 @@ Gurax_ImplementFunctionEx(Mix_GetChunkDecoder_gurax, processor_gurax, argument_g
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.Mix_HasChunkDecoder(name:String)
+// sdl.Mix_HasChunkDecoder(name as String)
 Gurax_DeclareFunctionAlias(Mix_HasChunkDecoder_gurax, "Mix_HasChunkDecoder")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -11132,7 +11132,7 @@ Gurax_ImplementFunctionEx(Mix_GetNumMusicDecoders_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_GetMusicDecoder(index:Number)
+// sdl.Mix_GetMusicDecoder(index as Number)
 Gurax_DeclareFunctionAlias(Mix_GetMusicDecoder_gurax, "Mix_GetMusicDecoder")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -11152,7 +11152,7 @@ Gurax_ImplementFunctionEx(Mix_GetMusicDecoder_gurax, processor_gurax, argument_g
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.Mix_GetMusicType(music:Mix_Music)
+// sdl.Mix_GetMusicType(music as Mix_Music)
 Gurax_DeclareFunctionAlias(Mix_GetMusicType_gurax, "Mix_GetMusicType")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11173,7 +11173,7 @@ Gurax_ImplementFunctionEx(Mix_GetMusicType_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_UnregisterAllEffects(channel:Number)
+// sdl.Mix_UnregisterAllEffects(channel as Number)
 Gurax_DeclareFunctionAlias(Mix_UnregisterAllEffects_gurax, "Mix_UnregisterAllEffects")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11193,7 +11193,7 @@ Gurax_ImplementFunctionEx(Mix_UnregisterAllEffects_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_SetPanning(channel:Number, left:Number, right:Number)
+// sdl.Mix_SetPanning(channel as Number, left as Number, right as Number)
 Gurax_DeclareFunctionAlias(Mix_SetPanning_gurax, "Mix_SetPanning")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11217,7 +11217,7 @@ Gurax_ImplementFunctionEx(Mix_SetPanning_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_SetPosition(channel:Number, angle:Number, distance:Number)
+// sdl.Mix_SetPosition(channel as Number, angle as Number, distance as Number)
 Gurax_DeclareFunctionAlias(Mix_SetPosition_gurax, "Mix_SetPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11241,7 +11241,7 @@ Gurax_ImplementFunctionEx(Mix_SetPosition_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_SetDistance(channel:Number, distance:Number)
+// sdl.Mix_SetDistance(channel as Number, distance as Number)
 Gurax_DeclareFunctionAlias(Mix_SetDistance_gurax, "Mix_SetDistance")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11263,7 +11263,7 @@ Gurax_ImplementFunctionEx(Mix_SetDistance_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_SetReverseStereo(channel:Number, flip:Number)
+// sdl.Mix_SetReverseStereo(channel as Number, flip as Number)
 Gurax_DeclareFunctionAlias(Mix_SetReverseStereo_gurax, "Mix_SetReverseStereo")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11285,7 +11285,7 @@ Gurax_ImplementFunctionEx(Mix_SetReverseStereo_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_ReserveChannels(num:Number)
+// sdl.Mix_ReserveChannels(num as Number)
 Gurax_DeclareFunctionAlias(Mix_ReserveChannels_gurax, "Mix_ReserveChannels")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11305,7 +11305,7 @@ Gurax_ImplementFunctionEx(Mix_ReserveChannels_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_GroupChannel(which:Number, tag:Number)
+// sdl.Mix_GroupChannel(which as Number, tag as Number)
 Gurax_DeclareFunctionAlias(Mix_GroupChannel_gurax, "Mix_GroupChannel")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11327,7 +11327,7 @@ Gurax_ImplementFunctionEx(Mix_GroupChannel_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_GroupChannels(from:Number, to:Number, tag:Number)
+// sdl.Mix_GroupChannels(from as Number, to as Number, tag as Number)
 Gurax_DeclareFunctionAlias(Mix_GroupChannels_gurax, "Mix_GroupChannels")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11351,7 +11351,7 @@ Gurax_ImplementFunctionEx(Mix_GroupChannels_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_GroupAvailable(tag:Number)
+// sdl.Mix_GroupAvailable(tag as Number)
 Gurax_DeclareFunctionAlias(Mix_GroupAvailable_gurax, "Mix_GroupAvailable")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11371,7 +11371,7 @@ Gurax_ImplementFunctionEx(Mix_GroupAvailable_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_GroupCount(tag:Number)
+// sdl.Mix_GroupCount(tag as Number)
 Gurax_DeclareFunctionAlias(Mix_GroupCount_gurax, "Mix_GroupCount")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11391,7 +11391,7 @@ Gurax_ImplementFunctionEx(Mix_GroupCount_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_GroupOldest(tag:Number)
+// sdl.Mix_GroupOldest(tag as Number)
 Gurax_DeclareFunctionAlias(Mix_GroupOldest_gurax, "Mix_GroupOldest")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11411,7 +11411,7 @@ Gurax_ImplementFunctionEx(Mix_GroupOldest_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_GroupNewer(tag:Number)
+// sdl.Mix_GroupNewer(tag as Number)
 Gurax_DeclareFunctionAlias(Mix_GroupNewer_gurax, "Mix_GroupNewer")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11431,7 +11431,7 @@ Gurax_ImplementFunctionEx(Mix_GroupNewer_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_PlayChannel(channel:Number, chunk:Mix_Chunk, loops:Number)
+// sdl.Mix_PlayChannel(channel as Number, chunk as Mix_Chunk, loops as Number)
 Gurax_DeclareFunctionAlias(Mix_PlayChannel_gurax, "Mix_PlayChannel")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11456,7 +11456,7 @@ Gurax_ImplementFunctionEx(Mix_PlayChannel_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_PlayChannelTimed(channel:Number, chunk:Mix_Chunk, loops:Number, ticks:Number)
+// sdl.Mix_PlayChannelTimed(channel as Number, chunk as Mix_Chunk, loops as Number, ticks as Number)
 Gurax_DeclareFunctionAlias(Mix_PlayChannelTimed_gurax, "Mix_PlayChannelTimed")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11483,7 +11483,7 @@ Gurax_ImplementFunctionEx(Mix_PlayChannelTimed_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_PlayMusic(music:Mix_Music, loops:Number)
+// sdl.Mix_PlayMusic(music as Mix_Music, loops as Number)
 Gurax_DeclareFunctionAlias(Mix_PlayMusic_gurax, "Mix_PlayMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11506,7 +11506,7 @@ Gurax_ImplementFunctionEx(Mix_PlayMusic_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_FadeInMusic(music:Mix_Music, loops:Number, ms:Number)
+// sdl.Mix_FadeInMusic(music as Mix_Music, loops as Number, ms as Number)
 Gurax_DeclareFunctionAlias(Mix_FadeInMusic_gurax, "Mix_FadeInMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11531,7 +11531,7 @@ Gurax_ImplementFunctionEx(Mix_FadeInMusic_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_FadeInMusicPos(music:Mix_Music, loops:Number, ms:Number, position:Number)
+// sdl.Mix_FadeInMusicPos(music as Mix_Music, loops as Number, ms as Number, position as Number)
 Gurax_DeclareFunctionAlias(Mix_FadeInMusicPos_gurax, "Mix_FadeInMusicPos")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11558,7 +11558,7 @@ Gurax_ImplementFunctionEx(Mix_FadeInMusicPos_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_FadeInChannelTimed(channel:Number, chunk:Mix_Chunk, loops:Number, ms:Number, ticks:Number)
+// sdl.Mix_FadeInChannelTimed(channel as Number, chunk as Mix_Chunk, loops as Number, ms as Number, ticks as Number)
 Gurax_DeclareFunctionAlias(Mix_FadeInChannelTimed_gurax, "Mix_FadeInChannelTimed")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11587,7 +11587,7 @@ Gurax_ImplementFunctionEx(Mix_FadeInChannelTimed_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_Volume(channel:Number, volume:Number)
+// sdl.Mix_Volume(channel as Number, volume as Number)
 Gurax_DeclareFunctionAlias(Mix_Volume_gurax, "Mix_Volume")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11609,7 +11609,7 @@ Gurax_ImplementFunctionEx(Mix_Volume_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_VolumeChunk(chunk:Mix_Chunk, volume:Number)
+// sdl.Mix_VolumeChunk(chunk as Mix_Chunk, volume as Number)
 Gurax_DeclareFunctionAlias(Mix_VolumeChunk_gurax, "Mix_VolumeChunk")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11632,7 +11632,7 @@ Gurax_ImplementFunctionEx(Mix_VolumeChunk_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_VolumeMusic(volume:Number)
+// sdl.Mix_VolumeMusic(volume as Number)
 Gurax_DeclareFunctionAlias(Mix_VolumeMusic_gurax, "Mix_VolumeMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11652,7 +11652,7 @@ Gurax_ImplementFunctionEx(Mix_VolumeMusic_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_HaltChannel(channel:Number)
+// sdl.Mix_HaltChannel(channel as Number)
 Gurax_DeclareFunctionAlias(Mix_HaltChannel_gurax, "Mix_HaltChannel")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11672,7 +11672,7 @@ Gurax_ImplementFunctionEx(Mix_HaltChannel_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_HaltGroup(tag:Number)
+// sdl.Mix_HaltGroup(tag as Number)
 Gurax_DeclareFunctionAlias(Mix_HaltGroup_gurax, "Mix_HaltGroup")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11708,7 +11708,7 @@ Gurax_ImplementFunctionEx(Mix_HaltMusic_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_ExpireChannel(channel:Number, ticks:Number)
+// sdl.Mix_ExpireChannel(channel as Number, ticks as Number)
 Gurax_DeclareFunctionAlias(Mix_ExpireChannel_gurax, "Mix_ExpireChannel")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11730,7 +11730,7 @@ Gurax_ImplementFunctionEx(Mix_ExpireChannel_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_FadeOutChannel(which:Number, ms:Number)
+// sdl.Mix_FadeOutChannel(which as Number, ms as Number)
 Gurax_DeclareFunctionAlias(Mix_FadeOutChannel_gurax, "Mix_FadeOutChannel")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11752,7 +11752,7 @@ Gurax_ImplementFunctionEx(Mix_FadeOutChannel_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_FadeOutGroup(tag:Number, ms:Number)
+// sdl.Mix_FadeOutGroup(tag as Number, ms as Number)
 Gurax_DeclareFunctionAlias(Mix_FadeOutGroup_gurax, "Mix_FadeOutGroup")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11774,7 +11774,7 @@ Gurax_ImplementFunctionEx(Mix_FadeOutGroup_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_FadeOutMusic(ms:Number)
+// sdl.Mix_FadeOutMusic(ms as Number)
 Gurax_DeclareFunctionAlias(Mix_FadeOutMusic_gurax, "Mix_FadeOutMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11810,7 +11810,7 @@ Gurax_ImplementFunctionEx(Mix_FadingMusic_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_FadingChannel(which:Number)
+// sdl.Mix_FadingChannel(which as Number)
 Gurax_DeclareFunctionAlias(Mix_FadingChannel_gurax, "Mix_FadingChannel")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11830,7 +11830,7 @@ Gurax_ImplementFunctionEx(Mix_FadingChannel_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_Pause(channel:Number)
+// sdl.Mix_Pause(channel as Number)
 Gurax_DeclareFunctionAlias(Mix_Pause_gurax, "Mix_Pause")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11850,7 +11850,7 @@ Gurax_ImplementFunctionEx(Mix_Pause_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.Mix_Resume(channel:Number)
+// sdl.Mix_Resume(channel as Number)
 Gurax_DeclareFunctionAlias(Mix_Resume_gurax, "Mix_Resume")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -11870,7 +11870,7 @@ Gurax_ImplementFunctionEx(Mix_Resume_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// sdl.Mix_Paused(channel:Number)
+// sdl.Mix_Paused(channel as Number)
 Gurax_DeclareFunctionAlias(Mix_Paused_gurax, "Mix_Paused")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11954,7 +11954,7 @@ Gurax_ImplementFunctionEx(Mix_PausedMusic_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_SetMusicPosition(position:Number)
+// sdl.Mix_SetMusicPosition(position as Number)
 Gurax_DeclareFunctionAlias(Mix_SetMusicPosition_gurax, "Mix_SetMusicPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -11974,7 +11974,7 @@ Gurax_ImplementFunctionEx(Mix_SetMusicPosition_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_Playing(channel:Number)
+// sdl.Mix_Playing(channel as Number)
 Gurax_DeclareFunctionAlias(Mix_Playing_gurax, "Mix_Playing")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12010,7 +12010,7 @@ Gurax_ImplementFunctionEx(Mix_PlayingMusic_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_SetMusicCMD(command:String)
+// sdl.Mix_SetMusicCMD(command as String)
 Gurax_DeclareFunctionAlias(Mix_SetMusicCMD_gurax, "Mix_SetMusicCMD")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12030,7 +12030,7 @@ Gurax_ImplementFunctionEx(Mix_SetMusicCMD_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_SetSynchroValue(value:Number)
+// sdl.Mix_SetSynchroValue(value as Number)
 Gurax_DeclareFunctionAlias(Mix_SetSynchroValue_gurax, "Mix_SetSynchroValue")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12066,7 +12066,7 @@ Gurax_ImplementFunctionEx(Mix_GetSynchroValue_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.Mix_SetSoundFonts(paths:String)
+// sdl.Mix_SetSoundFonts(paths as String)
 Gurax_DeclareFunctionAlias(Mix_SetSoundFonts_gurax, "Mix_SetSoundFonts")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12102,7 +12102,7 @@ Gurax_ImplementFunctionEx(Mix_GetSoundFonts_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.Mix_GetChunk(channel:Number)
+// sdl.Mix_GetChunk(channel as Number)
 Gurax_DeclareFunctionAlias(Mix_GetChunk_gurax, "Mix_GetChunk")
 {
 	Declare(VTYPE_Mix_Chunk, Flag::None);
@@ -12155,7 +12155,7 @@ Gurax_ImplementFunctionEx(TTF_Linked_Version_gurax, processor_gurax, argument_gu
 	return new Value_SDL_version(*ver);
 }
 
-// sdl.TTF_ByteSwappedUNICODE(swapped:Number)
+// sdl.TTF_ByteSwappedUNICODE(swapped as Number)
 Gurax_DeclareFunctionAlias(TTF_ByteSwappedUNICODE_gurax, "TTF_ByteSwappedUNICODE")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12207,7 +12207,7 @@ Gurax_ImplementFunctionEx(TTF_GetError_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_String(rtn);
 }
 
-// sdl.TTF_OpenFont(file:String, ptsize:Number)
+// sdl.TTF_OpenFont(file as String, ptsize as Number)
 Gurax_DeclareFunctionAlias(TTF_OpenFont_gurax, "TTF_OpenFont")
 {
 	Declare(VTYPE_TTF_Font, Flag::None);
@@ -12230,7 +12230,7 @@ Gurax_ImplementFunctionEx(TTF_OpenFont_gurax, processor_gurax, argument_gurax)
 	return new Value_TTF_Font(rtn);
 }
 
-// sdl.TTF_OpenFontIndex(file:String, ptsize:Number, index:Number)
+// sdl.TTF_OpenFontIndex(file as String, ptsize as Number, index as Number)
 Gurax_DeclareFunctionAlias(TTF_OpenFontIndex_gurax, "TTF_OpenFontIndex")
 {
 	Declare(VTYPE_TTF_Font, Flag::None);
@@ -12255,7 +12255,7 @@ Gurax_ImplementFunctionEx(TTF_OpenFontIndex_gurax, processor_gurax, argument_gur
 	return new Value_TTF_Font(rtn);
 }
 
-// sdl.TTF_OpenFontRW(src:SDL_RWops, freesrc:Number, ptsize:Number)
+// sdl.TTF_OpenFontRW(src as SDL_RWops, freesrc as Number, ptsize as Number)
 Gurax_DeclareFunctionAlias(TTF_OpenFontRW_gurax, "TTF_OpenFontRW")
 {
 	Declare(VTYPE_TTF_Font, Flag::None);
@@ -12281,7 +12281,7 @@ Gurax_ImplementFunctionEx(TTF_OpenFontRW_gurax, processor_gurax, argument_gurax)
 	return new Value_TTF_Font(rtn);
 }
 
-// sdl.TTF_OpenFontIndexRW(src:SDL_RWops, freesrc:Number, ptsize:Number, index:Number)
+// sdl.TTF_OpenFontIndexRW(src as SDL_RWops, freesrc as Number, ptsize as Number, index as Number)
 Gurax_DeclareFunctionAlias(TTF_OpenFontIndexRW_gurax, "TTF_OpenFontIndexRW")
 {
 	Declare(VTYPE_TTF_Font, Flag::None);
@@ -12309,7 +12309,7 @@ Gurax_ImplementFunctionEx(TTF_OpenFontIndexRW_gurax, processor_gurax, argument_g
 	return new Value_TTF_Font(rtn);
 }
 
-// sdl.TTF_GetFontStyle(font:TTF_Font)
+// sdl.TTF_GetFontStyle(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_GetFontStyle_gurax, "TTF_GetFontStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12330,7 +12330,7 @@ Gurax_ImplementFunctionEx(TTF_GetFontStyle_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_SetFontStyle(font:TTF_Font, style:Number)
+// sdl.TTF_SetFontStyle(font as TTF_Font, style as Number)
 Gurax_DeclareFunctionAlias(TTF_SetFontStyle_gurax, "TTF_SetFontStyle")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12353,7 +12353,7 @@ Gurax_ImplementFunctionEx(TTF_SetFontStyle_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// sdl.TTF_GetFontOutline(font:TTF_Font)
+// sdl.TTF_GetFontOutline(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_GetFontOutline_gurax, "TTF_GetFontOutline")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12374,7 +12374,7 @@ Gurax_ImplementFunctionEx(TTF_GetFontOutline_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_SetFontOutline(font:TTF_Font, outline:Number)
+// sdl.TTF_SetFontOutline(font as TTF_Font, outline as Number)
 Gurax_DeclareFunctionAlias(TTF_SetFontOutline_gurax, "TTF_SetFontOutline")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12397,7 +12397,7 @@ Gurax_ImplementFunctionEx(TTF_SetFontOutline_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// sdl.TTF_GetFontHinting(font:TTF_Font)
+// sdl.TTF_GetFontHinting(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_GetFontHinting_gurax, "TTF_GetFontHinting")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12418,7 +12418,7 @@ Gurax_ImplementFunctionEx(TTF_GetFontHinting_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_SetFontHinting(font:TTF_Font, hinting:Number)
+// sdl.TTF_SetFontHinting(font as TTF_Font, hinting as Number)
 Gurax_DeclareFunctionAlias(TTF_SetFontHinting_gurax, "TTF_SetFontHinting")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12441,7 +12441,7 @@ Gurax_ImplementFunctionEx(TTF_SetFontHinting_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// sdl.TTF_FontHeight(font:TTF_Font)
+// sdl.TTF_FontHeight(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_FontHeight_gurax, "TTF_FontHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12462,7 +12462,7 @@ Gurax_ImplementFunctionEx(TTF_FontHeight_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_FontAscent(font:TTF_Font)
+// sdl.TTF_FontAscent(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_FontAscent_gurax, "TTF_FontAscent")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12483,7 +12483,7 @@ Gurax_ImplementFunctionEx(TTF_FontAscent_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_FontDescent(font:TTF_Font)
+// sdl.TTF_FontDescent(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_FontDescent_gurax, "TTF_FontDescent")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12504,7 +12504,7 @@ Gurax_ImplementFunctionEx(TTF_FontDescent_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_FontLineSkip(font:TTF_Font)
+// sdl.TTF_FontLineSkip(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_FontLineSkip_gurax, "TTF_FontLineSkip")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12525,7 +12525,7 @@ Gurax_ImplementFunctionEx(TTF_FontLineSkip_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_GetFontKerning(font:TTF_Font)
+// sdl.TTF_GetFontKerning(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_GetFontKerning_gurax, "TTF_GetFontKerning")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12546,7 +12546,7 @@ Gurax_ImplementFunctionEx(TTF_GetFontKerning_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_SetFontKerning(font:TTF_Font, allowed:Number)
+// sdl.TTF_SetFontKerning(font as TTF_Font, allowed as Number)
 Gurax_DeclareFunctionAlias(TTF_SetFontKerning_gurax, "TTF_SetFontKerning")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -12569,7 +12569,7 @@ Gurax_ImplementFunctionEx(TTF_SetFontKerning_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// sdl.TTF_FontFaces(font:TTF_Font)
+// sdl.TTF_FontFaces(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_FontFaces_gurax, "TTF_FontFaces")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12590,7 +12590,7 @@ Gurax_ImplementFunctionEx(TTF_FontFaces_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_FontFaceIsFixedWidth(font:TTF_Font)
+// sdl.TTF_FontFaceIsFixedWidth(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_FontFaceIsFixedWidth_gurax, "TTF_FontFaceIsFixedWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12611,7 +12611,7 @@ Gurax_ImplementFunctionEx(TTF_FontFaceIsFixedWidth_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_GlyphIsProvided(font:TTF_Font, ch:Number)
+// sdl.TTF_GlyphIsProvided(font as TTF_Font, ch as Number)
 Gurax_DeclareFunctionAlias(TTF_GlyphIsProvided_gurax, "TTF_GlyphIsProvided")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -12634,7 +12634,7 @@ Gurax_ImplementFunctionEx(TTF_GlyphIsProvided_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// sdl.TTF_RenderText_Solid(font:TTF_Font, text:String, fg:SDL_Color)
+// sdl.TTF_RenderText_Solid(font as TTF_Font, text as String, fg as SDL_Color)
 Gurax_DeclareFunctionAlias(TTF_RenderText_Solid_gurax, "TTF_RenderText_Solid")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12661,7 +12661,7 @@ Gurax_ImplementFunctionEx(TTF_RenderText_Solid_gurax, processor_gurax, argument_
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderUTF8_Solid(font:TTF_Font, text:String, fg:SDL_Color)
+// sdl.TTF_RenderUTF8_Solid(font as TTF_Font, text as String, fg as SDL_Color)
 Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Solid_gurax, "TTF_RenderUTF8_Solid")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12688,7 +12688,7 @@ Gurax_ImplementFunctionEx(TTF_RenderUTF8_Solid_gurax, processor_gurax, argument_
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderGlyph_Solid(font:TTF_Font, ch:Number, fg:SDL_Color)
+// sdl.TTF_RenderGlyph_Solid(font as TTF_Font, ch as Number, fg as SDL_Color)
 Gurax_DeclareFunctionAlias(TTF_RenderGlyph_Solid_gurax, "TTF_RenderGlyph_Solid")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12715,7 +12715,7 @@ Gurax_ImplementFunctionEx(TTF_RenderGlyph_Solid_gurax, processor_gurax, argument
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderText_Shaded(font:TTF_Font, text:String, fg:SDL_Color, bg:SDL_Color)
+// sdl.TTF_RenderText_Shaded(font as TTF_Font, text as String, fg as SDL_Color, bg as SDL_Color)
 Gurax_DeclareFunctionAlias(TTF_RenderText_Shaded_gurax, "TTF_RenderText_Shaded")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12745,7 +12745,7 @@ Gurax_ImplementFunctionEx(TTF_RenderText_Shaded_gurax, processor_gurax, argument
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderUTF8_Shaded(font:TTF_Font, text:String, fg:SDL_Color, bg:SDL_Color)
+// sdl.TTF_RenderUTF8_Shaded(font as TTF_Font, text as String, fg as SDL_Color, bg as SDL_Color)
 Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Shaded_gurax, "TTF_RenderUTF8_Shaded")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12775,7 +12775,7 @@ Gurax_ImplementFunctionEx(TTF_RenderUTF8_Shaded_gurax, processor_gurax, argument
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderGlyph_Shaded(font:TTF_Font, ch:Number, fg:SDL_Color, bg:SDL_Color)
+// sdl.TTF_RenderGlyph_Shaded(font as TTF_Font, ch as Number, fg as SDL_Color, bg as SDL_Color)
 Gurax_DeclareFunctionAlias(TTF_RenderGlyph_Shaded_gurax, "TTF_RenderGlyph_Shaded")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12805,7 +12805,7 @@ Gurax_ImplementFunctionEx(TTF_RenderGlyph_Shaded_gurax, processor_gurax, argumen
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderText_Blended(font:TTF_Font, text:String, fg:SDL_Color)
+// sdl.TTF_RenderText_Blended(font as TTF_Font, text as String, fg as SDL_Color)
 Gurax_DeclareFunctionAlias(TTF_RenderText_Blended_gurax, "TTF_RenderText_Blended")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12832,7 +12832,7 @@ Gurax_ImplementFunctionEx(TTF_RenderText_Blended_gurax, processor_gurax, argumen
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderUTF8_Blended(font:TTF_Font, text:String, fg:SDL_Color)
+// sdl.TTF_RenderUTF8_Blended(font as TTF_Font, text as String, fg as SDL_Color)
 Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Blended_gurax, "TTF_RenderUTF8_Blended")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12859,7 +12859,7 @@ Gurax_ImplementFunctionEx(TTF_RenderUTF8_Blended_gurax, processor_gurax, argumen
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderText_Blended_Wrapped(font:TTF_Font, text:String, fg:SDL_Color, wrapLength:Number)
+// sdl.TTF_RenderText_Blended_Wrapped(font as TTF_Font, text as String, fg as SDL_Color, wrapLength as Number)
 Gurax_DeclareFunctionAlias(TTF_RenderText_Blended_Wrapped_gurax, "TTF_RenderText_Blended_Wrapped")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12888,7 +12888,7 @@ Gurax_ImplementFunctionEx(TTF_RenderText_Blended_Wrapped_gurax, processor_gurax,
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderUTF8_Blended_Wrapped(font:TTF_Font, text:String, fg:SDL_Color, wrapLength:Number)
+// sdl.TTF_RenderUTF8_Blended_Wrapped(font as TTF_Font, text as String, fg as SDL_Color, wrapLength as Number)
 Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Blended_Wrapped_gurax, "TTF_RenderUTF8_Blended_Wrapped")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12917,7 +12917,7 @@ Gurax_ImplementFunctionEx(TTF_RenderUTF8_Blended_Wrapped_gurax, processor_gurax,
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_RenderGlyph_Blended(font:TTF_Font, ch:Number, fg:SDL_Color)
+// sdl.TTF_RenderGlyph_Blended(font as TTF_Font, ch as Number, fg as SDL_Color)
 Gurax_DeclareFunctionAlias(TTF_RenderGlyph_Blended_gurax, "TTF_RenderGlyph_Blended")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
@@ -12944,7 +12944,7 @@ Gurax_ImplementFunctionEx(TTF_RenderGlyph_Blended_gurax, processor_gurax, argume
 	return new Value_SDL_Surface(rtn);
 }
 
-// sdl.TTF_CloseFont(font:TTF_Font)
+// sdl.TTF_CloseFont(font as TTF_Font)
 Gurax_DeclareFunctionAlias(TTF_CloseFont_gurax, "TTF_CloseFont")
 {
 	Declare(VTYPE_Nil, Flag::None);

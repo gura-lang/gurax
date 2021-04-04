@@ -87,11 +87,10 @@ ArgInfo = class {
 		str
 	}
 	ComposeArgRef() = this.typeInfo.ComposeArgRef(this.name)
-	ToString() = Format('%s%s%s:%s%s%s%s', this.name, cond(this.listVarFlag, '[]', ''),
-			cond(this.optionFlag, '?', ''), this.typeInfo.vtypeFullName,
-			cond(this.nilFlag, ':nil', ''),
-			cond(this.streamWFlag, ':w', ''),
-			cond(this.streamRFlag, ':r', ''))
+	ToString() = Format('%s%s%s%s%s%s as %s', this.name, cond(this.listVarFlag, '[]', ''),
+			cond(this.optionFlag, '?', ''), cond(this.nilFlag, ':nil', ''),
+			cond(this.streamWFlag, ':w', ''), cond(this.streamRFlag, ':r', ''),
+			this.typeInfo.vtypeFullName)
 }
 
 ArgInfo.tmplDeclaration = tR'''
