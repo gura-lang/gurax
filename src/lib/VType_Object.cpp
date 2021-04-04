@@ -173,7 +173,7 @@ VType& Value_Object::vtype = VTYPE_Object;
 
 String Value_Object::ToString(const StringStyle& ss) const
 {
-	return String().Format("<Object>");
+	return String().Format("<%s>", GetVTypeCustom().MakeFullName().c_str());
 }
 
 //------------------------------------------------------------------------------

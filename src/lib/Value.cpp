@@ -170,7 +170,8 @@ bool Value::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 
 Value* Value::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	const PropSlot* pPropSlot = GetVTypeCustom().LookupPropSlot(pSymbol);
+	VType& vtype = GetVTypeCustom();
+	const PropSlot* pPropSlot = vtype.LookupPropSlot(pSymbol);
 	if (pPropSlot) {
 		if (!pPropSlot->CheckValidAttribute(attr)) return nullptr;
 		if (!pPropSlot->IsSet(PropSlot::Flag::Readable)) {
@@ -179,19 +180,20 @@ Value* Value::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool n
 		}
 		return pPropSlot->GetValue(*this, attr);
 	}
-	RefPtr<Value> pValue(GetVTypeCustom().GetFrameOfMember().Retrieve(pSymbol));
+	RefPtr<Value> pValue(vtype.GetFrameOfMember().Retrieve(pSymbol));
 	if (pValue) return pValue.release();
 	if (notFoundErrorFlag) {
 		Error::Issue(ErrorType::PropertyError,
 					 "value type '%s' doesn't have a property '%s'",
-					 GetVTypeCustom().MakeFullName().c_str(), pSymbol->GetName());
+					 vtype.MakeFullName().c_str(), pSymbol->GetName());
 	}
 	return nullptr;
 }
 
 bool Value::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
 {
-	const PropSlot* pPropSlot = GetVTypeCustom().LookupPropSlot(pSymbol);
+	VType& vtype = GetVTypeCustom();
+	const PropSlot* pPropSlot = vtype.LookupPropSlot(pSymbol);
 	if (pPropSlot) {
 		if (!pPropSlot->CheckValidAttribute(attr)) return false;
 		if (!pPropSlot->IsSet(PropSlot::Flag::Writable)) {
@@ -202,7 +204,7 @@ bool Value::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Att
 	}
 	Error::Issue(ErrorType::PropertyError,
 				 "value type '%s' doesn't have a property '%s'",
-				 GetVTypeCustom().MakeFullName().c_str(), pSymbol->GetName());
+				 vtype.MakeFullName().c_str(), pSymbol->GetName());
 	return false;
 }
 
