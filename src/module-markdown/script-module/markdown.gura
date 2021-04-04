@@ -49,7 +49,7 @@ _propentry(lang as symbol, propdecl as propdeclaration):map = {
 	str
 }
 
-makedoc@module(lang as symbol, moduleName as string, headeroff?:number) = {
+makedoc@module(lang as symbol, moduleName as string, headeroff? as Number) = {
 	moduleName += '.doc'
 	mod = import(&moduleName)
 	if (headeroff) {
@@ -61,7 +61,7 @@ makedoc@module(lang as symbol, moduleName as string, headeroff?:number) = {
 	}
 }
 
-makedoc@class(lang as symbol, cls as class, headeroff?:number):dynamicScope = {
+makedoc@class(lang as symbol, cls as class, headeroff? as Number):dynamicScope = {
 	// The attribute :dynamicScope is necessary when the help document contains template in it
 	// that is expected to be evaluated with the outer environment.
 	if (headeroff) {
