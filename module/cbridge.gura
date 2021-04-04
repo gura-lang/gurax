@@ -83,8 +83,7 @@ ArgInfo = class {
 		this.tmplDeclaration.Eval()
 	}
 	ComposeImplementation() = {
-		str = this.typeInfo.ComposePicker(this.name, this.listVarFlag, this.optionFlag || this.nilFlag)
-		str
+		this.typeInfo.ComposePicker(this.name, this.listVarFlag, this.optionFlag || this.nilFlag)
 	}
 	ComposeArgRef() = this.typeInfo.ComposeArgRef(this.name)
 	ToString() = Format('%s%s%s%s%s%s as %s', this.name, cond(this.listVarFlag, '[]', ''),
