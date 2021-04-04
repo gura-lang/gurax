@@ -43,7 +43,7 @@ Gurax_ImplementFunctionEx(cairo_version_string_gurax, processor_gurax, argument_
 	return new Gurax::Value_String(rtn);
 }
 
-// cairo.cairo_create(target:cairo_surface_t)
+// cairo.cairo_create(target as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_create_gurax, "cairo_create")
 {
 	Declare(VTYPE_cairo_t, Flag::None);
@@ -65,7 +65,7 @@ Gurax_ImplementFunctionEx(cairo_create_gurax, processor_gurax, argument_gurax)
 	return new Value_cairo_t(rtn);
 }
 
-// cairo.cairo_reference(cr:cairo_t)
+// cairo.cairo_reference(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_reference_gurax, "cairo_reference")
 {
 	Declare(VTYPE_cairo_t, Flag::None);
@@ -87,7 +87,7 @@ Gurax_ImplementFunctionEx(cairo_reference_gurax, processor_gurax, argument_gurax
 	return new Value_cairo_t(rtn);
 }
 
-// cairo.cairo_destroy(cr:cairo_t)
+// cairo.cairo_destroy(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_destroy_gurax, "cairo_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -108,7 +108,7 @@ Gurax_ImplementFunctionEx(cairo_destroy_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_get_reference_count(cr:cairo_t)
+// cairo.cairo_get_reference_count(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_reference_count_gurax, "cairo_get_reference_count")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -129,7 +129,7 @@ Gurax_ImplementFunctionEx(cairo_get_reference_count_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_save(cr:cairo_t)
+// cairo.cairo_save(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_save_gurax, "cairo_save")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -150,7 +150,7 @@ Gurax_ImplementFunctionEx(cairo_save_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_restore(cr:cairo_t)
+// cairo.cairo_restore(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_restore_gurax, "cairo_restore")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -171,7 +171,7 @@ Gurax_ImplementFunctionEx(cairo_restore_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_push_group(cr:cairo_t)
+// cairo.cairo_push_group(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_push_group_gurax, "cairo_push_group")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -192,7 +192,7 @@ Gurax_ImplementFunctionEx(cairo_push_group_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_push_group_with_content(cr:cairo_t, content:Number)
+// cairo.cairo_push_group_with_content(cr as cairo_t, content as Number)
 Gurax_DeclareFunctionAlias(cairo_push_group_with_content_gurax, "cairo_push_group_with_content")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -215,7 +215,7 @@ Gurax_ImplementFunctionEx(cairo_push_group_with_content_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pop_group(cr:cairo_t)
+// cairo.cairo_pop_group(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_pop_group_gurax, "cairo_pop_group")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
@@ -237,7 +237,7 @@ Gurax_ImplementFunctionEx(cairo_pop_group_gurax, processor_gurax, argument_gurax
 	return new Value_cairo_pattern_t(rtn);
 }
 
-// cairo.cairo_pop_group_to_source(cr:cairo_t)
+// cairo.cairo_pop_group_to_source(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_pop_group_to_source_gurax, "cairo_pop_group_to_source")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -258,7 +258,7 @@ Gurax_ImplementFunctionEx(cairo_pop_group_to_source_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_operator(cr:cairo_t, op:Number)
+// cairo.cairo_set_operator(cr as cairo_t, op as Number)
 Gurax_DeclareFunctionAlias(cairo_set_operator_gurax, "cairo_set_operator")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -281,7 +281,7 @@ Gurax_ImplementFunctionEx(cairo_set_operator_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_source(cr:cairo_t, source:cairo_pattern_t)
+// cairo.cairo_set_source(cr as cairo_t, source as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_set_source_gurax, "cairo_set_source")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -305,7 +305,7 @@ Gurax_ImplementFunctionEx(cairo_set_source_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_source_rgb(cr:cairo_t, red:Number, green:Number, blue:Number)
+// cairo.cairo_set_source_rgb(cr as cairo_t, red as Number, green as Number, blue as Number)
 Gurax_DeclareFunctionAlias(cairo_set_source_rgb_gurax, "cairo_set_source_rgb")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -332,7 +332,7 @@ Gurax_ImplementFunctionEx(cairo_set_source_rgb_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_source_rgba(cr:cairo_t, red:Number, green:Number, blue:Number, alpha:Number)
+// cairo.cairo_set_source_rgba(cr as cairo_t, red as Number, green as Number, blue as Number, alpha as Number)
 Gurax_DeclareFunctionAlias(cairo_set_source_rgba_gurax, "cairo_set_source_rgba")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -361,7 +361,7 @@ Gurax_ImplementFunctionEx(cairo_set_source_rgba_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_source_surface(cr:cairo_t, surface:cairo_surface_t, x:Number, y:Number)
+// cairo.cairo_set_source_surface(cr as cairo_t, surface as cairo_surface_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_set_source_surface_gurax, "cairo_set_source_surface")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -389,7 +389,7 @@ Gurax_ImplementFunctionEx(cairo_set_source_surface_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_tolerance(cr:cairo_t, tolerance:Number)
+// cairo.cairo_set_tolerance(cr as cairo_t, tolerance as Number)
 Gurax_DeclareFunctionAlias(cairo_set_tolerance_gurax, "cairo_set_tolerance")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -412,7 +412,7 @@ Gurax_ImplementFunctionEx(cairo_set_tolerance_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_antialias(cr:cairo_t, antialias:Number)
+// cairo.cairo_set_antialias(cr as cairo_t, antialias as Number)
 Gurax_DeclareFunctionAlias(cairo_set_antialias_gurax, "cairo_set_antialias")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -435,7 +435,7 @@ Gurax_ImplementFunctionEx(cairo_set_antialias_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_fill_rule(cr:cairo_t, fill_rule:Number)
+// cairo.cairo_set_fill_rule(cr as cairo_t, fill_rule as Number)
 Gurax_DeclareFunctionAlias(cairo_set_fill_rule_gurax, "cairo_set_fill_rule")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -458,7 +458,7 @@ Gurax_ImplementFunctionEx(cairo_set_fill_rule_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_line_width(cr:cairo_t, width:Number)
+// cairo.cairo_set_line_width(cr as cairo_t, width as Number)
 Gurax_DeclareFunctionAlias(cairo_set_line_width_gurax, "cairo_set_line_width")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -481,7 +481,7 @@ Gurax_ImplementFunctionEx(cairo_set_line_width_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_line_cap(cr:cairo_t, line_cap:Number)
+// cairo.cairo_set_line_cap(cr as cairo_t, line_cap as Number)
 Gurax_DeclareFunctionAlias(cairo_set_line_cap_gurax, "cairo_set_line_cap")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -504,7 +504,7 @@ Gurax_ImplementFunctionEx(cairo_set_line_cap_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_line_join(cr:cairo_t, line_join:Number)
+// cairo.cairo_set_line_join(cr as cairo_t, line_join as Number)
 Gurax_DeclareFunctionAlias(cairo_set_line_join_gurax, "cairo_set_line_join")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -527,7 +527,7 @@ Gurax_ImplementFunctionEx(cairo_set_line_join_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_dash(cr:cairo_t, dashes[]:Number, offset:Number)
+// cairo.cairo_set_dash(cr as cairo_t, dashes[] as Number, offset as Number)
 Gurax_DeclareFunctionAlias(cairo_set_dash_gurax, "cairo_set_dash")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -553,7 +553,7 @@ Gurax_ImplementFunctionEx(cairo_set_dash_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// cairo.cairo_set_miter_limit(cr:cairo_t, limit:Number)
+// cairo.cairo_set_miter_limit(cr as cairo_t, limit as Number)
 Gurax_DeclareFunctionAlias(cairo_set_miter_limit_gurax, "cairo_set_miter_limit")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -576,7 +576,7 @@ Gurax_ImplementFunctionEx(cairo_set_miter_limit_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_translate(cr:cairo_t, tx:Number, ty:Number)
+// cairo.cairo_translate(cr as cairo_t, tx as Number, ty as Number)
 Gurax_DeclareFunctionAlias(cairo_translate_gurax, "cairo_translate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -601,7 +601,7 @@ Gurax_ImplementFunctionEx(cairo_translate_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_scale(cr:cairo_t, sx:Number, sy:Number)
+// cairo.cairo_scale(cr as cairo_t, sx as Number, sy as Number)
 Gurax_DeclareFunctionAlias(cairo_scale_gurax, "cairo_scale")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -626,7 +626,7 @@ Gurax_ImplementFunctionEx(cairo_scale_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_rotate(cr:cairo_t, angle:Number)
+// cairo.cairo_rotate(cr as cairo_t, angle as Number)
 Gurax_DeclareFunctionAlias(cairo_rotate_gurax, "cairo_rotate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -649,7 +649,7 @@ Gurax_ImplementFunctionEx(cairo_rotate_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_transform(cr:cairo_t, matrix:cairo_matrix_t)
+// cairo.cairo_transform(cr as cairo_t, matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_transform_gurax, "cairo_transform")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -673,7 +673,7 @@ Gurax_ImplementFunctionEx(cairo_transform_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_matrix(cr:cairo_t, matrix:cairo_matrix_t)
+// cairo.cairo_set_matrix(cr as cairo_t, matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_set_matrix_gurax, "cairo_set_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -697,7 +697,7 @@ Gurax_ImplementFunctionEx(cairo_set_matrix_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_identity_matrix(cr:cairo_t)
+// cairo.cairo_identity_matrix(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_identity_matrix_gurax, "cairo_identity_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -718,7 +718,7 @@ Gurax_ImplementFunctionEx(cairo_identity_matrix_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_user_to_device(cr:cairo_t, x:Number, y:Number)
+// cairo.cairo_user_to_device(cr as cairo_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_user_to_device_gurax, "cairo_user_to_device")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -743,7 +743,7 @@ Gurax_ImplementFunctionEx(cairo_user_to_device_gurax, processor_gurax, argument_
 	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 }
 
-// cairo.cairo_user_to_device_distance(cr:cairo_t, dx:Number, dy:Number)
+// cairo.cairo_user_to_device_distance(cr as cairo_t, dx as Number, dy as Number)
 Gurax_DeclareFunctionAlias(cairo_user_to_device_distance_gurax, "cairo_user_to_device_distance")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -768,7 +768,7 @@ Gurax_ImplementFunctionEx(cairo_user_to_device_distance_gurax, processor_gurax, 
 	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
 }
 
-// cairo.cairo_device_to_user(cr:cairo_t, x:Number, y:Number)
+// cairo.cairo_device_to_user(cr as cairo_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_device_to_user_gurax, "cairo_device_to_user")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -793,7 +793,7 @@ Gurax_ImplementFunctionEx(cairo_device_to_user_gurax, processor_gurax, argument_
 	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 }
 
-// cairo.cairo_device_to_user_distance(cr:cairo_t, dx:Number, dy:Number)
+// cairo.cairo_device_to_user_distance(cr as cairo_t, dx as Number, dy as Number)
 Gurax_DeclareFunctionAlias(cairo_device_to_user_distance_gurax, "cairo_device_to_user_distance")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -818,7 +818,7 @@ Gurax_ImplementFunctionEx(cairo_device_to_user_distance_gurax, processor_gurax, 
 	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
 }
 
-// cairo.cairo_new_path(cr:cairo_t)
+// cairo.cairo_new_path(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_new_path_gurax, "cairo_new_path")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -839,7 +839,7 @@ Gurax_ImplementFunctionEx(cairo_new_path_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_move_to(cr:cairo_t, x:Number, y:Number)
+// cairo.cairo_move_to(cr as cairo_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_move_to_gurax, "cairo_move_to")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -864,7 +864,7 @@ Gurax_ImplementFunctionEx(cairo_move_to_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_new_sub_path(cr:cairo_t)
+// cairo.cairo_new_sub_path(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_new_sub_path_gurax, "cairo_new_sub_path")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -885,7 +885,7 @@ Gurax_ImplementFunctionEx(cairo_new_sub_path_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_line_to(cr:cairo_t, x:Number, y:Number)
+// cairo.cairo_line_to(cr as cairo_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_line_to_gurax, "cairo_line_to")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -910,7 +910,7 @@ Gurax_ImplementFunctionEx(cairo_line_to_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_curve_to(cr:cairo_t, x1:Number, y1:Number, x2:Number, y2:Number, x3:Number, y3:Number)
+// cairo.cairo_curve_to(cr as cairo_t, x1 as Number, y1 as Number, x2 as Number, y2 as Number, x3 as Number, y3 as Number)
 Gurax_DeclareFunctionAlias(cairo_curve_to_gurax, "cairo_curve_to")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -943,7 +943,7 @@ Gurax_ImplementFunctionEx(cairo_curve_to_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_arc(cr:cairo_t, xc:Number, yc:Number, radius:Number, angle1:Number, angle2:Number)
+// cairo.cairo_arc(cr as cairo_t, xc as Number, yc as Number, radius as Number, angle1 as Number, angle2 as Number)
 Gurax_DeclareFunctionAlias(cairo_arc_gurax, "cairo_arc")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -974,7 +974,7 @@ Gurax_ImplementFunctionEx(cairo_arc_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_arc_negative(cr:cairo_t, xc:Number, yc:Number, radius:Number, angle1:Number, angle2:Number)
+// cairo.cairo_arc_negative(cr as cairo_t, xc as Number, yc as Number, radius as Number, angle1 as Number, angle2 as Number)
 Gurax_DeclareFunctionAlias(cairo_arc_negative_gurax, "cairo_arc_negative")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1005,7 +1005,7 @@ Gurax_ImplementFunctionEx(cairo_arc_negative_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_rel_move_to(cr:cairo_t, dx:Number, dy:Number)
+// cairo.cairo_rel_move_to(cr as cairo_t, dx as Number, dy as Number)
 Gurax_DeclareFunctionAlias(cairo_rel_move_to_gurax, "cairo_rel_move_to")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1030,7 +1030,7 @@ Gurax_ImplementFunctionEx(cairo_rel_move_to_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_rel_line_to(cr:cairo_t, dx:Number, dy:Number)
+// cairo.cairo_rel_line_to(cr as cairo_t, dx as Number, dy as Number)
 Gurax_DeclareFunctionAlias(cairo_rel_line_to_gurax, "cairo_rel_line_to")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1055,7 +1055,7 @@ Gurax_ImplementFunctionEx(cairo_rel_line_to_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_rel_curve_to(cr:cairo_t, dx1:Number, dy1:Number, dx2:Number, dy2:Number, dx3:Number, dy3:Number)
+// cairo.cairo_rel_curve_to(cr as cairo_t, dx1 as Number, dy1 as Number, dx2 as Number, dy2 as Number, dx3 as Number, dy3 as Number)
 Gurax_DeclareFunctionAlias(cairo_rel_curve_to_gurax, "cairo_rel_curve_to")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1088,7 +1088,7 @@ Gurax_ImplementFunctionEx(cairo_rel_curve_to_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_rectangle(cr:cairo_t, x:Number, y:Number, width:Number, height:Number)
+// cairo.cairo_rectangle(cr as cairo_t, x as Number, y as Number, width as Number, height as Number)
 Gurax_DeclareFunctionAlias(cairo_rectangle_gurax, "cairo_rectangle")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1117,7 +1117,7 @@ Gurax_ImplementFunctionEx(cairo_rectangle_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_close_path(cr:cairo_t)
+// cairo.cairo_close_path(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_close_path_gurax, "cairo_close_path")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1138,7 +1138,7 @@ Gurax_ImplementFunctionEx(cairo_close_path_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_path_extents(cr:cairo_t)
+// cairo.cairo_path_extents(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_path_extents_gurax, "cairo_path_extents")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1160,7 +1160,7 @@ Gurax_ImplementFunctionEx(cairo_path_extents_gurax, processor_gurax, argument_gu
 	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
 }
 
-// cairo.cairo_paint(cr:cairo_t)
+// cairo.cairo_paint(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_paint_gurax, "cairo_paint")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1181,7 +1181,7 @@ Gurax_ImplementFunctionEx(cairo_paint_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_paint_with_alpha(cr:cairo_t, alpha:Number)
+// cairo.cairo_paint_with_alpha(cr as cairo_t, alpha as Number)
 Gurax_DeclareFunctionAlias(cairo_paint_with_alpha_gurax, "cairo_paint_with_alpha")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1204,7 +1204,7 @@ Gurax_ImplementFunctionEx(cairo_paint_with_alpha_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mask(cr:cairo_t, pattern:cairo_pattern_t)
+// cairo.cairo_mask(cr as cairo_t, pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_mask_gurax, "cairo_mask")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1228,7 +1228,7 @@ Gurax_ImplementFunctionEx(cairo_mask_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mask_surface(cr:cairo_t, surface:cairo_surface_t, surface_x:Number, surface_y:Number)
+// cairo.cairo_mask_surface(cr as cairo_t, surface as cairo_surface_t, surface_x as Number, surface_y as Number)
 Gurax_DeclareFunctionAlias(cairo_mask_surface_gurax, "cairo_mask_surface")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1256,7 +1256,7 @@ Gurax_ImplementFunctionEx(cairo_mask_surface_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_stroke(cr:cairo_t)
+// cairo.cairo_stroke(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_stroke_gurax, "cairo_stroke")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1277,7 +1277,7 @@ Gurax_ImplementFunctionEx(cairo_stroke_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_stroke_preserve(cr:cairo_t)
+// cairo.cairo_stroke_preserve(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_stroke_preserve_gurax, "cairo_stroke_preserve")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1298,7 +1298,7 @@ Gurax_ImplementFunctionEx(cairo_stroke_preserve_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_fill(cr:cairo_t)
+// cairo.cairo_fill(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_fill_gurax, "cairo_fill")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1319,7 +1319,7 @@ Gurax_ImplementFunctionEx(cairo_fill_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_fill_preserve(cr:cairo_t)
+// cairo.cairo_fill_preserve(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_fill_preserve_gurax, "cairo_fill_preserve")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1340,7 +1340,7 @@ Gurax_ImplementFunctionEx(cairo_fill_preserve_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_copy_page(cr:cairo_t)
+// cairo.cairo_copy_page(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_copy_page_gurax, "cairo_copy_page")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1361,7 +1361,7 @@ Gurax_ImplementFunctionEx(cairo_copy_page_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_show_page(cr:cairo_t)
+// cairo.cairo_show_page(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_show_page_gurax, "cairo_show_page")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1382,7 +1382,7 @@ Gurax_ImplementFunctionEx(cairo_show_page_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_in_stroke(cr:cairo_t, x:Number, y:Number)
+// cairo.cairo_in_stroke(cr as cairo_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_in_stroke_gurax, "cairo_in_stroke")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -1407,7 +1407,7 @@ Gurax_ImplementFunctionEx(cairo_in_stroke_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_in_fill(cr:cairo_t, x:Number, y:Number)
+// cairo.cairo_in_fill(cr as cairo_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_in_fill_gurax, "cairo_in_fill")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -1432,7 +1432,7 @@ Gurax_ImplementFunctionEx(cairo_in_fill_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_in_clip(cr:cairo_t, x:Number, y:Number)
+// cairo.cairo_in_clip(cr as cairo_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_in_clip_gurax, "cairo_in_clip")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -1457,7 +1457,7 @@ Gurax_ImplementFunctionEx(cairo_in_clip_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_stroke_extents(cr:cairo_t)
+// cairo.cairo_stroke_extents(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_stroke_extents_gurax, "cairo_stroke_extents")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1479,7 +1479,7 @@ Gurax_ImplementFunctionEx(cairo_stroke_extents_gurax, processor_gurax, argument_
 	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
 }
 
-// cairo.cairo_fill_extents(cr:cairo_t)
+// cairo.cairo_fill_extents(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_fill_extents_gurax, "cairo_fill_extents")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1501,7 +1501,7 @@ Gurax_ImplementFunctionEx(cairo_fill_extents_gurax, processor_gurax, argument_gu
 	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
 }
 
-// cairo.cairo_reset_clip(cr:cairo_t)
+// cairo.cairo_reset_clip(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_reset_clip_gurax, "cairo_reset_clip")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1522,7 +1522,7 @@ Gurax_ImplementFunctionEx(cairo_reset_clip_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_clip(cr:cairo_t)
+// cairo.cairo_clip(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_clip_gurax, "cairo_clip")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1543,7 +1543,7 @@ Gurax_ImplementFunctionEx(cairo_clip_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_clip_preserve(cr:cairo_t)
+// cairo.cairo_clip_preserve(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_clip_preserve_gurax, "cairo_clip_preserve")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1564,7 +1564,7 @@ Gurax_ImplementFunctionEx(cairo_clip_preserve_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_clip_extents(cr:cairo_t)
+// cairo.cairo_clip_extents(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_clip_extents_gurax, "cairo_clip_extents")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -1586,7 +1586,7 @@ Gurax_ImplementFunctionEx(cairo_clip_extents_gurax, processor_gurax, argument_gu
 	return Value_Tuple::Create(new Value_Number(x1), new Value_Number(y1), new Value_Number(x2), new Value_Number(y2));
 }
 
-// cairo.cairo_copy_clip_rectangle_list(cr:cairo_t)
+// cairo.cairo_copy_clip_rectangle_list(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_copy_clip_rectangle_list_gurax, "cairo_copy_clip_rectangle_list")
 {
 	Declare(VTYPE_cairo_rectangle_list_t, Flag::None);
@@ -1608,7 +1608,7 @@ Gurax_ImplementFunctionEx(cairo_copy_clip_rectangle_list_gurax, processor_gurax,
 	return new Value_cairo_rectangle_list_t(rtn);
 }
 
-// cairo.cairo_rectangle_list_destroy(rectangle_list:cairo_rectangle_list_t)
+// cairo.cairo_rectangle_list_destroy(rectangle_list as cairo_rectangle_list_t)
 Gurax_DeclareFunctionAlias(cairo_rectangle_list_destroy_gurax, "cairo_rectangle_list_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1629,7 +1629,7 @@ Gurax_ImplementFunctionEx(cairo_rectangle_list_destroy_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_tag_begin(cr:cairo_t, tag_name:String, attributes:String)
+// cairo.cairo_tag_begin(cr as cairo_t, tag_name as String, attributes as String)
 Gurax_DeclareFunctionAlias(cairo_tag_begin_gurax, "cairo_tag_begin")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1654,7 +1654,7 @@ Gurax_ImplementFunctionEx(cairo_tag_begin_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_tag_end(cr:cairo_t, tag_name:String)
+// cairo.cairo_tag_end(cr as cairo_t, tag_name as String)
 Gurax_DeclareFunctionAlias(cairo_tag_end_gurax, "cairo_tag_end")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1677,7 +1677,7 @@ Gurax_ImplementFunctionEx(cairo_tag_end_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_glyph_allocate(num_glyphs:Number)
+// cairo.cairo_glyph_allocate(num_glyphs as Number)
 Gurax_DeclareFunctionAlias(cairo_glyph_allocate_gurax, "cairo_glyph_allocate")
 {
 	Declare(VTYPE_cairo_glyph_t, Flag::None);
@@ -1698,7 +1698,7 @@ Gurax_ImplementFunctionEx(cairo_glyph_allocate_gurax, processor_gurax, argument_
 	return new Value_cairo_glyph_t(rtn);
 }
 
-// cairo.cairo_glyph_free(glyphs:cairo_glyph_t)
+// cairo.cairo_glyph_free(glyphs as cairo_glyph_t)
 Gurax_DeclareFunctionAlias(cairo_glyph_free_gurax, "cairo_glyph_free")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1719,7 +1719,7 @@ Gurax_ImplementFunctionEx(cairo_glyph_free_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_text_cluster_allocate(num_clusters:Number)
+// cairo.cairo_text_cluster_allocate(num_clusters as Number)
 Gurax_DeclareFunctionAlias(cairo_text_cluster_allocate_gurax, "cairo_text_cluster_allocate")
 {
 	Declare(VTYPE_cairo_text_cluster_t, Flag::None);
@@ -1740,7 +1740,7 @@ Gurax_ImplementFunctionEx(cairo_text_cluster_allocate_gurax, processor_gurax, ar
 	return new Value_cairo_text_cluster_t(rtn);
 }
 
-// cairo.cairo_text_cluster_free(clusters:cairo_text_cluster_t)
+// cairo.cairo_text_cluster_free(clusters as cairo_text_cluster_t)
 Gurax_DeclareFunctionAlias(cairo_text_cluster_free_gurax, "cairo_text_cluster_free")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1778,7 +1778,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_create_gurax, processor_gurax, argu
 	return new Value_cairo_font_options_t(rtn);
 }
 
-// cairo.cairo_font_options_copy(original:cairo_font_options_t)
+// cairo.cairo_font_options_copy(original as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_copy_gurax, "cairo_font_options_copy")
 {
 	Declare(VTYPE_cairo_font_options_t, Flag::None);
@@ -1800,7 +1800,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_copy_gurax, processor_gurax, argume
 	return new Value_cairo_font_options_t(rtn);
 }
 
-// cairo.cairo_font_options_destroy(options:cairo_font_options_t)
+// cairo.cairo_font_options_destroy(options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_destroy_gurax, "cairo_font_options_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1821,7 +1821,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_destroy_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_font_options_status(options:cairo_font_options_t)
+// cairo.cairo_font_options_status(options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_status_gurax, "cairo_font_options_status")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1842,7 +1842,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_status_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_font_options_merge(options:cairo_font_options_t, other:cairo_font_options_t)
+// cairo.cairo_font_options_merge(options as cairo_font_options_t, other as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_merge_gurax, "cairo_font_options_merge")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1866,7 +1866,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_merge_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_font_options_equal(options:cairo_font_options_t, other:cairo_font_options_t)
+// cairo.cairo_font_options_equal(options as cairo_font_options_t, other as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_equal_gurax, "cairo_font_options_equal")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -1890,7 +1890,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_equal_gurax, processor_gurax, argum
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_font_options_hash(options:cairo_font_options_t)
+// cairo.cairo_font_options_hash(options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_hash_gurax, "cairo_font_options_hash")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1911,7 +1911,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_hash_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_font_options_set_antialias(options:cairo_font_options_t, antialias:Number)
+// cairo.cairo_font_options_set_antialias(options as cairo_font_options_t, antialias as Number)
 Gurax_DeclareFunctionAlias(cairo_font_options_set_antialias_gurax, "cairo_font_options_set_antialias")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1934,7 +1934,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_set_antialias_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_font_options_get_antialias(options:cairo_font_options_t)
+// cairo.cairo_font_options_get_antialias(options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_get_antialias_gurax, "cairo_font_options_get_antialias")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1955,7 +1955,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_get_antialias_gurax, processor_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_font_options_set_subpixel_order(options:cairo_font_options_t, subpixel_order:Number)
+// cairo.cairo_font_options_set_subpixel_order(options as cairo_font_options_t, subpixel_order as Number)
 Gurax_DeclareFunctionAlias(cairo_font_options_set_subpixel_order_gurax, "cairo_font_options_set_subpixel_order")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1978,7 +1978,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_set_subpixel_order_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_font_options_get_subpixel_order(options:cairo_font_options_t)
+// cairo.cairo_font_options_get_subpixel_order(options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_get_subpixel_order_gurax, "cairo_font_options_get_subpixel_order")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -1999,7 +1999,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_get_subpixel_order_gurax, processor
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_font_options_set_hint_style(options:cairo_font_options_t, hint_style:Number)
+// cairo.cairo_font_options_set_hint_style(options as cairo_font_options_t, hint_style as Number)
 Gurax_DeclareFunctionAlias(cairo_font_options_set_hint_style_gurax, "cairo_font_options_set_hint_style")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2022,7 +2022,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_set_hint_style_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_font_options_get_hint_style(options:cairo_font_options_t)
+// cairo.cairo_font_options_get_hint_style(options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_get_hint_style_gurax, "cairo_font_options_get_hint_style")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2043,7 +2043,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_get_hint_style_gurax, processor_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_font_options_set_hint_metrics(options:cairo_font_options_t, hint_metrics:Number)
+// cairo.cairo_font_options_set_hint_metrics(options as cairo_font_options_t, hint_metrics as Number)
 Gurax_DeclareFunctionAlias(cairo_font_options_set_hint_metrics_gurax, "cairo_font_options_set_hint_metrics")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2066,7 +2066,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_set_hint_metrics_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_font_options_get_hint_metrics(options:cairo_font_options_t)
+// cairo.cairo_font_options_get_hint_metrics(options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_get_hint_metrics_gurax, "cairo_font_options_get_hint_metrics")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2087,7 +2087,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_get_hint_metrics_gurax, processor_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_font_options_get_variations(options:cairo_font_options_t)
+// cairo.cairo_font_options_get_variations(options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_font_options_get_variations_gurax, "cairo_font_options_get_variations")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -2108,7 +2108,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_get_variations_gurax, processor_gur
 	return new Gurax::Value_String(rtn);
 }
 
-// cairo.cairo_font_options_set_variations(options:cairo_font_options_t, variations:String)
+// cairo.cairo_font_options_set_variations(options as cairo_font_options_t, variations as String)
 Gurax_DeclareFunctionAlias(cairo_font_options_set_variations_gurax, "cairo_font_options_set_variations")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2131,7 +2131,7 @@ Gurax_ImplementFunctionEx(cairo_font_options_set_variations_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_select_font_face(cr:cairo_t, family:String, slant:Number, weight:Number)
+// cairo.cairo_select_font_face(cr as cairo_t, family as String, slant as Number, weight as Number)
 Gurax_DeclareFunctionAlias(cairo_select_font_face_gurax, "cairo_select_font_face")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2158,7 +2158,7 @@ Gurax_ImplementFunctionEx(cairo_select_font_face_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_font_size(cr:cairo_t, size:Number)
+// cairo.cairo_set_font_size(cr as cairo_t, size as Number)
 Gurax_DeclareFunctionAlias(cairo_set_font_size_gurax, "cairo_set_font_size")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2181,7 +2181,7 @@ Gurax_ImplementFunctionEx(cairo_set_font_size_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_font_matrix(cr:cairo_t, matrix:cairo_matrix_t)
+// cairo.cairo_set_font_matrix(cr as cairo_t, matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_set_font_matrix_gurax, "cairo_set_font_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2205,7 +2205,7 @@ Gurax_ImplementFunctionEx(cairo_set_font_matrix_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_get_font_matrix(cr:cairo_t, matrix:cairo_matrix_t)
+// cairo.cairo_get_font_matrix(cr as cairo_t, matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_get_font_matrix_gurax, "cairo_get_font_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2229,7 +2229,7 @@ Gurax_ImplementFunctionEx(cairo_get_font_matrix_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_font_options(cr:cairo_t, options:cairo_font_options_t)
+// cairo.cairo_set_font_options(cr as cairo_t, options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_set_font_options_gurax, "cairo_set_font_options")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2253,7 +2253,7 @@ Gurax_ImplementFunctionEx(cairo_set_font_options_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_get_font_options(cr:cairo_t, options:cairo_font_options_t)
+// cairo.cairo_get_font_options(cr as cairo_t, options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_get_font_options_gurax, "cairo_get_font_options")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2277,7 +2277,7 @@ Gurax_ImplementFunctionEx(cairo_get_font_options_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_set_font_face(cr:cairo_t, font_face:cairo_font_face_t)
+// cairo.cairo_set_font_face(cr as cairo_t, font_face as cairo_font_face_t)
 Gurax_DeclareFunctionAlias(cairo_set_font_face_gurax, "cairo_set_font_face")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2301,7 +2301,7 @@ Gurax_ImplementFunctionEx(cairo_set_font_face_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_get_font_face(cr:cairo_t)
+// cairo.cairo_get_font_face(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_font_face_gurax, "cairo_get_font_face")
 {
 	Declare(VTYPE_cairo_font_face_t, Flag::None);
@@ -2323,7 +2323,7 @@ Gurax_ImplementFunctionEx(cairo_get_font_face_gurax, processor_gurax, argument_g
 	return new Value_cairo_font_face_t(rtn);
 }
 
-// cairo.cairo_set_scaled_font(cr:cairo_t, scaled_font:cairo_scaled_font_t)
+// cairo.cairo_set_scaled_font(cr as cairo_t, scaled_font as cairo_scaled_font_t)
 Gurax_DeclareFunctionAlias(cairo_set_scaled_font_gurax, "cairo_set_scaled_font")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2347,7 +2347,7 @@ Gurax_ImplementFunctionEx(cairo_set_scaled_font_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_get_scaled_font(cr:cairo_t)
+// cairo.cairo_get_scaled_font(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_scaled_font_gurax, "cairo_get_scaled_font")
 {
 	Declare(VTYPE_cairo_scaled_font_t, Flag::None);
@@ -2369,7 +2369,7 @@ Gurax_ImplementFunctionEx(cairo_get_scaled_font_gurax, processor_gurax, argument
 	return new Value_cairo_scaled_font_t(rtn);
 }
 
-// cairo.cairo_show_text(cr:cairo_t, utf8:String)
+// cairo.cairo_show_text(cr as cairo_t, utf8 as String)
 Gurax_DeclareFunctionAlias(cairo_show_text_gurax, "cairo_show_text")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2392,7 +2392,7 @@ Gurax_ImplementFunctionEx(cairo_show_text_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_show_glyphs(cr:cairo_t, glyphs:cairo_glyph_t, num_glyphs:Number)
+// cairo.cairo_show_glyphs(cr as cairo_t, glyphs as cairo_glyph_t, num_glyphs as Number)
 Gurax_DeclareFunctionAlias(cairo_show_glyphs_gurax, "cairo_show_glyphs")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2418,7 +2418,7 @@ Gurax_ImplementFunctionEx(cairo_show_glyphs_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_show_text_glyphs(cr:cairo_t, utf8:String, utf8_len:Number, glyphs:cairo_glyph_t, num_glyphs:Number, clusters:cairo_text_cluster_t, num_clusters:Number, cluster_flags:Number)
+// cairo.cairo_show_text_glyphs(cr as cairo_t, utf8 as String, utf8_len as Number, glyphs as cairo_glyph_t, num_glyphs as Number, clusters as cairo_text_cluster_t, num_clusters as Number, cluster_flags as Number)
 Gurax_DeclareFunctionAlias(cairo_show_text_glyphs_gurax, "cairo_show_text_glyphs")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2455,7 +2455,7 @@ Gurax_ImplementFunctionEx(cairo_show_text_glyphs_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_text_path(cr:cairo_t, utf8:String)
+// cairo.cairo_text_path(cr as cairo_t, utf8 as String)
 Gurax_DeclareFunctionAlias(cairo_text_path_gurax, "cairo_text_path")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2478,7 +2478,7 @@ Gurax_ImplementFunctionEx(cairo_text_path_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_glyph_path(cr:cairo_t, glyphs:cairo_glyph_t, num_glyphs:Number)
+// cairo.cairo_glyph_path(cr as cairo_t, glyphs as cairo_glyph_t, num_glyphs as Number)
 Gurax_DeclareFunctionAlias(cairo_glyph_path_gurax, "cairo_glyph_path")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2504,7 +2504,7 @@ Gurax_ImplementFunctionEx(cairo_glyph_path_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_text_extents(cr:cairo_t, utf8:String, extents:cairo_text_extents_t)
+// cairo.cairo_text_extents(cr as cairo_t, utf8 as String, extents as cairo_text_extents_t)
 Gurax_DeclareFunctionAlias(cairo_text_extents_gurax, "cairo_text_extents")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2530,7 +2530,7 @@ Gurax_ImplementFunctionEx(cairo_text_extents_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_glyph_extents(cr:cairo_t, glyphs:cairo_glyph_t, num_glyphs:Number, extents:cairo_text_extents_t)
+// cairo.cairo_glyph_extents(cr as cairo_t, glyphs as cairo_glyph_t, num_glyphs as Number, extents as cairo_text_extents_t)
 Gurax_DeclareFunctionAlias(cairo_glyph_extents_gurax, "cairo_glyph_extents")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2559,7 +2559,7 @@ Gurax_ImplementFunctionEx(cairo_glyph_extents_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_font_extents(cr:cairo_t, extents:cairo_font_extents_t)
+// cairo.cairo_font_extents(cr as cairo_t, extents as cairo_font_extents_t)
 Gurax_DeclareFunctionAlias(cairo_font_extents_gurax, "cairo_font_extents")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2583,7 +2583,7 @@ Gurax_ImplementFunctionEx(cairo_font_extents_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_font_face_reference(font_face:cairo_font_face_t)
+// cairo.cairo_font_face_reference(font_face as cairo_font_face_t)
 Gurax_DeclareFunctionAlias(cairo_font_face_reference_gurax, "cairo_font_face_reference")
 {
 	Declare(VTYPE_cairo_font_face_t, Flag::None);
@@ -2605,7 +2605,7 @@ Gurax_ImplementFunctionEx(cairo_font_face_reference_gurax, processor_gurax, argu
 	return new Value_cairo_font_face_t(rtn);
 }
 
-// cairo.cairo_font_face_destroy(font_face:cairo_font_face_t)
+// cairo.cairo_font_face_destroy(font_face as cairo_font_face_t)
 Gurax_DeclareFunctionAlias(cairo_font_face_destroy_gurax, "cairo_font_face_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2626,7 +2626,7 @@ Gurax_ImplementFunctionEx(cairo_font_face_destroy_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_font_face_get_reference_count(font_face:cairo_font_face_t)
+// cairo.cairo_font_face_get_reference_count(font_face as cairo_font_face_t)
 Gurax_DeclareFunctionAlias(cairo_font_face_get_reference_count_gurax, "cairo_font_face_get_reference_count")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2647,7 +2647,7 @@ Gurax_ImplementFunctionEx(cairo_font_face_get_reference_count_gurax, processor_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_font_face_status(font_face:cairo_font_face_t)
+// cairo.cairo_font_face_status(font_face as cairo_font_face_t)
 Gurax_DeclareFunctionAlias(cairo_font_face_status_gurax, "cairo_font_face_status")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2668,7 +2668,7 @@ Gurax_ImplementFunctionEx(cairo_font_face_status_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_font_face_get_type(font_face:cairo_font_face_t)
+// cairo.cairo_font_face_get_type(font_face as cairo_font_face_t)
 Gurax_DeclareFunctionAlias(cairo_font_face_get_type_gurax, "cairo_font_face_get_type")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2689,7 +2689,7 @@ Gurax_ImplementFunctionEx(cairo_font_face_get_type_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_scaled_font_create(font_face:cairo_font_face_t, font_matrix:cairo_matrix_t, ctm:cairo_matrix_t, options:cairo_font_options_t)
+// cairo.cairo_scaled_font_create(font_face as cairo_font_face_t, font_matrix as cairo_matrix_t, ctm as cairo_matrix_t, options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_create_gurax, "cairo_scaled_font_create")
 {
 	Declare(VTYPE_cairo_scaled_font_t, Flag::None);
@@ -2720,7 +2720,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_create_gurax, processor_gurax, argum
 	return new Value_cairo_scaled_font_t(rtn);
 }
 
-// cairo.cairo_scaled_font_reference(scaled_font:cairo_scaled_font_t)
+// cairo.cairo_scaled_font_reference(scaled_font as cairo_scaled_font_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_reference_gurax, "cairo_scaled_font_reference")
 {
 	Declare(VTYPE_cairo_scaled_font_t, Flag::None);
@@ -2742,7 +2742,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_reference_gurax, processor_gurax, ar
 	return new Value_cairo_scaled_font_t(rtn);
 }
 
-// cairo.cairo_scaled_font_destroy(scaled_font:cairo_scaled_font_t)
+// cairo.cairo_scaled_font_destroy(scaled_font as cairo_scaled_font_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_destroy_gurax, "cairo_scaled_font_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2763,7 +2763,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_destroy_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_scaled_font_get_reference_count(scaled_font:cairo_scaled_font_t)
+// cairo.cairo_scaled_font_get_reference_count(scaled_font as cairo_scaled_font_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_get_reference_count_gurax, "cairo_scaled_font_get_reference_count")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2784,7 +2784,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_get_reference_count_gurax, processor
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_scaled_font_status(scaled_font:cairo_scaled_font_t)
+// cairo.cairo_scaled_font_status(scaled_font as cairo_scaled_font_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_status_gurax, "cairo_scaled_font_status")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2805,7 +2805,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_status_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_scaled_font_get_type(scaled_font:cairo_scaled_font_t)
+// cairo.cairo_scaled_font_get_type(scaled_font as cairo_scaled_font_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_get_type_gurax, "cairo_scaled_font_get_type")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -2826,7 +2826,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_get_type_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_scaled_font_extents(scaled_font:cairo_scaled_font_t, extents:cairo_font_extents_t)
+// cairo.cairo_scaled_font_extents(scaled_font as cairo_scaled_font_t, extents as cairo_font_extents_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_extents_gurax, "cairo_scaled_font_extents")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2850,7 +2850,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_extents_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_scaled_font_text_extents(scaled_font:cairo_scaled_font_t, utf8:String, extents:cairo_text_extents_t)
+// cairo.cairo_scaled_font_text_extents(scaled_font as cairo_scaled_font_t, utf8 as String, extents as cairo_text_extents_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_text_extents_gurax, "cairo_scaled_font_text_extents")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2876,7 +2876,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_text_extents_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_scaled_font_glyph_extents(scaled_font:cairo_scaled_font_t, glyphs:cairo_glyph_t, num_glyphs:Number, extents:cairo_text_extents_t)
+// cairo.cairo_scaled_font_glyph_extents(scaled_font as cairo_scaled_font_t, glyphs as cairo_glyph_t, num_glyphs as Number, extents as cairo_text_extents_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_glyph_extents_gurax, "cairo_scaled_font_glyph_extents")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2905,7 +2905,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_glyph_extents_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_scaled_font_get_font_face(scaled_font:cairo_scaled_font_t)
+// cairo.cairo_scaled_font_get_font_face(scaled_font as cairo_scaled_font_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_get_font_face_gurax, "cairo_scaled_font_get_font_face")
 {
 	Declare(VTYPE_cairo_font_face_t, Flag::None);
@@ -2927,7 +2927,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_get_font_face_gurax, processor_gurax
 	return new Value_cairo_font_face_t(rtn);
 }
 
-// cairo.cairo_scaled_font_get_font_matrix(scaled_font:cairo_scaled_font_t, font_matrix:cairo_matrix_t)
+// cairo.cairo_scaled_font_get_font_matrix(scaled_font as cairo_scaled_font_t, font_matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_get_font_matrix_gurax, "cairo_scaled_font_get_font_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2951,7 +2951,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_get_font_matrix_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_scaled_font_get_ctm(scaled_font:cairo_scaled_font_t, ctm:cairo_matrix_t)
+// cairo.cairo_scaled_font_get_ctm(scaled_font as cairo_scaled_font_t, ctm as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_get_ctm_gurax, "cairo_scaled_font_get_ctm")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2975,7 +2975,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_get_ctm_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_scaled_font_get_scale_matrix(scaled_font:cairo_scaled_font_t, scale_matrix:cairo_matrix_t)
+// cairo.cairo_scaled_font_get_scale_matrix(scaled_font as cairo_scaled_font_t, scale_matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_get_scale_matrix_gurax, "cairo_scaled_font_get_scale_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -2999,7 +2999,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_get_scale_matrix_gurax, processor_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_scaled_font_get_font_options(scaled_font:cairo_scaled_font_t, options:cairo_font_options_t)
+// cairo.cairo_scaled_font_get_font_options(scaled_font as cairo_scaled_font_t, options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_scaled_font_get_font_options_gurax, "cairo_scaled_font_get_font_options")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3023,7 +3023,7 @@ Gurax_ImplementFunctionEx(cairo_scaled_font_get_font_options_gurax, processor_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_toy_font_face_create(family:String, slant:Number, weight:Number)
+// cairo.cairo_toy_font_face_create(family as String, slant as Number, weight as Number)
 Gurax_DeclareFunctionAlias(cairo_toy_font_face_create_gurax, "cairo_toy_font_face_create")
 {
 	Declare(VTYPE_cairo_font_face_t, Flag::None);
@@ -3048,7 +3048,7 @@ Gurax_ImplementFunctionEx(cairo_toy_font_face_create_gurax, processor_gurax, arg
 	return new Value_cairo_font_face_t(rtn);
 }
 
-// cairo.cairo_toy_font_face_get_family(font_face:cairo_font_face_t)
+// cairo.cairo_toy_font_face_get_family(font_face as cairo_font_face_t)
 Gurax_DeclareFunctionAlias(cairo_toy_font_face_get_family_gurax, "cairo_toy_font_face_get_family")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -3069,7 +3069,7 @@ Gurax_ImplementFunctionEx(cairo_toy_font_face_get_family_gurax, processor_gurax,
 	return new Gurax::Value_String(rtn);
 }
 
-// cairo.cairo_toy_font_face_get_slant(font_face:cairo_font_face_t)
+// cairo.cairo_toy_font_face_get_slant(font_face as cairo_font_face_t)
 Gurax_DeclareFunctionAlias(cairo_toy_font_face_get_slant_gurax, "cairo_toy_font_face_get_slant")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3090,7 +3090,7 @@ Gurax_ImplementFunctionEx(cairo_toy_font_face_get_slant_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_toy_font_face_get_weight(font_face:cairo_font_face_t)
+// cairo.cairo_toy_font_face_get_weight(font_face as cairo_font_face_t)
 Gurax_DeclareFunctionAlias(cairo_toy_font_face_get_weight_gurax, "cairo_toy_font_face_get_weight")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3128,7 +3128,7 @@ Gurax_ImplementFunctionEx(cairo_user_font_face_create_gurax, processor_gurax, ar
 	return new Value_cairo_font_face_t(rtn);
 }
 
-// cairo.cairo_get_operator(cr:cairo_t)
+// cairo.cairo_get_operator(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_operator_gurax, "cairo_get_operator")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3149,7 +3149,7 @@ Gurax_ImplementFunctionEx(cairo_get_operator_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_source(cr:cairo_t)
+// cairo.cairo_get_source(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_source_gurax, "cairo_get_source")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
@@ -3171,7 +3171,7 @@ Gurax_ImplementFunctionEx(cairo_get_source_gurax, processor_gurax, argument_gura
 	return new Value_cairo_pattern_t(rtn);
 }
 
-// cairo.cairo_get_tolerance(cr:cairo_t)
+// cairo.cairo_get_tolerance(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_tolerance_gurax, "cairo_get_tolerance")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3192,7 +3192,7 @@ Gurax_ImplementFunctionEx(cairo_get_tolerance_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_antialias(cr:cairo_t)
+// cairo.cairo_get_antialias(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_antialias_gurax, "cairo_get_antialias")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3213,7 +3213,7 @@ Gurax_ImplementFunctionEx(cairo_get_antialias_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_has_current_point(cr:cairo_t)
+// cairo.cairo_has_current_point(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_has_current_point_gurax, "cairo_has_current_point")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -3234,7 +3234,7 @@ Gurax_ImplementFunctionEx(cairo_has_current_point_gurax, processor_gurax, argume
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_get_current_point(cr:cairo_t)
+// cairo.cairo_get_current_point(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_current_point_gurax, "cairo_get_current_point")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3256,7 +3256,7 @@ Gurax_ImplementFunctionEx(cairo_get_current_point_gurax, processor_gurax, argume
 	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 }
 
-// cairo.cairo_get_fill_rule(cr:cairo_t)
+// cairo.cairo_get_fill_rule(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_fill_rule_gurax, "cairo_get_fill_rule")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3277,7 +3277,7 @@ Gurax_ImplementFunctionEx(cairo_get_fill_rule_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_line_width(cr:cairo_t)
+// cairo.cairo_get_line_width(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_line_width_gurax, "cairo_get_line_width")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3298,7 +3298,7 @@ Gurax_ImplementFunctionEx(cairo_get_line_width_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_line_cap(cr:cairo_t)
+// cairo.cairo_get_line_cap(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_line_cap_gurax, "cairo_get_line_cap")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3319,7 +3319,7 @@ Gurax_ImplementFunctionEx(cairo_get_line_cap_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_line_join(cr:cairo_t)
+// cairo.cairo_get_line_join(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_line_join_gurax, "cairo_get_line_join")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3340,7 +3340,7 @@ Gurax_ImplementFunctionEx(cairo_get_line_join_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_miter_limit(cr:cairo_t)
+// cairo.cairo_get_miter_limit(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_miter_limit_gurax, "cairo_get_miter_limit")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3361,7 +3361,7 @@ Gurax_ImplementFunctionEx(cairo_get_miter_limit_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_dash_count(cr:cairo_t)
+// cairo.cairo_get_dash_count(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_dash_count_gurax, "cairo_get_dash_count")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3382,7 +3382,7 @@ Gurax_ImplementFunctionEx(cairo_get_dash_count_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_get_dash(cr:cairo_t)
+// cairo.cairo_get_dash(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_dash_gurax, "cairo_get_dash")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -3406,7 +3406,7 @@ Gurax_ImplementFunctionEx(cairo_get_dash_gurax, processor_gurax, argument_gurax)
 	return Value_Tuple::Create(Value_List::Create(dashes.get(), dash_count), new Value_Number(offset));
 }
 
-// cairo.cairo_get_matrix(cr:cairo_t, matrix:cairo_matrix_t)
+// cairo.cairo_get_matrix(cr as cairo_t, matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_get_matrix_gurax, "cairo_get_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3430,7 +3430,7 @@ Gurax_ImplementFunctionEx(cairo_get_matrix_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_get_target(cr:cairo_t)
+// cairo.cairo_get_target(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_target_gurax, "cairo_get_target")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -3452,7 +3452,7 @@ Gurax_ImplementFunctionEx(cairo_get_target_gurax, processor_gurax, argument_gura
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_get_group_target(cr:cairo_t)
+// cairo.cairo_get_group_target(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_get_group_target_gurax, "cairo_get_group_target")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -3474,7 +3474,7 @@ Gurax_ImplementFunctionEx(cairo_get_group_target_gurax, processor_gurax, argumen
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_copy_path(cr:cairo_t)
+// cairo.cairo_copy_path(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_copy_path_gurax, "cairo_copy_path")
 {
 	Declare(VTYPE_cairo_path_t, Flag::None);
@@ -3496,7 +3496,7 @@ Gurax_ImplementFunctionEx(cairo_copy_path_gurax, processor_gurax, argument_gurax
 	return new Value_cairo_path_t(rtn);
 }
 
-// cairo.cairo_copy_path_flat(cr:cairo_t)
+// cairo.cairo_copy_path_flat(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_copy_path_flat_gurax, "cairo_copy_path_flat")
 {
 	Declare(VTYPE_cairo_path_t, Flag::None);
@@ -3518,7 +3518,7 @@ Gurax_ImplementFunctionEx(cairo_copy_path_flat_gurax, processor_gurax, argument_
 	return new Value_cairo_path_t(rtn);
 }
 
-// cairo.cairo_append_path(cr:cairo_t, path:cairo_path_t)
+// cairo.cairo_append_path(cr as cairo_t, path as cairo_path_t)
 Gurax_DeclareFunctionAlias(cairo_append_path_gurax, "cairo_append_path")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3542,7 +3542,7 @@ Gurax_ImplementFunctionEx(cairo_append_path_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_path_destroy(path:cairo_path_t)
+// cairo.cairo_path_destroy(path as cairo_path_t)
 Gurax_DeclareFunctionAlias(cairo_path_destroy_gurax, "cairo_path_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3563,7 +3563,7 @@ Gurax_ImplementFunctionEx(cairo_path_destroy_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_status(cr:cairo_t)
+// cairo.cairo_status(cr as cairo_t)
 Gurax_DeclareFunctionAlias(cairo_status_gurax, "cairo_status")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3584,7 +3584,7 @@ Gurax_ImplementFunctionEx(cairo_status_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_status_to_string(status:Number)
+// cairo.cairo_status_to_string(status as Number)
 Gurax_DeclareFunctionAlias(cairo_status_to_string_gurax, "cairo_status_to_string")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -3604,7 +3604,7 @@ Gurax_ImplementFunctionEx(cairo_status_to_string_gurax, processor_gurax, argumen
 	return new Gurax::Value_String(rtn);
 }
 
-// cairo.cairo_device_reference(device:cairo_device_t)
+// cairo.cairo_device_reference(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_reference_gurax, "cairo_device_reference")
 {
 	Declare(VTYPE_cairo_device_t, Flag::None);
@@ -3626,7 +3626,7 @@ Gurax_ImplementFunctionEx(cairo_device_reference_gurax, processor_gurax, argumen
 	return new Value_cairo_device_t(rtn);
 }
 
-// cairo.cairo_device_get_type(device:cairo_device_t)
+// cairo.cairo_device_get_type(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_get_type_gurax, "cairo_device_get_type")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3647,7 +3647,7 @@ Gurax_ImplementFunctionEx(cairo_device_get_type_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_device_status(device:cairo_device_t)
+// cairo.cairo_device_status(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_status_gurax, "cairo_device_status")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3668,7 +3668,7 @@ Gurax_ImplementFunctionEx(cairo_device_status_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_device_acquire(device:cairo_device_t)
+// cairo.cairo_device_acquire(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_acquire_gurax, "cairo_device_acquire")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3689,7 +3689,7 @@ Gurax_ImplementFunctionEx(cairo_device_acquire_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_device_release(device:cairo_device_t)
+// cairo.cairo_device_release(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_release_gurax, "cairo_device_release")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3710,7 +3710,7 @@ Gurax_ImplementFunctionEx(cairo_device_release_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_device_flush(device:cairo_device_t)
+// cairo.cairo_device_flush(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_flush_gurax, "cairo_device_flush")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3731,7 +3731,7 @@ Gurax_ImplementFunctionEx(cairo_device_flush_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_device_finish(device:cairo_device_t)
+// cairo.cairo_device_finish(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_finish_gurax, "cairo_device_finish")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3752,7 +3752,7 @@ Gurax_ImplementFunctionEx(cairo_device_finish_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_device_destroy(device:cairo_device_t)
+// cairo.cairo_device_destroy(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_destroy_gurax, "cairo_device_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3773,7 +3773,7 @@ Gurax_ImplementFunctionEx(cairo_device_destroy_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_device_get_reference_count(device:cairo_device_t)
+// cairo.cairo_device_get_reference_count(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_get_reference_count_gurax, "cairo_device_get_reference_count")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3794,7 +3794,7 @@ Gurax_ImplementFunctionEx(cairo_device_get_reference_count_gurax, processor_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_surface_create_similar(other:cairo_surface_t, content:Number, width:Number, height:Number)
+// cairo.cairo_surface_create_similar(other as cairo_surface_t, content as Number, width as Number, height as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_create_similar_gurax, "cairo_surface_create_similar")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -3822,7 +3822,7 @@ Gurax_ImplementFunctionEx(cairo_surface_create_similar_gurax, processor_gurax, a
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_surface_create_similar_image(other:cairo_surface_t, format:Number, width:Number, height:Number)
+// cairo.cairo_surface_create_similar_image(other as cairo_surface_t, format as Number, width as Number, height as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_create_similar_image_gurax, "cairo_surface_create_similar_image")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -3850,7 +3850,7 @@ Gurax_ImplementFunctionEx(cairo_surface_create_similar_image_gurax, processor_gu
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_surface_map_to_image(surface:cairo_surface_t, extents:cairo_rectangle_int_t)
+// cairo.cairo_surface_map_to_image(surface as cairo_surface_t, extents as cairo_rectangle_int_t)
 Gurax_DeclareFunctionAlias(cairo_surface_map_to_image_gurax, "cairo_surface_map_to_image")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -3875,7 +3875,7 @@ Gurax_ImplementFunctionEx(cairo_surface_map_to_image_gurax, processor_gurax, arg
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_surface_unmap_image(surface:cairo_surface_t, image:cairo_surface_t)
+// cairo.cairo_surface_unmap_image(surface as cairo_surface_t, image as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_unmap_image_gurax, "cairo_surface_unmap_image")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -3899,7 +3899,7 @@ Gurax_ImplementFunctionEx(cairo_surface_unmap_image_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_create_for_rectangle(target:cairo_surface_t, x:Number, y:Number, width:Number, height:Number)
+// cairo.cairo_surface_create_for_rectangle(target as cairo_surface_t, x as Number, y as Number, width as Number, height as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_create_for_rectangle_gurax, "cairo_surface_create_for_rectangle")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -3929,7 +3929,7 @@ Gurax_ImplementFunctionEx(cairo_surface_create_for_rectangle_gurax, processor_gu
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_surface_create_observer(target:cairo_surface_t, mode:Number)
+// cairo.cairo_surface_create_observer(target as cairo_surface_t, mode as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_create_observer_gurax, "cairo_surface_create_observer")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -3953,7 +3953,7 @@ Gurax_ImplementFunctionEx(cairo_surface_create_observer_gurax, processor_gurax, 
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_surface_observer_elapsed(surface:cairo_surface_t)
+// cairo.cairo_surface_observer_elapsed(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_observer_elapsed_gurax, "cairo_surface_observer_elapsed")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3974,7 +3974,7 @@ Gurax_ImplementFunctionEx(cairo_surface_observer_elapsed_gurax, processor_gurax,
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_device_observer_elapsed(device:cairo_device_t)
+// cairo.cairo_device_observer_elapsed(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_observer_elapsed_gurax, "cairo_device_observer_elapsed")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -3995,7 +3995,7 @@ Gurax_ImplementFunctionEx(cairo_device_observer_elapsed_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_device_observer_paint_elapsed(device:cairo_device_t)
+// cairo.cairo_device_observer_paint_elapsed(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_observer_paint_elapsed_gurax, "cairo_device_observer_paint_elapsed")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4016,7 +4016,7 @@ Gurax_ImplementFunctionEx(cairo_device_observer_paint_elapsed_gurax, processor_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_device_observer_mask_elapsed(device:cairo_device_t)
+// cairo.cairo_device_observer_mask_elapsed(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_observer_mask_elapsed_gurax, "cairo_device_observer_mask_elapsed")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4037,7 +4037,7 @@ Gurax_ImplementFunctionEx(cairo_device_observer_mask_elapsed_gurax, processor_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_device_observer_fill_elapsed(device:cairo_device_t)
+// cairo.cairo_device_observer_fill_elapsed(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_observer_fill_elapsed_gurax, "cairo_device_observer_fill_elapsed")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4058,7 +4058,7 @@ Gurax_ImplementFunctionEx(cairo_device_observer_fill_elapsed_gurax, processor_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_device_observer_stroke_elapsed(device:cairo_device_t)
+// cairo.cairo_device_observer_stroke_elapsed(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_observer_stroke_elapsed_gurax, "cairo_device_observer_stroke_elapsed")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4079,7 +4079,7 @@ Gurax_ImplementFunctionEx(cairo_device_observer_stroke_elapsed_gurax, processor_
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_device_observer_glyphs_elapsed(device:cairo_device_t)
+// cairo.cairo_device_observer_glyphs_elapsed(device as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_device_observer_glyphs_elapsed_gurax, "cairo_device_observer_glyphs_elapsed")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4100,7 +4100,7 @@ Gurax_ImplementFunctionEx(cairo_device_observer_glyphs_elapsed_gurax, processor_
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_surface_reference(surface:cairo_surface_t)
+// cairo.cairo_surface_reference(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_reference_gurax, "cairo_surface_reference")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -4122,7 +4122,7 @@ Gurax_ImplementFunctionEx(cairo_surface_reference_gurax, processor_gurax, argume
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_surface_finish(surface:cairo_surface_t)
+// cairo.cairo_surface_finish(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_finish_gurax, "cairo_surface_finish")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4143,7 +4143,7 @@ Gurax_ImplementFunctionEx(cairo_surface_finish_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_destroy(surface:cairo_surface_t)
+// cairo.cairo_surface_destroy(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_destroy_gurax, "cairo_surface_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4164,7 +4164,7 @@ Gurax_ImplementFunctionEx(cairo_surface_destroy_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_get_device(surface:cairo_surface_t)
+// cairo.cairo_surface_get_device(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_get_device_gurax, "cairo_surface_get_device")
 {
 	Declare(VTYPE_cairo_device_t, Flag::None);
@@ -4186,7 +4186,7 @@ Gurax_ImplementFunctionEx(cairo_surface_get_device_gurax, processor_gurax, argum
 	return new Value_cairo_device_t(rtn);
 }
 
-// cairo.cairo_surface_get_reference_count(surface:cairo_surface_t)
+// cairo.cairo_surface_get_reference_count(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_get_reference_count_gurax, "cairo_surface_get_reference_count")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4207,7 +4207,7 @@ Gurax_ImplementFunctionEx(cairo_surface_get_reference_count_gurax, processor_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_surface_status(surface:cairo_surface_t)
+// cairo.cairo_surface_status(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_status_gurax, "cairo_surface_status")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4228,7 +4228,7 @@ Gurax_ImplementFunctionEx(cairo_surface_status_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_surface_get_type(surface:cairo_surface_t)
+// cairo.cairo_surface_get_type(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_get_type_gurax, "cairo_surface_get_type")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4249,7 +4249,7 @@ Gurax_ImplementFunctionEx(cairo_surface_get_type_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_surface_get_content(surface:cairo_surface_t)
+// cairo.cairo_surface_get_content(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_get_content_gurax, "cairo_surface_get_content")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4270,7 +4270,7 @@ Gurax_ImplementFunctionEx(cairo_surface_get_content_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_surface_write_to_png(surface:cairo_surface_t, filename:String)
+// cairo.cairo_surface_write_to_png(surface as cairo_surface_t, filename as String)
 Gurax_DeclareFunctionAlias(cairo_surface_write_to_png_gurax, "cairo_surface_write_to_png")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4293,7 +4293,7 @@ Gurax_ImplementFunctionEx(cairo_surface_write_to_png_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_surface_write_to_png_stream(surface:cairo_surface_t, stream:Stream:w)
+// cairo.cairo_surface_write_to_png_stream(surface as cairo_surface_t, stream:w as Stream)
 Gurax_DeclareFunctionAlias(cairo_surface_write_to_png_stream_gurax, "cairo_surface_write_to_png_stream")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4316,7 +4316,7 @@ Gurax_ImplementFunctionEx(cairo_surface_write_to_png_stream_gurax, processor_gur
 	return new Value_Number(rtn);
 }
 
-// cairo.cairo_surface_get_mime_data(surface:cairo_surface_t, mime_type:String)
+// cairo.cairo_surface_get_mime_data(surface as cairo_surface_t, mime_type as String)
 Gurax_DeclareFunctionAlias(cairo_surface_get_mime_data_gurax, "cairo_surface_get_mime_data")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4341,7 +4341,7 @@ Gurax_ImplementFunctionEx(cairo_surface_get_mime_data_gurax, processor_gurax, ar
 	return new Value_Binary(Binary(data, length));
 }
 
-// cairo.cairo_surface_supports_mime_type(surface:cairo_surface_t, mime_type:String)
+// cairo.cairo_surface_supports_mime_type(surface as cairo_surface_t, mime_type as String)
 Gurax_DeclareFunctionAlias(cairo_surface_supports_mime_type_gurax, "cairo_surface_supports_mime_type")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -4364,7 +4364,7 @@ Gurax_ImplementFunctionEx(cairo_surface_supports_mime_type_gurax, processor_gura
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_surface_get_font_options(surface:cairo_surface_t, options:cairo_font_options_t)
+// cairo.cairo_surface_get_font_options(surface as cairo_surface_t, options as cairo_font_options_t)
 Gurax_DeclareFunctionAlias(cairo_surface_get_font_options_gurax, "cairo_surface_get_font_options")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4388,7 +4388,7 @@ Gurax_ImplementFunctionEx(cairo_surface_get_font_options_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_flush(surface:cairo_surface_t)
+// cairo.cairo_surface_flush(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_flush_gurax, "cairo_surface_flush")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4409,7 +4409,7 @@ Gurax_ImplementFunctionEx(cairo_surface_flush_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_mark_dirty(surface:cairo_surface_t)
+// cairo.cairo_surface_mark_dirty(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_mark_dirty_gurax, "cairo_surface_mark_dirty")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4430,7 +4430,7 @@ Gurax_ImplementFunctionEx(cairo_surface_mark_dirty_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_mark_dirty_rectangle(surface:cairo_surface_t, x:Number, y:Number, width:Number, height:Number)
+// cairo.cairo_surface_mark_dirty_rectangle(surface as cairo_surface_t, x as Number, y as Number, width as Number, height as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_mark_dirty_rectangle_gurax, "cairo_surface_mark_dirty_rectangle")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4459,7 +4459,7 @@ Gurax_ImplementFunctionEx(cairo_surface_mark_dirty_rectangle_gurax, processor_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_set_device_scale(surface:cairo_surface_t, x_scale:Number, y_scale:Number)
+// cairo.cairo_surface_set_device_scale(surface as cairo_surface_t, x_scale as Number, y_scale as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_set_device_scale_gurax, "cairo_surface_set_device_scale")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4484,7 +4484,7 @@ Gurax_ImplementFunctionEx(cairo_surface_set_device_scale_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_get_device_scale(surface:cairo_surface_t)
+// cairo.cairo_surface_get_device_scale(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_get_device_scale_gurax, "cairo_surface_get_device_scale")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4506,7 +4506,7 @@ Gurax_ImplementFunctionEx(cairo_surface_get_device_scale_gurax, processor_gurax,
 	return Value_Tuple::Create(new Value_Number(x_scale), new Value_Number(y_scale));
 }
 
-// cairo.cairo_surface_set_device_offset(surface:cairo_surface_t, x_offset:Number, y_offset:Number)
+// cairo.cairo_surface_set_device_offset(surface as cairo_surface_t, x_offset as Number, y_offset as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_set_device_offset_gurax, "cairo_surface_set_device_offset")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4531,7 +4531,7 @@ Gurax_ImplementFunctionEx(cairo_surface_set_device_offset_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_get_device_offset(surface:cairo_surface_t)
+// cairo.cairo_surface_get_device_offset(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_get_device_offset_gurax, "cairo_surface_get_device_offset")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4553,7 +4553,7 @@ Gurax_ImplementFunctionEx(cairo_surface_get_device_offset_gurax, processor_gurax
 	return Value_Tuple::Create(new Value_Number(x_offset), new Value_Number(y_offset));
 }
 
-// cairo.cairo_surface_set_fallback_resolution(surface:cairo_surface_t, x_pixels_per_inch:Number, y_pixels_per_inch:Number)
+// cairo.cairo_surface_set_fallback_resolution(surface as cairo_surface_t, x_pixels_per_inch as Number, y_pixels_per_inch as Number)
 Gurax_DeclareFunctionAlias(cairo_surface_set_fallback_resolution_gurax, "cairo_surface_set_fallback_resolution")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4578,7 +4578,7 @@ Gurax_ImplementFunctionEx(cairo_surface_set_fallback_resolution_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_get_fallback_resolution(surface:cairo_surface_t)
+// cairo.cairo_surface_get_fallback_resolution(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_get_fallback_resolution_gurax, "cairo_surface_get_fallback_resolution")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -4600,7 +4600,7 @@ Gurax_ImplementFunctionEx(cairo_surface_get_fallback_resolution_gurax, processor
 	return Value_Tuple::Create(new Value_Number(x_pixels_per_inch), new Value_Number(y_pixels_per_inch));
 }
 
-// cairo.cairo_surface_copy_page(surface:cairo_surface_t)
+// cairo.cairo_surface_copy_page(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_copy_page_gurax, "cairo_surface_copy_page")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4621,7 +4621,7 @@ Gurax_ImplementFunctionEx(cairo_surface_copy_page_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_show_page(surface:cairo_surface_t)
+// cairo.cairo_surface_show_page(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_show_page_gurax, "cairo_surface_show_page")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4642,7 +4642,7 @@ Gurax_ImplementFunctionEx(cairo_surface_show_page_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_surface_has_show_text_glyphs(surface:cairo_surface_t)
+// cairo.cairo_surface_has_show_text_glyphs(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_surface_has_show_text_glyphs_gurax, "cairo_surface_has_show_text_glyphs")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -4663,7 +4663,7 @@ Gurax_ImplementFunctionEx(cairo_surface_has_show_text_glyphs_gurax, processor_gu
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_image_surface_create(format:Number, width:Number, height:Number)
+// cairo.cairo_image_surface_create(format as Number, width as Number, height as Number)
 Gurax_DeclareFunctionAlias(cairo_image_surface_create_gurax, "cairo_image_surface_create")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -4688,7 +4688,7 @@ Gurax_ImplementFunctionEx(cairo_image_surface_create_gurax, processor_gurax, arg
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_format_stride_for_width(format:Number, width:Number)
+// cairo.cairo_format_stride_for_width(format as Number, width as Number)
 Gurax_DeclareFunctionAlias(cairo_format_stride_for_width_gurax, "cairo_format_stride_for_width")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4710,7 +4710,7 @@ Gurax_ImplementFunctionEx(cairo_format_stride_for_width_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_image_surface_get_format(surface:cairo_surface_t)
+// cairo.cairo_image_surface_get_format(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_image_surface_get_format_gurax, "cairo_image_surface_get_format")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4731,7 +4731,7 @@ Gurax_ImplementFunctionEx(cairo_image_surface_get_format_gurax, processor_gurax,
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_image_surface_get_width(surface:cairo_surface_t)
+// cairo.cairo_image_surface_get_width(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_image_surface_get_width_gurax, "cairo_image_surface_get_width")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4752,7 +4752,7 @@ Gurax_ImplementFunctionEx(cairo_image_surface_get_width_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_image_surface_get_height(surface:cairo_surface_t)
+// cairo.cairo_image_surface_get_height(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_image_surface_get_height_gurax, "cairo_image_surface_get_height")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4773,7 +4773,7 @@ Gurax_ImplementFunctionEx(cairo_image_surface_get_height_gurax, processor_gurax,
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_image_surface_get_stride(surface:cairo_surface_t)
+// cairo.cairo_image_surface_get_stride(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_image_surface_get_stride_gurax, "cairo_image_surface_get_stride")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -4794,7 +4794,7 @@ Gurax_ImplementFunctionEx(cairo_image_surface_get_stride_gurax, processor_gurax,
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_image_surface_create_from_png(filename:String)
+// cairo.cairo_image_surface_create_from_png(filename as String)
 Gurax_DeclareFunctionAlias(cairo_image_surface_create_from_png_gurax, "cairo_image_surface_create_from_png")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -4815,7 +4815,7 @@ Gurax_ImplementFunctionEx(cairo_image_surface_create_from_png_gurax, processor_g
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_recording_surface_create(content:Number, extents:cairo_rectangle_t)
+// cairo.cairo_recording_surface_create(content as Number, extents as cairo_rectangle_t)
 Gurax_DeclareFunctionAlias(cairo_recording_surface_create_gurax, "cairo_recording_surface_create")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -4839,7 +4839,7 @@ Gurax_ImplementFunctionEx(cairo_recording_surface_create_gurax, processor_gurax,
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_recording_surface_get_extents(surface:cairo_surface_t, extents:cairo_rectangle_t)
+// cairo.cairo_recording_surface_get_extents(surface as cairo_surface_t, extents as cairo_rectangle_t)
 Gurax_DeclareFunctionAlias(cairo_recording_surface_get_extents_gurax, "cairo_recording_surface_get_extents")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -4863,7 +4863,7 @@ Gurax_ImplementFunctionEx(cairo_recording_surface_get_extents_gurax, processor_g
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_pattern_create_raster_source(user_data:Pointer, content:Number, width:Number, height:Number)
+// cairo.cairo_pattern_create_raster_source(user_data as Pointer, content as Number, width as Number, height as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_create_raster_source_gurax, "cairo_pattern_create_raster_source")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
@@ -4894,7 +4894,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_create_raster_source_gurax, processor_gu
 	return new Value_cairo_pattern_t(rtn);
 }
 
-// cairo.cairo_raster_source_pattern_set_callback_data(pattern:cairo_pattern_t, data:Pointer)
+// cairo.cairo_raster_source_pattern_set_callback_data(pattern as cairo_pattern_t, data as Pointer)
 Gurax_DeclareFunctionAlias(cairo_raster_source_pattern_set_callback_data_gurax, "cairo_raster_source_pattern_set_callback_data")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -4921,7 +4921,7 @@ Gurax_ImplementFunctionEx(cairo_raster_source_pattern_set_callback_data_gurax, p
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pattern_create_rgb(red:Number, green:Number, blue:Number)
+// cairo.cairo_pattern_create_rgb(red as Number, green as Number, blue as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_create_rgb_gurax, "cairo_pattern_create_rgb")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
@@ -4946,7 +4946,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_create_rgb_gurax, processor_gurax, argum
 	return new Value_cairo_pattern_t(rtn);
 }
 
-// cairo.cairo_pattern_create_rgba(red:Number, green:Number, blue:Number, alpha:Number)
+// cairo.cairo_pattern_create_rgba(red as Number, green as Number, blue as Number, alpha as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_create_rgba_gurax, "cairo_pattern_create_rgba")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
@@ -4973,7 +4973,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_create_rgba_gurax, processor_gurax, argu
 	return new Value_cairo_pattern_t(rtn);
 }
 
-// cairo.cairo_pattern_create_for_surface(surface:cairo_surface_t)
+// cairo.cairo_pattern_create_for_surface(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_create_for_surface_gurax, "cairo_pattern_create_for_surface")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
@@ -4995,7 +4995,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_create_for_surface_gurax, processor_gura
 	return new Value_cairo_pattern_t(rtn);
 }
 
-// cairo.cairo_pattern_create_linear(x0:Number, y0:Number, x1:Number, y1:Number)
+// cairo.cairo_pattern_create_linear(x0 as Number, y0 as Number, x1 as Number, y1 as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_create_linear_gurax, "cairo_pattern_create_linear")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
@@ -5022,7 +5022,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_create_linear_gurax, processor_gurax, ar
 	return new Value_cairo_pattern_t(rtn);
 }
 
-// cairo.cairo_pattern_create_radial(cx0:Number, cy0:Number, radius0:Number, cx1:Number, cy1:Number, radius1:Number)
+// cairo.cairo_pattern_create_radial(cx0 as Number, cy0 as Number, radius0 as Number, cx1 as Number, cy1 as Number, radius1 as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_create_radial_gurax, "cairo_pattern_create_radial")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
@@ -5070,7 +5070,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_create_mesh_gurax, processor_gurax, argu
 	return new Value_cairo_pattern_t(rtn);
 }
 
-// cairo.cairo_pattern_reference(pattern:cairo_pattern_t)
+// cairo.cairo_pattern_reference(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_reference_gurax, "cairo_pattern_reference")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
@@ -5092,7 +5092,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_reference_gurax, processor_gurax, argume
 	return new Value_cairo_pattern_t(rtn);
 }
 
-// cairo.cairo_pattern_destroy(pattern:cairo_pattern_t)
+// cairo.cairo_pattern_destroy(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_destroy_gurax, "cairo_pattern_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5113,7 +5113,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_destroy_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pattern_get_reference_count(pattern:cairo_pattern_t)
+// cairo.cairo_pattern_get_reference_count(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_get_reference_count_gurax, "cairo_pattern_get_reference_count")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5134,7 +5134,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_reference_count_gurax, processor_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_pattern_status(pattern:cairo_pattern_t)
+// cairo.cairo_pattern_status(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_status_gurax, "cairo_pattern_status")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5155,7 +5155,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_status_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_pattern_get_type(pattern:cairo_pattern_t)
+// cairo.cairo_pattern_get_type(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_get_type_gurax, "cairo_pattern_get_type")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5176,7 +5176,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_type_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_pattern_add_color_stop_rgb(pattern:cairo_pattern_t, offset:Number, red:Number, green:Number, blue:Number)
+// cairo.cairo_pattern_add_color_stop_rgb(pattern as cairo_pattern_t, offset as Number, red as Number, green as Number, blue as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_add_color_stop_rgb_gurax, "cairo_pattern_add_color_stop_rgb")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5205,7 +5205,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_add_color_stop_rgb_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pattern_add_color_stop_rgba(pattern:cairo_pattern_t, offset:Number, red:Number, green:Number, blue:Number, alpha:Number)
+// cairo.cairo_pattern_add_color_stop_rgba(pattern as cairo_pattern_t, offset as Number, red as Number, green as Number, blue as Number, alpha as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_add_color_stop_rgba_gurax, "cairo_pattern_add_color_stop_rgba")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5236,7 +5236,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_add_color_stop_rgba_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mesh_pattern_begin_patch(pattern:cairo_pattern_t)
+// cairo.cairo_mesh_pattern_begin_patch(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_begin_patch_gurax, "cairo_mesh_pattern_begin_patch")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5257,7 +5257,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_begin_patch_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mesh_pattern_end_patch(pattern:cairo_pattern_t)
+// cairo.cairo_mesh_pattern_end_patch(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_end_patch_gurax, "cairo_mesh_pattern_end_patch")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5278,7 +5278,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_end_patch_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mesh_pattern_curve_to(pattern:cairo_pattern_t, x1:Number, y1:Number, x2:Number, y2:Number, x3:Number, y3:Number)
+// cairo.cairo_mesh_pattern_curve_to(pattern as cairo_pattern_t, x1 as Number, y1 as Number, x2 as Number, y2 as Number, x3 as Number, y3 as Number)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_curve_to_gurax, "cairo_mesh_pattern_curve_to")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5311,7 +5311,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_curve_to_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mesh_pattern_line_to(pattern:cairo_pattern_t, x:Number, y:Number)
+// cairo.cairo_mesh_pattern_line_to(pattern as cairo_pattern_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_line_to_gurax, "cairo_mesh_pattern_line_to")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5336,7 +5336,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_line_to_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mesh_pattern_move_to(pattern:cairo_pattern_t, x:Number, y:Number)
+// cairo.cairo_mesh_pattern_move_to(pattern as cairo_pattern_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_move_to_gurax, "cairo_mesh_pattern_move_to")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5361,7 +5361,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_move_to_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mesh_pattern_set_control_point(pattern:cairo_pattern_t, point_num:Number, x:Number, y:Number)
+// cairo.cairo_mesh_pattern_set_control_point(pattern as cairo_pattern_t, point_num as Number, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_set_control_point_gurax, "cairo_mesh_pattern_set_control_point")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5388,7 +5388,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_set_control_point_gurax, processor_
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mesh_pattern_set_corner_color_rgb(pattern:cairo_pattern_t, corner_num:Number, red:Number, green:Number, blue:Number)
+// cairo.cairo_mesh_pattern_set_corner_color_rgb(pattern as cairo_pattern_t, corner_num as Number, red as Number, green as Number, blue as Number)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_set_corner_color_rgb_gurax, "cairo_mesh_pattern_set_corner_color_rgb")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5417,7 +5417,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_set_corner_color_rgb_gurax, process
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_mesh_pattern_set_corner_color_rgba(pattern:cairo_pattern_t, corner_num:Number, red:Number, green:Number, blue:Number, alpha:Number)
+// cairo.cairo_mesh_pattern_set_corner_color_rgba(pattern as cairo_pattern_t, corner_num as Number, red as Number, green as Number, blue as Number, alpha as Number)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_set_corner_color_rgba_gurax, "cairo_mesh_pattern_set_corner_color_rgba")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5448,7 +5448,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_set_corner_color_rgba_gurax, proces
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pattern_set_matrix(pattern:cairo_pattern_t, matrix:cairo_matrix_t)
+// cairo.cairo_pattern_set_matrix(pattern as cairo_pattern_t, matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_set_matrix_gurax, "cairo_pattern_set_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5472,7 +5472,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_set_matrix_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pattern_get_matrix(pattern:cairo_pattern_t, matrix:cairo_matrix_t)
+// cairo.cairo_pattern_get_matrix(pattern as cairo_pattern_t, matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_get_matrix_gurax, "cairo_pattern_get_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5496,7 +5496,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_matrix_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pattern_set_extend(pattern:cairo_pattern_t, extend:Number)
+// cairo.cairo_pattern_set_extend(pattern as cairo_pattern_t, extend as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_set_extend_gurax, "cairo_pattern_set_extend")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5519,7 +5519,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_set_extend_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pattern_get_extend(pattern:cairo_pattern_t)
+// cairo.cairo_pattern_get_extend(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_get_extend_gurax, "cairo_pattern_get_extend")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5540,7 +5540,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_extend_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_pattern_set_filter(pattern:cairo_pattern_t, filter:Number)
+// cairo.cairo_pattern_set_filter(pattern as cairo_pattern_t, filter as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_set_filter_gurax, "cairo_pattern_set_filter")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5563,7 +5563,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_set_filter_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pattern_get_filter(pattern:cairo_pattern_t)
+// cairo.cairo_pattern_get_filter(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_get_filter_gurax, "cairo_pattern_get_filter")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5584,7 +5584,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_filter_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_pattern_get_rgba(pattern:cairo_pattern_t)
+// cairo.cairo_pattern_get_rgba(pattern as cairo_pattern_t)
 Gurax_DeclareFunctionAlias(cairo_pattern_get_rgba_gurax, "cairo_pattern_get_rgba")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -5606,7 +5606,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_rgba_gurax, processor_gurax, argumen
 	return Value_Tuple::Create(new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
 }
 
-// cairo.cairo_pattern_get_color_stop_rgba(pattern:cairo_pattern_t, index:Number)
+// cairo.cairo_pattern_get_color_stop_rgba(pattern as cairo_pattern_t, index as Number)
 Gurax_DeclareFunctionAlias(cairo_pattern_get_color_stop_rgba_gurax, "cairo_pattern_get_color_stop_rgba")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -5630,7 +5630,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_get_color_stop_rgba_gurax, processor_gur
 	return Value_Tuple::Create(new Value_Number(offset), new Value_Number(red), new Value_Number(green), new Value_Number(blue), new Value_Number(alpha));
 }
 
-// cairo.cairo_mesh_pattern_get_path(pattern:cairo_pattern_t, patch_num:Number)
+// cairo.cairo_mesh_pattern_get_path(pattern as cairo_pattern_t, patch_num as Number)
 Gurax_DeclareFunctionAlias(cairo_mesh_pattern_get_path_gurax, "cairo_mesh_pattern_get_path")
 {
 	Declare(VTYPE_cairo_path_t, Flag::None);
@@ -5654,7 +5654,7 @@ Gurax_ImplementFunctionEx(cairo_mesh_pattern_get_path_gurax, processor_gurax, ar
 	return new Value_cairo_path_t(rtn);
 }
 
-// cairo.cairo_matrix_init(matrix:cairo_matrix_t, xx:Number, yx:Number, xy:Number, yy:Number, x0:Number, y0:Number)
+// cairo.cairo_matrix_init(matrix as cairo_matrix_t, xx as Number, yx as Number, xy as Number, yy as Number, x0 as Number, y0 as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_init_gurax, "cairo_matrix_init")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5687,7 +5687,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_init_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_init_identity(matrix:cairo_matrix_t)
+// cairo.cairo_matrix_init_identity(matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_matrix_init_identity_gurax, "cairo_matrix_init_identity")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5708,7 +5708,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_init_identity_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_init_translate(matrix:cairo_matrix_t, tx:Number, ty:Number)
+// cairo.cairo_matrix_init_translate(matrix as cairo_matrix_t, tx as Number, ty as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_init_translate_gurax, "cairo_matrix_init_translate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5733,7 +5733,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_init_translate_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_init_scale(matrix:cairo_matrix_t, sx:Number, sy:Number)
+// cairo.cairo_matrix_init_scale(matrix as cairo_matrix_t, sx as Number, sy as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_init_scale_gurax, "cairo_matrix_init_scale")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5758,7 +5758,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_init_scale_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_init_rotate(matrix:cairo_matrix_t, radians:Number)
+// cairo.cairo_matrix_init_rotate(matrix as cairo_matrix_t, radians as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_init_rotate_gurax, "cairo_matrix_init_rotate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5781,7 +5781,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_init_rotate_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_translate(matrix:cairo_matrix_t, tx:Number, ty:Number)
+// cairo.cairo_matrix_translate(matrix as cairo_matrix_t, tx as Number, ty as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_translate_gurax, "cairo_matrix_translate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5806,7 +5806,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_translate_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_scale(matrix:cairo_matrix_t, sx:Number, sy:Number)
+// cairo.cairo_matrix_scale(matrix as cairo_matrix_t, sx as Number, sy as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_scale_gurax, "cairo_matrix_scale")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5831,7 +5831,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_scale_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_rotate(matrix:cairo_matrix_t, radians:Number)
+// cairo.cairo_matrix_rotate(matrix as cairo_matrix_t, radians as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_rotate_gurax, "cairo_matrix_rotate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5854,7 +5854,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_rotate_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_invert(matrix:cairo_matrix_t)
+// cairo.cairo_matrix_invert(matrix as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_matrix_invert_gurax, "cairo_matrix_invert")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -5875,7 +5875,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_invert_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_matrix_multiply(result:cairo_matrix_t, a:cairo_matrix_t, b:cairo_matrix_t)
+// cairo.cairo_matrix_multiply(result as cairo_matrix_t, a as cairo_matrix_t, b as cairo_matrix_t)
 Gurax_DeclareFunctionAlias(cairo_matrix_multiply_gurax, "cairo_matrix_multiply")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -5902,7 +5902,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_multiply_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_matrix_transform_distance(matrix:cairo_matrix_t, dx:Number, dy:Number)
+// cairo.cairo_matrix_transform_distance(matrix as cairo_matrix_t, dx as Number, dy as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_transform_distance_gurax, "cairo_matrix_transform_distance")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -5927,7 +5927,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_transform_distance_gurax, processor_gurax
 	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
 }
 
-// cairo.cairo_matrix_transform_point(matrix:cairo_matrix_t, x:Number, y:Number)
+// cairo.cairo_matrix_transform_point(matrix as cairo_matrix_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_matrix_transform_point_gurax, "cairo_matrix_transform_point")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -5969,7 +5969,7 @@ Gurax_ImplementFunctionEx(cairo_region_create_gurax, processor_gurax, argument_g
 	return new Value_cairo_region_t(rtn);
 }
 
-// cairo.cairo_region_create_rectangle(rectangle:cairo_rectangle_int_t)
+// cairo.cairo_region_create_rectangle(rectangle as cairo_rectangle_int_t)
 Gurax_DeclareFunctionAlias(cairo_region_create_rectangle_gurax, "cairo_region_create_rectangle")
 {
 	Declare(VTYPE_cairo_region_t, Flag::None);
@@ -5991,7 +5991,7 @@ Gurax_ImplementFunctionEx(cairo_region_create_rectangle_gurax, processor_gurax, 
 	return new Value_cairo_region_t(rtn);
 }
 
-// cairo.cairo_region_create_rectangles(rects:cairo_rectangle_int_t, count:Number)
+// cairo.cairo_region_create_rectangles(rects as cairo_rectangle_int_t, count as Number)
 Gurax_DeclareFunctionAlias(cairo_region_create_rectangles_gurax, "cairo_region_create_rectangles")
 {
 	Declare(VTYPE_cairo_region_t, Flag::None);
@@ -6015,7 +6015,7 @@ Gurax_ImplementFunctionEx(cairo_region_create_rectangles_gurax, processor_gurax,
 	return new Value_cairo_region_t(rtn);
 }
 
-// cairo.cairo_region_copy(original:cairo_region_t)
+// cairo.cairo_region_copy(original as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_copy_gurax, "cairo_region_copy")
 {
 	Declare(VTYPE_cairo_region_t, Flag::None);
@@ -6037,7 +6037,7 @@ Gurax_ImplementFunctionEx(cairo_region_copy_gurax, processor_gurax, argument_gur
 	return new Value_cairo_region_t(rtn);
 }
 
-// cairo.cairo_region_reference(region:cairo_region_t)
+// cairo.cairo_region_reference(region as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_reference_gurax, "cairo_region_reference")
 {
 	Declare(VTYPE_cairo_region_t, Flag::None);
@@ -6059,7 +6059,7 @@ Gurax_ImplementFunctionEx(cairo_region_reference_gurax, processor_gurax, argumen
 	return new Value_cairo_region_t(rtn);
 }
 
-// cairo.cairo_region_destroy(region:cairo_region_t)
+// cairo.cairo_region_destroy(region as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_destroy_gurax, "cairo_region_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6080,7 +6080,7 @@ Gurax_ImplementFunctionEx(cairo_region_destroy_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_region_equal(a:cairo_region_t, b:cairo_region_t)
+// cairo.cairo_region_equal(a as cairo_region_t, b as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_equal_gurax, "cairo_region_equal")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -6104,7 +6104,7 @@ Gurax_ImplementFunctionEx(cairo_region_equal_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_region_status(region:cairo_region_t)
+// cairo.cairo_region_status(region as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_status_gurax, "cairo_region_status")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6125,7 +6125,7 @@ Gurax_ImplementFunctionEx(cairo_region_status_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_get_extents(region:cairo_region_t, extents:cairo_rectangle_int_t)
+// cairo.cairo_region_get_extents(region as cairo_region_t, extents as cairo_rectangle_int_t)
 Gurax_DeclareFunctionAlias(cairo_region_get_extents_gurax, "cairo_region_get_extents")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6149,7 +6149,7 @@ Gurax_ImplementFunctionEx(cairo_region_get_extents_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_region_num_rectangles(region:cairo_region_t)
+// cairo.cairo_region_num_rectangles(region as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_num_rectangles_gurax, "cairo_region_num_rectangles")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6170,7 +6170,7 @@ Gurax_ImplementFunctionEx(cairo_region_num_rectangles_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_get_rectangle(region:cairo_region_t, nth:Number, rectangle:cairo_rectangle_int_t)
+// cairo.cairo_region_get_rectangle(region as cairo_region_t, nth as Number, rectangle as cairo_rectangle_int_t)
 Gurax_DeclareFunctionAlias(cairo_region_get_rectangle_gurax, "cairo_region_get_rectangle")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6196,7 +6196,7 @@ Gurax_ImplementFunctionEx(cairo_region_get_rectangle_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_region_is_empty(region:cairo_region_t)
+// cairo.cairo_region_is_empty(region as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_is_empty_gurax, "cairo_region_is_empty")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -6217,7 +6217,7 @@ Gurax_ImplementFunctionEx(cairo_region_is_empty_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_region_contains_rectangle(region:cairo_region_t, rectangle:cairo_rectangle_int_t)
+// cairo.cairo_region_contains_rectangle(region as cairo_region_t, rectangle as cairo_rectangle_int_t)
 Gurax_DeclareFunctionAlias(cairo_region_contains_rectangle_gurax, "cairo_region_contains_rectangle")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6241,7 +6241,7 @@ Gurax_ImplementFunctionEx(cairo_region_contains_rectangle_gurax, processor_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_contains_point(region:cairo_region_t, x:Number, y:Number)
+// cairo.cairo_region_contains_point(region as cairo_region_t, x as Number, y as Number)
 Gurax_DeclareFunctionAlias(cairo_region_contains_point_gurax, "cairo_region_contains_point")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -6266,7 +6266,7 @@ Gurax_ImplementFunctionEx(cairo_region_contains_point_gurax, processor_gurax, ar
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_region_translate(region:cairo_region_t, dx:Number, dy:Number)
+// cairo.cairo_region_translate(region as cairo_region_t, dx as Number, dy as Number)
 Gurax_DeclareFunctionAlias(cairo_region_translate_gurax, "cairo_region_translate")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6291,7 +6291,7 @@ Gurax_ImplementFunctionEx(cairo_region_translate_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_region_subtract(dst:cairo_region_t, other:cairo_region_t)
+// cairo.cairo_region_subtract(dst as cairo_region_t, other as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_subtract_gurax, "cairo_region_subtract")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6315,7 +6315,7 @@ Gurax_ImplementFunctionEx(cairo_region_subtract_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_subtract_rectangle(dst:cairo_region_t, rectangle:cairo_rectangle_int_t)
+// cairo.cairo_region_subtract_rectangle(dst as cairo_region_t, rectangle as cairo_rectangle_int_t)
 Gurax_DeclareFunctionAlias(cairo_region_subtract_rectangle_gurax, "cairo_region_subtract_rectangle")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6339,7 +6339,7 @@ Gurax_ImplementFunctionEx(cairo_region_subtract_rectangle_gurax, processor_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_intersect(dst:cairo_region_t, other:cairo_region_t)
+// cairo.cairo_region_intersect(dst as cairo_region_t, other as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_intersect_gurax, "cairo_region_intersect")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6363,7 +6363,7 @@ Gurax_ImplementFunctionEx(cairo_region_intersect_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_intersect_rectangle(dst:cairo_region_t, rectangle:cairo_rectangle_int_t)
+// cairo.cairo_region_intersect_rectangle(dst as cairo_region_t, rectangle as cairo_rectangle_int_t)
 Gurax_DeclareFunctionAlias(cairo_region_intersect_rectangle_gurax, "cairo_region_intersect_rectangle")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6387,7 +6387,7 @@ Gurax_ImplementFunctionEx(cairo_region_intersect_rectangle_gurax, processor_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_union(dst:cairo_region_t, other:cairo_region_t)
+// cairo.cairo_region_union(dst as cairo_region_t, other as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_union_gurax, "cairo_region_union")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6411,7 +6411,7 @@ Gurax_ImplementFunctionEx(cairo_region_union_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_union_rectangle(dst:cairo_region_t, rectangle:cairo_rectangle_int_t)
+// cairo.cairo_region_union_rectangle(dst as cairo_region_t, rectangle as cairo_rectangle_int_t)
 Gurax_DeclareFunctionAlias(cairo_region_union_rectangle_gurax, "cairo_region_union_rectangle")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6435,7 +6435,7 @@ Gurax_ImplementFunctionEx(cairo_region_union_rectangle_gurax, processor_gurax, a
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_xor(dst:cairo_region_t, other:cairo_region_t)
+// cairo.cairo_region_xor(dst as cairo_region_t, other as cairo_region_t)
 Gurax_DeclareFunctionAlias(cairo_region_xor_gurax, "cairo_region_xor")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6459,7 +6459,7 @@ Gurax_ImplementFunctionEx(cairo_region_xor_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_region_xor_rectangle(dst:cairo_region_t, rectangle:cairo_rectangle_int_t)
+// cairo.cairo_region_xor_rectangle(dst as cairo_region_t, rectangle as cairo_rectangle_int_t)
 Gurax_DeclareFunctionAlias(cairo_region_xor_rectangle_gurax, "cairo_region_xor_rectangle")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6499,7 +6499,7 @@ Gurax_ImplementFunctionEx(cairo_debug_reset_static_data_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pdf_surface_create(filename:String, width_in_points:Number, height_in_points:Number)
+// cairo.cairo_pdf_surface_create(filename as String, width_in_points as Number, height_in_points as Number)
 Gurax_DeclareFunctionAlias(cairo_pdf_surface_create_gurax, "cairo_pdf_surface_create")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -6524,7 +6524,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_create_gurax, processor_gurax, argum
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_pdf_surface_create_for_stream(stream:Stream:w, width_in_points:Number, height_in_points:Number)
+// cairo.cairo_pdf_surface_create_for_stream(stream:w as Stream, width_in_points as Number, height_in_points as Number)
 Gurax_DeclareFunctionAlias(cairo_pdf_surface_create_for_stream_gurax, "cairo_pdf_surface_create_for_stream")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -6548,7 +6548,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_create_for_stream_gurax, processor_g
 	return new Value_cairo_surface_t(surface, stream.release());
 }
 
-// cairo.cairo_pdf_surface_restrict_to_version(surface:cairo_surface_t, version:Number)
+// cairo.cairo_pdf_surface_restrict_to_version(surface as cairo_surface_t, version as Number)
 Gurax_DeclareFunctionAlias(cairo_pdf_surface_restrict_to_version_gurax, "cairo_pdf_surface_restrict_to_version")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6589,7 +6589,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_get_versions_gurax, processor_gurax, argumen
 	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
 }
 
-// cairo.cairo_pdf_version_to_string(version:Number)
+// cairo.cairo_pdf_version_to_string(version as Number)
 Gurax_DeclareFunctionAlias(cairo_pdf_version_to_string_gurax, "cairo_pdf_version_to_string")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -6609,7 +6609,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_version_to_string_gurax, processor_gurax, ar
 	return new Gurax::Value_String(rtn);
 }
 
-// cairo.cairo_pdf_surface_set_size(surface:cairo_surface_t, width_in_points:Number, height_in_points:Number)
+// cairo.cairo_pdf_surface_set_size(surface as cairo_surface_t, width_in_points as Number, height_in_points as Number)
 Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_size_gurax, "cairo_pdf_surface_set_size")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6634,7 +6634,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_set_size_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pdf_surface_add_outline(surface:cairo_surface_t, parent_id:Number, utf8:String, link_attribs:String, flags:Number)
+// cairo.cairo_pdf_surface_add_outline(surface as cairo_surface_t, parent_id as Number, utf8 as String, link_attribs as String, flags as Number)
 Gurax_DeclareFunctionAlias(cairo_pdf_surface_add_outline_gurax, "cairo_pdf_surface_add_outline")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -6663,7 +6663,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_add_outline_gurax, processor_gurax, 
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_pdf_surface_set_metadata(surface:cairo_surface_t, metadata:Number, utf8:String)
+// cairo.cairo_pdf_surface_set_metadata(surface as cairo_surface_t, metadata as Number, utf8 as String)
 Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_metadata_gurax, "cairo_pdf_surface_set_metadata")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6688,7 +6688,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_set_metadata_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pdf_surface_set_page_label(surface:cairo_surface_t, utf8:String)
+// cairo.cairo_pdf_surface_set_page_label(surface as cairo_surface_t, utf8 as String)
 Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_page_label_gurax, "cairo_pdf_surface_set_page_label")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6711,7 +6711,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_set_page_label_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_pdf_surface_set_thumbnail_size(surface:cairo_surface_t, width:Number, height:Number)
+// cairo.cairo_pdf_surface_set_thumbnail_size(surface as cairo_surface_t, width as Number, height as Number)
 Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_thumbnail_size_gurax, "cairo_pdf_surface_set_thumbnail_size")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6736,7 +6736,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_set_thumbnail_size_gurax, processor_
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_ps_surface_create(filename:String, width_in_points:Number, height_in_points:Number)
+// cairo.cairo_ps_surface_create(filename as String, width_in_points as Number, height_in_points as Number)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_create_gurax, "cairo_ps_surface_create")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -6761,7 +6761,7 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_create_gurax, processor_gurax, argume
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_ps_surface_create_for_stream(stream:Stream:w, width_in_points:Number, height_in_points:Number)
+// cairo.cairo_ps_surface_create_for_stream(stream:w as Stream, width_in_points as Number, height_in_points as Number)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_create_for_stream_gurax, "cairo_ps_surface_create_for_stream")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -6785,7 +6785,7 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_create_for_stream_gurax, processor_gu
 	return new Value_cairo_surface_t(surface, stream.release());
 }
 
-// cairo.cairo_ps_surface_restrict_to_level(surface:cairo_surface_t, level:Number)
+// cairo.cairo_ps_surface_restrict_to_level(surface as cairo_surface_t, level as Number)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_restrict_to_level_gurax, "cairo_ps_surface_restrict_to_level")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6808,7 +6808,7 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_restrict_to_level_gurax, processor_gu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_ps_level_to_string(level:Number)
+// cairo.cairo_ps_level_to_string(level as Number)
 Gurax_DeclareFunctionAlias(cairo_ps_level_to_string_gurax, "cairo_ps_level_to_string")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -6828,7 +6828,7 @@ Gurax_ImplementFunctionEx(cairo_ps_level_to_string_gurax, processor_gurax, argum
 	return new Gurax::Value_String(rtn);
 }
 
-// cairo.cairo_ps_surface_set_eps(surface:cairo_surface_t, eps:Bool)
+// cairo.cairo_ps_surface_set_eps(surface as cairo_surface_t, eps as Bool)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_set_eps_gurax, "cairo_ps_surface_set_eps")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6851,7 +6851,7 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_set_eps_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_ps_surface_get_eps(surface:cairo_surface_t)
+// cairo.cairo_ps_surface_get_eps(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_get_eps_gurax, "cairo_ps_surface_get_eps")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -6872,7 +6872,7 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_get_eps_gurax, processor_gurax, argum
 	return new Gurax::Value_Bool(!!rtn);
 }
 
-// cairo.cairo_ps_surface_set_size(surface:cairo_surface_t, width_in_points:Number, height_in_points:Number)
+// cairo.cairo_ps_surface_set_size(surface as cairo_surface_t, width_in_points as Number, height_in_points as Number)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_set_size_gurax, "cairo_ps_surface_set_size")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6897,7 +6897,7 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_set_size_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_ps_surface_dsc_comment(surface:cairo_surface_t, comment:String)
+// cairo.cairo_ps_surface_dsc_comment(surface as cairo_surface_t, comment as String)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_dsc_comment_gurax, "cairo_ps_surface_dsc_comment")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6920,7 +6920,7 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_dsc_comment_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_ps_surface_dsc_begin_setup(surface:cairo_surface_t)
+// cairo.cairo_ps_surface_dsc_begin_setup(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_dsc_begin_setup_gurax, "cairo_ps_surface_dsc_begin_setup")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6941,7 +6941,7 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_dsc_begin_setup_gurax, processor_gura
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_ps_surface_dsc_begin_page_setup(surface:cairo_surface_t)
+// cairo.cairo_ps_surface_dsc_begin_page_setup(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_ps_surface_dsc_begin_page_setup_gurax, "cairo_ps_surface_dsc_begin_page_setup")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -6962,7 +6962,7 @@ Gurax_ImplementFunctionEx(cairo_ps_surface_dsc_begin_page_setup_gurax, processor
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_script_create(filename:String)
+// cairo.cairo_script_create(filename as String)
 Gurax_DeclareFunctionAlias(cairo_script_create_gurax, "cairo_script_create")
 {
 	Declare(VTYPE_cairo_device_t, Flag::None);
@@ -6983,7 +6983,7 @@ Gurax_ImplementFunctionEx(cairo_script_create_gurax, processor_gurax, argument_g
 	return new Value_cairo_device_t(rtn);
 }
 
-// cairo.cairo_script_create_for_stream(stream:Stream:w)
+// cairo.cairo_script_create_for_stream(stream:w as Stream)
 Gurax_DeclareFunctionAlias(cairo_script_create_for_stream_gurax, "cairo_script_create_for_stream")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -7003,7 +7003,7 @@ Gurax_ImplementFunctionEx(cairo_script_create_for_stream_gurax, processor_gurax,
 	return new Value_cairo_device_t(device, stream.release());
 }
 
-// cairo.cairo_script_write_comment(script:cairo_device_t, comment:String, len:Number)
+// cairo.cairo_script_write_comment(script as cairo_device_t, comment as String, len as Number)
 Gurax_DeclareFunctionAlias(cairo_script_write_comment_gurax, "cairo_script_write_comment")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7028,7 +7028,7 @@ Gurax_ImplementFunctionEx(cairo_script_write_comment_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_script_set_mode(script:cairo_device_t, mode:Number)
+// cairo.cairo_script_set_mode(script as cairo_device_t, mode as Number)
 Gurax_DeclareFunctionAlias(cairo_script_set_mode_gurax, "cairo_script_set_mode")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7051,7 +7051,7 @@ Gurax_ImplementFunctionEx(cairo_script_set_mode_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_script_get_mode(script:cairo_device_t)
+// cairo.cairo_script_get_mode(script as cairo_device_t)
 Gurax_DeclareFunctionAlias(cairo_script_get_mode_gurax, "cairo_script_get_mode")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7072,7 +7072,7 @@ Gurax_ImplementFunctionEx(cairo_script_get_mode_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_script_surface_create(script:cairo_device_t, content:Number, width:Number, height:Number)
+// cairo.cairo_script_surface_create(script as cairo_device_t, content as Number, width as Number, height as Number)
 Gurax_DeclareFunctionAlias(cairo_script_surface_create_gurax, "cairo_script_surface_create")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -7100,7 +7100,7 @@ Gurax_ImplementFunctionEx(cairo_script_surface_create_gurax, processor_gurax, ar
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_script_surface_create_for_target(script:cairo_device_t, target:cairo_surface_t)
+// cairo.cairo_script_surface_create_for_target(script as cairo_device_t, target as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_script_surface_create_for_target_gurax, "cairo_script_surface_create_for_target")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -7125,7 +7125,7 @@ Gurax_ImplementFunctionEx(cairo_script_surface_create_for_target_gurax, processo
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_script_from_recording_surface(script:cairo_device_t, recording_surface:cairo_surface_t)
+// cairo.cairo_script_from_recording_surface(script as cairo_device_t, recording_surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_script_from_recording_surface_gurax, "cairo_script_from_recording_surface")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -7149,7 +7149,7 @@ Gurax_ImplementFunctionEx(cairo_script_from_recording_surface_gurax, processor_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// cairo.cairo_svg_surface_create(filename:String, width_in_points:Number, height_in_points:Number)
+// cairo.cairo_svg_surface_create(filename as String, width_in_points as Number, height_in_points as Number)
 Gurax_DeclareFunctionAlias(cairo_svg_surface_create_gurax, "cairo_svg_surface_create")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
@@ -7174,7 +7174,7 @@ Gurax_ImplementFunctionEx(cairo_svg_surface_create_gurax, processor_gurax, argum
 	return new Value_cairo_surface_t(rtn);
 }
 
-// cairo.cairo_svg_surface_create_for_stream(stream:Stream:w, width_in_points:Number, height_in_points:Number)
+// cairo.cairo_svg_surface_create_for_stream(stream:w as Stream, width_in_points as Number, height_in_points as Number)
 Gurax_DeclareFunctionAlias(cairo_svg_surface_create_for_stream_gurax, "cairo_svg_surface_create_for_stream")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -7198,7 +7198,7 @@ Gurax_ImplementFunctionEx(cairo_svg_surface_create_for_stream_gurax, processor_g
 	return new Value_cairo_surface_t(surface, stream.release());
 }
 
-// cairo.cairo_svg_surface_restrict_to_version(surface:cairo_surface_t, version:Number)
+// cairo.cairo_svg_surface_restrict_to_version(surface as cairo_surface_t, version as Number)
 Gurax_DeclareFunctionAlias(cairo_svg_surface_restrict_to_version_gurax, "cairo_svg_surface_restrict_to_version")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7239,7 +7239,7 @@ Gurax_ImplementFunctionEx(cairo_svg_get_versions_gurax, processor_gurax, argumen
 	return Value_List::Create(reinterpret_cast<const int*>(versions), num_version);
 }
 
-// cairo.cairo_svg_version_to_string(version:Number)
+// cairo.cairo_svg_version_to_string(version as Number)
 Gurax_DeclareFunctionAlias(cairo_svg_version_to_string_gurax, "cairo_svg_version_to_string")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -7259,7 +7259,7 @@ Gurax_ImplementFunctionEx(cairo_svg_version_to_string_gurax, processor_gurax, ar
 	return new Gurax::Value_String(rtn);
 }
 
-// cairo.cairo_svg_surface_set_document_unit(surface:cairo_surface_t, unit:Number)
+// cairo.cairo_svg_surface_set_document_unit(surface as cairo_surface_t, unit as Number)
 Gurax_DeclareFunctionAlias(cairo_svg_surface_set_document_unit_gurax, "cairo_svg_surface_set_document_unit")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -7282,7 +7282,7 @@ Gurax_ImplementFunctionEx(cairo_svg_surface_set_document_unit_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// cairo.cairo_svg_surface_get_document_unit(surface:cairo_surface_t)
+// cairo.cairo_svg_surface_get_document_unit(surface as cairo_surface_t)
 Gurax_DeclareFunctionAlias(cairo_svg_surface_get_document_unit_gurax, "cairo_svg_surface_get_document_unit")
 {
 	Declare(VTYPE_Number, Flag::None);

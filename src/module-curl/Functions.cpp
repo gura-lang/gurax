@@ -22,7 +22,7 @@ Gurax_ImplementFunctionEx(curl_easy_init_gurax, processor_gurax, argument_gurax)
 	return new Value_CURL(processor_gurax.Reference(), rtn);
 }
 
-// curl.curl_easy_setopt(curl:CURL, option:Number, value:Any)
+// curl.curl_easy_setopt(curl as CURL, option as Number, value as Any)
 Gurax_DeclareFunctionAlias(curl_easy_setopt_gurax, "curl_easy_setopt")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -48,7 +48,7 @@ Gurax_ImplementFunctionEx(curl_easy_setopt_gurax, processor_gurax, argument_gura
 	return new Value_Number(code);
 }
 
-// curl.curl_easy_perform(curl:CURL)
+// curl.curl_easy_perform(curl as CURL)
 Gurax_DeclareFunctionAlias(curl_easy_perform_gurax, "curl_easy_perform")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -69,7 +69,7 @@ Gurax_ImplementFunctionEx(curl_easy_perform_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_easy_cleanup(curl:CURL)
+// curl.curl_easy_cleanup(curl as CURL)
 Gurax_DeclareFunctionAlias(curl_easy_cleanup_gurax, "curl_easy_cleanup")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -90,7 +90,7 @@ Gurax_ImplementFunctionEx(curl_easy_cleanup_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// curl.curl_easy_getinfo(curl:CURL, info:Number)
+// curl.curl_easy_getinfo(curl as CURL, info as Number)
 Gurax_DeclareFunctionAlias(curl_easy_getinfo_gurax, "curl_easy_getinfo")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -112,7 +112,7 @@ Gurax_ImplementFunctionEx(curl_easy_getinfo_gurax, processor_gurax, argument_gur
 	return value_curl.GetInfo().GetItem(info);
 }
 
-// curl.curl_easy_duphandle(curl:CURL)
+// curl.curl_easy_duphandle(curl as CURL)
 Gurax_DeclareFunctionAlias(curl_easy_duphandle_gurax, "curl_easy_duphandle")
 {
 	Declare(VTYPE_CURL, Flag::None);
@@ -134,7 +134,7 @@ Gurax_ImplementFunctionEx(curl_easy_duphandle_gurax, processor_gurax, argument_g
 	return new Value_CURL(processor_gurax.Reference(), rtn);
 }
 
-// curl.curl_easy_reset(curl:CURL)
+// curl.curl_easy_reset(curl as CURL)
 Gurax_DeclareFunctionAlias(curl_easy_reset_gurax, "curl_easy_reset")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -155,7 +155,7 @@ Gurax_ImplementFunctionEx(curl_easy_reset_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// curl.curl_easy_upkeep(curl:CURL)
+// curl.curl_easy_upkeep(curl as CURL)
 Gurax_DeclareFunctionAlias(curl_easy_upkeep_gurax, "curl_easy_upkeep")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -176,7 +176,7 @@ Gurax_ImplementFunctionEx(curl_easy_upkeep_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_mime_init(easy:CURL)
+// curl.curl_mime_init(easy as CURL)
 Gurax_DeclareFunctionAlias(curl_mime_init_gurax, "curl_mime_init")
 {
 	Declare(VTYPE_curl_mime, Flag::None);
@@ -198,7 +198,7 @@ Gurax_ImplementFunctionEx(curl_mime_init_gurax, processor_gurax, argument_gurax)
 	return new Value_curl_mime(rtn);
 }
 
-// curl.curl_mime_free(mime:curl_mime)
+// curl.curl_mime_free(mime as curl_mime)
 Gurax_DeclareFunctionAlias(curl_mime_free_gurax, "curl_mime_free")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -219,7 +219,7 @@ Gurax_ImplementFunctionEx(curl_mime_free_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// curl.curl_mime_addpart(mime:curl_mime)
+// curl.curl_mime_addpart(mime as curl_mime)
 Gurax_DeclareFunctionAlias(curl_mime_addpart_gurax, "curl_mime_addpart")
 {
 	Declare(VTYPE_curl_mimepart, Flag::None);
@@ -241,7 +241,7 @@ Gurax_ImplementFunctionEx(curl_mime_addpart_gurax, processor_gurax, argument_gur
 	return new Value_curl_mimepart(rtn);
 }
 
-// curl.curl_mime_name(part:curl_mimepart, name:String)
+// curl.curl_mime_name(part as curl_mimepart, name as String)
 Gurax_DeclareFunctionAlias(curl_mime_name_gurax, "curl_mime_name")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -264,7 +264,7 @@ Gurax_ImplementFunctionEx(curl_mime_name_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_mime_filename(part:curl_mimepart, filename:String)
+// curl.curl_mime_filename(part as curl_mimepart, filename as String)
 Gurax_DeclareFunctionAlias(curl_mime_filename_gurax, "curl_mime_filename")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -287,7 +287,7 @@ Gurax_ImplementFunctionEx(curl_mime_filename_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_mime_type(part:curl_mimepart, mimetype:String)
+// curl.curl_mime_type(part as curl_mimepart, mimetype as String)
 Gurax_DeclareFunctionAlias(curl_mime_type_gurax, "curl_mime_type")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -310,7 +310,7 @@ Gurax_ImplementFunctionEx(curl_mime_type_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_mime_encoder(part:curl_mimepart, encoding:String)
+// curl.curl_mime_encoder(part as curl_mimepart, encoding as String)
 Gurax_DeclareFunctionAlias(curl_mime_encoder_gurax, "curl_mime_encoder")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -333,7 +333,7 @@ Gurax_ImplementFunctionEx(curl_mime_encoder_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_mime_data(part:curl_mimepart, data:Pointer, datasize:Number)
+// curl.curl_mime_data(part as curl_mimepart, data as Pointer, datasize as Number)
 Gurax_DeclareFunctionAlias(curl_mime_data_gurax, "curl_mime_data")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -358,7 +358,7 @@ Gurax_ImplementFunctionEx(curl_mime_data_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_mime_filedata(part:curl_mimepart, filename:String)
+// curl.curl_mime_filedata(part as curl_mimepart, filename as String)
 Gurax_DeclareFunctionAlias(curl_mime_filedata_gurax, "curl_mime_filedata")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -381,7 +381,7 @@ Gurax_ImplementFunctionEx(curl_mime_filedata_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_mime_subparts(part:curl_mimepart, subparts:curl_mime)
+// curl.curl_mime_subparts(part as curl_mimepart, subparts as curl_mime)
 Gurax_DeclareFunctionAlias(curl_mime_subparts_gurax, "curl_mime_subparts")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -405,7 +405,7 @@ Gurax_ImplementFunctionEx(curl_mime_subparts_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_mime_headers(part:curl_mimepart, headers:curl_slist, take_ownership:Number)
+// curl.curl_mime_headers(part as curl_mimepart, headers as curl_slist, take_ownership as Number)
 Gurax_DeclareFunctionAlias(curl_mime_headers_gurax, "curl_mime_headers")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -431,7 +431,7 @@ Gurax_ImplementFunctionEx(curl_mime_headers_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// curl.curl_free(value:Any)
+// curl.curl_free(value as Any)
 Gurax_DeclareFunctionAlias(curl_free_gurax, "curl_free")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -450,7 +450,7 @@ Gurax_ImplementFunctionEx(curl_free_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// curl.curl_global_init(flags:Number)
+// curl.curl_global_init(flags as Number)
 Gurax_DeclareFunctionAlias(curl_global_init_gurax, "curl_global_init")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -486,7 +486,7 @@ Gurax_ImplementFunctionEx(curl_global_cleanup_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// curl.curl_slist_append(slist:curl_slist:nil, str:String)
+// curl.curl_slist_append(slist:nil as curl_slist, str as String)
 Gurax_DeclareFunctionAlias(curl_slist_append_gurax, "curl_slist_append")
 {
 	Declare(VTYPE_curl_slist, Flag::None);
@@ -509,7 +509,7 @@ Gurax_ImplementFunctionEx(curl_slist_append_gurax, processor_gurax, argument_gur
 	return new Value_curl_slist(rtn);
 }
 
-// curl.curl_slist_free_all(slist:curl_slist)
+// curl.curl_slist_free_all(slist as curl_slist)
 Gurax_DeclareFunctionAlias(curl_slist_free_all_gurax, "curl_slist_free_all")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -530,7 +530,7 @@ Gurax_ImplementFunctionEx(curl_slist_free_all_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// curl.curl_easy_strerror(code:Number)
+// curl.curl_easy_strerror(code as Number)
 Gurax_DeclareFunctionAlias(curl_easy_strerror_gurax, "curl_easy_strerror")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -550,7 +550,7 @@ Gurax_ImplementFunctionEx(curl_easy_strerror_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(rtn);
 }
 
-// curl.curl_share_strerror(code:Number)
+// curl.curl_share_strerror(code as Number)
 Gurax_DeclareFunctionAlias(curl_share_strerror_gurax, "curl_share_strerror")
 {
 	Declare(VTYPE_String, Flag::None);
@@ -570,7 +570,7 @@ Gurax_ImplementFunctionEx(curl_share_strerror_gurax, processor_gurax, argument_g
 	return new Gurax::Value_String(rtn);
 }
 
-// curl.curl_easy_pause(handle:CURL, bitmask:Number)
+// curl.curl_easy_pause(handle as CURL, bitmask as Number)
 Gurax_DeclareFunctionAlias(curl_easy_pause_gurax, "curl_easy_pause")
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -610,7 +610,7 @@ Gurax_ImplementFunctionEx(curl_url_gurax, processor_gurax, argument_gurax)
 	return new Value_CURLU(rtn);
 }
 
-// curl.curl_url_cleanup(handle:CURLU)
+// curl.curl_url_cleanup(handle as CURLU)
 Gurax_DeclareFunctionAlias(curl_url_cleanup_gurax, "curl_url_cleanup")
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -631,7 +631,7 @@ Gurax_ImplementFunctionEx(curl_url_cleanup_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// curl.curl_url_dup(inhandle:CURLU)
+// curl.curl_url_dup(inhandle as CURLU)
 Gurax_DeclareFunctionAlias(curl_url_dup_gurax, "curl_url_dup")
 {
 	Declare(VTYPE_CURLU, Flag::None);
@@ -653,7 +653,7 @@ Gurax_ImplementFunctionEx(curl_url_dup_gurax, processor_gurax, argument_gurax)
 	return new Value_CURLU(rtn);
 }
 
-// curl.curl_url_get(url:CURLU, what:Number, flags:Number)
+// curl.curl_url_get(url as CURLU, what as Number, flags as Number)
 Gurax_DeclareFunctionAlias(curl_url_get_gurax, "curl_url_get")
 {
 	Declare(VTYPE_Any, Flag::None);
@@ -685,7 +685,7 @@ Gurax_ImplementFunctionEx(curl_url_get_gurax, processor_gurax, argument_gurax)
 	return pValueRtn.release();
 }
 
-// curl.curl_url_set(url:CURLU, part:Number, content:String, flags:Number)
+// curl.curl_url_set(url as CURLU, part as Number, content as String, flags as Number)
 Gurax_DeclareFunctionAlias(curl_url_set_gurax, "curl_url_set")
 {
 	Declare(VTYPE_Number, Flag::None);
