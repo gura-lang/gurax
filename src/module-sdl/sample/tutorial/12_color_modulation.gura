@@ -76,7 +76,7 @@ LTexture = class {
 	}
 
 	//Renders texture at given point
-	render(x as Number, y as Number, clip?:SDL_Rect) = {
+	render(x as Number, y as Number, clip? as SDL_Rect) = {
 		//Set rendering space and render to screen
 		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
 
