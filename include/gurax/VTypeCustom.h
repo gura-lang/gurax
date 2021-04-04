@@ -71,6 +71,7 @@ public:
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction) override;
 };
 
+#if 0
 //------------------------------------------------------------------------------
 // ValueCustom
 //------------------------------------------------------------------------------
@@ -102,6 +103,7 @@ public:
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };
+#endif
 
 }
 

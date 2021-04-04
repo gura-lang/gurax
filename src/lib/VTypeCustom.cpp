@@ -234,6 +234,7 @@ String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const
 	return str;
 }
 
+#if 0
 //------------------------------------------------------------------------------
 // ValueCustom
 //------------------------------------------------------------------------------
@@ -241,5 +242,6 @@ String ValueCustom::ToString(const StringStyle& ss) const
 {
 	return String().Format("<%s>", GetVTypeCustom().MakeFullName().c_str());
 }
+#endif
 
 }
