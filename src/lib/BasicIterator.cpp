@@ -73,7 +73,7 @@ Value* Iterator_UnaryOpImpMap::DoNextValue()
 	Frame& frame = GetProcessor().GetFrameCur();
 	if (!GetValue().ReadyToPickValue(frame, *DeclArg::Any)) return nullptr;
 	RefPtr<Value> pValueEach(GetValue().PickValue());
-	const VType& vtype = pValueEach->GetVType();
+	const VType& vtype = pValueEach->GetVTypeCustom();
 	if (!vtype.IsIdentical(*_pVTypePrev)) {
 		if (!(_pOpEntry = _pOp->FindMatchedEntry(vtype))) return nullptr;
 	}
@@ -108,8 +108,8 @@ Value* Iterator_BinaryOpImpMap::DoNextValue()
 		!GetValueR().ReadyToPickValue(frame, *DeclArg::Any)) return nullptr;
 	RefPtr<Value> pValueEachL(GetValueL().PickValue());
 	RefPtr<Value> pValueEachR(GetValueR().PickValue());
-	const VType& vtypeL = pValueEachL->GetVType();
-	const VType& vtypeR = pValueEachR->GetVType();
+	const VType& vtypeL = pValueEachL->GetVTypeCustom();
+	const VType& vtypeR = pValueEachR->GetVTypeCustom();
 	if (!vtypeL.IsIdentical(*_pVTypePrevL) || !vtypeR.IsIdentical(*_pVTypePrevR)) {
 		if (!(_pOpEntry = _pOp->FindMatchedEntry(vtypeL, vtypeR))) return nullptr;
 	}

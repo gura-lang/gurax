@@ -46,17 +46,17 @@ VType& ValueList::GetVTypeOfElems() const
 {
 	if (empty()) return VTYPE_Undefined;
 	auto ppValue = begin();
-	VType* pVTypeOfElems = &(*ppValue)->GetVType();
+	VType* pVTypeOfElems = &(*ppValue)->GetVTypeCustom();
 	ppValue++;
 	for ( ; ppValue != end(); ppValue++) {
-		if (!pVTypeOfElems->IsIdentical((*ppValue)->GetVType())) return VTYPE_Any;
+		if (!pVTypeOfElems->IsIdentical((*ppValue)->GetVTypeCustom())) return VTYPE_Any;
 	}
 	return *pVTypeOfElems;
 }
 
 VType& ValueList::GetVTypeOfElemsQuick() const
 {
-	return empty()? VTYPE_Undefined : front()->GetVType();
+	return empty()? VTYPE_Undefined : front()->GetVTypeCustom();
 }
 
 void ValueList::IncCntRefOfEach() const

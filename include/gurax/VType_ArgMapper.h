@@ -69,7 +69,7 @@ public:
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
 			GetIterator().IsLessThan(Value_ArgMapper::GetIterator(value)) :
-			GetVType().IsLessThan(value.GetVType());
+			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual Iterator* DoGenIterator() const override;

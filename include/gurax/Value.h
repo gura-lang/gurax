@@ -126,18 +126,18 @@ private:
 	static const Value* _pValue_Zero;
 	static const Value* _pValue_EmptyStr;
 protected:
-	VType* _pVType2;
+	VType* _pVType;
 protected:
 	std::unique_ptr<CustomPack> _pCustomPack;
 public:
 	// Constructor
 	Value() = delete;
-	explicit Value(VType& vtype) : _pVType2(&vtype) {}
+	explicit Value(VType& vtype) : _pVType(&vtype) {}
 	// Copy constructor/operator
-	Value(const Value& src) : _pVType2(src._pVType2) {}
+	Value(const Value& src) : _pVType(src._pVType) {}
 	Value& operator=(const Value& src) = delete;
 	// Move constructor/operator
-	Value(Value&& src) noexcept : _pVType2(src._pVType2) {}
+	Value(Value&& src) noexcept : _pVType(src._pVType) {}
 	Value& operator=(Value&& src) noexcept = delete;
 protected:
 	// Destructor
@@ -147,18 +147,18 @@ public:
 	T_Value* Cast(DeclArg::Flags flags = DeclArg::Flag::None) const {
 		return dynamic_cast<T_Value*>(T_Value::vtype.Cast(*this, nullptr, flags));
 	}
-	VType& GetVType() const { return *_pVType2; }
+	VType& GetVTypeOfEntity() const { return *_pVType; }
 	VType& GetVTypeCustom() const;
 	size_t CalcHash() const { return DoCalcHash(); }
 	bool IsIdentical(const Value* pValue) const { return this == pValue; }
 	static bool IsIdentical(const Value* pValue1, const Value* pValue2) {
 		return pValue1? pValue1->IsIdentical(pValue2) : (!pValue1 && !pValue2);
 	}
-	bool IsSameType(const Value& value) const { return GetVType().IsIdentical(value.GetVType()); }
+	bool IsSameType(const Value& value) const { return GetVTypeCustom().IsIdentical(value.GetVTypeCustom()); }
 	static bool IsSameType(const Value* pValue1, const Value* pValue2) {
 		return pValue1 && pValue1->IsSameType(*pValue2);
 	}
-	bool IsType(const VType& vtype) const { return GetVType().IsIdentical(vtype); }
+	bool IsType(const VType& vtype) const { return GetVTypeCustom().IsIdentical(vtype); }
 	static bool IsType(const Value* pValue, const VType& vtype) { return pValue && pValue->IsType(vtype); }
 	bool IsInstanceOf(const VType& vtype) const;
 	Value* AsMember(const Value& valueTarget) const;
@@ -169,8 +169,8 @@ public:
 		return ToStringGeneric(ss, strEntity.c_str());
 	}
 public:
-	bool IsMutable() const { return GetVType().IsMutable(); }
-	bool IsImmutable() const { return GetVType().IsImmutable(); }
+	bool IsMutable() const { return GetVTypeCustom().IsMutable(); }
+	bool IsImmutable() const { return GetVTypeCustom().IsImmutable(); }
 public:
 	static void CreateConstant();
 public:
@@ -252,7 +252,7 @@ public:
 	virtual bool CanBeCallableMember() const { return false; }
 	virtual bool CanEvalAsMethod(const Function& function) const;
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const {
-		GetVType().GatherMemberSymbol(symbolList);
+		GetVTypeCustom().GatherMemberSymbol(symbolList);
 	}
 	virtual const DeclCallable* GetDeclCallableWithError();
 	virtual const DeclCallable* GetDeclCallable();

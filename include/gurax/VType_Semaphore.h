@@ -72,7 +72,7 @@ public:
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
 			GetSemaphore().IsLessThan(Value_Semaphore::GetSemaphore(value)) :
-			GetVType().IsLessThan(value.GetVType());
+			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

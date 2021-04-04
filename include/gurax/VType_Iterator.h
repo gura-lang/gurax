@@ -99,7 +99,7 @@ public:
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
 			GetIterator().IsLessThan(dynamic_cast<const Value_Iterator&>(value).GetIterator()) :
-			GetVType().IsLessThan(value.GetVType());
+			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	// Virtual functions for runtime process

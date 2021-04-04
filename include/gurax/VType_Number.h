@@ -92,7 +92,7 @@ public:
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
 			GetNumber<Double>() < Value_Number::GetNumber<Double>(value) :
-			GetVType().IsLessThan(value.GetVType());
+			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool IsAsDictKey() const override { return true; }

@@ -51,7 +51,7 @@ bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, VType* pVT
 	} else if (pValueInit->IsNil()) {
 		pVType = &VTYPE_Any;
 	} else {
-		pVType = &pValueInit->GetVType();
+		pVType = &pValueInit->GetVTypeCustom();
 	}
 	valuesProp.push_back(pValueInit.release());
 	if (ofClassFlag) {
@@ -237,7 +237,7 @@ String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 String ValueCustom::ToString(const StringStyle& ss) const
 {
-	return String().Format("<%s>", GetVType().MakeFullName().c_str());
+	return String().Format("<%s>", GetVTypeCustom().MakeFullName().c_str());
 }
 
 }

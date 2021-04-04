@@ -66,7 +66,7 @@ public:
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
 			GetFrame().IsLessThan(dynamic_cast<const Value_Scope&>(value).GetFrame()) :
-			GetVType().IsLessThan(value.GetVType());
+			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 public:
 	// Virtual functions for runtime process

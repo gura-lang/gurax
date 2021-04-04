@@ -103,10 +103,10 @@ Value* VType::Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags fla
 			if (pSymbol) {
 				Error::Issue(ErrorType::ValueError, "%s can't cast from %s to %s",
 					pSymbol->GetName(),
-					value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
+					value.GetVTypeCustom().MakeFullName().c_str(), vtype.MakeFullName().c_str());
 			} else {
 				Error::Issue(ErrorType::ValueError, "can't cast from %s to %s",
-					value.GetVType().MakeFullName().c_str(), vtype.MakeFullName().c_str());
+					value.GetVTypeCustom().MakeFullName().c_str(), vtype.MakeFullName().c_str());
 			}
 		}
 	};

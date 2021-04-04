@@ -49,7 +49,7 @@ Gurax_ImplementConstructor(Help)
 	HelpHolder* pHelpHolder = value.GetHelpHolder();
 	if (!pHelpHolder) {
 		Error::Issue(ErrorType::ValueError,
-					 "value type '%s' doesn't have help", value.GetVType().MakeFullName().c_str());
+					 "value type '%s' doesn't have help", value.GetVTypeCustom().MakeFullName().c_str());
 		return Value::nil();
 	}
 	const Help* pHelp = nullptr;
@@ -144,7 +144,7 @@ Gurax_ImplementOpBinary(ModMod, Any, String)
 	HelpHolder* pHelpHolder = valueL.GetHelpHolder();
 	if (!pHelpHolder) {
 		Error::Issue(ErrorType::ValueError,
-				 "can't assign help to value type '%s'", valueL.GetVType().MakeFullName().c_str());
+				 "can't assign help to value type '%s'", valueL.GetVTypeCustom().MakeFullName().c_str());
 		return Value::nil();
 	}
 	pHelpHolder->AddHelp(Gurax_Symbol(en), Value_String::GetString(valueR));
@@ -157,7 +157,7 @@ Gurax_ImplementOpBinary(ModMod, Any, Help)
 	HelpHolder* pHelpHolder = valueL.GetHelpHolder();
 	if (!pHelpHolder) {
 		Error::Issue(ErrorType::ValueError,
-				 "can't assign help to value type '%s'", valueL.GetVType().MakeFullName().c_str());
+				 "can't assign help to value type '%s'", valueL.GetVTypeCustom().MakeFullName().c_str());
 		return Value::nil();
 	}
 	pHelpHolder->AddHelp(Value_Help::GetHelp(valueR).Clone());

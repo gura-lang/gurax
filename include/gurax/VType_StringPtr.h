@@ -63,7 +63,7 @@ public:
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
 			String::IsLessThan(GetString(), dynamic_cast<const Value_StringPtr&>(value).GetString()) :
-			GetVType().IsLessThan(value.GetVType());
+			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool Format_s(Formatter& formatter, FormatterFlags& formatterFlags) const override;

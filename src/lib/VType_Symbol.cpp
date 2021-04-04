@@ -98,7 +98,7 @@ bool Value_Symbol::IsLessThan(const Value& value) const
 {
 	return IsSameType(value)?
 		GetSymbol()->IsLessThan_UniqId(Value_Symbol::GetSymbol(value)) :
-		GetVType().IsLessThan(value.GetVType());
+		GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 }
 
 String Value_Symbol::ToString(const StringStyle& ss) const

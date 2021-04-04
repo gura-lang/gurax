@@ -48,7 +48,7 @@ public:
 	virtual size_t DoCalcHash() const override { return 0; }
 	virtual bool IsEqualTo(const Value& value) const override { return IsSameType(value); }
 	virtual bool IsLessThan(const Value& value) const override {
-		return IsSameType(value)? false : GetVType().IsLessThan(value.GetVType());
+		return IsSameType(value)? false : GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };

@@ -69,7 +69,7 @@ public:
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
 			GetValueDict().IsLessThan(dynamic_cast<const Value_Dict&>(value).GetValueDict()) :
-			GetVType().IsLessThan(value.GetVType());
+			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 		
 	}
 	virtual String ToString(const StringStyle& ss) const override;

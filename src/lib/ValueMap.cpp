@@ -59,7 +59,7 @@ String ValueMap::ToString(const StringStyle& ss) const
 		Value* pValue = Lookup(pSymbol);
 		str += pSymbol->GetName();
 		str += ":";
-		str += pValue->GetVType().MakeFullName().c_str();
+		str += pValue->GetVTypeCustom().MakeFullName().c_str();
 		str += " = ";
 		str += pValue->ToString(ss);
 		str += "\n";

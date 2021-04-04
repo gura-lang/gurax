@@ -44,7 +44,7 @@ Gurax_ImplementFunction(VType)
 	ArgPicker args(argument);
 	const Value& value = args.PickValue();
 	// Function body
-	return argument.ReturnValue(processor, new Value_VType(value.GetVType()));
+	return argument.ReturnValue(processor, new Value_VType(value.GetVTypeCustom()));
 }
 
 //------------------------------------------------------------------------------

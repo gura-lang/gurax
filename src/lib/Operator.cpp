@@ -191,7 +191,7 @@ Value* Operator::EvalUnary(Processor& processor, Value& value)
 			return new Value_Iterator(pIterator.release());
 		}
 	}
-	const OpEntry* pOpEntry = FindMatchedEntry(value.GetVType());
+	const OpEntry* pOpEntry = FindMatchedEntry(value.GetVTypeCustom());
 	return pOpEntry? pOpEntry->EvalUnary(processor, value) : Value::undefined();
 }
 
@@ -222,7 +222,7 @@ Value* Operator::EvalBinary(Processor& processor, Value& valueL, Value& valueR)
 			return pValueRtn.release();
 		}
 	}
-	const OpEntry* pOpEntry = FindMatchedEntry(valueL.GetVType(), valueR.GetVType());
+	const OpEntry* pOpEntry = FindMatchedEntry(valueL.GetVTypeCustom(), valueR.GetVTypeCustom());
 	return pOpEntry? pOpEntry->EvalBinary(processor, valueL, valueR) : Value::undefined();
 }
 

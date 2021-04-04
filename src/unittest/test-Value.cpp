@@ -27,7 +27,7 @@ void Test_IsType()
 {
 	auto func = [](const Value* pValue) {
 		::printf("%-12s %d %d %d %d\n",
-				 pValue->GetVType().GetName(),
+				 pValue->GetVTypeCustom().GetName(),
 				 pValue->IsInstanceOf(VTYPE_Object),
 				 pValue->IsType(VTYPE_Bool),
 				 pValue->IsType(VTYPE_Number),

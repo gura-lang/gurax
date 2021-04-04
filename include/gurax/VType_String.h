@@ -186,7 +186,7 @@ public:
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
 			String::IsLessThan(GetString(), dynamic_cast<const Value_String&>(value).GetString()) :
-			GetVType().IsLessThan(value.GetVType());
+			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	virtual bool IsAsDictKey() const override { return true; }

@@ -250,7 +250,7 @@ bool ValueTypedOwner::Erase(const NumList<Int>& posList)
 void ValueTypedOwner::UpdateVTypeOfElems(const Value& value)
 {
 	// Assumes that value is not of Undefined or Any.
-	VType& vtypeAdded = value.GetVType();
+	VType& vtypeAdded = value.GetVTypeCustom();
 	if (_pVTypeOfElems->IsIdentical(VTYPE_Undefined)) {
 		_pVTypeOfElems = &vtypeAdded;
 	} else if (!_pVTypeOfElems->IsIdentical(vtypeAdded)) {
@@ -278,10 +278,10 @@ VType& ValueTypedOwner::RefreshVTypeOfElems()
 		const ValueOwner& valueOwner = GetValueOwner();
 		auto ppValue = valueOwner.begin();
 		if (ppValue != valueOwner.end()) {
-			VType* pVType = &(*ppValue)->GetVType();
+			VType* pVType = &(*ppValue)->GetVTypeCustom();
 			ppValue++;
 			for ( ; ppValue != valueOwner.end(); ppValue++) {
-				if (pVType->IsIdentical((*ppValue)->GetVType())) {
+				if (pVType->IsIdentical((*ppValue)->GetVTypeCustom())) {
 					pVType = &VTYPE_Any;
 					break;
 				}

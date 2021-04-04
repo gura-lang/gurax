@@ -29,7 +29,7 @@ Value* PropSlotCustom_Class::DoGetValue(Value& valueTarget, const Attribute& att
 		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis());
 		return vtype.GetCustomPropOfClass(_iProp);
 	} else {
-		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(valueTarget.GetVType());
+		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(valueTarget.GetVTypeCustom());
 		return vtype.GetCustomPropOfClass(_iProp);
 	}
 }
@@ -40,7 +40,7 @@ void PropSlotCustom_Class::DoSetValue(Value& valueTarget, const Value& value, co
 		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis());
 		vtype.SetCustomPropOfClass(_iProp, value.Reference());
 	} else {
-		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(valueTarget.GetVType());
+		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(valueTarget.GetVTypeCustom());
 		vtype.SetCustomPropOfClass(_iProp, value.Reference());
 	}
 }

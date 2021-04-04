@@ -142,7 +142,7 @@ Gurax_DeclareProperty_R(Object, __vtype__)
 Gurax_ImplementPropertyGetter(Object, __vtype__)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_VType(valueThis.GetVType());
+	return new Value_VType(valueThis.GetVTypeCustom());
 }
 
 //------------------------------------------------------------------------------

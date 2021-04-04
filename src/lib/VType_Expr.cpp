@@ -866,7 +866,7 @@ bool Value_Expr::IsLessThan(const Value& value) const
 {
 	return IsSameType(value)?
 		GetExpr().IsLessThan(dynamic_cast<const Value_Expr&>(value).GetExpr()) :
-		GetVType().IsLessThan(value.GetVType());
+		GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 }
 
 String Value_Expr::ToString(const StringStyle& ss) const

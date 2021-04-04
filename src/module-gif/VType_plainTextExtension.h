@@ -72,7 +72,7 @@ public:
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			GetEntityPtr(*this) < GetEntityPtr(value) : GetVType().IsLessThan(value.GetVType());
+			GetEntityPtr(*this) < GetEntityPtr(value) : GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 };
