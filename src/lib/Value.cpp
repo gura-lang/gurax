@@ -17,7 +17,7 @@ const Value *Value::_pValue_EmptyStr	= nullptr;
 
 VType& Value::GetVTypeCustom() const
 {
-	return _pCustomPack? _pCustomPack->GetVType() : *_pVType;
+	return _pCustomPack? _pCustomPack->GetVType() : GetVType();
 }
 
 void Value::CreateConstant()

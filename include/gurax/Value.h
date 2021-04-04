@@ -126,18 +126,18 @@ private:
 	static const Value* _pValue_Zero;
 	static const Value* _pValue_EmptyStr;
 protected:
-	VType* _pVType;
+	VType* _pVType2;
 protected:
 	std::unique_ptr<CustomPack> _pCustomPack;
 public:
 	// Constructor
 	Value() = delete;
-	explicit Value(VType& vtype) : _pVType(&vtype) {}
+	explicit Value(VType& vtype) : _pVType2(&vtype) {}
 	// Copy constructor/operator
-	Value(const Value& src) : _pVType(src._pVType) {}
+	Value(const Value& src) : _pVType2(src._pVType2) {}
 	Value& operator=(const Value& src) = delete;
 	// Move constructor/operator
-	Value(Value&& src) noexcept : _pVType(src._pVType) {}
+	Value(Value&& src) noexcept : _pVType2(src._pVType2) {}
 	Value& operator=(Value&& src) noexcept = delete;
 protected:
 	// Destructor
@@ -147,7 +147,7 @@ public:
 	T_Value* Cast(DeclArg::Flags flags = DeclArg::Flag::None) const {
 		return dynamic_cast<T_Value*>(T_Value::vtype.Cast(*this, nullptr, flags));
 	}
-	VType& GetVType() const { return *_pVType; }
+	VType& GetVType() const { return *_pVType2; }
 	VType& GetVTypeCustom() const;
 	size_t CalcHash() const { return DoCalcHash(); }
 	bool IsIdentical(const Value* pValue) const { return this == pValue; }
