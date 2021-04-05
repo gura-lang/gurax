@@ -160,10 +160,9 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	if (argument.GetValueThis().IsValid()) {
 		pValueThis.reset(argument.GetValueThis().Reference());
 	} else {
-		//RefPtr<Value> pValueThisWk(new ValueCustom(GetVTypeCustom()));
 		pValueThis.reset(new Value_Object(GetVTypeCustom()));
-		if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) return Value::nil();
 		argument.SetValueThis(pValueThis.Reference());
+		if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) return Value::nil();
 	}
 	bool dynamicScopeFlag = false;
 	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag), processor.GetFrameCur());
