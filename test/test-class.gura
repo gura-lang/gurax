@@ -26,6 +26,13 @@ TestCase('Constructor') {
 	}
 	Tester(`A2)
 	Tester(`A2(3, 4))
+	try {
+		A3 = class {
+			__init__() = 'hello'
+		}
+	} catch {|e|
+		Println('Expected error occured: ', e.text)
+	}
 }
 
 TestCase('Destructor') {

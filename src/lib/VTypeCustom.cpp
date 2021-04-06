@@ -107,18 +107,23 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 {
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	if (pSymbol->IsIdentical(Gurax_Symbol(__init__))) {
+		if (!pFunction->GetExprBody().IsType<Expr_Block>()) {
+			Error::Issue(ErrorType::SyntaxError, "constructor's body must be a block");
+			return false;
+		}
+		RefPtr<Expr_Block> pExprBody(dynamic_cast<Expr_Block*>(pFunction->GetExprBody().Reference()));
 		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
 		RefPtr<Function> pConstructor;
 		if (GetVTypeInh()->IsCustom()) {
 			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
 			pConstructor.reset(new ConstructorClass(
-								   *this, pFunction->GetDeclCallable().Reference(),
-								   pFunction->GetExprBody().Reference(),
-								   pVTypeInh->GetConstructor().Reference()));
+								*this, pFunction->GetDeclCallable().Reference(),
+								pExprBody.release(),
+								pVTypeInh->GetConstructor().Reference()));
 		} else {
 			pConstructor.reset(new ConstructorClass(
-								   *this, pFunction->GetDeclCallable().Reference(),
-								   pFunction->GetExprBody().Reference(), nullptr));
+								*this, pFunction->GetDeclCallable().Reference(),
+								pExprBody.release(), nullptr));
 		}
 		pConstructor->SetFrameOuter(GetFrame());
 		SetConstructor(pConstructor.release());
@@ -156,6 +161,12 @@ VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCa
 
 Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& argument) const
 {
+#if 0
+	VType* pVTypeInh = GetVTypeCustom().GetVTypeInh();
+	Function& constructorInh = pVTypeInh->GetConstructor();
+	RefPtr<Argument> pArgument(new Argument(constructorInh));
+	GetExprBody();
+#endif
 	RefPtr<Value> pValueThis;
 	if (argument.GetValueThis().IsValid()) {
 		pValueThis.reset(argument.GetValueThis().Reference());

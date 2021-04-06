@@ -8,6 +8,7 @@ A1 .. <VType:A1(v){block?}>
 A1(3) .. <A1>
 A2 .. <VType:A2(v1,v2){block?}>
 A2(3, 4) .. <A2>
+Expected error occured: constructor's body must be a block
 ======== Destructor ========
 A .. <VType:A(name:String):map{block?}>
 A was destroyed
