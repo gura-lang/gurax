@@ -86,11 +86,11 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 		if (GetVTypeInh()->IsCustom()) {
 			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
 			pConstructor.reset(new ConstructorClass(
-								   *this, pDeclCallable.release(), Expr::Empty.Reference(),
+								   *this, pDeclCallable.release(), new Expr_Block(),
 								   pVTypeInh->GetConstructor().Reference()));
 		} else {
 			pConstructor.reset(new ConstructorClass(
-								   *this, pDeclCallable.release(), Expr::Empty.Reference(), nullptr));
+								   *this, pDeclCallable.release(), new Expr_Block(), nullptr));
 		}
 		pConstructor->SetFrameOuter(processor.GetFrameCur());
 		SetConstructor(pConstructor.release());
@@ -151,7 +151,7 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 // VTypeCustom::ConstructorClass
 //------------------------------------------------------------------------------
 VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable,
-												Expr* pExprBody, Function* pConstructorInh) :
+												Expr_Block* pExprBody, Function* pConstructorInh) :
 	Function(Type::Constructor, Symbol::Empty, pDeclCallable),
 	_vtypeCustom(vtypeCustom), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst()),
 	_pConstructorInh(pConstructorInh)
@@ -178,14 +178,12 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	bool dynamicScopeFlag = false;
 	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag), processor.GetFrameCur());
 	if (_pConstructorInh) {
-		const Expr& exprBody = GetExprBody();
+		const Expr_Block& exprBody = GetExprBody();
 		RefPtr<Argument> pArgument(new Argument(*_pConstructorInh));
 		pArgument->SetValueThis(pValueThis.Reference());
-		if (exprBody.IsType<Expr_Block>()) {
-			const Expr_Block& exprBodyEx = dynamic_cast<const Expr_Block&>(exprBody);
-			processor.PushValue(new Value_Argument(pArgument.Reference()));
-			Value::Delete(processor.ProcessPUnit(exprBodyEx.GetPUnitSubFirst()));
-		}
+		//const Expr_Block& exprBodyEx = dynamic_cast<const Expr_Block&>(exprBody);
+		processor.PushValue(new Value_Argument(pArgument.Reference()));
+		Value::Delete(processor.ProcessPUnit(exprBody.GetPUnitSubFirst()));
 		Value::Delete(_pConstructorInh->Eval(processor, *pArgument));
 	}
 	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));

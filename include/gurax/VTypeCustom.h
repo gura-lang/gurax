@@ -15,16 +15,16 @@ public:
 	class ConstructorClass : public Function {
 	protected:
 		VTypeCustom& _vtypeCustom;
-		RefPtr<Expr> _pExprBody;
+		RefPtr<Expr_Block> _pExprBody;
 		const PUnit* _pPUnitBody;
 		RefPtr<Function> _pConstructorInh;	// this may be nullptr
 	public:
-		ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, Expr* pExprBody, Function* pConstructorInh);
+		ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, Expr_Block* pExprBody, Function* pConstructorInh);
 	public:
 		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
 	public:
 		// Virtual functions of Function
-		virtual const Expr& GetExprBody() const override { return *_pExprBody; }
+		virtual const Expr_Block& GetExprBody() const override { return *_pExprBody; }
 		virtual const PUnit* GetPUnitBody() const override { return _pPUnitBody; }
 		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
