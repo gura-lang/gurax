@@ -203,7 +203,9 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	RefPtr<Argument> pArgumentInh(new Argument(constructorInh));
 	processor.PushValue(new Value_Argument(pArgumentInh.Reference()));
 	Value::Delete(processor.ProcessPUnit(GetExprBody().GetPUnitSubFirst()));
+	if (Error::IsIssued()) return Value::nil();
 	RefPtr<Value> pValueThis(constructorInh.Eval(processor, *pArgumentInh));
+	if (Error::IsIssued()) return Value::nil();
 	argument.SetValueThis(pValueThis.Reference());
 	if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) return Value::nil();
 	bool dynamicScopeFlag = false;
