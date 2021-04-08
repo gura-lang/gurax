@@ -159,14 +159,9 @@ VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCa
 	if (_pPUnitBody && _pPUnitBody->IsSequenceBegin()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
 }
 
+#if 1
 Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& argument) const
 {
-#if 0
-	VType* pVTypeInh = GetVTypeCustom().GetVTypeInh();
-	Function& constructorInh = pVTypeInh->GetConstructor();
-	RefPtr<Argument> pArgument(new Argument(constructorInh));
-	GetExprBody();
-#endif
 	RefPtr<Value> pValueThis;
 	if (argument.GetValueThis().IsValid()) {
 		pValueThis.reset(argument.GetValueThis().Reference());
@@ -194,6 +189,34 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	argument.SetValueThis(Value::nil());
 	return argument.ReturnValue(processor, pValueThis.release());
 }
+
+#else
+Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& argument) const
+{
+	VType* pVTypeInh = GetVTypeCustom().GetVTypeInh();
+	Function& constructorInh = pVTypeInh->GetConstructor();
+	if (constructorInh.IsEmpty()) {
+		Error::Issue(ErrorType::ValueError,
+			 "value type %s does not have a constructor", pVTypeInh->MakeFullName().c_str());
+		return Value::nil();
+	}
+	RefPtr<Argument> pArgumentInh(new Argument(constructorInh));
+	processor.PushValue(new Value_Argument(pArgumentInh.Reference()));
+	Value::Delete(processor.ProcessPUnit(GetExprBody().GetPUnitSubFirst()));
+	RefPtr<Value> pValueThis(constructorInh.Eval(processor, *pArgumentInh));
+	argument.SetValueThis(pValueThis.Reference());
+	if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) return Value::nil();
+	bool dynamicScopeFlag = false;
+	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag), processor.GetFrameCur());
+	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));
+	processor.EndFunction(true);
+	processor.ClearEvent();
+	if (Error::IsIssued()) return Value::nil();
+	// Clear argument's "this" value in preparation for the next iteration of a mapping operation.
+	argument.SetValueThis(Value::nil());
+	return argument.ReturnValue(processor, pValueThis.release());
+}
+#endif
 
 String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
 {

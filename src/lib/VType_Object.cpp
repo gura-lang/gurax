@@ -25,6 +25,25 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Object() {block?}
+Gurax_DeclareConstructor(Object)
+{
+	Declare(VTYPE_Color, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an `Object` instance.\n");
+}
+
+Gurax_ImplementConstructor(Object)
+{
+	// Function body
+	return argument.ReturnValue(processor, new Value_Object());
+}
+
+//------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
 // Object#__prop__(symbol:Symbol):map {block?}
@@ -155,7 +174,7 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VType::Empty, Flag::Immutable);
+	Declare(VType::Empty, Flag::Immutable, Gurax_CreateConstructor(Object));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Object, __prop__));
 	Assign(Gurax_CreateMethod(Object, __str__));
