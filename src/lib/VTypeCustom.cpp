@@ -179,6 +179,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 		//const Expr_Block& exprBodyEx = dynamic_cast<const Expr_Block&>(exprBody);
 		processor.PushValue(new Value_Argument(pArgument.Reference()));
 		Value::Delete(processor.ProcessPUnit(exprBody.GetPUnitSubFirst()));
+		if (!pArgument->Compensate(processor)) return Value::nil();
 		Value::Delete(_pConstructorInh->Eval(processor, *pArgument));
 	}
 	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));
@@ -204,6 +205,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	processor.PushValue(new Value_Argument(pArgumentInh.Reference()));
 	Value::Delete(processor.ProcessPUnit(GetExprBody().GetPUnitSubFirst()));
 	if (Error::IsIssued()) return Value::nil();
+	if (!pArgumentInh->Compensate(processor)) return Value::nil();
 	RefPtr<Value> pValueThis(constructorInh.Eval(processor, *pArgumentInh));
 	if (Error::IsIssued()) return Value::nil();
 	argument.SetValueThis(pValueThis.Reference());
