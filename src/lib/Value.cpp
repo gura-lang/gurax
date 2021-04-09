@@ -328,4 +328,49 @@ bool Value::KeyCustomCompare::operator()(const Value* pValue1, const Value* pVal
 	return pValueRtn->GetBool();
 }
 
+//------------------------------------------------------------------------------
+// Value::CustomPack
+//------------------------------------------------------------------------------
+Value::CustomPack::CustomPack(VTypeCustom& vtypeCustom, Processor* pProcessor, Value* pValueThis) :
+	_vtypeCustom(vtypeCustom), _pProcessor(pProcessor), _pValueThis(pValueThis), _pValuesProp(new ValueOwner())
+{
+}
+
+Value::CustomPack::~CustomPack()
+{
+	const Function& funcDestructor = _vtypeCustom.GetDestructor();
+	if (!funcDestructor.IsEmpty()) {
+		RefPtr<Argument> pArgument(new Argument(funcDestructor));
+		pArgument->SetValueThis(_pValueThis->Reference());
+		Value::Delete(funcDestructor.Eval(*_pProcessor, *pArgument));
+	}
+}
+
+bool Value::CustomPack::InitCustomProp()
+{
+	const ValueOwner& valuesPropInit = _vtypeCustom.GetValuesPropInit();
+	_pValuesProp->reserve(valuesPropInit.size());
+	for (const Value* pValue : valuesPropInit) {
+		RefPtr<Value> pValueCloned = pValue->Clone();
+		if (!pValueCloned) {
+			Error::Issue(ErrorType::PropertyError, "failed to initialize property");
+			return false;
+		}
+		_pValuesProp->push_back(pValueCloned.release());
+	}
+	return true;
+}
+
+void Value::CustomPack::SetCustomProp(size_t iProp, Value* pValue)
+{
+	ValueOwner::iterator ppValue = _pValuesProp->begin() + iProp;
+	Value::Delete(*ppValue);
+	*ppValue = pValue;
+}
+
+Value* Value::CustomPack::GetCustomProp(size_t iProp)
+{
+	return (*_pValuesProp)[iProp]->Reference();
+}
+
 }
