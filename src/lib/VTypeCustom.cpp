@@ -18,6 +18,7 @@ VTypeCustom::VTypeCustom() :
 
 void VTypeCustom::Inherit()
 {
+	//****************
 	if (GetVTypeInh()->IsCustom()) {
 		VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
 		_pValuesPropInit.reset(pVTypeInh->GetValuesPropInit().Reference());
@@ -176,7 +177,6 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 		const Expr_Block& exprBody = GetExprBody();
 		RefPtr<Argument> pArgument(new Argument(*_pConstructorInh));
 		pArgument->SetValueThis(pValueThis.Reference());
-		//const Expr_Block& exprBodyEx = dynamic_cast<const Expr_Block&>(exprBody);
 		processor.PushValue(new Value_Argument(pArgument.Reference()));
 		Value::Delete(processor.ProcessPUnit(exprBody.GetPUnitSubFirst()));
 		if (!pArgument->Compensate(processor)) return Value::nil();

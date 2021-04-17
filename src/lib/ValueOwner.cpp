@@ -21,6 +21,18 @@ ValueOwner* ValueOwner::Clone() const
 	return pValueOwner.release();
 }
 
+ValueOwner* ValueOwner::CloneDeep() const
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(size());
+	for (Value* pValue : *this) {
+		Value* pValueCloned = pValue->Clone();
+		if (!pValueCloned) return nullptr;
+		pValueOwner->push_back(pValueCloned);
+	}
+	return pValueOwner.release();
+}
+
 ValueOwner* ValueOwner::Head(size_t n) const
 {
 	ValueOwner::const_iterator ppValueEnd = (size() <= n)? end() : begin() + n;
@@ -34,18 +46,6 @@ ValueOwner* ValueOwner::Tail(size_t n) const
 	ValueOwner::const_iterator ppValueBegin = (size() <= n)? begin() : begin() + size() - n;
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner(ppValueBegin, end()));
 	pValueOwner->IncCntRefOfEach();
-	return pValueOwner.release();
-}
-
-ValueOwner* ValueOwner::CloneDeep() const
-{
-	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
-	pValueOwner->reserve(size());
-	for (Value* pValue : *this) {
-		Value* pValueCloned = pValue->Clone();
-		if (!pValueCloned) return nullptr;
-		pValueOwner->push_back(pValueCloned);
-	}
 	return pValueOwner.release();
 }
 

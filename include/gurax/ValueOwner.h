@@ -26,13 +26,13 @@ protected:
 public:
 	void Clear();
 	ValueOwner* Clone() const;
+	ValueOwner* CloneDeep() const;
 	ValueOwner* Head(size_t n) const;
 	ValueOwner* Tail(size_t n) const;
 	template<typename T_Num>
 	ValueOwner* Extract(NumList<T_Num>& indices) const;
 	template<typename T_Num>
 	ValueOwner* Extract(NumList<T_Num>& indices, size_t n) const;
-	ValueOwner* CloneDeep() const;
 public:
 	static ValueOwner* Create(Value* pValue);
 	static ValueOwner* Create(Value* pValue1, Value* pValue2);
