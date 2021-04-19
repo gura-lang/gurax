@@ -49,6 +49,24 @@ Value* Value::AsMember(const Value& valueTarget) const
 	}
 }
 
+#if 1
+bool Value::InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor)
+{
+	_pCustomPack.reset(new CustomPack(vtypeCustom, pProcessor, this));
+	return _pCustomPack->InitCustomProp();
+}
+#else
+bool Value::InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor)
+{
+	if (_pCustomPack) {
+		_pCustomPack->SetVType(vtypeCustom);
+	} else {
+		_pCustomPack.reset(new CustomPack(vtypeCustom, pProcessor, this));
+	}
+	return _pCustomPack->InitCustomProp();
+}
+#endif
+
 String Value::ToStringGeneric(const StringStyle& ss, const char* strEntity) const
 {
 	if (ss.IsUnbracket()) return strEntity;
@@ -332,13 +350,13 @@ bool Value::KeyCustomCompare::operator()(const Value* pValue1, const Value* pVal
 // Value::CustomPack
 //------------------------------------------------------------------------------
 Value::CustomPack::CustomPack(VTypeCustom& vtypeCustom, Processor* pProcessor, Value* pValueThis) :
-	_vtypeCustom(vtypeCustom), _pProcessor(pProcessor), _pValueThis(pValueThis), _pValuesProp(new ValueOwner())
+	_pVTypeCustom(&vtypeCustom), _pProcessor(pProcessor), _pValueThis(pValueThis), _pValuesProp(new ValueOwner())
 {
 }
 
 Value::CustomPack::~CustomPack()
 {
-	const Function& funcDestructor = _vtypeCustom.GetDestructor();
+	const Function& funcDestructor = _pVTypeCustom->GetDestructor();
 	if (!funcDestructor.IsEmpty()) {
 		RefPtr<Argument> pArgument(new Argument(funcDestructor));
 		pArgument->SetValueThis(_pValueThis->Reference());
@@ -348,9 +366,11 @@ Value::CustomPack::~CustomPack()
 
 bool Value::CustomPack::InitCustomProp()
 {
-	const ValueOwner& valuesPropInit = _vtypeCustom.GetValuesPropOfInstInit();
+	const ValueOwner& valuesPropInit = _pVTypeCustom->GetValuesPropOfInstInit();
+	size_t iProp = _pValuesProp->size();
 	_pValuesProp->reserve(valuesPropInit.size());
-	for (const Value* pValue : valuesPropInit) {
+	for (auto ppValue = valuesPropInit.begin() + iProp; ppValue != valuesPropInit.end(); ppValue++) {
+		Value* pValue = *ppValue;
 		RefPtr<Value> pValueCloned = pValue->Clone();
 		if (!pValueCloned) {
 			Error::Issue(ErrorType::PropertyError, "failed to initialize property");

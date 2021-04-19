@@ -18,7 +18,6 @@ VTypeCustom::VTypeCustom() :
 
 void VTypeCustom::Inherit()
 {
-	//****************
 	if (GetVTypeInh()->IsCustom()) {
 		VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
 		_pValuesPropOfInstInit.reset(pVTypeInh->GetValuesPropOfInstInit().Clone());

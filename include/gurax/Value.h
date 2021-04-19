@@ -105,13 +105,14 @@ public:
 public:
 	class CustomPack {
 	private:
-		VTypeCustom& _vtypeCustom;
+		VTypeCustom* _pVTypeCustom;
 		RefPtr<Processor> _pProcessor;
 		Value* _pValueThis;
 		RefPtr<ValueOwner> _pValuesProp;
 	public:
 		CustomPack(VTypeCustom& vtypeCustom, Processor* pProcessor, Value* pValueThis);
-		VTypeCustom& GetVType() const { return _vtypeCustom; }
+		void SetVType(VTypeCustom& vtypeCustom) { _pVTypeCustom = &vtypeCustom; }
+		VTypeCustom& GetVType() const { return *_pVTypeCustom; }
 		virtual ~CustomPack();
 		bool InitCustomProp();
 		void SetCustomProp(size_t iProp, Value* pValue);
@@ -206,10 +207,7 @@ public:
 	bool AssignCustomMethod(Function* pFunction) { return DoAssignCustomMethod(pFunction); }
 	Iterator* GenIterator() const { return DoGenIterator(); }
 public:
-	bool InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor) {
-		_pCustomPack.reset(new CustomPack(vtypeCustom, pProcessor, this));
-		return _pCustomPack->InitCustomProp();
-	}
+	bool InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor);
 	void SetCustomProp(size_t iProp, Value* pValue) {
 		if (_pCustomPack) _pCustomPack->SetCustomProp(iProp, pValue);
 	}
