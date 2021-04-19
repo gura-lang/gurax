@@ -348,7 +348,7 @@ Value::CustomPack::~CustomPack()
 
 bool Value::CustomPack::InitCustomProp()
 {
-	const ValueOwner& valuesPropInit = _vtypeCustom.GetValuesPropInit();
+	const ValueOwner& valuesPropInit = _vtypeCustom.GetValuesPropOfInstInit();
 	_pValuesProp->reserve(valuesPropInit.size());
 	for (const Value* pValue : valuesPropInit) {
 		RefPtr<Value> pValueCloned = pValue->Clone();

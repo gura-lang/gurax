@@ -44,7 +44,7 @@ public:
 		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
 	};
 private:
-	RefPtr<ValueOwner> _pValuesPropInit;
+	RefPtr<ValueOwner> _pValuesPropOfInstInit;
 	RefPtr<ValueOwner> _pValuesPropOfClass;
 	RefPtr<Function> _pDestructor;
 public:
@@ -54,8 +54,8 @@ public:
 	void SetConstructor(Function* pConstructor) { _pConstructor.reset(pConstructor); }
 	void SetDestructor(Function* pDestructor) { _pDestructor.reset(pDestructor); }
 	const Function& GetDestructor() const { return *_pDestructor; }
-	ValueOwner& GetValuesPropInit() { return *_pValuesPropInit; }
-	const ValueOwner& GetValuesPropInit() const { return *_pValuesPropInit; }
+	ValueOwner& GetValuesPropOfInstInit() { return *_pValuesPropOfInstInit; }
+	const ValueOwner& GetValuesPropOfInstInit() const { return *_pValuesPropOfInstInit; }
 	ValueOwner& GetValuesPropOfClass() { return *_pValuesPropOfClass; }
 	const ValueOwner& GetValuesPropOfClass() const { return *_pValuesPropOfClass; }
 	bool AssignPropSlot(Frame& frame, const Symbol* pSymbol, VType* pVType,
@@ -70,40 +70,6 @@ public:
 	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
 	virtual bool DoAssignCustomMethod(RefPtr<Function> pFunction) override;
 };
-
-#if 0
-//------------------------------------------------------------------------------
-// ValueCustom
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ValueCustom : public Value_Object {
-public:
-	// Referable declaration
-	Gurax_DeclareReferable(ValueCustom);
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("ValueCustom");
-public:
-	// Constructor
-	ValueCustom(VType& vtype) : Value_Object(vtype) {}
-	// Copy constructor/operator
-	ValueCustom(const ValueCustom& src) = delete;
-	ValueCustom& operator=(const ValueCustom& src) = delete;
-	// Move constructor/operator
-	ValueCustom(ValueCustom&& src) = delete;
-	ValueCustom& operator=(ValueCustom&& src) noexcept = delete;
-protected:
-	// Destructor
-	~ValueCustom() = default;
-public:
-	// Virtual functions of Value
-	virtual Value* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override { return 0; }
-	virtual bool IsEqualTo(const Value& value) const override { return IsSameType(value); }
-	virtual bool IsLessThan(const Value& value) const override {
-		return IsSameType(value)? false : GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
-	}
-	virtual String ToString(const StringStyle& ss) const override;
-};
-#endif
 
 }
 

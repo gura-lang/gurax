@@ -9,7 +9,7 @@ namespace Gurax {
 // VTypeCustom
 //------------------------------------------------------------------------------
 VTypeCustom::VTypeCustom() :
-	VType(Symbol::Empty), _pValuesPropInit(new ValueOwner()), _pValuesPropOfClass(new ValueOwner())
+	VType(Symbol::Empty), _pValuesPropOfInstInit(new ValueOwner()), _pValuesPropOfClass(new ValueOwner())
 {
 	// _pConstructor and _pDestructor must be initialized here
 	_pConstructor.reset(Function::Empty.Reference());
@@ -21,7 +21,7 @@ void VTypeCustom::Inherit()
 	//****************
 	if (GetVTypeInh()->IsCustom()) {
 		VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-		_pValuesPropInit.reset(pVTypeInh->GetValuesPropInit().Reference());
+		_pValuesPropOfInstInit.reset(pVTypeInh->GetValuesPropOfInstInit().Reference());
 		_pValuesPropOfClass.reset(pVTypeInh->GetValuesPropOfClass().Reference());
 	}
 }
@@ -30,7 +30,7 @@ bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, VType* pVT
 									PropSlot::Flags flags, RefPtr<Value> pValueInit)
 {
 	bool ofClassFlag = (flags & PropSlot::Flag::OfClass);
-	ValueOwner& valuesProp = ofClassFlag? GetValuesPropOfClass() : GetValuesPropInit();
+	ValueOwner& valuesProp = ofClassFlag? GetValuesPropOfClass() : GetValuesPropOfInstInit();
 	size_t iProp = valuesProp.size();
 	if (pValueInit->IsNil()) flags |= PropSlot::Flag::Nil;
 	if (pVType) {
@@ -267,15 +267,5 @@ String VTypeCustom::ConstructorStruct::ToString(const StringStyle& ss) const
 	str += GetDeclCallable().ToString(ss);
 	return str;
 }
-
-#if 0
-//------------------------------------------------------------------------------
-// ValueCustom
-//------------------------------------------------------------------------------
-String ValueCustom::ToString(const StringStyle& ss) const
-{
-	return String().Format("<%s>", GetVTypeCustom().MakeFullName().c_str());
-}
-#endif
 
 }
