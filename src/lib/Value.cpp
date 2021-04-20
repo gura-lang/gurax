@@ -49,7 +49,7 @@ Value* Value::AsMember(const Value& valueTarget) const
 	}
 }
 
-#if 1
+#if 0
 bool Value::InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor)
 {
 	_pCustomPack.reset(new CustomPack(vtypeCustom, pProcessor, this));

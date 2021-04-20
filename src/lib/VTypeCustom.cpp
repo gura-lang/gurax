@@ -159,7 +159,7 @@ VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCa
 	if (_pPUnitBody && _pPUnitBody->IsSequenceBegin()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
 }
 
-#if 1
+#if 0
 Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& argument) const
 {
 	RefPtr<Value> pValueThis;
@@ -200,23 +200,34 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 			 "value type %s does not have a constructor", pVTypeInh->MakeFullName().c_str());
 		return Value::nil();
 	}
+	bool dynamicScopeFlag = false;
+	Frame& frame = processor.BeginFunction(*this, dynamicScopeFlag);
+	argument.AssignToFrame(frame, processor.GetFrameCur());
 	RefPtr<Argument> pArgumentInh(new Argument(constructorInh));
 	processor.PushValue(new Value_Argument(pArgumentInh.Reference()));
 	Value::Delete(processor.ProcessPUnit(GetExprBody().GetPUnitSubFirst()));
-	if (Error::IsIssued()) return Value::nil();
-	if (!pArgumentInh->Compensate(processor)) return Value::nil();
+	if (Error::IsIssued()) {
+		processor.EndFunction(true);
+		return Value::nil();
+	}
+	if (!pArgumentInh->Compensate(processor)) {
+		processor.EndFunction(true);
+		return Value::nil();
+	}
 	RefPtr<Value> pValueThis(constructorInh.Eval(processor, *pArgumentInh));
-	if (Error::IsIssued()) return Value::nil();
-	argument.SetValueThis(pValueThis.Reference());
-	if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) return Value::nil();
-	bool dynamicScopeFlag = false;
-	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag), processor.GetFrameCur());
+	if (Error::IsIssued()) {
+		processor.EndFunction(true);
+		return Value::nil();
+	}
+	if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) {
+		processor.EndFunction(true);
+		return Value::nil();
+	}
+	argument.AssignThisToFrame(frame, pValueThis->PickValue());
 	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));
 	processor.EndFunction(true);
 	processor.ClearEvent();
 	if (Error::IsIssued()) return Value::nil();
-	// Clear argument's "this" value in preparation for the next iteration of a mapping operation.
-	argument.SetValueThis(Value::nil());
 	return argument.ReturnValue(processor, pValueThis.release());
 }
 #endif
