@@ -159,38 +159,6 @@ VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCa
 	if (_pPUnitBody && _pPUnitBody->IsSequenceBegin()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
 }
 
-#if 0
-Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& argument) const
-{
-	RefPtr<Value> pValueThis;
-	if (argument.GetValueThis().IsValid()) {
-		pValueThis.reset(argument.GetValueThis().Reference());
-	} else {
-		pValueThis.reset(new Value_Object(GetVTypeCustom()));
-		argument.SetValueThis(pValueThis.Reference());
-		if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) return Value::nil();
-	}
-	bool dynamicScopeFlag = false;
-	argument.AssignToFrame(processor.BeginFunction(*this, dynamicScopeFlag), processor.GetFrameCur());
-	if (_pConstructorInh) {
-		const Expr_Block& exprBody = GetExprBody();
-		RefPtr<Argument> pArgument(new Argument(*_pConstructorInh));
-		pArgument->SetValueThis(pValueThis.Reference());
-		processor.PushValue(new Value_Argument(pArgument.Reference()));
-		Value::Delete(processor.ProcessPUnit(exprBody.GetPUnitSubFirst()));
-		if (!pArgument->Compensate(processor)) return Value::nil();
-		Value::Delete(_pConstructorInh->Eval(processor, *pArgument));
-	}
-	Value::Delete(processor.ProcessPUnit(GetPUnitBody()));
-	processor.EndFunction(true);
-	processor.ClearEvent();
-	if (Error::IsIssued()) return Value::nil();
-	// Clear argument's "this" value in preparation for the next iteration of a mapping operation.
-	argument.SetValueThis(Value::nil());
-	return argument.ReturnValue(processor, pValueThis.release());
-}
-
-#else
 Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& argument) const
 {
 	VType* pVTypeInh = GetVTypeCustom().GetVTypeInh();
@@ -230,7 +198,6 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	if (Error::IsIssued()) return Value::nil();
 	return argument.ReturnValue(processor, pValueThis.release());
 }
-#endif
 
 String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
 {
@@ -252,7 +219,6 @@ VTypeCustom::ConstructorStruct::ConstructorStruct(
 
 Value* VTypeCustom::ConstructorStruct::DoEval(Processor& processor, Argument& argument) const
 {
-	//RefPtr<Value> pValueThis(new ValueCustom(GetVTypeCustom()));
 	RefPtr<Value> pValueThis(new Value_Object(GetVTypeCustom()));
 	if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) return Value::nil();
 	ArgPicker args(argument);

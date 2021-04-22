@@ -49,13 +49,6 @@ Value* Value::AsMember(const Value& valueTarget) const
 	}
 }
 
-#if 0
-bool Value::InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor)
-{
-	_pCustomPack.reset(new CustomPack(vtypeCustom, pProcessor, this));
-	return _pCustomPack->InitCustomProp();
-}
-#else
 bool Value::InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor)
 {
 	if (_pCustomPack) {
@@ -65,7 +58,6 @@ bool Value::InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor)
 	}
 	return _pCustomPack->InitCustomProp();
 }
-#endif
 
 String Value::ToStringGeneric(const StringStyle& ss, const char* strEntity) const
 {
