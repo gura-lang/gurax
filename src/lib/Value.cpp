@@ -32,7 +32,7 @@ void Value::CreateConstant()
 
 bool Value::IsInstanceOf(const VType& vtype) const
 {
-	for (const VType *pVType = &GetVTypeCustom(); pVType != nullptr; pVType = pVType->GetVTypeInh()) {
+	for (const VType *pVType = &GetVTypeCustom(); pVType; pVType = pVType->GetVTypeInh()) {
 		if (pVType->IsIdentical(vtype)) return true;
 	}
 	return false;
