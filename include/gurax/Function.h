@@ -179,7 +179,10 @@ public:
 	Function(Type type, const char* name, DeclCallable* pDeclCallable, HelpHolder* pHelpHolder) :
 		Function(type, Symbol::Add(name), pDeclCallable, pHelpHolder) {}
 	// Copy constructor/operator
-	Function(const Function& src) = delete;
+	Function(const Function& src) :
+		_type(src._type), _pSymbol(src._pSymbol), _pDeclCallable(src._pDeclCallable.Reference()),
+		_pHelpHolder(src._pHelpHolder.Reference()), _pwFrameOuter(src._pwFrameOuter.Reference()),
+		_pVTypeOfOwner(src._pVTypeOfOwner) {}
 	Function& operator=(const Function& src) = delete;
 	// Move constructor/operator
 	Function(Function&& src) = delete;
@@ -188,6 +191,7 @@ protected:
 	// Destructor
 	virtual ~Function() = default;
 public:
+	Function* Clone() const { return new Function(*this); }
 	static Function* CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol, const Expr_Block& exprOfBlock);
 	static Function* CreateDynamicFunction(
 		const Symbol* pSymbol, const ValueList& valuesExpr, const Expr_Block& exprOfBlock);
