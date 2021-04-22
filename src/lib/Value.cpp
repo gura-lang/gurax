@@ -32,7 +32,7 @@ void Value::CreateConstant()
 
 bool Value::IsInstanceOf(const VType& vtype) const
 {
-	for (const VType *pVType = &GetVTypeCustom(); pVType; pVType = pVType->GetVTypeInh()) {
+	for (const VType* pVType = &GetVTypeCustom(); pVType; pVType = pVType->GetVTypeInh()) {
 		if (pVType->IsIdentical(vtype)) return true;
 	}
 	return false;
@@ -348,12 +348,28 @@ Value::CustomPack::CustomPack(VTypeCustom& vtypeCustom, Processor* pProcessor, V
 
 Value::CustomPack::~CustomPack()
 {
+#if 0
 	const Function& funcDestructor = _pVTypeCustom->GetDestructor();
 	if (!funcDestructor.IsEmpty()) {
 		RefPtr<Argument> pArgument(new Argument(funcDestructor));
 		pArgument->SetValueThis(_pValueThis->Reference());
 		Value::Delete(funcDestructor.Eval(*_pProcessor, *pArgument));
 	}
+#else
+	const VTypeCustom* pVTypeCustom = _pVTypeCustom;
+	for (;;) {
+		const Function& funcDestructor = pVTypeCustom->GetDestructor();
+		if (!funcDestructor.IsEmpty()) {
+			RefPtr<Argument> pArgument(new Argument(funcDestructor));
+			pArgument->SetValueThis(_pValueThis->Reference());
+			Value::Delete(funcDestructor.Eval(*_pProcessor, *pArgument));
+			if (Error::IsIssued()) return;
+		}
+		const VType* pVType = pVTypeCustom->GetVTypeInh();
+		if (!pVType || !pVType->IsCustom()) break;
+		pVTypeCustom = dynamic_cast<const VTypeCustom*>(pVType);
+	}
+#endif
 }
 
 bool Value::CustomPack::InitCustomProp()

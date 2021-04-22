@@ -43,7 +43,6 @@ TestCase('Destructor') {
 	}
 	Tester(`A)
 	a = A('A')
-	//x = A(Format('x%d', Range(100))):list
 	a = nil
 }
 
@@ -483,4 +482,25 @@ TestCase('Constructor call with mapping') {
 	}
 	tbl = A([1, 2, 3]):list
 	Println(tbl::x):noMap
+}
+
+TestCase('Destructor of inherited class') {
+	A = class {
+		__del__() = { Println('A destructor') }
+	}
+	B = class(A) {
+		__del__() = { Println('B destructor') }
+	}
+	C = class(B) {
+		__del__() = { Println('C destructor') }
+	}
+	Println('----')
+	a = A()
+	a = nil
+	Println('----')
+	b = B()
+	b = nil
+	Println('----')
+	c = C()
+	c = nil
 }
