@@ -82,16 +82,7 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 	if (GetConstructor().IsEmpty()) {
 		RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 		pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
-		RefPtr<Function> pConstructor;
-		if (GetVTypeInh()->IsCustom()) {
-			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-			pConstructor.reset(new ConstructorClass(
-								   *this, pDeclCallable.release(), new Expr_Block(),
-								   pVTypeInh->GetConstructor().Reference()));
-		} else {
-			pConstructor.reset(new ConstructorClass(
-								   *this, pDeclCallable.release(), new Expr_Block(), nullptr));
-		}
+		RefPtr<Function> pConstructor(new ConstructorClass(*this, pDeclCallable.release(), new Expr_Block()));
 		pConstructor->SetFrameOuter(processor.GetFrameCur());
 		SetConstructor(pConstructor.release());
 	}
@@ -113,18 +104,8 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 		}
 		RefPtr<Expr_Block> pExprBody(dynamic_cast<Expr_Block*>(pFunction->GetExprBody().Reference()));
 		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
-		RefPtr<Function> pConstructor;
-		if (GetVTypeInh()->IsCustom()) {
-			VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-			pConstructor.reset(new ConstructorClass(
-								*this, pFunction->GetDeclCallable().Reference(),
-								pExprBody.release(),
-								pVTypeInh->GetConstructor().Reference()));
-		} else {
-			pConstructor.reset(new ConstructorClass(
-								*this, pFunction->GetDeclCallable().Reference(),
-								pExprBody.release(), nullptr));
-		}
+		RefPtr<Function> pConstructor(new ConstructorClass(
+						*this, pFunction->GetDeclCallable().Reference(), pExprBody.release()));
 		pConstructor->SetFrameOuter(GetFrame());
 		SetConstructor(pConstructor.release());
 		return true;
@@ -151,10 +132,9 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 // VTypeCustom::ConstructorClass
 //------------------------------------------------------------------------------
 VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable,
-												Expr_Block* pExprBody, Function* pConstructorInh) :
+												Expr_Block* pExprBody) :
 	Function(Type::Constructor, Symbol::Empty, pDeclCallable),
-	_vtypeCustom(vtypeCustom), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst()),
-	_pConstructorInh(pConstructorInh)
+	_vtypeCustom(vtypeCustom), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst())
 {
 	if (_pPUnitBody && _pPUnitBody->IsSequenceBegin()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
 }

@@ -17,9 +17,8 @@ public:
 		VTypeCustom& _vtypeCustom;
 		RefPtr<Expr_Block> _pExprBody;
 		const PUnit* _pPUnitBody;
-		RefPtr<Function> _pConstructorInh;	// this may be nullptr
 	public:
-		ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, Expr_Block* pExprBody, Function* pConstructorInh);
+		ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, Expr_Block* pExprBody);
 	public:
 		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
 	public:
