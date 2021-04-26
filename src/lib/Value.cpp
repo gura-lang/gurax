@@ -348,14 +348,6 @@ Value::CustomPack::CustomPack(VTypeCustom& vtypeCustom, Processor* pProcessor, V
 
 Value::CustomPack::~CustomPack()
 {
-#if 0
-	const Function& funcDestructor = _pVTypeCustom->GetDestructor();
-	if (!funcDestructor.IsEmpty()) {
-		RefPtr<Argument> pArgument(new Argument(funcDestructor));
-		pArgument->SetValueThis(_pValueThis->Reference());
-		Value::Delete(funcDestructor.Eval(*_pProcessor, *pArgument));
-	}
-#else
 	const VTypeCustom* pVTypeCustom = _pVTypeCustom;
 	for (;;) {
 		const Function& funcDestructor = pVTypeCustom->GetDestructor();
@@ -369,7 +361,6 @@ Value::CustomPack::~CustomPack()
 		if (!pVType || !pVType->IsCustom()) break;
 		pVTypeCustom = dynamic_cast<const VTypeCustom*>(pVType);
 	}
-#endif
 }
 
 bool Value::CustomPack::InitCustomProp()
