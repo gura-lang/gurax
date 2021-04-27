@@ -80,11 +80,18 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 	if (!_pSymbol->IsEmpty()) return;
 	_pSymbol = pSymbol;
 	if (GetConstructor().IsEmpty()) {
+#if 0
 		RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 		pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
 		RefPtr<Function> pConstructor(new ConstructorClass(*this, pDeclCallable.release(), new Expr_Block()));
 		pConstructor->SetFrameOuter(processor.GetFrameCur());
 		SetConstructor(pConstructor.release());
+#else
+		Function& constructorInh = GetVTypeInh()->GetConstructor();
+		RefPtr<Function> pConstructor(new ConstructorClassDefault(*this, constructorInh.GetDeclCallable().Reference()));
+		pConstructor->SetFrameOuter(processor.GetFrameCur());
+		SetConstructor(pConstructor.release());
+#endif
 	}
 	GetConstructor().SetSymbol(pSymbol);
 }
@@ -180,6 +187,42 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 }
 
 String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
+{
+	String str;
+	str += MakeFullName();
+	str += GetDeclCallable().ToString(ss);
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// VTypeCustom::ConstructorClassDefault
+//------------------------------------------------------------------------------
+VTypeCustom::ConstructorClassDefault::ConstructorClassDefault(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable) :
+	Function(Type::Constructor, Symbol::Empty, pDeclCallable), _vtypeCustom(vtypeCustom)
+{
+}
+
+Value* VTypeCustom::ConstructorClassDefault::DoEval(Processor& processor, Argument& argument) const
+{
+	VType* pVTypeInh = GetVTypeCustom().GetVTypeInh();
+	Function& constructorInh = pVTypeInh->GetConstructor();
+	if (constructorInh.IsEmpty()) {
+		Error::Issue(ErrorType::ValueError,
+			 "value type %s does not have a constructor", pVTypeInh->MakeFullName().c_str());
+		return Value::nil();
+	}
+	RefPtr<Expr_Block> pExprBlock(argument.SuspendExprOfBlock());
+	RefPtr<Value> pValueThis(constructorInh.Eval(processor, argument));
+	argument.ResumeExprOfBlock(pExprBlock.release());
+	if (Error::IsIssued()) return Value::nil();
+	if (!pValueThis->InitCustomProp(GetVTypeCustom(), processor.Reference())) {
+		processor.EndFunction(true);
+		return Value::nil();
+	}
+	return argument.ReturnValue(processor, pValueThis.release());
+}
+
+String VTypeCustom::ConstructorClassDefault::ToString(const StringStyle& ss) const
 {
 	String str;
 	str += MakeFullName();

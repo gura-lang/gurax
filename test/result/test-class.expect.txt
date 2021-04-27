@@ -237,3 +237,46 @@ A destructor
 C destructor
 B destructor
 A destructor
+======== Inherits from String ========
+string=
+string=
+string=hoge
+string=hoge
+======== Default Constructor (1) ========
+<VType:A(){block?}>
+<VType:B(){block?}>
+<VType:C(){block?}>
+----
+A.f1() this=<A>, v1=1, v2=2, v3=3
+A.f1() this=<A>, v1=1, v2=2, v3=3
+----
+A.f1() this=<B>, v1=1, v2=2, v3=3
+B.f2() this=<B>, v1=1, v2=2, v3=3
+A.f1() this=<B>, v1=1, v2=2, v3=3
+B.f2() this=<B>, v1=1, v2=2, v3=3
+----
+A.f1() this=<C>, v1=1, v2=2, v3=3
+B.f2() this=<C>, v1=1, v2=2, v3=3
+C.f3() this=<C>, v1=1, v2=2, v3=3
+A.f1() this=<C>, v1=1, v2=2, v3=3
+B.f2() this=<C>, v1=1, v2=2, v3=3
+C.f3() this=<C>, v1=1, v2=2, v3=3
+======== Default Constructor (2) ========
+<VType:A(v1,v2,v3){block?}>
+<VType:B(v1,v2,v3){block?}>
+<VType:C(v1,v2,v3){block?}>
+----
+A.f1() this=<A>, v1=1, v2=2, v3=3
+A.f1() this=<A>, v1=1, v2=2, v3=3
+----
+A.f1() this=<B>, v1=1, v2=2, v3=3
+B.f2() this=<B>, v1=1, v2=2, v3=3
+A.f1() this=<B>, v1=1, v2=2, v3=3
+B.f2() this=<B>, v1=1, v2=2, v3=3
+----
+A.f1() this=<C>, v1=1, v2=2, v3=3
+B.f2() this=<C>, v1=1, v2=2, v3=3
+C.f3() this=<C>, v1=1, v2=2, v3=3
+A.f1() this=<C>, v1=1, v2=2, v3=3
+B.f2() this=<C>, v1=1, v2=2, v3=3
+C.f3() this=<C>, v1=1, v2=2, v3=3

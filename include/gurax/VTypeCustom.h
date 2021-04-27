@@ -28,6 +28,18 @@ public:
 		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
 	};
+	class ConstructorClassDefault : public Function {
+	protected:
+		VTypeCustom& _vtypeCustom;
+	public:
+		ConstructorClassDefault(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable);
+	public:
+		VTypeCustom& GetVTypeCustom() const { return _vtypeCustom; }
+	public:
+		// Virtual functions of Function
+		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
+		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
+	};
 	class ConstructorStruct : public Function {
 	protected:
 		VTypeCustom& _vtypeCustom;

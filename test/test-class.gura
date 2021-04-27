@@ -504,3 +504,76 @@ TestCase('Destructor of inherited class') {
 	c = C()
 	c = nil
 }
+
+TestCase('Inherits from String') {
+	StringEx = class(String) {
+		foo() = { Println('string=', this) }
+	}
+	StringEx().foo()
+	StringEx {|str| str.foo()}
+	StringEx('hoge').foo()
+	StringEx('hoge') {|str| str.foo()}
+}
+
+TestCase('Default Constructor (1)') {
+	A = class {
+		v1 = 1, v2 = 2, v3 = 3
+		f1() = { Printf('A.f1() this=%s, v1=%d, v2=%d, v3=%d\n', this, this.v1, this.v2, this.v3) }
+	}
+	Println(A)
+	B = class(A) {
+		f2() = { Printf('B.f2() this=%s, v1=%d, v2=%d, v3=%d\n', this, this.v1, this.v2, this.v3) }
+	}
+	Println(B)
+	C = class(B) {
+		f3() = { Printf('C.f3() this=%s, v1=%d, v2=%d, v3=%d\n', this, this.v1, this.v2, this.v3) }
+	}
+	Println(C)
+	Println('----')
+	a = A()
+	a.f1()
+	A() {|a| a.f1()}
+	Println('----')
+	b = B()
+	b.f1()
+	b.f2()
+	B() {|b| b.f1(), b.f2()}
+	Println('----')
+	c = C()
+	c.f1()
+	c.f2()
+	c.f3()
+	C() {|c| c.f1(), c.f2(), c.f3()}
+}
+
+TestCase('Default Constructor (2)') {
+	A = class {
+		v1, v2, v3
+		__init__(v1, v2, v3) = { this.v1 = v1, this.v2 = v2, this.v3 = v3 }
+		f1() = { Printf('A.f1() this=%s, v1=%d, v2=%d, v3=%d\n', this, this.v1, this.v2, this.v3) }
+	}
+	Println(A)
+	B = class(A) {
+		f2() = { Printf('B.f2() this=%s, v1=%d, v2=%d, v3=%d\n', this, this.v1, this.v2, this.v3) }
+	}
+	Println(B)
+	C = class(B) {
+		f3() = { Printf('C.f3() this=%s, v1=%d, v2=%d, v3=%d\n', this, this.v1, this.v2, this.v3) }
+	}
+	Println(C)
+	Println('----')
+	a = A(1, 2, 3)
+	a.f1()
+	A(1, 2, 3) {|a| a.f1()}
+	Println('----')
+	b = B(1, 2, 3)
+	b.f1()
+	b.f2()
+	B(1, 2, 3) {|b| b.f1(), b.f2()}
+	Println('----')
+	c = C(1, 2, 3)
+	c.f1()
+	c.f2()
+	c.f3()
+	C(1, 2, 3) {|c| c.f1(), c.f2(), c.f3()}
+}

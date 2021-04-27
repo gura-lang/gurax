@@ -73,6 +73,8 @@ public:
 	const Value& GetValueThis() const { return *_pValueThis; }
 	bool HasExprOfBlock() const { return _pExprOfBlock.get() != nullptr; }
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
+	Expr_Block* SuspendExprOfBlock() { return _pExprOfBlock.release(); }
+	void ResumeExprOfBlock(Expr_Block* pExpr) { _pExprOfBlock.reset(pExpr); }
 	Function* CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol) const;
 	bool HasValueOfDict() const { return _pValueOfDict.get() != nullptr; }
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
