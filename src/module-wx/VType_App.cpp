@@ -39,11 +39,10 @@ Gurax_DeclareConstructor(App)
 
 Gurax_ImplementConstructor(App)
 {
-	::printf("check\n");
 	// Function body
 	auto pEntity = new Value_App::EntityT();
 	RefPtr<Value_App> pValue(new Value_App(pEntity));
-	pEntity->SetValue(*pValue);
+	pEntity->SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
 
@@ -123,17 +122,18 @@ String Value_App::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 bool Value_App::EntityT::OnInit()
 {
-	RefPtr<Value_App> pValue(LockValue());
-	if (!pValue) return false;
-
-#if 0
-	Function& func = *_pFunc_OnInit;
+	::printf("check\n");
+	RefPtr<Value_App> pValueThis(LockValue());
+	if (!pValueThis) return false;
+	RefPtr<Value> pValueFunc(vtype.GetFrameOfMember().Retrieve(Symbol::Add("OnInit")));
+	::printf("%p\n", pValueFunc.get());
+	if (!pValueFunc || !pValueFunc->IsType(VTYPE_Function)) return false;
+	Function& func = dynamic_cast<Value_Function&>(*pValueFunc).GetFunction();
 	RefPtr<Argument> pArgument(new Argument(func));
-	RefPtr<Value> pValue(func.Eval(GetProcessor(), *pArgument));
-	if (!pValue->IsValid()) return false;
-	return Value_Bool::GetBool(*pValue);
-#endif
-	return false;
+	pArgument->SetValueThis(pValueThis.release());
+	RefPtr<Value> pValueRtn(func.Eval(GetProcessor(), *pArgument));
+	if (!pValueRtn->IsValid()) return false;
+	return Value_Bool::GetBool(*pValueRtn);
 }
 
 Gurax_EndModuleScope(wx)

@@ -33,12 +33,17 @@ public:
 	public:
 		using wxApp::wxApp;
 	private:
+		RefPtr<Processor> _pProcessor;
 		RefPtr<Value_App::WeakPtr> _pwValue;
 	public:
 		virtual bool OnInit();
 	public:
-		void SetValue(const Value_App& value) { _pwValue.reset(value.GetWeakPtr()); }
+		void SetInfo(Processor* pProcessor, const Value_App& value) {
+			_pProcessor.reset(pProcessor);
+			_pwValue.reset(value.GetWeakPtr());
+		}
 		Value_App* LockValue() const { return _pwValue->Lock(); }
+		Processor& GetProcessor() const { return *_pProcessor; }
 	};
 protected:
 	wxWeakRef<EntityT> _pEntity;
