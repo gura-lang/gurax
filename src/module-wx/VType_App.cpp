@@ -122,11 +122,12 @@ String Value_App::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 bool Value_App::EntityT::OnInit()
 {
-	::printf("check\n");
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnInit");
 	RefPtr<Value_App> pValueThis(LockValue());
+	VType& vtypeCustom = pValueThis->GetVTypeCustom();
 	if (!pValueThis) return false;
-	RefPtr<Value> pValueFunc(vtype.GetFrameOfMember().Retrieve(Symbol::Add("OnInit")));
-	::printf("%p\n", pValueFunc.get());
+	RefPtr<Value> pValueFunc(vtypeCustom.GetFrameOfMember().Retrieve(pSymbolFunc));
 	if (!pValueFunc || !pValueFunc->IsType(VTYPE_Function)) return false;
 	Function& func = dynamic_cast<Value_Function&>(*pValueFunc).GetFunction();
 	RefPtr<Argument> pArgument(new Argument(func));
