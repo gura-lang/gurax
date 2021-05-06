@@ -125,13 +125,28 @@ bool Value_App::EntityT::OnInit()
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnInit");
 	RefPtr<Value_App> pValueThis(LockValue());
-	VType& vtypeCustom = pValueThis->GetVTypeCustom();
-	if (!pValueThis) return false;
-	RefPtr<Value> pValueFunc(vtypeCustom.GetFrameOfMember().Retrieve(pSymbolFunc));
-	if (!pValueFunc || !pValueFunc->IsType(VTYPE_Function)) return false;
-	Function& func = dynamic_cast<Value_Function&>(*pValueFunc).GetFunction();
+	if (!pValueThis) return EntitySuper::OnInit();
+	Function& func = pValueThis->LookupMethod(pSymbolFunc);
+	if (func.IsEmpty()) return EntitySuper::OnInit();
 	RefPtr<Argument> pArgument(new Argument(func));
 	pArgument->SetValueThis(pValueThis.release());
+	
+	RefPtr<Value> pValueRtn(func.Eval(GetProcessor(), *pArgument));
+	if (!pValueRtn->IsValid()) return false;
+	return Value_Bool::GetBool(*pValueRtn);
+}
+
+bool Value_App::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SafeYield");
+	RefPtr<Value_App> pValueThis(LockValue());
+	if (!pValueThis) return EntitySuper::SafeYield(win, onlyIfNeeded);
+	Function& func = pValueThis->LookupMethod(pSymbolFunc);
+	if (func.IsEmpty()) return EntitySuper::SafeYield(win, onlyIfNeeded);
+	RefPtr<Argument> pArgument(new Argument(func));
+	pArgument->SetValueThis(pValueThis.release());
+	
 	RefPtr<Value> pValueRtn(func.Eval(GetProcessor(), *pArgument));
 	if (!pValueRtn->IsValid()) return false;
 	return Value_Bool::GetBool(*pValueRtn);

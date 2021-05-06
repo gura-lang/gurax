@@ -31,12 +31,14 @@ public:
 public:
 	class EntityT : public wxApp {
 	public:
+		using EntitySuper = wxApp;
 		using wxApp::wxApp;
 	private:
 		RefPtr<Processor> _pProcessor;
 		RefPtr<Value_App::WeakPtr> _pwValue;
 	public:
-		virtual bool OnInit();
+		virtual bool OnInit() override;
+		virtual bool SafeYield(wxWindow* win, bool onlyIfNeeded) override;
 	public:
 		void SetInfo(Processor* pProcessor, const Value_App& value) {
 			_pProcessor.reset(pProcessor);

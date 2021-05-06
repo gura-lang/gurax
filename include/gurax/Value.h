@@ -206,6 +206,7 @@ public:
 	}
 	bool AssignCustomMethod(Function* pFunction) { return DoAssignCustomMethod(pFunction); }
 	Iterator* GenIterator() const { return DoGenIterator(); }
+	Function& LookupMethod(const Symbol* pSymbol) const;
 public:
 	bool InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor);
 	void SetCustomProp(size_t iProp, Value* pValue) {

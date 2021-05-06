@@ -49,6 +49,13 @@ Value* Value::AsMember(const Value& valueTarget) const
 	}
 }
 
+Function& Value::LookupMethod(const Symbol* pSymbol) const
+{
+	RefPtr<Value> pValueFunc(GetVTypeCustom().GetFrameOfMember().Retrieve(pSymbol));
+	if (!pValueFunc || !pValueFunc->IsType(VTYPE_Function)) return *Function::Empty;
+	return dynamic_cast<Value_Function&>(*pValueFunc).GetFunction();
+}
+
 bool Value::InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor)
 {
 	if (_pCustomPack) {
