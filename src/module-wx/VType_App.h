@@ -44,6 +44,7 @@ public:
 			_pProcessor.reset(pProcessor);
 			_pwValue.reset(value.GetWeakPtr());
 		}
+		bool PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const;
 		Value_App* LockValue() const { return _pwValue->Lock(); }
 		Processor& GetProcessor() const { return *_pProcessor; }
 	};
