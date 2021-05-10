@@ -38,7 +38,8 @@ target_compile_definitions(wx.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(wx.gurd PRIVATE
 	module-wx.cpp
 	Util.cpp
-	VType_App.cpp)
+	VType_App.cpp
+	VType_Window.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

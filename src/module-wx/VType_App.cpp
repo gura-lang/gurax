@@ -49,27 +49,22 @@ Gurax_ImplementConstructor(App)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.App#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(App, MethodSkeleton)
+// wx.App#OnInit()
+Gurax_DeclareMethod(App, OnInit)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(App, MethodSkeleton)
+Gurax_ImplementMethod(App, OnInit)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	RefPtr<Value> pValueRtn(new Value_Bool(valueThis.GetEntity()->OnInit()));
+	return pValueRtn.release();
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +97,7 @@ void VType_App::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(App));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(App, MethodSkeleton));
+	Assign(Gurax_CreateMethod(App, OnInit));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(App, propSkeleton));
 }
@@ -129,7 +124,6 @@ bool Value_App::EntityT::OnInit()
 		Function* pFunc;
 		RefPtr<Argument> pArgument;
 		if (!PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
-		
 		RefPtr<Value> pValueRtn(pFunc->Eval(GetProcessor(), *pArgument));
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
@@ -145,7 +139,11 @@ bool Value_App::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 		Function* pFunc;
 		RefPtr<Argument> pArgument;
 		if (!PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
-		
+		// Arguments
+		Frame& frame = GetProcessor().GetFrameCur();
+		ArgFeeder args(*pArgument);
+		if (!args.FeedValue(frame, new Value_Window(dynamic_cast<Value_Window::EntityT*>(win)))) break;
+		if (!args.FeedValue(frame, new Value_Bool(onlyIfNeeded))) break;
 		RefPtr<Value> pValueRtn(pFunc->Eval(GetProcessor(), *pArgument));
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
