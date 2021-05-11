@@ -42,7 +42,7 @@ Gurax_ImplementConstructor(App)
 	// Function body
 	auto pEntity = new Value_App::EntityT();
 	RefPtr<Value_App> pValue(new Value_App(pEntity));
-	pEntity->SetInfo(processor.Reference(), *pValue);
+	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
 
@@ -123,11 +123,11 @@ bool Value_App::EntityT::OnInit()
 	do {
 		Function* pFunc;
 		RefPtr<Argument> pArgument;
-		if (!PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+		if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
 		// Argument
 		// (none)
 		// Evaluation
-		RefPtr<Value> pValueRtn(pFunc->Eval(GetProcessor(), *pArgument));
+		RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
 		// Return Value
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
@@ -142,29 +142,18 @@ bool Value_App::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 	do {
 		Function* pFunc;
 		RefPtr<Argument> pArgument;
-		if (!PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+		if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
 		// Argument
-		ArgFeeder args(*pArgument, GetProcessor().GetFrameCur());
+		ArgFeeder args(*pArgument, core.GetProcessor().GetFrameCur());
 		if (!args.FeedValue(new Value_Window(dynamic_cast<Value_Window::EntityT*>(win)))) break;
 		if (!args.FeedValue(new Value_Bool(onlyIfNeeded))) break;
 		// Evaluation
-		RefPtr<Value> pValueRtn(pFunc->Eval(GetProcessor(), *pArgument));
+		RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
 		// Return Value
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
 	return EntitySuper::SafeYield(win, onlyIfNeeded);
-}
-
-bool Value_App::EntityT::PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const
-{
-	RefPtr<Value_App> pValueThis(LockValue());
-	if (!pValueThis) return false;
-	*ppFunc = &pValueThis->LookupMethod(pSymbolFunc);
-	if ((*ppFunc)->IsEmpty()) return false;
-	pArgument.reset(new Argument(**ppFunc));
-	pArgument->SetValueThis(pValueThis.release());
-	return true;
 }
 
 Gurax_EndModuleScope(wx)
