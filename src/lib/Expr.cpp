@@ -1003,20 +1003,18 @@ bool Expr_Block::HasCallerAsParent() const
 
 Value* Expr_Block::EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const
 {
-	Frame& frame = processor.GetFrameCur();
 	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*this));
-	ArgFeeder args(*pArgument);
-	if (!args.FeedValue(frame, pValueArg.release())) return Value::nil();
+	ArgFeeder args(*pArgument, processor.GetFrameCur());
+	if (!args.FeedValue(pValueArg.release())) return Value::nil();
 	return Eval(processor, *pArgument);
 }
 
 Value* Expr_Block::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const
 {
-	Frame& frame = processor.GetFrameCur();
 	RefPtr<Argument> pArgument(Argument::CreateForBlockCall(*this));
-	ArgFeeder args(*pArgument);
-	if (!args.FeedValue(frame, pValueArg1.release())) return Value::nil();
-	if (!args.FeedValue(frame, pValueArg2.release())) return Value::nil();
+	ArgFeeder args(*pArgument, processor.GetFrameCur());
+	if (!args.FeedValue(pValueArg1.release())) return Value::nil();
+	if (!args.FeedValue(pValueArg2.release())) return Value::nil();
 	return Eval(processor, *pArgument);
 }
 

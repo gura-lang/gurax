@@ -8,7 +8,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // ArgFeeder
 //------------------------------------------------------------------------------
-bool ArgFeeder::FeedValue(Frame& frame, Value* pValue)
+bool ArgFeeder::FeedValue(Value* pValue)
 {
 	if (Error::IsIssued()) return false;
 	if (!_pArgSlot) {
@@ -20,16 +20,16 @@ bool ArgFeeder::FeedValue(Frame& frame, Value* pValue)
 			return false;
 		}
 	}
-	_pArgSlot->FeedValue(_argument, frame, pValue);
+	_pArgSlot->FeedValue(_argument, _frame, pValue);
 	if (Error::IsIssued()) return false;
 	_pArgSlot = _pArgSlot->Advance();
 	return true;
 }
 
-bool ArgFeeder::FeedValues(Frame& frame, const ValueList& values)
+bool ArgFeeder::FeedValues(const ValueList& values)
 {
 	for (const Value* pValue : values) {
-		if (!FeedValue(frame, pValue->Reference())) return false;
+		if (!FeedValue(pValue->Reference())) return false;
 	}
 	return true;
 }

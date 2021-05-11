@@ -55,8 +55,8 @@ template<typename... T_Args> void callback_Window(Processor& processor, const Fu
 	if (!pFunc) return;
 	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
 	RefPtr<Argument> pArgument(new Argument(*pFunc, DeclCallable::Flag::CutExtraArgs));
-	ArgFeeder args(*pArgument);
-	args.FeedValues(*pFrame, pValues...);
+	ArgFeeder args(*pArgument, *pFrame);
+	args.FeedValues(pValues...);
 	if (Error::IsIssued()) return;
 	Value::Delete(pFunc->Eval(processor, *pArgument));
 }

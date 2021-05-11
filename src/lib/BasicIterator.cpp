@@ -262,8 +262,8 @@ Value* Iterator_for::DoNextValue()
 			}
 		}
 		if (GetArgument().HasArgSlot()) {
-			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) {
+			ArgFeeder args(GetArgument(), GetFrame());
+			if (!args.FeedValue(new Value_Number(_idx))) {
 				_contFlag = false;
 				break;
 			}
@@ -314,8 +314,8 @@ Value* Iterator_while::DoNextValue()
 			break;
 		}
 		if (GetArgument().HasArgSlot()) {
-			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) {
+			ArgFeeder args(GetArgument(), GetFrame());
+			if (!args.FeedValue(new Value_Number(_idx))) {
 				_contFlag = false;
 				break;
 			}
@@ -359,8 +359,8 @@ Value* Iterator_repeat::DoNextValue()
 	while (_contFlag) {
 		if (GetFiniteFlag() && _idx >= _cnt) break;
 		if (GetArgument().HasArgSlot()) {
-			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(GetFrame(), new Value_Number(_idx))) {
+			ArgFeeder args(GetArgument(), GetFrame());
+			if (!args.FeedValue(new Value_Number(_idx))) {
 				_contFlag = false;
 				break;
 			}
@@ -404,9 +404,9 @@ Value* Iterator_DoEach::DoNextValue()
 		RefPtr<Value> pValue(GetIteratorSrc().NextValue());
 		if (!pValue) return nullptr;
 		if (GetArgument().HasArgSlot()) {
-			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(GetFrame(), pValue.Reference())) return Value::nil();
-			if (args.IsValid() && !args.FeedValue(GetFrame(), new Value_Number(_idx))) return Value::nil();
+			ArgFeeder args(GetArgument(), GetFrame());
+			if (!args.FeedValue(pValue.Reference())) return Value::nil();
+			if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
 		Event event;
@@ -721,9 +721,9 @@ Value* Iterator_SinceWithFunc::DoNextValue()
 		}
 		if (_triggeredFlag) return pValue.release();
 		if (GetArgument().HasArgSlot()) {
-			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(*pFrame, pValue.Reference())) return Value::nil();
-			if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
+			ArgFeeder args(GetArgument(), *pFrame);
+			if (!args.FeedValue(pValue.Reference())) return Value::nil();
+			if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
 		RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
@@ -799,9 +799,9 @@ Value* Iterator_UntilWithFunc::DoNextValue()
 		return nullptr;
 	}
 	if (GetArgument().HasArgSlot()) {
-		ArgFeeder args(GetArgument());
-		if (!args.FeedValue(*pFrame, pValue.Reference())) return Value::nil();
-		if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
+		ArgFeeder args(GetArgument(), *pFrame);
+		if (!args.FeedValue(pValue.Reference())) return Value::nil();
+		if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
 	}
 	_idx++;
 	RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
@@ -873,9 +873,9 @@ Value* Iterator_WhileWithFunc::DoNextValue()
 		return nullptr;
 	}
 	if (GetArgument().HasArgSlot()) {
-		ArgFeeder args(GetArgument());
-		if (!args.FeedValue(*pFrame, pValue.Reference())) return Value::nil();
-		if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
+		ArgFeeder args(GetArgument(), *pFrame);
+		if (!args.FeedValue(pValue.Reference())) return Value::nil();
+		if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
 	}
 	_idx++;
 	RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));
@@ -943,9 +943,9 @@ Value* Iterator_FilterWithFunc::DoNextValue()
 			return nullptr;
 		}
 		if (GetArgument().HasArgSlot()) {
-			ArgFeeder args(GetArgument());
-			if (!args.FeedValue(*pFrame, pValue.Reference())) return Value::nil();
-			if (args.IsValid() && !args.FeedValue(*pFrame, new Value_Number(_idx))) return Value::nil();
+			ArgFeeder args(GetArgument(), *pFrame);
+			if (!args.FeedValue(pValue.Reference())) return Value::nil();
+			if (args.IsValid() && !args.FeedValue(new Value_Number(_idx))) return Value::nil();
 		}
 		_idx++;
 		RefPtr<Value> pValueRtn(GetFunction().Eval(GetProcessor(), GetArgument()));

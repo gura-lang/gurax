@@ -17,8 +17,8 @@ void callback_ErrorCallback(int error_code, const char* description)
 	if (!pFunc) return;
 	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
 	RefPtr<Argument> pArgument(new Argument(*pFunc, DeclCallable::Flag::CutExtraArgs));
-	ArgFeeder args(*pArgument);
-	args.FeedValues(*pFrame, new Value_Number(error_code), new Value_String(description));
+	ArgFeeder args(*pArgument, *pFrame);
+	args.FeedValues(new Value_Number(error_code), new Value_String(description));
 	if (Error::IsIssued()) return;
 	Value::Delete(pFunc->Eval(*g_pProcessor_ErrorCallback, *pArgument));
 }
@@ -32,8 +32,8 @@ void callback_MonitorCallback(GLFWmonitor* monitor, int event)
 	if (!pFunc) return;
 	RefPtr<Frame> pFrame(pFunc->LockFrameOuter());
 	RefPtr<Argument> pArgument(new Argument(*pFunc, DeclCallable::Flag::CutExtraArgs));
-	ArgFeeder args(*pArgument);
-	args.FeedValues(*pFrame, Value_GLFWmonitor::GetValue(monitor).Reference(), new Value_Number(event));
+	ArgFeeder args(*pArgument, *pFrame);
+	args.FeedValues(Value_GLFWmonitor::GetValue(monitor).Reference(), new Value_Number(event));
 	if (Error::IsIssued()) return;
 	Value::Delete(pFunc->Eval(*g_pProcessor_MonitorCallback, *pArgument));
 }

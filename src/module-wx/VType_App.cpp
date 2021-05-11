@@ -140,10 +140,9 @@ bool Value_App::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 		RefPtr<Argument> pArgument;
 		if (!PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
 		// Arguments
-		Frame& frame = GetProcessor().GetFrameCur();
-		ArgFeeder args(*pArgument);
-		if (!args.FeedValue(frame, new Value_Window(dynamic_cast<Value_Window::EntityT*>(win)))) break;
-		if (!args.FeedValue(frame, new Value_Bool(onlyIfNeeded))) break;
+		ArgFeeder args(*pArgument, GetProcessor().GetFrameCur());
+		if (!args.FeedValue(new Value_Window(dynamic_cast<Value_Window::EntityT*>(win)))) break;
+		if (!args.FeedValue(new Value_Bool(onlyIfNeeded))) break;
 		RefPtr<Value> pValueRtn(pFunc->Eval(GetProcessor(), *pArgument));
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);

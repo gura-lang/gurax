@@ -78,25 +78,24 @@ Value* Function::Eval(Processor& processor, Argument& argument) const
 Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const
 {
 	RefPtr<Argument> pArg(new Argument(*this));
-	ArgFeeder args(*pArg);
-	if (!args.FeedValue(processor.GetFrameCur(), pValueArg.release())) return Value::nil();
+	ArgFeeder args(*pArg, processor.GetFrameCur());
+	if (!args.FeedValue(pValueArg.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
 
 Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const
 {
 	RefPtr<Argument> pArg(new Argument(*this));
-	ArgFeeder args(*pArg);
-	if (!args.FeedValues(processor.GetFrameCur(), pValueArg1.release(),
-				pValueArg2.release())) return Value::nil();
+	ArgFeeder args(*pArg, processor.GetFrameCur());
+	if (!args.FeedValues(pValueArg1.release(), pValueArg2.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
 
 Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2, RefPtr<Value> pValueArg3) const
 {
 	RefPtr<Argument> pArg(new Argument(*this));
-	ArgFeeder args(*pArg);
-	if (!args.FeedValues(processor.GetFrameCur(), pValueArg1.release(),
+	ArgFeeder args(*pArg, processor.GetFrameCur());
+	if (!args.FeedValues(pValueArg1.release(),
 			pValueArg2.release(), pValueArg3.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }
@@ -105,8 +104,8 @@ Value* Function::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr
 										RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4) const
 {
 	RefPtr<Argument> pArg(new Argument(*this));
-	ArgFeeder args(*pArg);
-	if (!args.FeedValues(processor.GetFrameCur(), pValueArg1.release(),
+	ArgFeeder args(*pArg, processor.GetFrameCur());
+	if (!args.FeedValues(pValueArg1.release(),
 			pValueArg2.release(), pValueArg3.release(), pValueArg4.release())) return Value::nil();
 	return Eval(processor, *pArg);
 }

@@ -323,10 +323,10 @@ bool Value::Format_c(Formatter& formatter, FormatterFlags& formatterFlags) const
 bool Value::CustomCompare::operator()(const Value* pValue1, const Value* pValue2) const
 {
 	if (Error::IsIssued()) return false;
-	ArgFeeder args(_argument);
 	RefPtr<Frame> pFrame(_function.LockFrameOuter());
-	if (!args.FeedValue(*pFrame, pValue1->Reference()) ||
-		!args.FeedValue(*pFrame, pValue2->Reference())) return false;
+	ArgFeeder args(_argument, *pFrame);
+	if (!args.FeedValue(pValue1->Reference()) ||
+		!args.FeedValue(pValue2->Reference())) return false;
 	RefPtr<Value> pValueRtn(_function.Eval(_processor, _argument));
 	return pValueRtn->GetBool();
 }
@@ -337,10 +337,10 @@ bool Value::CustomCompare::operator()(const Value* pValue1, const Value* pValue2
 bool Value::KeyCustomCompare::operator()(const Value* pValue1, const Value* pValue2) const
 {
 	if (Error::IsIssued()) return false;
-	ArgFeeder args(_argument);
 	RefPtr<Frame> pFrame(_function.LockFrameOuter());
-	if (!args.FeedValue(*pFrame, pValue1->GetValueKey().Reference()) ||
-		!args.FeedValue(*pFrame, pValue2->GetValueKey().Reference())) return false;
+	ArgFeeder args(_argument, *pFrame);
+	if (!args.FeedValue(pValue1->GetValueKey().Reference()) ||
+		!args.FeedValue(pValue2->GetValueKey().Reference())) return false;
 	RefPtr<Value> pValueRtn(_function.Eval(_processor, _argument));
 	return pValueRtn->GetBool();
 }
