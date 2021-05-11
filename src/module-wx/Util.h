@@ -6,6 +6,24 @@
 #include <gurax.h>
 
 Gurax_BeginModuleScope(wx)
+
+//------------------------------------------------------------------------------
+// EntityCore
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE EntityCore {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Value::WeakPtr> _pwValue;
+public:
+	void SetInfo(Processor* pProcessor, const Value& value) {
+		_pProcessor.reset(pProcessor);
+		_pwValue.reset(value.GetWeakPtr());
+	}
+	bool PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const;
+	Processor& GetProcessor() const { return *_pProcessor; }
+	Value* LockValue() const { return _pwValue->Lock(); }
+};
+
 Gurax_EndModuleScope(wx)
 
 #endif

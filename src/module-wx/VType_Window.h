@@ -5,6 +5,7 @@
 #define GURAX_MODULE_WX_VTYPE_WINDOW_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include "Util.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -33,18 +34,8 @@ public:
 	public:
 		using EntitySuper = wxWindow;
 		using wxWindow::wxWindow;
-	private:
-		RefPtr<Processor> _pProcessor;
-		RefPtr<Value_Window::WeakPtr> _pwValue;
 	public:
-	public:
-		void SetInfo(Processor* pProcessor, const Value_Window& value) {
-			_pProcessor.reset(pProcessor);
-			_pwValue.reset(value.GetWeakPtr());
-		}
-		bool PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const;
-		Value_Window* LockValue() const { return _pwValue->Lock(); }
-		Processor& GetProcessor() const { return *_pProcessor; }
+		EntityCore core;
 	};
 protected:
 	wxWeakRef<EntityT> _pEntity;

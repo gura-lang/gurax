@@ -42,7 +42,7 @@ Gurax_ImplementConstructor(Window)
 	// Function body
 	auto pEntity = new Value_Window::EntityT();
 	RefPtr<Value_Window> pValue(new Value_Window(pEntity));
-	pEntity->SetInfo(processor.Reference(), *pValue);
+	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
 
@@ -98,15 +98,5 @@ String Value_Window::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_Window::EntityT
 //------------------------------------------------------------------------------
-bool Value_Window::EntityT::PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const
-{
-	RefPtr<Value_Window> pValueThis(LockValue());
-	if (!pValueThis) return false;
-	*ppFunc = &pValueThis->LookupMethod(pSymbolFunc);
-	if ((*ppFunc)->IsEmpty()) return false;
-	pArgument.reset(new Argument(**ppFunc));
-	pArgument->SetValueThis(pValueThis.release());
-	return true;
-}
 
 Gurax_EndModuleScope(wx)

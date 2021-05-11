@@ -124,7 +124,11 @@ bool Value_App::EntityT::OnInit()
 		Function* pFunc;
 		RefPtr<Argument> pArgument;
 		if (!PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+		// Argument
+		// (none)
+		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc->Eval(GetProcessor(), *pArgument));
+		// Return Value
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
@@ -139,11 +143,13 @@ bool Value_App::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 		Function* pFunc;
 		RefPtr<Argument> pArgument;
 		if (!PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
-		// Arguments
+		// Argument
 		ArgFeeder args(*pArgument, GetProcessor().GetFrameCur());
 		if (!args.FeedValue(new Value_Window(dynamic_cast<Value_Window::EntityT*>(win)))) break;
 		if (!args.FeedValue(new Value_Bool(onlyIfNeeded))) break;
+		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc->Eval(GetProcessor(), *pArgument));
+		// Return Value
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
