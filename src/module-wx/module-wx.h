@@ -11,6 +11,7 @@
 #include "VType_Frame.h"
 #include "VType_Menu.h"
 #include "VType_MenuBar.h"
+#include "VType_MenuItem.h"
 #include "VType_Point.h"
 #include "VType_Size.h"
 #include "VType_StatusBar.h"

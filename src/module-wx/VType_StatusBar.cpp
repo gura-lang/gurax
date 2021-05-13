@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Menu.cpp
+// VType_StatusBar.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,21 +27,21 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Menu() {block?}
-Gurax_DeclareConstructor(Menu)
+// wx.StatusBar() {block?}
+Gurax_DeclareConstructor(StatusBar)
 {
-	Declare(VTYPE_Menu, Flag::None);
+	Declare(VTYPE_StatusBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Menu` instance.");
+		"Creates a `wx.StatusBar` instance.");
 }
 
-Gurax_ImplementConstructor(Menu)
+Gurax_ImplementConstructor(StatusBar)
 {
 	// Function body
-	auto pEntity = new Value_Menu::EntityT();
-	RefPtr<Value_Menu> pValue(new Value_Menu(pEntity));
+	auto pEntity = new Value_StatusBar::EntityT();
+	RefPtr<Value_StatusBar> pValue(new Value_StatusBar(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -49,67 +49,40 @@ Gurax_ImplementConstructor(Menu)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Menu#Append(id as Number, item? as String, helpString? as String, kind? as Number)
-Gurax_DeclareMethod(Menu, Append)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("item", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethod(Menu, Append)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	int id = args.PickNumber<int>();
-	const char* item = args.IsValid()? args.PickString() : "";
-	const char* helpString = args.IsValid()? args.PickString() : "";
-	wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
-	// Function body
-	wxMenuItem* rtn = valueThis.GetEntity()->Append(id, item, helpString, kind);
-	return new Value_MenuItem(rtn);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Menu
+// VType_StatusBar
 //------------------------------------------------------------------------------
-VType_Menu VTYPE_Menu("Menu");
+VType_StatusBar VTYPE_StatusBar("StatusBar");
 
-void VType_Menu::DoPrepare(Frame& frameOuter)
+void VType_StatusBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Menu));
+	Declare(VTYPE_Control, Flag::Mutable, Gurax_CreateConstructor(StatusBar));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Menu, OnInit));
+	//Assign(Gurax_CreateMethod(StatusBar, SetMenuBar));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Menu, propSkeleton));
+	//Assign(Gurax_CreateProperty(StatusBar, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Menu
+// Value_StatusBar
 //------------------------------------------------------------------------------
-VType& Value_Menu::vtype = VTYPE_Menu;
+VType& Value_StatusBar::vtype = VTYPE_StatusBar;
 
-String Value_Menu::ToString(const StringStyle& ss) const
+String Value_StatusBar::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "wx.Menu");
+	return ToStringGeneric(ss, "wx.StatusBar");
 }
 
 //------------------------------------------------------------------------------
-// Value_Menu::EntityT
+// Value_StatusBar::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)
