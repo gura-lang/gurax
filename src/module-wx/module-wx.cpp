@@ -125,6 +125,7 @@ Gurax_ModulePrepare()
     Assign(VTYPE_App);
     Assign(VTYPE_Frame);
     Assign(VTYPE_Menu);
+    Assign(VTYPE_MenuBar);
     Assign(VTYPE_Point);
     Assign(VTYPE_Size);
     Assign(VTYPE_Window);

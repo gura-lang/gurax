@@ -27,10 +27,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Point() {block?}
+// wx.Point(x? as Number, y? as Number) {block?}
 Gurax_DeclareConstructor(Point)
 {
 	Declare(VTYPE_Point, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -39,8 +41,12 @@ Gurax_DeclareConstructor(Point)
 
 Gurax_ImplementConstructor(Point)
 {
+	// Argument
+	ArgPicker args(argument);
+	int x = args.IsValid()? args.PickNumber<int>() : 0;
+	int y = args.IsValid()? args.PickNumber<int>() : 0;
 	// Function body
-	Value_Point::EntityT entity;
+	Value_Point::EntityT entity(x, y);
 	RefPtr<Value_Point> pValue(new Value_Point(entity));
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -63,7 +69,7 @@ void VType_Point::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Window, Flag::Mutable, Gurax_CreateConstructor(Point));
+	Declare(Gurax::VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Point));
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(Point, OnInit));
 	// Assignment of property

@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Size.cpp
+// VType_MenuBar.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,27 +27,22 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Size(width? as Number, height? as Number) {block?}
-Gurax_DeclareConstructor(Size)
+// wx.MenuBar() {block?}
+Gurax_DeclareConstructor(MenuBar)
 {
-	Declare(VTYPE_Size, Flag::None);
-	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_MenuBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Size` instance.");
+		"Creates a `wx.MenuBar` instance.");
 }
 
-Gurax_ImplementConstructor(Size)
+Gurax_ImplementConstructor(MenuBar)
 {
-	// Argument
-	ArgPicker args(argument);
-	int width = args.IsValid()? args.PickNumber<int>() : 0;
-	int height = args.IsValid()? args.PickNumber<int>() : 0;
 	// Function body
-	Value_Size::EntityT entity(width, height);
-	RefPtr<Value_Size> pValue(new Value_Size(entity));
+	auto pEntity = new Value_MenuBar::EntityT();
+	RefPtr<Value_MenuBar> pValue(new Value_MenuBar(pEntity));
+	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
 
@@ -60,30 +55,33 @@ Gurax_ImplementConstructor(Size)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Size
+// VType_MenuBar
 //------------------------------------------------------------------------------
-VType_Size VTYPE_Size("Size");
+VType_MenuBar VTYPE_MenuBar("MenuBar");
 
-void VType_Size::DoPrepare(Frame& frameOuter)
+void VType_MenuBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(Gurax::VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Size));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(MenuBar));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Size, OnInit));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Size, propSkeleton));
+	//Assign(Gurax_CreateProperty(MenuBar, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Size
+// Value_MenuBar
 //------------------------------------------------------------------------------
-VType& Value_Size::vtype = VTYPE_Size;
+VType& Value_MenuBar::vtype = VTYPE_MenuBar;
 
-String Value_Size::ToString(const StringStyle& ss) const
+String Value_MenuBar::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "wx.Size");
+	return ToStringGeneric(ss, "wx.MenuBar");
 }
+
+//------------------------------------------------------------------------------
+// Value_MenuBar::EntityT
+//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)
