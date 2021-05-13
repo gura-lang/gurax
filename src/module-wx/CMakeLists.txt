@@ -39,6 +39,9 @@ target_sources(wx.gurd PRIVATE
 	module-wx.cpp
 	Util.cpp
 	VType_App.cpp
+	VType_Frame.cpp
+	VType_Point.cpp
+	VType_Size.cpp
 	VType_Window.cpp)
 #-------------------------------------------------------------------------------
 # Link

@@ -123,6 +123,9 @@ Gurax_ModulePrepare()
 {
 	// Assignment of VType
     Assign(VTYPE_App);
+    Assign(VTYPE_Frame);
+    Assign(VTYPE_Point);
+    Assign(VTYPE_Size);
     Assign(VTYPE_Window);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
