@@ -64,7 +64,7 @@ void VType_MenuBar::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(MenuBar));
+	Declare(VTYPE_Window, Flag::Mutable, Gurax_CreateConstructor(MenuBar));
 	// Assignment of method
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(MenuBar, propSkeleton));

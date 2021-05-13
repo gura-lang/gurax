@@ -65,6 +65,79 @@ Gurax_ImplementConstructor(Frame)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Frame#CreateStatusBar(number? as Number, style? as Number, id? as Number, name? as String)
+Gurax_DeclareMethod(Frame, CreateStatusBar)
+{
+	Declare(VTYPE_Frame, Flag::None);
+	DeclareArg("number", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Frame, CreateStatusBar)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	int number = args.IsValid()? args.PickNumber<int>() : 1;
+	long style = args.IsValid()? args.PickNumber<long>() : wxSTB_DEFAULT_STYLE;
+	wxWindowID id = args.IsValid()? args.PickNumber<wxWindowID>() : 0;
+	const char* name = args.IsValid()? args.PickString() : wxToolBarNameStr;
+	// Function body
+	wxStatusBar* rtn = valueThis.GetEntity()->CreateStatusBar(number, style, id, name);
+	return new Value_StatusBar(rtn);
+}
+
+// wx.Frame#SetMenuBar(menuBar as wx.MenuBar)
+Gurax_DeclareMethod(Frame, SetMenuBar)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("menuBar", VTYPE_MenuBar, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Frame, SetMenuBar)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	wxMenuBar* menuBar = args.Pick<Value_MenuBar>().GetEntity();
+	// Function body
+	valueThis.GetEntity()->SetMenuBar(menuBar);
+	return Value::nil();
+}
+
+// wx.Frame#SetStatusText(text as String, number? as Number)
+Gurax_DeclareMethod(Frame, SetStatusText)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("number", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Frame, SetStatusText)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* text = args.PickString();
+	int number = args.IsValid()? args.PickNumber<int>() : 0;
+	// Function body
+	valueThis.GetEntity()->SetStatusText(text, number);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -82,7 +155,9 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Window, Flag::Mutable, Gurax_CreateConstructor(Frame));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Frame, OnInit));
+	Assign(Gurax_CreateMethod(Frame, CreateStatusBar));
+	Assign(Gurax_CreateMethod(Frame, SetMenuBar));
+	Assign(Gurax_CreateMethod(Frame, SetStatusText));
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(Frame, propSkeleton));
 }

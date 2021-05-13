@@ -49,6 +49,33 @@ Gurax_ImplementConstructor(Menu)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Menu#Append(id as Number, item? as String, helpString? as String, kind? as Number)
+Gurax_DeclareMethod(Menu, Append)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Menu, Append)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	int id = args.PickNumber<int>();
+	const char* item = args.IsValid()? args.PickString() : "";
+	const char* helpString = args.IsValid()? args.PickString() : "";
+	wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
+	// Function body
+	wxMenuItem* rtn = valueThis.GetEntity()->Append(id, item, helpString, kind);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property

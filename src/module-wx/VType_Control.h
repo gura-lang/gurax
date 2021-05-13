@@ -1,69 +1,68 @@
 //==============================================================================
-// VType_Menu.h
+// VType_Control.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_MENU_H
-#define GURAX_MODULE_WX_VTYPE_MENU_H
+#ifndef GURAX_MODULE_WX_VTYPE_CONTROL_H
+#define GURAX_MODULE_WX_VTYPE_CONTROL_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
+#include "VType_Window.h"
 
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_Menu
+// VType_Control
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_Menu : public VType {
+class GURAX_DLLDECLARE VType_Control : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_Menu VTYPE_Menu;
+extern GURAX_DLLDECLARE VType_Control VTYPE_Control;
 
 //------------------------------------------------------------------------------
-// Value_Menu
+// Value_Control
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Menu : public Value_Object {
+class GURAX_DLLDECLARE Value_Control : public Value_Window {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Menu);
+	Gurax_DeclareReferable(Value_Control);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Menu");
+	Gurax_MemoryPoolAllocator("Value_Control");
 public:
-	class EntityT : public wxMenu {
+	class EntityT : public wxControl {
 	public:
-		using EntitySuper = wxMenu;
-		using wxMenu::wxMenu;
+		using EntitySuper = wxControl;
+		using wxControl::wxControl;
 	public:
 		EntityCore core;
 	};
-protected:
-	wxWeakRef<wxMenu> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_Menu() = delete;
-	explicit Value_Menu(wxMenu* pEntity, VType& vtype = VTYPE_Menu) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+	Value_Control() = delete;
+	explicit Value_Control(wxControl* pEntity, VType& vtype = VTYPE_Control) :
+		Value_Window(pEntity, vtype) {}
 	// Copy constructor/operator
-	Value_Menu(const Value_Menu& src) = delete;
-	Value_Menu& operator=(const Value_Menu& src) = delete;
+	Value_Control(const Value_Control& src) = delete;
+	Value_Control& operator=(const Value_Control& src) = delete;
 	// Move constructor/operator
-	Value_Menu(Value_Menu&& src) noexcept = delete;
-	Value_Menu& operator=(Value_Menu&& src) noexcept = delete;
+	Value_Control(Value_Control&& src) noexcept = delete;
+	Value_Control& operator=(Value_Control&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Menu() = default;
+	~Value_Control() = default;
 public:
-	wxMenu* GetEntity() { return _pEntity.get(); }
-	const wxMenu* GetEntity() const { return _pEntity.get(); }
+	wxControl* GetEntity() { return wxDynamicCast(Value_Window::GetEntity(), wxControl); }
+	const wxControl* GetEntity() const { return wxDynamicCast(Value_Window::GetEntity(), wxControl); }
 public:
-	static wxMenu* GetEntity(Value& value) {
-		return dynamic_cast<Value_Menu&>(value).GetEntity();
+	static wxControl* GetEntity(Value& value) {
+		return dynamic_cast<Value_Control&>(value).GetEntity();
 	}
-	static const wxMenu* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_Menu&>(value).GetEntity();
+	static const wxControl* GetEntity(const Value& value) {
+		return dynamic_cast<const Value_Control&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value
