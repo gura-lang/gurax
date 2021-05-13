@@ -49,6 +49,27 @@ Gurax_ImplementConstructor(Window)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Window#Show(show? as Bool)
+Gurax_DeclareMethod(Window, Show)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Window, Show)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Bool show = args.IsValid()? args.PickBool() : true;
+	// Function body
+	bool rtn = valueThis.GetEntity()->Show(show);
+	return new Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -66,7 +87,7 @@ void VType_Window::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Window));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Window, OnInit));
+	Assign(Gurax_CreateMethod(Window, Show));
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(Window, propSkeleton));
 }

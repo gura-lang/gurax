@@ -8,6 +8,7 @@
 #include "Util.h"
 #include "VType_App.h"
 #include "VType_Frame.h"
+#include "VType_Menu.h"
 #include "VType_Point.h"
 #include "VType_Size.h"
 #include "VType_Window.h"

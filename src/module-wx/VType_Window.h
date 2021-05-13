@@ -38,13 +38,13 @@ public:
 		EntityCore core;
 	};
 protected:
-	wxWeakRef<EntityT> _pEntity;
+	wxWeakRef<wxWindow> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Window() = delete;
-	explicit Value_Window(EntityT* pEntity, VType& vtype = VTYPE_Window) :
+	explicit Value_Window(wxWindow* pEntity, VType& vtype = VTYPE_Window) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_Window(const Value_Window& src) = delete;
@@ -56,13 +56,13 @@ protected:
 	// Destructor
 	~Value_Window() = default;
 public:
-	EntityT* GetEntity() { return _pEntity.get(); }
-	const EntityT* GetEntity() const { return _pEntity.get(); }
+	wxWindow* GetEntity() { return _pEntity.get(); }
+	const wxWindow* GetEntity() const { return _pEntity.get(); }
 public:
-	static EntityT* GetEntity(Value& value) {
+	static wxWindow* GetEntity(Value& value) {
 		return dynamic_cast<Value_Window&>(value).GetEntity();
 	}
-	static const EntityT* GetEntity(const Value& value) {
+	static const wxWindow* GetEntity(const Value& value) {
 		return dynamic_cast<const Value_Window&>(value).GetEntity();
 	}
 public:
