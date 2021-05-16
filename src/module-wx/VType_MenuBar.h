@@ -24,7 +24,7 @@ extern GURAX_DLLDECLARE VType_MenuBar VTYPE_MenuBar;
 //------------------------------------------------------------------------------
 // Value_MenuBar
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_MenuBar : public Value_Object {
+class GURAX_DLLDECLARE Value_MenuBar : public Value_Window {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_MenuBar);
@@ -38,15 +38,13 @@ public:
 	public:
 		EntityCore core;
 	};
-protected:
-	wxWeakRef<wxMenuBar> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_MenuBar() = delete;
 	explicit Value_MenuBar(wxMenuBar* pEntity, VType& vtype = VTYPE_MenuBar) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+		Value_Window(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_MenuBar(const Value_MenuBar& src) = delete;
 	Value_MenuBar& operator=(const Value_MenuBar& src) = delete;
@@ -57,8 +55,8 @@ protected:
 	// Destructor
 	~Value_MenuBar() = default;
 public:
-	wxMenuBar* GetEntity() { return _pEntity.get(); }
-	const wxMenuBar* GetEntity() const { return _pEntity.get(); }
+	wxMenuBar* GetEntity() { return wxDynamicCast(Value_Window::GetEntity(), wxMenuBar); }
+	const wxMenuBar* GetEntity() const { return wxDynamicCast(Value_Window::GetEntity(), wxMenuBar); }
 public:
 	static wxMenuBar* GetEntity(Value& value) {
 		return dynamic_cast<Value_MenuBar&>(value).GetEntity();

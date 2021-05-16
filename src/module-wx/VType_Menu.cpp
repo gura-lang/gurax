@@ -91,7 +91,7 @@ void VType_Menu::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Menu));
+	Declare(VTYPE_EvtHandler, Flag::Mutable, Gurax_CreateConstructor(Menu));
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(Menu, OnInit));
 	// Assignment of property
