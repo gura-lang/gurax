@@ -82,6 +82,8 @@ Gurax_ImplementMethod(Frame, CreateStatusBar)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	auto pEntity = valueThis.GetEntity();
+	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
 	int number = args.IsValid()? args.PickNumber<int>() : 1;
@@ -89,7 +91,7 @@ Gurax_ImplementMethod(Frame, CreateStatusBar)
 	wxWindowID id = args.IsValid()? args.PickNumber<wxWindowID>() : 0;
 	const char* name = args.IsValid()? args.PickString() : wxToolBarNameStr;
 	// Function body
-	wxStatusBar* rtn = valueThis.GetEntity()->CreateStatusBar(number, style, id, name);
+	wxStatusBar* rtn = pEntity->CreateStatusBar(number, style, id, name);
 	return new Value_StatusBar(rtn);
 }
 
@@ -107,11 +109,13 @@ Gurax_ImplementMethod(Frame, SetMenuBar)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	auto pEntity = valueThis.GetEntity();
+	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
 	wxMenuBar* menuBar = args.Pick<Value_MenuBar>().GetEntity();
 	// Function body
-	valueThis.GetEntity()->SetMenuBar(menuBar);
+	pEntity->SetMenuBar(menuBar);
 	return Value::nil();
 }
 
@@ -130,12 +134,14 @@ Gurax_ImplementMethod(Frame, SetStatusText)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	auto pEntity = valueThis.GetEntity();
+	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
 	const char* text = args.PickString();
 	int number = args.IsValid()? args.PickNumber<int>() : 0;
 	// Function body
-	valueThis.GetEntity()->SetStatusText(text, number);
+	pEntity->SetStatusText(text, number);
 	return Value::nil();
 }
 

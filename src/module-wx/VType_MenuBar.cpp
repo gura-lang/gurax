@@ -49,6 +49,31 @@ Gurax_ImplementConstructor(MenuBar)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.MenuBar#Append(menu as wx.Menu, title as String)
+Gurax_DeclareMethod(MenuBar, Append)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("menu", VTYPE_Menu, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(MenuBar, Append)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	auto pEntity = valueThis.GetEntity();
+	if (!pEntity) return Value::nil();
+	// Arguments
+	ArgPicker args(argument);
+	wxMenu* menu = args.Pick<Value_Menu>().GetEntity();
+	const char* title = args.PickString();
+	// Function body
+	bool rtn = pEntity->Append(menu, title);
+	return new Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -66,6 +91,7 @@ void VType_MenuBar::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Window, Flag::Mutable, Gurax_CreateConstructor(MenuBar));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(MenuBar, Append));
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(MenuBar, propSkeleton));
 }

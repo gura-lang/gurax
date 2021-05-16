@@ -9,6 +9,7 @@
 #include "VType_App.h"
 #include "VType_AppConsole.h"
 #include "VType_Control.h"
+#include "VType_Event.h"
 #include "VType_EvtHandler.h"
 #include "VType_Frame.h"
 #include "VType_Menu.h"

@@ -63,11 +63,13 @@ Gurax_ImplementMethod(Window, Show)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	auto pEntity = valueThis.GetEntity();
+	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
 	Bool show = args.IsValid()? args.PickBool() : true;
 	// Function body
-	bool rtn = valueThis.GetEntity()->Show(show);
+	bool rtn = pEntity->Show(show);
 	return new Value_Bool(rtn);
 }
 

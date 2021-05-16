@@ -62,8 +62,10 @@ Gurax_ImplementMethod(App, OnInit)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	auto pEntity = valueThis.GetEntity();
+	if (!pEntity) return Value::nil();
 	// Function body
-	RefPtr<Value> pValueRtn(new Value_Bool(valueThis.GetEntity()->OnInit()));
+	RefPtr<Value> pValueRtn(new Value_Bool(pEntity->OnInit()));
 	return pValueRtn.release();
 }
 
