@@ -1,8 +1,8 @@
 //==============================================================================
 // VType_EvtHandler.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_EvtHandler_H
-#define GURAX_MODULE_WX_VTYPE_EvtHandler_H
+#ifndef GURAX_MODULE_WX_VTYPE_EVTHANDLER_H
+#define GURAX_MODULE_WX_VTYPE_EVTHANDLER_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"

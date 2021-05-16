@@ -95,7 +95,7 @@ void VType_App::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(App));
+	Declare(VTYPE_AppConsole, Flag::Immutable, Gurax_CreateConstructor(App));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(App, OnInit));
 	// Assignment of property

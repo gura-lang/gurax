@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
+#include "VType_AppConsole.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -23,7 +24,7 @@ extern GURAX_DLLDECLARE VType_App VTYPE_App;
 //------------------------------------------------------------------------------
 // Value_App
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_App : public Value_Object {
+class GURAX_DLLDECLARE Value_App : public Value_AppConsole {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_App);
@@ -40,15 +41,13 @@ public:
 		virtual bool OnInit() override;
 		virtual bool SafeYield(wxWindow* win, bool onlyIfNeeded) override;
 	};
-protected:
-	wxWeakRef<EntityT> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_App() = delete;
-	explicit Value_App(EntityT* pEntity, VType& vtype = VTYPE_App) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_App(wxApp* pEntity, VType& vtype = VTYPE_App) :
+		Value_AppConsole(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_App(const Value_App& src) = delete;
 	Value_App& operator=(const Value_App& src) = delete;
@@ -59,13 +58,13 @@ protected:
 	// Destructor
 	~Value_App() = default;
 public:
-	EntityT* GetEntity() { return _pEntity.get(); }
-	const EntityT* GetEntity() const { return _pEntity.get(); }
+	wxApp* GetEntity() { return wxDynamicCast(Value_AppConsole::GetEntity(), wxApp); }
+	const wxApp* GetEntity() const { return wxDynamicCast(Value_AppConsole::GetEntity(), wxApp); }
 public:
-	static EntityT* GetEntity(Value& value) {
+	static wxApp* GetEntity(Value& value) {
 		return dynamic_cast<Value_App&>(value).GetEntity();
 	}
-	static const EntityT* GetEntity(const Value& value) {
+	static const wxApp* GetEntity(const Value& value) {
 		return dynamic_cast<const Value_App&>(value).GetEntity();
 	}
 public:

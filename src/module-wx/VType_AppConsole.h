@@ -1,11 +1,12 @@
 //==============================================================================
 // VType_AppConsole.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_AppConsole_H
-#define GURAX_MODULE_WX_VTYPE_AppConsole_H
+#ifndef GURAX_MODULE_WX_VTYPE_APPCONSOLE_H
+#define GURAX_MODULE_WX_VTYPE_APPCONSOLE_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
+#include "VType_EvtHandler.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -23,7 +24,7 @@ extern GURAX_DLLDECLARE VType_AppConsole VTYPE_AppConsole;
 //------------------------------------------------------------------------------
 // Value_AppConsole
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_AppConsole : public Value_Object {
+class GURAX_DLLDECLARE Value_AppConsole : public Value_EvtHandler {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_AppConsole);
@@ -37,15 +38,13 @@ public:
 	public:
 		EntityCore core;
 	};
-protected:
-	wxWeakRef<EntityT> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_AppConsole() = delete;
-	explicit Value_AppConsole(EntityT* pEntity, VType& vtype = VTYPE_AppConsole) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_AppConsole(wxAppConsole* pEntity, VType& vtype = VTYPE_AppConsole) :
+		Value_EvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_AppConsole(const Value_AppConsole& src) = delete;
 	Value_AppConsole& operator=(const Value_AppConsole& src) = delete;
@@ -56,13 +55,13 @@ protected:
 	// Destructor
 	~Value_AppConsole() = default;
 public:
-	EntityT* GetEntity() { return _pEntity.get(); }
-	const EntityT* GetEntity() const { return _pEntity.get(); }
+	wxAppConsole* GetEntity() { return wxDynamicCast(Value_EvtHandler::GetEntity(), wxAppConsole); }
+	const wxAppConsole* GetEntity() const { return wxDynamicCast(Value_EvtHandler::GetEntity(), wxAppConsole); }
 public:
-	static EntityT* GetEntity(Value& value) {
+	static wxAppConsole* GetEntity(Value& value) {
 		return dynamic_cast<Value_AppConsole&>(value).GetEntity();
 	}
-	static const EntityT* GetEntity(const Value& value) {
+	static const wxAppConsole* GetEntity(const Value& value) {
 		return dynamic_cast<const Value_AppConsole&>(value).GetEntity();
 	}
 public:
