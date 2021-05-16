@@ -8,6 +8,7 @@
 #include "Util.h"
 #include "VType_App.h"
 #include "VType_AppConsole.h"
+#include "VType_CommandEvent.h"
 #include "VType_Control.h"
 #include "VType_Event.h"
 #include "VType_EvtHandler.h"

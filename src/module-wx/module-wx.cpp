@@ -238,6 +238,7 @@ Gurax_ModulePrepare()
 	// Assignment of VType
     Assign(VTYPE_App);
     Assign(VTYPE_AppConsole);
+    Assign(VTYPE_CommandEvent);
     Assign(VTYPE_Control);
     Assign(VTYPE_Event);
     Assign(VTYPE_EvtHandler);
