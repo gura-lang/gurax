@@ -123,7 +123,9 @@ Gurax_ModulePrepare()
 {
 	// Assignment of VType
     Assign(VTYPE_App);
+    Assign(VTYPE_AppConsole);
     Assign(VTYPE_Control);
+    Assign(VTYPE_EvtHandler);
     Assign(VTYPE_Frame);
     Assign(VTYPE_Menu);
     Assign(VTYPE_MenuBar);

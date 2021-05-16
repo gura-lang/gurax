@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Window.cpp
+// VType_EvtHandler.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,21 +27,21 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Window() {block?}
-Gurax_DeclareConstructor(Window)
+// wx.EvtHandler() {block?}
+Gurax_DeclareConstructor(EvtHandler)
 {
-	Declare(VTYPE_Window, Flag::None);
+	Declare(VTYPE_EvtHandler, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Window` instance.");
+		"Creates a `wx.EvtHandler` instance.");
 }
 
-Gurax_ImplementConstructor(Window)
+Gurax_ImplementConstructor(EvtHandler)
 {
 	// Function body
-	auto pEntity = new Value_Window::EntityT();
-	RefPtr<Value_Window> pValue(new Value_Window(pEntity));
+	auto pEntity = new Value_EvtHandler::EntityT();
+	RefPtr<Value_EvtHandler> pValue(new Value_EvtHandler(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -49,61 +49,40 @@ Gurax_ImplementConstructor(Window)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Window#Show(show? as Bool)
-Gurax_DeclareMethod(Window, Show)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethod(Window, Show)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Bool show = args.IsValid()? args.PickBool() : true;
-	// Function body
-	bool rtn = valueThis.GetEntity()->Show(show);
-	return new Value_Bool(rtn);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Window
+// VType_EvtHandler
 //------------------------------------------------------------------------------
-VType_Window VTYPE_Window("Window");
+VType_EvtHandler VTYPE_EvtHandler("EvtHandler");
 
-void VType_Window::DoPrepare(Frame& frameOuter)
+void VType_EvtHandler::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_EvtHandler, Flag::Mutable, Gurax_CreateConstructor(Window));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(EvtHandler));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Window, Show));
+	//Assign(Gurax_CreateMethod(EvtHandler, Show));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Window, propSkeleton));
+	//Assign(Gurax_CreateProperty(EvtHandler, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Window
+// Value_EvtHandler
 //------------------------------------------------------------------------------
-VType& Value_Window::vtype = VTYPE_Window;
+VType& Value_EvtHandler::vtype = VTYPE_EvtHandler;
 
-String Value_Window::ToString(const StringStyle& ss) const
+String Value_EvtHandler::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "wx.Window");
+	return ToStringGeneric(ss, "wx.EvtHandler");
 }
 
 //------------------------------------------------------------------------------
-// Value_Window::EntityT
+// Value_EvtHandler::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

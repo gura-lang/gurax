@@ -1,68 +1,69 @@
 //==============================================================================
-// VType_Window.h
+// VType_EvtHandler.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_WINDOW_H
-#define GURAX_MODULE_WX_VTYPE_WINDOW_H
+#ifndef GURAX_MODULE_WX_VTYPE_EvtHandler_H
+#define GURAX_MODULE_WX_VTYPE_EvtHandler_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_EvtHandler.h"
 
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_Window
+// VType_EvtHandler
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_Window : public VType {
+class GURAX_DLLDECLARE VType_EvtHandler : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_Window VTYPE_Window;
+extern GURAX_DLLDECLARE VType_EvtHandler VTYPE_EvtHandler;
 
 //------------------------------------------------------------------------------
-// Value_Window
+// Value_EvtHandler
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Window : public Value_EvtHandler {
+class GURAX_DLLDECLARE Value_EvtHandler : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Window);
+	Gurax_DeclareReferable(Value_EvtHandler);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Window");
+	Gurax_MemoryPoolAllocator("Value_EvtHandler");
 public:
-	class EntityT : public wxWindow {
+	class EntityT : public wxEvtHandler {
 	public:
-		using EntitySuper = wxWindow;
-		using wxWindow::wxWindow;
+		using EntitySuper = wxEvtHandler;
+		using wxEvtHandler::wxEvtHandler;
 	public:
 		EntityCore core;
 	};
+protected:
+	wxWeakRef<wxEvtHandler> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_Window() = delete;
-	explicit Value_Window(wxWindow* pEntity, VType& vtype = VTYPE_Window) :
-		Value_EvtHandler(pEntity, vtype) {}
+	Value_EvtHandler() = delete;
+	explicit Value_EvtHandler(wxEvtHandler* pEntity, VType& vtype = VTYPE_EvtHandler) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
-	Value_Window(const Value_Window& src) = delete;
-	Value_Window& operator=(const Value_Window& src) = delete;
+	Value_EvtHandler(const Value_EvtHandler& src) = delete;
+	Value_EvtHandler& operator=(const Value_EvtHandler& src) = delete;
 	// Move constructor/operator
-	Value_Window(Value_Window&& src) noexcept = delete;
-	Value_Window& operator=(Value_Window&& src) noexcept = delete;
+	Value_EvtHandler(Value_EvtHandler&& src) noexcept = delete;
+	Value_EvtHandler& operator=(Value_EvtHandler&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Window() = default;
+	~Value_EvtHandler() = default;
 public:
-	wxWindow* GetEntity() { return wxDynamicCast(Value_EvtHandler::GetEntity(), wxWindow); }
-	const wxWindow* GetEntity() const { return wxDynamicCast(Value_EvtHandler::GetEntity(), wxWindow); }
+	wxEvtHandler* GetEntity() { return _pEntity.get(); }
+	const wxEvtHandler* GetEntity() const { return _pEntity.get(); }
 public:
-	static wxWindow* GetEntity(Value& value) {
-		return dynamic_cast<Value_Window&>(value).GetEntity();
+	static wxEvtHandler* GetEntity(Value& value) {
+		return dynamic_cast<Value_EvtHandler&>(value).GetEntity();
 	}
-	static const wxWindow* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_Window&>(value).GetEntity();
+	static const wxEvtHandler* GetEntity(const Value& value) {
+		return dynamic_cast<const Value_EvtHandler&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

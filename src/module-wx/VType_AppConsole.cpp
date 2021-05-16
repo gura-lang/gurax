@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Window.cpp
+// VType_AppConsole.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,21 +27,21 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Window() {block?}
-Gurax_DeclareConstructor(Window)
+// wx.AppConsole() {block?}
+Gurax_DeclareConstructor(AppConsole)
 {
-	Declare(VTYPE_Window, Flag::None);
+	Declare(VTYPE_AppConsole, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Window` instance.");
+		"Creates a `wx.AppConsole` instance.");
 }
 
-Gurax_ImplementConstructor(Window)
+Gurax_ImplementConstructor(AppConsole)
 {
 	// Function body
-	auto pEntity = new Value_Window::EntityT();
-	RefPtr<Value_Window> pValue(new Value_Window(pEntity));
+	auto pEntity = new Value_AppConsole::EntityT();
+	RefPtr<Value_AppConsole> pValue(new Value_AppConsole(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -49,61 +49,55 @@ Gurax_ImplementConstructor(Window)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Window#Show(show? as Bool)
-Gurax_DeclareMethod(Window, Show)
+
+//-----------------------------------------------------------------------------
+// Implementation of property
+//-----------------------------------------------------------------------------
+// wx.AppConsole#propSkeleton
+Gurax_DeclareProperty_R(AppConsole, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethod(Window, Show)
+Gurax_ImplementPropertyGetter(AppConsole, propSkeleton)
 {
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Bool show = args.IsValid()? args.PickBool() : true;
-	// Function body
-	bool rtn = valueThis.GetEntity()->Show(show);
-	return new Value_Bool(rtn);
+	//auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(3);
 }
 
-//-----------------------------------------------------------------------------
-// Implementation of property
-//-----------------------------------------------------------------------------
-
 //------------------------------------------------------------------------------
-// VType_Window
+// VType_AppConsole
 //------------------------------------------------------------------------------
-VType_Window VTYPE_Window("Window");
+VType_AppConsole VTYPE_AppConsole("AppConsole");
 
-void VType_Window::DoPrepare(Frame& frameOuter)
+void VType_AppConsole::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_EvtHandler, Flag::Mutable, Gurax_CreateConstructor(Window));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(AppConsole));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Window, Show));
+	//Assign(Gurax_CreateMethod(AppConsole, OnInit));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Window, propSkeleton));
+	Assign(Gurax_CreateProperty(AppConsole, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Window
+// Value_AppConsole
 //------------------------------------------------------------------------------
-VType& Value_Window::vtype = VTYPE_Window;
+VType& Value_AppConsole::vtype = VTYPE_AppConsole;
 
-String Value_Window::ToString(const StringStyle& ss) const
+String Value_AppConsole::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "wx.Window");
+	return ToStringGeneric(ss, "wx.AppConsole");
 }
 
+
 //------------------------------------------------------------------------------
-// Value_Window::EntityT
+// Value_AppConsole::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)
