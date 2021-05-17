@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
+#include "Consts.h"
 #include "VType_App.h"
 #include "VType_AppConsole.h"
 #include "VType_CommandEvent.h"
