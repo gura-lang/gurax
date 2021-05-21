@@ -7,6 +7,7 @@
 #include <wx/wx.h>
 #include "Util.h"
 #include "Consts.h"
+#include "Events.h"
 #include "Functions.h"
 #include "VTypes.h"
 

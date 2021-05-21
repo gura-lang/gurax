@@ -38,6 +38,7 @@ target_compile_definitions(wx.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(wx.gurd PRIVATE
 	module-wx.cpp
 	Consts.cpp
+	Events.cpp
 	Functions.cpp
 	Util.cpp
 	VTypes.cpp

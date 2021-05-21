@@ -1,8 +1,8 @@
 //==============================================================================
 // VType_CommandEvent.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_CommandEvent_H
-#define GURAX_MODULE_WX_VTYPE_CommandEvent_H
+#ifndef GURAX_MODULE_WX_VTYPE_COMMANDEVENT_H
+#define GURAX_MODULE_WX_VTYPE_COMMANDEVENT_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
@@ -37,8 +37,8 @@ public:
 public:
 	// Constructor
 	Value_CommandEvent() = delete;
-	explicit Value_CommandEvent(EntityT* pEntity, VType& vtype = VTYPE_CommandEvent) :
-		Value_Event(pEntity, vtype) {}
+	explicit Value_CommandEvent(EntityT* pEntity, Value* pValueUserData, VType& vtype = VTYPE_CommandEvent) :
+		Value_Event(pEntity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_CommandEvent(const Value_CommandEvent& src) = delete;
 	Value_CommandEvent& operator=(const Value_CommandEvent& src) = delete;

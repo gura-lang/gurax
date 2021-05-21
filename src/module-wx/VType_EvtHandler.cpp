@@ -66,11 +66,13 @@ class EventUserData : public wxObject {
 private:
 	RefPtr<Processor> _pProcessor;
 	RefPtr<Function> _pFunc;
+	RefPtr<Value> _pValueUserData;
 public:
-	EventUserData(Processor* pProcessor, Function* pFunc) : _pProcessor(pProcessor), _pFunc(pFunc) {}
+	EventUserData(Processor* pProcessor, Function* pFunc, Value* pValueUserData) :
+				_pProcessor(pProcessor), _pFunc(pFunc), _pValueUserData(pValueUserData) {}
 public:
 	void Eval(wxEvent& event) {
-		Value::Delete(_pFunc->EvalEasy(*_pProcessor, new Value_Event(event.Clone())));
+		Value::Delete(_pFunc->EvalEasy(*_pProcessor, new Value_Event(event.Clone(), _pValueUserData.Reference())));
 	}
 };
 
@@ -91,8 +93,10 @@ Gurax_ImplementMethod(EvtHandler, Bind)
 	Function& func = args.PickFunction();
 	int id = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
 	int lastId = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
+	RefPtr<Value> pValueUserData(args.IsValid()? args.PickValue().Reference() : Value::nil());
 	// Function body
-	pEntity->Bind(eventType, &HandlerFunc, id, lastId, new EventUserData(processor.Reference(), func.Reference()));
+	pEntity->Bind(eventType, &HandlerFunc, id, lastId,
+		new EventUserData(processor.Reference(), func.Reference(), pValueUserData.release()));
 	return Value::nil();
 }
 

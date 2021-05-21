@@ -15,9 +15,10 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
-	AssignVTypes(GetFrame());
     AssignConsts(GetFrame());
+    AssignEvents(GetFrame());
     AssignFunctions(GetFrame());
+	AssignVTypes(GetFrame());
 	return true;
 }
 

@@ -33,13 +33,14 @@ public:
 	using EntityT = wxEvent;
 protected:
 	std::unique_ptr<EntityT> _pEntity;
+	RefPtr<Value> _pValueUserData;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Event() = delete;
-	explicit Value_Event(EntityT* pEntity, VType& vtype = VTYPE_Event) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_Event(EntityT* pEntity, Value* pValueUserData, VType& vtype = VTYPE_Event) :
+		Value_Object(vtype), _pEntity(pEntity), _pValueUserData(pValueUserData) {}
 	// Copy constructor/operator
 	Value_Event(const Value_Event& src) = delete;
 	Value_Event& operator=(const Value_Event& src) = delete;
@@ -59,6 +60,8 @@ public:
 	static const EntityT& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_Event&>(value).GetEntity();
 	}
+public:
+	Value& GetValueUserData() { return *_pValueUserData; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
