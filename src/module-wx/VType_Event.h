@@ -32,7 +32,7 @@ public:
 public:
 	using EntityT = wxEvent;
 protected:
-	EntityT* _pEntity;
+	std::unique_ptr<EntityT> _pEntity;
 public:
 	static VType& vtype;
 public:

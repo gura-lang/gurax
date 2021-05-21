@@ -49,24 +49,34 @@ Gurax_ImplementConstructor(EvtHandler)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.EvtHandler#Bind()
+// wx.EvtHandler#Bind(eventType as wx.EventType, func as Function, id? as Number, lastId? as Number):void
 Gurax_DeclareMethod(EvtHandler, Bind)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("eventType", VTYPE_EventType, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("lastId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
 class EventUserData : public wxObject {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Function> _pFunc;
 public:
-	
+	EventUserData(Processor* pProcessor, Function* pFunc) : _pProcessor(pProcessor), _pFunc(pFunc) {}
+public:
+	void Eval(wxEvent& event) {
+		Value::Delete(_pFunc->EvalEasy(*_pProcessor, new Value_Event(event.Clone())));
+	}
 };
 
 void HandlerFunc(wxEvent& event)
 {
-	event.GetEventUserData();
+	wxDynamicCast(event.GetEventUserData(), EventUserData)->Eval(event);
 }
 
 Gurax_ImplementMethod(EvtHandler, Bind)
@@ -77,10 +87,13 @@ Gurax_ImplementMethod(EvtHandler, Bind)
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
-	Int num = args.PickNumber<Int>();
+	wxEventType eventType = args.Pick<Value_EventType>().GetEntity();
+	Function& func = args.PickFunction();
+	int id = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
+	int lastId = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
 	// Function body
-	pEntity->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &HandlerFunc, wxID_EXIT, -1, new EventUserData());
-	return new Value_Number(num * 3);
+	pEntity->Bind(eventType, &HandlerFunc, id, lastId, new EventUserData(processor.Reference(), func.Reference()));
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
