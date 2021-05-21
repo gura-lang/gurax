@@ -7,20 +7,8 @@
 #include <wx/wx.h>
 #include "Util.h"
 #include "Consts.h"
-#include "VType_App.h"
-#include "VType_AppConsole.h"
-#include "VType_CommandEvent.h"
-#include "VType_Control.h"
-#include "VType_Event.h"
-#include "VType_EvtHandler.h"
-#include "VType_Frame.h"
-#include "VType_Menu.h"
-#include "VType_MenuBar.h"
-#include "VType_MenuItem.h"
-#include "VType_Point.h"
-#include "VType_Size.h"
-#include "VType_StatusBar.h"
-#include "VType_Window.h"
+#include "Functions.h"
+#include "VTypes.h"
 
 Gurax_BeginModuleHeader(wx)
 Gurax_EndModuleHeader(wx)
