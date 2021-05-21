@@ -49,6 +49,39 @@ Gurax_ImplementConstructor(EvtHandler)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.EvtHandler#Bind()
+Gurax_DeclareMethod(EvtHandler, Bind)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+class EventUserData : public wxObject {
+public:
+	
+};
+
+void HandlerFunc(wxEvent& event)
+{
+	event.GetEventUserData();
+}
+
+Gurax_ImplementMethod(EvtHandler, Bind)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	auto pEntity = valueThis.GetEntity();
+	if (!pEntity) return Value::nil();
+	// Arguments
+	ArgPicker args(argument);
+	Int num = args.PickNumber<Int>();
+	// Function body
+	pEntity->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &HandlerFunc, wxID_EXIT, -1, new EventUserData());
+	return new Value_Number(num * 3);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -66,7 +99,7 @@ void VType_EvtHandler::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(EvtHandler));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(EvtHandler, Show));
+	Assign(Gurax_CreateMethod(EvtHandler, Bind));
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(EvtHandler, propSkeleton));
 }

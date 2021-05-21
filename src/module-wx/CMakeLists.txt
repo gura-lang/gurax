@@ -46,6 +46,7 @@ target_sources(wx.gurd PRIVATE
 	VType_CommandEvent.cpp
 	VType_Control.cpp
 	VType_Event.cpp
+	VType_EventType.cpp
 	VType_EvtHandler.cpp
 	VType_Frame.cpp
 	VType_Menu.cpp
