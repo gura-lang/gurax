@@ -7,6 +7,7 @@
 #include <wx/wx.h>
 #include "Util.h"
 #include "VType_Event.h"
+#include "VType_EventType.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -34,10 +35,11 @@ public:
 	using EntityT = wxCommandEvent;
 public:
 	static VType& vtype;
+	//static EventValueFactoryDeriv<Value_CommandEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_CommandEvent() = delete;
-	explicit Value_CommandEvent(EntityT* pEntity, Value* pValueUserData, VType& vtype = VTYPE_CommandEvent) :
+	explicit Value_CommandEvent(wxEvent* pEntity, Value* pValueUserData, VType& vtype = VTYPE_CommandEvent) :
 		Value_Event(pEntity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_CommandEvent(const Value_CommandEvent& src) = delete;

@@ -12,11 +12,11 @@ void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_App);
 	frame.Assign(VTYPE_AppConsole);
-	frame.Assign(VTYPE_CommandEvent);
+	//frame.Assign(VTYPE_CommandEvent);
 	frame.Assign(VTYPE_Control);
-	frame.Assign(VTYPE_Event);
-	frame.Assign(VTYPE_EventType);
-	frame.Assign(VTYPE_EvtHandler);
+	//frame.Assign(VTYPE_Event);
+	//frame.Assign(VTYPE_EventType);
+	//frame.Assign(VTYPE_EvtHandler);
 	frame.Assign(VTYPE_Frame);
 	frame.Assign(VTYPE_Menu);
 	frame.Assign(VTYPE_MenuBar);

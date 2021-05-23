@@ -10,6 +10,23 @@
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
+// EventValueFactory
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE EventValueFactory {
+public:
+	virtual Value* CreateValue(wxEvent* pEvent, Value* pValueUserData) const = 0;
+};
+
+template<typename T_Value>
+class EventValueFactoryDeriv : public EventValueFactory {
+public:
+	virtual Value* CreateValue(wxEvent* pEvent, Value* pValueUserData) const override {
+		return new T_Value(pEvent, pValueUserData);
+	}
+};
+
+
+//------------------------------------------------------------------------------
 // VType_EventType
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_EventType : public VType {
@@ -33,13 +50,14 @@ public:
 	using EntityT = wxEventType;
 protected:
 	EntityT _entity;
+	const EventValueFactory& _eventValueFactory;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_EventType() = delete;
-	explicit Value_EventType(const EntityT& entity, VType& vtype = VTYPE_EventType) :
-		Value_Object(vtype), _entity(entity) {}
+	explicit Value_EventType(const EntityT& entity, const EventValueFactory& eventValueFactory, VType& vtype = VTYPE_EventType) :
+		Value_Object(vtype), _entity(entity), _eventValueFactory(eventValueFactory) {}
 	// Copy constructor/operator
 	Value_EventType(const Value_EventType& src) = delete;
 	Value_EventType& operator=(const Value_EventType& src) = delete;
@@ -59,6 +77,8 @@ public:
 	static const EntityT& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_EventType&>(value).GetEntity();
 	}
+public:
+	const EventValueFactory& GetEventValueFactory() const { return _eventValueFactory; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

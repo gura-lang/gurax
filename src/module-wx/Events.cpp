@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 void AssignEvents(Frame& frame)
 {
-    frame.Assign("EVT_COMMAND_BUTTON_CLICKED", new Value_EventType(wxEVT_COMMAND_BUTTON_CLICKED));
+	//frame.Assign("EVT_COMMAND_BUTTON_CLICKED", new Value_EventType(wxEVT_COMMAND_BUTTON_CLICKED, Value_CommandEvent::eventValueFactory));
 }
 
 Gurax_EndModuleScope(wx)
