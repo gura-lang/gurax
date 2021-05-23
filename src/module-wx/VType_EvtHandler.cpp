@@ -52,16 +52,20 @@ Gurax_ImplementConstructor(EvtHandler)
 class EventUserData : public wxObject {
 private:
 	RefPtr<Processor> _pProcessor;
-	RefPtr<Function> _pFunc;
+	RefPtr<Value> _pValueFunct;
 	RefPtr<Value> _pValueUserData;
 	const EventValueFactory& _eventValueFactory;
 public:
-	EventUserData(Processor* pProcessor, Function* pFunc, Value* pValueUserData, const EventValueFactory& eventValueFactory) :
-			_pProcessor(pProcessor), _pFunc(pFunc), _pValueUserData(pValueUserData), _eventValueFactory(eventValueFactory) {}
+	EventUserData(Processor* pProcessor, Value* pValueFunct, Value* pValueUserData, const EventValueFactory& eventValueFactory) :
+			_pProcessor(pProcessor), _pValueFunct(pValueFunct), _pValueUserData(pValueUserData), _eventValueFactory(eventValueFactory) {}
 public:
 	void Eval(wxEvent& event) {
-		Value::Delete(_pFunc->EvalEasy(*_pProcessor,
-				_eventValueFactory.CreateValue(event.Clone(), _pValueUserData.Reference())));
+		const DeclCallable* pDeclCallable = _pValueFunct->GetDeclCallableWithError();
+		if (!pDeclCallable) return;
+		RefPtr<Argument> pArg(new Argument(pDeclCallable->Reference()));
+		ArgFeeder args(*pArg, _pProcessor->GetFrameCur());
+		if (!args.FeedValue(_eventValueFactory.CreateValue(event.Clone(), _pValueUserData.Reference()))) return;
+		Value::Delete(_pValueFunct->Eval(*_pProcessor, *pArg));
 	}
 	static void HandlerFunc(wxEvent& event) {
 		wxDynamicCast(event.GetEventUserData(), EventUserData)->Eval(event);
@@ -71,12 +75,12 @@ public:
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.EvtHandler#Bind(eventType as wx.EventType, func as Function, id? as Number, lastId? as Number):void
+// wx.EvtHandler#Bind(eventType as wx.EventType, funct as Any, id? as Number, lastId? as Number):void
 Gurax_DeclareMethod(EvtHandler, Bind)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("eventType", VTYPE_EventType, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("func", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("lastId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
@@ -95,13 +99,13 @@ Gurax_ImplementMethod(EvtHandler, Bind)
 	Value_EventType& valueEventType = args.Pick<Value_EventType>();
 	wxEventType eventType = valueEventType.GetEntity();
 	const EventValueFactory& eventValueFactory = valueEventType.GetEventValueFactory();
-	Function& func = args.PickFunction();
+	Value& valueFunct = args.PickValue();
 	int id = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
 	int lastId = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
 	RefPtr<Value> pValueUserData(args.IsValid()? args.PickValue().Reference() : Value::nil());
 	// Function body
 	pEntity->Bind(eventType, &EventUserData::HandlerFunc, id, lastId,
-		new EventUserData(processor.Reference(), func.Reference(), pValueUserData.release(), eventValueFactory));
+		new EventUserData(processor.Reference(), valueFunct.Reference(), pValueUserData.release(), eventValueFactory));
 	return Value::nil();
 }
 
