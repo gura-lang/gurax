@@ -49,6 +49,30 @@ Gurax_ImplementConstructor(Window)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Window#Close(force? as Bool)
+Gurax_DeclareMethod(Window, Close)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("force", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Window, Close)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	auto pEntity = valueThis.GetEntity();
+	if (!pEntity) return Value::nil();
+	// Arguments
+	ArgPicker args(argument);
+	Bool force = args.IsValid()? args.PickBool() : false;
+	// Function body
+	bool rtn = pEntity->Close(force);
+	return new Value_Bool(rtn);
+}
+
 // wx.Window#Show(show? as Bool)
 Gurax_DeclareMethod(Window, Show)
 {
@@ -89,6 +113,7 @@ void VType_Window::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_EvtHandler, Flag::Mutable, Gurax_CreateConstructor(Window));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Window, Close));
 	Assign(Gurax_CreateMethod(Window, Show));
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(Window, propSkeleton));
