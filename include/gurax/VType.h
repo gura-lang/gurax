@@ -96,7 +96,6 @@ public:
 	void GatherMemberSymbol(SymbolList& symbolList) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 public:
-	void Prepare(Frame& frameOuter);
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 public:
 	bool IsMutable() const { return (_flags & Flag::Mutable) != 0; }

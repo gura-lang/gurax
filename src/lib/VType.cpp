@@ -38,12 +38,6 @@ void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 	}
 }
 
-void VType::Prepare(Frame& frameOuter)
-{
-	frameOuter.Assign(*this);
-	DoPrepare(frameOuter);
-}
-
 String VType::ToString(const StringStyle& ss) const
 {
 	String str;

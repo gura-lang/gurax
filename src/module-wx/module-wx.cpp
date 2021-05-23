@@ -18,22 +18,7 @@ Gurax_ModulePrepare()
 	AssignConsts(GetFrame());
 	AssignEvents(GetFrame());
 	AssignFunctions(GetFrame());
-	//AssignVTypes(GetFrame());
-	Assign(VTYPE_App);
-	Assign(VTYPE_AppConsole);
-	//Assign(VTYPE_CommandEvent);
-	Assign(VTYPE_Control);
-	//Assign(VTYPE_Event);
-	//Assign(VTYPE_EventType);
-	//Assign(VTYPE_EvtHandler);
-	Assign(VTYPE_Frame);
-	Assign(VTYPE_Menu);
-	Assign(VTYPE_MenuBar);
-	Assign(VTYPE_MenuItem);
-	Assign(VTYPE_Point);
-	Assign(VTYPE_Size);
-	Assign(VTYPE_StatusBar);
-	Assign(VTYPE_Window);
+	AssignVTypes(GetFrame());
 	return true;
 }
 
