@@ -57,7 +57,7 @@ void VType_CommandEvent::DoPrepare(Frame& frameOuter)
 // Value_CommandEvent
 //------------------------------------------------------------------------------
 VType& Value_CommandEvent::vtype = VTYPE_CommandEvent;
-//EventValueFactoryDeriv<Value_CommandEvent> Value_CommandEvent::eventValueFactory;
+EventValueFactoryDeriv<Value_CommandEvent> Value_CommandEvent::eventValueFactory;
 
 String Value_CommandEvent::ToString(const StringStyle& ss) const
 {

@@ -35,7 +35,7 @@ public:
 	using EntityT = wxCommandEvent;
 public:
 	static VType& vtype;
-	//static EventValueFactoryDeriv<Value_CommandEvent> eventValueFactory;
+	static EventValueFactoryDeriv<Value_CommandEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_CommandEvent() = delete;
