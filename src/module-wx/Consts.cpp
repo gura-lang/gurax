@@ -117,6 +117,9 @@ void AssignConsts(Frame& frame)
     // IDs used by generic file dialog (13 consecutive starting from this value)
     Gurax_AssignWxValue(ID_FILEDLGG);
 	Gurax_AssignWxValue(ID_HIGHEST);
+
+	Gurax_AssignWxValue(OK);
+	Gurax_AssignWxValue(ICON_INFORMATION);
 }
 
 Gurax_EndModuleScope(wx)
