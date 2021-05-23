@@ -1,31 +1,36 @@
 #!/usr/bin/env gurax
+// wxWidgets "Hello world" Program
 import(wx)
-
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		Println('OnInit()')		
-		frame = MyFrame('title', wx.Point(50, 50), wx.Size(450, 340))
-		frame.Show()
+		frame = MyFrame('Hello World', wx.Point(50, 50), wx.Size(450, 340))
+		frame.Show(true)
 		true
 	}
 }
 
 MyFrame = class(wx.Frame) {
-	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, -1, title, pos, size|
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {
+			|nil, wx.ID_ANY, title, pos, size|
 		menuFile = wx.Menu()
 		menuFile.Append(ID_Hello, '&Hello...\tCtrl-H',
         				'Help string shown in status bar for this menu item')
 		menuFile.AppendSeparator()
 		menuFile.Append(wx.ID_EXIT)
+		
 		menuHelp = wx.Menu()
 		menuHelp.Append(wx.ID_ABOUT);
+		
 		menuBar = wx.MenuBar()
 		menuBar.Append(menuFile, '&File')
 		menuBar.Append(menuHelp, '&Help')
+		
 		this.SetMenuBar(menuBar)
+		
 		this.CreateStatusBar()
 		this.SetStatusText('Welcome to wxWidgets!')
+		
 		this.Bind(wx.EVT_MENU, this.OnHello, ID_Hello)
 		this.Bind(wx.EVT_MENU, this.OnExit, wx.ID_EXIT)
 		this.Bind(wx.EVT_MENU, this.OnAbout, wx.ID_ABOUT)
