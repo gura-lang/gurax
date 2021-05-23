@@ -15,12 +15,12 @@ MyFrame = class(wx.Frame) {
 			|nil, wx.ID_ANY, title, pos, size|
 		menuFile = wx.Menu()
 		menuFile.Append(ID_Hello, '&Hello...\tCtrl-H',
-        				'Help string shown in status bar for this menu item')
+						'Help string shown in status bar for this menu item')
 		menuFile.AppendSeparator()
 		menuFile.Append(wx.ID_EXIT)
 		
 		menuHelp = wx.Menu()
-		menuHelp.Append(wx.ID_ABOUT);
+		menuHelp.Append(wx.ID_ABOUT)
 		
 		menuBar = wx.MenuBar()
 		menuBar.Append(menuFile, '&File')

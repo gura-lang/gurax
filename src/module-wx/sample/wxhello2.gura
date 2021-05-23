@@ -13,22 +13,19 @@ MyApp = class(wx.App) {
 MyFrame = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {
 			|nil, wx.ID_ANY, title, pos, size|
-		wx.MenuBar {|menuBar|
-			menuBar.Append(
-				wx.Menu {|menu|
-					menu.Append(ID_Hello, '&Hello...\tCtrl-H',
-									'Help string shown in status bar for this menu item')
-					menu.AppendSeparator()
-					menu.Append(wx.ID_EXIT)
-					menu
-				}, '&File')
-			menuBar.Append(
-				wx.Menu {|menu|
-					menu.Append(wx.ID_ABOUT)
-					menu
-				}, '&Help')
-			this.SetMenuBar(menuBar)
-		}
+		menuBar = wx.MenuBar()
+		menuBar.Append(wx.Menu {|menu|
+			menu.Append(ID_Hello, '&Hello...\tCtrl-H',
+						'Help string shown in status bar for this menu item')
+			menu.AppendSeparator()
+			menu.Append(wx.ID_EXIT)
+			menu
+		}, '&File')
+		menuBar.Append(wx.Menu {|menu|
+			menu.Append(wx.ID_ABOUT)
+			menu
+		}, '&Help')
+		this.SetMenuBar(menuBar)
 		this.CreateStatusBar()
 		this.SetStatusText('Welcome to wxWidgets!')
 		
