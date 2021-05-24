@@ -42,8 +42,10 @@ target_sources(wx.gurd PRIVATE
 	Functions.cpp
 	Util.cpp
 	VTypes.cpp
+	VType_AnyButton.cpp
 	VType_App.cpp
 	VType_AppConsole.cpp
+	VType_Button.cpp
 	VType_CommandEvent.cpp
 	VType_Control.cpp
 	VType_Event.cpp
@@ -57,6 +59,7 @@ target_sources(wx.gurd PRIVATE
 	VType_Point.cpp
 	VType_Size.cpp
 	VType_StatusBar.cpp
+	VType_Validator.cpp
 	VType_Window.cpp)
 #-------------------------------------------------------------------------------
 # Link

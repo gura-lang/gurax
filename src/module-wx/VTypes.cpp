@@ -10,8 +10,10 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 void AssignVTypes(Frame& frame)
 {
+	frame.Assign(VTYPE_AnyButton);
 	frame.Assign(VTYPE_App);
 	frame.Assign(VTYPE_AppConsole);
+	frame.Assign(VTYPE_Button);
 	frame.Assign(VTYPE_CommandEvent);
 	frame.Assign(VTYPE_Control);
 	frame.Assign(VTYPE_Event);
@@ -25,6 +27,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_Point);
 	frame.Assign(VTYPE_Size);
 	frame.Assign(VTYPE_StatusBar);
+	frame.Assign(VTYPE_Validator);
 	frame.Assign(VTYPE_Window);
 }
 
