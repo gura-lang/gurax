@@ -134,7 +134,36 @@ public:
 	void SetFlags(Flags flags) { _flags = flags; }
 	Flags GetFlags() const { return _flags; }
 	void OrFlags(Flags flags) { _flags |= flags; }
+public:
 	void Declare(VType& vtype, Flags flags) { _pVTypeResult = &vtype; _flags |= flags; }
+	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
+					const DeclArg::Occur& occur = DeclArg::Occur::Once,
+					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
+		GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occur, flags, pExprDefault));
+	}
+	void DeclareArg(const char* name, const VType& vtype,
+					const DeclArg::Occur& occur = DeclArg::Occur::Once,
+					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
+		DeclareArg(Symbol::Add(name), vtype, occur, flags, pExprDefault);
+	}
+	void DeclareAttrOpt(const Symbol* pSymbol) {
+		GetAttr().AddSymbolOpt(pSymbol);
+	}
+	void DeclareAttrOpt(const char* name) {
+		DeclareAttrOpt(Symbol::Add(name));
+	}
+	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur,
+					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
+		GetDeclBlock().SetSymbol(pSymbol).SetOccur(occur).SetFlags(flags);
+	}
+	void DeclareBlock(const char* name, const DeclBlock::Occur& occur,
+					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
+		DeclareBlock(Symbol::Add(name), occur, flags);
+	}
+	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
+		DeclareBlock(Gurax_Symbol(block), occur, flags);
+	}
+public:
 	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	bool HasAttr() const { return GetFlags() != 0 || !GetAttr().IsEmpty(); }

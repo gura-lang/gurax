@@ -1626,17 +1626,6 @@ const DeclCallable* Value_List::GetDeclCallable()
 	return pValueElem->GetDeclCallable();
 }
 
-void Value_List::DoCall(Processor& processor, Argument& argument)
-{
-	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
-	RefPtr<Value> pValueRtn(Eval(processor, argument));
-	if (Error::IsIssued()) return;
-	if (!pPUnitOfCaller->GetDiscardValueFlag()) {
-		processor.PushValue(pValueRtn.release());
-	}
-	processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
-}
-
 // **** must handle attributes: :list, :xlist ****
 Value* Value_List::DoEval(Processor& processor, Argument& argument) const
 {

@@ -111,6 +111,17 @@ const DeclCallable* Value::GetDeclCallable()
 	return nullptr;
 }
 
+void Value::DoCall(Processor& processor, Argument& argument)
+{
+	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
+	RefPtr<Value> pValueRtn(DoEval(processor, argument));
+	if (Error::IsIssued()) return;
+	if (!pPUnitOfCaller->GetDiscardValueFlag()) {
+		processor.PushValue(pValueRtn.release());
+	}
+	processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
+}
+
 Value* Value::DoIndexGet(const Index& index) const
 {
 	const ValueList& valuesIndex = index.GetValueOwner();

@@ -255,7 +255,7 @@ public:
 	}
 	virtual const DeclCallable* GetDeclCallableWithError();
 	virtual const DeclCallable* GetDeclCallable();
-	virtual void DoCall(Processor& processor, Argument& argument) {}
+	virtual void DoCall(Processor& processor, Argument& argument);
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); }
 	virtual Value* DoIndexGet(const Index& index) const;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue);

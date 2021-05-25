@@ -288,14 +288,6 @@ const DeclCallable* Value_Operator::GetDeclCallable()
 	return &GetOperator().GetDeclCallable();
 }
 
-void Value_Operator::DoCall(Processor& processor, Argument& argument)
-{
-	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
-	RefPtr<Value> pValueResult(DoEval(processor, argument));
-	if (!pPUnitOfCaller->GetDiscardValueFlag()) processor.PushValue(pValueResult.release());
-	processor.SetPUnitCur(pPUnitOfCaller->GetPUnitCont());
-}
-
 Value* Value_Operator::DoEval(Processor& processor, Argument& argument) const
 {
 	ArgPicker args(argument);

@@ -3,6 +3,9 @@
 //==============================================================================
 #include "stdafx.h"
 
+#define AssignEvent(eventName, eventType) \
+frame.Assign(#eventName, new Value_EventType(wx##eventName, Value_##eventType::eventValueFactory))
+
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
@@ -10,8 +13,8 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 void AssignEvents(Frame& frame)
 {
-	frame.Assign("EVT_MENU", new Value_EventType(wxEVT_MENU, Value_CommandEvent::eventValueFactory));
-	frame.Assign("EVT_COMMAND_BUTTON_CLICKED", new Value_EventType(wxEVT_COMMAND_BUTTON_CLICKED, Value_CommandEvent::eventValueFactory));
+	AssignEvent(EVT_MENU, CommandEvent);
+	AssignEvent(EVT_COMMAND_BUTTON_CLICKED, CommandEvent);
 }
 
 Gurax_EndModuleScope(wx)

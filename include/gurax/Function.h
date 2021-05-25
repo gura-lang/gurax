@@ -215,34 +215,38 @@ public:
 	void SetVTypeOfOwner(VType& vtypeOfOwner) { _pVTypeOfOwner = &vtypeOfOwner; }
 	const VType* GetVTypeOfOwner() const { return _pVTypeOfOwner; }
 	void OrFlags(Flags flags) { GetDeclCallable().OrFlags(flags); }
-	void Declare(VType& vtypeResult, Flags flags) { GetDeclCallable().Declare(vtypeResult, flags); }
+public:
+	void Declare(VType& vtypeResult, Flags flags) {
+		GetDeclCallable().Declare(vtypeResult, flags);
+	}
 	void DeclareArg(const Symbol* pSymbol, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
-		GetDeclCallable().GetDeclArgOwner().push_back(new DeclArg(pSymbol, vtype, occur, flags, pExprDefault));
+		GetDeclCallable().DeclareArg(pSymbol, vtype, occur, flags, pExprDefault);
 	}
 	void DeclareArg(const char* name, const VType& vtype,
 					const DeclArg::Occur& occur = DeclArg::Occur::Once,
 					DeclArg::Flags flags = DeclArg::Flag::None, Expr* pExprDefault = nullptr) {
-		DeclareArg(Symbol::Add(name), vtype, occur, flags, pExprDefault);
+		GetDeclCallable().DeclareArg(name, vtype, occur, flags, pExprDefault);
 	}
 	void DeclareAttrOpt(const Symbol* pSymbol) {
-		GetDeclCallable().GetAttr().AddSymbolOpt(pSymbol);
+		GetDeclCallable().DeclareAttrOpt(pSymbol);
 	}
 	void DeclareAttrOpt(const char* name) {
-		GetDeclCallable().GetAttr().AddSymbolOpt(Symbol::Add(name));
+		GetDeclCallable().DeclareAttrOpt(name);
 	}
 	void DeclareBlock(const Symbol* pSymbol, const DeclBlock::Occur& occur,
 					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
-		GetDeclCallable().GetDeclBlock().SetSymbol(pSymbol).SetOccur(occur).SetFlags(flags);
+		GetDeclCallable().DeclareBlock(pSymbol, occur, flags);
 	}
 	void DeclareBlock(const char* name, const DeclBlock::Occur& occur,
 					  DeclBlock::Flags flags = DeclBlock::Flag::None) {
-		DeclareBlock(Symbol::Add(name), occur, flags);
+		GetDeclCallable().DeclareBlock(name, occur, flags);
 	}
 	void DeclareBlock(const DeclBlock::Occur& occur, DeclBlock::Flags flags = DeclBlock::Flag::None) {
-		DeclareBlock(Gurax_Symbol(block), occur, flags);
+		GetDeclCallable().DeclareBlock(occur, flags);
 	}
+public:
 	Flags GetFlags() const { return GetDeclCallable().GetFlags(); }
 	bool IsSet(Flags flags) const { return GetDeclCallable().IsSet(flags); }
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
