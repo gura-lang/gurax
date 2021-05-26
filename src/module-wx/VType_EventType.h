@@ -25,14 +25,16 @@ public:
 	}
 };
 
-
 //------------------------------------------------------------------------------
 // VType_EventType
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_EventType : public VType {
 public:
-	using VType::VType;
+	RefPtr<DeclCallable> _pDeclCallable;
+public:
+	VType_EventType(const char* name) : VType(name), _pDeclCallable(new DeclCallable()) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
+	DeclCallable& GetDeclCallable() { return *_pDeclCallable; }
 };
 
 extern GURAX_DLLDECLARE VType_EventType VTYPE_EventType;
