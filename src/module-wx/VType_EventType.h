@@ -68,7 +68,7 @@ extern GURAX_DLLDECLARE VType_EventType VTYPE_EventType;
 //------------------------------------------------------------------------------
 // Value_EventType
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_EventType : public Value_Object {
+class GURAX_DLLDECLARE Value_EventType : public Gurax::Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_EventType);
@@ -85,7 +85,7 @@ public:
 	// Constructor
 	Value_EventType() = delete;
 	explicit Value_EventType(const EntityT& entity, const EventValueFactory& eventValueFactory, VType& vtype = VTYPE_EventType) :
-		Value_Object(vtype), _entity(entity), _eventValueFactory(eventValueFactory) {}
+		Gurax::Value_Object(vtype), _entity(entity), _eventValueFactory(eventValueFactory) {}
 	// Copy constructor/operator
 	Value_EventType(const Value_EventType& src) = delete;
 	Value_EventType& operator=(const Value_EventType& src) = delete;

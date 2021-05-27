@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
+#include "VType_Object.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -32,7 +33,6 @@ public:
 public:
 	using EntityT = wxEvent;
 protected:
-	std::unique_ptr<EntityT> _pEntity;
 	RefPtr<Value> _pValueUserData;
 public:
 	static VType& vtype;
@@ -40,7 +40,7 @@ public:
 	// Constructor
 	Value_Event() = delete;
 	explicit Value_Event(EntityT* pEntity, Value* pValueUserData, VType& vtype = VTYPE_Event) :
-		Value_Object(vtype), _pEntity(pEntity), _pValueUserData(pValueUserData) {}
+		Value_Object(*pEntity, vtype), _pValueUserData(pValueUserData) {}
 	// Copy constructor/operator
 	Value_Event(const Value_Event& src) = delete;
 	Value_Event& operator=(const Value_Event& src) = delete;
@@ -51,8 +51,8 @@ protected:
 	// Destructor
 	~Value_Event() = default;
 public:
-	EntityT& GetEntity() { return *_pEntity; }
-	const EntityT& GetEntity() const { return *_pEntity; }
+	EntityT& GetEntity() { return dynamic_cast<EntityT&>(Value_Object::GetEntity()); }
+	const EntityT& GetEntity() const { return dynamic_cast<const EntityT&>(Value_Object::GetEntity()); }
 public:
 	static EntityT& GetEntity(Value& value) {
 		return dynamic_cast<Value_Event&>(value).GetEntity();

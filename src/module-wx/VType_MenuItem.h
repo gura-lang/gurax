@@ -23,7 +23,7 @@ extern GURAX_DLLDECLARE VType_MenuItem VTYPE_MenuItem;
 //------------------------------------------------------------------------------
 // Value_MenuItem
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_MenuItem : public Value_Object {
+class GURAX_DLLDECLARE Value_MenuItem : public Gurax::Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_MenuItem);
@@ -45,7 +45,7 @@ public:
 	// Constructor
 	Value_MenuItem() = delete;
 	explicit Value_MenuItem(wxMenuItem* pEntity, VType& vtype = VTYPE_MenuItem) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+		Gurax::Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_MenuItem(const Value_MenuItem& src) = delete;
 	Value_MenuItem& operator=(const Value_MenuItem& src) = delete;
