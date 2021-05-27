@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Size.cpp
+// VType_wxSize.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.Size(width? as Number, height? as Number) {block?}
 Gurax_DeclareConstructor(Size)
 {
-	Declare(VTYPE_Size, Flag::None);
+	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -46,8 +46,8 @@ Gurax_ImplementConstructor(Size)
 	int width = args.IsValid()? args.PickNumber<int>() : 0;
 	int height = args.IsValid()? args.PickNumber<int>() : 0;
 	// Function body
-	Value_Size::EntityT entity(width, height);
-	RefPtr<Value_Size> pValue(new Value_Size(entity));
+	Value_wxSize::EntityT entity(width, height);
+	RefPtr<Value_wxSize> pValue(new Value_wxSize(entity));
 	return argument.ReturnValue(processor, pValue.release());
 }
 
@@ -60,11 +60,11 @@ Gurax_ImplementConstructor(Size)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Size
+// VType_wxSize
 //------------------------------------------------------------------------------
-VType_Size VTYPE_Size("Size");
+VType_wxSize VTYPE_wxSize("Size");
 
-void VType_Size::DoPrepare(Frame& frameOuter)
+void VType_wxSize::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -77,11 +77,11 @@ void VType_Size::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_Size
+// Value_wxSize
 //------------------------------------------------------------------------------
-VType& Value_Size::vtype = VTYPE_Size;
+VType& Value_wxSize::vtype = VTYPE_wxSize;
 
-String Value_Size::ToString(const StringStyle& ss) const
+String Value_wxSize::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Size");
 }

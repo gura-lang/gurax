@@ -33,8 +33,8 @@ Gurax_DeclareConstructor(Panel)
 	Declare(VTYPE_Panel, Flag::None);
 	DeclareArg("parent", VTYPE_Window, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("pos", VTYPE_Point, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("size", VTYPE_Size, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -50,8 +50,8 @@ Gurax_ImplementConstructor(Panel)
 	wxWindow* parent = args.IsValid()? args.Pick<Value_Window>().GetEntity() : nullptr;
 	wxWindowID id = args.IsValid()? args.PickNumber<wxWindowID>() : wxID_ANY;
 	const char* title = args.PickString();
-	const wxPoint& pos = args.IsValid()? args.Pick<Value_Point>().GetEntity() : wxDefaultPosition;
-	const wxSize& size = args.IsValid()? args.Pick<Value_Size>().GetEntity() : wxDefaultSize;
+	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	long style = args.IsValid()? args.PickNumber<long>() : wxTAB_TRAVERSAL;
 	const char* name = args.IsValid()? args.PickString() : wxPanelNameStr;
 	// Function body

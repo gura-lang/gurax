@@ -1,8 +1,8 @@
 //==============================================================================
-// VType_Point.h
+// VType_wxSize.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_POINT_H
-#define GURAX_MODULE_WX_VTYPE_POINT_H
+#ifndef GURAX_MODULE_WX_VTYPE_SIZE_H
+#define GURAX_MODULE_WX_VTYPE_SIZE_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
@@ -10,54 +10,54 @@
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_Point
+// VType_wxSize
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_Point : public VType {
+class GURAX_DLLDECLARE VType_wxSize : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_Point VTYPE_Point;
+extern GURAX_DLLDECLARE VType_wxSize VTYPE_wxSize;
 
 //------------------------------------------------------------------------------
-// Value_Point
+// Value_wxSize
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Point : public Gurax::Value_Object {
+class GURAX_DLLDECLARE Value_wxSize : public Gurax::Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Point);
+	Gurax_DeclareReferable(Value_wxSize);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Point");
+	Gurax_MemoryPoolAllocator("Value_wxSize");
 public:
-	using EntityT = wxPoint;
+	using EntityT = wxSize;
 protected:
 	EntityT _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_Point() = delete;
-	explicit Value_Point(const EntityT& entity, VType& vtype = VTYPE_Point) :
+	Value_wxSize() = delete;
+	explicit Value_wxSize(const EntityT& entity, VType& vtype = VTYPE_wxSize) :
 		Gurax::Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
-	Value_Point(const Value_Point& src) = delete;
-	Value_Point& operator=(const Value_Point& src) = delete;
+	Value_wxSize(const Value_wxSize& src) = delete;
+	Value_wxSize& operator=(const Value_wxSize& src) = delete;
 	// Move constructor/operator
-	Value_Point(Value_Point&& src) noexcept = delete;
-	Value_Point& operator=(Value_Point&& src) noexcept = delete;
+	Value_wxSize(Value_wxSize&& src) noexcept = delete;
+	Value_wxSize& operator=(Value_wxSize&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Point() = default;
+	~Value_wxSize() = default;
 public:
 	EntityT& GetEntity() { return _entity; }
 	const EntityT& GetEntity() const { return _entity; }
 public:
 	static EntityT& GetEntity(Value& value) {
-		return dynamic_cast<Value_Point&>(value).GetEntity();
+		return dynamic_cast<Value_wxSize&>(value).GetEntity();
 	}
 	static const EntityT& GetEntity(const Value& value) {
-		return dynamic_cast<const Value_Point&>(value).GetEntity();
+		return dynamic_cast<const Value_wxSize&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

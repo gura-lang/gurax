@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Point.cpp
+// VType_wxPoint.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.Point(x? as Number, y? as Number) {block?}
 Gurax_DeclareConstructor(Point)
 {
-	Declare(VTYPE_Point, Flag::None);
+	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -46,8 +46,8 @@ Gurax_ImplementConstructor(Point)
 	int x = args.IsValid()? args.PickNumber<int>() : 0;
 	int y = args.IsValid()? args.PickNumber<int>() : 0;
 	// Function body
-	Value_Point::EntityT entity(x, y);
-	RefPtr<Value_Point> pValue(new Value_Point(entity));
+	Value_wxPoint::EntityT entity(x, y);
+	RefPtr<Value_wxPoint> pValue(new Value_wxPoint(entity));
 	return argument.ReturnValue(processor, pValue.release());
 }
 
@@ -60,11 +60,11 @@ Gurax_ImplementConstructor(Point)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Point
+// VType_wxPoint
 //------------------------------------------------------------------------------
-VType_Point VTYPE_Point("Point");
+VType_wxPoint VTYPE_wxPoint("Point");
 
-void VType_Point::DoPrepare(Frame& frameOuter)
+void VType_wxPoint::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -77,11 +77,11 @@ void VType_Point::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_Point
+// Value_wxPoint
 //------------------------------------------------------------------------------
-VType& Value_Point::vtype = VTYPE_Point;
+VType& Value_wxPoint::vtype = VTYPE_wxPoint;
 
-String Value_Point::ToString(const StringStyle& ss) const
+String Value_wxPoint::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Point");
 }
