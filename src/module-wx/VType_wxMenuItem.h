@@ -1,8 +1,8 @@
 //==============================================================================
 // VType_wxMenuItem.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_wxMenuItem_H
-#define GURAX_MODULE_WX_VTYPE_wxMenuItem_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXMENUITEM_H
+#define GURAX_MODULE_WX_VTYPE_WXMENUITEM_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"

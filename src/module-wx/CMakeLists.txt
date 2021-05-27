@@ -51,9 +51,9 @@ target_sources(wx.gurd PRIVATE
 	VType_wxEvent.cpp
 	VType_wxEventType.cpp
 	VType_wxEvtHandler.cpp
-	VType_Frame.cpp
-	VType_Menu.cpp
-	VType_MenuBar.cpp
+	VType_wxFrame.cpp
+	VType_wxMenu.cpp
+	VType_wxMenuBar.cpp
 	VType_wxMenuItem.cpp
 	VType_wxObject.cpp
 	VType_wxPanel.cpp

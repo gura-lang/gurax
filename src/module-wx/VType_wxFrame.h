@@ -1,8 +1,8 @@
 //==============================================================================
-// VType_MenuBar.h
+// VType_wxFrame.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_MENUBAR_H
-#define GURAX_MODULE_WX_VTYPE_MENUBAR_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXFRAME_H
+#define GURAX_MODULE_WX_VTYPE_WXFRAME_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
@@ -11,30 +11,30 @@
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_MenuBar
+// VType_wxFrame
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_MenuBar : public VType {
+class GURAX_DLLDECLARE VType_wxFrame : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_MenuBar VTYPE_MenuBar;
+extern GURAX_DLLDECLARE VType_wxFrame VTYPE_wxFrame;
 
 //------------------------------------------------------------------------------
-// Value_MenuBar
+// Value_wxFrame
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_MenuBar : public Value_wxWindow {
+class GURAX_DLLDECLARE Value_wxFrame : public Value_wxWindow {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_MenuBar);
+	Gurax_DeclareReferable(Value_wxFrame);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_MenuBar");
+	Gurax_MemoryPoolAllocator("Value_wxFrame");
 public:
-	class EntityT : public wxMenuBar {
+	class EntityT : public wxFrame {
 	public:
-		using EntitySuper = wxMenuBar;
-		using wxMenuBar::wxMenuBar;
+		using EntitySuper = wxFrame;
+		using wxFrame::wxFrame;
 	public:
 		EntityCore core;
 	};
@@ -42,27 +42,27 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_MenuBar() = delete;
-	explicit Value_MenuBar(wxMenuBar* pEntity, VType& vtype = VTYPE_MenuBar) :
+	Value_wxFrame() = delete;
+	explicit Value_wxFrame(EntityT* pEntity, VType& vtype = VTYPE_wxFrame) :
 		Value_wxWindow(pEntity, vtype) {}
 	// Copy constructor/operator
-	Value_MenuBar(const Value_MenuBar& src) = delete;
-	Value_MenuBar& operator=(const Value_MenuBar& src) = delete;
+	Value_wxFrame(const Value_wxFrame& src) = delete;
+	Value_wxFrame& operator=(const Value_wxFrame& src) = delete;
 	// Move constructor/operator
-	Value_MenuBar(Value_MenuBar&& src) noexcept = delete;
-	Value_MenuBar& operator=(Value_MenuBar&& src) noexcept = delete;
+	Value_wxFrame(Value_wxFrame&& src) noexcept = delete;
+	Value_wxFrame& operator=(Value_wxFrame&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_MenuBar() = default;
+	~Value_wxFrame() = default;
 public:
-	wxMenuBar* GetEntity() { return wxDynamicCast(Value_wxWindow::GetEntity(), wxMenuBar); }
-	const wxMenuBar* GetEntity() const { return wxDynamicCast(Value_wxWindow::GetEntity(), wxMenuBar); }
+	wxFrame* GetEntity() { return wxDynamicCast(Value_wxWindow::GetEntity(), wxFrame); }
+	const wxFrame* GetEntity() const { return wxDynamicCast(Value_wxWindow::GetEntity(), wxFrame); }
 public:
-	static wxMenuBar* GetEntity(Value& value) {
-		return dynamic_cast<Value_MenuBar&>(value).GetEntity();
+	static wxFrame* GetEntity(Value& value) {
+		return dynamic_cast<Value_wxFrame&>(value).GetEntity();
 	}
-	static const wxMenuBar* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_MenuBar&>(value).GetEntity();
+	static const wxFrame* GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxFrame&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

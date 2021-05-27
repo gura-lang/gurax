@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Frame.cpp
+// VType_wxFrame.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.Frame(parent:nil as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructor(Frame)
 {
-	Declare(VTYPE_Frame, Flag::None);
+	Declare(VTYPE_wxFrame, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -56,8 +56,8 @@ Gurax_ImplementConstructor(Frame)
 	long style = args.IsValid()? args.PickNumber<long>() : wxDEFAULT_FRAME_STYLE;
 	const char* name = args.IsValid()? args.PickString() : wxFrameNameStr;
 	// Function body
-	auto pEntity = new Value_Frame::EntityT(parent, id, title, pos, size, style, name);
-	RefPtr<Value_Frame> pValue(new Value_Frame(pEntity));
+	auto pEntity = new Value_wxFrame::EntityT(parent, id, title, pos, size, style, name);
+	RefPtr<Value_wxFrame> pValue(new Value_wxFrame(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -66,9 +66,9 @@ Gurax_ImplementConstructor(Frame)
 // Implementation of method
 //-----------------------------------------------------------------------------
 // wx.Frame#CreateStatusBar(number? as Number, style? as Number, id? as Number, name? as String)
-Gurax_DeclareMethod(Frame, CreateStatusBar)
+Gurax_DeclareMethod(wxFrame, CreateStatusBar)
 {
-	Declare(VTYPE_Frame, Flag::None);
+	Declare(VTYPE_wxFrame, Flag::None);
 	DeclareArg("number", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -78,7 +78,7 @@ Gurax_DeclareMethod(Frame, CreateStatusBar)
 		"");
 }
 
-Gurax_ImplementMethod(Frame, CreateStatusBar)
+Gurax_ImplementMethod(wxFrame, CreateStatusBar)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -96,16 +96,16 @@ Gurax_ImplementMethod(Frame, CreateStatusBar)
 }
 
 // wx.Frame#SetMenuBar(menuBar as wx.MenuBar)
-Gurax_DeclareMethod(Frame, SetMenuBar)
+Gurax_DeclareMethod(wxFrame, SetMenuBar)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("menuBar", VTYPE_MenuBar, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("menuBar", VTYPE_wxMenuBar, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethod(Frame, SetMenuBar)
+Gurax_ImplementMethod(wxFrame, SetMenuBar)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -113,14 +113,14 @@ Gurax_ImplementMethod(Frame, SetMenuBar)
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
-	wxMenuBar* menuBar = args.Pick<Value_MenuBar>().GetEntity();
+	wxMenuBar* menuBar = args.Pick<Value_wxMenuBar>().GetEntity();
 	// Function body
 	pEntity->SetMenuBar(menuBar);
 	return Value::nil();
 }
 
 // wx.Frame#SetStatusText(text as String, number? as Number)
-Gurax_DeclareMethod(Frame, SetStatusText)
+Gurax_DeclareMethod(wxFrame, SetStatusText)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -130,7 +130,7 @@ Gurax_DeclareMethod(Frame, SetStatusText)
 		"");
 }
 
-Gurax_ImplementMethod(Frame, SetStatusText)
+Gurax_ImplementMethod(wxFrame, SetStatusText)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -150,36 +150,36 @@ Gurax_ImplementMethod(Frame, SetStatusText)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Frame
+// VType_wxFrame
 //------------------------------------------------------------------------------
-VType_Frame VTYPE_Frame("Frame");
+VType_wxFrame VTYPE_wxFrame("Frame");
 
-void VType_Frame::DoPrepare(Frame& frameOuter)
+void VType_wxFrame::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Frame));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Frame, CreateStatusBar));
-	Assign(Gurax_CreateMethod(Frame, SetMenuBar));
-	Assign(Gurax_CreateMethod(Frame, SetStatusText));
+	Assign(Gurax_CreateMethod(wxFrame, CreateStatusBar));
+	Assign(Gurax_CreateMethod(wxFrame, SetMenuBar));
+	Assign(Gurax_CreateMethod(wxFrame, SetStatusText));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Frame, propSkeleton));
+	//Assign(Gurax_CreateProperty(wxFrame, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Frame
+// Value_wxFrame
 //------------------------------------------------------------------------------
-VType& Value_Frame::vtype = VTYPE_Frame;
+VType& Value_wxFrame::vtype = VTYPE_wxFrame;
 
-String Value_Frame::ToString(const StringStyle& ss) const
+String Value_wxFrame::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Frame");
 }
 
 //------------------------------------------------------------------------------
-// Value_Frame::EntityT
+// Value_wxFrame::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)
