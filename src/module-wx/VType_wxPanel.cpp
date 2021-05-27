@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Panel.cpp
+// VType_wxPanel.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.Panel(parent:nil as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructor(Panel)
 {
-	Declare(VTYPE_Panel, Flag::None);
+	Declare(VTYPE_wxPanel, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -55,8 +55,8 @@ Gurax_ImplementConstructor(Panel)
 	long style = args.IsValid()? args.PickNumber<long>() : wxTAB_TRAVERSAL;
 	const char* name = args.IsValid()? args.PickString() : wxPanelNameStr;
 	// Function body
-	auto pEntity = new Value_Panel::EntityT(parent, id, pos, size, style, name);
-	RefPtr<Value_Panel> pValue(new Value_Panel(pEntity));
+	auto pEntity = new Value_wxPanel::EntityT(parent, id, pos, size, style, name);
+	RefPtr<Value_wxPanel> pValue(new Value_wxPanel(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -70,11 +70,11 @@ Gurax_ImplementConstructor(Panel)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Panel
+// VType_wxPanel
 //------------------------------------------------------------------------------
-VType_Panel VTYPE_Panel("Panel");
+VType_wxPanel VTYPE_wxPanel("Panel");
 
-void VType_Panel::DoPrepare(Frame& frameOuter)
+void VType_wxPanel::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -87,17 +87,17 @@ void VType_Panel::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_Panel
+// Value_wxPanel
 //------------------------------------------------------------------------------
-VType& Value_Panel::vtype = VTYPE_Panel;
+VType& Value_wxPanel::vtype = VTYPE_wxPanel;
 
-String Value_Panel::ToString(const StringStyle& ss) const
+String Value_wxPanel::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Panel");
 }
 
 //------------------------------------------------------------------------------
-// Value_Panel::EntityT
+// Value_wxPanel::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

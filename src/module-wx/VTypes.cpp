@@ -24,7 +24,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_MenuBar);
 	frame.Assign(VTYPE_wxMenuItem);
 	frame.Assign(VTYPE_Object);
-	frame.Assign(VTYPE_Panel);
+	frame.Assign(VTYPE_wxPanel);
 	frame.Assign(VTYPE_wxPoint);
 	frame.Assign(VTYPE_wxSize);
 	frame.Assign(VTYPE_wxStatusBar);

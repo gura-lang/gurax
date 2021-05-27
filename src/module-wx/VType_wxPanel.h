@@ -1,8 +1,8 @@
 //==============================================================================
-// VType_Panel.h
+// VType_wxPanel.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_PANEL_H
-#define GURAX_MODULE_WX_VTYPE_PANEL_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXPANEL_H
+#define GURAX_MODULE_WX_VTYPE_WXPANEL_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
@@ -11,25 +11,25 @@
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_Panel
+// VType_wxPanel
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_Panel : public VType {
+class GURAX_DLLDECLARE VType_wxPanel : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_Panel VTYPE_Panel;
+extern GURAX_DLLDECLARE VType_wxPanel VTYPE_wxPanel;
 
 //------------------------------------------------------------------------------
-// Value_Panel
+// Value_wxPanel
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Panel : public Value_wxWindow {
+class GURAX_DLLDECLARE Value_wxPanel : public Value_wxWindow {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Panel);
+	Gurax_DeclareReferable(Value_wxPanel);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Panel");
+	Gurax_MemoryPoolAllocator("Value_wxPanel");
 public:
 	class EntityT : public wxPanel {
 	public:
@@ -42,27 +42,27 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_Panel() = delete;
-	explicit Value_Panel(wxPanel* pEntity, VType& vtype = VTYPE_Panel) :
+	Value_wxPanel() = delete;
+	explicit Value_wxPanel(wxPanel* pEntity, VType& vtype = VTYPE_wxPanel) :
 		Value_wxWindow(pEntity, vtype) {}
 	// Copy constructor/operator
-	Value_Panel(const Value_Panel& src) = delete;
-	Value_Panel& operator=(const Value_Panel& src) = delete;
+	Value_wxPanel(const Value_wxPanel& src) = delete;
+	Value_wxPanel& operator=(const Value_wxPanel& src) = delete;
 	// Move constructor/operator
-	Value_Panel(Value_Panel&& src) noexcept = delete;
-	Value_Panel& operator=(Value_Panel&& src) noexcept = delete;
+	Value_wxPanel(Value_wxPanel&& src) noexcept = delete;
+	Value_wxPanel& operator=(Value_wxPanel&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Panel() = default;
+	~Value_wxPanel() = default;
 public:
 	wxPanel* GetEntity() { return wxDynamicCast(Value_wxWindow::GetEntity(), wxPanel); }
 	const wxPanel* GetEntity() const { return wxDynamicCast(Value_wxWindow::GetEntity(), wxPanel); }
 public:
 	static wxPanel* GetEntity(Value& value) {
-		return dynamic_cast<Value_Panel&>(value).GetEntity();
+		return dynamic_cast<Value_wxPanel&>(value).GetEntity();
 	}
 	static const wxPanel* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_Panel&>(value).GetEntity();
+		return dynamic_cast<const Value_wxPanel&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

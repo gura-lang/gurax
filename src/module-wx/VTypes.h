@@ -18,7 +18,7 @@
 #include "VType_MenuBar.h"
 #include "VType_wxMenuItem.h"
 #include "VType_wxObject.h"
-#include "VType_Panel.h"
+#include "VType_wxPanel.h"
 #include "VType_wxPoint.h"
 #include "VType_wxSize.h"
 #include "VType_wxStatusBar.h"
