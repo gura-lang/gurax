@@ -1,8 +1,8 @@
 //==============================================================================
 // VType_wxPoint.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_POINT_H
-#define GURAX_MODULE_WX_VTYPE_POINT_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXPOINT_H
+#define GURAX_MODULE_WX_VTYPE_WXPOINT_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"

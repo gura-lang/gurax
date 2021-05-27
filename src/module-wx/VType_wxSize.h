@@ -1,8 +1,8 @@
 //==============================================================================
 // VType_wxSize.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_SIZE_H
-#define GURAX_MODULE_WX_VTYPE_SIZE_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXSIZE_H
+#define GURAX_MODULE_WX_VTYPE_WXSIZE_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
