@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_Control.h"
+#include "VType_wxControl.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -24,7 +24,7 @@ extern GURAX_DLLDECLARE VType_wxStatusBar VTYPE_wxStatusBar;
 //------------------------------------------------------------------------------
 // Value_wxStatusBar
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxStatusBar : public Value_Control {
+class GURAX_DLLDECLARE Value_wxStatusBar : public Value_wxControl {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxStatusBar);
@@ -44,7 +44,7 @@ public:
 	// Constructor
 	Value_wxStatusBar() = delete;
 	explicit Value_wxStatusBar(wxStatusBar* pEntity, VType& vtype = VTYPE_wxStatusBar) :
-		Value_Control(pEntity, vtype) {}
+		Value_wxControl(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxStatusBar(const Value_wxStatusBar& src) = delete;
 	Value_wxStatusBar& operator=(const Value_wxStatusBar& src) = delete;
@@ -55,8 +55,8 @@ protected:
 	// Destructor
 	~Value_wxStatusBar() = default;
 public:
-	wxStatusBar* GetEntity() { return wxDynamicCast(Value_Control::GetEntity(), wxStatusBar); }
-	const wxStatusBar* GetEntity() const { return wxDynamicCast(Value_Control::GetEntity(), wxStatusBar); }
+	wxStatusBar* GetEntity() { return wxDynamicCast(Value_wxControl::GetEntity(), wxStatusBar); }
+	const wxStatusBar* GetEntity() const { return wxDynamicCast(Value_wxControl::GetEntity(), wxStatusBar); }
 public:
 	static wxStatusBar* GetEntity(Value& value) {
 		return dynamic_cast<Value_wxStatusBar&>(value).GetEntity();

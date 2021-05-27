@@ -9,7 +9,7 @@
 #include "VType_wxAppConsole.h"
 #include "VType_Button.h"
 #include "VType_CommandEvent.h"
-#include "VType_Control.h"
+#include "VType_wxControl.h"
 #include "VType_wxEvent.h"
 #include "VType_wxEventType.h"
 #include "VType_wxEvtHandler.h"

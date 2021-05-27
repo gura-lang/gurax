@@ -82,7 +82,7 @@ void VType_Button::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Control, Flag::Mutable, Gurax_CreateConstructor(Button));
+	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Button));
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(Button, SetMenuBar));
 	// Assignment of property

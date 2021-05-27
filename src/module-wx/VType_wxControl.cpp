@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Control.cpp
+// VType_wxControl.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -31,7 +31,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.Control(parent:nil as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructor(Control)
 {
-	Declare(VTYPE_Control, Flag::None);
+	Declare(VTYPE_wxControl, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -54,11 +54,11 @@ Gurax_ImplementConstructor(Control)
 	const char* title = args.PickString();
 	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args.IsValid()? args.PickNumber<long>() : wxDEFAULT_Control_STYLE;
+	long style = args.IsValid()? args.PickNumber<long>() : wxDEFAULT_wxControl_STYLE;
 	const char* name = args.IsValid()? args.PickString() : wxControlNameStr;
 	// Function body
-	auto pEntity = new Value_Control::EntityT(parent, id, title, pos, size, style, name);
-	RefPtr<Value_Control> pValue(new Value_Control(pEntity));
+	auto pEntity = new Value_wxControl::EntityT(parent, id, title, pos, size, style, name);
+	RefPtr<Value_wxControl> pValue(new Value_wxControl(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -67,7 +67,7 @@ Gurax_ImplementConstructor(Control)
 // wx.Control() {block?}
 Gurax_DeclareConstructor(Control)
 {
-	Declare(VTYPE_Control, Flag::None);
+	Declare(VTYPE_wxControl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -77,8 +77,8 @@ Gurax_DeclareConstructor(Control)
 Gurax_ImplementConstructor(Control)
 {
 	// Function body
-	auto pEntity = new Value_Control::EntityT();
-	RefPtr<Value_Control> pValue(new Value_Control(pEntity));
+	auto pEntity = new Value_wxControl::EntityT();
+	RefPtr<Value_wxControl> pValue(new Value_wxControl(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -92,11 +92,11 @@ Gurax_ImplementConstructor(Control)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Control
+// VType_wxControl
 //------------------------------------------------------------------------------
-VType_Control VTYPE_Control("Control");
+VType_wxControl VTYPE_wxControl("Control");
 
-void VType_Control::DoPrepare(Frame& frameOuter)
+void VType_wxControl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -109,17 +109,17 @@ void VType_Control::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_Control
+// Value_wxControl
 //------------------------------------------------------------------------------
-VType& Value_Control::vtype = VTYPE_Control;
+VType& Value_wxControl::vtype = VTYPE_wxControl;
 
-String Value_Control::ToString(const StringStyle& ss) const
+String Value_wxControl::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Control");
 }
 
 //------------------------------------------------------------------------------
-// Value_Control::EntityT
+// Value_wxControl::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

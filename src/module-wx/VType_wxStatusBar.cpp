@@ -64,7 +64,7 @@ void VType_wxStatusBar::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Control, Flag::Mutable, Gurax_CreateConstructor(StatusBar));
+	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StatusBar));
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(StatusBar, SetMenuBar));
 	// Assignment of property
