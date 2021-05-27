@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_AppConsole.cpp
+// VType_wxAppConsole.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.AppConsole() {block?}
 Gurax_DeclareConstructor(AppConsole)
 {
-	Declare(VTYPE_AppConsole, Flag::None);
+	Declare(VTYPE_wxAppConsole, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,8 +40,8 @@ Gurax_DeclareConstructor(AppConsole)
 Gurax_ImplementConstructor(AppConsole)
 {
 	// Function body
-	auto pEntity = new Value_AppConsole::EntityT();
-	RefPtr<Value_AppConsole> pValue(new Value_AppConsole(pEntity));
+	auto pEntity = new Value_wxAppConsole::EntityT();
+	RefPtr<Value_wxAppConsole> pValue(new Value_wxAppConsole(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -53,27 +53,13 @@ Gurax_ImplementConstructor(AppConsole)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// wx.AppConsole#propSkeleton
-Gurax_DeclareProperty_R(AppConsole, propSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementPropertyGetter(AppConsole, propSkeleton)
-{
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
-}
 
 //------------------------------------------------------------------------------
-// VType_AppConsole
+// VType_wxAppConsole
 //------------------------------------------------------------------------------
-VType_AppConsole VTYPE_AppConsole("AppConsole");
+VType_wxAppConsole VTYPE_wxAppConsole("AppConsole");
 
-void VType_AppConsole::DoPrepare(Frame& frameOuter)
+void VType_wxAppConsole::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -82,22 +68,22 @@ void VType_AppConsole::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(AppConsole, OnInit));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(AppConsole, propSkeleton));
+	//Assign(Gurax_CreateProperty(AppConsole, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_AppConsole
+// Value_wxAppConsole
 //------------------------------------------------------------------------------
-VType& Value_AppConsole::vtype = VTYPE_AppConsole;
+VType& Value_wxAppConsole::vtype = VTYPE_wxAppConsole;
 
-String Value_AppConsole::ToString(const StringStyle& ss) const
+String Value_wxAppConsole::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.AppConsole");
 }
 
 
 //------------------------------------------------------------------------------
-// Value_AppConsole::EntityT
+// Value_wxAppConsole::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

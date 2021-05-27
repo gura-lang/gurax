@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include "VType_wxAnyButton.h"
 #include "VType_App.h"
-#include "VType_AppConsole.h"
+#include "VType_wxAppConsole.h"
 #include "VType_Button.h"
 #include "VType_CommandEvent.h"
 #include "VType_Control.h"
