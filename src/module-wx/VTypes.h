@@ -23,7 +23,7 @@
 #include "VType_wxSize.h"
 #include "VType_StatusBar.h"
 #include "VType_Validator.h"
-#include "VType_Window.h"
+#include "VType_wxWindow.h"
 
 Gurax_BeginModuleScope(wx)
 

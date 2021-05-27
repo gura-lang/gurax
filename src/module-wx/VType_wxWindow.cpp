@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Window.cpp
+// VType_wxWindow.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.Window() {block?}
 Gurax_DeclareConstructor(Window)
 {
-	Declare(VTYPE_Window, Flag::None);
+	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,8 +40,8 @@ Gurax_DeclareConstructor(Window)
 Gurax_ImplementConstructor(Window)
 {
 	// Function body
-	auto pEntity = new Value_Window::EntityT();
-	RefPtr<Value_Window> pValue(new Value_Window(pEntity));
+	auto pEntity = new Value_wxWindow::EntityT();
+	RefPtr<Value_wxWindow> pValue(new Value_wxWindow(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -50,7 +50,7 @@ Gurax_ImplementConstructor(Window)
 // Implementation of method
 //-----------------------------------------------------------------------------
 // wx.Window#Close(force? as Bool)
-Gurax_DeclareMethod(Window, Close)
+Gurax_DeclareMethod(wxWindow, Close)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("force", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -59,7 +59,7 @@ Gurax_DeclareMethod(Window, Close)
 		"");
 }
 
-Gurax_ImplementMethod(Window, Close)
+Gurax_ImplementMethod(wxWindow, Close)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -74,7 +74,7 @@ Gurax_ImplementMethod(Window, Close)
 }
 
 // wx.Window#Show(show? as Bool)
-Gurax_DeclareMethod(Window, Show)
+Gurax_DeclareMethod(wxWindow, Show)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -83,7 +83,7 @@ Gurax_DeclareMethod(Window, Show)
 		"");
 }
 
-Gurax_ImplementMethod(Window, Show)
+Gurax_ImplementMethod(wxWindow, Show)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -102,35 +102,35 @@ Gurax_ImplementMethod(Window, Show)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Window
+// VType_wxWindow
 //------------------------------------------------------------------------------
-VType_Window VTYPE_Window("Window");
+VType_wxWindow VTYPE_wxWindow("Window");
 
-void VType_Window::DoPrepare(Frame& frameOuter)
+void VType_wxWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Window));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Window, Close));
-	Assign(Gurax_CreateMethod(Window, Show));
+	Assign(Gurax_CreateMethod(wxWindow, Close));
+	Assign(Gurax_CreateMethod(wxWindow, Show));
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(Window, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Window
+// Value_wxWindow
 //------------------------------------------------------------------------------
-VType& Value_Window::vtype = VTYPE_Window;
+VType& Value_wxWindow::vtype = VTYPE_wxWindow;
 
-String Value_Window::ToString(const StringStyle& ss) const
+String Value_wxWindow::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Window");
 }
 
 //------------------------------------------------------------------------------
-// Value_Window::EntityT
+// Value_wxWindow::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

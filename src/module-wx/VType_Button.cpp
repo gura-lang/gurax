@@ -31,7 +31,7 @@ static const char* g_docHelp_en = u8R"**(
 Gurax_DeclareConstructor(Button)
 {
 	Declare(VTYPE_Button, Flag::None);
-	DeclareArg("parent", VTYPE_Window, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -49,7 +49,7 @@ Gurax_ImplementConstructor(Button)
 {
 	// Argument
 	ArgPicker args(argument);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_Window>().GetEntity() : nullptr;
+	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntity() : nullptr;
 	wxWindowID id = args.PickNumber<wxWindowID>();
 	const char* label = args.IsValid()? args.PickString() : "";
 	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;

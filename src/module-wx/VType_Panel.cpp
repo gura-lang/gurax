@@ -31,7 +31,7 @@ static const char* g_docHelp_en = u8R"**(
 Gurax_DeclareConstructor(Panel)
 {
 	Declare(VTYPE_Panel, Flag::None);
-	DeclareArg("parent", VTYPE_Window, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -47,7 +47,7 @@ Gurax_ImplementConstructor(Panel)
 {
 	// Argument
 	ArgPicker args(argument);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_Window>().GetEntity() : nullptr;
+	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntity() : nullptr;
 	wxWindowID id = args.IsValid()? args.PickNumber<wxWindowID>() : wxID_ANY;
 	const char* title = args.PickString();
 	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
@@ -79,7 +79,7 @@ void VType_Panel::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Window, Flag::Mutable, Gurax_CreateConstructor(Panel));
+	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Panel));
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(Panel, SetMenuBar));
 	// Assignment of property

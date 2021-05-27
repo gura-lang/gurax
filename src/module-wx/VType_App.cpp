@@ -147,7 +147,7 @@ bool Value_App::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 		if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
 		// Argument
 		ArgFeeder args(*pArgument, core.GetProcessor().GetFrameCur());
-		if (!args.FeedValue(new Value_Window(dynamic_cast<Value_Window::EntityT*>(win)))) break;
+		if (!args.FeedValue(new Value_wxWindow(dynamic_cast<Value_wxWindow::EntityT*>(win)))) break;
 		if (!args.FeedValue(new Value_Bool(onlyIfNeeded))) break;
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));

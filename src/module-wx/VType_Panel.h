@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_Window.h"
+#include "VType_wxWindow.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -24,7 +24,7 @@ extern GURAX_DLLDECLARE VType_Panel VTYPE_Panel;
 //------------------------------------------------------------------------------
 // Value_Panel
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Panel : public Value_Window {
+class GURAX_DLLDECLARE Value_Panel : public Value_wxWindow {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Panel);
@@ -44,7 +44,7 @@ public:
 	// Constructor
 	Value_Panel() = delete;
 	explicit Value_Panel(wxPanel* pEntity, VType& vtype = VTYPE_Panel) :
-		Value_Window(pEntity, vtype) {}
+		Value_wxWindow(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_Panel(const Value_Panel& src) = delete;
 	Value_Panel& operator=(const Value_Panel& src) = delete;
@@ -55,8 +55,8 @@ protected:
 	// Destructor
 	~Value_Panel() = default;
 public:
-	wxPanel* GetEntity() { return wxDynamicCast(Value_Window::GetEntity(), wxPanel); }
-	const wxPanel* GetEntity() const { return wxDynamicCast(Value_Window::GetEntity(), wxPanel); }
+	wxPanel* GetEntity() { return wxDynamicCast(Value_wxWindow::GetEntity(), wxPanel); }
+	const wxPanel* GetEntity() const { return wxDynamicCast(Value_wxWindow::GetEntity(), wxPanel); }
 public:
 	static wxPanel* GetEntity(Value& value) {
 		return dynamic_cast<Value_Panel&>(value).GetEntity();

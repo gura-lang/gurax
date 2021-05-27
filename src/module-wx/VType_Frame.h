@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_Window.h"
+#include "VType_wxWindow.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -24,7 +24,7 @@ extern GURAX_DLLDECLARE VType_Frame VTYPE_Frame;
 //------------------------------------------------------------------------------
 // Value_Frame
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Frame : public Value_Window {
+class GURAX_DLLDECLARE Value_Frame : public Value_wxWindow {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Frame);
@@ -44,7 +44,7 @@ public:
 	// Constructor
 	Value_Frame() = delete;
 	explicit Value_Frame(EntityT* pEntity, VType& vtype = VTYPE_Frame) :
-		Value_Window(pEntity, vtype) {}
+		Value_wxWindow(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_Frame(const Value_Frame& src) = delete;
 	Value_Frame& operator=(const Value_Frame& src) = delete;
@@ -55,8 +55,8 @@ protected:
 	// Destructor
 	~Value_Frame() = default;
 public:
-	wxFrame* GetEntity() { return wxDynamicCast(Value_Window::GetEntity(), wxFrame); }
-	const wxFrame* GetEntity() const { return wxDynamicCast(Value_Window::GetEntity(), wxFrame); }
+	wxFrame* GetEntity() { return wxDynamicCast(Value_wxWindow::GetEntity(), wxFrame); }
+	const wxFrame* GetEntity() const { return wxDynamicCast(Value_wxWindow::GetEntity(), wxFrame); }
 public:
 	static wxFrame* GetEntity(Value& value) {
 		return dynamic_cast<Value_Frame&>(value).GetEntity();

@@ -118,7 +118,7 @@ Gurax_DeclareFunctionAlias(MessageBox_, "MessageBox")
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("caption", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("parent", VTYPE_Window, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
@@ -133,7 +133,7 @@ Gurax_ImplementFunction(MessageBox_)
 	const char* message = args.PickString();
 	const char* caption = args.IsValid()? args.PickString() : wxMessageBoxCaptionStr;
 	int style = args.IsValid()? args.PickNumber<int>() : (wxOK | wxCENTRE);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_Window>().GetEntity() : nullptr;
+	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntity() : nullptr;
 	int x = args.IsValid()? args.PickNumber<int>() : wxDefaultCoord;
 	int y = args.IsValid()? args.PickNumber<int>() : wxDefaultCoord;
 	// Function body

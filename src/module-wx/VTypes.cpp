@@ -29,7 +29,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxSize);
 	frame.Assign(VTYPE_StatusBar);
 	frame.Assign(VTYPE_Validator);
-	frame.Assign(VTYPE_Window);
+	frame.Assign(VTYPE_wxWindow);
 }
 
 Gurax_EndModuleScope(wx)

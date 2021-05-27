@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_Window.h"
+#include "VType_wxWindow.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -24,7 +24,7 @@ extern GURAX_DLLDECLARE VType_Control VTYPE_Control;
 //------------------------------------------------------------------------------
 // Value_Control
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Control : public Value_Window {
+class GURAX_DLLDECLARE Value_Control : public Value_wxWindow {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Control);
@@ -44,7 +44,7 @@ public:
 	// Constructor
 	Value_Control() = delete;
 	explicit Value_Control(wxControl* pEntity, VType& vtype = VTYPE_Control) :
-		Value_Window(pEntity, vtype) {}
+		Value_wxWindow(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_Control(const Value_Control& src) = delete;
 	Value_Control& operator=(const Value_Control& src) = delete;
@@ -55,8 +55,8 @@ protected:
 	// Destructor
 	~Value_Control() = default;
 public:
-	wxControl* GetEntity() { return wxDynamicCast(Value_Window::GetEntity(), wxControl); }
-	const wxControl* GetEntity() const { return wxDynamicCast(Value_Window::GetEntity(), wxControl); }
+	wxControl* GetEntity() { return wxDynamicCast(Value_wxWindow::GetEntity(), wxControl); }
+	const wxControl* GetEntity() const { return wxDynamicCast(Value_wxWindow::GetEntity(), wxControl); }
 public:
 	static wxControl* GetEntity(Value& value) {
 		return dynamic_cast<Value_Control&>(value).GetEntity();

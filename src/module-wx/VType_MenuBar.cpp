@@ -89,7 +89,7 @@ void VType_MenuBar::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Window, Flag::Mutable, Gurax_CreateConstructor(MenuBar));
+	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(MenuBar));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(MenuBar, Append));
 	// Assignment of property
