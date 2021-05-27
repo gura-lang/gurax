@@ -55,7 +55,7 @@ void VType_wxEventType::DoPrepare(Frame& frameOuter)
 	do {
 		DeclCallable& d = GetDeclCallable();
 		d.Declare(VTYPE_Nil, DeclCallable::Flag::None);
-		d.DeclareArg("handler", VTYPE_EvtHandler, DeclArg::Occur::Once, DeclArg::Flag::None);
+		d.DeclareArg("handler", VTYPE_wxEvtHandler, DeclArg::Occur::Once, DeclArg::Flag::None);
 		d.DeclareArg("id", VTYPE_Number, DeclArg::Occur::Once, DeclArg::Flag::None);
 		d.DeclareArg("funct", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
 	} while (0);
@@ -83,7 +83,7 @@ Value* Value_wxEventType::DoEval(Processor& processor, Argument& argument) const
 	const EventValueFactory& eventValueFactory = GetEventValueFactory();
 	// Arguments
 	ArgPicker args(argument);
-	wxEvtHandler* pEvtHandler = args.Pick<Value_EvtHandler>().GetEntity();
+	wxEvtHandler* pEvtHandler = args.Pick<Value_wxEvtHandler>().GetEntity();
 	int id = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
 	Value& valueFunct = args.PickValue();
 	// Function body

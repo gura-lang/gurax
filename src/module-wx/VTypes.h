@@ -12,7 +12,7 @@
 #include "VType_Control.h"
 #include "VType_wxEvent.h"
 #include "VType_wxEventType.h"
-#include "VType_EvtHandler.h"
+#include "VType_wxEvtHandler.h"
 #include "VType_Frame.h"
 #include "VType_Menu.h"
 #include "VType_MenuBar.h"

@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_EvtHandler.h"
+#include "VType_wxEvtHandler.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -24,7 +24,7 @@ extern GURAX_DLLDECLARE VType_Validator VTYPE_Validator;
 //------------------------------------------------------------------------------
 // Value_Validator
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Validator : public Value_EvtHandler {
+class GURAX_DLLDECLARE Value_Validator : public Value_wxEvtHandler {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Validator);
@@ -44,7 +44,7 @@ public:
 	// Constructor
 	Value_Validator() = delete;
 	explicit Value_Validator(wxValidator* pEntity, VType& vtype = VTYPE_Validator) :
-		Value_EvtHandler(pEntity, vtype) {}
+		Value_wxEvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_Validator(const Value_Validator& src) = delete;
 	Value_Validator& operator=(const Value_Validator& src) = delete;
@@ -55,8 +55,8 @@ protected:
 	// Destructor
 	~Value_Validator() = default;
 public:
-	wxValidator* GetEntity() { return wxDynamicCast(Value_EvtHandler::GetEntity(), wxValidator); }
-	const wxValidator* GetEntity() const { return wxDynamicCast(Value_EvtHandler::GetEntity(), wxValidator); }
+	wxValidator* GetEntity() { return wxDynamicCast(Value_wxEvtHandler::GetEntity(), wxValidator); }
+	const wxValidator* GetEntity() const { return wxDynamicCast(Value_wxEvtHandler::GetEntity(), wxValidator); }
 public:
 	static wxValidator* GetEntity(Value& value) {
 		return dynamic_cast<Value_Validator&>(value).GetEntity();

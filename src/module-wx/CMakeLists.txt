@@ -50,7 +50,7 @@ target_sources(wx.gurd PRIVATE
 	VType_Control.cpp
 	VType_wxEvent.cpp
 	VType_wxEventType.cpp
-	VType_EvtHandler.cpp
+	VType_wxEvtHandler.cpp
 	VType_Frame.cpp
 	VType_Menu.cpp
 	VType_MenuBar.cpp

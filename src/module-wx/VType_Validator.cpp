@@ -64,7 +64,7 @@ void VType_Validator::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_EvtHandler, Flag::Mutable, Gurax_CreateConstructor(Validator));
+	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Validator));
 	// Assignment of method
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(Validator, propSkeleton));

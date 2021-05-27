@@ -111,7 +111,7 @@ void VType_Window::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_EvtHandler, Flag::Mutable, Gurax_CreateConstructor(Window));
+	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Window));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Window, Close));
 	Assign(Gurax_CreateMethod(Window, Show));

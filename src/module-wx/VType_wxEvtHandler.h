@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_EvtHandler.h
+// VType_wxEvtHandler.h
 //==============================================================================
 #ifndef GURAX_MODULE_WX_VTYPE_EVTHANDLER_H
 #define GURAX_MODULE_WX_VTYPE_EVTHANDLER_H
@@ -10,25 +10,25 @@
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_EvtHandler
+// VType_wxEvtHandler
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_EvtHandler : public VType {
+class GURAX_DLLDECLARE VType_wxEvtHandler : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_EvtHandler VTYPE_EvtHandler;
+extern GURAX_DLLDECLARE VType_wxEvtHandler VTYPE_wxEvtHandler;
 
 //------------------------------------------------------------------------------
-// Value_EvtHandler
+// Value_wxEvtHandler
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_EvtHandler : public Value_Object {
+class GURAX_DLLDECLARE Value_wxEvtHandler : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_EvtHandler);
+	Gurax_DeclareReferable(Value_wxEvtHandler);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_EvtHandler");
+	Gurax_MemoryPoolAllocator("Value_wxEvtHandler");
 public:
 	class EntityT : public wxEvtHandler {
 	public:
@@ -43,27 +43,27 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_EvtHandler() = delete;
-	explicit Value_EvtHandler(wxEvtHandler* pEntity, VType& vtype = VTYPE_EvtHandler) :
+	Value_wxEvtHandler() = delete;
+	explicit Value_wxEvtHandler(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxEvtHandler) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
-	Value_EvtHandler(const Value_EvtHandler& src) = delete;
-	Value_EvtHandler& operator=(const Value_EvtHandler& src) = delete;
+	Value_wxEvtHandler(const Value_wxEvtHandler& src) = delete;
+	Value_wxEvtHandler& operator=(const Value_wxEvtHandler& src) = delete;
 	// Move constructor/operator
-	Value_EvtHandler(Value_EvtHandler&& src) noexcept = delete;
-	Value_EvtHandler& operator=(Value_EvtHandler&& src) noexcept = delete;
+	Value_wxEvtHandler(Value_wxEvtHandler&& src) noexcept = delete;
+	Value_wxEvtHandler& operator=(Value_wxEvtHandler&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_EvtHandler() = default;
+	~Value_wxEvtHandler() = default;
 public:
 	wxEvtHandler* GetEntity() { return _pEntity.get(); }
 	const wxEvtHandler* GetEntity() const { return _pEntity.get(); }
 public:
 	static wxEvtHandler* GetEntity(Value& value) {
-		return dynamic_cast<Value_EvtHandler&>(value).GetEntity();
+		return dynamic_cast<Value_wxEvtHandler&>(value).GetEntity();
 	}
 	static const wxEvtHandler* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_EvtHandler&>(value).GetEntity();
+		return dynamic_cast<const Value_wxEvtHandler&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

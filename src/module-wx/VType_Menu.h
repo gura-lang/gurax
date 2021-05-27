@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_EvtHandler.h"
+#include "VType_wxEvtHandler.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -24,7 +24,7 @@ extern GURAX_DLLDECLARE VType_Menu VTYPE_Menu;
 //------------------------------------------------------------------------------
 // Value_Menu
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Menu : public Value_EvtHandler {
+class GURAX_DLLDECLARE Value_Menu : public Value_wxEvtHandler {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Menu);
@@ -44,7 +44,7 @@ public:
 	// Constructor
 	Value_Menu() = delete;
 	explicit Value_Menu(wxMenu* pEntity, VType& vtype = VTYPE_Menu) :
-		Value_EvtHandler(pEntity, vtype) {}
+		Value_wxEvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_Menu(const Value_Menu& src) = delete;
 	Value_Menu& operator=(const Value_Menu& src) = delete;
@@ -55,8 +55,8 @@ protected:
 	// Destructor
 	~Value_Menu() = default;
 public:
-	wxMenu* GetEntity() { return wxDynamicCast(Value_EvtHandler::GetEntity(), wxMenu); }
-	const wxMenu* GetEntity() const { return wxDynamicCast(Value_EvtHandler::GetEntity(), wxMenu); }
+	wxMenu* GetEntity() { return wxDynamicCast(Value_wxEvtHandler::GetEntity(), wxMenu); }
+	const wxMenu* GetEntity() const { return wxDynamicCast(Value_wxEvtHandler::GetEntity(), wxMenu); }
 public:
 	static wxMenu* GetEntity(Value& value) {
 		return dynamic_cast<Value_Menu&>(value).GetEntity();

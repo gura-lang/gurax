@@ -18,7 +18,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_Control);
 	frame.Assign(VTYPE_wxEvent);
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_EvtHandler);
+	frame.Assign(VTYPE_wxEvtHandler);
 	frame.Assign(VTYPE_Frame);
 	frame.Assign(VTYPE_Menu);
 	frame.Assign(VTYPE_MenuBar);

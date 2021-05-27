@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_EvtHandler.cpp
+// VType_wxEvtHandler.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.EvtHandler() {block?}
 Gurax_DeclareConstructor(EvtHandler)
 {
-	Declare(VTYPE_EvtHandler, Flag::None);
+	Declare(VTYPE_wxEvtHandler, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,8 +40,8 @@ Gurax_DeclareConstructor(EvtHandler)
 Gurax_ImplementConstructor(EvtHandler)
 {
 	// Function body
-	auto pEntity = new Value_EvtHandler::EntityT();
-	RefPtr<Value_EvtHandler> pValue(new Value_EvtHandler(pEntity));
+	auto pEntity = new Value_wxEvtHandler::EntityT();
+	RefPtr<Value_wxEvtHandler> pValue(new Value_wxEvtHandler(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -50,7 +50,7 @@ Gurax_ImplementConstructor(EvtHandler)
 // Implementation of method
 //-----------------------------------------------------------------------------
 // wx.EvtHandler#Bind(eventType as wx.EventType, funct as Any, id? as Number, lastId? as Number):void
-Gurax_DeclareMethod(EvtHandler, Bind)
+Gurax_DeclareMethod(wxEvtHandler, Bind)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("eventType", VTYPE_wxEventType, ArgOccur::Once, ArgFlag::None);
@@ -62,7 +62,7 @@ Gurax_DeclareMethod(EvtHandler, Bind)
 		"");
 }
 
-Gurax_ImplementMethod(EvtHandler, Bind)
+Gurax_ImplementMethod(wxEvtHandler, Bind)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -88,34 +88,34 @@ Gurax_ImplementMethod(EvtHandler, Bind)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_EvtHandler
+// VType_wxEvtHandler
 //------------------------------------------------------------------------------
-VType_EvtHandler VTYPE_EvtHandler("EvtHandler");
+VType_wxEvtHandler VTYPE_wxEvtHandler("EvtHandler");
 
-void VType_EvtHandler::DoPrepare(Frame& frameOuter)
+void VType_wxEvtHandler::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(EvtHandler));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(EvtHandler, Bind));
+	Assign(Gurax_CreateMethod(wxEvtHandler, Bind));
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(EvtHandler, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_EvtHandler
+// Value_wxEvtHandler
 //------------------------------------------------------------------------------
-VType& Value_EvtHandler::vtype = VTYPE_EvtHandler;
+VType& Value_wxEvtHandler::vtype = VTYPE_wxEvtHandler;
 
-String Value_EvtHandler::ToString(const StringStyle& ss) const
+String Value_wxEvtHandler::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.EvtHandler");
 }
 
 //------------------------------------------------------------------------------
-// Value_EvtHandler::EntityT
+// Value_wxEvtHandler::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)
