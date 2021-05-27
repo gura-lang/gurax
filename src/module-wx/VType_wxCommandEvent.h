@@ -39,8 +39,8 @@ public:
 public:
 	// Constructor
 	Value_wxCommandEvent() = delete;
-	explicit Value_wxCommandEvent(wxEvent* pEntity, Value* pValueUserData, VType& vtype = VTYPE_wxCommandEvent) :
-		Value_wxEvent(pEntity, pValueUserData, vtype) {}
+	Value_wxCommandEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxCommandEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxCommandEvent(const Value_wxCommandEvent& src) = delete;
 	Value_wxCommandEvent& operator=(const Value_wxCommandEvent& src) = delete;

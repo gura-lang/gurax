@@ -14,14 +14,14 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE EventValueFactory {
 public:
-	virtual Value* CreateValue(wxEvent* pEvent, Value* pValueUserData) const = 0;
+	virtual Value* CreateValue(const wxEvent& event, Value* pValueUserData) const = 0;
 };
 
 template<typename T_Value>
 class EventValueFactoryDeriv : public EventValueFactory {
 public:
-	virtual Value* CreateValue(wxEvent* pEvent, Value* pValueUserData) const override {
-		return new T_Value(pEvent, pValueUserData);
+	virtual Value* CreateValue(const wxEvent& event, Value* pValueUserData) const override {
+		return new T_Value(event, pValueUserData);
 	}
 };
 
@@ -43,7 +43,7 @@ public:
 		if (!pDeclCallable) return;
 		RefPtr<Argument> pArg(new Argument(pDeclCallable->Reference()));
 		ArgFeeder args(*pArg, _pProcessor->GetFrameCur());
-		if (!args.FeedValue(_eventValueFactory.CreateValue(event.Clone(), _pValueUserData.Reference()))) return;
+		if (!args.FeedValue(_eventValueFactory.CreateValue(event, _pValueUserData.Reference()))) return;
 		Value::Delete(_pValueFunct->Eval(*_pProcessor, *pArg));
 	}
 	static void HandlerFunc(wxEvent& event) {
