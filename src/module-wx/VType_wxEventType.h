@@ -1,8 +1,8 @@
 //==============================================================================
-// VType_EventType.h
+// VType_wxEventType.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_EVENTTYPE_H
-#define GURAX_MODULE_WX_VTYPE_EVENTTYPE_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXEVENTTYPE_H
+#define GURAX_MODULE_WX_VTYPE_WXEVENTTYPE_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
@@ -52,28 +52,28 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// VType_EventType
+// VType_wxEventType
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_EventType : public VType {
+class GURAX_DLLDECLARE VType_wxEventType : public VType {
 public:
 	RefPtr<DeclCallable> _pDeclCallable;
 public:
-	VType_EventType(const char* name) : VType(name), _pDeclCallable(new DeclCallable()) {}
+	VType_wxEventType(const char* name) : VType(name), _pDeclCallable(new DeclCallable()) {}
 	virtual void DoPrepare(Frame& frameOuter) override;
 	DeclCallable& GetDeclCallable() { return *_pDeclCallable; }
 };
 
-extern GURAX_DLLDECLARE VType_EventType VTYPE_EventType;
+extern GURAX_DLLDECLARE VType_wxEventType VTYPE_wxEventType;
 
 //------------------------------------------------------------------------------
-// Value_EventType
+// Value_wxEventType
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_EventType : public Gurax::Value_Object {
+class GURAX_DLLDECLARE Value_wxEventType : public Gurax::Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_EventType);
+	Gurax_DeclareReferable(Value_wxEventType);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_EventType");
+	Gurax_MemoryPoolAllocator("Value_wxEventType");
 public:
 	using EntityT = wxEventType;
 protected:
@@ -83,27 +83,27 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_EventType() = delete;
-	explicit Value_EventType(const EntityT& entity, const EventValueFactory& eventValueFactory, VType& vtype = VTYPE_EventType) :
+	Value_wxEventType() = delete;
+	explicit Value_wxEventType(const EntityT& entity, const EventValueFactory& eventValueFactory, VType& vtype = VTYPE_wxEventType) :
 		Gurax::Value_Object(vtype), _entity(entity), _eventValueFactory(eventValueFactory) {}
 	// Copy constructor/operator
-	Value_EventType(const Value_EventType& src) = delete;
-	Value_EventType& operator=(const Value_EventType& src) = delete;
+	Value_wxEventType(const Value_wxEventType& src) = delete;
+	Value_wxEventType& operator=(const Value_wxEventType& src) = delete;
 	// Move constructor/operator
-	Value_EventType(Value_EventType&& src) noexcept = delete;
-	Value_EventType& operator=(Value_EventType&& src) noexcept = delete;
+	Value_wxEventType(Value_wxEventType&& src) noexcept = delete;
+	Value_wxEventType& operator=(Value_wxEventType&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_EventType() = default;
+	~Value_wxEventType() = default;
 public:
 	EntityT& GetEntity() { return _entity; }
 	const EntityT& GetEntity() const { return _entity; }
 public:
 	static EntityT& GetEntity(Value& value) {
-		return dynamic_cast<Value_EventType&>(value).GetEntity();
+		return dynamic_cast<Value_wxEventType&>(value).GetEntity();
 	}
 	static const EntityT& GetEntity(const Value& value) {
-		return dynamic_cast<const Value_EventType&>(value).GetEntity();
+		return dynamic_cast<const Value_wxEventType&>(value).GetEntity();
 	}
 public:
 	const EventValueFactory& GetEventValueFactory() const { return _eventValueFactory; }

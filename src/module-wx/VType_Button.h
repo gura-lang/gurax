@@ -6,7 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_AnyButton.h"
+#include "VType_wxAnyButton.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -24,7 +24,7 @@ extern GURAX_DLLDECLARE VType_Button VTYPE_Button;
 //------------------------------------------------------------------------------
 // Value_Button
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Button : public Value_AnyButton {
+class GURAX_DLLDECLARE Value_Button : public Value_wxAnyButton {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Button);
@@ -44,7 +44,7 @@ public:
 	// Constructor
 	Value_Button() = delete;
 	explicit Value_Button(wxButton* pEntity, VType& vtype = VTYPE_Button) :
-		Value_AnyButton(pEntity, vtype) {}
+		Value_wxAnyButton(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_Button(const Value_Button& src) = delete;
 	Value_Button& operator=(const Value_Button& src) = delete;
@@ -55,8 +55,8 @@ protected:
 	// Destructor
 	~Value_Button() = default;
 public:
-	wxButton* GetEntity() { return wxDynamicCast(Value_AnyButton::GetEntity(), wxButton); }
-	const wxButton* GetEntity() const { return wxDynamicCast(Value_AnyButton::GetEntity(), wxButton); }
+	wxButton* GetEntity() { return wxDynamicCast(Value_wxAnyButton::GetEntity(), wxButton); }
+	const wxButton* GetEntity() const { return wxDynamicCast(Value_wxAnyButton::GetEntity(), wxButton); }
 public:
 	static wxButton* GetEntity(Value& value) {
 		return dynamic_cast<Value_Button&>(value).GetEntity();

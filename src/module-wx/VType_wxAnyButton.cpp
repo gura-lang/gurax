@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_AnyButton.cpp
+// VType_wxAnyButton.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -31,7 +31,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.AnyButton(parent:nil as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructor(AnyButton)
 {
-	Declare(VTYPE_AnyButton, Flag::None);
+	Declare(VTYPE_wxAnyButton, Flag::None);
 	DeclareArg("parent", VTYPE_Window, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -54,11 +54,11 @@ Gurax_ImplementConstructor(AnyButton)
 	const char* title = args.PickString();
 	const wxPoint& pos = args.IsValid()? args.Pick<Value_Point>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args.IsValid()? args.Pick<Value_Size>().GetEntity() : wxDefaultSize;
-	long style = args.IsValid()? args.PickNumber<long>() : wxDEFAULT_AnyButton_STYLE;
+	long style = args.IsValid()? args.PickNumber<long>() : wxDEFAULT_wxAnyButton_STYLE;
 	const char* name = args.IsValid()? args.PickString() : wxAnyButtonNameStr;
 	// Function body
-	auto pEntity = new Value_AnyButton::EntityT(parent, id, title, pos, size, style, name);
-	RefPtr<Value_AnyButton> pValue(new Value_AnyButton(pEntity));
+	auto pEntity = new Value_wxAnyButton::EntityT(parent, id, title, pos, size, style, name);
+	RefPtr<Value_wxAnyButton> pValue(new Value_wxAnyButton(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -67,7 +67,7 @@ Gurax_ImplementConstructor(AnyButton)
 // wx.AnyButton() {block?}
 Gurax_DeclareConstructor(AnyButton)
 {
-	Declare(VTYPE_AnyButton, Flag::None);
+	Declare(VTYPE_wxAnyButton, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -77,8 +77,8 @@ Gurax_DeclareConstructor(AnyButton)
 Gurax_ImplementConstructor(AnyButton)
 {
 	// Function body
-	auto pEntity = new Value_AnyButton::EntityT();
-	RefPtr<Value_AnyButton> pValue(new Value_AnyButton(pEntity));
+	auto pEntity = new Value_wxAnyButton::EntityT();
+	RefPtr<Value_wxAnyButton> pValue(new Value_wxAnyButton(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -92,11 +92,11 @@ Gurax_ImplementConstructor(AnyButton)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_AnyButton
+// VType_wxAnyButton
 //------------------------------------------------------------------------------
-VType_AnyButton VTYPE_AnyButton("AnyButton");
+VType_wxAnyButton VTYPE_wxAnyButton("AnyButton");
 
-void VType_AnyButton::DoPrepare(Frame& frameOuter)
+void VType_wxAnyButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -109,17 +109,17 @@ void VType_AnyButton::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_AnyButton
+// Value_wxAnyButton
 //------------------------------------------------------------------------------
-VType& Value_AnyButton::vtype = VTYPE_AnyButton;
+VType& Value_wxAnyButton::vtype = VTYPE_wxAnyButton;
 
-String Value_AnyButton::ToString(const StringStyle& ss) const
+String Value_wxAnyButton::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.AnyButton");
 }
 
 //------------------------------------------------------------------------------
-// Value_AnyButton::EntityT
+// Value_wxAnyButton::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

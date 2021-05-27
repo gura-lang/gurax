@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_EventType.cpp
+// VType_wxEventType.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -37,11 +37,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_EventType
+// VType_wxEventType
 //------------------------------------------------------------------------------
-VType_EventType VTYPE_EventType("EventType");
+VType_wxEventType VTYPE_wxEventType("EventType");
 
-void VType_EventType::DoPrepare(Frame& frameOuter)
+void VType_wxEventType::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -62,21 +62,21 @@ void VType_EventType::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_EventType
+// Value_wxEventType
 //------------------------------------------------------------------------------
-VType& Value_EventType::vtype = VTYPE_EventType;
+VType& Value_wxEventType::vtype = VTYPE_wxEventType;
 
-String Value_EventType::ToString(const StringStyle& ss) const
+String Value_wxEventType::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.EventType");
 }
 
-const DeclCallable* Value_EventType::GetDeclCallable()
+const DeclCallable* Value_wxEventType::GetDeclCallable()
 {
-	return &VTYPE_EventType.GetDeclCallable();
+	return &VTYPE_wxEventType.GetDeclCallable();
 }
 
-Value* Value_EventType::DoEval(Processor& processor, Argument& argument) const
+Value* Value_wxEventType::DoEval(Processor& processor, Argument& argument) const
 {
 	// Target
 	wxEventType eventType = GetEntity();

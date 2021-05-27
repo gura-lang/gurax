@@ -53,7 +53,7 @@ Gurax_ImplementConstructor(EvtHandler)
 Gurax_DeclareMethod(EvtHandler, Bind)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("eventType", VTYPE_EventType, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("eventType", VTYPE_wxEventType, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("lastId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -70,7 +70,7 @@ Gurax_ImplementMethod(EvtHandler, Bind)
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
-	Value_EventType& valueEventType = args.Pick<Value_EventType>();
+	Value_wxEventType& valueEventType = args.Pick<Value_wxEventType>();
 	wxEventType eventType = valueEventType.GetEntity();
 	const EventValueFactory& eventValueFactory = valueEventType.GetEventValueFactory();
 	Value& valueFunct = args.PickValue();

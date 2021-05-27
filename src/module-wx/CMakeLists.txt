@@ -42,20 +42,20 @@ target_sources(wx.gurd PRIVATE
 	Functions.cpp
 	Util.cpp
 	VTypes.cpp
-	VType_AnyButton.cpp
+	VType_wxAnyButton.cpp
 	VType_App.cpp
 	VType_AppConsole.cpp
 	VType_Button.cpp
 	VType_CommandEvent.cpp
 	VType_Control.cpp
-	VType_Event.cpp
-	VType_EventType.cpp
+	VType_wxEvent.cpp
+	VType_wxEventType.cpp
 	VType_EvtHandler.cpp
 	VType_Frame.cpp
 	VType_Menu.cpp
 	VType_MenuBar.cpp
 	VType_MenuItem.cpp
-	VType_Object.cpp
+	VType_wxObject.cpp
 	VType_Panel.cpp
 	VType_Point.cpp
 	VType_Size.cpp

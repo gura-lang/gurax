@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Object.cpp
+// VType_wxObject.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -40,7 +40,7 @@ Gurax_DeclareConstructor(Object)
 Gurax_ImplementConstructor(Object)
 {
 	// Function body
-	RefPtr<Value_Object> pValue(new Value_Object(wxObject()));
+	RefPtr<Value_wxObject> pValue(new Value_wxObject(wxObject()));
 	return argument.ReturnValue(processor, pValue.release());
 }
 
@@ -53,11 +53,11 @@ Gurax_ImplementConstructor(Object)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Object
+// VType_wxObject
 //------------------------------------------------------------------------------
-VType_Object VTYPE_Object("Object");
+VType_wxObject VTYPE_wxObject("Object");
 
-void VType_Object::DoPrepare(Frame& frameOuter)
+void VType_wxObject::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -70,11 +70,11 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_Object
+// Value_wxObject
 //------------------------------------------------------------------------------
-VType& Value_Object::vtype = VTYPE_Object;
+VType& Value_wxObject::vtype = VTYPE_wxObject;
 
-String Value_Object::ToString(const StringStyle& ss) const
+String Value_wxObject::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Object");
 }

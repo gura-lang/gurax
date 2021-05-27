@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_AnyButton.h
+// VType_wxAnyButton.h
 //==============================================================================
 #ifndef GURAX_MODULE_WX_VTYPE_ANYBUTTON_H
 #define GURAX_MODULE_WX_VTYPE_ANYBUTTON_H
@@ -11,25 +11,25 @@
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_AnyButton
+// VType_wxAnyButton
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_AnyButton : public VType {
+class GURAX_DLLDECLARE VType_wxAnyButton : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_AnyButton VTYPE_AnyButton;
+extern GURAX_DLLDECLARE VType_wxAnyButton VTYPE_wxAnyButton;
 
 //------------------------------------------------------------------------------
-// Value_AnyButton
+// Value_wxAnyButton
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_AnyButton : public Value_Control {
+class GURAX_DLLDECLARE Value_wxAnyButton : public Value_Control {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_AnyButton);
+	Gurax_DeclareReferable(Value_wxAnyButton);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_AnyButton");
+	Gurax_MemoryPoolAllocator("Value_wxAnyButton");
 public:
 	class EntityT : public wxAnyButton {
 	public:
@@ -42,27 +42,27 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_AnyButton() = delete;
-	explicit Value_AnyButton(wxAnyButton* pEntity, VType& vtype = VTYPE_AnyButton) :
+	Value_wxAnyButton() = delete;
+	explicit Value_wxAnyButton(wxAnyButton* pEntity, VType& vtype = VTYPE_wxAnyButton) :
 		Value_Control(pEntity, vtype) {}
 	// Copy constructor/operator
-	Value_AnyButton(const Value_AnyButton& src) = delete;
-	Value_AnyButton& operator=(const Value_AnyButton& src) = delete;
+	Value_wxAnyButton(const Value_wxAnyButton& src) = delete;
+	Value_wxAnyButton& operator=(const Value_wxAnyButton& src) = delete;
 	// Move constructor/operator
-	Value_AnyButton(Value_AnyButton&& src) noexcept = delete;
-	Value_AnyButton& operator=(Value_AnyButton&& src) noexcept = delete;
+	Value_wxAnyButton(Value_wxAnyButton&& src) noexcept = delete;
+	Value_wxAnyButton& operator=(Value_wxAnyButton&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_AnyButton() = default;
+	~Value_wxAnyButton() = default;
 public:
 	wxAnyButton* GetEntity() { return wxDynamicCast(Value_Control::GetEntity(), wxAnyButton); }
 	const wxAnyButton* GetEntity() const { return wxDynamicCast(Value_Control::GetEntity(), wxAnyButton); }
 public:
 	static wxAnyButton* GetEntity(Value& value) {
-		return dynamic_cast<Value_AnyButton&>(value).GetEntity();
+		return dynamic_cast<Value_wxAnyButton&>(value).GetEntity();
 	}
 	static const wxAnyButton* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_AnyButton&>(value).GetEntity();
+		return dynamic_cast<const Value_wxAnyButton&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

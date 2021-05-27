@@ -4,7 +4,7 @@
 #include "stdafx.h"
 
 #define AssignEvent(eventName, eventType) \
-frame.Assign(#eventName, new Value_EventType(wx##eventName, Value_##eventType::eventValueFactory))
+frame.Assign(#eventName, new Value_wxEventType(wx##eventName, Value_##eventType::eventValueFactory))
 
 Gurax_BeginModuleScope(wx)
 

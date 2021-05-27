@@ -1,67 +1,64 @@
 //==============================================================================
-// VType_Event.h
+// VType_wxObject.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_EVENT_H
-#define GURAX_MODULE_WX_VTYPE_EVENT_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXOBJECT_H
+#define GURAX_MODULE_WX_VTYPE_WXOBJECT_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_Object.h"
 
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_Event
+// VType_wxObject
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_Event : public VType {
+class GURAX_DLLDECLARE VType_wxObject : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_Event VTYPE_Event;
+extern GURAX_DLLDECLARE VType_wxObject VTYPE_wxObject;
 
 //------------------------------------------------------------------------------
-// Value_Event
+// Value_wxObject
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Event : public Value_Object {
+class GURAX_DLLDECLARE Value_wxObject : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Event);
+	Gurax_DeclareReferable(Value_wxObject);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Event");
+	Gurax_MemoryPoolAllocator("Value_wxObject");
 public:
-	using EntityT = wxEvent;
+	using EntityT = wxObject;
 protected:
-	RefPtr<Value> _pValueUserData;
+	EntityT _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_Event() = delete;
-	explicit Value_Event(EntityT* pEntity, Value* pValueUserData, VType& vtype = VTYPE_Event) :
-		Value_Object(*pEntity, vtype), _pValueUserData(pValueUserData) {}
+	Value_wxObject() = delete;
+	explicit Value_wxObject(const wxObject& entity, VType& vtype = VTYPE_wxObject) :
+		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
-	Value_Event(const Value_Event& src) = delete;
-	Value_Event& operator=(const Value_Event& src) = delete;
+	Value_wxObject(const Value_wxObject& src) = delete;
+	Value_wxObject& operator=(const Value_wxObject& src) = delete;
 	// Move constructor/operator
-	Value_Event(Value_Event&& src) noexcept = delete;
-	Value_Event& operator=(Value_Event&& src) noexcept = delete;
+	Value_wxObject(Value_wxObject&& src) noexcept = delete;
+	Value_wxObject& operator=(Value_wxObject&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Event() = default;
+	~Value_wxObject() = default;
 public:
-	EntityT& GetEntity() { return dynamic_cast<EntityT&>(Value_Object::GetEntity()); }
-	const EntityT& GetEntity() const { return dynamic_cast<const EntityT&>(Value_Object::GetEntity()); }
+	EntityT& GetEntity() { return _entity; }
+	const EntityT& GetEntity() const { return _entity; }
 public:
 	static EntityT& GetEntity(Value& value) {
-		return dynamic_cast<Value_Event&>(value).GetEntity();
+		return dynamic_cast<Value_wxObject&>(value).GetEntity();
 	}
 	static const EntityT& GetEntity(const Value& value) {
-		return dynamic_cast<const Value_Event&>(value).GetEntity();
+		return dynamic_cast<const Value_wxObject&>(value).GetEntity();
 	}
-public:
-	Value& GetValueUserData() { return *_pValueUserData; }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
@@ -69,7 +66,7 @@ public:
 		return reinterpret_cast<size_t>(&GetEntity(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && &GetEntity(*this) == &GetEntity(value);
+		return IsSameType(value) && GetEntity(*this).IsSameAs(GetEntity(value));
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?

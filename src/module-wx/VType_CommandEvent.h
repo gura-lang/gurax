@@ -6,8 +6,8 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_Event.h"
-#include "VType_EventType.h"
+#include "VType_wxEvent.h"
+#include "VType_wxEventType.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -25,7 +25,7 @@ extern GURAX_DLLDECLARE VType_CommandEvent VTYPE_CommandEvent;
 //------------------------------------------------------------------------------
 // Value_CommandEvent
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_CommandEvent : public Value_Event {
+class GURAX_DLLDECLARE Value_CommandEvent : public Value_wxEvent {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_CommandEvent);
@@ -40,7 +40,7 @@ public:
 	// Constructor
 	Value_CommandEvent() = delete;
 	explicit Value_CommandEvent(wxEvent* pEntity, Value* pValueUserData, VType& vtype = VTYPE_CommandEvent) :
-		Value_Event(pEntity, pValueUserData, vtype) {}
+		Value_wxEvent(pEntity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_CommandEvent(const Value_CommandEvent& src) = delete;
 	Value_CommandEvent& operator=(const Value_CommandEvent& src) = delete;
@@ -51,8 +51,8 @@ protected:
 	// Destructor
 	~Value_CommandEvent() = default;
 public:
-	EntityT& GetEntity() { return dynamic_cast<EntityT&>(Value_Event::GetEntity()); }
-	const EntityT& GetEntity() const { return dynamic_cast<const EntityT&>(Value_Event::GetEntity()); }
+	EntityT& GetEntity() { return dynamic_cast<EntityT&>(Value_wxEvent::GetEntity()); }
+	const EntityT& GetEntity() const { return dynamic_cast<const EntityT&>(Value_wxEvent::GetEntity()); }
 public:
 	static EntityT& GetEntity(Value& value) {
 		return dynamic_cast<Value_CommandEvent&>(value).GetEntity();

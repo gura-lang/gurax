@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Event.cpp
+// VType_wxEvent.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -37,11 +37,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Event
+// VType_wxEvent
 //------------------------------------------------------------------------------
-VType_Event VTYPE_Event("Event");
+VType_wxEvent VTYPE_wxEvent("Event");
 
-void VType_Event::DoPrepare(Frame& frameOuter)
+void VType_wxEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -54,11 +54,11 @@ void VType_Event::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_Event
+// Value_wxEvent
 //------------------------------------------------------------------------------
-VType& Value_Event::vtype = VTYPE_Event;
+VType& Value_wxEvent::vtype = VTYPE_wxEvent;
 
-String Value_Event::ToString(const StringStyle& ss) const
+String Value_wxEvent::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Event");
 }
