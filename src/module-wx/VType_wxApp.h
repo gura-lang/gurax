@@ -1,8 +1,8 @@
 //==============================================================================
-// VType_App.h
+// VType_wxApp.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_APP_H
-#define GURAX_MODULE_WX_VTYPE_APP_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXAPP_H
+#define GURAX_MODULE_WX_VTYPE_WXAPP_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
@@ -11,25 +11,25 @@
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_App
+// VType_wxApp
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_App : public VType {
+class GURAX_DLLDECLARE VType_wxApp : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_App VTYPE_App;
+extern GURAX_DLLDECLARE VType_wxApp VTYPE_wxApp;
 
 //------------------------------------------------------------------------------
-// Value_App
+// Value_wxApp
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_App : public Value_wxAppConsole {
+class GURAX_DLLDECLARE Value_wxApp : public Value_wxAppConsole {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_App);
+	Gurax_DeclareReferable(Value_wxApp);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_App");
+	Gurax_MemoryPoolAllocator("Value_wxApp");
 public:
 	class EntityT : public wxApp {
 	public:
@@ -45,27 +45,27 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_App() = delete;
-	explicit Value_App(wxApp* pEntity, VType& vtype = VTYPE_App) :
+	Value_wxApp() = delete;
+	explicit Value_wxApp(wxApp* pEntity, VType& vtype = VTYPE_wxApp) :
 		Value_wxAppConsole(pEntity, vtype) {}
 	// Copy constructor/operator
-	Value_App(const Value_App& src) = delete;
-	Value_App& operator=(const Value_App& src) = delete;
+	Value_wxApp(const Value_wxApp& src) = delete;
+	Value_wxApp& operator=(const Value_wxApp& src) = delete;
 	// Move constructor/operator
-	Value_App(Value_App&& src) noexcept = delete;
-	Value_App& operator=(Value_App&& src) noexcept = delete;
+	Value_wxApp(Value_wxApp&& src) noexcept = delete;
+	Value_wxApp& operator=(Value_wxApp&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_App() = default;
+	~Value_wxApp() = default;
 public:
 	wxApp* GetEntity() { return wxDynamicCast(Value_wxAppConsole::GetEntity(), wxApp); }
 	const wxApp* GetEntity() const { return wxDynamicCast(Value_wxAppConsole::GetEntity(), wxApp); }
 public:
 	static wxApp* GetEntity(Value& value) {
-		return dynamic_cast<Value_App&>(value).GetEntity();
+		return dynamic_cast<Value_wxApp&>(value).GetEntity();
 	}
 	static const wxApp* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_App&>(value).GetEntity();
+		return dynamic_cast<const Value_wxApp&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

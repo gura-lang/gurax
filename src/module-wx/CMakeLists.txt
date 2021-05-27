@@ -43,7 +43,7 @@ target_sources(wx.gurd PRIVATE
 	Util.cpp
 	VTypes.cpp
 	VType_wxAnyButton.cpp
-	VType_App.cpp
+	VType_wxApp.cpp
 	VType_wxAppConsole.cpp
 	VType_wxButton.cpp
 	VType_wxCommandEvent.cpp

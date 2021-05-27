@@ -11,7 +11,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxAnyButton);
-	frame.Assign(VTYPE_App);
+	frame.Assign(VTYPE_wxApp);
 	frame.Assign(VTYPE_wxAppConsole);
 	frame.Assign(VTYPE_wxButton);
 	frame.Assign(VTYPE_wxCommandEvent);

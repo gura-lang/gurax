@@ -1,8 +1,8 @@
 //==============================================================================
 // VType_wxMenuBar.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_MENUBAR_H
-#define GURAX_MODULE_WX_VTYPE_MENUBAR_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXMENUBAR_H
+#define GURAX_MODULE_WX_VTYPE_WXMENUBAR_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"

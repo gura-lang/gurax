@@ -1,8 +1,8 @@
 //==============================================================================
 // VType_wxControl.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_CONTROL_H
-#define GURAX_MODULE_WX_VTYPE_CONTROL_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXCONTROL_H
+#define GURAX_MODULE_WX_VTYPE_WXCONTROL_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"

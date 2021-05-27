@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_App.cpp
+// VType_wxApp.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.App() {block?}
 Gurax_DeclareConstructor(App)
 {
-	Declare(VTYPE_App, Flag::None);
+	Declare(VTYPE_wxApp, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,8 +40,8 @@ Gurax_DeclareConstructor(App)
 Gurax_ImplementConstructor(App)
 {
 	// Function body
-	auto pEntity = new Value_App::EntityT();
-	RefPtr<Value_App> pValue(new Value_App(pEntity));
+	auto pEntity = new Value_wxApp::EntityT();
+	RefPtr<Value_wxApp> pValue(new Value_wxApp(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -50,7 +50,7 @@ Gurax_ImplementConstructor(App)
 // Implementation of method
 //-----------------------------------------------------------------------------
 // wx.App#OnInit()
-Gurax_DeclareMethod(App, OnInit)
+Gurax_DeclareMethod(wxApp, OnInit)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -58,7 +58,7 @@ Gurax_DeclareMethod(App, OnInit)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(App, OnInit)
+Gurax_ImplementMethod(wxApp, OnInit)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -73,7 +73,7 @@ Gurax_ImplementMethod(App, OnInit)
 // Implementation of property
 //-----------------------------------------------------------------------------
 // wx.App#propSkeleton
-Gurax_DeclareProperty_R(App, propSkeleton)
+Gurax_DeclareProperty_R(wxApp, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -81,44 +81,44 @@ Gurax_DeclareProperty_R(App, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(App, propSkeleton)
+Gurax_ImplementPropertyGetter(wxApp, propSkeleton)
 {
 	//auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(3);
 }
 
 //------------------------------------------------------------------------------
-// VType_App
+// VType_wxApp
 //------------------------------------------------------------------------------
-VType_App VTYPE_App("App");
+VType_wxApp VTYPE_wxApp("App");
 
-void VType_App::DoPrepare(Frame& frameOuter)
+void VType_wxApp::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxAppConsole, Flag::Immutable, Gurax_CreateConstructor(App));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(App, OnInit));
+	Assign(Gurax_CreateMethod(wxApp, OnInit));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(App, propSkeleton));
+	Assign(Gurax_CreateProperty(wxApp, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_App
+// Value_wxApp
 //------------------------------------------------------------------------------
-VType& Value_App::vtype = VTYPE_App;
+VType& Value_wxApp::vtype = VTYPE_wxApp;
 
-String Value_App::ToString(const StringStyle& ss) const
+String Value_wxApp::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.App");
 }
 
 
 //------------------------------------------------------------------------------
-// Value_App::EntityT
+// Value_wxApp::EntityT
 //------------------------------------------------------------------------------
-bool Value_App::EntityT::OnInit()
+bool Value_wxApp::EntityT::OnInit()
 {
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnInit");
@@ -137,7 +137,7 @@ bool Value_App::EntityT::OnInit()
 	return EntitySuper::OnInit();
 }
 
-bool Value_App::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
+bool Value_wxApp::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 {
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SafeYield");

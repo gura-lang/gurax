@@ -5,7 +5,7 @@
 #define GURAX_MODULE_WX_VTYPES_H
 #include <gurax.h>
 #include "VType_wxAnyButton.h"
-#include "VType_App.h"
+#include "VType_wxApp.h"
 #include "VType_wxAppConsole.h"
 #include "VType_wxButton.h"
 #include "VType_wxCommandEvent.h"

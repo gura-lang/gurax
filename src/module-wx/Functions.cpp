@@ -92,7 +92,7 @@ Gurax_ImplementFunction(Test)
 Gurax_DeclareFunction(ImplementApp)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("app", VTYPE_App, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("app", VTYPE_wxApp, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -102,7 +102,7 @@ Gurax_ImplementFunction(ImplementApp)
 {
 	// Argument
 	ArgPicker args(argument);
-	auto app = Value_App::GetEntity(args.PickValue());
+	auto app = Value_wxApp::GetEntity(args.PickValue());
 	// Function Body
 	wxApp::SetInstance(app);
 	int argc = 0;

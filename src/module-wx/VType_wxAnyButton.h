@@ -1,8 +1,8 @@
 //==============================================================================
 // VType_wxAnyButton.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_ANYBUTTON_H
-#define GURAX_MODULE_WX_VTYPE_ANYBUTTON_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXANYBUTTON_H
+#define GURAX_MODULE_WX_VTYPE_WXANYBUTTON_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
