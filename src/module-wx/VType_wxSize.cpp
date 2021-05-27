@@ -69,7 +69,7 @@ void VType_wxSize::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(Gurax::VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Size));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Size));
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(Size, OnInit));
 	// Assignment of property

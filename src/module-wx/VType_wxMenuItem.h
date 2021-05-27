@@ -1,8 +1,8 @@
 //==============================================================================
-// VType_MenuItem.h
+// VType_wxMenuItem.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_MenuItem_H
-#define GURAX_MODULE_WX_VTYPE_MenuItem_H
+#ifndef GURAX_MODULE_WX_VTYPE_wxMenuItem_H
+#define GURAX_MODULE_WX_VTYPE_wxMenuItem_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
@@ -10,25 +10,25 @@
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_MenuItem
+// VType_wxMenuItem
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_MenuItem : public VType {
+class GURAX_DLLDECLARE VType_wxMenuItem : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_MenuItem VTYPE_MenuItem;
+extern GURAX_DLLDECLARE VType_wxMenuItem VTYPE_wxMenuItem;
 
 //------------------------------------------------------------------------------
-// Value_MenuItem
+// Value_wxMenuItem
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_MenuItem : public Gurax::Value_Object {
+class GURAX_DLLDECLARE Value_wxMenuItem : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_MenuItem);
+	Gurax_DeclareReferable(Value_wxMenuItem);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_MenuItem");
+	Gurax_MemoryPoolAllocator("Value_wxMenuItem");
 public:
 	class EntityT : public wxMenuItem {
 	public:
@@ -43,27 +43,27 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_MenuItem() = delete;
-	explicit Value_MenuItem(wxMenuItem* pEntity, VType& vtype = VTYPE_MenuItem) :
-		Gurax::Value_Object(vtype), _pEntity(pEntity) {}
+	Value_wxMenuItem() = delete;
+	explicit Value_wxMenuItem(wxMenuItem* pEntity, VType& vtype = VTYPE_wxMenuItem) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
-	Value_MenuItem(const Value_MenuItem& src) = delete;
-	Value_MenuItem& operator=(const Value_MenuItem& src) = delete;
+	Value_wxMenuItem(const Value_wxMenuItem& src) = delete;
+	Value_wxMenuItem& operator=(const Value_wxMenuItem& src) = delete;
 	// Move constructor/operator
-	Value_MenuItem(Value_MenuItem&& src) noexcept = delete;
-	Value_MenuItem& operator=(Value_MenuItem&& src) noexcept = delete;
+	Value_wxMenuItem(Value_wxMenuItem&& src) noexcept = delete;
+	Value_wxMenuItem& operator=(Value_wxMenuItem&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_MenuItem() = default;
+	~Value_wxMenuItem() = default;
 public:
 	wxMenuItem* GetEntity() { return _pEntity; }
 	const wxMenuItem* GetEntity() const { return _pEntity; }
 public:
 	static wxMenuItem* GetEntity(Value& value) {
-		return dynamic_cast<Value_MenuItem&>(value).GetEntity();
+		return dynamic_cast<Value_wxMenuItem&>(value).GetEntity();
 	}
 	static const wxMenuItem* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_MenuItem&>(value).GetEntity();
+		return dynamic_cast<const Value_wxMenuItem&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

@@ -68,7 +68,7 @@ extern GURAX_DLLDECLARE VType_wxEventType VTYPE_wxEventType;
 //------------------------------------------------------------------------------
 // Value_wxEventType
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxEventType : public Gurax::Value_Object {
+class GURAX_DLLDECLARE Value_wxEventType : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxEventType);
@@ -85,7 +85,7 @@ public:
 	// Constructor
 	Value_wxEventType() = delete;
 	explicit Value_wxEventType(const EntityT& entity, const EventValueFactory& eventValueFactory, VType& vtype = VTYPE_wxEventType) :
-		Gurax::Value_Object(vtype), _entity(entity), _eventValueFactory(eventValueFactory) {}
+		Value_Object(vtype), _entity(entity), _eventValueFactory(eventValueFactory) {}
 	// Copy constructor/operator
 	Value_wxEventType(const Value_wxEventType& src) = delete;
 	Value_wxEventType& operator=(const Value_wxEventType& src) = delete;

@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_MenuItem.cpp
+// VType_wxMenuItem.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.MenuItem() {block?}
 Gurax_DeclareConstructor(MenuItem)
 {
-	Declare(VTYPE_MenuItem, Flag::None);
+	Declare(VTYPE_wxMenuItem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,8 +40,8 @@ Gurax_DeclareConstructor(MenuItem)
 Gurax_ImplementConstructor(MenuItem)
 {
 	// Function body
-	//auto pEntity = new Value_MenuItem::EntityT();
-	//RefPtr<Value_MenuItem> pValue(new Value_MenuItem(pEntity));
+	//auto pEntity = new Value_wxMenuItem::EntityT();
+	//RefPtr<Value_wxMenuItem> pValue(new Value_wxMenuItem(pEntity));
 	//pEntity->core.SetInfo(processor.Reference(), *pValue);
 	//return argument.ReturnValue(processor, pValue.release());
 	return Value::nil();
@@ -56,11 +56,11 @@ Gurax_ImplementConstructor(MenuItem)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_MenuItem
+// VType_wxMenuItem
 //------------------------------------------------------------------------------
-VType_MenuItem VTYPE_MenuItem("MenuItem");
+VType_wxMenuItem VTYPE_wxMenuItem("MenuItem");
 
-void VType_MenuItem::DoPrepare(Frame& frameOuter)
+void VType_wxMenuItem::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -73,17 +73,17 @@ void VType_MenuItem::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_MenuItem
+// Value_wxMenuItem
 //------------------------------------------------------------------------------
-VType& Value_MenuItem::vtype = VTYPE_MenuItem;
+VType& Value_wxMenuItem::vtype = VTYPE_wxMenuItem;
 
-String Value_MenuItem::ToString(const StringStyle& ss) const
+String Value_wxMenuItem::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.MenuItem");
 }
 
 //------------------------------------------------------------------------------
-// Value_MenuItem::EntityT
+// Value_wxMenuItem::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

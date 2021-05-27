@@ -22,7 +22,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_Frame);
 	frame.Assign(VTYPE_Menu);
 	frame.Assign(VTYPE_MenuBar);
-	frame.Assign(VTYPE_MenuItem);
+	frame.Assign(VTYPE_wxMenuItem);
 	frame.Assign(VTYPE_Object);
 	frame.Assign(VTYPE_Panel);
 	frame.Assign(VTYPE_wxPoint);

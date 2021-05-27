@@ -23,7 +23,7 @@ extern GURAX_DLLDECLARE VType_wxSize VTYPE_wxSize;
 //------------------------------------------------------------------------------
 // Value_wxSize
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxSize : public Gurax::Value_Object {
+class GURAX_DLLDECLARE Value_wxSize : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxSize);
@@ -39,7 +39,7 @@ public:
 	// Constructor
 	Value_wxSize() = delete;
 	explicit Value_wxSize(const EntityT& entity, VType& vtype = VTYPE_wxSize) :
-		Gurax::Value_Object(vtype), _entity(entity) {}
+		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxSize(const Value_wxSize& src) = delete;
 	Value_wxSize& operator=(const Value_wxSize& src) = delete;

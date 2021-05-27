@@ -69,7 +69,7 @@ void VType_wxPoint::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(Gurax::VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Point));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Point));
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(Point, OnInit));
 	// Assignment of property

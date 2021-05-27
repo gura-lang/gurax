@@ -76,7 +76,7 @@ Gurax_ImplementMethod(Menu, Append)
 	wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
 	// Function body
 	wxMenuItem* rtn = pEntity->Append(id, item, helpString, kind);
-	return new Value_MenuItem(rtn);
+	return new Value_wxMenuItem(rtn);
 }
 
 // wx.Menu#AppendSeparator()
@@ -96,7 +96,7 @@ Gurax_ImplementMethod(Menu, AppendSeparator)
 	if (!pEntity) return Value::nil();
 	// Function body
 	wxMenuItem* rtn = pEntity->AppendSeparator();
-	return new Value_MenuItem(rtn);
+	return new Value_wxMenuItem(rtn);
 }
 
 //-----------------------------------------------------------------------------

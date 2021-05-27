@@ -46,7 +46,7 @@ void VType_wxEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(Gurax::VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(Event, OnInit));
 	// Assignment of property

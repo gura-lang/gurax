@@ -23,7 +23,7 @@ extern GURAX_DLLDECLARE VType_wxPoint VTYPE_wxPoint;
 //------------------------------------------------------------------------------
 // Value_wxPoint
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxPoint : public Gurax::Value_Object {
+class GURAX_DLLDECLARE Value_wxPoint : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxPoint);
@@ -39,7 +39,7 @@ public:
 	// Constructor
 	Value_wxPoint() = delete;
 	explicit Value_wxPoint(const EntityT& entity, VType& vtype = VTYPE_wxPoint) :
-		Gurax::Value_Object(vtype), _entity(entity) {}
+		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxPoint(const Value_wxPoint& src) = delete;
 	Value_wxPoint& operator=(const Value_wxPoint& src) = delete;

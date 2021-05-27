@@ -16,7 +16,7 @@
 #include "VType_Frame.h"
 #include "VType_Menu.h"
 #include "VType_MenuBar.h"
-#include "VType_MenuItem.h"
+#include "VType_wxMenuItem.h"
 #include "VType_wxObject.h"
 #include "VType_Panel.h"
 #include "VType_wxPoint.h"
