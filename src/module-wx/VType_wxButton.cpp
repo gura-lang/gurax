@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Button.cpp
+// VType_wxButton.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.Button(parent as wx.Window, id as Number, label? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructor(Button)
 {
-	Declare(VTYPE_Button, Flag::None);
+	Declare(VTYPE_wxButton, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -58,8 +58,8 @@ Gurax_ImplementConstructor(Button)
 	const wxValidator& validator = args.IsValid()? *args.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args.IsValid()? args.PickString() : wxButtonNameStr;
 	// Function body
-	auto pEntity = new Value_Button::EntityT(parent, id, label, pos, size, style, validator, name);
-	RefPtr<Value_Button> pValue(new Value_Button(pEntity));
+	auto pEntity = new Value_wxButton::EntityT(parent, id, label, pos, size, style, validator, name);
+	RefPtr<Value_wxButton> pValue(new Value_wxButton(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -73,11 +73,11 @@ Gurax_ImplementConstructor(Button)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Button
+// VType_wxButton
 //------------------------------------------------------------------------------
-VType_Button VTYPE_Button("Button");
+VType_wxButton VTYPE_wxButton("Button");
 
-void VType_Button::DoPrepare(Frame& frameOuter)
+void VType_wxButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -90,17 +90,17 @@ void VType_Button::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_Button
+// Value_wxButton
 //------------------------------------------------------------------------------
-VType& Value_Button::vtype = VTYPE_Button;
+VType& Value_wxButton::vtype = VTYPE_wxButton;
 
-String Value_Button::ToString(const StringStyle& ss) const
+String Value_wxButton::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Button");
 }
 
 //------------------------------------------------------------------------------
-// Value_Button::EntityT
+// Value_wxButton::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

@@ -13,8 +13,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAnyButton);
 	frame.Assign(VTYPE_App);
 	frame.Assign(VTYPE_wxAppConsole);
-	frame.Assign(VTYPE_Button);
-	frame.Assign(VTYPE_CommandEvent);
+	frame.Assign(VTYPE_wxButton);
+	frame.Assign(VTYPE_wxCommandEvent);
 	frame.Assign(VTYPE_wxControl);
 	frame.Assign(VTYPE_wxEvent);
 	frame.Assign(VTYPE_wxEventType);

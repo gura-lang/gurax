@@ -13,9 +13,9 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 void AssignEvents(Frame& frame)
 {
-	AssignEvent(EVT_MENU, CommandEvent);
-	AssignEvent(EVT_COMMAND_BUTTON_CLICKED, CommandEvent);
-	AssignEvent(EVT_BUTTON, CommandEvent);
+	AssignEvent(EVT_MENU, wxCommandEvent);
+	AssignEvent(EVT_COMMAND_BUTTON_CLICKED, wxCommandEvent);
+	AssignEvent(EVT_BUTTON, wxCommandEvent);
 }
 
 Gurax_EndModuleScope(wx)
