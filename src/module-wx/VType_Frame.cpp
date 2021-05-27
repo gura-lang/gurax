@@ -92,7 +92,7 @@ Gurax_ImplementMethod(Frame, CreateStatusBar)
 	const char* name = args.IsValid()? args.PickString() : wxToolBarNameStr;
 	// Function body
 	wxStatusBar* rtn = pEntity->CreateStatusBar(number, style, id, name);
-	return new Value_StatusBar(rtn);
+	return new Value_wxStatusBar(rtn);
 }
 
 // wx.Frame#SetMenuBar(menuBar as wx.MenuBar)

@@ -37,7 +37,7 @@ Gurax_DeclareConstructor(Button)
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("validator", VTYPE_Validator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -55,7 +55,7 @@ Gurax_ImplementConstructor(Button)
 	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	long style = args.IsValid()? args.PickNumber<long>() : 0;
-	const wxValidator& validator = args.IsValid()? *args.Pick<Value_Validator>().GetEntity() : wxDefaultValidator;
+	const wxValidator& validator = args.IsValid()? *args.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args.IsValid()? args.PickString() : wxButtonNameStr;
 	// Function body
 	auto pEntity = new Value_Button::EntityT(parent, id, label, pos, size, style, validator, name);

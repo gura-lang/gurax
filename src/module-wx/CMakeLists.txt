@@ -59,8 +59,8 @@ target_sources(wx.gurd PRIVATE
 	VType_Panel.cpp
 	VType_wxPoint.cpp
 	VType_wxSize.cpp
-	VType_StatusBar.cpp
-	VType_Validator.cpp
+	VType_wxStatusBar.cpp
+	VType_wxValidator.cpp
 	VType_wxWindow.cpp)
 #-------------------------------------------------------------------------------
 # Link

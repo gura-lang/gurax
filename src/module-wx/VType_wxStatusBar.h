@@ -1,40 +1,40 @@
 //==============================================================================
-// VType_Validator.h
+// VType_wxStatusBar.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_VALIDATOR_H
-#define GURAX_MODULE_WX_VTYPE_VALIDATOR_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXSTATUSBAR_H
+#define GURAX_MODULE_WX_VTYPE_WXSTATUSBAR_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_wxEvtHandler.h"
+#include "VType_Control.h"
 
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_Validator
+// VType_wxStatusBar
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_Validator : public VType {
+class GURAX_DLLDECLARE VType_wxStatusBar : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_Validator VTYPE_Validator;
+extern GURAX_DLLDECLARE VType_wxStatusBar VTYPE_wxStatusBar;
 
 //------------------------------------------------------------------------------
-// Value_Validator
+// Value_wxStatusBar
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Validator : public Value_wxEvtHandler {
+class GURAX_DLLDECLARE Value_wxStatusBar : public Value_Control {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_Validator);
+	Gurax_DeclareReferable(Value_wxStatusBar);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_Validator");
+	Gurax_MemoryPoolAllocator("Value_wxStatusBar");
 public:
-	class EntityT : public wxValidator {
+	class EntityT : public wxStatusBar {
 	public:
-		using EntitySuper = wxValidator;
-		using wxValidator::wxValidator;
+		using EntitySuper = wxStatusBar;
+		using wxStatusBar::wxStatusBar;
 	public:
 		EntityCore core;
 	};
@@ -42,27 +42,27 @@ public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_Validator() = delete;
-	explicit Value_Validator(wxValidator* pEntity, VType& vtype = VTYPE_Validator) :
-		Value_wxEvtHandler(pEntity, vtype) {}
+	Value_wxStatusBar() = delete;
+	explicit Value_wxStatusBar(wxStatusBar* pEntity, VType& vtype = VTYPE_wxStatusBar) :
+		Value_Control(pEntity, vtype) {}
 	// Copy constructor/operator
-	Value_Validator(const Value_Validator& src) = delete;
-	Value_Validator& operator=(const Value_Validator& src) = delete;
+	Value_wxStatusBar(const Value_wxStatusBar& src) = delete;
+	Value_wxStatusBar& operator=(const Value_wxStatusBar& src) = delete;
 	// Move constructor/operator
-	Value_Validator(Value_Validator&& src) noexcept = delete;
-	Value_Validator& operator=(Value_Validator&& src) noexcept = delete;
+	Value_wxStatusBar(Value_wxStatusBar&& src) noexcept = delete;
+	Value_wxStatusBar& operator=(Value_wxStatusBar&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_Validator() = default;
+	~Value_wxStatusBar() = default;
 public:
-	wxValidator* GetEntity() { return wxDynamicCast(Value_wxEvtHandler::GetEntity(), wxValidator); }
-	const wxValidator* GetEntity() const { return wxDynamicCast(Value_wxEvtHandler::GetEntity(), wxValidator); }
+	wxStatusBar* GetEntity() { return wxDynamicCast(Value_Control::GetEntity(), wxStatusBar); }
+	const wxStatusBar* GetEntity() const { return wxDynamicCast(Value_Control::GetEntity(), wxStatusBar); }
 public:
-	static wxValidator* GetEntity(Value& value) {
-		return dynamic_cast<Value_Validator&>(value).GetEntity();
+	static wxStatusBar* GetEntity(Value& value) {
+		return dynamic_cast<Value_wxStatusBar&>(value).GetEntity();
 	}
-	static const wxValidator* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_Validator&>(value).GetEntity();
+	static const wxStatusBar* GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxStatusBar&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

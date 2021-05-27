@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Validator.cpp
+// VType_wxValidator.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -30,7 +30,7 @@ static const char* g_docHelp_en = u8R"**(
 // wx.Validator() {block?}
 Gurax_DeclareConstructor(Validator)
 {
-	Declare(VTYPE_Validator, Flag::None);
+	Declare(VTYPE_wxValidator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,8 +40,8 @@ Gurax_DeclareConstructor(Validator)
 Gurax_ImplementConstructor(Validator)
 {
 	// Function body
-	auto pEntity = new Value_Validator::EntityT();
-	RefPtr<Value_Validator> pValue(new Value_Validator(pEntity));
+	auto pEntity = new Value_wxValidator::EntityT();
+	RefPtr<Value_wxValidator> pValue(new Value_wxValidator(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());
 }
@@ -55,11 +55,11 @@ Gurax_ImplementConstructor(Validator)
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_Validator
+// VType_wxValidator
 //------------------------------------------------------------------------------
-VType_Validator VTYPE_Validator("Validator");
+VType_wxValidator VTYPE_wxValidator("Validator");
 
-void VType_Validator::DoPrepare(Frame& frameOuter)
+void VType_wxValidator::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
@@ -71,17 +71,17 @@ void VType_Validator::DoPrepare(Frame& frameOuter)
 }
 
 //------------------------------------------------------------------------------
-// Value_Validator
+// Value_wxValidator
 //------------------------------------------------------------------------------
-VType& Value_Validator::vtype = VTYPE_Validator;
+VType& Value_wxValidator::vtype = VTYPE_wxValidator;
 
-String Value_Validator::ToString(const StringStyle& ss) const
+String Value_wxValidator::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Validator");
 }
 
 //------------------------------------------------------------------------------
-// Value_Validator::EntityT
+// Value_wxValidator::EntityT
 //------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

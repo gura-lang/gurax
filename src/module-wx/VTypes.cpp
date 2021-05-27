@@ -27,8 +27,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_Panel);
 	frame.Assign(VTYPE_wxPoint);
 	frame.Assign(VTYPE_wxSize);
-	frame.Assign(VTYPE_StatusBar);
-	frame.Assign(VTYPE_Validator);
+	frame.Assign(VTYPE_wxStatusBar);
+	frame.Assign(VTYPE_wxValidator);
 	frame.Assign(VTYPE_wxWindow);
 }
 
