@@ -52,6 +52,13 @@ void VType_EventType::DoPrepare(Frame& frameOuter)
 	//Assign(Gurax_CreateMethod(EventType, OnInit));
 	// Assignment of property
 	//Assign(Gurax_CreateProperty(EventType, propSkeleton));
+	do {
+		DeclCallable& d = GetDeclCallable();
+		d.Declare(VTYPE_Nil, DeclCallable::Flag::None);
+		d.DeclareArg("handler", VTYPE_EvtHandler, DeclArg::Occur::Once, DeclArg::Flag::None);
+		d.DeclareArg("id", VTYPE_Number, DeclArg::Occur::Once, DeclArg::Flag::None);
+		d.DeclareArg("funct", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
+	} while (0);
 }
 
 //------------------------------------------------------------------------------
@@ -62,6 +69,27 @@ VType& Value_EventType::vtype = VTYPE_EventType;
 String Value_EventType::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.EventType");
+}
+
+const DeclCallable* Value_EventType::GetDeclCallable()
+{
+	return &VTYPE_EventType.GetDeclCallable();
+}
+
+Value* Value_EventType::DoEval(Processor& processor, Argument& argument) const
+{
+	// Target
+	wxEventType eventType = GetEntity();
+	const EventValueFactory& eventValueFactory = GetEventValueFactory();
+	// Arguments
+	ArgPicker args(argument);
+	wxEvtHandler* pEvtHandler = args.Pick<Value_EvtHandler>().GetEntity();
+	int id = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
+	Value& valueFunct = args.PickValue();
+	// Function body
+	pEvtHandler->Bind(eventType, &EventUserData::HandlerFunc, id, -1,
+		new EventUserData(processor.Reference(), valueFunct.Reference(), Value::nil(), eventValueFactory));
+	return Value::nil();
 }
 
 Gurax_EndModuleScope(wx)

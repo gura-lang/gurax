@@ -25,6 +25,32 @@ public:
 	}
 };
 
+//-----------------------------------------------------------------------------
+// EventUserData
+//-----------------------------------------------------------------------------
+class EventUserData : public wxObject {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Value> _pValueFunct;
+	RefPtr<Value> _pValueUserData;
+	const EventValueFactory& _eventValueFactory;
+public:
+	EventUserData(Processor* pProcessor, Value* pValueFunct, Value* pValueUserData, const EventValueFactory& eventValueFactory) :
+			_pProcessor(pProcessor), _pValueFunct(pValueFunct), _pValueUserData(pValueUserData), _eventValueFactory(eventValueFactory) {}
+public:
+	void Eval(wxEvent& event) {
+		const DeclCallable* pDeclCallable = _pValueFunct->GetDeclCallableWithError();
+		if (!pDeclCallable) return;
+		RefPtr<Argument> pArg(new Argument(pDeclCallable->Reference()));
+		ArgFeeder args(*pArg, _pProcessor->GetFrameCur());
+		if (!args.FeedValue(_eventValueFactory.CreateValue(event.Clone(), _pValueUserData.Reference()))) return;
+		Value::Delete(_pValueFunct->Eval(*_pProcessor, *pArg));
+	}
+	static void HandlerFunc(wxEvent& event) {
+		wxDynamicCast(event.GetEventUserData(), EventUserData)->Eval(event);
+	}
+};
+
 //------------------------------------------------------------------------------
 // VType_EventType
 //------------------------------------------------------------------------------
@@ -96,6 +122,9 @@ public:
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	virtual const DeclCallable* GetDeclCallable() override;
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 };
 
 Gurax_EndModuleScope(wx)

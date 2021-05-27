@@ -23,7 +23,7 @@ extern GURAX_DLLDECLARE VType_Point VTYPE_Point;
 //------------------------------------------------------------------------------
 // Value_Point
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Point : public Value_Object {
+class GURAX_DLLDECLARE Value_Point : public Gurax::Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Point);
@@ -39,7 +39,7 @@ public:
 	// Constructor
 	Value_Point() = delete;
 	explicit Value_Point(const EntityT& entity, VType& vtype = VTYPE_Point) :
-		Value_Object(vtype), _entity(entity) {}
+		Gurax::Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_Point(const Value_Point& src) = delete;
 	Value_Point& operator=(const Value_Point& src) = delete;
