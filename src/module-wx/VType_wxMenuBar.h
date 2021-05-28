@@ -33,7 +33,6 @@ public:
 public:
 	class EntityT : public wxMenuBar {
 	public:
-		using EntitySuper = wxMenuBar;
 		using wxMenuBar::wxMenuBar;
 	public:
 		EntityCore core;

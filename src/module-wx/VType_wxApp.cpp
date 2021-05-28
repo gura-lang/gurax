@@ -134,7 +134,7 @@ bool Value_wxApp::EntityT::OnInit()
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return EntitySuper::OnInit();
+	return wxApp::OnInit();
 }
 
 bool Value_wxApp::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
@@ -155,7 +155,7 @@ bool Value_wxApp::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return EntitySuper::SafeYield(win, onlyIfNeeded);
+	return wxApp::SafeYield(win, onlyIfNeeded);
 }
 
 Gurax_EndModuleScope(wx)

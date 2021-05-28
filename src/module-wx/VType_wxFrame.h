@@ -33,7 +33,6 @@ public:
 public:
 	class EntityT : public wxFrame {
 	public:
-		using EntitySuper = wxFrame;
 		using wxFrame::wxFrame;
 	public:
 		EntityCore core;

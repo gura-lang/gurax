@@ -33,7 +33,6 @@ public:
 public:
 	class EntityT : public wxAppConsole {
 	public:
-		using EntitySuper = wxAppConsole;
 		using wxAppConsole::wxAppConsole;
 	public:
 		EntityCore core;

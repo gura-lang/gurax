@@ -33,7 +33,6 @@ public:
 public:
 	class EntityT : public wxValidator {
 	public:
-		using EntitySuper = wxValidator;
 		using wxValidator::wxValidator;
 	public:
 		EntityCore core;

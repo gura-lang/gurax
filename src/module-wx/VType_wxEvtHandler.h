@@ -33,7 +33,6 @@ public:
 public:
 	class EntityT : public wxEvtHandler {
 	public:
-		using EntitySuper = wxEvtHandler;
 		using wxEvtHandler::wxEvtHandler;
 	public:
 		EntityCore core;

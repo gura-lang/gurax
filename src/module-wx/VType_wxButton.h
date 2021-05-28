@@ -33,7 +33,6 @@ public:
 public:
 	class EntityT : public wxButton {
 	public:
-		using EntitySuper = wxButton;
 		using wxButton::wxButton;
 	public:
 		EntityCore core;

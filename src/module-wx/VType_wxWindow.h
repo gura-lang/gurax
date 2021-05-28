@@ -33,7 +33,6 @@ public:
 public:
 	class EntityT : public wxWindow {
 	public:
-		using EntitySuper = wxWindow;
 		using wxWindow::wxWindow;
 	public:
 		EntityCore core;

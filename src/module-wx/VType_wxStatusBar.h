@@ -33,7 +33,6 @@ public:
 public:
 	class EntityT : public wxStatusBar {
 	public:
-		using EntitySuper = wxStatusBar;
 		using wxStatusBar::wxStatusBar;
 	public:
 		EntityCore core;
