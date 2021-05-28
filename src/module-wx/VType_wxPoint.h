@@ -38,7 +38,7 @@ public:
 public:
 	// Constructor
 	Value_wxPoint() = delete;
-	explicit Value_wxPoint(const EntityT& entity, VType& vtype = VTYPE_wxPoint) :
+	explicit Value_wxPoint(const wxPoint& entity, VType& vtype = VTYPE_wxPoint) :
 		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxPoint(const Value_wxPoint& src) = delete;

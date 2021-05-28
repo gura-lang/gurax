@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxAppConsole() = delete;
-	explicit Value_wxAppConsole(wxAppConsole* pEntity, VType& vtype = VTYPE_wxAppConsole) :
+	explicit Value_wxAppConsole(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxAppConsole) :
 		Value_wxEvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxAppConsole(const Value_wxAppConsole& src) = delete;

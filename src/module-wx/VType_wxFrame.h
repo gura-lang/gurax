@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxFrame() = delete;
-	explicit Value_wxFrame(EntityT* pEntity, VType& vtype = VTYPE_wxFrame) :
+	explicit Value_wxFrame(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxFrame) :
 		Value_wxWindow(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxFrame(const Value_wxFrame& src) = delete;

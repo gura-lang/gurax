@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxValidator() = delete;
-	explicit Value_wxValidator(wxValidator* pEntity, VType& vtype = VTYPE_wxValidator) :
+	explicit Value_wxValidator(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxValidator) :
 		Value_wxEvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxValidator(const Value_wxValidator& src) = delete;

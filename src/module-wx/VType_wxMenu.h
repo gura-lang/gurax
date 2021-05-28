@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxMenu() = delete;
-	explicit Value_wxMenu(wxMenu* pEntity, VType& vtype = VTYPE_wxMenu) :
+	explicit Value_wxMenu(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxMenu) :
 		Value_wxEvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxMenu(const Value_wxMenu& src) = delete;

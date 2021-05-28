@@ -84,7 +84,7 @@ public:
 public:
 	// Constructor
 	Value_wxEventType() = delete;
-	explicit Value_wxEventType(const EntityT& entity, const EventValueFactory& eventValueFactory, VType& vtype = VTYPE_wxEventType) :
+	explicit Value_wxEventType(const wxEventType& entity, const EventValueFactory& eventValueFactory, VType& vtype = VTYPE_wxEventType) :
 		Value_Object(vtype), _entity(entity), _eventValueFactory(eventValueFactory) {}
 	// Copy constructor/operator
 	Value_wxEventType(const Value_wxEventType& src) = delete;

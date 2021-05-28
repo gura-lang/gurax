@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxStatusBar() = delete;
-	explicit Value_wxStatusBar(wxStatusBar* pEntity, VType& vtype = VTYPE_wxStatusBar) :
+	explicit Value_wxStatusBar(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxStatusBar) :
 		Value_wxControl(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxStatusBar(const Value_wxStatusBar& src) = delete;

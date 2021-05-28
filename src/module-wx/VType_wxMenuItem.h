@@ -23,7 +23,7 @@ extern GURAX_DLLDECLARE VType_wxMenuItem VTYPE_wxMenuItem;
 //------------------------------------------------------------------------------
 // Value_wxMenuItem
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxMenuItem : public Value_Object {
+class GURAX_DLLDECLARE Value_wxMenuItem : public Value_wxObject {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxMenuItem);
@@ -37,15 +37,13 @@ public:
 	public:
 		EntityCore core;
 	};
-protected:
-	wxMenuItem* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxMenuItem() = delete;
-	explicit Value_wxMenuItem(wxMenuItem* pEntity, VType& vtype = VTYPE_wxMenuItem) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxMenuItem(const wxObject& entity, VType& vtype = VTYPE_wxMenuItem) :
+		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxMenuItem(const Value_wxMenuItem& src) = delete;
 	Value_wxMenuItem& operator=(const Value_wxMenuItem& src) = delete;
@@ -56,27 +54,27 @@ protected:
 	// Destructor
 	~Value_wxMenuItem() = default;
 public:
-	wxMenuItem* GetEntity() { return _pEntity; }
-	const wxMenuItem* GetEntity() const { return _pEntity; }
+	wxMenuItem& GetEntity() { return dynamic_cast<wxMenuItem&>(Value_wxObject::GetEntity()); }
+	const wxMenuItem& GetEntity() const { return dynamic_cast<const wxMenuItem&>(Value_wxObject::GetEntity()); }
 public:
-	static wxMenuItem* GetEntity(Value& value) {
+	static wxMenuItem& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMenuItem&>(value).GetEntity();
 	}
-	static const wxMenuItem* GetEntity(const Value& value) {
+	static const wxMenuItem& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxMenuItem&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntity(*this));
+		return reinterpret_cast<size_t>(&GetEntity(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this) == GetEntity(value);
+		return IsSameType(value) && GetEntity(*this).IsSameAs(GetEntity(value));
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(GetEntity(*this) < GetEntity(value)) :
+			(&GetEntity(*this) < &GetEntity(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

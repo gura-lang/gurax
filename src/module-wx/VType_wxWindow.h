@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxWindow() = delete;
-	explicit Value_wxWindow(wxWindow* pEntity, VType& vtype = VTYPE_wxWindow) :
+	explicit Value_wxWindow(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxWindow) :
 		Value_wxEvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxWindow(const Value_wxWindow& src) = delete;

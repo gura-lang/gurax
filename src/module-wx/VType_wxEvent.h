@@ -39,7 +39,7 @@ public:
 public:
 	// Constructor
 	Value_wxEvent() = delete;
-	explicit Value_wxEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxEvent) :
+	explicit Value_wxEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxEvent) :
 		Value_wxObject(entity, vtype), _pValueUserData(pValueUserData) {}
 	// Copy constructor/operator
 	Value_wxEvent(const Value_wxEvent& src) = delete;
@@ -69,7 +69,7 @@ public:
 		return reinterpret_cast<size_t>(&GetEntity(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && &GetEntity(*this) == &GetEntity(value);
+		return IsSameType(value) && GetEntity(*this).IsSameAs(GetEntity(value));
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?

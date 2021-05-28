@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxAnyButton() = delete;
-	explicit Value_wxAnyButton(wxAnyButton* pEntity, VType& vtype = VTYPE_wxAnyButton) :
+	explicit Value_wxAnyButton(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxAnyButton) :
 		Value_wxControl(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxAnyButton(const Value_wxAnyButton& src) = delete;
