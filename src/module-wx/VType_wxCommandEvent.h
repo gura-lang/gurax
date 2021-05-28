@@ -32,8 +32,6 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxCommandEvent");
 public:
-	using EntityT = wxCommandEvent;
-public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxCommandEvent> eventValueFactory;
 public:
@@ -51,13 +49,17 @@ protected:
 	// Destructor
 	~Value_wxCommandEvent() = default;
 public:
-	EntityT& GetEntity() { return dynamic_cast<EntityT&>(Value_wxEvent::GetEntity()); }
-	const EntityT& GetEntity() const { return dynamic_cast<const EntityT&>(Value_wxEvent::GetEntity()); }
+	wxCommandEvent& GetEntity() {
+		return dynamic_cast<wxCommandEvent&>(Value_wxObject::GetEntity());
+	}
+	const wxCommandEvent& GetEntity() const {
+		return dynamic_cast<const wxCommandEvent&>(Value_wxObject::GetEntity());
+	}
 public:
-	static EntityT& GetEntity(Value& value) {
+	static wxCommandEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxCommandEvent&>(value).GetEntity();
 	}
-	static const EntityT& GetEntity(const Value& value) {
+	static const wxCommandEvent& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxCommandEvent&>(value).GetEntity();
 	}
 public:

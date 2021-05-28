@@ -30,14 +30,6 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxMenuItem");
 public:
-	class EntityT : public wxMenuItem {
-	public:
-		using EntitySuper = wxMenuItem;
-		using wxMenuItem::wxMenuItem;
-	public:
-		EntityCore core;
-	};
-public:
 	static VType& vtype;
 public:
 	// Constructor
@@ -54,8 +46,12 @@ protected:
 	// Destructor
 	~Value_wxMenuItem() = default;
 public:
-	wxMenuItem& GetEntity() { return dynamic_cast<wxMenuItem&>(Value_wxObject::GetEntity()); }
-	const wxMenuItem& GetEntity() const { return dynamic_cast<const wxMenuItem&>(Value_wxObject::GetEntity()); }
+	wxMenuItem& GetEntity() {
+		return dynamic_cast<wxMenuItem&>(Value_wxObject::GetEntity());
+	}
+	const wxMenuItem& GetEntity() const {
+		return dynamic_cast<const wxMenuItem&>(Value_wxObject::GetEntity());
+	}
 public:
 	static wxMenuItem& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMenuItem&>(value).GetEntity();

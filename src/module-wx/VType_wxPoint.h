@@ -29,10 +29,8 @@ public:
 	Gurax_DeclareReferable(Value_wxPoint);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxPoint");
-public:
-	using EntityT = wxPoint;
 protected:
-	EntityT _entity;
+	wxPoint _entity;
 public:
 	static VType& vtype;
 public:
@@ -50,13 +48,13 @@ protected:
 	// Destructor
 	~Value_wxPoint() = default;
 public:
-	EntityT& GetEntity() { return _entity; }
-	const EntityT& GetEntity() const { return _entity; }
+	wxPoint& GetEntity() { return _entity; }
+	const wxPoint& GetEntity() const { return _entity; }
 public:
-	static EntityT& GetEntity(Value& value) {
+	static wxPoint& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxPoint&>(value).GetEntity();
 	}
-	static const EntityT& GetEntity(const Value& value) {
+	static const wxPoint& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxPoint&>(value).GetEntity();
 	}
 public:

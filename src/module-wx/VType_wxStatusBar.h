@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxStatusBar() = delete;
-	explicit Value_wxStatusBar(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxStatusBar) :
+	explicit Value_wxStatusBar(wxTrackable* pEntity, VType& vtype = VTYPE_wxStatusBar) :
 		Value_wxControl(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxStatusBar(const Value_wxStatusBar& src) = delete;
@@ -55,8 +55,12 @@ protected:
 	// Destructor
 	~Value_wxStatusBar() = default;
 public:
-	wxStatusBar* GetEntity() { return wxDynamicCast(Value_wxControl::GetEntity(), wxStatusBar); }
-	const wxStatusBar* GetEntity() const { return wxDynamicCast(Value_wxControl::GetEntity(), wxStatusBar); }
+	wxStatusBar* GetEntity() {
+		return reinterpret_cast<wxStatusBar*>(Value_wxTrackable::GetEntity());
+	}
+	const wxStatusBar* GetEntity() const {
+		return reinterpret_cast<const wxStatusBar*>(Value_wxTrackable::GetEntity());
+	}
 public:
 	static wxStatusBar* GetEntity(Value& value) {
 		return dynamic_cast<Value_wxStatusBar&>(value).GetEntity();

@@ -29,10 +29,8 @@ public:
 	Gurax_DeclareReferable(Value_wxSize);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxSize");
-public:
-	using EntityT = wxSize;
 protected:
-	EntityT _entity;
+	wxSize _entity;
 public:
 	static VType& vtype;
 public:
@@ -50,13 +48,13 @@ protected:
 	// Destructor
 	~Value_wxSize() = default;
 public:
-	EntityT& GetEntity() { return _entity; }
-	const EntityT& GetEntity() const { return _entity; }
+	wxSize& GetEntity() { return _entity; }
+	const wxSize& GetEntity() const { return _entity; }
 public:
-	static EntityT& GetEntity(Value& value) {
+	static wxSize& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxSize&>(value).GetEntity();
 	}
-	static const EntityT& GetEntity(const Value& value) {
+	static const wxSize& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxSize&>(value).GetEntity();
 	}
 public:

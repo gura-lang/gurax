@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxPanel() = delete;
-	explicit Value_wxPanel(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxPanel) :
+	explicit Value_wxPanel(wxTrackable* pEntity, VType& vtype = VTYPE_wxPanel) :
 		Value_wxWindow(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxPanel(const Value_wxPanel& src) = delete;
@@ -55,8 +55,12 @@ protected:
 	// Destructor
 	~Value_wxPanel() = default;
 public:
-	wxPanel* GetEntity() { return wxDynamicCast(Value_wxWindow::GetEntity(), wxPanel); }
-	const wxPanel* GetEntity() const { return wxDynamicCast(Value_wxWindow::GetEntity(), wxPanel); }
+	wxPanel* GetEntity() {
+		return reinterpret_cast<wxPanel*>(Value_wxTrackable::GetEntity());
+	}
+	const wxPanel* GetEntity() const {
+		return reinterpret_cast<const wxPanel*>(Value_wxTrackable::GetEntity());
+	}
 public:
 	static wxPanel* GetEntity(Value& value) {
 		return dynamic_cast<Value_wxPanel&>(value).GetEntity();

@@ -30,8 +30,6 @@ public:
 	Gurax_DeclareReferable(Value_wxEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxEvent");
-public:
-	using EntityT = wxEvent;
 protected:
 	RefPtr<Value> _pValueUserData;
 public:
@@ -51,13 +49,17 @@ protected:
 	// Destructor
 	~Value_wxEvent() = default;
 public:
-	EntityT& GetEntity() { return dynamic_cast<EntityT&>(Value_wxObject::GetEntity()); }
-	const EntityT& GetEntity() const { return dynamic_cast<const EntityT&>(Value_wxObject::GetEntity()); }
+	wxEvent& GetEntity() {
+		return dynamic_cast<wxEvent&>(Value_wxObject::GetEntity());
+	}
+	const wxEvent& GetEntity() const {
+		return dynamic_cast<const wxEvent&>(Value_wxObject::GetEntity());
+	}
 public:
-	static EntityT& GetEntity(Value& value) {
+	static wxEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxEvent&>(value).GetEntity();
 	}
-	static const EntityT& GetEntity(const Value& value) {
+	static const wxEvent& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxEvent&>(value).GetEntity();
 	}
 public:

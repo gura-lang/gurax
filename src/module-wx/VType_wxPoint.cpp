@@ -46,7 +46,7 @@ Gurax_ImplementConstructor(Point)
 	int x = args.IsValid()? args.PickNumber<int>() : 0;
 	int y = args.IsValid()? args.PickNumber<int>() : 0;
 	// Function body
-	Value_wxPoint::EntityT entity(x, y);
+	wxPoint entity(x, y);
 	RefPtr<Value_wxPoint> pValue(new Value_wxPoint(entity));
 	return argument.ReturnValue(processor, pValue.release());
 }

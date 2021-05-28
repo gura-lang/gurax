@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxMenuBar() = delete;
-	explicit Value_wxMenuBar(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxMenuBar) :
+	explicit Value_wxMenuBar(wxTrackable* pEntity, VType& vtype = VTYPE_wxMenuBar) :
 		Value_wxWindow(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxMenuBar(const Value_wxMenuBar& src) = delete;
@@ -55,8 +55,12 @@ protected:
 	// Destructor
 	~Value_wxMenuBar() = default;
 public:
-	wxMenuBar* GetEntity() { return wxDynamicCast(Value_wxWindow::GetEntity(), wxMenuBar); }
-	const wxMenuBar* GetEntity() const { return wxDynamicCast(Value_wxWindow::GetEntity(), wxMenuBar); }
+	wxMenuBar* GetEntity() {
+		return reinterpret_cast<wxMenuBar*>(Value_wxTrackable::GetEntity());
+	}
+	const wxMenuBar* GetEntity() const {
+		return reinterpret_cast<const wxMenuBar*>(Value_wxTrackable::GetEntity());
+	}
 public:
 	static wxMenuBar* GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMenuBar&>(value).GetEntity();

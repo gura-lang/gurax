@@ -43,7 +43,7 @@ public:
 public:
 	// Constructor
 	Value_wxButton() = delete;
-	explicit Value_wxButton(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxButton) :
+	explicit Value_wxButton(wxTrackable* pEntity, VType& vtype = VTYPE_wxButton) :
 		Value_wxAnyButton(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxButton(const Value_wxButton& src) = delete;
@@ -55,8 +55,12 @@ protected:
 	// Destructor
 	~Value_wxButton() = default;
 public:
-	wxButton* GetEntity() { return wxDynamicCast(Value_wxAnyButton::GetEntity(), wxButton); }
-	const wxButton* GetEntity() const { return wxDynamicCast(Value_wxAnyButton::GetEntity(), wxButton); }
+	wxButton* GetEntity() {
+		return reinterpret_cast<wxButton*>(Value_wxTrackable::GetEntity());
+	}
+	const wxButton* GetEntity() const {
+		return reinterpret_cast<const wxButton*>(Value_wxTrackable::GetEntity());
+	}
 public:
 	static wxButton* GetEntity(Value& value) {
 		return dynamic_cast<Value_wxButton&>(value).GetEntity();

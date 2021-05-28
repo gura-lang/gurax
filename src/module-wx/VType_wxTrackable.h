@@ -1,72 +1,61 @@
 //==============================================================================
-// VType_wxControl.h
+// VType_wxTrackable.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_WXCONTROL_H
-#define GURAX_MODULE_WX_VTYPE_WXCONTROL_H
+#ifndef GURAX_MODULE_WX_VTYPE_WXTRACKABLE_H
+#define GURAX_MODULE_WX_VTYPE_WXTRACKABLE_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_wxWindow.h"
 
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_wxControl
+// VType_wxTrackable
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_wxControl : public VType {
+class GURAX_DLLDECLARE VType_wxTrackable : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_wxControl VTYPE_wxControl;
+extern GURAX_DLLDECLARE VType_wxTrackable VTYPE_wxTrackable;
 
 //------------------------------------------------------------------------------
-// Value_wxControl
+// Value_wxTrackable
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxControl : public Value_wxWindow {
+class GURAX_DLLDECLARE Value_wxTrackable : public Value_Object {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_wxControl);
+	Gurax_DeclareReferable(Value_wxTrackable);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_wxControl");
-public:
-	class EntityT : public wxControl {
-	public:
-		using EntitySuper = wxControl;
-		using wxControl::wxControl;
-	public:
-		EntityCore core;
-	};
+	Gurax_MemoryPoolAllocator("Value_wxTrackable");
+protected:
+	wxWeakRef<wxTrackable> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
-	Value_wxControl() = delete;
-	explicit Value_wxControl(wxTrackable* pEntity, VType& vtype = VTYPE_wxControl) :
-		Value_wxWindow(pEntity, vtype) {}
+	Value_wxTrackable() = delete;
+	explicit Value_wxTrackable(wxTrackable* pEntity, VType& vtype = VTYPE_wxTrackable) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
-	Value_wxControl(const Value_wxControl& src) = delete;
-	Value_wxControl& operator=(const Value_wxControl& src) = delete;
+	Value_wxTrackable(const Value_wxTrackable& src) = delete;
+	Value_wxTrackable& operator=(const Value_wxTrackable& src) = delete;
 	// Move constructor/operator
-	Value_wxControl(Value_wxControl&& src) noexcept = delete;
-	Value_wxControl& operator=(Value_wxControl&& src) noexcept = delete;
+	Value_wxTrackable(Value_wxTrackable&& src) noexcept = delete;
+	Value_wxTrackable& operator=(Value_wxTrackable&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_wxControl() = default;
+	~Value_wxTrackable() = default;
 public:
-	wxControl* GetEntity() {
-		return reinterpret_cast<wxControl*>(Value_wxTrackable::GetEntity());
-	}
-	const wxControl* GetEntity() const {
-		return reinterpret_cast<const wxControl*>(Value_wxTrackable::GetEntity());
-	}
+	wxTrackable* GetEntity() { return _pEntity.get(); }
+	const wxTrackable* GetEntity() const { return _pEntity.get(); }
 public:
-	static wxControl* GetEntity(Value& value) {
-		return dynamic_cast<Value_wxControl&>(value).GetEntity();
+	static wxTrackable* GetEntity(Value& value) {
+		return dynamic_cast<Value_wxTrackable&>(value).GetEntity();
 	}
-	static const wxControl* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_wxControl&>(value).GetEntity();
+	static const wxTrackable* GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxTrackable&>(value).GetEntity();
 	}
 public:
 	// Virtual functions of Value

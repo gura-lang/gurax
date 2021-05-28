@@ -74,10 +74,8 @@ public:
 	Gurax_DeclareReferable(Value_wxEventType);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxEventType");
-public:
-	using EntityT = wxEventType;
 protected:
-	EntityT _entity;
+	wxEventType _entity;
 	const EventValueFactory& _eventValueFactory;
 public:
 	static VType& vtype;
@@ -96,13 +94,13 @@ protected:
 	// Destructor
 	~Value_wxEventType() = default;
 public:
-	EntityT& GetEntity() { return _entity; }
-	const EntityT& GetEntity() const { return _entity; }
+	wxEventType& GetEntity() { return _entity; }
+	const wxEventType& GetEntity() const { return _entity; }
 public:
-	static EntityT& GetEntity(Value& value) {
+	static wxEventType& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxEventType&>(value).GetEntity();
 	}
-	static const EntityT& GetEntity(const Value& value) {
+	static const wxEventType& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxEventType&>(value).GetEntity();
 	}
 public:
