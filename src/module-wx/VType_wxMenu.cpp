@@ -75,7 +75,7 @@ Gurax_ImplementMethod(wxMenu, Append)
 	const char* helpString = args.IsValid()? args.PickString() : "";
 	wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
 	// Function body
-	std::unique_ptr<wxMenuItem> rtn(pEntity->Append(id, item, helpString, kind));
+	wxMenuItem* rtn = pEntity->Append(id, item, helpString, kind);
 	return new Value_wxMenuItem(*rtn);
 }
 
@@ -95,7 +95,7 @@ Gurax_ImplementMethod(wxMenu, AppendSeparator)
 	auto pEntity = valueThis.GetEntity();
 	if (!pEntity) return Value::nil();
 	// Function body
-	std::unique_ptr<wxMenuItem> rtn(pEntity->AppendSeparator());
+	wxMenuItem* rtn = pEntity->AppendSeparator();
 	return new Value_wxMenuItem(*rtn);
 }
 
