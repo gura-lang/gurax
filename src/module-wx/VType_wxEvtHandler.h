@@ -24,7 +24,7 @@ extern GURAX_DLLDECLARE VType_wxEvtHandler VTYPE_wxEvtHandler;
 //------------------------------------------------------------------------------
 // Value_wxEvtHandler
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxEvtHandler : public Value_wxTrackable {
+class GURAX_DLLDECLARE Value_wxEvtHandler : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxEvtHandler);
@@ -37,13 +37,15 @@ public:
 	public:
 		EntityCore core;
 	};
+protected:
+	wxWeakRef<wxEvtHandler> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxEvtHandler() = delete;
-	explicit Value_wxEvtHandler(wxTrackable* pEntity, VType& vtype = VTYPE_wxEvtHandler) :
-		Value_wxTrackable(pEntity, vtype) {}
+	explicit Value_wxEvtHandler(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxEvtHandler) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxEvtHandler(const Value_wxEvtHandler& src) = delete;
 	Value_wxEvtHandler& operator=(const Value_wxEvtHandler& src) = delete;
@@ -54,12 +56,8 @@ protected:
 	// Destructor
 	~Value_wxEvtHandler() = default;
 public:
-	wxEvtHandler* GetEntity() {
-		return reinterpret_cast<wxEvtHandler*>(Value_wxTrackable::GetEntity());
-	}
-	const wxEvtHandler* GetEntity() const {
-		return reinterpret_cast<const wxEvtHandler*>(Value_wxTrackable::GetEntity());
-	}
+	wxEvtHandler* GetEntity() { return _pEntity.get(); }
+	const wxEvtHandler* GetEntity() const { return _pEntity.get(); }
 public:
 	static wxEvtHandler* GetEntity(Value& value) {
 		return dynamic_cast<Value_wxEvtHandler&>(value).GetEntity();

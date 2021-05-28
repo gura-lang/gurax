@@ -41,6 +41,7 @@ Gurax_ImplementConstructor(App)
 {
 	// Function body
 	auto pEntity = new Value_wxApp::EntityT();
+	::printf("%p\n", pEntity);
 	RefPtr<Value_wxApp> pValue(new Value_wxApp(pEntity));
 	pEntity->core.SetInfo(processor.Reference(), *pValue);
 	return argument.ReturnValue(processor, pValue.release());

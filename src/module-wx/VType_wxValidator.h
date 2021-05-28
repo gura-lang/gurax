@@ -42,7 +42,7 @@ public:
 public:
 	// Constructor
 	Value_wxValidator() = delete;
-	explicit Value_wxValidator(wxTrackable* pEntity, VType& vtype = VTYPE_wxValidator) :
+	explicit Value_wxValidator(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxValidator) :
 		Value_wxEvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxValidator(const Value_wxValidator& src) = delete;
@@ -55,10 +55,10 @@ protected:
 	~Value_wxValidator() = default;
 public:
 	wxValidator* GetEntity() {
-		return reinterpret_cast<wxValidator*>(Value_wxTrackable::GetEntity());
+		return reinterpret_cast<wxValidator*>(Value_wxEvtHandler::GetEntity());
 	}
 	const wxValidator* GetEntity() const {
-		return reinterpret_cast<const wxValidator*>(Value_wxTrackable::GetEntity());
+		return reinterpret_cast<const wxValidator*>(Value_wxEvtHandler::GetEntity());
 	}
 public:
 	static wxValidator* GetEntity(Value& value) {

@@ -42,7 +42,7 @@ public:
 public:
 	// Constructor
 	Value_wxWindow() = delete;
-	explicit Value_wxWindow(wxTrackable* pEntity, VType& vtype = VTYPE_wxWindow) :
+	explicit Value_wxWindow(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxWindow) :
 		Value_wxEvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxWindow(const Value_wxWindow& src) = delete;
@@ -55,10 +55,10 @@ protected:
 	~Value_wxWindow() = default;
 public:
 	wxWindow* GetEntity() {
-		return reinterpret_cast<wxWindow*>(Value_wxTrackable::GetEntity());
+		return reinterpret_cast<wxWindow*>(Value_wxEvtHandler::GetEntity());
 	}
 	const wxWindow* GetEntity() const {
-		return reinterpret_cast<const wxWindow*>(Value_wxTrackable::GetEntity());
+		return reinterpret_cast<const wxWindow*>(Value_wxEvtHandler::GetEntity());
 	}
 public:
 	static wxWindow* GetEntity(Value& value) {

@@ -103,6 +103,7 @@ Gurax_ImplementFunction(ImplementApp)
 	// Argument
 	ArgPicker args(argument);
 	auto app = Value_wxApp::GetEntity(args.PickValue());
+	::printf("%p\n", app);
 	// Function Body
 	wxApp::SetInstance(app);
 	int argc = 0;

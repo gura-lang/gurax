@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxTrackable() = delete;
-	explicit Value_wxTrackable(wxTrackable* pEntity, VType& vtype = VTYPE_wxTrackable) :
+	explicit Value_wxTrackable(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxTrackable) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxTrackable(const Value_wxTrackable& src) = delete;

@@ -42,7 +42,7 @@ public:
 public:
 	// Constructor
 	Value_wxMenu() = delete;
-	explicit Value_wxMenu(wxTrackable* pEntity, VType& vtype = VTYPE_wxMenu) :
+	explicit Value_wxMenu(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxMenu) :
 		Value_wxEvtHandler(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxMenu(const Value_wxMenu& src) = delete;
@@ -55,10 +55,10 @@ protected:
 	~Value_wxMenu() = default;
 public:
 	wxMenu* GetEntity() {
-		return reinterpret_cast<wxMenu*>(Value_wxTrackable::GetEntity());
+		return reinterpret_cast<wxMenu*>(Value_wxEvtHandler::GetEntity());
 	}
 	const wxMenu* GetEntity() const {
-		return reinterpret_cast<const wxMenu*>(Value_wxTrackable::GetEntity());
+		return reinterpret_cast<const wxMenu*>(Value_wxEvtHandler::GetEntity());
 	}
 public:
 	static wxMenu* GetEntity(Value& value) {

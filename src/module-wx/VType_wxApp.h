@@ -45,7 +45,7 @@ public:
 public:
 	// Constructor
 	Value_wxApp() = delete;
-	explicit Value_wxApp(wxTrackable* pEntity, VType& vtype = VTYPE_wxApp) :
+	explicit Value_wxApp(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxApp) :
 		Value_wxAppConsole(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxApp(const Value_wxApp& src) = delete;
@@ -58,10 +58,10 @@ protected:
 	~Value_wxApp() = default;
 public:
 	wxApp* GetEntity() {
-		return reinterpret_cast<wxApp*>(Value_wxTrackable::GetEntity());
+		return reinterpret_cast<wxApp*>(Value_wxEvtHandler::GetEntity());
 	}
 	const wxApp* GetEntity() const {
-		return reinterpret_cast<const wxApp*>(Value_wxTrackable::GetEntity());
+		return reinterpret_cast<const wxApp*>(Value_wxEvtHandler::GetEntity());
 	}
 public:
 	static wxApp* GetEntity(Value& value) {
