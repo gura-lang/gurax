@@ -114,7 +114,6 @@ String Value_wxApp::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.App");
 }
 
-
 //------------------------------------------------------------------------------
 // Value_wxApp::EntityT
 //------------------------------------------------------------------------------
