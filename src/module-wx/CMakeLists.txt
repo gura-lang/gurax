@@ -60,7 +60,6 @@ target_sources(wx.gurd PRIVATE
 	VType_wxPoint.cpp
 	VType_wxSize.cpp
 	VType_wxStatusBar.cpp
-	VType_wxTrackable.cpp
 	VType_wxValidator.cpp
 	VType_wxWindow.cpp)
 #-------------------------------------------------------------------------------

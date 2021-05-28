@@ -22,7 +22,6 @@
 #include "VType_wxPoint.h"
 #include "VType_wxSize.h"
 #include "VType_wxStatusBar.h"
-#include "VType_wxTrackable.h"
 #include "VType_wxValidator.h"
 #include "VType_wxWindow.h"
 

@@ -6,7 +6,6 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_wxTrackable.h"
 
 Gurax_BeginModuleScope(wx)
 

@@ -28,7 +28,6 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPoint);
 	frame.Assign(VTYPE_wxSize);
 	frame.Assign(VTYPE_wxStatusBar);
-	frame.Assign(VTYPE_wxTrackable);
 	frame.Assign(VTYPE_wxValidator);
 	frame.Assign(VTYPE_wxWindow);
 }
