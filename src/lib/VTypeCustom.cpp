@@ -80,18 +80,10 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 	if (!_pSymbol->IsEmpty()) return;
 	_pSymbol = pSymbol;
 	if (GetConstructor().IsEmpty()) {
-#if 0
-		RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
-		pDeclCallable->GetDeclBlock().SetOccur(DeclBlock::Occur::ZeroOrOnce).SetFlags(Flag::None);
-		RefPtr<Function> pConstructor(new ConstructorClass(*this, pDeclCallable.release(), new Expr_Block()));
-		pConstructor->SetFrameOuter(processor.GetFrameCur());
-		SetConstructor(pConstructor.release());
-#else
 		Function& constructorInh = GetVTypeInh()->GetConstructor();
 		RefPtr<Function> pConstructor(new ConstructorClassDefault(*this, constructorInh.GetDeclCallable().Reference()));
 		pConstructor->SetFrameOuter(processor.GetFrameCur());
 		SetConstructor(pConstructor.release());
-#endif
 	}
 	GetConstructor().SetSymbol(pSymbol);
 }
