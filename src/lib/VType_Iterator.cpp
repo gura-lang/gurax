@@ -498,10 +498,12 @@ Value* VType_Iterator::Method_Filter(Processor& processor, Argument& argument, I
 {
 	// Arguments
 	ArgPicker args(argument);
-	RefPtr<Value> pValue(args.PickValue().Reference());
+	RefPtr<Value> pValue(args.IsValid()? args.PickValue().Reference() : Value::nil());
 	// Function body
 	RefPtr<Iterator> pIterator;
-	if (pValue->IsType(VTYPE_Function)) {
+	if (!pValue->IsValid()) {
+		pIterator.reset(new Iterator_SkipFalse(iteratorSrc.Reference()));
+	} else if (pValue->IsType(VTYPE_Function)) {
 		pIterator.reset(
 			new Iterator_FilterWithFunc(
 				processor.Reference(), Value_Function::GetFunction(*pValue).Reference(),
@@ -529,15 +531,65 @@ Gurax_DeclareMethod(Iterator, Find)
 
 Gurax_ImplementMethod(Iterator, Find)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorSrc = valueThis.GetIterator();
+	// Function body
+	return VType_Iterator::Method_Find(processor, argument, iteratorSrc);
+}
+
+Value* VType_Iterator::Method_Find(Processor& processor, Argument& argument, Iterator& iteratorSrc)
+{
 	// Arguments
 	ArgPicker args(argument);
+	RefPtr<Value> pValue(args.IsValid()? args.PickValue().Reference() : Value::nil());
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Value> pValueRtn(Value::nil());
+	if (!pValue->IsValid()) {
+		for (size_t idx = 0; ; idx++) {
+			RefPtr<Value> pValueSrc(iteratorSrc.NextValue());
+			if (!pValueSrc) break;
+			if (pValueSrc->GetBool()) {
+				pValueRtn.reset(pValueSrc.release());
+				break;
+			}
+		}
+	} else if (pValue->IsType(VTYPE_Function)) {
+		Function& func = Value_Function::GetFunction(*pValue);
+		RefPtr<Frame> pFrame(func.LockFrameOuter());
+		if (!pFrame) return Value::nil();
+		RefPtr<Argument> pArgument(new Argument(func));
+		for (size_t idx = 0; ; idx++) {
+			RefPtr<Value> pValueSrc(iteratorSrc.NextValue());
+			if (!pValueSrc) break;
+			if (pArgument->HasArgSlot()) {
+				ArgFeeder args(*pArgument, *pFrame);
+				if (!args.FeedValue(pValueSrc.Reference())) return Value::nil();
+				if (args.IsValid() && !args.FeedValue(new Value_Number(idx))) return Value::nil();
+			}
+			RefPtr<Value> pValueResult(func.Eval(processor, *pArgument));
+			if (pValueResult->GetBool()) {
+				pValueRtn.reset(pValueSrc.release());
+				break;
+			}
+		}
+	} else if (pValue->IsIterable()) {
+		RefPtr<Iterator> pIteratorCriteria(pValue->GenIterator());
+		for (size_t idx = 0; ; idx++) {
+			RefPtr<Value> pValueSrc(iteratorSrc.NextValue());
+			if (!pValueSrc) break;
+			RefPtr<Value> pValueCriteria(pIteratorCriteria->NextValue());
+			if (!pValueCriteria) break;
+			if (pValueCriteria->GetBool()) {
+				pValueRtn.reset(pValueSrc.release());
+				break;
+			}
+		}
+	} else {
+		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
+		return Value::nil();
+	}
+	return pValueRtn.release();
 }
 
 // Iterator#Flatten():[dfs,bfs] {block?}
@@ -1294,15 +1346,12 @@ Gurax_DeclareMethod(Iterator, SkipNil)
 
 Gurax_ImplementMethod(Iterator, SkipNil)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorSrc = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_SkipNil(iteratorSrc.Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Sort(directive?, keys[]?):[stable] {block?}

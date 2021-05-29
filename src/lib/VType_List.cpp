@@ -629,15 +629,11 @@ Gurax_DeclareMethod(List, Find)
 
 Gurax_ImplementMethod(List, Find)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorSrc(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	return VType_Iterator::Method_Find(processor, argument, *pIteratorSrc);
 }
 
 // List#Flatten():[dfs,bfs] {block?}
@@ -1223,13 +1219,12 @@ Gurax_DeclareMethod(List, SkipNil)
 
 Gurax_ImplementMethod(List, SkipNil)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_SkipNil(pIteratorThis.Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // List#Sort(directive?, keys[]?):[stable] {block?}

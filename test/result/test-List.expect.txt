@@ -430,7 +430,14 @@ names .. ['Burke', 'Connor', 'Frank', 'Everett', 'Albert', 'George', 'Harris', '
 BURKE
 DAVID
 FRANK
+x .. [false, 52, 23, 62, <Nil>, 75, 46, false, 10, <Nil>, 86, 80, 19, 34, false]
+x.Filter():list .. [52, 23, 62, 75, 46, 10, 86, 80, 19, 34]
 ======== List#Find() ========
+names .. ['Burke', 'Connor', 'Frank', 'Everett', 'Albert', 'George', 'Harris', 'David']
+Connor
+Connor
+x .. [false, <Nil>, 52, 23, 62, <Nil>, 75, 46, false, 10, <Nil>, 86, 80, 19, 34, false]
+x.Find() .. 52
 ======== List#Flatten() ========
 [[1, 2, 3, [4, [5, 6], 7], 8], [9, 10, 11], 12]
 x.Flatten().Join(', ') .. 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
@@ -551,6 +558,8 @@ x.Since(x < 0).Offset(1):list .. [4, 4, 4, 0]
 x.Since(& {$i < 0}).Offset(1).While(& {$i >= 0}):list .. [3, 1, 2, 3, 4]
 ======== List#Skip() ========
 ======== List#SkipNil() ========
+x .. [false, 52, 23, 62, <Nil>, 75, 46, false, 10, <Nil>, 86, 80, 19, 34, false]
+x.SkipNil():list .. [false, 52, 23, 62, 75, 46, false, 10, 86, 80, 19, 34, false]
 ======== List#Sort() ========
 words100.Sort() .. ['agreeable', 'beautiful', 'blow', 'boil', 'bore', 'boy', 'bruise', 'bubble', 'burst', 'bushes', 'cannon', 'cattle', 'cause', 'change', 'cheat', 'childlike', 'clap', 'complain', 'country', 'cover', 'cowardly', 'curve', 'dapper', 'deeply', 'demonic', 'detect', 'digestion', 'disgusting', 'dry', 'encourage', 'entertaining', 'equable', 'exotic', 'experience', 'flame', 'flat', 'flowery', 'force', 'foregoing', 'gaping', 'greasy', 'happen', 'hate', 'heal', 'horn', 'hydrant', 'ignore', 'impartial', 'inexpensive', 'iron', 'jump', 'living', 'loutish', 'mate', 'merciful', 'milk', 'miniature', 'mix', 'motionwhip', 'move', 'natural', 'nebulous', 'null', 'oceanic', 'part', 'person', 'pine', 'poor', 'possess', 'preach', 'prevent', 'private', 'property', 'purring', 'rampant', 'rat', 'ray', 'reading', 'religion', 'roasted', 'rob', 'roll', 'rural', 'sigh', 'smile', 'soap', 'steam', 'sudden', 'sulky', 'tasteful', 'thaw', 'tired', 'toy', 'try', 'unaccountable', 'unarmed', 'unusual', 'vest', 'volatile', 'yell']
 words100.Sort(`ascend) .. ['agreeable', 'beautiful', 'blow', 'boil', 'bore', 'boy', 'bruise', 'bubble', 'burst', 'bushes', 'cannon', 'cattle', 'cause', 'change', 'cheat', 'childlike', 'clap', 'complain', 'country', 'cover', 'cowardly', 'curve', 'dapper', 'deeply', 'demonic', 'detect', 'digestion', 'disgusting', 'dry', 'encourage', 'entertaining', 'equable', 'exotic', 'experience', 'flame', 'flat', 'flowery', 'force', 'foregoing', 'gaping', 'greasy', 'happen', 'hate', 'heal', 'horn', 'hydrant', 'ignore', 'impartial', 'inexpensive', 'iron', 'jump', 'living', 'loutish', 'mate', 'merciful', 'milk', 'miniature', 'mix', 'motionwhip', 'move', 'natural', 'nebulous', 'null', 'oceanic', 'part', 'person', 'pine', 'poor', 'possess', 'preach', 'prevent', 'private', 'property', 'purring', 'rampant', 'rat', 'ray', 'reading', 'religion', 'roasted', 'rob', 'roll', 'rural', 'sigh', 'smile', 'soap', 'steam', 'sudden', 'sulky', 'tasteful', 'thaw', 'tired', 'toy', 'try', 'unaccountable', 'unarmed', 'unusual', 'vest', 'volatile', 'yell']

@@ -937,6 +937,56 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_SkipNil
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_SkipNil : public Iterator {
+private:
+	RefPtr<Iterator> _pIteratorSrc;
+	bool _doneFlag;
+public:
+	Iterator_SkipNil(Iterator* pIteratorSrc);
+protected:
+	// Destructor
+	virtual ~Iterator_SkipNil() = default;
+public:
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_SkipFalse
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_SkipFalse : public Iterator {
+private:
+	RefPtr<Iterator> _pIteratorSrc;
+	bool _doneFlag;
+public:
+	Iterator_SkipFalse(Iterator* pIteratorSrc);
+protected:
+	// Destructor
+	virtual ~Iterator_SkipFalse() = default;
+public:
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return (GetIteratorSrc().GetFlags() & Flag::Finite) | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Permutation
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Permutation : public Iterator {

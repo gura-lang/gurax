@@ -529,9 +529,21 @@ TestCase('List#Filter()') {
 	]
 	Tester(`names)
 	Println(names.Filter(&{$s.len == 5}).Sort():*Upper())
+	x = [false, 52, 23, 62, nil, 75, 46, false, 10, nil, 86, 80, 19, 34, false]
+	Tester(`x)
+	Tester(`x.Filter():list)
 }
 
 TestCase('List#Find()') {
+	names = [
+		'Burke', 'Connor', 'Frank', 'Everett', 'Albert', 'George', 'Harris', 'David'
+	]
+	Tester(`names)
+	Println(names.Find(&{$s.len == 6}))
+	Println(names.Find(names:*len == 6))
+	x = [false, nil, 52, 23, 62, nil, 75, 46, false, 10, nil, 86, 80, 19, 34, false]
+	Tester(`x)
+	Tester(`x.Find())
 }
 
 TestCase('List#Flatten()') {
@@ -713,6 +725,9 @@ TestCase('List#Skip()') {
 }
 
 TestCase('List#SkipNil()') {
+	x = [false, 52, 23, 62, nil, 75, 46, false, 10, nil, 86, 80, 19, 34, false]
+	Tester(`x)
+	Tester(`x.SkipNil():list)
 }
 
 TestCase('List#Sort()') {

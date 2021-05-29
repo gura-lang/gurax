@@ -309,9 +309,21 @@ TestCase('Iterator#Filter()') {
 	]
 	Tester(`names)
 	Println(names.Each().Filter(&{$s.len == 5}).Sort():*Upper())
+	x = [false, 52, 23, 62, nil, 75, 46, false, 10, nil, 86, 80, 19, 34, false]
+	Tester(`x)
+	Tester(`x.Each().Filter():list)
 }
 
 TestCase('Iterator#Find()') {
+	names = [
+		'Burke', 'Connor', 'Frank', 'Everett', 'Albert', 'George', 'Harris', 'David'
+	]
+	Tester(`names)
+	Println(names.Each().Find(&{$s.len == 6}))
+	Println(names.Each().Find(names:*len == 6))
+	x = [false, nil, 52, 23, 62, nil, 75, 46, false, 10, nil, 86, 80, 19, 34, false]
+	Tester(`x)
+	Tester(`x.Each().Find())
 }
 
 TestCase('Iterator#Flatten()') {
@@ -494,6 +506,9 @@ TestCase('Iterator#Skip()') {
 }
 
 TestCase('Iterator#SkipNil()') {
+	x = [false, 52, 23, 62, nil, 75, 46, false, 10, nil, 86, 80, 19, 34, false]
+	Tester(`x)
+	Tester(`x.Each().SkipNil():list)
 }
 
 TestCase('Iterator#Sort()') {

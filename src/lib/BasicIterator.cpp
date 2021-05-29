@@ -995,6 +995,62 @@ String Iterator_FilterWithIter::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_SkipNil
+//------------------------------------------------------------------------------
+Iterator_SkipNil::Iterator_SkipNil(Iterator* pIteratorSrc) : _pIteratorSrc(pIteratorSrc), _doneFlag(false)
+{
+}
+
+Value* Iterator_SkipNil::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	for (;;) {
+		RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+		if (!pValue) {
+			_doneFlag = true;
+			return nullptr;
+		}
+		if (pValue->IsValid()) return pValue.release();
+	}
+	return nullptr;
+}
+
+String Iterator_SkipNil::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Format("SkipNil");
+	return str;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_SkipFalse
+//------------------------------------------------------------------------------
+Iterator_SkipFalse::Iterator_SkipFalse(Iterator* pIteratorSrc) : _pIteratorSrc(pIteratorSrc), _doneFlag(false)
+{
+}
+
+Value* Iterator_SkipFalse::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	for (;;) {
+		RefPtr<Value> pValue(GetIteratorSrc().NextValue());
+		if (!pValue) {
+			_doneFlag = true;
+			return nullptr;
+		}
+		if (pValue->GetBool()) return pValue.release();
+	}
+	return nullptr;
+}
+
+String Iterator_SkipFalse::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Format("SkipFalse");
+	return str;
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Permutation
 //------------------------------------------------------------------------------
 Value* Iterator_Permutation::DoNextValue()
