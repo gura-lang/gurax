@@ -1,5 +1,206 @@
 #!/usr/bin/env gurax
 
+tmplHeader = tR'''
+//==============================================================================
+// VType_${className}.h
+//==============================================================================
+#ifndef GURAX_MODULE_WX_VTYPE_${className.Upper()}_H
+#define GURAX_MODULE_WX_VTYPE_${className.Upper()}_H
+#include <gurax.h>
+#include <wx/wx.h>
+#include "Util.h"
+
+Gurax_BeginModuleScope(wx)
+
+//------------------------------------------------------------------------------
+// VType_${className}
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE VType_${className} : public VType {
+public:
+	using VType::VType;
+	virtual void DoPrepare(Frame& frameOuter) override;
+};
+
+extern GURAX_DLLDECLARE VType_${className} VTYPE_${className};
+
+//------------------------------------------------------------------------------
+// Value_${className}
+//------------------------------------------------------------------------------
+${if (classNameParent)}
+class GURAX_DLLDECLARE Value_${className} : public Value_${classNameParent} {
+${else}
+class GURAX_DLLDECLARE Value_${className} : public Value_Object {
+${end}
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Value_${className});
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Value_${className}");
+${if (className == 'wxEvtHandler')}
+protected:
+	wxWeakRef<${className}> _pEntity;
+${elsif (!classNameParent)}
+protected:
+	${className} _entity;
+${end}
+public:
+	static VType& vtype;
+public:
+	// Constructor
+	Value_${className}() = delete;
+${if (className == 'wxEvtHandler')}
+	explicit Value_${className}(${className}* pEntity, VType& vtype = VTYPE_${className}) :
+		Value_Object(vtype), _pEntity(pEntity) {}
+${elsif (!classNameParent)}
+	explicit Value_${className}(const ${className}& entity, VType& vtype = VTYPE_${className}) :
+		Value_Object(vtype), _entity(entity) {}
+${elsif (classNameRoot == 'wxEvtHandler')}
+	explicit Value_${className}(${classNameRoot}* pEntity, VType& vtype = VTYPE_${className}) :
+		Value_${classNameParent}(pEntity, vtype) {}
+${else}
+	explicit Value_${className}(const ${classNameRoot}& entity, VType& vtype = VTYPE_${className}) :
+		Value_${classNameParent}(entity, vtype) {}
+${end}
+	// Copy constructor/operator
+	Value_${className}(const Value_${className}& src) = delete;
+	Value_${className}& operator=(const Value_${className}& src) = delete;
+	// Move constructor/operator
+	Value_${className}(Value_${className}&& src) noexcept = delete;
+	Value_${className}& operator=(Value_${className}&& src) noexcept = delete;
+protected:
+	// Destructor
+	~Value_${className}() = default;
+public:
+${if (className == 'wxEvtHandler')}
+	${className}& GetEntity() { return *_pEntity; }
+	const ${className}& GetEntity() const { return *_pEntity; }
+	${className}* GetEntityPtr() { return _pEntity.get(); }
+	const ${className}* GetEntityPtr() const { return _pEntity.get(); }
+${elsif (!classNameRoot)}
+	${className}& GetEntity() { return _entity; }
+	const ${className}& GetEntity() const { return _entity; }
+	${className}* GetEntityPtr() { return &_entity; }
+	const ${className}* GetEntityPtr() const { return &_entity; }
+$${else}
+	${className}& GetEntity() {
+		return reinterpret_cast<${className}&>(Value_${classNameRoot}::GetEntity());
+	}
+	const ${className}* GetEntity() const {
+		return reinterpret_cast<const ${className}&>(Value_${classNameRoot}::GetEntity());
+	}
+	${className}& GetEntityPtr() {
+		return reinterpret_cast<${className}*>(Value_${classNameRoot}::GetEntityPtr());
+	}
+	const ${className}* GetEntityPtr() const {
+		return reinterpret_cast<const ${className}*>(Value_${classNameRoot}::GetEntityPtr());
+	}
+${end}
+public:
+	static ${className}& GetEntity(Value& value) {
+		return dynamic_cast<Value_${className}&>(value).GetEntity();
+	}
+	static const ${className}& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_${className}&>(value).GetEntity();
+	}
+	static ${className}* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_${className}&>(value).GetEntityPtr();
+	}
+	static const ${className}* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_${className}&>(value).GetEntityPtr();
+	}
+public:
+	// Virtual functions of Value
+	virtual Value* Clone() const override { return Reference(); }
+	virtual size_t DoCalcHash() const override {
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
+	}
+	virtual bool IsEqualTo(const Value& value) const override {
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
+	}
+	virtual bool IsLessThan(const Value& value) const override {
+		return IsSameType(value)?
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
+			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
+	}
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+Gurax_EndModuleScope(wx)
+
+#endif
+'''
+
+tmplSource = tR'''
+//==============================================================================
+// VType_${className}.cpp
+//==============================================================================
+#include "stdafx.h"
+
+Gurax_BeginModuleScope(wx)
+
+//------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+# Property
+
+# Operator
+
+# Cast Operation
+
+# Constructor
+
+# Method
+)**";
+
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// Implementation of property
+//-----------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// VType_${className}
+//------------------------------------------------------------------------------
+VType_${className} VTYPE_${className}("${className.Mid(2)}");
+
+void VType_${className}::DoPrepare(Frame& frameOuter)
+{
+	// Add help
+	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	// Declaration of VType
+${if (classNameParent)}
+	Declare(VTYPE_${classNameParent}, Flag::Mutable);
+${else}
+	Declare(VTYPE_Object, Flag::Mutable);
+${end}
+	// Assignment of method
+	// Assignment of property
+}
+
+//------------------------------------------------------------------------------
+// Value_${className}
+//------------------------------------------------------------------------------
+VType& Value_${className}::vtype = VTYPE_${className};
+
+String Value_${className}::ToString(const StringStyle& ss) const
+{
+	return ToStringGeneric(ss, "wx.${className.Mid(2)}");
+}
+
+Gurax_EndModuleScope(wx)
+'''
+
 expr = `{
 	wxAnyButton = class(wxControl) {
 	}
@@ -94,7 +295,14 @@ classInfoTbl.Each {|classInfo|
 classInfoTbl.Each {|classInfo|
 	classInfoParent = classInfo.classInfoParent
 	classInfoRoot = classInfo.GetClassInfoRoot()
-	Printf('%s %s %s\n', classInfo.className,
-		cond(classInfoParent, classInfoParent.className, '(nil)'),
-		cond(classInfoRoot, classInfoRoot.className, '(nil)'))
+	className = classInfo.className
+	classNameParent = cond(classInfoParent, classInfoParent.className)
+	classNameRoot = cond(classInfoRoot, classInfoRoot.className)
+	fileNameHeader = Format('VType_%s.h', className)
+	fileNameSource = Format('VType_%s.cpp', className)
+	if (className in ['wxObject']) {
+		Println(className)
+		tmplHeader.Render(fileNameHeader)
+		tmplSource.Render(fileNameSource)
+	}
 }
