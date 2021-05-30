@@ -92,6 +92,41 @@ ArgInfo = class {
 			this.typeInfo.vtypeFullName)
 }
 
+CreateArgInfoTbl(r as Renderer, expr as Expr) = {
+	argInfoTbl = []
+	expr.EachParam {|exprParam|
+		//Println(exprParam)
+		listVarFlag = false
+		optionFlag = false
+		typeName = 'any'
+		if (exprParam.IsBinaryOp()) {
+			if (exprParam.operator.symbol == `as) {
+				!exprParam.right.IsIdentifier() && ErrorDone('invalid format for value type')
+				typeName = exprParam.right.symbolName
+			} else {
+				ErrorDone(exprParam, 'invalid format of parameter')
+			}
+			exprParam = exprParam.left
+		}
+		if (exprParam.IsUnaryOp()) {
+			if (exprParam.operator.symbol == `?) {
+				optionFlag = true
+			} else {
+				ErrorDone(exprParam, 'invalid format of parameter')
+			}
+			exprParam = exprParam.child
+		}
+		attr = exprParam.attr
+		if (exprParam.IsIndexer()) {
+			listVarFlag = true
+			exprParam = exprParam.car
+		}
+		!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
+		argInfoTbl.Add(ArgInfo(r, exprParam.symbolName, typeName, attr, listVarFlag, optionFlag))
+	}
+	argInfoTbl
+}
+
 ArgInfo.tmplDeclaration = tR'''
 DeclareArg("${this.name}", VTYPE_${this.typeInfo.vtype}, ${strArgOccur}, ${strArgFlags});
 '''
@@ -108,18 +143,15 @@ if (${this.name}.size() != 3) {
 FuncInfo = class {
 	moduleName as String
 	name as String
-	typeName as String
+	argInfoTbl[] as ArgInfo
 	typeInfo as TypeInfo
-	argInfoTbl[] as ArgInfo = []
 	tmplFunctionBody as Template
 	tmplImplementation:static as Template
 	tmplAssignment:static as Template
 	ComposeImplementation() = this.tmplImplementation.Eval()
 	ComposeAssignment() = this.tmplAssignment.Eval()
-	__init__(r as Renderer, moduleName as String, name as String, typeName as String, codeFunctionBody:nil as String) = {
-		if (typeName.IsEmpty()) { typeName = 'any' }
-		this.moduleName = moduleName, this.name = name, this.typeName = typeName
-		this.typeInfo = r.typeInfoMap[typeName]
+	__init__(r as Renderer, moduleName as String, name as String, argInfoTbl[] as ArgInfo, typeInfo as TypeInfo, codeFunctionBody:nil as String) = {
+		this.moduleName = moduleName, this.name = name, this.argInfoTbl = argInfoTbl, this.typeInfo = typeInfo
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	ComposeCaller() = {
@@ -156,6 +188,32 @@ Gurax_ImplementFunctionEx(${this.name}_gurax, processor_gurax, argument_gurax)
 '''
 
 FuncInfo.tmplAssignment = t'Assign(Gurax_CreateFunction(${this.name}_gurax));'
+
+ParseCaller(r as Renderer, expr as Expr) = {
+	codeFunctionBody = nil
+	if (expr.IsAssign()) {
+		!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
+		codeFunctionBody = expr.right.string
+		expr = expr.left
+	}
+	typeName = ''
+	if (expr.IsBinaryOp()) {
+		if (expr.operator.symbol == `as) {
+			!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
+			typeName = expr.right.symbolName
+		} else {
+			ErrorDone(expr, 'invalid format of parameter')
+		}
+		expr = expr.left
+	}
+	!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
+	!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
+	if (expr.attr.IsSet(`void)) { typeName = 'void' }
+	argInfoTbl = CreateArgInfoTbl(r, expr)
+	if (typeName.IsEmpty()) { typeName = 'any' }
+	typeInfo = r.typeInfoMap[typeName]
+	(expr.car.symbolName, argInfoTbl, typeInfo, codeFunctionBody)
+}
 
 //------------------------------------------------------------------------------
 // Renderer
@@ -230,63 +288,9 @@ Renderer = class {
 		Println(className)
 	}
 	RegisterFunction(moduleName as String, expr as Expr):map:void = {
-		codeFunctionBody = nil
-		if (expr.IsAssign()) {
-			!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
-			codeFunctionBody = expr.right.string
-			expr = expr.left
-		}
-		typeNameResult = ''
-		if (expr.IsBinaryOp()) {
-			if (expr.operator.symbol == `as) {
-				!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
-				typeNameResult = expr.right.symbolName
-			} else {
-				ErrorDone(expr, 'invalid format of parameter')
-			}
-			expr = expr.left
-		}
-		!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
-		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
-		if (expr.attr.IsSet(`void)) { typeNameResult = 'void' }
-		Println(expr.car.symbolName)
-		try {
-			funcInfo = FuncInfo(this, moduleName, expr.car.symbolName, typeNameResult, codeFunctionBody)
-			this.funcInfoTbl.Add(funcInfo)
-			expr.EachParam {|exprParam|
-				//Println(exprParam)
-				listVarFlag = false
-				optionFlag = false
-				typeName = 'any'
-				if (exprParam.IsBinaryOp()) {
-					if (exprParam.operator.symbol == `as) {
-						!exprParam.right.IsIdentifier() && ErrorDone('invalid format for value type')
-						typeName = exprParam.right.symbolName
-					} else {
-						ErrorDone(exprParam, 'invalid format of parameter')
-					}
-					exprParam = exprParam.left
-				}
-				if (exprParam.IsUnaryOp()) {
-					if (exprParam.operator.symbol == `?) {
-						optionFlag = true
-					} else {
-						ErrorDone(exprParam, 'invalid format of parameter')
-					}
-					exprParam = exprParam.child
-				}
-				attr = exprParam.attr
-				if (exprParam.IsIndexer()) {
-					listVarFlag = true
-					exprParam = exprParam.car
-				}
-				!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-				argInfo = ArgInfo(this, exprParam.symbolName, typeName, attr, listVarFlag, optionFlag)
-				funcInfo.argInfoTbl.Add(argInfo)
-			}
-		} catch {|e|
-			ErrorDone(expr, e.text)
-		}
+		[symbolName, argInfoTbl, typeInfo, codeFunctionBody] = ParseCaller(this, expr)
+		Println(symbolName)
+		this.funcInfoTbl.Add(FuncInfo(this, moduleName, symbolName, argInfoTbl, typeInfo, codeFunctionBody))
 	}
 	ComposeImplementation() = this.funcInfoTbl:*ComposeImplementation().Join('\n')
 	ComposeAssignment(codePrefix as String) = (codePrefix + this.funcInfoTbl:*ComposeAssignment()).Join('\n')
