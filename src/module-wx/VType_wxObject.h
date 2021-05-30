@@ -50,6 +50,8 @@ protected:
 public:
 	wxObject& GetEntity() { return _entity; }
 	const wxObject& GetEntity() const { return _entity; }
+	wxObject* GetEntityPtr() { return &_entity; }
+	const wxObject* GetEntityPtr() const { return &_entity; }
 public:
 	static wxObject& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxObject&>(value).GetEntity();
@@ -57,18 +59,24 @@ public:
 	static const wxObject& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxObject&>(value).GetEntity();
 	}
+	static wxObject* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxObject&>(value).GetEntityPtr();
+	}
+	static const wxObject* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxObject&>(value).GetEntityPtr();
+	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(&GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this).IsSameAs(GetEntity(value));
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(&GetEntity(*this) < &GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
