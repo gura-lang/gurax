@@ -7,6 +7,7 @@
 #include <wx/wx.h>
 #include "Util.h"
 #include "VType_wxObject.h"
+#include "VType_wxEventType.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -50,10 +51,16 @@ protected:
 	~Value_wxEvent() = default;
 public:
 	wxEvent& GetEntity() {
-		return dynamic_cast<wxEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxEvent&>(Value_wxObject::GetEntity());
 	}
 	const wxEvent& GetEntity() const {
-		return dynamic_cast<const wxEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxEvent&>(Value_wxObject::GetEntity());
+	}
+	wxEvent* GetEntityPtr() {
+		return reinterpret_cast<wxEvent*>(Value_wxObject::GetEntityPtr());
+	}
+	const wxEvent* GetEntityPtr() const {
+		return reinterpret_cast<const wxEvent*>(Value_wxObject::GetEntityPtr());
 	}
 public:
 	static wxEvent& GetEntity(Value& value) {
@@ -62,20 +69,24 @@ public:
 	static const wxEvent& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxEvent&>(value).GetEntity();
 	}
-public:
-	Value& GetValueUserData() { return *_pValueUserData; }
+	static wxEvent* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxEvent&>(value).GetEntityPtr();
+	}
+	static const wxEvent* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxEvent&>(value).GetEntityPtr();
+	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(&GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this).IsSameAs(GetEntity(value));
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(&GetEntity(*this) < &GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

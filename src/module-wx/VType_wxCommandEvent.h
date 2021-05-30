@@ -7,7 +7,6 @@
 #include <wx/wx.h>
 #include "Util.h"
 #include "VType_wxEvent.h"
-#include "VType_wxEventType.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -50,10 +49,16 @@ protected:
 	~Value_wxCommandEvent() = default;
 public:
 	wxCommandEvent& GetEntity() {
-		return dynamic_cast<wxCommandEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxCommandEvent&>(Value_wxObject::GetEntity());
 	}
 	const wxCommandEvent& GetEntity() const {
-		return dynamic_cast<const wxCommandEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxCommandEvent&>(Value_wxObject::GetEntity());
+	}
+	wxCommandEvent* GetEntityPtr() {
+		return reinterpret_cast<wxCommandEvent*>(Value_wxObject::GetEntityPtr());
+	}
+	const wxCommandEvent* GetEntityPtr() const {
+		return reinterpret_cast<const wxCommandEvent*>(Value_wxObject::GetEntityPtr());
 	}
 public:
 	static wxCommandEvent& GetEntity(Value& value) {
@@ -62,18 +67,24 @@ public:
 	static const wxCommandEvent& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxCommandEvent&>(value).GetEntity();
 	}
+	static wxCommandEvent* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxCommandEvent&>(value).GetEntityPtr();
+	}
+	static const wxCommandEvent* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxCommandEvent&>(value).GetEntityPtr();
+	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(&GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && &GetEntity(*this) == &GetEntity(value);
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(&GetEntity(*this) < &GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

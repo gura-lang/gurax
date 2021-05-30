@@ -48,6 +48,9 @@ protected:
 ${elsif (!classNameParent)}
 protected:
 	${className} _entity;
+${elsif (className == 'wxEvent')}
+protected:
+	RefPtr<Value> _pValueUserData;
 ${end}
 public:
 	static VType& vtype;
@@ -100,10 +103,10 @@ ${else}
 	${className}& GetEntity() {
 		return reinterpret_cast<${className}&>(Value_${classNameRoot}::GetEntity());
 	}
-	const ${className}* GetEntity() const {
+	const ${className}& GetEntity() const {
 		return reinterpret_cast<const ${className}&>(Value_${classNameRoot}::GetEntity());
 	}
-	${className}& GetEntityPtr() {
+	${className}* GetEntityPtr() {
 		return reinterpret_cast<${className}*>(Value_${classNameRoot}::GetEntityPtr());
 	}
 	const ${className}* GetEntityPtr() const {
@@ -327,7 +330,7 @@ classInfoTbl.Each {|classInfo|
 	fileNameHeader = Format('VType_%s.h', className)
 	fileNameSource = Format('VType_%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
-	if (className in ['wxObject', 'wxEvent']) {
+	if (className in ['wxObject', 'wxEvent', 'wxCommandEvent']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
