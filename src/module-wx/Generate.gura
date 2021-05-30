@@ -9,6 +9,12 @@ tmplHeader = tR'''
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
+${if (classNameParent)}
+#include "VType_${classNameParent}.h"
+${end}
+${if (className == 'wxEvent')}
+#include "VType_wxEventType.h"
+${end}
 
 Gurax_BeginModuleScope(wx)
 
@@ -321,7 +327,7 @@ classInfoTbl.Each {|classInfo|
 	fileNameHeader = Format('VType_%s.h', className)
 	fileNameSource = Format('VType_%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
-	if (className in ['wxObject']) {
+	if (className in ['wxObject', 'wxEvent']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
