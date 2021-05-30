@@ -330,7 +330,7 @@ classInfoTbl.Each {|classInfo|
 	fileNameHeader = Format('VType_%s.h', className)
 	fileNameSource = Format('VType_%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
-	if (className in ['wxObject', 'wxEvent', 'wxCommandEvent']) {
+	if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)

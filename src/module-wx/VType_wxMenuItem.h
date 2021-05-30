@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
+#include "VType_wxObject.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -47,10 +48,16 @@ protected:
 	~Value_wxMenuItem() = default;
 public:
 	wxMenuItem& GetEntity() {
-		return dynamic_cast<wxMenuItem&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxMenuItem&>(Value_wxObject::GetEntity());
 	}
 	const wxMenuItem& GetEntity() const {
-		return dynamic_cast<const wxMenuItem&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxMenuItem&>(Value_wxObject::GetEntity());
+	}
+	wxMenuItem* GetEntityPtr() {
+		return reinterpret_cast<wxMenuItem*>(Value_wxObject::GetEntityPtr());
+	}
+	const wxMenuItem* GetEntityPtr() const {
+		return reinterpret_cast<const wxMenuItem*>(Value_wxObject::GetEntityPtr());
 	}
 public:
 	static wxMenuItem& GetEntity(Value& value) {
@@ -59,18 +66,24 @@ public:
 	static const wxMenuItem& GetEntity(const Value& value) {
 		return dynamic_cast<const Value_wxMenuItem&>(value).GetEntity();
 	}
+	static wxMenuItem* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxMenuItem&>(value).GetEntityPtr();
+	}
+	static const wxMenuItem* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxMenuItem&>(value).GetEntityPtr();
+	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(&GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this).IsSameAs(GetEntity(value));
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(&GetEntity(*this) < &GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

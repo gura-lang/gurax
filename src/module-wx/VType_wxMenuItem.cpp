@@ -27,25 +27,6 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MenuItem() {block?}
-Gurax_DeclareConstructor(MenuItem)
-{
-	Declare(VTYPE_wxMenuItem, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `wx.MenuItem` instance.");
-}
-
-Gurax_ImplementConstructor(MenuItem)
-{
-	// Function body
-	//auto pEntity = new Value_wxMenuItem::EntityT();
-	//RefPtr<Value_wxMenuItem> pValue(new Value_wxMenuItem(pEntity));
-	//pEntity->core.SetInfo(processor.Reference(), *pValue);
-	//return argument.ReturnValue(processor, pValue.release());
-	return Value::nil();
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -65,11 +46,9 @@ void VType_wxMenuItem::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(MenuItem));
+	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(MenuItem, Show));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(MenuItem, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
