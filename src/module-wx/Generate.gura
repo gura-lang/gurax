@@ -223,45 +223,47 @@ Gurax_EndModuleScope(wx)
 '''
 
 expr = `{
-	wxAnyButton = class(wxControl) {
+	wxAnyButton = Class(wxControl) {
 	}
-	wxApp = class(wxAppConsole) {
+	wxApp = Class(wxAppConsole) {
 	}
-	wxAppConsole = class(wxEvtHandler) {
+	wxAppConsole = Class(wxEvtHandler) {
 	}
-	wxButton = class(wxAnyButton) {
+	wxButton = Class(wxAnyButton) {
 	}
-	wxCommandEvent = class(wxEvent) {
+	wxCommandEvent = Class(wxEvent) {
 	}
-	wxControl = class(wxWindow) {
+	wxControl = Class(wxWindow) {
 	}
-	wxEvent = class(wxObject) {
+	wxEvent = Class(wxObject) {
 	}
-	wxEventType = class {
+	wxEventType = Class {
 	}
-	wxEvtHandler = class {
+	wxEvtHandler = Class {
 	}
-	wxFrame = class(wxWindow) {
+	wxFrame = Class(wxWindow) {
 	}
-	wxMenu = class(wxEvtHandler) {
+	wxMenu = Class(wxEvtHandler) {
 	}
-	wxMenuBar = class(wxWindow) {
+	wxMenuBar = Class(wxWindow) {
 	}
-	wxMenuItem = class(wxObject) {
+	wxMenuItem = Class(wxObject) {
 	}
-	wxObject = class {
+	wxObject = Class {
 	}
-	wxPanel = class(wxWindow) {
+	wxPanel = Class(wxWindow) {
 	}
-	wxPoint = class {
+	wxPoint = Class {
+		__init__(x? as Number, y? as Number)
 	}
-	wxSize = class {
+	wxSize = Class {
+		__init__(width? as Number, height? as Number)
 	}
-	wxStatusBar = class(wxWindow) {
+	wxStatusBar = Class(wxWindow) {
 	}
-	wxValidator = class(wxEvtHandler) {
+	wxValidator = Class(wxEvtHandler) {
 	}
-	wxWindow = class(wxEvtHandler) {
+	wxWindow = Class(wxEvtHandler) {
 	}
 }
 
@@ -294,7 +296,7 @@ ClassInfo = class {
 classInfoTbl = []
 
 expr.EachElem {|expr|
-	if (expr.IsAssign() && expr.left.IsIdentifier() && expr.right.IsCaller() && expr.right.car.IsIdentifier(`class)) {
+	if (expr.IsAssign() && expr.left.IsIdentifier() && expr.right.IsCaller() && expr.right.car.IsIdentifier(`Class)) {
 		className = expr.left.symbolName
 		params = expr.right.EachParam():list
 		if (!params.first) {
