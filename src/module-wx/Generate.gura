@@ -181,6 +181,9 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+${if (funcInfoConstructor)}
+${EvalTmplConstructorImplementation(funcInfoConstructor)}
+${end}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -316,6 +319,7 @@ expr.EachElem {|expr|
 		expr.right.block.EachElem {|expr|
 			funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
 			if (funcInfo.name == '__init__') {
+				funcInfo.name = classInfo.className
 				classInfo.funcInfoConstructor = funcInfo
 			} else {
 				classInfo.funcInfoTbl.Add(funcInfo)
@@ -352,7 +356,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 }
 '''
 
-EvalTmplConstructorImplementation(funcInfo as FuncInfo):map = tmplConstructorImplementation.Eval()
+EvalTmplConstructorImplementation(funcInfo as cbridge.FuncInfo):map = tmplConstructorImplementation.Eval()
 
 classInfoTbl.Each {|classInfo|
 	if (classInfo.classNameParent) {
@@ -370,10 +374,12 @@ classInfoTbl.Each {|classInfo|
 	className = classInfo.className
 	classNameParent = cond(classInfoParent, classInfoParent.className)
 	classNameRoot = cond(classInfoRoot, classInfoRoot.className)
+	funcInfoConstructor = classInfo.funcInfoConstructor
 	fileNameHeader = Format('VType_%s.h', className)
 	fileNameSource = Format('VType_%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
-	if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem']) {
+	//if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem']) {
+	if (className in ['wxPoint']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
