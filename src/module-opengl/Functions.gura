@@ -3144,11 +3144,11 @@ tR'''
 
 Gurax_BeginModuleScope(opengl)
 
-${r.ComposeImplementation()}
+${r.ComposeFunctionImplementation()}
 
 void AssignFunctions(Frame& frame)
 {
-	${r.ComposeAssignment('frame.')}
+	${r.ComposeFunctionAssignment('frame.')}
 }
 
 Gurax_EndModuleScope(opengl)

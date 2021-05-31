@@ -2411,11 +2411,11 @@ tR'''
 
 Gurax_BeginModuleScope(sdl)
 
-${r.ComposeImplementation()}
+${r.ComposeFunctionImplementation()}
 
 void AssignFunctions(Frame& frame)
 {
-	${r.ComposeAssignment('frame.')}
+	${r.ComposeFunctionAssignment('frame.')}
 }
 
 Gurax_EndModuleScope(sdl)

@@ -631,11 +631,11 @@ tR'''
 
 Gurax_BeginModuleScope(glfw)
 
-${r.ComposeImplementation()}
+${r.ComposeFunctionImplementation()}
 
 void AssignFunctions(Frame& frame)
 {
-	${r.ComposeAssignment('frame.')}
+	${r.ComposeFunctionAssignment('frame.')}
 }
 
 Gurax_EndModuleScope(glfw)
