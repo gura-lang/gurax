@@ -154,6 +154,33 @@ FuncInfo = class {
 		Format('%s(%s)', this.name, this.argInfoTbl:*ComposeArgRef().Join(', ')) 
 	}
 	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
+	Create(r as Renderer, moduleName as String, expr as Expr):static = {
+		codeFunctionBody = nil
+		if (expr.IsAssign()) {
+			!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
+			codeFunctionBody = expr.right.string
+			expr = expr.left
+		}
+		typeName = ''
+		if (expr.IsBinaryOp()) {
+			if (expr.operator.symbol == `as) {
+				!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
+				typeName = expr.right.symbolName
+			} else {
+				ErrorDone(expr, 'invalid format of parameter')
+			}
+			expr = expr.left
+		}
+		!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
+		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
+		if (expr.attr.IsSet(`void)) { typeName = 'void' }
+		argInfoTbl = CreateArgInfoTbl(r, expr)
+		if (typeName.IsEmpty()) { typeName = 'any' }
+		typeInfo = r.typeInfoMap[typeName]
+		symbolName = expr.car.symbolName
+		//(symbolName, argInfoTbl, typeInfo, codeFunctionBody)
+		FuncInfo(r, moduleName, symbolName, argInfoTbl, typeInfo, codeFunctionBody)
+	}
 }
 
 tmplFunctionImplementation = tR'''
@@ -188,32 +215,6 @@ EvalTmplFunctionImplementation(funcInfo as FuncInfo):map = tmplFunctionImplement
 tmplFunctionAssignment = t'Assign(Gurax_CreateFunction(${funcInfo.name}_gurax));'
 
 EvalTmplFunctionAssignment(funcInfo as FuncInfo):map = tmplFunctionAssignment.Eval()
-
-ParseCaller(r as Renderer, expr as Expr) = {
-	codeFunctionBody = nil
-	if (expr.IsAssign()) {
-		!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
-		codeFunctionBody = expr.right.string
-		expr = expr.left
-	}
-	typeName = ''
-	if (expr.IsBinaryOp()) {
-		if (expr.operator.symbol == `as) {
-			!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
-			typeName = expr.right.symbolName
-		} else {
-			ErrorDone(expr, 'invalid format of parameter')
-		}
-		expr = expr.left
-	}
-	!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
-	!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
-	if (expr.attr.IsSet(`void)) { typeName = 'void' }
-	argInfoTbl = CreateArgInfoTbl(r, expr)
-	if (typeName.IsEmpty()) { typeName = 'any' }
-	typeInfo = r.typeInfoMap[typeName]
-	(expr.car.symbolName, argInfoTbl, typeInfo, codeFunctionBody)
-}
 
 //------------------------------------------------------------------------------
 // Renderer
@@ -288,9 +289,9 @@ Renderer = class {
 		Println(className)
 	}
 	RegisterFunction(moduleName as String, expr as Expr):map:void = {
-		[symbolName, argInfoTbl, typeInfo, codeFunctionBody] = ParseCaller(this, expr)
-		Println(symbolName)
-		this.funcInfoTbl.Add(FuncInfo(this, moduleName, symbolName, argInfoTbl, typeInfo, codeFunctionBody))
+		funcInfo = FuncInfo.Create(this, moduleName, expr)
+		Println(funcInfo.name)
+		this.funcInfoTbl.Add(funcInfo)
 	}
 	ComposeFunctionImplementation() = EvalTmplFunctionImplementation(this.funcInfoTbl.Each()).Join('\n')
 	ComposeFunctionAssignment(codePrefix as String) = (codePrefix + EvalTmplFunctionAssignment(this.funcInfoTbl.Each())).Join('\n')
