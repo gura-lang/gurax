@@ -1,4 +1,7 @@
 #!/usr/bin/env gurax
+import(cbridge)
+
+r = cbridge.Renderer()
 
 tmplHeader = tR'''
 //==============================================================================
@@ -254,10 +257,10 @@ expr = `{
 	wxPanel = Class(wxWindow) {
 	}
 	wxPoint = Class {
-		__init__(x? as Number, y? as Number)
+		__init__(x? as int, y? as int)
 	}
 	wxSize = Class {
-		__init__(width? as Number, height? as Number)
+		__init__(width? as int, height? as int)
 	}
 	wxStatusBar = Class(wxWindow) {
 	}
@@ -271,6 +274,8 @@ ClassInfo = class {
 	className as String
 	classNameParent:nil as String
 	classInfoParent:nil as ClassInfo
+	funcInfoConstructor as cbridge.FuncInfo
+	funcInfoTbl[] as cbridge.FuncInfo
 	__init__(className as String, classNameParent:nil as String) = {
 		this.className = className
 		this.classNameParent = classNameParent
@@ -307,11 +312,47 @@ expr.EachElem {|expr|
 			sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
 			sys.Exit(1)
 		}
-		//expr.right.block
-		//Println(className, ' ', classNameParent)
-		classInfoTbl.Add(ClassInfo(className, classNameParent))
+		classInfo = ClassInfo(className, classNameParent)
+		expr.right.block.EachElem {|expr|
+			funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
+			if (funcInfo.name == '__init__') {
+				classInfo.funcInfoConstructor = funcInfo
+			} else {
+				classInfo.funcInfoTbl.Add(funcInfo)
+			}
+		}
+		classInfoTbl.Add(classInfo)
 	}
 }
+
+tmplConstructorImplementation = tR'''
+// ${funcInfo.ToString()}
+Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
+{
+	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
+	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
+{
+	${if (!funcInfo.argInfoTbl.IsEmpty())}
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	${funcInfo.argInfoTbl::ComposeImplementation()}
+	${end}
+	// Function body
+	${if (funcInfo.tmplFunctionBody)}
+	${funcInfo.tmplFunctionBody.Eval()}
+	${else}
+	${funcInfo.typeInfo.ComposeFunctionBody(funcInfo.ComposeCaller())}
+	${end}
+}
+'''
+
+EvalTmplConstructorImplementation(funcInfo as FuncInfo):map = tmplConstructorImplementation.Eval()
 
 classInfoTbl.Each {|classInfo|
 	if (classInfo.classNameParent) {
