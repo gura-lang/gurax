@@ -372,30 +372,11 @@ classInfoTbl.Each {|classInfo|
 	}
 }
 
-cbridge.Renderer.DeclareType_Entity(decl as String, cType as String, vtypeFullName as String) = \
-this.DeclareType(decl, cType, vtypeFullName,
-	codePicker = R'''
-	auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
-	${this.cType}& ${varName} = value_${varName}.GetEntity();
-	'''
-	codePickerVec = R'''
-	auto ${varName} = args_gurax.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
-	'''
-	codeFunctionBody = R'''
-	${this.cType} rtn = ${caller};
-	return new Value_${this.vtype}(rtn);
-	''')
-
-r.DeclareType_Entity('wxPoint', 'wxPoint', 'wxPoint')
-
 classInfoTbl.Each {|classInfo|
 	classInfo.typeInfo = r.DeclareType(classInfo.className, classInfo.className, classInfo.className,
 		codePicker = R'''
 		auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 		${this.cType}& ${varName} = value_${varName}.GetEntity();
-		'''
-		codePickerVec = R'''
-		auto ${varName} = args_gurax.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		'''
 		codeFunctionBody = R'''
 		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
