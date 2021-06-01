@@ -257,6 +257,7 @@ expr = `{
 	wxEventType = Class {
 	}
 	wxEvtHandler = Class {
+		__init__()
 	}
 	wxFrame = Class(wxWindow) {
 	}
@@ -387,15 +388,27 @@ classInfoTbl.Each {|classInfo|
 }
 
 classInfoTbl.Each {|classInfo|
-	classInfo.typeInfo = r.DeclareType(classInfo.className, classInfo.className, classInfo.className,
-		codePicker = R'''
-		auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
-		${this.cType}& ${varName} = value_${varName}.GetEntity();
-		'''
-		codeFunctionBody = R'''
-		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-			${caller}));
-		''')
+	if (classInfo.IsEvtHandlerOrDeriv()) {
+		classInfo.typeInfo = r.DeclareType(classInfo.className + '_p', classInfo.className + '*', classInfo.className,
+			codePicker = R'''
+			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+			${this.cType} ${varName} = value_${varName}.GetEntityPtr();
+			'''
+			codeFunctionBody = R'''
+			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+				${caller}));
+			''')
+	} else {
+		classInfo.typeInfo = r.DeclareType(classInfo.className, classInfo.className, classInfo.className,
+			codePicker = R'''
+			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+			${this.cType}& ${varName} = value_${varName}.GetEntity();
+			'''
+			codeFunctionBody = R'''
+			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+				${caller}));
+			''')
+	}
 	if (classInfo.funcInfoConstructor) {
 		classInfo.funcInfoConstructor.typeInfo = classInfo.typeInfo
 	}

@@ -150,9 +150,8 @@ FuncInfo = class {
 		this.moduleName = moduleName, this.name = name, this.argInfoTbl = argInfoTbl, this.typeInfo = typeInfo
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
-	ComposeCaller() = {
-		Format('%s(%s)', this.name, this.argInfoTbl:*ComposeArgRef().Join(', ')) 
-	}
+	ComposeArgs() = this.argInfoTbl:*ComposeArgRef().Join(', ')
+	ComposeCaller() = Format('%s(%s)', this.name, this.ComposeArgs())
 	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
 }
 
