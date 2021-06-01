@@ -54,31 +54,31 @@ protected:
 	// Destructor
 	~Value_wxValidator() = default;
 public:
-	wxValidator* GetEntity() {
-		return reinterpret_cast<wxValidator*>(Value_wxEvtHandler::GetEntity());
+	wxValidator* GetEntityPtr() {
+		return reinterpret_cast<wxValidator*>(Value_wxEvtHandler::GetEntityPtr());
 	}
-	const wxValidator* GetEntity() const {
-		return reinterpret_cast<const wxValidator*>(Value_wxEvtHandler::GetEntity());
+	const wxValidator* GetEntityPtr() const {
+		return reinterpret_cast<const wxValidator*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
-	static wxValidator* GetEntity(Value& value) {
-		return dynamic_cast<Value_wxValidator&>(value).GetEntity();
+	static wxValidator* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxValidator&>(value).GetEntityPtr();
 	}
-	static const wxValidator* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_wxValidator&>(value).GetEntity();
+	static const wxValidator* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxValidator&>(value).GetEntityPtr();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this) == GetEntity(value);
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(GetEntity(*this) < GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

@@ -47,7 +47,7 @@ Gurax_ImplementConstructor(Panel)
 {
 	// Argument
 	ArgPicker args(argument);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntity() : nullptr;
+	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	wxWindowID id = args.IsValid()? args.PickNumber<wxWindowID>() : wxID_ANY;
 	const char* title = args.PickString();
 	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;

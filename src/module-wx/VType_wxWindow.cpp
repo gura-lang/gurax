@@ -63,7 +63,7 @@ Gurax_ImplementMethod(wxWindow, Close)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
@@ -87,7 +87,7 @@ Gurax_ImplementMethod(wxWindow, Show)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);

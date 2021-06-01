@@ -83,7 +83,7 @@ Value* Value_wxEventType::DoEval(Processor& processor, Argument& argument) const
 	const EventValueFactory& eventValueFactory = GetEventValueFactory();
 	// Arguments
 	ArgPicker args(argument);
-	wxEvtHandler* pEvtHandler = args.Pick<Value_wxEvtHandler>().GetEntity();
+	wxEvtHandler* pEvtHandler = args.Pick<Value_wxEvtHandler>().GetEntityPtr();
 	int id = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
 	Value& valueFunct = args.PickValue();
 	// Function body

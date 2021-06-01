@@ -102,7 +102,7 @@ Gurax_ImplementFunction(ImplementApp)
 {
 	// Argument
 	ArgPicker args(argument);
-	auto app = Value_wxApp::GetEntity(args.PickValue());
+	auto app = Value_wxApp::GetEntityPtr(args.PickValue());
 	// Function Body
 	wxApp::SetInstance(app);
 	int argc = 0;
@@ -133,7 +133,7 @@ Gurax_ImplementFunction(MessageBox_)
 	const char* message = args.PickString();
 	const char* caption = args.IsValid()? args.PickString() : wxMessageBoxCaptionStr;
 	int style = args.IsValid()? args.PickNumber<int>() : (wxOK | wxCENTRE);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntity() : nullptr;
+	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	int x = args.IsValid()? args.PickNumber<int>() : wxDefaultCoord;
 	int y = args.IsValid()? args.PickNumber<int>() : wxDefaultCoord;
 	// Function body

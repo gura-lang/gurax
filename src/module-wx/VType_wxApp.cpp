@@ -62,7 +62,7 @@ Gurax_ImplementMethod(wxApp, OnInit)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Function body
 	RefPtr<Value> pValueRtn(new Value_Bool(pEntity->OnInit()));

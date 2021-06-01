@@ -55,27 +55,27 @@ protected:
 	// Destructor
 	~Value_wxEvtHandler() = default;
 public:
-	wxEvtHandler* GetEntity() { return _pEntity.get(); }
-	const wxEvtHandler* GetEntity() const { return _pEntity.get(); }
+	wxEvtHandler* GetEntityPtr() { return _pEntity.get(); }
+	const wxEvtHandler* GetEntityPtr() const { return _pEntity.get(); }
 public:
-	static wxEvtHandler* GetEntity(Value& value) {
-		return dynamic_cast<Value_wxEvtHandler&>(value).GetEntity();
+	static wxEvtHandler* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxEvtHandler&>(value).GetEntityPtr();
 	}
-	static const wxEvtHandler* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_wxEvtHandler&>(value).GetEntity();
+	static const wxEvtHandler* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxEvtHandler&>(value).GetEntityPtr();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this) == GetEntity(value);
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(GetEntity(*this) < GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

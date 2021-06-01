@@ -54,31 +54,31 @@ protected:
 	// Destructor
 	~Value_wxControl() = default;
 public:
-	wxControl* GetEntity() {
-		return reinterpret_cast<wxControl*>(Value_wxEvtHandler::GetEntity());
+	wxControl* GetEntityPtr() {
+		return reinterpret_cast<wxControl*>(Value_wxEvtHandler::GetEntityPtr());
 	}
-	const wxControl* GetEntity() const {
-		return reinterpret_cast<const wxControl*>(Value_wxEvtHandler::GetEntity());
+	const wxControl* GetEntityPtr() const {
+		return reinterpret_cast<const wxControl*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
-	static wxControl* GetEntity(Value& value) {
-		return dynamic_cast<Value_wxControl&>(value).GetEntity();
+	static wxControl* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxControl&>(value).GetEntityPtr();
 	}
-	static const wxControl* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_wxControl&>(value).GetEntity();
+	static const wxControl* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxControl&>(value).GetEntityPtr();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this) == GetEntity(value);
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(GetEntity(*this) < GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

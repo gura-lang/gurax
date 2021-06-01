@@ -48,7 +48,7 @@ Gurax_ImplementConstructor(Frame)
 {
 	// Argument
 	ArgPicker args(argument);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntity() : nullptr;
+	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	wxWindowID id = args.PickNumber<wxWindowID>();
 	const char* title = args.PickString();
 	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
@@ -82,7 +82,7 @@ Gurax_ImplementMethod(wxFrame, CreateStatusBar)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
@@ -109,11 +109,11 @@ Gurax_ImplementMethod(wxFrame, SetMenuBar)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
-	wxMenuBar* menuBar = args.Pick<Value_wxMenuBar>().GetEntity();
+	wxMenuBar* menuBar = args.Pick<Value_wxMenuBar>().GetEntityPtr();
 	// Function body
 	pEntity->SetMenuBar(menuBar);
 	return Value::nil();
@@ -134,7 +134,7 @@ Gurax_ImplementMethod(wxFrame, SetStatusText)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);

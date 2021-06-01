@@ -54,31 +54,31 @@ protected:
 	// Destructor
 	~Value_wxStatusBar() = default;
 public:
-	wxStatusBar* GetEntity() {
-		return reinterpret_cast<wxStatusBar*>(Value_wxEvtHandler::GetEntity());
+	wxStatusBar* GetEntityPtr() {
+		return reinterpret_cast<wxStatusBar*>(Value_wxEvtHandler::GetEntityPtr());
 	}
-	const wxStatusBar* GetEntity() const {
-		return reinterpret_cast<const wxStatusBar*>(Value_wxEvtHandler::GetEntity());
+	const wxStatusBar* GetEntityPtr() const {
+		return reinterpret_cast<const wxStatusBar*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
-	static wxStatusBar* GetEntity(Value& value) {
-		return dynamic_cast<Value_wxStatusBar&>(value).GetEntity();
+	static wxStatusBar* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxStatusBar&>(value).GetEntityPtr();
 	}
-	static const wxStatusBar* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_wxStatusBar&>(value).GetEntity();
+	static const wxStatusBar* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxStatusBar&>(value).GetEntityPtr();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this) == GetEntity(value);
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(GetEntity(*this) < GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

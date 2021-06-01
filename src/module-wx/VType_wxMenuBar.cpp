@@ -64,11 +64,11 @@ Gurax_ImplementMethod(wxMenuBar, Append)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
-	wxMenu* menu = args.Pick<Value_wxMenu>().GetEntity();
+	wxMenu* menu = args.Pick<Value_wxMenu>().GetEntityPtr();
 	const char* title = args.PickString();
 	// Function body
 	bool rtn = pEntity->Append(menu, title);

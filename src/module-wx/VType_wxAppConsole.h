@@ -54,31 +54,31 @@ protected:
 	// Destructor
 	~Value_wxAppConsole() = default;
 public:
-	wxAppConsole* GetEntity() {
-		return reinterpret_cast<wxAppConsole*>(Value_wxEvtHandler::GetEntity());
+	wxAppConsole* GetEntityPtr() {
+		return reinterpret_cast<wxAppConsole*>(Value_wxEvtHandler::GetEntityPtr());
 	}
-	const wxAppConsole* GetEntity() const {
-		return reinterpret_cast<const wxAppConsole*>(Value_wxEvtHandler::GetEntity());
+	const wxAppConsole* GetEntityPtr() const {
+		return reinterpret_cast<const wxAppConsole*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
-	static wxAppConsole* GetEntity(Value& value) {
-		return dynamic_cast<Value_wxAppConsole&>(value).GetEntity();
+	static wxAppConsole* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxAppConsole&>(value).GetEntityPtr();
 	}
-	static const wxAppConsole* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_wxAppConsole&>(value).GetEntity();
+	static const wxAppConsole* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxAppConsole&>(value).GetEntityPtr();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this) == GetEntity(value);
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(GetEntity(*this) < GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

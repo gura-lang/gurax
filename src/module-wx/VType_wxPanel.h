@@ -54,31 +54,31 @@ protected:
 	// Destructor
 	~Value_wxPanel() = default;
 public:
-	wxPanel* GetEntity() {
-		return reinterpret_cast<wxPanel*>(Value_wxEvtHandler::GetEntity());
+	wxPanel* GetEntityPtr() {
+		return reinterpret_cast<wxPanel*>(Value_wxEvtHandler::GetEntityPtr());
 	}
-	const wxPanel* GetEntity() const {
-		return reinterpret_cast<const wxPanel*>(Value_wxEvtHandler::GetEntity());
+	const wxPanel* GetEntityPtr() const {
+		return reinterpret_cast<const wxPanel*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
-	static wxPanel* GetEntity(Value& value) {
-		return dynamic_cast<Value_wxPanel&>(value).GetEntity();
+	static wxPanel* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxPanel&>(value).GetEntityPtr();
 	}
-	static const wxPanel* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_wxPanel&>(value).GetEntity();
+	static const wxPanel* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxPanel&>(value).GetEntityPtr();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this) == GetEntity(value);
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(GetEntity(*this) < GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

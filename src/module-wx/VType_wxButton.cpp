@@ -49,13 +49,13 @@ Gurax_ImplementConstructor(Button)
 {
 	// Argument
 	ArgPicker args(argument);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntity() : nullptr;
+	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
 	wxWindowID id = args.PickNumber<wxWindowID>();
 	const char* label = args.IsValid()? args.PickString() : "";
 	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	long style = args.IsValid()? args.PickNumber<long>() : 0;
-	const wxValidator& validator = args.IsValid()? *args.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const wxValidator& validator = args.IsValid()? *args.Pick<Value_wxValidator>().GetEntityPtr() : wxDefaultValidator;
 	const char* name = args.IsValid()? args.PickString() : wxButtonNameStr;
 	// Function body
 	auto pEntity = new Value_wxButton::EntityT(parent, id, label, pos, size, style, validator, name);

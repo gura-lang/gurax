@@ -54,31 +54,31 @@ protected:
 	// Destructor
 	~Value_wxAnyButton() = default;
 public:
-	wxAnyButton* GetEntity() {
-		return reinterpret_cast<wxAnyButton*>(Value_wxEvtHandler::GetEntity());
+	wxAnyButton* GetEntityPtr() {
+		return reinterpret_cast<wxAnyButton*>(Value_wxEvtHandler::GetEntityPtr());
 	}
-	const wxAnyButton* GetEntity() const {
-		return reinterpret_cast<const wxAnyButton*>(Value_wxEvtHandler::GetEntity());
+	const wxAnyButton* GetEntityPtr() const {
+		return reinterpret_cast<const wxAnyButton*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
-	static wxAnyButton* GetEntity(Value& value) {
-		return dynamic_cast<Value_wxAnyButton&>(value).GetEntity();
+	static wxAnyButton* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wxAnyButton&>(value).GetEntityPtr();
 	}
-	static const wxAnyButton* GetEntity(const Value& value) {
-		return dynamic_cast<const Value_wxAnyButton&>(value).GetEntity();
+	static const wxAnyButton* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wxAnyButton&>(value).GetEntityPtr();
 	}
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
 	virtual size_t DoCalcHash() const override {
-		return reinterpret_cast<size_t>(GetEntity(*this));
+		return reinterpret_cast<size_t>(GetEntityPtr(*this));
 	}
 	virtual bool IsEqualTo(const Value& value) const override {
-		return IsSameType(value) && GetEntity(*this) == GetEntity(value);
+		return IsSameType(value) && GetEntityPtr(*this) == GetEntityPtr(value);
 	}
 	virtual bool IsLessThan(const Value& value) const override {
 		return IsSameType(value)?
-			(GetEntity(*this) < GetEntity(value)) :
+			(GetEntityPtr(*this) < GetEntityPtr(value)) :
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;

@@ -66,7 +66,7 @@ Gurax_ImplementMethod(wxMenu, Append)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
@@ -92,7 +92,7 @@ Gurax_ImplementMethod(wxMenu, AppendSeparator)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Function body
 	wxMenuItem* rtn = pEntity->AppendSeparator();

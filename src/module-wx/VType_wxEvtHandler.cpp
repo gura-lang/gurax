@@ -66,7 +66,7 @@ Gurax_ImplementMethod(wxEvtHandler, Bind)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntity();
+	auto pEntity = valueThis.GetEntityPtr();
 	if (!pEntity) return Value::nil();
 	// Arguments
 	ArgPicker args(argument);
