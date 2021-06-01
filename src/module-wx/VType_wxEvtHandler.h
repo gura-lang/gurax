@@ -29,6 +29,8 @@ public:
 	Gurax_DeclareReferable(Value_wxEvtHandler);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxEvtHandler");
+protected:
+	wxWeakRef<wxEvtHandler> _pEntity;
 public:
 	class EntityT : public wxEvtHandler {
 	public:
@@ -36,8 +38,6 @@ public:
 	public:
 		EntityCore core;
 	};
-protected:
-	wxWeakRef<wxEvtHandler> _pEntity;
 public:
 	static VType& vtype;
 public:
@@ -55,9 +55,17 @@ protected:
 	// Destructor
 	~Value_wxEvtHandler() = default;
 public:
+	wxEvtHandler& GetEntity() { return *_pEntity; }
+	const wxEvtHandler& GetEntity() const { return *_pEntity; }
 	wxEvtHandler* GetEntityPtr() { return _pEntity.get(); }
 	const wxEvtHandler* GetEntityPtr() const { return _pEntity.get(); }
 public:
+	static wxEvtHandler& GetEntity(Value& value) {
+		return dynamic_cast<Value_wxEvtHandler&>(value).GetEntity();
+	}
+	static const wxEvtHandler& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxEvtHandler&>(value).GetEntity();
+	}
 	static wxEvtHandler* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_wxEvtHandler&>(value).GetEntityPtr();
 	}

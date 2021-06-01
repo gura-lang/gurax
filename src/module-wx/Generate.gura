@@ -55,6 +55,15 @@ ${elsif (className == 'wxEvent')}
 protected:
 	RefPtr<Value> _pValueUserData;
 ${end}
+${if (evtHandlerOrDerivFlag)}
+public:
+	class EntityT : public ${className} {
+	public:
+		using ${className}::${className};
+	public:
+		EntityCore core;
+	};
+${end}
 public:
 	static VType& vtype;
 ${if (eventDerivFlag)}
@@ -302,6 +311,11 @@ ClassInfo = class {
 		}
 		false
 	}
+	IsEvtHandlerOrDeriv() = {
+		(className == 'wxEvtHandler') && return(true)
+		classInfo = this.GetClassInfoRoot()
+		classInfo && classInfo.className == 'wxEvtHandler'
+	}
 }
 
 classInfoTbl = []
@@ -397,7 +411,9 @@ classInfoTbl.Each {|classInfo|
 	fileNameHeader = Format('VType_%s.h', className)
 	fileNameSource = Format('VType_%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
-	if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem', 'wxPoint', 'wxSize']) {
+	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
+	//if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem', 'wxPoint', 'wxSize']) {
+	if (className in ['wxEvtHandler']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
