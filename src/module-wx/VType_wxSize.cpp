@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Size(width? as Number, height? as Number) {block?}
-Gurax_DeclareConstructor(Size)
+// wx.wxSize(width? as Number, height? as Number) {block?}
+Gurax_DeclareConstructorAlias(wxSize_gurax, "wxSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -36,19 +36,18 @@ Gurax_DeclareConstructor(Size)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Size` instance.");
+		"Creates an instance of wxSize.");
 }
 
-Gurax_ImplementConstructor(Size)
+Gurax_ImplementConstructorEx(wxSize_gurax, processor_gurax, argument_gurax)
 {
-	// Argument
-	ArgPicker args(argument);
-	int width = args.IsValid()? args.PickNumber<int>() : 0;
-	int height = args.IsValid()? args.PickNumber<int>() : 0;
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	int height = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
 	// Function body
-	wxSize entity(width, height);
-	RefPtr<Value_wxSize> pValue(new Value_wxSize(entity));
-	return argument.ReturnValue(processor, pValue.release());
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		wxSize(width, height)));
 }
 
 //-----------------------------------------------------------------------------
@@ -69,11 +68,9 @@ void VType_wxSize::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Size));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(wxSize_gurax));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Size, OnInit));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Size, propSkeleton));
 }
 
 //------------------------------------------------------------------------------

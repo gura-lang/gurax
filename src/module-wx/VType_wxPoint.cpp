@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Point(x? as Number, y? as Number) {block?}
-Gurax_DeclareConstructor(Point)
+// wx.wxPoint(x? as Number, y? as Number) {block?}
+Gurax_DeclareConstructorAlias(wxPoint_gurax, "wxPoint")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -36,19 +36,18 @@ Gurax_DeclareConstructor(Point)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Point` instance.");
+		"Creates an instance of wxPoint.");
 }
 
-Gurax_ImplementConstructor(Point)
+Gurax_ImplementConstructorEx(wxPoint_gurax, processor_gurax, argument_gurax)
 {
-	// Argument
-	ArgPicker args(argument);
-	int x = args.IsValid()? args.PickNumber<int>() : 0;
-	int y = args.IsValid()? args.PickNumber<int>() : 0;
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	int y = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
 	// Function body
-	wxPoint entity(x, y);
-	RefPtr<Value_wxPoint> pValue(new Value_wxPoint(entity));
-	return argument.ReturnValue(processor, pValue.release());
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
+		wxPoint(x, y)));
 }
 
 //-----------------------------------------------------------------------------
@@ -69,11 +68,9 @@ void VType_wxPoint::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Point));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(wxPoint_gurax));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Point, OnInit));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(Point, propSkeleton));
 }
 
 //------------------------------------------------------------------------------

@@ -226,8 +226,10 @@ Renderer = class {
 	DeclareType(decl as String, cType as String, vtypeFullName as String,
 			codePicker as String = '', codePickerValidation as String = '',
 			codePickerVec as String = '', codeFunctionBody as String = '', codeArgRef = '${varName}') = {
-		this.typeInfoMap[decl] = TypeInfo(decl, cType, vtypeFullName,
+		typeInfo = TypeInfo(decl, cType, vtypeFullName,
 				codePicker, codePickerValidation, codePickerVec, codeFunctionBody, codeArgRef)
+		this.typeInfoMap[decl] = typeInfo
+		typeInfo
 	}
 	DeclareType_Number(decl as String, cType? as String) = this.DeclareType(decl, cType || decl, 'Number',
 		codePicker = R'''

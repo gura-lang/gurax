@@ -204,9 +204,11 @@ void VType_${className}::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 ${if (classNameParent)}
-	Declare(VTYPE_${classNameParent}, Flag::Mutable);
+	Declare(VTYPE_${classNameParent}, Flag::Mutable${if (funcInfoConstructor) {
+		Format(', Gurax_CreateConstructor(%s_gurax)', funcInfoConstructor.name) }});
 ${else}
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable${if (funcInfoConstructor) {
+		Format(', Gurax_CreateConstructor(%s_gurax)', funcInfoConstructor.name) }});
 ${end}
 	// Assignment of method
 	// Assignment of property
@@ -274,6 +276,7 @@ expr = `{
 }
 
 ClassInfo = class {
+	typeInfo as cbridge.TypeInfo
 	className as String
 	classNameParent:nil as String
 	classInfoParent:nil as ClassInfo
@@ -330,14 +333,15 @@ expr.EachElem {|expr|
 }
 
 tmplConstructorImplementation = tR'''
-// ${funcInfo.ToString()}
+// ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Creates an instance of ${funcInfo.typeInfo.vtype}.");
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -384,9 +388,8 @@ this.DeclareType(decl, cType, vtypeFullName,
 
 r.DeclareType_Entity('wxPoint', 'wxPoint', 'wxPoint')
 
-/*
 classInfoTbl.Each {|classInfo|
-	r.DeclareType(classInfo.className, classInfo.className, classInfo.className,
+	classInfo.typeInfo = r.DeclareType(classInfo.className, classInfo.className, classInfo.className,
 		codePicker = R'''
 		auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 		${this.cType}& ${varName} = value_${varName}.GetEntity();
@@ -395,11 +398,13 @@ classInfoTbl.Each {|classInfo|
 		auto ${varName} = args_gurax.PickListT<${this.cType}>(Value_${this.vtype}::ValueForVector);
 		'''
 		codeFunctionBody = R'''
-		${this.cType} rtn = ${caller};
-		return new Value_${this.vtype}(rtn);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+			${caller}));
 		''')
+	if (classInfo.funcInfoConstructor) {
+		classInfo.funcInfoConstructor.typeInfo = classInfo.typeInfo
+	}
 }
-*/
 
 classInfoTbl.Each {|classInfo|
 	classInfoParent = classInfo.classInfoParent
@@ -411,8 +416,7 @@ classInfoTbl.Each {|classInfo|
 	fileNameHeader = Format('VType_%s.h', className)
 	fileNameSource = Format('VType_%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
-	//if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem']) {
-	if (className in ['wxPoint']) {
+	if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem', 'wxPoint', 'wxSize']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
