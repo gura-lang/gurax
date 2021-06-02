@@ -303,7 +303,7 @@ public:
 	Iterator_for(Processor* pProcessor, Expr_Block* pExprOfBlock, DeclArgOwner* pDeclArgOwner,
 				 IteratorOwner* pIteratorOwner, bool skipNilFlag) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->CreateFrame<Frame_Scope>()),
-		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
+		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pProcessor, *pExprOfBlock)),
 		_pDeclArgOwner(pDeclArgOwner), _pIteratorOwner(pIteratorOwner),
 		_skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
 public:
@@ -339,7 +339,7 @@ public:
 	Iterator_while(Processor* pProcessor, Expr* pExprCriteria, Expr_Block* pExprOfBlock, bool skipNilFlag) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
 		_pExprCriteria(pExprCriteria), _pExprOfBlock(pExprOfBlock),
-		_pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
+		_pArgument(Argument::CreateForBlockCall(*pProcessor, *pExprOfBlock)),
 		_skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
@@ -373,7 +373,7 @@ private:
 public:
 	Iterator_repeat(Processor* pProcessor, Expr_Block* pExprOfBlock, bool finiteFlag, bool skipNilFlag, size_t cnt = -1) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->GetFrameCur().Reference()),
-		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
+		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pProcessor, *pExprOfBlock)),
 		_finiteFlag(finiteFlag), _skipNilFlag(skipNilFlag), _cnt(cnt), _idx(0), _contFlag(true) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }
@@ -410,7 +410,7 @@ private:
 public:
 	Iterator_DoEach(Processor* pProcessor, Expr_Block* pExprOfBlock, Iterator* pIteratorSrc, bool skipNilFlag) :
 		_pProcessor(pProcessor), _pFrame(pProcessor->CreateFrame<Frame_Scope>()),
-		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pExprOfBlock)),
+		_pExprOfBlock(pExprOfBlock), _pArgument(Argument::CreateForBlockCall(*pProcessor, *pExprOfBlock)),
 		_pIteratorSrc(pIteratorSrc), _skipNilFlag(skipNilFlag), _idx(0), _contFlag(true) {}
 public:
 	Processor& GetProcessor() { return *_pProcessor; }

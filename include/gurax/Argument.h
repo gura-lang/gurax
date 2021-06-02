@@ -25,6 +25,7 @@ public:
 	enum class MapMode { None, ToIter, ToList, };
 private:
 	RefPtr<Value> _pValueCar;
+	RefPtr<Frame> _pFrameOfScope;
 	RefPtr<DeclCallable> _pDeclCallable;
 	RefPtr<Attribute> _pAttr;
 	DeclCallable::Flags _flags;
@@ -36,11 +37,11 @@ private:
 	MapMode _mapMode;
 public:
 	// Constructor
-	Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
+	Argument(Processor& processor, Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
 			 DeclCallable::Flags flags, Value* pValueThis, Expr_Block* pExprOfBlock);
-	Argument(DeclCallable* pDeclCallable, DeclCallable::Flags flags = DeclCallable::Flag::None) :
-		Argument(Value::nil(), pDeclCallable, Attribute::Empty->Reference(), flags, Value::undefined(), nullptr) {}
-	Argument(const Function& function, DeclCallable::Flags flags = DeclCallable::Flag::None);
+	Argument(Processor& processor, DeclCallable* pDeclCallable, DeclCallable::Flags flags = DeclCallable::Flag::None) :
+		Argument(processor, Value::nil(), pDeclCallable, Attribute::Empty->Reference(), flags, Value::undefined(), nullptr) {}
+	Argument(Processor& processor, const Function& function, DeclCallable::Flags flags = DeclCallable::Flag::None);
 	// Copy constructor/operator
 	Argument(const Argument& src) = delete;
 	Argument& operator=(const Argument& src) = delete;
@@ -50,12 +51,13 @@ public:
 protected:
 	~Argument() = default;
 public:
-	static Argument* CreateForBlockCall(const Expr_Block& exprOfBlock) {
-		return new Argument(exprOfBlock.GetDeclCallable().Reference(), DeclCallable::Flag::CutExtraArgs);
+	static Argument* CreateForBlockCall(Processor& processor, const Expr_Block& exprOfBlock) {
+		return new Argument(processor, exprOfBlock.GetDeclCallable().Reference(), DeclCallable::Flag::CutExtraArgs);
 	}
 public:
 	Value& GetValueCar() { return *_pValueCar; }
 	const Value& GetValueCar() const { return *_pValueCar; }
+	Frame& GetFrameOfScope() { return *_pFrameOfScope; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	DeclCallable::Flags GetFlags() const { return _flags; }
 	const Attribute& GetAttr() const { return *_pAttr; }

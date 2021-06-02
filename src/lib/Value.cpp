@@ -111,6 +111,11 @@ const DeclCallable* Value::GetDeclCallable()
 	return nullptr;
 }
 
+Frame* Value::GetFrameOfScope(Processor& processor)
+{
+	return processor.GetFrameCur().Reference();
+}
+
 void Value::DoCall(Processor& processor, Argument& argument)
 {
 	const PUnit* pPUnitOfCaller = processor.GetPUnitCur();
@@ -370,7 +375,7 @@ Value::CustomPack::~CustomPack()
 	for (;;) {
 		const Function& funcDestructor = pVTypeCustom->GetDestructor();
 		if (!funcDestructor.IsEmpty()) {
-			RefPtr<Argument> pArgument(new Argument(funcDestructor));
+			RefPtr<Argument> pArgument(new Argument(*_pProcessor, funcDestructor));
 			pArgument->SetValueThis(_pValueThis->Reference());
 			Value::Delete(funcDestructor.Eval(*_pProcessor, *pArgument));
 			if (Error::IsIssued()) return;

@@ -150,7 +150,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 	bool dynamicScopeFlag = false;
 	Frame& frame = processor.BeginFunction(*this, dynamicScopeFlag);
 	argument.AssignToFrame(frame, processor.GetFrameCur());
-	RefPtr<Argument> pArgumentInh(new Argument(constructorInh));
+	RefPtr<Argument> pArgumentInh(new Argument(processor, constructorInh));
 	processor.PushValue(new Value_Argument(pArgumentInh.Reference()));
 	Value::Delete(processor.ProcessPUnit(GetExprBody().GetPUnitSubFirst()));
 	if (Error::IsIssued()) {

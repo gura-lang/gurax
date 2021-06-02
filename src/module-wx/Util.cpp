@@ -14,7 +14,7 @@ bool EntityCore::PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, Ref
 	if (!pValueThis) return false;
 	*ppFunc = &pValueThis->LookupMethod(pSymbolFunc);
 	if ((*ppFunc)->IsEmpty()) return false;
-	pArgument.reset(new Argument(**ppFunc));
+	pArgument.reset(new Argument(GetProcessor(), **ppFunc));
 	pArgument->SetValueThis(pValueThis.release());
 	return true;
 }

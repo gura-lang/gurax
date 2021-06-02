@@ -704,7 +704,7 @@ String Iterator_Flatten::ToString(const StringStyle& ss) const
 Iterator_SinceWithFunc::Iterator_SinceWithFunc(
 	Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeFirstFlag) :
 	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
-	_pArgument(new Argument(*pFunction)), _idx(0),
+	_pArgument(new Argument(*pProcessor, *pFunction)), _idx(0),
 	_includeFirstFlag(includeFirstFlag), _contFlag(true), _triggeredFlag(false)
 {
 }
@@ -783,7 +783,7 @@ String Iterator_SinceWithIter::ToString(const StringStyle& ss) const
 Iterator_UntilWithFunc::Iterator_UntilWithFunc(
 	Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc, bool includeLastFlag) :
 	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
-	_pArgument(new Argument(*pFunction)), _idx(0),
+	_pArgument(new Argument(*pProcessor, *pFunction)), _idx(0),
 	_includeLastFlag(includeLastFlag), _doneFlag(false)
 {
 }
@@ -858,7 +858,7 @@ String Iterator_UntilWithIter::ToString(const StringStyle& ss) const
 Iterator_WhileWithFunc::Iterator_WhileWithFunc(
 	Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc) :
 	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
-	_pArgument(new Argument(*pFunction)), _idx(0), _doneFlag(false)
+	_pArgument(new Argument(*pProcessor, *pFunction)), _idx(0), _doneFlag(false)
 {
 }
 
@@ -927,7 +927,7 @@ String Iterator_WhileWithIter::ToString(const StringStyle& ss) const
 Iterator_FilterWithFunc::Iterator_FilterWithFunc(
 	Processor* pProcessor, Function* pFunction, Iterator* pIteratorSrc) :
 	_pProcessor(pProcessor), _pFunction(pFunction), _pIteratorSrc(pIteratorSrc),
-	_pArgument(new Argument(*pFunction)), _idx(0), _doneFlag(false)
+	_pArgument(new Argument(*pProcessor, *pFunction)), _idx(0), _doneFlag(false)
 {
 }
 

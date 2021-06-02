@@ -558,7 +558,7 @@ Value* VType_Iterator::Method_Find(Processor& processor, Argument& argument, Ite
 		Function& func = Value_Function::GetFunction(*pValue);
 		RefPtr<Frame> pFrame(func.LockFrameOuter());
 		if (!pFrame) return Value::nil();
-		RefPtr<Argument> pArgument(new Argument(func));
+		RefPtr<Argument> pArgument(new Argument(processor, func));
 		for (size_t idx = 0; ; idx++) {
 			RefPtr<Value> pValueSrc(iteratorSrc.NextValue());
 			if (!pValueSrc) break;

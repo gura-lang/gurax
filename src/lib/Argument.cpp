@@ -8,9 +8,9 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Argument
 //------------------------------------------------------------------------------
-Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
+Argument::Argument(Processor& processor, Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
 				   DeclCallable::Flags flags, Value* pValueThis, Expr_Block* pExprOfBlock) :
-	_pValueCar(pValueCar), _pDeclCallable(pDeclCallable), _pAttr(pAttr), _flags(flags),
+	_pValueCar(pValueCar), _pFrameOfScope(pValueCar->GetFrameOfScope(processor)), _pDeclCallable(pDeclCallable), _pAttr(pAttr), _flags(flags),
 	_pValueThis(pValueThis), _pExprOfBlock(pExprOfBlock), _pArgSlotToFeed(nullptr),
 	_mapMode(MapMode::None)
 {
@@ -33,8 +33,8 @@ Argument::Argument(Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAt
 	_pArgSlotToFeed = _pArgSlotFirst.get();
 }
 
-Argument::Argument(const Function& function, DeclCallable::Flags flags) :
-	Argument(function.GetDeclCallable().Reference(), flags)
+Argument::Argument(Processor& processor, const Function& function, DeclCallable::Flags flags) :
+	Argument(processor, function.GetDeclCallable().Reference(), flags)
 {
 }
 

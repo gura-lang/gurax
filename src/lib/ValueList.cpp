@@ -18,7 +18,7 @@ ValueList& ValueList::Sort(SortOrder sortOrder)
 
 ValueList& ValueList::Sort(Processor& processor, const Function& function)
 {
-	RefPtr<Argument> pArgument(new Argument(function));
+	RefPtr<Argument> pArgument(new Argument(processor, function));
 	std::sort(begin(), end(), Value::KeyCustomCompare(processor, function, *pArgument));
 	return *this;
 }
@@ -31,7 +31,7 @@ ValueList& ValueList::StableSort(SortOrder sortOrder)
 
 ValueList& ValueList::StableSort(Processor& processor, const Function& function)
 {
-	RefPtr<Argument> pArgument(new Argument(function));
+	RefPtr<Argument> pArgument(new Argument(processor, function));
 	std::stable_sort(begin(), end(), Value::KeyCustomCompare(processor, function, *pArgument));
 	return *this;
 }
@@ -117,7 +117,7 @@ size_t ValueList::CountIf(Processor& processor, const Function& function) const
 {
 	Frame& frame = processor.GetFrameCur();
 	size_t cnt = 0;
-	RefPtr<Argument> pArgument(new Argument(function));
+	RefPtr<Argument> pArgument(new Argument(processor, function));
 	for (const Value* pValue : *this) {
 		ArgFeeder args(*pArgument, frame);
 		args.FeedValue(pValue->Reference());

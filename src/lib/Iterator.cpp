@@ -75,7 +75,7 @@ size_t Iterator::CountIf(Processor& processor, const Function& function)
 {
 	Frame& frame = processor.GetFrameCur();
 	size_t cnt = 0;
-	RefPtr<Argument> pArgument(new Argument(function));
+	RefPtr<Argument> pArgument(new Argument(processor, function));
 	for (;;) {
 		RefPtr<Value> pValueElem(NextValue());
 		if (!pValueElem) break;

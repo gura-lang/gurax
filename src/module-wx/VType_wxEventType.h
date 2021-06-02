@@ -41,7 +41,7 @@ public:
 	void Eval(wxEvent& event) {
 		const DeclCallable* pDeclCallable = _pValueFunct->GetDeclCallableWithError();
 		if (!pDeclCallable) return;
-		RefPtr<Argument> pArg(new Argument(pDeclCallable->Reference()));
+		RefPtr<Argument> pArg(new Argument(*_pProcessor, pDeclCallable->Reference()));
 		ArgFeeder args(*pArg, _pProcessor->GetFrameCur());
 		if (!args.FeedValue(_eventValueFactory.CreateValue(event, _pValueUserData.Reference()))) return;
 		Value::Delete(_pValueFunct->Eval(*_pProcessor, *pArg));

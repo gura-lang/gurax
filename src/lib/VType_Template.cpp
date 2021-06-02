@@ -286,7 +286,7 @@ Gurax_ImplementMethod(Template, call)
 	const Value* pValue = tmpl.LookupValue(pSymbol);
 	if (!pValue || !pValue->IsType(VTYPE_Function)) return Value::nil();
 	const Function& function = Value_Function::GetFunction(*pValue);
-	RefPtr<Argument> pArgument(new Argument(function));
+	RefPtr<Argument> pArgument(new Argument(processor, function));
 	do {
 		ArgFeeder args(*pArgument, processor.GetFrameCur());
 		if (!args.FeedValues(values)) return Value::nil();

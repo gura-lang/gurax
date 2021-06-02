@@ -2087,7 +2087,7 @@ void PUnit_Argument<discardValueFlag, keepCarFlag>::Exec(Processor& processor) c
 		return;
 	}
 	RefPtr<Argument> pArgument(
-		new Argument(pValueCar.release(), pDeclCallable->Reference(),
+		new Argument(processor, pValueCar.release(), pDeclCallable->Reference(),
 					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::undefined(),
 					 Expr_Block::Reference(GetExprOfBlock())));
 	if constexpr (!discardValueFlag) processor.PushValue(new Value_Argument(pArgument.release()));
@@ -2169,7 +2169,7 @@ void PUnit_ArgumentDelegation<discardValueFlag>::Exec(Processor& processor) cons
 		pExprOfBlock.reset(dynamic_cast<Expr_Block*>(pValueExprCasted->GetExpr().Reference()));
 	}
 	RefPtr<Argument> pArgument(
-		new Argument(pValueCar.release(), pDeclCallable->Reference(),
+		new Argument(processor, pValueCar.release(), pDeclCallable->Reference(),
 					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::undefined(),
 					 pExprOfBlock.release()));
 	if constexpr (!discardValueFlag) processor.PushValue(new Value_Argument(pArgument.release()));
@@ -2206,7 +2206,9 @@ void PUnit_ArgSlot_Value<discardValueFlag>::Exec(Processor& processor) const
 {
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
+	
 	Frame& frame = processor.GetFrameCur();
+	
 	if (!pArgSlot) {
 		if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
 			Error::Issue(ErrorType::ArgumentError, "too many arguments");
@@ -2267,7 +2269,9 @@ void PUnit_ArgSlot_Lookup<discardValueFlag>::Exec(Processor& processor) const
 {
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
+	
 	Frame& frame = processor.GetFrameCur();
+	
 	if (!pArgSlot) {
 		if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
 			Error::Issue(ErrorType::ArgumentError, "too many arguments");
@@ -2333,7 +2337,6 @@ void PUnit_ArgSlotBegin<discardValueFlag>::Exec(Processor& processor) const
 {
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
-	Frame& frame = processor.GetFrameCur();
 	if (!pArgSlot) {
 		if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
 			Error::Issue(ErrorType::ArgumentError, "too many arguments");
@@ -2346,6 +2349,9 @@ void PUnit_ArgSlotBegin<discardValueFlag>::Exec(Processor& processor) const
 		processor.ErrorDone();
 		return;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
+	
+		Frame& frame = processor.GetFrameCur();
+	
 		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
 		if (Error::IsIssued()) {
 			processor.ErrorDone();
@@ -2391,6 +2397,7 @@ template<bool discardValueFlag>
 void PUnit_ArgSlotEnd<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
+	
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	argument.FeedValue(frame, pValue.release());
@@ -2428,6 +2435,7 @@ template<bool discardValueFlag>
 void PUnit_ArgSlotEnd_Expand<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
+	
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	if (!pValue->FeedExpandToArgument(frame, argument)) {
@@ -2482,7 +2490,9 @@ void PUnit_NamedArgSlotBegin<discardValueFlag>::Exec(Processor& processor) const
 		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
 		processor.ErrorDone();
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
+		
 		Frame& frame = processor.GetFrameCur();
+		
 		pArgSlot->FeedValue(argument, frame, new Value_Expr(GetExprAssigned()->Reference()));
 		if (Error::IsIssued()) {
 			processor.ErrorDone();
@@ -2527,6 +2537,7 @@ template<bool discardValueFlag>
 void PUnit_NamedArgSlotEnd<discardValueFlag>::Exec(Processor& processor) const
 {
 	Frame& frame = processor.GetFrameCur();
+	
 	RefPtr<Value> pValue(processor.PopValue());
 	RefPtr<Value> pValueArgSlot(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));

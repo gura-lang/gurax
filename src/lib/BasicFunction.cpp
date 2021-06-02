@@ -112,7 +112,7 @@ Gurax_ImplementFunction(Dim)
 	NumList<Int> idxList(cntList.size(), 0);
 	auto pCnt = cntList.begin();
 	auto pIdx = idxList.begin();
-	RefPtr<Argument> pArgSub(pExprOfBlock? Argument::CreateForBlockCall(*pExprOfBlock) : nullptr);
+	RefPtr<Argument> pArgSub(pExprOfBlock? Argument::CreateForBlockCall(processor, *pExprOfBlock) : nullptr);
 	RefPtr<ValueTypedOwner> pValueTypedOwner(
 		DimSub(processor, cntList, pCnt, idxList, pIdx, pExprOfBlock, pArgSub.get()));
 	if (!pValueTypedOwner) return Value::nil();

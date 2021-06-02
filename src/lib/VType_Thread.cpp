@@ -44,7 +44,7 @@ Gurax_ImplementConstructor(Thread)
 	ArgPicker args(argument);
 	Function& func = args.PickFunction();
 	// Function body
-	RefPtr<Argument> pArgument(new Argument(func));
+	RefPtr<Argument> pArgument(new Argument(processor, func));
 	RefPtr<OAL::Thread> pThread(new ThreadCustom(processor, func.Reference(), pArgument.release()));
 	return argument.ReturnValue(processor, new Value_Thread(pThread.release()));
 }
