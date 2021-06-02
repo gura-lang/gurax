@@ -191,7 +191,7 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of constructor
 //------------------------------------------------------------------------------
 ${if (funcInfoConstructor)}
-${EvalTmplConstructorImplementation(funcInfoConstructor)}
+${classInfo.EvalTmplConstructorImplementation(funcInfoConstructor)}
 ${end}
 
 //-----------------------------------------------------------------------------
@@ -291,6 +291,7 @@ ClassInfo = class {
 	classNameParent:nil as String
 	classInfoParent:nil as ClassInfo
 	funcInfoConstructor as cbridge.FuncInfo
+	tmplConstructorImplementation as Template
 	funcInfoTbl[] as cbridge.FuncInfo
 	__init__(className as String, classNameParent:nil as String) = {
 		this.className = className
@@ -313,9 +314,12 @@ ClassInfo = class {
 		false
 	}
 	IsEvtHandlerOrDeriv() = {
-		(className == 'wxEvtHandler') && return(true)
+		(this.className == 'wxEvtHandler') && return(true)
 		classInfo = this.GetClassInfoRoot()
 		classInfo && classInfo.className == 'wxEvtHandler'
+	}
+	EvalTmplConstructorImplementation(funcInfo as cbridge.FuncInfo):map = {
+		this.tmplConstructorImplementation.Eval()
 	}
 }
 
@@ -347,7 +351,7 @@ expr.EachElem {|expr|
 	}
 }
 
-tmplConstructorImplementation = tR'''
+tmplConstructorImplementation_Object = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
@@ -370,12 +374,42 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	${funcInfo.typeInfo.ComposeFunctionBody(funcInfo.ComposeCaller())}
+	return argument_gurax.ReturnValue(processor_gurax, new Value_${funcInfo.typeInfo.vtype}(
+		${funcInfo.ComposeCaller()}));
 	${end}
 }
 '''
 
-EvalTmplConstructorImplementation(funcInfo as cbridge.FuncInfo):map = tmplConstructorImplementation.Eval()
+tmplConstructorImplementation_EvtHandler = tR'''
+// ${funcInfo.ToString()} {block?}
+Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
+{
+	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
+	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of ${funcInfo.typeInfo.vtype}.");
+}
+
+Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
+{
+	${if (!funcInfo.argInfoTbl.IsEmpty())}
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	${funcInfo.argInfoTbl::ComposeImplementation()}
+	${end}
+	// Function body
+	${if (funcInfo.tmplFunctionBody)}
+	${funcInfo.tmplFunctionBody.Eval()}
+	${else}
+	auto pEntity_gurax = new Value_${funcInfo.typeInfo.vtype}::EntityT();
+	RefPtr<Value_${funcInfo.typeInfo.vtype}> pValue_gurax(new Value_${funcInfo.typeInfo.vtype}(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+	${end}
+}
+'''
 
 classInfoTbl.Each {|classInfo|
 	if (classInfo.classNameParent) {
@@ -398,6 +432,7 @@ classInfoTbl.Each {|classInfo|
 			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
 				${caller}));
 			''')
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
 	} else {
 		classInfo.typeInfo = r.DeclareType(classInfo.className, classInfo.className, classInfo.className,
 			codePicker = R'''
@@ -408,6 +443,7 @@ classInfoTbl.Each {|classInfo|
 			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
 				${caller}));
 			''')
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object
 	}
 	if (classInfo.funcInfoConstructor) {
 		classInfo.funcInfoConstructor.typeInfo = classInfo.typeInfo
@@ -426,7 +462,7 @@ classInfoTbl.Each {|classInfo|
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
 	//if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem', 'wxPoint', 'wxSize']) {
-	if (className in ['wxEvtHandler']) {
+	if (className in ['wxPoint', 'wxEvtHandler']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)

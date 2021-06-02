@@ -27,61 +27,28 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.EvtHandler() {block?}
-Gurax_DeclareConstructor(EvtHandler)
+// wx.wxEvtHandler() {block?}
+Gurax_DeclareConstructorAlias(wxEvtHandler_gurax, "wxEvtHandler")
 {
 	Declare(VTYPE_wxEvtHandler, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.EvtHandler` instance.");
+		"Creates an instance of wxEvtHandler.");
 }
 
-Gurax_ImplementConstructor(EvtHandler)
+Gurax_ImplementConstructorEx(wxEvtHandler_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	auto pEntity = new Value_wxEvtHandler::EntityT();
-	RefPtr<Value_wxEvtHandler> pValue(new Value_wxEvtHandler(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
+	auto pEntity_gurax = new Value_wxEvtHandler::EntityT();
+	RefPtr<Value_wxEvtHandler> pValue_gurax(new Value_wxEvtHandler(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.EvtHandler#Bind(eventType as wx.EventType, funct as Any, id? as Number, lastId? as Number):void
-Gurax_DeclareMethod(wxEvtHandler, Bind)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("eventType", VTYPE_wxEventType, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("lastId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethod(wxEvtHandler, Bind)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntityPtr();
-	if (!pEntity) return Value::nil();
-	// Arguments
-	ArgPicker args(argument);
-	Value_wxEventType& valueEventType = args.Pick<Value_wxEventType>();
-	wxEventType eventType = valueEventType.GetEntity();
-	const EventValueFactory& eventValueFactory = valueEventType.GetEventValueFactory();
-	Value& valueFunct = args.PickValue();
-	int id = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
-	int lastId = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
-	RefPtr<Value> pValueUserData(args.IsValid()? args.PickValue().Reference() : Value::nil());
-	// Function body
-	pEntity->Bind(eventType, &EventUserData::HandlerFunc, id, lastId,
-		new EventUserData(processor.Reference(), valueFunct.Reference(), pValueUserData.release(), eventValueFactory));
-	return Value::nil();
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -97,11 +64,9 @@ void VType_wxEvtHandler::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(EvtHandler));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(wxEvtHandler_gurax));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(wxEvtHandler, Bind));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(EvtHandler, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -113,9 +78,5 @@ String Value_wxEvtHandler::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.EvtHandler");
 }
-
-//------------------------------------------------------------------------------
-// Value_wxEvtHandler::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)
