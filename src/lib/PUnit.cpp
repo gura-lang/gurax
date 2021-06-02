@@ -2206,9 +2206,7 @@ void PUnit_ArgSlot_Value<discardValueFlag>::Exec(Processor& processor) const
 {
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
-	
-	Frame& frame = processor.GetFrameCur();
-	
+	Frame& frame = argument.GetFrameOfScope();
 	if (!pArgSlot) {
 		if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
 			Error::Issue(ErrorType::ArgumentError, "too many arguments");
@@ -2269,9 +2267,7 @@ void PUnit_ArgSlot_Lookup<discardValueFlag>::Exec(Processor& processor) const
 {
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
 	ArgSlot* pArgSlot = argument.GetArgSlotToFeed(); // this may be nullptr
-	
-	Frame& frame = processor.GetFrameCur();
-	
+	Frame& frame = argument.GetFrameOfScope();
 	if (!pArgSlot) {
 		if (!argument.IsSet(DeclCallable::Flag::CutExtraArgs)) {
 			Error::Issue(ErrorType::ArgumentError, "too many arguments");
@@ -2286,7 +2282,7 @@ void PUnit_ArgSlot_Lookup<discardValueFlag>::Exec(Processor& processor) const
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
 		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
 	} else {
-		RefPtr<Value> pValue(frame.Retrieve(GetSymbol()));
+		RefPtr<Value> pValue(processor.GetFrameCur().Retrieve(GetSymbol()));
 		if (!pValue) {
 			Error::Issue(ErrorType::ValueError, "symbol '%s' is not found", GetSymbol()->GetName());
 			processor.ErrorDone();
@@ -2349,9 +2345,7 @@ void PUnit_ArgSlotBegin<discardValueFlag>::Exec(Processor& processor) const
 		processor.ErrorDone();
 		return;
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
-	
-		Frame& frame = processor.GetFrameCur();
-	
+		Frame& frame = argument.GetFrameOfScope();
 		argument.FeedValue(frame, new Value_Expr(GetExprSrc().Reference()));
 		if (Error::IsIssued()) {
 			processor.ErrorDone();
@@ -2396,10 +2390,9 @@ PUnit* PUnitFactory_ArgSlotBegin::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_ArgSlotEnd<discardValueFlag>::Exec(Processor& processor) const
 {
-	Frame& frame = processor.GetFrameCur();
-	
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
+	Frame& frame = argument.GetFrameOfScope();
 	argument.FeedValue(frame, pValue.release());
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
@@ -2434,10 +2427,9 @@ PUnit* PUnitFactory_ArgSlotEnd::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_ArgSlotEnd_Expand<discardValueFlag>::Exec(Processor& processor) const
 {
-	Frame& frame = processor.GetFrameCur();
-	
 	RefPtr<Value> pValue(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
+	Frame& frame = argument.GetFrameOfScope();
 	if (!pValue->FeedExpandToArgument(frame, argument)) {
 		processor.ErrorDone();
 		return;
@@ -2490,9 +2482,7 @@ void PUnit_NamedArgSlotBegin<discardValueFlag>::Exec(Processor& processor) const
 		Error::Issue(ErrorType::ArgumentError, "duplicated assignment of argument");
 		processor.ErrorDone();
 	} else if (pArgSlot->IsVType(VTYPE_Quote)) {
-		
-		Frame& frame = processor.GetFrameCur();
-		
+		Frame& frame = argument.GetFrameOfScope();
 		pArgSlot->FeedValue(argument, frame, new Value_Expr(GetExprAssigned()->Reference()));
 		if (Error::IsIssued()) {
 			processor.ErrorDone();
@@ -2536,11 +2526,10 @@ PUnit* PUnitFactory_NamedArgSlotBegin::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_NamedArgSlotEnd<discardValueFlag>::Exec(Processor& processor) const
 {
-	Frame& frame = processor.GetFrameCur();
-	
 	RefPtr<Value> pValue(processor.PopValue());
 	RefPtr<Value> pValueArgSlot(processor.PopValue());
 	Argument& argument = Value_Argument::GetArgument(processor.PeekValue(0));
+	Frame& frame = argument.GetFrameOfScope();
 	ArgSlot& argSlot = Value_ArgSlot::GetArgSlot(*pValueArgSlot);
 	argSlot.FeedValue(argument, frame, pValue.release());
 	if (Error::IsIssued()) {
