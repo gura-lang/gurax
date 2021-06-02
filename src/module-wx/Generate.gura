@@ -197,6 +197,7 @@ ${end}
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+${EvalTmplMethodImplementation(funcInfoTbl.Each()).Join('\n')}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -220,6 +221,7 @@ ${else}
 		Format(', Gurax_CreateConstructor(%s_gurax)', funcInfoConstructor.name) }});
 ${end}
 	// Assignment of method
+	${//(codePrefix + cbriege.EvalTmplFunctionAssignment(funcInfoTbl.Each())).Join('\n')}
 	// Assignment of property
 }
 
@@ -238,6 +240,39 @@ String Value_${className}::ToString(const StringStyle& ss) const
 
 Gurax_EndModuleScope(wx)
 '''
+
+tmplMethodImplementation = tR'''
+// ${Format('%s.%s#%s(%s)', funcInfo.moduleName, className, funcInfo.name, funcInfo.argInfoTbl:*ToString().Join(', '))}
+Gurax_DeclareMethodAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
+{
+	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
+	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument);
+	auto pEntity_gurax = valueThis.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	${if (!funcInfo.argInfoTbl.IsEmpty())}
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	${funcInfo.argInfoTbl::ComposeImplementation()}
+	${end}
+	// Function body
+	${if (funcInfo.tmplFunctionBody)}
+	${funcInfo.tmplFunctionBody.Eval()}
+	${else}
+	${funcInfo.typeInfo.ComposeFunctionBody(funcInfo.ComposeCaller())}
+	${end}
+}
+'''
+
+EvalTmplMethodImplementation(funcInfo as cbridge.FuncInfo):map = tmplMethodImplementation.Eval()
 
 expr = `{
 	wxAnyButton = Class(wxControl) {
@@ -258,6 +293,7 @@ expr = `{
 	}
 	wxEvtHandler = Class {
 		__init__()
+		//Bind(eventType as wx.EventType, funct as Any, id? as int, lastId? as int, userData as Any):void
 	}
 	wxFrame = Class(wxWindow) {
 	}
@@ -282,6 +318,9 @@ expr = `{
 	wxValidator = Class(wxEvtHandler) {
 	}
 	wxWindow = Class(wxEvtHandler) {
+		__init__()
+		Close(force? as bool)
+		Show(show? as bool)
 	}
 }
 
@@ -292,7 +331,7 @@ ClassInfo = class {
 	classInfoParent:nil as ClassInfo
 	funcInfoConstructor as cbridge.FuncInfo
 	tmplConstructorImplementation as Template
-	funcInfoTbl[] as cbridge.FuncInfo
+	funcInfoTbl[] as cbridge.FuncInfo = []
 	__init__(className as String, classNameParent:nil as String) = {
 		this.className = className
 		this.classNameParent = classNameParent
@@ -457,12 +496,13 @@ classInfoTbl.Each {|classInfo|
 	classNameParent = cond(classInfoParent, classInfoParent.className)
 	classNameRoot = cond(classInfoRoot, classInfoRoot.className)
 	funcInfoConstructor = classInfo.funcInfoConstructor
-	fileNameHeader = Format('VType_%s.h', className)
-	fileNameSource = Format('VType_%s.cpp', className)
+	funcInfoTbl = classInfo.funcInfoTbl
+	fileNameHeader = Format('_VType_%s.h', className)
+	fileNameSource = Format('_VType_%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
 	//if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem', 'wxPoint', 'wxSize']) {
-	if (className in ['wxPoint', 'wxEvtHandler']) {
+	if (className in ['wxWindow']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
