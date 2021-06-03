@@ -324,7 +324,7 @@ Expr
   string     String     <Nil>
   symbol     Symbol     <Nil>
   mode       Symbol     <Nil>
-  operator   Operator   <Operator:Unary:Neg:-:(a:Any):map>
+  operator   Operator   <Operator:Unary:Neg:-:(a as Any):map>
   attr       Attribute  <Nil>
   EachParam  []
   EachElem   []
@@ -340,7 +340,7 @@ Expr
   string     String     <Nil>
   symbol     Symbol     <Nil>
   mode       Symbol     <Nil>
-  operator   Operator   <Operator:Binary:Add:+:(a:Any,b:Any):map>
+  operator   Operator   <Operator:Binary:Add:+:(a as Any,b as Any):map>
   attr       Attribute  <Nil>
   EachParam  []
   EachElem   []
@@ -372,7 +372,7 @@ Expr
   string     String     <Nil>
   symbol     Symbol     <Nil>
   mode       Symbol     <Nil>
-  operator   Operator   <Operator:Binary:Add:+:(a:Any,b:Any):map>
+  operator   Operator   <Operator:Binary:Add:+:(a as Any,b as Any):map>
   attr       Attribute  <Nil>
   EachParam  []
   EachElem   []

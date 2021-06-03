@@ -22,3 +22,6 @@ foo.sub1.sub2.CheckName() .. Am I foo.sub1.sub2? .. Yes.
 ======== Error ========
 import(bar) .. can't find a module named 'bar'
 import(foo.sub1) .. failed to assign module foo.sub1
+======== Scope ========
+scopetest.func .. <Function:scopetest.func(t as Type)>
+scopetest.func(x) .. Successfully accessed

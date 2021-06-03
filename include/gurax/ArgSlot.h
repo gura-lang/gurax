@@ -67,7 +67,7 @@ public:
 public:
 	// Virtual functions
 	virtual void ResetValue() = 0;
-	virtual void FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue) = 0;
+	virtual void FeedValue(Argument& argument, Frame& frameForVType, RefPtr<Value> pValue) = 0;
 	virtual bool HasValidValue() const = 0;
 	virtual ArgSlot* Advance() { return _pArgSlotNext.get(); }
 	virtual bool IsDefined() const = 0;

@@ -111,7 +111,7 @@ const DeclCallable* Value::GetDeclCallable()
 	return nullptr;
 }
 
-Frame* Value::GetFrameOfScope(Processor& processor)
+Frame* Value::GetFrameForVType(Processor& processor)
 {
 	return processor.GetFrameCur().Reference();
 }

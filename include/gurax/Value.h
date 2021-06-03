@@ -255,7 +255,7 @@ public:
 	}
 	virtual const DeclCallable* GetDeclCallableWithError();
 	virtual const DeclCallable* GetDeclCallable();
-	virtual Frame* GetFrameOfScope(Processor& processor);
+	virtual Frame* GetFrameForVType(Processor& processor);
 	virtual void DoCall(Processor& processor, Argument& argument);
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); }
 	virtual Value* DoIndexGet(const Index& index) const;

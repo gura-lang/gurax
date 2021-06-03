@@ -40,3 +40,10 @@ TestCase('Error') {
 	foo = 3
 	Tester(`import(foo.sub1))
 }
+
+TestCase('Scope') {
+	import(scopetest)
+	x = scopetest.Type()
+	Tester(`scopetest.func)
+	Tester(`scopetest.func(x))
+}

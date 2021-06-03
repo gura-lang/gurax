@@ -206,7 +206,7 @@ const DeclCallable* Value_Function::GetDeclCallable()
 	return &GetFunction().GetDeclCallable();
 }
 
-Frame* Value_Function::GetFrameOfScope(Processor& processor)
+Frame* Value_Function::GetFrameForVType(Processor& processor)
 {
 	Frame* pFrame = GetFunction().LockFrameOuter();
 	if (pFrame) return pFrame;

@@ -182,13 +182,13 @@ func.type .. `function
 String.Find.type .. `method
 A.f.type .. `method
 ======== return ========
-f() .. <Function:return(value?:Any)>
+f() .. <Function:return(value? as Any)>
 g() .. 3
 ======== Recursion ========
 20! = 2432902008176640000
 ======== nil attribute ========
-f .. <Function:f(a:Number)>
-g .. <Function:g(a:Number:nil)>
+f .. <Function:f(a as Number)>
+g .. <Function:g(a:nil as Number)>
 f(nil) .. a can't accept nil value
 g(nil) .. <Nil>
 ======== dynamicScope ========
@@ -262,23 +262,23 @@ Fact.type .. `function
 {f = & {}, f} .. <Function:f()>
 {f = & {}, f()} .. <Nil>
 {f = & {}, f(3)} .. too many arguments
-{f = & {$a}, f} .. <Function:f($a:Any)>
+{f = & {$a}, f} .. <Function:f($a as Any)>
 {f = & {$a}, f()} .. lacking value for argument '$a'
 {f = & {$a}, f(3)} .. 3
 {f = & {$a}, f(3, 4)} .. too many arguments
-{f = & {$a + $b}, f} .. <Function:f($a:Any,$b:Any)>
+{f = & {$a + $b}, f} .. <Function:f($a as Any,$b as Any)>
 {f = & {$a + $b}, f(3, 4)} .. 7
-{f = & {((($a + $b) + $c) + $d) + $e}, f} .. <Function:f($a:Any,$b:Any,$c:Any,$d:Any,$e:Any)>
+{f = & {((($a + $b) + $c) + $d) + $e}, f} .. <Function:f($a as Any,$b as Any,$c as Any,$d as Any,$e as Any)>
 {f = & {((($a + $b) + $c) + $d) + $e}, f(3, 4, 5, 6, 7)} .. 25
-{f = & {$a + ($b * $c)}, f} .. <Function:f($a:Any,$b:Any,$c:Any)>
+{f = & {$a + ($b * $c)}, f} .. <Function:f($a as Any,$b as Any,$c as Any)>
 {f = & {$a + ($b * $c)}, f(3, 4, 5)} .. 23
-{f = & {($a * $b) + $c}, f} .. <Function:f($a:Any,$b:Any,$c:Any)>
+{f = & {($a * $b) + $c}, f} .. <Function:f($a as Any,$b as Any,$c as Any)>
 {f = & {($a * $b) + $c}, f(3, 4, 5)} .. 17
-{f = & {g($a, $b, $c) + $d}, f} .. <Function:f($a:Any,$b:Any,$c:Any,$d:Any)>
+{f = & {g($a, $b, $c) + $d}, f} .. <Function:f($a as Any,$b as Any,$c as Any,$d as Any)>
 {f = & {g($a, $b, $c) + $d}, f(3, 4, 5, 6)} .. 18
-{f = & {$a + g($b, $c, $d)}, f} .. <Function:f($a:Any,$b:Any,$c:Any,$d:Any)>
+{f = & {$a + g($b, $c, $d)}, f} .. <Function:f($a as Any,$b as Any,$c as Any,$d as Any)>
 {f = & {$a + g($b, $c, $d)}, f(3, 4, 5, 6)} .. 18
-{f = & {$a + $a}, f} .. <Function:f($a:Any)>
+{f = & {$a + $a}, f} .. <Function:f($a as Any)>
 {f = & {$a + $a}, f(3)} .. 6
 {f = & {|a|}, f} .. <Function:f(a)>
 {f = & {|a| $x}, f} .. block parameters and dollar-style arguments can not be used together.

@@ -180,16 +180,19 @@ String DeclArg::ToString(const StringStyle& ss) const
 	str += GetSymbol()->GetName();
 	if (GetFlags() & Flag::ListVar) str += "[]";
 	str += GetOccur().GetMarker();
+	str += FlagsToString(GetFlags() & ~Flag::ListVar);
 	if (quoteFlag) {
 		// nothing to do 
+	//} else if (_pVType) {
+	//	str += " as ";
+	//	str += _pVType->ToString(ss);
 	} else if (!GetDottedSymbol().IsEmpty()) {
-		str += ':';
+		str += " as ";
 		str += GetDottedSymbol().ToString();
 	} else if (ss.IsVerbose()) {
-		str += ':';
+		str += " as ";
 		str += VTYPE_Any.GetName();
 	}
-	str += FlagsToString(GetFlags() & ~Flag::ListVar);
 	if (GetExprDefault()) {
 		str += ss.IsCram()? "=" : " = ";
 		str += GetExprDefault()->ToString(ss);

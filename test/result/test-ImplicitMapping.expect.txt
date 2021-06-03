@@ -27,7 +27,7 @@ f(x) .. [[0, 0, 0], <Nil>, [2, 4, 6], <Nil>, [4, 8, 12], <Nil>]
 f(x):flat .. [0, 0, 0, <Nil>, 2, 4, 6, <Nil>, 4, 8, 12, <Nil>]
 f(x):xlist:flat .. [0, 0, 0, 2, 4, 6, 4, 8, 12]
 ======== :void attribute ========
-<Function:f(n:Number):map:void>
+<Function:f(n as Number):map:void>
 1
 2
 3

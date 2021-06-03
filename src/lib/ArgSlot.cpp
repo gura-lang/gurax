@@ -25,13 +25,13 @@ void ArgSlot_Single::ResetValue()
 	_pValue.reset(Value::undefined());
 }
 
-void ArgSlot_Single::FeedValue(Argument& argument, Frame& frame, RefPtr<Value> pValue)
+void ArgSlot_Single::FeedValue(Argument& argument, Frame& frameForVType, RefPtr<Value> pValue)
 {
 	if (pValue->IsMappable(GetDeclArg(), argument.GetFlags())) {
 		pValue->UpdateMapMode(argument);
 		_pValue.reset(new Value_ArgMapper(pValue->GenIterator()));
 	} else {
-		pValue.reset(GetDeclArg().Cast(frame, *pValue));
+		pValue.reset(GetDeclArg().Cast(frameForVType, *pValue));
 		if (Error::IsIssued()) return;
 		_pValue.reset(pValue.release());
 	}

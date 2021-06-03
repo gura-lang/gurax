@@ -25,7 +25,7 @@ public:
 	enum class MapMode { None, ToIter, ToList, };
 private:
 	RefPtr<Value> _pValueCar;
-	RefPtr<Frame> _pFrameOfScope;
+	RefPtr<Frame> _pFrameForVType;
 	RefPtr<DeclCallable> _pDeclCallable;
 	RefPtr<Attribute> _pAttr;
 	DeclCallable::Flags _flags;
@@ -57,7 +57,7 @@ public:
 public:
 	Value& GetValueCar() { return *_pValueCar; }
 	const Value& GetValueCar() const { return *_pValueCar; }
-	Frame& GetFrameOfScope() { return *_pFrameOfScope; }
+	Frame& GetFrameForVType() { return *_pFrameForVType; }
 	const DeclCallable& GetDeclCallable() const { return *_pDeclCallable; }
 	DeclCallable::Flags GetFlags() const { return _flags; }
 	const Attribute& GetAttr() const { return *_pAttr; }
@@ -91,9 +91,9 @@ public:
 	bool CheckArgSlotToFeed() const;
 public:
 	void ResetAllValues();
-	void FeedValue(Frame& frame, Value* pValue) {
+	void FeedValue(Frame& frameForVType, Value* pValue) {
 		if (!_pArgSlotToFeed) return;
-		_pArgSlotToFeed->FeedValue(*this, frame, pValue);
+		_pArgSlotToFeed->FeedValue(*this, frameForVType, pValue);
 		_pArgSlotToFeed = _pArgSlotToFeed->Advance();
 	}
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {

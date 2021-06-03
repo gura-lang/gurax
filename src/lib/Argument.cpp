@@ -10,7 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 Argument::Argument(Processor& processor, Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
 				   DeclCallable::Flags flags, Value* pValueThis, Expr_Block* pExprOfBlock) :
-	_pValueCar(pValueCar), _pFrameOfScope(pValueCar->GetFrameOfScope(processor)), _pDeclCallable(pDeclCallable), _pAttr(pAttr), _flags(flags),
+	_pValueCar(pValueCar), _pFrameForVType(pValueCar->GetFrameForVType(processor)), _pDeclCallable(pDeclCallable), _pAttr(pAttr), _flags(flags),
 	_pValueThis(pValueThis), _pExprOfBlock(pExprOfBlock), _pArgSlotToFeed(nullptr),
 	_mapMode(MapMode::None)
 {
