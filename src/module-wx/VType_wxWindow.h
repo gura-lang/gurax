@@ -54,6 +54,12 @@ protected:
 	// Destructor
 	~Value_wxWindow() = default;
 public:
+	wxWindow& GetEntity() {
+		return reinterpret_cast<wxWindow&>(Value_wxEvtHandler::GetEntity());
+	}
+	const wxWindow& GetEntity() const {
+		return reinterpret_cast<const wxWindow&>(Value_wxEvtHandler::GetEntity());
+	}
 	wxWindow* GetEntityPtr() {
 		return reinterpret_cast<wxWindow*>(Value_wxEvtHandler::GetEntityPtr());
 	}
@@ -61,6 +67,12 @@ public:
 		return reinterpret_cast<const wxWindow*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
+	static wxWindow& GetEntity(Value& value) {
+		return dynamic_cast<Value_wxWindow&>(value).GetEntity();
+	}
+	static const wxWindow& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxWindow&>(value).GetEntity();
+	}
 	static wxWindow* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_wxWindow&>(value).GetEntityPtr();
 	}

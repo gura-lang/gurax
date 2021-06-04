@@ -197,7 +197,7 @@ ${end}
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-${EvalTmplMethodImplementation(funcInfoTbl.Each()).Join('\n')}
+${EvalTmplMethodImplementation(className, funcInfoTbl.Each()).Join('\n')}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -221,8 +221,10 @@ ${else}
 		Format(', Gurax_CreateConstructor(%s_gurax)', funcInfoConstructor.name) }});
 ${end}
 	// Assignment of method
+	${funcInfoTbl.Each() {|funcInfo|}}
+	Assign(Gurax_CreateMethod(${className}, ${funcInfo.name}_gurax));
+	${end}
 	${//(codePrefix + cbriege.EvalTmplFunctionAssignment(funcInfoTbl.Each())).Join('\n')}
-	// Assignment of property
 }
 
 //------------------------------------------------------------------------------
@@ -243,7 +245,7 @@ Gurax_EndModuleScope(wx)
 
 tmplMethodImplementation = tR'''
 // ${Format('%s.%s#%s(%s)', funcInfo.moduleName, className, funcInfo.name, funcInfo.argInfoTbl:*ToString().Join(', '))}
-Gurax_DeclareMethodAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
+Gurax_DeclareMethodAlias(${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
@@ -252,11 +254,11 @@ Gurax_DeclareMethodAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 		"");
 }
 
-Gurax_ImplementMethodEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(${className}, ${funcInfo.name}_gurax, processor_gurax, argument_gurax)
 {
 	// Target
-	auto& valueThis_gurax = GetValueThis(argument);
-	auto pEntity_gurax = valueThis.GetEntityPtr();
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	${if (!funcInfo.argInfoTbl.IsEmpty())}
 	// Arguments
@@ -267,12 +269,12 @@ Gurax_ImplementMethodEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	${funcInfo.typeInfo.ComposeFunctionBody(funcInfo.ComposeCaller())}
+	${funcInfo.typeInfo.ComposeFunctionBody('pEntity_gurax->' + funcInfo.ComposeCaller())}
 	${end}
 }
 '''
 
-EvalTmplMethodImplementation(funcInfo as cbridge.FuncInfo):map = tmplMethodImplementation.Eval()
+EvalTmplMethodImplementation(className as String, funcInfo as cbridge.FuncInfo):map = tmplMethodImplementation.Eval()
 
 expr = `{
 	wxAnyButton = Class(wxControl) {
@@ -319,8 +321,8 @@ expr = `{
 	}
 	wxWindow = Class(wxEvtHandler) {
 		__init__()
-		Close(force? as bool)
-		Show(show? as bool)
+		Close(force? as bool) as bool
+		Show(show? as bool) as bool
 	}
 }
 
@@ -380,7 +382,7 @@ expr.EachElem {|expr|
 		expr.right.block.EachElem {|expr|
 			funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
 			if (funcInfo.name == '__init__') {
-				funcInfo.name = classInfo.className
+				funcInfo.name = classInfo.className.Mid(2)
 				classInfo.funcInfoConstructor = funcInfo
 			} else {
 				classInfo.funcInfoTbl.Add(funcInfo)
@@ -392,7 +394,7 @@ expr.EachElem {|expr|
 
 tmplConstructorImplementation_Object = tR'''
 // ${funcInfo.ToString()} {block?}
-Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
+Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name.Mid(2)}")
 {
 	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
@@ -421,7 +423,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 
 tmplConstructorImplementation_EvtHandler = tR'''
 // ${funcInfo.ToString()} {block?}
-Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
+Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name.Mid(2)}")
 {
 	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
@@ -497,8 +499,8 @@ classInfoTbl.Each {|classInfo|
 	classNameRoot = cond(classInfoRoot, classInfoRoot.className)
 	funcInfoConstructor = classInfo.funcInfoConstructor
 	funcInfoTbl = classInfo.funcInfoTbl
-	fileNameHeader = Format('_VType_%s.h', className)
-	fileNameSource = Format('_VType_%s.cpp', className)
+	fileNameHeader = Format('VType_%s.h', className)
+	fileNameSource = Format('VType_%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
 	//if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem', 'wxPoint', 'wxSize']) {

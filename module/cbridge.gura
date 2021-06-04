@@ -155,7 +155,7 @@ FuncInfo = class {
 	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
 }
 
-CreateFuncInfo(r, moduleName as String, expr as Expr) = {
+CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	codeFunctionBody = nil
 	if (expr.IsAssign()) {
 		!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
