@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.wxPoint(x? as Number, y? as Number) {block?}
-Gurax_DeclareConstructorAlias(wxPoint_gurax, "wxPoint")
+// wx.Point(x? as Number, y? as Number) {block?}
+Gurax_DeclareConstructorAlias(Point_gurax, "Point")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -39,7 +39,7 @@ Gurax_DeclareConstructorAlias(wxPoint_gurax, "wxPoint")
 		"Creates an instance of wxPoint.");
 }
 
-Gurax_ImplementConstructorEx(wxPoint_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementConstructorEx(Point_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -53,6 +53,7 @@ Gurax_ImplementConstructorEx(wxPoint_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -68,9 +69,8 @@ void VType_wxPoint::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(wxPoint_gurax));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Point_gurax));
 	// Assignment of method
-	// Assignment of property
 }
 
 //------------------------------------------------------------------------------

@@ -394,7 +394,7 @@ expr.EachElem {|expr|
 
 tmplConstructorImplementation_Object = tR'''
 // ${funcInfo.ToString()} {block?}
-Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name.Mid(2)}")
+Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
@@ -416,14 +416,14 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
 	return argument_gurax.ReturnValue(processor_gurax, new Value_${funcInfo.typeInfo.vtype}(
-		${funcInfo.ComposeCaller()}));
+		wx${funcInfo.ComposeCaller()}));
 	${end}
 }
 '''
 
 tmplConstructorImplementation_EvtHandler = tR'''
 // ${funcInfo.ToString()} {block?}
-Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name.Mid(2)}")
+Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
@@ -503,8 +503,7 @@ classInfoTbl.Each {|classInfo|
 	fileNameSource = Format('VType_%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	//if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem', 'wxPoint', 'wxSize']) {
-	if (className in ['wxWindow']) {
+	if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem', 'wxPoint', 'wxSize', 'wxWindow']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)

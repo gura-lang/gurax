@@ -32,6 +32,7 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of method
 //-----------------------------------------------------------------------------
 
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -48,7 +49,6 @@ void VType_wxMenuItem::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method
-	// Assignment of property
 }
 
 //------------------------------------------------------------------------------

@@ -27,8 +27,8 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.wxSize(width? as Number, height? as Number) {block?}
-Gurax_DeclareConstructorAlias(wxSize_gurax, "wxSize")
+// wx.Size(width? as Number, height? as Number) {block?}
+Gurax_DeclareConstructorAlias(Size_gurax, "Size")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -39,7 +39,7 @@ Gurax_DeclareConstructorAlias(wxSize_gurax, "wxSize")
 		"Creates an instance of wxSize.");
 }
 
-Gurax_ImplementConstructorEx(wxSize_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementConstructorEx(Size_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -53,6 +53,7 @@ Gurax_ImplementConstructorEx(wxSize_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -68,9 +69,8 @@ void VType_wxSize::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(wxSize_gurax));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Size_gurax));
 	// Assignment of method
-	// Assignment of property
 }
 
 //------------------------------------------------------------------------------
