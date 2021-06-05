@@ -5,61 +5,61 @@ r = cbridge.Renderer()
 
 tmplHeader = tR'''
 //==============================================================================
-// VType_${className}.h
+// VType_wx${className}.h
 //==============================================================================
-#ifndef GURAX_MODULE_WX_VTYPE_${className.Upper()}_H
-#define GURAX_MODULE_WX_VTYPE_${className.Upper()}_H
+#ifndef GURAX_MODULE_WX_VTYPE_WX${className.Upper()}_H
+#define GURAX_MODULE_WX_VTYPE_WX${className.Upper()}_H
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
 ${if (classNameParent)}
-#include "VType_${classNameParent}.h"
+#include "VType_wx${classNameParent}.h"
 ${end}
-${if (className == 'wxEvent')}
+${if (className == 'Event')}
 #include "VType_wxEventType.h"
 ${end}
 
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// VType_${className}
+// VType_wx${className}
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE VType_${className} : public VType {
+class GURAX_DLLDECLARE VType_wx${className} : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
 };
 
-extern GURAX_DLLDECLARE VType_${className} VTYPE_${className};
+extern GURAX_DLLDECLARE VType_wx${className} VTYPE_wx${className};
 
 //------------------------------------------------------------------------------
-// Value_${className}
+// Value_wx${className}
 //------------------------------------------------------------------------------
 ${if (classNameParent)}
-class GURAX_DLLDECLARE Value_${className} : public Value_${classNameParent} {
+class GURAX_DLLDECLARE Value_wx${className} : public Value_wx${classNameParent} {
 ${else}
-class GURAX_DLLDECLARE Value_${className} : public Value_Object {
+class GURAX_DLLDECLARE Value_wx${className} : public Value_Object {
 ${end}
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Value_${className});
+	Gurax_DeclareReferable(Value_wx${className});
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Value_${className}");
-${if (className == 'wxEvtHandler')}
+	Gurax_MemoryPoolAllocator("Value_wx${className}");
+${if (className == 'EvtHandler')}
 protected:
-	wxWeakRef<${className}> _pEntity;
+	wxWeakRef<wx${className}> _pEntity;
 ${elsif (!classNameParent)}
 protected:
-	${className} _entity;
-${elsif (className == 'wxEvent')}
+	wx${className} _entity;
+${elsif (className == 'Event')}
 protected:
 	RefPtr<Value> _pValueUserData;
 ${end}
 ${if (evtHandlerOrDerivFlag)}
 public:
-	class EntityT : public ${className} {
+	class EntityT : public wx${className} {
 	public:
-		using ${className}::${className};
+		using wx${className}::wx${className};
 	public:
 		EntityCore core;
 	};
@@ -67,76 +67,76 @@ ${end}
 public:
 	static VType& vtype;
 ${if (eventDerivFlag)}
-	static EventValueFactoryDeriv<Value_${className}> eventValueFactory;
+	static EventValueFactoryDeriv<Value_wx${className}> eventValueFactory;
 ${end}
 public:
 	// Constructor
-	Value_${className}() = delete;
-${if (className == 'wxEvtHandler')}
-	explicit Value_${className}(${className}* pEntity, VType& vtype = VTYPE_${className}) :
+	Value_wx${className}() = delete;
+${if (className == 'EvtHandler')}
+	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (!classNameParent)}
-	explicit Value_${className}(const ${className}& entity, VType& vtype = VTYPE_${className}) :
+	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
-${elsif (className == 'wxEvent')}
-	explicit Value_${className}(const ${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_${className}) :
-		Value_${classNameParent}(entity, vtype), _pValueUserData(pValueUserData) {}
-${elsif (classNameRoot == 'wxEvtHandler')}
-	explicit Value_${className}(${classNameRoot}* pEntity, VType& vtype = VTYPE_${className}) :
-		Value_${classNameParent}(pEntity, vtype) {}
+${elsif (className == 'Event')}
+	explicit Value_wx${className}(const wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(entity, vtype), _pValueUserData(pValueUserData) {}
+${elsif (classNameRoot == 'EvtHandler')}
+	explicit Value_wx${className}(wx${classNameRoot}* pEntity, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(pEntity, vtype) {}
 ${elsif (eventDerivFlag)}
-	Value_${className}(const ${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_${className}) :
-		Value_${classNameParent}(entity, pValueUserData, vtype) {}
+	Value_wx${className}(const wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(entity, pValueUserData, vtype) {}
 ${else}
-	explicit Value_${className}(const ${classNameRoot}& entity, VType& vtype = VTYPE_${className}) :
-		Value_${classNameParent}(entity, vtype) {}
+	explicit Value_wx${className}(const wx${classNameRoot}& entity, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(entity, vtype) {}
 ${end}
 	// Copy constructor/operator
-	Value_${className}(const Value_${className}& src) = delete;
-	Value_${className}& operator=(const Value_${className}& src) = delete;
+	Value_wx${className}(const Value_wx${className}& src) = delete;
+	Value_wx${className}& operator=(const Value_wx${className}& src) = delete;
 	// Move constructor/operator
-	Value_${className}(Value_${className}&& src) noexcept = delete;
-	Value_${className}& operator=(Value_${className}&& src) noexcept = delete;
+	Value_wx${className}(Value_wx${className}&& src) noexcept = delete;
+	Value_wx${className}& operator=(Value_wx${className}&& src) noexcept = delete;
 protected:
 	// Destructor
-	~Value_${className}() = default;
+	~Value_wx${className}() = default;
 public:
-${if (className == 'wxEvtHandler')}
-	${className}& GetEntity() { return *_pEntity; }
-	const ${className}& GetEntity() const { return *_pEntity; }
-	${className}* GetEntityPtr() { return _pEntity.get(); }
-	const ${className}* GetEntityPtr() const { return _pEntity.get(); }
+${if (className == 'EvtHandler')}
+	wx${className}& GetEntity() { return *_pEntity; }
+	const wx${className}& GetEntity() const { return *_pEntity; }
+	wx${className}* GetEntityPtr() { return _pEntity.get(); }
+	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
 ${elsif (!classNameRoot)}
-	${className}& GetEntity() { return _entity; }
-	const ${className}& GetEntity() const { return _entity; }
-	${className}* GetEntityPtr() { return &_entity; }
-	const ${className}* GetEntityPtr() const { return &_entity; }
+	wx${className}& GetEntity() { return _entity; }
+	const wx${className}& GetEntity() const { return _entity; }
+	wx${className}* GetEntityPtr() { return &_entity; }
+	const wx${className}* GetEntityPtr() const { return &_entity; }
 ${else}
-	${className}& GetEntity() {
-		return reinterpret_cast<${className}&>(Value_${classNameRoot}::GetEntity());
+	wx${className}& GetEntity() {
+		return reinterpret_cast<wx${className}&>(Value_wx${classNameRoot}::GetEntity());
 	}
-	const ${className}& GetEntity() const {
-		return reinterpret_cast<const ${className}&>(Value_${classNameRoot}::GetEntity());
+	const wx${className}& GetEntity() const {
+		return reinterpret_cast<const wx${className}&>(Value_wx${classNameRoot}::GetEntity());
 	}
-	${className}* GetEntityPtr() {
-		return reinterpret_cast<${className}*>(Value_${classNameRoot}::GetEntityPtr());
+	wx${className}* GetEntityPtr() {
+		return reinterpret_cast<wx${className}*>(Value_wx${classNameRoot}::GetEntityPtr());
 	}
-	const ${className}* GetEntityPtr() const {
-		return reinterpret_cast<const ${className}*>(Value_${classNameRoot}::GetEntityPtr());
+	const wx${className}* GetEntityPtr() const {
+		return reinterpret_cast<const wx${className}*>(Value_wx${classNameRoot}::GetEntityPtr());
 	}
 ${end}
 public:
-	static ${className}& GetEntity(Value& value) {
-		return dynamic_cast<Value_${className}&>(value).GetEntity();
+	static wx${className}& GetEntity(Value& value) {
+		return dynamic_cast<Value_wx${className}&>(value).GetEntity();
 	}
-	static const ${className}& GetEntity(const Value& value) {
-		return dynamic_cast<const Value_${className}&>(value).GetEntity();
+	static const wx${className}& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wx${className}&>(value).GetEntity();
 	}
-	static ${className}* GetEntityPtr(Value& value) {
-		return dynamic_cast<Value_${className}&>(value).GetEntityPtr();
+	static wx${className}* GetEntityPtr(Value& value) {
+		return dynamic_cast<Value_wx${className}&>(value).GetEntityPtr();
 	}
-	static const ${className}* GetEntityPtr(const Value& value) {
-		return dynamic_cast<const Value_${className}&>(value).GetEntityPtr();
+	static const wx${className}* GetEntityPtr(const Value& value) {
+		return dynamic_cast<const Value_wx${className}&>(value).GetEntityPtr();
 	}
 public:
 	// Virtual functions of Value
@@ -162,7 +162,7 @@ Gurax_EndModuleScope(wx)
 
 tmplSource = tR'''
 //==============================================================================
-// VType_${className}.cpp
+// VType_wx${className}.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -204,17 +204,17 @@ ${EvalTmplMethodImplementation(className, funcInfoTbl.Each()).Join('\n')}
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// VType_${className}
+// VType_wx${className}
 //------------------------------------------------------------------------------
-VType_${className} VTYPE_${className}("${className.Mid(2)}");
+VType_wx${className} VTYPE_wx${className}("${className}");
 
-void VType_${className}::DoPrepare(Frame& frameOuter)
+void VType_wx${className}::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 ${if (classNameParent)}
-	Declare(VTYPE_${classNameParent}, Flag::Mutable${if (funcInfoConstructor) {
+	Declare(VTYPE_wx${classNameParent}, Flag::Mutable${if (funcInfoConstructor) {
 		Format(', Gurax_CreateConstructor(%s_gurax)', funcInfoConstructor.name) }});
 ${else}
 	Declare(VTYPE_Object, Flag::Mutable${if (funcInfoConstructor) {
@@ -228,16 +228,16 @@ ${end}
 }
 
 //------------------------------------------------------------------------------
-// Value_${className}
+// Value_wx${className}
 //------------------------------------------------------------------------------
-VType& Value_${className}::vtype = VTYPE_${className};
+VType& Value_wx${className}::vtype = VTYPE_wx${className};
 ${if (eventDerivFlag)}
-EventValueFactoryDeriv<Value_${className}> Value_${className}::eventValueFactory;
+EventValueFactoryDeriv<Value_wx${className}> Value_wx${className}::eventValueFactory;
 ${end}
 
-String Value_${className}::ToString(const StringStyle& ss) const
+String Value_wx${className}::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, "wx.${className.Mid(2)}");
+	return ToStringGeneric(ss, "wx.${className}");
 }
 
 Gurax_EndModuleScope(wx)
@@ -277,49 +277,54 @@ Gurax_ImplementMethodEx(${className}, ${funcInfo.name}_gurax, processor_gurax, a
 EvalTmplMethodImplementation(className as String, funcInfo as cbridge.FuncInfo):map = tmplMethodImplementation.Eval()
 
 expr = `{
-	wxAnyButton = Class(wxControl) {
+	AnyButton = Class(Control) {
 	}
-	wxApp = Class(wxAppConsole) {
+	App = Class(AppConsole) {
 	}
-	wxAppConsole = Class(wxEvtHandler) {
+	AppConsole = Class(EvtHandler) {
 	}
-	wxButton = Class(wxAnyButton) {
+	Button = Class(AnyButton) {
 	}
-	wxCommandEvent = Class(wxEvent) {
+	CommandEvent = Class(Event) {
 	}
-	wxControl = Class(wxWindow) {
+	Control = Class(Window) {
 	}
-	wxEvent = Class(wxObject) {
+	Event = Class(Object) {
 	}
-	wxEventType = Class {
+	EventType = Class {
 	}
-	wxEvtHandler = Class {
+	EvtHandler = Class {
 		__init__()
-		//Bind(eventType as wx.EventType, funct as Any, id? as int, lastId? as int, userData as Any):void
+		//Bind(eventType as EventType, funct as Any, id? as int, lastId? as int, userData as Any):void
 	}
-	wxFrame = Class(wxWindow) {
+	Frame = Class(Window) {
 	}
-	wxMenu = Class(wxEvtHandler) {
+	Menu = Class(EvtHandler) {
 	}
-	wxMenuBar = Class(wxWindow) {
+	MenuBar = Class(Window) {
+		__init__()
+		//Append(menu as Menu, title as const_char_p) as bool
+		//Append(menu as Menu) as bool
 	}
-	wxMenuItem = Class(wxObject) {
+	MenuItem = Class(Object) {
 	}
-	wxObject = Class {
+	Object = Class {
 	}
-	wxPanel = Class(wxWindow) {
+	Panel = Class(Window) {
 	}
-	wxPoint = Class {
+	Point = Class {
 		__init__(x? as int, y? as int)
 	}
-	wxSize = Class {
+	Size = Class {
 		__init__(width? as int, height? as int)
 	}
-	wxStatusBar = Class(wxWindow) {
+	StatusBar = Class(Control) {
+		__init__()
 	}
-	wxValidator = Class(wxEvtHandler) {
+	Validator = Class(EvtHandler) {
+		__init__()
 	}
-	wxWindow = Class(wxEvtHandler) {
+	Window = Class(EvtHandler) {
 		__init__()
 		Close(force? as bool) as bool
 		Show(show? as bool) as bool
@@ -349,15 +354,15 @@ ClassInfo = class {
 	IsEventDeriv() = {
 		classInfo = this.classInfoParent
 		while (classInfo) {
-			(classInfo.className == 'wxEvent') && return(true)
+			(classInfo.className == 'Event') && return(true)
 			classInfo = classInfo.classInfoParent
 		}
 		false
 	}
 	IsEvtHandlerOrDeriv() = {
-		(this.className == 'wxEvtHandler') && return(true)
+		(this.className == 'EvtHandler') && return(true)
 		classInfo = this.GetClassInfoRoot()
-		classInfo && classInfo.className == 'wxEvtHandler'
+		classInfo && classInfo.className == 'EvtHandler'
 	}
 	EvalTmplConstructorImplementation(funcInfo as cbridge.FuncInfo):map = {
 		this.tmplConstructorImplementation.Eval()
@@ -382,7 +387,7 @@ expr.EachElem {|expr|
 		expr.right.block.EachElem {|expr|
 			funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
 			if (funcInfo.name == '__init__') {
-				funcInfo.name = classInfo.className.Mid(2)
+				funcInfo.name = classInfo.className
 				classInfo.funcInfoConstructor = funcInfo
 			} else {
 				classInfo.funcInfoTbl.Add(funcInfo)
@@ -401,7 +406,7 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an instance of ${funcInfo.typeInfo.vtype}.");
+		"Creates an instance of wx.${funcInfo.typeInfo.vtype}.");
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -415,7 +420,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	return argument_gurax.ReturnValue(processor_gurax, new Value_${funcInfo.typeInfo.vtype}(
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wx${funcInfo.typeInfo.vtype}(
 		wx${funcInfo.ComposeCaller()}));
 	${end}
 }
@@ -425,12 +430,12 @@ tmplConstructorImplementation_EvtHandler = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
+	Declare(VTYPE_wx${funcInfo.typeInfo.vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an instance of ${funcInfo.typeInfo.vtype}.");
+		"Creates an instance of wx.${funcInfo.typeInfo.vtype}.");
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -444,8 +449,8 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	auto pEntity_gurax = new Value_${funcInfo.typeInfo.vtype}::EntityT();
-	RefPtr<Value_${funcInfo.typeInfo.vtype}> pValue_gurax(new Value_${funcInfo.typeInfo.vtype}(pEntity_gurax));
+	auto pEntity_gurax = new Value_wx${funcInfo.typeInfo.vtype}::EntityT();
+	RefPtr<Value_wx${funcInfo.typeInfo.vtype}> pValue_gurax(new Value_wx${funcInfo.typeInfo.vtype}(pEntity_gurax));
 	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 	${end}
@@ -464,24 +469,24 @@ classInfoTbl.Each {|classInfo|
 
 classInfoTbl.Each {|classInfo|
 	if (classInfo.IsEvtHandlerOrDeriv()) {
-		classInfo.typeInfo = r.DeclareType(classInfo.className + '_p', classInfo.className + '*', classInfo.className,
+		classInfo.typeInfo = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*', classInfo.className,
 			codePicker = R'''
-			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+			auto& value_${varName} = args_gurax.Pick<Value_wx${this.vtype}>();
 			${this.cType} ${varName} = value_${varName}.GetEntityPtr();
 			'''
 			codeFunctionBody = R'''
-			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wx${this.vtype}(
 				${caller}));
 			''')
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
 	} else {
-		classInfo.typeInfo = r.DeclareType(classInfo.className, classInfo.className, classInfo.className,
+		classInfo.typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className, classInfo.className,
 			codePicker = R'''
-			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+			auto& value_${varName} = args_gurax.Pick<Value_wx${this.vtype}>();
 			${this.cType}& ${varName} = value_${varName}.GetEntity();
 			'''
 			codeFunctionBody = R'''
-			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wx${this.vtype}(
 				${caller}));
 			''')
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object
@@ -499,11 +504,13 @@ classInfoTbl.Each {|classInfo|
 	classNameRoot = cond(classInfoRoot, classInfoRoot.className)
 	funcInfoConstructor = classInfo.funcInfoConstructor
 	funcInfoTbl = classInfo.funcInfoTbl
-	fileNameHeader = Format('VType_%s.h', className)
-	fileNameSource = Format('VType_%s.cpp', className)
+	fileNameHeader = Format('VType_wx%s.h', className)
+	fileNameSource = Format('VType_wx%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	if (className in ['wxObject', 'wxEvent', 'wxCommandEvent', 'wxMenuItem', 'wxPoint', 'wxSize', 'wxWindow']) {
+	if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
+		'Validator']) {
+	//if (className in ['MenuBar']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
