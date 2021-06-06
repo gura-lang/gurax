@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(Window_gurax, "Window")
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an instance of wxWindow.");
+		"Creates an instance of wx.Window.");
 }
 
 Gurax_ImplementConstructorEx(Window_gurax, processor_gurax, argument_gurax)
@@ -49,7 +49,7 @@ Gurax_ImplementConstructorEx(Window_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.wxWindow#Close(force? as Bool)
+// wx.Window#Close(force? as Bool)
 Gurax_DeclareMethodAlias(wxWindow, Close_gurax, "Close")
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -73,7 +73,7 @@ Gurax_ImplementMethodEx(wxWindow, Close_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.wxWindow#Show(show? as Bool)
+// wx.Window#Show(show? as Bool)
 Gurax_DeclareMethodAlias(wxWindow, Show_gurax, "Show")
 {
 	Declare(VTYPE_Bool, Flag::None);

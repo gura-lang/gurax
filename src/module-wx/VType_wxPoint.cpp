@@ -36,7 +36,7 @@ Gurax_DeclareConstructorAlias(Point_gurax, "Point")
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an instance of wxPoint.");
+		"Creates an instance of wx.Point.");
 }
 
 Gurax_ImplementConstructorEx(Point_gurax, processor_gurax, argument_gurax)

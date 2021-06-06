@@ -36,7 +36,7 @@ Gurax_DeclareConstructorAlias(Size_gurax, "Size")
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an instance of wxSize.");
+		"Creates an instance of wx.Size.");
 }
 
 Gurax_ImplementConstructorEx(Size_gurax, processor_gurax, argument_gurax)

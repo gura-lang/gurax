@@ -28,27 +28,28 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // wx.StatusBar() {block?}
-Gurax_DeclareConstructor(StatusBar)
+Gurax_DeclareConstructorAlias(StatusBar_gurax, "StatusBar")
 {
 	Declare(VTYPE_wxStatusBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.StatusBar` instance.");
+		"Creates an instance of wx.StatusBar.");
 }
 
-Gurax_ImplementConstructor(StatusBar)
+Gurax_ImplementConstructorEx(StatusBar_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	auto pEntity = new Value_wxStatusBar::EntityT();
-	RefPtr<Value_wxStatusBar> pValue(new Value_wxStatusBar(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
+	auto pEntity_gurax = new Value_wxStatusBar::EntityT();
+	RefPtr<Value_wxStatusBar> pValue_gurax(new Value_wxStatusBar(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,11 +65,8 @@ void VType_wxStatusBar::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StatusBar));
+	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StatusBar_gurax));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(StatusBar, SetMenuBar));
-	// Assignment of property
-	//Assign(Gurax_CreateProperty(StatusBar, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -80,9 +78,5 @@ String Value_wxStatusBar::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.StatusBar");
 }
-
-//------------------------------------------------------------------------------
-// Value_wxStatusBar::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

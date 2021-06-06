@@ -28,27 +28,28 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // wx.Validator() {block?}
-Gurax_DeclareConstructor(Validator)
+Gurax_DeclareConstructorAlias(Validator_gurax, "Validator")
 {
 	Declare(VTYPE_wxValidator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Validator` instance.");
+		"Creates an instance of wx.Validator.");
 }
 
-Gurax_ImplementConstructor(Validator)
+Gurax_ImplementConstructorEx(Validator_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	auto pEntity = new Value_wxValidator::EntityT();
-	RefPtr<Value_wxValidator> pValue(new Value_wxValidator(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
+	auto pEntity_gurax = new Value_wxValidator::EntityT();
+	RefPtr<Value_wxValidator> pValue_gurax(new Value_wxValidator(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,10 +65,8 @@ void VType_wxValidator::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Validator));
+	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Validator_gurax));
 	// Assignment of method
-	// Assignment of property
-	//Assign(Gurax_CreateProperty(Validator, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -79,9 +78,5 @@ String Value_wxValidator::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Validator");
 }
-
-//------------------------------------------------------------------------------
-// Value_wxValidator::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

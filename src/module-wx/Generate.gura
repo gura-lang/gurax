@@ -222,7 +222,7 @@ ${else}
 ${end}
 	// Assignment of method
 	${funcInfoTbl.Each() {|funcInfo|}}
-	Assign(Gurax_CreateMethod(${className}, ${funcInfo.name}_gurax));
+	Assign(Gurax_CreateMethod(wx${className}, ${funcInfo.name}_gurax));
 	${end}
 	${//(codePrefix + cbriege.EvalTmplFunctionAssignment(funcInfoTbl.Each())).Join('\n')}
 }
@@ -245,7 +245,7 @@ Gurax_EndModuleScope(wx)
 
 tmplMethodImplementation = tR'''
 // ${Format('%s.%s#%s(%s)', funcInfo.moduleName, className, funcInfo.name, funcInfo.argInfoTbl:*ToString().Join(', '))}
-Gurax_DeclareMethodAlias(${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
+Gurax_DeclareMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
@@ -254,7 +254,7 @@ Gurax_DeclareMethodAlias(${className}, ${funcInfo.name}_gurax, "${funcInfo.name}
 		"");
 }
 
-Gurax_ImplementMethodEx(${className}, ${funcInfo.name}_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -406,7 +406,7 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an instance of wx.${funcInfo.typeInfo.vtype}.");
+		"Creates an instance of wx.${className}.");
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -420,7 +420,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wx${funcInfo.typeInfo.vtype}(
+	return argument_gurax.ReturnValue(processor_gurax, new Value_${funcInfo.typeInfo.vtype}(
 		wx${funcInfo.ComposeCaller()}));
 	${end}
 }
@@ -430,12 +430,12 @@ tmplConstructorImplementation_EvtHandler = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_wx${funcInfo.typeInfo.vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an instance of wx.${funcInfo.typeInfo.vtype}.");
+		"Creates an instance of wx.${className}.");
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -449,8 +449,8 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	auto pEntity_gurax = new Value_wx${funcInfo.typeInfo.vtype}::EntityT();
-	RefPtr<Value_wx${funcInfo.typeInfo.vtype}> pValue_gurax(new Value_wx${funcInfo.typeInfo.vtype}(pEntity_gurax));
+	auto pEntity_gurax = new Value_${funcInfo.typeInfo.vtype}::EntityT();
+	RefPtr<Value_${funcInfo.typeInfo.vtype}> pValue_gurax(new Value_${funcInfo.typeInfo.vtype}(pEntity_gurax));
 	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 	${end}
@@ -469,24 +469,24 @@ classInfoTbl.Each {|classInfo|
 
 classInfoTbl.Each {|classInfo|
 	if (classInfo.IsEvtHandlerOrDeriv()) {
-		classInfo.typeInfo = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*', classInfo.className,
+		classInfo.typeInfo = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*', 'wx' + classInfo.className,
 			codePicker = R'''
-			auto& value_${varName} = args_gurax.Pick<Value_wx${this.vtype}>();
+			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 			${this.cType} ${varName} = value_${varName}.GetEntityPtr();
 			'''
 			codeFunctionBody = R'''
-			return argument_gurax.ReturnValue(processor_gurax, new Value_wx${this.vtype}(
+			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
 				${caller}));
 			''')
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
 	} else {
-		classInfo.typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className, classInfo.className,
+		classInfo.typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className, 'wx' + classInfo.className,
 			codePicker = R'''
-			auto& value_${varName} = args_gurax.Pick<Value_wx${this.vtype}>();
+			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 			${this.cType}& ${varName} = value_${varName}.GetEntity();
 			'''
 			codeFunctionBody = R'''
-			return argument_gurax.ReturnValue(processor_gurax, new Value_wx${this.vtype}(
+			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
 				${caller}));
 			''')
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object
@@ -511,6 +511,7 @@ classInfoTbl.Each {|classInfo|
 	if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
 		'Validator']) {
 	//if (className in ['MenuBar']) {
+	//if (className in ['Window']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)

@@ -54,6 +54,12 @@ protected:
 	// Destructor
 	~Value_wxValidator() = default;
 public:
+	wxValidator& GetEntity() {
+		return reinterpret_cast<wxValidator&>(Value_wxEvtHandler::GetEntity());
+	}
+	const wxValidator& GetEntity() const {
+		return reinterpret_cast<const wxValidator&>(Value_wxEvtHandler::GetEntity());
+	}
 	wxValidator* GetEntityPtr() {
 		return reinterpret_cast<wxValidator*>(Value_wxEvtHandler::GetEntityPtr());
 	}
@@ -61,6 +67,12 @@ public:
 		return reinterpret_cast<const wxValidator*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
+	static wxValidator& GetEntity(Value& value) {
+		return dynamic_cast<Value_wxValidator&>(value).GetEntity();
+	}
+	static const wxValidator& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxValidator&>(value).GetEntity();
+	}
 	static wxValidator* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_wxValidator&>(value).GetEntityPtr();
 	}
