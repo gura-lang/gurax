@@ -16,6 +16,7 @@ TypeInfo = class {
 	cType as String
 	cTypeElem as String
 	vtypeFullName as String
+	vtypeDisplay as String
 	moduleName as String = ''
 	vtype as String = ''
 	tmplPicker as Template
@@ -23,12 +24,13 @@ TypeInfo = class {
 	tmplPickerListVar as Template
 	tmplFunctionBody as Template
 	tmplArgRef as Template
-	__init__(decl as String, cType as String, vtypeFullName as String,
+	__init__(decl as String, cType as String, vtypeFullName as String, vtypeDisplay as String,
 			codePicker as String, codePickerValidation as String,
 			codePickerVec as String, codeFunctionBody as String, codeArgRef as String) = {
 		this.decl = decl, this.cType = cType
 		this.cTypeElem = cType.Sub(r'(const\s+)?(\w+).*', r'\2')
 		this.vtypeFullName = vtypeFullName
+		this.vtypeDisplay = vtypeDisplay
 		fields = vtypeFullName.Split('.'):list
 		if (!fields.IsEmpty()) {
 			this.moduleName = fields.Head(fields.len - 1).Join('.')
@@ -94,7 +96,7 @@ ArgInfo = class {
 		Format('%s%s%s%s%s%s as %s', this.name, cond(this.listVarFlag, '[]', ''),
 			cond(this.optionFlag, '?', ''), cond(this.nilFlag, ':nil', ''),
 			cond(this.streamWFlag, ':w', ''), cond(this.streamRFlag, ':r', ''),
-			this.typeInfo.vtypeFullName)
+			this.typeInfo.vtypeDisplay)
 	}
 }
 
@@ -228,10 +230,10 @@ EvalTmplFunctionAssignment(funcInfo as FuncInfo):map = tmplFunctionAssignment.Ev
 Renderer = class {
 	funcInfoTbl = []
 	typeInfoMap = %{}
-	DeclareType(decl as String, cType as String, vtypeFullName as String,
+	DeclareType(decl as String, cType as String, vtypeFullName as String, vtypeDisplay? as String,
 			codePicker as String = '', codePickerValidation as String = '',
 			codePickerVec as String = '', codeFunctionBody as String = '', codeArgRef = '${varName}') = {
-		typeInfo = TypeInfo(decl, cType, vtypeFullName,
+		typeInfo = TypeInfo(decl, cType, vtypeFullName, vtypeDisplay || vtypeFullName,
 				codePicker, codePickerValidation, codePickerVec, codeFunctionBody, codeArgRef)
 		this.typeInfoMap[decl] = typeInfo
 		typeInfo

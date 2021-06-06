@@ -483,7 +483,8 @@ classInfoTbl.Each {|classInfo|
 
 classInfoTbl.Each {|classInfo|
 	if (classInfo.IsEvtHandlerOrDeriv()) {
-		classInfo.typeInfo = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*', 'wx' + classInfo.className,
+		classInfo.typeInfo = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
+			'wx' + classInfo.className, 'wx.' + classInfo.className,
 			codePicker = R'''
 			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 			${this.cType} ${varName} = value_${varName}.GetEntityPtr();

@@ -49,7 +49,7 @@ Gurax_ImplementConstructorEx(MenuBar_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.MenuBar#Append(menu as wxMenu, title as String)
+// wx.MenuBar#Append(menu as wx.Menu, title as String)
 Gurax_DeclareMethodAlias(wxMenuBar, Append_gurax, "Append")
 {
 	Declare(VTYPE_Bool, Flag::None);
