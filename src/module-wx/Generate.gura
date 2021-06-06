@@ -3,6 +3,21 @@ import(cbridge)
 
 r = cbridge.Renderer()
 
+r.DeclareType('String', 'const char*', 'String',
+	codePicker = R'''
+	${this.cType} ${varName} = args_gurax.PickString();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : nullptr;
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<${this.cType}>(Gurax::Value_${this.vtype}::ValueForVector);
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_${this.vtype}(rtn);
+	''')
+
 tmplHeader = tR'''
 //==============================================================================
 // VType_wx${className}.h
@@ -303,8 +318,7 @@ expr = `{
 	}
 	MenuBar = Class(Window) {
 		__init__()
-		//Append(menu as Menu, title as const_char_p) as bool
-		//Append(menu as Menu) as bool
+		Append(menu as Menu_p, title as String) as bool
 	}
 	MenuItem = Class(Object) {
 	}
@@ -508,10 +522,9 @@ classInfoTbl.Each {|classInfo|
 	fileNameSource = Format('VType_wx%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
-		'Validator']) {
-	//if (className in ['MenuBar']) {
-	//if (className in ['Window']) {
+	//if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
+	//	'Validator']) {
+	if (className in ['MenuBar']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
