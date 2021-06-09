@@ -42,7 +42,7 @@ TypeInfo = class {
 		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
 		this.tmplArgRef = Template().Parse(codeArgRef)
 	}
-	ComposePicker(varName as String, defaultValue as String, listVarFlag as Bool, validationFlag as Bool) = {
+	ComposePicker(varName as String, defaultValue:nil as String, listVarFlag as Bool, validationFlag as Bool) = {
 		cond(listVarFlag, this.tmplPickerListVar, cond(validationFlag, this.tmplPickerValidation, this.tmplPicker)).Eval()
 	}
 	ComposeFunctionBody(caller as String) = this.tmplFunctionBody.Eval()
@@ -64,7 +64,7 @@ ArgInfo = class {
 	typeInfo as TypeInfo
 	tmplDeclaration:static as Template
 	tmplRangeCheck:static as Template
-	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue as String, attr as Attribute, listVarFlag as Bool, optionFlag as Bool) = {
+	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue:nil as String, attr as Attribute, listVarFlag as Bool, optionFlag as Bool) = {
 		this.name = name
 		this.typeName = typeName
 		this.defaultValue = defaultValue
@@ -106,16 +106,13 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 	argInfoTbl = []
 	expr.EachParam {|exprParam|
 		//Println(exprParam)
-		defaultValue = '0'
+		defaultValue = nil
 		listVarFlag = false
 		optionFlag = false
 		typeName = 'any'
 		if (exprParam.IsAssign()) {
-			if (!exprParam.right.IsString()) {
-				ErrorDone(exprParam, 'default value must be specified as string')
-			}
 			optionFlag = true
-			defaultValue = exprParam.right.string
+			defaultValue = exprParam.right.__str__():dquoteString
 			exprParam = exprParam.left
 		}
 		if (exprParam.IsBinaryOp()) {
@@ -254,7 +251,7 @@ Renderer = class {
 		${this.cType} ${varName} = args_gurax.PickNumber<${this.cType}>();
 		'''
 		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickNumber<${this.cType}>() : 0;
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickNumber<${this.cType}>() : ${defaultValue || '0'};
 		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickNumList<${this.cType}>();
@@ -268,7 +265,7 @@ Renderer = class {
 		${this.cType} ${varName} = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>();
 		'''
 		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>() : nullptr;
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<${this.cTypeElem}>() : ${defaultValue || 'nullptr'};
 		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
@@ -284,7 +281,7 @@ Renderer = class {
 		}
 		'''
 		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<${this.cTypeElem}>() : nullptr;
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<${this.cTypeElem}>() : ${defaultValue || 'nullptr'};
 		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) -> ${this.cType} {
@@ -345,7 +342,7 @@ Renderer.__init__() = {
 		RefPtr<Function> ${varName}(args_gurax.PickFunction().Reference());
 		'''
 		codePickerValidation = R'''
-		RefPtr<Function> ${varName}(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : nullptr);
+		RefPtr<Function> ${varName}(args_gurax.IsValid()? args_gurax.PickFunction().Reference() : ${defaultValue || 'nullptr'});
 		'''
 		codePickerVec = ''
 		codeFunctionBody = '')
@@ -354,7 +351,7 @@ Renderer.__init__() = {
 		RefPtr<Stream> ${varName}(args_gurax.PickStream().Reference());
 		'''
 		codePickerValidation = R'''
-		RefPtr<Stream> ${varName}(args_gurax.IsValid()? args_gurax.PickStream().Reference() : nullptr);
+		RefPtr<Stream> ${varName}(args_gurax.IsValid()? args_gurax.PickStream().Reference() : ${defaultValue || 'nullptr'});
 		'''
 		codePickerVec = ''
 		codeFunctionBody = '')
@@ -404,7 +401,7 @@ Renderer.__init__() = {
 		${this.cType} ${varName} = args_gurax.PickBool();
 		'''
 		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickBool() : false;
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickBool() : ${defaultValue || 'false'};
 		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<bool>(Gurax::Value_${this.vtype}::ValueForVector);
@@ -418,7 +415,7 @@ Renderer.__init__() = {
 		${this.cType} ${varName} = args_gurax.PickBool();
 		'''
 		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickBool() : false;
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickBool() : ${defaultValue || 'false'};
 		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<bool>(Gurax::Value_${this.vtype}::ValueForVector);
@@ -432,7 +429,7 @@ Renderer.__init__() = {
 		${this.cType} ${varName} = args_gurax.PickString();
 		'''
 		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : nullptr;
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : ${defaultValue || 'nullptr'};
 		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<${this.cType}>(Gurax::Value_${this.vtype}::ValueForVector);
