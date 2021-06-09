@@ -952,3 +952,6 @@ Expr
   attr       Attribute  <Attribute:(:a:b:c)>
   EachParam  [`v1:aa:bb, `v2:cc:dd, `v3:ee:ff]
   EachElem   []
+======== To String ========
+x.__str__() .. 'Hello World'
+x.__str__():dquoteString .. "Hello World"

@@ -1580,6 +1580,7 @@ String Value_String::ToString(const StringStyle& ss) const
 	String strEntity = GetStringSTL();
 	if (ss.IsBracket()) return ToStringGeneric(ss, strEntity.EnquoteAuto());
 	if (ss.IsQuoteString()) strEntity = strEntity.EnquoteAuto();
+	if (ss.IsDQuoteString()) strEntity = strEntity.Enquote('"');
 	return strEntity;
 }
 

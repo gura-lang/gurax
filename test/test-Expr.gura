@@ -145,3 +145,9 @@ TestCase('Inspection') {
 	InspectExpr(`a() {block})
 	InspectExpr(`a(v1:aa:bb, v2:cc:dd, v3:ee:ff):a:b:c {|p1, p2| block})
 }
+
+TestCase('To String') {
+	x = `'Hello World'
+	Tester(`x.__str__())
+	Tester(`x.__str__():dquoteString)
+}

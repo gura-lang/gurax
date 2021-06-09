@@ -23,14 +23,15 @@ public:
 		static const Flags QuoteString		= (1 << 2);
 		static const Flags QuoteSymbol		= (1 << 3);
 		static const Flags Quote			= QuoteString | QuoteSymbol;
-		static const Flags NilVisible		= (1 << 4);
-		static const Flags UndefVisible		= (1 << 5);
+		static const Flags DQuoteString		= (1 << 4);
+		static const Flags NilVisible		= (1 << 5);
+		static const Flags UndefVisible		= (1 << 6);
 		static const Flags InvalidVisible	= NilVisible | UndefVisible;
-		static const Flags Cram				= (1 << 6);
-		static const Flags MultiLine		= (1 << 7);
-		static const Flags Verbose			= (1 << 8);
-		static const Flags WithSquare		= (1 << 9);
-		static const Flags WithParenthesis	= (1 << 10);
+		static const Flags Cram				= (1 << 7);
+		static const Flags MultiLine		= (1 << 8);
+		static const Flags Verbose			= (1 << 9);
+		static const Flags WithSquare		= (1 << 10);
+		static const Flags WithParenthesis	= (1 << 11);
 	};
 private:
 	Flags _flags;
@@ -75,6 +76,8 @@ public:
 	StringStyle& UnsetQuoteSymbol()		{ _flags &= ~Flag::QuoteSymbol; return *this; }
 	StringStyle& SetQuote()				{ _flags |= Flag::Quote; return *this; }
 	StringStyle& UnsetQuote()			{ _flags &= Flag::Quote; return *this; }
+	StringStyle& SetDQuoteString()		{ _flags |= Flag::DQuoteString; return *this; }
+	StringStyle& UnsetDQuoteString()		{ _flags &= ~Flag::DQuoteString; return *this; }
 	StringStyle& SetNilVisible()		{ _flags |= Flag::NilVisible; return *this; }
 	StringStyle& UnsetNilVisible()		{ _flags &= ~Flag::NilVisible; return *this; }
 	StringStyle& SetUndefVisible()		{ _flags |= Flag::UndefVisible; return *this; }
@@ -95,6 +98,7 @@ public:
 	bool IsUnbracket() const			{ return (_flags & Flag::Unbracket) != 0; }
 	bool IsQuoteString() const			{ return (_flags & Flag::QuoteString) != 0; }
 	bool IsQuoteSymbol() const			{ return (_flags & Flag::QuoteSymbol) != 0; }
+	bool IsDQuoteString() const			{ return (_flags & Flag::DQuoteString) != 0; }
 	bool IsNilVisible() const			{ return (_flags & Flag::NilVisible) != 0; }
 	bool IsUndefVisible() const			{ return (_flags & Flag::UndefVisible) != 0; }
 	bool IsInvalidVisible() const		{ return (_flags & Flag::InvalidVisible) != 0; }

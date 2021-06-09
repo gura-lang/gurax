@@ -27,65 +27,45 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-/*
-// wx.Control(parent:nil as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
-Gurax_DeclareConstructor(Control)
+// wx.Control(parent:nil as wx.Window, id as Number, title as String, pos as wx.Point, size as wx.Size, style as Number, name as String) {block?}
+Gurax_DeclareConstructorAlias(Control_gurax, "Control")
 {
 	Declare(VTYPE_wxControl, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Control` instance.");
+		"Creates an instance of wx.Control.");
 }
 
-Gurax_ImplementConstructor(Control)
+Gurax_ImplementConstructorEx(Control_gurax, processor_gurax, argument_gurax)
 {
-	// Argument
-	ArgPicker args(argument);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntity() : nullptr;
-	wxWindowID id = args.PickNumber<wxWindowID>();
-	const char* title = args.PickString();
-	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
-	const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args.IsValid()? args.PickNumber<long>() : wxDEFAULT_wxControl_STYLE;
-	const char* name = args.IsValid()? args.PickString() : wxControlNameStr;
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
+	int id = args_gurax.PickNumber<int>();
+	const char* title = args_gurax.PickString();
+	wxPoint& pos = args_gurax.Pick<Value_wxPoint>().GetEntity();
+	wxSize& size = args_gurax.Pick<Value_wxSize>().GetEntity();
+	int style = args_gurax.PickNumber<int>();
+	const char* name = args_gurax.PickString();
 	// Function body
-	auto pEntity = new Value_wxControl::EntityT(parent, id, title, pos, size, style, name);
-	RefPtr<Value_wxControl> pValue(new Value_wxControl(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
-}
-*/
-
-// wx.Control() {block?}
-Gurax_DeclareConstructor(Control)
-{
-	Declare(VTYPE_wxControl, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `wx.Control` instance.");
-}
-
-Gurax_ImplementConstructor(Control)
-{
-	// Function body
-	auto pEntity = new Value_wxControl::EntityT();
-	RefPtr<Value_wxControl> pValue(new Value_wxControl(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
+	auto pEntity_gurax = new Value_wxControl::EntityT(parent, id, title, pos, size, style, name);
+	RefPtr<Value_wxControl> pValue_gurax(new Value_wxControl(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -101,11 +81,8 @@ void VType_wxControl::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Control));
+	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Control_gurax));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Control, SetMenuBar));
-	// Assignment of property
-	//Assign(Gurax_CreateProperty(Control, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -117,9 +94,5 @@ String Value_wxControl::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Control");
 }
-
-//------------------------------------------------------------------------------
-// Value_wxControl::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

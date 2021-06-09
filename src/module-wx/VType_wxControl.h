@@ -54,6 +54,12 @@ protected:
 	// Destructor
 	~Value_wxControl() = default;
 public:
+	wxControl& GetEntity() {
+		return reinterpret_cast<wxControl&>(Value_wxEvtHandler::GetEntity());
+	}
+	const wxControl& GetEntity() const {
+		return reinterpret_cast<const wxControl&>(Value_wxEvtHandler::GetEntity());
+	}
 	wxControl* GetEntityPtr() {
 		return reinterpret_cast<wxControl*>(Value_wxEvtHandler::GetEntityPtr());
 	}
@@ -61,6 +67,12 @@ public:
 		return reinterpret_cast<const wxControl*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
+	static wxControl& GetEntity(Value& value) {
+		return dynamic_cast<Value_wxControl&>(value).GetEntity();
+	}
+	static const wxControl& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxControl&>(value).GetEntity();
+	}
 	static wxControl* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_wxControl&>(value).GetEntityPtr();
 	}

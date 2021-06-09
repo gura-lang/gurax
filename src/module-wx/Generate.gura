@@ -303,7 +303,8 @@ expr = `{
 	CommandEvent = Class(Event) {
 	}
 	Control = Class(Window) {
-		__init__(parent:nil as Window_p, id as int, title as String, pos? as Point, size? as Size, style? as int, name? as String)
+		__init__(parent:nil as Window_p, id as int, title as String, pos as Point = wxDefaultPos, size as Size,
+			style as int, name as String)
 	}
 	Event = Class(Object) {
 	}
@@ -487,8 +488,10 @@ classInfoTbl.Each {|classInfo|
 		classInfo.typeInfo = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
 			'wx' + classInfo.className, 'wx.' + classInfo.className,
 			codePicker = R'''
-			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
-			${this.cType} ${varName} = value_${varName}.GetEntityPtr();
+			${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
+			'''
+			codePickerValidation = R'''
+			${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
 			'''
 			codeFunctionBody = R'''
 			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
@@ -499,8 +502,10 @@ classInfoTbl.Each {|classInfo|
 		classInfo.typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
 			'wx' + classInfo.className, 'wx.' + classInfo.className,
 			codePicker = R'''
-			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
-			${this.cType}& ${varName} = value_${varName}.GetEntity();
+			${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
+			'''
+			codePickerValidation = R'''
+			${this.cType}& ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : ${defaultValue};
 			'''
 			codeFunctionBody = R'''
 			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(

@@ -638,8 +638,7 @@ void Expr_String::ComposeWithinArgSlot(Composer& composer)
 String Expr_String::ToString(const StringStyle& ss) const
 {
 	String str = GetSegmentSTL();
-	//if (ss.IsQuoteString()) str = str.EnquoteAuto();
-	str = str.EnquoteAuto();
+	str = ss.IsDQuoteString()? str.Enquote('"') : str.EnquoteAuto();
 	return str;
 }
 

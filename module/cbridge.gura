@@ -42,7 +42,7 @@ TypeInfo = class {
 		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
 		this.tmplArgRef = Template().Parse(codeArgRef)
 	}
-	ComposePicker(varName as String, listVarFlag as Bool, validationFlag as Bool) = {
+	ComposePicker(varName as String, defaultValue as String, listVarFlag as Bool, validationFlag as Bool) = {
 		cond(listVarFlag, this.tmplPickerListVar, cond(validationFlag, this.tmplPickerValidation, this.tmplPicker)).Eval()
 	}
 	ComposeFunctionBody(caller as String) = this.tmplFunctionBody.Eval()
@@ -55,6 +55,7 @@ TypeInfo = class {
 ArgInfo = class {
 	name as String
 	typeName as String
+	defaultValue as String
 	listVarFlag as Bool
 	optionFlag as Bool
 	nilFlag as Bool
@@ -63,9 +64,10 @@ ArgInfo = class {
 	typeInfo as TypeInfo
 	tmplDeclaration:static as Template
 	tmplRangeCheck:static as Template
-	__init__(r as Renderer, name as String, typeName:nil as String, attr as Attribute, listVarFlag as Bool, optionFlag as Bool) = {
+	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue as String, attr as Attribute, listVarFlag as Bool, optionFlag as Bool) = {
 		this.name = name
 		this.typeName = typeName
+		this.defaultValue = defaultValue
 		this.listVarFlag = listVarFlag
 		this.optionFlag = optionFlag
 		this.nilFlag = attr.IsSet(`nil)
@@ -85,7 +87,7 @@ ArgInfo = class {
 	}
 	ComposeImplementation() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
-		this.typeInfo.ComposePicker(this.name, this.listVarFlag, this.optionFlag || this.nilFlag)
+		this.typeInfo.ComposePicker(this.name, this.defaultValue, this.listVarFlag, this.optionFlag || this.nilFlag)
 	}
 	ComposeArgRef() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
@@ -104,9 +106,18 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 	argInfoTbl = []
 	expr.EachParam {|exprParam|
 		//Println(exprParam)
+		defaultValue = '0'
 		listVarFlag = false
 		optionFlag = false
 		typeName = 'any'
+		if (exprParam.IsAssign()) {
+			if (!exprParam.right.IsString()) {
+				ErrorDone(exprParam, 'default value must be specified as string')
+			}
+			optionFlag = true
+			defaultValue = exprParam.right.string
+			exprParam = exprParam.left
+		}
 		if (exprParam.IsBinaryOp()) {
 			if (exprParam.operator.symbol == `as) {
 				!exprParam.right.IsIdentifier() && ErrorDone('invalid format for value type')
@@ -130,7 +141,7 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 			exprParam = exprParam.car
 		}
 		!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-		argInfoTbl.Add(ArgInfo(r, exprParam.symbolName, typeName, attr, listVarFlag, optionFlag))
+		argInfoTbl.Add(ArgInfo(r, exprParam.symbolName, typeName, defaultValue, attr, listVarFlag, optionFlag))
 	}
 	argInfoTbl
 }
