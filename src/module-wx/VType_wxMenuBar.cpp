@@ -68,8 +68,7 @@ Gurax_ImplementMethodEx(wxMenuBar, Append_gurax, processor_gurax, argument_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto& value_menu = args_gurax.Pick<Value_wxMenu>();
-	wxMenu* menu = value_menu.GetEntityPtr();
+	wxMenu* menu = args_gurax.Pick<Value_wxMenu>().GetEntityPtr();
 	const char* title = args_gurax.PickString();
 	// Function body
 	bool rtn = pEntity_gurax->Append(menu, title);

@@ -532,9 +532,8 @@ classInfoTbl.Each {|classInfo|
 	fileNameSource = Format('VType_wx%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	//if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
-	//	'Validator', 'MenuBar']) {
-	if (className in ['Control']) {
+	if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
+		'Validator', 'MenuBar', 'Control']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
