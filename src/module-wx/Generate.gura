@@ -315,6 +315,9 @@ expr = `{
 		//Bind(eventType as EventType, funct as Any, id? as int, lastId? as int, userData as Any):void
 	}
 	Frame = Class(Window) {
+		__init__(parent:nil as Window_p, id as int, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+			style as long = wxDEFAULT_FRAME_STYLE, name as String = wxFrameNameStr)
+		CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as int = 0, name as String = wxStatusBarNameStr)
 	}
 	Menu = Class(EvtHandler) {
 	}
@@ -532,8 +535,9 @@ classInfoTbl.Each {|classInfo|
 	fileNameSource = Format('VType_wx%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
-		'Validator', 'MenuBar', 'Control']) {
+	//if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
+	//	'Validator', 'MenuBar', 'Control']) {
+	if (className in ['Frame']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
