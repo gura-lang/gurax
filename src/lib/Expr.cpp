@@ -891,12 +891,16 @@ void Expr_Assign::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pD
 
 void Expr_Assign::ComposeWithinArgSlot(Composer& composer)
 {
-	if (GetOperator() || !GetExprLeft().IsType<Expr_Identifier>()) {
+	const Expr* pExprLeft = &GetExprLeft();
+	if (pExprLeft->IsBinaryOp(OpType::As)) {
+		pExprLeft = &dynamic_cast<const Expr_BinaryOp*>(pExprLeft)->GetExprLeft();
+	}
+	if (GetOperator() || !pExprLeft->IsType<Expr_Identifier>()) {
 		Error::IssueWith(ErrorType::ArgumentError, *this,
 						 "invalid declaration of named argument");
 		return;
 	}
-	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier&>(GetExprLeft()).GetSymbol();
+	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprLeft)->GetSymbol();
 	PUnit* pPUnitOfArgSlot = composer.PeekPUnitCont();
 	GetExprRight().SetPUnitFirst(pPUnitOfArgSlot);
 	composer.Add_NamedArgSlotBegin(pSymbol, GetExprRight().Reference(), *this);	// [Argument ArgSlot]

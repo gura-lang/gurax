@@ -303,6 +303,7 @@ expr = `{
 	CommandEvent = Class(Event) {
 	}
 	Control = Class(Window) {
+		__init__(parent:nil as Window_p, id as int, title as String, pos? as Point, size? as Size, style? as int, name? as String)
 	}
 	Event = Class(Object) {
 	}
@@ -463,7 +464,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	auto pEntity_gurax = new Value_${funcInfo.typeInfo.vtype}::EntityT();
+	auto pEntity_gurax = new Value_${funcInfo.typeInfo.vtype}::EntityT(${funcInfo.ComposeArgs()});
 	RefPtr<Value_${funcInfo.typeInfo.vtype}> pValue_gurax(new Value_${funcInfo.typeInfo.vtype}(pEntity_gurax));
 	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
@@ -495,7 +496,8 @@ classInfoTbl.Each {|classInfo|
 			''')
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
 	} else {
-		classInfo.typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className, 'wx' + classInfo.className,
+		classInfo.typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
+			'wx' + classInfo.className, 'wx.' + classInfo.className,
 			codePicker = R'''
 			auto& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 			${this.cType}& ${varName} = value_${varName}.GetEntity();
@@ -524,8 +526,8 @@ classInfoTbl.Each {|classInfo|
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
 	//if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
-	//	'Validator']) {
-	if (className in ['MenuBar']) {
+	//	'Validator', 'MenuBar']) {
+	if (className in ['Control']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
