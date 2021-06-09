@@ -304,7 +304,7 @@ expr = `{
 	}
 	Control = Class(Window) {
 		__init__(parent:nil as Window_p, id as int, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-			style as int = 0, name as String = wxControlNameStr)
+			style as int = 0, validator as Validator = wxDefaultValidator, name as String = wxControlNameStr)
 	}
 	Event = Class(Object) {
 	}
@@ -484,33 +484,35 @@ classInfoTbl.Each {|classInfo|
 }
 
 classInfoTbl.Each {|classInfo|
+	typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
+		'wx' + classInfo.className, 'wx.' + classInfo.className,
+		codePicker = R'''
+		${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
+		'''
+		codePickerValidation = R'''
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
+		'''
+		codeFunctionBody = R'''
+		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+			${caller}));
+		''')
+	typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
+		'wx' + classInfo.className, 'wx.' + classInfo.className,
+		codePicker = R'''
+		const ${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
+		'''
+		codePickerValidation = R'''
+		const ${this.cType}& ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : ${defaultValue || '0'};
+		'''
+		codeFunctionBody = R'''
+		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+			${caller}));
+		''')
 	if (classInfo.IsEvtHandlerOrDeriv()) {
-		classInfo.typeInfo = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
-			'wx' + classInfo.className, 'wx.' + classInfo.className,
-			codePicker = R'''
-			${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
-			'''
-			codePickerValidation = R'''
-			${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
-			'''
-			codeFunctionBody = R'''
-			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-				${caller}));
-			''')
+		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
 	} else {
-		classInfo.typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
-			'wx' + classInfo.className, 'wx.' + classInfo.className,
-			codePicker = R'''
-			const ${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
-			'''
-			codePickerValidation = R'''
-			const ${this.cType}& ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : ${defaultValue || '0'};
-			'''
-			codeFunctionBody = R'''
-			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-				${caller}));
-			''')
+		classInfo.typeInfo = typeInfo
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object
 	}
 	if (classInfo.funcInfoConstructor) {

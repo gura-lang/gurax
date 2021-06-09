@@ -27,7 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Control(parent:nil as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.Control(parent:nil as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructorAlias(Control_gurax, "Control")
 {
 	Declare(VTYPE_wxControl, Flag::None);
@@ -36,6 +36,7 @@ Gurax_DeclareConstructorAlias(Control_gurax, "Control")
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -52,9 +53,10 @@ Gurax_ImplementConstructorEx(Control_gurax, processor_gurax, argument_gurax)
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	int style = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxControlNameStr;
 	// Function body
-	auto pEntity_gurax = new Value_wxControl::EntityT(parent, id, pos, size, style, wxDefaultValidator, name);
+	auto pEntity_gurax = new Value_wxControl::EntityT(parent, id, pos, size, style, validator, name);
 	RefPtr<Value_wxControl> pValue_gurax(new Value_wxControl(pEntity_gurax));
 	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
