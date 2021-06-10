@@ -95,6 +95,56 @@ Gurax_ImplementMethodEx(wxFrame, CreateStatusBar_gurax, processor_gurax, argumen
 		pEntity_gurax->CreateStatusBar(number, style, id, name)));
 }
 
+// wx.Frame#SetStatusText(text as String, number? as Number)
+Gurax_DeclareMethodAlias(wxFrame, SetStatusText_gurax, "SetStatusText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("number", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxFrame, SetStatusText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	int number = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	pEntity_gurax->SetStatusText(text, number);
+	return Gurax::Value::nil();
+}
+
+// wx.Frame#SetMenuBar(menuBar as wx.MenuBar)
+Gurax_DeclareMethodAlias(wxFrame, SetMenuBar_gurax, "SetMenuBar")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("menuBar", VTYPE_wxMenuBar, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxFrame, SetMenuBar_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxMenuBar* menuBar = args_gurax.Pick<Value_wxMenuBar>().GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetMenuBar(menuBar);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -112,6 +162,8 @@ void VType_wxFrame::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Frame_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxFrame, CreateStatusBar_gurax));
+	Assign(Gurax_CreateMethod(wxFrame, SetStatusText_gurax));
+	Assign(Gurax_CreateMethod(wxFrame, SetMenuBar_gurax));
 }
 
 //------------------------------------------------------------------------------

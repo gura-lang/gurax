@@ -318,6 +318,8 @@ expr = `{
 		__init__(parent:nil as Window_p, id as int, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 			style as long = wxDEFAULT_FRAME_STYLE, name as String = wxFrameNameStr)
 		CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as int = 0, name as String = wxStatusBarNameStr) as Frame_p
+		SetStatusText(text as String, number as int = 0):void
+		SetMenuBar(menuBar as MenuBar_p):void
 	}
 	Menu = Class(EvtHandler) {
 	}
