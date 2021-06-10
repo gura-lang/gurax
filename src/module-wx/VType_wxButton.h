@@ -54,6 +54,12 @@ protected:
 	// Destructor
 	~Value_wxButton() = default;
 public:
+	wxButton& GetEntity() {
+		return reinterpret_cast<wxButton&>(Value_wxEvtHandler::GetEntity());
+	}
+	const wxButton& GetEntity() const {
+		return reinterpret_cast<const wxButton&>(Value_wxEvtHandler::GetEntity());
+	}
 	wxButton* GetEntityPtr() {
 		return reinterpret_cast<wxButton*>(Value_wxEvtHandler::GetEntityPtr());
 	}
@@ -61,6 +67,12 @@ public:
 		return reinterpret_cast<const wxButton*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
+	static wxButton& GetEntity(Value& value) {
+		return dynamic_cast<Value_wxButton&>(value).GetEntity();
+	}
+	static const wxButton& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxButton&>(value).GetEntity();
+	}
 	static wxButton* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_wxButton&>(value).GetEntityPtr();
 	}

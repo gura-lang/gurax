@@ -299,6 +299,8 @@ expr = `{
 	AppConsole = Class(EvtHandler) {
 	}
 	Button = Class(AnyButton) {
+		__init__(parent as Window_p, id as int, label as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+			style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
 	}
 	CommandEvent = Class(Event) {
 	}
@@ -537,9 +539,9 @@ classInfoTbl.Each {|classInfo|
 	fileNameSource = Format('VType_wx%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	//if (className in ['Object', 'Event', 'CommandEvent', 'MenuItem', 'Point', 'Size', 'Window', 'StatusBar',
-	//	'Validator', 'MenuBar', 'Control']) {
-	if (className in ['Frame']) {
+	//if (className in ['Button', 'CommandEvent', 'Control', 'Event', 'Frame', 'MenuBar', 'MenuItem',
+	//	'Object', 'Point', 'Size', 'StatusBar', 'Validator', 'Window', ]) {
+	if (className in ['Menu']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)

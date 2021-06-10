@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // wx.Button(parent as wx.Window, id as Number, label? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
-Gurax_DeclareConstructor(Button)
+Gurax_DeclareConstructorAlias(Button_gurax, "Button")
 {
 	Declare(VTYPE_wxButton, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
@@ -42,31 +42,32 @@ Gurax_DeclareConstructor(Button)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Button` instance.");
+		"Creates an instance of wx.Button.");
 }
 
-Gurax_ImplementConstructor(Button)
+Gurax_ImplementConstructorEx(Button_gurax, processor_gurax, argument_gurax)
 {
-	// Argument
-	ArgPicker args(argument);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	wxWindowID id = args.PickNumber<wxWindowID>();
-	const char* label = args.IsValid()? args.PickString() : "";
-	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
-	const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args.IsValid()? args.PickNumber<long>() : 0;
-	const wxValidator& validator = args.IsValid()? *args.Pick<Value_wxValidator>().GetEntityPtr() : wxDefaultValidator;
-	const char* name = args.IsValid()? args.PickString() : wxButtonNameStr;
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxWindow* parent = args_gurax.Pick<Value_wxWindow>().GetEntityPtr();
+	int id = args_gurax.PickNumber<int>();
+	const char* label = args_gurax.IsValid()? args_gurax.PickString() : "";
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxButtonNameStr;
 	// Function body
-	auto pEntity = new Value_wxButton::EntityT(parent, id, label, pos, size, style, validator, name);
-	RefPtr<Value_wxButton> pValue(new Value_wxButton(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
+	auto pEntity_gurax = new Value_wxButton::EntityT(parent, id, label, pos, size, style, validator, name);
+	RefPtr<Value_wxButton> pValue_gurax(new Value_wxButton(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -82,11 +83,8 @@ void VType_wxButton::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Button));
+	Declare(VTYPE_wxAnyButton, Flag::Mutable, Gurax_CreateConstructor(Button_gurax));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Button, SetMenuBar));
-	// Assignment of property
-	//Assign(Gurax_CreateProperty(Button, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -98,9 +96,5 @@ String Value_wxButton::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Button");
 }
-
-//------------------------------------------------------------------------------
-// Value_wxButton::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)
