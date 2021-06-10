@@ -157,14 +157,20 @@ if (${this.name}.size() != 3) {
 // FuncInfo
 //------------------------------------------------------------------------------
 FuncInfo = class {
+	r as Renderer
 	moduleName as String
 	name as String
 	argInfoTbl[] as ArgInfo
-	typeInfo as TypeInfo
+	typeName as String
+	_typeInfo as TypeInfo
 	tmplFunctionBody as Template
-	__init__(r as Renderer, moduleName as String, name as String, argInfoTbl[] as ArgInfo, typeInfo as TypeInfo, codeFunctionBody:nil as String) = {
-		this.moduleName = moduleName, this.name = name, this.argInfoTbl = argInfoTbl, this.typeInfo = typeInfo
+	__init__(r as Renderer, moduleName as String, name as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String) = {
+		this.r = r, this.moduleName = moduleName, this.name = name, this.argInfoTbl = argInfoTbl, this.typeName = typeName
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
+	}
+	GetTypeInfo() = {
+		if (!this._typeInfo) { this._typeInfo = this.r.typeInfoMap[this.typeName] }
+		this._typeInfo
 	}
 	ComposeArgs() = this.argInfoTbl:*ComposeArgRef().Join(', ')
 	ComposeCaller() = Format('%s(%s)', this.name, this.ComposeArgs())
@@ -193,17 +199,16 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	if (expr.attr.IsSet(`void)) { typeName = 'void' }
 	argInfoTbl = CreateArgInfoTbl(r, expr)
 	if (typeName.IsEmpty()) { typeName = 'any' }
-	typeInfo = r.typeInfoMap[typeName]
 	symbolName = expr.car.symbolName
 	//(symbolName, argInfoTbl, typeInfo, codeFunctionBody)
-	FuncInfo(r, moduleName, symbolName, argInfoTbl, typeInfo, codeFunctionBody)
+	FuncInfo(r, moduleName, symbolName, argInfoTbl, typeName, codeFunctionBody)
 }
 
 tmplFunctionImplementation = tR'''
 // ${funcInfo.ToString()}
 Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	AddHelp(
 		Gurax_Symbol(en),
@@ -221,7 +226,7 @@ Gurax_ImplementFunctionEx(${funcInfo.name}_gurax, processor_gurax, argument_gura
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	${funcInfo.typeInfo.ComposeFunctionBody(funcInfo.ComposeCaller())}
+	${funcInfo.GetTypeInfo().ComposeFunctionBody(funcInfo.ComposeCaller())}
 	${end}
 }
 '''

@@ -262,7 +262,7 @@ tmplMethodImplementation = tR'''
 // ${Format('%s.%s#%s(%s)', funcInfo.moduleName, className, funcInfo.name, funcInfo.argInfoTbl:*ToString().Join(', '))}
 Gurax_DeclareMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	AddHelp(
 		Gurax_Symbol(en),
@@ -284,7 +284,7 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	${funcInfo.typeInfo.ComposeFunctionBody('pEntity_gurax->' + funcInfo.ComposeCaller())}
+	${funcInfo.GetTypeInfo().ComposeFunctionBody('pEntity_gurax->' + funcInfo.ComposeCaller())}
 	${end}
 }
 '''
@@ -317,7 +317,7 @@ expr = `{
 	Frame = Class(Window) {
 		__init__(parent:nil as Window_p, id as int, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 			style as long = wxDEFAULT_FRAME_STYLE, name as String = wxFrameNameStr)
-		CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as int = 0, name as String = wxStatusBarNameStr)
+		CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as int = 0, name as String = wxStatusBarNameStr) as Frame_p
 	}
 	Menu = Class(EvtHandler) {
 	}
@@ -420,7 +420,7 @@ tmplConstructorImplementation_Object = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -439,7 +439,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	return argument_gurax.ReturnValue(processor_gurax, new Value_${funcInfo.typeInfo.vtype}(
+	return argument_gurax.ReturnValue(processor_gurax, new Value_${funcInfo.GetTypeInfo().vtype}(
 		wx${funcInfo.ComposeCaller()}));
 	${end}
 }
@@ -449,7 +449,7 @@ tmplConstructorImplementation_EvtHandler = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.typeInfo.vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -468,8 +468,8 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	auto pEntity_gurax = new Value_${funcInfo.typeInfo.vtype}::EntityT(${funcInfo.ComposeArgs()});
-	RefPtr<Value_${funcInfo.typeInfo.vtype}> pValue_gurax(new Value_${funcInfo.typeInfo.vtype}(pEntity_gurax));
+	auto pEntity_gurax = new Value_${funcInfo.GetTypeInfo().vtype}::EntityT(${funcInfo.ComposeArgs()});
+	RefPtr<Value_${funcInfo.GetTypeInfo().vtype}> pValue_gurax(new Value_${funcInfo.GetTypeInfo().vtype}(pEntity_gurax));
 	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 	${end}
@@ -519,7 +519,7 @@ classInfoTbl.Each {|classInfo|
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object
 	}
 	if (classInfo.funcInfoConstructor) {
-		classInfo.funcInfoConstructor.typeInfo = classInfo.typeInfo
+		classInfo.funcInfoConstructor.typeName = classInfo.typeInfo.decl
 	}
 }
 

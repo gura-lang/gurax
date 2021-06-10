@@ -84,7 +84,7 @@ Method_##nameVType##_##name::Method_##nameVType##_##name(const char* name_) : Fu
 #define Gurax_ImplementMethod(nameVType, name) \
 Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
 
-#define Gurax_ImplementMethodEx(nameVType, name, procesor, argument) \
+#define Gurax_ImplementMethodEx(nameVType, name, processor, argument) \
 Value* Method_##nameVType##_##name::DoEval(Processor& processor, Argument& argument) const
 
 #define Gurax_CreateMethod(nameVType, name) (new Method_##nameVType##_##name())
