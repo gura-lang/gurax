@@ -10,7 +10,7 @@ AppConsole = Class(EvtHandler) {
 }
 
 Button = Class(AnyButton) {
-	__init__(parent as Window_p, id as int, label as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+	__init__(parent as Window_p, id as WindowID, label as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
 }
 
@@ -18,7 +18,7 @@ CommandEvent = Class(Event) {
 }
 
 Control = Class(Window) {
-	__init__(parent:nil as Window_p, id as int, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+	__init__(parent:nil as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as int = 0, validator as Validator = wxDefaultValidator, name as String = wxControlNameStr)
 }
 
@@ -34,16 +34,16 @@ EvtHandler = Class {
 }
 
 Frame = Class(Window) {
-	__init__(parent:nil as Window_p, id as int, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+	__init__(parent:nil as Window_p, id as WindowID, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxDEFAULT_FRAME_STYLE, name as String = wxFrameNameStr)
-	CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as int = 0, name as String = wxStatusBarNameStr) as Frame_p
+	CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as WindowID = 0, name as String = wxStatusBarNameStr) as Frame_p
 	SetStatusText(text as String, number as int = 0):void
 	SetMenuBar(menuBar as MenuBar_p):void
 }
 
 Menu = Class(EvtHandler) {
 	__init__()
-	Append(id as int, item as String = '', helpString as String = '', kind as wxItemKind = wxITEM_NORMAL) as MenuItem_p
+	Append(id as int, item as String = '', helpString as String = '', kind as ItemKind = wxITEM_NORMAL) as MenuItem_p
 	AppendSeparator() as MenuItem_p
 }
 
@@ -59,6 +59,8 @@ Object = Class {
 }
 
 Panel = Class(Window) {
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxTAB_TRAVERSAL, name as String = wxPanelNameStr)
 }
 
 Point = Class {

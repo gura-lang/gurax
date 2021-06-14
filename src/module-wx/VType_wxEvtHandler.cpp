@@ -27,17 +27,17 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.wxEvtHandler() {block?}
-Gurax_DeclareConstructorAlias(wxEvtHandler_gurax, "wxEvtHandler")
+// wx.EvtHandler() {block?}
+Gurax_DeclareConstructorAlias(EvtHandler_gurax, "EvtHandler")
 {
 	Declare(VTYPE_wxEvtHandler, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an instance of wxEvtHandler.");
+		"Creates an instance of wx.EvtHandler.");
 }
 
-Gurax_ImplementConstructorEx(wxEvtHandler_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementConstructorEx(EvtHandler_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
 	auto pEntity_gurax = new Value_wxEvtHandler::EntityT();
@@ -49,6 +49,7 @@ Gurax_ImplementConstructorEx(wxEvtHandler_gurax, processor_gurax, argument_gurax
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,9 +65,8 @@ void VType_wxEvtHandler::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(wxEvtHandler_gurax));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(EvtHandler_gurax));
 	// Assignment of method
-	// Assignment of property
 }
 
 //------------------------------------------------------------------------------

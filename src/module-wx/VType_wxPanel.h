@@ -54,6 +54,12 @@ protected:
 	// Destructor
 	~Value_wxPanel() = default;
 public:
+	wxPanel& GetEntity() {
+		return reinterpret_cast<wxPanel&>(Value_wxEvtHandler::GetEntity());
+	}
+	const wxPanel& GetEntity() const {
+		return reinterpret_cast<const wxPanel&>(Value_wxEvtHandler::GetEntity());
+	}
 	wxPanel* GetEntityPtr() {
 		return reinterpret_cast<wxPanel*>(Value_wxEvtHandler::GetEntityPtr());
 	}
@@ -61,6 +67,12 @@ public:
 		return reinterpret_cast<const wxPanel*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
+	static wxPanel& GetEntity(Value& value) {
+		return dynamic_cast<Value_wxPanel&>(value).GetEntity();
+	}
+	static const wxPanel& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxPanel&>(value).GetEntity();
+	}
 	static wxPanel* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_wxPanel&>(value).GetEntityPtr();
 	}

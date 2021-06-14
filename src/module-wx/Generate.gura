@@ -18,7 +18,8 @@ r.DeclareType('String', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
-r.DeclareType_Number('wxItemKind')
+r.DeclareType_Number('ItemKind', 'wxItemKind')
+r.DeclareType_Number('WindowID', 'wxWindowID')
 
 tmplHeader = tR'''
 //==============================================================================
@@ -494,9 +495,9 @@ classInfoTbl.Each {|classInfo|
 	fileNameSource = Format('VType_wx%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	//if (className in ['AppConsole', 'Button', 'CommandEvent', 'Control', 'Event', 'Frame', 'Menu', 'MenuBar', 'MenuItem',
+	//if (className in ['AnyButton', 'AppConsole', 'Button', 'CommandEvent', 'Control', 'Event', 'EvtHandler', 'Frame', 'Menu', 'MenuBar', 'MenuItem',
 	//	'Object', 'Point', 'Size', 'StatusBar', 'Validator', 'Window', ]) {
-	if (className in ['AnyButton']) {
+	if (className in ['Panel']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)

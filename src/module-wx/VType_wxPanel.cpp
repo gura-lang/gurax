@@ -27,11 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Panel(parent:nil as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
-Gurax_DeclareConstructor(Panel)
+// wx.Panel(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+Gurax_DeclareConstructorAlias(Panel_gurax, "Panel")
 {
 	Declare(VTYPE_wxPanel, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -40,30 +40,30 @@ Gurax_DeclareConstructor(Panel)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Panel` instance.");
+		"Creates an instance of wx.Panel.");
 }
 
-Gurax_ImplementConstructor(Panel)
+Gurax_ImplementConstructorEx(Panel_gurax, processor_gurax, argument_gurax)
 {
-	// Argument
-	ArgPicker args(argument);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	wxWindowID id = args.IsValid()? args.PickNumber<wxWindowID>() : wxID_ANY;
-	const char* title = args.PickString();
-	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
-	const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args.IsValid()? args.PickNumber<long>() : wxTAB_TRAVERSAL;
-	const char* name = args.IsValid()? args.PickString() : wxPanelNameStr;
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxWindow* parent = args_gurax.Pick<Value_wxWindow>().GetEntityPtr();
+	wxWindowID id = args_gurax.IsValid()? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxTAB_TRAVERSAL;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPanelNameStr;
 	// Function body
-	auto pEntity = new Value_wxPanel::EntityT(parent, id, pos, size, style, name);
-	RefPtr<Value_wxPanel> pValue(new Value_wxPanel(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
+	auto pEntity_gurax = new Value_wxPanel::EntityT(parent, id, pos, size, style, name);
+	RefPtr<Value_wxPanel> pValue_gurax(new Value_wxPanel(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -79,11 +79,8 @@ void VType_wxPanel::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Panel));
+	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Panel_gurax));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Panel, SetMenuBar));
-	// Assignment of property
-	//Assign(Gurax_CreateProperty(Panel, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -95,9 +92,5 @@ String Value_wxPanel::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Panel");
 }
-
-//------------------------------------------------------------------------------
-// Value_wxPanel::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)
