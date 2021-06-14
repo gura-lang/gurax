@@ -334,7 +334,7 @@ ClassInfo = class {
 
 classInfoTbl = []
 
-path.Glob('metafile/*.gura').Each {|pathName|
+path.Glob('metafile/VType_*.gura').Each {|pathName|
 	fileName = path.FileName(pathName)
 	(fileName in ['VType_wxApp.gura', 'VType_wxEventType.gura']) && continue
 	Expr(pathName).EachElem {|expr|
