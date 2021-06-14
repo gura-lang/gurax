@@ -54,6 +54,12 @@ protected:
 	// Destructor
 	~Value_wxMenu() = default;
 public:
+	wxMenu& GetEntity() {
+		return reinterpret_cast<wxMenu&>(Value_wxEvtHandler::GetEntity());
+	}
+	const wxMenu& GetEntity() const {
+		return reinterpret_cast<const wxMenu&>(Value_wxEvtHandler::GetEntity());
+	}
 	wxMenu* GetEntityPtr() {
 		return reinterpret_cast<wxMenu*>(Value_wxEvtHandler::GetEntityPtr());
 	}
@@ -61,6 +67,12 @@ public:
 		return reinterpret_cast<const wxMenu*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
+	static wxMenu& GetEntity(Value& value) {
+		return dynamic_cast<Value_wxMenu&>(value).GetEntity();
+	}
+	static const wxMenu& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxMenu&>(value).GetEntity();
+	}
 	static wxMenu* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_wxMenu&>(value).GetEntityPtr();
 	}

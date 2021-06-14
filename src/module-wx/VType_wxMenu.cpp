@@ -28,31 +28,31 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // wx.Menu() {block?}
-Gurax_DeclareConstructor(Menu)
+Gurax_DeclareConstructorAlias(Menu_gurax, "Menu")
 {
 	Declare(VTYPE_wxMenu, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.Menu` instance.");
+		"Creates an instance of wx.Menu.");
 }
 
-Gurax_ImplementConstructor(Menu)
+Gurax_ImplementConstructorEx(Menu_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	auto pEntity = new Value_wxMenu::EntityT();
-	RefPtr<Value_wxMenu> pValue(new Value_wxMenu(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
+	auto pEntity_gurax = new Value_wxMenu::EntityT();
+	RefPtr<Value_wxMenu> pValue_gurax(new Value_wxMenu(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
 // wx.Menu#Append(id as Number, item? as String, helpString? as String, kind? as Number)
-Gurax_DeclareMethod(wxMenu, Append)
+Gurax_DeclareMethodAlias(wxMenu, Append_gurax, "Append")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_wxMenuItem, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("item", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -62,41 +62,41 @@ Gurax_DeclareMethod(wxMenu, Append)
 		"");
 }
 
-Gurax_ImplementMethod(wxMenu, Append)
+Gurax_ImplementMethodEx(wxMenu, Append_gurax, processor_gurax, argument_gurax)
 {
 	// Target
-	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntityPtr();
-	if (!pEntity) return Value::nil();
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
 	// Arguments
-	ArgPicker args(argument);
-	int id = args.PickNumber<int>();
-	const char* item = args.IsValid()? args.PickString() : "";
-	const char* helpString = args.IsValid()? args.PickString() : "";
-	wxItemKind kind = args.IsValid()? args.PickNumber<wxItemKind>() : wxITEM_NORMAL;
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	const char* item = args_gurax.IsValid()? args_gurax.PickString() : "";
+	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	wxItemKind kind = args_gurax.IsValid()? args_gurax.PickNumber<wxItemKind>() : wxITEM_NORMAL;
 	// Function body
-	wxMenuItem* rtn = pEntity->Append(id, item, helpString, kind);
-	return new Value_wxMenuItem(*rtn);
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->Append(id, item, helpString, kind)));
 }
 
 // wx.Menu#AppendSeparator()
-Gurax_DeclareMethod(wxMenu, AppendSeparator)
+Gurax_DeclareMethodAlias(wxMenu, AppendSeparator_gurax, "AppendSeparator")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_wxMenuItem, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethod(wxMenu, AppendSeparator)
+Gurax_ImplementMethodEx(wxMenu, AppendSeparator_gurax, processor_gurax, argument_gurax)
 {
 	// Target
-	auto& valueThis = GetValueThis(argument);
-	auto pEntity = valueThis.GetEntityPtr();
-	if (!pEntity) return Value::nil();
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	wxMenuItem* rtn = pEntity->AppendSeparator();
-	return new Value_wxMenuItem(*rtn);
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->AppendSeparator()));
 }
 
 //-----------------------------------------------------------------------------
@@ -113,12 +113,10 @@ void VType_wxMenu::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Menu));
+	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Menu_gurax));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(wxMenu, Append));
-	Assign(Gurax_CreateMethod(wxMenu, AppendSeparator));
-	// Assignment of property
-	//Assign(Gurax_CreateProperty(Menu, propSkeleton));
+	Assign(Gurax_CreateMethod(wxMenu, Append_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, AppendSeparator_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -130,9 +128,5 @@ String Value_wxMenu::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.Menu");
 }
-
-//------------------------------------------------------------------------------
-// Value_wxMenu::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

@@ -18,6 +18,8 @@ r.DeclareType('String', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
+r.DeclareType_Number('wxItemKind')
+
 tmplHeader = tR'''
 //==============================================================================
 // VType_wx${className}.h
@@ -291,69 +293,6 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 
 EvalTmplMethodImplementation(className as String, funcInfo as cbridge.FuncInfo):map = tmplMethodImplementation.Eval()
 
-expr = `{
-	AnyButton = Class(Control) {
-	}
-	App = Class(AppConsole) {
-	}
-	AppConsole = Class(EvtHandler) {
-	}
-	Button = Class(AnyButton) {
-		__init__(parent as Window_p, id as int, label as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-			style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
-	}
-	CommandEvent = Class(Event) {
-	}
-	Control = Class(Window) {
-		__init__(parent:nil as Window_p, id as int, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-			style as int = 0, validator as Validator = wxDefaultValidator, name as String = wxControlNameStr)
-	}
-	Event = Class(Object) {
-	}
-	EventType = Class {
-	}
-	EvtHandler = Class {
-		__init__()
-		//Bind(eventType as EventType, funct as Any, id? as int, lastId? as int, userData as Any):void
-	}
-	Frame = Class(Window) {
-		__init__(parent:nil as Window_p, id as int, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-			style as long = wxDEFAULT_FRAME_STYLE, name as String = wxFrameNameStr)
-		CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as int = 0, name as String = wxStatusBarNameStr) as Frame_p
-		SetStatusText(text as String, number as int = 0):void
-		SetMenuBar(menuBar as MenuBar_p):void
-	}
-	Menu = Class(EvtHandler) {
-	}
-	MenuBar = Class(Window) {
-		__init__()
-		Append(menu as Menu_p, title as String) as bool
-	}
-	MenuItem = Class(Object) {
-	}
-	Object = Class {
-	}
-	Panel = Class(Window) {
-	}
-	Point = Class {
-		__init__(x? as int, y? as int)
-	}
-	Size = Class {
-		__init__(width? as int, height? as int)
-	}
-	StatusBar = Class(Control) {
-		__init__()
-	}
-	Validator = Class(EvtHandler) {
-		__init__()
-	}
-	Window = Class(EvtHandler) {
-		__init__()
-		Close(force? as bool) as bool
-		Show(show? as bool) as bool
-	}
-}
-
 ClassInfo = class {
 	typeInfo as cbridge.TypeInfo
 	className as String
@@ -394,6 +333,7 @@ ClassInfo = class {
 
 classInfoTbl = []
 
+expr = Expr('metafile/Main.gura')
 expr.EachElem {|expr|
 	if (expr.IsAssign() && expr.left.IsIdentifier() && expr.right.IsCaller() && expr.right.car.IsIdentifier(`Class)) {
 		className = expr.left.symbolName
@@ -491,18 +431,33 @@ classInfoTbl.Each {|classInfo|
 }
 
 classInfoTbl.Each {|classInfo|
-	typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
-		'wx' + classInfo.className, 'wx.' + classInfo.className,
-		codePicker = R'''
-		${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
-		'''
-		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
-		'''
-		codeFunctionBody = R'''
-		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-			${caller}));
-		''')
+	if (classInfo.IsEvtHandlerOrDeriv()) {
+		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
+			'wx' + classInfo.className, 'wx.' + classInfo.className,
+			codePicker = R'''
+			${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
+			'''
+			codePickerValidation = R'''
+			${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
+			'''
+			codeFunctionBody = R'''
+			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+				${caller}));
+			''')
+	} else {
+		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
+			'wx' + classInfo.className, 'wx.' + classInfo.className,
+			codePicker = R'''
+			${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
+			'''
+			codePickerValidation = R'''
+			${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
+			'''
+			codeFunctionBody = R'''
+			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+				*${caller}));
+			''')
+	}
 	typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
 		codePicker = R'''
