@@ -1,0 +1,4 @@
+Control = Class(Window) {
+	__init__(parent:nil as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as int = 0, validator as Validator = wxDefaultValidator, name as String = wxControlNameStr)
+}

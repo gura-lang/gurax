@@ -49,7 +49,7 @@ Gurax_ImplementConstructorEx(Frame_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	int id = args_gurax.PickNumber<int>();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
 	const char* title = args_gurax.PickString();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
@@ -88,7 +88,7 @@ Gurax_ImplementMethodEx(wxFrame, CreateStatusBar_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int number = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 1;
 	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxSTB_DEFAULT_STYLE;
-	int id = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	wxWindowID id = args_gurax.IsValid()? args_gurax.PickNumber<wxWindowID>() : 0;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxStatusBarNameStr;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFrame(

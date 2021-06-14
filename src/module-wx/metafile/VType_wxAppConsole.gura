@@ -1,0 +1,3 @@
+AppConsole = Class(EvtHandler) {
+	__init__()
+}

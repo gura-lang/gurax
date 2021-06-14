@@ -1,0 +1,3 @@
+Size = Class {
+	__init__(width? as int, height? as int)
+}

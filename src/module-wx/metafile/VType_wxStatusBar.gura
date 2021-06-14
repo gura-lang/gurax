@@ -1,0 +1,3 @@
+StatusBar = Class(Control) {
+	__init__()
+}

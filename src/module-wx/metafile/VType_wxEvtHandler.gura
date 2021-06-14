@@ -1,0 +1,4 @@
+EvtHandler = Class {
+	__init__()
+	//Bind(eventType as EventType, funct as Any, id? as int, lastId? as int, userData as Any):void
+}

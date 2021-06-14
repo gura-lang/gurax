@@ -334,30 +334,33 @@ ClassInfo = class {
 
 classInfoTbl = []
 
-expr = Expr('metafile/Main.gura')
-expr.EachElem {|expr|
-	if (expr.IsAssign() && expr.left.IsIdentifier() && expr.right.IsCaller() && expr.right.car.IsIdentifier(`Class)) {
-		className = expr.left.symbolName
-		params = expr.right.EachParam():list
-		if (!params.first) {
-			classNameParent = nil
-		} elsif (params.first.IsIdentifier()) {
-			classNameParent = params.first.symbolName
-		} else {
-			sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
-			sys.Exit(1)
-		}
-		classInfo = ClassInfo(className, classNameParent)
-		expr.right.block.EachElem {|expr|
-			funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
-			if (funcInfo.name == '__init__') {
-				funcInfo.name = classInfo.className
-				classInfo.funcInfoConstructor = funcInfo
+path.Glob('metafile/*.gura').Each {|pathName|
+	fileName = path.FileName(pathName)
+	(fileName in ['VType_wxApp.gura', 'VType_wxEventType.gura']) && continue
+	Expr(pathName).EachElem {|expr|
+		if (expr.IsAssign() && expr.left.IsIdentifier() && expr.right.IsCaller() && expr.right.car.IsIdentifier(`Class)) {
+			className = expr.left.symbolName
+			params = expr.right.EachParam():list
+			if (!params.first) {
+				classNameParent = nil
+			} elsif (params.first.IsIdentifier()) {
+				classNameParent = params.first.symbolName
 			} else {
-				classInfo.funcInfoTbl.Add(funcInfo)
+				sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
+				sys.Exit(1)
 			}
+			classInfo = ClassInfo(className, classNameParent)
+			expr.right.block.EachElem {|expr|
+				funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
+				if (funcInfo.name == '__init__') {
+					funcInfo.name = classInfo.className
+					classInfo.funcInfoConstructor = funcInfo
+				} else {
+					classInfo.funcInfoTbl.Add(funcInfo)
+				}
+			}
+			classInfoTbl.Add(classInfo)
 		}
-		classInfoTbl.Add(classInfo)
 	}
 }
 
@@ -456,7 +459,7 @@ classInfoTbl.Each {|classInfo|
 			'''
 			codeFunctionBody = R'''
 			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-				*dsx${caller}));
+				*${caller}));
 			''')
 	}
 	typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
@@ -495,11 +498,7 @@ classInfoTbl.Each {|classInfo|
 	fileNameSource = Format('VType_wx%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	//if (className in ['AnyButton', 'AppConsole', 'Button', 'CommandEvent', 'Control', 'Event', 'EvtHandler', 'Frame', 'Menu', 'MenuBar', 'MenuItem',
-	//	'Object', 'Point', 'Size', 'StatusBar', 'Validator', 'Window', ]) {
-	if (className in ['Panel']) {
-		Println(className)
-		tmplHeader.Render(fileNameHeader)
-		tmplSource.Render(fileNameSource)
-	}
+	Println(className)
+	tmplHeader.Render(fileNameHeader)
+	tmplSource.Render(fileNameSource)
 }

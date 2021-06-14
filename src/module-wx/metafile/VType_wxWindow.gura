@@ -1,0 +1,5 @@
+Window = Class(EvtHandler) {
+	__init__()
+	Close(force? as bool) as bool
+	Show(show? as bool) as bool
+}

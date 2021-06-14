@@ -1,0 +1,4 @@
+MenuBar = Class(Window) {
+	__init__()
+	Append(menu as Menu_p, title as String) as bool
+}

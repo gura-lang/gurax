@@ -1,0 +1,3 @@
+Validator = Class(EvtHandler) {
+	__init__()
+}

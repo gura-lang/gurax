@@ -1,0 +1,5 @@
+Menu = Class(EvtHandler) {
+	__init__()
+	Append(id as int, item as String = '', helpString as String = '', kind as ItemKind = wxITEM_NORMAL) as MenuItem_p
+	AppendSeparator() as MenuItem_p
+}

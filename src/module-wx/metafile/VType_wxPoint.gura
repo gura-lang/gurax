@@ -1,0 +1,3 @@
+Point = Class {
+	__init__(x? as int, y? as int)
+}

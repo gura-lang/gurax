@@ -50,7 +50,7 @@ Gurax_ImplementConstructorEx(Button_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxWindow* parent = args_gurax.Pick<Value_wxWindow>().GetEntityPtr();
-	int id = args_gurax.PickNumber<int>();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
 	const char* label = args_gurax.IsValid()? args_gurax.PickString() : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
