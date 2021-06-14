@@ -455,7 +455,7 @@ classInfoTbl.Each {|classInfo|
 			'''
 			codeFunctionBody = R'''
 			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
-				*${caller}));
+				*dsx${caller}));
 			''')
 	}
 	typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
@@ -494,9 +494,9 @@ classInfoTbl.Each {|classInfo|
 	fileNameSource = Format('VType_wx%s.cpp', className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	//if (className in ['Button', 'CommandEvent', 'Control', 'Event', 'Frame', 'MenuBar', 'MenuItem',
+	//if (className in ['AppConsole', 'Button', 'CommandEvent', 'Control', 'Event', 'Frame', 'Menu', 'MenuBar', 'MenuItem',
 	//	'Object', 'Point', 'Size', 'StatusBar', 'Validator', 'Window', ]) {
-	if (className in ['Menu']) {
+	if (className in ['AnyButton']) {
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)

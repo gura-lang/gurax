@@ -27,65 +27,29 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-/*
-// wx.AnyButton(parent:nil as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
-Gurax_DeclareConstructor(AnyButton)
-{
-	Declare(VTYPE_wxAnyButton, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::Nil);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `wx.AnyButton` instance.");
-}
-
-Gurax_ImplementConstructor(AnyButton)
-{
-	// Argument
-	ArgPicker args(argument);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntity() : nullptr;
-	wxWindowID id = args.PickNumber<wxWindowID>();
-	const char* title = args.PickString();
-	const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
-	const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args.IsValid()? args.PickNumber<long>() : wxDEFAULT_wxAnyButton_STYLE;
-	const char* name = args.IsValid()? args.PickString() : wxAnyButtonNameStr;
-	// Function body
-	auto pEntity = new Value_wxAnyButton::EntityT(parent, id, title, pos, size, style, name);
-	RefPtr<Value_wxAnyButton> pValue(new Value_wxAnyButton(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
-}
-*/
-
 // wx.AnyButton() {block?}
-Gurax_DeclareConstructor(AnyButton)
+Gurax_DeclareConstructorAlias(AnyButton_gurax, "AnyButton")
 {
 	Declare(VTYPE_wxAnyButton, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.AnyButton` instance.");
+		"Creates an instance of wx.AnyButton.");
 }
 
-Gurax_ImplementConstructor(AnyButton)
+Gurax_ImplementConstructorEx(AnyButton_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	auto pEntity = new Value_wxAnyButton::EntityT();
-	RefPtr<Value_wxAnyButton> pValue(new Value_wxAnyButton(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
+	auto pEntity_gurax = new Value_wxAnyButton::EntityT();
+	RefPtr<Value_wxAnyButton> pValue_gurax(new Value_wxAnyButton(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -101,11 +65,8 @@ void VType_wxAnyButton::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(AnyButton));
+	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(AnyButton_gurax));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(AnyButton, SetMenuBar));
-	// Assignment of property
-	//Assign(Gurax_CreateProperty(AnyButton, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -117,9 +78,5 @@ String Value_wxAnyButton::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.AnyButton");
 }
-
-//------------------------------------------------------------------------------
-// Value_wxAnyButton::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

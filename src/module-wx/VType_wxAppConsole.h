@@ -54,6 +54,12 @@ protected:
 	// Destructor
 	~Value_wxAppConsole() = default;
 public:
+	wxAppConsole& GetEntity() {
+		return reinterpret_cast<wxAppConsole&>(Value_wxEvtHandler::GetEntity());
+	}
+	const wxAppConsole& GetEntity() const {
+		return reinterpret_cast<const wxAppConsole&>(Value_wxEvtHandler::GetEntity());
+	}
 	wxAppConsole* GetEntityPtr() {
 		return reinterpret_cast<wxAppConsole*>(Value_wxEvtHandler::GetEntityPtr());
 	}
@@ -61,6 +67,12 @@ public:
 		return reinterpret_cast<const wxAppConsole*>(Value_wxEvtHandler::GetEntityPtr());
 	}
 public:
+	static wxAppConsole& GetEntity(Value& value) {
+		return dynamic_cast<Value_wxAppConsole&>(value).GetEntity();
+	}
+	static const wxAppConsole& GetEntity(const Value& value) {
+		return dynamic_cast<const Value_wxAppConsole&>(value).GetEntity();
+	}
 	static wxAppConsole* GetEntityPtr(Value& value) {
 		return dynamic_cast<Value_wxAppConsole&>(value).GetEntityPtr();
 	}

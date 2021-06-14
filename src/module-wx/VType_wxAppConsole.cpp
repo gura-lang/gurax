@@ -28,27 +28,28 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // wx.AppConsole() {block?}
-Gurax_DeclareConstructor(AppConsole)
+Gurax_DeclareConstructorAlias(AppConsole_gurax, "AppConsole")
 {
 	Declare(VTYPE_wxAppConsole, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `wx.AppConsole` instance.");
+		"Creates an instance of wx.AppConsole.");
 }
 
-Gurax_ImplementConstructor(AppConsole)
+Gurax_ImplementConstructorEx(AppConsole_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	auto pEntity = new Value_wxAppConsole::EntityT();
-	RefPtr<Value_wxAppConsole> pValue(new Value_wxAppConsole(pEntity));
-	pEntity->core.SetInfo(processor.Reference(), *pValue);
-	return argument.ReturnValue(processor, pValue.release());
+	auto pEntity_gurax = new Value_wxAppConsole::EntityT();
+	RefPtr<Value_wxAppConsole> pValue_gurax(new Value_wxAppConsole(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -64,11 +65,8 @@ void VType_wxAppConsole::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(AppConsole));
+	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(AppConsole_gurax));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(AppConsole, OnInit));
-	// Assignment of property
-	//Assign(Gurax_CreateProperty(AppConsole, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
@@ -80,10 +78,5 @@ String Value_wxAppConsole::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, "wx.AppConsole");
 }
-
-
-//------------------------------------------------------------------------------
-// Value_wxAppConsole::EntityT
-//------------------------------------------------------------------------------
 
 Gurax_EndModuleScope(wx)

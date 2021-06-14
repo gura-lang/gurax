@@ -1,10 +1,12 @@
 AnyButton = Class(Control) {
+	__init__()
 }
 
 App = Class(AppConsole) {
 }
 
 AppConsole = Class(EvtHandler) {
+	__init__()
 }
 
 Button = Class(AnyButton) {
