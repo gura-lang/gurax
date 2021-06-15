@@ -1,0 +1,3 @@
+BoxSizer = Class(Sizer) {
+	__init__(orient as int)
+}

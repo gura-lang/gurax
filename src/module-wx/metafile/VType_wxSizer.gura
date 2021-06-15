@@ -1,0 +1,3 @@
+Sizer = Class(Object) {
+	//__init__()
+}

@@ -7,6 +7,7 @@ set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
 	VType_wxAnyButton.cpp
 	VType_wxAppConsole.cpp
+	VType_wxBoxSizer.cpp
 	VType_wxButton.cpp
 	VType_wxComboBox.cpp
 	VType_wxCommandEvent.cpp
@@ -21,6 +22,8 @@ set(SRCFILES_VTYPE
 	VType_wxPanel.cpp
 	VType_wxPoint.cpp
 	VType_wxSize.cpp
+	VType_wxSizer.cpp
+	VType_wxStaticBoxSizer.cpp
 	VType_wxStatusBar.cpp
 	VType_wxValidator.cpp
 	VType_wxWindow.cpp

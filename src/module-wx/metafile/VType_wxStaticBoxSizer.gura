@@ -1,0 +1,3 @@
+StaticBoxSizer = Class(BoxSizer) {
+	//__init__()
+}
