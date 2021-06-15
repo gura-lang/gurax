@@ -23,6 +23,7 @@ set(SRCFILES_VTYPE
 	VType_wxPoint.cpp
 	VType_wxSize.cpp
 	VType_wxSizer.cpp
+	VType_wxStaticBox.cpp
 	VType_wxStaticBoxSizer.cpp
 	VType_wxStatusBar.cpp
 	VType_wxValidator.cpp

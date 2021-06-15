@@ -25,6 +25,7 @@
 #include "VType_wxPoint.h"
 #include "VType_wxSize.h"
 #include "VType_wxSizer.h"
+#include "VType_wxStaticBox.h"
 #include "VType_wxStaticBoxSizer.h"
 #include "VType_wxStatusBar.h"
 #include "VType_wxValidator.h"
