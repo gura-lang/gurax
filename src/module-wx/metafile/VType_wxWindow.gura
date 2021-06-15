@@ -1,5 +1,15 @@
 Window = Class(EvtHandler) {
 	__init__()
+	AcceptsFocus():virtual as bool
+	AcceptsFocusFromKeyboard():virtual as bool
+	AcceptsFocusRecursively():virtual as bool
+	IsFocusable() as bool
+	CanAcceptFocus() as bool
+	CanAcceptFocusFromKeyboard() as bool
+	HasFocus():virtual as bool
+	SetCanFocus(canFocus as bool):virtual:void
+	SetFocus():void
+	SetFocusFromKbd():void
 	Close(force? as bool) as bool
 	Show(show? as bool) as bool
 }

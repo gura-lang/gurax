@@ -50,6 +50,210 @@ Gurax_ImplementConstructorEx(Window_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Window#AcceptsFocus()
+Gurax_DeclareMethodAlias(wxWindow, AcceptsFocus_gurax, "AcceptsFocus")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, AcceptsFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->AcceptsFocus();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#AcceptsFocusFromKeyboard()
+Gurax_DeclareMethodAlias(wxWindow, AcceptsFocusFromKeyboard_gurax, "AcceptsFocusFromKeyboard")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, AcceptsFocusFromKeyboard_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->AcceptsFocusFromKeyboard();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#AcceptsFocusRecursively()
+Gurax_DeclareMethodAlias(wxWindow, AcceptsFocusRecursively_gurax, "AcceptsFocusRecursively")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, AcceptsFocusRecursively_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->AcceptsFocusRecursively();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#IsFocusable()
+Gurax_DeclareMethodAlias(wxWindow, IsFocusable_gurax, "IsFocusable")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsFocusable_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsFocusable();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#CanAcceptFocus()
+Gurax_DeclareMethodAlias(wxWindow, CanAcceptFocus_gurax, "CanAcceptFocus")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, CanAcceptFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanAcceptFocus();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#CanAcceptFocusFromKeyboard()
+Gurax_DeclareMethodAlias(wxWindow, CanAcceptFocusFromKeyboard_gurax, "CanAcceptFocusFromKeyboard")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, CanAcceptFocusFromKeyboard_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanAcceptFocusFromKeyboard();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#HasFocus()
+Gurax_DeclareMethodAlias(wxWindow, HasFocus_gurax, "HasFocus")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, HasFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFocus();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#SetCanFocus(canFocus as Bool)
+Gurax_DeclareMethodAlias(wxWindow, SetCanFocus_gurax, "SetCanFocus")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("canFocus", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetCanFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool canFocus = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetCanFocus(canFocus);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetFocus()
+Gurax_DeclareMethodAlias(wxWindow, SetFocus_gurax, "SetFocus")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->SetFocus();
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetFocusFromKbd()
+Gurax_DeclareMethodAlias(wxWindow, SetFocusFromKbd_gurax, "SetFocusFromKbd")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetFocusFromKbd_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->SetFocusFromKbd();
+	return Gurax::Value::nil();
+}
+
 // wx.Window#Close(force? as Bool)
 Gurax_DeclareMethodAlias(wxWindow, Close_gurax, "Close")
 {
@@ -114,6 +318,16 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Window_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxWindow, AcceptsFocus_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, AcceptsFocusFromKeyboard_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, AcceptsFocusRecursively_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsFocusable_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, CanAcceptFocus_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, CanAcceptFocusFromKeyboard_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, HasFocus_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetCanFocus_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetFocus_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetFocusFromKbd_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Close_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Show_gurax));
 }
