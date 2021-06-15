@@ -4,14 +4,14 @@
 #ifndef GURAX_MODULE_WX_VTYPES_H
 #define GURAX_MODULE_WX_VTYPES_H
 #include <gurax.h>
-#include "VType_wxAnyButton.h"
 #include "VType_wxApp.h"
+#include "VType_wxEventType.h"
+#include "VType_wxAnyButton.h"
 #include "VType_wxAppConsole.h"
 #include "VType_wxButton.h"
 #include "VType_wxCommandEvent.h"
 #include "VType_wxControl.h"
 #include "VType_wxEvent.h"
-#include "VType_wxEventType.h"
 #include "VType_wxEvtHandler.h"
 #include "VType_wxFrame.h"
 #include "VType_wxMenu.h"

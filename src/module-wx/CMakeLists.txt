@@ -4,6 +4,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_wx)
 
+include(VTypes.cmake)
+
 add_library(wx.gurd SHARED)
 #-------------------------------------------------------------------------------
 # Directory Information
@@ -42,26 +44,7 @@ target_sources(wx.gurd PRIVATE
 	Functions.cpp
 	Util.cpp
 	VTypes.cpp
-	VType_wxAnyButton.cpp
-	VType_wxApp.cpp
-	VType_wxAppConsole.cpp
-	VType_wxButton.cpp
-	VType_wxCommandEvent.cpp
-	VType_wxControl.cpp
-	VType_wxEvent.cpp
-	VType_wxEventType.cpp
-	VType_wxEvtHandler.cpp
-	VType_wxFrame.cpp
-	VType_wxMenu.cpp
-	VType_wxMenuBar.cpp
-	VType_wxMenuItem.cpp
-	VType_wxObject.cpp
-	VType_wxPanel.cpp
-	VType_wxPoint.cpp
-	VType_wxSize.cpp
-	VType_wxStatusBar.cpp
-	VType_wxValidator.cpp
-	VType_wxWindow.cpp)
+	${SRCFILES_VTYPE})
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

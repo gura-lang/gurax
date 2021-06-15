@@ -21,6 +21,36 @@ r.DeclareType('String', 'const char*', 'String',
 r.DeclareType_Number('ItemKind', 'wxItemKind')
 r.DeclareType_Number('WindowID', 'wxWindowID')
 
+tmplVTypesCMake = tR'''
+set(SRCFILES_VTYPE
+	VType_wxApp.cpp
+	VType_wxEventType.cpp
+	${fileNamesSource + '\n'}
+)
+'''
+
+tmplVTypesH = tR'''
+//==============================================================================
+// VTypes.h
+//==============================================================================
+#ifndef GURAX_MODULE_WX_VTYPES_H
+#define GURAX_MODULE_WX_VTYPES_H
+#include <gurax.h>
+#include "VType_wxApp.h"
+#include "VType_wxEventType.h"
+${fileNamesHeader.Each {|fileNameHeader|}}
+#include "${fileNameHeader}"
+${end}
+
+Gurax_BeginModuleScope(wx)
+
+void AssignVTypes(Frame& frame);
+
+Gurax_EndModuleScope(wx)
+
+#endif
+'''
+
 tmplHeader = tR'''
 //==============================================================================
 // VType_wx${className}.h
@@ -486,6 +516,8 @@ classInfoTbl.Each {|classInfo|
 	}
 }
 
+fileNamesHeader = []
+fileNamesSource = []
 classInfoTbl.Each {|classInfo|
 	classInfoParent = classInfo.classInfoParent
 	classInfoRoot = classInfo.GetClassInfoRoot()
@@ -496,9 +528,13 @@ classInfoTbl.Each {|classInfo|
 	funcInfoTbl = classInfo.funcInfoTbl
 	fileNameHeader = Format('VType_wx%s.h', className)
 	fileNameSource = Format('VType_wx%s.cpp', className)
+	fileNamesHeader.Add(fileNameHeader)
+	fileNamesSource.Add(fileNameSource)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
 	Println(className)
 	tmplHeader.Render(fileNameHeader)
 	tmplSource.Render(fileNameSource)
 }
+tmplVTypesH.Render('VTypes.h')
+tmplVTypesCMake.Render('VTypes.cmake')
