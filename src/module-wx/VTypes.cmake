@@ -9,6 +9,7 @@ set(SRCFILES_VTYPE
 	VType_wxAppConsole.cpp
 	VType_wxBoxSizer.cpp
 	VType_wxButton.cpp
+	VType_wxCheckBox.cpp
 	VType_wxComboBox.cpp
 	VType_wxCommandEvent.cpp
 	VType_wxControl.cpp

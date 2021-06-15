@@ -11,6 +11,7 @@
 #include "VType_wxAppConsole.h"
 #include "VType_wxBoxSizer.h"
 #include "VType_wxButton.h"
+#include "VType_wxCheckBox.h"
 #include "VType_wxComboBox.h"
 #include "VType_wxCommandEvent.h"
 #include "VType_wxControl.h"
