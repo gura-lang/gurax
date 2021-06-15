@@ -28,6 +28,46 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.ComboBox(parent as wx.Window, id as Number, value? as String, pos? as wx.Point, size? as wx.Size, choices_[]? as String, style? as Number, validator? as wx.Validator, name? as String) {block?}
+Gurax_DeclareConstructorAlias(ComboBox_gurax, "ComboBox")
+{
+	Declare(VTYPE_wxComboBox, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("choices_", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.ComboBox.");
+}
+
+Gurax_ImplementConstructorEx(ComboBox_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxWindow* parent = args_gurax.Pick<Value_wxWindow>().GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	auto choices_ = args_gurax.PickListT<const char*>(Gurax::Value_String::ValueForVector);
+	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxButtonNameStr;
+	// Function body
+	wxArrayString choices;
+	for (const char* choice : choices_) choices.Add(choice);
+	auto pEntity_gurax = new Value_wxComboBox::EntityT(parent, id, value, pos, size, choices, style, validator, name);
+	RefPtr<Value_wxComboBox> pValue_gurax(new Value_wxComboBox(pEntity_gurax));
+	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -48,7 +88,7 @@ void VType_wxComboBox::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxControl, Flag::Mutable);
+	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ComboBox_gurax));
 	// Assignment of method
 }
 

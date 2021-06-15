@@ -1,4 +1,11 @@
 ComboBox = Class(Control) {
-	//__init__(parent as Window_p, id as WindowID, label as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-	//	style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
+	__init__(parent as Window_p, id as WindowID, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		choices_[]? as String, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr) = R'''
+		wxArrayString choices;
+		for (const char* choice : choices_) choices.Add(choice);
+		auto pEntity_gurax = new Value_wxComboBox::EntityT(parent, id, value, pos, size, choices, style, validator, name);
+		RefPtr<Value_wxComboBox> pValue_gurax(new Value_wxComboBox(pEntity_gurax));
+		pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+	'''
 }
