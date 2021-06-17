@@ -164,7 +164,10 @@ FuncInfo = class {
 	typeName as String
 	_typeInfo as TypeInfo
 	tmplFunctionBody as Template
-	__init__(r as Renderer, moduleName as String, name as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String) = {
+	virtualFlag as Bool
+	returnThisFlag as Bool
+	__init__(r as Renderer, moduleName as String, name as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
+			virtualFlag as Bool, returnThisFlag as Bool) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.argInfoTbl = argInfoTbl, this.typeName = typeName
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
@@ -185,6 +188,8 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		expr = expr.left
 	}
 	typeName = ''
+	virtualFlag = false
+	returnThisFlag = false
 	if (expr.IsBinaryOp()) {
 		if (expr.operator.symbol == `as) {
 			!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
@@ -197,11 +202,13 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
 	!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
 	if (expr.attr.IsSet(`void)) { typeName = 'void' }
+	if (expr.attr.IsSet(`virtual)) { virtualFlag = true }
+	if (expr.attr.IsSet(`returnThis)) { returnThisFlag = true }
 	argInfoTbl = CreateArgInfoTbl(r, expr)
 	if (typeName.IsEmpty()) { typeName = 'any' }
 	symbolName = expr.car.symbolName
 	//(symbolName, argInfoTbl, typeInfo, codeFunctionBody)
-	FuncInfo(r, moduleName, symbolName, argInfoTbl, typeName, codeFunctionBody)
+	FuncInfo(r, moduleName, symbolName, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag)
 }
 
 tmplFunctionImplementation = tR'''

@@ -52,7 +52,55 @@ Gurax_ImplementConstructorEx(SizerFlags_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.SizerFlags#Align(alignment as Number)
+Gurax_DeclareMethodAlias(wxSizerFlags, Align_gurax, "Align")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("alignment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
 
+Gurax_ImplementMethodEx(wxSizerFlags, Align_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int alignment = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->Align(alignment);
+	return Gurax::Value::nil();
+}
+
+// wx.SizerFlags#Border(direction as Number, borderinpixels as Number)
+Gurax_DeclareMethodAlias(wxSizerFlags, Border_gurax, "Border")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("direction", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("borderinpixels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSizerFlags, Border_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int direction = args_gurax.PickNumber<int>();
+	int borderinpixels = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->Border(direction, borderinpixels);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -70,6 +118,8 @@ void VType_wxSizerFlags::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(SizerFlags_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxSizerFlags, Align_gurax));
+	Assign(Gurax_CreateMethod(wxSizerFlags, Border_gurax));
 }
 
 //------------------------------------------------------------------------------

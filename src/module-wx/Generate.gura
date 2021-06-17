@@ -323,6 +323,9 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 	// Function body
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
+	${elsif (funcInfo.returnThisFlag)}
+	pEntity_gurax->${funcInfo.ComposeCaller()}
+	return valueThis_gurax.Reference()
 	${else}
 	${funcInfo.GetTypeInfo().ComposeFunctionBody('pEntity_gurax->' + funcInfo.ComposeCaller())}
 	${end}
