@@ -5,9 +5,14 @@
 set(SRCFILES_VTYPE
 	VType_wxApp.cpp
 	VType_wxEventType.cpp
+	VType_wxSizerFlags.cpp
+	VType_wxSizerItem.cpp
+	VType_wxAboutDialogInfo.cpp
 	VType_wxGridSizer.cpp
 	VType_wxStdDialogButtonSizer.cpp
+	VType_wxWrapSizer.cpp
 	VType_wxFlexGridSizer.cpp
+	VType_wxGridBagSizer.cpp
 	VType_wxAnyButton.cpp
 	VType_wxAppConsole.cpp
 	VType_wxBoxSizer.cpp

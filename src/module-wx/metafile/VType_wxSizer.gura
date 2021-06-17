@@ -1,3 +1,20 @@
 Sizer = Class(Object) {
 	//__init__()
+	Add(item as any, flags as SizerFlags) as SizerItem_p = \
+		R'''
+		wxSizerItem* rtn;
+		if (item.IsInstanceOf(VTYPE_wxWindow)) {
+			rtn = pEntity_gurax->Add(Value_wxWindow::GetEntityPtr(item), flags);
+		} else if (item.IsInstanceOf(VTYPE_wxSizer)) {
+			rtn = pEntity_gurax->Add(Value_wxSizer::GetEntityPtr(item), flags);
+		} else {
+			Error::Issue(ErrorType::TypeError, "item must be an instance of wx.Window or wx.Sizer");
+			return Value::nil();
+		}
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+		'''
+	AddSpacer(size as int) as SizerItem_p
+	AddStretchSpacer(prop as int) as SizerItem_p
+	CalcMin() as Size
+	Clear(delete_windows as bool = false):void
 }
