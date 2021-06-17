@@ -7,6 +7,9 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
+#include "VType_wxGridSizer.h"
+#include "VType_wxStdDialogButtonSizer.h"
+#include "VType_wxFlexGridSizer.h"
 #include "VType_wxAnyButton.h"
 #include "VType_wxAppConsole.h"
 #include "VType_wxBoxSizer.h"
