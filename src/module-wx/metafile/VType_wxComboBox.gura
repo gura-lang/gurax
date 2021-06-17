@@ -1,13 +1,14 @@
 ComboBox = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-		choices[]? as String, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr) = R'''
+		choices[]? as String, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr) = \
+		R'''
 		wxArrayString choices_;
 		for (const char* choice : choices) choices_.Add(choice);
 		auto pEntity_gurax = new Value_wxComboBox::EntityT(parent, id, value, pos, size, choices_, style, validator, name);
 		RefPtr<Value_wxComboBox> pValue_gurax(new Value_wxComboBox(pEntity_gurax));
 		pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
-	'''
+		'''
 	// wxItemContainerImmutable
 	GetCount() as unsigned_int
 	//IsEmpty() as bool
@@ -20,8 +21,34 @@ ComboBox = Class(Control) {
 	SetStringSelection(string as String) as bool
 	GetStringSelection() as String
 	Select(n as int):void
-	// wxItemContainerImmutable
+	// wxItemContainer
 	Clear():void
 	Delete(n as unsigned_int):void
-	DetachClientObject(n as unsigned_int)
+	//DetachClientObject(n as unsigned_int)
+	HasClientData() as bool
+	HasClientObjectData() as bool
+	HasClientUntypedData() as bool
+	Append(item as String) as int
+	AppendItems(items[] as String) as int = \
+		R'''
+		wxArrayString items_;
+		for (const char* item : items) items_.Add(item);
+		int rtn = pEntity_gurax->Append(items_);
+		return new Gurax::Value_Number(rtn);
+		'''
+	Insert(item as String, pos as unsigned_int) as int
+	InsertItems(items[] as String, pos as unsigned_int) as int = \
+		R'''
+		wxArrayString items_;
+		for (const char* item : items) items_.Add(item);
+		int rtn = pEntity_gurax->Insert(items_, pos);
+		return new Gurax::Value_Number(rtn);
+		'''
+	Set(items[] as String):void = \
+		R'''
+		wxArrayString items_;
+		for (const char* item : items) items_.Add(item);
+		pEntity_gurax->Set(items_);
+		return Value::nil();
+		'''
 }
