@@ -98,6 +98,9 @@ public:
 	}
 	bool FeedValues(Frame& frameForVType, const ValueList& values);
 	bool CompleteFeedValue(Processor& processor);
+	bool FeedValuesAndComplete(Processor& processor, Frame& frameForVType, const ValueList& values) {
+		return FeedValues(frameForVType, values) && CompleteFeedValue(processor);
+	}
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {
 		return _pArgSlotFirst? _pArgSlotFirst->Find(pSymbol) : nullptr;
 	}
