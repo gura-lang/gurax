@@ -94,7 +94,7 @@ Value* Expr::Eval(Processor& processor, Event& event) const
 Value* Expr::Eval(Processor& processor, Argument& argument) const
 {
 	if (!GetPUnitFirst()) return Value::nil();
-	if (!argument.Compensate(processor)) return Value::nil();
+	if (!argument.CompleteFeedValue(processor)) return Value::nil();
 	Frame& frameCur = processor.GetFrameCur();
 	argument.AssignToFrame(processor.PushFrame<Frame_Block>(), frameCur);
 	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));
@@ -106,7 +106,7 @@ Value* Expr::Eval(Processor& processor, Argument& argument) const
 Value* Expr::Eval(Processor& processor, Argument& argument, Event& event) const
 {
 	if (!GetPUnitFirst()) return Value::nil();
-	if (!argument.Compensate(processor)) return Value::nil();
+	if (!argument.CompleteFeedValue(processor)) return Value::nil();
 	Frame& frameCur = processor.GetFrameCur();
 	argument.AssignToFrame(processor.PushFrame<Frame_Block>(), frameCur);
 	RefPtr<Value> pValue(processor.ProcessPUnit(GetPUnitFirst()));

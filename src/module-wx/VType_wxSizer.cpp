@@ -54,6 +54,13 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 	Gurax::Value& item = args_gurax.PickValue();
 	const wxSizerFlags& flags = args_gurax.Pick<Value_wxSizerFlags>().GetEntity();
 	// Function body
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable->DeclareArg("", VTYPE_wxWindow);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, *pDeclCallable));
+	} while (0);
 	wxSizerItem* rtn;
 	if (item.IsInstanceOf(VTYPE_wxWindow)) {
 		rtn = pEntity_gurax->Add(Value_wxWindow::GetEntityPtr(item), flags);

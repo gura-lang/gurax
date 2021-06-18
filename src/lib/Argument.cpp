@@ -68,7 +68,16 @@ void Argument::ResetAllValues()
 	if (_pValueOfDict) _pValueOfDict->GetValueDict().Clear();
 }
 
-bool Argument::Compensate(Processor& processor)
+bool Argument::FeedValues(Frame& frameForVType, const ValueList& values)
+{
+	for (const Value* pValue : values) {
+		FeedValue(frameForVType, pValue->Reference());
+		if (Error::IsIssued()) return false;
+	}
+	return true;
+}
+
+bool Argument::CompleteFeedValue(Processor& processor)
 {
 	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {
 		if (pArgSlot->HasValidValue()) {
@@ -89,7 +98,7 @@ bool Argument::Compensate(Processor& processor)
 void Argument::DoCall(Processor& processor)
 {
 	const PUnit* pPUnitCur = processor.GetPUnitCur();
-	if (!Compensate(processor)) return;
+	if (!CompleteFeedValue(processor)) return;
 	processor.SetPUnitCur(pPUnitCur);
 	const DeclBlock& declBlock = _pDeclCallable->GetDeclBlock();
 	if (_pExprOfBlock) {

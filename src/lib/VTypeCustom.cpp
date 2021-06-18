@@ -157,7 +157,7 @@ Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& arg
 		processor.EndFunction(true);
 		return Value::nil();
 	}
-	if (!pArgumentInh->Compensate(processor)) {
+	if (!pArgumentInh->CompleteFeedValue(processor)) {
 		processor.EndFunction(true);
 		return Value::nil();
 	}

@@ -91,11 +91,13 @@ public:
 	bool CheckArgSlotToFeed() const;
 public:
 	void ResetAllValues();
-	void FeedValue(Frame& frameForVType, Value* pValue) {
+	void FeedValue(Frame& frameForVType, RefPtr<Value> pValue) {
 		if (!_pArgSlotToFeed) return;
-		_pArgSlotToFeed->FeedValue(*this, frameForVType, pValue);
+		_pArgSlotToFeed->FeedValue(*this, frameForVType, pValue.release());
 		_pArgSlotToFeed = _pArgSlotToFeed->Advance();
 	}
+	bool FeedValues(Frame& frameForVType, const ValueList& values);
+	bool CompleteFeedValue(Processor& processor);
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {
 		return _pArgSlotFirst? _pArgSlotFirst->Find(pSymbol) : nullptr;
 	}
@@ -104,7 +106,6 @@ public:
 	}
 	bool ReadyToPickValue(Frame& frame);
 	void AssignToFrame(Frame& frame, Frame& frameOuter) const;
-	bool Compensate(Processor& processor);
 	void DoCall(Processor& processor);
 	Value* ReturnValue(Processor& processor, RefPtr<Value> pValueRtn) {
 		return _pExprOfBlock? _pExprOfBlock->EvalEasy(processor, pValueRtn.release()) : pValueRtn.release();

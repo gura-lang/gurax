@@ -2,6 +2,16 @@ Sizer = Class(Object) {
 	//__init__()
 	Add(item as any, flags as SizerFlags) as SizerItem_p = \
 		R'''
+		/*
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable->DeclareArg("", VTYPE_wxWindow);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable.Reference()));
+			
+		} while (0);
+		*/
 		wxSizerItem* rtn;
 		if (item.IsInstanceOf(VTYPE_wxWindow)) {
 			rtn = pEntity_gurax->Add(Value_wxWindow::GetEntityPtr(item), flags);
