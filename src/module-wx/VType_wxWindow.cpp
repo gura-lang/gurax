@@ -302,6 +302,32 @@ Gurax_ImplementMethodEx(wxWindow, Show_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.Window#SetSizer(sizer as wx.Sizer, deleteOld? as Bool)
+Gurax_DeclareMethodAlias(wxWindow, SetSizer_gurax, "SetSizer")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("sizer", VTYPE_wxSizer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("deleteOld", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetSizer_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxSizer* sizer = args_gurax.Pick<Value_wxSizer>().GetEntityPtr();
+	bool deleteOld = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetSizer(sizer, deleteOld);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -330,6 +356,7 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, SetFocusFromKbd_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Close_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Show_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetSizer_gurax));
 }
 
 //------------------------------------------------------------------------------

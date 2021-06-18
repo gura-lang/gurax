@@ -12,4 +12,6 @@ Window = Class(EvtHandler) {
 	SetFocusFromKbd():void
 	Close(force? as bool) as bool
 	Show(show? as bool) as bool
+
+	SetSizer(sizer as Sizer_p, deleteOld as bool = true)
 }

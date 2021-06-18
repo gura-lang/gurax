@@ -32,11 +32,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Sizer#Add(args[] as Any)
+// wx.Sizer#Add(args* as Any)
 Gurax_DeclareMethodAlias(wxSizer, Add_gurax, "Add")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
-	DeclareArg("args", VTYPE_Any, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -193,12 +193,12 @@ Gurax_ImplementMethodEx(wxSizer, Clear_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.Sizer#Insert(index as Number, args[] as Any)
+// wx.Sizer#Insert(index as Number, args* as Any)
 Gurax_DeclareMethodAlias(wxSizer, Insert_gurax, "Insert")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("args", VTYPE_Any, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

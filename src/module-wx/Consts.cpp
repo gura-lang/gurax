@@ -120,6 +120,9 @@ void AssignConsts(Frame& frame)
 
 	Gurax_AssignWxValue(OK);
 	Gurax_AssignWxValue(ICON_INFORMATION);
+
+	Gurax_AssignWxValue(VERTICAL);
+	Gurax_AssignWxValue(HORIZONTAL);
 }
 
 Gurax_EndModuleScope(wx)

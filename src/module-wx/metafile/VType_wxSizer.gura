@@ -1,6 +1,6 @@
 Sizer = Class(Object) {
 	//__init__()
-	Add(args[] as any) as SizerItem_p = \
+	Add(args* as any) as SizerItem_p = \
 		R'''
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
@@ -54,7 +54,7 @@ Sizer = Class(Object) {
 	AddStretchSpacer(prop as int) as SizerItem_p
 	CalcMin() as Size
 	Clear(delete_windows as bool = false):void
-	Insert(index as size_t, args[] as any) as SizerItem_p = \
+	Insert(index as size_t, args* as any) as SizerItem_p = \
 		R'''
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
