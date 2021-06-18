@@ -57,25 +57,25 @@ ArgInfo = class {
 	typeName as String
 	defaultValue as String
 	listVarFlag as Bool
-	optionFlag as Bool
+	occurSymbol as Symbol
 	nilFlag as Bool
 	streamWFlag as Bool
 	streamRFlag as Bool
 	typeInfo as TypeInfo
 	tmplDeclaration:static as Template
 	tmplRangeCheck:static as Template
-	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue:nil as String, attr as Attribute, listVarFlag as Bool, optionFlag as Bool) = {
+	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue:nil as String, attr as Attribute, listVarFlag as Bool, occurSymbol as Symbol) = {
 		this.name = name
 		this.typeName = typeName
 		this.defaultValue = defaultValue
 		this.listVarFlag = listVarFlag
-		this.optionFlag = optionFlag
+		this.occurSymbol = occurSymbol
 		this.nilFlag = attr.IsSet(`nil)
 		this.streamWFlag = attr.IsSet(`w)
 		this.streamRFlag = attr.IsSet(`r)
 	}
 	ComposeDeclaration() = {
-		strArgOccur = 'ArgOccur::' + cond(this.optionFlag, 'ZeroOrOnce', 'Once')
+		strArgOccur = 'ArgOccur::' + this.occurSymbol
 		argFlags = []
 		this.listVarFlag && argFlags.Add('ListVar')
 		this.nilFlag && argFlags.Add('Nil')
@@ -87,7 +87,7 @@ ArgInfo = class {
 	}
 	ComposeImplementation() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
-		this.typeInfo.ComposePicker(this.name, this.defaultValue, this.listVarFlag, this.optionFlag || this.nilFlag)
+		this.typeInfo.ComposePicker(this.name, this.defaultValue, this.listVarFlag, (this.occurSymbol == `ZeroOrOnce) || this.nilFlag)
 	}
 	ComposeArgRef() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
@@ -96,7 +96,9 @@ ArgInfo = class {
 	ToString() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
 		Format('%s%s%s%s%s%s as %s', this.name, cond(this.listVarFlag, '[]', ''),
-			cond(this.optionFlag, '?', ''), cond(this.nilFlag, ':nil', ''),
+			cond(this.occurSymbol == `ZeroOrOnce, '?', cond(this.occurSymbol == `ZeroOrMore, '*',
+				cond(this.occurSymbol == `OnceOrMore, '+', ''))),
+			cond(this.nilFlag, ':nil', ''),
 			cond(this.streamWFlag, ':w', ''), cond(this.streamRFlag, ':r', ''),
 			this.typeInfo.vtypeDisplay)
 	}
@@ -108,10 +110,10 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 		//Println(exprParam)
 		defaultValue = nil
 		listVarFlag = false
-		optionFlag = false
+		occurSymbol = `Once
 		typeName = 'any'
 		if (exprParam.IsAssign()) {
-			optionFlag = true
+			occurSymbol = `ZeroOrOnce
 			defaultValue = exprParam.right.__str__():dquoteString
 			exprParam = exprParam.left
 		}
@@ -126,7 +128,11 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 		}
 		if (exprParam.IsUnaryOp()) {
 			if (exprParam.operator.symbol == `?) {
-				optionFlag = true
+				occurSymbol = `ZeroOrOnce
+			} elsif (exprParam.operator.symbol == `*) {
+				occurSymbol = `ZeroOrMore
+			} elsif (exprParam.operator.symbol == `+) {
+				occurSymbol = `OnceOrMore
 			} else {
 				ErrorDone(exprParam, 'invalid format of parameter')
 			}
@@ -138,7 +144,7 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 			exprParam = exprParam.car
 		}
 		!exprParam.IsIdentifier() && ErrorDone(exprParam, 'Identifier is expected in parameter list')
-		argInfoTbl.Add(ArgInfo(r, exprParam.symbolName, typeName, defaultValue, attr, listVarFlag, optionFlag))
+		argInfoTbl.Add(ArgInfo(r, exprParam.symbolName, typeName, defaultValue, attr, listVarFlag, occurSymbol))
 	}
 	argInfoTbl
 }
