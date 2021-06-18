@@ -87,7 +87,9 @@ ArgInfo = class {
 	}
 	ComposeImplementation() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
-		this.typeInfo.ComposePicker(this.name, this.defaultValue, this.listVarFlag, (this.occurSymbol == `ZeroOrOnce) || this.nilFlag)
+		this.typeInfo.ComposePicker(this.name, this.defaultValue,
+			(this.occurSymbol == `ZeroOrMore) || (this.occurSymbol == `OnceOrMore) || this.listVarFlag,
+			(this.occurSymbol == `ZeroOrOnce) || this.nilFlag)
 	}
 	ComposeArgRef() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
