@@ -101,6 +101,9 @@ public:
 	bool FeedValuesAndComplete(Processor& processor, Frame& frameForVType, const ValueList& values) {
 		return FeedValues(frameForVType, values) && CompleteFeedValue(processor);
 	}
+	bool FeedValuesAndComplete(Processor& processor, const ValueList& values) {
+		return FeedValuesAndComplete(processor, processor.GetFrameCur(), values);
+	}
 	ArgSlot* FindArgSlot(const Symbol* pSymbol) {
 		return _pArgSlotFirst? _pArgSlotFirst->Find(pSymbol) : nullptr;
 	}

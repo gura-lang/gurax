@@ -1,30 +1,107 @@
 Sizer = Class(Object) {
 	//__init__()
-	Add(item as any, flags as SizerFlags) as SizerItem_p = \
+	Add(args[] as any) as SizerItem_p = \
 		R'''
-		/*
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
-				pDeclCallable->DeclareArg("", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("window", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);
 			}
-			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable.Reference()));
-			
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
+			wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
+			wxSizerItem* rtn = pEntity_gurax->Add(window, flags);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 		} while (0);
-		*/
-		wxSizerItem* rtn;
-		if (item.IsInstanceOf(VTYPE_wxWindow)) {
-			rtn = pEntity_gurax->Add(Value_wxWindow::GetEntityPtr(item), flags);
-		} else if (item.IsInstanceOf(VTYPE_wxSizer)) {
-			rtn = pEntity_gurax->Add(Value_wxSizer::GetEntityPtr(item), flags);
-		} else {
-			Error::Issue(ErrorType::TypeError, "item must be an instance of wx.Window or wx.Sizer");
-			return Value::nil();
-		}
-		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable->DeclareArg("sizer", VTYPE_wxSizer);
+				pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			wxSizer* sizer = args.Pick<Value_wxSizer>().GetEntityPtr();
+			wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
+			wxSizerItem* rtn = pEntity_gurax->Add(sizer, flags);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+				pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int width = args.PickNumber<int>();
+			int height = args.PickNumber<int>();
+			wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
+			wxSizerItem* rtn = pEntity_gurax->Add(width, height, flags);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+		} while (0);
+		return Value::nil();
 		'''
 	AddSpacer(size as int) as SizerItem_p
 	AddStretchSpacer(prop as int) as SizerItem_p
 	CalcMin() as Size
 	Clear(delete_windows as bool = false):void
+	Insert(index as size_t, args[] as any) as SizerItem_p = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable->DeclareArg("window", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
+			wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
+			wxSizerItem* rtn = pEntity_gurax->Insert(index, window, flags);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable->DeclareArg("sizer", VTYPE_wxSizer);
+				pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			wxSizer* sizer = args.Pick<Value_wxSizer>().GetEntityPtr();
+			wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
+			wxSizerItem* rtn = pEntity_gurax->Insert(index, sizer, flags);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+				pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int width = args.PickNumber<int>();
+			int height = args.PickNumber<int>();
+			wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
+			wxSizerItem* rtn = pEntity_gurax->Insert(index, width, height, flags);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+		} while (0);
+		return Value::nil();
+		'''
 }

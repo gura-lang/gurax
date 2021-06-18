@@ -337,6 +337,9 @@ Renderer.__init__() = {
 		codePicker = R'''
 		Gurax::Value& ${varName} = args_gurax.PickValue();
 		'''
+		codePickerVec = R'''
+		const Gurax::ValueList& ${varName} = args_gurax.PickList();
+		'''
 		codeFunctionBody = R'''
 		${caller};
 		return Gurax::Value::nil();
