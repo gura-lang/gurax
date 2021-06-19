@@ -7,11 +7,11 @@ Window = Class(EvtHandler) {
 	CanAcceptFocus() as bool
 	CanAcceptFocusFromKeyboard() as bool
 	HasFocus():virtual as bool
-	SetCanFocus(canFocus as bool):virtual:void
-	SetFocus():void
-	SetFocusFromKbd():void
+	SetCanFocus(canFocus as bool):virtual as void
+	SetFocus() as void
+	SetFocusFromKbd() as void
 	Close(force? as bool) as bool
 	Show(show? as bool) as bool
 
-	SetSizer(sizer as Sizer_p, deleteOld as bool = true)
+	SetSizer(sizer as Sizer_p, deleteOld as bool = true) as void
 }

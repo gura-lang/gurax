@@ -305,7 +305,7 @@ Gurax_ImplementMethodEx(wxWindow, Show_gurax, processor_gurax, argument_gurax)
 // wx.Window#SetSizer(sizer as wx.Sizer, deleteOld? as Bool)
 Gurax_DeclareMethodAlias(wxWindow, SetSizer_gurax, "SetSizer")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sizer", VTYPE_wxSizer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("deleteOld", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
