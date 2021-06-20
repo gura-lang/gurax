@@ -177,6 +177,7 @@ FuncInfo = class {
 	__init__(r as Renderer, moduleName as String, name as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
 			virtualFlag as Bool, returnThisFlag as Bool) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.argInfoTbl = argInfoTbl, this.typeName = typeName
+		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	GetTypeInfo() = {

@@ -55,6 +55,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
 			pDeclCallable->DeclareArg("window", VTYPE_wxWindow);
 			pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);
 		}
@@ -70,6 +71,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
 			pDeclCallable->DeclareArg("sizer", VTYPE_wxSizer);
 			pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);
 		}
@@ -85,6 +87,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
 			pDeclCallable->DeclareArg("width", VTYPE_Number);
 			pDeclCallable->DeclareArg("height", VTYPE_Number);
 			pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);

@@ -73,7 +73,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, Align_gurax, processor_gurax, argument_gur
 	int alignment = args_gurax.PickNumber<int>();
 	// Function body
 	pEntity_gurax->Align(alignment);
-	return Gurax::Value::nil();
+	return valueThis_gurax.Reference();
 }
 
 // wx.SizerFlags#Border(direction as Number, borderinpixels as Number)
@@ -99,7 +99,27 @@ Gurax_ImplementMethodEx(wxSizerFlags, Border_gurax, processor_gurax, argument_gu
 	int borderinpixels = args_gurax.PickNumber<int>();
 	// Function body
 	pEntity_gurax->Border(direction, borderinpixels);
-	return Gurax::Value::nil();
+	return valueThis_gurax.Reference();
+}
+
+// wx.SizerFlags#Expand()
+Gurax_DeclareMethodAlias(wxSizerFlags, Expand_gurax, "Expand")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSizerFlags, Expand_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Expand();
+	return valueThis_gurax.Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -120,6 +140,7 @@ void VType_wxSizerFlags::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxSizerFlags, Align_gurax));
 	Assign(Gurax_CreateMethod(wxSizerFlags, Border_gurax));
+	Assign(Gurax_CreateMethod(wxSizerFlags, Expand_gurax));
 }
 
 //------------------------------------------------------------------------------
