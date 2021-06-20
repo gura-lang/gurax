@@ -45,8 +45,9 @@ Gurax_ImplementConstructorEx(BoxSizer_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int orient = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBoxSizer(
-		wxBoxSizer(orient)));
+	auto pEntity_gurax = new wxBoxSizer(orient);
+	RefPtr<Value_wxBoxSizer> pValue_gurax(new Value_wxBoxSizer(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------

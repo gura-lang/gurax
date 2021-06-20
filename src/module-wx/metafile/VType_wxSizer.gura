@@ -1,4 +1,4 @@
-Sizer = Class(Object) {
+Sizer = Class {
 	//__init__()
 	Add(args* as any) as SizerItem_p = \
 		R'''

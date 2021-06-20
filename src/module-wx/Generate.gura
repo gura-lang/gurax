@@ -126,6 +126,9 @@ public:
 ${if (className == 'EvtHandler')}
 protected:
 	wxWeakRef<wx${className}> _pEntity;
+${elsif (className == 'Sizer')}
+protected:
+	wx${className}* _pEntity;
 ${elsif (!classNameParent)}
 protected:
 	wx${className} _entity;
@@ -150,7 +153,7 @@ ${end}
 public:
 	// Constructor
 	Value_wx${className}() = delete;
-${if (className == 'EvtHandler')}
+${if (className in ['EvtHandler', 'Sizer'])}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (!classNameParent)}
@@ -159,7 +162,7 @@ ${elsif (!classNameParent)}
 ${elsif (className == 'Event')}
 	explicit Value_wx${className}(const wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(entity, vtype), _pValueUserData(pValueUserData) {}
-${elsif (classNameRoot == 'EvtHandler')}
+${elsif (classNameRoot in ['EvtHandler', 'Sizer'])}
 	explicit Value_wx${className}(wx${classNameRoot}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(pEntity, vtype) {}
 ${elsif (eventDerivFlag)}
@@ -184,6 +187,11 @@ ${if (className == 'EvtHandler')}
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
 	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
+${elsif (className == 'Sizer')}
+	wx${className}& GetEntity() { return *_pEntity; }
+	const wx${className}& GetEntity() const { return *_pEntity; }
+	wx${className}* GetEntityPtr() { return _pEntity; }
+	const wx${className}* GetEntityPtr() const { return _pEntity; }
 ${elsif (!classNameRoot)}
 	wx${className}& GetEntity() { return _entity; }
 	const wx${className}& GetEntity() const { return _entity; }
@@ -391,6 +399,11 @@ ClassInfo = class {
 		classInfo = this.GetClassInfoRoot()
 		classInfo && classInfo.className == 'EvtHandler'
 	}
+	IsSizerOrDeriv() = {
+		(this.className == 'Sizer') && return(true)
+		classInfo = this.GetClassInfoRoot()
+		classInfo && classInfo.className == 'Sizer'
+	}
 	EvalTmplConstructorImplementation(funcInfo as cbridge.FuncInfo):map = {
 		this.tmplConstructorImplementation.Eval()
 	}
@@ -488,6 +501,36 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 }
 '''
 
+tmplConstructorImplementation_Sizer = tR'''
+// ${funcInfo.ToString()} {block?}
+Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
+{
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.${className}.");
+}
+
+Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
+{
+	${if (!funcInfo.argInfoTbl.IsEmpty())}
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	${funcInfo.argInfoTbl::ComposeImplementation()}
+	${end}
+	// Function body
+	${if (funcInfo.tmplFunctionBody)}
+	${funcInfo.tmplFunctionBody.Eval()}
+	${else}
+	auto pEntity_gurax = new ${funcInfo.GetTypeInfo().vtype}(${funcInfo.ComposeArgs()});
+	RefPtr<Value_${funcInfo.GetTypeInfo().vtype}> pValue_gurax(new Value_${funcInfo.GetTypeInfo().vtype}(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+	${end}
+}
+'''
+
 classInfoTbl.Each {|classInfo|
 	if (classInfo.classNameParent) {
 		classInfo.classInfoParent = classInfoTbl.Find(classInfoTbl:*className == classInfo.classNameParent)
@@ -499,7 +542,7 @@ classInfoTbl.Each {|classInfo|
 }
 
 classInfoTbl.Each {|classInfo|
-	if (classInfo.IsEvtHandlerOrDeriv()) {
+	if (classInfo.IsEvtHandlerOrDeriv() || classInfo.IsSizerOrDeriv()) {
 		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
 			'wx' + classInfo.className, 'wx.' + classInfo.className,
 			codePicker = R'''
@@ -541,6 +584,9 @@ classInfoTbl.Each {|classInfo|
 	if (classInfo.IsEvtHandlerOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
+	} elsif (classInfo.IsSizerOrDeriv()) {
+		classInfo.typeInfo = typeInfo_p
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Sizer
 	} else {
 		classInfo.typeInfo = typeInfo
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object
@@ -568,6 +614,7 @@ classInfoTbl.Each {|classInfo|
 	classNames.Add(className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
+	sizerOrDerivFlag = classInfo.IsSizerOrDeriv()
 	Println(className)
 	tmplHeader.Render(fileNameHeader)
 	tmplSource.Render(fileNameSource)

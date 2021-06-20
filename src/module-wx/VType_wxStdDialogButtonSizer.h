@@ -36,8 +36,8 @@ public:
 public:
 	// Constructor
 	Value_wxStdDialogButtonSizer() = delete;
-	explicit Value_wxStdDialogButtonSizer(const wxObject& entity, VType& vtype = VTYPE_wxStdDialogButtonSizer) :
-		Value_wxBoxSizer(entity, vtype) {}
+	explicit Value_wxStdDialogButtonSizer(wxSizer* pEntity, VType& vtype = VTYPE_wxStdDialogButtonSizer) :
+		Value_wxBoxSizer(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxStdDialogButtonSizer(const Value_wxStdDialogButtonSizer& src) = delete;
 	Value_wxStdDialogButtonSizer& operator=(const Value_wxStdDialogButtonSizer& src) = delete;
@@ -49,16 +49,16 @@ protected:
 	~Value_wxStdDialogButtonSizer() = default;
 public:
 	wxStdDialogButtonSizer& GetEntity() {
-		return reinterpret_cast<wxStdDialogButtonSizer&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxStdDialogButtonSizer&>(Value_wxSizer::GetEntity());
 	}
 	const wxStdDialogButtonSizer& GetEntity() const {
-		return reinterpret_cast<const wxStdDialogButtonSizer&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxStdDialogButtonSizer&>(Value_wxSizer::GetEntity());
 	}
 	wxStdDialogButtonSizer* GetEntityPtr() {
-		return reinterpret_cast<wxStdDialogButtonSizer*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxStdDialogButtonSizer*>(Value_wxSizer::GetEntityPtr());
 	}
 	const wxStdDialogButtonSizer* GetEntityPtr() const {
-		return reinterpret_cast<const wxStdDialogButtonSizer*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxStdDialogButtonSizer*>(Value_wxSizer::GetEntityPtr());
 	}
 public:
 	static wxStdDialogButtonSizer& GetEntity(Value& value) {

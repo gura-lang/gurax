@@ -36,8 +36,8 @@ public:
 public:
 	// Constructor
 	Value_wxWrapSizer() = delete;
-	explicit Value_wxWrapSizer(const wxObject& entity, VType& vtype = VTYPE_wxWrapSizer) :
-		Value_wxBoxSizer(entity, vtype) {}
+	explicit Value_wxWrapSizer(wxSizer* pEntity, VType& vtype = VTYPE_wxWrapSizer) :
+		Value_wxBoxSizer(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxWrapSizer(const Value_wxWrapSizer& src) = delete;
 	Value_wxWrapSizer& operator=(const Value_wxWrapSizer& src) = delete;
@@ -49,16 +49,16 @@ protected:
 	~Value_wxWrapSizer() = default;
 public:
 	wxWrapSizer& GetEntity() {
-		return reinterpret_cast<wxWrapSizer&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxWrapSizer&>(Value_wxSizer::GetEntity());
 	}
 	const wxWrapSizer& GetEntity() const {
-		return reinterpret_cast<const wxWrapSizer&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxWrapSizer&>(Value_wxSizer::GetEntity());
 	}
 	wxWrapSizer* GetEntityPtr() {
-		return reinterpret_cast<wxWrapSizer*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxWrapSizer*>(Value_wxSizer::GetEntityPtr());
 	}
 	const wxWrapSizer* GetEntityPtr() const {
-		return reinterpret_cast<const wxWrapSizer*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxWrapSizer*>(Value_wxSizer::GetEntityPtr());
 	}
 public:
 	static wxWrapSizer& GetEntity(Value& value) {

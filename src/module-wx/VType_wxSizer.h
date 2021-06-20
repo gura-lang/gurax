@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_wxObject.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -25,19 +24,21 @@ extern GURAX_DLLDECLARE VType_wxSizer VTYPE_wxSizer;
 //------------------------------------------------------------------------------
 // Value_wxSizer
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxSizer : public Value_wxObject {
+class GURAX_DLLDECLARE Value_wxSizer : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxSizer);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxSizer");
+protected:
+	wxSizer* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxSizer() = delete;
-	explicit Value_wxSizer(const wxObject& entity, VType& vtype = VTYPE_wxSizer) :
-		Value_wxObject(entity, vtype) {}
+	explicit Value_wxSizer(wxSizer* pEntity, VType& vtype = VTYPE_wxSizer) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxSizer(const Value_wxSizer& src) = delete;
 	Value_wxSizer& operator=(const Value_wxSizer& src) = delete;
@@ -48,18 +49,10 @@ protected:
 	// Destructor
 	~Value_wxSizer() = default;
 public:
-	wxSizer& GetEntity() {
-		return reinterpret_cast<wxSizer&>(Value_wxObject::GetEntity());
-	}
-	const wxSizer& GetEntity() const {
-		return reinterpret_cast<const wxSizer&>(Value_wxObject::GetEntity());
-	}
-	wxSizer* GetEntityPtr() {
-		return reinterpret_cast<wxSizer*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxSizer* GetEntityPtr() const {
-		return reinterpret_cast<const wxSizer*>(Value_wxObject::GetEntityPtr());
-	}
+	wxSizer& GetEntity() { return *_pEntity; }
+	const wxSizer& GetEntity() const { return *_pEntity; }
+	wxSizer* GetEntityPtr() { return _pEntity; }
+	const wxSizer* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxSizer& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxSizer&>(value).GetEntity();

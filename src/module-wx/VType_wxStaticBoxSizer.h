@@ -36,8 +36,8 @@ public:
 public:
 	// Constructor
 	Value_wxStaticBoxSizer() = delete;
-	explicit Value_wxStaticBoxSizer(const wxObject& entity, VType& vtype = VTYPE_wxStaticBoxSizer) :
-		Value_wxBoxSizer(entity, vtype) {}
+	explicit Value_wxStaticBoxSizer(wxSizer* pEntity, VType& vtype = VTYPE_wxStaticBoxSizer) :
+		Value_wxBoxSizer(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxStaticBoxSizer(const Value_wxStaticBoxSizer& src) = delete;
 	Value_wxStaticBoxSizer& operator=(const Value_wxStaticBoxSizer& src) = delete;
@@ -49,16 +49,16 @@ protected:
 	~Value_wxStaticBoxSizer() = default;
 public:
 	wxStaticBoxSizer& GetEntity() {
-		return reinterpret_cast<wxStaticBoxSizer&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxStaticBoxSizer&>(Value_wxSizer::GetEntity());
 	}
 	const wxStaticBoxSizer& GetEntity() const {
-		return reinterpret_cast<const wxStaticBoxSizer&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxStaticBoxSizer&>(Value_wxSizer::GetEntity());
 	}
 	wxStaticBoxSizer* GetEntityPtr() {
-		return reinterpret_cast<wxStaticBoxSizer*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxStaticBoxSizer*>(Value_wxSizer::GetEntityPtr());
 	}
 	const wxStaticBoxSizer* GetEntityPtr() const {
-		return reinterpret_cast<const wxStaticBoxSizer*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxStaticBoxSizer*>(Value_wxSizer::GetEntityPtr());
 	}
 public:
 	static wxStaticBoxSizer& GetEntity(Value& value) {

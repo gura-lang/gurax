@@ -36,8 +36,8 @@ public:
 public:
 	// Constructor
 	Value_wxGridBagSizer() = delete;
-	explicit Value_wxGridBagSizer(const wxObject& entity, VType& vtype = VTYPE_wxGridBagSizer) :
-		Value_wxFlexGridSizer(entity, vtype) {}
+	explicit Value_wxGridBagSizer(wxSizer* pEntity, VType& vtype = VTYPE_wxGridBagSizer) :
+		Value_wxFlexGridSizer(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGridBagSizer(const Value_wxGridBagSizer& src) = delete;
 	Value_wxGridBagSizer& operator=(const Value_wxGridBagSizer& src) = delete;
@@ -49,16 +49,16 @@ protected:
 	~Value_wxGridBagSizer() = default;
 public:
 	wxGridBagSizer& GetEntity() {
-		return reinterpret_cast<wxGridBagSizer&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxGridBagSizer&>(Value_wxSizer::GetEntity());
 	}
 	const wxGridBagSizer& GetEntity() const {
-		return reinterpret_cast<const wxGridBagSizer&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxGridBagSizer&>(Value_wxSizer::GetEntity());
 	}
 	wxGridBagSizer* GetEntityPtr() {
-		return reinterpret_cast<wxGridBagSizer*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxGridBagSizer*>(Value_wxSizer::GetEntityPtr());
 	}
 	const wxGridBagSizer* GetEntityPtr() const {
-		return reinterpret_cast<const wxGridBagSizer*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxGridBagSizer*>(Value_wxSizer::GetEntityPtr());
 	}
 public:
 	static wxGridBagSizer& GetEntity(Value& value) {
