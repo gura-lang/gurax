@@ -1,0 +1,11 @@
+ChildFocusEvent = Class(CommandEvent) {
+}
+
+ContextMenuEvent = Class(CommandEvent) {
+}
+
+HelpEvent = Class(CommandEvent) {
+}
+
+DropFilesEvent = Class(Event) {
+}

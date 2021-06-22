@@ -56,7 +56,7 @@ Sizer = Class {
 	AddSpacer(size as int) as SizerItem_p
 	AddStretchSpacer(prop as int) as SizerItem_p
 	CalcMin() as Size
-	Clear(delete_windows as bool = false):void
+	Clear(delete_windows as bool = false) as void
 	Insert(index as size_t, args* as any) as SizerItem_p = \
 		R'''
 		do {

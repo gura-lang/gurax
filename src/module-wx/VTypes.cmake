@@ -5,14 +5,12 @@
 set(SRCFILES_VTYPE
 	VType_wxApp.cpp
 	VType_wxEventType.cpp
-	VType_wxSizerFlags.cpp
-	VType_wxSizerItem.cpp
+	VType_wxChildFocusEvent.cpp
+	VType_wxContextMenuEvent.cpp
+	VType_wxHelpEvent.cpp
+	VType_wxDropFilesEvent.cpp
 	VType_wxAboutDialogInfo.cpp
-	VType_wxGridSizer.cpp
-	VType_wxStdDialogButtonSizer.cpp
-	VType_wxWrapSizer.cpp
-	VType_wxFlexGridSizer.cpp
-	VType_wxGridBagSizer.cpp
+	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp
 	VType_wxAppConsole.cpp
 	VType_wxBoxSizer.cpp
@@ -23,7 +21,10 @@ set(SRCFILES_VTYPE
 	VType_wxControl.cpp
 	VType_wxEvent.cpp
 	VType_wxEvtHandler.cpp
+	VType_wxFlexGridSizer.cpp
 	VType_wxFrame.cpp
+	VType_wxGridBagSizer.cpp
+	VType_wxGridSizer.cpp
 	VType_wxMenu.cpp
 	VType_wxMenuBar.cpp
 	VType_wxMenuItem.cpp
@@ -32,9 +33,13 @@ set(SRCFILES_VTYPE
 	VType_wxPoint.cpp
 	VType_wxSize.cpp
 	VType_wxSizer.cpp
+	VType_wxSizerFlags.cpp
+	VType_wxSizerItem.cpp
 	VType_wxStaticBox.cpp
 	VType_wxStaticBoxSizer.cpp
 	VType_wxStatusBar.cpp
+	VType_wxStdDialogButtonSizer.cpp
 	VType_wxValidator.cpp
 	VType_wxWindow.cpp
+	VType_wxWrapSizer.cpp
 )

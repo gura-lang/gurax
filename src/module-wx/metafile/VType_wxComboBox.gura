@@ -14,16 +14,16 @@ ComboBox = Class(Control) {
 	//IsEmpty() as bool
 	GetString(n as unsigned_int) as String
 	//GetStrings()
-	SetString(n as unsigned_int, string as String):void
+	SetString(n as unsigned_int, string as String) as void
 	FindString(string as String, caseSensitive as bool = false) as int
-	SetSelection(n as int):void
+	SetSelection(n as int) as void
 	GetSelection() as int
 	SetStringSelection(string as String) as bool
 	GetStringSelection() as String
-	Select(n as int):void
+	Select(n as int) as void
 	// wxItemContainer
-	Clear():void
-	Delete(n as unsigned_int):void
+	Clear() as void
+	Delete(n as unsigned_int) as void
 	//DetachClientObject(n as unsigned_int)
 	HasClientData() as bool
 	HasClientObjectData() as bool
@@ -44,7 +44,7 @@ ComboBox = Class(Control) {
 		int rtn = pEntity_gurax->Insert(items_, pos);
 		return new Gurax::Value_Number(rtn);
 		'''
-	Set(items[] as String):void = \
+	Set(items[] as String) as void = \
 		R'''
 		wxArrayString items_;
 		for (const char* item : items) items_.Add(item);
