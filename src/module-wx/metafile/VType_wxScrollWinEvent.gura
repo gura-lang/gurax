@@ -1,0 +1,2 @@
+ScrollWinEvent = Class(Event) {
+}

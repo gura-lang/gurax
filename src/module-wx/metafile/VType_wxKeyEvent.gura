@@ -1,0 +1,2 @@
+KeyEvent = Class(Event) {
+}

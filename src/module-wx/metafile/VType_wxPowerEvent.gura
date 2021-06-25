@@ -1,0 +1,2 @@
+PowerEvent = Class(Event) {
+}

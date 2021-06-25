@@ -1,0 +1,2 @@
+MouseCaptureLostEvent = Class(Event) {
+}

@@ -1,0 +1,2 @@
+PaintEvent = Class(Event) {
+}

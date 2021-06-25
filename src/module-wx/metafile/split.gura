@@ -5,7 +5,9 @@ stat = `start
 ReadLines('Misc.gura') {|line|
 	if (stat == `start) {
 		if (m = line.Match(r'(\w+) = ')) {
-			f = Open('VType_wx' + m[1] + '.gura', 'w')
+			fileName = 'VType_wx' + m[1] + '.gura'
+			Println(fileName)
+			f = Open(fileName, 'w')
 			f.Print(line)
 			stat = `extract
 		}

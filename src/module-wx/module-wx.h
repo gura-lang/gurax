@@ -8,6 +8,7 @@
 #include <wx/aboutdlg.h>
 #include <wx/gbsizer.h>
 #include <wx/wrapsizer.h>
+#include <wx/power.h>
 #include "Util.h"
 #include "Consts.h"
 #include "Events.h"

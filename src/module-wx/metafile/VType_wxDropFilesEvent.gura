@@ -1,0 +1,2 @@
+DropFilesEvent = Class(Event) {
+}

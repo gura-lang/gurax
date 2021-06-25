@@ -1,0 +1,2 @@
+HelpEvent = Class(CommandEvent) {
+}

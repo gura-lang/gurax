@@ -1,0 +1,2 @@
+SysColourChangedEvent = Class(Event) {
+}
