@@ -5,6 +5,7 @@
 set(SRCFILES_VTYPE
 	VType_wxApp.cpp
 	VType_wxEventType.cpp
+	VType_wxSetCursorEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp

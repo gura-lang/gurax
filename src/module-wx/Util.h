@@ -7,6 +7,8 @@
 
 Gurax_BeginModuleScope(wx)
 
+class EventValueFactory;
+
 //------------------------------------------------------------------------------
 // EntityCore
 //------------------------------------------------------------------------------
@@ -23,6 +25,12 @@ public:
 	Processor& GetProcessor() const { return *_pProcessor; }
 	Value* LockValue() const { return _pwValue->Lock(); }
 };
+
+//------------------------------------------------------------------------------
+// Utility
+//------------------------------------------------------------------------------
+void BindMultiEvents(Processor& processor, Argument& argument,
+		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory);
 
 Gurax_EndModuleScope(wx)
 
