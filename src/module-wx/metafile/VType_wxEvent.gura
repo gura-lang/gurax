@@ -1,3 +1,12 @@
 Event = Class(Object) {
+	GetEventObject() = \
+		R'''
+		return EventUserData::GetValueUserData(*pEntity_gurax).Reference();
+		'''
+	GetEventType() as EventType = \
+		R'''
+		return LookupEventType(pEntity_gurax->GetEventType()).Reference();
+		'''
+	GetEventCategory() as EventCategory
 	
 }

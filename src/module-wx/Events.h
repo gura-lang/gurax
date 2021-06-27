@@ -8,6 +8,7 @@
 Gurax_BeginModuleScope(wx)
 
 void AssignEvents(Frame& frame);
+const Value& LookupEventType(wxEventType eventType);
 
 Gurax_EndModuleScope(wx)
 

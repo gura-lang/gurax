@@ -18,6 +18,7 @@ r.DeclareType('String', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
+r.DeclareType_Number('EventCategory', 'wxEventCategory')
 r.DeclareType_Number('ItemKind', 'wxItemKind')
 r.DeclareType_Number('WindowID', 'wxWindowID')
 
@@ -540,6 +541,17 @@ classInfoTbl.Each {|classInfo|
 		}
 	}
 }
+
+r.DeclareType('EventType', 'wxEventType', 'wxEventType', 'wxEventType',
+	codePicker = R'''
+	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : -1;
+	'''
+	codeFunctionBody = R'''
+	return LookupEventType(${caller}).Reference();
+	''')
 
 classInfoTbl.Each {|classInfo|
 	if (classInfo.IsEvtHandlerOrDeriv() || classInfo.IsSizerOrDeriv()) {

@@ -3,10 +3,17 @@
 //==============================================================================
 #include "stdafx.h"
 
-#define AssignEvent(eventName, eventType) \
-frame.Assign(#eventName, new Value_wxEventType(wx##eventName, Value_##eventType::eventValueFactory))
+#define AssignEvent(eventName, eventType) do { \
+RefPtr<Value> pValue(new Value_wxEventType(wx##eventName, Value_##eventType::eventValueFactory)); \
+g_eventTypeMap[wx##eventName] = pValue.Reference(); \
+frame.Assign(#eventName, pValue.release()); \
+} while (0)
 
 Gurax_BeginModuleScope(wx)
+
+using EventTypeMap = std::unordered_map<wxEventType, Value*>;
+
+static EventTypeMap g_eventTypeMap;
 
 //------------------------------------------------------------------------------
 // Function
@@ -170,7 +177,12 @@ void AssignEvents(Frame& frame)
 	AssignEvent(EVT_SET_CURSOR,					wxSetCursorEvent);
 	AssignEvent(EVT_SIZE,						wxSizeEvent);
 	AssignEvent(EVT_SYS_COLOUR_CHANGED,			wxSysColourChangedEvent);
+}
 
+const Value& LookupEventType(wxEventType eventType)
+{
+	auto iter = g_eventTypeMap.find(eventType);
+	return (iter == g_eventTypeMap.end())? Value::C_nil() : *iter->second;
 }
 
 Gurax_EndModuleScope(wx)

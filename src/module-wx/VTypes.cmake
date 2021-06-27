@@ -5,7 +5,6 @@
 set(SRCFILES_VTYPE
 	VType_wxApp.cpp
 	VType_wxEventType.cpp
-	VType_wxSetCursorEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp
@@ -43,6 +42,7 @@ set(SRCFILES_VTYPE
 	VType_wxPoint.cpp
 	VType_wxPowerEvent.cpp
 	VType_wxScrollWinEvent.cpp
+	VType_wxSetCursorEvent.cpp
 	VType_wxSize.cpp
 	VType_wxSizeEvent.cpp
 	VType_wxSizer.cpp

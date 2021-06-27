@@ -32,7 +32,63 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Event#GetEventObject()
+Gurax_DeclareMethodAlias(wxEvent, GetEventObject_gurax, "GetEventObject")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
 
+Gurax_ImplementMethodEx(wxEvent, GetEventObject_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return EventUserData::GetValueUserData(*pEntity_gurax).Reference();
+}
+
+// wx.Event#GetEventType()
+Gurax_DeclareMethodAlias(wxEvent, GetEventType_gurax, "GetEventType")
+{
+	Declare(VTYPE_wxEventType, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxEvent, GetEventType_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return LookupEventType(pEntity_gurax->GetEventType()).Reference();
+}
+
+// wx.Event#GetEventCategory()
+Gurax_DeclareMethodAlias(wxEvent, GetEventCategory_gurax, "GetEventCategory")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxEvent, GetEventCategory_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxEventCategory rtn = pEntity_gurax->GetEventCategory();
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -50,6 +106,9 @@ void VType_wxEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxEvent, GetEventObject_gurax));
+	Assign(Gurax_CreateMethod(wxEvent, GetEventType_gurax));
+	Assign(Gurax_CreateMethod(wxEvent, GetEventCategory_gurax));
 }
 
 //------------------------------------------------------------------------------

@@ -13,7 +13,6 @@ void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxApp);
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxSetCursorEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAnyButton);
@@ -51,6 +50,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPoint);
 	frame.Assign(VTYPE_wxPowerEvent);
 	frame.Assign(VTYPE_wxScrollWinEvent);
+	frame.Assign(VTYPE_wxSetCursorEvent);
 	frame.Assign(VTYPE_wxSize);
 	frame.Assign(VTYPE_wxSizeEvent);
 	frame.Assign(VTYPE_wxSizer);

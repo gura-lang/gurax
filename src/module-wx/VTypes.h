@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxSetCursorEvent.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxActivateEvent.h"
 #include "VType_wxAnyButton.h"
@@ -45,6 +44,7 @@
 #include "VType_wxPoint.h"
 #include "VType_wxPowerEvent.h"
 #include "VType_wxScrollWinEvent.h"
+#include "VType_wxSetCursorEvent.h"
 #include "VType_wxSize.h"
 #include "VType_wxSizeEvent.h"
 #include "VType_wxSizer.h"
