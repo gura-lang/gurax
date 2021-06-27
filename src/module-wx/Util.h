@@ -27,6 +27,41 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// EventValueFactory
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE EventValueFactory {
+public:
+	virtual Value* CreateValue(const wxEvent& event, Value* pValueUserData) const = 0;
+};
+
+template<typename T_Value>
+class EventValueFactoryDeriv : public EventValueFactory {
+public:
+	virtual Value* CreateValue(const wxEvent& event, Value* pValueUserData) const override {
+		return new T_Value(event, pValueUserData);
+	}
+};
+
+//-----------------------------------------------------------------------------
+// EventUserData
+//-----------------------------------------------------------------------------
+class EventUserData : public wxObject {
+private:
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Value> _pValueFunct;
+	RefPtr<Value> _pValueUserData;
+	const EventValueFactory& _eventValueFactory;
+public:
+	EventUserData(Processor* pProcessor, Value* pValueFunct, Value* pValueUserData, const EventValueFactory& eventValueFactory) :
+			_pProcessor(pProcessor), _pValueFunct(pValueFunct), _pValueUserData(pValueUserData), _eventValueFactory(eventValueFactory) {}
+public:
+	void Eval(wxEvent& event);
+	static void HandlerFunc(wxEvent& event) {
+		wxDynamicCast(event.GetEventUserData(), EventUserData)->Eval(event);
+	}
+};
+
+//------------------------------------------------------------------------------
 // Utility
 //------------------------------------------------------------------------------
 void BindMultiEvents(Processor& processor, Argument& argument,

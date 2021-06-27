@@ -10,48 +10,6 @@
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
-// EventValueFactory
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE EventValueFactory {
-public:
-	virtual Value* CreateValue(const wxEvent& event, Value* pValueUserData) const = 0;
-};
-
-template<typename T_Value>
-class EventValueFactoryDeriv : public EventValueFactory {
-public:
-	virtual Value* CreateValue(const wxEvent& event, Value* pValueUserData) const override {
-		return new T_Value(event, pValueUserData);
-	}
-};
-
-//-----------------------------------------------------------------------------
-// EventUserData
-//-----------------------------------------------------------------------------
-class EventUserData : public wxObject {
-private:
-	RefPtr<Processor> _pProcessor;
-	RefPtr<Value> _pValueFunct;
-	RefPtr<Value> _pValueUserData;
-	const EventValueFactory& _eventValueFactory;
-public:
-	EventUserData(Processor* pProcessor, Value* pValueFunct, Value* pValueUserData, const EventValueFactory& eventValueFactory) :
-			_pProcessor(pProcessor), _pValueFunct(pValueFunct), _pValueUserData(pValueUserData), _eventValueFactory(eventValueFactory) {}
-public:
-	void Eval(wxEvent& event) {
-		const DeclCallable* pDeclCallable = _pValueFunct->GetDeclCallableWithError();
-		if (!pDeclCallable) return;
-		RefPtr<Argument> pArg(new Argument(*_pProcessor, pDeclCallable->Reference()));
-		ArgFeeder args(*pArg, _pProcessor->GetFrameCur());
-		if (!args.FeedValue(_eventValueFactory.CreateValue(event, _pValueUserData.Reference()))) return;
-		Value::Delete(_pValueFunct->Eval(*_pProcessor, *pArg));
-	}
-	static void HandlerFunc(wxEvent& event) {
-		wxDynamicCast(event.GetEventUserData(), EventUserData)->Eval(event);
-	}
-};
-
-//------------------------------------------------------------------------------
 // VType_wxEventType
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VType_wxEventType : public VType {

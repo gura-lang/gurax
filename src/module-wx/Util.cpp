@@ -20,6 +20,23 @@ bool EntityCore::PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, Ref
 }
 
 //------------------------------------------------------------------------------
+// EventValueFactory
+//------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// EventUserData
+//-----------------------------------------------------------------------------
+void EventUserData::Eval(wxEvent& event)
+{
+	const DeclCallable* pDeclCallable = _pValueFunct->GetDeclCallableWithError();
+	if (!pDeclCallable) return;
+	RefPtr<Argument> pArg(new Argument(*_pProcessor, pDeclCallable->Reference()));
+	ArgFeeder args(*pArg, _pProcessor->GetFrameCur());
+	if (!args.FeedValue(_eventValueFactory.CreateValue(event, _pValueUserData.Reference()))) return;
+	Value::Delete(_pValueFunct->Eval(*_pProcessor, *pArg));
+}
+
+//------------------------------------------------------------------------------
 // Utility
 //------------------------------------------------------------------------------
 void BindMultiEvents(Processor& processor, Argument& argument,
