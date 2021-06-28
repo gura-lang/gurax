@@ -544,7 +544,8 @@ classInfoTbl.Each {|classInfo|
 
 r.DeclareType('EventType', 'wxEventType', 'wxEventType', 'wxEventType',
 	codePicker = R'''
-	${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
+	Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+	${this.cType} ${varName} = value_${varName}.GetEntity();
 	'''
 	codePickerValidation = R'''
 	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : -1;
@@ -558,7 +559,8 @@ classInfoTbl.Each {|classInfo|
 		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
 			'wx' + classInfo.className, 'wx.' + classInfo.className,
 			codePicker = R'''
-			${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
+			Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+			${this.cType} ${varName} = value_${varName}.GetEntityPtr();
 			'''
 			codePickerValidation = R'''
 			${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
@@ -571,7 +573,8 @@ classInfoTbl.Each {|classInfo|
 		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
 			'wx' + classInfo.className, 'wx.' + classInfo.className,
 			codePicker = R'''
-			${this.cType} ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr();
+			Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+			${this.cType} ${varName} = value_${varName}.GetEntityPtr();
 			'''
 			codePickerValidation = R'''
 			${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
@@ -584,7 +587,8 @@ classInfoTbl.Each {|classInfo|
 	typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
 		codePicker = R'''
-		const ${this.cType}& ${varName} = args_gurax.Pick<Value_${this.vtype}>().GetEntity();
+		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+		const ${this.cType}& ${varName} = value_${varName}.GetEntity();
 		'''
 		codePickerValidation = R'''
 		const ${this.cType}& ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : ${defaultValue || '0'};

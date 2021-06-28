@@ -140,7 +140,8 @@ Gurax_ImplementMethodEx(wxFrame, SetMenuBar_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxMenuBar* menuBar = args_gurax.Pick<Value_wxMenuBar>().GetEntityPtr();
+	Value_wxMenuBar& value_menuBar = args_gurax.Pick<Value_wxMenuBar>();
+	wxMenuBar* menuBar = value_menuBar.GetEntityPtr();
 	// Function body
 	pEntity_gurax->SetMenuBar(menuBar);
 	return Gurax::Value::nil();

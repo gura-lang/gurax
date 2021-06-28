@@ -4,7 +4,7 @@
 #include "stdafx.h"
 
 #define AssignEvent(eventName, eventType) do { \
-RefPtr<Value> pValue(new Value_wxEventType(wx##eventName, Value_##eventType::eventValueFactory)); \
+RefPtr<Value> pValue(new Value_wxEventType(wx##eventName, #eventName, Value_##eventType::eventValueFactory)); \
 g_eventTypeMap[wx##eventName] = pValue.Reference(); \
 frame.Assign(#eventName, pValue.release()); \
 } while (0)
@@ -182,7 +182,9 @@ void AssignEvents(Frame& frame)
 const Value& LookupEventType(wxEventType eventType)
 {
 	auto iter = g_eventTypeMap.find(eventType);
-	return (iter == g_eventTypeMap.end())? Value::C_nil() : *iter->second;
+	//::printf("check1: %d %d\n", wxEVT_BUTTON, eventType);
+	if (iter == g_eventTypeMap.end()) return Value::C_nil();
+	return *iter->second;
 }
 
 Gurax_EndModuleScope(wx)

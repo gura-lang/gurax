@@ -1,4 +1,10 @@
 EvtHandler = Class {
 	__init__()
-	//Bind(eventType as EventType, funct as Any, id? as int, lastId? as int, userData as Any) as void
+	Bind(eventType as EventType, funct as any, userData? as any, id? as int, lastId? as int) as void = \
+		R'''
+		const EventValueFactory& eventValueFactory = value_eventType.GetEventValueFactory();
+		pEntity_gurax->Bind(eventType, &EventUserData::HandlerFunc, id, lastId,
+			new EventUserData(processor_gurax.Reference(), funct.Reference(), userData.Reference(), eventValueFactory));
+		return Value::nil();
+		'''
 }

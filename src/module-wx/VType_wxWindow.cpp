@@ -321,7 +321,8 @@ Gurax_ImplementMethodEx(wxWindow, SetSizer_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxSizer* sizer = args_gurax.Pick<Value_wxSizer>().GetEntityPtr();
+	Value_wxSizer& value_sizer = args_gurax.Pick<Value_wxSizer>();
+	wxSizer* sizer = value_sizer.GetEntityPtr();
 	bool deleteOld = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	pEntity_gurax->SetSizer(sizer, deleteOld);

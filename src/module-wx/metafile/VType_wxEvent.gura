@@ -1,12 +1,22 @@
 Event = Class(Object) {
-	GetEventObject() = \
-		R'''
-		return EventUserData::GetValueUserData(*pEntity_gurax).Reference();
-		'''
 	GetEventType() as EventType = \
 		R'''
 		return LookupEventType(pEntity_gurax->GetEventType()).Reference();
 		'''
 	GetEventCategory() as EventCategory
-	
+	GetId() as int
+	GetEventUserData() = \
+		R'''
+		return EventUserData::GetValueUserData(*pEntity_gurax).Reference();
+		'''
+	GetSkipped() as bool
+	GetTimestamp() as long
+	IsCommandEvent() as bool
+	ResumePropagation(propagationLevel as int) as void
+	//SetEventType(type as EventType) as void
+	SetId(id as int) as void
+	SetTimestamp(timeStamp as long = 0) as void
+	ShouldPropagate() as bool
+	Skip(skip as bool = true) as void
+	StopPropagation() as int
 }

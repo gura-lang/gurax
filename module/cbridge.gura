@@ -344,7 +344,10 @@ Renderer.__init__() = {
 		''')
 	this.DeclareType('any', '', 'Any',
 		codePicker = R'''
-		Gurax::Value& ${varName} = args_gurax.PickValue();
+		const Gurax::Value& ${varName} = args_gurax.PickValue();
+		'''
+		codePickerValidation = R'''
+		const Gurax::Value& ${varName} = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 		'''
 		codePickerVec = R'''
 		const Gurax::ValueList& ${varName} = args_gurax.PickList();

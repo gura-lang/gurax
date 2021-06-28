@@ -34,14 +34,15 @@ public:
 	Gurax_MemoryPoolAllocator("Value_wxEventType");
 protected:
 	wxEventType _entity;
+	String _name;
 	const EventValueFactory& _eventValueFactory;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxEventType() = delete;
-	explicit Value_wxEventType(const wxEventType& entity, const EventValueFactory& eventValueFactory, VType& vtype = VTYPE_wxEventType) :
-		Value_Object(vtype), _entity(entity), _eventValueFactory(eventValueFactory) {}
+	explicit Value_wxEventType(const wxEventType& entity, String name, const EventValueFactory& eventValueFactory, VType& vtype = VTYPE_wxEventType) :
+		Value_Object(vtype), _entity(entity), _name(name), _eventValueFactory(eventValueFactory) {}
 	// Copy constructor/operator
 	Value_wxEventType(const Value_wxEventType& src) = delete;
 	Value_wxEventType& operator=(const Value_wxEventType& src) = delete;
@@ -62,6 +63,7 @@ public:
 		return dynamic_cast<const Value_wxEventType&>(value).GetEntity();
 	}
 public:
+	const char* GetName() const { return _name.c_str(); }
 	const EventValueFactory& GetEventValueFactory() const { return _eventValueFactory; }
 public:
 	// Virtual functions of Value
