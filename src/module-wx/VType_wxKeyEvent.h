@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxKeyEvent() = delete;
-	Value_wxKeyEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxKeyEvent) :
+	Value_wxKeyEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxKeyEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxKeyEvent(const Value_wxKeyEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxKeyEvent() = default;
 public:
 	wxKeyEvent& GetEntity() {
-		return reinterpret_cast<wxKeyEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxKeyEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxKeyEvent& GetEntity() const {
-		return reinterpret_cast<const wxKeyEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxKeyEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxKeyEvent* GetEntityPtr() {
-		return reinterpret_cast<wxKeyEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxKeyEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxKeyEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxKeyEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxKeyEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxKeyEvent& GetEntity(Value& value) {

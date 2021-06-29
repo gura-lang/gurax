@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxScrollWinEvent() = delete;
-	Value_wxScrollWinEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxScrollWinEvent) :
+	Value_wxScrollWinEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxScrollWinEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxScrollWinEvent(const Value_wxScrollWinEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxScrollWinEvent() = default;
 public:
 	wxScrollWinEvent& GetEntity() {
-		return reinterpret_cast<wxScrollWinEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxScrollWinEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxScrollWinEvent& GetEntity() const {
-		return reinterpret_cast<const wxScrollWinEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxScrollWinEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxScrollWinEvent* GetEntityPtr() {
-		return reinterpret_cast<wxScrollWinEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxScrollWinEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxScrollWinEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxScrollWinEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxScrollWinEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxScrollWinEvent& GetEntity(Value& value) {

@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxFocusEvent() = delete;
-	Value_wxFocusEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxFocusEvent) :
+	Value_wxFocusEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxFocusEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxFocusEvent(const Value_wxFocusEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxFocusEvent() = default;
 public:
 	wxFocusEvent& GetEntity() {
-		return reinterpret_cast<wxFocusEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxFocusEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxFocusEvent& GetEntity() const {
-		return reinterpret_cast<const wxFocusEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxFocusEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxFocusEvent* GetEntityPtr() {
-		return reinterpret_cast<wxFocusEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxFocusEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxFocusEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxFocusEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxFocusEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxFocusEvent& GetEntity(Value& value) {

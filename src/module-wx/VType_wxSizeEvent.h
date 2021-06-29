@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxSizeEvent() = delete;
-	Value_wxSizeEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSizeEvent) :
+	Value_wxSizeEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSizeEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxSizeEvent(const Value_wxSizeEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxSizeEvent() = default;
 public:
 	wxSizeEvent& GetEntity() {
-		return reinterpret_cast<wxSizeEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxSizeEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxSizeEvent& GetEntity() const {
-		return reinterpret_cast<const wxSizeEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxSizeEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxSizeEvent* GetEntityPtr() {
-		return reinterpret_cast<wxSizeEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxSizeEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxSizeEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxSizeEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxSizeEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxSizeEvent& GetEntity(Value& value) {

@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxPowerEvent() = delete;
-	Value_wxPowerEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxPowerEvent) :
+	Value_wxPowerEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxPowerEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxPowerEvent(const Value_wxPowerEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxPowerEvent() = default;
 public:
 	wxPowerEvent& GetEntity() {
-		return reinterpret_cast<wxPowerEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxPowerEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxPowerEvent& GetEntity() const {
-		return reinterpret_cast<const wxPowerEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxPowerEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxPowerEvent* GetEntityPtr() {
-		return reinterpret_cast<wxPowerEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxPowerEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxPowerEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxPowerEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxPowerEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxPowerEvent& GetEntity(Value& value) {

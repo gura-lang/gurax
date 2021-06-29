@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_wxObject.h"
 #include "VType_wxEventType.h"
 
 Gurax_BeginModuleScope(wx)
@@ -26,13 +25,14 @@ extern GURAX_DLLDECLARE VType_wxEvent VTYPE_wxEvent;
 //------------------------------------------------------------------------------
 // Value_wxEvent
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxEvent : public Value_wxObject {
+class GURAX_DLLDECLARE Value_wxEvent : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxEvent");
 protected:
+	std::unique_ptr<wxEvent> _pEntity;
 	RefPtr<Value> _pValueUserData;
 public:
 	const Value& GetValueUserData() const { return *_pValueUserData; }
@@ -41,8 +41,8 @@ public:
 public:
 	// Constructor
 	Value_wxEvent() = delete;
-	explicit Value_wxEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxEvent) :
-		Value_wxObject(entity, vtype), _pValueUserData(pValueUserData) {}
+	explicit Value_wxEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxEvent) :
+		Value_Object(vtype), _pEntity(entity.Clone()), _pValueUserData(pValueUserData) {}
 	// Copy constructor/operator
 	Value_wxEvent(const Value_wxEvent& src) = delete;
 	Value_wxEvent& operator=(const Value_wxEvent& src) = delete;
@@ -53,18 +53,10 @@ protected:
 	// Destructor
 	~Value_wxEvent() = default;
 public:
-	wxEvent& GetEntity() {
-		return reinterpret_cast<wxEvent&>(Value_wxObject::GetEntity());
-	}
-	const wxEvent& GetEntity() const {
-		return reinterpret_cast<const wxEvent&>(Value_wxObject::GetEntity());
-	}
-	wxEvent* GetEntityPtr() {
-		return reinterpret_cast<wxEvent*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxEvent*>(Value_wxObject::GetEntityPtr());
-	}
+	wxEvent& GetEntity() { return *_pEntity; }
+	const wxEvent& GetEntity() const { return *_pEntity; }
+	wxEvent* GetEntityPtr() { return _pEntity.get(); }
+	const wxEvent* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxEvent&>(value).GetEntity();

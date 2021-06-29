@@ -320,7 +320,7 @@ void VType_wxEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxEvent, GetEventType_gurax));
 	Assign(Gurax_CreateMethod(wxEvent, GetEventCategory_gurax));

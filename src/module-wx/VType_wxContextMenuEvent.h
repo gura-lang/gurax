@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxContextMenuEvent() = delete;
-	Value_wxContextMenuEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxContextMenuEvent) :
+	Value_wxContextMenuEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxContextMenuEvent) :
 		Value_wxCommandEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxContextMenuEvent(const Value_wxContextMenuEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxContextMenuEvent() = default;
 public:
 	wxContextMenuEvent& GetEntity() {
-		return reinterpret_cast<wxContextMenuEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxContextMenuEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxContextMenuEvent& GetEntity() const {
-		return reinterpret_cast<const wxContextMenuEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxContextMenuEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxContextMenuEvent* GetEntityPtr() {
-		return reinterpret_cast<wxContextMenuEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxContextMenuEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxContextMenuEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxContextMenuEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxContextMenuEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxContextMenuEvent& GetEntity(Value& value) {

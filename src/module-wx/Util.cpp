@@ -28,6 +28,7 @@ bool EntityCore::PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, Ref
 //-----------------------------------------------------------------------------
 void EventUserData::Eval(wxEvent& event)
 {
+	::printf("%d\n", event.GetEventType());
 	const DeclCallable* pDeclCallable = _pValueFunct->GetDeclCallableWithError();
 	if (!pDeclCallable) return;
 	RefPtr<Argument> pArg(new Argument(*_pProcessor, pDeclCallable->Reference()));

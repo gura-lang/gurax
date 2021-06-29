@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxPaintEvent() = delete;
-	Value_wxPaintEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxPaintEvent) :
+	Value_wxPaintEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxPaintEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxPaintEvent(const Value_wxPaintEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxPaintEvent() = default;
 public:
 	wxPaintEvent& GetEntity() {
-		return reinterpret_cast<wxPaintEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxPaintEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxPaintEvent& GetEntity() const {
-		return reinterpret_cast<const wxPaintEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxPaintEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxPaintEvent* GetEntityPtr() {
-		return reinterpret_cast<wxPaintEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxPaintEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxPaintEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxPaintEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxPaintEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxPaintEvent& GetEntity(Value& value) {

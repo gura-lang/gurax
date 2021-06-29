@@ -1,4 +1,4 @@
-Event = Class(Object) {
+Event = Class {
 	GetEventType() as EventType = \
 		R'''
 		return LookupEventType(pEntity_gurax->GetEventType()).Reference();

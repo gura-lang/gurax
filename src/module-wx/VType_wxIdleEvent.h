@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxIdleEvent() = delete;
-	Value_wxIdleEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxIdleEvent) :
+	Value_wxIdleEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxIdleEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxIdleEvent(const Value_wxIdleEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxIdleEvent() = default;
 public:
 	wxIdleEvent& GetEntity() {
-		return reinterpret_cast<wxIdleEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxIdleEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxIdleEvent& GetEntity() const {
-		return reinterpret_cast<const wxIdleEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxIdleEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxIdleEvent* GetEntityPtr() {
-		return reinterpret_cast<wxIdleEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxIdleEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxIdleEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxIdleEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxIdleEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxIdleEvent& GetEntity(Value& value) {

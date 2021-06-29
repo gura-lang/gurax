@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxMouseCaptureLostEvent() = delete;
-	Value_wxMouseCaptureLostEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxMouseCaptureLostEvent) :
+	Value_wxMouseCaptureLostEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxMouseCaptureLostEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxMouseCaptureLostEvent(const Value_wxMouseCaptureLostEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxMouseCaptureLostEvent() = default;
 public:
 	wxMouseCaptureLostEvent& GetEntity() {
-		return reinterpret_cast<wxMouseCaptureLostEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxMouseCaptureLostEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxMouseCaptureLostEvent& GetEntity() const {
-		return reinterpret_cast<const wxMouseCaptureLostEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxMouseCaptureLostEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxMouseCaptureLostEvent* GetEntityPtr() {
-		return reinterpret_cast<wxMouseCaptureLostEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxMouseCaptureLostEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxMouseCaptureLostEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxMouseCaptureLostEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxMouseCaptureLostEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxMouseCaptureLostEvent& GetEntity(Value& value) {

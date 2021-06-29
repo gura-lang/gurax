@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxSysColourChangedEvent() = delete;
-	Value_wxSysColourChangedEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSysColourChangedEvent) :
+	Value_wxSysColourChangedEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSysColourChangedEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxSysColourChangedEvent(const Value_wxSysColourChangedEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxSysColourChangedEvent() = default;
 public:
 	wxSysColourChangedEvent& GetEntity() {
-		return reinterpret_cast<wxSysColourChangedEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxSysColourChangedEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxSysColourChangedEvent& GetEntity() const {
-		return reinterpret_cast<const wxSysColourChangedEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxSysColourChangedEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxSysColourChangedEvent* GetEntityPtr() {
-		return reinterpret_cast<wxSysColourChangedEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxSysColourChangedEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxSysColourChangedEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxSysColourChangedEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxSysColourChangedEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxSysColourChangedEvent& GetEntity(Value& value) {

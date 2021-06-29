@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxDropFilesEvent() = delete;
-	Value_wxDropFilesEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxDropFilesEvent) :
+	Value_wxDropFilesEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxDropFilesEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxDropFilesEvent(const Value_wxDropFilesEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxDropFilesEvent() = default;
 public:
 	wxDropFilesEvent& GetEntity() {
-		return reinterpret_cast<wxDropFilesEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxDropFilesEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxDropFilesEvent& GetEntity() const {
-		return reinterpret_cast<const wxDropFilesEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxDropFilesEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxDropFilesEvent* GetEntityPtr() {
-		return reinterpret_cast<wxDropFilesEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxDropFilesEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxDropFilesEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxDropFilesEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxDropFilesEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxDropFilesEvent& GetEntity(Value& value) {

@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxEraseEvent() = delete;
-	Value_wxEraseEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxEraseEvent) :
+	Value_wxEraseEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxEraseEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxEraseEvent(const Value_wxEraseEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxEraseEvent() = default;
 public:
 	wxEraseEvent& GetEntity() {
-		return reinterpret_cast<wxEraseEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxEraseEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxEraseEvent& GetEntity() const {
-		return reinterpret_cast<const wxEraseEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxEraseEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxEraseEvent* GetEntityPtr() {
-		return reinterpret_cast<wxEraseEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxEraseEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxEraseEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxEraseEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxEraseEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxEraseEvent& GetEntity(Value& value) {

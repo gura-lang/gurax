@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxSetCursorEvent() = delete;
-	Value_wxSetCursorEvent(const wxObject& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSetCursorEvent) :
+	Value_wxSetCursorEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSetCursorEvent) :
 		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxSetCursorEvent(const Value_wxSetCursorEvent& src) = delete;
@@ -50,16 +50,16 @@ protected:
 	~Value_wxSetCursorEvent() = default;
 public:
 	wxSetCursorEvent& GetEntity() {
-		return reinterpret_cast<wxSetCursorEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<wxSetCursorEvent&>(Value_wxEvent::GetEntity());
 	}
 	const wxSetCursorEvent& GetEntity() const {
-		return reinterpret_cast<const wxSetCursorEvent&>(Value_wxObject::GetEntity());
+		return reinterpret_cast<const wxSetCursorEvent&>(Value_wxEvent::GetEntity());
 	}
 	wxSetCursorEvent* GetEntityPtr() {
-		return reinterpret_cast<wxSetCursorEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<wxSetCursorEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 	const wxSetCursorEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxSetCursorEvent*>(Value_wxObject::GetEntityPtr());
+		return reinterpret_cast<const wxSetCursorEvent*>(Value_wxEvent::GetEntityPtr());
 	}
 public:
 	static wxSetCursorEvent& GetEntity(Value& value) {
