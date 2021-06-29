@@ -17,6 +17,10 @@ private:
 	RefPtr<Processor> _pProcessor;
 	RefPtr<Value::WeakPtr> _pwValue;
 public:
+	void operator=(const EntityCore& core) {
+		_pProcessor.reset(core._pProcessor.Reference());
+		_pwValue.reset(core._pwValue.Reference());
+	}
 	void SetInfo(Processor* pProcessor, const Value& value) {
 		_pProcessor.reset(pProcessor);
 		_pwValue.reset(value.GetWeakPtr());
@@ -68,8 +72,12 @@ public:
 //------------------------------------------------------------------------------
 // Utility
 //------------------------------------------------------------------------------
+namespace Util {
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory);
+
+void ExitMainLoop();
+};
 
 Gurax_EndModuleScope(wx)
 

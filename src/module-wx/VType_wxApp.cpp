@@ -129,6 +129,10 @@ bool Value_wxApp::EntityT::OnInit()
 		// (none)
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Return Value
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
@@ -150,6 +154,10 @@ bool Value_wxApp::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 		if (!args.FeedValue(new Value_Bool(onlyIfNeeded))) break;
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Return Value
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);

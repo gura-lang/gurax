@@ -39,7 +39,7 @@ Gurax_ImplementFunction(EVT_JOYSTICK_EVENTS)
 		wxEVT_JOY_MOVE,
 		wxEVT_JOY_ZMOVE,
 	};
-	BindMultiEvents(processor, argument, eventTypes, Gurax_ArraySizeOf(eventTypes), Value_wxMouseEvent::eventValueFactory);
+	Util::BindMultiEvents(processor, argument, eventTypes, Gurax_ArraySizeOf(eventTypes), Value_wxMouseEvent::eventValueFactory);
 	return Value::nil();
 }
 
@@ -79,7 +79,7 @@ Gurax_ImplementFunction(EVT_MOUSE_EVENTS)
 		wxEVT_LEAVE_WINDOW,
 		wxEVT_MOUSEWHEEL,
 	};
-	BindMultiEvents(processor, argument, eventTypes, Gurax_ArraySizeOf(eventTypes), Value_wxMouseEvent::eventValueFactory);
+	Util::BindMultiEvents(processor, argument, eventTypes, Gurax_ArraySizeOf(eventTypes), Value_wxMouseEvent::eventValueFactory);
 	return Value::nil();
 }
 
@@ -108,7 +108,7 @@ Gurax_ImplementFunction(EVT_SCROLLWIN)
 		wxEVT_SCROLLWIN_THUMBTRACK,
 		wxEVT_SCROLLWIN_THUMBRELEASE,
 	};
-	BindMultiEvents(processor, argument, eventTypes, Gurax_ArraySizeOf(eventTypes), Value_wxMouseEvent::eventValueFactory);
+	Util::BindMultiEvents(processor, argument, eventTypes, Gurax_ArraySizeOf(eventTypes), Value_wxMouseEvent::eventValueFactory);
 	return Value::nil();
 }
 

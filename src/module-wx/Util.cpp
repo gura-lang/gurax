@@ -34,11 +34,13 @@ void EventUserData::Eval(wxEvent& event)
 	ArgFeeder args(*pArg, _pProcessor->GetFrameCur());
 	if (!args.FeedValue(_eventValueFactory.CreateValue(event, _pValueUserData.Reference()))) return;
 	Value::Delete(_pValueFunct->Eval(*_pProcessor, *pArg));
+	if (Error::IsIssued()) Util::ExitMainLoop();
 }
 
 //------------------------------------------------------------------------------
 // Utility
 //------------------------------------------------------------------------------
+namespace Util {
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory)
 {
@@ -53,6 +55,14 @@ void BindMultiEvents(Processor& processor, Argument& argument,
 		pEvtHandler->Bind(eventType, &EventUserData::HandlerFunc, id, -1,
 			new EventUserData(processor.Reference(), valueFunct.Reference(), Value::nil(), eventValueFactory));
 	}
+}
+
+void ExitMainLoop()
+{
+	wxWindow* window = wxDynamicCast(wxApp::GetInstance(), wxApp)->GetTopWindow();
+	if (window) window->Close(true);
+	wxApp::GetInstance()->ExitMainLoop();
+}
 }
 
 Gurax_EndModuleScope(wx)
