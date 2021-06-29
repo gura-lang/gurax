@@ -182,7 +182,6 @@ void AssignEvents(Frame& frame)
 const Value& LookupEventType(wxEventType eventType)
 {
 	auto iter = g_eventTypeMap.find(eventType);
-	//::printf("check1: %d %d\n", wxEVT_BUTTON, eventType);
 	if (iter == g_eventTypeMap.end()) return Value::C_nil();
 	return *iter->second;
 }

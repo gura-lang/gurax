@@ -37,6 +37,25 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
+// Implementation of operator
+//------------------------------------------------------------------------------
+// wx.EventType == wx.EventType
+Gurax_ImplementOpBinary(Eq, wxEventType, wxEventType)
+{
+	wxEventType eventTypeL = Value_wxEventType::GetEntity(valueL);
+	wxEventType eventTypeR = Value_wxEventType::GetEntity(valueR);
+	return new Value_Bool(eventTypeL == eventTypeR);
+}
+
+// wx.EventType != wx.EventType
+Gurax_ImplementOpBinary(Ne, wxEventType, wxEventType)
+{
+	wxEventType eventTypeL = Value_wxEventType::GetEntity(valueL);
+	wxEventType eventTypeR = Value_wxEventType::GetEntity(valueR);
+	return new Value_Bool(eventTypeL != eventTypeR);
+}
+
+//------------------------------------------------------------------------------
 // VType_wxEventType
 //------------------------------------------------------------------------------
 VType_wxEventType VTYPE_wxEventType("EventType");
@@ -61,6 +80,9 @@ void VType_wxEventType::DoPrepare(Frame& frameOuter)
 		d.DeclareArg("id", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
 		d.DeclareArg("lastId", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
 	} while (0);
+	// Assignment of operator
+	Gurax_AssignOpBinary(Eq,	wxEventType, wxEventType);
+	Gurax_AssignOpBinary(Ne,	wxEventType, wxEventType);
 }
 
 //------------------------------------------------------------------------------
