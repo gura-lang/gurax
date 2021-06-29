@@ -60,12 +60,8 @@ public:
 			_pProcessor(pProcessor), _pValueFunct(pValueFunct), _pValueUserData(pValueUserData), _eventValueFactory(eventValueFactory) {}
 public:
 	void Eval(wxEvent& event);
-	const Value& GetValueUserData() const { return *_pValueUserData; }
 	static void HandlerFunc(wxEvent& event) {
 		wxDynamicCast(event.GetEventUserData(), EventUserData)->Eval(event);
-	}
-	static const Value& GetValueUserData(wxEvent& event) {
-		return wxDynamicCast(event.GetEventUserData(), EventUserData)->GetValueUserData();
 	}
 };
 
@@ -73,10 +69,11 @@ public:
 // Utility
 //------------------------------------------------------------------------------
 namespace Util {
+
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory);
-
 void ExitMainLoop();
+
 };
 
 Gurax_EndModuleScope(wx)

@@ -136,6 +136,8 @@ protected:
 ${elsif (className == 'Event')}
 protected:
 	RefPtr<Value> _pValueUserData;
+public:
+	const Value& GetValueUserData() const { return *_pValueUserData; }
 ${end}
 ${if (evtHandlerOrDerivFlag)}
 public:

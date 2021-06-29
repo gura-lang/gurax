@@ -35,6 +35,8 @@ public:
 protected:
 	RefPtr<Value> _pValueUserData;
 public:
+	const Value& GetValueUserData() const { return *_pValueUserData; }
+public:
 	static VType& vtype;
 public:
 	// Constructor

@@ -41,6 +41,7 @@ void EventUserData::Eval(wxEvent& event)
 // Utility
 //------------------------------------------------------------------------------
 namespace Util {
+
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory)
 {
@@ -63,6 +64,7 @@ void ExitMainLoop()
 	if (window) window->Close(true);
 	wxApp::GetInstance()->ExitMainLoop();
 }
+
 }
 
 Gurax_EndModuleScope(wx)

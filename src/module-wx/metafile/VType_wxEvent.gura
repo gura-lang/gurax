@@ -7,7 +7,7 @@ Event = Class(Object) {
 	GetId() as int
 	GetEventUserData() = \
 		R'''
-		return EventUserData::GetValueUserData(*pEntity_gurax).Reference();
+		return valueThis_gurax.GetValueUserData().Reference();
 		'''
 	GetSkipped() as bool
 	GetTimestamp() as long

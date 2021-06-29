@@ -107,7 +107,7 @@ Gurax_ImplementMethodEx(wxEvent, GetEventUserData_gurax, processor_gurax, argume
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return EventUserData::GetValueUserData(*pEntity_gurax).Reference();
+	return valueThis_gurax.GetValueUserData().Reference();
 }
 
 // wx.Event#GetSkipped()
