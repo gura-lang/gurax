@@ -1,3 +1,6 @@
+//==============================================================================
+// VType_wxPanel.gura
+//==============================================================================
 Panel = Class(Window) {
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxTAB_TRAVERSAL, name as String = wxPanelNameStr)

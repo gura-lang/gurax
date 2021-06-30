@@ -1,3 +1,6 @@
+//==============================================================================
+// VType_wxSizerFlags.gura
+//==============================================================================
 SizerFlags = Class {
 	__init__(proportion as int = 0)
 	Align(alignment as int):returnThis

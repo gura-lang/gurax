@@ -1,3 +1,6 @@
+//==============================================================================
+// VType_wxFrame.gura
+//==============================================================================
 Frame = Class(Window) {
 	__init__(parent:nil as Window_p, id as WindowID, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxDEFAULT_FRAME_STYLE, name as String = wxFrameNameStr)

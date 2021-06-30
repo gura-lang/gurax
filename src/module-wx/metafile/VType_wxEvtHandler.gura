@@ -1,3 +1,6 @@
+//==============================================================================
+// VType_wxEvtHandler.gura
+//==============================================================================
 EvtHandler = Class {
 	__init__()
 	Bind(eventType as EventType, funct as any, userData? as any, id as int = wxID_ANY, lastId as int = wxID_ANY) as void = \
