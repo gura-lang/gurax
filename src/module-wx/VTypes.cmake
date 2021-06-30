@@ -5,10 +5,19 @@
 set(SRCFILES_VTYPE
 	VType_wxApp.cpp
 	VType_wxEventType.cpp
+	VType_wxBrush.cpp
+	VType_wxCursor.cpp
+	VType_wxFont.cpp
+	VType_wxIcon.cpp
+	VType_wxIconBundle.cpp
+	VType_wxPalette.cpp
+	VType_wxPen.cpp
+	VType_wxRegion.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp
 	VType_wxAppConsole.cpp
+	VType_wxBitmap.cpp
 	VType_wxBoxSizer.cpp
 	VType_wxButton.cpp
 	VType_wxCheckBox.cpp
@@ -24,6 +33,7 @@ set(SRCFILES_VTYPE
 	VType_wxFlexGridSizer.cpp
 	VType_wxFocusEvent.cpp
 	VType_wxFrame.cpp
+	VType_wxGDIObject.cpp
 	VType_wxGridBagSizer.cpp
 	VType_wxGridSizer.cpp
 	VType_wxHelpEvent.cpp

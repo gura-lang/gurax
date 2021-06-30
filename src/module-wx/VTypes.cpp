@@ -13,10 +13,19 @@ void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxApp);
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxBrush);
+	frame.Assign(VTYPE_wxCursor);
+	frame.Assign(VTYPE_wxFont);
+	frame.Assign(VTYPE_wxIcon);
+	frame.Assign(VTYPE_wxIconBundle);
+	frame.Assign(VTYPE_wxPalette);
+	frame.Assign(VTYPE_wxPen);
+	frame.Assign(VTYPE_wxRegion);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAnyButton);
 	frame.Assign(VTYPE_wxAppConsole);
+	frame.Assign(VTYPE_wxBitmap);
 	frame.Assign(VTYPE_wxBoxSizer);
 	frame.Assign(VTYPE_wxButton);
 	frame.Assign(VTYPE_wxCheckBox);
@@ -32,6 +41,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFlexGridSizer);
 	frame.Assign(VTYPE_wxFocusEvent);
 	frame.Assign(VTYPE_wxFrame);
+	frame.Assign(VTYPE_wxGDIObject);
 	frame.Assign(VTYPE_wxGridBagSizer);
 	frame.Assign(VTYPE_wxGridSizer);
 	frame.Assign(VTYPE_wxHelpEvent);

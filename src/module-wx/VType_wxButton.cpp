@@ -69,7 +69,113 @@ Gurax_ImplementConstructorEx(Button_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Button#GetAuthNeeded()
+Gurax_DeclareMethodAlias(wxButton, GetAuthNeeded_gurax, "GetAuthNeeded")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
 
+Gurax_ImplementMethodEx(wxButton, GetAuthNeeded_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->GetAuthNeeded();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Button#GetLabel()
+Gurax_DeclareMethodAlias(wxButton, GetLabel_gurax, "GetLabel")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxButton, GetLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	const char* rtn = pEntity_gurax->GetLabel();
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.Button#SetAuthNeeded(needed? as Bool)
+Gurax_DeclareMethodAlias(wxButton, SetAuthNeeded_gurax, "SetAuthNeeded")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("needed", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxButton, SetAuthNeeded_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool needed = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetAuthNeeded(needed);
+	return Gurax::Value::nil();
+}
+
+// wx.Button#SetDefault()
+Gurax_DeclareMethodAlias(wxButton, SetDefault_gurax, "SetDefault")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxButton, SetDefault_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		pEntity_gurax->SetDefault()));
+}
+
+// wx.Button#SetLabel(label as String)
+Gurax_DeclareMethodAlias(wxButton, SetLabel_gurax, "SetLabel")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxButton, SetLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* label = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetLabel(label);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -87,6 +193,11 @@ void VType_wxButton::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxAnyButton, Flag::Mutable, Gurax_CreateConstructor(Button_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxButton, GetAuthNeeded_gurax));
+	Assign(Gurax_CreateMethod(wxButton, GetLabel_gurax));
+	Assign(Gurax_CreateMethod(wxButton, SetAuthNeeded_gurax));
+	Assign(Gurax_CreateMethod(wxButton, SetDefault_gurax));
+	Assign(Gurax_CreateMethod(wxButton, SetLabel_gurax));
 }
 
 //------------------------------------------------------------------------------

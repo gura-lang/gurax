@@ -4,4 +4,9 @@
 Button = Class(AnyButton) {
 	__init__(parent as Window_p, id as WindowID, label as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
+	GetAuthNeeded() as bool
+	GetLabel() as String
+	SetAuthNeeded(needed as bool = true) as void
+	SetDefault() as Window_p
+	SetLabel(label as String) as void
 }
