@@ -296,7 +296,7 @@ Gurax_ImplementMethodEx(wxWindow, Show_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	bool show = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	bool show = args_gurax.IsValid()? args_gurax.PickBool() : true;
 	// Function body
 	bool rtn = pEntity_gurax->Show(show);
 	return new Gurax::Value_Bool(rtn);

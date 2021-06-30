@@ -2,4 +2,13 @@
 // VType_wxCommandEvent.gura
 //==============================================================================
 CommandEvent = Class(Event) {
+	GetExtraLong() as long
+	GetInt() as int
+	GetSelection() as int
+	GetString() as String
+	IsChecked() as bool
+	IsSelection() as bool
+	SetExtraLong(extraLong as long) as void
+	SetInt(intCommand as int) as void
+	SetString(string as String) as void
 }

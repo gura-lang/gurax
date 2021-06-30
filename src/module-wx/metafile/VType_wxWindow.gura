@@ -13,8 +13,8 @@ Window = Class(EvtHandler) {
 	SetCanFocus(canFocus as bool):virtual as void
 	SetFocus() as void
 	SetFocusFromKbd() as void
-	Close(force? as bool) as bool
-	Show(show? as bool) as bool
+	Close(force as bool = false) as bool
+	Show(show as bool = true) as bool
 
 	SetSizer(sizer as Sizer_p, deleteOld as bool = true) as void
 }
