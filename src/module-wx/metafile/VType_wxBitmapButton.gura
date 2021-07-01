@@ -1,5 +1,5 @@
 //==============================================================================
-// Misc.gura
+// VType_wxBitmapButton.gura
 //==============================================================================
 BitmapButton = Class(Button) {
 	__init__(parent as Window_p, id as WindowID, bitmap as Bitmap, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,

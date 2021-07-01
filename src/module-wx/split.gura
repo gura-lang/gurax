@@ -5,12 +5,12 @@
 import(re)
 
 stat = `start
-ReadLines('Misc.gura') {|line|
+ReadLines('metafile/Misc.gura') {|line|
 	if (stat == `start) {
 		if (m = line.Match(r'(\w+) = ')) {
 			fileName = 'VType_wx' + m[1] + '.gura'
 			Println(fileName)
-			f = Open(fileName, 'w')
+			f = Open(path.Join('metafile', fileName), 'w')
 			f.Printf(R'''
 			//==============================================================================
 			// %s
