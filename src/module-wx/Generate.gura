@@ -147,6 +147,9 @@ public:
 		using wx${className}::wx${className};
 	public:
 		EntityCore core;
+		${funcInfoTbl.Filter(funcInfoTbl:*virtualFlag) {|funcInfo|}}
+		${funcInfo.name}
+		${end}
 	};
 ${end}
 public:

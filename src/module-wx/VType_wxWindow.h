@@ -37,6 +37,11 @@ public:
 		using wxWindow::wxWindow;
 	public:
 		EntityCore core;
+		AcceptsFocus
+		AcceptsFocusFromKeyboard
+		AcceptsFocusRecursively
+		HasFocus
+		SetCanFocus
 	};
 public:
 	static VType& vtype;

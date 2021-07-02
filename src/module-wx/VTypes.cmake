@@ -11,6 +11,7 @@ set(SRCFILES_VTYPE
 	VType_wxAnyButton.cpp
 	VType_wxAppConsole.cpp
 	VType_wxBitmap.cpp
+	VType_wxBitmapButton.cpp
 	VType_wxBoxSizer.cpp
 	VType_wxBrush.cpp
 	VType_wxButton.cpp

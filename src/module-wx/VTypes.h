@@ -13,6 +13,7 @@
 #include "VType_wxAnyButton.h"
 #include "VType_wxAppConsole.h"
 #include "VType_wxBitmap.h"
+#include "VType_wxBitmapButton.h"
 #include "VType_wxBoxSizer.h"
 #include "VType_wxBrush.h"
 #include "VType_wxButton.h"

@@ -19,6 +19,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAnyButton);
 	frame.Assign(VTYPE_wxAppConsole);
 	frame.Assign(VTYPE_wxBitmap);
+	frame.Assign(VTYPE_wxBitmapButton);
 	frame.Assign(VTYPE_wxBoxSizer);
 	frame.Assign(VTYPE_wxBrush);
 	frame.Assign(VTYPE_wxButton);

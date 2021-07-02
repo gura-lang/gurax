@@ -3,5 +3,5 @@
 //==============================================================================
 BitmapButton = Class(Button) {
 	__init__(parent as Window_p, id as WindowID, bitmap as Bitmap, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-		style as long = wxBU_AUTODRAW, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
+		style as long = wxBU_AUTODRAW, 	validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
 }
