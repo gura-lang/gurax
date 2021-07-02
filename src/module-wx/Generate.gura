@@ -148,7 +148,27 @@ public:
 	public:
 		EntityCore core;
 		${funcInfoTbl.Filter(funcInfoTbl:*virtualFlag) {|funcInfo|}}
-		${funcInfo.name}
+		virtual ${funcInfo.ComposeCDecl()} {
+			static const Symbol* pSymbolFunc = nullptr;
+			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("${funcInfo.name}");
+			do {
+				Function* pFunc;
+				RefPtr<Argument> pArgument;
+				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				// Argument
+				// (none)
+				// Evaluation
+				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				if (Error::IsIssued()) {
+					Util::ExitMainLoop();
+					break;
+				}
+				// Return Value
+				if (!pValueRtn->IsType(VTYPE_${funcInfo.GetTypeInfo().vtype})) break;
+				//return Value_Bool::GetBool(*pValueRtn);
+			} while (0);
+			return wx${className}::${funcInfo.ComposeCaller()};
+		}
 		${end}
 	};
 ${end}

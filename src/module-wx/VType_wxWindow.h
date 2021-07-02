@@ -37,11 +37,111 @@ public:
 		using wxWindow::wxWindow;
 	public:
 		EntityCore core;
-		AcceptsFocus
-		AcceptsFocusFromKeyboard
-		AcceptsFocusRecursively
-		HasFocus
-		SetCanFocus
+		virtual bool AcceptsFocus() {
+			static const Symbol* pSymbolFunc = nullptr;
+			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocus");
+			do {
+				Function* pFunc;
+				RefPtr<Argument> pArgument;
+				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				// Argument
+				// (none)
+				// Evaluation
+				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				if (Error::IsIssued()) {
+					Util::ExitMainLoop();
+					break;
+				}
+				// Return Value
+				if (!pValueRtn->IsType(VTYPE_Bool)) break;
+				//return Value_Bool::GetBool(*pValueRtn);
+			} while (0);
+			return wxWindow::AcceptsFocus();
+		}
+		virtual bool AcceptsFocusFromKeyboard() {
+			static const Symbol* pSymbolFunc = nullptr;
+			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocusFromKeyboard");
+			do {
+				Function* pFunc;
+				RefPtr<Argument> pArgument;
+				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				// Argument
+				// (none)
+				// Evaluation
+				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				if (Error::IsIssued()) {
+					Util::ExitMainLoop();
+					break;
+				}
+				// Return Value
+				if (!pValueRtn->IsType(VTYPE_Bool)) break;
+				//return Value_Bool::GetBool(*pValueRtn);
+			} while (0);
+			return wxWindow::AcceptsFocusFromKeyboard();
+		}
+		virtual bool AcceptsFocusRecursively() {
+			static const Symbol* pSymbolFunc = nullptr;
+			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocusRecursively");
+			do {
+				Function* pFunc;
+				RefPtr<Argument> pArgument;
+				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				// Argument
+				// (none)
+				// Evaluation
+				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				if (Error::IsIssued()) {
+					Util::ExitMainLoop();
+					break;
+				}
+				// Return Value
+				if (!pValueRtn->IsType(VTYPE_Bool)) break;
+				//return Value_Bool::GetBool(*pValueRtn);
+			} while (0);
+			return wxWindow::AcceptsFocusRecursively();
+		}
+		virtual bool HasFocus() {
+			static const Symbol* pSymbolFunc = nullptr;
+			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("HasFocus");
+			do {
+				Function* pFunc;
+				RefPtr<Argument> pArgument;
+				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				// Argument
+				// (none)
+				// Evaluation
+				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				if (Error::IsIssued()) {
+					Util::ExitMainLoop();
+					break;
+				}
+				// Return Value
+				if (!pValueRtn->IsType(VTYPE_Bool)) break;
+				//return Value_Bool::GetBool(*pValueRtn);
+			} while (0);
+			return wxWindow::HasFocus();
+		}
+		virtual void SetCanFocus(bool canFocus) {
+			static const Symbol* pSymbolFunc = nullptr;
+			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SetCanFocus");
+			do {
+				Function* pFunc;
+				RefPtr<Argument> pArgument;
+				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				// Argument
+				// (none)
+				// Evaluation
+				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				if (Error::IsIssued()) {
+					Util::ExitMainLoop();
+					break;
+				}
+				// Return Value
+				if (!pValueRtn->IsType(VTYPE_Nil)) break;
+				//return Value_Bool::GetBool(*pValueRtn);
+			} while (0);
+			return wxWindow::SetCanFocus(canFocus);
+		}
 	};
 public:
 	static VType& vtype;

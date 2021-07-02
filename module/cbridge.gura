@@ -47,6 +47,7 @@ TypeInfo = class {
 	}
 	ComposeFunctionBody(caller as String) = this.tmplFunctionBody.Eval()
 	ComposeArgRef(varName as String) = this.tmplArgRef.Eval()
+	ComposeArgCDecl(varName as String) = Format('%s %s', this.cType, varName)
 }
 
 //------------------------------------------------------------------------------
@@ -94,6 +95,10 @@ ArgInfo = class {
 	ComposeArgRef() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
 		this.typeInfo.ComposeArgRef(this.name)
+	}
+	ComposeArgCDecl() = {
+		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
+		this.typeInfo.ComposeArgCDecl(this.name)
 	}
 	ToString() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
@@ -185,7 +190,12 @@ FuncInfo = class {
 		this._typeInfo
 	}
 	ComposeArgs() = this.argInfoTbl:*ComposeArgRef().Join(', ')
+	ComposeArgsCDecl() = this.argInfoTbl:*ComposeArgCDecl().Join(', ')
 	ComposeCaller() = Format('%s(%s)', this.name, this.ComposeArgs())
+	ComposeCDecl() = {
+		typeInfo = this.GetTypeInfo()
+		Format('%s %s(%s)', typeInfo.cType, this.name, this.ComposeArgsCDecl())
+	}
 	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
 }
 
