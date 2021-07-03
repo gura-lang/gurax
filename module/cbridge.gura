@@ -22,11 +22,14 @@ TypeInfo = class {
 	tmplPicker as Template
 	tmplPickerValidation as Template
 	tmplPickerListVar as Template
+	tmplConvToC as Template
+	tmplConvToGurax as Template
 	tmplFunctionBody as Template
 	tmplArgRef as Template
 	__init__(decl as String, cType as String, vtypeFullName as String, vtypeDisplay as String,
-			codePicker as String, codePickerValidation as String,
-			codePickerVec as String, codeFunctionBody as String, codeArgRef as String) = {
+			codePicker as String, codePickerValidation as String, codePickerVec as String,
+			codeConvToC as String, codeConvToGurax as String,
+			codeFunctionBody as String, codeArgRef as String) = {
 		this.decl = decl, this.cType = cType
 		this.cTypeElem = cType.Sub(r'(const\s+)?(\w+).*', r'\2')
 		this.vtypeFullName = vtypeFullName
@@ -39,12 +42,16 @@ TypeInfo = class {
 		this.tmplPicker = Template().Parse(codePicker)
 		this.tmplPickerValidation = Template().Parse(codePickerValidation)
 		this.tmplPickerListVar = Template().Parse(codePickerVec)
+		this.tmplConvToC = Template().Parse(codeConvToC)
+		this.tmplConvToGurax = Template().Parse(codeConvToGurax)
 		this.tmplFunctionBody = Template().Parse(codeFunctionBody)
 		this.tmplArgRef = Template().Parse(codeArgRef)
 	}
 	ComposePicker(varName as String, defaultValue:nil as String, listVarFlag as Bool, validationFlag as Bool) = {
 		cond(listVarFlag, this.tmplPickerListVar, cond(validationFlag, this.tmplPickerValidation, this.tmplPicker)).Eval()
 	}
+	ComposeConvToC(varName as String, src as String) = this.tmplConvToC.Eval()
+	ComposeConvToGurax(varName as String) = this.tmplConvToGurax.Eval()
 	ComposeFunctionBody(caller as String) = this.tmplFunctionBody.Eval()
 	ComposeArgRef(varName as String) = this.tmplArgRef.Eval()
 	ComposeArgCDecl(varName as String) = Format('%s %s', this.cType, varName)
@@ -270,10 +277,12 @@ Renderer = class {
 	funcInfoTbl = []
 	typeInfoMap = %{}
 	DeclareType(decl as String, cType as String, vtypeFullName as String, vtypeDisplay? as String,
-			codePicker as String = '', codePickerValidation as String = '',
-			codePickerVec as String = '', codeFunctionBody as String = '', codeArgRef = '${varName}') = {
+			codePicker as String = '', codePickerValidation as String = '', codePickerVec as String = '',
+			codeConvToC as String = '', codeConvToGurax as String = 'new Gurax::Value_${this.vtype}(${varName})',
+			codeFunctionBody as String = '', codeArgRef = '${varName}') = {
 		typeInfo = TypeInfo(decl, cType, vtypeFullName, vtypeDisplay || vtypeFullName,
-				codePicker, codePickerValidation, codePickerVec, codeFunctionBody, codeArgRef)
+				codePicker, codePickerValidation, codePickerVec,
+				codeConvToC, codeConvToGurax, codeFunctionBody, codeArgRef)
 		this.typeInfoMap[decl] = typeInfo
 		typeInfo
 	}
@@ -287,6 +296,7 @@ Renderer = class {
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickNumList<${this.cType}>();
 		'''
+		codeConvToC = 'Value_Number::GetNumber<${this.cType}>(${src})'
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
 		return new Gurax::Value_${this.vtype}(rtn);
@@ -443,6 +453,7 @@ Renderer.__init__() = {
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<bool>(Gurax::Value_${this.vtype}::ValueForVector);
 		'''
+		codeConvToC = 'Value_Number::GetBool(${src})'
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
 		return new Gurax::Value_${this.vtype}(rtn);
@@ -471,6 +482,7 @@ Renderer.__init__() = {
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<${this.cType}>(Gurax::Value_${this.vtype}::ValueForVector);
 		'''
+		codeConvToC = 'Value_String::GetString(${src})'
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
 		return new Gurax::Value_${this.vtype}(rtn);
