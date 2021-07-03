@@ -62,7 +62,7 @@ Gurax_ImplementConstructorEx(CheckBox_gurax, processor_gurax, argument_gurax)
 	// Function body
 	auto pEntity_gurax = new Value_wxCheckBox::EntityT(parent, id, label, pos, size, style, validator, name);
 	RefPtr<Value_wxCheckBox> pValue_gurax(new Value_wxCheckBox(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

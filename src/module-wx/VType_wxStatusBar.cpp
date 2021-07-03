@@ -43,7 +43,7 @@ Gurax_ImplementConstructorEx(StatusBar_gurax, processor_gurax, argument_gurax)
 	// Function body
 	auto pEntity_gurax = new Value_wxStatusBar::EntityT();
 	RefPtr<Value_wxStatusBar> pValue_gurax(new Value_wxStatusBar(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

@@ -66,7 +66,7 @@ Gurax_ImplementConstructorEx(ComboBox_gurax, processor_gurax, argument_gurax)
 	for (const char* choice : choices) choices_.Add(choice);
 	auto pEntity_gurax = new Value_wxComboBox::EntityT(parent, id, value, pos, size, choices_, style, validator, name);
 	RefPtr<Value_wxComboBox> pValue_gurax(new Value_wxComboBox(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

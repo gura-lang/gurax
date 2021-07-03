@@ -60,7 +60,7 @@ Gurax_ImplementConstructorEx(StaticBox_gurax, processor_gurax, argument_gurax)
 	// Function body
 	auto pEntity_gurax = new Value_wxStaticBox::EntityT(parent, id, label, pos, size, style, name);
 	RefPtr<Value_wxStaticBox> pValue_gurax(new Value_wxStaticBox(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

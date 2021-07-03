@@ -36,7 +36,7 @@ public:
 	public:
 		using wxStatusBar::wxStatusBar;
 	public:
-		EntityCore core;
+		EntityCore core_gurax;
 	};
 public:
 	static VType& vtype;

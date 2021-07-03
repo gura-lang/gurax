@@ -43,7 +43,7 @@ Gurax_ImplementConstructorEx(AnyButton_gurax, processor_gurax, argument_gurax)
 	// Function body
 	auto pEntity_gurax = new Value_wxAnyButton::EntityT();
 	RefPtr<Value_wxAnyButton> pValue_gurax(new Value_wxAnyButton(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

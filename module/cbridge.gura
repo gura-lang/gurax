@@ -50,7 +50,7 @@ TypeInfo = class {
 	ComposePicker(varName as String, defaultValue:nil as String, listVarFlag as Bool, validationFlag as Bool) = {
 		cond(listVarFlag, this.tmplPickerListVar, cond(validationFlag, this.tmplPickerValidation, this.tmplPicker)).Eval()
 	}
-	ComposeConvToC(varName as String, src as String) = this.tmplConvToC.Eval()
+	ComposeConvToC(src as String) = this.tmplConvToC.Eval()
 	ComposeConvToGurax(varName as String) = this.tmplConvToGurax.Eval()
 	ComposeFunctionBody(caller as String) = this.tmplFunctionBody.Eval()
 	ComposeArgRef(varName as String) = this.tmplArgRef.Eval()
@@ -99,6 +99,7 @@ ArgInfo = class {
 			(this.occurSymbol == `ZeroOrMore) || (this.occurSymbol == `OnceOrMore) || this.listVarFlag,
 			(this.occurSymbol == `ZeroOrOnce) || this.nilFlag)
 	}
+	ComposeConvToGurax() = this.typeInfo.ComposeConvToGurax(this.name)
 	ComposeArgRef() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
 		this.typeInfo.ComposeArgRef(this.name)
@@ -196,6 +197,7 @@ FuncInfo = class {
 		if (!this._typeInfo) { this._typeInfo = this.r.typeInfoMap[this.typeName] }
 		this._typeInfo
 	}
+	IsVoid() = (this.typeName == 'void')
 	ComposeArgs() = this.argInfoTbl:*ComposeArgRef().Join(', ')
 	ComposeArgsCDecl() = this.argInfoTbl:*ComposeArgCDecl().Join(', ')
 	ComposeCaller() = Format('%s(%s)', this.name, this.ComposeArgs())
@@ -453,7 +455,7 @@ Renderer.__init__() = {
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickListT<bool>(Gurax::Value_${this.vtype}::ValueForVector);
 		'''
-		codeConvToC = 'Value_Number::GetBool(${src})'
+		codeConvToC = 'Value_Bool::GetBool(${src})'
 		codeFunctionBody = R'''
 		${this.cType} rtn = ${caller};
 		return new Gurax::Value_${this.vtype}(rtn);

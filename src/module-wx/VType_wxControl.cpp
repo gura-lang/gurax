@@ -59,7 +59,7 @@ Gurax_ImplementConstructorEx(Control_gurax, processor_gurax, argument_gurax)
 	// Function body
 	auto pEntity_gurax = new Value_wxControl::EntityT(parent, id, pos, size, style, validator, name);
 	RefPtr<Value_wxControl> pValue_gurax(new Value_wxControl(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

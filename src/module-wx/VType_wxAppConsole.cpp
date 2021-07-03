@@ -43,7 +43,7 @@ Gurax_ImplementConstructorEx(AppConsole_gurax, processor_gurax, argument_gurax)
 	// Function body
 	auto pEntity_gurax = new Value_wxAppConsole::EntityT();
 	RefPtr<Value_wxAppConsole> pValue_gurax(new Value_wxAppConsole(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

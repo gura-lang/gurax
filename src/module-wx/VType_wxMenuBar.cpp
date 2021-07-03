@@ -43,7 +43,7 @@ Gurax_ImplementConstructorEx(MenuBar_gurax, processor_gurax, argument_gurax)
 	// Function body
 	auto pEntity_gurax = new Value_wxMenuBar::EntityT();
 	RefPtr<Value_wxMenuBar> pValue_gurax(new Value_wxMenuBar(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

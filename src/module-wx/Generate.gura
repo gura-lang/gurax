@@ -146,28 +146,41 @@ public:
 	public:
 		using wx${className}::wx${className};
 	public:
-		EntityCore core;
+		EntityCore core_gurax;
 		${funcInfoTbl.Filter(funcInfoTbl:*virtualFlag) {|funcInfo|}}
 		virtual ${funcInfo.ComposeCDecl()} {
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("${funcInfo.name}");
 			do {
-				Function* pFunc;
-				RefPtr<Argument> pArgument;
-				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				Gurax::Function* pFunc_gurax;
+				RefPtr<Gurax::Argument> pArgument_gurax;
+				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 				// Argument
+				${if (funcInfo.argInfoTbl.IsEmpty())}
 				// (none)
+				${else}
+				Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+				${funcInfo.argInfoTbl.Each {|argInfo|}}
+				if (!args_gurax.FeedValue(${argInfo.ComposeConvToGurax()})) break;
+				${end}
+				${end}
 				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 				if (Error::IsIssued()) {
 					Util::ExitMainLoop();
 					break;
 				}
+				${if (funcInfo.IsVoid())}
+				return;
+				${else}
 				// Return Value
 				if (!pValueRtn->IsType(VTYPE_${funcInfo.GetTypeInfo().vtype})) break;
-				//return Value_Bool::GetBool(*pValueRtn);
+				return ${funcInfo.GetTypeInfo().ComposeConvToC('*pValueRtn')};
+				${end}
 			} while (0);
+			${if (!funcInfo.IsVoid())}
 			return wx${className}::${funcInfo.ComposeCaller()};
+			${end}
 		}
 		${end}
 	};
@@ -522,7 +535,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${else}
 	auto pEntity_gurax = new Value_${funcInfo.GetTypeInfo().vtype}::EntityT(${funcInfo.ComposeArgs()});
 	RefPtr<Value_${funcInfo.GetTypeInfo().vtype}> pValue_gurax(new Value_${funcInfo.GetTypeInfo().vtype}(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 	${end}
 }

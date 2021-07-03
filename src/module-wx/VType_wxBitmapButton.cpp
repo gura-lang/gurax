@@ -63,7 +63,7 @@ Gurax_ImplementConstructorEx(BitmapButton_gurax, processor_gurax, argument_gurax
 	// Function body
 	auto pEntity_gurax = new Value_wxBitmapButton::EntityT(parent, id, bitmap, pos, size, style, validator, name);
 	RefPtr<Value_wxBitmapButton> pValue_gurax(new Value_wxBitmapButton(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

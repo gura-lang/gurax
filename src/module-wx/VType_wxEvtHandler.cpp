@@ -43,7 +43,7 @@ Gurax_ImplementConstructorEx(EvtHandler_gurax, processor_gurax, argument_gurax)
 	// Function body
 	auto pEntity_gurax = new Value_wxEvtHandler::EntityT();
 	RefPtr<Value_wxEvtHandler> pValue_gurax(new Value_wxEvtHandler(pEntity_gurax));
-	pEntity_gurax->core.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 

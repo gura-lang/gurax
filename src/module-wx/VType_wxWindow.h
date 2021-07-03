@@ -36,25 +36,25 @@ public:
 	public:
 		using wxWindow::wxWindow;
 	public:
-		EntityCore core;
+		EntityCore core_gurax;
 		virtual bool AcceptsFocus() {
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocus");
 			do {
-				Function* pFunc;
-				RefPtr<Argument> pArgument;
-				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				Gurax::Function* pFunc_gurax;
+				RefPtr<Gurax::Argument> pArgument_gurax;
+				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 				// Argument
 				// (none)
 				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 				if (Error::IsIssued()) {
 					Util::ExitMainLoop();
 					break;
 				}
 				// Return Value
 				if (!pValueRtn->IsType(VTYPE_Bool)) break;
-				//return Value_Bool::GetBool(*pValueRtn);
+				return Value_Bool::GetBool(*pValueRtn);
 			} while (0);
 			return wxWindow::AcceptsFocus();
 		}
@@ -62,20 +62,20 @@ public:
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocusFromKeyboard");
 			do {
-				Function* pFunc;
-				RefPtr<Argument> pArgument;
-				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				Gurax::Function* pFunc_gurax;
+				RefPtr<Gurax::Argument> pArgument_gurax;
+				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 				// Argument
 				// (none)
 				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 				if (Error::IsIssued()) {
 					Util::ExitMainLoop();
 					break;
 				}
 				// Return Value
 				if (!pValueRtn->IsType(VTYPE_Bool)) break;
-				//return Value_Bool::GetBool(*pValueRtn);
+				return Value_Bool::GetBool(*pValueRtn);
 			} while (0);
 			return wxWindow::AcceptsFocusFromKeyboard();
 		}
@@ -83,20 +83,20 @@ public:
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocusRecursively");
 			do {
-				Function* pFunc;
-				RefPtr<Argument> pArgument;
-				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				Gurax::Function* pFunc_gurax;
+				RefPtr<Gurax::Argument> pArgument_gurax;
+				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 				// Argument
 				// (none)
 				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 				if (Error::IsIssued()) {
 					Util::ExitMainLoop();
 					break;
 				}
 				// Return Value
 				if (!pValueRtn->IsType(VTYPE_Bool)) break;
-				//return Value_Bool::GetBool(*pValueRtn);
+				return Value_Bool::GetBool(*pValueRtn);
 			} while (0);
 			return wxWindow::AcceptsFocusRecursively();
 		}
@@ -104,20 +104,20 @@ public:
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("HasFocus");
 			do {
-				Function* pFunc;
-				RefPtr<Argument> pArgument;
-				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				Gurax::Function* pFunc_gurax;
+				RefPtr<Gurax::Argument> pArgument_gurax;
+				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 				// Argument
 				// (none)
 				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 				if (Error::IsIssued()) {
 					Util::ExitMainLoop();
 					break;
 				}
 				// Return Value
 				if (!pValueRtn->IsType(VTYPE_Bool)) break;
-				//return Value_Bool::GetBool(*pValueRtn);
+				return Value_Bool::GetBool(*pValueRtn);
 			} while (0);
 			return wxWindow::HasFocus();
 		}
@@ -125,22 +125,20 @@ public:
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SetCanFocus");
 			do {
-				Function* pFunc;
-				RefPtr<Argument> pArgument;
-				if (!core.PrepareMethod(pSymbolFunc, &pFunc, pArgument)) break;
+				Gurax::Function* pFunc_gurax;
+				RefPtr<Gurax::Argument> pArgument_gurax;
+				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 				// Argument
-				// (none)
+				Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+				if (!args_gurax.FeedValue(new Gurax::Value_Bool(canFocus))) break;
 				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc->Eval(core.GetProcessor(), *pArgument));
+				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 				if (Error::IsIssued()) {
 					Util::ExitMainLoop();
 					break;
 				}
-				// Return Value
-				if (!pValueRtn->IsType(VTYPE_Nil)) break;
-				//return Value_Bool::GetBool(*pValueRtn);
+				return;
 			} while (0);
-			return wxWindow::SetCanFocus(canFocus);
 		}
 	};
 public:
