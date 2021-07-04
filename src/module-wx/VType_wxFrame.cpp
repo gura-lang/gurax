@@ -178,4 +178,8 @@ String Value_wxFrame::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.Frame");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxFrame::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

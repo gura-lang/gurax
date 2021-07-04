@@ -80,4 +80,8 @@ String Value_wxValidator::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.Validator");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxValidator::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

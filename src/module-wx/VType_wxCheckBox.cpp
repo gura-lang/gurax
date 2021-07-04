@@ -99,4 +99,8 @@ String Value_wxCheckBox::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.CheckBox");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxCheckBox::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

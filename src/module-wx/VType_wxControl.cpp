@@ -96,4 +96,8 @@ String Value_wxControl::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.Control");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxControl::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

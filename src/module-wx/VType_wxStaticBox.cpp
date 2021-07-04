@@ -97,4 +97,8 @@ String Value_wxStaticBox::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.StaticBox");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxStaticBox::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

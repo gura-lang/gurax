@@ -106,4 +106,8 @@ String Value_wxMenuBar::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.MenuBar");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxMenuBar::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

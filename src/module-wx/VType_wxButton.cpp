@@ -210,4 +210,8 @@ String Value_wxButton::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.Button");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxButton::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

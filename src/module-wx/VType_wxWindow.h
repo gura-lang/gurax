@@ -37,109 +37,11 @@ public:
 		using wxWindow::wxWindow;
 	public:
 		EntityCore core_gurax;
-		virtual bool AcceptsFocus() const override {
-			static const Symbol* pSymbolFunc = nullptr;
-			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocus");
-			do {
-				Gurax::Function* pFunc_gurax;
-				RefPtr<Gurax::Argument> pArgument_gurax;
-				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-				// Argument
-				// (none)
-				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-				if (Error::IsIssued()) {
-					Util::ExitMainLoop();
-					break;
-				}
-				// Return Value
-				if (!pValueRtn->IsType(VTYPE_Bool)) break;
-				return Value_Bool::GetBool(*pValueRtn);
-			} while (0);
-			return wxWindow::AcceptsFocus();
-		}
-		virtual bool AcceptsFocusFromKeyboard() const override {
-			static const Symbol* pSymbolFunc = nullptr;
-			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocusFromKeyboard");
-			do {
-				Gurax::Function* pFunc_gurax;
-				RefPtr<Gurax::Argument> pArgument_gurax;
-				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-				// Argument
-				// (none)
-				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-				if (Error::IsIssued()) {
-					Util::ExitMainLoop();
-					break;
-				}
-				// Return Value
-				if (!pValueRtn->IsType(VTYPE_Bool)) break;
-				return Value_Bool::GetBool(*pValueRtn);
-			} while (0);
-			return wxWindow::AcceptsFocusFromKeyboard();
-		}
-		virtual bool AcceptsFocusRecursively() const override {
-			static const Symbol* pSymbolFunc = nullptr;
-			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocusRecursively");
-			do {
-				Gurax::Function* pFunc_gurax;
-				RefPtr<Gurax::Argument> pArgument_gurax;
-				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-				// Argument
-				// (none)
-				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-				if (Error::IsIssued()) {
-					Util::ExitMainLoop();
-					break;
-				}
-				// Return Value
-				if (!pValueRtn->IsType(VTYPE_Bool)) break;
-				return Value_Bool::GetBool(*pValueRtn);
-			} while (0);
-			return wxWindow::AcceptsFocusRecursively();
-		}
-		virtual bool HasFocus() const override {
-			static const Symbol* pSymbolFunc = nullptr;
-			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("HasFocus");
-			do {
-				Gurax::Function* pFunc_gurax;
-				RefPtr<Gurax::Argument> pArgument_gurax;
-				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-				// Argument
-				// (none)
-				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-				if (Error::IsIssued()) {
-					Util::ExitMainLoop();
-					break;
-				}
-				// Return Value
-				if (!pValueRtn->IsType(VTYPE_Bool)) break;
-				return Value_Bool::GetBool(*pValueRtn);
-			} while (0);
-			return wxWindow::HasFocus();
-		}
-		virtual void SetCanFocus(bool canFocus) override {
-			static const Symbol* pSymbolFunc = nullptr;
-			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SetCanFocus");
-			do {
-				Gurax::Function* pFunc_gurax;
-				RefPtr<Gurax::Argument> pArgument_gurax;
-				if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-				// Argument
-				Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-				if (!args_gurax.FeedValue(new Gurax::Value_Bool(canFocus))) break;
-				// Evaluation
-				RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-				if (Error::IsIssued()) {
-					Util::ExitMainLoop();
-					break;
-				}
-				return;
-			} while (0);
-		}
+		virtual bool AcceptsFocus() const override;
+		virtual bool AcceptsFocusFromKeyboard() const override;
+		virtual bool AcceptsFocusRecursively() const override;
+		virtual bool HasFocus() const override;
+		virtual void SetCanFocus(bool canFocus) override;
 	};
 public:
 	static VType& vtype;

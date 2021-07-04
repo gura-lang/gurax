@@ -202,9 +202,9 @@ FuncInfo = class {
 	ComposeArgs() = this.argInfoTbl:*ComposeArgRef().Join(', ')
 	ComposeArgsCDecl() = this.argInfoTbl:*ComposeArgCDecl().Join(', ')
 	ComposeCaller() = Format('%s(%s)', this.name, this.ComposeArgs())
-	ComposeCDecl() = {
+	ComposeCDecl(prefix as String = '') = {
 		typeInfo = this.GetTypeInfo()
-		Format('%s %s(%s)%s', typeInfo.cType, this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))
+		Format('%s %s%s(%s)%s', typeInfo.cType, prefix, this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))
 	}
 	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
 }

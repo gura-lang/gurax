@@ -95,4 +95,8 @@ String Value_wxPanel::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.Panel");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxPanel::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

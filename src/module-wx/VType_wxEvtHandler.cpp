@@ -114,4 +114,8 @@ String Value_wxEvtHandler::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.EvtHandler");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxEvtHandler::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

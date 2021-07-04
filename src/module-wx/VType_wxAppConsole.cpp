@@ -80,4 +80,8 @@ String Value_wxAppConsole::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.AppConsole");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxAppConsole::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

@@ -100,4 +100,8 @@ String Value_wxBitmapButton::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.BitmapButton");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxBitmapButton::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

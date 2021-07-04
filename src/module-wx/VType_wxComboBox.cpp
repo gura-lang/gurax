@@ -562,4 +562,8 @@ String Value_wxComboBox::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.ComboBox");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxComboBox::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)

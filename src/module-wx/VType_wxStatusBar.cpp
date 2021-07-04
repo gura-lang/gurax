@@ -80,4 +80,8 @@ String Value_wxStatusBar::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, "wx.StatusBar");
 }
 
+//------------------------------------------------------------------------------
+// Value_wxStatusBar::EntityT
+//------------------------------------------------------------------------------
+
 Gurax_EndModuleScope(wx)
