@@ -164,6 +164,8 @@ ${if (className in ['EvtHandler', 'Sizer'])}
 ${elsif (className == 'Event')}
 	explicit Value_wx${className}(const wx${className}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(entity.Clone()), _pValueUserData(pValueUserData) {}
+${elsif (className == 'CmdLineParser')}
+	explicit Value_wx${className}(VType& vtype = VTYPE_wx${className}) : Value_Object(vtype) {}
 ${elsif (!classNameParent)}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}

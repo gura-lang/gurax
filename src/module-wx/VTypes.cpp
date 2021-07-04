@@ -25,6 +25,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxButton);
 	frame.Assign(VTYPE_wxCheckBox);
 	frame.Assign(VTYPE_wxChildFocusEvent);
+	frame.Assign(VTYPE_wxCmdLineParser);
 	frame.Assign(VTYPE_wxComboBox);
 	frame.Assign(VTYPE_wxCommandEvent);
 	frame.Assign(VTYPE_wxContextMenuEvent);

@@ -17,6 +17,7 @@ set(SRCFILES_VTYPE
 	VType_wxButton.cpp
 	VType_wxCheckBox.cpp
 	VType_wxChildFocusEvent.cpp
+	VType_wxCmdLineParser.cpp
 	VType_wxComboBox.cpp
 	VType_wxCommandEvent.cpp
 	VType_wxContextMenuEvent.cpp

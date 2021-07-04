@@ -20,6 +20,7 @@
 #include "VType_wxButton.h"
 #include "VType_wxCheckBox.h"
 #include "VType_wxChildFocusEvent.h"
+#include "VType_wxCmdLineParser.h"
 #include "VType_wxComboBox.h"
 #include "VType_wxCommandEvent.h"
 #include "VType_wxContextMenuEvent.h"

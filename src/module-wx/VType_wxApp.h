@@ -37,9 +37,12 @@ public:
 		using wxApp::wxApp;
 	public:
 		EntityCore core_gurax;
+		virtual bool OnExceptionInMainLoop() override;
 		virtual int OnExit() override;
+		virtual void OnFatalException() override;
 		virtual bool OnInit() override;
-		virtual bool SafeYield(wxWindow* win, bool onlyIfNeeded) override;
+		virtual int OnRun() override;
+		virtual void OnUnhandledException() override;
 	};
 public:
 	static VType& vtype;

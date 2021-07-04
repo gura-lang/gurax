@@ -50,6 +50,26 @@ Gurax_ImplementConstructorEx(App_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.App#OnExceptionInMainLoop()
+Gurax_DeclareMethodAlias(wxApp, OnExceptionInMainLoop_gurax, "OnExceptionInMainLoop")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxApp, OnExceptionInMainLoop_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->OnExceptionInMainLoop();
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.App#OnExit()
 Gurax_DeclareMethodAlias(wxApp, OnExit_gurax, "OnExit")
 {
@@ -68,6 +88,26 @@ Gurax_ImplementMethodEx(wxApp, OnExit_gurax, processor_gurax, argument_gurax)
 	// Function body
 	int rtn = pEntity_gurax->OnExit();
 	return new Gurax::Value_Number(rtn);
+}
+
+// wx.App#OnFatalException()
+Gurax_DeclareMethodAlias(wxApp, OnFatalException_gurax, "OnFatalException")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxApp, OnFatalException_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->OnFatalException();
+	return Gurax::Value::nil();
 }
 
 // wx.App#OnInit()
@@ -90,31 +130,44 @@ Gurax_ImplementMethodEx(wxApp, OnInit_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.App#SafeYield(win as wx.Window, onlyIfNeeded as Bool)
-Gurax_DeclareMethodAlias(wxApp, SafeYield_gurax, "SafeYield")
+// wx.App#OnRun()
+Gurax_DeclareMethodAlias(wxApp, OnRun_gurax, "OnRun")
 {
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("onlyIfNeeded", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethodEx(wxApp, SafeYield_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxApp, OnRun_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* win = value_win.GetEntityPtr();
-	bool onlyIfNeeded = args_gurax.PickBool();
 	// Function body
-	bool rtn = pEntity_gurax->SafeYield(win, onlyIfNeeded);
-	return new Gurax::Value_Bool(rtn);
+	int rtn = pEntity_gurax->OnRun();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.App#OnUnhandledException()
+Gurax_DeclareMethodAlias(wxApp, OnUnhandledException_gurax, "OnUnhandledException")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxApp, OnUnhandledException_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->OnUnhandledException();
+	return Gurax::Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -133,9 +186,12 @@ void VType_wxApp::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxAppConsole, Flag::Mutable, Gurax_CreateConstructor(App_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxApp, OnExceptionInMainLoop_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnExit_gurax));
+	Assign(Gurax_CreateMethod(wxApp, OnFatalException_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnInit_gurax));
-	Assign(Gurax_CreateMethod(wxApp, SafeYield_gurax));
+	Assign(Gurax_CreateMethod(wxApp, OnRun_gurax));
+	Assign(Gurax_CreateMethod(wxApp, OnUnhandledException_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -151,6 +207,29 @@ String Value_wxApp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxApp::EntityT
 //------------------------------------------------------------------------------
+bool Value_wxApp::EntityT::OnExceptionInMainLoop()
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnExceptionInMainLoop");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		// (none)
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		return Value_Bool::GetBool(*pValueRtn);
+	} while (0);
+	return wxApp::OnExceptionInMainLoop();
+}
+
 int Value_wxApp::EntityT::OnExit()
 {
 	static const Symbol* pSymbolFunc = nullptr;
@@ -172,6 +251,26 @@ int Value_wxApp::EntityT::OnExit()
 		return Value_Number::GetNumber<int>(*pValueRtn);
 	} while (0);
 	return wxApp::OnExit();
+}
+
+void Value_wxApp::EntityT::OnFatalException()
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnFatalException");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		// (none)
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
 }
 
 bool Value_wxApp::EntityT::OnInit()
@@ -197,18 +296,16 @@ bool Value_wxApp::EntityT::OnInit()
 	return wxApp::OnInit();
 }
 
-bool Value_wxApp::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
+int Value_wxApp::EntityT::OnRun()
 {
 	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SafeYield");
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnRun");
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
-		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxWindow(win))) break;
-		if (!args_gurax.FeedValue(new Gurax::Value_Bool(onlyIfNeeded))) break;
+		// (none)
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -216,10 +313,30 @@ bool Value_wxApp::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
-		return Value_Bool::GetBool(*pValueRtn);
+		if (!pValueRtn->IsType(VTYPE_Number)) break;
+		return Value_Number::GetNumber<int>(*pValueRtn);
 	} while (0);
-	return wxApp::SafeYield(win, onlyIfNeeded);
+	return wxApp::OnRun();
+}
+
+void Value_wxApp::EntityT::OnUnhandledException()
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnUnhandledException");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		// (none)
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
 }
 
 Gurax_EndModuleScope(wx)

@@ -3,7 +3,10 @@
 //==============================================================================
 App = Class(AppConsole) {
 	__init__()
+	OnExceptionInMainLoop():virtual as bool
 	OnExit():virtual as int
+	OnFatalException():virtual as void
 	OnInit():virtual as bool
-	SafeYield(win as Window_p, onlyIfNeeded as bool):virtual as bool
+	OnRun():virtual as int
+	OnUnhandledException():virtual as void
 }
