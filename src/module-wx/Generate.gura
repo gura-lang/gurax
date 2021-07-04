@@ -653,6 +653,21 @@ classInfoTbl.Each {|classInfo|
 		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
 			${caller}));
 		''')
+	r.DeclareType(classInfo.className + '_r', 'wx' + classInfo.className + '&',
+		'wx' + classInfo.className, 'wx.' + classInfo.className,
+		codePicker = R'''
+		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+		const ${this.cType}& ${varName} = value_${varName}.GetEntity();
+		'''
+		codePickerValidation = R'''
+		const ${this.cType}& ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : ${defaultValue || '0'};
+		'''
+		codeConvToC = 'Value_${this.vtype}::GetEntity(${src})'
+		codeConvToGurax = 'new Value_${this.vtype}(${varName})'
+		codeFunctionBody = R'''
+		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+			${caller}));
+		''')
 	if (classInfo.IsEvtHandlerOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
