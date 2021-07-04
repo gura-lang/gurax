@@ -3,6 +3,7 @@
 //==============================================================================
 App = Class(AppConsole) {
 	__init__()
+	//OnCmdLineError(parser as CmdLineParser_r):virtual as bool
 	OnExceptionInMainLoop():virtual as bool
 	OnExit():virtual as int
 	OnFatalException():virtual as void
