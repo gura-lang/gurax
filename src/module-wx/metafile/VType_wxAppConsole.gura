@@ -3,4 +3,5 @@
 //==============================================================================
 AppConsole = Class(EvtHandler) {
 	__init__()
+	OnInit():virtual as bool
 }

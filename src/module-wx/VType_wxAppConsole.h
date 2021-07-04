@@ -37,6 +37,7 @@ public:
 		using wxAppConsole::wxAppConsole;
 	public:
 		EntityCore core_gurax;
+		virtual bool OnInit() override;
 	};
 public:
 	static VType& vtype;

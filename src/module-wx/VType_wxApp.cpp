@@ -50,6 +50,26 @@ Gurax_ImplementConstructorEx(App_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.App#OnExit()
+Gurax_DeclareMethodAlias(wxApp, OnExit_gurax, "OnExit")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxApp, OnExit_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->OnExit();
+	return new Gurax::Value_Number(rtn);
+}
+
 // wx.App#OnInit()
 Gurax_DeclareMethodAlias(wxApp, OnInit_gurax, "OnInit")
 {
@@ -113,6 +133,7 @@ void VType_wxApp::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxAppConsole, Flag::Mutable, Gurax_CreateConstructor(App_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxApp, OnExit_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnInit_gurax));
 	Assign(Gurax_CreateMethod(wxApp, SafeYield_gurax));
 }
@@ -130,6 +151,29 @@ String Value_wxApp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxApp::EntityT
 //------------------------------------------------------------------------------
+int Value_wxApp::EntityT::OnExit()
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnExit");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		// (none)
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Number)) break;
+		return Value_Number::GetNumber<int>(*pValueRtn);
+	} while (0);
+	return wxApp::OnExit();
+}
+
 bool Value_wxApp::EntityT::OnInit()
 {
 	static const Symbol* pSymbolFunc = nullptr;

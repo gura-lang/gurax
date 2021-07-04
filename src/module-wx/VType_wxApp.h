@@ -37,6 +37,7 @@ public:
 		using wxApp::wxApp;
 	public:
 		EntityCore core_gurax;
+		virtual int OnExit() override;
 		virtual bool OnInit() override;
 		virtual bool SafeYield(wxWindow* win, bool onlyIfNeeded) override;
 	};

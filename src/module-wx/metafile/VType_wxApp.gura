@@ -3,6 +3,7 @@
 //==============================================================================
 App = Class(AppConsole) {
 	__init__()
+	OnExit():virtual as int
 	OnInit():virtual as bool
 	SafeYield(win as Window_p, onlyIfNeeded as bool):virtual as bool
 }

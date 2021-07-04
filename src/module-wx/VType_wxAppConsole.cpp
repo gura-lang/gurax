@@ -50,7 +50,25 @@ Gurax_ImplementConstructorEx(AppConsole_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.AppConsole#OnInit()
+Gurax_DeclareMethodAlias(wxAppConsole, OnInit_gurax, "OnInit")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
 
+Gurax_ImplementMethodEx(wxAppConsole, OnInit_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->OnInit();
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -68,6 +86,7 @@ void VType_wxAppConsole::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(AppConsole_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxAppConsole, OnInit_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -83,5 +102,27 @@ String Value_wxAppConsole::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxAppConsole::EntityT
 //------------------------------------------------------------------------------
+bool Value_wxAppConsole::EntityT::OnInit()
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnInit");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		// (none)
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		return Value_Bool::GetBool(*pValueRtn);
+	} while (0);
+	return wxAppConsole::OnInit();
+}
 
 Gurax_EndModuleScope(wx)
