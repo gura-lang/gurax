@@ -38,6 +38,7 @@ public:
 	public:
 		EntityCore core_gurax;
 		virtual bool OnInit() override;
+		virtual bool SafeYield(wxWindow* win, bool onlyIfNeeded) override;
 	};
 public:
 	static VType& vtype;

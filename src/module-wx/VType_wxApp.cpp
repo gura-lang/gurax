@@ -70,6 +70,33 @@ Gurax_ImplementMethodEx(wxApp, OnInit_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.App#SafeYield(win as wx.Window, onlyIfNeeded as Bool)
+Gurax_DeclareMethodAlias(wxApp, SafeYield_gurax, "SafeYield")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("onlyIfNeeded", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxApp, SafeYield_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* win = value_win.GetEntityPtr();
+	bool onlyIfNeeded = args_gurax.PickBool();
+	// Function body
+	bool rtn = pEntity_gurax->SafeYield(win, onlyIfNeeded);
+	return new Gurax::Value_Bool(rtn);
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -87,6 +114,7 @@ void VType_wxApp::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_wxAppConsole, Flag::Mutable, Gurax_CreateConstructor(App_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxApp, OnInit_gurax));
+	Assign(Gurax_CreateMethod(wxApp, SafeYield_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -123,6 +151,31 @@ bool Value_wxApp::EntityT::OnInit()
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
 	return wxApp::OnInit();
+}
+
+bool Value_wxApp::EntityT::SafeYield(wxWindow* win, bool onlyIfNeeded)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SafeYield");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxWindow(win))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Bool(onlyIfNeeded))) break;
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		return Value_Bool::GetBool(*pValueRtn);
+	} while (0);
+	return wxApp::SafeYield(win, onlyIfNeeded);
 }
 
 Gurax_EndModuleScope(wx)

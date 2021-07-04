@@ -613,6 +613,8 @@ classInfoTbl.Each {|classInfo|
 			codePickerValidation = R'''
 			${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
 			'''
+			codeConvToC = 'Value_${this.vtype}::GetEntityPtr(${src})'
+			codeConvToGurax = 'new Value_${this.vtype}(${varName})'
 			codeFunctionBody = R'''
 			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
 				${caller}));
@@ -627,6 +629,8 @@ classInfoTbl.Each {|classInfo|
 			codePickerValidation = R'''
 			${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
 			'''
+			codeConvToC = 'Value_${this.vtype}::GetEntityPtr(${src})'
+			codeConvToGurax = 'new Value_${this.vtype}(${varName})'
 			codeFunctionBody = R'''
 			return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
 				*${caller}));
@@ -641,6 +645,8 @@ classInfoTbl.Each {|classInfo|
 		codePickerValidation = R'''
 		const ${this.cType}& ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : ${defaultValue || '0'};
 		'''
+		codeConvToC = 'Value_${this.vtype}::GetEntity(${src})'
+		codeConvToGurax = 'new Value_${this.vtype}(${varName})'
 		codeFunctionBody = R'''
 		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
 			${caller}));
