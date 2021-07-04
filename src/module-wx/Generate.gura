@@ -148,7 +148,7 @@ public:
 	public:
 		EntityCore core_gurax;
 		${funcInfoTbl.Filter(funcInfoTbl:*virtualFlag) {|funcInfo|}}
-		virtual ${funcInfo.ComposeCDecl()} {
+		virtual ${funcInfo.ComposeCDecl()} override {
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("${funcInfo.name}");
 			do {

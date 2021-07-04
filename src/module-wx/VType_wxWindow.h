@@ -37,7 +37,7 @@ public:
 		using wxWindow::wxWindow;
 	public:
 		EntityCore core_gurax;
-		virtual bool AcceptsFocus() {
+		virtual bool AcceptsFocus() const override {
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocus");
 			do {
@@ -58,7 +58,7 @@ public:
 			} while (0);
 			return wxWindow::AcceptsFocus();
 		}
-		virtual bool AcceptsFocusFromKeyboard() {
+		virtual bool AcceptsFocusFromKeyboard() const override {
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocusFromKeyboard");
 			do {
@@ -79,7 +79,7 @@ public:
 			} while (0);
 			return wxWindow::AcceptsFocusFromKeyboard();
 		}
-		virtual bool AcceptsFocusRecursively() {
+		virtual bool AcceptsFocusRecursively() const override {
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("AcceptsFocusRecursively");
 			do {
@@ -100,7 +100,7 @@ public:
 			} while (0);
 			return wxWindow::AcceptsFocusRecursively();
 		}
-		virtual bool HasFocus() {
+		virtual bool HasFocus() const override {
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("HasFocus");
 			do {
@@ -121,7 +121,7 @@ public:
 			} while (0);
 			return wxWindow::HasFocus();
 		}
-		virtual void SetCanFocus(bool canFocus) {
+		virtual void SetCanFocus(bool canFocus) override {
 			static const Symbol* pSymbolFunc = nullptr;
 			if (!pSymbolFunc) pSymbolFunc = Symbol::Add("SetCanFocus");
 			do {

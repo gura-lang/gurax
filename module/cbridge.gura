@@ -187,10 +187,11 @@ FuncInfo = class {
 	tmplFunctionBody as Template
 	virtualFlag as Bool
 	returnThisFlag as Bool
+	constFlag as Bool
 	__init__(r as Renderer, moduleName as String, name as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
-			virtualFlag as Bool, returnThisFlag as Bool) = {
+			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.argInfoTbl = argInfoTbl, this.typeName = typeName
-		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag
+		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.constFlag = constFlag
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	GetTypeInfo() = {
@@ -203,7 +204,7 @@ FuncInfo = class {
 	ComposeCaller() = Format('%s(%s)', this.name, this.ComposeArgs())
 	ComposeCDecl() = {
 		typeInfo = this.GetTypeInfo()
-		Format('%s %s(%s)', typeInfo.cType, this.name, this.ComposeArgsCDecl())
+		Format('%s %s(%s)%s', typeInfo.cType, this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))
 	}
 	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
 }
@@ -218,6 +219,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	typeName = ''
 	virtualFlag = false
 	returnThisFlag = false
+	constFlag = false
 	if (expr.IsBinaryOp()) {
 		if (expr.operator.symbol == `as) {
 			!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
@@ -232,11 +234,12 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	if (expr.attr.IsSet(`void)) { typeName = 'void' }
 	if (expr.attr.IsSet(`virtual)) { virtualFlag = true }
 	if (expr.attr.IsSet(`returnThis)) { returnThisFlag = true }
+	if (expr.attr.IsSet(`const)) { constFlag = true }
 	argInfoTbl = CreateArgInfoTbl(r, expr)
 	if (typeName.IsEmpty()) { typeName = 'any' }
 	symbolName = expr.car.symbolName
 	//(symbolName, argInfoTbl, typeInfo, codeFunctionBody)
-	FuncInfo(r, moduleName, symbolName, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag)
+	FuncInfo(r, moduleName, symbolName, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag)
 }
 
 tmplFunctionImplementation = tR'''

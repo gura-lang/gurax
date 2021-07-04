@@ -3,13 +3,13 @@
 //==============================================================================
 Window = Class(EvtHandler) {
 	__init__()
-	AcceptsFocus():virtual as bool
-	AcceptsFocusFromKeyboard():virtual as bool
-	AcceptsFocusRecursively():virtual as bool
+	AcceptsFocus():const:virtual as bool
+	AcceptsFocusFromKeyboard():const:virtual as bool
+	AcceptsFocusRecursively():const:virtual as bool
 	IsFocusable() as bool
 	CanAcceptFocus() as bool
 	CanAcceptFocusFromKeyboard() as bool
-	HasFocus():virtual as bool
+	HasFocus():const:virtual as bool
 	SetCanFocus(canFocus as bool):virtual as void
 	SetFocus() as void
 	SetFocusFromKbd() as void
