@@ -11,6 +11,7 @@
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxActivateEvent.h"
 #include "VType_wxAnyButton.h"
+#include "VType_wxApp.h"
 #include "VType_wxAppConsole.h"
 #include "VType_wxBitmap.h"
 #include "VType_wxBitmapButton.h"
