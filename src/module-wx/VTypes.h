@@ -29,6 +29,7 @@
 #include "VType_wxDropFilesEvent.h"
 #include "VType_wxEraseEvent.h"
 #include "VType_wxEvent.h"
+#include "VType_wxEventLoopBase.h"
 #include "VType_wxEvtHandler.h"
 #include "VType_wxFlexGridSizer.h"
 #include "VType_wxFocusEvent.h"

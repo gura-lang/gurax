@@ -26,6 +26,7 @@ set(SRCFILES_VTYPE
 	VType_wxDropFilesEvent.cpp
 	VType_wxEraseEvent.cpp
 	VType_wxEvent.cpp
+	VType_wxEventLoopBase.cpp
 	VType_wxEvtHandler.cpp
 	VType_wxFlexGridSizer.cpp
 	VType_wxFocusEvent.cpp

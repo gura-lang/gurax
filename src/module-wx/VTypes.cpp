@@ -34,6 +34,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxDropFilesEvent);
 	frame.Assign(VTYPE_wxEraseEvent);
 	frame.Assign(VTYPE_wxEvent);
+	frame.Assign(VTYPE_wxEventLoopBase);
 	frame.Assign(VTYPE_wxEvtHandler);
 	frame.Assign(VTYPE_wxFlexGridSizer);
 	frame.Assign(VTYPE_wxFocusEvent);

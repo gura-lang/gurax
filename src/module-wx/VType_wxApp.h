@@ -37,11 +37,13 @@ public:
 		using wxApp::wxApp;
 	public:
 		EntityCore core_gurax;
+		virtual bool OnCmdLineError(wxCmdLineParser& parser) override;
+		virtual bool OnCmdLineHelp(wxCmdLineParser& parser) override;
+		virtual bool OnCmdLineParsed(wxCmdLineParser& parser) override;
 		virtual bool OnExceptionInMainLoop() override;
 		virtual int OnExit() override;
 		virtual void OnFatalException() override;
 		virtual bool OnInit() override;
-		virtual int OnRun() override;
 		virtual void OnUnhandledException() override;
 	};
 public:

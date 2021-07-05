@@ -128,12 +128,18 @@ protected:
 ${elsif (className == 'Sizer')}
 protected:
 	wx${className}* _pEntity;
+${elsif (className == 'CmdLineParser')}
+protected:
+	wx${className}& _entity;
 ${elsif (className == 'Event')}
 protected:
 	std::unique_ptr<wx${className}> _pEntity;
 	RefPtr<Value> _pValueUserData;
 public:
 	const Value& GetValueUserData() const { return *_pValueUserData; }
+${elsif (className == 'EventLoopBase')}
+protected:
+	wx${className}* _pEntity;
 ${elsif (!classNameParent)}
 protected:
 	wx${className} _entity;
@@ -165,7 +171,11 @@ ${elsif (className == 'Event')}
 	explicit Value_wx${className}(const wx${className}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(entity.Clone()), _pValueUserData(pValueUserData) {}
 ${elsif (className == 'CmdLineParser')}
-	explicit Value_wx${className}(VType& vtype = VTYPE_wx${className}) : Value_Object(vtype) {}
+	explicit Value_wx${className}(wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
+		Value_Object(vtype), _entity(entity) {}
+${elsif (className == 'EventLoopBase')}
+	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (!classNameParent)}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
@@ -194,7 +204,7 @@ ${if (className in ['EvtHandler', 'Event'])}
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
 	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
-${elsif (className == 'Sizer')}
+${elsif (className in ['Sizer', 'EventLoopBase'])}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity; }
@@ -657,10 +667,10 @@ classInfoTbl.Each {|classInfo|
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
 		codePicker = R'''
 		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
-		const ${this.cType}& ${varName} = value_${varName}.GetEntity();
+		${this.cType} ${varName} = value_${varName}.GetEntity();
 		'''
 		codePickerValidation = R'''
-		const ${this.cType}& ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : ${defaultValue || '0'};
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : ${defaultValue || '0'};
 		'''
 		codeConvToC = 'Value_${this.vtype}::GetEntity(${src})'
 		codeConvToGurax = 'new Value_${this.vtype}(${varName})'

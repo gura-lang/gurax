@@ -50,6 +50,81 @@ Gurax_ImplementConstructorEx(App_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.App#OnCmdLineError(parser as wx.CmdLineParser)
+Gurax_DeclareMethodAlias(wxApp, OnCmdLineError_gurax, "OnCmdLineError")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parser", VTYPE_wxCmdLineParser, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxApp, OnCmdLineError_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxCmdLineParser& value_parser = args_gurax.Pick<Value_wxCmdLineParser>();
+	wxCmdLineParser& parser = value_parser.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->OnCmdLineError(parser);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.App#OnCmdLineHelp(parser as wx.CmdLineParser)
+Gurax_DeclareMethodAlias(wxApp, OnCmdLineHelp_gurax, "OnCmdLineHelp")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parser", VTYPE_wxCmdLineParser, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxApp, OnCmdLineHelp_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxCmdLineParser& value_parser = args_gurax.Pick<Value_wxCmdLineParser>();
+	wxCmdLineParser& parser = value_parser.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->OnCmdLineHelp(parser);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.App#OnCmdLineParsed(parser as wx.CmdLineParser)
+Gurax_DeclareMethodAlias(wxApp, OnCmdLineParsed_gurax, "OnCmdLineParsed")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parser", VTYPE_wxCmdLineParser, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxApp, OnCmdLineParsed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxCmdLineParser& value_parser = args_gurax.Pick<Value_wxCmdLineParser>();
+	wxCmdLineParser& parser = value_parser.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->OnCmdLineParsed(parser);
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.App#OnExceptionInMainLoop()
 Gurax_DeclareMethodAlias(wxApp, OnExceptionInMainLoop_gurax, "OnExceptionInMainLoop")
 {
@@ -130,26 +205,6 @@ Gurax_ImplementMethodEx(wxApp, OnInit_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.App#OnRun()
-Gurax_DeclareMethodAlias(wxApp, OnRun_gurax, "OnRun")
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxApp, OnRun_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	int rtn = pEntity_gurax->OnRun();
-	return new Gurax::Value_Number(rtn);
-}
-
 // wx.App#OnUnhandledException()
 Gurax_DeclareMethodAlias(wxApp, OnUnhandledException_gurax, "OnUnhandledException")
 {
@@ -186,11 +241,13 @@ void VType_wxApp::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxAppConsole, Flag::Mutable, Gurax_CreateConstructor(App_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxApp, OnCmdLineError_gurax));
+	Assign(Gurax_CreateMethod(wxApp, OnCmdLineHelp_gurax));
+	Assign(Gurax_CreateMethod(wxApp, OnCmdLineParsed_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnExceptionInMainLoop_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnExit_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnFatalException_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnInit_gurax));
-	Assign(Gurax_CreateMethod(wxApp, OnRun_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnUnhandledException_gurax));
 }
 
@@ -207,6 +264,78 @@ String Value_wxApp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxApp::EntityT
 //------------------------------------------------------------------------------
+bool Value_wxApp::EntityT::OnCmdLineError(wxCmdLineParser& parser)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnCmdLineError");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) break;
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		return Value_Bool::GetBool(*pValueRtn);
+	} while (0);
+	return wxApp::OnCmdLineError(parser);
+}
+
+bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnCmdLineHelp");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) break;
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		return Value_Bool::GetBool(*pValueRtn);
+	} while (0);
+	return wxApp::OnCmdLineHelp(parser);
+}
+
+bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnCmdLineParsed");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) break;
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		return Value_Bool::GetBool(*pValueRtn);
+	} while (0);
+	return wxApp::OnCmdLineParsed(parser);
+}
+
 bool Value_wxApp::EntityT::OnExceptionInMainLoop()
 {
 	static const Symbol* pSymbolFunc = nullptr;
@@ -294,29 +423,6 @@ bool Value_wxApp::EntityT::OnInit()
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
 	return wxApp::OnInit();
-}
-
-int Value_wxApp::EntityT::OnRun()
-{
-	static const Symbol* pSymbolFunc = nullptr;
-	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnRun");
-	do {
-		Gurax::Function* pFunc_gurax;
-		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
-		// Argument
-		// (none)
-		// Evaluation
-		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
-		if (Error::IsIssued()) {
-			Util::ExitMainLoop();
-			break;
-		}
-		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) break;
-		return Value_Number::GetNumber<int>(*pValueRtn);
-	} while (0);
-	return wxApp::OnRun();
 }
 
 void Value_wxApp::EntityT::OnUnhandledException()

@@ -31,13 +31,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxCmdLineParser");
 protected:
-	wxCmdLineParser _entity;
+	wxCmdLineParser& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxCmdLineParser() = delete;
-	explicit Value_wxCmdLineParser(VType& vtype = VTYPE_wxCmdLineParser) : Value_Object(vtype) {}
+	explicit Value_wxCmdLineParser(wxCmdLineParser& entity, VType& vtype = VTYPE_wxCmdLineParser) :
+		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxCmdLineParser(const Value_wxCmdLineParser& src) = delete;
 	Value_wxCmdLineParser& operator=(const Value_wxCmdLineParser& src) = delete;

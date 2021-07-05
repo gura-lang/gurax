@@ -3,11 +3,15 @@
 //==============================================================================
 App = Class(AppConsole) {
 	__init__()
-	//OnCmdLineError(parser as CmdLineParser_r):virtual as bool
+	OnCmdLineError(parser as CmdLineParser_r):virtual as bool
+	OnCmdLineHelp(parser as CmdLineParser_r):virtual as bool
+	OnCmdLineParsed(parser as CmdLineParser_r):virtual as bool
+	//OnEventLoopEnter(loop as EventLoopBase_p):virtual as void
+	//OnEventLoopExit(loop as EventLoopBase_p):virtual as void
 	OnExceptionInMainLoop():virtual as bool
 	OnExit():virtual as int
 	OnFatalException():virtual as void
 	OnInit():virtual as bool
-	OnRun():virtual as int
+	//OnRun():virtual as int
 	OnUnhandledException():virtual as void
 }
