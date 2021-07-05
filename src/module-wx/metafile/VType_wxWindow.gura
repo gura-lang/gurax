@@ -17,4 +17,7 @@ Window = Class(EvtHandler) {
 	Show(show as bool = true) as bool
 
 	SetSizer(sizer as Sizer_p, deleteOld as bool = true) as void
+
+	FindFocus():static as Window_p
+	FindWindowById(id as long, parent as Window_p = nullptr):static as Window_p
 }

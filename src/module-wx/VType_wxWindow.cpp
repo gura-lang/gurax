@@ -329,6 +329,44 @@ Gurax_ImplementMethodEx(wxWindow, SetSizer_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
+// wx.Window.FindFocus()
+Gurax_DeclareClassMethodAlias(wxWindow, FindFocus_gurax, "FindFocus")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxWindow, FindFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		wxWindow::FindFocus()));
+}
+
+// wx.Window.FindWindowById(id as Number, parent? as wx.Window)
+Gurax_DeclareClassMethodAlias(wxWindow, FindWindowById_gurax, "FindWindowById")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxWindow, FindWindowById_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long id = args_gurax.PickNumber<long>();
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		wxWindow::FindWindowById(id, parent)));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -358,6 +396,8 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, Close_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Show_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetSizer_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, FindFocus_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, FindWindowById_gurax));
 }
 
 //------------------------------------------------------------------------------

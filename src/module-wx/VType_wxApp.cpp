@@ -225,6 +225,27 @@ Gurax_ImplementMethodEx(wxApp, OnUnhandledException_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
+// wx.App.SetInstance(app as wx.AppConsole)
+Gurax_DeclareClassMethodAlias(wxApp, SetInstance_gurax, "SetInstance")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("app", VTYPE_wxAppConsole, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxApp, SetInstance_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxAppConsole& value_app = args_gurax.Pick<Value_wxAppConsole>();
+	wxAppConsole* app = value_app.GetEntityPtr();
+	// Function body
+	wxApp::SetInstance(app);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -249,6 +270,7 @@ void VType_wxApp::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxApp, OnFatalException_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnInit_gurax));
 	Assign(Gurax_CreateMethod(wxApp, OnUnhandledException_gurax));
+	Assign(Gurax_CreateMethod(wxApp, SetInstance_gurax));
 }
 
 //------------------------------------------------------------------------------
