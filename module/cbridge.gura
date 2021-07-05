@@ -188,10 +188,11 @@ FuncInfo = class {
 	virtualFlag as Bool
 	returnThisFlag as Bool
 	constFlag as Bool
+	staticFlag as Bool
 	__init__(r as Renderer, moduleName as String, name as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
-			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool) = {
+			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool, staticFlag as Bool) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.argInfoTbl = argInfoTbl, this.typeName = typeName
-		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.constFlag = constFlag
+		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.constFlag = constFlag, this.staticFlag = staticFlag
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	GetTypeInfo() = {
@@ -220,6 +221,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	virtualFlag = false
 	returnThisFlag = false
 	constFlag = false
+	staticFlag = false
 	if (expr.IsBinaryOp()) {
 		if (expr.operator.symbol == `as) {
 			!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
@@ -235,11 +237,12 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	if (expr.attr.IsSet(`virtual)) { virtualFlag = true }
 	if (expr.attr.IsSet(`returnThis)) { returnThisFlag = true }
 	if (expr.attr.IsSet(`const)) { constFlag = true }
+	if (expr.attr.IsSet(`static)) { staticFlag = true }
 	argInfoTbl = CreateArgInfoTbl(r, expr)
 	if (typeName.IsEmpty()) { typeName = 'any' }
 	symbolName = expr.car.symbolName
 	//(symbolName, argInfoTbl, typeInfo, codeFunctionBody)
-	FuncInfo(r, moduleName, symbolName, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag)
+	FuncInfo(r, moduleName, symbolName, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag, staticFlag)
 }
 
 tmplFunctionImplementation = tR'''

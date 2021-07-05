@@ -425,7 +425,39 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 }
 '''
 
-EvalTmplMethodImplementation(className as String, funcInfo as cbridge.FuncInfo):map = tmplMethodImplementation.Eval()
+tmplClassMethodImplementation = tR'''
+// ${Format('%s.%s.%s(%s)', funcInfo.moduleName, className, funcInfo.name, funcInfo.argInfoTbl:*ToString().Join(', '))}
+Gurax_DeclareClassMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
+{
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax, argument_gurax)
+{
+	${if (!funcInfo.argInfoTbl.IsEmpty())}
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	${funcInfo.argInfoTbl::ComposeImplementation()}
+	${end}
+	// Function body
+	${if (funcInfo.tmplFunctionBody)}
+	${funcInfo.tmplFunctionBody.Eval()}
+	${elsif (funcInfo.returnThisFlag)}
+	wx${className}::${funcInfo.ComposeCaller()};
+	return valueThis_gurax.Reference();
+	${else}
+	${funcInfo.GetTypeInfo().ComposeFunctionBody('wx' + className + '::' + funcInfo.ComposeCaller())}
+	${end}
+}
+'''
+
+EvalTmplMethodImplementation(className as String, funcInfo as cbridge.FuncInfo):map = {
+	cond(funcInfo.staticFlag, tmplClassMethodImplementation, tmplMethodImplementation).Eval()
+}
 
 ClassInfo = class {
 	typeInfo as cbridge.TypeInfo
