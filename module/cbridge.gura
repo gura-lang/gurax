@@ -130,6 +130,9 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 		if (exprParam.IsAssign()) {
 			occurSymbol = `ZeroOrOnce
 			defaultValue = exprParam.right.__str__():dquoteString
+			if (exprParam.right.IsBinaryOp()) {
+				defaultValue = '(' + defaultValue + ')'
+			}
 			exprParam = exprParam.left
 		}
 		if (exprParam.IsBinaryOp()) {

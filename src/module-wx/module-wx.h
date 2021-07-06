@@ -10,6 +10,7 @@
 #include <wx/evtloop.h>
 #include <wx/gbsizer.h>
 #include <wx/listctrl.h>
+#include <wx/sashwin.h>
 #include <wx/wrapsizer.h>
 #include <wx/power.h>
 #include "Util.h"

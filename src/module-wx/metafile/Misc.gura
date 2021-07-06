@@ -1,12 +1,12 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
-ListCtrl = Class(Control) {
+SashWindow = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-		style as long = wxLC_ICON, validator as Validator = wxDefaultValidator, name as String = wxListCtrlNameStr) = \
+		style as long = wxCLIP_CHILDREN | wxSW_3D, name as String = 'sashWindow') = \
 		R'''
-		auto pEntity_gurax = new Value_wxListCtrl::EntityT(parent, id, pos, size, style, validator, name);
-		RefPtr<Value_wxListCtrl> pValue_gurax(new Value_wxListCtrl(pEntity_gurax));
+		auto pEntity_gurax = new Value_wxSashWindow::EntityT(parent, id, pos, size, style, name);
+		RefPtr<Value_wxSashWindow> pValue_gurax(new Value_wxSashWindow(pEntity_gurax));
 		pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 		'''
