@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxSize.gura
+// VType_wxRect.gura
 //==============================================================================
-Size = Class {
-	__init__(width as int = 0, height as int = 0)
+Rect = Class {
+	__init__(x as int = 0, y as int = 0, width as int = 0, height as int = 0)
 }

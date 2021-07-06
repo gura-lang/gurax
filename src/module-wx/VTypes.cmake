@@ -58,6 +58,7 @@ set(SRCFILES_VTYPE
 	VType_wxPoint.cpp
 	VType_wxPowerEvent.cpp
 	VType_wxRadioBox.cpp
+	VType_wxRect.cpp
 	VType_wxRegion.cpp
 	VType_wxSashWindow.cpp
 	VType_wxScrollWinEvent.cpp

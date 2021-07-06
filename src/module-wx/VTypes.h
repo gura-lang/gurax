@@ -61,6 +61,7 @@
 #include "VType_wxPoint.h"
 #include "VType_wxPowerEvent.h"
 #include "VType_wxRadioBox.h"
+#include "VType_wxRect.h"
 #include "VType_wxRegion.h"
 #include "VType_wxSashWindow.h"
 #include "VType_wxScrollWinEvent.h"

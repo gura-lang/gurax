@@ -66,6 +66,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPoint);
 	frame.Assign(VTYPE_wxPowerEvent);
 	frame.Assign(VTYPE_wxRadioBox);
+	frame.Assign(VTYPE_wxRect);
 	frame.Assign(VTYPE_wxRegion);
 	frame.Assign(VTYPE_wxSashWindow);
 	frame.Assign(VTYPE_wxScrollWinEvent);
