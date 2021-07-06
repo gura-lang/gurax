@@ -7,7 +7,7 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_wxControl.h"
+#include "VType_wxWindow.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -25,7 +25,7 @@ extern GURAX_DLLDECLARE VType_wxSashWindow VTYPE_wxSashWindow;
 //------------------------------------------------------------------------------
 // Value_wxSashWindow
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxSashWindow : public Value_wxControl {
+class GURAX_DLLDECLARE Value_wxSashWindow : public Value_wxWindow {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxSashWindow);
@@ -44,7 +44,7 @@ public:
 	// Constructor
 	Value_wxSashWindow() = delete;
 	explicit Value_wxSashWindow(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxSashWindow) :
-		Value_wxControl(pEntity, vtype) {}
+		Value_wxWindow(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxSashWindow(const Value_wxSashWindow& src) = delete;
 	Value_wxSashWindow& operator=(const Value_wxSashWindow& src) = delete;

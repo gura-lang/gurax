@@ -80,7 +80,7 @@ void VType_wxSashWindow::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(SashWindow_gurax));
+	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(SashWindow_gurax));
 	// Assignment of method
 }
 
