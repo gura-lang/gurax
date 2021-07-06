@@ -12,9 +12,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxChoice);
-	frame.Assign(VTYPE_wxListBox);
-	frame.Assign(VTYPE_wxRadioBox);
+	frame.Assign(VTYPE_wxListCtrl);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAnyButton);
@@ -27,6 +25,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxButton);
 	frame.Assign(VTYPE_wxCheckBox);
 	frame.Assign(VTYPE_wxChildFocusEvent);
+	frame.Assign(VTYPE_wxChoice);
 	frame.Assign(VTYPE_wxCmdLineParser);
 	frame.Assign(VTYPE_wxComboBox);
 	frame.Assign(VTYPE_wxCommandEvent);
@@ -51,6 +50,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxIdleEvent);
 	frame.Assign(VTYPE_wxJoystickEvent);
 	frame.Assign(VTYPE_wxKeyEvent);
+	frame.Assign(VTYPE_wxListBox);
 	frame.Assign(VTYPE_wxMenu);
 	frame.Assign(VTYPE_wxMenuBar);
 	frame.Assign(VTYPE_wxMenuItem);
@@ -64,6 +64,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPen);
 	frame.Assign(VTYPE_wxPoint);
 	frame.Assign(VTYPE_wxPowerEvent);
+	frame.Assign(VTYPE_wxRadioBox);
 	frame.Assign(VTYPE_wxRegion);
 	frame.Assign(VTYPE_wxScrollWinEvent);
 	frame.Assign(VTYPE_wxSetCursorEvent);

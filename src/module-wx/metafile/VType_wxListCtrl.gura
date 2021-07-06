@@ -1,5 +1,5 @@
 //==============================================================================
-// Misc.gura
+// VType_wxListCtrl.gura
 //==============================================================================
 ListCtrl = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,

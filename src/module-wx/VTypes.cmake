@@ -4,9 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxChoice.cpp
-	VType_wxListBox.cpp
-	VType_wxRadioBox.cpp
+	VType_wxListCtrl.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp
@@ -19,6 +17,7 @@ set(SRCFILES_VTYPE
 	VType_wxButton.cpp
 	VType_wxCheckBox.cpp
 	VType_wxChildFocusEvent.cpp
+	VType_wxChoice.cpp
 	VType_wxCmdLineParser.cpp
 	VType_wxComboBox.cpp
 	VType_wxCommandEvent.cpp
@@ -43,6 +42,7 @@ set(SRCFILES_VTYPE
 	VType_wxIdleEvent.cpp
 	VType_wxJoystickEvent.cpp
 	VType_wxKeyEvent.cpp
+	VType_wxListBox.cpp
 	VType_wxMenu.cpp
 	VType_wxMenuBar.cpp
 	VType_wxMenuItem.cpp
@@ -56,6 +56,7 @@ set(SRCFILES_VTYPE
 	VType_wxPen.cpp
 	VType_wxPoint.cpp
 	VType_wxPowerEvent.cpp
+	VType_wxRadioBox.cpp
 	VType_wxRegion.cpp
 	VType_wxScrollWinEvent.cpp
 	VType_wxSetCursorEvent.cpp

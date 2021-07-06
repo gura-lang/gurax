@@ -9,6 +9,7 @@
 #include <wx/cmdline.h>
 #include <wx/evtloop.h>
 #include <wx/gbsizer.h>
+#include <wx/listctrl.h>
 #include <wx/wrapsizer.h>
 #include <wx/power.h>
 #include "Util.h"
