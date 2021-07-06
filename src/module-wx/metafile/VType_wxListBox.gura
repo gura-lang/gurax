@@ -1,0 +1,15 @@
+//==============================================================================
+// VType_wxListBox.gura
+//==============================================================================
+ListBox = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		choices[]? as String, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxListBoxNameStr) = \
+		R'''
+		wxArrayString choices_;
+		for (const char* choice : choices) choices_.Add(choice);
+		auto pEntity_gurax = new Value_wxListBox::EntityT(parent, id, pos, size, choices_, style, validator, name);
+		RefPtr<Value_wxListBox> pValue_gurax(new Value_wxListBox(pEntity_gurax));
+		pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+		'''
+}

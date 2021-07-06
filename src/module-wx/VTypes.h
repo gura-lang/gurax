@@ -7,7 +7,9 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxBitmapButton.h"
+#include "VType_wxChoice.h"
+#include "VType_wxListBox.h"
+#include "VType_wxRadioBox.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxActivateEvent.h"
 #include "VType_wxAnyButton.h"

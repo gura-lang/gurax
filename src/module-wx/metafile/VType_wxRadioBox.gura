@@ -1,0 +1,15 @@
+//==============================================================================
+// VType_wxRadioBox.gura
+//==============================================================================
+RadioBox = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		choices[] as String, majorDimension as int = 0, style as long = wxRA_SPECIFY_COLS, validator as Validator = wxDefaultValidator, name as String = wxRadioBoxNameStr) = \
+		R'''
+		wxArrayString choices_;
+		for (const char* choice : choices) choices_.Add(choice);
+		auto pEntity_gurax = new Value_wxRadioBox::EntityT(parent, id, label, pos, size, choices_, majorDimension, style, validator, name);
+		RefPtr<Value_wxRadioBox> pValue_gurax(new Value_wxRadioBox(pEntity_gurax));
+		pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+		'''
+}

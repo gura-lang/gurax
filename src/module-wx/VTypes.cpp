@@ -12,7 +12,9 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxBitmapButton);
+	frame.Assign(VTYPE_wxChoice);
+	frame.Assign(VTYPE_wxListBox);
+	frame.Assign(VTYPE_wxRadioBox);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAnyButton);

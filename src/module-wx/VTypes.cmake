@@ -4,7 +4,9 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxBitmapButton.cpp
+	VType_wxChoice.cpp
+	VType_wxListBox.cpp
+	VType_wxRadioBox.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp
