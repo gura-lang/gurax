@@ -51,7 +51,6 @@ Gurax_ImplementConstructorEx(StatusBar_gurax, processor_gurax, argument_gurax)
 // Implementation of method
 //-----------------------------------------------------------------------------
 
-
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------

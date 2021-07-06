@@ -43,6 +43,7 @@ set(SRCFILES_VTYPE
 	VType_wxJoystickEvent.cpp
 	VType_wxKeyEvent.cpp
 	VType_wxListBox.cpp
+	VType_wxListCtrl.cpp
 	VType_wxMenu.cpp
 	VType_wxMenuBar.cpp
 	VType_wxMenuItem.cpp

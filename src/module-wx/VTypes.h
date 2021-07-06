@@ -46,6 +46,7 @@
 #include "VType_wxJoystickEvent.h"
 #include "VType_wxKeyEvent.h"
 #include "VType_wxListBox.h"
+#include "VType_wxListCtrl.h"
 #include "VType_wxMenu.h"
 #include "VType_wxMenuBar.h"
 #include "VType_wxMenuItem.h"

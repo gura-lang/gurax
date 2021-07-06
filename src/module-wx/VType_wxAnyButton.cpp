@@ -51,7 +51,6 @@ Gurax_ImplementConstructorEx(AnyButton_gurax, processor_gurax, argument_gurax)
 // Implementation of method
 //-----------------------------------------------------------------------------
 
-
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------

@@ -51,6 +51,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxJoystickEvent);
 	frame.Assign(VTYPE_wxKeyEvent);
 	frame.Assign(VTYPE_wxListBox);
+	frame.Assign(VTYPE_wxListCtrl);
 	frame.Assign(VTYPE_wxMenu);
 	frame.Assign(VTYPE_wxMenuBar);
 	frame.Assign(VTYPE_wxMenuItem);

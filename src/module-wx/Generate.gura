@@ -301,7 +301,9 @@ ${end}
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+${if (!funcInfoTbl.IsEmpty())}
 ${EvalTmplMethodImplementation(className, funcInfoTbl.Each()).Join('\n')}
+${end}
 
 //-----------------------------------------------------------------------------
 // Implementation of property

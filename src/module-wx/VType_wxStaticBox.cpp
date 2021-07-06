@@ -68,7 +68,6 @@ Gurax_ImplementConstructorEx(StaticBox_gurax, processor_gurax, argument_gurax)
 // Implementation of method
 //-----------------------------------------------------------------------------
 
-
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------

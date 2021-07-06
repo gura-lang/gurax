@@ -71,7 +71,6 @@ Gurax_ImplementConstructorEx(BitmapButton_gurax, processor_gurax, argument_gurax
 // Implementation of method
 //-----------------------------------------------------------------------------
 
-
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
