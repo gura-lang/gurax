@@ -12,7 +12,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxSashWindow);
+	frame.Assign(VTYPE_wxTextCtrl);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAnyButton);
@@ -67,6 +67,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPowerEvent);
 	frame.Assign(VTYPE_wxRadioBox);
 	frame.Assign(VTYPE_wxRegion);
+	frame.Assign(VTYPE_wxSashWindow);
 	frame.Assign(VTYPE_wxScrollWinEvent);
 	frame.Assign(VTYPE_wxSetCursorEvent);
 	frame.Assign(VTYPE_wxSize);

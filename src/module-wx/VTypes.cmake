@@ -4,7 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxSashWindow.cpp
+	VType_wxTextCtrl.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp
@@ -59,6 +59,7 @@ set(SRCFILES_VTYPE
 	VType_wxPowerEvent.cpp
 	VType_wxRadioBox.cpp
 	VType_wxRegion.cpp
+	VType_wxSashWindow.cpp
 	VType_wxScrollWinEvent.cpp
 	VType_wxSetCursorEvent.cpp
 	VType_wxSize.cpp

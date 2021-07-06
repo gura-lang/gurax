@@ -60,7 +60,7 @@ Gurax_ImplementConstructorEx(ComboBox_gurax, processor_gurax, argument_gurax)
 	auto choices = args_gurax.PickListT<const char*>(Gurax::Value_String::ValueForVector);
 	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxButtonNameStr;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxComboBoxNameStr;
 	// Function body
 	wxArrayString choices_;
 	for (const char* choice : choices) choices_.Add(choice);

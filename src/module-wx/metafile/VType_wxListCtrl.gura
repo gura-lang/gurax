@@ -3,11 +3,5 @@
 //==============================================================================
 ListCtrl = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-		style as long = wxLC_ICON, validator as Validator = wxDefaultValidator, name as String = wxListCtrlNameStr) = \
-		R'''
-		auto pEntity_gurax = new Value_wxListCtrl::EntityT(parent, id, pos, size, style, validator, name);
-		RefPtr<Value_wxListCtrl> pValue_gurax(new Value_wxListCtrl(pEntity_gurax));
-		pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
-		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
-		'''
+		style as long = wxLC_ICON, validator as Validator = wxDefaultValidator, name as String = wxListCtrlNameStr)
 }

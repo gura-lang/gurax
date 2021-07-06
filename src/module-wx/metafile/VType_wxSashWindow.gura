@@ -3,11 +3,5 @@
 //==============================================================================
 SashWindow = Class(Window) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-		style as long = wxCLIP_CHILDREN | wxSW_3D, name as String = 'sashWindow') = \
-		R'''
-		auto pEntity_gurax = new Value_wxSashWindow::EntityT(parent, id, pos, size, style, name);
-		RefPtr<Value_wxSashWindow> pValue_gurax(new Value_wxSashWindow(pEntity_gurax));
-		pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
-		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
-		'''
+		style as long = wxCLIP_CHILDREN | wxSW_3D, name as String = 'sashWindow')
 }
