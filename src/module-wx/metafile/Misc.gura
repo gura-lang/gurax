@@ -1,7 +1,67 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+DateTime = Class {
+	__init__()
+}
+
 TextCtrl = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxTextCtrlNameStr)
+}
+
+CalendarCtrl = Class(Control) {
+	@include['wx/calctrl.h']
+	__init__(parent as Window_p, id as WindowID, date as DateTime = wxDefaultDateTime, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxCAL_SHOW_HOLIDAYS, name as String = wxCalendarNameStr)
+}
+
+RadioButton = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxRadioButtonNameStr)
+}
+
+SpinButton = Class(Control) {
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxSP_VERTICAL, name as String = 'wxSpinButton')
+}
+
+SpinCtrl = Class(Control) {
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxSP_ARROW_KEYS, min as int = 0, max as int = 100, initial as int = 0, name as String = 'wxSpinCtrl')
+}
+
+Slider = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, value as int, minValue as int, maxValue as int, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxSL_HORIZONTAL, validator as Validator = wxDefaultValidator, name as String = wxSliderNameStr)
+}
+
+ScrollBar = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxSB_HORIZONTAL, validator as Validator = wxDefaultValidator, name as String = wxScrollBarNameStr)
+}
+
+StyledTextCtrl = Class(Control) {
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = 0, name as String = wxSTCNameStr)
+}
+
+StaticLine = Class(Control) {
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxLI_HORIZONTAL, name as String = wxStaticLineNameStr)
+}
+
+StaticText = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = 0, name as String = wxStaticTextNameStr)
+}
+
+StaticBox = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = 0, name as String = wxStaticBoxNameStr)
+}
+
+ToolBar = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxTB_HORIZONTAL, name as String = wxToolBarNameStr)
 }

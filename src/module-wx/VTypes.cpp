@@ -12,7 +12,19 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxDateTime);
 	frame.Assign(VTYPE_wxTextCtrl);
+	frame.Assign(VTYPE_wxCalendarCtrl);
+	frame.Assign(VTYPE_wxRadioButton);
+	frame.Assign(VTYPE_wxSpinButton);
+	frame.Assign(VTYPE_wxSpinCtrl);
+	frame.Assign(VTYPE_wxSlider);
+	frame.Assign(VTYPE_wxScrollBar);
+	frame.Assign(VTYPE_wxStyledTextCtrl);
+	frame.Assign(VTYPE_wxStaticLine);
+	frame.Assign(VTYPE_wxStaticText);
+	frame.Assign(VTYPE_wxStaticBox);
+	frame.Assign(VTYPE_wxToolBar);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAnyButton);

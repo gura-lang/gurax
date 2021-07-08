@@ -469,6 +469,7 @@ ClassInfo = class {
 	funcInfoConstructor as cbridge.FuncInfo
 	tmplConstructorImplementation as Template
 	funcInfoTbl[] as cbridge.FuncInfo = []
+	includeFiles[] as String = []
 	__init__(className as String, classNameParent:nil as String) = {
 		this.className = className
 		this.classNameParent = classNameParent
@@ -523,12 +524,26 @@ path.Glob('metafile/*.gura').Each {|pathName|
 			}
 			classInfo = ClassInfo(className, classNameParent)
 			expr.right.block.EachElem {|expr|
-				funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
-				if (funcInfo.name == '__init__') {
-					funcInfo.name = classInfo.className
-					classInfo.funcInfoConstructor = funcInfo
+				if (expr.IsIndexer()) {
+					params = expr.EachParam():list
+					if (!expr.car.IsIdentifier()) {
+						sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
+						sys.Exit(1)
+					}
+					if (expr.car.symbolName == '@include') {
+						classInfo.includeFiles = params::string
+					} else {
+						sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
+						sys.Exit(1)
+					}
 				} else {
-					classInfo.funcInfoTbl.Add(funcInfo)
+					funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
+					if (funcInfo.name == '__init__') {
+						funcInfo.name = classInfo.className
+						classInfo.funcInfoConstructor = funcInfo
+					} else {
+						classInfo.funcInfoTbl.Add(funcInfo)
+					}
 				}
 			}
 			classInfoTbl.Add(classInfo)

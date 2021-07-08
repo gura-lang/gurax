@@ -4,7 +4,19 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxDateTime.cpp
 	VType_wxTextCtrl.cpp
+	VType_wxCalendarCtrl.cpp
+	VType_wxRadioButton.cpp
+	VType_wxSpinButton.cpp
+	VType_wxSpinCtrl.cpp
+	VType_wxSlider.cpp
+	VType_wxScrollBar.cpp
+	VType_wxStyledTextCtrl.cpp
+	VType_wxStaticLine.cpp
+	VType_wxStaticText.cpp
+	VType_wxStaticBox.cpp
+	VType_wxToolBar.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp
