@@ -14,6 +14,7 @@ set(SRCFILES_VTYPE
 	VType_wxAuiNotebook.cpp
 	VType_wxBitmap.cpp
 	VType_wxBitmapButton.cpp
+	VType_wxBitmapToggleButton.cpp
 	VType_wxBookCtrlBase.cpp
 	VType_wxBoxSizer.cpp
 	VType_wxBrush.cpp
@@ -26,6 +27,8 @@ set(SRCFILES_VTYPE
 	VType_wxCmdLineParser.cpp
 	VType_wxComboBox.cpp
 	VType_wxCommandEvent.cpp
+	VType_wxCommandLinkButton.cpp
+	VType_wxContextHelpButton.cpp
 	VType_wxContextMenuEvent.cpp
 	VType_wxControl.cpp
 	VType_wxCursor.cpp
@@ -92,6 +95,7 @@ set(SRCFILES_VTYPE
 	VType_wxStyledTextCtrl.cpp
 	VType_wxSysColourChangedEvent.cpp
 	VType_wxTextCtrl.cpp
+	VType_wxToggleButton.cpp
 	VType_wxToolBar.cpp
 	VType_wxToolbook.cpp
 	VType_wxTreebook.cpp

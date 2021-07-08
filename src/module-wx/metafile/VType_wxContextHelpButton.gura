@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxContextHelpButton.gura
+//==============================================================================
+ContextHelpButton = Class(BitmapButton) {
+	@include['wx/cshelp.h']
+	__init__(parent as Window_p, id as WindowID = wxID_CONTEXT_HELP, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxBU_AUTODRAW)
+}

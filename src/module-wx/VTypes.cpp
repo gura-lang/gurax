@@ -22,6 +22,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAuiNotebook);
 	frame.Assign(VTYPE_wxBitmap);
 	frame.Assign(VTYPE_wxBitmapButton);
+	frame.Assign(VTYPE_wxBitmapToggleButton);
 	frame.Assign(VTYPE_wxBookCtrlBase);
 	frame.Assign(VTYPE_wxBoxSizer);
 	frame.Assign(VTYPE_wxBrush);
@@ -34,6 +35,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxCmdLineParser);
 	frame.Assign(VTYPE_wxComboBox);
 	frame.Assign(VTYPE_wxCommandEvent);
+	frame.Assign(VTYPE_wxCommandLinkButton);
+	frame.Assign(VTYPE_wxContextHelpButton);
 	frame.Assign(VTYPE_wxContextMenuEvent);
 	frame.Assign(VTYPE_wxControl);
 	frame.Assign(VTYPE_wxCursor);
@@ -100,6 +103,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxStyledTextCtrl);
 	frame.Assign(VTYPE_wxSysColourChangedEvent);
 	frame.Assign(VTYPE_wxTextCtrl);
+	frame.Assign(VTYPE_wxToggleButton);
 	frame.Assign(VTYPE_wxToolBar);
 	frame.Assign(VTYPE_wxToolbook);
 	frame.Assign(VTYPE_wxTreebook);
