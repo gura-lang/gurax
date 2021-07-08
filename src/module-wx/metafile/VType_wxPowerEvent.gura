@@ -2,4 +2,5 @@
 // VType_wxPowerEvent.gura
 //==============================================================================
 PowerEvent = Class(Event) {
+	@include['wx/power.h']
 }

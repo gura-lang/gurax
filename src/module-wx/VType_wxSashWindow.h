@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXSASHWINDOW_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/sashwin.h>
 #include "Util.h"
 #include "VType_wxWindow.h"
 

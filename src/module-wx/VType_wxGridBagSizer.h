@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXGRIDBAGSIZER_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/gbsizer.h>
 #include "Util.h"
 #include "VType_wxFlexGridSizer.h"
 

@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXSPINCTRL_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/spinctrl.h>
 #include "Util.h"
 #include "VType_wxControl.h"
 

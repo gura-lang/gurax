@@ -2,4 +2,5 @@
 // VType_wxWrapSizer.gura
 //==============================================================================
 WrapSizer = Class(BoxSizer) {
+	@include['wx/wrapsizer.h']
 }

@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXCMDLINEPARSER_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/cmdline.h>
 #include "Util.h"
 
 Gurax_BeginModuleScope(wx)

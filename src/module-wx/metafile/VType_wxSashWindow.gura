@@ -2,6 +2,7 @@
 // VType_wxSashWindow.gura
 //==============================================================================
 SashWindow = Class(Window) {
+	@include['wx/sashwin.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxCLIP_CHILDREN | wxSW_3D, name as String = 'sashWindow')
 }

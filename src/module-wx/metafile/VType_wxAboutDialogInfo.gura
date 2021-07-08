@@ -2,4 +2,5 @@
 // VType_wxAboutDialogInfo.gura
 //==============================================================================
 AboutDialogInfo = Class {
+	@include['wx/aboutdlg.h']
 }

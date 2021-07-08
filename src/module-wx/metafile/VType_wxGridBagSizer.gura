@@ -2,4 +2,5 @@
 // VType_wxGridBagSizer.gura
 //==============================================================================
 GridBagSizer = Class(FlexGridSizer) {
+	@include['wx/gbsizer.h']
 }

@@ -2,6 +2,7 @@
 // VType_wxListCtrl.gura
 //==============================================================================
 ListCtrl = Class(Control) {
+	@include['wx/listctrl.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxLC_ICON, validator as Validator = wxDefaultValidator, name as String = wxListCtrlNameStr)
 }

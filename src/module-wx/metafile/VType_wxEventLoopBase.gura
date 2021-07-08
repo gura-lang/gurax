@@ -2,4 +2,5 @@
 // VType_wxEventLoopBase.gura
 //==============================================================================
 EventLoopBase = Class {
+	@include['wx/evtloop.h']
 }

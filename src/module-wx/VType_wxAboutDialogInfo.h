@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXABOUTDIALOGINFO_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/aboutdlg.h>
 #include "Util.h"
 
 Gurax_BeginModuleScope(wx)
