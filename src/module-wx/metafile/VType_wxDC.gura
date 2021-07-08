@@ -2,4 +2,16 @@
 // VType_wxDC.gura
 //==============================================================================
 DC = Class(Object) {
+	CopyAttributes(dc as const_DC_r) as void
+	GetDepth() as int
+	GetDeviceOrigin() as Point
+	GetLogicalFunction() as RasterOperationMode
+	GetMapMode() as MappingMode
+	GetPixel(x as Coord, y as Coord) as Colour = \
+		R'''
+		wxColour colour;
+		bool rtn = pEntity_gurax->GetPixel(x, y, &colour);
+		if (!rtn) return Value::nil();
+		return new Value_wxColour(colour);
+		'''
 }

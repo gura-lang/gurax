@@ -18,9 +18,12 @@ r.DeclareType('String', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
-r.DeclareType_Number('EventCategory', 'wxEventCategory')
-r.DeclareType_Number('ItemKind', 'wxItemKind')
-r.DeclareType_Number('WindowID', 'wxWindowID')
+r.DeclareType_Number('Coord',					'wxCoord')
+r.DeclareType_Number('EventCategory',			'wxEventCategory')
+r.DeclareType_Number('ItemKind',				'wxItemKind')
+r.DeclareType_Number('MappingMode',				'wxMappingMode')
+r.DeclareType_Number('RasterOperationMode',		'wxRasterOperationMode')
+r.DeclareType_Number('WindowID',				'wxWindowID')
 
 tmplVTypesCMake = tR'''
 #===============================================================================
