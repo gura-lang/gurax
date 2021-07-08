@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxCalendarCtrl.gura
+//==============================================================================
+CalendarCtrl = Class(Control) {
+	@include['wx/calctrl.h']
+	__init__(parent as Window_p, id as WindowID, date as DateTime = wxDefaultDateTime, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxCAL_SHOW_HOLIDAYS, name as String = wxCalendarNameStr)
+}

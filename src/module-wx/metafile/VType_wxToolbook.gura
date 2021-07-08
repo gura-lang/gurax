@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxToolbook.gura
+//==============================================================================
+Toolbook = Class(BookCtrlBase) {
+	@include['wx/toolbook.h']
+	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = 0, name as String = '')
+}

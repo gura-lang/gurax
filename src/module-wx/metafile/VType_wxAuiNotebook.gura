@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxAuiNotebook.gura
+//==============================================================================
+AuiNotebook = Class(BookCtrlBase) {
+	@include['wx/aui/auibook.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxAUI_NB_DEFAULT_STYLE)
+}

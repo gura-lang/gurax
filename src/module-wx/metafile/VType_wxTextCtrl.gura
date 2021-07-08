@@ -1,0 +1,7 @@
+//==============================================================================
+// VType_wxTextCtrl.gura
+//==============================================================================
+TextCtrl = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxTextCtrlNameStr)
+}

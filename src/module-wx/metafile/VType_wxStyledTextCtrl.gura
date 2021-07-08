@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxStyledTextCtrl.gura
+//==============================================================================
+StyledTextCtrl = Class(Control) {
+	@include['wx/stc/stc.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = 0, name as String = wxSTCNameStr)
+}

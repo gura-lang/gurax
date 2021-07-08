@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxSpinCtrl.gura
+//==============================================================================
+SpinCtrl = Class(Control) {
+	@include['wx/spinctrl.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxSP_ARROW_KEYS, min as int = 0, max as int = 100, initial as int = 0, name as String = 'wxSpinCtrl')
+}

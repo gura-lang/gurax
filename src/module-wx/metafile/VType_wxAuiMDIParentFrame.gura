@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxAuiMDIParentFrame.gura
+//==============================================================================
+AuiMDIParentFrame = Class(Frame) {
+	@include['wx/aui/tabmdi.h']
+	__init__(parent as Window_p, id as WindowID, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxDEFAULT_FRAME_STYLE | wxVSCROLL | wxHSCROLL, name as String = wxFrameNameStr)
+}

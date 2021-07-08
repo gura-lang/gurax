@@ -1,0 +1,7 @@
+//==============================================================================
+// VType_wxAuiMDIClientWindow.gura
+//==============================================================================
+AuiMDIClientWindow = Class(AuiNotebook) {
+	@include['wx/aui/tabmdi.h']
+	__init__(parent as AuiMDIParentFrame_p, style as long = 0)
+}

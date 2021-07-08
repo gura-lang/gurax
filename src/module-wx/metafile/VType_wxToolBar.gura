@@ -1,0 +1,7 @@
+//==============================================================================
+// VType_wxToolBar.gura
+//==============================================================================
+ToolBar = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxTB_HORIZONTAL, name as String = wxToolBarNameStr)
+}

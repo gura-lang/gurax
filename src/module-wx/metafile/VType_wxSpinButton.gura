@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxSpinButton.gura
+//==============================================================================
+SpinButton = Class(Control) {
+	@include['wx/spinbutt.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxSP_VERTICAL, name as String = 'wxSpinButton')
+}

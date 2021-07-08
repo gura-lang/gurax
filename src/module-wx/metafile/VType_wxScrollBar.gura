@@ -1,0 +1,7 @@
+//==============================================================================
+// VType_wxScrollBar.gura
+//==============================================================================
+ScrollBar = Class(Control) {
+	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxSB_HORIZONTAL, validator as Validator = wxDefaultValidator, name as String = wxScrollBarNameStr)
+}
