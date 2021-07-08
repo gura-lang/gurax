@@ -88,6 +88,9 @@ tmplHeader = tR'''
 #define GURAX_MODULE_WX_VTYPE_WX${className.Upper()}_H
 #include <gurax.h>
 #include <wx/wx.h>
+${classInfo.includeFiles.Each {|includeFile|}}
+#include <${includeFile}>
+${end}
 #include "Util.h"
 ${if (classNameParent)}
 #include "VType_wx${classNameParent}.h"
