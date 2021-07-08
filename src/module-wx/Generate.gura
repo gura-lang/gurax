@@ -715,7 +715,37 @@ classInfoTbl.Each {|classInfo|
 		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
 			${caller}));
 		''')
+	r.DeclareType('const_' + classInfo.className + '_p', 'const wx' + classInfo.className + '*',
+		'wx' + classInfo.className, 'wx.' + classInfo.className,
+		codePicker = R'''
+		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+		${this.cType} ${varName} = value_${varName}.GetEntityPtr();
+		'''
+		codePickerValidation = R'''
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntityPtr() : nullptr;
+		'''
+		codeConvToC = 'Value_${this.vtype}::GetEntityPtr(${src})'
+		codeConvToGurax = 'new Value_${this.vtype}(${varName})'
+		codeFunctionBody = R'''
+		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+			*${caller}));
+		''')
 	r.DeclareType(classInfo.className + '_r', 'wx' + classInfo.className + '&',
+		'wx' + classInfo.className, 'wx.' + classInfo.className,
+		codePicker = R'''
+		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
+		${this.cType} ${varName} = value_${varName}.GetEntity();
+		'''
+		codePickerValidation = R'''
+		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.Pick<Value_${this.vtype}>().GetEntity() : ${defaultValue || '0'};
+		'''
+		codeConvToC = 'Value_${this.vtype}::GetEntity(${src})'
+		codeConvToGurax = 'new Value_${this.vtype}(${varName})'
+		codeFunctionBody = R'''
+		return argument_gurax.ReturnValue(processor_gurax, new Value_${this.vtype}(
+			${caller}));
+		''')
+	r.DeclareType('const_' + classInfo.className + '_r', 'const wx' + classInfo.className + '&',
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
 		codePicker = R'''
 		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();

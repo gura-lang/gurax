@@ -41,6 +41,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxControl);
 	frame.Assign(VTYPE_wxCursor);
 	frame.Assign(VTYPE_wxDateTime);
+	frame.Assign(VTYPE_wxDC);
 	frame.Assign(VTYPE_wxDropFilesEvent);
 	frame.Assign(VTYPE_wxEraseEvent);
 	frame.Assign(VTYPE_wxEvent);
@@ -63,9 +64,12 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxListbook);
 	frame.Assign(VTYPE_wxListBox);
 	frame.Assign(VTYPE_wxListCtrl);
+	frame.Assign(VTYPE_wxMemoryDC);
 	frame.Assign(VTYPE_wxMenu);
 	frame.Assign(VTYPE_wxMenuBar);
 	frame.Assign(VTYPE_wxMenuItem);
+	frame.Assign(VTYPE_wxMetafileDC);
+	frame.Assign(VTYPE_wxMirrorDC);
 	frame.Assign(VTYPE_wxMouseCaptureChangedEvent);
 	frame.Assign(VTYPE_wxMouseCaptureLostEvent);
 	frame.Assign(VTYPE_wxMouseEvent);
@@ -77,11 +81,13 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPen);
 	frame.Assign(VTYPE_wxPoint);
 	frame.Assign(VTYPE_wxPowerEvent);
+	frame.Assign(VTYPE_wxPrintData);
 	frame.Assign(VTYPE_wxRadioBox);
 	frame.Assign(VTYPE_wxRadioButton);
 	frame.Assign(VTYPE_wxRect);
 	frame.Assign(VTYPE_wxRegion);
 	frame.Assign(VTYPE_wxSashWindow);
+	frame.Assign(VTYPE_wxScreenDC);
 	frame.Assign(VTYPE_wxScrollBar);
 	frame.Assign(VTYPE_wxScrollWinEvent);
 	frame.Assign(VTYPE_wxSetCursorEvent);
