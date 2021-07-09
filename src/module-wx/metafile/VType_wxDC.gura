@@ -14,4 +14,90 @@ DC = Class(Object) {
 		if (!rtn) return Value::nil();
 		return new Value_wxColour(colour);
 		'''
+	GetPPI() as Size
+	GetSize() as Size
+	GetSizeMM() as Size
+	GetUserScale() = \
+		R'''
+		double x, y;
+		pEntity_gurax->GetUserScale(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
+	IsOk() as bool
+	SetAxisOrientation(xLeftRight as bool, yBottomUp as bool) as void
+	SetDeviceOrigin(x as Coord, y as Coord) as void
+	SetLogicalFunction(function as RasterOperationMode) as void
+	SetMapMode(mode as MappingMode) as void
+	SetPalette(palette as const_Palette_r) as void
+	SetUserScale(xScale as double, yScale as double) as void
+	//GetHandle()
+	GetAsBitmap(subrect as const_Rect_p = nullptr) as Bitmap
+	SetLogicalScale(x as double, y as double) as void
+	GetLogicalScale() = \
+		R'''
+		double x, y;
+		pEntity_gurax->GetLogicalScale(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
+	SetLogicalOrigin(x as Coord, y as Coord) as void
+	// Coordinate conversion functions
+	DeviceToLogicalX(x as Coord) as Coord
+	DeviceToLogicalXRel(x as Coord) as Coord
+	DeviceToLogicalY(y as Coord) as Coord
+	DeviceToLogicalYRel(y as Coord) as Coord
+	LogicalToDeviceX(x as Coord) as Coord
+	LogicalToDeviceXRel(x as Coord) as Coord
+	LogicalToDeviceY(y as Coord) as Coord
+	LogicalToDeviceYRel(y as Coord) as Coord
+	// Drawing function
+	Clear() as void
+	DrawArcXY(xStart as Coord, yStart as Coord, xEnd as Coord, yEnd as Coord, xc as Coord, yc as Coord) as void = DrawArc
+	DrawArc(ptStart as const_Point_r, ptEnd as const_Point_r, centre as const_Point_r) as void
+	DrawBitmapXY(bitmap as const_Bitmap_r, x as Coord, y as Coord, useMask as bool = false) as void = DrawBitmap
+	DrawBitmap(bmp as const_Bitmap_r, pt as const_Point_r, useMask as bool = false) as void
+	DrawCheckMarkXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = DrawCheckMark
+	DrawCheckMark(rect as const_Rect_r) as void
+	DrawCircleXY(x as Coord, y as Coord, radius as Coord) as void = DrawCircle
+	DrawCircle(pt as const_Point_r, radius as Coord) as void
+	DrawEllipseXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = DrawEllipse
+	DrawEllipse(pt as const_Point_r, size as const_Size_r) as void
+	DrawEllipseRect(rect as const_Rect_r) as void = DrawEllipse
+	DrawEllipticArcXY(x as Coord, y as Coord, width as Coord, height as Coord, start as double, end as double) as void = DrawEllipticArc
+	DrawEllipticArc(pt as const_Point_r, sz as const_Size_r, sa as double, ea as double) as void
+	/*
+	DrawIcon(const wxIcon &icon, x as Coord, y as Coord) as void
+	DrawIcon(const wxIcon &icon, pt as const_Point_r) as void
+	DrawLabel(const wxString &text, bitmap as const_Bitmap_r, rect as const_Rect_r, int alignment=wxALIGN_LEFT|wxALIGN_TOP, int indexAccel=-1, wxRect *rectBounding=NULL) as void
+	DrawLabel(const wxString &text, rect as const_Rect_r, int alignment=wxALIGN_LEFT|wxALIGN_TOP, int indexAccel=-1) as void
+	DrawLine(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord) as void
+	DrawLine(pt1 as const_Point_r, pt2 as const_Point_r) as void
+	DrawLines(int n, const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0) as void
+	DrawLines(const wxPointList *points, xoffset as Coord=0, yoffset as Coord=0) as void
+	DrawPoint(x as Coord, y as Coord) as void
+	DrawPoint(pt as const_Point_r) as void
+	DrawPolygon(int n, const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
+	DrawPolygon(const wxPointList *points, xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
+	DrawPolyPolygon(int n, const int count[], const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
+	DrawRectangle(x as Coord, y as Coord, width as Coord, height as Coord) as void
+	DrawRectangle(pt as const_Point_r, sz as const_Size_r) as void
+	DrawRectangle(rect as const_Rect_r) as void
+	DrawRotatedText(const wxString &text, x as Coord, y as Coord, angle as double) as void
+	DrawRotatedText(const wxString &text, point as const_Point_r, angle as double) as void
+	DrawRoundedRectangle(x as Coord, y as Coord, width as Coord, height as Coord, radius as double) as void
+	DrawRoundedRectangle(pt as const_Point_r, sz as const_Size_r, radius as double) as void
+	DrawRoundedRectangle(rect as const_Rect_r, radius as double) as void
+	DrawSpline(int n, const wxPoint points[]) as void
+	DrawSpline(const wxPointList *points) as void
+	DrawSpline(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord, x3 as Coord, y3 as Coord) as void
+	DrawText(const wxString &text, x as Coord, y as Coord) as void
+	DrawText(const wxString &text, pt as const_Point_r) as void
+	GradientFillConcentric(rect as const_Rect_r, const wxColour &initialColour, const wxColour &destColour) as void
+	GradientFillConcentric(rect as const_Rect_r, const wxColour &initialColour, const wxColour &destColour, circleCenter as const_Point_r) as void
+	GradientFillLinear(rect as const_Rect_r, const wxColour &initialColour, const wxColour &destColour, wxDirection nDirection=wxRIGHT) as void
+	FloodFill(x as Coord, y as Coord, const wxColour &colour, wxFloodFillStyle style=wxFLOOD_SURFACE) as void
+	FloodFill(pt as const_Point_r, const wxColour &col, wxFloodFillStyle style=wxFLOOD_SURFACE) as void
+	CrossHair(x as Coord, y as Coord) as void
+	CrossHair(pt as const_Point_r) as void
+	*/
+
 }

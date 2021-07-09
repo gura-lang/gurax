@@ -165,6 +165,952 @@ Gurax_ImplementMethodEx(wxDC, GetPixel_gurax, processor_gurax, argument_gurax)
 	return new Value_wxColour(colour);
 }
 
+// wx.DC#GetPPI()
+Gurax_DeclareMethodAlias(wxDC, GetPPI_gurax, "GetPPI")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetPPI_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetPPI()));
+}
+
+// wx.DC#GetSize()
+Gurax_DeclareMethodAlias(wxDC, GetSize_gurax, "GetSize")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetSize()));
+}
+
+// wx.DC#GetSizeMM()
+Gurax_DeclareMethodAlias(wxDC, GetSizeMM_gurax, "GetSizeMM")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetSizeMM_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetSizeMM()));
+}
+
+// wx.DC#GetUserScale()
+Gurax_DeclareMethodAlias(wxDC, GetUserScale_gurax, "GetUserScale")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	double x, y;
+	pEntity_gurax->GetUserScale(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// wx.DC#IsOk()
+Gurax_DeclareMethodAlias(wxDC, IsOk_gurax, "IsOk")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, IsOk_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsOk();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DC#SetAxisOrientation(xLeftRight as Bool, yBottomUp as Bool)
+Gurax_DeclareMethodAlias(wxDC, SetAxisOrientation_gurax, "SetAxisOrientation")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xLeftRight", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yBottomUp", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetAxisOrientation_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool xLeftRight = args_gurax.PickBool();
+	bool yBottomUp = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetAxisOrientation(xLeftRight, yBottomUp);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetDeviceOrigin(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxDC, SetDeviceOrigin_gurax, "SetDeviceOrigin")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetDeviceOrigin_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->SetDeviceOrigin(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetLogicalFunction(function as Number)
+Gurax_DeclareMethodAlias(wxDC, SetLogicalFunction_gurax, "SetLogicalFunction")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("function", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetLogicalFunction_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxRasterOperationMode function = args_gurax.PickNumber<wxRasterOperationMode>();
+	// Function body
+	pEntity_gurax->SetLogicalFunction(function);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetMapMode(mode as Number)
+Gurax_DeclareMethodAlias(wxDC, SetMapMode_gurax, "SetMapMode")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetMapMode_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxMappingMode mode = args_gurax.PickNumber<wxMappingMode>();
+	// Function body
+	pEntity_gurax->SetMapMode(mode);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetPalette(palette as wx.Palette)
+Gurax_DeclareMethodAlias(wxDC, SetPalette_gurax, "SetPalette")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("palette", VTYPE_wxPalette, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetPalette_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPalette& value_palette = args_gurax.Pick<Value_wxPalette>();
+	const wxPalette& palette = value_palette.GetEntity();
+	// Function body
+	pEntity_gurax->SetPalette(palette);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetUserScale(xScale as Number, yScale as Number)
+Gurax_DeclareMethodAlias(wxDC, SetUserScale_gurax, "SetUserScale")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetUserScale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	double xScale = args_gurax.PickNumber<double>();
+	double yScale = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->SetUserScale(xScale, yScale);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#GetAsBitmap(subrect? as wx.Rect)
+Gurax_DeclareMethodAlias(wxDC, GetAsBitmap_gurax, "GetAsBitmap")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareArg("subrect", VTYPE_wxRect, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetAsBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const wxRect* subrect = args_gurax.IsValid()? args_gurax.Pick<Value_wxRect>().GetEntityPtr() : nullptr;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetAsBitmap(subrect)));
+}
+
+// wx.DC#SetLogicalScale(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxDC, SetLogicalScale_gurax, "SetLogicalScale")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetLogicalScale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	double x = args_gurax.PickNumber<double>();
+	double y = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->SetLogicalScale(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#GetLogicalScale()
+Gurax_DeclareMethodAlias(wxDC, GetLogicalScale_gurax, "GetLogicalScale")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetLogicalScale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	double x, y;
+	pEntity_gurax->GetLogicalScale(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// wx.DC#SetLogicalOrigin(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxDC, SetLogicalOrigin_gurax, "SetLogicalOrigin")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetLogicalOrigin_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->SetLogicalOrigin(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DeviceToLogicalX(x as Number)
+Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalX_gurax, "DeviceToLogicalX")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DeviceToLogicalX_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	wxCoord rtn = pEntity_gurax->DeviceToLogicalX(x);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#DeviceToLogicalXRel(x as Number)
+Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalXRel_gurax, "DeviceToLogicalXRel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DeviceToLogicalXRel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	wxCoord rtn = pEntity_gurax->DeviceToLogicalXRel(x);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#DeviceToLogicalY(y as Number)
+Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalY_gurax, "DeviceToLogicalY")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DeviceToLogicalY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	wxCoord rtn = pEntity_gurax->DeviceToLogicalY(y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#DeviceToLogicalYRel(y as Number)
+Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalYRel_gurax, "DeviceToLogicalYRel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DeviceToLogicalYRel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	wxCoord rtn = pEntity_gurax->DeviceToLogicalYRel(y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#LogicalToDeviceX(x as Number)
+Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceX_gurax, "LogicalToDeviceX")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, LogicalToDeviceX_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	wxCoord rtn = pEntity_gurax->LogicalToDeviceX(x);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#LogicalToDeviceXRel(x as Number)
+Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceXRel_gurax, "LogicalToDeviceXRel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, LogicalToDeviceXRel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	wxCoord rtn = pEntity_gurax->LogicalToDeviceXRel(x);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#LogicalToDeviceY(y as Number)
+Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceY_gurax, "LogicalToDeviceY")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, LogicalToDeviceY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	wxCoord rtn = pEntity_gurax->LogicalToDeviceY(y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#LogicalToDeviceYRel(y as Number)
+Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceYRel_gurax, "LogicalToDeviceYRel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, LogicalToDeviceYRel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	wxCoord rtn = pEntity_gurax->LogicalToDeviceYRel(y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#Clear()
+Gurax_DeclareMethodAlias(wxDC, Clear_gurax, "Clear")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, Clear_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Clear();
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawArcXY(xStart as Number, yStart as Number, xEnd as Number, yEnd as Number, xc as Number, yc as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawArcXY_gurax, "DrawArcXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xStart", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yStart", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xEnd", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yEnd", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawArcXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord xStart = args_gurax.PickNumber<wxCoord>();
+	wxCoord yStart = args_gurax.PickNumber<wxCoord>();
+	wxCoord xEnd = args_gurax.PickNumber<wxCoord>();
+	wxCoord yEnd = args_gurax.PickNumber<wxCoord>();
+	wxCoord xc = args_gurax.PickNumber<wxCoord>();
+	wxCoord yc = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawArc(xStart, yStart, xEnd, yEnd, xc, yc);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawArc(ptStart as wx.Point, ptEnd as wx.Point, centre as wx.Point)
+Gurax_DeclareMethodAlias(wxDC, DrawArc_gurax, "DrawArc")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("ptStart", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ptEnd", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("centre", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawArc_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_ptStart = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& ptStart = value_ptStart.GetEntity();
+	Value_wxPoint& value_ptEnd = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& ptEnd = value_ptEnd.GetEntity();
+	Value_wxPoint& value_centre = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& centre = value_centre.GetEntity();
+	// Function body
+	pEntity_gurax->DrawArc(ptStart, ptEnd, centre);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawBitmapXY(bitmap as wx.Bitmap, x as Number, y as Number, useMask? as Bool)
+Gurax_DeclareMethodAlias(wxDC, DrawBitmapXY_gurax, "DrawBitmapXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("useMask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawBitmapXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	bool useMask = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	// Function body
+	pEntity_gurax->DrawBitmap(bitmap, x, y, useMask);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawBitmap(bmp as wx.Bitmap, pt as wx.Point, useMask? as Bool)
+Gurax_DeclareMethodAlias(wxDC, DrawBitmap_gurax, "DrawBitmap")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("useMask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bmp = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bmp = value_bmp.GetEntity();
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	bool useMask = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	// Function body
+	pEntity_gurax->DrawBitmap(bmp, pt, useMask);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawCheckMarkXY(x as Number, y as Number, width as Number, height as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawCheckMarkXY_gurax, "DrawCheckMarkXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawCheckMarkXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	wxCoord width = args_gurax.PickNumber<wxCoord>();
+	wxCoord height = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawCheckMark(x, y, width, height);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawCheckMark(rect as wx.Rect)
+Gurax_DeclareMethodAlias(wxDC, DrawCheckMark_gurax, "DrawCheckMark")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawCheckMark_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	// Function body
+	pEntity_gurax->DrawCheckMark(rect);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawCircleXY(x as Number, y as Number, radius as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawCircleXY_gurax, "DrawCircleXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawCircleXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	wxCoord radius = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawCircle(x, y, radius);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawCircle(pt as wx.Point, radius as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawCircle_gurax, "DrawCircle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawCircle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	wxCoord radius = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawCircle(pt, radius);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawEllipseXY(x as Number, y as Number, width as Number, height as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawEllipseXY_gurax, "DrawEllipseXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawEllipseXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	wxCoord width = args_gurax.PickNumber<wxCoord>();
+	wxCoord height = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawEllipse(x, y, width, height);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawEllipse(pt as wx.Point, size as wx.Size)
+Gurax_DeclareMethodAlias(wxDC, DrawEllipse_gurax, "DrawEllipse")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawEllipse_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	// Function body
+	pEntity_gurax->DrawEllipse(pt, size);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawEllipseRect(rect as wx.Rect)
+Gurax_DeclareMethodAlias(wxDC, DrawEllipseRect_gurax, "DrawEllipseRect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawEllipseRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	// Function body
+	pEntity_gurax->DrawEllipse(rect);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawEllipticArcXY(x as Number, y as Number, width as Number, height as Number, start as Number, end as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawEllipticArcXY_gurax, "DrawEllipticArcXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("start", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("end", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawEllipticArcXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	wxCoord width = args_gurax.PickNumber<wxCoord>();
+	wxCoord height = args_gurax.PickNumber<wxCoord>();
+	double start = args_gurax.PickNumber<double>();
+	double end = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->DrawEllipticArc(x, y, width, height, start, end);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawEllipticArc(pt as wx.Point, sz as wx.Size, sa as Number, ea as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawEllipticArc_gurax, "DrawEllipticArc")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sa", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ea", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawEllipticArc_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
+	const wxSize& sz = value_sz.GetEntity();
+	double sa = args_gurax.PickNumber<double>();
+	double ea = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->DrawEllipticArc(pt, sz, sa, ea);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -187,6 +1133,43 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, GetLogicalFunction_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetMapMode_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetPixel_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetPPI_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetSize_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetSizeMM_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetUserScale_gurax));
+	Assign(Gurax_CreateMethod(wxDC, IsOk_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetAxisOrientation_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetDeviceOrigin_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetLogicalFunction_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetMapMode_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetPalette_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetUserScale_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetAsBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetLogicalScale_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetLogicalScale_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetLogicalOrigin_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DeviceToLogicalX_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DeviceToLogicalXRel_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DeviceToLogicalY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DeviceToLogicalYRel_gurax));
+	Assign(Gurax_CreateMethod(wxDC, LogicalToDeviceX_gurax));
+	Assign(Gurax_CreateMethod(wxDC, LogicalToDeviceXRel_gurax));
+	Assign(Gurax_CreateMethod(wxDC, LogicalToDeviceY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, LogicalToDeviceYRel_gurax));
+	Assign(Gurax_CreateMethod(wxDC, Clear_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawArcXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawArc_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawBitmapXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawCheckMarkXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawCheckMark_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawCircleXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawCircle_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawEllipseXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawEllipse_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawEllipseRect_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawEllipticArcXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawEllipticArc_gurax));
 }
 
 //------------------------------------------------------------------------------

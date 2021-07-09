@@ -184,6 +184,7 @@ FuncInfo = class {
 	r as Renderer
 	moduleName as String
 	name as String
+	nameOnCall as String
 	argInfoTbl[] as ArgInfo
 	typeName as String
 	_typeInfo as TypeInfo
@@ -192,9 +193,10 @@ FuncInfo = class {
 	returnThisFlag as Bool
 	constFlag as Bool
 	staticFlag as Bool
-	__init__(r as Renderer, moduleName as String, name as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
+	__init__(r as Renderer, moduleName as String, name as String, nameOnCall:nil as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
 			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool, staticFlag as Bool) = {
-		this.r = r, this.moduleName = moduleName, this.name = name, this.argInfoTbl = argInfoTbl, this.typeName = typeName
+		this.r = r, this.moduleName = moduleName, this.name = name, this.nameOnCall = nameOnCall
+		this.argInfoTbl = argInfoTbl, this.typeName = typeName
 		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.constFlag = constFlag, this.staticFlag = staticFlag
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
@@ -205,19 +207,25 @@ FuncInfo = class {
 	IsVoid() = (this.typeName == 'void')
 	ComposeArgs() = this.argInfoTbl:*ComposeArgRef().Join(', ')
 	ComposeArgsCDecl() = this.argInfoTbl:*ComposeArgCDecl().Join(', ')
-	ComposeCaller() = Format('%s(%s)', this.name, this.ComposeArgs())
+	ComposeCaller() = Format('%s(%s)', this.nameOnCall || this.name, this.ComposeArgs())
 	ComposeCDecl(prefix as String = '') = {
 		typeInfo = this.GetTypeInfo()
-		Format('%s %s%s(%s)%s', typeInfo.cType, prefix, this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))
+		Format('%s %s%s(%s)%s', typeInfo.cType, prefix, this.nameOnCall || this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))
 	}
 	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
 }
 
 CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	codeFunctionBody = nil
+	symbolNameOnCall = nil
 	if (expr.IsAssign()) {
-		!expr.right.IsString() && ErrorDone(expr, 'assigned value must be a string')
-		codeFunctionBody = expr.right.string
+		if (expr.right.IsString()) {
+			codeFunctionBody = expr.right.string
+		} elsif (expr.right.IsIdentifier()) {
+			symbolNameOnCall = expr.right.symbolName
+		} else {
+			ErrorDone(expr, 'assigned value must be a string')
+		}
 		expr = expr.left
 	}
 	typeName = ''
@@ -245,7 +253,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	if (typeName.IsEmpty()) { typeName = 'any' }
 	symbolName = expr.car.symbolName
 	//(symbolName, argInfoTbl, typeInfo, codeFunctionBody)
-	FuncInfo(r, moduleName, symbolName, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag, staticFlag)
+	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag, staticFlag)
 }
 
 tmplFunctionImplementation = tR'''
