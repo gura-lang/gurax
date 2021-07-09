@@ -1111,6 +1111,152 @@ Gurax_ImplementMethodEx(wxDC, DrawEllipticArc_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
+// wx.DC#DrawIconXY(icon as wx.Icon, x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawIconXY_gurax, "DrawIconXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("icon", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawIconXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxIcon& value_icon = args_gurax.Pick<Value_wxIcon>();
+	const wxIcon& icon = value_icon.GetEntity();
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawIcon(icon, x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawIcon(icon as wx.Icon, pt as wx.Point)
+Gurax_DeclareMethodAlias(wxDC, DrawIcon_gurax, "DrawIcon")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("icon", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawIcon_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxIcon& value_icon = args_gurax.Pick<Value_wxIcon>();
+	const wxIcon& icon = value_icon.GetEntity();
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	pEntity_gurax->DrawIcon(icon, pt);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawLabel(text as String, rect as wx.Rect, alignment? as Number, indexAccel? as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawLabel_gurax, "DrawLabel")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("alignment", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("indexAccel", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	int alignment = args_gurax.IsValid()? args_gurax.PickNumber<int>() : (wxALIGN_LEFT | wxALIGN_TOP);
+	int indexAccel = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	pEntity_gurax->DrawLabel(text, rect, alignment, indexAccel);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawLineXY(x1 as Number, y1 as Number, x2 as Number, y2 as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawLineXY_gurax, "DrawLineXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawLineXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x1 = args_gurax.PickNumber<wxCoord>();
+	wxCoord y1 = args_gurax.PickNumber<wxCoord>();
+	wxCoord x2 = args_gurax.PickNumber<wxCoord>();
+	wxCoord y2 = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawLine(x1, y1, x2, y2);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawLine(pt1 as wx.Point, pt2 as wx.Point)
+Gurax_DeclareMethodAlias(wxDC, DrawLine_gurax, "DrawLine")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt1", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pt2", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawLine_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt1 = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt1 = value_pt1.GetEntity();
+	Value_wxPoint& value_pt2 = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt2 = value_pt2.GetEntity();
+	// Function body
+	pEntity_gurax->DrawLine(pt1, pt2);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -1170,6 +1316,11 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, DrawEllipseRect_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawEllipticArcXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawEllipticArc_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawIconXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawIcon_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawLabel_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawLineXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawLine_gurax));
 }
 
 //------------------------------------------------------------------------------

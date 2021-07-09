@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxColour.gura
+//==============================================================================
+Colour = Class {
+	__init__(red as unsigned_char = 0, green as unsigned_char = 0, blue as unsigned_char = 0, alpha as unsigned_char = wxALPHA_OPAQUE)
+}

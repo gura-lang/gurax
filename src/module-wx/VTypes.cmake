@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxColour.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp
@@ -26,6 +25,7 @@ set(SRCFILES_VTYPE
 	VType_wxChoice.cpp
 	VType_wxChoicebook.cpp
 	VType_wxCmdLineParser.cpp
+	VType_wxColour.cpp
 	VType_wxComboBox.cpp
 	VType_wxCommandEvent.cpp
 	VType_wxCommandLinkButton.cpp

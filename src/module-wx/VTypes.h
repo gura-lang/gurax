@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxColour.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxActivateEvent.h"
 #include "VType_wxAnyButton.h"
@@ -29,6 +28,7 @@
 #include "VType_wxChoice.h"
 #include "VType_wxChoicebook.h"
 #include "VType_wxCmdLineParser.h"
+#include "VType_wxColour.h"
 #include "VType_wxComboBox.h"
 #include "VType_wxCommandEvent.h"
 #include "VType_wxCommandLinkButton.h"

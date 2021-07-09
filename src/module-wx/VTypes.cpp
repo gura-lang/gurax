@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxColour);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAnyButton);
@@ -34,6 +33,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxChoice);
 	frame.Assign(VTYPE_wxChoicebook);
 	frame.Assign(VTYPE_wxCmdLineParser);
+	frame.Assign(VTYPE_wxColour);
 	frame.Assign(VTYPE_wxComboBox);
 	frame.Assign(VTYPE_wxCommandEvent);
 	frame.Assign(VTYPE_wxCommandLinkButton);
