@@ -70,34 +70,45 @@ DC = Class(Object) {
 	DrawLabel(text as String, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1) as void
 	DrawLineXY(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord) as void = DrawLine
 	DrawLine(pt1 as const_Point_r, pt2 as const_Point_r) as void
-	/*
-	DrawLines(int n, const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0) as void
-	DrawLines(const wxPointList *points, xoffset as Coord=0, yoffset as Coord=0) as void
-	DrawPoint(x as Coord, y as Coord) as void
+	//DrawLines(const wxPointList *points, xoffset as Coord=0, yoffset as Coord=0) as void
+	DrawPointXY(x as Coord, y as Coord) as void = DrawPoint
 	DrawPoint(pt as const_Point_r) as void
-	DrawPolygon(int n, const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
-	DrawPolygon(const wxPointList *points, xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
-	DrawPolyPolygon(int n, const int count[], const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
-	DrawRectangle(x as Coord, y as Coord, width as Coord, height as Coord) as void
+	//DrawPolygon(const wxPointList *points, xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
+	//DrawPolyPolygon(int n, const int count[], const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
+	DrawRectangleXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = DrawRectangle
 	DrawRectangle(pt as const_Point_r, sz as const_Size_r) as void
-	DrawRectangle(rect as const_Rect_r) as void
-	DrawRotatedText(text as String, x as Coord, y as Coord, angle as double) as void
+	DrawRectangleRect(rect as const_Rect_r) as void = DrawRectangle
+	DrawRotatedTextXY(text as String, x as Coord, y as Coord, angle as double) as void = DrawRotatedText
 	DrawRotatedText(text as String, point as const_Point_r, angle as double) as void
-	DrawRoundedRectangle(x as Coord, y as Coord, width as Coord, height as Coord, radius as double) as void
+	DrawRoundedRectangleXY(x as Coord, y as Coord, width as Coord, height as Coord, radius as double) as void = DrawRoundedRectangle
 	DrawRoundedRectangle(pt as const_Point_r, sz as const_Size_r, radius as double) as void
-	DrawRoundedRectangle(rect as const_Rect_r, radius as double) as void
-	DrawSpline(int n, const wxPoint points[]) as void
-	DrawSpline(const wxPointList *points) as void
+	DrawRoundedRectangleRect(rect as const_Rect_r, radius as double) as void = DrawRoundedRectangle
+	//DrawSpline(const wxPointList *points) as void
 	DrawSpline(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord, x3 as Coord, y3 as Coord) as void
-	DrawText(text as String, x as Coord, y as Coord) as void
+	DrawTextXY(text as String, x as Coord, y as Coord) as void = DrawText
 	DrawText(text as String, pt as const_Point_r) as void
-	GradientFillConcentric(rect as const_Rect_r, const wxColour &initialColour, const wxColour &destColour) as void
-	GradientFillConcentric(rect as const_Rect_r, const wxColour &initialColour, const wxColour &destColour, circleCenter as const_Point_r) as void
-	GradientFillLinear(rect as const_Rect_r, const wxColour &initialColour, const wxColour &destColour, wxDirection nDirection=wxRIGHT) as void
-	FloodFill(x as Coord, y as Coord, const wxColour &colour, wxFloodFillStyle style=wxFLOOD_SURFACE) as void
-	FloodFill(pt as const_Point_r, const wxColour &col, wxFloodFillStyle style=wxFLOOD_SURFACE) as void
-	CrossHair(x as Coord, y as Coord) as void
+	GradientFillConcentric(rect as const_Rect_r, initialColour as const_Colour_r, destColour as const_Colour_r, circleCenter? as const_Point_p) as void = \
+		R'''
+		if (circleCenter) {
+			pEntity_gurax->GradientFillConcentric(rect, initialColour, destColour, *circleCenter);
+		} else {
+			pEntity_gurax->GradientFillConcentric(rect, initialColour, destColour);
+		}
+		return Value::nil();
+		'''
+	GradientFillLinear(rect as const_Rect_r, initialColour as const_Colour_r, destColour as const_Colour_r, nDirection as Direction = wxRIGHT) as void
+	FloodFillXY(x as Coord, y as Coord, colour as const_Colour_r, style as FloodFillStyle = wxFLOOD_SURFACE) as void = FloodFill
+	FloodFill(pt as const_Point_r, col as const_Colour_r, style as FloodFillStyle = wxFLOOD_SURFACE) as void
+	CrossHairXY(x as Coord, y as Coord) as void = CrossHair
 	CrossHair(pt as const_Point_r) as void
-	*/
-
+	// Clipping region functions
+	
+	// Text/character extent functions
+	// Text properties functions
+	// Bounding box functions
+	// Page and document start/end functions
+	// Bit-Block Transfer operations (blit)
+	// Background/foreground brush and pen
+	// Transformation matrix
+	// query capabilities
 }

@@ -1257,6 +1257,559 @@ Gurax_ImplementMethodEx(wxDC, DrawLine_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// wx.DC#DrawPointXY(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawPointXY_gurax, "DrawPointXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawPointXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawPoint(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawPoint(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxDC, DrawPoint_gurax, "DrawPoint")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawPoint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	pEntity_gurax->DrawPoint(pt);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawRectangleXY(x as Number, y as Number, width as Number, height as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawRectangleXY_gurax, "DrawRectangleXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawRectangleXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	wxCoord width = args_gurax.PickNumber<wxCoord>();
+	wxCoord height = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawRectangle(x, y, width, height);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawRectangle(pt as wx.Point, sz as wx.Size)
+Gurax_DeclareMethodAlias(wxDC, DrawRectangle_gurax, "DrawRectangle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawRectangle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
+	const wxSize& sz = value_sz.GetEntity();
+	// Function body
+	pEntity_gurax->DrawRectangle(pt, sz);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawRectangleRect(rect as wx.Rect)
+Gurax_DeclareMethodAlias(wxDC, DrawRectangleRect_gurax, "DrawRectangleRect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawRectangleRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	// Function body
+	pEntity_gurax->DrawRectangle(rect);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawRotatedTextXY(text as String, x as Number, y as Number, angle as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawRotatedTextXY_gurax, "DrawRotatedTextXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawRotatedTextXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	double angle = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->DrawRotatedText(text, x, y, angle);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawRotatedText(text as String, point as wx.Point, angle as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawRotatedText_gurax, "DrawRotatedText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawRotatedText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	Value_wxPoint& value_point = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& point = value_point.GetEntity();
+	double angle = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->DrawRotatedText(text, point, angle);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawRoundedRectangleXY(x as Number, y as Number, width as Number, height as Number, radius as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawRoundedRectangleXY_gurax, "DrawRoundedRectangleXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawRoundedRectangleXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	wxCoord width = args_gurax.PickNumber<wxCoord>();
+	wxCoord height = args_gurax.PickNumber<wxCoord>();
+	double radius = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->DrawRoundedRectangle(x, y, width, height, radius);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawRoundedRectangle(pt as wx.Point, sz as wx.Size, radius as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawRoundedRectangle_gurax, "DrawRoundedRectangle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawRoundedRectangle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
+	const wxSize& sz = value_sz.GetEntity();
+	double radius = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->DrawRoundedRectangle(pt, sz, radius);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawRoundedRectangleRect(rect as wx.Rect, radius as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawRoundedRectangleRect_gurax, "DrawRoundedRectangleRect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawRoundedRectangleRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	double radius = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->DrawRoundedRectangle(rect, radius);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawSpline(x1 as Number, y1 as Number, x2 as Number, y2 as Number, x3 as Number, y3 as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawSpline_gurax, "DrawSpline")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawSpline_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x1 = args_gurax.PickNumber<wxCoord>();
+	wxCoord y1 = args_gurax.PickNumber<wxCoord>();
+	wxCoord x2 = args_gurax.PickNumber<wxCoord>();
+	wxCoord y2 = args_gurax.PickNumber<wxCoord>();
+	wxCoord x3 = args_gurax.PickNumber<wxCoord>();
+	wxCoord y3 = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawSpline(x1, y1, x2, y2, x3, y3);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawTextXY(text as String, x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawTextXY_gurax, "DrawTextXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawTextXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->DrawText(text, x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawText(text as String, pt as wx.Point)
+Gurax_DeclareMethodAlias(wxDC, DrawText_gurax, "DrawText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	pEntity_gurax->DrawText(text, pt);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#GradientFillConcentric(rect as wx.Rect, initialColour as wx.Colour, destColour as wx.Colour, circleCenter? as wx.Point)
+Gurax_DeclareMethodAlias(wxDC, GradientFillConcentric_gurax, "GradientFillConcentric")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("initialColour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("destColour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("circleCenter", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GradientFillConcentric_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	Value_wxColour& value_initialColour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& initialColour = value_initialColour.GetEntity();
+	Value_wxColour& value_destColour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& destColour = value_destColour.GetEntity();
+	const wxPoint* circleCenter = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntityPtr() : nullptr;
+	// Function body
+	if (circleCenter) {
+		pEntity_gurax->GradientFillConcentric(rect, initialColour, destColour, *circleCenter);
+	} else {
+		pEntity_gurax->GradientFillConcentric(rect, initialColour, destColour);
+	}
+	return Value::nil();
+}
+
+// wx.DC#GradientFillLinear(rect as wx.Rect, initialColour as wx.Colour, destColour as wx.Colour, nDirection? as Number)
+Gurax_DeclareMethodAlias(wxDC, GradientFillLinear_gurax, "GradientFillLinear")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("initialColour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("destColour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("nDirection", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GradientFillLinear_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	Value_wxColour& value_initialColour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& initialColour = value_initialColour.GetEntity();
+	Value_wxColour& value_destColour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& destColour = value_destColour.GetEntity();
+	wxDirection nDirection = args_gurax.IsValid()? args_gurax.PickNumber<wxDirection>() : wxRIGHT;
+	// Function body
+	pEntity_gurax->GradientFillLinear(rect, initialColour, destColour, nDirection);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#FloodFillXY(x as Number, y as Number, colour as wx.Colour, style? as Number)
+Gurax_DeclareMethodAlias(wxDC, FloodFillXY_gurax, "FloodFillXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, FloodFillXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	wxFloodFillStyle style = args_gurax.IsValid()? args_gurax.PickNumber<wxFloodFillStyle>() : wxFLOOD_SURFACE;
+	// Function body
+	pEntity_gurax->FloodFill(x, y, colour, style);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#FloodFill(pt as wx.Point, col as wx.Colour, style? as Number)
+Gurax_DeclareMethodAlias(wxDC, FloodFill_gurax, "FloodFill")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, FloodFill_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	Value_wxColour& value_col = args_gurax.Pick<Value_wxColour>();
+	const wxColour& col = value_col.GetEntity();
+	wxFloodFillStyle style = args_gurax.IsValid()? args_gurax.PickNumber<wxFloodFillStyle>() : wxFLOOD_SURFACE;
+	// Function body
+	pEntity_gurax->FloodFill(pt, col, style);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#CrossHairXY(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxDC, CrossHairXY_gurax, "CrossHairXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, CrossHairXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->CrossHair(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#CrossHair(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxDC, CrossHair_gurax, "CrossHair")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, CrossHair_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	pEntity_gurax->CrossHair(pt);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -1321,6 +1874,25 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, DrawLabel_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawLineXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawLine_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawPointXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawPoint_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawRectangleXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawRectangle_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawRectangleRect_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawRotatedTextXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawRotatedText_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawRoundedRectangleXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawRoundedRectangle_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawRoundedRectangleRect_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawSpline_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawTextXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawText_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GradientFillConcentric_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GradientFillLinear_gurax));
+	Assign(Gurax_CreateMethod(wxDC, FloodFillXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, FloodFill_gurax));
+	Assign(Gurax_CreateMethod(wxDC, CrossHairXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, CrossHair_gurax));
 }
 
 //------------------------------------------------------------------------------
