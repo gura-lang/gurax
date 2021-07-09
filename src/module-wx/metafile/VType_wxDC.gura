@@ -102,9 +102,27 @@ DC = Class(Object) {
 	CrossHairXY(x as Coord, y as Coord) as void = CrossHair
 	CrossHair(pt as const_Point_r) as void
 	// Clipping region functions
-	
+	DestroyClippingRegion() as void
+	GetClippingBox() = \
+		R'''
+		wxCoord x, y, width, height;
+		pEntity_gurax->GetClippingBox(&x, &y, &width, &height);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y), new Value_Number(width), new Value_Number(height));
+		'''
+	SetClippingRegionXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = SetClippingRegion
+	SetClippingRegion(pt as const_Point_r, sz as const_Size_r) as void
+	SetClippingRegionRect(rect as const_Rect_r) as void = SetClippingRegion
+	SetDeviceClippingRegion(region as const_Region_r) as void
 	// Text/character extent functions
-	// Text properties functions
+	GetCharHeight() as Coord
+	GetCharWidth() as Coord
+	GetFontMetrics() as FontMetrics
+	//GetMultiLineTextExtent(string as String, wxCoord *w, wxCoord *h, wxCoord *heightLine=NULL, const wxFont *font=NULL) as void
+	GetMultiLineTextExtent(string as String) as Size
+	//GetPartialTextExtents(text as String, wxArrayInt &widths) as bool
+	//GetTextExtent(const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent=NULL, wxCoord *externalLeading=NULL, const wxFont *font=NULL) as void
+	GetTextExtent(string as String) as Size
+ 	// Text properties functions
 	// Bounding box functions
 	// Page and document start/end functions
 	// Bit-Block Transfer operations (blit)

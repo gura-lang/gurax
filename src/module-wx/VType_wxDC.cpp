@@ -1810,6 +1810,263 @@ Gurax_ImplementMethodEx(wxDC, CrossHair_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// wx.DC#DestroyClippingRegion()
+Gurax_DeclareMethodAlias(wxDC, DestroyClippingRegion_gurax, "DestroyClippingRegion")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DestroyClippingRegion_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->DestroyClippingRegion();
+	return Gurax::Value::nil();
+}
+
+// wx.DC#GetClippingBox()
+Gurax_DeclareMethodAlias(wxDC, GetClippingBox_gurax, "GetClippingBox")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetClippingBox_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord x, y, width, height;
+	pEntity_gurax->GetClippingBox(&x, &y, &width, &height);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y), new Value_Number(width), new Value_Number(height));
+}
+
+// wx.DC#SetClippingRegionXY(x as Number, y as Number, width as Number, height as Number)
+Gurax_DeclareMethodAlias(wxDC, SetClippingRegionXY_gurax, "SetClippingRegionXY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetClippingRegionXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	wxCoord width = args_gurax.PickNumber<wxCoord>();
+	wxCoord height = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->SetClippingRegion(x, y, width, height);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetClippingRegion(pt as wx.Point, sz as wx.Size)
+Gurax_DeclareMethodAlias(wxDC, SetClippingRegion_gurax, "SetClippingRegion")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetClippingRegion_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
+	const wxSize& sz = value_sz.GetEntity();
+	// Function body
+	pEntity_gurax->SetClippingRegion(pt, sz);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetClippingRegionRect(rect as wx.Rect)
+Gurax_DeclareMethodAlias(wxDC, SetClippingRegionRect_gurax, "SetClippingRegionRect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetClippingRegionRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	// Function body
+	pEntity_gurax->SetClippingRegion(rect);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetDeviceClippingRegion(region as wx.Region)
+Gurax_DeclareMethodAlias(wxDC, SetDeviceClippingRegion_gurax, "SetDeviceClippingRegion")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("region", VTYPE_wxRegion, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetDeviceClippingRegion_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRegion& value_region = args_gurax.Pick<Value_wxRegion>();
+	const wxRegion& region = value_region.GetEntity();
+	// Function body
+	pEntity_gurax->SetDeviceClippingRegion(region);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#GetCharHeight()
+Gurax_DeclareMethodAlias(wxDC, GetCharHeight_gurax, "GetCharHeight")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetCharHeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->GetCharHeight();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#GetCharWidth()
+Gurax_DeclareMethodAlias(wxDC, GetCharWidth_gurax, "GetCharWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetCharWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->GetCharWidth();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#GetFontMetrics()
+Gurax_DeclareMethodAlias(wxDC, GetFontMetrics_gurax, "GetFontMetrics")
+{
+	Declare(VTYPE_wxFontMetrics, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetFontMetrics_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFontMetrics(
+		pEntity_gurax->GetFontMetrics()));
+}
+
+// wx.DC#GetMultiLineTextExtent(string as String)
+Gurax_DeclareMethodAlias(wxDC, GetMultiLineTextExtent_gurax, "GetMultiLineTextExtent")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetMultiLineTextExtent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* string = args_gurax.PickString();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetMultiLineTextExtent(string)));
+}
+
+// wx.DC#GetTextExtent(string as String)
+Gurax_DeclareMethodAlias(wxDC, GetTextExtent_gurax, "GetTextExtent")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetTextExtent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* string = args_gurax.PickString();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetTextExtent(string)));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -1893,6 +2150,17 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, FloodFill_gurax));
 	Assign(Gurax_CreateMethod(wxDC, CrossHairXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, CrossHair_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DestroyClippingRegion_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetClippingBox_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetClippingRegionXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetClippingRegion_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetClippingRegionRect_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetDeviceClippingRegion_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetCharHeight_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetCharWidth_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetFontMetrics_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetMultiLineTextExtent_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetTextExtent_gurax));
 }
 
 //------------------------------------------------------------------------------
