@@ -228,7 +228,7 @@ Gurax_ImplementMethodEx(wxDC, GetSizeMM_gurax, processor_gurax, argument_gurax)
 // wx.DC#GetUserScale()
 Gurax_DeclareMethodAlias(wxDC, GetUserScale_gurax, "GetUserScale")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Tuple, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -470,7 +470,7 @@ Gurax_ImplementMethodEx(wxDC, SetLogicalScale_gurax, processor_gurax, argument_g
 // wx.DC#GetLogicalScale()
 Gurax_DeclareMethodAlias(wxDC, GetLogicalScale_gurax, "GetLogicalScale")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Tuple, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1833,7 +1833,7 @@ Gurax_ImplementMethodEx(wxDC, DestroyClippingRegion_gurax, processor_gurax, argu
 // wx.DC#GetClippingBox()
 Gurax_DeclareMethodAlias(wxDC, GetClippingBox_gurax, "GetClippingBox")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Tuple, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2067,6 +2067,834 @@ Gurax_ImplementMethodEx(wxDC, GetTextExtent_gurax, processor_gurax, argument_gur
 		pEntity_gurax->GetTextExtent(string)));
 }
 
+// wx.DC#GetBackgroundMode()
+Gurax_DeclareMethodAlias(wxDC, GetBackgroundMode_gurax, "GetBackgroundMode")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetBackgroundMode_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetBackgroundMode();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#GetFont()
+Gurax_DeclareMethodAlias(wxDC, GetFont_gurax, "GetFont")
+{
+	Declare(VTYPE_wxFont, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
+		pEntity_gurax->GetFont()));
+}
+
+// wx.DC#GetLayoutDirection()
+Gurax_DeclareMethodAlias(wxDC, GetLayoutDirection_gurax, "GetLayoutDirection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetLayoutDirection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxLayoutDirection rtn = pEntity_gurax->GetLayoutDirection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#GetTextBackground()
+Gurax_DeclareMethodAlias(wxDC, GetTextBackground_gurax, "GetTextBackground")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetTextBackground_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetTextBackground()));
+}
+
+// wx.DC#GetTextForeground()
+Gurax_DeclareMethodAlias(wxDC, GetTextForeground_gurax, "GetTextForeground")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetTextForeground_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetTextForeground()));
+}
+
+// wx.DC#SetBackgroundMode(mode as Number)
+Gurax_DeclareMethodAlias(wxDC, SetBackgroundMode_gurax, "SetBackgroundMode")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetBackgroundMode_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int mode = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetBackgroundMode(mode);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetFont(font as wx.Font)
+Gurax_DeclareMethodAlias(wxDC, SetFont_gurax, "SetFont")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxFont& value_font = args_gurax.Pick<Value_wxFont>();
+	const wxFont& font = value_font.GetEntity();
+	// Function body
+	pEntity_gurax->SetFont(font);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetTextBackground(colour as wx.Colour)
+Gurax_DeclareMethodAlias(wxDC, SetTextBackground_gurax, "SetTextBackground")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetTextBackground_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	// Function body
+	pEntity_gurax->SetTextBackground(colour);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetTextForeground(colour as wx.Colour)
+Gurax_DeclareMethodAlias(wxDC, SetTextForeground_gurax, "SetTextForeground")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetTextForeground_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	// Function body
+	pEntity_gurax->SetTextForeground(colour);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetLayoutDirection(dir as Number)
+Gurax_DeclareMethodAlias(wxDC, SetLayoutDirection_gurax, "SetLayoutDirection")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dir", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetLayoutDirection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxLayoutDirection dir = args_gurax.PickNumber<wxLayoutDirection>();
+	// Function body
+	pEntity_gurax->SetLayoutDirection(dir);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#CalcBoundingBox(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxDC, CalcBoundingBox_gurax, "CalcBoundingBox")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, CalcBoundingBox_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->CalcBoundingBox(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#MaxX()
+Gurax_DeclareMethodAlias(wxDC, MaxX_gurax, "MaxX")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, MaxX_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->MaxX();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#MaxY()
+Gurax_DeclareMethodAlias(wxDC, MaxY_gurax, "MaxY")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, MaxY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->MaxY();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#MinX()
+Gurax_DeclareMethodAlias(wxDC, MinX_gurax, "MinX")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, MinX_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->MinX();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#MinY()
+Gurax_DeclareMethodAlias(wxDC, MinY_gurax, "MinY")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, MinY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->MinY();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DC#ResetBoundingBox()
+Gurax_DeclareMethodAlias(wxDC, ResetBoundingBox_gurax, "ResetBoundingBox")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, ResetBoundingBox_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->ResetBoundingBox();
+	return Gurax::Value::nil();
+}
+
+// wx.DC#StartDoc(message as String)
+Gurax_DeclareMethodAlias(wxDC, StartDoc_gurax, "StartDoc")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, StartDoc_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* message = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->StartDoc(message);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DC#StartPage()
+Gurax_DeclareMethodAlias(wxDC, StartPage_gurax, "StartPage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, StartPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->StartPage();
+	return Gurax::Value::nil();
+}
+
+// wx.DC#EndDoc()
+Gurax_DeclareMethodAlias(wxDC, EndDoc_gurax, "EndDoc")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, EndDoc_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->EndDoc();
+	return Gurax::Value::nil();
+}
+
+// wx.DC#EndPage()
+Gurax_DeclareMethodAlias(wxDC, EndPage_gurax, "EndPage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, EndPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->EndPage();
+	return Gurax::Value::nil();
+}
+
+// wx.DC#Blit(xdest as Number, ydest as Number, width as Number, height as Number, source as wx.DC, xsrc as Number, ysrc as Number, logicalFunc? as Number, useMask? as Bool, xsrcMask? as Number, ysrcMask? as Number)
+Gurax_DeclareMethodAlias(wxDC, Blit_gurax, "Blit")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("xdest", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ydest", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("source", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xsrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ysrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("logicalFunc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("useMask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("xsrcMask", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("ysrcMask", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, Blit_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord xdest = args_gurax.PickNumber<wxCoord>();
+	wxCoord ydest = args_gurax.PickNumber<wxCoord>();
+	wxCoord width = args_gurax.PickNumber<wxCoord>();
+	wxCoord height = args_gurax.PickNumber<wxCoord>();
+	Value_wxDC& value_source = args_gurax.Pick<Value_wxDC>();
+	wxDC* source = value_source.GetEntityPtr();
+	wxCoord xsrc = args_gurax.PickNumber<wxCoord>();
+	wxCoord ysrc = args_gurax.PickNumber<wxCoord>();
+	wxRasterOperationMode logicalFunc = args_gurax.IsValid()? args_gurax.PickNumber<wxRasterOperationMode>() : wxCOPY;
+	bool useMask = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	wxCoord xsrcMask = args_gurax.IsValid()? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
+	wxCoord ysrcMask = args_gurax.IsValid()? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
+	// Function body
+	bool rtn = pEntity_gurax->Blit(xdest, ydest, width, height, source, xsrc, ysrc, logicalFunc, useMask, xsrcMask, ysrcMask);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DC#StretchBlit(xdest as Number, ydest as Number, dstWidth as Number, dstHeight as Number, source as wx.DC, xsrc as Number, ysrc as Number, srcWidth as Number, srcHeight as Number, logicalFunc? as Number, useMask? as Bool, xsrcMask? as Number, ysrcMask? as Number)
+Gurax_DeclareMethodAlias(wxDC, StretchBlit_gurax, "StretchBlit")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("xdest", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ydest", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstWidth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dstHeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("source", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("xsrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ysrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcWidth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("srcHeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("logicalFunc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("useMask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("xsrcMask", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("ysrcMask", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, StretchBlit_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord xdest = args_gurax.PickNumber<wxCoord>();
+	wxCoord ydest = args_gurax.PickNumber<wxCoord>();
+	wxCoord dstWidth = args_gurax.PickNumber<wxCoord>();
+	wxCoord dstHeight = args_gurax.PickNumber<wxCoord>();
+	Value_wxDC& value_source = args_gurax.Pick<Value_wxDC>();
+	wxDC* source = value_source.GetEntityPtr();
+	wxCoord xsrc = args_gurax.PickNumber<wxCoord>();
+	wxCoord ysrc = args_gurax.PickNumber<wxCoord>();
+	wxCoord srcWidth = args_gurax.PickNumber<wxCoord>();
+	wxCoord srcHeight = args_gurax.PickNumber<wxCoord>();
+	wxRasterOperationMode logicalFunc = args_gurax.IsValid()? args_gurax.PickNumber<wxRasterOperationMode>() : wxCOPY;
+	bool useMask = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	wxCoord xsrcMask = args_gurax.IsValid()? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
+	wxCoord ysrcMask = args_gurax.IsValid()? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
+	// Function body
+	bool rtn = pEntity_gurax->StretchBlit(xdest, ydest, dstWidth, dstHeight, source, xsrc, ysrc, srcWidth, srcHeight, logicalFunc, useMask, xsrcMask, ysrcMask);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DC#GetBackground()
+Gurax_DeclareMethodAlias(wxDC, GetBackground_gurax, "GetBackground")
+{
+	Declare(VTYPE_wxBrush, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetBackground_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBrush(
+		pEntity_gurax->GetBackground()));
+}
+
+// wx.DC#GetBrush()
+Gurax_DeclareMethodAlias(wxDC, GetBrush_gurax, "GetBrush")
+{
+	Declare(VTYPE_wxBrush, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetBrush_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBrush(
+		pEntity_gurax->GetBrush()));
+}
+
+// wx.DC#GetPen()
+Gurax_DeclareMethodAlias(wxDC, GetPen_gurax, "GetPen")
+{
+	Declare(VTYPE_wxPen, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetPen_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPen(
+		pEntity_gurax->GetPen()));
+}
+
+// wx.DC#SetBackground(brush as wx.Brush)
+Gurax_DeclareMethodAlias(wxDC, SetBackground_gurax, "SetBackground")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("brush", VTYPE_wxBrush, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetBackground_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBrush& value_brush = args_gurax.Pick<Value_wxBrush>();
+	const wxBrush& brush = value_brush.GetEntity();
+	// Function body
+	pEntity_gurax->SetBackground(brush);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetBrush(brush as wx.Brush)
+Gurax_DeclareMethodAlias(wxDC, SetBrush_gurax, "SetBrush")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("brush", VTYPE_wxBrush, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetBrush_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBrush& value_brush = args_gurax.Pick<Value_wxBrush>();
+	const wxBrush& brush = value_brush.GetEntity();
+	// Function body
+	pEntity_gurax->SetBrush(brush);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#SetPen(pen as wx.Pen)
+Gurax_DeclareMethodAlias(wxDC, SetPen_gurax, "SetPen")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pen", VTYPE_wxPen, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetPen_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPen& value_pen = args_gurax.Pick<Value_wxPen>();
+	const wxPen& pen = value_pen.GetEntity();
+	// Function body
+	pEntity_gurax->SetPen(pen);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#CanUseTransformMatrix()
+Gurax_DeclareMethodAlias(wxDC, CanUseTransformMatrix_gurax, "CanUseTransformMatrix")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, CanUseTransformMatrix_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanUseTransformMatrix();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DC#SetTransformMatrix(matrix as wx.AffineMatrix2D)
+Gurax_DeclareMethodAlias(wxDC, SetTransformMatrix_gurax, "SetTransformMatrix")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("matrix", VTYPE_wxAffineMatrix2D, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, SetTransformMatrix_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxAffineMatrix2D& value_matrix = args_gurax.Pick<Value_wxAffineMatrix2D>();
+	const wxAffineMatrix2D& matrix = value_matrix.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetTransformMatrix(matrix);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DC#GetTransformMatrix()
+Gurax_DeclareMethodAlias(wxDC, GetTransformMatrix_gurax, "GetTransformMatrix")
+{
+	Declare(VTYPE_wxAffineMatrix2D, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetTransformMatrix_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAffineMatrix2D(
+		pEntity_gurax->GetTransformMatrix()));
+}
+
+// wx.DC#ResetTransformMatrix()
+Gurax_DeclareMethodAlias(wxDC, ResetTransformMatrix_gurax, "ResetTransformMatrix")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, ResetTransformMatrix_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->ResetTransformMatrix();
+	return Gurax::Value::nil();
+}
+
+// wx.DC#CanDrawBitmap()
+Gurax_DeclareMethodAlias(wxDC, CanDrawBitmap_gurax, "CanDrawBitmap")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, CanDrawBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanDrawBitmap();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DC#CanGetTextExtent()
+Gurax_DeclareMethodAlias(wxDC, CanGetTextExtent_gurax, "CanGetTextExtent")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, CanGetTextExtent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanGetTextExtent();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DC#GetLogicalOriginXY()
+Gurax_DeclareMethodAlias(wxDC, GetLogicalOriginXY_gurax, "GetLogicalOriginXY")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetLogicalOriginXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord x, y;
+	pEntity_gurax->GetLogicalOrigin(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// wx.DC#GetLogicalOrigin()
+Gurax_DeclareMethodAlias(wxDC, GetLogicalOrigin_gurax, "GetLogicalOrigin")
+{
+	Declare(VTYPE_wxPoint, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, GetLogicalOrigin_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
+		pEntity_gurax->GetLogicalOrigin()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -2161,6 +2989,42 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, GetFontMetrics_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetMultiLineTextExtent_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetTextExtent_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetBackgroundMode_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetFont_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetLayoutDirection_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetTextBackground_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetTextForeground_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetBackgroundMode_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetFont_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetTextBackground_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetTextForeground_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetLayoutDirection_gurax));
+	Assign(Gurax_CreateMethod(wxDC, CalcBoundingBox_gurax));
+	Assign(Gurax_CreateMethod(wxDC, MaxX_gurax));
+	Assign(Gurax_CreateMethod(wxDC, MaxY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, MinX_gurax));
+	Assign(Gurax_CreateMethod(wxDC, MinY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, ResetBoundingBox_gurax));
+	Assign(Gurax_CreateMethod(wxDC, StartDoc_gurax));
+	Assign(Gurax_CreateMethod(wxDC, StartPage_gurax));
+	Assign(Gurax_CreateMethod(wxDC, EndDoc_gurax));
+	Assign(Gurax_CreateMethod(wxDC, EndPage_gurax));
+	Assign(Gurax_CreateMethod(wxDC, Blit_gurax));
+	Assign(Gurax_CreateMethod(wxDC, StretchBlit_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetBackground_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetBrush_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetPen_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetBackground_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetBrush_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetPen_gurax));
+	Assign(Gurax_CreateMethod(wxDC, CanUseTransformMatrix_gurax));
+	Assign(Gurax_CreateMethod(wxDC, SetTransformMatrix_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetTransformMatrix_gurax));
+	Assign(Gurax_CreateMethod(wxDC, ResetTransformMatrix_gurax));
+	Assign(Gurax_CreateMethod(wxDC, CanDrawBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxDC, CanGetTextExtent_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetLogicalOriginXY_gurax));
+	Assign(Gurax_CreateMethod(wxDC, GetLogicalOrigin_gurax));
 }
 
 //------------------------------------------------------------------------------

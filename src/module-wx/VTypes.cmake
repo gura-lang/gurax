@@ -5,6 +5,7 @@
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
 	VType_wxFontMetrics.cpp
+	VType_wxAffineMatrix2D.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp

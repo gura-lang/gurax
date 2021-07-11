@@ -17,7 +17,7 @@ DC = Class(Object) {
 	GetPPI() as Size
 	GetSize() as Size
 	GetSizeMM() as Size
-	GetUserScale() = \
+	GetUserScale() as Tuple@gurax = \
 		R'''
 		double x, y;
 		pEntity_gurax->GetUserScale(&x, &y);
@@ -33,7 +33,7 @@ DC = Class(Object) {
 	//GetHandle()
 	GetAsBitmap(subrect as const_Rect_p = nullptr) as Bitmap
 	SetLogicalScale(x as double, y as double) as void
-	GetLogicalScale() = \
+	GetLogicalScale() as Tuple@gurax = \
 		R'''
 		double x, y;
 		pEntity_gurax->GetLogicalScale(&x, &y);
@@ -103,7 +103,7 @@ DC = Class(Object) {
 	CrossHair(pt as const_Point_r) as void
 	// Clipping region functions
 	DestroyClippingRegion() as void
-	GetClippingBox() = \
+	GetClippingBox() as Tuple@gurax = \
 		R'''
 		wxCoord x, y, width, height;
 		pEntity_gurax->GetClippingBox(&x, &y, &width, &height);
@@ -122,11 +122,52 @@ DC = Class(Object) {
 	//GetPartialTextExtents(text as String, wxArrayInt &widths) as bool
 	//GetTextExtent(const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent=NULL, wxCoord *externalLeading=NULL, const wxFont *font=NULL) as void
 	GetTextExtent(string as String) as Size
- 	// Text properties functions
+	// Text properties functions
+	GetBackgroundMode() as int
+	GetFont() as Font
+	GetLayoutDirection() as LayoutDirection
+	GetTextBackground() as Colour
+	GetTextForeground() as Colour
+	SetBackgroundMode(mode as int) as void
+	SetFont(font as const_Font_r) as void
+	SetTextBackground(colour as const_Colour_r) as void
+	SetTextForeground(colour as const_Colour_r) as void
+	SetLayoutDirection(dir as LayoutDirection) as void
 	// Bounding box functions
+	CalcBoundingBox(x as Coord, y as Coord) as void
+	MaxX() as Coord
+	MaxY() as Coord
+	MinX() as Coord
+	MinY() as Coord
+	ResetBoundingBox() as void
 	// Page and document start/end functions
+	StartDoc(message as const_String_r) as bool
+	StartPage() as void
+	EndDoc() as void
+	EndPage() as void
 	// Bit-Block Transfer operations (blit)
+	Blit(xdest as Coord, ydest as Coord, width as Coord, height as Coord, source as DC_p, xsrc as Coord, ysrc as Coord, logicalFunc as RasterOperationMode = wxCOPY, useMask as bool = false, xsrcMask as Coord = wxDefaultCoord, ysrcMask as Coord = wxDefaultCoord) as bool
+	StretchBlit(xdest as Coord, ydest as Coord, dstWidth as Coord, dstHeight as Coord, source as DC_p, xsrc as Coord, ysrc as Coord, srcWidth as Coord, srcHeight as Coord, logicalFunc as RasterOperationMode = wxCOPY, useMask as bool = false, xsrcMask as Coord = wxDefaultCoord, ysrcMask as Coord = wxDefaultCoord) as bool
 	// Background/foreground brush and pen
+	GetBackground() as Brush
+	GetBrush() as Brush
+	GetPen() as Pen
+	SetBackground(brush as const_Brush_r) as void
+	SetBrush(brush as const_Brush_r) as void
+	SetPen(pen as const_Pen_r) as void
 	// Transformation matrix
+	CanUseTransformMatrix() as bool
+	SetTransformMatrix(matrix as const_AffineMatrix2D_r) as bool
+	GetTransformMatrix() as AffineMatrix2D
+	ResetTransformMatrix() as void
 	// query capabilities
+	CanDrawBitmap() as bool
+	CanGetTextExtent() as bool
+	GetLogicalOriginXY() as Tuple@gurax = \
+		R'''
+		wxCoord x, y;
+		pEntity_gurax->GetLogicalOrigin(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
+	GetLogicalOrigin() as Point
 }

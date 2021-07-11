@@ -396,6 +396,7 @@ Renderer.__init__() = {
 		return Gurax::Value::nil();
 		''')
 	this.DeclareType('String@gurax', '', 'String')
+	this.DeclareType('Tuple@gurax', '', 'Tuple')
 	this.DeclareType('Number@gurax', '', 'Number',
 		codePicker = R'''
 		Gurax::Value_Number& ${varName} = args_gurax.Pick<Gurax::Value_Number>();

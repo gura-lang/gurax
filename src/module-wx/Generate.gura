@@ -18,11 +18,27 @@ r.DeclareType('String', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
+r.DeclareType('const_String_r', 'const char*', 'String',
+	codePicker = R'''
+	${this.cType} ${varName} = args_gurax.PickString();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : ${defaultValue || 'nullptr'};
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<${this.cType}>(Gurax::Value_${this.vtype}::ValueForVector);
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_${this.vtype}(rtn);
+	''')
+
 r.DeclareType_Number('Coord',					'wxCoord')
 r.DeclareType_Number('Direction',				'wxDirection')
 r.DeclareType_Number('EventCategory',			'wxEventCategory')
 r.DeclareType_Number('FloodFillStyle',			'wxFloodFillStyle')
 r.DeclareType_Number('ItemKind',				'wxItemKind')
+r.DeclareType_Number('LayoutDirection',			'wxLayoutDirection')
 r.DeclareType_Number('MappingMode',				'wxMappingMode')
 r.DeclareType_Number('RasterOperationMode',		'wxRasterOperationMode')
 r.DeclareType_Number('WindowID',				'wxWindowID')

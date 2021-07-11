@@ -1,0 +1,145 @@
+import(re)
+
+//------------------------------------------------------------------------------
+txt = R'''
+@Text properties functions
+int 	GetBackgroundMode () const
+ 	Returns the current background mode: wxSOLID or wxTRANSPARENT. More...
+ 
+const wxFont & 	GetFont () const
+ 	Gets the current font. More...
+ 
+wxLayoutDirection 	GetLayoutDirection () const
+ 	Gets the current layout direction of the device context. More...
+ 
+const wxColour & 	GetTextBackground () const
+ 	Gets the current text background colour. More...
+ 
+const wxColour & 	GetTextForeground () const
+ 	Gets the current text foreground colour. More...
+ 
+void 	SetBackgroundMode (int mode)
+ 	mode may be one of wxSOLID and wxTRANSPARENT. More...
+ 
+void 	SetFont (const wxFont &font)
+ 	Sets the current font for the DC. More...
+ 
+void 	SetTextBackground (const wxColour &colour)
+ 	Sets the current text background colour for the DC. More...
+ 
+void 	SetTextForeground (const wxColour &colour)
+ 	Sets the current text foreground colour for the DC. More...
+ 
+void 	SetLayoutDirection (wxLayoutDirection dir)
+ 	Sets the current layout direction for the device context. More...
+ 
+@Bounding box functions
+void 	CalcBoundingBox (wxCoord x, wxCoord y)
+ 	Adds the specified point to the bounding box which can be retrieved with MinX(), MaxX() and MinY(), MaxY() functions. More...
+ 
+wxCoord 	MaxX () const
+ 	Gets the maximum horizontal extent used in drawing commands so far. More...
+ 
+wxCoord 	MaxY () const
+ 	Gets the maximum vertical extent used in drawing commands so far. More...
+ 
+wxCoord 	MinX () const
+ 	Gets the minimum horizontal extent used in drawing commands so far. More...
+ 
+wxCoord 	MinY () const
+ 	Gets the minimum vertical extent used in drawing commands so far. More...
+ 
+void 	ResetBoundingBox ()
+ 	Resets the bounding box: after a call to this function, the bounding box doesn't contain anything. More...
+ 
+@Page and document start/end functions
+bool 	StartDoc (const wxString &message)
+ 	Starts a document (only relevant when outputting to a printer). More...
+ 
+void 	StartPage ()
+ 	Starts a document page (only relevant when outputting to a printer). More...
+ 
+void 	EndDoc ()
+ 	Ends a document (only relevant when outputting to a printer). More...
+ 
+void 	EndPage ()
+ 	Ends a document page (only relevant when outputting to a printer). More...
+ 
+@Bit-Block Transfer operations (blit)
+bool 	Blit (wxCoord xdest, wxCoord ydest, wxCoord width, wxCoord height, wxDC *source, wxCoord xsrc, wxCoord ysrc, wxRasterOperationMode logicalFunc=wxCOPY, bool useMask=false, wxCoord xsrcMask=wxDefaultCoord, wxCoord ysrcMask=wxDefaultCoord)
+ 	Copy from a source DC to this DC. More...
+ 
+bool 	StretchBlit (wxCoord xdest, wxCoord ydest, wxCoord dstWidth, wxCoord dstHeight, wxDC *source, wxCoord xsrc, wxCoord ysrc, wxCoord srcWidth, wxCoord srcHeight, wxRasterOperationMode logicalFunc=wxCOPY, bool useMask=false, wxCoord xsrcMask=wxDefaultCoord, wxCoord ysrcMask=wxDefaultCoord)
+ 	Copy from a source DC to this DC possibly changing the scale. More...
+ 
+@Background/foreground brush and pen
+const wxBrush & 	GetBackground () const
+ 	Gets the brush used for painting the background. More...
+ 
+const wxBrush & 	GetBrush () const
+ 	Gets the current brush. More...
+ 
+const wxPen & 	GetPen () const
+ 	Gets the current pen. More...
+ 
+void 	SetBackground (const wxBrush &brush)
+ 	Sets the current background brush for the DC. More...
+ 
+void 	SetBrush (const wxBrush &brush)
+ 	Sets the current brush for the DC. More...
+ 
+void 	SetPen (const wxPen &pen)
+ 	Sets the current pen for the DC. More...
+ 
+@Transformation matrix
+bool 	CanUseTransformMatrix () const
+ 	Check if the use of transformation matrix is supported by the current system. More...
+ 
+bool 	SetTransformMatrix (const wxAffineMatrix2D &matrix)
+ 	Set the transformation matrix. More...
+ 
+wxAffineMatrix2D 	GetTransformMatrix () const
+ 	Return the transformation matrix used by this device context. More...
+ 
+void 	ResetTransformMatrix ()
+ 	Revert the transformation matrix to identity matrix. More...
+ 
+@query capabilities
+bool 	CanDrawBitmap () const
+ 	Does the DC support drawing bitmaps? More...
+ 
+bool 	CanGetTextExtent () const
+ 	Does the DC support calculating the size required to draw text? More...
+ 
+void 	GetLogicalOrigin (wxCoord *x, wxCoord *y) const
+ 	Return the coordinates of the logical point (0, 0). More...
+ 
+wxPoint 	GetLogicalOrigin () const
+ 	Return the coordinates of the logical point (0, 0). More...
+'''
+//------------------------------------------------------------------------------
+
+txt.EachLine {|line|
+	if (m = line.Match('^@(.+)')) {
+		Printf('// %s\n', m[1])
+	} elsif (m = line.Match(r'^\s')) {
+		// nothing to do
+	} elsif (m = line.Match(r'^(.+[^\w])(\w+)\s*\(([^)]*)\)')) {
+		typeRtn = m[1].Strip().Sub(r'^const\s+', '').Sub(r'^wx', '').Sub(r'([ &\*])wx', r'\1').Sub(r'\s*&', '').Sub(r'\s*\*', '_p').Sub(r'\s+', '_')
+		funcName = m[2]
+		args = m[3].SplitReg(r',\s*'):list
+		argsMod = args.Each():xiter {|arg|
+			arg.IsEmpty() && continue
+			fields = arg.Split('='):list
+			m = fields[0].Strip().Match(r'^(.+[^\w])(\w+)$')
+			typeArg = m[1].Strip().Sub(r'^wx', '').Sub(r'([ &\*])wx', r'\1').Sub(r'\s*&', '_r').Sub(r'\s*\*', '_p').Sub(r'\s+', '_')
+			argName = m[2]
+			str = Format('%s as %s', argName, typeArg)
+			if (fields.len == 2) {
+				str += Format(' = %s', fields[1].Strip())
+			}
+			str
+		}.Join(', ')
+		Printf('%s(%s) as %s\n', funcName, argsMod, typeRtn)
+	}
+}
