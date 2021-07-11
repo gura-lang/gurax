@@ -14,6 +14,12 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxEventType);
 	frame.Assign(VTYPE_wxFontMetrics);
 	frame.Assign(VTYPE_wxAffineMatrix2D);
+	frame.Assign(VTYPE_wxVisualAttributes);
+	frame.Assign(VTYPE_wxToolTip);
+	frame.Assign(VTYPE_wxAcceleratorTable);
+	frame.Assign(VTYPE_wxAccessible);
+	frame.Assign(VTYPE_wxDropTarget);
+	frame.Assign(VTYPE_wxLayoutConstraints);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAnyButton);

@@ -3,6 +3,7 @@
 //==============================================================================
 Window = Class(EvtHandler) {
 	__init__()
+	// Focus functions
 	AcceptsFocus():const:virtual as bool
 	AcceptsFocusFromKeyboard():const:virtual as bool
 	AcceptsFocusRecursively():const:virtual as bool
@@ -13,11 +14,259 @@ Window = Class(EvtHandler) {
 	SetCanFocus(canFocus as bool):virtual as void
 	SetFocus() as void
 	SetFocusFromKbd() as void
-	Close(force as bool = false) as bool
+	// Child management functions
+	AddChild(child as Window_p) as void
+	DestroyChildren() as bool
+	FindWindow(id as long) as Window_p
+	FindWindowByName(name as const_String_r) as Window_p = FindWindow
+	//GetChildren() as WindowList
+	//GetChildren() as WindowList
+	RemoveChild(child as Window_p) as void
+	// Sibling and parent management functions
+	GetGrandParent() as Window_p
+	GetNextSibling() as Window_p
+	GetParent() as Window_p
+	GetPrevSibling() as Window_p
+	//IsDescendant(win as WindowBase_p) as bool
+	Reparent(newParent as Window_p) as bool
+	// Scrolling and scrollbars functions
+	AlwaysShowScrollbars(hflag as bool = true, vflag as bool = true) as void
+	GetScrollPos(orientation as int) as int
+	GetScrollRange(orientation as int) as int
+	GetScrollThumb(orientation as int) as int
+	CanScroll(orient as int) as bool
+	HasScrollbar(orient as int) as bool
+	IsScrollbarAlwaysShown(orient as int) as bool
+	ScrollLines(lines as int) as bool
+	ScrollPages(pages as int) as bool
+	//ScrollWindow(dx as int, dy as int, rect as const_Rect_p = NULL) as void
+	LineUp() as bool
+	LineDown() as bool
+	PageUp() as bool
+	PageDown() as bool
+	SetScrollPos(orientation as int, pos as int, refresh as bool = true) as void
+	SetScrollbar(orientation as int, position as int, thumbSize as int, range as int, refresh as bool = true) as void
+	// Sizing functions
+	//DoGetBestClientSize() as See_also_the_protected_functions_DoGetBestSize()_and
+	BeginRepositioningChildren() as bool
+	EndRepositioningChildren() as void
+	CacheBestSize(size as const_Size_r) as void
+	ClientToWindowSize(size as const_Size_r) as Size
+	WindowToClientSize(size as const_Size_r) as Size
+	Fit() as void
+	FitInside() as void
+	GetBestSize() as Size
+	GetBestHeight(width as int) as int
+	GetBestWidth(height as int) as int
+	//GetClientSize(width as int_p, height as int_p) as void
+	GetClientSize() as Size
+	GetEffectiveMinSize() as Size
+	GetMaxClientSize() as Size
+	GetMaxSize() as Size
+	GetMinClientSize() as Size
+	GetMinSize() as Size
+	GetMinWidth() as int
+	GetMinHeight() as int
+	GetMaxWidth() as int
+	GetMaxHeight() as int
+	//GetSize(width as int_p, height as int_p) as void
+	GetSize() as Size
+	GetVirtualSize() as Size
+	//GetVirtualSize(width as int_p, height as int_p) as void
+	GetBestVirtualSize() as Size
+	GetContentScaleFactor() as double
+	GetWindowBorderSize() as Size
+	InformFirstDirection(direction as int, size as int, availableOtherDir as int) as bool
+	InvalidateBestSize() as void
+	PostSizeEvent() as void
+	PostSizeEventToParent() as void
+	SendSizeEvent(flags as int = 0) as void
+	SendSizeEventToParent(flags as int = 0) as void
+	SetClientSize(width as int, height as int) as void
+	//SetClientSize(size as const_Size_r) as void
+	//SetClientSize(rect as const_Rect_r) as void
+	SetContainingSizer(sizer as Sizer_p) as void
+	SetInitialSize(size as const_Size_r = wxDefaultSize) as void
+	SetMaxClientSize(size as const_Size_r) as void
+	SetMaxSize(size as const_Size_r) as void
+	SetMinClientSize(size as const_Size_r) as void
+	SetMinSize(size as const_Size_r) as void
+	SetSize(x as int, y as int, width as int, height as int, sizeFlags as int = wxSIZE_AUTO) as void
+	//SetSize(rect as const_Rect_r) as void
+	//SetSize(size as const_Size_r) as void
+	//SetSize(width as int, height as int) as void
+	SetSizeHints(minSize as const_Size_r, maxSize as const_Size_r = wxDefaultSize, incSize as const_Size_r = wxDefaultSize) as void
+	//SetSizeHints(minW as int, minH as int, maxW as int = -1, maxH as int = -1, incW as int = -1, incH as int = -1) as void
+	SetVirtualSize(width as int, height as int) as void
+	//SetVirtualSize(size as const_Size_r) as void
+	// Positioning functions
+	Center(dir as int = wxBOTH) as void
+	CenterOnParent(dir as int = wxBOTH) as void
+	Centre(direction as int = wxBOTH) as void
+	CentreOnParent(direction as int = wxBOTH) as void
+	GetPositionXY() as Tuple@gurax = \
+		R'''
+		int x, y;
+		pEntity_gurax->GetPosition(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
+	GetPosition() as Point
+	GetRect() as Rect
+	GetScreenPositionXY() as Tuple@gurax = \
+		R'''
+		int x, y;
+		pEntity_gurax->GetScreenPosition(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
+	GetScreenPosition() as Point
+	GetScreenRect() as Rect
+	GetClientAreaOrigin() as Point
+	GetClientRect() as Rect
+	MoveXY(x as int, y as int, flags as int = wxSIZE_USE_EXISTING) as void = Move
+	Move(pt as const_Point_r, flags as int = wxSIZE_USE_EXISTING) as void
+	SetPosition(pt as const_Point_r) as void
+	// Coordinate conversion functions
+	//ClientToScreen(x as int_p, y as int_p) as void
+	ClientToScreen(pt as const_Point_r) as Point
+	ConvertDialogToPixels(pt as const_Point_r) as Point
+	//ConvertDialogToPixels(sz as const_Size_r) as Size
+	ConvertPixelsToDialog(pt as const_Point_r) as Point
+	//ConvertPixelsToDialog(sz as const_Size_r) as Size
+	//ScreenToClient(x as int_p, y as int_p) as void
+	ScreenToClient(pt as const_Point_r) as Point
+	// Drawing-related functions
+	ClearBackground() as void
+	Freeze() as void
+	Thaw() as void
+	IsFrozen() as bool
+	GetBackgroundColour() as Colour
+	GetBackgroundStyle() as BackgroundStyle
+	GetCharHeight() as int
+	GetCharWidth() as int
+	GetDefaultAttributes() as VisualAttributes
+	GetFont() as Font
+	GetForegroundColour() as Colour
+	//GetTextExtent(string as const_String_r, w as int_p, h as int_p, descent as int_p = NULL, externalLeading as int_p = NULL, font as const_Font_p = NULL) as void
+	GetTextExtent(string as const_String_r) as Size
+	GetUpdateRegion() as Region
+	GetUpdateClientRect() as Rect
+	HasTransparentBackground() as bool
+	Refresh(eraseBackground as bool = true, rect as const_Rect_p = NULL) as void
+	RefreshRect(rect as const_Rect_r, eraseBackground as bool = true) as void
+	Update() as void
+	SetBackgroundColour(colour as const_Colour_r) as bool
+	SetBackgroundStyle(style as BackgroundStyle) as bool
+	//IsTransparentBackgroundSupported(reason as String_p = NULL) as bool
+	SetFont(font as const_Font_r) as bool
+	SetForegroundColour(colour as const_Colour_r) as bool
+	SetOwnBackgroundColour(colour as const_Colour_r) as void
+	InheritsBackgroundColour() as bool
+	UseBgCol() as bool
+	SetOwnFont(font as const_Font_r) as void
+	SetOwnForegroundColour(colour as const_Colour_r) as void
+	SetPalette(pal as const_Palette_r) as void
+	ShouldInheritColours() as bool
+	SetThemeEnabled(enable as bool) as void
+	GetThemeEnabled() as bool
+	CanSetTransparent() as bool
+	SetTransparent(alpha as Byte) as bool
+	// Event-handling functions
+	GetEventHandler() as EvtHandler_p
+	HandleAsNavigationKey(event as const_KeyEvent_r) as bool
+	HandleWindowEvent(event as Event_r) as bool
+	ProcessWindowEvent(event as Event_r) as bool
+	ProcessWindowEventLocally(event as Event_r) as bool
+	PopEventHandler(deleteHandler as bool = false) as EvtHandler_p
+	PushEventHandler(handler as EvtHandler_p) as void
+	RemoveEventHandler(handler as EvtHandler_p) as bool
+	SetEventHandler(handler as EvtHandler_p) as void
+	SetNextHandler(handler as EvtHandler_p) as void
+	SetPreviousHandler(handler as EvtHandler_p) as void
+	// Window styles functions
+	GetExtraStyle() as long
+	GetWindowStyleFlag() as long
+	GetWindowStyle() as long
+	HasExtraStyle(exFlag as int) as bool
+	HasFlag(flag as int) as bool
+	SetExtraStyle(exStyle as long) as void
+	SetWindowStyleFlag(style as long) as void
+	SetWindowStyle(style as long) as void
+	ToggleWindowStyle(flag as int) as bool
+	// Tab order functions
+	MoveAfterInTabOrder(win as Window_p) as void
+	MoveBeforeInTabOrder(win as Window_p) as void
+	Navigate(flags as int = wxNavigationKeyEvent::IsForward) as bool
+	NavigateIn(flags as int = wxNavigationKeyEvent::IsForward) as bool
+	// Z order functions
+	Lower() as void
+	Raise() as void
+	// Window status functions
+	Hide() as bool
+	HideWithEffect(effect as ShowEffect, timeout as unsigned_int = 0) as bool
+	IsEnabled() as bool
+	//IsExposed(x as int, y as int) as bool
+	//IsExposed(pt as Point_r) as bool
+	//IsExposed(x as int, y as int, w as int, h as int) as bool
+	//IsExposed(rect as Rect_r) as bool
+	IsShown() as bool
+	IsShownOnScreen() as bool
+	Disable() as bool
+	Enable(enable as bool = true) as bool
 	Show(show as bool = true) as bool
+	ShowWithEffect(effect as ShowEffect, timeout as unsigned_int = 0) as bool
+	// Context-sensitive help functions
+	GetHelpText() as String
+	SetHelpText(helpText as const_String_r) as void
+	//GetHelpTextAtPoint(point as const_Point_r, origin as HelpEvent::Origin) as String
+	GetToolTip() as ToolTip_p
+	GetToolTipText() as String
+	SetToolTip(tipString as const_String_r) as void
+	//SetToolTip(tip as ToolTip_p) as void
+	UnsetToolTip() as void
+	// Popup/context menu functions
+	GetPopupMenuSelectionFromUser(menu as Menu_r, pos as const_Point_r = wxDefaultPosition) as int
+	//GetPopupMenuSelectionFromUser(menu as Menu_r, x as int, y as int) as int
+	PopupMenu(menu as Menu_p, pos as const_Point_r = wxDefaultPosition) as bool
+	//PopupMenu(menu as Menu_p, x as int, y as int) as bool
+	GetValidator() as Validator_p
+	SetValidator(validator as const_Validator_r) as void
+	TransferDataFromWindow() as bool
+	TransferDataToWindow() as bool
+	Validate() as bool
 
+	// wxWindow properties functions
+	GetId() as WindowID
+	GetLabel() as String
+	GetLayoutDirection() as LayoutDirection
+	AdjustForLayoutDirection(x as Coord, width as Coord, widthTotal as Coord) as Coord
+	GetName() as String
+	GetWindowVariant() as WindowVariant
+	SetId(winid as WindowID) as void
+	SetLabel(label as const_String_r) as void
+	SetLayoutDirection(dir as LayoutDirection) as void
+	SetName(name as const_String_r) as void
+	SetWindowVariant(variant as WindowVariant) as void
+	GetAcceleratorTable() as AcceleratorTable_p
+	GetAccessible() as Accessible_p
+	SetAcceleratorTable(accel as const_AcceleratorTable_r) as void
+	SetAccessible(accessible as Accessible_p) as void
+	// Window deletion functions
+	Close(force as bool = false) as bool
+	Destroy() as bool
+	IsBeingDeleted() as bool
+	// Drag and drop functions
+	//GetDropTarget() as DropTarget_p
+	//SetDropTarget(target as DropTarget_p) as void
+	DragAcceptFiles(accept as bool) as void
+	// Constraints, sizers and window layout functions
+	GetContainingSizer() as Sizer_p
+	GetSizer() as Sizer_p
 	SetSizer(sizer as Sizer_p, deleteOld as bool = true) as void
+	SetSizerAndFit(sizer as Sizer_p, deleteOld as bool = true) as void
+	GetConstraints() as LayoutConstraints_p
+	SetConstraints(constraints as LayoutConstraints_p) as void
+	Layout() as bool
+	SetAutoLayout(autoLayout as bool) as void
+	GetAutoLayout() as bool
 
-	FindFocus():static as Window_p
-	FindWindowById(id as long, parent as Window_p = nullptr):static as Window_p
 }

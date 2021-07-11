@@ -6,6 +6,12 @@ set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
 	VType_wxFontMetrics.cpp
 	VType_wxAffineMatrix2D.cpp
+	VType_wxVisualAttributes.cpp
+	VType_wxToolTip.cpp
+	VType_wxAcceleratorTable.cpp
+	VType_wxAccessible.cpp
+	VType_wxDropTarget.cpp
+	VType_wxLayoutConstraints.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp

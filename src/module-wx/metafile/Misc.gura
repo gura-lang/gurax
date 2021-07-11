@@ -6,3 +6,22 @@ FontMetrics = Class {
 
 AffineMatrix2D = Class {
 }
+
+VisualAttributes = Class {
+}
+
+ToolTip = Class(Object) {
+	__init__(tip as String)
+}
+
+AcceleratorTable = Class(Object) {
+}
+
+Accessible = Class(Object) {
+}
+
+DropTarget = Class {
+}
+
+LayoutConstraints = Class(Object) {
+}

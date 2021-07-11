@@ -33,6 +33,8 @@ r.DeclareType('const_String_r', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
+r.DeclareType_Number('BackgroundStyle',			'wxBackgroundStyle')
+r.DeclareType_Number('Byte',					'wxByte')
 r.DeclareType_Number('Coord',					'wxCoord')
 r.DeclareType_Number('Direction',				'wxDirection')
 r.DeclareType_Number('EventCategory',			'wxEventCategory')
@@ -41,7 +43,9 @@ r.DeclareType_Number('ItemKind',				'wxItemKind')
 r.DeclareType_Number('LayoutDirection',			'wxLayoutDirection')
 r.DeclareType_Number('MappingMode',				'wxMappingMode')
 r.DeclareType_Number('RasterOperationMode',		'wxRasterOperationMode')
+r.DeclareType_Number('ShowEffect',				'wxShowEffect')
 r.DeclareType_Number('WindowID',				'wxWindowID')
+r.DeclareType_Number('WindowVariant',			'wxWindowVariant')
 
 tmplVTypesCMake = tR'''
 #===============================================================================
@@ -149,7 +153,7 @@ public:
 ${if (className == 'EvtHandler')}
 protected:
 	wxWeakRef<wx${className}> _pEntity;
-${elsif (className == 'Sizer')}
+${elsif (className in ['Sizer', 'DropTarget'])}
 protected:
 	wx${className}* _pEntity;
 ${elsif (className == 'CmdLineParser')}
@@ -188,7 +192,7 @@ ${end}
 public:
 	// Constructor
 	Value_wx${className}() = delete;
-${if (className in ['EvtHandler', 'Sizer'])}
+${if (className in ['EvtHandler', 'Sizer', 'DropTarget'])}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'Event')}
@@ -203,7 +207,7 @@ ${elsif (className == 'EventLoopBase')}
 ${elsif (!classNameParent)}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
-${elsif (classNameRoot in ['EvtHandler', 'Sizer'])}
+${elsif (classNameRoot in ['EvtHandler', 'Sizer', 'DropTarget'])}
 	explicit Value_wx${className}(wx${classNameRoot}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(pEntity, vtype) {}
 ${elsif (eventDerivFlag)}
@@ -228,7 +232,7 @@ ${if (className in ['EvtHandler', 'Event'])}
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
 	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
-${elsif (className in ['Sizer', 'EventLoopBase'])}
+${elsif (className in ['Sizer', 'EventLoopBase', 'DropTarget'])}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity; }
@@ -524,6 +528,11 @@ ClassInfo = class {
 		classInfo = this.GetClassInfoRoot()
 		classInfo && classInfo.className == 'Sizer'
 	}
+	IsDropTargetOrDeriv() = {
+		(this.className == 'DropTarget') && return(true)
+		classInfo = this.GetClassInfoRoot()
+		classInfo && classInfo.className == 'DropTarget'
+	}
 	EvalTmplConstructorImplementation(funcInfo as cbridge.FuncInfo):map = {
 		this.tmplConstructorImplementation.Eval()
 	}
@@ -665,6 +674,8 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 }
 '''
 
+tmplConstructorImplementation_DropTarget = tmplConstructorImplementation_Sizer
+
 classInfoTbl.Each {|classInfo|
 	if (classInfo.classNameParent) {
 		classInfo.classInfoParent = classInfoTbl.Find(classInfoTbl:*className == classInfo.classNameParent)
@@ -787,6 +798,9 @@ classInfoTbl.Each {|classInfo|
 	} elsif (classInfo.IsSizerOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Sizer
+	} elsif (classInfo.IsDropTargetOrDeriv()) {
+		classInfo.typeInfo = typeInfo_p
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_DropTarget
 	} else {
 		classInfo.typeInfo = typeInfo
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object
