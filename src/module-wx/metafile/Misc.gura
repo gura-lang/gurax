@@ -25,3 +25,10 @@ DropTarget = Class {
 
 LayoutConstraints = Class(Object) {
 }
+
+Caret = Class {
+}
+
+//UpdateUIEvent = Class(CommandEvent) {
+//	__init__(commandId as WindowID = 0)
+//}

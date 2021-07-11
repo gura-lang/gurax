@@ -4645,6 +4645,471 @@ Gurax_ImplementMethodEx(wxWindow, GetAutoLayout_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.Window#CaptureMouse()
+Gurax_DeclareMethodAlias(wxWindow, CaptureMouse_gurax, "CaptureMouse")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, CaptureMouse_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->CaptureMouse();
+	return Gurax::Value::nil();
+}
+
+// wx.Window#GetCursor()
+Gurax_DeclareMethodAlias(wxWindow, GetCursor_gurax, "GetCursor")
+{
+	Declare(VTYPE_wxCursor, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCursor(
+		pEntity_gurax->GetCursor()));
+}
+
+// wx.Window#HasCapture()
+Gurax_DeclareMethodAlias(wxWindow, HasCapture_gurax, "HasCapture")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, HasCapture_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasCapture();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#ReleaseMouse()
+Gurax_DeclareMethodAlias(wxWindow, ReleaseMouse_gurax, "ReleaseMouse")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, ReleaseMouse_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->ReleaseMouse();
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetCursor(cursor as wx.Cursor)
+Gurax_DeclareMethodAlias(wxWindow, SetCursor_gurax, "SetCursor")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("cursor", VTYPE_wxCursor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetCursor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxCursor& value_cursor = args_gurax.Pick<Value_wxCursor>();
+	const wxCursor& cursor = value_cursor.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetCursor(cursor);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#WarpPointer(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxWindow, WarpPointer_gurax, "WarpPointer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, WarpPointer_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->WarpPointer(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#HitTest(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxWindow, HitTest_gurax, "HitTest")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, HitTest_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	wxHitTest rtn = pEntity_gurax->HitTest(pt);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Window#GetBorder(flags as Number)
+Gurax_DeclareMethodAlias(wxWindow, GetBorder_gurax, "GetBorder")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetBorder_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long flags = args_gurax.PickNumber<long>();
+	// Function body
+	wxBorder rtn = pEntity_gurax->GetBorder(flags);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Window#HasMultiplePages()
+Gurax_DeclareMethodAlias(wxWindow, HasMultiplePages_gurax, "HasMultiplePages")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, HasMultiplePages_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasMultiplePages();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#InheritAttributes()
+Gurax_DeclareMethodAlias(wxWindow, InheritAttributes_gurax, "InheritAttributes")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, InheritAttributes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->InheritAttributes();
+	return Gurax::Value::nil();
+}
+
+// wx.Window#InitDialog()
+Gurax_DeclareMethodAlias(wxWindow, InitDialog_gurax, "InitDialog")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, InitDialog_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->InitDialog();
+	return Gurax::Value::nil();
+}
+
+// wx.Window#IsDoubleBuffered()
+Gurax_DeclareMethodAlias(wxWindow, IsDoubleBuffered_gurax, "IsDoubleBuffered")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsDoubleBuffered_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsDoubleBuffered();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#SetDoubleBuffered(on as Bool)
+Gurax_DeclareMethodAlias(wxWindow, SetDoubleBuffered_gurax, "SetDoubleBuffered")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("on", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetDoubleBuffered_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool on = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetDoubleBuffered(on);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#IsRetained()
+Gurax_DeclareMethodAlias(wxWindow, IsRetained_gurax, "IsRetained")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsRetained_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsRetained();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#IsThisEnabled()
+Gurax_DeclareMethodAlias(wxWindow, IsThisEnabled_gurax, "IsThisEnabled")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsThisEnabled_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsThisEnabled();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#IsTopLevel()
+Gurax_DeclareMethodAlias(wxWindow, IsTopLevel_gurax, "IsTopLevel")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsTopLevel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsTopLevel();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#OnInternalIdle()
+Gurax_DeclareMethodAlias(wxWindow, OnInternalIdle_gurax, "OnInternalIdle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, OnInternalIdle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->OnInternalIdle();
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SendIdleEvents(event as wx.IdleEvent)
+Gurax_DeclareMethodAlias(wxWindow, SendIdleEvents_gurax, "SendIdleEvents")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("event", VTYPE_wxIdleEvent, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SendIdleEvents_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxIdleEvent& value_event = args_gurax.Pick<Value_wxIdleEvent>();
+	wxIdleEvent& event = value_event.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SendIdleEvents(event);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#RegisterHotKey(hotkeyId as Number, modifiers as Number, virtualKeyCode as Number)
+Gurax_DeclareMethodAlias(wxWindow, RegisterHotKey_gurax, "RegisterHotKey")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("hotkeyId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("modifiers", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("virtualKeyCode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, RegisterHotKey_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int hotkeyId = args_gurax.PickNumber<int>();
+	int modifiers = args_gurax.PickNumber<int>();
+	int virtualKeyCode = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->RegisterHotKey(hotkeyId, modifiers, virtualKeyCode);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#UnregisterHotKey(hotkeyId as Number)
+Gurax_DeclareMethodAlias(wxWindow, UnregisterHotKey_gurax, "UnregisterHotKey")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("hotkeyId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, UnregisterHotKey_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int hotkeyId = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->UnregisterHotKey(hotkeyId);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#UpdateWindowUI(flags? as Number)
+Gurax_DeclareMethodAlias(wxWindow, UpdateWindowUI_gurax, "UpdateWindowUI")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, UpdateWindowUI_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long flags = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxUPDATE_UI_NONE;
+	// Function body
+	pEntity_gurax->UpdateWindowUI(flags);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -4865,6 +5330,27 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, Layout_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetAutoLayout_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetAutoLayout_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, CaptureMouse_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetCursor_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, HasCapture_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ReleaseMouse_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetCursor_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, WarpPointer_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, HitTest_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetBorder_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, HasMultiplePages_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, InheritAttributes_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, InitDialog_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsDoubleBuffered_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetDoubleBuffered_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsRetained_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsThisEnabled_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsTopLevel_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, OnInternalIdle_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SendIdleEvents_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, RegisterHotKey_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, UnregisterHotKey_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, UpdateWindowUI_gurax));
 }
 
 //------------------------------------------------------------------------------

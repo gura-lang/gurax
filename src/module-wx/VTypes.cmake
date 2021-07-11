@@ -12,6 +12,7 @@ set(SRCFILES_VTYPE
 	VType_wxAccessible.cpp
 	VType_wxDropTarget.cpp
 	VType_wxLayoutConstraints.cpp
+	VType_wxCaret.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAnyButton.cpp

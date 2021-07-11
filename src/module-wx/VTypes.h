@@ -15,6 +15,7 @@
 #include "VType_wxAccessible.h"
 #include "VType_wxDropTarget.h"
 #include "VType_wxLayoutConstraints.h"
+#include "VType_wxCaret.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxActivateEvent.h"
 #include "VType_wxAnyButton.h"

@@ -20,6 +20,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAccessible);
 	frame.Assign(VTYPE_wxDropTarget);
 	frame.Assign(VTYPE_wxLayoutConstraints);
+	frame.Assign(VTYPE_wxCaret);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAnyButton);

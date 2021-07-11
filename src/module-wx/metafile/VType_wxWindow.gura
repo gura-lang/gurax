@@ -233,7 +233,6 @@ Window = Class(EvtHandler) {
 	TransferDataFromWindow() as bool
 	TransferDataToWindow() as bool
 	Validate() as bool
-
 	// wxWindow properties functions
 	GetId() as WindowID
 	GetLabel() as String
@@ -268,5 +267,36 @@ Window = Class(EvtHandler) {
 	Layout() as bool
 	SetAutoLayout(autoLayout as bool) as void
 	GetAutoLayout() as bool
+
+	// Mouse functions
+	CaptureMouse() as void
+	//GetCaret() as Caret_p
+	GetCursor() as Cursor
+	HasCapture() as bool
+	ReleaseMouse() as void
+	//SetCaret(caret as Caret_p) as void
+	SetCursor(cursor as const_Cursor_r) as bool
+	WarpPointer(x as int, y as int) as void
+	// Miscellaneous functions
+	//HitTest(x as Coord, y as Coord) as HitTest
+	HitTest(pt as const_Point_r) as HitTest
+	GetBorder(flags as long) as Border
+	//GetBorder() as Border
+	//DoUpdateWindowUI(event as UpdateUIEvent_r) as void
+	//GetHandle() as WXWidget
+	HasMultiplePages() as bool
+	InheritAttributes() as void
+	InitDialog() as void
+	IsDoubleBuffered() as bool
+	SetDoubleBuffered(on as bool) as void
+	IsRetained() as bool
+	IsThisEnabled() as bool
+	IsTopLevel() as bool
+	OnInternalIdle() as void
+	SendIdleEvents(event as IdleEvent_r) as bool
+	RegisterHotKey(hotkeyId as int, modifiers as int, virtualKeyCode as int) as bool
+	UnregisterHotKey(hotkeyId as int) as bool
+	UpdateWindowUI(flags as long = wxUPDATE_UI_NONE) as void
+
 
 }

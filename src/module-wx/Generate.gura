@@ -34,11 +34,13 @@ r.DeclareType('const_String_r', 'const char*', 'String',
 	''')
 
 r.DeclareType_Number('BackgroundStyle',			'wxBackgroundStyle')
+r.DeclareType_Number('Border',					'wxBorder')
 r.DeclareType_Number('Byte',					'wxByte')
 r.DeclareType_Number('Coord',					'wxCoord')
 r.DeclareType_Number('Direction',				'wxDirection')
 r.DeclareType_Number('EventCategory',			'wxEventCategory')
 r.DeclareType_Number('FloodFillStyle',			'wxFloodFillStyle')
+r.DeclareType_Number('HitTest',					'wxHitTest')
 r.DeclareType_Number('ItemKind',				'wxItemKind')
 r.DeclareType_Number('LayoutDirection',			'wxLayoutDirection')
 r.DeclareType_Number('MappingMode',				'wxMappingMode')
@@ -153,7 +155,7 @@ public:
 ${if (className == 'EvtHandler')}
 protected:
 	wxWeakRef<wx${className}> _pEntity;
-${elsif (className in ['Sizer', 'DropTarget'])}
+${elsif (className in ['Sizer', 'DropTarget', 'Caret'])}
 protected:
 	wx${className}* _pEntity;
 ${elsif (className == 'CmdLineParser')}
@@ -192,7 +194,7 @@ ${end}
 public:
 	// Constructor
 	Value_wx${className}() = delete;
-${if (className in ['EvtHandler', 'Sizer', 'DropTarget'])}
+${if (className in ['EvtHandler', 'Sizer', 'DropTarget', 'Caret'])}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'Event')}
@@ -207,7 +209,7 @@ ${elsif (className == 'EventLoopBase')}
 ${elsif (!classNameParent)}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
-${elsif (classNameRoot in ['EvtHandler', 'Sizer', 'DropTarget'])}
+${elsif (classNameRoot in ['EvtHandler', 'Sizer', 'DropTarget', 'Caret'])}
 	explicit Value_wx${className}(wx${classNameRoot}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(pEntity, vtype) {}
 ${elsif (eventDerivFlag)}
@@ -232,7 +234,7 @@ ${if (className in ['EvtHandler', 'Event'])}
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
 	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
-${elsif (className in ['Sizer', 'EventLoopBase', 'DropTarget'])}
+${elsif (className in ['Sizer', 'EventLoopBase', 'DropTarget', 'Caret'])}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity; }
@@ -533,6 +535,11 @@ ClassInfo = class {
 		classInfo = this.GetClassInfoRoot()
 		classInfo && classInfo.className == 'DropTarget'
 	}
+	IsCaretOrDeriv() = {
+		(this.className == 'Caret') && return(true)
+		classInfo = this.GetClassInfoRoot()
+		classInfo && classInfo.className == 'Caret'
+	}
 	EvalTmplConstructorImplementation(funcInfo as cbridge.FuncInfo):map = {
 		this.tmplConstructorImplementation.Eval()
 	}
@@ -675,6 +682,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 '''
 
 tmplConstructorImplementation_DropTarget = tmplConstructorImplementation_Sizer
+tmplConstructorImplementation_Caret = tmplConstructorImplementation_Sizer
 
 classInfoTbl.Each {|classInfo|
 	if (classInfo.classNameParent) {
@@ -801,6 +809,9 @@ classInfoTbl.Each {|classInfo|
 	} elsif (classInfo.IsDropTargetOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_DropTarget
+	} elsif (classInfo.IsCaretOrDeriv()) {
+		classInfo.typeInfo = typeInfo_p
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Caret
 	} else {
 		classInfo.typeInfo = typeInfo
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object

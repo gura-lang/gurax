@@ -2,103 +2,8 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-@wxWindow properties functions
-wxWindowID 	GetId () const
- 	Returns the identifier of the window. More...
  
-virtual wxString 	GetLabel () const
- 	Generic way of getting a label from any window, for identification purposes. More...
- 
-virtual wxLayoutDirection 	GetLayoutDirection () const
- 	Returns the layout direction for this window, Note that wxLayout_Default is returned if layout direction is not supported. More...
- 
-virtual wxCoord 	AdjustForLayoutDirection (wxCoord x, wxCoord width, wxCoord widthTotal) const
- 	Mirror coordinates for RTL layout if this window uses it and if the mirroring is not done automatically like Win32. More...
- 
-virtual wxString 	GetName () const
- 	Returns the window's name. More...
- 
-wxWindowVariant 	GetWindowVariant () const
- 	Returns the value previously passed to SetWindowVariant(). More...
- 
-void 	SetId (wxWindowID winid)
- 	Sets the identifier of the window. More...
- 
-virtual void 	SetLabel (const wxString &label)
- 	Sets the window's label. More...
- 
-virtual void 	SetLayoutDirection (wxLayoutDirection dir)
- 	Sets the layout direction for this window. More...
- 
-virtual void 	SetName (const wxString &name)
- 	Sets the window's name. More...
- 
-void 	SetWindowVariant (wxWindowVariant variant)
- 	Chooses a different variant of the window display to use. More...
- 
-wxAcceleratorTable * 	GetAcceleratorTable ()
- 	Gets the accelerator table for this window. More...
- 
-wxAccessible * 	GetAccessible ()
- 	Returns the accessible object for this window, if any. More...
- 
-virtual void 	SetAcceleratorTable (const wxAcceleratorTable &accel)
- 	Sets the accelerator table for this window. More...
- 
-void 	SetAccessible (wxAccessible *accessible)
- 	Sets the accessible for this window. More...
- 
-@Window deletion functions
-bool 	Close (bool force=false)
- 	This function simply generates a wxCloseEvent whose handler usually tries to close the window. More...
- 
-virtual bool 	Destroy ()
- 	Destroys the window safely. More...
- 
-bool 	IsBeingDeleted () const
- 	Returns true if this window is in process of being destroyed. More...
- 
-@Drag and drop functions
-virtual wxDropTarget * 	GetDropTarget () const
- 	Returns the associated drop target, which may be NULL. More...
- 
-virtual void 	SetDropTarget (wxDropTarget *target)
- 	Associates a drop target with this window. More...
- 
-virtual void 	DragAcceptFiles (bool accept)
- 	Enables or disables eligibility for drop file events (OnDropFiles). More...
- 
-@Constraints, sizers and window layout functions
-wxSizer * 	GetContainingSizer () const
- 	Returns the sizer of which this window is a member, if any, otherwise NULL. More...
- 
-wxSizer * 	GetSizer () const
- 	Returns the sizer associated with the window by a previous call to SetSizer(), or NULL. More...
- 
-void 	SetSizer (wxSizer *sizer, bool deleteOld=true)
- 	Sets the window to have the given layout sizer. More...
- 
-void 	SetSizerAndFit (wxSizer *sizer, bool deleteOld=true)
- 	This method calls SetSizer() and then wxSizer::SetSizeHints which sets the initial window size to the size needed to accommodate all sizer elements and sets the size hints which, if this window is a top level one, prevent the user from resizing it to be less than this minimal size. More...
- 
-wxLayoutConstraints * 	GetConstraints () const
- 	Returns a pointer to the window's layout constraints, or NULL if there are none. More...
- 
-void 	SetConstraints (wxLayoutConstraints *constraints)
- 	Sets the window to have the given layout constraints. More...
- 
-virtual bool 	Layout ()
- 	Invokes the constraint-based layout algorithm or the sizer-based algorithm for this window. More...
- 
-void 	SetAutoLayout (bool autoLayout)
- 	Determines whether the Layout() function will be called automatically when the window is resized. More...
- 
-bool 	GetAutoLayout () const
- 	Returns the sizer of which this window is a member, if any, otherwise NULL. More...
-'''
-R'''
- 
-Mouse functions
+@Mouse functions
 void 	CaptureMouse ()
  	Directs all mouse input to this window. More...
  
@@ -123,7 +28,7 @@ virtual bool 	SetCursor (const wxCursor &cursor)
 virtual void 	WarpPointer (int x, int y)
  	Moves the pointer to the given position on the window. More...
  
-Miscellaneous functions
+@Miscellaneous functions
 wxHitTest 	HitTest (wxCoord x, wxCoord y) const
  	Get the window border style from the given flags: this is different from simply doing flags & wxBORDER_MASK because it uses GetDefaultBorder() to translate wxBORDER_DEFAULT to something reasonable. More...
  
