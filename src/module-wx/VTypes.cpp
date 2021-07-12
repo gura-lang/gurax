@@ -12,6 +12,8 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxImage);
+	frame.Assign(VTYPE_wxMask);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);

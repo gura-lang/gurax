@@ -2,30 +2,36 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-virtual void 	Command (wxCommandEvent &event)
- 	Simulates the effect of the user issuing a command to the item. More...
+static void 	AddHandler (wxBitmapHandler *handler)
+ 	Adds a handler to the end of the static list of format handlers. More...
  
-wxString 	GetLabel () const
- 	Returns the control's label, as it was passed to SetLabel(). More...
+static void 	CleanUpHandlers ()
+ 	Deletes all bitmap handlers. More...
  
-wxString 	GetLabelText () const
- 	Returns the control's label without mnemonics. More...
+static wxBitmapHandler * 	FindHandler (const wxString &name)
+ 	Finds the handler with the given name. More...
  
-wxSize 	GetSizeFromTextSize (int xlen, int ylen=-1) const
- 	Determine the size needed by the control to leave the given area for its text. More...
+static wxBitmapHandler * 	FindHandler (const wxString &extension, wxBitmapType bitmapType)
+ 	Finds the handler associated with the given extension and type. More...
  
-wxSize 	GetSizeFromTextSize (const wxSize &tsize) const
- 	This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. More...
+static wxBitmapHandler * 	FindHandler (wxBitmapType bitmapType)
+ 	Finds the handler associated with the given bitmap type. More...
  
-void 	SetLabel (const wxString &label)
- 	Sets the control's label. More...
+static wxList & 	GetHandlers ()
+ 	Returns the static list of bitmap format handlers. More...
  
-void 	SetLabelText (const wxString &text)
- 	Sets the control's label to exactly the given string. More...
+static void 	InitStandardHandlers ()
+ 	Adds the standard bitmap format handlers, which, depending on wxWidgets configuration, can be handlers for Windows bitmap, Windows bitmap resource, and XPM. More...
  
-bool 	SetLabelMarkup (const wxString &markup)
- 	Sets the controls label to a string using markup. More...
- '''
+static void 	InsertHandler (wxBitmapHandler *handler)
+ 	Adds a handler at the start of the static list of format handlers. More...
+ 
+static wxBitmap 	NewFromPNGData (const void *data, size_t size)
+ 	Loads a bitmap from the memory containing image data in PNG format. More...
+ 
+static bool 	RemoveHandler (const wxString &name)
+ 	Finds the handler with the given name, and removes it. More...
+'''
 //------------------------------------------------------------------------------
 
 txt.EachLine {|line|
@@ -34,9 +40,15 @@ txt.EachLine {|line|
 	} elsif (m = line.Match(r'^\s')) {
 		// nothing to do
 	} elsif (m = line.Match(r'^(.+[^\w])(\w+)\s*\(([^)]*)\)')) {
-		typeRtn = m[1].Strip().Sub(r'^virtual\s+', '').Sub(r'^const\s+', '').Sub(r'^wx', '').Sub(r'([ &\*])wx', r'\1').Sub(r'\s*&', '').Sub(r'\s*\*', '_p').Sub(r'\s+', '_')
+		attrs = ''
+		typeRtn = m[1].Strip()
 		funcName = m[2]
 		args = m[3].SplitReg(r',\s*'):list
+		if (m = typeRtn.Match(r'^static\s+(.+)')) {
+			attrs += ':static'
+			typeRtn = m[1]
+		}
+		typeRtn = typeRtn.Sub(r'^virtual\s+', '').Sub(r'^const\s+', '').Sub(r'^wx', '').Sub(r'([ &\*])wx', r'\1').Sub(r'\s*&', '').Sub(r'\s*\*', '_p').Sub(r'\s+', '_')
 		argsMod = args.Each():xiter {|arg|
 			arg.IsEmpty() && continue
 			fields = arg.Split('='):list
@@ -49,6 +61,6 @@ txt.EachLine {|line|
 			}
 			str
 		}.Join(', ')
-		Printf('%s(%s) as %s\n', funcName, argsMod, typeRtn)
+		Printf('%s(%s)%s as %s\n', funcName, argsMod, attrs, typeRtn)
 	}
 }

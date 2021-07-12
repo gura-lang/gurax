@@ -34,6 +34,7 @@ r.DeclareType('const_String_r', 'const char*', 'String',
 	''')
 
 r.DeclareType_Number('BackgroundStyle',			'wxBackgroundStyle')
+r.DeclareType_Number('BitmapType',				'wxBitmapType')
 r.DeclareType_Number('Border',					'wxBorder')
 r.DeclareType_Number('Byte',					'wxByte')
 r.DeclareType_Number('Coord',					'wxCoord')

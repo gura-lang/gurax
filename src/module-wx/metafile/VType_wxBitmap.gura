@@ -2,4 +2,24 @@
 // VType_wxBitmap.gura
 //==============================================================================
 Bitmap = Class(GDIObject) {
+	ConvertToImage() as Image
+	CopyFromIcon(icon as const_Icon_r) as bool
+	//Create(width as int, height as int, depth as int = wxBITMAP_SCREEN_DEPTH) as bool
+	//Create(sz as const_Size_r, depth as int = wxBITMAP_SCREEN_DEPTH) as bool
+	GetDepth() as int
+	GetHeight() as int
+	GetMask() as Mask_p
+	GetPalette() as Palette_p
+	GetSubBitmap(rect as const_Rect_r) as Bitmap
+	GetSize() as Size
+	ConvertToDisabled(brightness as unsigned_char = 255) as Bitmap
+	GetWidth() as int
+	IsOk() as bool
+	LoadFile(name as const_String_r, type as BitmapType = wxBITMAP_DEFAULT_TYPE) as bool
+	SaveFile(name as const_String_r, type as BitmapType, palette as const_Palette_p = NULL) as bool
+	SetDepth(depth as int) as void
+	SetHeight(height as int) as void
+	SetMask(mask as Mask_p) as void
+	SetPalette(palette as const_Palette_r) as void
+	SetWidth(width as int) as void
 }
