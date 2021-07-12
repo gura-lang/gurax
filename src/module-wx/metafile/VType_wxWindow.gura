@@ -134,9 +134,9 @@ Window = Class(EvtHandler) {
 		'''
 	ClientToScreenPoint(pt as const_Point_r) as Point = ClientToScreen
 	ConvertDialogToPixels(pt as const_Point_r) as Point
-	//ConvertDialogToPixels(sz as const_Size_r) as Size
+	ConvertDialogToPixelsSize(sz as const_Size_r) as Size = ConvertDialogToPixels
 	ConvertPixelsToDialog(pt as const_Point_r) as Point
-	//ConvertPixelsToDialog(sz as const_Size_r) as Size
+	ConvertPixelsToDialogSize(sz as const_Size_r) as Size = ConvertPixelsToDialog
 	ScreenToClientXY(x as int, y as int) as Tuple@gurax = \
 		R'''
 		pEntity_gurax->ScreenToClient(&x, &y);
@@ -155,7 +155,12 @@ Window = Class(EvtHandler) {
 	GetDefaultAttributes() as VisualAttributes
 	GetFont() as Font
 	GetForegroundColour() as Colour
-	//GetTextExtent(string as const_String_r, w as int_p, h as int_p, descent as int_p = NULL, externalLeading as int_p = NULL, font as const_Font_p = NULL) as void
+	GetTextExtentWH(string as const_String_r, font? as const_Font_p) as Tuple@gurax = \
+		R'''
+		int w, h, descent, externalLeading;
+		pEntity_gurax->GetTextExtent(string, &w, &h, &descent, &externalLeading, font);
+		return Value_Tuple::Create(new Value_Number(w), new Value_Number(h), new Value_Number(descent), new Value_Number(externalLeading));
+		'''
 	GetTextExtent(string as const_String_r) as Size
 	GetUpdateRegion() as Region
 	GetUpdateClientRect() as Rect
@@ -165,7 +170,17 @@ Window = Class(EvtHandler) {
 	Update() as void
 	SetBackgroundColour(colour as const_Colour_r) as bool
 	SetBackgroundStyle(style as BackgroundStyle) as bool
-	//IsTransparentBackgroundSupported(reason as String_p = NULL) as bool
+	IsTransparentBackgroundSupported(reason? as String) as bool = \
+		R'''
+		bool rtn;
+		if (reason) {
+			wxString reason_(reason);
+			rtn = pEntity_gurax->IsTransparentBackgroundSupported(&reason_);
+		} else {
+			rtn = pEntity_gurax->IsTransparentBackgroundSupported();
+		}
+		return new Value_Bool(rtn);
+		'''
 	SetFont(font as const_Font_r) as bool
 	SetForegroundColour(colour as const_Colour_r) as bool
 	SetOwnBackgroundColour(colour as const_Colour_r) as void

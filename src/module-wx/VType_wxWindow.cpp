@@ -2350,6 +2350,31 @@ Gurax_ImplementMethodEx(wxWindow, ConvertDialogToPixels_gurax, processor_gurax, 
 		pEntity_gurax->ConvertDialogToPixels(pt)));
 }
 
+// wx.Window#ConvertDialogToPixelsSize(sz as wx.Size)
+Gurax_DeclareMethodAlias(wxWindow, ConvertDialogToPixelsSize_gurax, "ConvertDialogToPixelsSize")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, ConvertDialogToPixelsSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
+	const wxSize& sz = value_sz.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->ConvertDialogToPixels(sz)));
+}
+
 // wx.Window#ConvertPixelsToDialog(pt as wx.Point)
 Gurax_DeclareMethodAlias(wxWindow, ConvertPixelsToDialog_gurax, "ConvertPixelsToDialog")
 {
@@ -2373,6 +2398,31 @@ Gurax_ImplementMethodEx(wxWindow, ConvertPixelsToDialog_gurax, processor_gurax, 
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
 		pEntity_gurax->ConvertPixelsToDialog(pt)));
+}
+
+// wx.Window#ConvertPixelsToDialogSize(sz as wx.Size)
+Gurax_DeclareMethodAlias(wxWindow, ConvertPixelsToDialogSize_gurax, "ConvertPixelsToDialogSize")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, ConvertPixelsToDialogSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
+	const wxSize& sz = value_sz.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->ConvertPixelsToDialog(sz)));
 }
 
 // wx.Window#ScreenToClientXY(x as Number, y as Number)
@@ -2646,6 +2696,33 @@ Gurax_ImplementMethodEx(wxWindow, GetForegroundColour_gurax, processor_gurax, ar
 		pEntity_gurax->GetForegroundColour()));
 }
 
+// wx.Window#GetTextExtentWH(string as String, font? as wx.Font)
+Gurax_DeclareMethodAlias(wxWindow, GetTextExtentWH_gurax, "GetTextExtentWH")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetTextExtentWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* string = args_gurax.PickString();
+	const wxFont* font = args_gurax.IsValid()? args_gurax.Pick<Value_wxFont>().GetEntityPtr() : nullptr;
+	// Function body
+	int w, h, descent, externalLeading;
+	pEntity_gurax->GetTextExtent(string, &w, &h, &descent, &externalLeading, font);
+	return Value_Tuple::Create(new Value_Number(w), new Value_Number(h), new Value_Number(descent), new Value_Number(externalLeading));
+}
+
 // wx.Window#GetTextExtent(string as String)
 Gurax_DeclareMethodAlias(wxWindow, GetTextExtent_gurax, "GetTextExtent")
 {
@@ -2850,6 +2927,36 @@ Gurax_ImplementMethodEx(wxWindow, SetBackgroundStyle_gurax, processor_gurax, arg
 	// Function body
 	bool rtn = pEntity_gurax->SetBackgroundStyle(style);
 	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#IsTransparentBackgroundSupported(reason? as String)
+Gurax_DeclareMethodAlias(wxWindow, IsTransparentBackgroundSupported_gurax, "IsTransparentBackgroundSupported")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("reason", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsTransparentBackgroundSupported_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* reason = args_gurax.IsValid()? args_gurax.PickString() : nullptr;
+	// Function body
+	bool rtn;
+	if (reason) {
+		wxString reason_(reason);
+		rtn = pEntity_gurax->IsTransparentBackgroundSupported(&reason_);
+	} else {
+		rtn = pEntity_gurax->IsTransparentBackgroundSupported();
+	}
+	return new Value_Bool(rtn);
 }
 
 // wx.Window#SetFont(font as wx.Font)
@@ -5649,7 +5756,9 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, ClientToScreenXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ClientToScreenPoint_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertDialogToPixels_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ConvertDialogToPixelsSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertPixelsToDialog_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ConvertPixelsToDialogSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ScreenToClientXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ScreenToClientPoint_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ClearBackground_gurax));
@@ -5663,6 +5772,7 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, GetDefaultAttributes_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetFont_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetForegroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetTextExtentWH_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetTextExtent_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetUpdateRegion_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetUpdateClientRect_gurax));
@@ -5672,6 +5782,7 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, Update_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetBackgroundColour_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetBackgroundStyle_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsTransparentBackgroundSupported_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetFont_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetForegroundColour_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetOwnBackgroundColour_gurax));
