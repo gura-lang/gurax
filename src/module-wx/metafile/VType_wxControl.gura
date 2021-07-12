@@ -4,4 +4,12 @@
 Control = Class(Window) {
 	__init__(parent:nil as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as int = 0, validator as Validator = wxDefaultValidator, name as String = wxControlNameStr)
+	Command(event as CommandEvent_r) as void
+	GetLabel() as String
+	GetLabelText() as String
+	GetSizeFromTextSizeXY(xlen as int, ylen as int = -1) as Size = GetSizeFromTextSize
+	GetSizeFromTextSize(tsize as const_Size_r) as Size
+	SetLabel(label as const_String_r) as void
+	SetLabelText(text as const_String_r) as void
+	SetLabelMarkup(markup as const_String_r) as bool
 }

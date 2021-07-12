@@ -66,6 +66,193 @@ Gurax_ImplementConstructorEx(Control_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Control#Command(event as wx.CommandEvent)
+Gurax_DeclareMethodAlias(wxControl, Command_gurax, "Command")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxControl, Command_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxCommandEvent& value_event = args_gurax.Pick<Value_wxCommandEvent>();
+	wxCommandEvent& event = value_event.GetEntity();
+	// Function body
+	pEntity_gurax->Command(event);
+	return Gurax::Value::nil();
+}
+
+// wx.Control#GetLabel()
+Gurax_DeclareMethodAlias(wxControl, GetLabel_gurax, "GetLabel")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxControl, GetLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	const char* rtn = pEntity_gurax->GetLabel();
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.Control#GetLabelText()
+Gurax_DeclareMethodAlias(wxControl, GetLabelText_gurax, "GetLabelText")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxControl, GetLabelText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	const char* rtn = pEntity_gurax->GetLabelText();
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.Control#GetSizeFromTextSizeXY(xlen as Number, ylen? as Number)
+Gurax_DeclareMethodAlias(wxControl, GetSizeFromTextSizeXY_gurax, "GetSizeFromTextSizeXY")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareArg("xlen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ylen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxControl, GetSizeFromTextSizeXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int xlen = args_gurax.PickNumber<int>();
+	int ylen = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetSizeFromTextSize(xlen, ylen)));
+}
+
+// wx.Control#GetSizeFromTextSize(tsize as wx.Size)
+Gurax_DeclareMethodAlias(wxControl, GetSizeFromTextSize_gurax, "GetSizeFromTextSize")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareArg("tsize", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxControl, GetSizeFromTextSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_tsize = args_gurax.Pick<Value_wxSize>();
+	const wxSize& tsize = value_tsize.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetSizeFromTextSize(tsize)));
+}
+
+// wx.Control#SetLabel(label as String)
+Gurax_DeclareMethodAlias(wxControl, SetLabel_gurax, "SetLabel")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxControl, SetLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* label = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetLabel(label);
+	return Gurax::Value::nil();
+}
+
+// wx.Control#SetLabelText(text as String)
+Gurax_DeclareMethodAlias(wxControl, SetLabelText_gurax, "SetLabelText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxControl, SetLabelText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetLabelText(text);
+	return Gurax::Value::nil();
+}
+
+// wx.Control#SetLabelMarkup(markup as String)
+Gurax_DeclareMethodAlias(wxControl, SetLabelMarkup_gurax, "SetLabelMarkup")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("markup", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxControl, SetLabelMarkup_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* markup = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->SetLabelMarkup(markup);
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -83,6 +270,14 @@ void VType_wxControl::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Control_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxControl, Command_gurax));
+	Assign(Gurax_CreateMethod(wxControl, GetLabel_gurax));
+	Assign(Gurax_CreateMethod(wxControl, GetLabelText_gurax));
+	Assign(Gurax_CreateMethod(wxControl, GetSizeFromTextSizeXY_gurax));
+	Assign(Gurax_CreateMethod(wxControl, GetSizeFromTextSize_gurax));
+	Assign(Gurax_CreateMethod(wxControl, SetLabel_gurax));
+	Assign(Gurax_CreateMethod(wxControl, SetLabelText_gurax));
+	Assign(Gurax_CreateMethod(wxControl, SetLabelMarkup_gurax));
 }
 
 //------------------------------------------------------------------------------
