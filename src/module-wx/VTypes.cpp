@@ -12,17 +12,11 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxFontMetrics);
-	frame.Assign(VTYPE_wxAffineMatrix2D);
-	frame.Assign(VTYPE_wxVisualAttributes);
-	frame.Assign(VTYPE_wxToolTip);
+	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
-	frame.Assign(VTYPE_wxDropTarget);
-	frame.Assign(VTYPE_wxLayoutConstraints);
-	frame.Assign(VTYPE_wxCaret);
-	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxActivateEvent);
+	frame.Assign(VTYPE_wxAffineMatrix2D);
 	frame.Assign(VTYPE_wxAnyButton);
 	frame.Assign(VTYPE_wxApp);
 	frame.Assign(VTYPE_wxAppConsole);
@@ -37,6 +31,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxBrush);
 	frame.Assign(VTYPE_wxButton);
 	frame.Assign(VTYPE_wxCalendarCtrl);
+	frame.Assign(VTYPE_wxCaret);
 	frame.Assign(VTYPE_wxCheckBox);
 	frame.Assign(VTYPE_wxChildFocusEvent);
 	frame.Assign(VTYPE_wxChoice);
@@ -53,6 +48,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxDateTime);
 	frame.Assign(VTYPE_wxDC);
 	frame.Assign(VTYPE_wxDropFilesEvent);
+	frame.Assign(VTYPE_wxDropTarget);
 	frame.Assign(VTYPE_wxEraseEvent);
 	frame.Assign(VTYPE_wxEvent);
 	frame.Assign(VTYPE_wxEventLoopBase);
@@ -60,6 +56,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFlexGridSizer);
 	frame.Assign(VTYPE_wxFocusEvent);
 	frame.Assign(VTYPE_wxFont);
+	frame.Assign(VTYPE_wxFontMetrics);
 	frame.Assign(VTYPE_wxFrame);
 	frame.Assign(VTYPE_wxGauge);
 	frame.Assign(VTYPE_wxGDIObject);
@@ -71,6 +68,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxIdleEvent);
 	frame.Assign(VTYPE_wxJoystickEvent);
 	frame.Assign(VTYPE_wxKeyEvent);
+	frame.Assign(VTYPE_wxLayoutConstraints);
 	frame.Assign(VTYPE_wxListbook);
 	frame.Assign(VTYPE_wxListBox);
 	frame.Assign(VTYPE_wxListCtrl);
@@ -122,8 +120,10 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxToggleButton);
 	frame.Assign(VTYPE_wxToolBar);
 	frame.Assign(VTYPE_wxToolbook);
+	frame.Assign(VTYPE_wxToolTip);
 	frame.Assign(VTYPE_wxTreebook);
 	frame.Assign(VTYPE_wxValidator);
+	frame.Assign(VTYPE_wxVisualAttributes);
 	frame.Assign(VTYPE_wxWindow);
 	frame.Assign(VTYPE_wxWrapSizer);
 }

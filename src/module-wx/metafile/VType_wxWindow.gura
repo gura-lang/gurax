@@ -39,7 +39,7 @@ Window = Class(EvtHandler) {
 	IsScrollbarAlwaysShown(orient as int) as bool
 	ScrollLines(lines as int) as bool
 	ScrollPages(pages as int) as bool
-	//ScrollWindow(dx as int, dy as int, rect as const_Rect_p = NULL) as void
+	ScrollWindow(dx as int, dy as int, rect? as const_Rect_p) as void
 	LineUp() as bool
 	LineDown() as bool
 	PageUp() as bool
@@ -83,8 +83,9 @@ Window = Class(EvtHandler) {
 	SendSizeEvent(flags as int = 0) as void
 	SendSizeEventToParent(flags as int = 0) as void
 	SetClientSize(width as int, height as int) as void
-	//SetClientSize(size as const_Size_r) as void
-	//SetClientSize(rect as const_Rect_r) as void
+	SetClientSizeWH(width as int, height as int) as void = SetClientSize
+	SetClientSizeSize(size as const_Size_r) as void = SetClientSize
+	SetClientSizeRect(rect as const_Rect_r) as void = SetClientSize
 	SetContainingSizer(sizer as Sizer_p) as void
 	SetInitialSize(size as const_Size_r = wxDefaultSize) as void
 	SetMaxClientSize(size as const_Size_r) as void
@@ -92,9 +93,9 @@ Window = Class(EvtHandler) {
 	SetMinClientSize(size as const_Size_r) as void
 	SetMinSize(size as const_Size_r) as void
 	SetSize(x as int, y as int, width as int, height as int, sizeFlags as int = wxSIZE_AUTO) as void
-	//SetSize(rect as const_Rect_r) as void
-	//SetSize(size as const_Size_r) as void
-	//SetSize(width as int, height as int) as void
+	SetSizeRect(rect as const_Rect_r) as void = SetSize
+	SetSizeSize(size as const_Size_r) as void = SetSize
+	SetSizeWH(width as int, height as int) as void = SetSize
 	SetSizeHints(minSize as const_Size_r, maxSize as const_Size_r = wxDefaultSize, incSize as const_Size_r = wxDefaultSize) as void
 	//SetSizeHints(minW as int, minH as int, maxW as int = -1, maxH as int = -1, incW as int = -1, incH as int = -1) as void
 	SetVirtualSize(width as int, height as int) as void
@@ -126,14 +127,22 @@ Window = Class(EvtHandler) {
 	Move(pt as const_Point_r, flags as int = wxSIZE_USE_EXISTING) as void
 	SetPosition(pt as const_Point_r) as void
 	// Coordinate conversion functions
-	//ClientToScreen(x as int_p, y as int_p) as void
-	ClientToScreen(pt as const_Point_r) as Point
+	ClientToScreenXY(x as int, y as int) as Tuple@gurax = \
+		R'''
+		pEntity_gurax->ClientToScreen(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
+	ClientToScreenPoint(pt as const_Point_r) as Point = ClientToScreen
 	ConvertDialogToPixels(pt as const_Point_r) as Point
 	//ConvertDialogToPixels(sz as const_Size_r) as Size
 	ConvertPixelsToDialog(pt as const_Point_r) as Point
 	//ConvertPixelsToDialog(sz as const_Size_r) as Size
-	//ScreenToClient(x as int_p, y as int_p) as void
-	ScreenToClient(pt as const_Point_r) as Point
+	ScreenToClientXY(x as int, y as int) as Tuple@gurax = \
+		R'''
+		pEntity_gurax->ScreenToClient(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
+	ScreenToClientPoint(pt as const_Point_r) as Point = ScreenToClient
 	// Drawing-related functions
 	ClearBackground() as void
 	Freeze() as void
@@ -204,10 +213,10 @@ Window = Class(EvtHandler) {
 	Hide() as bool
 	HideWithEffect(effect as ShowEffect, timeout as unsigned_int = 0) as bool
 	IsEnabled() as bool
-	//IsExposed(x as int, y as int) as bool
-	//IsExposed(pt as Point_r) as bool
-	//IsExposed(x as int, y as int, w as int, h as int) as bool
-	//IsExposed(rect as Rect_r) as bool
+	IsExposedXY(x as int, y as int) as bool = IsExposed
+	IsExposed(pt as Point_r) as bool
+	IsExposedXYWH(x as int, y as int, w as int, h as int) as bool = IsExposed
+	IsExposedRect(rect as Rect_r) as bool = IsExposed
 	IsShown() as bool
 	IsShownOnScreen() as bool
 	Disable() as bool
@@ -225,9 +234,9 @@ Window = Class(EvtHandler) {
 	UnsetToolTip() as void
 	// Popup/context menu functions
 	GetPopupMenuSelectionFromUser(menu as Menu_r, pos as const_Point_r = wxDefaultPosition) as int
-	//GetPopupMenuSelectionFromUser(menu as Menu_r, x as int, y as int) as int
+	GetPopupMenuSelectionFromUserXY(menu as Menu_r, x as int, y as int) as int = GetPopupMenuSelectionFromUser
 	PopupMenu(menu as Menu_p, pos as const_Point_r = wxDefaultPosition) as bool
-	//PopupMenu(menu as Menu_p, x as int, y as int) as bool
+	PopupMenuXY(menu as Menu_p, x as int, y as int) as bool = PopupMenu
 	GetValidator() as Validator_p
 	SetValidator(validator as const_Validator_r) as void
 	TransferDataFromWindow() as bool
@@ -267,7 +276,6 @@ Window = Class(EvtHandler) {
 	Layout() as bool
 	SetAutoLayout(autoLayout as bool) as void
 	GetAutoLayout() as bool
-
 	// Mouse functions
 	CaptureMouse() as void
 	//GetCaret() as Caret_p
@@ -278,7 +286,7 @@ Window = Class(EvtHandler) {
 	SetCursor(cursor as const_Cursor_r) as bool
 	WarpPointer(x as int, y as int) as void
 	// Miscellaneous functions
-	//HitTest(x as Coord, y as Coord) as HitTest
+	HitTestXY(x as Coord, y as Coord) as HitTest = HitTest
 	HitTest(pt as const_Point_r) as HitTest
 	GetBorder(flags as long) as Border
 	//GetBorder() as Border
@@ -297,6 +305,4 @@ Window = Class(EvtHandler) {
 	RegisterHotKey(hotkeyId as int, modifiers as int, virtualKeyCode as int) as bool
 	UnregisterHotKey(hotkeyId as int) as bool
 	UpdateWindowUI(flags as long = wxUPDATE_UI_NONE) as void
-
-
 }

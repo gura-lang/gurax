@@ -695,6 +695,34 @@ Gurax_ImplementMethodEx(wxWindow, ScrollPages_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.Window#ScrollWindow(dx as Number, dy as Number, rect? as wx.Rect)
+Gurax_DeclareMethodAlias(wxWindow, ScrollWindow_gurax, "ScrollWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, ScrollWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int dx = args_gurax.PickNumber<int>();
+	int dy = args_gurax.PickNumber<int>();
+	const wxRect* rect = args_gurax.IsValid()? args_gurax.Pick<Value_wxRect>().GetEntityPtr() : nullptr;
+	// Function body
+	pEntity_gurax->ScrollWindow(dx, dy, rect);
+	return Gurax::Value::nil();
+}
+
 // wx.Window#LineUp()
 Gurax_DeclareMethodAlias(wxWindow, LineUp_gurax, "LineUp")
 {
@@ -1520,6 +1548,82 @@ Gurax_ImplementMethodEx(wxWindow, SetClientSize_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
+// wx.Window#SetClientSizeWH(width as Number, height as Number)
+Gurax_DeclareMethodAlias(wxWindow, SetClientSizeWH_gurax, "SetClientSizeWH")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetClientSizeWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetClientSize(width, height);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetClientSizeSize(size as wx.Size)
+Gurax_DeclareMethodAlias(wxWindow, SetClientSizeSize_gurax, "SetClientSizeSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetClientSizeSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	// Function body
+	pEntity_gurax->SetClientSize(size);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetClientSizeRect(rect as wx.Rect)
+Gurax_DeclareMethodAlias(wxWindow, SetClientSizeRect_gurax, "SetClientSizeRect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetClientSizeRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	// Function body
+	pEntity_gurax->SetClientSize(rect);
+	return Gurax::Value::nil();
+}
+
 // wx.Window#SetContainingSizer(sizer as wx.Sizer)
 Gurax_DeclareMethodAlias(wxWindow, SetContainingSizer_gurax, "SetContainingSizer")
 {
@@ -1698,6 +1802,82 @@ Gurax_ImplementMethodEx(wxWindow, SetSize_gurax, processor_gurax, argument_gurax
 	int sizeFlags = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxSIZE_AUTO;
 	// Function body
 	pEntity_gurax->SetSize(x, y, width, height, sizeFlags);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetSizeRect(rect as wx.Rect)
+Gurax_DeclareMethodAlias(wxWindow, SetSizeRect_gurax, "SetSizeRect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetSizeRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	// Function body
+	pEntity_gurax->SetSize(rect);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetSizeSize(size as wx.Size)
+Gurax_DeclareMethodAlias(wxWindow, SetSizeSize_gurax, "SetSizeSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetSizeSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	// Function body
+	pEntity_gurax->SetSize(size);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetSizeWH(width as Number, height as Number)
+Gurax_DeclareMethodAlias(wxWindow, SetSizeWH_gurax, "SetSizeWH")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetSizeWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetSize(width, height);
 	return Gurax::Value::nil();
 }
 
@@ -2094,8 +2274,34 @@ Gurax_ImplementMethodEx(wxWindow, SetPosition_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.Window#ClientToScreen(pt as wx.Point)
-Gurax_DeclareMethodAlias(wxWindow, ClientToScreen_gurax, "ClientToScreen")
+// wx.Window#ClientToScreenXY(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxWindow, ClientToScreenXY_gurax, "ClientToScreenXY")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, ClientToScreenXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->ClientToScreen(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// wx.Window#ClientToScreenPoint(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxWindow, ClientToScreenPoint_gurax, "ClientToScreenPoint")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
@@ -2104,7 +2310,7 @@ Gurax_DeclareMethodAlias(wxWindow, ClientToScreen_gurax, "ClientToScreen")
 		"");
 }
 
-Gurax_ImplementMethodEx(wxWindow, ClientToScreen_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxWindow, ClientToScreenPoint_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -2169,8 +2375,34 @@ Gurax_ImplementMethodEx(wxWindow, ConvertPixelsToDialog_gurax, processor_gurax, 
 		pEntity_gurax->ConvertPixelsToDialog(pt)));
 }
 
-// wx.Window#ScreenToClient(pt as wx.Point)
-Gurax_DeclareMethodAlias(wxWindow, ScreenToClient_gurax, "ScreenToClient")
+// wx.Window#ScreenToClientXY(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxWindow, ScreenToClientXY_gurax, "ScreenToClientXY")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, ScreenToClientXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->ScreenToClient(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// wx.Window#ScreenToClientPoint(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxWindow, ScreenToClientPoint_gurax, "ScreenToClientPoint")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
@@ -2179,7 +2411,7 @@ Gurax_DeclareMethodAlias(wxWindow, ScreenToClient_gurax, "ScreenToClient")
 		"");
 }
 
-Gurax_ImplementMethodEx(wxWindow, ScreenToClient_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxWindow, ScreenToClientPoint_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -3595,6 +3827,112 @@ Gurax_ImplementMethodEx(wxWindow, IsEnabled_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.Window#IsExposedXY(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxWindow, IsExposedXY_gurax, "IsExposedXY")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsExposedXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->IsExposed(x, y);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#IsExposed(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxWindow, IsExposed_gurax, "IsExposed")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsExposed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsExposed(pt);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#IsExposedXYWH(x as Number, y as Number, w as Number, h as Number)
+Gurax_DeclareMethodAlias(wxWindow, IsExposedXYWH_gurax, "IsExposedXYWH")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsExposedXYWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	int w = args_gurax.PickNumber<int>();
+	int h = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->IsExposed(x, y, w, h);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#IsExposedRect(rect as wx.Rect)
+Gurax_DeclareMethodAlias(wxWindow, IsExposedRect_gurax, "IsExposedRect")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, IsExposedRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	wxRect& rect = value_rect.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsExposed(rect);
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.Window#IsShown()
 Gurax_DeclareMethodAlias(wxWindow, IsShown_gurax, "IsShown")
 {
@@ -3884,6 +4222,35 @@ Gurax_ImplementMethodEx(wxWindow, GetPopupMenuSelectionFromUser_gurax, processor
 	return new Gurax::Value_Number(rtn);
 }
 
+// wx.Window#GetPopupMenuSelectionFromUserXY(menu as wx.Menu, x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxWindow, GetPopupMenuSelectionFromUserXY_gurax, "GetPopupMenuSelectionFromUserXY")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetPopupMenuSelectionFromUserXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxMenu& value_menu = args_gurax.Pick<Value_wxMenu>();
+	wxMenu& menu = value_menu.GetEntity();
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = pEntity_gurax->GetPopupMenuSelectionFromUser(menu, x, y);
+	return new Gurax::Value_Number(rtn);
+}
+
 // wx.Window#PopupMenu(menu as wx.Menu, pos? as wx.Point)
 Gurax_DeclareMethodAlias(wxWindow, PopupMenu_gurax, "PopupMenu")
 {
@@ -3908,6 +4275,35 @@ Gurax_ImplementMethodEx(wxWindow, PopupMenu_gurax, processor_gurax, argument_gur
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	// Function body
 	bool rtn = pEntity_gurax->PopupMenu(menu, pos);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Window#PopupMenuXY(menu as wx.Menu, x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxWindow, PopupMenuXY_gurax, "PopupMenuXY")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, PopupMenuXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxMenu& value_menu = args_gurax.Pick<Value_wxMenu>();
+	wxMenu* menu = value_menu.GetEntityPtr();
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->PopupMenu(menu, x, y);
 	return new Gurax::Value_Bool(rtn);
 }
 
@@ -4776,6 +5172,32 @@ Gurax_ImplementMethodEx(wxWindow, WarpPointer_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
+// wx.Window#HitTestXY(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxWindow, HitTestXY_gurax, "HitTestXY")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, HitTestXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	wxHitTest rtn = pEntity_gurax->HitTest(x, y);
+	return new Gurax::Value_Number(rtn);
+}
+
 // wx.Window#HitTest(pt as wx.Point)
 Gurax_DeclareMethodAlias(wxWindow, HitTest_gurax, "HitTest")
 {
@@ -5155,6 +5577,7 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, IsScrollbarAlwaysShown_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ScrollLines_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ScrollPages_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ScrollWindow_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, LineUp_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, LineDown_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, PageUp_gurax));
@@ -5193,6 +5616,9 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, SendSizeEvent_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SendSizeEventToParent_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetClientSize_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetClientSizeWH_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetClientSizeSize_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetClientSizeRect_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetContainingSizer_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetInitialSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetMaxClientSize_gurax));
@@ -5200,6 +5626,9 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, SetMinClientSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetMinSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetSize_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetSizeRect_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetSizeSize_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetSizeWH_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetSizeHints_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetVirtualSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Center_gurax));
@@ -5217,10 +5646,12 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, MoveXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Move_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetPosition_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, ClientToScreen_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ClientToScreenXY_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ClientToScreenPoint_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertDialogToPixels_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertPixelsToDialog_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, ScreenToClient_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ScreenToClientXY_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ScreenToClientPoint_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ClearBackground_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Freeze_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Thaw_gurax));
@@ -5283,6 +5714,10 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, Hide_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, HideWithEffect_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, IsEnabled_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsExposedXY_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsExposed_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsExposedXYWH_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, IsExposedRect_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, IsShown_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, IsShownOnScreen_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Disable_gurax));
@@ -5296,7 +5731,9 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, SetToolTip_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, UnsetToolTip_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetPopupMenuSelectionFromUser_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetPopupMenuSelectionFromUserXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, PopupMenu_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, PopupMenuXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetValidator_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetValidator_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, TransferDataFromWindow_gurax));
@@ -5336,6 +5773,7 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, ReleaseMouse_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetCursor_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, WarpPointer_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, HitTestXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, HitTest_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetBorder_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, HasMultiplePages_gurax));

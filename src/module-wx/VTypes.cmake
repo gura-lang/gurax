@@ -4,17 +4,11 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxFontMetrics.cpp
-	VType_wxAffineMatrix2D.cpp
-	VType_wxVisualAttributes.cpp
-	VType_wxToolTip.cpp
+	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
-	VType_wxDropTarget.cpp
-	VType_wxLayoutConstraints.cpp
-	VType_wxCaret.cpp
-	VType_wxAboutDialogInfo.cpp
 	VType_wxActivateEvent.cpp
+	VType_wxAffineMatrix2D.cpp
 	VType_wxAnyButton.cpp
 	VType_wxApp.cpp
 	VType_wxAppConsole.cpp
@@ -29,6 +23,7 @@ set(SRCFILES_VTYPE
 	VType_wxBrush.cpp
 	VType_wxButton.cpp
 	VType_wxCalendarCtrl.cpp
+	VType_wxCaret.cpp
 	VType_wxCheckBox.cpp
 	VType_wxChildFocusEvent.cpp
 	VType_wxChoice.cpp
@@ -45,6 +40,7 @@ set(SRCFILES_VTYPE
 	VType_wxDateTime.cpp
 	VType_wxDC.cpp
 	VType_wxDropFilesEvent.cpp
+	VType_wxDropTarget.cpp
 	VType_wxEraseEvent.cpp
 	VType_wxEvent.cpp
 	VType_wxEventLoopBase.cpp
@@ -52,6 +48,7 @@ set(SRCFILES_VTYPE
 	VType_wxFlexGridSizer.cpp
 	VType_wxFocusEvent.cpp
 	VType_wxFont.cpp
+	VType_wxFontMetrics.cpp
 	VType_wxFrame.cpp
 	VType_wxGauge.cpp
 	VType_wxGDIObject.cpp
@@ -63,6 +60,7 @@ set(SRCFILES_VTYPE
 	VType_wxIdleEvent.cpp
 	VType_wxJoystickEvent.cpp
 	VType_wxKeyEvent.cpp
+	VType_wxLayoutConstraints.cpp
 	VType_wxListbook.cpp
 	VType_wxListBox.cpp
 	VType_wxListCtrl.cpp
@@ -114,8 +112,10 @@ set(SRCFILES_VTYPE
 	VType_wxToggleButton.cpp
 	VType_wxToolBar.cpp
 	VType_wxToolbook.cpp
+	VType_wxToolTip.cpp
 	VType_wxTreebook.cpp
 	VType_wxValidator.cpp
+	VType_wxVisualAttributes.cpp
 	VType_wxWindow.cpp
 	VType_wxWrapSizer.cpp
 )
