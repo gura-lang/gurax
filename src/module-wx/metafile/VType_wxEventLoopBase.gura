@@ -1,6 +1,6 @@
 //==============================================================================
 // VType_wxEventLoopBase.gura
 //==============================================================================
-EventLoopBase = Class {
+EventLoopBase = Class():loosePointer {
 	@include['wx/evtloop.h']
 }
