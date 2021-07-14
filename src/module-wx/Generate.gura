@@ -156,7 +156,7 @@ public:
 ${if (className == 'EvtHandler')}
 protected:
 	wxWeakRef<wx${className}> _pEntity;
-${elsif (className in ['Sizer', 'DropTarget', 'Caret'])}
+${elsif (className in ['Sizer', 'EventLoopBase', 'DropTarget', 'Caret'])}
 protected:
 	wx${className}* _pEntity;
 ${elsif (className == 'CmdLineParser')}
@@ -168,9 +168,6 @@ protected:
 	RefPtr<Value> _pValueUserData;
 public:
 	const Value& GetValueUserData() const { return *_pValueUserData; }
-${elsif (className == 'EventLoopBase')}
-protected:
-	wx${className}* _pEntity;
 ${elsif (!classNameParent)}
 protected:
 	wx${className} _entity;
@@ -195,7 +192,7 @@ ${end}
 public:
 	// Constructor
 	Value_wx${className}() = delete;
-${if (className in ['EvtHandler', 'Sizer', 'DropTarget', 'Caret'])}
+${if (className in ['EvtHandler', 'Sizer', 'EventLoopBase', 'DropTarget', 'Caret'])}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'Event')}
@@ -204,13 +201,10 @@ ${elsif (className == 'Event')}
 ${elsif (className == 'CmdLineParser')}
 	explicit Value_wx${className}(wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
-${elsif (className == 'EventLoopBase')}
-	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
-		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (!classNameParent)}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
-${elsif (classNameRoot in ['EvtHandler', 'Sizer', 'DropTarget', 'Caret'])}
+${elsif (classNameRoot in ['EvtHandler', 'Sizer', 'EventLoopBase', 'DropTarget', 'Caret'])}
 	explicit Value_wx${className}(wx${classNameRoot}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(pEntity, vtype) {}
 ${elsif (eventDerivFlag)}
