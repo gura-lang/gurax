@@ -493,6 +493,7 @@ ClassInfo = class {
 	classInfoParent:nil as ClassInfo
 	funcInfoConstructor as cbridge.FuncInfo
 	tmplConstructorImplementation as Template
+	loosePointerFlag as Bool = false
 	funcInfoTbl[] as cbridge.FuncInfo = []
 	includeFiles[] as String = []
 	__init__(className as String, classNameParent:nil as String) = {
@@ -558,6 +559,7 @@ path.Glob('metafile/*.gura').Each {|pathName|
 				sys.Exit(1)
 			}
 			classInfo = ClassInfo(className, classNameParent)
+			classInfo.loosePointerFlag = expr.right.attr.IsSet(`loosePointer)
 			expr.right.block.EachElem {|expr|
 				if (expr.IsIndexer()) {
 					params = expr.EachParam():list
@@ -646,7 +648,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 }
 '''
 
-tmplConstructorImplementation_Sizer = tR'''
+tmplConstructorImplementation_LoosePointer = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
@@ -675,9 +677,6 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${end}
 }
 '''
-
-tmplConstructorImplementation_DropTarget = tmplConstructorImplementation_Sizer
-tmplConstructorImplementation_Caret = tmplConstructorImplementation_Sizer
 
 classInfoTbl.Each {|classInfo|
 	if (classInfo.classNameParent) {
@@ -800,13 +799,13 @@ classInfoTbl.Each {|classInfo|
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
 	} elsif (classInfo.IsSizerOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
-		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Sizer
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_LoosePointer
 	} elsif (classInfo.IsDropTargetOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
-		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_DropTarget
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_LoosePointer
 	} elsif (classInfo.IsCaretOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
-		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Caret
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_LoosePointer
 	} else {
 		classInfo.typeInfo = typeInfo
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object
