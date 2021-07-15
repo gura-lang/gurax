@@ -156,7 +156,7 @@ public:
 ${if (className == 'EvtHandler')}
 protected:
 	wxWeakRef<wx${className}> _pEntity;
-${elsif (className in ['Sizer', 'EventLoopBase', 'DropTarget', 'Caret'])}
+${elsif (classInfo.loosePointerFlag)}
 protected:
 	wx${className}* _pEntity;
 ${elsif (className == 'CmdLineParser')}
@@ -192,7 +192,7 @@ ${end}
 public:
 	// Constructor
 	Value_wx${className}() = delete;
-${if (className in ['EvtHandler', 'Sizer', 'EventLoopBase', 'DropTarget', 'Caret'])}
+${if (className == 'EvtHandler' || classInfo.loosePointerFlag)}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'Event')}
@@ -204,7 +204,7 @@ ${elsif (className == 'CmdLineParser')}
 ${elsif (!classNameParent)}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
-${elsif (classNameRoot in ['EvtHandler', 'Sizer', 'EventLoopBase', 'DropTarget', 'Caret'])}
+${elsif (classNameRoot == 'EvtHandler' || classInfoRoot.loosePointerFlag)}
 	explicit Value_wx${className}(wx${classNameRoot}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(pEntity, vtype) {}
 ${elsif (eventDerivFlag)}
@@ -229,7 +229,7 @@ ${if (className in ['EvtHandler', 'Event'])}
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
 	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
-${elsif (className in ['Sizer', 'EventLoopBase', 'DropTarget', 'Caret'])}
+${elsif (classInfo.loosePointerFlag)}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity; }
@@ -521,20 +521,10 @@ ClassInfo = class {
 		classInfo = this.GetClassInfoRoot()
 		classInfo && classInfo.className == 'EvtHandler'
 	}
-	IsSizerOrDeriv() = {
-		(this.className == 'Sizer') && return(true)
+	IsLoosePointer() = {
+		this.loosePointerFlag && return(true)
 		classInfo = this.GetClassInfoRoot()
-		classInfo && classInfo.className == 'Sizer'
-	}
-	IsDropTargetOrDeriv() = {
-		(this.className == 'DropTarget') && return(true)
-		classInfo = this.GetClassInfoRoot()
-		classInfo && classInfo.className == 'DropTarget'
-	}
-	IsCaretOrDeriv() = {
-		(this.className == 'Caret') && return(true)
-		classInfo = this.GetClassInfoRoot()
-		classInfo && classInfo.className == 'Caret'
+		classInfo && classInfo.loosePointerFlag
 	}
 	EvalTmplConstructorImplementation(funcInfo as cbridge.FuncInfo):map = {
 		this.tmplConstructorImplementation.Eval()
@@ -701,7 +691,7 @@ r.DeclareType('EventType', 'wxEventType', 'wxEventType', 'wxEventType',
 	''')
 
 classInfoTbl.Each {|classInfo|
-	if (classInfo.IsEvtHandlerOrDeriv() || classInfo.IsSizerOrDeriv()) {
+	if (classInfo.IsEvtHandlerOrDeriv() || classInfo.IsLoosePointer()) {
 		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
 			'wx' + classInfo.className, 'wx.' + classInfo.className,
 			codePicker = R'''
@@ -797,13 +787,7 @@ classInfoTbl.Each {|classInfo|
 	if (classInfo.IsEvtHandlerOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
-	} elsif (classInfo.IsSizerOrDeriv()) {
-		classInfo.typeInfo = typeInfo_p
-		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_LoosePointer
-	} elsif (classInfo.IsDropTargetOrDeriv()) {
-		classInfo.typeInfo = typeInfo_p
-		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_LoosePointer
-	} elsif (classInfo.IsCaretOrDeriv()) {
+	} elsif (classInfo.IsLoosePointer()) {
 		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_LoosePointer
 	} else {
@@ -834,7 +818,6 @@ classInfoTbl.Each {|classInfo|
 	classNames.Add(className)
 	eventDerivFlag = classInfo.IsEventDeriv()
 	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	sizerOrDerivFlag = classInfo.IsSizerOrDeriv()
 	Println(className)
 	tmplHeader.Render(fileNameHeader)
 	tmplSource.Render(fileNameSource)
