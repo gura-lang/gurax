@@ -2,4 +2,91 @@
 // VType_wxGridSizer.gura
 //==============================================================================
 GridSizer = Class(Sizer) {
+	__init__(args* as any) = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("cols", VTYPE_Number);
+				pDeclCallable->DeclareArg("vgap", VTYPE_Number);
+				pDeclCallable->DeclareArg("hgap", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int cols = args.PickNumber<int>();
+			int vgap = args.PickNumber<int>();
+			int hgap = args.PickNumber<int>();
+			wxGridSizer* rtn = new wxGridSizer(cols, vgap, hgap);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridSizer(rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("cols", VTYPE_Number);
+				pDeclCallable->DeclareArg("gap", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int cols = args.PickNumber<int>();
+			const wxSize& gap = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxSize(0, 0);
+			wxGridSizer* rtn = new wxGridSizer(cols, gap);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridSizer(rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rows", VTYPE_Number);
+				pDeclCallable->DeclareArg("cols", VTYPE_Number);
+				pDeclCallable->DeclareArg("vgap", VTYPE_Number);
+				pDeclCallable->DeclareArg("hgap", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int rows = args.PickNumber<int>();
+			int cols = args.PickNumber<int>();
+			int vgap = args.PickNumber<int>();
+			int hgap = args.PickNumber<int>();
+			wxGridSizer* rtn = new wxGridSizer(rows, cols, vgap, hgap);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridSizer(rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rows", VTYPE_Number);
+				pDeclCallable->DeclareArg("cols", VTYPE_Number);
+				pDeclCallable->DeclareArg("gap", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int rows = args.PickNumber<int>();
+			int cols = args.PickNumber<int>();
+			const wxSize& gap = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxSize(0, 0);
+			wxGridSizer* rtn = new wxGridSizer(rows, cols, gap);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridSizer(rtn));
+		} while (0);
+		return Value::nil();
+		'''
+	GetCols() as int
+	GetRows() as int
+	GetEffectiveColsCount() as int
+	GetEffectiveRowsCount() as int
+	GetHGap() as int
+	GetVGap() as int
+	SetCols(cols as int) as void
+	SetHGap(gap as int) as void
+	SetRows(rows as int) as void
+	SetVGap(gap as int) as void
+	CalcMin() as Size
+	RecalcSizes() as void
 }
