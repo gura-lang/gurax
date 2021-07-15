@@ -22,4 +22,15 @@ Bitmap = Class(GDIObject) {
 	SetMask(mask as Mask_p) as void
 	SetPalette(palette as const_Palette_r) as void
 	SetWidth(width as int) as void
+	// Static Public Member Functions
+	AddHandler(handler as GDIImageHandler_p):static as void
+	CleanUpHandlers():static as void
+	FindHandler(name as const_String_r):static as GDIImageHandler_p
+	//FindHandler(extension as const_String_r, bitmapType as BitmapType):static as GDIImageHandler_p
+	//FindHandler(bitmapType as BitmapType):static as GDIImageHandler_p
+	//GetHandlers():static as List
+	InitStandardHandlers():static as void
+	InsertHandler(handler as GDIImageHandler_p):static as void
+	NewFromPNGData(data as const_void_p, size as size_t):static as Bitmap
+	RemoveHandler(name as const_String_r):static as bool
 }

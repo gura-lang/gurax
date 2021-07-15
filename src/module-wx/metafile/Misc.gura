@@ -7,3 +7,8 @@ Image = Class(Object) {
 Mask = Class(Object) {
 }
 
+BitmapHandler = Class():loosePointer {
+}
+
+GDIImageHandler = Class():loosePointer {
+}

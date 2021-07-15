@@ -442,6 +442,142 @@ Gurax_ImplementMethodEx(wxBitmap, SetWidth_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
+// wx.Bitmap.AddHandler(handler as wx.GDIImageHandler)
+Gurax_DeclareClassMethodAlias(wxBitmap, AddHandler_gurax, "AddHandler")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("handler", VTYPE_wxGDIImageHandler, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxBitmap, AddHandler_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxGDIImageHandler& value_handler = args_gurax.Pick<Value_wxGDIImageHandler>();
+	wxGDIImageHandler* handler = value_handler.GetEntityPtr();
+	// Function body
+	wxBitmap::AddHandler(handler);
+	return Gurax::Value::nil();
+}
+
+// wx.Bitmap.CleanUpHandlers()
+Gurax_DeclareClassMethodAlias(wxBitmap, CleanUpHandlers_gurax, "CleanUpHandlers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxBitmap, CleanUpHandlers_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxBitmap::CleanUpHandlers();
+	return Gurax::Value::nil();
+}
+
+// wx.Bitmap.FindHandler(name as String)
+Gurax_DeclareClassMethodAlias(wxBitmap, FindHandler_gurax, "FindHandler")
+{
+	Declare(VTYPE_wxGDIImageHandler, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxBitmap, FindHandler_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGDIImageHandler(
+		wxBitmap::FindHandler(name)));
+}
+
+// wx.Bitmap.InitStandardHandlers()
+Gurax_DeclareClassMethodAlias(wxBitmap, InitStandardHandlers_gurax, "InitStandardHandlers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxBitmap, InitStandardHandlers_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxBitmap::InitStandardHandlers();
+	return Gurax::Value::nil();
+}
+
+// wx.Bitmap.InsertHandler(handler as wx.GDIImageHandler)
+Gurax_DeclareClassMethodAlias(wxBitmap, InsertHandler_gurax, "InsertHandler")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("handler", VTYPE_wxGDIImageHandler, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxBitmap, InsertHandler_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxGDIImageHandler& value_handler = args_gurax.Pick<Value_wxGDIImageHandler>();
+	wxGDIImageHandler* handler = value_handler.GetEntityPtr();
+	// Function body
+	wxBitmap::InsertHandler(handler);
+	return Gurax::Value::nil();
+}
+
+// wx.Bitmap.NewFromPNGData(data as Pointer, size as Number)
+Gurax_DeclareClassMethodAlias(wxBitmap, NewFromPNGData_gurax, "NewFromPNGData")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxBitmap, NewFromPNGData_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
+	size_t size = args_gurax.PickNumber<size_t>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		wxBitmap::NewFromPNGData(data, size)));
+}
+
+// wx.Bitmap.RemoveHandler(name as String)
+Gurax_DeclareClassMethodAlias(wxBitmap, RemoveHandler_gurax, "RemoveHandler")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxBitmap, RemoveHandler_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	bool rtn = wxBitmap::RemoveHandler(name);
+	return new Gurax::Value_Bool(rtn);
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -476,6 +612,13 @@ void VType_wxBitmap::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxBitmap, SetMask_gurax));
 	Assign(Gurax_CreateMethod(wxBitmap, SetPalette_gurax));
 	Assign(Gurax_CreateMethod(wxBitmap, SetWidth_gurax));
+	Assign(Gurax_CreateMethod(wxBitmap, AddHandler_gurax));
+	Assign(Gurax_CreateMethod(wxBitmap, CleanUpHandlers_gurax));
+	Assign(Gurax_CreateMethod(wxBitmap, FindHandler_gurax));
+	Assign(Gurax_CreateMethod(wxBitmap, InitStandardHandlers_gurax));
+	Assign(Gurax_CreateMethod(wxBitmap, InsertHandler_gurax));
+	Assign(Gurax_CreateMethod(wxBitmap, NewFromPNGData_gurax));
+	Assign(Gurax_CreateMethod(wxBitmap, RemoveHandler_gurax));
 }
 
 //------------------------------------------------------------------------------

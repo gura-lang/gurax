@@ -9,6 +9,8 @@
 #include "VType_wxEventType.h"
 #include "VType_wxImage.h"
 #include "VType_wxMask.h"
+#include "VType_wxBitmapHandler.h"
+#include "VType_wxGDIImageHandler.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"

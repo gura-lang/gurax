@@ -6,6 +6,8 @@ set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
 	VType_wxImage.cpp
 	VType_wxMask.cpp
+	VType_wxBitmapHandler.cpp
+	VType_wxGDIImageHandler.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
