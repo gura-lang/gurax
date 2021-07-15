@@ -36,7 +36,8 @@ static bool 	RemoveHandler (const wxString &name)
 
 txt.EachLine {|line|
 	if (m = line.Match('^@(.+)')) {
-		Printf('// %s\n', m[1])
+		Println('\t//--------------------------------------------------------------------------')
+		Printf('\t// %s\n', m[1])
 	} elsif (m = line.Match(r'^\s')) {
 		// nothing to do
 	} elsif (m = line.Match(r'^(.+[^\w])(\w+)\s*\(([^)]*)\)')) {
@@ -61,6 +62,6 @@ txt.EachLine {|line|
 			}
 			str
 		}.Join(', ')
-		Printf('%s(%s)%s as %s\n', funcName, argsMod, attrs, typeRtn)
+		Printf('\t%s(%s)%s as %s\n', funcName, argsMod, attrs, typeRtn)
 	}
 }
