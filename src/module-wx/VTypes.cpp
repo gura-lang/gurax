@@ -12,10 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxImage);
-	frame.Assign(VTYPE_wxMask);
-	frame.Assign(VTYPE_wxBitmapHandler);
-	frame.Assign(VTYPE_wxGDIImageHandler);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -29,6 +25,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAuiNotebook);
 	frame.Assign(VTYPE_wxBitmap);
 	frame.Assign(VTYPE_wxBitmapButton);
+	frame.Assign(VTYPE_wxBitmapHandler);
 	frame.Assign(VTYPE_wxBitmapToggleButton);
 	frame.Assign(VTYPE_wxBookCtrlBase);
 	frame.Assign(VTYPE_wxBoxSizer);
@@ -63,6 +60,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFontMetrics);
 	frame.Assign(VTYPE_wxFrame);
 	frame.Assign(VTYPE_wxGauge);
+	frame.Assign(VTYPE_wxGDIImageHandler);
 	frame.Assign(VTYPE_wxGDIObject);
 	frame.Assign(VTYPE_wxGridBagSizer);
 	frame.Assign(VTYPE_wxGridSizer);
@@ -70,12 +68,14 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxIcon);
 	frame.Assign(VTYPE_wxIconBundle);
 	frame.Assign(VTYPE_wxIdleEvent);
+	frame.Assign(VTYPE_wxImage);
 	frame.Assign(VTYPE_wxJoystickEvent);
 	frame.Assign(VTYPE_wxKeyEvent);
 	frame.Assign(VTYPE_wxLayoutConstraints);
 	frame.Assign(VTYPE_wxListbook);
 	frame.Assign(VTYPE_wxListBox);
 	frame.Assign(VTYPE_wxListCtrl);
+	frame.Assign(VTYPE_wxMask);
 	frame.Assign(VTYPE_wxMemoryDC);
 	frame.Assign(VTYPE_wxMenu);
 	frame.Assign(VTYPE_wxMenuBar);

@@ -4,10 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxImage.cpp
-	VType_wxMask.cpp
-	VType_wxBitmapHandler.cpp
-	VType_wxGDIImageHandler.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -21,6 +17,7 @@ set(SRCFILES_VTYPE
 	VType_wxAuiNotebook.cpp
 	VType_wxBitmap.cpp
 	VType_wxBitmapButton.cpp
+	VType_wxBitmapHandler.cpp
 	VType_wxBitmapToggleButton.cpp
 	VType_wxBookCtrlBase.cpp
 	VType_wxBoxSizer.cpp
@@ -55,6 +52,7 @@ set(SRCFILES_VTYPE
 	VType_wxFontMetrics.cpp
 	VType_wxFrame.cpp
 	VType_wxGauge.cpp
+	VType_wxGDIImageHandler.cpp
 	VType_wxGDIObject.cpp
 	VType_wxGridBagSizer.cpp
 	VType_wxGridSizer.cpp
@@ -62,12 +60,14 @@ set(SRCFILES_VTYPE
 	VType_wxIcon.cpp
 	VType_wxIconBundle.cpp
 	VType_wxIdleEvent.cpp
+	VType_wxImage.cpp
 	VType_wxJoystickEvent.cpp
 	VType_wxKeyEvent.cpp
 	VType_wxLayoutConstraints.cpp
 	VType_wxListbook.cpp
 	VType_wxListBox.cpp
 	VType_wxListCtrl.cpp
+	VType_wxMask.cpp
 	VType_wxMemoryDC.cpp
 	VType_wxMenu.cpp
 	VType_wxMenuBar.cpp

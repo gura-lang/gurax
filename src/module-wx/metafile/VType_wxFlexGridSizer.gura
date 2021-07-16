@@ -2,4 +2,19 @@
 // VType_wxFlexGridSizer.gura
 //==============================================================================
 FlexGridSizer = Class(GridSizer) {
+
+	AddGrowableCol(idx as size_t, proportion as int = 0) as void
+	AddGrowableRow(idx as size_t, proportion as int = 0) as void
+	GetFlexibleDirection() as int
+	GetNonFlexibleGrowMode() as FlexSizerGrowMode
+	IsColGrowable(idx as size_t) as bool
+	IsRowGrowable(idx as size_t) as bool
+	RemoveGrowableCol(idx as size_t) as void
+	RemoveGrowableRow(idx as size_t) as void
+	SetFlexibleDirection(direction as int) as void
+	SetNonFlexibleGrowMode(mode as FlexSizerGrowMode) as void
+	//GetRowHeights() as ArrayInt
+	//GetColWidths() as ArrayInt
+	RecalcSizes() as void
+	CalcMin() as Size
 }
