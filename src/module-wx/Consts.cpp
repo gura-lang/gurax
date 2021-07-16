@@ -123,6 +123,27 @@ void AssignConsts(Frame& frame)
 
 	Gurax_AssignWxValue(VERTICAL);
 	Gurax_AssignWxValue(HORIZONTAL);
+    // wx.Sizer
+    Gurax_AssignWxValue(TOP);
+    Gurax_AssignWxValue(BOTTOM);
+    Gurax_AssignWxValue(LEFT);
+    Gurax_AssignWxValue(RIGHT);
+    Gurax_AssignWxValue(ALL);
+    Gurax_AssignWxValue(EXPAND);
+    Gurax_AssignWxValue(SHAPED);
+    Gurax_AssignWxValue(FIXED_MINSIZE);
+    Gurax_AssignWxValue(RESERVE_SPACE_EVEN_IF_HIDDEN);
+    Gurax_AssignWxValue(ALIGN_CENTER);
+    Gurax_AssignWxValue(ALIGN_CENTRE);
+    Gurax_AssignWxValue(ALIGN_LEFT);
+    Gurax_AssignWxValue(ALIGN_RIGHT);
+    Gurax_AssignWxValue(ALIGN_TOP);
+    Gurax_AssignWxValue(ALIGN_BOTTOM);
+    Gurax_AssignWxValue(ALIGN_CENTER_VERTICAL);
+    Gurax_AssignWxValue(ALIGN_CENTRE_VERTICAL);
+    Gurax_AssignWxValue(ALIGN_CENTER_HORIZONTAL);
+    Gurax_AssignWxValue(ALIGN_CENTRE_HORIZONTAL);
+
 }
 
 Gurax_EndModuleScope(wx)
