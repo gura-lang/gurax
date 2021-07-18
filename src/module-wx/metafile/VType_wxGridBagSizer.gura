@@ -3,4 +3,32 @@
 //==============================================================================
 GridBagSizer = Class(FlexGridSizer) {
 	@include['wx/gbsizer.h']
+	CalcMin() as Size
+	FindItemAtPoint(pt as const_Point_r) as GBSizerItem_p
+	FindItemAtPosition(pos as const_GBPosition_r) as GBSizerItem_p
+	FindItemWithData(userData as const_Object_p) as GBSizerItem_p
+	GetCellSize(row as int, col as int) as Size
+	GetEmptyCellSize() as Size
+	RecalcSizes() as void
+	SetEmptyCellSize(sz as const_Size_r) as void
+	Add(window as Window_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	//Add(sizer as Sizer_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	//Add(item as GBSizerItem_p) as SizerItem_p
+	//Add(width as int, height as int, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	CheckForIntersection(item as GBSizerItem_p, excludeItem as GBSizerItem_p = NULL) as bool
+	//CheckForIntersection(pos as const_GBPosition_r, span as const_GBSpan_r, excludeItem as GBSizerItem_p = NULL) as bool
+	FindItem(window as Window_p) as GBSizerItem_p
+	//FindItem(sizer as Sizer_p) as GBSizerItem_p
+	GetItemPosition(window as Window_p) as GBPosition
+	//GetItemPosition(sizer as Sizer_p) as GBPosition
+	//GetItemPosition(index as size_t) as GBPosition
+	GetItemSpan(window as Window_p) as GBSpan
+	//GetItemSpan(sizer as Sizer_p) as GBSpan
+	//GetItemSpan(index as size_t) as GBSpan
+	SetItemPosition(window as Window_p, pos as const_GBPosition_r) as bool
+	//SetItemPosition(sizer as Sizer_p, pos as const_GBPosition_r) as bool
+	//SetItemPosition(index as size_t, pos as const_GBPosition_r) as bool
+	SetItemSpan(window as Window_p, span as const_GBSpan_r) as bool
+	//SetItemSpan(sizer as Sizer_p, span as const_GBSpan_r) as bool
+	//SetItemSpan(index as size_t, span as const_GBSpan_r) as bool
 }

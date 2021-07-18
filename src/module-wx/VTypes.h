@@ -7,6 +7,9 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
+#include "VType_wxGBPosition.h"
+#include "VType_wxGBSpan.h"
+#include "VType_wxGBSizerItem.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"

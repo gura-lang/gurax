@@ -1,3 +1,15 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+GBPosition = Class {
+	@include['wx/gbsizer.h']
+}
+
+GBSpan = Class {
+	@include['wx/gbsizer.h']
+}
+
+GBSizerItem = Class(SizerItem) {
+	@include['wx/gbsizer.h']
+}
+
