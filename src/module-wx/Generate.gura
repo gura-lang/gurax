@@ -321,7 +321,7 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of constructor
 //------------------------------------------------------------------------------
 ${if (funcInfoConstructor)}
-${classInfo.EvalTmplConstructorImplementation(funcInfoConstructor)}
+${classInfo.EvalTmplConstructorImplementation(className, funcInfoConstructor)}
 ${end}
 
 //-----------------------------------------------------------------------------
@@ -483,6 +483,24 @@ Gurax_ImplementClassMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_g
 }
 '''
 
+tmplConsts = tR'''
+//==============================================================================
+// Consts.cpp
+//==============================================================================
+#include "stdafx.h"
+
+Gurax_BeginModuleScope(wx)
+
+void AssignConsts(Frame& frame)
+{
+	${constNameTbl.Each {|constName|}}
+	frame.Assign("${constName}", new Value_Number(wx${constName}));
+	${end}
+}
+
+Gurax_EndModuleScope(wx)
+'''
+
 EvalTmplMethodImplementation(className as String, funcInfo as cbridge.FuncInfo):map = {
 	cond(funcInfo.staticFlag, tmplClassMethodImplementation, tmplMethodImplementation).Eval()
 }
@@ -527,12 +545,13 @@ ClassInfo = class {
 		classInfo = this.GetClassInfoRoot()
 		classInfo && classInfo.loosePointerFlag
 	}
-	EvalTmplConstructorImplementation(funcInfo as cbridge.FuncInfo):map = {
+	EvalTmplConstructorImplementation(className as String, funcInfo as cbridge.FuncInfo):map = {
 		this.tmplConstructorImplementation.Eval()
 	}
 }
 
 classInfoTbl = []
+constNameTbl = []
 
 path.Glob('metafile/*.gura').Each {|pathName|
 	fileName = path.FileName(pathName)
@@ -575,6 +594,18 @@ path.Glob('metafile/*.gura').Each {|pathName|
 				}
 			}
 			classInfoTbl.Add(classInfo)
+		} elsif (expr.IsIndexer()) {
+			params = expr.EachParam():list
+			if (!expr.car.IsIdentifier()) {
+				sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
+				sys.Exit(1)
+			}
+			if (expr.car.symbolName == '@const') {
+				constNameTbl.Append(params:*symbolName)
+			} else {
+				sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
+				sys.Exit(1)
+			}
 		}
 	}
 }
@@ -800,29 +831,38 @@ classInfoTbl.Each {|classInfo|
 	}
 }
 
-fileNamesHeader = []
-fileNamesSource = []
-classNames = []
-classInfoTbl.Each {|classInfo|
-	classInfoParent = classInfo.classInfoParent
-	classInfoRoot = classInfo.GetClassInfoRoot()
-	className = classInfo.className
-	classNameParent = cond(classInfoParent, classInfoParent.className)
-	classNameRoot = cond(classInfoRoot, classInfoRoot.className)
-	funcInfoConstructor = classInfo.funcInfoConstructor
-	funcInfoTbl = classInfo.funcInfoTbl
-	funcInfoVirtualTbl = funcInfoTbl.Filter(funcInfoTbl:*virtualFlag):list
-	fileNameHeader = Format('VType_wx%s.h', className)
-	fileNameSource = Format('VType_wx%s.cpp', className)
-	fileNamesHeader.Add(fileNameHeader)
-	fileNamesSource.Add(fileNameSource)
-	classNames.Add(className)
-	eventDerivFlag = classInfo.IsEventDeriv()
-	evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
-	Println(className)
-	tmplHeader.Render(fileNameHeader)
-	tmplSource.Render(fileNameSource)
+GenerateVType(classInfoTbl[] as ClassInfo) = {
+	fileNamesHeader = []
+	fileNamesSource = []
+	classNames = []
+	classInfoTbl.Each {|classInfo|
+		classInfoParent = classInfo.classInfoParent
+		classInfoRoot = classInfo.GetClassInfoRoot()
+		className = classInfo.className
+		classNameParent = cond(classInfoParent, classInfoParent.className)
+		classNameRoot = cond(classInfoRoot, classInfoRoot.className)
+		funcInfoConstructor = classInfo.funcInfoConstructor
+		funcInfoTbl = classInfo.funcInfoTbl
+		funcInfoVirtualTbl = funcInfoTbl.Filter(funcInfoTbl:*virtualFlag):list
+		fileNameHeader = Format('VType_wx%s.h', className)
+		fileNameSource = Format('VType_wx%s.cpp', className)
+		fileNamesHeader.Add(fileNameHeader)
+		fileNamesSource.Add(fileNameSource)
+		classNames.Add(className)
+		eventDerivFlag = classInfo.IsEventDeriv()
+		evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
+		Println(className)
+		tmplHeader.Render(fileNameHeader)
+		tmplSource.Render(fileNameSource)
+	}
+	tmplVTypesH.Render('VTypes.h')
+	tmplVTypesCPP.Render('VTypes.cpp')
+	tmplVTypesCMake.Render('VTypes.cmake')
 }
-tmplVTypesH.Render('VTypes.h')
-tmplVTypesCPP.Render('VTypes.cpp')
-tmplVTypesCMake.Render('VTypes.cmake')
+
+GenerateConst(constNameTbl[] as String) = {
+	tmplConsts.Render('Consts.cpp')
+}
+
+GenerateVType(classInfoTbl)
+GenerateConst(constNameTbl.Sort())
