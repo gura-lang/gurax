@@ -2,7 +2,81 @@
 // VType_wxFlexGridSizer.gura
 //==============================================================================
 FlexGridSizer = Class(GridSizer) {
-
+	__init__(args* as any) = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("cols", VTYPE_Number);
+				pDeclCallable->DeclareArg("vgap", VTYPE_Number);
+				pDeclCallable->DeclareArg("hgap", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int cols = args.PickNumber<int>();
+			int vgap = args.PickNumber<int>();
+			int hgap = args.PickNumber<int>();
+			wxFlexGridSizer* rtn = new wxFlexGridSizer(cols, vgap, hgap);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("cols", VTYPE_Number);
+				pDeclCallable->DeclareArg("gap", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int cols = args.PickNumber<int>();
+			const wxSize& gap = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxSize(0, 0);
+			wxFlexGridSizer* rtn = new wxFlexGridSizer(cols, gap);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rows", VTYPE_Number);
+				pDeclCallable->DeclareArg("cols", VTYPE_Number);
+				pDeclCallable->DeclareArg("vgap", VTYPE_Number);
+				pDeclCallable->DeclareArg("hgap", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int rows = args.PickNumber<int>();
+			int cols = args.PickNumber<int>();
+			int vgap = args.PickNumber<int>();
+			int hgap = args.PickNumber<int>();
+			wxFlexGridSizer* rtn = new wxFlexGridSizer(rows, cols, vgap, hgap);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rows", VTYPE_Number);
+				pDeclCallable->DeclareArg("cols", VTYPE_Number);
+				pDeclCallable->DeclareArg("gap", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int rows = args.PickNumber<int>();
+			int cols = args.PickNumber<int>();
+			const wxSize& gap = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxSize(0, 0);
+			wxFlexGridSizer* rtn = new wxFlexGridSizer(rows, cols, gap);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
+		} while (0);
+		return Value::nil();
+		'''
 	AddGrowableCol(idx as size_t, proportion as int = 0) as void
 	AddGrowableRow(idx as size_t, proportion as int = 0) as void
 	GetFlexibleDirection() as int
@@ -13,8 +87,22 @@ FlexGridSizer = Class(GridSizer) {
 	RemoveGrowableRow(idx as size_t) as void
 	SetFlexibleDirection(direction as int) as void
 	SetNonFlexibleGrowMode(mode as FlexSizerGrowMode) as void
-	//GetRowHeights() as ArrayInt
-	//GetColWidths() as ArrayInt
+	GetRowHeights() as List@gurax = \
+		R'''
+		auto rtn = pEntity_gurax->GetRowHeights();
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		pValueOwner->reserve(rtn.GetCount());
+		for (int n : rtn) pValueOwner->push_back(new Value_Number(n));
+		return new Value_List(pValueOwner.release());
+		'''
+	GetColWidths() as List@gurax = \
+		R'''
+		auto rtn = pEntity_gurax->GetColWidths();
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+		pValueOwner->reserve(rtn.GetCount());
+		for (int n : rtn) pValueOwner->push_back(new Value_Number(n));
+		return new Value_List(pValueOwner.release());
+		'''
 	RecalcSizes() as void
 	CalcMin() as Size
 }

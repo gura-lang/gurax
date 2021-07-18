@@ -28,6 +28,96 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.FlexGridSizer(args* as Any) {block?}
+Gurax_DeclareConstructorAlias(FlexGridSizer_gurax, "FlexGridSizer")
+{
+	Declare(VTYPE_wxFlexGridSizer, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.FlexGridSizer.");
+}
+
+Gurax_ImplementConstructorEx(FlexGridSizer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("cols", VTYPE_Number);
+			pDeclCallable->DeclareArg("vgap", VTYPE_Number);
+			pDeclCallable->DeclareArg("hgap", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		int cols = args.PickNumber<int>();
+		int vgap = args.PickNumber<int>();
+		int hgap = args.PickNumber<int>();
+		wxFlexGridSizer* rtn = new wxFlexGridSizer(cols, vgap, hgap);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
+	} while (0);
+	Error::Clear();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("cols", VTYPE_Number);
+			pDeclCallable->DeclareArg("gap", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		int cols = args.PickNumber<int>();
+		const wxSize& gap = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxSize(0, 0);
+		wxFlexGridSizer* rtn = new wxFlexGridSizer(cols, gap);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
+	} while (0);
+	Error::Clear();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("rows", VTYPE_Number);
+			pDeclCallable->DeclareArg("cols", VTYPE_Number);
+			pDeclCallable->DeclareArg("vgap", VTYPE_Number);
+			pDeclCallable->DeclareArg("hgap", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		int rows = args.PickNumber<int>();
+		int cols = args.PickNumber<int>();
+		int vgap = args.PickNumber<int>();
+		int hgap = args.PickNumber<int>();
+		wxFlexGridSizer* rtn = new wxFlexGridSizer(rows, cols, vgap, hgap);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
+	} while (0);
+	Error::Clear();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("rows", VTYPE_Number);
+			pDeclCallable->DeclareArg("cols", VTYPE_Number);
+			pDeclCallable->DeclareArg("gap", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		int rows = args.PickNumber<int>();
+		int cols = args.PickNumber<int>();
+		const wxSize& gap = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxSize(0, 0);
+		wxFlexGridSizer* rtn = new wxFlexGridSizer(rows, cols, gap);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -268,6 +358,52 @@ Gurax_ImplementMethodEx(wxFlexGridSizer, SetNonFlexibleGrowMode_gurax, processor
 	return Gurax::Value::nil();
 }
 
+// wx.FlexGridSizer#GetRowHeights()
+Gurax_DeclareMethodAlias(wxFlexGridSizer, GetRowHeights_gurax, "GetRowHeights")
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxFlexGridSizer, GetRowHeights_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	auto rtn = pEntity_gurax->GetRowHeights();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(rtn.GetCount());
+	for (int n : rtn) pValueOwner->push_back(new Value_Number(n));
+	return new Value_List(pValueOwner.release());
+}
+
+// wx.FlexGridSizer#GetColWidths()
+Gurax_DeclareMethodAlias(wxFlexGridSizer, GetColWidths_gurax, "GetColWidths")
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxFlexGridSizer, GetColWidths_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	auto rtn = pEntity_gurax->GetColWidths();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(rtn.GetCount());
+	for (int n : rtn) pValueOwner->push_back(new Value_Number(n));
+	return new Value_List(pValueOwner.release());
+}
+
 // wx.FlexGridSizer#RecalcSizes()
 Gurax_DeclareMethodAlias(wxFlexGridSizer, RecalcSizes_gurax, "RecalcSizes")
 {
@@ -322,7 +458,7 @@ void VType_wxFlexGridSizer::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGridSizer, Flag::Mutable);
+	Declare(VTYPE_wxGridSizer, Flag::Mutable, Gurax_CreateConstructor(FlexGridSizer_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxFlexGridSizer, AddGrowableCol_gurax));
 	Assign(Gurax_CreateMethod(wxFlexGridSizer, AddGrowableRow_gurax));
@@ -334,6 +470,8 @@ void VType_wxFlexGridSizer::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxFlexGridSizer, RemoveGrowableRow_gurax));
 	Assign(Gurax_CreateMethod(wxFlexGridSizer, SetFlexibleDirection_gurax));
 	Assign(Gurax_CreateMethod(wxFlexGridSizer, SetNonFlexibleGrowMode_gurax));
+	Assign(Gurax_CreateMethod(wxFlexGridSizer, GetRowHeights_gurax));
+	Assign(Gurax_CreateMethod(wxFlexGridSizer, GetColWidths_gurax));
 	Assign(Gurax_CreateMethod(wxFlexGridSizer, RecalcSizes_gurax));
 	Assign(Gurax_CreateMethod(wxFlexGridSizer, CalcMin_gurax));
 }
