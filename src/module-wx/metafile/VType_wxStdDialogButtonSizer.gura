@@ -2,4 +2,12 @@
 // VType_wxStdDialogButtonSizer.gura
 //==============================================================================
 StdDialogButtonSizer = Class(BoxSizer) {
+	__init__()
+	AddButton(button as Button_p) as void
+	Realize() as void
+	SetAffirmativeButton(button as Button_p) as void
+	SetCancelButton(button as Button_p) as void
+	SetNegativeButton(button as Button_p) as void
+	RecalcSizes() as void
+	CalcMin() as Size
 }

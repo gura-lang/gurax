@@ -2,5 +2,44 @@
 // VType_wxStaticBoxSizer.gura
 //==============================================================================
 StaticBoxSizer = Class(BoxSizer) {
-	//__init__()
+	__init__(args* as any) = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("box", VTYPE_wxStaticBox);
+				pDeclCallable->DeclareArg("orient", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			wxStaticBox* box = args.Pick<Value_wxStaticBox>().GetEntityPtr();
+			int orient = args.PickNumber<int>();
+			wxStaticBoxSizer* rtn = new wxStaticBoxSizer(box, orient);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxStaticBoxSizer(rtn));
+		} while (0);
+		Error::Clear();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("orient", VTYPE_Number);
+				pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("label", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int orient = args.PickNumber<int>();
+			wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+			const char* label = args.IsValid()? args.PickString() : "";
+			wxStaticBoxSizer* rtn = new wxStaticBoxSizer(orient, parent, label);
+			return argument_gurax.ReturnValue(processor_gurax, new Value_wxStaticBoxSizer(rtn));
+		} while (0);
+		return Value::nil();
+		'''
+	GetStaticBox() as StaticBox_p
+	CalcMin() as Size
+	RecalcSizes() as void
 }

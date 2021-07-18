@@ -28,10 +28,121 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.StaticBoxSizer(args* as Any) {block?}
+Gurax_DeclareConstructorAlias(StaticBoxSizer_gurax, "StaticBoxSizer")
+{
+	Declare(VTYPE_wxStaticBoxSizer, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.StaticBoxSizer.");
+}
+
+Gurax_ImplementConstructorEx(StaticBoxSizer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("box", VTYPE_wxStaticBox);
+			pDeclCallable->DeclareArg("orient", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		wxStaticBox* box = args.Pick<Value_wxStaticBox>().GetEntityPtr();
+		int orient = args.PickNumber<int>();
+		wxStaticBoxSizer* rtn = new wxStaticBoxSizer(box, orient);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxStaticBoxSizer(rtn));
+	} while (0);
+	Error::Clear();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("orient", VTYPE_Number);
+			pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+			pDeclCallable->DeclareArg("label", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		int orient = args.PickNumber<int>();
+		wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+		const char* label = args.IsValid()? args.PickString() : "";
+		wxStaticBoxSizer* rtn = new wxStaticBoxSizer(orient, parent, label);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxStaticBoxSizer(rtn));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.StaticBoxSizer#GetStaticBox()
+Gurax_DeclareMethodAlias(wxStaticBoxSizer, GetStaticBox_gurax, "GetStaticBox")
+{
+	Declare(VTYPE_wxStaticBox, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStaticBoxSizer, GetStaticBox_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStaticBox(
+		pEntity_gurax->GetStaticBox()));
+}
+
+// wx.StaticBoxSizer#CalcMin()
+Gurax_DeclareMethodAlias(wxStaticBoxSizer, CalcMin_gurax, "CalcMin")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStaticBoxSizer, CalcMin_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->CalcMin()));
+}
+
+// wx.StaticBoxSizer#RecalcSizes()
+Gurax_DeclareMethodAlias(wxStaticBoxSizer, RecalcSizes_gurax, "RecalcSizes")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStaticBoxSizer, RecalcSizes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->RecalcSizes();
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +158,11 @@ void VType_wxStaticBoxSizer::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxBoxSizer, Flag::Mutable);
+	Declare(VTYPE_wxBoxSizer, Flag::Mutable, Gurax_CreateConstructor(StaticBoxSizer_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxStaticBoxSizer, GetStaticBox_gurax));
+	Assign(Gurax_CreateMethod(wxStaticBoxSizer, CalcMin_gurax));
+	Assign(Gurax_CreateMethod(wxStaticBoxSizer, RecalcSizes_gurax));
 }
 
 //------------------------------------------------------------------------------

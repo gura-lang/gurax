@@ -3,4 +3,9 @@
 //==============================================================================
 WrapSizer = Class(BoxSizer) {
 	@include['wx/wrapsizer.h']
+	__init__(orient as int, flag as int = wxWRAPSIZER_DEFAULT_FLAGS)
+	InformFirstDirection(direction as int, size as int, availableOtherDir as int) as bool
+	RecalcSizes() as void
+	CalcMin() as Size
+	//IsSpaceItem(item as SizerItem_p):virtual as bool
 }
