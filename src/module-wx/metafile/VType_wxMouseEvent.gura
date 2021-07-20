@@ -2,4 +2,38 @@
 // VType_wxMouseEvent.gura
 //==============================================================================
 MouseEvent = Class(Event) {
+	Aux1DClick() as bool
+	Aux1Down() as bool
+	Aux1Up() as bool
+	Aux2DClick() as bool
+	Aux2Down() as bool
+	Aux2Up() as bool
+	Button(but as MouseButton) as bool
+	ButtonDClick(but as MouseButton = wxMOUSE_BTN_ANY) as bool
+	ButtonDown(but as MouseButton = wxMOUSE_BTN_ANY) as bool
+	ButtonUp(but as MouseButton = wxMOUSE_BTN_ANY) as bool
+	Dragging() as bool
+	Entering() as bool
+	GetButton() as int
+	GetClickCount() as int
+	GetLinesPerAction() as int
+	GetColumnsPerAction() as int
+	GetLogicalPosition(dc as const_DC_r) as Point
+	GetWheelDelta() as int
+	GetWheelRotation() as int
+	GetWheelAxis() as MouseWheelAxis
+	IsButton() as bool
+	IsPageScroll() as bool
+	Leaving() as bool
+	LeftDClick() as bool
+	LeftDown() as bool
+	LeftUp() as bool
+	MetaDown() as bool
+	MiddleDClick() as bool
+	MiddleDown() as bool
+	MiddleUp() as bool
+	Moving() as bool
+	RightDClick() as bool
+	RightDown() as bool
+	RightUp() as bool
 }

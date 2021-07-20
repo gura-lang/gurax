@@ -32,6 +32,210 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.KeyEvent#GetKeyCode()
+Gurax_DeclareMethodAlias(wxKeyEvent, GetKeyCode_gurax, "GetKeyCode")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, GetKeyCode_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetKeyCode();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.KeyEvent#IsKeyInCategory(category as Number)
+Gurax_DeclareMethodAlias(wxKeyEvent, IsKeyInCategory_gurax, "IsKeyInCategory")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("category", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, IsKeyInCategory_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int category = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->IsKeyInCategory(category);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#GetRawKeyFlags()
+Gurax_DeclareMethodAlias(wxKeyEvent, GetRawKeyFlags_gurax, "GetRawKeyFlags")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, GetRawKeyFlags_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	UInt32 rtn = pEntity_gurax->GetRawKeyFlags();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.KeyEvent#GetUnicodeKey()
+Gurax_DeclareMethodAlias(wxKeyEvent, GetUnicodeKey_gurax, "GetUnicodeKey")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, GetUnicodeKey_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	char rtn = pEntity_gurax->GetUnicodeKey();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.KeyEvent#GetX()
+Gurax_DeclareMethodAlias(wxKeyEvent, GetX_gurax, "GetX")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, GetX_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->GetX();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.KeyEvent#GetY()
+Gurax_DeclareMethodAlias(wxKeyEvent, GetY_gurax, "GetY")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, GetY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->GetY();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.KeyEvent#DoAllowNextEvent()
+Gurax_DeclareMethodAlias(wxKeyEvent, DoAllowNextEvent_gurax, "DoAllowNextEvent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, DoAllowNextEvent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->DoAllowNextEvent();
+	return Gurax::Value::nil();
+}
+
+// wx.KeyEvent#IsNextEventAllowed()
+Gurax_DeclareMethodAlias(wxKeyEvent, IsNextEventAllowed_gurax, "IsNextEventAllowed")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, IsNextEventAllowed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsNextEventAllowed();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#GetPosition()
+Gurax_DeclareMethodAlias(wxKeyEvent, GetPosition_gurax, "GetPosition")
+{
+	Declare(VTYPE_wxPoint, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, GetPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
+		pEntity_gurax->GetPosition()));
+}
+
+// wx.KeyEvent#GetPositionXY()
+Gurax_DeclareMethodAlias(wxKeyEvent, GetPositionXY_gurax, "GetPositionXY")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, GetPositionXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord x, y;
+	pEntity_gurax->GetPosition(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +253,16 @@ void VType_wxKeyEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxKeyEvent, GetKeyCode_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, IsKeyInCategory_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, GetRawKeyFlags_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, GetUnicodeKey_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, GetX_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, GetY_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, DoAllowNextEvent_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, IsNextEventAllowed_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, GetPosition_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, GetPositionXY_gurax));
 }
 
 //------------------------------------------------------------------------------

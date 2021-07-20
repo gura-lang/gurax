@@ -2,5 +2,39 @@
 // VType_wxSizerItem.gura
 //==============================================================================
 SizerItem = Class(Object) {
-
+	AssignWindow(window as Window_p) as void
+	AssignSizer(sizer as Sizer_p) as void
+	CalcMin() as Size
+	DeleteWindows() as void
+	DetachSizer() as void
+	GetBorder() as int
+	GetFlag() as int
+	GetId() as int
+	GetMinSize() as Size
+	SetMinSize(size as const_Size_r) as void
+	SetMinSizeXY(x as int, y as int) as void = SetMinSize
+	GetPosition() as Point
+	GetProportion() as int
+	GetRatio() as float
+	GetRect() as Rect
+	GetSize() as Size
+	GetSizer() as Sizer_p
+	GetSpacer() as Size
+	GetUserData() as Object_p
+	GetWindow() as Window_p
+	IsShown() as bool
+	IsSizer() as bool
+	IsSpacer() as bool
+	IsWindow() as bool
+	SetBorder(border as int) as void
+	SetDimension(pos as const_Point_r, size as const_Size_r) as void
+	SetFlag(flag as int) as void
+	SetId(id as int) as void
+	SetInitSize(x as int, y as int) as void
+	SetProportion(proportion as int) as void
+	//SetSizer(sizer as Sizer_p) as void
+	//SetSpacer(size as const_Size_r) as void
+	SetUserData(userData as Object_p) as void
+	//SetWindow(window as Window_p) as void
+	Show(show as bool) as void
 }
