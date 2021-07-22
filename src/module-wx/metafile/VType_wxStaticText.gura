@@ -4,4 +4,16 @@
 StaticText = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = wxStaticTextNameStr)
+	IsEllipsized() as bool
+	Wrap(width as int) as void
 }
+
+@const[
+	ALIGN_LEFT
+	ALIGN_RIGHT
+	ALIGN_CENTRE_HORIZONTAL
+	ST_NO_AUTORESIZE
+	ST_ELLIPSIZE_START
+	ST_ELLIPSIZE_MIDDLE
+	ST_ELLIPSIZE_END
+]

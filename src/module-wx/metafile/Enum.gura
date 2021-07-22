@@ -14,12 +14,12 @@
 	HitTest
 	ItemKind
 	LayoutDirection
+	ListColumnFormat
 	MouseButton
 	MouseWheelAxis
 	MappingMode
 	RasterOperationMode
 	ShowEffect
-	UInt32
 	WindowID
 	WindowVariant
 ]

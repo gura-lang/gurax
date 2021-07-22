@@ -92,7 +92,7 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetRawKeyFlags_gurax, processor_gurax, argum
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	wxUInt32 rtn = pEntity_gurax->GetRawKeyFlags();
+	UInt32 rtn = pEntity_gurax->GetRawKeyFlags();
 	return new Gurax::Value_Number(rtn);
 }
 

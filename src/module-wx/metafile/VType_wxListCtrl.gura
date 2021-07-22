@@ -5,4 +5,99 @@ ListCtrl = Class(Control) {
 	@include['wx/listctrl.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxLC_ICON, validator as Validator = wxDefaultValidator, name as String = wxListCtrlNameStr)
+	AppendColumn(heading as const_String_r, format as ListColumnFormat = wxLIST_FORMAT_LEFT, width as int = -1) as long
+	Arrange(flag as int = wxLIST_ALIGN_DEFAULT) as bool
+	AssignImageList(imageList as ImageList_p, which as int) as void
+	ClearAll() as void
+	Create(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxLC_ICON, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxListCtrlNameStr) as bool
+	DeleteAllColumns() as bool
+	DeleteAllItems() as bool
+	DeleteColumn(col as int) as bool
+	DeleteItem(item as long) as bool
+	EnableAlternateRowColours(enable as bool = true) as void
+	EnableBellOnNoMatch(on as bool = true) as void
+	EndEditLabel(cancel as bool) as bool
+	EnsureVisible(item as long) as bool
+	FindItem(start as long, str as const_String_r, partial as bool = false) as long
+	//FindItem(start as long, data as UIntPtr) as long
+	//FindItem(start as long, pt as const_Point_r, direction as int) as long
+	GetColumn(col as int, item as ListItem_r) as bool
+	GetColumnCount() as int
+	GetColumnIndexFromOrder(pos as int) as int
+	GetColumnOrder(col as int) as int
+	GetColumnWidth(col as int) as int
+	//GetColumnsOrder() as ArrayInt
+	GetCountPerPage() as int
+	GetEditControl() as TextCtrl_p
+	GetImageList(which as int) as ImageList_p
+	GetItem(info as ListItem_r) as bool
+	GetItemBackgroundColour(item as long) as Colour
+	GetItemCount() as int
+	//GetItemData(item as long) as UIntPtr
+	GetItemFont(item as long) as Font
+	GetItemPosition(item as long, pos as Point_r) as bool
+	GetItemRect(item as long, rect as Rect_r, code as int = wxLIST_RECT_BOUNDS) as bool
+	GetItemSpacing() as Size
+	GetItemState(item as long, stateMask as long) as int
+	GetItemText(item as long, col as int = 0) as String
+	GetItemTextColour(item as long) as Colour
+	GetNextItem(item as long, geometry as int = wxLIST_NEXT_ALL, state as int = wxLIST_STATE_DONTCARE) as long
+	GetSelectedItemCount() as int
+	GetSubItemRect(item as long, subItem as long, rect as Rect_r, code as int = wxLIST_RECT_BOUNDS) as bool
+	GetTextColour() as Colour
+	GetTopItem() as long
+	GetViewRect() as Rect
+	SetAlternateRowColour(colour as const_Colour_r) as void
+	//HitTest(point as const_Point_r, flags as int_r, ptrSubItem as long_p = NULL) as long
+	InReportView() as bool
+	InsertColumn(col as long, info as const_ListItem_r) as long
+	//InsertColumn(col as long, heading as const_String_r, format as int = wxLIST_FORMAT_LEFT, width as int = wxLIST_AUTOSIZE) as long
+	InsertItem(info as ListItem_r) as long
+	//InsertItem(index as long, label as const_String_r) as long
+	//InsertItem(index as long, imageIndex as int) as long
+	//InsertItem(index as long, label as const_String_r, imageIndex as int) as long
+	IsVirtual() as bool
+	RefreshItem(item as long) as void
+	RefreshItems(itemFrom as long, itemTo as long) as void
+	ScrollList(dx as int, dy as int) as bool
+	SetBackgroundColour(col as const_Colour_r) as bool
+	SetColumn(col as int, item as ListItem_r) as bool
+	SetColumnWidth(col as int, width as int) as bool
+	//SetColumnsOrder(orders as const_ArrayInt_r) as bool
+	SetImageList(imageList as ImageList_p, which as int) as void
+	SetItem(info as ListItem_r) as bool
+	//SetItem(index as long, column as int, label as const_String_r, imageId as int = -1) as long
+	SetItemBackgroundColour(item as long, col as const_Colour_r) as void
+	SetItemColumnImage(item as long, column as long, image as int) as bool
+	SetItemCount(count as long) as void
+	SetItemData(item as long, data as long) as bool
+	SetItemFont(item as long, font as const_Font_r) as void
+	SetItemImage(item as long, image as int, selImage as int = -1) as bool
+	SetItemPosition(item as long, pos as const_Point_r) as bool
+	//SetItemPtrData(item as long, data as UIntPtr) as bool
+	SetItemState(item as long, state as long, stateMask as long) as bool
+	SetItemText(item as long, text as const_String_r) as void
+	SetItemTextColour(item as long, col as const_Colour_r) as void
+	SetSingleStyle(style as long, add as bool = true) as void
+	SetTextColour(col as const_Colour_r) as void
+	SetWindowStyleFlag(style as long) as void
+	//SortItems(fnSortCallBack as ListCtrlCompare, data as IntPtr) as bool
 }
+
+@const[
+	LC_LIST
+	LC_REPORT
+	LC_VIRTUAL
+	LC_ICON
+	LC_SMALL_ICON
+	LC_ALIGN_TOP
+	LC_ALIGN_LEFT
+	LC_AUTOARRANGE
+	LC_EDIT_LABELS
+	LC_NO_HEADER
+	LC_SINGLE_SEL
+	LC_SORT_ASCENDING
+	LC_SORT_DESCENDING
+	LC_HRULES
+	LC_VRULES
+]

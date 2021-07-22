@@ -67,6 +67,1586 @@ Gurax_ImplementConstructorEx(ListCtrl_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ListCtrl#AppendColumn(heading as String, format? as Number, width? as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, AppendColumn_gurax, "AppendColumn")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("heading", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, AppendColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* heading = args_gurax.PickString();
+	wxListColumnFormat format = args_gurax.IsValid()? args_gurax.PickNumber<wxListColumnFormat>() : wxLIST_FORMAT_LEFT;
+	int width = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	long rtn = pEntity_gurax->AppendColumn(heading, format, width);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#Arrange(flag? as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, Arrange_gurax, "Arrange")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("flag", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, Arrange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int flag = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_ALIGN_DEFAULT;
+	// Function body
+	bool rtn = pEntity_gurax->Arrange(flag);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#AssignImageList(imageList as wx.ImageList, which as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, AssignImageList_gurax, "AssignImageList")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, AssignImageList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImageList& value_imageList = args_gurax.Pick<Value_wxImageList>();
+	wxImageList* imageList = value_imageList.GetEntityPtr();
+	int which = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->AssignImageList(imageList, which);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#ClearAll()
+Gurax_DeclareMethodAlias(wxListCtrl, ClearAll_gurax, "ClearAll")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, ClearAll_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->ClearAll();
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#Create(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String)
+Gurax_DeclareMethodAlias(wxListCtrl, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxLC_ICON;
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxListCtrlNameStr;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, validator, name);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#DeleteAllColumns()
+Gurax_DeclareMethodAlias(wxListCtrl, DeleteAllColumns_gurax, "DeleteAllColumns")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, DeleteAllColumns_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->DeleteAllColumns();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#DeleteAllItems()
+Gurax_DeclareMethodAlias(wxListCtrl, DeleteAllItems_gurax, "DeleteAllItems")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, DeleteAllItems_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->DeleteAllItems();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#DeleteColumn(col as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, DeleteColumn_gurax, "DeleteColumn")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, DeleteColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int col = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->DeleteColumn(col);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#DeleteItem(item as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, DeleteItem_gurax, "DeleteItem")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, DeleteItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	// Function body
+	bool rtn = pEntity_gurax->DeleteItem(item);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#EnableAlternateRowColours(enable? as Bool)
+Gurax_DeclareMethodAlias(wxListCtrl, EnableAlternateRowColours_gurax, "EnableAlternateRowColours")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, EnableAlternateRowColours_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool enable = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->EnableAlternateRowColours(enable);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#EnableBellOnNoMatch(on? as Bool)
+Gurax_DeclareMethodAlias(wxListCtrl, EnableBellOnNoMatch_gurax, "EnableBellOnNoMatch")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("on", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, EnableBellOnNoMatch_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool on = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->EnableBellOnNoMatch(on);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#EndEditLabel(cancel as Bool)
+Gurax_DeclareMethodAlias(wxListCtrl, EndEditLabel_gurax, "EndEditLabel")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("cancel", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, EndEditLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool cancel = args_gurax.PickBool();
+	// Function body
+	bool rtn = pEntity_gurax->EndEditLabel(cancel);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#EnsureVisible(item as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, EnsureVisible_gurax, "EnsureVisible")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, EnsureVisible_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	// Function body
+	bool rtn = pEntity_gurax->EnsureVisible(item);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#FindItem(start as Number, str as String, partial? as Bool)
+Gurax_DeclareMethodAlias(wxListCtrl, FindItem_gurax, "FindItem")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("start", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("partial", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, FindItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long start = args_gurax.PickNumber<long>();
+	const char* str = args_gurax.PickString();
+	bool partial = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	// Function body
+	long rtn = pEntity_gurax->FindItem(start, str, partial);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetColumn(col as Number, item as wx.ListItem)
+Gurax_DeclareMethodAlias(wxListCtrl, GetColumn_gurax, "GetColumn")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int col = args_gurax.PickNumber<int>();
+	Value_wxListItem& value_item = args_gurax.Pick<Value_wxListItem>();
+	wxListItem& item = value_item.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->GetColumn(col, item);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#GetColumnCount()
+Gurax_DeclareMethodAlias(wxListCtrl, GetColumnCount_gurax, "GetColumnCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetColumnCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetColumnCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetColumnIndexFromOrder(pos as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetColumnIndexFromOrder_gurax, "GetColumnIndexFromOrder")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetColumnIndexFromOrder_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int pos = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = pEntity_gurax->GetColumnIndexFromOrder(pos);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetColumnOrder(col as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetColumnOrder_gurax, "GetColumnOrder")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetColumnOrder_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int col = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = pEntity_gurax->GetColumnOrder(col);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetColumnWidth(col as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetColumnWidth_gurax, "GetColumnWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetColumnWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int col = args_gurax.PickNumber<int>();
+	// Function body
+	int rtn = pEntity_gurax->GetColumnWidth(col);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetCountPerPage()
+Gurax_DeclareMethodAlias(wxListCtrl, GetCountPerPage_gurax, "GetCountPerPage")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetCountPerPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetCountPerPage();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetEditControl()
+Gurax_DeclareMethodAlias(wxListCtrl, GetEditControl_gurax, "GetEditControl")
+{
+	Declare(VTYPE_wxTextCtrl, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetEditControl_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTextCtrl(
+		pEntity_gurax->GetEditControl()));
+}
+
+// wx.ListCtrl#GetImageList(which as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetImageList_gurax, "GetImageList")
+{
+	Declare(VTYPE_wxImageList, Flag::None);
+	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetImageList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int which = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
+		*pEntity_gurax->GetImageList(which)));
+}
+
+// wx.ListCtrl#GetItem(info as wx.ListItem)
+Gurax_DeclareMethodAlias(wxListCtrl, GetItem_gurax, "GetItem")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("info", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxListItem& value_info = args_gurax.Pick<Value_wxListItem>();
+	wxListItem& info = value_info.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->GetItem(info);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#GetItemBackgroundColour(item as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetItemBackgroundColour_gurax, "GetItemBackgroundColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItemBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetItemBackgroundColour(item)));
+}
+
+// wx.ListCtrl#GetItemCount()
+Gurax_DeclareMethodAlias(wxListCtrl, GetItemCount_gurax, "GetItemCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItemCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetItemCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetItemFont(item as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetItemFont_gurax, "GetItemFont")
+{
+	Declare(VTYPE_wxFont, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItemFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
+		pEntity_gurax->GetItemFont(item)));
+}
+
+// wx.ListCtrl#GetItemPosition(item as Number, pos as wx.Point)
+Gurax_DeclareMethodAlias(wxListCtrl, GetItemPosition_gurax, "GetItemPosition")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItemPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	Value_wxPoint& value_pos = args_gurax.Pick<Value_wxPoint>();
+	wxPoint& pos = value_pos.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->GetItemPosition(item, pos);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#GetItemRect(item as Number, rect as wx.Rect, code? as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetItemRect_gurax, "GetItemRect")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("code", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItemRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	wxRect& rect = value_rect.GetEntity();
+	int code = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_RECT_BOUNDS;
+	// Function body
+	bool rtn = pEntity_gurax->GetItemRect(item, rect, code);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#GetItemSpacing()
+Gurax_DeclareMethodAlias(wxListCtrl, GetItemSpacing_gurax, "GetItemSpacing")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItemSpacing_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetItemSpacing()));
+}
+
+// wx.ListCtrl#GetItemState(item as Number, stateMask as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetItemState_gurax, "GetItemState")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stateMask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItemState_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	long stateMask = args_gurax.PickNumber<long>();
+	// Function body
+	int rtn = pEntity_gurax->GetItemState(item, stateMask);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetItemText(item as Number, col? as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetItemText_gurax, "GetItemText")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItemText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	int col = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	const char* rtn = pEntity_gurax->GetItemText(item, col);
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.ListCtrl#GetItemTextColour(item as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetItemTextColour_gurax, "GetItemTextColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetItemTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetItemTextColour(item)));
+}
+
+// wx.ListCtrl#GetNextItem(item as Number, geometry? as Number, state? as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetNextItem_gurax, "GetNextItem")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("geometry", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("state", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetNextItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	int geometry = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_NEXT_ALL;
+	int state = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_STATE_DONTCARE;
+	// Function body
+	long rtn = pEntity_gurax->GetNextItem(item, geometry, state);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetSelectedItemCount()
+Gurax_DeclareMethodAlias(wxListCtrl, GetSelectedItemCount_gurax, "GetSelectedItemCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetSelectedItemCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetSelectedItemCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetSubItemRect(item as Number, subItem as Number, rect as wx.Rect, code? as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, GetSubItemRect_gurax, "GetSubItemRect")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("subItem", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("code", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetSubItemRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	long subItem = args_gurax.PickNumber<long>();
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	wxRect& rect = value_rect.GetEntity();
+	int code = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_RECT_BOUNDS;
+	// Function body
+	bool rtn = pEntity_gurax->GetSubItemRect(item, subItem, rect, code);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#GetTextColour()
+Gurax_DeclareMethodAlias(wxListCtrl, GetTextColour_gurax, "GetTextColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetTextColour()));
+}
+
+// wx.ListCtrl#GetTopItem()
+Gurax_DeclareMethodAlias(wxListCtrl, GetTopItem_gurax, "GetTopItem")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetTopItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetTopItem();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#GetViewRect()
+Gurax_DeclareMethodAlias(wxListCtrl, GetViewRect_gurax, "GetViewRect")
+{
+	Declare(VTYPE_wxRect, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetViewRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
+		pEntity_gurax->GetViewRect()));
+}
+
+// wx.ListCtrl#SetAlternateRowColour(colour as wx.Colour)
+Gurax_DeclareMethodAlias(wxListCtrl, SetAlternateRowColour_gurax, "SetAlternateRowColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetAlternateRowColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	// Function body
+	pEntity_gurax->SetAlternateRowColour(colour);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#InReportView()
+Gurax_DeclareMethodAlias(wxListCtrl, InReportView_gurax, "InReportView")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, InReportView_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->InReportView();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#InsertColumn(col as Number, info as wx.ListItem)
+Gurax_DeclareMethodAlias(wxListCtrl, InsertColumn_gurax, "InsertColumn")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("info", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, InsertColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long col = args_gurax.PickNumber<long>();
+	Value_wxListItem& value_info = args_gurax.Pick<Value_wxListItem>();
+	const wxListItem& info = value_info.GetEntity();
+	// Function body
+	long rtn = pEntity_gurax->InsertColumn(col, info);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#InsertItem(info as wx.ListItem)
+Gurax_DeclareMethodAlias(wxListCtrl, InsertItem_gurax, "InsertItem")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("info", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxListItem& value_info = args_gurax.Pick<Value_wxListItem>();
+	wxListItem& info = value_info.GetEntity();
+	// Function body
+	long rtn = pEntity_gurax->InsertItem(info);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#IsVirtual()
+Gurax_DeclareMethodAlias(wxListCtrl, IsVirtual_gurax, "IsVirtual")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, IsVirtual_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsVirtual();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#RefreshItem(item as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, RefreshItem_gurax, "RefreshItem")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, RefreshItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	// Function body
+	pEntity_gurax->RefreshItem(item);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#RefreshItems(itemFrom as Number, itemTo as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, RefreshItems_gurax, "RefreshItems")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("itemFrom", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("itemTo", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, RefreshItems_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long itemFrom = args_gurax.PickNumber<long>();
+	long itemTo = args_gurax.PickNumber<long>();
+	// Function body
+	pEntity_gurax->RefreshItems(itemFrom, itemTo);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#ScrollList(dx as Number, dy as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, ScrollList_gurax, "ScrollList")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, ScrollList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int dx = args_gurax.PickNumber<int>();
+	int dy = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->ScrollList(dx, dy);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetBackgroundColour(col as wx.Colour)
+Gurax_DeclareMethodAlias(wxListCtrl, SetBackgroundColour_gurax, "SetBackgroundColour")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_col = args_gurax.Pick<Value_wxColour>();
+	const wxColour& col = value_col.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetBackgroundColour(col);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetColumn(col as Number, item as wx.ListItem)
+Gurax_DeclareMethodAlias(wxListCtrl, SetColumn_gurax, "SetColumn")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int col = args_gurax.PickNumber<int>();
+	Value_wxListItem& value_item = args_gurax.Pick<Value_wxListItem>();
+	wxListItem& item = value_item.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetColumn(col, item);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetColumnWidth(col as Number, width as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, SetColumnWidth_gurax, "SetColumnWidth")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetColumnWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int col = args_gurax.PickNumber<int>();
+	int width = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->SetColumnWidth(col, width);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetImageList(imageList as wx.ImageList, which as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, SetImageList_gurax, "SetImageList")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetImageList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImageList& value_imageList = args_gurax.Pick<Value_wxImageList>();
+	wxImageList* imageList = value_imageList.GetEntityPtr();
+	int which = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetImageList(imageList, which);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#SetItem(info as wx.ListItem)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItem_gurax, "SetItem")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("info", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxListItem& value_info = args_gurax.Pick<Value_wxListItem>();
+	wxListItem& info = value_info.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetItem(info);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetItemBackgroundColour(item as Number, col as wx.Colour)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemBackgroundColour_gurax, "SetItemBackgroundColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	Value_wxColour& value_col = args_gurax.Pick<Value_wxColour>();
+	const wxColour& col = value_col.GetEntity();
+	// Function body
+	pEntity_gurax->SetItemBackgroundColour(item, col);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#SetItemColumnImage(item as Number, column as Number, image as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemColumnImage_gurax, "SetItemColumnImage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("image", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemColumnImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	long column = args_gurax.PickNumber<long>();
+	int image = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->SetItemColumnImage(item, column, image);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetItemCount(count as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemCount_gurax, "SetItemCount")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long count = args_gurax.PickNumber<long>();
+	// Function body
+	pEntity_gurax->SetItemCount(count);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#SetItemData(item as Number, data as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemData_gurax, "SetItemData")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	long data = args_gurax.PickNumber<long>();
+	// Function body
+	bool rtn = pEntity_gurax->SetItemData(item, data);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetItemFont(item as Number, font as wx.Font)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemFont_gurax, "SetItemFont")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	Value_wxFont& value_font = args_gurax.Pick<Value_wxFont>();
+	const wxFont& font = value_font.GetEntity();
+	// Function body
+	pEntity_gurax->SetItemFont(item, font);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#SetItemImage(item as Number, image as Number, selImage? as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemImage_gurax, "SetItemImage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("image", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("selImage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	int image = args_gurax.PickNumber<int>();
+	int selImage = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	bool rtn = pEntity_gurax->SetItemImage(item, image, selImage);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetItemPosition(item as Number, pos as wx.Point)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemPosition_gurax, "SetItemPosition")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	Value_wxPoint& value_pos = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pos = value_pos.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetItemPosition(item, pos);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetItemState(item as Number, state as Number, stateMask as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemState_gurax, "SetItemState")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stateMask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemState_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	long state = args_gurax.PickNumber<long>();
+	long stateMask = args_gurax.PickNumber<long>();
+	// Function body
+	bool rtn = pEntity_gurax->SetItemState(item, state, stateMask);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetItemText(item as Number, text as String)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemText_gurax, "SetItemText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	const char* text = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetItemText(item, text);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#SetItemTextColour(item as Number, col as wx.Colour)
+Gurax_DeclareMethodAlias(wxListCtrl, SetItemTextColour_gurax, "SetItemTextColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetItemTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	Value_wxColour& value_col = args_gurax.Pick<Value_wxColour>();
+	const wxColour& col = value_col.GetEntity();
+	// Function body
+	pEntity_gurax->SetItemTextColour(item, col);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#SetSingleStyle(style as Number, add? as Bool)
+Gurax_DeclareMethodAlias(wxListCtrl, SetSingleStyle_gurax, "SetSingleStyle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("add", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetSingleStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long style = args_gurax.PickNumber<long>();
+	bool add = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetSingleStyle(style, add);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#SetTextColour(col as wx.Colour)
+Gurax_DeclareMethodAlias(wxListCtrl, SetTextColour_gurax, "SetTextColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_col = args_gurax.Pick<Value_wxColour>();
+	const wxColour& col = value_col.GetEntity();
+	// Function body
+	pEntity_gurax->SetTextColour(col);
+	return Gurax::Value::nil();
+}
+
+// wx.ListCtrl#SetWindowStyleFlag(style as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, SetWindowStyleFlag_gurax, "SetWindowStyleFlag")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetWindowStyleFlag_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long style = args_gurax.PickNumber<long>();
+	// Function body
+	pEntity_gurax->SetWindowStyleFlag(style);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -84,6 +1664,70 @@ void VType_wxListCtrl::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ListCtrl_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxListCtrl, AppendColumn_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, Arrange_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, AssignImageList_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, ClearAll_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, Create_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, DeleteAllColumns_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, DeleteAllItems_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, DeleteColumn_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, DeleteItem_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, EnableAlternateRowColours_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, EnableBellOnNoMatch_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, EndEditLabel_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, EnsureVisible_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, FindItem_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetColumn_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetColumnCount_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetColumnIndexFromOrder_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetColumnOrder_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetColumnWidth_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetCountPerPage_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetEditControl_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetImageList_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItem_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItemBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItemCount_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItemFont_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItemPosition_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItemRect_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItemSpacing_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItemState_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItemText_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetItemTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetNextItem_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetSelectedItemCount_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetSubItemRect_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetTopItem_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetViewRect_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetAlternateRowColour_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, InReportView_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, InsertColumn_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, InsertItem_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, IsVirtual_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, RefreshItem_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, RefreshItems_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, ScrollList_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetColumn_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetColumnWidth_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetImageList_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItem_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemColumnImage_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemCount_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemData_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemFont_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemImage_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemPosition_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemState_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemText_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetItemTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetSingleStyle_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetWindowStyleFlag_gurax));
 }
 
 //------------------------------------------------------------------------------

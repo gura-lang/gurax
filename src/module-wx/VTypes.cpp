@@ -15,6 +15,10 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGBPosition);
 	frame.Assign(VTYPE_wxGBSpan);
 	frame.Assign(VTYPE_wxGBSizerItem);
+	frame.Assign(VTYPE_wxImageList);
+	frame.Assign(VTYPE_wxListItem);
+	frame.Assign(VTYPE_wxTreeItemId);
+	frame.Assign(VTYPE_wxTreeCtrl);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);

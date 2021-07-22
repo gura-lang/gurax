@@ -7,6 +7,10 @@ set(SRCFILES_VTYPE
 	VType_wxGBPosition.cpp
 	VType_wxGBSpan.cpp
 	VType_wxGBSizerItem.cpp
+	VType_wxImageList.cpp
+	VType_wxListItem.cpp
+	VType_wxTreeItemId.cpp
+	VType_wxTreeCtrl.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

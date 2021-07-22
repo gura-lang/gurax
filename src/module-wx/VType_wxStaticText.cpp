@@ -67,6 +67,49 @@ Gurax_ImplementConstructorEx(StaticText_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.StaticText#IsEllipsized()
+Gurax_DeclareMethodAlias(wxStaticText, IsEllipsized_gurax, "IsEllipsized")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStaticText, IsEllipsized_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsEllipsized();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StaticText#Wrap(width as Number)
+Gurax_DeclareMethodAlias(wxStaticText, Wrap_gurax, "Wrap")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStaticText, Wrap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->Wrap(width);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -84,6 +127,8 @@ void VType_wxStaticText::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticText_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxStaticText, IsEllipsized_gurax));
+	Assign(Gurax_CreateMethod(wxStaticText, Wrap_gurax));
 }
 
 //------------------------------------------------------------------------------
