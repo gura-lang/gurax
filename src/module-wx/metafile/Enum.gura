@@ -1,0 +1,22 @@
+@enum[
+	BackgroundStyle
+	BitmapType
+	Border
+	Byte
+	Coord
+	Direction
+	EventCategory
+	FloodFillStyle
+	FlexSizerGrowMode
+	HitTest
+	ItemKind
+	LayoutDirection
+	MouseButton
+	MouseWheelAxis
+	MappingMode
+	RasterOperationMode
+	ShowEffect
+	UInt32
+	WindowID
+	WindowVariant
+]

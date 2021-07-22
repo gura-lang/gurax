@@ -33,27 +33,6 @@ r.DeclareType('const_String_r', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
-r.DeclareType_Number('BackgroundStyle',			'wxBackgroundStyle')
-r.DeclareType_Number('BitmapType',				'wxBitmapType')
-r.DeclareType_Number('Border',					'wxBorder')
-r.DeclareType_Number('Byte',					'wxByte')
-r.DeclareType_Number('Coord',					'wxCoord')
-r.DeclareType_Number('Direction',				'wxDirection')
-r.DeclareType_Number('EventCategory',			'wxEventCategory')
-r.DeclareType_Number('FloodFillStyle',			'wxFloodFillStyle')
-r.DeclareType_Number('FlexSizerGrowMode',		'wxFlexSizerGrowMode')
-r.DeclareType_Number('HitTest',					'wxHitTest')
-r.DeclareType_Number('ItemKind',				'wxItemKind')
-r.DeclareType_Number('LayoutDirection',			'wxLayoutDirection')
-r.DeclareType_Number('MouseButton',				'wxMouseButton')
-r.DeclareType_Number('MouseWheelAxis',			'wxMouseWheelAxis')
-r.DeclareType_Number('MappingMode',				'wxMappingMode')
-r.DeclareType_Number('RasterOperationMode',		'wxRasterOperationMode')
-r.DeclareType_Number('ShowEffect',				'wxShowEffect')
-r.DeclareType_Number('UInt32',					'UInt32')
-r.DeclareType_Number('WindowID',				'wxWindowID')
-r.DeclareType_Number('WindowVariant',			'wxWindowVariant')
-
 tmplVTypesCMake = tR'''
 #===============================================================================
 # VTypes.cmake
@@ -556,6 +535,7 @@ ClassInfo = class {
 
 classInfoTbl = []
 constNameTbl = []
+enumNameTbl = []
 
 path.Glob('metafile/*.gura').Each {|pathName|
 	fileName = path.FileName(pathName)
@@ -606,12 +586,18 @@ path.Glob('metafile/*.gura').Each {|pathName|
 			}
 			if (expr.car.symbolName == '@const') {
 				constNameTbl.Append(params:*symbolName)
+			} elsif (expr.car.symbolName == '@enum') {
+				enumNameTbl.Append(params:*symbolName)
 			} else {
 				sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
 				sys.Exit(1)
 			}
 		}
 	}
+}
+
+enumNameTbl.Each {|enumName|
+	r.DeclareType_Number(enumName, 'wx' + enumName)
 }
 
 tmplConstructorImplementation_Object = tR'''
