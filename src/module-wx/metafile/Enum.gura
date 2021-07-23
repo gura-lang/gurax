@@ -6,6 +6,7 @@
 	BitmapType
 	Border
 	Byte
+	CalendarDateBorder
 	Coord
 	Direction
 	EventCategory

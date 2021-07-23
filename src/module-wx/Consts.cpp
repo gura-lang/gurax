@@ -23,6 +23,14 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ALIGN_TOP", new Value_Number(wxALIGN_TOP));
 	frame.Assign("ALL", new Value_Number(wxALL));
 	frame.Assign("BOTTOM", new Value_Number(wxBOTTOM));
+	frame.Assign("CAL_MONDAY_FIRST", new Value_Number(wxCAL_MONDAY_FIRST));
+	frame.Assign("CAL_NO_MONTH_CHANGE", new Value_Number(wxCAL_NO_MONTH_CHANGE));
+	frame.Assign("CAL_NO_YEAR_CHANGE", new Value_Number(wxCAL_NO_YEAR_CHANGE));
+	frame.Assign("CAL_SEQUENTIAL_MONTH_SELECTION", new Value_Number(wxCAL_SEQUENTIAL_MONTH_SELECTION));
+	frame.Assign("CAL_SHOW_HOLIDAYS", new Value_Number(wxCAL_SHOW_HOLIDAYS));
+	frame.Assign("CAL_SHOW_SURROUNDING_WEEKS", new Value_Number(wxCAL_SHOW_SURROUNDING_WEEKS));
+	frame.Assign("CAL_SHOW_WEEK_NUMBERS", new Value_Number(wxCAL_SHOW_WEEK_NUMBERS));
+	frame.Assign("CAL_SUNDAY_FIRST", new Value_Number(wxCAL_SUNDAY_FIRST));
 	frame.Assign("EXPAND", new Value_Number(wxEXPAND));
 	frame.Assign("FIXED_MINSIZE", new Value_Number(wxFIXED_MINSIZE));
 	frame.Assign("HORIZONTAL", new Value_Number(wxHORIZONTAL));

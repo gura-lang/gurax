@@ -4,13 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxGBPosition.cpp
-	VType_wxGBSpan.cpp
-	VType_wxGBSizerItem.cpp
-	VType_wxImageList.cpp
-	VType_wxListItem.cpp
-	VType_wxTreeItemId.cpp
-	VType_wxTreeCtrl.cpp
+	VType_wxCalendarDateAttr.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -59,6 +53,9 @@ set(SRCFILES_VTYPE
 	VType_wxFontMetrics.cpp
 	VType_wxFrame.cpp
 	VType_wxGauge.cpp
+	VType_wxGBPosition.cpp
+	VType_wxGBSizerItem.cpp
+	VType_wxGBSpan.cpp
 	VType_wxGDIImageHandler.cpp
 	VType_wxGDIObject.cpp
 	VType_wxGridBagSizer.cpp
@@ -68,12 +65,14 @@ set(SRCFILES_VTYPE
 	VType_wxIconBundle.cpp
 	VType_wxIdleEvent.cpp
 	VType_wxImage.cpp
+	VType_wxImageList.cpp
 	VType_wxJoystickEvent.cpp
 	VType_wxKeyEvent.cpp
 	VType_wxLayoutConstraints.cpp
 	VType_wxListbook.cpp
 	VType_wxListBox.cpp
 	VType_wxListCtrl.cpp
+	VType_wxListItem.cpp
 	VType_wxMask.cpp
 	VType_wxMemoryDC.cpp
 	VType_wxMenu.cpp
@@ -125,6 +124,8 @@ set(SRCFILES_VTYPE
 	VType_wxToolbook.cpp
 	VType_wxToolTip.cpp
 	VType_wxTreebook.cpp
+	VType_wxTreeCtrl.cpp
+	VType_wxTreeItemId.cpp
 	VType_wxValidator.cpp
 	VType_wxVisualAttributes.cpp
 	VType_wxWindow.cpp

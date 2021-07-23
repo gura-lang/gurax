@@ -32,6 +32,45 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.TreeItemId#IsOk()
+Gurax_DeclareMethodAlias(wxTreeItemId, IsOk_gurax, "IsOk")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreeItemId, IsOk_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsOk();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TreeItemId#Unset()
+Gurax_DeclareMethodAlias(wxTreeItemId, Unset_gurax, "Unset")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreeItemId, Unset_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Unset();
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +88,8 @@ void VType_wxTreeItemId::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxTreeItemId, IsOk_gurax));
+	Assign(Gurax_CreateMethod(wxTreeItemId, Unset_gurax));
 }
 
 //------------------------------------------------------------------------------

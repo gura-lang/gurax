@@ -3,4 +3,7 @@
 //==============================================================================
 TreeItemId = Class {
 	@include['wx/treebase.h']	
+	IsOk() as bool
+	//GetID() as void_p
+	Unset() as void
 }

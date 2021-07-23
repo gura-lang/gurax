@@ -5,4 +5,37 @@ CalendarCtrl = Class(Control) {
 	@include['wx/calctrl.h']
 	__init__(parent as Window_p, id as WindowID, date as DateTime = wxDefaultDateTime, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxCAL_SHOW_HOLIDAYS, name as String = wxCalendarNameStr)
+	EnableHolidayDisplay(display as bool = true) as void
+	EnableMonthChange(enable as bool = true) as bool
+	//EnableYearChange(enable as bool = true) as void
+	GetAttr(day as size_t) as CalendarDateAttr_p
+	GetDate() as DateTime
+	GetHeaderColourBg() as Colour
+	GetHeaderColourFg() as Colour
+	GetHighlightColourBg() as Colour
+	GetHighlightColourFg() as Colour
+	GetHolidayColourBg() as Colour
+	GetHolidayColourFg() as Colour
+	//HitTest(pos as const_Point_r, date as DateTime_p = NULL, wd as DateTime::WeekDay_p = NULL) as CalendarHitTestResult
+	ResetAttr(day as size_t) as void
+	SetAttr(day as size_t, attr as CalendarDateAttr_p) as void
+	SetDate(date as const_DateTime_r) as bool
+	SetHeaderColours(colFg as const_Colour_r, colBg as const_Colour_r) as void
+	SetHighlightColours(colFg as const_Colour_r, colBg as const_Colour_r) as void
+	SetHoliday(day as size_t) as void
+	SetHolidayColours(colFg as const_Colour_r, colBg as const_Colour_r) as void
+	Mark(day as size_t, mark as bool) as void
+	SetDateRange(lowerdate as const_DateTime_r = wxDefaultDateTime, upperdate as const_DateTime_r = wxDefaultDateTime) as bool
+	GetDateRange(lowerdate as DateTime_p, upperdate as DateTime_p) as bool
 }
+
+@const[
+	CAL_SUNDAY_FIRST
+	CAL_MONDAY_FIRST
+	CAL_SHOW_HOLIDAYS
+	CAL_NO_YEAR_CHANGE
+	CAL_NO_MONTH_CHANGE
+	CAL_SHOW_SURROUNDING_WEEKS
+	CAL_SEQUENTIAL_MONTH_SELECTION
+	CAL_SHOW_WEEK_NUMBERS
+]

@@ -12,13 +12,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxGBPosition);
-	frame.Assign(VTYPE_wxGBSpan);
-	frame.Assign(VTYPE_wxGBSizerItem);
-	frame.Assign(VTYPE_wxImageList);
-	frame.Assign(VTYPE_wxListItem);
-	frame.Assign(VTYPE_wxTreeItemId);
-	frame.Assign(VTYPE_wxTreeCtrl);
+	frame.Assign(VTYPE_wxCalendarDateAttr);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -67,6 +61,9 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFontMetrics);
 	frame.Assign(VTYPE_wxFrame);
 	frame.Assign(VTYPE_wxGauge);
+	frame.Assign(VTYPE_wxGBPosition);
+	frame.Assign(VTYPE_wxGBSizerItem);
+	frame.Assign(VTYPE_wxGBSpan);
 	frame.Assign(VTYPE_wxGDIImageHandler);
 	frame.Assign(VTYPE_wxGDIObject);
 	frame.Assign(VTYPE_wxGridBagSizer);
@@ -76,12 +73,14 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxIconBundle);
 	frame.Assign(VTYPE_wxIdleEvent);
 	frame.Assign(VTYPE_wxImage);
+	frame.Assign(VTYPE_wxImageList);
 	frame.Assign(VTYPE_wxJoystickEvent);
 	frame.Assign(VTYPE_wxKeyEvent);
 	frame.Assign(VTYPE_wxLayoutConstraints);
 	frame.Assign(VTYPE_wxListbook);
 	frame.Assign(VTYPE_wxListBox);
 	frame.Assign(VTYPE_wxListCtrl);
+	frame.Assign(VTYPE_wxListItem);
 	frame.Assign(VTYPE_wxMask);
 	frame.Assign(VTYPE_wxMemoryDC);
 	frame.Assign(VTYPE_wxMenu);
@@ -133,6 +132,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxToolbook);
 	frame.Assign(VTYPE_wxToolTip);
 	frame.Assign(VTYPE_wxTreebook);
+	frame.Assign(VTYPE_wxTreeCtrl);
+	frame.Assign(VTYPE_wxTreeItemId);
 	frame.Assign(VTYPE_wxValidator);
 	frame.Assign(VTYPE_wxVisualAttributes);
 	frame.Assign(VTYPE_wxWindow);
