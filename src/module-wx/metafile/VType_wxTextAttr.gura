@@ -1,9 +1,5 @@
 //==============================================================================
-// VType_wxSizeEvent.gura
+// VType_wxTextAttr.gura
 //==============================================================================
-SizeEvent = Class(Event) {
-	GetSize() as Size
-	SetSize(size as Size) as void
-	GetRect() as Rect
-	SetRect(rect as Rect) as void
+TextAttr = Class {
 }

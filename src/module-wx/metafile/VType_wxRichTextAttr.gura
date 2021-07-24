@@ -1,9 +1,6 @@
 //==============================================================================
-// VType_wxSizeEvent.gura
+// VType_wxRichTextAttr.gura
 //==============================================================================
-SizeEvent = Class(Event) {
-	GetSize() as Size
-	SetSize(size as Size) as void
-	GetRect() as Rect
-	SetRect(rect as Rect) as void
+RichTextAttr = Class(TextAttr) {
+	@include['wx/richtext/richtextctrl.h']
 }

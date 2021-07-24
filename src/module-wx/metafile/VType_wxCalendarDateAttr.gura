@@ -1,0 +1,25 @@
+//==============================================================================
+// VType_wxCalendarDateAttr.gura
+//==============================================================================
+CalendarDateAttr = Class {
+	@include['wx/calctrl.h']
+	GetBackgroundColour() as Colour
+	GetBorder() as CalendarDateBorder
+	GetBorderColour() as Colour
+	GetFont() as Font
+	GetTextColour() as Colour
+	HasBackgroundColour() as bool
+	HasBorder() as bool
+	HasBorderColour() as bool
+	HasFont() as bool
+	HasTextColour() as bool
+	IsHoliday() as bool
+	SetBackgroundColour(colBack as const_Colour_r) as void
+	SetBorder(border as CalendarDateBorder) as void
+	SetBorderColour(col as const_Colour_r) as void
+	SetFont(font as const_Font_r) as void
+	SetHoliday(holiday as bool) as void
+	SetTextColour(colText as const_Colour_r) as void
+	GetMark():static as CalendarDateAttr
+	SetMark(m as const_CalendarDateAttr_r):static as void
+}
