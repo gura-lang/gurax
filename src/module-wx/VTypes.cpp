@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxCalendarDateAttr);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -33,6 +32,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxBrush);
 	frame.Assign(VTYPE_wxButton);
 	frame.Assign(VTYPE_wxCalendarCtrl);
+	frame.Assign(VTYPE_wxCalendarDateAttr);
 	frame.Assign(VTYPE_wxCaret);
 	frame.Assign(VTYPE_wxCheckBox);
 	frame.Assign(VTYPE_wxChildFocusEvent);
@@ -104,6 +104,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRadioButton);
 	frame.Assign(VTYPE_wxRect);
 	frame.Assign(VTYPE_wxRegion);
+	frame.Assign(VTYPE_wxRichTextAttr);
 	frame.Assign(VTYPE_wxSashWindow);
 	frame.Assign(VTYPE_wxScreenDC);
 	frame.Assign(VTYPE_wxScrollBar);
@@ -126,6 +127,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxStdDialogButtonSizer);
 	frame.Assign(VTYPE_wxStyledTextCtrl);
 	frame.Assign(VTYPE_wxSysColourChangedEvent);
+	frame.Assign(VTYPE_wxTextAttr);
 	frame.Assign(VTYPE_wxTextCtrl);
 	frame.Assign(VTYPE_wxToggleButton);
 	frame.Assign(VTYPE_wxToolBar);

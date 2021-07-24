@@ -34,6 +34,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("EXPAND", new Value_Number(wxEXPAND));
 	frame.Assign("FIXED_MINSIZE", new Value_Number(wxFIXED_MINSIZE));
 	frame.Assign("HORIZONTAL", new Value_Number(wxHORIZONTAL));
+	frame.Assign("HSCROLL", new Value_Number(wxHSCROLL));
 	frame.Assign("ICON_INFORMATION", new Value_Number(wxICON_INFORMATION));
 	frame.Assign("ID_ABORT", new Value_Number(wxID_ABORT));
 	frame.Assign("ID_ABOUT", new Value_Number(wxID_ABOUT));
@@ -164,6 +165,24 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ST_ELLIPSIZE_MIDDLE", new Value_Number(wxST_ELLIPSIZE_MIDDLE));
 	frame.Assign("ST_ELLIPSIZE_START", new Value_Number(wxST_ELLIPSIZE_START));
 	frame.Assign("ST_NO_AUTORESIZE", new Value_Number(wxST_NO_AUTORESIZE));
+	frame.Assign("TE_AUTO_URL", new Value_Number(wxTE_AUTO_URL));
+	frame.Assign("TE_BESTWRAP", new Value_Number(wxTE_BESTWRAP));
+	frame.Assign("TE_CAPITALIZE", new Value_Number(wxTE_CAPITALIZE));
+	frame.Assign("TE_CENTRE", new Value_Number(wxTE_CENTRE));
+	frame.Assign("TE_CHARWRAP", new Value_Number(wxTE_CHARWRAP));
+	frame.Assign("TE_DONTWRAP", new Value_Number(wxTE_DONTWRAP));
+	frame.Assign("TE_LEFT", new Value_Number(wxTE_LEFT));
+	frame.Assign("TE_MULTILINE", new Value_Number(wxTE_MULTILINE));
+	frame.Assign("TE_NOHIDESEL", new Value_Number(wxTE_NOHIDESEL));
+	frame.Assign("TE_NO_VSCROLL", new Value_Number(wxTE_NO_VSCROLL));
+	frame.Assign("TE_PASSWORD", new Value_Number(wxTE_PASSWORD));
+	frame.Assign("TE_PROCESS_ENTER", new Value_Number(wxTE_PROCESS_ENTER));
+	frame.Assign("TE_PROCESS_TAB", new Value_Number(wxTE_PROCESS_TAB));
+	frame.Assign("TE_READONLY", new Value_Number(wxTE_READONLY));
+	frame.Assign("TE_RICH", new Value_Number(wxTE_RICH));
+	frame.Assign("TE_RICH2", new Value_Number(wxTE_RICH2));
+	frame.Assign("TE_RIGHT", new Value_Number(wxTE_RIGHT));
+	frame.Assign("TE_WORDWRAP", new Value_Number(wxTE_WORDWRAP));
 	frame.Assign("TOP", new Value_Number(wxTOP));
 	frame.Assign("VERTICAL", new Value_Number(wxVERTICAL));
 }

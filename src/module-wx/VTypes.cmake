@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxCalendarDateAttr.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -25,6 +24,7 @@ set(SRCFILES_VTYPE
 	VType_wxBrush.cpp
 	VType_wxButton.cpp
 	VType_wxCalendarCtrl.cpp
+	VType_wxCalendarDateAttr.cpp
 	VType_wxCaret.cpp
 	VType_wxCheckBox.cpp
 	VType_wxChildFocusEvent.cpp
@@ -96,6 +96,7 @@ set(SRCFILES_VTYPE
 	VType_wxRadioButton.cpp
 	VType_wxRect.cpp
 	VType_wxRegion.cpp
+	VType_wxRichTextAttr.cpp
 	VType_wxSashWindow.cpp
 	VType_wxScreenDC.cpp
 	VType_wxScrollBar.cpp
@@ -118,6 +119,7 @@ set(SRCFILES_VTYPE
 	VType_wxStdDialogButtonSizer.cpp
 	VType_wxStyledTextCtrl.cpp
 	VType_wxSysColourChangedEvent.cpp
+	VType_wxTextAttr.cpp
 	VType_wxTextCtrl.cpp
 	VType_wxToggleButton.cpp
 	VType_wxToolBar.cpp

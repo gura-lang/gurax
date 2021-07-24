@@ -21,6 +21,7 @@
 	MappingMode
 	RasterOperationMode
 	ShowEffect
+	TextCoord
 	WindowID
 	WindowVariant
 ]

@@ -4,4 +4,49 @@
 TextCtrl = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxTextCtrlNameStr)
+	DiscardEdits() as void
+	EmulateKeyPress(event as const_KeyEvent_r) as bool
+	GetDefaultStyle() as TextAttr
+	GetLineLength(lineNo as long) as int
+	GetLineText(lineNo as long) as String
+	GetNumberOfLines() as int
+	GetStyle(position as long, style as TextAttr_r) as bool
+	//HitTest(pt as const_Point_r, pos as long_p) as TextCtrlHitTestResult
+	//HitTest(pt as const_Point_r, col as TextCoord_p, row as TextCoord_p) as TextCtrlHitTestResult
+	IsModified() as bool
+	IsMultiLine() as bool
+	IsSingleLine() as bool
+	LoadFile(filename as const_String_r, fileType as int = wxTEXT_TYPE_ANY) as bool
+	MarkDirty() as void
+	OnDropFiles(event as DropFilesEvent_r) as void
+	//PositionToXY(pos as long, x as long_p, y as long_p) as bool
+	PositionToCoords(pos as long) as Point
+	SaveFile(filename as const_String_r = '', fileType as int = wxTEXT_TYPE_ANY) as bool
+	SetDefaultStyle(style as const_TextAttr_r) as bool
+	SetModified(modified as bool) as void
+	SetStyle(start as long, end as long, style as const_TextAttr_r) as bool
+	ShowPosition(pos as long) as void
+	XYToPosition(x as long, y as long) as long
 }
+
+@const[
+	TE_PROCESS_ENTER
+	TE_PROCESS_TAB
+	TE_MULTILINE
+	TE_PASSWORD
+	TE_READONLY
+	TE_RICH
+	TE_RICH2
+	TE_AUTO_URL
+	TE_NOHIDESEL
+	HSCROLL
+	TE_NO_VSCROLL
+	TE_LEFT
+	TE_CENTRE
+	TE_RIGHT
+	TE_DONTWRAP
+	TE_CHARWRAP
+	TE_WORDWRAP
+	TE_BESTWRAP
+	TE_CAPITALIZE
+]
