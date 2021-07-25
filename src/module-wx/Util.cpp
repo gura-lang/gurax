@@ -42,6 +42,8 @@ void EventUserData::Eval(wxEvent& event)
 //------------------------------------------------------------------------------
 namespace Util {
 
+EventTypeMap eventTypeMap;
+
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory)
 {
@@ -56,6 +58,13 @@ void BindMultiEvents(Processor& processor, Argument& argument,
 		pEvtHandler->Bind(eventType, &EventUserData::HandlerFunc, id, -1,
 			new EventUserData(processor.Reference(), valueFunct.Reference(), Value::nil(), eventValueFactory));
 	}
+}
+
+const Value& LookupEventType(wxEventType eventType)
+{
+	auto iter = eventTypeMap.find(eventType);
+	if (iter == eventTypeMap.end()) return Value::C_nil();
+	return *iter->second;
 }
 
 void ExitMainLoop()

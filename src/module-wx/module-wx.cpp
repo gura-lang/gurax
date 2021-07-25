@@ -18,6 +18,7 @@ Gurax_ModulePrepare()
 	AssignConsts(GetFrame());
 	AssignEvents(GetFrame());
 	AssignFunctions(GetFrame());
+	AssignMultiEvents(GetFrame());
 	AssignVTypes(GetFrame());
 	return true;
 }

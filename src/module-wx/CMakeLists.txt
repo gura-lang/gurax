@@ -42,6 +42,7 @@ target_sources(wx.gurd PRIVATE
 	Consts.cpp
 	Events.cpp
 	Functions.cpp
+	MultiEvents.cpp
 	Util.cpp
 	VTypes.cpp
 	${SRCFILES_VTYPE})

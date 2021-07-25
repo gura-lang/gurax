@@ -5,7 +5,15 @@
 #define GURAX_MODULE_WX_UTIL_H
 #include <gurax.h>
 
+#define Gurax_AssignEvent(eventName, eventType) do { \
+RefPtr<Value> pValue(new Value_wxEventType(wx##eventName, #eventName, Value_##eventType::eventValueFactory)); \
+Util::eventTypeMap[wx##eventName] = pValue.Reference(); \
+frame.Assign(#eventName, pValue.release()); \
+} while (0)
+
 Gurax_BeginModuleScope(wx)
+
+using EventTypeMap = std::unordered_map<wxEventType, Value*>;
 
 class EventValueFactory;
 
@@ -70,11 +78,15 @@ public:
 //------------------------------------------------------------------------------
 namespace Util {
 
+extern EventTypeMap eventTypeMap;
+
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory);
+const Value& LookupEventType(wxEventType eventType);
 void ExitMainLoop();
 
 };
+
 
 Gurax_EndModuleScope(wx)
 

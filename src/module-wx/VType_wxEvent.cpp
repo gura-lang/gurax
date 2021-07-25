@@ -48,7 +48,7 @@ Gurax_ImplementMethodEx(wxEvent, GetEventType_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return LookupEventType(pEntity_gurax->GetEventType()).Reference();
+	return Util::LookupEventType(pEntity_gurax->GetEventType()).Reference();
 }
 
 // wx.Event#GetEventCategory()
