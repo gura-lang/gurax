@@ -4,7 +4,7 @@
 Event = Class {
 	GetEventType() as EventType = \
 		R'''
-		return LookupEventType(pEntity_gurax->GetEventType()).Reference();
+		return Util::LookupEventType(pEntity_gurax->GetEventType()).Reference();
 		'''
 	GetEventCategory() as EventCategory
 	GetId() as int
