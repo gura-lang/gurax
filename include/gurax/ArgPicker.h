@@ -113,9 +113,9 @@ public:
 	Help& PickHelp()				{ return Pick<Value_Help>().GetHelp(); }
 	Image& PickImage()				{ return Pick<Value_Image>().GetImage(); }
 	Iterator& PickIterator();
-	const ValueList& PickList()		{ return Pick<Value_List>().GetValueOwner(); }
+	const ValueList& PickList()		{ return IsValid()? Pick<Value_List>().GetValueOwner() : ValueList::Empty; }
 	StringList PickStringList() {
-		return Value_String::GetStringList(Pick<Value_List>().GetValueOwner());
+		return Value_String::GetStringList(IsValid()? Pick<Value_List>().GetValueOwner() : ValueList::Empty);
 	}
 	Palette& PickPalette()			{ return Pick<Value_Palette>().GetPalette(); }
 	Pixel& PickPixel()				{ return Pick<Value_Pixel>().GetPixel(); }

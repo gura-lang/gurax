@@ -44,6 +44,46 @@ namespace Util {
 
 EventTypeMap eventTypeMap;
 
+wxArrayString CreateArrayString(const ValueList& values)
+{
+	wxArrayString rtn;
+	rtn.reserve(values.size());
+	for (const Value* pValue : values) rtn.push_back(Value_String::GetString(*pValue));
+	return rtn;
+}
+
+wxArrayShort CreateArrayShort(const ValueList& values)
+{
+	wxArrayShort rtn;
+	rtn.reserve(values.size());
+	for (const Value* pValue : values) rtn.push_back(Value_Number::GetNumber<Short>(*pValue));
+	return rtn;
+}
+
+wxArrayInt CreateArrayInt(const ValueList& values)
+{
+	wxArrayInt rtn;
+	rtn.reserve(values.size());
+	for (const Value* pValue : values) rtn.push_back(Value_Number::GetNumber<Int>(*pValue));
+	return rtn;
+}
+
+wxArrayDouble CreateArrayDouble(const ValueList& values)
+{
+	wxArrayDouble rtn;
+	rtn.reserve(values.size());
+	for (const Value* pValue : values) rtn.push_back(Value_Number::GetNumber<Double>(*pValue));
+	return rtn;
+}
+
+wxArrayLong CreateArrayLong(const ValueList& values)
+{
+	wxArrayLong rtn;
+	rtn.reserve(values.size());
+	for (const Value* pValue : values) rtn.push_back(Value_Number::GetNumber<Long>(*pValue));
+	return rtn;
+}
+
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory)
 {

@@ -3,4 +3,38 @@
 //==============================================================================
 AboutDialogInfo = Class {
 	@include['wx/aboutdlg.h']
+	AddArtist(artist as const_String_r) as void
+	AddDeveloper(developer as const_String_r) as void
+	AddDocWriter(docwriter as const_String_r) as void
+	AddTranslator(translator as const_String_r) as void
+	GetName() as String
+	HasDescription() as bool
+	GetDescription() as String
+	HasCopyright() as bool
+	GetCopyright() as String
+	SetArtists(artists as const_ArrayString_r) as void
+	SetCopyright(copyright as const_String_r) as void
+	SetDescription(desc as const_String_r) as void
+	SetDevelopers(developers as const_ArrayString_r) as void
+	SetDocWriters(docwriters as const_ArrayString_r) as void
+	HasIcon() as bool
+	GetIcon() as Icon
+	SetIcon(icon as const_Icon_r) as void
+	HasLicence() as bool
+	GetLicence() as String
+	SetLicence(licence as const_String_r) as void
+	SetLicense(licence as const_String_r) as void
+	SetName(name as const_String_r) as void
+	SetTranslators(translators as const_ArrayString_r) as void
+	SetVersion(version as const_String_r, longVersion as const_String_r = '') as void
+	GetVersion() as String
+	GetLongVersion() as String
+	HasWebSite() as bool
+	GetWebSiteURL() as String
+	GetWebSiteDescription() as String
+	SetWebSite(url as const_String_r, desc as const_String_r = '') as void
+	HasDevelopers() as bool
+	HasDocWriters() as bool
+	HasArtists() as bool
+	HasTranslators() as bool
 }

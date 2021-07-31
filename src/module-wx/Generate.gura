@@ -33,6 +33,31 @@ r.DeclareType('const_String_r', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
+r.DeclareType('const_ArrayString_r', 'const ArrayString&', 'String[]',
+	codePickerVec = R'''
+	wxArrayString ${varName} = Util::CreateArrayString(args_gurax.PickList());
+	''')
+
+r.DeclareType('const_ArrayShort_r', 'const ArrayShort&', 'Number[]',
+	codePickerVec = R'''
+	wxArrayShort ${varName} = Util::CreateArrayShort(args_gurax.PickList());
+	''')
+
+r.DeclareType('const_ArrayInt_r', 'const ArrayInt&', 'Number[]',
+	codePickerVec = R'''
+	wxArrayInt ${varName} = Util::CreateArrayInt(args_gurax.PickList());
+	''')
+
+r.DeclareType('const_ArrayDouble_r', 'const ArrayDouble&', 'Number[]',
+	codePickerVec = R'''
+	wxArrayDouble ${varName} = Util::CreateArrayDouble(args_gurax.PickList());
+	''')
+
+r.DeclareType('const_ArrayLong_r', 'const ArrayLong&', 'Number[]',
+	codePickerVec = R'''
+	wxArrayLong ${varName} = Util::CreateArrayLong(args_gurax.PickList());
+	''')
+
 tmplVTypesCMake = tR'''
 #===============================================================================
 # VTypes.cmake

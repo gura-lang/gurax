@@ -12,4 +12,21 @@ RadioBox = Class(Control) {
 		pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 		'''
+	Enable(n as unsigned_int, enable as bool = true) as bool
+	FindString(string as const_String_r, bCase as bool = false) as int
+	GetColumnCount() as unsigned_int
+	GetItemFromPoint(pt as const_Point_r) as int
+	GetItemHelpText(item as unsigned_int) as String
+	GetItemToolTip(item as unsigned_int) as ToolTip_p
+	GetRowCount() as unsigned_int
+	IsItemEnabled(n as unsigned_int) as bool
+	IsItemShown(n as unsigned_int) as bool
+	SetItemHelpText(item as unsigned_int, helptext as const_String_r) as void
+	SetItemToolTip(item as unsigned_int, text as const_String_r) as void
+	SetSelection(n as int) as void
+	Show(item as unsigned_int, show as bool = true) as bool
+	GetCount() as unsigned_int
+	GetString(n as unsigned_int) as String
+	SetString(n as unsigned_int, string as const_String_r) as void
+	GetSelection() as int
 }

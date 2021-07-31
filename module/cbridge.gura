@@ -17,6 +17,7 @@ TypeInfo = class {
 	cTypeElem as String
 	vtypeFullName as String
 	vtypeDisplay as String
+	listVarFlag as Bool
 	moduleName as String = ''
 	vtype as String = ''
 	tmplPicker as Template
@@ -26,7 +27,7 @@ TypeInfo = class {
 	tmplConvToGurax as Template
 	tmplFunctionBody as Template
 	tmplArgRef as Template
-	__init__(decl as String, cType as String, vtypeFullName as String, vtypeDisplay as String,
+	__init__(decl as String, cType as String, vtypeFullName as String, vtypeDisplay as String, listVarFlag as Bool,
 			codePicker as String, codePickerValidation as String, codePickerVec as String,
 			codeConvToC as String, codeConvToGurax as String,
 			codeFunctionBody as String, codeArgRef as String) = {
@@ -34,6 +35,7 @@ TypeInfo = class {
 		this.cTypeElem = cType.Sub(r'(const\s+)?(\w+).*', r'\2')
 		this.vtypeFullName = vtypeFullName
 		this.vtypeDisplay = vtypeDisplay
+		this.listVarFlag = listVarFlag
 		fields = vtypeFullName.Split('.'):list
 		if (!fields.IsEmpty()) {
 			this.moduleName = fields.Head(fields.len - 1).Join('.')
@@ -82,10 +84,14 @@ ArgInfo = class {
 		this.streamWFlag = attr.IsSet(`w)
 		this.streamRFlag = attr.IsSet(`r)
 	}
+	IsList() = {
+		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
+		this.listVarFlag || this.typeInfo.listVarFlag
+	}
 	ComposeDeclaration() = {
 		strArgOccur = 'ArgOccur::' + this.occurSymbol
 		argFlags = []
-		this.listVarFlag && argFlags.Add('ListVar')
+		this.IsList() && argFlags.Add('ListVar')
 		this.nilFlag && argFlags.Add('Nil')
 		this.streamWFlag && argFlags.Add('StreamW')
 		this.streamRFlag && argFlags.Add('StreamR')
@@ -96,7 +102,7 @@ ArgInfo = class {
 	ComposeImplementation() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
 		this.typeInfo.ComposePicker(this.name, this.defaultValue,
-			(this.occurSymbol == `ZeroOrMore) || (this.occurSymbol == `OnceOrMore) || this.listVarFlag,
+			(this.occurSymbol == `ZeroOrMore) || (this.occurSymbol == `OnceOrMore) || this.IsList(),
 			(this.occurSymbol == `ZeroOrOnce) || this.nilFlag)
 	}
 	ComposeConvToGurax() = this.typeInfo.ComposeConvToGurax(this.name)
@@ -110,7 +116,7 @@ ArgInfo = class {
 	}
 	ToString() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
-		Format('%s%s%s%s%s%s as %s', this.name, cond(this.listVarFlag, '[]', ''),
+		Format('%s%s%s%s%s%s as %s', this.name, cond(this.IsList(), '[]', ''),
 			cond(this.occurSymbol == `ZeroOrOnce, '?', cond(this.occurSymbol == `ZeroOrMore, '*',
 				cond(this.occurSymbol == `OnceOrMore, '+', ''))),
 			cond(this.nilFlag, ':nil', ''),
@@ -299,7 +305,12 @@ Renderer = class {
 			codePicker as String = '', codePickerValidation as String = '', codePickerVec as String = '',
 			codeConvToC as String = '', codeConvToGurax as String = 'new Gurax::Value_${this.vtype}(${varName})',
 			codeFunctionBody as String = '', codeArgRef = '${varName}') = {
-		typeInfo = TypeInfo(decl, cType, vtypeFullName, vtypeDisplay || vtypeFullName,
+		listVarFlag = false
+		if (m = vtypeFullName.Match(r'^(\w+)\[\]')) {
+			vtypeFullName = m[1]
+			listVarFlag = true
+		}
+		typeInfo = TypeInfo(decl, cType, vtypeFullName, vtypeDisplay || vtypeFullName, listVarFlag,
 				codePicker, codePickerValidation, codePickerVec,
 				codeConvToC, codeConvToGurax, codeFunctionBody, codeArgRef)
 		this.typeInfoMap[decl] = typeInfo

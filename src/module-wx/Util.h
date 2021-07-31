@@ -80,6 +80,11 @@ namespace Util {
 
 extern EventTypeMap eventTypeMap;
 
+wxArrayString CreateArrayString(const ValueList& values);
+wxArrayShort CreateArrayShort(const ValueList& values);
+wxArrayInt CreateArrayInt(const ValueList& values);
+wxArrayDouble CreateArrayDouble(const ValueList& values);
+wxArrayLong CreateArrayLong(const ValueList& values);
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory);
 const Value& LookupEventType(wxEventType eventType);
