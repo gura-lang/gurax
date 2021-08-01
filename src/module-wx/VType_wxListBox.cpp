@@ -55,14 +55,12 @@ Gurax_ImplementConstructorEx(ListBox_gurax, processor_gurax, argument_gurax)
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	auto choices = args_gurax.PickListT<const char*>(Gurax::Value_String::ValueForVector);
+	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
 	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxListBoxNameStr;
 	// Function body
-	wxArrayString choices_;
-	for (const char* choice : choices) choices_.Add(choice);
-	auto pEntity_gurax = new Value_wxListBox::EntityT(parent, id, pos, size, choices_, style, validator, name);
+	auto pEntity_gurax = new Value_wxListBox::EntityT(parent, id, pos, size, choices, style, validator, name);
 	RefPtr<Value_wxListBox> pValue_gurax(new Value_wxListBox(pEntity_gurax));
 	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());

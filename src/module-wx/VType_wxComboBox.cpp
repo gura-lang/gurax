@@ -54,7 +54,6 @@ Gurax_ImplementConstructorEx(ComboBox_gurax, processor_gurax, argument_gurax)
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-#if 0
 	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
@@ -63,15 +62,9 @@ Gurax_ImplementConstructorEx(ComboBox_gurax, processor_gurax, argument_gurax)
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxComboBoxNameStr;
 	// Function body
-	//wxArrayString choices_;
-	//for (const char* choice : choices) choices_.Add(choice);
 	auto pEntity_gurax = new Value_wxComboBox::EntityT(parent, id, value, pos, size, choices, style, validator, name);
-#endif
-	//auto pEntity_gurax = new Value_wxComboBox::EntityT(parent, id);
-	auto pEntity_gurax = new wxComboBox(parent, id);
-	::printf("%p %p\n", pEntity_gurax, reinterpret_cast<wxEvtHandler*>(pEntity_gurax));
 	RefPtr<Value_wxComboBox> pValue_gurax(new Value_wxComboBox(pEntity_gurax));
-	//pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
