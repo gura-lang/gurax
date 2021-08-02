@@ -161,10 +161,10 @@ public:
 	Gurax_DeclareReferable(Value_wx${className});
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wx${className}");
-${if (className == 'EvtHandler')}
+${if (evtHandlerOrDerivFlag)}
 protected:
 	wxWeakRef<wx${className}> _pEntity;
-${elsif (classInfo.loosePointerFlag)}
+${elsif (classInfo.loosePointerFlag || (classInfoRoot && classInfoRoot.loosePointerFlag))}
 protected:
 	wx${className}* _pEntity;
 ${elsif (className == 'CmdLineParser')}
@@ -213,8 +213,8 @@ ${elsif (!classNameParent)}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
 ${elsif (classNameRoot == 'EvtHandler' || classInfoRoot.loosePointerFlag)}
-	explicit Value_wx${className}(wx${classNameRoot}* pEntity, VType& vtype = VTYPE_wx${className}) :
-		Value_wx${classNameParent}(pEntity, vtype) {}
+	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(pEntity, vtype), _pEntity(pEntity) {}
 ${elsif (eventDerivFlag)}
 	Value_wx${className}(const wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(entity, pValueUserData, vtype) {}
@@ -232,12 +232,12 @@ protected:
 	// Destructor
 	~Value_wx${className}() = default;
 public:
-${if (className in ['EvtHandler', 'Event'])}
+${if (evtHandlerOrDerivFlag || className in ['Event'])}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
 	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
-${elsif (classInfo.loosePointerFlag)}
+${elsif (classInfo.loosePointerFlag || (classInfoRoot && classInfoRoot.loosePointerFlag))}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity; }

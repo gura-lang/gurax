@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxAuiMDIParentFrame);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxAuiMDIParentFrame");
+protected:
+	wxWeakRef<wxAuiMDIParentFrame> _pEntity;
 public:
 	class EntityT : public wxAuiMDIParentFrame {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxAuiMDIParentFrame() = delete;
-	explicit Value_wxAuiMDIParentFrame(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxAuiMDIParentFrame) :
-		Value_wxFrame(pEntity, vtype) {}
+	explicit Value_wxAuiMDIParentFrame(wxAuiMDIParentFrame* pEntity, VType& vtype = VTYPE_wxAuiMDIParentFrame) :
+		Value_wxFrame(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxAuiMDIParentFrame(const Value_wxAuiMDIParentFrame& src) = delete;
 	Value_wxAuiMDIParentFrame& operator=(const Value_wxAuiMDIParentFrame& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxAuiMDIParentFrame() = default;
 public:
-	wxAuiMDIParentFrame& GetEntity() {
-		return reinterpret_cast<wxAuiMDIParentFrame&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxAuiMDIParentFrame& GetEntity() const {
-		return reinterpret_cast<const wxAuiMDIParentFrame&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxAuiMDIParentFrame* GetEntityPtr() {
-		return reinterpret_cast<wxAuiMDIParentFrame*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxAuiMDIParentFrame* GetEntityPtr() const {
-		return reinterpret_cast<const wxAuiMDIParentFrame*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxAuiMDIParentFrame& GetEntity() { return *_pEntity; }
+	const wxAuiMDIParentFrame& GetEntity() const { return *_pEntity; }
+	wxAuiMDIParentFrame* GetEntityPtr() { return _pEntity.get(); }
+	const wxAuiMDIParentFrame* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxAuiMDIParentFrame& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxAuiMDIParentFrame&>(value).GetEntity();

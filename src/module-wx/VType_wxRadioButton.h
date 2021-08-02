@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxRadioButton);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxRadioButton");
+protected:
+	wxWeakRef<wxRadioButton> _pEntity;
 public:
 	class EntityT : public wxRadioButton {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxRadioButton() = delete;
-	explicit Value_wxRadioButton(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxRadioButton) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxRadioButton(wxRadioButton* pEntity, VType& vtype = VTYPE_wxRadioButton) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxRadioButton(const Value_wxRadioButton& src) = delete;
 	Value_wxRadioButton& operator=(const Value_wxRadioButton& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxRadioButton() = default;
 public:
-	wxRadioButton& GetEntity() {
-		return reinterpret_cast<wxRadioButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxRadioButton& GetEntity() const {
-		return reinterpret_cast<const wxRadioButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxRadioButton* GetEntityPtr() {
-		return reinterpret_cast<wxRadioButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxRadioButton* GetEntityPtr() const {
-		return reinterpret_cast<const wxRadioButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxRadioButton& GetEntity() { return *_pEntity; }
+	const wxRadioButton& GetEntity() const { return *_pEntity; }
+	wxRadioButton* GetEntityPtr() { return _pEntity.get(); }
+	const wxRadioButton* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxRadioButton& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxRadioButton&>(value).GetEntity();

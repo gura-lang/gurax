@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxSlider);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxSlider");
+protected:
+	wxWeakRef<wxSlider> _pEntity;
 public:
 	class EntityT : public wxSlider {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxSlider() = delete;
-	explicit Value_wxSlider(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxSlider) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxSlider(wxSlider* pEntity, VType& vtype = VTYPE_wxSlider) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxSlider(const Value_wxSlider& src) = delete;
 	Value_wxSlider& operator=(const Value_wxSlider& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxSlider() = default;
 public:
-	wxSlider& GetEntity() {
-		return reinterpret_cast<wxSlider&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxSlider& GetEntity() const {
-		return reinterpret_cast<const wxSlider&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxSlider* GetEntityPtr() {
-		return reinterpret_cast<wxSlider*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxSlider* GetEntityPtr() const {
-		return reinterpret_cast<const wxSlider*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxSlider& GetEntity() { return *_pEntity; }
+	const wxSlider& GetEntity() const { return *_pEntity; }
+	wxSlider* GetEntityPtr() { return _pEntity.get(); }
+	const wxSlider* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxSlider& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxSlider&>(value).GetEntity();

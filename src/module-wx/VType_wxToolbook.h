@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxToolbook);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxToolbook");
+protected:
+	wxWeakRef<wxToolbook> _pEntity;
 public:
 	class EntityT : public wxToolbook {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxToolbook() = delete;
-	explicit Value_wxToolbook(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxToolbook) :
-		Value_wxBookCtrlBase(pEntity, vtype) {}
+	explicit Value_wxToolbook(wxToolbook* pEntity, VType& vtype = VTYPE_wxToolbook) :
+		Value_wxBookCtrlBase(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxToolbook(const Value_wxToolbook& src) = delete;
 	Value_wxToolbook& operator=(const Value_wxToolbook& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxToolbook() = default;
 public:
-	wxToolbook& GetEntity() {
-		return reinterpret_cast<wxToolbook&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxToolbook& GetEntity() const {
-		return reinterpret_cast<const wxToolbook&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxToolbook* GetEntityPtr() {
-		return reinterpret_cast<wxToolbook*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxToolbook* GetEntityPtr() const {
-		return reinterpret_cast<const wxToolbook*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxToolbook& GetEntity() { return *_pEntity; }
+	const wxToolbook& GetEntity() const { return *_pEntity; }
+	wxToolbook* GetEntityPtr() { return _pEntity.get(); }
+	const wxToolbook* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxToolbook& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxToolbook&>(value).GetEntity();

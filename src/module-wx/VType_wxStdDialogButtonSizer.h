@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxStdDialogButtonSizer);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxStdDialogButtonSizer");
+protected:
+	wxStdDialogButtonSizer* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxStdDialogButtonSizer() = delete;
-	explicit Value_wxStdDialogButtonSizer(wxSizer* pEntity, VType& vtype = VTYPE_wxStdDialogButtonSizer) :
-		Value_wxBoxSizer(pEntity, vtype) {}
+	explicit Value_wxStdDialogButtonSizer(wxStdDialogButtonSizer* pEntity, VType& vtype = VTYPE_wxStdDialogButtonSizer) :
+		Value_wxBoxSizer(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxStdDialogButtonSizer(const Value_wxStdDialogButtonSizer& src) = delete;
 	Value_wxStdDialogButtonSizer& operator=(const Value_wxStdDialogButtonSizer& src) = delete;
@@ -48,18 +50,10 @@ protected:
 	// Destructor
 	~Value_wxStdDialogButtonSizer() = default;
 public:
-	wxStdDialogButtonSizer& GetEntity() {
-		return reinterpret_cast<wxStdDialogButtonSizer&>(Value_wxSizer::GetEntity());
-	}
-	const wxStdDialogButtonSizer& GetEntity() const {
-		return reinterpret_cast<const wxStdDialogButtonSizer&>(Value_wxSizer::GetEntity());
-	}
-	wxStdDialogButtonSizer* GetEntityPtr() {
-		return reinterpret_cast<wxStdDialogButtonSizer*>(Value_wxSizer::GetEntityPtr());
-	}
-	const wxStdDialogButtonSizer* GetEntityPtr() const {
-		return reinterpret_cast<const wxStdDialogButtonSizer*>(Value_wxSizer::GetEntityPtr());
-	}
+	wxStdDialogButtonSizer& GetEntity() { return *_pEntity; }
+	const wxStdDialogButtonSizer& GetEntity() const { return *_pEntity; }
+	wxStdDialogButtonSizer* GetEntityPtr() { return _pEntity; }
+	const wxStdDialogButtonSizer* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxStdDialogButtonSizer& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxStdDialogButtonSizer&>(value).GetEntity();

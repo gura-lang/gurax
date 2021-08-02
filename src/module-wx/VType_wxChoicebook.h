@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxChoicebook);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxChoicebook");
+protected:
+	wxWeakRef<wxChoicebook> _pEntity;
 public:
 	class EntityT : public wxChoicebook {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxChoicebook() = delete;
-	explicit Value_wxChoicebook(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxChoicebook) :
-		Value_wxBookCtrlBase(pEntity, vtype) {}
+	explicit Value_wxChoicebook(wxChoicebook* pEntity, VType& vtype = VTYPE_wxChoicebook) :
+		Value_wxBookCtrlBase(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxChoicebook(const Value_wxChoicebook& src) = delete;
 	Value_wxChoicebook& operator=(const Value_wxChoicebook& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxChoicebook() = default;
 public:
-	wxChoicebook& GetEntity() {
-		return reinterpret_cast<wxChoicebook&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxChoicebook& GetEntity() const {
-		return reinterpret_cast<const wxChoicebook&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxChoicebook* GetEntityPtr() {
-		return reinterpret_cast<wxChoicebook*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxChoicebook* GetEntityPtr() const {
-		return reinterpret_cast<const wxChoicebook*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxChoicebook& GetEntity() { return *_pEntity; }
+	const wxChoicebook& GetEntity() const { return *_pEntity; }
+	wxChoicebook* GetEntityPtr() { return _pEntity.get(); }
+	const wxChoicebook* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxChoicebook& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxChoicebook&>(value).GetEntity();

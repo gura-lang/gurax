@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxCheckBox);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxCheckBox");
+protected:
+	wxWeakRef<wxCheckBox> _pEntity;
 public:
 	class EntityT : public wxCheckBox {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxCheckBox() = delete;
-	explicit Value_wxCheckBox(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxCheckBox) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxCheckBox(wxCheckBox* pEntity, VType& vtype = VTYPE_wxCheckBox) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxCheckBox(const Value_wxCheckBox& src) = delete;
 	Value_wxCheckBox& operator=(const Value_wxCheckBox& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxCheckBox() = default;
 public:
-	wxCheckBox& GetEntity() {
-		return reinterpret_cast<wxCheckBox&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxCheckBox& GetEntity() const {
-		return reinterpret_cast<const wxCheckBox&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxCheckBox* GetEntityPtr() {
-		return reinterpret_cast<wxCheckBox*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxCheckBox* GetEntityPtr() const {
-		return reinterpret_cast<const wxCheckBox*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxCheckBox& GetEntity() { return *_pEntity; }
+	const wxCheckBox& GetEntity() const { return *_pEntity; }
+	wxCheckBox* GetEntityPtr() { return _pEntity.get(); }
+	const wxCheckBox* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxCheckBox& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxCheckBox&>(value).GetEntity();

@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxAuiMDIClientWindow);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxAuiMDIClientWindow");
+protected:
+	wxWeakRef<wxAuiMDIClientWindow> _pEntity;
 public:
 	class EntityT : public wxAuiMDIClientWindow {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxAuiMDIClientWindow() = delete;
-	explicit Value_wxAuiMDIClientWindow(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxAuiMDIClientWindow) :
-		Value_wxAuiNotebook(pEntity, vtype) {}
+	explicit Value_wxAuiMDIClientWindow(wxAuiMDIClientWindow* pEntity, VType& vtype = VTYPE_wxAuiMDIClientWindow) :
+		Value_wxAuiNotebook(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxAuiMDIClientWindow(const Value_wxAuiMDIClientWindow& src) = delete;
 	Value_wxAuiMDIClientWindow& operator=(const Value_wxAuiMDIClientWindow& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxAuiMDIClientWindow() = default;
 public:
-	wxAuiMDIClientWindow& GetEntity() {
-		return reinterpret_cast<wxAuiMDIClientWindow&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxAuiMDIClientWindow& GetEntity() const {
-		return reinterpret_cast<const wxAuiMDIClientWindow&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxAuiMDIClientWindow* GetEntityPtr() {
-		return reinterpret_cast<wxAuiMDIClientWindow*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxAuiMDIClientWindow* GetEntityPtr() const {
-		return reinterpret_cast<const wxAuiMDIClientWindow*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxAuiMDIClientWindow& GetEntity() { return *_pEntity; }
+	const wxAuiMDIClientWindow& GetEntity() const { return *_pEntity; }
+	wxAuiMDIClientWindow* GetEntityPtr() { return _pEntity.get(); }
+	const wxAuiMDIClientWindow* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxAuiMDIClientWindow& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxAuiMDIClientWindow&>(value).GetEntity();

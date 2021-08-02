@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxGridBagSizer);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGridBagSizer");
+protected:
+	wxGridBagSizer* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxGridBagSizer() = delete;
-	explicit Value_wxGridBagSizer(wxSizer* pEntity, VType& vtype = VTYPE_wxGridBagSizer) :
-		Value_wxFlexGridSizer(pEntity, vtype) {}
+	explicit Value_wxGridBagSizer(wxGridBagSizer* pEntity, VType& vtype = VTYPE_wxGridBagSizer) :
+		Value_wxFlexGridSizer(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxGridBagSizer(const Value_wxGridBagSizer& src) = delete;
 	Value_wxGridBagSizer& operator=(const Value_wxGridBagSizer& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxGridBagSizer() = default;
 public:
-	wxGridBagSizer& GetEntity() {
-		return reinterpret_cast<wxGridBagSizer&>(Value_wxSizer::GetEntity());
-	}
-	const wxGridBagSizer& GetEntity() const {
-		return reinterpret_cast<const wxGridBagSizer&>(Value_wxSizer::GetEntity());
-	}
-	wxGridBagSizer* GetEntityPtr() {
-		return reinterpret_cast<wxGridBagSizer*>(Value_wxSizer::GetEntityPtr());
-	}
-	const wxGridBagSizer* GetEntityPtr() const {
-		return reinterpret_cast<const wxGridBagSizer*>(Value_wxSizer::GetEntityPtr());
-	}
+	wxGridBagSizer& GetEntity() { return *_pEntity; }
+	const wxGridBagSizer& GetEntity() const { return *_pEntity; }
+	wxGridBagSizer* GetEntityPtr() { return _pEntity; }
+	const wxGridBagSizer* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxGridBagSizer& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGridBagSizer&>(value).GetEntity();

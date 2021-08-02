@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxSpinCtrl);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxSpinCtrl");
+protected:
+	wxWeakRef<wxSpinCtrl> _pEntity;
 public:
 	class EntityT : public wxSpinCtrl {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxSpinCtrl() = delete;
-	explicit Value_wxSpinCtrl(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxSpinCtrl) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxSpinCtrl(wxSpinCtrl* pEntity, VType& vtype = VTYPE_wxSpinCtrl) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxSpinCtrl(const Value_wxSpinCtrl& src) = delete;
 	Value_wxSpinCtrl& operator=(const Value_wxSpinCtrl& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxSpinCtrl() = default;
 public:
-	wxSpinCtrl& GetEntity() {
-		return reinterpret_cast<wxSpinCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxSpinCtrl& GetEntity() const {
-		return reinterpret_cast<const wxSpinCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxSpinCtrl* GetEntityPtr() {
-		return reinterpret_cast<wxSpinCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxSpinCtrl* GetEntityPtr() const {
-		return reinterpret_cast<const wxSpinCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxSpinCtrl& GetEntity() { return *_pEntity; }
+	const wxSpinCtrl& GetEntity() const { return *_pEntity; }
+	wxSpinCtrl* GetEntityPtr() { return _pEntity.get(); }
+	const wxSpinCtrl* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxSpinCtrl& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxSpinCtrl&>(value).GetEntity();

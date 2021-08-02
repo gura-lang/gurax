@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxToggleButton);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxToggleButton");
+protected:
+	wxWeakRef<wxToggleButton> _pEntity;
 public:
 	class EntityT : public wxToggleButton {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxToggleButton() = delete;
-	explicit Value_wxToggleButton(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxToggleButton) :
-		Value_wxAnyButton(pEntity, vtype) {}
+	explicit Value_wxToggleButton(wxToggleButton* pEntity, VType& vtype = VTYPE_wxToggleButton) :
+		Value_wxAnyButton(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxToggleButton(const Value_wxToggleButton& src) = delete;
 	Value_wxToggleButton& operator=(const Value_wxToggleButton& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxToggleButton() = default;
 public:
-	wxToggleButton& GetEntity() {
-		return reinterpret_cast<wxToggleButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxToggleButton& GetEntity() const {
-		return reinterpret_cast<const wxToggleButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxToggleButton* GetEntityPtr() {
-		return reinterpret_cast<wxToggleButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxToggleButton* GetEntityPtr() const {
-		return reinterpret_cast<const wxToggleButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxToggleButton& GetEntity() { return *_pEntity; }
+	const wxToggleButton& GetEntity() const { return *_pEntity; }
+	wxToggleButton* GetEntityPtr() { return _pEntity.get(); }
+	const wxToggleButton* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxToggleButton& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxToggleButton&>(value).GetEntity();

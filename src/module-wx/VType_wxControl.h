@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxControl);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxControl");
+protected:
+	wxWeakRef<wxControl> _pEntity;
 public:
 	class EntityT : public wxControl {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxControl() = delete;
-	explicit Value_wxControl(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxControl) :
-		Value_wxWindow(pEntity, vtype) {}
+	explicit Value_wxControl(wxControl* pEntity, VType& vtype = VTYPE_wxControl) :
+		Value_wxWindow(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxControl(const Value_wxControl& src) = delete;
 	Value_wxControl& operator=(const Value_wxControl& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxControl() = default;
 public:
-	wxControl& GetEntity() {
-		return reinterpret_cast<wxControl&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxControl& GetEntity() const {
-		return reinterpret_cast<const wxControl&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxControl* GetEntityPtr() {
-		return reinterpret_cast<wxControl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxControl* GetEntityPtr() const {
-		return reinterpret_cast<const wxControl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxControl& GetEntity() { return *_pEntity; }
+	const wxControl& GetEntity() const { return *_pEntity; }
+	wxControl* GetEntityPtr() { return _pEntity.get(); }
+	const wxControl* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxControl& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxControl&>(value).GetEntity();

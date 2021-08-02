@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxCommandLinkButton);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxCommandLinkButton");
+protected:
+	wxWeakRef<wxCommandLinkButton> _pEntity;
 public:
 	class EntityT : public wxCommandLinkButton {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxCommandLinkButton() = delete;
-	explicit Value_wxCommandLinkButton(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxCommandLinkButton) :
-		Value_wxButton(pEntity, vtype) {}
+	explicit Value_wxCommandLinkButton(wxCommandLinkButton* pEntity, VType& vtype = VTYPE_wxCommandLinkButton) :
+		Value_wxButton(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxCommandLinkButton(const Value_wxCommandLinkButton& src) = delete;
 	Value_wxCommandLinkButton& operator=(const Value_wxCommandLinkButton& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxCommandLinkButton() = default;
 public:
-	wxCommandLinkButton& GetEntity() {
-		return reinterpret_cast<wxCommandLinkButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxCommandLinkButton& GetEntity() const {
-		return reinterpret_cast<const wxCommandLinkButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxCommandLinkButton* GetEntityPtr() {
-		return reinterpret_cast<wxCommandLinkButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxCommandLinkButton* GetEntityPtr() const {
-		return reinterpret_cast<const wxCommandLinkButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxCommandLinkButton& GetEntity() { return *_pEntity; }
+	const wxCommandLinkButton& GetEntity() const { return *_pEntity; }
+	wxCommandLinkButton* GetEntityPtr() { return _pEntity.get(); }
+	const wxCommandLinkButton* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxCommandLinkButton& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxCommandLinkButton&>(value).GetEntity();

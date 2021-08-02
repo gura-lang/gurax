@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxComboBox);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxComboBox");
+protected:
+	wxWeakRef<wxComboBox> _pEntity;
 public:
 	class EntityT : public wxComboBox {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxComboBox() = delete;
-	explicit Value_wxComboBox(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxComboBox) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxComboBox(wxComboBox* pEntity, VType& vtype = VTYPE_wxComboBox) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxComboBox(const Value_wxComboBox& src) = delete;
 	Value_wxComboBox& operator=(const Value_wxComboBox& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxComboBox() = default;
 public:
-	wxComboBox& GetEntity() {
-		return reinterpret_cast<wxComboBox&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxComboBox& GetEntity() const {
-		return reinterpret_cast<const wxComboBox&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxComboBox* GetEntityPtr() {
-		return reinterpret_cast<wxComboBox*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxComboBox* GetEntityPtr() const {
-		return reinterpret_cast<const wxComboBox*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxComboBox& GetEntity() { return *_pEntity; }
+	const wxComboBox& GetEntity() const { return *_pEntity; }
+	wxComboBox* GetEntityPtr() { return _pEntity.get(); }
+	const wxComboBox* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxComboBox& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxComboBox&>(value).GetEntity();

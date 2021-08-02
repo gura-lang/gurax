@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxNotebook);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxNotebook");
+protected:
+	wxWeakRef<wxNotebook> _pEntity;
 public:
 	class EntityT : public wxNotebook {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxNotebook() = delete;
-	explicit Value_wxNotebook(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxNotebook) :
-		Value_wxBookCtrlBase(pEntity, vtype) {}
+	explicit Value_wxNotebook(wxNotebook* pEntity, VType& vtype = VTYPE_wxNotebook) :
+		Value_wxBookCtrlBase(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxNotebook(const Value_wxNotebook& src) = delete;
 	Value_wxNotebook& operator=(const Value_wxNotebook& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxNotebook() = default;
 public:
-	wxNotebook& GetEntity() {
-		return reinterpret_cast<wxNotebook&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxNotebook& GetEntity() const {
-		return reinterpret_cast<const wxNotebook&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxNotebook* GetEntityPtr() {
-		return reinterpret_cast<wxNotebook*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxNotebook* GetEntityPtr() const {
-		return reinterpret_cast<const wxNotebook*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxNotebook& GetEntity() { return *_pEntity; }
+	const wxNotebook& GetEntity() const { return *_pEntity; }
+	wxNotebook* GetEntityPtr() { return _pEntity.get(); }
+	const wxNotebook* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxNotebook& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxNotebook&>(value).GetEntity();

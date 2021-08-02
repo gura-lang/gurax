@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxBitmapButton);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxBitmapButton");
+protected:
+	wxWeakRef<wxBitmapButton> _pEntity;
 public:
 	class EntityT : public wxBitmapButton {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxBitmapButton() = delete;
-	explicit Value_wxBitmapButton(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxBitmapButton) :
-		Value_wxButton(pEntity, vtype) {}
+	explicit Value_wxBitmapButton(wxBitmapButton* pEntity, VType& vtype = VTYPE_wxBitmapButton) :
+		Value_wxButton(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxBitmapButton(const Value_wxBitmapButton& src) = delete;
 	Value_wxBitmapButton& operator=(const Value_wxBitmapButton& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxBitmapButton() = default;
 public:
-	wxBitmapButton& GetEntity() {
-		return reinterpret_cast<wxBitmapButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxBitmapButton& GetEntity() const {
-		return reinterpret_cast<const wxBitmapButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxBitmapButton* GetEntityPtr() {
-		return reinterpret_cast<wxBitmapButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxBitmapButton* GetEntityPtr() const {
-		return reinterpret_cast<const wxBitmapButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxBitmapButton& GetEntity() { return *_pEntity; }
+	const wxBitmapButton& GetEntity() const { return *_pEntity; }
+	wxBitmapButton* GetEntityPtr() { return _pEntity.get(); }
+	const wxBitmapButton* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxBitmapButton& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxBitmapButton&>(value).GetEntity();

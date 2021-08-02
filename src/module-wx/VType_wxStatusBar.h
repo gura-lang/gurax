@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxStatusBar);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxStatusBar");
+protected:
+	wxWeakRef<wxStatusBar> _pEntity;
 public:
 	class EntityT : public wxStatusBar {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxStatusBar() = delete;
-	explicit Value_wxStatusBar(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxStatusBar) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxStatusBar(wxStatusBar* pEntity, VType& vtype = VTYPE_wxStatusBar) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxStatusBar(const Value_wxStatusBar& src) = delete;
 	Value_wxStatusBar& operator=(const Value_wxStatusBar& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxStatusBar() = default;
 public:
-	wxStatusBar& GetEntity() {
-		return reinterpret_cast<wxStatusBar&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxStatusBar& GetEntity() const {
-		return reinterpret_cast<const wxStatusBar&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxStatusBar* GetEntityPtr() {
-		return reinterpret_cast<wxStatusBar*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxStatusBar* GetEntityPtr() const {
-		return reinterpret_cast<const wxStatusBar*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxStatusBar& GetEntity() { return *_pEntity; }
+	const wxStatusBar& GetEntity() const { return *_pEntity; }
+	wxStatusBar* GetEntityPtr() { return _pEntity.get(); }
+	const wxStatusBar* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxStatusBar& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxStatusBar&>(value).GetEntity();

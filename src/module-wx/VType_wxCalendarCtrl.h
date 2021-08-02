@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxCalendarCtrl);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxCalendarCtrl");
+protected:
+	wxWeakRef<wxCalendarCtrl> _pEntity;
 public:
 	class EntityT : public wxCalendarCtrl {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxCalendarCtrl() = delete;
-	explicit Value_wxCalendarCtrl(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxCalendarCtrl) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxCalendarCtrl(wxCalendarCtrl* pEntity, VType& vtype = VTYPE_wxCalendarCtrl) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxCalendarCtrl(const Value_wxCalendarCtrl& src) = delete;
 	Value_wxCalendarCtrl& operator=(const Value_wxCalendarCtrl& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxCalendarCtrl() = default;
 public:
-	wxCalendarCtrl& GetEntity() {
-		return reinterpret_cast<wxCalendarCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxCalendarCtrl& GetEntity() const {
-		return reinterpret_cast<const wxCalendarCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxCalendarCtrl* GetEntityPtr() {
-		return reinterpret_cast<wxCalendarCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxCalendarCtrl* GetEntityPtr() const {
-		return reinterpret_cast<const wxCalendarCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxCalendarCtrl& GetEntity() { return *_pEntity; }
+	const wxCalendarCtrl& GetEntity() const { return *_pEntity; }
+	wxCalendarCtrl* GetEntityPtr() { return _pEntity.get(); }
+	const wxCalendarCtrl* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxCalendarCtrl& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxCalendarCtrl&>(value).GetEntity();

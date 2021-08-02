@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxWrapSizer);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxWrapSizer");
+protected:
+	wxWrapSizer* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxWrapSizer() = delete;
-	explicit Value_wxWrapSizer(wxSizer* pEntity, VType& vtype = VTYPE_wxWrapSizer) :
-		Value_wxBoxSizer(pEntity, vtype) {}
+	explicit Value_wxWrapSizer(wxWrapSizer* pEntity, VType& vtype = VTYPE_wxWrapSizer) :
+		Value_wxBoxSizer(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxWrapSizer(const Value_wxWrapSizer& src) = delete;
 	Value_wxWrapSizer& operator=(const Value_wxWrapSizer& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxWrapSizer() = default;
 public:
-	wxWrapSizer& GetEntity() {
-		return reinterpret_cast<wxWrapSizer&>(Value_wxSizer::GetEntity());
-	}
-	const wxWrapSizer& GetEntity() const {
-		return reinterpret_cast<const wxWrapSizer&>(Value_wxSizer::GetEntity());
-	}
-	wxWrapSizer* GetEntityPtr() {
-		return reinterpret_cast<wxWrapSizer*>(Value_wxSizer::GetEntityPtr());
-	}
-	const wxWrapSizer* GetEntityPtr() const {
-		return reinterpret_cast<const wxWrapSizer*>(Value_wxSizer::GetEntityPtr());
-	}
+	wxWrapSizer& GetEntity() { return *_pEntity; }
+	const wxWrapSizer& GetEntity() const { return *_pEntity; }
+	wxWrapSizer* GetEntityPtr() { return _pEntity; }
+	const wxWrapSizer* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxWrapSizer& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxWrapSizer&>(value).GetEntity();

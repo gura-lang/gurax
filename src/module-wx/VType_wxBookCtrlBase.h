@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxBookCtrlBase);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxBookCtrlBase");
+protected:
+	wxWeakRef<wxBookCtrlBase> _pEntity;
 public:
 	class EntityT : public wxBookCtrlBase {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxBookCtrlBase() = delete;
-	explicit Value_wxBookCtrlBase(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxBookCtrlBase) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxBookCtrlBase(wxBookCtrlBase* pEntity, VType& vtype = VTYPE_wxBookCtrlBase) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxBookCtrlBase(const Value_wxBookCtrlBase& src) = delete;
 	Value_wxBookCtrlBase& operator=(const Value_wxBookCtrlBase& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxBookCtrlBase() = default;
 public:
-	wxBookCtrlBase& GetEntity() {
-		return reinterpret_cast<wxBookCtrlBase&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxBookCtrlBase& GetEntity() const {
-		return reinterpret_cast<const wxBookCtrlBase&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxBookCtrlBase* GetEntityPtr() {
-		return reinterpret_cast<wxBookCtrlBase*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxBookCtrlBase* GetEntityPtr() const {
-		return reinterpret_cast<const wxBookCtrlBase*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxBookCtrlBase& GetEntity() { return *_pEntity; }
+	const wxBookCtrlBase& GetEntity() const { return *_pEntity; }
+	wxBookCtrlBase* GetEntityPtr() { return _pEntity.get(); }
+	const wxBookCtrlBase* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxBookCtrlBase& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxBookCtrlBase&>(value).GetEntity();

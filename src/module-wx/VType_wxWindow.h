@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxWindow);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxWindow");
+protected:
+	wxWeakRef<wxWindow> _pEntity;
 public:
 	class EntityT : public wxWindow {
 	public:
@@ -48,8 +50,8 @@ public:
 public:
 	// Constructor
 	Value_wxWindow() = delete;
-	explicit Value_wxWindow(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxWindow) :
-		Value_wxEvtHandler(pEntity, vtype) {}
+	explicit Value_wxWindow(wxWindow* pEntity, VType& vtype = VTYPE_wxWindow) :
+		Value_wxEvtHandler(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxWindow(const Value_wxWindow& src) = delete;
 	Value_wxWindow& operator=(const Value_wxWindow& src) = delete;
@@ -60,18 +62,10 @@ protected:
 	// Destructor
 	~Value_wxWindow() = default;
 public:
-	wxWindow& GetEntity() {
-		return reinterpret_cast<wxWindow&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxWindow& GetEntity() const {
-		return reinterpret_cast<const wxWindow&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxWindow* GetEntityPtr() {
-		return reinterpret_cast<wxWindow*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxWindow* GetEntityPtr() const {
-		return reinterpret_cast<const wxWindow*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxWindow& GetEntity() { return *_pEntity; }
+	const wxWindow& GetEntity() const { return *_pEntity; }
+	wxWindow* GetEntityPtr() { return _pEntity.get(); }
+	const wxWindow* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxWindow& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxWindow&>(value).GetEntity();

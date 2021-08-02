@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxChoice);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxChoice");
+protected:
+	wxWeakRef<wxChoice> _pEntity;
 public:
 	class EntityT : public wxChoice {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxChoice() = delete;
-	explicit Value_wxChoice(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxChoice) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxChoice(wxChoice* pEntity, VType& vtype = VTYPE_wxChoice) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxChoice(const Value_wxChoice& src) = delete;
 	Value_wxChoice& operator=(const Value_wxChoice& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxChoice() = default;
 public:
-	wxChoice& GetEntity() {
-		return reinterpret_cast<wxChoice&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxChoice& GetEntity() const {
-		return reinterpret_cast<const wxChoice&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxChoice* GetEntityPtr() {
-		return reinterpret_cast<wxChoice*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxChoice* GetEntityPtr() const {
-		return reinterpret_cast<const wxChoice*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxChoice& GetEntity() { return *_pEntity; }
+	const wxChoice& GetEntity() const { return *_pEntity; }
+	wxChoice* GetEntityPtr() { return _pEntity.get(); }
+	const wxChoice* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxChoice& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxChoice&>(value).GetEntity();

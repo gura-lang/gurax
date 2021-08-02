@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxGauge);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGauge");
+protected:
+	wxWeakRef<wxGauge> _pEntity;
 public:
 	class EntityT : public wxGauge {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxGauge() = delete;
-	explicit Value_wxGauge(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxGauge) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxGauge(wxGauge* pEntity, VType& vtype = VTYPE_wxGauge) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxGauge(const Value_wxGauge& src) = delete;
 	Value_wxGauge& operator=(const Value_wxGauge& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxGauge() = default;
 public:
-	wxGauge& GetEntity() {
-		return reinterpret_cast<wxGauge&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxGauge& GetEntity() const {
-		return reinterpret_cast<const wxGauge&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxGauge* GetEntityPtr() {
-		return reinterpret_cast<wxGauge*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxGauge* GetEntityPtr() const {
-		return reinterpret_cast<const wxGauge*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxGauge& GetEntity() { return *_pEntity; }
+	const wxGauge& GetEntity() const { return *_pEntity; }
+	wxGauge* GetEntityPtr() { return _pEntity.get(); }
+	const wxGauge* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxGauge& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGauge&>(value).GetEntity();

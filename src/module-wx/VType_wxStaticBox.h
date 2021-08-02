@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxStaticBox);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxStaticBox");
+protected:
+	wxWeakRef<wxStaticBox> _pEntity;
 public:
 	class EntityT : public wxStaticBox {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxStaticBox() = delete;
-	explicit Value_wxStaticBox(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxStaticBox) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxStaticBox(wxStaticBox* pEntity, VType& vtype = VTYPE_wxStaticBox) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxStaticBox(const Value_wxStaticBox& src) = delete;
 	Value_wxStaticBox& operator=(const Value_wxStaticBox& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxStaticBox() = default;
 public:
-	wxStaticBox& GetEntity() {
-		return reinterpret_cast<wxStaticBox&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxStaticBox& GetEntity() const {
-		return reinterpret_cast<const wxStaticBox&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxStaticBox* GetEntityPtr() {
-		return reinterpret_cast<wxStaticBox*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxStaticBox* GetEntityPtr() const {
-		return reinterpret_cast<const wxStaticBox*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxStaticBox& GetEntity() { return *_pEntity; }
+	const wxStaticBox& GetEntity() const { return *_pEntity; }
+	wxStaticBox* GetEntityPtr() { return _pEntity.get(); }
+	const wxStaticBox* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxStaticBox& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxStaticBox&>(value).GetEntity();

@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxListCtrl);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxListCtrl");
+protected:
+	wxWeakRef<wxListCtrl> _pEntity;
 public:
 	class EntityT : public wxListCtrl {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxListCtrl() = delete;
-	explicit Value_wxListCtrl(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxListCtrl) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxListCtrl(wxListCtrl* pEntity, VType& vtype = VTYPE_wxListCtrl) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxListCtrl(const Value_wxListCtrl& src) = delete;
 	Value_wxListCtrl& operator=(const Value_wxListCtrl& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxListCtrl() = default;
 public:
-	wxListCtrl& GetEntity() {
-		return reinterpret_cast<wxListCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxListCtrl& GetEntity() const {
-		return reinterpret_cast<const wxListCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxListCtrl* GetEntityPtr() {
-		return reinterpret_cast<wxListCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxListCtrl* GetEntityPtr() const {
-		return reinterpret_cast<const wxListCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxListCtrl& GetEntity() { return *_pEntity; }
+	const wxListCtrl& GetEntity() const { return *_pEntity; }
+	wxListCtrl* GetEntityPtr() { return _pEntity.get(); }
+	const wxListCtrl* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxListCtrl& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxListCtrl&>(value).GetEntity();

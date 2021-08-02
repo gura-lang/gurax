@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxStyledTextCtrl);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxStyledTextCtrl");
+protected:
+	wxWeakRef<wxStyledTextCtrl> _pEntity;
 public:
 	class EntityT : public wxStyledTextCtrl {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxStyledTextCtrl() = delete;
-	explicit Value_wxStyledTextCtrl(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxStyledTextCtrl) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxStyledTextCtrl(wxStyledTextCtrl* pEntity, VType& vtype = VTYPE_wxStyledTextCtrl) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxStyledTextCtrl(const Value_wxStyledTextCtrl& src) = delete;
 	Value_wxStyledTextCtrl& operator=(const Value_wxStyledTextCtrl& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxStyledTextCtrl() = default;
 public:
-	wxStyledTextCtrl& GetEntity() {
-		return reinterpret_cast<wxStyledTextCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxStyledTextCtrl& GetEntity() const {
-		return reinterpret_cast<const wxStyledTextCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxStyledTextCtrl* GetEntityPtr() {
-		return reinterpret_cast<wxStyledTextCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxStyledTextCtrl* GetEntityPtr() const {
-		return reinterpret_cast<const wxStyledTextCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxStyledTextCtrl& GetEntity() { return *_pEntity; }
+	const wxStyledTextCtrl& GetEntity() const { return *_pEntity; }
+	wxStyledTextCtrl* GetEntityPtr() { return _pEntity.get(); }
+	const wxStyledTextCtrl* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxStyledTextCtrl& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxStyledTextCtrl&>(value).GetEntity();

@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxValidator);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxValidator");
+protected:
+	wxWeakRef<wxValidator> _pEntity;
 public:
 	class EntityT : public wxValidator {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxValidator() = delete;
-	explicit Value_wxValidator(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxValidator) :
-		Value_wxEvtHandler(pEntity, vtype) {}
+	explicit Value_wxValidator(wxValidator* pEntity, VType& vtype = VTYPE_wxValidator) :
+		Value_wxEvtHandler(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxValidator(const Value_wxValidator& src) = delete;
 	Value_wxValidator& operator=(const Value_wxValidator& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxValidator() = default;
 public:
-	wxValidator& GetEntity() {
-		return reinterpret_cast<wxValidator&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxValidator& GetEntity() const {
-		return reinterpret_cast<const wxValidator&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxValidator* GetEntityPtr() {
-		return reinterpret_cast<wxValidator*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxValidator* GetEntityPtr() const {
-		return reinterpret_cast<const wxValidator*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxValidator& GetEntity() { return *_pEntity; }
+	const wxValidator& GetEntity() const { return *_pEntity; }
+	wxValidator* GetEntityPtr() { return _pEntity.get(); }
+	const wxValidator* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxValidator& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxValidator&>(value).GetEntity();

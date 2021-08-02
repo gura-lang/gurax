@@ -69,7 +69,7 @@ Gurax_ImplementConstructorEx(Frame_gurax, processor_gurax, argument_gurax)
 // wx.Frame#CreateStatusBar(number? as Number, style? as Number, id? as Number, name? as String)
 Gurax_DeclareMethodAlias(wxFrame, CreateStatusBar_gurax, "CreateStatusBar")
 {
-	Declare(VTYPE_wxFrame, Flag::None);
+	Declare(VTYPE_wxStatusBar, Flag::None);
 	DeclareArg("number", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -92,7 +92,7 @@ Gurax_ImplementMethodEx(wxFrame, CreateStatusBar_gurax, processor_gurax, argumen
 	wxWindowID id = args_gurax.IsValid()? args_gurax.PickNumber<wxWindowID>() : 0;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxStatusBarNameStr;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFrame(
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(
 		pEntity_gurax->CreateStatusBar(number, style, id, name)));
 }
 

@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxButton);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxButton");
+protected:
+	wxWeakRef<wxButton> _pEntity;
 public:
 	class EntityT : public wxButton {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxButton() = delete;
-	explicit Value_wxButton(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxButton) :
-		Value_wxAnyButton(pEntity, vtype) {}
+	explicit Value_wxButton(wxButton* pEntity, VType& vtype = VTYPE_wxButton) :
+		Value_wxAnyButton(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxButton(const Value_wxButton& src) = delete;
 	Value_wxButton& operator=(const Value_wxButton& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxButton() = default;
 public:
-	wxButton& GetEntity() {
-		return reinterpret_cast<wxButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxButton& GetEntity() const {
-		return reinterpret_cast<const wxButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxButton* GetEntityPtr() {
-		return reinterpret_cast<wxButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxButton* GetEntityPtr() const {
-		return reinterpret_cast<const wxButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxButton& GetEntity() { return *_pEntity; }
+	const wxButton& GetEntity() const { return *_pEntity; }
+	wxButton* GetEntityPtr() { return _pEntity.get(); }
+	const wxButton* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxButton& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxButton&>(value).GetEntity();

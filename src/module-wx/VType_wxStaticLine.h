@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxStaticLine);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxStaticLine");
+protected:
+	wxWeakRef<wxStaticLine> _pEntity;
 public:
 	class EntityT : public wxStaticLine {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxStaticLine() = delete;
-	explicit Value_wxStaticLine(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxStaticLine) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxStaticLine(wxStaticLine* pEntity, VType& vtype = VTYPE_wxStaticLine) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxStaticLine(const Value_wxStaticLine& src) = delete;
 	Value_wxStaticLine& operator=(const Value_wxStaticLine& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxStaticLine() = default;
 public:
-	wxStaticLine& GetEntity() {
-		return reinterpret_cast<wxStaticLine&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxStaticLine& GetEntity() const {
-		return reinterpret_cast<const wxStaticLine&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxStaticLine* GetEntityPtr() {
-		return reinterpret_cast<wxStaticLine*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxStaticLine* GetEntityPtr() const {
-		return reinterpret_cast<const wxStaticLine*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxStaticLine& GetEntity() { return *_pEntity; }
+	const wxStaticLine& GetEntity() const { return *_pEntity; }
+	wxStaticLine* GetEntityPtr() { return _pEntity.get(); }
+	const wxStaticLine* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxStaticLine& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxStaticLine&>(value).GetEntity();

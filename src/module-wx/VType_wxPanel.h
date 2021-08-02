@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxPanel);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxPanel");
+protected:
+	wxWeakRef<wxPanel> _pEntity;
 public:
 	class EntityT : public wxPanel {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxPanel() = delete;
-	explicit Value_wxPanel(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxPanel) :
-		Value_wxWindow(pEntity, vtype) {}
+	explicit Value_wxPanel(wxPanel* pEntity, VType& vtype = VTYPE_wxPanel) :
+		Value_wxWindow(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxPanel(const Value_wxPanel& src) = delete;
 	Value_wxPanel& operator=(const Value_wxPanel& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxPanel() = default;
 public:
-	wxPanel& GetEntity() {
-		return reinterpret_cast<wxPanel&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxPanel& GetEntity() const {
-		return reinterpret_cast<const wxPanel&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxPanel* GetEntityPtr() {
-		return reinterpret_cast<wxPanel*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxPanel* GetEntityPtr() const {
-		return reinterpret_cast<const wxPanel*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxPanel& GetEntity() { return *_pEntity; }
+	const wxPanel& GetEntity() const { return *_pEntity; }
+	wxPanel* GetEntityPtr() { return _pEntity.get(); }
+	const wxPanel* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxPanel& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxPanel&>(value).GetEntity();

@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxTreeCtrl);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxTreeCtrl");
+protected:
+	wxWeakRef<wxTreeCtrl> _pEntity;
 public:
 	class EntityT : public wxTreeCtrl {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxTreeCtrl() = delete;
-	explicit Value_wxTreeCtrl(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxTreeCtrl) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxTreeCtrl(wxTreeCtrl* pEntity, VType& vtype = VTYPE_wxTreeCtrl) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxTreeCtrl(const Value_wxTreeCtrl& src) = delete;
 	Value_wxTreeCtrl& operator=(const Value_wxTreeCtrl& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxTreeCtrl() = default;
 public:
-	wxTreeCtrl& GetEntity() {
-		return reinterpret_cast<wxTreeCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxTreeCtrl& GetEntity() const {
-		return reinterpret_cast<const wxTreeCtrl&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxTreeCtrl* GetEntityPtr() {
-		return reinterpret_cast<wxTreeCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxTreeCtrl* GetEntityPtr() const {
-		return reinterpret_cast<const wxTreeCtrl*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxTreeCtrl& GetEntity() { return *_pEntity; }
+	const wxTreeCtrl& GetEntity() const { return *_pEntity; }
+	wxTreeCtrl* GetEntityPtr() { return _pEntity.get(); }
+	const wxTreeCtrl* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxTreeCtrl& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxTreeCtrl&>(value).GetEntity();

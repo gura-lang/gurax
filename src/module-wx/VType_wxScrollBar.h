@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxScrollBar);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxScrollBar");
+protected:
+	wxWeakRef<wxScrollBar> _pEntity;
 public:
 	class EntityT : public wxScrollBar {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxScrollBar() = delete;
-	explicit Value_wxScrollBar(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxScrollBar) :
-		Value_wxControl(pEntity, vtype) {}
+	explicit Value_wxScrollBar(wxScrollBar* pEntity, VType& vtype = VTYPE_wxScrollBar) :
+		Value_wxControl(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxScrollBar(const Value_wxScrollBar& src) = delete;
 	Value_wxScrollBar& operator=(const Value_wxScrollBar& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxScrollBar() = default;
 public:
-	wxScrollBar& GetEntity() {
-		return reinterpret_cast<wxScrollBar&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxScrollBar& GetEntity() const {
-		return reinterpret_cast<const wxScrollBar&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxScrollBar* GetEntityPtr() {
-		return reinterpret_cast<wxScrollBar*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxScrollBar* GetEntityPtr() const {
-		return reinterpret_cast<const wxScrollBar*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxScrollBar& GetEntity() { return *_pEntity; }
+	const wxScrollBar& GetEntity() const { return *_pEntity; }
+	wxScrollBar* GetEntityPtr() { return _pEntity.get(); }
+	const wxScrollBar* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxScrollBar& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxScrollBar&>(value).GetEntity();

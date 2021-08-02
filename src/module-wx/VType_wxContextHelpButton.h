@@ -32,6 +32,8 @@ public:
 	Gurax_DeclareReferable(Value_wxContextHelpButton);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxContextHelpButton");
+protected:
+	wxWeakRef<wxContextHelpButton> _pEntity;
 public:
 	class EntityT : public wxContextHelpButton {
 	public:
@@ -44,8 +46,8 @@ public:
 public:
 	// Constructor
 	Value_wxContextHelpButton() = delete;
-	explicit Value_wxContextHelpButton(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxContextHelpButton) :
-		Value_wxBitmapButton(pEntity, vtype) {}
+	explicit Value_wxContextHelpButton(wxContextHelpButton* pEntity, VType& vtype = VTYPE_wxContextHelpButton) :
+		Value_wxBitmapButton(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxContextHelpButton(const Value_wxContextHelpButton& src) = delete;
 	Value_wxContextHelpButton& operator=(const Value_wxContextHelpButton& src) = delete;
@@ -56,18 +58,10 @@ protected:
 	// Destructor
 	~Value_wxContextHelpButton() = default;
 public:
-	wxContextHelpButton& GetEntity() {
-		return reinterpret_cast<wxContextHelpButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxContextHelpButton& GetEntity() const {
-		return reinterpret_cast<const wxContextHelpButton&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxContextHelpButton* GetEntityPtr() {
-		return reinterpret_cast<wxContextHelpButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxContextHelpButton* GetEntityPtr() const {
-		return reinterpret_cast<const wxContextHelpButton*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxContextHelpButton& GetEntity() { return *_pEntity; }
+	const wxContextHelpButton& GetEntity() const { return *_pEntity; }
+	wxContextHelpButton* GetEntityPtr() { return _pEntity.get(); }
+	const wxContextHelpButton* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxContextHelpButton& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxContextHelpButton&>(value).GetEntity();

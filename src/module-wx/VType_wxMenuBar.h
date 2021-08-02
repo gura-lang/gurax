@@ -31,6 +31,8 @@ public:
 	Gurax_DeclareReferable(Value_wxMenuBar);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxMenuBar");
+protected:
+	wxWeakRef<wxMenuBar> _pEntity;
 public:
 	class EntityT : public wxMenuBar {
 	public:
@@ -43,8 +45,8 @@ public:
 public:
 	// Constructor
 	Value_wxMenuBar() = delete;
-	explicit Value_wxMenuBar(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxMenuBar) :
-		Value_wxWindow(pEntity, vtype) {}
+	explicit Value_wxMenuBar(wxMenuBar* pEntity, VType& vtype = VTYPE_wxMenuBar) :
+		Value_wxWindow(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxMenuBar(const Value_wxMenuBar& src) = delete;
 	Value_wxMenuBar& operator=(const Value_wxMenuBar& src) = delete;
@@ -55,18 +57,10 @@ protected:
 	// Destructor
 	~Value_wxMenuBar() = default;
 public:
-	wxMenuBar& GetEntity() {
-		return reinterpret_cast<wxMenuBar&>(Value_wxEvtHandler::GetEntity());
-	}
-	const wxMenuBar& GetEntity() const {
-		return reinterpret_cast<const wxMenuBar&>(Value_wxEvtHandler::GetEntity());
-	}
-	wxMenuBar* GetEntityPtr() {
-		return reinterpret_cast<wxMenuBar*>(Value_wxEvtHandler::GetEntityPtr());
-	}
-	const wxMenuBar* GetEntityPtr() const {
-		return reinterpret_cast<const wxMenuBar*>(Value_wxEvtHandler::GetEntityPtr());
-	}
+	wxMenuBar& GetEntity() { return *_pEntity; }
+	const wxMenuBar& GetEntity() const { return *_pEntity; }
+	wxMenuBar* GetEntityPtr() { return _pEntity.get(); }
+	const wxMenuBar* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxMenuBar& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMenuBar&>(value).GetEntity();
