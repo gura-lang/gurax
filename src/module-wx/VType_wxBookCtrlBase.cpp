@@ -57,6 +57,33 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, SetPageSize_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
+// wx.BookCtrlBase#HitTest(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxBookCtrlBase, HitTest_gurax, "HitTest")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBookCtrlBase, HitTest_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	long flags;
+	int rtn = pEntity_gurax->HitTest(pt, &flags);
+	if (rtn == wxNOT_FOUND) return Value::nil();
+	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(flags));
+}
+
 // wx.BookCtrlBase#GetPageImage(nPage as Number)
 Gurax_DeclareMethodAlias(wxBookCtrlBase, GetPageImage_gurax, "GetPageImage")
 {
@@ -487,6 +514,7 @@ void VType_wxBookCtrlBase::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_wxControl, Flag::Mutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxBookCtrlBase, SetPageSize_gurax));
+	Assign(Gurax_CreateMethod(wxBookCtrlBase, HitTest_gurax));
 	Assign(Gurax_CreateMethod(wxBookCtrlBase, GetPageImage_gurax));
 	Assign(Gurax_CreateMethod(wxBookCtrlBase, SetPageImage_gurax));
 	Assign(Gurax_CreateMethod(wxBookCtrlBase, GetPageText_gurax));

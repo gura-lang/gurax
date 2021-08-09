@@ -5,6 +5,13 @@ BookCtrlBase = Class(Control) {
 	@include['wx/bookctrl.h']
 	SetPageSize(size as const_Size_r) as void
 	//HitTest(pt as const_Point_r, flags as long_p = NULL) as int
+	HitTest(pt as const_Point_r) as Tuple@gurax = \
+		R'''
+		long flags;
+		int rtn = pEntity_gurax->HitTest(pt, &flags);
+		if (rtn == wxNOT_FOUND) return Value::nil();
+		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(flags));
+		'''
 	GetPageImage(nPage as size_t) as int
 	SetPageImage(page as size_t, image as int) as bool
 	GetPageText(nPage as size_t) as String
