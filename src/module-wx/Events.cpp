@@ -77,6 +77,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_ENTER_WINDOW, wxMouseEvent);
 	Gurax_AssignEvent(EVT_LEAVE_WINDOW, wxMouseEvent);
 	Gurax_AssignEvent(EVT_MOUSEWHEEL, wxMouseEvent);
+	Gurax_AssignEvent(EVT_NOTEBOOK_PAGE_CHANGED, wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_NOTEBOOK_PAGE_CHANGING, wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_PAINT, wxPaintEvent);
 	Gurax_AssignEvent(EVT_POWER_SUSPENDING, wxPowerEvent);
 	Gurax_AssignEvent(EVT_POWER_SUSPENDED, wxPowerEvent);

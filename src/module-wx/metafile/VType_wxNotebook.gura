@@ -29,3 +29,8 @@ Notebook = Class(BookCtrlBase) {
 	ChangeSelection(page as size_t) as int
 	InsertPage(index as size_t, page as Window_p, text as const_String_r, select as bool = false, imageId as int = wxNotebook::NO_IMAGE) as bool
 }
+
+@event[
+	EVT_NOTEBOOK_PAGE_CHANGED	>> BookCtrlEvent
+	EVT_NOTEBOOK_PAGE_CHANGING	>> BookCtrlEvent
+]
