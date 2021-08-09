@@ -56,29 +56,29 @@ target_link_options(wx.gurd PRIVATE
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(wx.gurd PRIVATE guraxcore
-	$<$<PLATFORM_ID:Windows>:wxbase31u>
-	$<$<PLATFORM_ID:Windows>:wxbase31u_net>
-	$<$<PLATFORM_ID:Windows>:wxbase31u_xml>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_adv>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_aui>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_core>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_gl>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_html>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_media>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_propgrid>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_qa>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_ribbon>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_richtext>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_stc>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_webview>
-	$<$<PLATFORM_ID:Windows>:wxmsw31u_xrc>
-	$<$<PLATFORM_ID:Windows>:wxexpat>
-	$<$<PLATFORM_ID:Windows>:wxjpeg>
-	$<$<PLATFORM_ID:Windows>:wxpng>
-	$<$<PLATFORM_ID:Windows>:wxregexu>
-	$<$<PLATFORM_ID:Windows>:wxscintilla>
-	$<$<PLATFORM_ID:Windows>:wxtiff>
-	$<$<PLATFORM_ID:Windows>:wxzlib>
+	$<$<PLATFORM_ID:Windows>:wxbase31ud>
+	$<$<PLATFORM_ID:Windows>:wxbase31ud_net>
+	$<$<PLATFORM_ID:Windows>:wxbase31ud_xml>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_adv>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_aui>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_core>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_gl>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_html>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_media>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_propgrid>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_qa>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_ribbon>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_richtext>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_stc>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_webview>
+	$<$<PLATFORM_ID:Windows>:wxmsw31ud_xrc>
+	$<$<PLATFORM_ID:Windows>:wxexpatd>
+	$<$<PLATFORM_ID:Windows>:wxjpegd>
+	$<$<PLATFORM_ID:Windows>:wxpngd>
+	$<$<PLATFORM_ID:Windows>:wxregexud>
+	$<$<PLATFORM_ID:Windows>:wxscintillad>
+	$<$<PLATFORM_ID:Windows>:wxtiffd>
+	$<$<PLATFORM_ID:Windows>:wxzlibd>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------

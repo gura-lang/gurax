@@ -50,6 +50,13 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 	SetMenuBar( menuBar );
 	CreateStatusBar();
 	SetStatusText( "Welcome to wxWidgets!" );
+	wxPanel* pPanel = new wxPanel(this);
+	wxSizer* sizerTop = new wxBoxSizer(wxVERTICAL);
+	pPanel->SetSizer(sizerTop);
+	::printf("check\n");
+	sizerTop->Add(new wxComboBox(pPanel, wxID_ANY), wxSizerFlags().Expand());
+	//sizerTop->Add(new wxButton(pPanel, wxID_ANY, "push"), wxSizerFlags().Expand());
+	//sizerTop->Add(new wxButton(pPanel, wxID_ANY, "push"), wxSizerFlags(1).Expand());
 }
 void MyFrame::OnExit(wxCommandEvent& event)
 {
@@ -82,7 +89,7 @@ Gurax_DeclareFunction(Test)
 Gurax_ImplementFunction(Test)
 {
 	int argc = 0;
-	char *argv[1] = { nullptr };
+	char* argv[1] = { nullptr };
 	wxApp::SetInstance(new MyApp());
 	::wxEntry(argc, argv);
 	return Value::nil();
@@ -106,7 +113,7 @@ Gurax_ImplementFunction(ImplementApp)
 	// Function Body
 	wxApp::SetInstance(app);
 	int argc = 0;
-	char *argv[1] = { nullptr };
+	char* argv[1] = { nullptr };
 	::wxEntry(argc, argv);
 	return Value::nil();
 }

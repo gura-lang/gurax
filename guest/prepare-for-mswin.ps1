@@ -451,6 +451,7 @@ class Package_wx {
 	[String] $dirName = $this.baseName
 	Build() {
 		ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Release" /p:Platform=x64'
+		ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Debug" /p:Platform=x64'
 		copy lib\vc_x64_dll\*.dll ..\..\bin
 	}
 }
