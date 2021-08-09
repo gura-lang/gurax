@@ -3,3 +3,7 @@
 //==============================================================================
 EraseEvent = Class(Event) {
 }
+
+@event[
+	EVT_ERASE_BACKGROUND >> wxEraseEvent
+]

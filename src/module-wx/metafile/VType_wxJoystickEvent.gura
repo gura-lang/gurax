@@ -3,3 +3,10 @@
 //==============================================================================
 JoystickEvent = Class(Event) {
 }
+
+@event[
+	EVT_JOY_BUTTON_DOWN	>> wxJoystickEvent
+	EVT_JOY_BUTTON_UP	>> wxJoystickEvent
+	EVT_JOY_MOVE		>> wxJoystickEvent
+	EVT_JOY_ZMOVE		>> wxJoystickEvent
+]

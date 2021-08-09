@@ -3,3 +3,7 @@
 //==============================================================================
 SetCursorEvent = Class(Event) {
 }
+
+@event[
+	EVT_SET_CURSOR >> wxSetCursorEvent
+]

@@ -18,3 +18,10 @@ KeyEvent = Class(Event) {
 		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 		'''
 }
+
+@event[
+	EVT_KEY_DOWN	>> wxKeyEvent
+	EVT_KEY_UP		>> wxKeyEvent
+	EVT_CHAR		>> wxKeyEvent
+	EVT_CHAR_HOOK	>> wxKeyEvent
+]

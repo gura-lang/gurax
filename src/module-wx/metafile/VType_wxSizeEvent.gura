@@ -7,3 +7,7 @@ SizeEvent = Class(Event) {
 	GetRect() as Rect
 	SetRect(rect as Rect) as void
 }
+
+@event[
+	EVT_SIZE >> wxSizeEvent
+]

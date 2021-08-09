@@ -3,3 +3,9 @@
 //==============================================================================
 ActivateEvent = Class(Event) {
 }
+
+@event[
+	EVT_ACTIVATE		>> wxActivateEvent
+	EVT_ACTIVATE_APP	>> wxActivateEvent
+	EVT_HIBERNATE		>> wxActivateEvent
+]

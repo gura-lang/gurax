@@ -3,3 +3,7 @@
 //==============================================================================
 MouseCaptureLostEvent = Class(Event) {
 }
+
+@event[
+	EVT_MOUSE_CAPTURE_LOST >> wxMouseCaptureLostEvent
+]

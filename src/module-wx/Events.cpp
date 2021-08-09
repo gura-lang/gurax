@@ -10,8 +10,10 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 void AssignEvents(Frame& frame)
 {
-	Gurax_AssignEvent(EVT_MENU, wxCommandEvent);
-	Gurax_AssignEvent(EVT_COMMAND_BUTTON_CLICKED, wxCommandEvent);
+	Gurax_AssignEvent(EVT_ACTIVATE, wxActivateEvent);
+	Gurax_AssignEvent(EVT_ACTIVATE_APP, wxActivateEvent);
+	Gurax_AssignEvent(EVT_HIBERNATE, wxActivateEvent);
+	Gurax_AssignEvent(EVT_CHILD_FOCUS, wxChildFocusEvent);
 	Gurax_AssignEvent(EVT_BUTTON, wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHECKBOX, wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHOICE, wxCommandEvent);
@@ -38,14 +40,13 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS, wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_KILL_FOCUS, wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_ENTER, wxCommandEvent);
-	Gurax_AssignEvent(EVT_ACTIVATE, wxActivateEvent);
-	Gurax_AssignEvent(EVT_CHILD_FOCUS, wxChildFocusEvent);
+	Gurax_AssignEvent(EVT_COMMAND_BUTTON_CLICKED, wxCommandEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU, wxContextMenuEvent);
-	Gurax_AssignEvent(EVT_HELP, wxHelpEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES, wxDropFilesEvent);
 	Gurax_AssignEvent(EVT_ERASE_BACKGROUND, wxEraseEvent);
 	Gurax_AssignEvent(EVT_SET_FOCUS, wxFocusEvent);
 	Gurax_AssignEvent(EVT_KILL_FOCUS, wxFocusEvent);
+	Gurax_AssignEvent(EVT_HELP, wxHelpEvent);
 	Gurax_AssignEvent(EVT_IDLE, wxIdleEvent);
 	Gurax_AssignEvent(EVT_JOY_BUTTON_DOWN, wxJoystickEvent);
 	Gurax_AssignEvent(EVT_JOY_BUTTON_UP, wxJoystickEvent);
@@ -55,8 +56,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_KEY_UP, wxKeyEvent);
 	Gurax_AssignEvent(EVT_CHAR, wxKeyEvent);
 	Gurax_AssignEvent(EVT_CHAR_HOOK, wxKeyEvent);
-	Gurax_AssignEvent(EVT_MOUSE_CAPTURE_LOST, wxMouseCaptureLostEvent);
 	Gurax_AssignEvent(EVT_MOUSE_CAPTURE_CHANGED, wxMouseCaptureChangedEvent);
+	Gurax_AssignEvent(EVT_MOUSE_CAPTURE_LOST, wxMouseCaptureLostEvent);
 	Gurax_AssignEvent(EVT_LEFT_DOWN, wxMouseEvent);
 	Gurax_AssignEvent(EVT_LEFT_UP, wxMouseEvent);
 	Gurax_AssignEvent(EVT_LEFT_DCLICK, wxMouseEvent);

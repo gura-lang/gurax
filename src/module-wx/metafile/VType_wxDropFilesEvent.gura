@@ -3,3 +3,7 @@
 //==============================================================================
 DropFilesEvent = Class(Event) {
 }
+
+@event[
+	EVT_DROP_FILES >> wxDropFilesEvent
+]

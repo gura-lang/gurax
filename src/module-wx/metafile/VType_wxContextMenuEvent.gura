@@ -3,3 +3,7 @@
 //==============================================================================
 ContextMenuEvent = Class(CommandEvent) {
 }
+
+@event[
+	EVT_CONTEXT_MENU >> wxContextMenuEvent
+]

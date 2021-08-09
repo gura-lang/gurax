@@ -3,3 +3,14 @@
 //==============================================================================
 ScrollWinEvent = Class(Event) {
 }
+
+@event[
+	EVT_SCROLLWIN_TOP			>> wxScrollWinEvent
+	EVT_SCROLLWIN_BOTTOM		>> wxScrollWinEvent
+	EVT_SCROLLWIN_LINEUP		>> wxScrollWinEvent
+	EVT_SCROLLWIN_LINEDOWN		>> wxScrollWinEvent
+	EVT_SCROLLWIN_PAGEUP		>> wxScrollWinEvent
+	EVT_SCROLLWIN_PAGEDOWN		>> wxScrollWinEvent
+	EVT_SCROLLWIN_THUMBTRACK	>> wxScrollWinEvent
+	EVT_SCROLLWIN_THUMBRELEASE	>> wxScrollWinEvent
+]

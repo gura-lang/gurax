@@ -37,3 +37,25 @@ MouseEvent = Class(Event) {
 	RightDown() as bool
 	RightUp() as bool
 }
+
+@event[
+	EVT_LEFT_DOWN				>> wxMouseEvent
+	EVT_LEFT_UP					>> wxMouseEvent
+	EVT_LEFT_DCLICK				>> wxMouseEvent
+	EVT_MIDDLE_DOWN				>> wxMouseEvent
+	EVT_MIDDLE_UP				>> wxMouseEvent
+	EVT_MIDDLE_DCLICK			>> wxMouseEvent
+	EVT_RIGHT_DOWN				>> wxMouseEvent
+	EVT_RIGHT_UP				>> wxMouseEvent
+	EVT_RIGHT_DCLICK			>> wxMouseEvent
+	EVT_AUX1_DOWN				>> wxMouseEvent
+	EVT_AUX1_UP					>> wxMouseEvent
+	EVT_AUX1_DCLICK				>> wxMouseEvent
+	EVT_AUX2_DOWN				>> wxMouseEvent
+	EVT_AUX2_UP					>> wxMouseEvent
+	EVT_AUX2_DCLICK				>> wxMouseEvent
+	EVT_MOTION					>> wxMouseEvent
+	EVT_ENTER_WINDOW			>> wxMouseEvent
+	EVT_LEAVE_WINDOW			>> wxMouseEvent
+	EVT_MOUSEWHEEL				>> wxMouseEvent
+]

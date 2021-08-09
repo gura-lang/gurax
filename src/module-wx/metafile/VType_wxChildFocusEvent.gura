@@ -3,3 +3,7 @@
 //==============================================================================
 ChildFocusEvent = Class(CommandEvent) {
 }
+
+@event[
+	EVT_CHILD_FOCUS >> wxChildFocusEvent
+]

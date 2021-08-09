@@ -3,3 +3,8 @@
 //==============================================================================
 FocusEvent = Class(Event) {
 }
+
+@event[
+	EVT_SET_FOCUS	>> wxFocusEvent
+	EVT_KILL_FOCUS	>> wxFocusEvent
+]
