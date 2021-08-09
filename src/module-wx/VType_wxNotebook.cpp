@@ -65,6 +65,26 @@ Gurax_ImplementConstructorEx(Notebook_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Notebook#GetRowCount()
+Gurax_DeclareMethodAlias(wxNotebook, GetRowCount_gurax, "GetRowCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, GetRowCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetRowCount();
+	return new Gurax::Value_Number(rtn);
+}
+
 // wx.Notebook#GetThemeBackgroundColour()
 Gurax_DeclareMethodAlias(wxNotebook, GetThemeBackgroundColour_gurax, "GetThemeBackgroundColour")
 {
@@ -278,6 +298,39 @@ Gurax_ImplementMethodEx(wxNotebook, ChangeSelection_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
+// wx.Notebook#InsertPage(index as Number, page as wx.Window, text as String, select? as Bool, imageId? as Number)
+Gurax_DeclareMethodAlias(wxNotebook, InsertPage_gurax, "InsertPage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("page", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, InsertPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t index = args_gurax.PickNumber<size_t>();
+	Value_wxWindow& value_page = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* page = value_page.GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	bool select = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNotebook::NO_IMAGE;
+	// Function body
+	bool rtn = pEntity_gurax->InsertPage(index, page, text, select, imageId);
+	return new Gurax::Value_Bool(rtn);
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -294,6 +347,7 @@ void VType_wxNotebook::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Notebook_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxNotebook, GetRowCount_gurax));
 	Assign(Gurax_CreateMethod(wxNotebook, GetThemeBackgroundColour_gurax));
 	Assign(Gurax_CreateMethod(wxNotebook, SetPadding_gurax));
 	Assign(Gurax_CreateMethod(wxNotebook, GetPageImage_gurax));
@@ -303,6 +357,7 @@ void VType_wxNotebook::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxNotebook, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxNotebook, SetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxNotebook, ChangeSelection_gurax));
+	Assign(Gurax_CreateMethod(wxNotebook, InsertPage_gurax));
 }
 
 //------------------------------------------------------------------------------

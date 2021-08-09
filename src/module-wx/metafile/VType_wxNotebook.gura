@@ -16,6 +16,7 @@ Notebook = Class(BookCtrlBase) {
 	@include['wx/notebook.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = wxNotebookNameStr)
+	GetRowCount() as int
 	GetThemeBackgroundColour() as Colour
 	//OnSelChange(event as BookCtrlEvent_r) as void
 	SetPadding(padding as const_Size_r) as void
@@ -26,5 +27,5 @@ Notebook = Class(BookCtrlBase) {
 	GetSelection() as int
 	SetSelection(page as size_t) as int
 	ChangeSelection(page as size_t) as int
-	//InsertPage(index as size_t, page as Window_p, text as const_String_r, select as bool = false, imageId as int = NO_IMAGE) as bool
+	InsertPage(index as size_t, page as Window_p, text as const_String_r, select as bool = false, imageId as int = wxNotebook::NO_IMAGE) as bool
 }

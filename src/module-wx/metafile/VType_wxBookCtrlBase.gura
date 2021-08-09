@@ -3,4 +3,23 @@
 //==============================================================================
 BookCtrlBase = Class(Control) {
 	@include['wx/bookctrl.h']
+	SetPageSize(size as const_Size_r) as void
+	//HitTest(pt as const_Point_r, flags as long_p = NULL) as int
+	GetPageImage(nPage as size_t) as int
+	SetPageImage(page as size_t, image as int) as bool
+	GetPageText(nPage as size_t) as String
+	SetPageText(page as size_t, text as const_String_r) as bool
+	GetSelection() as int
+	GetCurrentPage() as Window_p
+	SetSelection(page as size_t) as int
+	AdvanceSelection(forward as bool = true) as void
+	ChangeSelection(page as size_t) as int
+	FindPage(page as const_Window_p) as int
+	AddPage(page as Window_p, text as const_String_r, select as bool = false, imageId as int = wxBookCtrlBase::NO_IMAGE) as bool
+	DeleteAllPages() as bool
+	DeletePage(page as size_t) as bool
+	InsertPage(index as size_t, page as Window_p, text as const_String_r, select as bool = false, imageId as int = wxBookCtrlBase::NO_IMAGE) as bool
+	RemovePage(page as size_t) as bool
+	GetPageCount() as size_t
+	GetPage(page as size_t) as Window_p
 }
