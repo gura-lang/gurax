@@ -5,5 +5,5 @@ EraseEvent = Class(Event) {
 }
 
 @event[
-	EVT_ERASE_BACKGROUND >> wxEraseEvent
+	EVT_ERASE_BACKGROUND >> EraseEvent
 ]

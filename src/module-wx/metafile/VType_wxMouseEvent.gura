@@ -39,23 +39,23 @@ MouseEvent = Class(Event) {
 }
 
 @event[
-	EVT_LEFT_DOWN				>> wxMouseEvent
-	EVT_LEFT_UP					>> wxMouseEvent
-	EVT_LEFT_DCLICK				>> wxMouseEvent
-	EVT_MIDDLE_DOWN				>> wxMouseEvent
-	EVT_MIDDLE_UP				>> wxMouseEvent
-	EVT_MIDDLE_DCLICK			>> wxMouseEvent
-	EVT_RIGHT_DOWN				>> wxMouseEvent
-	EVT_RIGHT_UP				>> wxMouseEvent
-	EVT_RIGHT_DCLICK			>> wxMouseEvent
-	EVT_AUX1_DOWN				>> wxMouseEvent
-	EVT_AUX1_UP					>> wxMouseEvent
-	EVT_AUX1_DCLICK				>> wxMouseEvent
-	EVT_AUX2_DOWN				>> wxMouseEvent
-	EVT_AUX2_UP					>> wxMouseEvent
-	EVT_AUX2_DCLICK				>> wxMouseEvent
-	EVT_MOTION					>> wxMouseEvent
-	EVT_ENTER_WINDOW			>> wxMouseEvent
-	EVT_LEAVE_WINDOW			>> wxMouseEvent
-	EVT_MOUSEWHEEL				>> wxMouseEvent
+	EVT_LEFT_DOWN				>> MouseEvent
+	EVT_LEFT_UP					>> MouseEvent
+	EVT_LEFT_DCLICK				>> MouseEvent
+	EVT_MIDDLE_DOWN				>> MouseEvent
+	EVT_MIDDLE_UP				>> MouseEvent
+	EVT_MIDDLE_DCLICK			>> MouseEvent
+	EVT_RIGHT_DOWN				>> MouseEvent
+	EVT_RIGHT_UP				>> MouseEvent
+	EVT_RIGHT_DCLICK			>> MouseEvent
+	EVT_AUX1_DOWN				>> MouseEvent
+	EVT_AUX1_UP					>> MouseEvent
+	EVT_AUX1_DCLICK				>> MouseEvent
+	EVT_AUX2_DOWN				>> MouseEvent
+	EVT_AUX2_UP					>> MouseEvent
+	EVT_AUX2_DCLICK				>> MouseEvent
+	EVT_MOTION					>> MouseEvent
+	EVT_ENTER_WINDOW			>> MouseEvent
+	EVT_LEAVE_WINDOW			>> MouseEvent
+	EVT_MOUSEWHEEL				>> MouseEvent
 ]

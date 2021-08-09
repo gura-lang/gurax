@@ -9,5 +9,5 @@ SizeEvent = Class(Event) {
 }
 
 @event[
-	EVT_SIZE >> wxSizeEvent
+	EVT_SIZE >> SizeEvent
 ]

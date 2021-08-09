@@ -6,8 +6,8 @@ PowerEvent = Class(Event) {
 }
 
 @event[
-	EVT_POWER_SUSPENDING		>> wxPowerEvent
-	EVT_POWER_SUSPENDED			>> wxPowerEvent
-	EVT_POWER_SUSPEND_CANCEL	>> wxPowerEvent
-	EVT_POWER_RESUME			>> wxPowerEvent
+	EVT_POWER_SUSPENDING		>> PowerEvent
+	EVT_POWER_SUSPENDED			>> PowerEvent
+	EVT_POWER_SUSPEND_CANCEL	>> PowerEvent
+	EVT_POWER_RESUME			>> PowerEvent
 ]

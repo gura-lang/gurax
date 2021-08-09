@@ -5,6 +5,6 @@ FocusEvent = Class(Event) {
 }
 
 @event[
-	EVT_SET_FOCUS	>> wxFocusEvent
-	EVT_KILL_FOCUS	>> wxFocusEvent
+	EVT_SET_FOCUS	>> FocusEvent
+	EVT_KILL_FOCUS	>> FocusEvent
 ]

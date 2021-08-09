@@ -5,5 +5,5 @@ PaintEvent = Class(Event) {
 }
 
 @event[
-	EVT_PAINT >> wxPaintEvent
+	EVT_PAINT >> PaintEvent
 ]

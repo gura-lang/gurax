@@ -5,5 +5,5 @@ SetCursorEvent = Class(Event) {
 }
 
 @event[
-	EVT_SET_CURSOR >> wxSetCursorEvent
+	EVT_SET_CURSOR >> SetCursorEvent
 ]

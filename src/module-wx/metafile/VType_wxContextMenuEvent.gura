@@ -5,5 +5,5 @@ ContextMenuEvent = Class(CommandEvent) {
 }
 
 @event[
-	EVT_CONTEXT_MENU >> wxContextMenuEvent
+	EVT_CONTEXT_MENU >> ContextMenuEvent
 ]

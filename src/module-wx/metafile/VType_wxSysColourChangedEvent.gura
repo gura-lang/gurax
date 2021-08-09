@@ -5,5 +5,5 @@ SysColourChangedEvent = Class(Event) {
 }
 
 @event[
-	EVT_SYS_COLOUR_CHANGED >> wxSysColourChangedEvent
+	EVT_SYS_COLOUR_CHANGED >> SysColourChangedEvent
 ]

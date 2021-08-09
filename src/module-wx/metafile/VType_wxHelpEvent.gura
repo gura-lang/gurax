@@ -5,5 +5,5 @@ HelpEvent = Class(CommandEvent) {
 }
 
 @event[
-	EVT_HELP >> wxHelpEvent
+	EVT_HELP >> HelpEvent
 ]

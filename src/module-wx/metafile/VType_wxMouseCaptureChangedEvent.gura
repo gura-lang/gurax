@@ -5,5 +5,5 @@ MouseCaptureChangedEvent = Class(Event) {
 }
 
 @event[
-	EVT_MOUSE_CAPTURE_CHANGED >> wxMouseCaptureChangedEvent
+	EVT_MOUSE_CAPTURE_CHANGED >> MouseCaptureChangedEvent
 ]

@@ -5,5 +5,5 @@ ChildFocusEvent = Class(CommandEvent) {
 }
 
 @event[
-	EVT_CHILD_FOCUS >> wxChildFocusEvent
+	EVT_CHILD_FOCUS >> ChildFocusEvent
 ]

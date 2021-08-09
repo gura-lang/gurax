@@ -5,7 +5,7 @@ ActivateEvent = Class(Event) {
 }
 
 @event[
-	EVT_ACTIVATE		>> wxActivateEvent
-	EVT_ACTIVATE_APP	>> wxActivateEvent
-	EVT_HIBERNATE		>> wxActivateEvent
+	EVT_ACTIVATE		>> ActivateEvent
+	EVT_ACTIVATE_APP	>> ActivateEvent
+	EVT_HIBERNATE		>> ActivateEvent
 ]

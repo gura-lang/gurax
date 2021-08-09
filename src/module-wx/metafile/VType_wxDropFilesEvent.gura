@@ -5,5 +5,5 @@ DropFilesEvent = Class(Event) {
 }
 
 @event[
-	EVT_DROP_FILES >> wxDropFilesEvent
+	EVT_DROP_FILES >> DropFilesEvent
 ]

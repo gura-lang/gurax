@@ -20,8 +20,8 @@ KeyEvent = Class(Event) {
 }
 
 @event[
-	EVT_KEY_DOWN	>> wxKeyEvent
-	EVT_KEY_UP		>> wxKeyEvent
-	EVT_CHAR		>> wxKeyEvent
-	EVT_CHAR_HOOK	>> wxKeyEvent
+	EVT_KEY_DOWN	>> KeyEvent
+	EVT_KEY_UP		>> KeyEvent
+	EVT_CHAR		>> KeyEvent
+	EVT_CHAR_HOOK	>> KeyEvent
 ]

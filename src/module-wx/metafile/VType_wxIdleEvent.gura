@@ -5,5 +5,5 @@ IdleEvent = Class(Event) {
 }
 
 @event[
-	EVT_IDLE >> wxIdleEvent
+	EVT_IDLE >> IdleEvent
 ]

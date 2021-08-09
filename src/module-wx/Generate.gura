@@ -741,7 +741,7 @@ Gurax_BeginModuleScope(wx)
 void AssignEvents(Frame& frame)
 {
 	${eventInfoTbl.Each {|eventInfo|}}
-	Gurax_AssignEvent(${eventInfo.eventName}, ${eventInfo.className});
+	Gurax_AssignEvent(${eventInfo.eventName}, wx${eventInfo.className});
 	${end}
 }
 
