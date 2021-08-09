@@ -4,6 +4,9 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxNotifyEvent.cpp
+	VType_wxBookCtrlEvent.cpp
+	VType_wxAuiNotebookEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

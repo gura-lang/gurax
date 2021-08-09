@@ -157,6 +157,13 @@ void AssignConsts(Frame& frame)
 	frame.Assign("LC_VIRTUAL", new Value_Number(wxLC_VIRTUAL));
 	frame.Assign("LC_VRULES", new Value_Number(wxLC_VRULES));
 	frame.Assign("LEFT", new Value_Number(wxLEFT));
+	frame.Assign("NB_BOTTOM", new Value_Number(wxNB_BOTTOM));
+	frame.Assign("NB_FIXEDWIDTH", new Value_Number(wxNB_FIXEDWIDTH));
+	frame.Assign("NB_LEFT", new Value_Number(wxNB_LEFT));
+	frame.Assign("NB_MULTILINE", new Value_Number(wxNB_MULTILINE));
+	frame.Assign("NB_NOPAGETHEME", new Value_Number(wxNB_NOPAGETHEME));
+	frame.Assign("NB_RIGHT", new Value_Number(wxNB_RIGHT));
+	frame.Assign("NB_TOP", new Value_Number(wxNB_TOP));
 	frame.Assign("OK", new Value_Number(wxOK));
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));

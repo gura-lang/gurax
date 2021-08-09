@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.RadioBox(parent as wx.Window, id as Number, label as String, pos? as wx.Point, size? as wx.Size, choices[] as String, majorDimension? as Number, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.RadioBox(parent as wx.Window, id as Number, label as String, pos? as wx.Point, size? as wx.Size, choices[]? as String, majorDimension? as Number, style? as Number, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructorAlias(RadioBox_gurax, "RadioBox")
 {
 	Declare(VTYPE_wxRadioBox, Flag::None);
@@ -37,7 +37,7 @@ Gurax_DeclareConstructorAlias(RadioBox_gurax, "RadioBox")
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("choices", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("choices", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
 	DeclareArg("majorDimension", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -58,15 +58,13 @@ Gurax_ImplementConstructorEx(RadioBox_gurax, processor_gurax, argument_gurax)
 	const char* label = args_gurax.PickString();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	auto choices = args_gurax.PickListT<const char*>(Gurax::Value_String::ValueForVector);
+	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
 	int majorDimension = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
 	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxRA_SPECIFY_COLS;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxRadioBoxNameStr;
 	// Function body
-	wxArrayString choices_;
-	for (const char* choice : choices) choices_.Add(choice);
-	auto pEntity_gurax = new Value_wxRadioBox::EntityT(parent, id, label, pos, size, choices_, majorDimension, style, validator, name);
+	auto pEntity_gurax = new Value_wxRadioBox::EntityT(parent, id, label, pos, size, choices, majorDimension, style, validator, name);
 	RefPtr<Value_wxRadioBox> pValue_gurax(new Value_wxRadioBox(pEntity_gurax));
 	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());

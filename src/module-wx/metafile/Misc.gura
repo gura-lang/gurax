@@ -1,3 +1,13 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+NotifyEvent = Class(CommandEvent) {
+}
+
+BookCtrlEvent = Class(NotifyEvent) {
+	@include['wx/bookctrl.h']
+}
+
+AuiNotebookEvent = Class(BookCtrlEvent) {
+	@include['wx/aui/auibook.h']
+}

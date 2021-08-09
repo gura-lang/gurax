@@ -1,8 +1,30 @@
 //==============================================================================
 // VType_wxNotebook.gura
 //==============================================================================
+@const[
+	NB_TOP
+	NB_LEFT
+	NB_RIGHT
+	NB_BOTTOM
+	NB_FIXEDWIDTH
+	NB_MULTILINE
+	NB_NOPAGETHEME
+	//NB_FLAT
+]
+
 Notebook = Class(BookCtrlBase) {
 	@include['wx/notebook.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = wxNotebookNameStr)
+	GetThemeBackgroundColour() as Colour
+	//OnSelChange(event as BookCtrlEvent_r) as void
+	SetPadding(padding as const_Size_r) as void
+	GetPageImage(nPage as size_t) as int
+	SetPageImage(page as size_t, image as int) as bool
+	GetPageText(nPage as size_t) as String
+	SetPageText(page as size_t, text as const_String_r) as bool
+	GetSelection() as int
+	SetSelection(page as size_t) as int
+	ChangeSelection(page as size_t) as int
+	//InsertPage(index as size_t, page as Window_p, text as const_String_r, select as bool = false, imageId as int = NO_IMAGE) as bool
 }

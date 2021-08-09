@@ -65,6 +65,218 @@ Gurax_ImplementConstructorEx(Notebook_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Notebook#GetThemeBackgroundColour()
+Gurax_DeclareMethodAlias(wxNotebook, GetThemeBackgroundColour_gurax, "GetThemeBackgroundColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, GetThemeBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetThemeBackgroundColour()));
+}
+
+// wx.Notebook#SetPadding(padding as wx.Size)
+Gurax_DeclareMethodAlias(wxNotebook, SetPadding_gurax, "SetPadding")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("padding", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, SetPadding_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_padding = args_gurax.Pick<Value_wxSize>();
+	const wxSize& padding = value_padding.GetEntity();
+	// Function body
+	pEntity_gurax->SetPadding(padding);
+	return Gurax::Value::nil();
+}
+
+// wx.Notebook#GetPageImage(nPage as Number)
+Gurax_DeclareMethodAlias(wxNotebook, GetPageImage_gurax, "GetPageImage")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("nPage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, GetPageImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t nPage = args_gurax.PickNumber<size_t>();
+	// Function body
+	int rtn = pEntity_gurax->GetPageImage(nPage);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Notebook#SetPageImage(page as Number, image as Number)
+Gurax_DeclareMethodAlias(wxNotebook, SetPageImage_gurax, "SetPageImage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("image", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, SetPageImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t page = args_gurax.PickNumber<size_t>();
+	int image = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->SetPageImage(page, image);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Notebook#GetPageText(nPage as Number)
+Gurax_DeclareMethodAlias(wxNotebook, GetPageText_gurax, "GetPageText")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("nPage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, GetPageText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t nPage = args_gurax.PickNumber<size_t>();
+	// Function body
+	const char* rtn = pEntity_gurax->GetPageText(nPage);
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.Notebook#SetPageText(page as Number, text as String)
+Gurax_DeclareMethodAlias(wxNotebook, SetPageText_gurax, "SetPageText")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, SetPageText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t page = args_gurax.PickNumber<size_t>();
+	const char* text = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->SetPageText(page, text);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Notebook#GetSelection()
+Gurax_DeclareMethodAlias(wxNotebook, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetSelection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Notebook#SetSelection(page as Number)
+Gurax_DeclareMethodAlias(wxNotebook, SetSelection_gurax, "SetSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, SetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t page = args_gurax.PickNumber<size_t>();
+	// Function body
+	int rtn = pEntity_gurax->SetSelection(page);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Notebook#ChangeSelection(page as Number)
+Gurax_DeclareMethodAlias(wxNotebook, ChangeSelection_gurax, "ChangeSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxNotebook, ChangeSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t page = args_gurax.PickNumber<size_t>();
+	// Function body
+	int rtn = pEntity_gurax->ChangeSelection(page);
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -82,6 +294,15 @@ void VType_wxNotebook::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Notebook_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxNotebook, GetThemeBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxNotebook, SetPadding_gurax));
+	Assign(Gurax_CreateMethod(wxNotebook, GetPageImage_gurax));
+	Assign(Gurax_CreateMethod(wxNotebook, SetPageImage_gurax));
+	Assign(Gurax_CreateMethod(wxNotebook, GetPageText_gurax));
+	Assign(Gurax_CreateMethod(wxNotebook, SetPageText_gurax));
+	Assign(Gurax_CreateMethod(wxNotebook, GetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxNotebook, SetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxNotebook, ChangeSelection_gurax));
 }
 
 //------------------------------------------------------------------------------
