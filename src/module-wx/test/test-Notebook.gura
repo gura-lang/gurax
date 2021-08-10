@@ -1,0 +1,46 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
+		this.SetSizer(sizerTop)
+		wx.Treebook(this, wx.ID_ANY) {|note|
+			sizerTop.Add(note, wx.SizerFlags(1).Expand())
+			wx.Panel(note) {|panel|
+				note.AddPage(panel, 'Page1')
+				sizer = wx.BoxSizer(wx.HORIZONTAL)
+				panel.SetSizer(sizer)
+				sizer.Add(wx.Button(panel, wx.ID_ANY, 'push1'), wx.SizerFlags(1).Expand())
+			}
+			wx.Panel(note) {|panel|
+				note.AddPage(panel, 'Page2')
+
+			}
+			wx.Panel(note) {|panel|
+				note.AddPage(panel, 'Page3')
+			}
+			wx.Panel(note) {|panel|
+				note.AddPage(panel, 'Page4')
+			}
+			wx.Panel(note) {|panel|
+				note.AddPage(panel, 'Page5')
+			}
+		}
+	}
+}
+
+wx.ImplementApp(MyApp())
