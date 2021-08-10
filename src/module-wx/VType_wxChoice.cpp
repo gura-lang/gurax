@@ -69,6 +69,229 @@ Gurax_ImplementConstructorEx(Choice_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Choice#GetColumns()
+Gurax_DeclareMethodAlias(wxChoice, GetColumns_gurax, "GetColumns")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, GetColumns_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetColumns();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Choice#GetCurrentSelection()
+Gurax_DeclareMethodAlias(wxChoice, GetCurrentSelection_gurax, "GetCurrentSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, GetCurrentSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetCurrentSelection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Choice#SetColumns(n? as Number)
+Gurax_DeclareMethodAlias(wxChoice, SetColumns_gurax, "SetColumns")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, SetColumns_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int n = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 1;
+	// Function body
+	pEntity_gurax->SetColumns(n);
+	return Gurax::Value::nil();
+}
+
+// wx.Choice#IsSorted()
+Gurax_DeclareMethodAlias(wxChoice, IsSorted_gurax, "IsSorted")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, IsSorted_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsSorted();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Choice#GetCount()
+Gurax_DeclareMethodAlias(wxChoice, GetCount_gurax, "GetCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, GetCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned int rtn = pEntity_gurax->GetCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Choice#GetSelection()
+Gurax_DeclareMethodAlias(wxChoice, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetSelection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Choice#SetSelection(n as Number)
+Gurax_DeclareMethodAlias(wxChoice, SetSelection_gurax, "SetSelection")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, SetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int n = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetSelection(n);
+	return Gurax::Value::nil();
+}
+
+// wx.Choice#FindString(s as String, bCase? as Bool)
+Gurax_DeclareMethodAlias(wxChoice, FindString_gurax, "FindString")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bCase", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, FindString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* s = args_gurax.PickString();
+	bool bCase = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	// Function body
+	int rtn = pEntity_gurax->FindString(s, bCase);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Choice#GetString(n as Number)
+Gurax_DeclareMethodAlias(wxChoice, GetString_gurax, "GetString")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, GetString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	const char* rtn = pEntity_gurax->GetString(n);
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.Choice#SetString(pos as Number, s as String)
+Gurax_DeclareMethodAlias(wxChoice, SetString_gurax, "SetString")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, SetString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int pos = args_gurax.PickNumber<unsigned int>();
+	const char* s = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetString(pos, s);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -86,6 +309,16 @@ void VType_wxChoice::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Choice_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxChoice, GetColumns_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, GetCurrentSelection_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, SetColumns_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, IsSorted_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, GetCount_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, GetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, SetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, FindString_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, GetString_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, SetString_gurax));
 }
 
 //------------------------------------------------------------------------------

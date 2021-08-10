@@ -22,6 +22,15 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ALIGN_RIGHT", new Value_Number(wxALIGN_RIGHT));
 	frame.Assign("ALIGN_TOP", new Value_Number(wxALIGN_TOP));
 	frame.Assign("ALL", new Value_Number(wxALL));
+	frame.Assign("ALWAYS_SHOW_SB", new Value_Number(wxALWAYS_SHOW_SB));
+	frame.Assign("BORDER_DEFAULT", new Value_Number(wxBORDER_DEFAULT));
+	frame.Assign("BORDER_DOUBLE", new Value_Number(wxBORDER_DOUBLE));
+	frame.Assign("BORDER_NONE", new Value_Number(wxBORDER_NONE));
+	frame.Assign("BORDER_RAISED", new Value_Number(wxBORDER_RAISED));
+	frame.Assign("BORDER_SIMPLE", new Value_Number(wxBORDER_SIMPLE));
+	frame.Assign("BORDER_STATIC", new Value_Number(wxBORDER_STATIC));
+	frame.Assign("BORDER_SUNKEN", new Value_Number(wxBORDER_SUNKEN));
+	frame.Assign("BORDER_THEME", new Value_Number(wxBORDER_THEME));
 	frame.Assign("BOTTOM", new Value_Number(wxBOTTOM));
 	frame.Assign("CAL_MONDAY_FIRST", new Value_Number(wxCAL_MONDAY_FIRST));
 	frame.Assign("CAL_NO_MONTH_CHANGE", new Value_Number(wxCAL_NO_MONTH_CHANGE));
@@ -31,8 +40,14 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CAL_SHOW_SURROUNDING_WEEKS", new Value_Number(wxCAL_SHOW_SURROUNDING_WEEKS));
 	frame.Assign("CAL_SHOW_WEEK_NUMBERS", new Value_Number(wxCAL_SHOW_WEEK_NUMBERS));
 	frame.Assign("CAL_SUNDAY_FIRST", new Value_Number(wxCAL_SUNDAY_FIRST));
+	frame.Assign("CB_DROPDOWN", new Value_Number(wxCB_DROPDOWN));
+	frame.Assign("CB_READONLY", new Value_Number(wxCB_READONLY));
+	frame.Assign("CB_SIMPLE", new Value_Number(wxCB_SIMPLE));
+	frame.Assign("CB_SORT", new Value_Number(wxCB_SORT));
+	frame.Assign("CLIP_CHILDREN", new Value_Number(wxCLIP_CHILDREN));
 	frame.Assign("EXPAND", new Value_Number(wxEXPAND));
 	frame.Assign("FIXED_MINSIZE", new Value_Number(wxFIXED_MINSIZE));
+	frame.Assign("FULL_REPAINT_ON_RESIZE", new Value_Number(wxFULL_REPAINT_ON_RESIZE));
 	frame.Assign("HORIZONTAL", new Value_Number(wxHORIZONTAL));
 	frame.Assign("HSCROLL", new Value_Number(wxHSCROLL));
 	frame.Assign("ICON_INFORMATION", new Value_Number(wxICON_INFORMATION));
@@ -164,6 +179,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("NB_NOPAGETHEME", new Value_Number(wxNB_NOPAGETHEME));
 	frame.Assign("NB_RIGHT", new Value_Number(wxNB_RIGHT));
 	frame.Assign("NB_TOP", new Value_Number(wxNB_TOP));
+	frame.Assign("NO_FULL_REPAINT_ON_RESIZE", new Value_Number(wxNO_FULL_REPAINT_ON_RESIZE));
 	frame.Assign("OK", new Value_Number(wxOK));
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
@@ -172,6 +188,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ST_ELLIPSIZE_MIDDLE", new Value_Number(wxST_ELLIPSIZE_MIDDLE));
 	frame.Assign("ST_ELLIPSIZE_START", new Value_Number(wxST_ELLIPSIZE_START));
 	frame.Assign("ST_NO_AUTORESIZE", new Value_Number(wxST_NO_AUTORESIZE));
+	frame.Assign("TAB_TRAVERSAL", new Value_Number(wxTAB_TRAVERSAL));
 	frame.Assign("TE_AUTO_URL", new Value_Number(wxTE_AUTO_URL));
 	frame.Assign("TE_BESTWRAP", new Value_Number(wxTE_BESTWRAP));
 	frame.Assign("TE_CAPITALIZE", new Value_Number(wxTE_CAPITALIZE));
@@ -191,7 +208,16 @@ void AssignConsts(Frame& frame)
 	frame.Assign("TE_RIGHT", new Value_Number(wxTE_RIGHT));
 	frame.Assign("TE_WORDWRAP", new Value_Number(wxTE_WORDWRAP));
 	frame.Assign("TOP", new Value_Number(wxTOP));
+	frame.Assign("TRANSPARENT_WINDOW", new Value_Number(wxTRANSPARENT_WINDOW));
 	frame.Assign("VERTICAL", new Value_Number(wxVERTICAL));
+	frame.Assign("VSCROLL", new Value_Number(wxVSCROLL));
+	frame.Assign("WANTS_CHARS", new Value_Number(wxWANTS_CHARS));
+	frame.Assign("WS_EX_BLOCK_EVENTS", new Value_Number(wxWS_EX_BLOCK_EVENTS));
+	frame.Assign("WS_EX_CONTEXTHELP", new Value_Number(wxWS_EX_CONTEXTHELP));
+	frame.Assign("WS_EX_PROCESS_IDLE", new Value_Number(wxWS_EX_PROCESS_IDLE));
+	frame.Assign("WS_EX_PROCESS_UI_UPDATES", new Value_Number(wxWS_EX_PROCESS_UI_UPDATES));
+	frame.Assign("WS_EX_TRANSIENT", new Value_Number(wxWS_EX_TRANSIENT));
+	frame.Assign("WS_EX_VALIDATE_RECURSIVELY", new Value_Number(wxWS_EX_VALIDATE_RECURSIVELY));
 }
 
 Gurax_EndModuleScope(wx)

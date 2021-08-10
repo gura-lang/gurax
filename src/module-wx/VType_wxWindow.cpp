@@ -1086,6 +1086,27 @@ Gurax_ImplementMethodEx(wxWindow, GetBestWidth_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
+// wx.Window#GetClientSizeWH()
+Gurax_DeclareMethodAlias(wxWindow, GetClientSizeWH_gurax, "GetClientSizeWH")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetClientSizeWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int width, height;
+	pEntity_gurax->GetClientSize(&width, &height);
+	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+}
+
 // wx.Window#GetClientSize()
 Gurax_DeclareMethodAlias(wxWindow, GetClientSize_gurax, "GetClientSize")
 {
@@ -5701,6 +5722,7 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, GetBestSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetBestHeight_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetBestWidth_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetClientSizeWH_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetClientSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetEffectiveMinSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetMaxClientSize_gurax));

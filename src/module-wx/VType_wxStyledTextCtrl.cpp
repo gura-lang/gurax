@@ -65,6 +65,813 @@ Gurax_ImplementConstructorEx(StyledTextCtrl_gurax, processor_gurax, argument_gur
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.StyledTextCtrl#SetMargins(left as Number, right as Number)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SetMargins_gurax, "SetMargins")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("left", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("right", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SetMargins_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int left = args_gurax.PickNumber<int>();
+	int right = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetMargins(left, right);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#AppendText(text as String)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, AppendText_gurax, "AppendText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, AppendText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->AppendText(text);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#AutoComplete(choices[] as String)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, AutoComplete_gurax, "AutoComplete")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("choices", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, AutoComplete_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
+	// Function body
+	bool rtn = pEntity_gurax->AutoComplete(choices);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#AutoCompleteFileNames()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, AutoCompleteFileNames_gurax, "AutoCompleteFileNames")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, AutoCompleteFileNames_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->AutoCompleteFileNames();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#AutoCompleteDirectories()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, AutoCompleteDirectories_gurax, "AutoCompleteDirectories")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, AutoCompleteDirectories_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->AutoCompleteDirectories();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#CanCopy()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, CanCopy_gurax, "CanCopy")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, CanCopy_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanCopy();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#CanCut()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, CanCut_gurax, "CanCut")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, CanCut_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanCut();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#CanPaste()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, CanPaste_gurax, "CanPaste")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, CanPaste_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanPaste();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#CanRedo()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, CanRedo_gurax, "CanRedo")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, CanRedo_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanRedo();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#CanUndo()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, CanUndo_gurax, "CanUndo")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, CanUndo_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CanUndo();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#ChangeValue(value as String)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, ChangeValue_gurax, "ChangeValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, ChangeValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* value = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->ChangeValue(value);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#Clear()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, Clear_gurax, "Clear")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, Clear_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Clear();
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#Copy()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, Copy_gurax, "Copy")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, Copy_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Copy();
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#Cut()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, Cut_gurax, "Cut")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, Cut_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Cut();
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#GetInsertionPoint()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetInsertionPoint_gurax, "GetInsertionPoint")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, GetInsertionPoint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetInsertionPoint();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.StyledTextCtrl#GetRange(from as Number, to as Number)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetRange_gurax, "GetRange")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, GetRange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long from = args_gurax.PickNumber<long>();
+	long to = args_gurax.PickNumber<long>();
+	// Function body
+	const char* rtn = pEntity_gurax->GetRange(from, to);
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.StyledTextCtrl#GetStringSelection()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetStringSelection_gurax, "GetStringSelection")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, GetStringSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	const char* rtn = pEntity_gurax->GetStringSelection();
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.StyledTextCtrl#GetValue()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetValue_gurax, "GetValue")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, GetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	const char* rtn = pEntity_gurax->GetValue();
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.StyledTextCtrl#IsEditable()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, IsEditable_gurax, "IsEditable")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, IsEditable_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsEditable();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#IsEmpty()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, IsEmpty_gurax, "IsEmpty")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, IsEmpty_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsEmpty();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#Paste()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, Paste_gurax, "Paste")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, Paste_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Paste();
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#Redo()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, Redo_gurax, "Redo")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, Redo_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Redo();
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#Remove(from as Number, to as Number)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, Remove_gurax, "Remove")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, Remove_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long from = args_gurax.PickNumber<long>();
+	long to = args_gurax.PickNumber<long>();
+	// Function body
+	pEntity_gurax->Remove(from, to);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#Replace(from as Number, to as Number, value as String)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, Replace_gurax, "Replace")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, Replace_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long from = args_gurax.PickNumber<long>();
+	long to = args_gurax.PickNumber<long>();
+	const char* value = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->Replace(from, to, value);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#SetEditable(editable as Bool)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SetEditable_gurax, "SetEditable")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("editable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SetEditable_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool editable = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetEditable(editable);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#SetInsertionPoint(pos as Number)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SetInsertionPoint_gurax, "SetInsertionPoint")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SetInsertionPoint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long pos = args_gurax.PickNumber<long>();
+	// Function body
+	pEntity_gurax->SetInsertionPoint(pos);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#SetInsertionPointEnd()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SetInsertionPointEnd_gurax, "SetInsertionPointEnd")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SetInsertionPointEnd_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->SetInsertionPointEnd();
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#SetMaxLength(len as Number)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SetMaxLength_gurax, "SetMaxLength")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SetMaxLength_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned long len = args_gurax.PickNumber<unsigned long>();
+	// Function body
+	pEntity_gurax->SetMaxLength(len);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#SetSelection(from as Number, to as Number)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SetSelection_gurax, "SetSelection")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long from = args_gurax.PickNumber<long>();
+	long to = args_gurax.PickNumber<long>();
+	// Function body
+	pEntity_gurax->SetSelection(from, to);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#SelectAll()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SelectAll_gurax, "SelectAll")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SelectAll_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->SelectAll();
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#SelectNone()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SelectNone_gurax, "SelectNone")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SelectNone_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->SelectNone();
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#SetHint(hint as String)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SetHint_gurax, "SetHint")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("hint", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SetHint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* hint = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->SetHint(hint);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StyledTextCtrl#GetHint()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetHint_gurax, "GetHint")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, GetHint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	const char* rtn = pEntity_gurax->GetHint();
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.StyledTextCtrl#GetMargins()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetMargins_gurax, "GetMargins")
+{
+	Declare(VTYPE_wxPoint, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, GetMargins_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
+		pEntity_gurax->GetMargins()));
+}
+
+// wx.StyledTextCtrl#SetValue(value as String)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, SetValue_gurax, "SetValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, SetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* value = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetValue(value);
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#Undo()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, Undo_gurax, "Undo")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, Undo_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Undo();
+	return Gurax::Value::nil();
+}
+
+// wx.StyledTextCtrl#WriteText(text as String)
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, WriteText_gurax, "WriteText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, WriteText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->WriteText(text);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -82,6 +889,43 @@ void VType_wxStyledTextCtrl::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StyledTextCtrl_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetMargins_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, AppendText_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, AutoComplete_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, AutoCompleteFileNames_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, AutoCompleteDirectories_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, CanCopy_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, CanCut_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, CanPaste_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, CanRedo_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, CanUndo_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, ChangeValue_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, Clear_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, Copy_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, Cut_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetInsertionPoint_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetRange_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetStringSelection_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetValue_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, IsEditable_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, IsEmpty_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, Paste_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, Redo_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, Remove_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, Replace_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetEditable_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetInsertionPoint_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetInsertionPointEnd_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetMaxLength_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SelectAll_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SelectNone_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetHint_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetHint_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetMargins_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, SetValue_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, Undo_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, WriteText_gurax));
 }
 
 //------------------------------------------------------------------------------

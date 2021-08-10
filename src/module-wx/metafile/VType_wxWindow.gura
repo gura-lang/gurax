@@ -59,6 +59,12 @@ Window = Class(EvtHandler) {
 	GetBestHeight(width as int) as int
 	GetBestWidth(height as int) as int
 	//GetClientSize(width as int_p, height as int_p) as void
+	GetClientSizeWH() as Tuple@gurax = \
+		R'''
+		int width, height;
+		pEntity_gurax->GetClientSize(&width, &height);
+		return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+		'''
 	GetClientSize() as Size
 	GetEffectiveMinSize() as Size
 	GetMaxClientSize() as Size
@@ -321,3 +327,29 @@ Window = Class(EvtHandler) {
 	UnregisterHotKey(hotkeyId as int) as bool
 	UpdateWindowUI(flags as long = wxUPDATE_UI_NONE) as void
 }
+
+@const[
+	BORDER_DEFAULT
+	BORDER_SIMPLE
+	BORDER_SUNKEN
+	BORDER_RAISED
+	BORDER_STATIC
+	BORDER_THEME
+	BORDER_NONE
+	BORDER_DOUBLE
+	TRANSPARENT_WINDOW
+	TAB_TRAVERSAL
+	WANTS_CHARS
+	NO_FULL_REPAINT_ON_RESIZE
+	VSCROLL
+	HSCROLL
+	ALWAYS_SHOW_SB
+	CLIP_CHILDREN
+	FULL_REPAINT_ON_RESIZE
+	WS_EX_VALIDATE_RECURSIVELY
+	WS_EX_BLOCK_EVENTS
+	WS_EX_TRANSIENT
+	WS_EX_CONTEXTHELP
+	WS_EX_PROCESS_IDLE
+	WS_EX_PROCESS_UI_UPDATES
+]

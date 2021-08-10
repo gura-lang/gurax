@@ -3,6 +3,8 @@
 //==============================================================================
 StyledTextCtrl = Class(Control) {
 	@include['wx/stc/stc.h']
+	@mixin[TextEntry]
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = wxSTCNameStr)
+	SetMargins(left as int, right as int) as void
 }

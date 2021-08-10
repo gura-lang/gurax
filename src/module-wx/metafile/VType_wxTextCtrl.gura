@@ -2,6 +2,7 @@
 // VType_wxTextCtrl.gura
 //==============================================================================
 TextCtrl = Class(Control) {
+	@mixin[TextEntry]
 	__init__(parent as Window_p, id as WindowID, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxTextCtrlNameStr)
 	DiscardEdits() as void
@@ -39,7 +40,6 @@ TextCtrl = Class(Control) {
 	TE_RICH2
 	TE_AUTO_URL
 	TE_NOHIDESEL
-	HSCROLL
 	TE_NO_VSCROLL
 	TE_LEFT
 	TE_CENTRE

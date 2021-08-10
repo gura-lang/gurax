@@ -2,17 +2,12 @@
 // VType_wxComboBox.gura
 //==============================================================================
 ComboBox = Class(Control) {
+	@mixin[TextEntry]
 	__init__(parent as Window_p, id as WindowID, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-		choices? as const_ArrayString_r, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxComboBoxNameStr) = \
-		R'''
-		auto pEntity_gurax = new Value_wxComboBox::EntityT(parent, id, value, pos, size, choices, style, validator, name);
-		RefPtr<Value_wxComboBox> pValue_gurax(new Value_wxComboBox(pEntity_gurax));
-		pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
-		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
-		'''
+		choices? as const_ArrayString_r, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxComboBoxNameStr)
 	// wxItemContainerImmutable
 	GetCount() as unsigned_int
-	//IsEmpty() as bool
+	IsEmpty() as void = 'return Value::nil();'
 	GetString(n as unsigned_int) as String
 	//GetStrings()
 	SetString(n as unsigned_int, string as String) as void
@@ -53,3 +48,10 @@ ComboBox = Class(Control) {
 		return Value::nil();
 		'''
 }
+
+@const[
+	CB_SIMPLE
+	CB_DROPDOWN
+	CB_READONLY
+	CB_SORT
+]

@@ -523,6 +523,7 @@ ClassInfo = class {
 	loosePointerFlag as Bool = false
 	funcInfoTbl[] as cbridge.FuncInfo = []
 	includeFiles[] as String = []
+	classNamesToMixin[] as String = []
 	__init__(className as String, classNameParent:nil as String) = {
 		this.className = className
 		this.classNameParent = classNameParent
@@ -561,6 +562,7 @@ ClassInfo = class {
 EventInfo = struct { eventName as String, className as String }
 
 classInfoTbl = []
+classInfoToMixinTbl = []
 constNameTbl = []
 enumNameTbl = []
 eventInfoTbl = []
@@ -591,6 +593,8 @@ path.Glob('metafile/*.gura').Each {|pathName|
 					}
 					if (expr.car.symbolName == '@include') {
 						classInfo.includeFiles = params::string
+					} elsif (expr.car.symbolName == '@mixin') {
+						classInfo.classNamesToMixin = params::symbolName
 					} else {
 						sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
 						sys.Exit(1)
@@ -605,7 +609,11 @@ path.Glob('metafile/*.gura').Each {|pathName|
 					}
 				}
 			}
-			classInfoTbl.Add(classInfo)
+			if (expr.right.attr.IsSet(`mixin)) {
+				classInfoToMixinTbl.Add(classInfo)
+			} else {
+				classInfoTbl.Add(classInfo)
+			}
 		} elsif (expr.IsIndexer()) {
 			params = expr.EachParam():list
 			if (!expr.car.IsIdentifier()) {
@@ -754,6 +762,18 @@ classInfoTbl.Each {|classInfo|
 		if (!classInfo.classInfoParent) {
 			sys.cerr.Printf('class is not found: %s\n', classInfo.classNameParent)
 			sys.Exit(1)
+		}
+	}
+	classInfo.classNamesToMixin.Each {|classNameToMixin|
+		classInfoToMixin = classInfoToMixinTbl.Find(classInfoToMixinTbl:*className == classNameToMixin)
+		if (!classInfoToMixin) {
+			sys.cerr.Printf('class is not found: %s\n', classNameToMixin)
+			sys.Exit(1)
+		}
+		classInfoToMixin.funcInfoTbl.Each {|funcInfo|
+			if (!(classInfo.funcInfoTbl:*name == funcInfo.name).Or()) {
+				classInfo.funcInfoTbl.Add(funcInfo)
+			}
 		}
 	}
 }
