@@ -65,6 +65,275 @@ Gurax_ImplementConstructorEx(Treebook_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Treebook#AddPage(page as wx.Window, text as String, bSelect? as Bool, imageId? as Number)
+Gurax_DeclareMethodAlias(wxTreebook, AddPage_gurax, "AddPage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("page", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bSelect", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, AddPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_page = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* page = value_page.GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	bool bSelect = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNOT_FOUND;
+	// Function body
+	bool rtn = pEntity_gurax->AddPage(page, text, bSelect, imageId);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Treebook#AddSubPage(page as wx.Window, text as String, bSelect? as Bool, imageId? as Number)
+Gurax_DeclareMethodAlias(wxTreebook, AddSubPage_gurax, "AddSubPage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("page", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bSelect", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, AddSubPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_page = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* page = value_page.GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	bool bSelect = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNOT_FOUND;
+	// Function body
+	bool rtn = pEntity_gurax->AddSubPage(page, text, bSelect, imageId);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Treebook#CollapseNode(pageId as Number)
+Gurax_DeclareMethodAlias(wxTreebook, CollapseNode_gurax, "CollapseNode")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pageId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, CollapseNode_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pageId = args_gurax.PickNumber<size_t>();
+	// Function body
+	bool rtn = pEntity_gurax->CollapseNode(pageId);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Treebook#DeletePage(pagePos as Number)
+Gurax_DeclareMethodAlias(wxTreebook, DeletePage_gurax, "DeletePage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pagePos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, DeletePage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pagePos = args_gurax.PickNumber<size_t>();
+	// Function body
+	bool rtn = pEntity_gurax->DeletePage(pagePos);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Treebook#ExpandNode(pageId as Number, expand? as Bool)
+Gurax_DeclareMethodAlias(wxTreebook, ExpandNode_gurax, "ExpandNode")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pageId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("expand", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, ExpandNode_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pageId = args_gurax.PickNumber<size_t>();
+	bool expand = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	bool rtn = pEntity_gurax->ExpandNode(pageId, expand);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Treebook#GetPageParent(page as Number)
+Gurax_DeclareMethodAlias(wxTreebook, GetPageParent_gurax, "GetPageParent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, GetPageParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t page = args_gurax.PickNumber<size_t>();
+	// Function body
+	int rtn = pEntity_gurax->GetPageParent(page);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Treebook#GetSelection()
+Gurax_DeclareMethodAlias(wxTreebook, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetSelection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Treebook#InsertPage(pagePos as Number, page as wx.Window, text as String, bSelect? as Bool, imageId? as Number)
+Gurax_DeclareMethodAlias(wxTreebook, InsertPage_gurax, "InsertPage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pagePos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("page", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bSelect", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, InsertPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pagePos = args_gurax.PickNumber<size_t>();
+	Value_wxWindow& value_page = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* page = value_page.GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	bool bSelect = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNOT_FOUND;
+	// Function body
+	bool rtn = pEntity_gurax->InsertPage(pagePos, page, text, bSelect, imageId);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Treebook#InsertSubPage(pagePos as Number, page as wx.Window, text as String, bSelect? as Bool, imageId? as Number)
+Gurax_DeclareMethodAlias(wxTreebook, InsertSubPage_gurax, "InsertSubPage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pagePos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("page", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bSelect", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, InsertSubPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pagePos = args_gurax.PickNumber<size_t>();
+	Value_wxWindow& value_page = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* page = value_page.GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	bool bSelect = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNOT_FOUND;
+	// Function body
+	bool rtn = pEntity_gurax->InsertSubPage(pagePos, page, text, bSelect, imageId);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Treebook#IsNodeExpanded(pageId as Number)
+Gurax_DeclareMethodAlias(wxTreebook, IsNodeExpanded_gurax, "IsNodeExpanded")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pageId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreebook, IsNodeExpanded_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pageId = args_gurax.PickNumber<size_t>();
+	// Function body
+	bool rtn = pEntity_gurax->IsNodeExpanded(pageId);
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -82,6 +351,16 @@ void VType_wxTreebook::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Treebook_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxTreebook, AddPage_gurax));
+	Assign(Gurax_CreateMethod(wxTreebook, AddSubPage_gurax));
+	Assign(Gurax_CreateMethod(wxTreebook, CollapseNode_gurax));
+	Assign(Gurax_CreateMethod(wxTreebook, DeletePage_gurax));
+	Assign(Gurax_CreateMethod(wxTreebook, ExpandNode_gurax));
+	Assign(Gurax_CreateMethod(wxTreebook, GetPageParent_gurax));
+	Assign(Gurax_CreateMethod(wxTreebook, GetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxTreebook, InsertPage_gurax));
+	Assign(Gurax_CreateMethod(wxTreebook, InsertSubPage_gurax));
+	Assign(Gurax_CreateMethod(wxTreebook, IsNodeExpanded_gurax));
 }
 
 //------------------------------------------------------------------------------

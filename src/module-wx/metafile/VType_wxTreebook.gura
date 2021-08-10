@@ -5,4 +5,21 @@ Treebook = Class(BookCtrlBase) {
 	@include['wx/treebook.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxBK_DEFAULT, name as String = '')
+	AddPage(page as Window_p, text as const_String_r, bSelect as bool = false, imageId as int = wxNOT_FOUND) as bool
+	AddSubPage(page as Window_p, text as const_String_r, bSelect as bool = false, imageId as int = wxNOT_FOUND) as bool
+	CollapseNode(pageId as size_t) as bool
+	DeletePage(pagePos as size_t) as bool
+	ExpandNode(pageId as size_t, expand as bool = true) as bool
+	GetPageParent(page as size_t) as int
+	GetSelection() as int
+	InsertPage(pagePos as size_t, page as Window_p, text as const_String_r, bSelect as bool = false, imageId as int = wxNOT_FOUND) as bool
+	InsertSubPage(pagePos as size_t, page as Window_p, text as const_String_r, bSelect as bool = false, imageId as int = wxNOT_FOUND) as bool
+	IsNodeExpanded(pageId as size_t) as bool
 }
+
+@event[
+	EVT_TREEBOOK_PAGE_CHANGED	>> BookCtrlEvent
+	EVT_TREEBOOK_PAGE_CHANGING	>> BookCtrlEvent
+	EVT_TREEBOOK_NODE_COLLAPSED	>> BookCtrlEvent
+	EVT_TREEBOOK_NODE_EXPANDED	>> BookCtrlEvent
+]

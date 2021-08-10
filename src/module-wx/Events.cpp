@@ -95,6 +95,10 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_SET_CURSOR, wxSetCursorEvent);
 	Gurax_AssignEvent(EVT_SIZE, wxSizeEvent);
 	Gurax_AssignEvent(EVT_SYS_COLOUR_CHANGED, wxSysColourChangedEvent);
+	Gurax_AssignEvent(EVT_TREEBOOK_PAGE_CHANGED, wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_TREEBOOK_PAGE_CHANGING, wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_TREEBOOK_NODE_COLLAPSED, wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_TREEBOOK_NODE_EXPANDED, wxBookCtrlEvent);
 }
 
 Gurax_EndModuleScope(wx)
