@@ -4,9 +4,8 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxNotifyEvent.cpp
-	VType_wxBookCtrlEvent.cpp
-	VType_wxAuiNotebookEvent.cpp
+	VType_wxMemoryBuffer.cpp
+	VType_wxCharBuffer.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -18,11 +17,13 @@ set(SRCFILES_VTYPE
 	VType_wxAuiMDIClientWindow.cpp
 	VType_wxAuiMDIParentFrame.cpp
 	VType_wxAuiNotebook.cpp
+	VType_wxAuiNotebookEvent.cpp
 	VType_wxBitmap.cpp
 	VType_wxBitmapButton.cpp
 	VType_wxBitmapHandler.cpp
 	VType_wxBitmapToggleButton.cpp
 	VType_wxBookCtrlBase.cpp
+	VType_wxBookCtrlEvent.cpp
 	VType_wxBoxSizer.cpp
 	VType_wxBrush.cpp
 	VType_wxButton.cpp
@@ -87,6 +88,7 @@ set(SRCFILES_VTYPE
 	VType_wxMouseCaptureLostEvent.cpp
 	VType_wxMouseEvent.cpp
 	VType_wxNotebook.cpp
+	VType_wxNotifyEvent.cpp
 	VType_wxObject.cpp
 	VType_wxPaintEvent.cpp
 	VType_wxPalette.cpp
@@ -121,6 +123,7 @@ set(SRCFILES_VTYPE
 	VType_wxStatusBar.cpp
 	VType_wxStdDialogButtonSizer.cpp
 	VType_wxStyledTextCtrl.cpp
+	VType_wxStyledTextEvent.cpp
 	VType_wxSysColourChangedEvent.cpp
 	VType_wxTextAttr.cpp
 	VType_wxTextCtrl.cpp

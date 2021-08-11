@@ -1,8 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxStyledTextEvent.gura
 //==============================================================================
-MemoryBuffer = Class {
-}
-
-CharBuffer = Class {
+StyledTextEvent = Class(CommandEvent) {
+	@include['wx/stc/stc.h']
 }

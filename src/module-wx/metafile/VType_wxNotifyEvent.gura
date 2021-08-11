@@ -1,8 +1,5 @@
 //==============================================================================
-// Misc.gura
+// VType_wxNotifyEvent.gura
 //==============================================================================
-MemoryBuffer = Class {
-}
-
-CharBuffer = Class {
+NotifyEvent = Class(CommandEvent) {
 }

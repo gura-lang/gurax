@@ -1,8 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxBookCtrlEvent.gura
 //==============================================================================
-MemoryBuffer = Class {
-}
-
-CharBuffer = Class {
+BookCtrlEvent = Class(NotifyEvent) {
+	@include['wx/bookctrl.h']
 }

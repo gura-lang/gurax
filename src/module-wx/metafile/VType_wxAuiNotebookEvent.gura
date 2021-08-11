@@ -1,8 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxAuiNotebookEvent.gura
 //==============================================================================
-MemoryBuffer = Class {
-}
-
-CharBuffer = Class {
+AuiNotebookEvent = Class(BookCtrlEvent) {
+	@include['wx/aui/auibook.h']
 }

@@ -6,5 +6,694 @@ StyledTextCtrl = Class(Control) {
 	@mixin[TextEntry]
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = wxSTCNameStr)
+	AddText(text as const_String_r) as void
+	AddStyledText(data as const_MemoryBuffer_r) as void
+	InsertText(pos as int, text as const_String_r) as void
+	ClearAll() as void
+	DeleteRange(pos as int, deleteLength as int) as void
+	ClearDocumentStyle() as void
+	GetLength() as int
+	GetCharAt(pos as int) as int
+	GetCurrentPos() as int
+	GetAnchor() as int
+	GetStyleAt(pos as int) as int
+	Redo() as void
+	SetUndoCollection(collectUndo as bool) as void
+	SelectAll() as void
+	SetSavePoint() as void
+	GetStyledText(startPos as int, endPos as int) as MemoryBuffer
+	CanRedo() as bool
+	MarkerLineFromHandle(handle as int) as int
+	MarkerDeleteHandle(handle as int) as void
+	GetUndoCollection() as bool
+	GetViewWhiteSpace() as int
+	SetViewWhiteSpace(viewWS as int) as void
+	PositionFromPoint(pt as Point) as int
+	PositionFromPointClose(x as int, y as int) as int
+	GotoLine(line as int) as void
+	GotoPos(pos as int) as void
+	SetAnchor(posAnchor as int) as void
+	//GetCurLine(linePos as int_p = NULL) as String
+	GetEndStyled() as int
+	ConvertEOLs(eolMode as int) as void
+	GetEOLMode() as int
+	SetEOLMode(eolMode as int) as void
+	StartStyling(pos as int, mask as int) as void
+	SetStyling(length as int, style as int) as void
+	GetBufferedDraw() as bool
+	SetBufferedDraw(buffered as bool) as void
+	SetTabWidth(tabWidth as int) as void
+	GetTabWidth() as int
+	SetCodePage(codePage as int) as void
+	MarkerDefine(markerNumber as int, markerSymbol as int, foreground as const_Colour_r = wxNullColour, background as const_Colour_r = wxNullColour) as void
+	MarkerSetForeground(markerNumber as int, fore as const_Colour_r) as void
+	MarkerSetBackground(markerNumber as int, back as const_Colour_r) as void
+	MarkerSetBackgroundSelected(markerNumber as int, back as const_Colour_r) as void
+	MarkerEnableHighlight(enabled as bool) as void
+	MarkerAdd(line as int, markerNumber as int) as int
+	MarkerDelete(line as int, markerNumber as int) as void
+	MarkerDeleteAll(markerNumber as int) as void
+	MarkerGet(line as int) as int
+	MarkerNext(lineStart as int, markerMask as int) as int
+	MarkerPrevious(lineStart as int, markerMask as int) as int
+	MarkerDefineBitmap(markerNumber as int, bmp as const_Bitmap_r) as void
+	MarkerAddSet(line as int, set as int) as void
+	MarkerSetAlpha(markerNumber as int, alpha as int) as void
+	SetMarginType(margin as int, marginType as int) as void
+	GetMarginType(margin as int) as int
+	SetMarginWidth(margin as int, pixelWidth as int) as void
+	GetMarginWidth(margin as int) as int
+	SetMarginMask(margin as int, mask as int) as void
+	GetMarginMask(margin as int) as int
+	SetMarginSensitive(margin as int, sensitive as bool) as void
+	GetMarginSensitive(margin as int) as bool
+	SetMarginCursor(margin as int, cursor as int) as void
+	GetMarginCursor(margin as int) as int
+	StyleClearAll() as void
+	StyleSetForeground(style as int, fore as const_Colour_r) as void
+	StyleSetBackground(style as int, back as const_Colour_r) as void
+	StyleSetBold(style as int, bold as bool) as void
+	StyleSetItalic(style as int, italic as bool) as void
+	StyleSetSize(style as int, sizePoints as int) as void
+	StyleSetFaceName(style as int, fontName as const_String_r) as void
+	StyleSetEOLFilled(style as int, filled as bool) as void
+	StyleResetDefault() as void
+	StyleSetUnderline(style as int, underline as bool) as void
+	StyleGetForeground(style as int) as Colour
+	StyleGetBackground(style as int) as Colour
+	StyleGetBold(style as int) as bool
+	StyleGetItalic(style as int) as bool
+	StyleGetSize(style as int) as int
+	StyleGetFaceName(style as int) as String
+	StyleGetEOLFilled(style as int) as bool
+	StyleGetUnderline(style as int) as bool
+	StyleGetCase(style as int) as int
+	StyleGetCharacterSet(style as int) as int
+	StyleGetVisible(style as int) as bool
+	StyleGetChangeable(style as int) as bool
+	StyleGetHotSpot(style as int) as bool
+	StyleSetCase(style as int, caseForce as int) as void
+	StyleSetSizeFractional(style as int, caseForce as int) as void
+	StyleGetSizeFractional(style as int) as int
+	StyleSetWeight(style as int, weight as int) as void
+	StyleGetWeight(style as int) as int
+	StyleSetHotSpot(style as int, hotspot as bool) as void
+	SetSelForeground(useSetting as bool, fore as const_Colour_r) as void
+	SetSelBackground(useSetting as bool, back as const_Colour_r) as void
+	GetSelAlpha() as int
+	SetSelAlpha(alpha as int) as void
+	GetSelEOLFilled() as bool
+	SetSelEOLFilled(filled as bool) as void
+	SetCaretForeground(fore as const_Colour_r) as void
+	CmdKeyAssign(key as int, modifiers as int, cmd as int) as void
+	CmdKeyClear(key as int, modifiers as int) as void
+	CmdKeyClearAll() as void
+	//SetStyleBytes(length as int, styleBytes as char_p) as void
+	StyleSetVisible(style as int, visible as bool) as void
+	GetCaretPeriod() as int
+	SetCaretPeriod(periodMilliseconds as int) as void
+	SetWordChars(characters as const_String_r) as void
+	GetWordChars() as String
+	BeginUndoAction() as void
+	EndUndoAction() as void
+	IndicatorSetStyle(indic as int, style as int) as void
+	IndicatorGetStyle(indic as int) as int
+	IndicatorSetForeground(indic as int, fore as const_Colour_r) as void
+	IndicatorGetForeground(indic as int) as Colour
+	IndicatorSetUnder(indic as int, under as bool) as void
+	IndicatorGetUnder(indic as int) as bool
+	SetWhitespaceForeground(useSetting as bool, fore as const_Colour_r) as void
+	SetWhitespaceBackground(useSetting as bool, back as const_Colour_r) as void
+	SetWhitespaceSize(size as int) as void
+	GetWhitespaceSize() as int
+	SetStyleBits(bits as int) as void
+	GetStyleBits() as int
+	SetLineState(line as int, state as int) as void
+	GetLineState(line as int) as int
+	GetMaxLineState() as int
+	GetCaretLineVisible() as bool
+	SetCaretLineVisible(show as bool) as void
+	GetCaretLineBackground() as Colour
+	SetCaretLineBackground(back as const_Colour_r) as void
+	StyleSetChangeable(style as int, changeable as bool) as void
+	AutoCompShow(lenEntered as int, itemList as const_String_r) as void
+	AutoCompCancel() as void
+	AutoCompActive() as bool
+	AutoCompPosStart() as int
+	AutoCompComplete() as void
+	AutoCompStops(characterSet as const_String_r) as void
+	AutoCompSetSeparator(separatorCharacter as int) as void
+	AutoCompGetSeparator() as int
+	AutoCompSelect(text as const_String_r) as void
+	AutoCompSetCancelAtStart(cancel as bool) as void
+	AutoCompGetCancelAtStart() as bool
+	AutoCompSetFillUps(characterSet as const_String_r) as void
+	AutoCompSetChooseSingle(chooseSingle as bool) as void
+	AutoCompGetChooseSingle() as bool
+	AutoCompSetIgnoreCase(ignoreCase as bool) as void
+	AutoCompGetIgnoreCase() as bool
+	UserListShow(listType as int, itemList as const_String_r) as void
+	AutoCompSetAutoHide(autoHide as bool) as void
+	AutoCompGetAutoHide() as bool
+	AutoCompSetDropRestOfWord(dropRestOfWord as bool) as void
+	AutoCompGetDropRestOfWord() as bool
+	RegisterImage(type as int, bmp as const_Bitmap_r) as void
+	ClearRegisteredImages() as void
+	AutoCompGetTypeSeparator() as int
+	AutoCompSetTypeSeparator(separatorCharacter as int) as void
+	AutoCompSetMaxWidth(characterCount as int) as void
+	AutoCompGetMaxWidth() as int
+	AutoCompSetMaxHeight(rowCount as int) as void
+	AutoCompGetMaxHeight() as int
+	SetIndent(indentSize as int) as void
+	GetIndent() as int
+	SetUseTabs(useTabs as bool) as void
+	GetUseTabs() as bool
+	SetLineIndentation(line as int, indentSize as int) as void
+	GetLineIndentation(line as int) as int
+	GetLineIndentPosition(line as int) as int
+	GetColumn(pos as int) as int
+	CountCharacters(startPos as int, endPos as int) as int
+	SetUseHorizontalScrollBar(show as bool) as void
+	GetUseHorizontalScrollBar() as bool
+	SetIndentationGuides(indentView as int) as void
+	GetIndentationGuides() as int
+	SetHighlightGuide(column as int) as void
+	GetHighlightGuide() as int
+	GetLineEndPosition(line as int) as int
+	GetCodePage() as int
+	GetCaretForeground() as Colour
+	GetReadOnly() as bool
+	SetCurrentPos(pos as int) as void
+	SetSelectionStart(pos as int) as void
+	GetSelectionStart() as int
+	SetSelectionEnd(pos as int) as void
+	GetSelectionEnd() as int
+	SetEmptySelection(pos as int) as void
+	SetPrintMagnification(magnification as int) as void
+	GetPrintMagnification() as int
+	SetPrintColourMode(mode as int) as void
+	GetPrintColourMode() as int
+	FindText(minPos as int, maxPos as int, text as const_String_r, flags as int = 0) as int
+	FormatRange(doDraw as bool, startPos as int, endPos as int, draw as DC_p, target as DC_p, renderRect as Rect, pageRect as Rect) as int
+	GetFirstVisibleLine() as int
+	GetLine(line as int) as String
+	GetLineCount() as int
+	SetMarginLeft(pixelWidth as int) as void
+	GetMarginLeft() as int
+	SetMarginRight(pixelWidth as int) as void
+	GetMarginRight() as int
+	GetModify() as bool
+	GetSelectedText() as String
+	GetTextRange(startPos as int, endPos as int) as String
+	HideSelection(normal as bool) as void
+	LineFromPosition(pos as int) as int
+	PositionFromLine(line as int) as int
+	LineScroll(columns as int, lines as int) as void
+	EnsureCaretVisible() as void
+	ReplaceSelection(text as const_String_r) as void
+	SetReadOnly(readOnly as bool) as void
+	CanPaste() as bool
+	CanUndo() as bool
+	EmptyUndoBuffer() as void
+	Undo() as void
+	Cut() as void
+	Copy() as void
+	Paste() as void
+	Clear() as void
+	SetText(text as const_String_r) as void
+	GetText() as String
+	GetTextLength() as int
+	SetOvertype(overtype as bool) as void
+	GetOvertype() as bool
+	SetCaretWidth(pixelWidth as int) as void
+	GetCaretWidth() as int
+	SetTargetStart(pos as int) as void
+	GetTargetStart() as int
+	SetTargetEnd(pos as int) as void
+	GetTargetEnd() as int
+	ReplaceTarget(text as const_String_r) as int
+	ReplaceTargetRE(text as const_String_r) as int
+	SearchInTarget(text as const_String_r) as int
+	SetSearchFlags(flags as int) as void
+	GetSearchFlags() as int
+	CallTipShow(pos as int, definition as const_String_r) as void
+	CallTipCancel() as void
+	CallTipActive() as bool
+	CallTipPosAtStart() as int
+	CallTipSetHighlight(start as int, end as int) as void
+	CallTipSetBackground(back as const_Colour_r) as void
+	CallTipSetForeground(fore as const_Colour_r) as void
+	CallTipSetForegroundHighlight(fore as const_Colour_r) as void
+	CallTipUseStyle(tabSize as int) as void
+	CallTipSetPosition(above as bool) as void
+	VisibleFromDocLine(line as int) as int
+	DocLineFromVisible(lineDisplay as int) as int
+	WrapCount(line as int) as int
+	SetFoldLevel(line as int, level as int) as void
+	GetFoldLevel(line as int) as int
+	GetLastChild(line as int, level as int) as int
+	GetFoldParent(line as int) as int
+	ShowLines(lineStart as int, lineEnd as int) as void
+	HideLines(lineStart as int, lineEnd as int) as void
+	GetLineVisible(line as int) as bool
+	GetAllLinesVisible() as bool
+	SetFoldExpanded(line as int, expanded as bool) as void
+	GetFoldExpanded(line as int) as bool
+	ToggleFold(line as int) as void
+	EnsureVisible(line as int) as void
+	SetFoldFlags(flags as int) as void
+	EnsureVisibleEnforcePolicy(line as int) as void
+	SetTabIndents(tabIndents as bool) as void
+	GetTabIndents() as bool
+	SetBackSpaceUnIndents(bsUnIndents as bool) as void
+	GetBackSpaceUnIndents() as bool
+	SetMouseDwellTime(periodMilliseconds as int) as void
+	GetMouseDwellTime() as int
+	WordStartPosition(pos as int, onlyWordCharacters as bool) as int
+	WordEndPosition(pos as int, onlyWordCharacters as bool) as int
+	SetWrapMode(mode as int) as void
+	GetWrapMode() as int
+	SetWrapVisualFlags(wrapVisualFlags as int) as void
+	GetWrapVisualFlags() as int
+	SetWrapVisualFlagsLocation(wrapVisualFlagsLocation as int) as void
+	GetWrapVisualFlagsLocation() as int
+	SetWrapStartIndent(indent as int) as void
+	GetWrapStartIndent() as int
+	SetWrapIndentMode(mode as int) as void
+	GetWrapIndentMode() as int
+	SetLayoutCache(mode as int) as void
+	GetLayoutCache() as int
+	SetScrollWidth(pixelWidth as int) as void
+	GetScrollWidth() as int
+	SetScrollWidthTracking(tracking as bool) as void
+	GetScrollWidthTracking() as bool
+	TextWidth(style as int, text as const_String_r) as int
+	SetEndAtLastLine(endAtLastLine as bool) as void
+	GetEndAtLastLine() as bool
+	TextHeight(line as int) as int
+	SetUseVerticalScrollBar(show as bool) as void
+	GetUseVerticalScrollBar() as bool
+	AppendText(text as const_String_r) as void
+	GetTwoPhaseDraw() as bool
+	SetTwoPhaseDraw(twoPhase as bool) as void
+	SetFirstVisibleLine(lineDisplay as int) as void
+	SetMultiPaste(multiPaste as int) as void
+	GetMultiPaste() as int
+	GetTag(tagNumber as int) as String
+	TargetFromSelection() as void
+	LinesJoin() as void
+	LinesSplit(pixelWidth as int) as void
+	SetFoldMarginColour(useSetting as bool, back as const_Colour_r) as void
+	SetFoldMarginHiColour(useSetting as bool, fore as const_Colour_r) as void
+	LineDown() as void
+	LineDownExtend() as void
+	LineUp() as void
+	LineUpExtend() as void
+	CharLeft() as void
+	CharLeftExtend() as void
+	CharRight() as void
+	CharRightExtend() as void
+	WordLeft() as void
+	WordLeftExtend() as void
+	WordRight() as void
+	WordRightExtend() as void
+	Home() as void
+	HomeExtend() as void
+	LineEnd() as void
+	LineEndExtend() as void
+	DocumentStart() as void
+	DocumentStartExtend() as void
+	DocumentEnd() as void
+	DocumentEndExtend() as void
+	PageUp() as void
+	PageUpExtend() as void
+	PageDown() as void
+	PageDownExtend() as void
+	EditToggleOvertype() as void
+	Cancel() as void
+	DeleteBack() as void
+	Tab() as void
+	BackTab() as void
+	NewLine() as void
+	FormFeed() as void
+	VCHome() as void
+	VCHomeExtend() as void
+	ZoomIn() as void
+	ZoomOut() as void
+	DelWordLeft() as void
+	DelWordRight() as void
+	DelWordRightEnd() as void
+	LineCut() as void
+	LineDelete() as void
+	LineTranspose() as void
+	LineDuplicate() as void
+	LowerCase() as void
+	UpperCase() as void
+	LineScrollDown() as void
+	LineScrollUp() as void
+	DeleteBackNotLine() as void
+	HomeDisplay() as void
+	HomeDisplayExtend() as void
+	LineEndDisplay() as void
+	LineEndDisplayExtend() as void
+	HomeWrap() as void
+	HomeWrapExtend() as void
+	LineEndWrap() as void
+	LineEndWrapExtend() as void
+	VCHomeWrap() as void
+	VCHomeWrapExtend() as void
+	LineCopy() as void
+	MoveCaretInsideView() as void
+	LineLength(line as int) as int
+	BraceHighlight(pos1 as int, pos2 as int) as void
+	BraceHighlightIndicator(useBraceHighlightIndicator as bool, indicator as int) as void
+	BraceBadLight(pos as int) as void
+	BraceBadLightIndicator(useBraceBadLightIndicator as bool, indicator as int) as void
+	BraceMatch(pos as int) as int
+	GetViewEOL() as bool
+	SetViewEOL(visible as bool) as void
+	//GetDocPointer() as void_p
+	SetDocPointer(docPointer as void_p) as void
+	SetModEventMask(mask as int) as void
+	GetEdgeColumn() as int
+	SetEdgeColumn(column as int) as void
+	GetEdgeMode() as int
+	SetEdgeMode(mode as int) as void
+	GetEdgeColour() as Colour
+	SetEdgeColour(edgeColour as const_Colour_r) as void
+	SearchAnchor() as void
+	SearchNext(flags as int, text as const_String_r) as int
+	SearchPrev(flags as int, text as const_String_r) as int
+	LinesOnScreen() as int
+	UsePopUp(allowPopUp as bool) as void
+	SelectionIsRectangle() as bool
+	SetZoom(zoom as int) as void
+	GetZoom() as int
+	//CreateDocument() as void_p
+	AddRefDocument(docPointer as void_p) as void
+	ReleaseDocument(docPointer as void_p) as void
+	GetModEventMask() as int
+	SetSTCFocus(focus as bool) as void
+	GetSTCFocus() as bool
+	SetStatus(statusCode as int) as void
+	GetStatus() as int
+	SetMouseDownCaptures(captures as bool) as void
+	GetMouseDownCaptures() as bool
+	SetSTCCursor(cursorType as int) as void
+	GetSTCCursor() as int
+	SetControlCharSymbol(symbol as int) as void
+	GetControlCharSymbol() as int
+	WordPartLeft() as void
+	WordPartLeftExtend() as void
+	WordPartRight() as void
+	WordPartRightExtend() as void
+	SetVisiblePolicy(visiblePolicy as int, visibleSlop as int) as void
+	DelLineLeft() as void
+	DelLineRight() as void
+	SetXOffset(newOffset as int) as void
+	GetXOffset() as int
+	ChooseCaretX() as void
+	SetXCaretPolicy(caretPolicy as int, caretSlop as int) as void
+	SetYCaretPolicy(caretPolicy as int, caretSlop as int) as void
+	SetPrintWrapMode(mode as int) as void
+	GetPrintWrapMode() as int
+	SetHotspotActiveForeground(useSetting as bool, fore as const_Colour_r) as void
+	GetHotspotActiveForeground() as Colour
+	SetHotspotActiveBackground(useSetting as bool, back as const_Colour_r) as void
+	GetHotspotActiveBackground() as Colour
+	SetHotspotActiveUnderline(underline as bool) as void
+	GetHotspotActiveUnderline() as bool
+	SetHotspotSingleLine(singleLine as bool) as void
+	GetHotspotSingleLine() as bool
+	ParaDown() as void
+	ParaDownExtend() as void
+	ParaUp() as void
+	ParaUpExtend() as void
+	PositionBefore(pos as int) as int
+	PositionAfter(pos as int) as int
+	CopyRange(start as int, end as int) as void
+	CopyText(length as int, text as const_String_r) as void
+	SetSelectionMode(mode as int) as void
+	GetSelectionMode() as int
+	GetLineSelStartPosition(line as int) as int
+	GetLineSelEndPosition(line as int) as int
+	LineDownRectExtend() as void
+	LineUpRectExtend() as void
+	CharLeftRectExtend() as void
+	CharRightRectExtend() as void
+	HomeRectExtend() as void
+	VCHomeRectExtend() as void
+	LineEndRectExtend() as void
+	PageUpRectExtend() as void
+	PageDownRectExtend() as void
+	StutteredPageUp() as void
+	StutteredPageUpExtend() as void
+	StutteredPageDown() as void
+	StutteredPageDownExtend() as void
+	WordLeftEnd() as void
+	WordLeftEndExtend() as void
+	WordRightEnd() as void
+	WordRightEndExtend() as void
+	SetWhitespaceChars(characters as const_String_r) as void
+	GetWhitespaceChars() as String
+	SetPunctuationChars(characters as const_String_r) as void
+	GetPunctuationChars() as String
+	SetCharsDefault() as void
+	AutoCompGetCurrent() as int
+	AutoCompSetCaseInsensitiveBehaviour(behaviour as int) as void
+	AutoCompGetCaseInsensitiveBehaviour() as int
+	Allocate(bytes as int) as void
+	FindColumn(line as int, column as int) as int
+	GetCaretSticky() as int
+	SetCaretSticky(useCaretStickyBehaviour as int) as void
+	ToggleCaretSticky() as void
+	SetPasteConvertEndings(convert as bool) as void
+	GetPasteConvertEndings() as bool
+	SelectionDuplicate() as void
+	SetCaretLineBackAlpha(alpha as int) as void
+	GetCaretLineBackAlpha() as int
+	SetCaretStyle(caretStyle as int) as void
+	GetCaretStyle() as int
+	SetIndicatorCurrent(indicator as int) as void
+	GetIndicatorCurrent() as int
+	SetIndicatorValue(value as int) as void
+	GetIndicatorValue() as int
+	IndicatorFillRange(position as int, fillLength as int) as void
+	IndicatorClearRange(position as int, clearLength as int) as void
+	IndicatorAllOnFor(position as int) as int
+	IndicatorValueAt(indicator as int, position as int) as int
+	IndicatorStart(indicator as int, position as int) as int
+	IndicatorEnd(indicator as int, position as int) as int
+	SetPositionCacheSize(size as int) as void
+	GetPositionCacheSize() as int
+	CopyAllowLine() as void
+	//GetCharacterPointer() as char_p
+	//GetRangePointer(position as int, rangeLength as int) as char_p
+	GetGapPosition() as int
+	//SetKeysUnicode(keysUnicode as bool) as void
+	//GetKeysUnicode() as bool
+	IndicatorSetAlpha(indicator as int, alpha as int) as void
+	IndicatorGetAlpha(indicator as int) as int
+	IndicatorSetOutlineAlpha(indicator as int, alpha as int) as void
+	IndicatorGetOutlineAlpha(indicator as int) as int
+	SetExtraAscent(extraAscent as int) as void
+	GetExtraAscent() as int
+	SetExtraDescent(extraDescent as int) as void
+	GetExtraDescent() as int
+	GetMarkerSymbolDefined(markerNumber as int) as int
+	MarginSetText(line as int, text as const_String_r) as void
+	MarginGetText(line as int) as String
+	MarginSetStyle(line as int, style as int) as void
+	MarginGetStyle(line as int) as int
+	MarginSetStyles(line as int, styles as const_String_r) as void
+	MarginGetStyles(line as int) as String
+	MarginTextClearAll() as void
+	MarginSetStyleOffset(style as int) as void
+	MarginGetStyleOffset() as int
+	SetMarginOptions(marginOptions as int) as void
+	GetMarginOptions() as int
+	AnnotationSetText(line as int, text as const_String_r) as void
+	AnnotationGetText(line as int) as String
+	AnnotationSetStyle(line as int, style as int) as void
+	AnnotationGetStyle(line as int) as int
+	AnnotationSetStyles(line as int, styles as const_String_r) as void
+	AnnotationGetStyles(line as int) as String
+	AnnotationGetLines(line as int) as int
+	AnnotationClearAll() as void
+	AnnotationSetVisible(visible as int) as void
+	AnnotationGetVisible() as int
+	AnnotationSetStyleOffset(style as int) as void
+	AnnotationGetStyleOffset() as int
+	AddUndoAction(token as int, flags as int) as void
+	CharPositionFromPoint(x as int, y as int) as int
+	CharPositionFromPointClose(x as int, y as int) as int
+	SetMultipleSelection(multipleSelection as bool) as void
+	GetMultipleSelection() as bool
+	SetAdditionalSelectionTyping(additionalSelectionTyping as bool) as void
+	GetAdditionalSelectionTyping() as bool
+	SetAdditionalCaretsBlink(additionalCaretsBlink as bool) as void
+	GetAdditionalCaretsBlink() as bool
+	SetAdditionalCaretsVisible(additionalCaretsBlink as bool) as void
+	GetAdditionalCaretsVisible() as bool
+	GetSelections() as int
+	ClearSelections() as void
+	AddSelection(caret as int, anchor as int) as int
+	SetMainSelection(selection as int) as void
+	GetMainSelection() as int
+	SetSelectionNCaret(selection as int, pos as int) as void
+	GetSelectionNCaret(selection as int) as int
+	SetSelectionNAnchor(selection as int, posAnchor as int) as void
+	GetSelectionNAnchor(selection as int) as int
+	SetSelectionNCaretVirtualSpace(selection as int, space as int) as void
+	GetSelectionNCaretVirtualSpace(selection as int) as int
+	SetSelectionNAnchorVirtualSpace(selection as int, space as int) as void
+	GetSelectionNAnchorVirtualSpace(selection as int) as int
+	SetSelectionNStart(selection as int, pos as int) as void
+	GetSelectionNStart(selection as int) as int
+	SetSelectionNEnd(selection as int, pos as int) as void
+	GetSelectionNEnd(selection as int) as int
+	SetRectangularSelectionCaret(pos as int) as void
+	GetRectangularSelectionCaret() as int
+	SetRectangularSelectionAnchor(posAnchor as int) as void
+	GetRectangularSelectionAnchor() as int
+	SetRectangularSelectionCaretVirtualSpace(space as int) as void
+	GetRectangularSelectionCaretVirtualSpace() as int
+	SetRectangularSelectionAnchorVirtualSpace(space as int) as void
+	GetRectangularSelectionAnchorVirtualSpace() as int
+	SetVirtualSpaceOptions(virtualSpaceOptions as int) as void
+	GetVirtualSpaceOptions() as int
+	SetRectangularSelectionModifier(modifier as int) as void
+	GetRectangularSelectionModifier() as int
+	SetAdditionalSelForeground(fore as const_Colour_r) as void
+	SetAdditionalSelBackground(back as const_Colour_r) as void
+	SetAdditionalSelAlpha(alpha as int) as void
+	GetAdditionalSelAlpha() as int
+	SetAdditionalCaretForeground(fore as const_Colour_r) as void
+	GetAdditionalCaretForeground() as Colour
+	RotateSelection() as void
+	SwapMainAnchorCaret() as void
+	ChangeLexerState(start as int, end as int) as int
+	ContractedFoldNext(lineStart as int) as int
+	VerticalCentreCaret() as void
+	MoveSelectedLinesUp() as void
+	MoveSelectedLinesDown() as void
+	SetIdentifier(identifier as int) as void
+	GetIdentifier() as int
+	RGBAImageSetWidth(width as int) as void
+	RGBAImageSetHeight(height as int) as void
+	//MarkerDefineRGBAImage(markerNumber as int, pixels as const_unsigned_char_p) as void
+	//RegisterRGBAImage(type as int, pixels as const_unsigned_char_p) as void
+	ScrollToStart() as void
+	ScrollToEnd() as void
+	SetTechnology(technology as int) as void
+	GetTechnology() as int
+	//CreateLoader(bytes as int) as void_p
+	StartRecord() as void
+	StopRecord() as void
+	SetLexer(lexer as int) as void
+	GetLexer() as int
+	Colourise(start as int, end as int) as void
+	SetProperty(key as const_String_r, value as const_String_r) as void
+	SetKeyWords(keywordSet as int, keyWords as const_String_r) as void
+	SetLexerLanguage(language as const_String_r) as void
+	GetProperty(key as const_String_r) as String
+	GetPropertyExpanded(key as const_String_r) as String
+	GetPropertyInt(key as const_String_r) as int
+	GetStyleBitsNeeded() as int
+	//PrivateLexerCall(operation as int, pointer as void_p) as void_p
+	PropertyNames() as String
+	PropertyType(name as const_String_r) as int
+	DescribeProperty(name as const_String_r) as String
+	DescribeKeyWordSets() as String
+	GetCurrentLine() as int
+	StyleSetSpec(styleNum as int, spec as const_String_r) as void
+	StyleGetFont(style as int) as Font
+	StyleSetFont(styleNum as int, font as Font_r) as void
+	StyleSetFontAttr(styleNum as int, size as int, faceName as const_String_r, bold as bool, italic as bool, underline as bool, encoding as FontEncoding = wxFONTENCODING_DEFAULT) as void
+	StyleSetCharacterSet(style as int, characterSet as int) as void
+	StyleSetFontEncoding(style as int, encoding as FontEncoding) as void
+	CmdKeyExecute(cmd as int) as void
 	SetMargins(left as int, right as int) as void
+	PointFromPosition(pos as int) as Point
+	ScrollToLine(line as int) as void
+	ScrollToColumn(column as int) as void
+	//SendMsg(msg as int, wp as UIntPtr = 0, lp as IntPtr = 0) as IntPtr
+	SetVScrollBar(bar as ScrollBar_p) as void
+	SetHScrollBar(bar as ScrollBar_p) as void
+	GetLastKeydownProcessed() as bool
+	SetLastKeydownProcessed(val as bool) as void
+	SaveFile(filename as const_String_r) as bool
+	LoadFile(filename as const_String_r) as bool
+	DoDragOver(x as Coord, y as Coord, defaultRes as DragResult) as DragResult
+	DoDropText(x as long, y as long, data as const_String_r) as bool
+	AnnotationClearLine(line as int) as void
+	AddTextRaw(text as const_char_p, length as int = -1) as void
+	InsertTextRaw(pos as int, text as const_char_p) as void
+	//GetCurLineRaw(linePos as int_p = NULL) as CharBuffer
+	GetLineRaw(line as int) as CharBuffer
+	GetSelectedTextRaw() as CharBuffer
+	GetTextRangeRaw(startPos as int, endPos as int) as CharBuffer
+	SetTextRaw(text as const_char_p) as void
+	GetTextRaw() as CharBuffer
+	AppendTextRaw(text as const_char_p, length as int = -1) as void
+	WriteText(text as const_String_r) as void
+	Remove(from as long, to as long) as void
+	Replace(from as long, to as long, text as const_String_r) as void
+	SetInsertionPoint(pos as long) as void
+	GetInsertionPoint() as long
+	GetLastPosition() as long
+	SetSelection(from as long, to as long) as void
+	SelectNone() as void
+	//GetSelection(from as long_p, to as long_p) as void
+	IsEditable() as bool
+	SetEditable(editable as bool) as void
+	GetLineLength(n as long) as int
+	GetLineText(n as long) as String
+	GetNumberOfLines() as int
+	IsModified() as bool
+	MarkDirty() as void
+	DiscardEdits() as void
+	SetStyle(start as long, end as long, style as const_TextAttr_r) as bool
+	GetStyle(position as long, style as TextAttr_r) as bool
+	SetDefaultStyle(style as const_TextAttr_r) as bool
+	XYToPosition(x as long, y as long) as long
+	//PositionToXY(pos as long, x as long_p, y as long_p) as bool
+	ShowPosition(pos as long) as void
+	//HitTest(pt as const_Point_r, pos as long_p) as TextCtrlHitTestResult
+	//HitTest(pt as const_Point_r, col as TextCoord_p, row as TextCoord_p) as TextCtrlHitTestResult
 }
+
+@event[
+	EVT_STC_CHANGE					>> StyledTextEvent
+	EVT_STC_STYLENEEDED				>> StyledTextEvent
+	EVT_STC_CHARADDED				>> StyledTextEvent
+	EVT_STC_SAVEPOINTREACHED		>> StyledTextEvent
+	EVT_STC_SAVEPOINTLEFT			>> StyledTextEvent
+	EVT_STC_ROMODIFYATTEMPT			>> StyledTextEvent
+	EVT_STC_KEY						>> StyledTextEvent
+	EVT_STC_DOUBLECLICK				>> StyledTextEvent
+	EVT_STC_UPDATEUI				>> StyledTextEvent
+	EVT_STC_MODIFIED				>> StyledTextEvent
+	EVT_STC_MACRORECORD				>> StyledTextEvent
+	EVT_STC_MARGINCLICK				>> StyledTextEvent
+	EVT_STC_NEEDSHOWN				>> StyledTextEvent
+	EVT_STC_PAINTED					>> StyledTextEvent
+	EVT_STC_USERLISTSELECTION		>> StyledTextEvent
+	EVT_STC_URIDROPPED				>> StyledTextEvent
+	EVT_STC_DWELLSTART				>> StyledTextEvent
+	EVT_STC_DWELLEND				>> StyledTextEvent
+	EVT_STC_START_DRAG				>> StyledTextEvent
+	EVT_STC_DRAG_OVER				>> StyledTextEvent
+	EVT_STC_DO_DROP					>> StyledTextEvent
+	EVT_STC_ZOOM					>> StyledTextEvent
+	EVT_STC_HOTSPOT_CLICK			>> StyledTextEvent
+	EVT_STC_HOTSPOT_DCLICK			>> StyledTextEvent
+	EVT_STC_CALLTIP_CLICK			>> StyledTextEvent
+	EVT_STC_AUTOCOMP_SELECTION		>> StyledTextEvent
+	EVT_STC_INDICATOR_CLICK			>> StyledTextEvent
+	EVT_STC_INDICATOR_RELEASE		>> StyledTextEvent
+	EVT_STC_AUTOCOMP_CANCELLED		>> StyledTextEvent
+	EVT_STC_AUTOCOMP_CHAR_DELETED	>> StyledTextEvent
+	EVT_STC_HOTSPOT_RELEASE_CLICK	>> StyledTextEvent
+]

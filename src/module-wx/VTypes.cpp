@@ -12,9 +12,8 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxNotifyEvent);
-	frame.Assign(VTYPE_wxBookCtrlEvent);
-	frame.Assign(VTYPE_wxAuiNotebookEvent);
+	frame.Assign(VTYPE_wxMemoryBuffer);
+	frame.Assign(VTYPE_wxCharBuffer);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -26,11 +25,13 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAuiMDIClientWindow);
 	frame.Assign(VTYPE_wxAuiMDIParentFrame);
 	frame.Assign(VTYPE_wxAuiNotebook);
+	frame.Assign(VTYPE_wxAuiNotebookEvent);
 	frame.Assign(VTYPE_wxBitmap);
 	frame.Assign(VTYPE_wxBitmapButton);
 	frame.Assign(VTYPE_wxBitmapHandler);
 	frame.Assign(VTYPE_wxBitmapToggleButton);
 	frame.Assign(VTYPE_wxBookCtrlBase);
+	frame.Assign(VTYPE_wxBookCtrlEvent);
 	frame.Assign(VTYPE_wxBoxSizer);
 	frame.Assign(VTYPE_wxBrush);
 	frame.Assign(VTYPE_wxButton);
@@ -95,6 +96,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxMouseCaptureLostEvent);
 	frame.Assign(VTYPE_wxMouseEvent);
 	frame.Assign(VTYPE_wxNotebook);
+	frame.Assign(VTYPE_wxNotifyEvent);
 	frame.Assign(VTYPE_wxObject);
 	frame.Assign(VTYPE_wxPaintEvent);
 	frame.Assign(VTYPE_wxPalette);
@@ -129,6 +131,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxStatusBar);
 	frame.Assign(VTYPE_wxStdDialogButtonSizer);
 	frame.Assign(VTYPE_wxStyledTextCtrl);
+	frame.Assign(VTYPE_wxStyledTextEvent);
 	frame.Assign(VTYPE_wxSysColourChangedEvent);
 	frame.Assign(VTYPE_wxTextAttr);
 	frame.Assign(VTYPE_wxTextCtrl);

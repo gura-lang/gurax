@@ -9,9 +9,11 @@
 	CalendarDateBorder
 	Coord
 	Direction
+	DragResult
 	EventCategory
 	FloodFillStyle
 	FlexSizerGrowMode
+	FontEncoding
 	HitTest
 	ItemKind
 	LayoutDirection

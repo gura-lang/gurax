@@ -1,0 +1,46 @@
+//==============================================================================
+// VType_wxTextEntry.gura
+//==============================================================================
+TextEntry = Class():mixin {
+	AppendText(text as const_String_r) as void
+	AutoComplete(choices as const_ArrayString_r) as bool
+	//AutoComplete(completer as TextCompleter_p) as bool
+	AutoCompleteFileNames() as bool
+	AutoCompleteDirectories() as bool
+	CanCopy() as bool
+	CanCut() as bool
+	CanPaste() as bool
+	CanRedo() as bool
+	CanUndo() as bool
+	ChangeValue(value as const_String_r) as void
+	Clear() as void
+	Copy() as void
+	Cut() as void
+	GetInsertionPoint() as long
+	//GetLastPosition() as TextPos
+	GetRange(from as long, to as long) as String
+	//GetSelection(from as long_p, to as long_p) as void
+	GetStringSelection() as String
+	GetValue() as String
+	IsEditable() as bool
+	IsEmpty() as bool
+	Paste() as void
+	Redo() as void
+	Remove(from as long, to as long) as void
+	Replace(from as long, to as long, value as const_String_r) as void
+	SetEditable(editable as bool) as void
+	SetInsertionPoint(pos as long) as void
+	SetInsertionPointEnd() as void
+	SetMaxLength(len as unsigned_long) as void
+	SetSelection(from as long, to as long) as void
+	SelectAll() as void
+	SelectNone() as void
+	SetHint(hint as const_String_r) as bool
+	GetHint() as String
+	GetMargins() as Point
+	SetValue(value as const_String_r) as void
+	Undo() as void
+	WriteText(text as const_String_r) as void
+	SetMargins(pt as const_Point_r) as bool
+	//SetMargins(left as Coord, top as Coord = -1) as bool
+}
