@@ -14,6 +14,10 @@
 	FloodFillStyle
 	FlexSizerGrowMode
 	FontEncoding
+	FontFamily
+	FontStyle
+	FontWeight
+	FontSymbolicSize
 	HitTest
 	ItemKind
 	LayoutDirection

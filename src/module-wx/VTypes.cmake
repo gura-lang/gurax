@@ -4,9 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxMemoryBuffer.cpp
-	VType_wxCharBuffer.cpp
-	VType_wxTreeItemData.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -31,6 +28,7 @@ set(SRCFILES_VTYPE
 	VType_wxCalendarCtrl.cpp
 	VType_wxCalendarDateAttr.cpp
 	VType_wxCaret.cpp
+	VType_wxCharBuffer.cpp
 	VType_wxCheckBox.cpp
 	VType_wxChildFocusEvent.cpp
 	VType_wxChoice.cpp
@@ -79,6 +77,7 @@ set(SRCFILES_VTYPE
 	VType_wxListCtrl.cpp
 	VType_wxListItem.cpp
 	VType_wxMask.cpp
+	VType_wxMemoryBuffer.cpp
 	VType_wxMemoryDC.cpp
 	VType_wxMenu.cpp
 	VType_wxMenuBar.cpp
@@ -134,6 +133,7 @@ set(SRCFILES_VTYPE
 	VType_wxToolTip.cpp
 	VType_wxTreebook.cpp
 	VType_wxTreeCtrl.cpp
+	VType_wxTreeItemData.cpp
 	VType_wxTreeItemId.cpp
 	VType_wxValidator.cpp
 	VType_wxVisualAttributes.cpp

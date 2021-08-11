@@ -12,9 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxMemoryBuffer);
-	frame.Assign(VTYPE_wxCharBuffer);
-	frame.Assign(VTYPE_wxTreeItemData);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -39,6 +36,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxCalendarCtrl);
 	frame.Assign(VTYPE_wxCalendarDateAttr);
 	frame.Assign(VTYPE_wxCaret);
+	frame.Assign(VTYPE_wxCharBuffer);
 	frame.Assign(VTYPE_wxCheckBox);
 	frame.Assign(VTYPE_wxChildFocusEvent);
 	frame.Assign(VTYPE_wxChoice);
@@ -87,6 +85,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxListCtrl);
 	frame.Assign(VTYPE_wxListItem);
 	frame.Assign(VTYPE_wxMask);
+	frame.Assign(VTYPE_wxMemoryBuffer);
 	frame.Assign(VTYPE_wxMemoryDC);
 	frame.Assign(VTYPE_wxMenu);
 	frame.Assign(VTYPE_wxMenuBar);
@@ -142,6 +141,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxToolTip);
 	frame.Assign(VTYPE_wxTreebook);
 	frame.Assign(VTYPE_wxTreeCtrl);
+	frame.Assign(VTYPE_wxTreeItemData);
 	frame.Assign(VTYPE_wxTreeItemId);
 	frame.Assign(VTYPE_wxValidator);
 	frame.Assign(VTYPE_wxVisualAttributes);

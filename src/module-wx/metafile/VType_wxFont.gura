@@ -2,4 +2,46 @@
 // VType_wxFont.gura
 //==============================================================================
 Font = Class(GDIObject) {
+	GetEncoding() as FontEncoding
+	GetFaceName() as String
+	GetFamily() as FontFamily
+	GetNativeFontInfoDesc() as String
+	GetNativeFontInfoUserDesc() as String
+	//GetNativeFontInfo() as NativeFontInfo_p
+	GetPointSize() as int
+	GetPixelSize() as Size
+	GetStyle() as FontStyle
+	GetUnderlined() as bool
+	GetStrikethrough() as bool
+	GetWeight() as FontWeight
+	IsFixedWidth() as bool
+	IsOk() as bool
+	Bold() as Font
+	Italic() as Font
+	Larger() as Font
+	Smaller() as Font
+	Underlined() as Font
+	Strikethrough() as Font
+	MakeBold():returnThis
+	MakeItalic():returnThis
+	MakeLarger():returnThis
+	MakeSmaller():returnThis
+	MakeUnderlined():returnThis
+	MakeStrikethrough():returnThis
+	Scale(x as float) as Font
+	Scaled(x as float) as Font
+	SetEncoding(encoding as FontEncoding) as void
+	SetFaceName(faceName as const_String_r) as bool
+	SetFamily(family as FontFamily) as void
+	SetNativeFontInfo(info as const_String_r) as bool
+	SetNativeFontInfoUserDesc(info as const_String_r) as bool
+	//SetNativeFontInfo(info as const_NativeFontInfo_r) as void
+	SetPointSize(pointSize as int) as void
+	SetPixelSize(pixelSize as const_Size_r) as void
+	SetStyle(style as FontStyle) as void
+	SetSymbolicSize(size as FontSymbolicSize) as void
+	SetSymbolicSizeRelativeTo(size as FontSymbolicSize, base as int) as void
+	SetUnderlined(underlined as bool) as void
+	SetStrikethrough(strikethrough as bool) as void
+	SetWeight(weight as FontWeight) as void
 }
