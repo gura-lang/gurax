@@ -6,6 +6,7 @@ set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
 	VType_wxMemoryBuffer.cpp
 	VType_wxCharBuffer.cpp
+	VType_wxTreeItemData.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

@@ -14,6 +14,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxEventType);
 	frame.Assign(VTYPE_wxMemoryBuffer);
 	frame.Assign(VTYPE_wxCharBuffer);
+	frame.Assign(VTYPE_wxTreeItemData);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);

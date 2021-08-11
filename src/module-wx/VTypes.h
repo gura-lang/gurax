@@ -9,6 +9,7 @@
 #include "VType_wxEventType.h"
 #include "VType_wxMemoryBuffer.h"
 #include "VType_wxCharBuffer.h"
+#include "VType_wxTreeItemData.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"

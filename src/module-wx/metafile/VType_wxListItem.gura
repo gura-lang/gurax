@@ -3,4 +3,32 @@
 //==============================================================================
 ListItem = Class(Object) {
 	@include['wx/listctrl.h']
+	__init__()
+	Clear() as void
+	GetAlign() as ListColumnFormat
+	GetBackgroundColour() as Colour
+	GetColumn() as int
+	//GetData() as UIntPtr
+	GetFont() as Font
+	GetId() as long
+	GetImage() as int
+	GetMask() as long
+	GetState() as long
+	GetText() as String
+	GetTextColour() as Colour
+	GetWidth() as int
+	SetAlign(align as ListColumnFormat) as void
+	SetBackgroundColour(colBack as const_Colour_r) as void
+	SetColumn(col as int) as void
+	SetFont(font as const_Font_r) as void
+	SetId(id as long) as void
+	SetImage(image as int) as void
+	SetMask(mask as long) as void
+	SetState(state as long) as void
+	SetStateMask(stateMask as long) as void
+	SetText(text as const_String_r) as void
+	SetTextColour(colText as const_Colour_r) as void
+	SetWidth(width as int) as void
+	SetData(data as long) as void
+	//SetData(data as void_p) as void
 }
