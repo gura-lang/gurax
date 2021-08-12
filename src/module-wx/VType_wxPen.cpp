@@ -72,6 +72,27 @@ Gurax_ImplementMethodEx(wxPen, GetColour_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->GetColour()));
 }
 
+// wx.Pen#GetDashes()
+Gurax_DeclareMethodAlias(wxPen, GetDashes_gurax, "GetDashes")
+{
+	Declare(VTYPE_List, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPen, GetDashes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxDash* dashes;
+	int n = pEntity_gurax->GetDashes(&dashes);
+	return Value_List::Create(dashes, n);
+}
+
 // wx.Pen#GetJoin()
 Gurax_DeclareMethodAlias(wxPen, GetJoin_gurax, "GetJoin")
 {
@@ -234,6 +255,31 @@ Gurax_ImplementMethodEx(wxPen, SetCap_gurax, processor_gurax, argument_gurax)
 	// Function body
 	pEntity_gurax->SetCap(capStyle);
 	return Gurax::Value::nil();
+}
+
+// wx.Pen#SetDashes(dash[] as Number)
+Gurax_DeclareMethodAlias(wxPen, SetDashes_gurax, "SetDashes")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dash", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPen, SetDashes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto dash = args_gurax.PickNumList<wxDash>();
+	// Function body
+	int n = dash.sizeT<int>();
+	pEntity_gurax->SetDashes(n, dash);
+	return Value::nil();
 }
 
 // wx.Pen#SetJoin(join_style as Number)
@@ -404,6 +450,7 @@ void VType_wxPen::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxPen, GetCap_gurax));
 	Assign(Gurax_CreateMethod(wxPen, GetColour_gurax));
+	Assign(Gurax_CreateMethod(wxPen, GetDashes_gurax));
 	Assign(Gurax_CreateMethod(wxPen, GetJoin_gurax));
 	Assign(Gurax_CreateMethod(wxPen, GetStipple_gurax));
 	Assign(Gurax_CreateMethod(wxPen, GetStyle_gurax));
@@ -412,6 +459,7 @@ void VType_wxPen::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxPen, IsNonTransparent_gurax));
 	Assign(Gurax_CreateMethod(wxPen, IsTransparent_gurax));
 	Assign(Gurax_CreateMethod(wxPen, SetCap_gurax));
+	Assign(Gurax_CreateMethod(wxPen, SetDashes_gurax));
 	Assign(Gurax_CreateMethod(wxPen, SetJoin_gurax));
 	Assign(Gurax_CreateMethod(wxPen, SetStipple_gurax));
 	Assign(Gurax_CreateMethod(wxPen, SetStyle_gurax));

@@ -5,10 +5,11 @@ Pen = Class(GDIObject) {
 	GetCap() as PenCap
 	GetColour() as Colour
 	//GetDashes(dashes as Dash_p_p) as int
-	GetDashes() as Tuple@gurax = \
+	GetDashes() as List@gurax = \
 		R'''
-		
-		return Value::nil();
+		wxDash* dashes;
+		int n = pEntity_gurax->GetDashes(&dashes);
+		return Value_List::Create(dashes, n);
 		'''
 	GetJoin() as PenJoin
 	GetStipple() as Bitmap_p
@@ -19,6 +20,12 @@ Pen = Class(GDIObject) {
 	IsTransparent() as bool
 	SetCap(capStyle as PenCap) as void
 	//SetDashes(n as int, dash as const_Dash_p) as void
+	SetDashes(dash[] as Dash) as void = \
+		R'''
+		int n = dash.sizeT<int>();
+		pEntity_gurax->SetDashes(n, dash);
+		return Value::nil();
+		'''
 	SetJoin(join_style as PenJoin) as void
 	SetStipple(stipple as const_Bitmap_r) as void
 	SetStyle(style as PenStyle) as void
