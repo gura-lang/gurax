@@ -3,4 +3,12 @@
 //==============================================================================
 ToolTip = Class(Object) {
 	__init__(tip as String)
+	GetTip() as String
+	GetWindow() as Window_p
+	SetTip(tip as const_String_r) as void
+	Enable(flag as bool):static as void
+	SetAutoPop(msecs as long):static as void
+	SetDelay(msecs as long):static as void
+	SetMaxWidth(width as int):static as void
+	SetReshow(msecs as long):static as void
 }
