@@ -2,4 +2,32 @@
 // VType_wxBrush.gura
 //==============================================================================
 Brush = Class(GDIObject) {
+	GetColour() as Colour
+	GetStipple() as Bitmap_p
+	GetStyle() as BrushStyle
+	IsHatch() as bool
+	IsOk() as bool
+	IsNonTransparent() as bool
+	IsTransparent() as bool
+	SetStipple(bitmap as const_Bitmap_r) as void
+	SetStyle(style as BrushStyle) as void
+	SetColour(colour as const_Colour_r) as void
+	SetColourRGB(red as unsigned_char, green as unsigned_char, blue as unsigned_char) as void = SetColour
 }
+
+@const[
+	BRUSHSTYLE_INVALID 	
+	BRUSHSTYLE_SOLID 	
+	BRUSHSTYLE_TRANSPARENT 	
+	BRUSHSTYLE_STIPPLE_MASK_OPAQUE 	
+	BRUSHSTYLE_STIPPLE_MASK 	
+	BRUSHSTYLE_STIPPLE 	
+	BRUSHSTYLE_BDIAGONAL_HATCH 	
+	BRUSHSTYLE_CROSSDIAG_HATCH 	
+	BRUSHSTYLE_FDIAGONAL_HATCH 	
+	BRUSHSTYLE_CROSS_HATCH 	
+	BRUSHSTYLE_HORIZONTAL_HATCH 	
+	BRUSHSTYLE_VERTICAL_HATCH 	
+	BRUSHSTYLE_FIRST_HATCH 	
+	BRUSHSTYLE_LAST_HATCH 	
+]

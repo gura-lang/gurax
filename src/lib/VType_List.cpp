@@ -1574,6 +1574,8 @@ Value* VType_List::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 	} else if (value.IsType(VTYPE_Array)) {
 		const Array& array = Value_Array::GetArray(value);
 		return array.ToList();
+	} else if (value.IsType(VTYPE_Tuple)) {
+		return new Value_List(Value_Tuple::GetValueOwner(value).Clone());
 	}
 	return nullptr;
 }

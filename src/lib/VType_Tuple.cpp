@@ -212,6 +212,25 @@ void VType_Tuple::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Ne, Tuple, Tuple);
 }
 
+Value* VType_Tuple::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	return nullptr;
+}
+
+#if 0
+Value* VType_Tuple::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Iterator)) {
+		Iterator& iterator = Value_Iterator::GetIterator(value);
+		if (!iterator.MustBeFinite()) return Value::nil();
+		return new Value_Tuple(ValueOwner::CreateFromIterator(iterator, false));
+	} else if (value.IsType(VTYPE_List)) {
+		return new Value_Tuple(Value_List::GetValueOwner(value).Clone());
+	}
+	return nullptr;
+}
+#endif
+
 //------------------------------------------------------------------------------
 // Value_Tuple
 //------------------------------------------------------------------------------
