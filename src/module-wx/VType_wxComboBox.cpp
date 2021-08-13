@@ -532,6 +532,36 @@ Gurax_ImplementMethodEx(wxComboBox, Set_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
+// wx.ComboBox#SetClientData(n as Number, data as Pointer)
+Gurax_DeclareMethodAlias(wxComboBox, SetClientData_gurax, "SetClientData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, SetClientData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	pEntity_gurax->SetClientData(n, data);
+	return Gurax::Value::nil();
+}
+
 // wx.ComboBox#AppendText(text as String)
 Gurax_DeclareMethodAlias(wxComboBox, AppendText_gurax, "AppendText")
 {
@@ -1289,6 +1319,7 @@ void VType_wxComboBox::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxComboBox, Insert_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, InsertItems_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Set_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, SetClientData_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, AppendText_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, AutoComplete_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, AutoCompleteFileNames_gurax));

@@ -2,6 +2,7 @@
 // VType_wxListBox.gura
 //==============================================================================
 ListBox = Class(Control) {
+	@mixin[ItemContainer]
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		choices? as const_ArrayString_r, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxListBoxNameStr) = \
 		R'''

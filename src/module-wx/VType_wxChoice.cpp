@@ -293,6 +293,214 @@ Gurax_ImplementMethodEx(wxChoice, SetString_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
+// wx.Choice#Clear()
+Gurax_DeclareMethodAlias(wxChoice, Clear_gurax, "Clear")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, Clear_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Clear();
+	return Gurax::Value::nil();
+}
+
+// wx.Choice#Delete(n as Number)
+Gurax_DeclareMethodAlias(wxChoice, Delete_gurax, "Delete")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, Delete_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	pEntity_gurax->Delete(n);
+	return Gurax::Value::nil();
+}
+
+// wx.Choice#HasClientData()
+Gurax_DeclareMethodAlias(wxChoice, HasClientData_gurax, "HasClientData")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, HasClientData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasClientData();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Choice#HasClientObjectData()
+Gurax_DeclareMethodAlias(wxChoice, HasClientObjectData_gurax, "HasClientObjectData")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, HasClientObjectData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasClientObjectData();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Choice#HasClientUntypedData()
+Gurax_DeclareMethodAlias(wxChoice, HasClientUntypedData_gurax, "HasClientUntypedData")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, HasClientUntypedData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasClientUntypedData();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Choice#Append(item as String)
+Gurax_DeclareMethodAlias(wxChoice, Append_gurax, "Append")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, Append_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* item = args_gurax.PickString();
+	// Function body
+	int rtn = pEntity_gurax->Append(item);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Choice#SetClientData(n as Number, data as Pointer)
+Gurax_DeclareMethodAlias(wxChoice, SetClientData_gurax, "SetClientData")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, SetClientData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	pEntity_gurax->SetClientData(n, data);
+	return Gurax::Value::nil();
+}
+
+// wx.Choice#Insert(item as String, pos as Number)
+Gurax_DeclareMethodAlias(wxChoice, Insert_gurax, "Insert")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, Insert_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* item = args_gurax.PickString();
+	unsigned int pos = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	int rtn = pEntity_gurax->Insert(item, pos);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Choice#Set(items[] as String)
+Gurax_DeclareMethodAlias(wxChoice, Set_gurax, "Set")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoice, Set_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxArrayString items = Util::CreateArrayString(args_gurax.PickList());
+	// Function body
+	pEntity_gurax->Set(items);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -319,6 +527,15 @@ void VType_wxChoice::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxChoice, FindString_gurax));
 	Assign(Gurax_CreateMethod(wxChoice, GetString_gurax));
 	Assign(Gurax_CreateMethod(wxChoice, SetString_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, Clear_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, Delete_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, HasClientData_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, HasClientObjectData_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, HasClientUntypedData_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, Append_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, SetClientData_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, Insert_gurax));
+	Assign(Gurax_CreateMethod(wxChoice, Set_gurax));
 }
 
 //------------------------------------------------------------------------------
