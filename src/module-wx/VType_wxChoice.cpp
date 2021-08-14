@@ -423,13 +423,14 @@ Gurax_ImplementMethodEx(wxChoice, Append_gurax, processor_gurax, argument_gurax)
 	if (item.IsType(VTYPE_String)) {
 		rtn = pEntity_gurax->Append(Value_String::GetString(item));
 	} else if (item.IsType(VTYPE_List)) {
-		if (!items.IsInstanceOf(VType_String)) {
+		const ValueOwner& items = Value_List::GetValueOwner(item);
+		if (!items.IsElemInstanceOf(VTYPE_String)) {
 	
 			return Value::nil();
 		}
 		rtn = pEntity_gurax->Append(Util::CreateArrayString(items));
 	} else {
-		
+	
 		return Value::nil();
 	}
 	return new Value_Number(rtn);
