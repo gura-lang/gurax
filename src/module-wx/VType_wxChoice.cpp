@@ -397,11 +397,12 @@ Gurax_ImplementMethodEx(wxChoice, HasClientUntypedData_gurax, processor_gurax, a
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.Choice#Append(item as String)
+// wx.Choice#Append(item as Any, clientData? as Any)
 Gurax_DeclareMethodAlias(wxChoice, Append_gurax, "Append")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -415,10 +416,23 @@ Gurax_ImplementMethodEx(wxChoice, Append_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* item = args_gurax.PickString();
+	const Gurax::Value& item = args_gurax.PickValue();
+	const Gurax::Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
-	int rtn = pEntity_gurax->Append(item);
-	return new Gurax::Value_Number(rtn);
+	int rtn = 0;
+	if (item.IsType(VTYPE_String)) {
+		rtn = pEntity_gurax->Append(Value_String::GetString(item));
+	} else if (item.IsType(VTYPE_List)) {
+		if (!items.IsInstanceOf(VType_String)) {
+	
+			return Value::nil();
+		}
+		rtn = pEntity_gurax->Append(Util::CreateArrayString(items));
+	} else {
+		
+		return Value::nil();
+	}
+	return new Value_Number(rtn);
 }
 
 // wx.Choice#SetClientData(n as Number, data as Pointer)

@@ -8,7 +8,24 @@ ItemContainer = Class():mixin {
 	HasClientData() as bool
 	HasClientObjectData() as bool
 	HasClientUntypedData() as bool
-	Append(item as const_String_r) as int
+	Append(item as any, clientData? as any) as int = \
+		R'''
+		int rtn = 0;
+		if (item.IsType(VTYPE_String)) {
+			rtn = pEntity_gurax->Append(Value_String::GetString(item));
+		} else if (item.IsType(VTYPE_List)) {
+			if (!items.IsInstanceOf(VType_String)) {
+
+				return Value::nil();
+			}
+			rtn = pEntity_gurax->Append(Util::CreateArrayString(items));
+		} else {
+			
+			return Value::nil();
+		}
+		return new Value_Number(rtn);
+		'''
+	//Append(item as const_String_r) as int
 	//Append(item as const_String_r, clientData as void_p) as int
 	//Append(item as const_String_r, clientData as ClientData_p) as int
 	//Append(items as const_ArrayString_r) as int

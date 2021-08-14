@@ -26,6 +26,7 @@ public:
 	ValueList& StableSort(SortOrder sortOrder = SortOrder::Ascend);
 	ValueList& StableSort(Processor& processor, const Function& function);
 	ValueList& Shuffle(Random& random);
+	bool IsElemInstanceOf(const VType& vtype) const;
 	VType& GetVTypeOfElems() const;
 	VType& GetVTypeOfElemsQuick() const;
 	void IncCntRefOfEach() const;

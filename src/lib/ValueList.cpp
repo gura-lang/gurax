@@ -42,6 +42,14 @@ ValueList& ValueList::Shuffle(Random& random)
 	return *this;
 }
 
+bool ValueList::IsElemInstanceOf(const VType& vtype) const
+{
+	for (const Value* pValue : *this) {
+		if (!pValue->IsInstanceOf(vtype)) return false;
+	}
+	return true;
+}
+
 VType& ValueList::GetVTypeOfElems() const
 {
 	if (empty()) return VTYPE_Undefined;
