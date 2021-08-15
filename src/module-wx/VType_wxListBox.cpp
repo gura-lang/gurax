@@ -197,16 +197,32 @@ Gurax_ImplementMethodEx(wxListBox, Append_gurax, processor_gurax, argument_gurax
 	// Function body
 	int rtn = 0;
 	if (item.IsType(VTYPE_String)) {
-		rtn = pEntity_gurax->Append(Value_String::GetString(item));
+		if (clientData.IsValid()) {
+			rtn = pEntity_gurax->Append(Value_String::GetString(item), ClientData::Create(clientData));
+		} else {
+			rtn = pEntity_gurax->Append(Value_String::GetString(item));
+		}
 	} else if (item.IsType(VTYPE_List)) {
 		const ValueOwner& items = Value_List::GetValueOwner(item);
 		if (!items.IsElemInstanceOf(VTYPE_String)) {
-	
+			Error::Issue(ErrorType::TypeError, "The list must contain items of String");
 			return Value::nil();
 		}
-		rtn = pEntity_gurax->Append(Util::CreateArrayString(items));
+		if (!clientData.IsValid()) {
+			rtn = pEntity_gurax->Append(Util::CreateArrayString(items));
+		} else if (clientData.IsType(VTYPE_List)) {
+			const ValueOwner& clientDataTbl = Value_List::GetValueOwner(clientData);
+			if (items.size() != clientDataTbl.size()) {
+				Error::Issue(ErrorType::ValueError, "The lists for item and clientData must have the same length");
+				return Value::nil();
+			}
+			rtn = pEntity_gurax->Append(Util::CreateArrayString(items), ClientData::Create(clientDataTbl).data());
+		} else {
+			Error::Issue(ErrorType::TypeError, "The argument clientData must be a List");
+			return Value::nil();
+		}
 	} else {
-	
+		Error::Issue(ErrorType::TypeError, "String or List of String can be accepted");
 		return Value::nil();
 	}
 	return new Value_Number(rtn);

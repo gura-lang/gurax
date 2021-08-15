@@ -55,6 +55,21 @@ public:
 };
 
 //-----------------------------------------------------------------------------
+// ClientData
+//-----------------------------------------------------------------------------
+class ClientData : public wxClientData {
+private:
+	RefPtr<Value> _pValue;
+public:
+	ClientData(Value* pValue) : _pValue(pValue) {}
+	Value& GetValue() { return *_pValue; }
+	const Value& GetValue() const { return *_pValue; }
+public:
+	static wxClientData* Create(const Value& value) { return new ClientData(value.Reference()); }
+	static std::vector<wxClientData*> Create(const ValueList& values);
+};
+
+//-----------------------------------------------------------------------------
 // EventUserData
 //-----------------------------------------------------------------------------
 class EventUserData : public wxObject {

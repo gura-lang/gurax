@@ -24,6 +24,17 @@ bool EntityCore::PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, Ref
 //------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
+// ClientData
+//-----------------------------------------------------------------------------
+std::vector<wxClientData*> ClientData::Create(const ValueList& values)
+{
+	std::vector<wxClientData*> rtn;
+	rtn.reserve(values.size());
+	for (const Value* pValue : values) rtn.push_back(new ClientData(pValue->Reference()));
+	return rtn;
+}
+
+//-----------------------------------------------------------------------------
 // EventUserData
 //-----------------------------------------------------------------------------
 void EventUserData::Eval(wxEvent& event)
