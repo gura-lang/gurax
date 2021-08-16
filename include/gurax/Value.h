@@ -170,6 +170,7 @@ public:
 		return ToStringGeneric(ss, strEntity.c_str());
 	}
 public:
+	bool IsInvalid() const { return !IsValid(); }
 	bool IsMutable() const { return GetVTypeCustom().IsMutable(); }
 	bool IsImmutable() const { return GetVTypeCustom().IsImmutable(); }
 public:

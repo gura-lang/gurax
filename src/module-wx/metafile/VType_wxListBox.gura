@@ -12,3 +12,14 @@ ListBox = Class(Control) {
 		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 		'''
 }
+
+@const[
+	LB_SINGLE
+	LB_MULTIPLE
+	LB_EXTENDED
+	LB_HSCROLL
+	LB_ALWAYS_SB
+	LB_NEEDED_SB
+	LB_NO_SB
+	LB_SORT
+]

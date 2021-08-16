@@ -170,6 +170,14 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ID_ZOOM_FIT", new Value_Number(wxID_ZOOM_FIT));
 	frame.Assign("ID_ZOOM_IN", new Value_Number(wxID_ZOOM_IN));
 	frame.Assign("ID_ZOOM_OUT", new Value_Number(wxID_ZOOM_OUT));
+	frame.Assign("LB_ALWAYS_SB", new Value_Number(wxLB_ALWAYS_SB));
+	frame.Assign("LB_EXTENDED", new Value_Number(wxLB_EXTENDED));
+	frame.Assign("LB_HSCROLL", new Value_Number(wxLB_HSCROLL));
+	frame.Assign("LB_MULTIPLE", new Value_Number(wxLB_MULTIPLE));
+	frame.Assign("LB_NEEDED_SB", new Value_Number(wxLB_NEEDED_SB));
+	frame.Assign("LB_NO_SB", new Value_Number(wxLB_NO_SB));
+	frame.Assign("LB_SINGLE", new Value_Number(wxLB_SINGLE));
+	frame.Assign("LB_SORT", new Value_Number(wxLB_SORT));
 	frame.Assign("LC_ALIGN_LEFT", new Value_Number(wxLC_ALIGN_LEFT));
 	frame.Assign("LC_ALIGN_TOP", new Value_Number(wxLC_ALIGN_TOP));
 	frame.Assign("LC_AUTOARRANGE", new Value_Number(wxLC_AUTOARRANGE));

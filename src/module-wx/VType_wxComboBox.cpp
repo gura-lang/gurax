@@ -532,12 +532,58 @@ Gurax_ImplementMethodEx(wxComboBox, Set_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.ComboBox#SetClientData(n as Number, data as Pointer)
+// wx.ComboBox#GetClientData(n as Number)
+Gurax_DeclareMethodAlias(wxComboBox, GetClientData_gurax, "GetClientData")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, GetClientData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+}
+
+// wx.ComboBox#GetClientObject(n as Number)
+Gurax_DeclareMethodAlias(wxComboBox, GetClientObject_gurax, "GetClientObject")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, GetClientObject_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+}
+
+// wx.ComboBox#SetClientData(n as Number, data as Any)
 Gurax_DeclareMethodAlias(wxComboBox, SetClientData_gurax, "SetClientData")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -552,14 +598,36 @@ Gurax_ImplementMethodEx(wxComboBox, SetClientData_gurax, processor_gurax, argume
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
-	void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
-	if (!data) {
-		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
-		return Value::nil();
-	}
+	const Gurax::Value& data = args_gurax.PickValue();
 	// Function body
-	pEntity_gurax->SetClientData(n, data);
-	return Gurax::Value::nil();
+	pEntity_gurax->SetClientObject(n, ClientData::Create(data));
+	return Value::nil();
+}
+
+// wx.ComboBox#SetClientObject(n as Number, data as Any)
+Gurax_DeclareMethodAlias(wxComboBox, SetClientObject_gurax, "SetClientObject")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, SetClientObject_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	const Gurax::Value& data = args_gurax.PickValue();
+	// Function body
+	pEntity_gurax->SetClientObject(n, ClientData::Create(data));
+	return Value::nil();
 }
 
 // wx.ComboBox#AppendText(text as String)
@@ -1319,7 +1387,10 @@ void VType_wxComboBox::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxComboBox, Insert_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, InsertItems_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Set_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, GetClientData_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, GetClientObject_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, SetClientData_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, SetClientObject_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, AppendText_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, AutoComplete_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, AutoCompleteFileNames_gurax));

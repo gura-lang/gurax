@@ -12,18 +12,18 @@ ItemContainer = Class():mixin {
 		R'''
 		int rtn = 0;
 		if (item.IsType(VTYPE_String)) {
-			if (clientData.IsValid()) {
-				rtn = pEntity_gurax->Append(Value_String::GetString(item), ClientData::Create(clientData));
-			} else {
+			if (clientData.IsInvalid()) {
 				rtn = pEntity_gurax->Append(Value_String::GetString(item));
+			} else {
+				rtn = pEntity_gurax->Append(Value_String::GetString(item), ClientData::Create(clientData));
 			}
 		} else if (item.IsType(VTYPE_List)) {
 			const ValueOwner& items = Value_List::GetValueOwner(item);
 			if (!items.IsElemInstanceOf(VTYPE_String)) {
-				Error::Issue(ErrorType::TypeError, "The list must contain items of String");
+				Error::Issue(ErrorType::TypeError, "The list must contain values of String");
 				return Value::nil();
 			}
-			if (!clientData.IsValid()) {
+			if (clientData.IsInvalid()) {
 				rtn = pEntity_gurax->Append(Util::CreateArrayString(items));
 			} else if (clientData.IsType(VTYPE_List)) {
 				const ValueOwner& clientDataTbl = Value_List::GetValueOwner(clientData);
@@ -33,11 +33,11 @@ ItemContainer = Class():mixin {
 				}
 				rtn = pEntity_gurax->Append(Util::CreateArrayString(items), ClientData::Create(clientDataTbl).data());
 			} else {
-				Error::Issue(ErrorType::TypeError, "The argument clientData must be a List");
+				Error::Issue(ErrorType::TypeError, "The argument clientData takes a value of List");
 				return Value::nil();
 			}
 		} else {
-			Error::Issue(ErrorType::TypeError, "String or List of String can be accepted");
+			Error::Issue(ErrorType::TypeError, "The argument item takes a value of String or List");
 			return Value::nil();
 		}
 		return new Value_Number(rtn);
@@ -53,9 +53,61 @@ ItemContainer = Class():mixin {
 	//Append(n as unsigned_int, items as const_String_p, clientData as ClientData_p_p) as int
 	//GetClientData(n as unsigned_int) as void_p
 	//GetClientObject(n as unsigned_int) as ClientData_p
-	SetClientData(n as unsigned_int, data as void_p) as void
+	GetClientData(n as unsigned_int) as any = \
+		R'''
+		return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+		'''
+	GetClientObject(n as unsigned_int) as any = \
+		R'''
+		return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+		'''
+	//SetClientData(n as unsigned_int, data as void_p) as void
 	//SetClientObject(n as unsigned_int, data as ClientData_p) as void
-	Insert(item as const_String_r, pos as unsigned_int) as int
+	SetClientData(n as unsigned_int, data as any) as void = \
+		R'''
+		pEntity_gurax->SetClientObject(n, ClientData::Create(data));
+		return Value::nil();
+		'''
+	SetClientObject(n as unsigned_int, data as any) as void = \
+		R'''
+		pEntity_gurax->SetClientObject(n, ClientData::Create(data));
+		return Value::nil();
+		'''
+	Insert(item as any, pos as unsigned_int, clientData? as any) as int = \
+		R'''
+		int rtn = 0;
+		if (item.IsType(VTYPE_String)) {
+			if (clientData.IsInvalid()) {
+				rtn = pEntity_gurax->Insert(Value_String::GetString(item), pos);
+			} else {
+				rtn = pEntity_gurax->Insert(Value_String::GetString(item), pos, ClientData::Create(clientData));
+			}
+		} else if (item.IsType(VTYPE_List)) {
+			const ValueOwner& items = Value_List::GetValueOwner(item);
+			if (!items.IsElemInstanceOf(VTYPE_String)) {
+				Error::Issue(ErrorType::TypeError, "The list must contain values of String");
+				return Value::nil();
+			}
+			if (clientData.IsInvalid()) {
+				rtn = pEntity_gurax->Insert(Util::CreateArrayString(items), pos);
+			} else if (clientData.IsType(VTYPE_List)) {
+				const ValueOwner& clientDataTbl = Value_List::GetValueOwner(clientData);
+				if (items.size() != clientDataTbl.size()) {
+					Error::Issue(ErrorType::ValueError, "The lists for item and clientData must have the same length");
+					return Value::nil();
+				}
+				rtn = pEntity_gurax->Insert(Util::CreateArrayString(items), pos, ClientData::Create(clientDataTbl).data());
+			} else {
+				Error::Issue(ErrorType::TypeError, "The argument clientData takes a value of List");
+				return Value::nil();
+			}
+		} else {
+			Error::Issue(ErrorType::TypeError, "The argument item takes a value of String or List");
+			return Value::nil();
+		}
+		return new Value_Number(rtn);
+		'''
+	//Insert(item as const_String_r, pos as unsigned_int) as int
 	//Insert(item as const_String_r, pos as unsigned_int, clientData as void_p) as int
 	//Insert(item as const_String_r, pos as unsigned_int, clientData as ClientData_p) as int
 	//Insert(items as const_ArrayString_r, pos as unsigned_int) as int
@@ -64,7 +116,24 @@ ItemContainer = Class():mixin {
 	//Insert(n as unsigned_int, items as const_String_p, pos as unsigned_int) as int
 	//Insert(n as unsigned_int, items as const_String_p, pos as unsigned_int, clientData as void_p_p) as int
 	//Insert(n as unsigned_int, items as const_String_p, pos as unsigned_int, clientData as ClientData_p_p) as int
-	Set(items as const_ArrayString_r) as void
+	Set(items as const_ArrayString_r, clientData? as any) as void = \
+		R'''
+		if (clientData.IsInvalid()) {
+			pEntity_gurax->Set(items);
+		} else if (clientData.IsType(VTYPE_List)) {
+			const ValueOwner& clientDataTbl = Value_List::GetValueOwner(clientData);
+			if (items.size() != clientDataTbl.size()) {
+				Error::Issue(ErrorType::ValueError, "The lists for item and clientData must have the same length");
+				return Value::nil();
+			}
+			pEntity_gurax->Set(items, ClientData::Create(clientDataTbl).data());
+		} else {
+			Error::Issue(ErrorType::TypeError, "The argument clientData takes a value of List");
+			return Value::nil();
+		}
+		return Value::nil();
+		'''
+	//Set(items as const_ArrayString_r) as void
 	//Set(items as const_ArrayString_r, clientData as void_p_p) as void
 	//Set(items as const_ArrayString_r, clientData as ClientData_p_p) as void
 	//Set(n as unsigned_int, items as const_String_p) as void
