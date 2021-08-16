@@ -422,10 +422,8 @@ Gurax_ImplementMethodEx(wxChoice, Append_gurax, processor_gurax, argument_gurax)
 	int rtn = 0;
 	if (item.IsType(VTYPE_String)) {
 		if (clientData.IsInvalid()) {
-			::printf("check\n");
 			rtn = pEntity_gurax->Append(Value_String::GetString(item));
 		} else {
-			::printf("check2\n");
 			rtn = pEntity_gurax->Append(Value_String::GetString(item), ClientData::Create(clientData));
 		}
 	} else if (item.IsType(VTYPE_List)) {

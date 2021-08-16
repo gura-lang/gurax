@@ -1,0 +1,35 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.ListBox(this, wx.ID_ANY) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			ctrl.Append('Item1')
+			ctrl.Append('Item2', 'data-2')
+			ctrl.Append(['Item3', 'Item4', 'Item5'])
+			//ctrl.Append(['Item6', 'Item7', 'Item8'], ['data-6', 'data-7', 'data-8', 'data-9'])
+			wx.EVT_LISTBOX(ctrl, this.OnListBox, 'hoge')
+		}
+	}
+	OnListBox(event) = {
+		Printf('hello %s %s\n', event.GetSelection(), event.GetEventUserData())
+	}
+}
+
+wx.ImplementApp(MyApp())
