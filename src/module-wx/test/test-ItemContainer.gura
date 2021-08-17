@@ -28,7 +28,7 @@ PanelTop = class(wx.Panel) {
 		}
 	}
 	OnListBox(event) = {
-		Printf('hello %s %s\n', event.GetSelection(), event.GetEventUserData())
+		Printf('hello %s %s\n', event.GetSelection(), event.GetEventObject())
 	}
 }
 
