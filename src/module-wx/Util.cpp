@@ -122,6 +122,14 @@ void ExitMainLoop()
 {
 	wxWindow* window = wxDynamicCast(wxApp::GetInstance(), wxApp)->GetTopWindow();
 	if (window) window->Close(true);
+	if (Error::IsIssued()) {
+		String str;
+		for (Error* pError : Error::GetErrorOwner()) {
+			str += pError->MakeMessage();
+			str += "\n";
+		}
+		wxMessageBox(str.c_str(), "Gurax Script Error", wxICON_ERROR | wxOK);
+	}
 	wxApp::GetInstance()->ExitMainLoop();
 }
 

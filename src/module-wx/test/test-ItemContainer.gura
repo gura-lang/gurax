@@ -23,7 +23,7 @@ PanelTop = class(wx.Panel) {
 			ctrl.Append('Item1')
 			ctrl.Append('Item2', 'data-2')
 			ctrl.Append(['Item3', 'Item4', 'Item5'])
-			//ctrl.Append(['Item6', 'Item7', 'Item8'], ['data-6', 'data-7', 'data-8', 'data-9'])
+			ctrl.Append(['Item6', 'Item7', 'Item8'], ['data-6', 'data-7', 'data-8'])
 			wx.EVT_LISTBOX(ctrl, this.OnListBox, 'hoge')
 		}
 	}
