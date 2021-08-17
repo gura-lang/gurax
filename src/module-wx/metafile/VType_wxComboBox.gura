@@ -5,48 +5,23 @@ ComboBox = Class(Control) {
 	@mixin[ItemContainer, TextEntry]
 	__init__(parent as Window_p, id as WindowID, value as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		choices? as const_ArrayString_r, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxComboBoxNameStr)
-	// wxItemContainerImmutable
-	GetCount() as unsigned_int
+	GetCurrentSelection() as int
+	GetInsertionPoint() as long
 	IsEmpty() as void = 'return Value::nil();'
-	GetString(n as unsigned_int) as String
-	//GetStrings()
-	SetString(n as unsigned_int, string as String) as void
-	FindString(string as String, caseSensitive as bool = false) as int
-	SetSelection(n as int) as void
+	IsListEmpty() as bool
+	IsTextEmpty() as bool
+	//SetSelection(from as long, to as long) as void
+	SetValue(text as const_String_r) as void
+	Popup() as void
+	Dismiss() as void
 	GetSelection() as int
-	SetStringSelection(string as String) as bool
+	//GetSelection(from as long_p, to as long_p) as void
+	SetSelection(n as int) as void
+	FindString(s as const_String_r, bCase as bool = false) as int
+	GetString(n as unsigned_int) as String
 	GetStringSelection() as String
-	Select(n as int) as void
-	// wxItemContainer
-	Clear() as void
-	Delete(n as unsigned_int) as void
-	//DetachClientObject(n as unsigned_int)
-	HasClientData() as bool
-	HasClientObjectData() as bool
-	HasClientUntypedData() as bool
-	Append(item as String) as int
-	AppendItems(items[] as String) as int = \
-		R'''
-		wxArrayString items_;
-		for (const char* item : items) items_.Add(item);
-		int rtn = pEntity_gurax->Append(items_);
-		return new Gurax::Value_Number(rtn);
-		'''
-	Insert(item as String, pos as unsigned_int) as int
-	InsertItems(items[] as String, pos as unsigned_int) as int = \
-		R'''
-		wxArrayString items_;
-		for (const char* item : items) items_.Add(item);
-		int rtn = pEntity_gurax->Insert(items_, pos);
-		return new Gurax::Value_Number(rtn);
-		'''
-	Set(items[] as String) as void = \
-		R'''
-		wxArrayString items_;
-		for (const char* item : items) items_.Add(item);
-		pEntity_gurax->Set(items_);
-		return Value::nil();
-		'''
+	SetString(n as unsigned_int, text as const_String_r) as void
+	GetCount() as unsigned_int
 }
 
 @const[

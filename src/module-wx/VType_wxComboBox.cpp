@@ -71,8 +71,8 @@ Gurax_ImplementConstructorEx(ComboBox_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.ComboBox#GetCount()
-Gurax_DeclareMethodAlias(wxComboBox, GetCount_gurax, "GetCount")
+// wx.ComboBox#GetCurrentSelection()
+Gurax_DeclareMethodAlias(wxComboBox, GetCurrentSelection_gurax, "GetCurrentSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -80,14 +80,34 @@ Gurax_DeclareMethodAlias(wxComboBox, GetCount_gurax, "GetCount")
 		"");
 }
 
-Gurax_ImplementMethodEx(wxComboBox, GetCount_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxComboBox, GetCurrentSelection_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	unsigned int rtn = pEntity_gurax->GetCount();
+	int rtn = pEntity_gurax->GetCurrentSelection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ComboBox#GetInsertionPoint()
+Gurax_DeclareMethodAlias(wxComboBox, GetInsertionPoint_gurax, "GetInsertionPoint")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, GetInsertionPoint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetInsertionPoint();
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -110,42 +130,57 @@ Gurax_ImplementMethodEx(wxComboBox, IsEmpty_gurax, processor_gurax, argument_gur
 	return Value::nil();
 }
 
-// wx.ComboBox#GetString(n as Number)
-Gurax_DeclareMethodAlias(wxComboBox, GetString_gurax, "GetString")
+// wx.ComboBox#IsListEmpty()
+Gurax_DeclareMethodAlias(wxComboBox, IsListEmpty_gurax, "IsListEmpty")
 {
-	Declare(VTYPE_String, Flag::None);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethodEx(wxComboBox, GetString_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxComboBox, IsListEmpty_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	const char* rtn = pEntity_gurax->GetString(n);
-	return new Gurax::Value_String(rtn);
+	bool rtn = pEntity_gurax->IsListEmpty();
+	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ComboBox#SetString(n as Number, string as String)
-Gurax_DeclareMethodAlias(wxComboBox, SetString_gurax, "SetString")
+// wx.ComboBox#IsTextEmpty()
+Gurax_DeclareMethodAlias(wxComboBox, IsTextEmpty_gurax, "IsTextEmpty")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, IsTextEmpty_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsTextEmpty();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ComboBox#SetValue(text as String)
+Gurax_DeclareMethodAlias(wxComboBox, SetValue_gurax, "SetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethodEx(wxComboBox, SetString_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxComboBox, SetValue_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -153,36 +188,69 @@ Gurax_ImplementMethodEx(wxComboBox, SetString_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	unsigned int n = args_gurax.PickNumber<unsigned int>();
-	const char* string = args_gurax.PickString();
+	const char* text = args_gurax.PickString();
 	// Function body
-	pEntity_gurax->SetString(n, string);
+	pEntity_gurax->SetValue(text);
 	return Gurax::Value::nil();
 }
 
-// wx.ComboBox#FindString(string as String, caseSensitive? as Bool)
-Gurax_DeclareMethodAlias(wxComboBox, FindString_gurax, "FindString")
+// wx.ComboBox#Popup()
+Gurax_DeclareMethodAlias(wxComboBox, Popup_gurax, "Popup")
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("caseSensitive", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethodEx(wxComboBox, FindString_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxComboBox, Popup_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
-	bool caseSensitive = args_gurax.IsValid()? args_gurax.PickBool() : false;
 	// Function body
-	int rtn = pEntity_gurax->FindString(string, caseSensitive);
+	pEntity_gurax->Popup();
+	return Gurax::Value::nil();
+}
+
+// wx.ComboBox#Dismiss()
+Gurax_DeclareMethodAlias(wxComboBox, Dismiss_gurax, "Dismiss")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, Dismiss_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Dismiss();
+	return Gurax::Value::nil();
+}
+
+// wx.ComboBox#GetSelection()
+Gurax_DeclareMethodAlias(wxComboBox, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetSelection();
 	return new Gurax::Value_Number(rtn);
 }
 
@@ -210,37 +278,18 @@ Gurax_ImplementMethodEx(wxComboBox, SetSelection_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// wx.ComboBox#GetSelection()
-Gurax_DeclareMethodAlias(wxComboBox, GetSelection_gurax, "GetSelection")
+// wx.ComboBox#FindString(s as String, bCase? as Bool)
+Gurax_DeclareMethodAlias(wxComboBox, FindString_gurax, "FindString")
 {
 	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bCase", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethodEx(wxComboBox, GetSelection_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	int rtn = pEntity_gurax->GetSelection();
-	return new Gurax::Value_Number(rtn);
-}
-
-// wx.ComboBox#SetStringSelection(string as String)
-Gurax_DeclareMethodAlias(wxComboBox, SetStringSelection_gurax, "SetStringSelection")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxComboBox, SetStringSelection_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxComboBox, FindString_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -248,10 +297,35 @@ Gurax_ImplementMethodEx(wxComboBox, SetStringSelection_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* string = args_gurax.PickString();
+	const char* s = args_gurax.PickString();
+	bool bCase = args_gurax.IsValid()? args_gurax.PickBool() : false;
 	// Function body
-	bool rtn = pEntity_gurax->SetStringSelection(string);
-	return new Gurax::Value_Bool(rtn);
+	int rtn = pEntity_gurax->FindString(s, bCase);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ComboBox#GetString(n as Number)
+Gurax_DeclareMethodAlias(wxComboBox, GetString_gurax, "GetString")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, GetString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	const char* rtn = pEntity_gurax->GetString(n);
+	return new Gurax::Value_String(rtn);
 }
 
 // wx.ComboBox#GetStringSelection()
@@ -274,17 +348,18 @@ Gurax_ImplementMethodEx(wxComboBox, GetStringSelection_gurax, processor_gurax, a
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.ComboBox#Select(n as Number)
-Gurax_DeclareMethodAlias(wxComboBox, Select_gurax, "Select")
+// wx.ComboBox#SetString(n as Number, text as String)
+Gurax_DeclareMethodAlias(wxComboBox, SetString_gurax, "SetString")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethodEx(wxComboBox, Select_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxComboBox, SetString_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -292,10 +367,31 @@ Gurax_ImplementMethodEx(wxComboBox, Select_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int n = args_gurax.PickNumber<int>();
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	const char* text = args_gurax.PickString();
 	// Function body
-	pEntity_gurax->Select(n);
+	pEntity_gurax->SetString(n, text);
 	return Gurax::Value::nil();
+}
+
+// wx.ComboBox#GetCount()
+Gurax_DeclareMethodAlias(wxComboBox, GetCount_gurax, "GetCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, GetCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned int rtn = pEntity_gurax->GetCount();
+	return new Gurax::Value_Number(rtn);
 }
 
 // wx.ComboBox#Clear()
@@ -402,11 +498,12 @@ Gurax_ImplementMethodEx(wxComboBox, HasClientUntypedData_gurax, processor_gurax,
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ComboBox#Append(item as String)
+// wx.ComboBox#Append(item as Any, clientData? as Any)
 Gurax_DeclareMethodAlias(wxComboBox, Append_gurax, "Append")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -420,116 +517,40 @@ Gurax_ImplementMethodEx(wxComboBox, Append_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* item = args_gurax.PickString();
+	const Gurax::Value& item = args_gurax.PickValue();
+	const Gurax::Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
-	int rtn = pEntity_gurax->Append(item);
-	return new Gurax::Value_Number(rtn);
-}
-
-// wx.ComboBox#AppendItems(items[] as String)
-Gurax_DeclareMethodAlias(wxComboBox, AppendItems_gurax, "AppendItems")
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxComboBox, AppendItems_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto items = args_gurax.PickListT<const char*>(Gurax::Value_String::ValueForVector);
-	// Function body
-	wxArrayString items_;
-	for (const char* item : items) items_.Add(item);
-	int rtn = pEntity_gurax->Append(items_);
-	return new Gurax::Value_Number(rtn);
-}
-
-// wx.ComboBox#Insert(item as String, pos as Number)
-Gurax_DeclareMethodAlias(wxComboBox, Insert_gurax, "Insert")
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxComboBox, Insert_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* item = args_gurax.PickString();
-	unsigned int pos = args_gurax.PickNumber<unsigned int>();
-	// Function body
-	int rtn = pEntity_gurax->Insert(item, pos);
-	return new Gurax::Value_Number(rtn);
-}
-
-// wx.ComboBox#InsertItems(items[] as String, pos as Number)
-Gurax_DeclareMethodAlias(wxComboBox, InsertItems_gurax, "InsertItems")
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxComboBox, InsertItems_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto items = args_gurax.PickListT<const char*>(Gurax::Value_String::ValueForVector);
-	unsigned int pos = args_gurax.PickNumber<unsigned int>();
-	// Function body
-	wxArrayString items_;
-	for (const char* item : items) items_.Add(item);
-	int rtn = pEntity_gurax->Insert(items_, pos);
-	return new Gurax::Value_Number(rtn);
-}
-
-// wx.ComboBox#Set(items[] as String)
-Gurax_DeclareMethodAlias(wxComboBox, Set_gurax, "Set")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxComboBox, Set_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	auto items = args_gurax.PickListT<const char*>(Gurax::Value_String::ValueForVector);
-	// Function body
-	wxArrayString items_;
-	for (const char* item : items) items_.Add(item);
-	pEntity_gurax->Set(items_);
-	return Value::nil();
+	int rtn = 0;
+	if (item.IsType(VTYPE_String)) {
+		if (clientData.IsInvalid()) {
+			rtn = pEntity_gurax->Append(Value_String::GetString(item));
+		} else {
+			rtn = pEntity_gurax->Append(Value_String::GetString(item), ClientData::Create(clientData));
+		}
+	} else if (item.IsType(VTYPE_List)) {
+		const ValueOwner& items = Value_List::GetValueOwner(item);
+		if (!items.IsElemInstanceOf(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "The list must contain values of String");
+			return Value::nil();
+		}
+		if (clientData.IsInvalid()) {
+			rtn = pEntity_gurax->Append(Util::CreateArrayString(items));
+		} else if (clientData.IsType(VTYPE_List)) {
+			const ValueOwner& clientDataTbl = Value_List::GetValueOwner(clientData);
+			if (items.size() != clientDataTbl.size()) {
+				Error::Issue(ErrorType::ValueError, "The lists for item and clientData must have the same length");
+				return Value::nil();
+			}
+			rtn = pEntity_gurax->Append(Util::CreateArrayString(items), ClientData::Create(clientDataTbl).data());
+		} else {
+			Error::Issue(ErrorType::TypeError, "The argument clientData takes a value of List");
+			return Value::nil();
+		}
+	} else {
+		Error::Issue(ErrorType::TypeError, "The argument item takes a value of String or List");
+		return Value::nil();
+	}
+	return new Value_Number(rtn);
 }
 
 // wx.ComboBox#GetClientData(n as Number)
@@ -552,7 +573,9 @@ Gurax_ImplementMethodEx(wxComboBox, GetClientData_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+	auto pClientData = dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n));
+	if (!pClientData) return Value::nil();
+	return pClientData->GetValue().Reference();
 }
 
 // wx.ComboBox#GetClientObject(n as Number)
@@ -575,7 +598,9 @@ Gurax_ImplementMethodEx(wxComboBox, GetClientObject_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+	auto pClientData = dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n));
+	if (!pClientData) return Value::nil();
+	return pClientData->GetValue().Reference();
 }
 
 // wx.ComboBox#SetClientData(n as Number, data as Any)
@@ -627,6 +652,101 @@ Gurax_ImplementMethodEx(wxComboBox, SetClientObject_gurax, processor_gurax, argu
 	const Gurax::Value& data = args_gurax.PickValue();
 	// Function body
 	pEntity_gurax->SetClientObject(n, ClientData::Create(data));
+	return Value::nil();
+}
+
+// wx.ComboBox#Insert(item as Any, pos as Number, clientData? as Any)
+Gurax_DeclareMethodAlias(wxComboBox, Insert_gurax, "Insert")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, Insert_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::Value& item = args_gurax.PickValue();
+	unsigned int pos = args_gurax.PickNumber<unsigned int>();
+	const Gurax::Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
+	// Function body
+	int rtn = 0;
+	if (item.IsType(VTYPE_String)) {
+		if (clientData.IsInvalid()) {
+			rtn = pEntity_gurax->Insert(Value_String::GetString(item), pos);
+		} else {
+			rtn = pEntity_gurax->Insert(Value_String::GetString(item), pos, ClientData::Create(clientData));
+		}
+	} else if (item.IsType(VTYPE_List)) {
+		const ValueOwner& items = Value_List::GetValueOwner(item);
+		if (!items.IsElemInstanceOf(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "The list must contain values of String");
+			return Value::nil();
+		}
+		if (clientData.IsInvalid()) {
+			rtn = pEntity_gurax->Insert(Util::CreateArrayString(items), pos);
+		} else if (clientData.IsType(VTYPE_List)) {
+			const ValueOwner& clientDataTbl = Value_List::GetValueOwner(clientData);
+			if (items.size() != clientDataTbl.size()) {
+				Error::Issue(ErrorType::ValueError, "The lists for item and clientData must have the same length");
+				return Value::nil();
+			}
+			rtn = pEntity_gurax->Insert(Util::CreateArrayString(items), pos, ClientData::Create(clientDataTbl).data());
+		} else {
+			Error::Issue(ErrorType::TypeError, "The argument clientData takes a value of List");
+			return Value::nil();
+		}
+	} else {
+		Error::Issue(ErrorType::TypeError, "The argument item takes a value of String or List");
+		return Value::nil();
+	}
+	return new Value_Number(rtn);
+}
+
+// wx.ComboBox#Set(items[] as String, clientData? as Any)
+Gurax_DeclareMethodAlias(wxComboBox, Set_gurax, "Set")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, Set_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxArrayString items = Util::CreateArrayString(args_gurax.PickList());
+	const Gurax::Value& clientData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
+	// Function body
+	if (clientData.IsInvalid()) {
+		pEntity_gurax->Set(items);
+	} else if (clientData.IsType(VTYPE_List)) {
+		const ValueOwner& clientDataTbl = Value_List::GetValueOwner(clientData);
+		if (items.size() != clientDataTbl.size()) {
+			Error::Issue(ErrorType::ValueError, "The lists for item and clientData must have the same length");
+			return Value::nil();
+		}
+		pEntity_gurax->Set(items, ClientData::Create(clientDataTbl).data());
+	} else {
+		Error::Issue(ErrorType::TypeError, "The argument clientData takes a value of List");
+		return Value::nil();
+	}
 	return Value::nil();
 }
 
@@ -880,26 +1000,6 @@ Gurax_ImplementMethodEx(wxComboBox, Cut_gurax, processor_gurax, argument_gurax)
 	// Function body
 	pEntity_gurax->Cut();
 	return Gurax::Value::nil();
-}
-
-// wx.ComboBox#GetInsertionPoint()
-Gurax_DeclareMethodAlias(wxComboBox, GetInsertionPoint_gurax, "GetInsertionPoint")
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxComboBox, GetInsertionPoint_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	long rtn = pEntity_gurax->GetInsertionPoint();
-	return new Gurax::Value_Number(rtn);
 }
 
 // wx.ComboBox#GetRange(from as Number, to as Number)
@@ -1258,30 +1358,6 @@ Gurax_ImplementMethodEx(wxComboBox, GetMargins_gurax, processor_gurax, argument_
 		pEntity_gurax->GetMargins()));
 }
 
-// wx.ComboBox#SetValue(value as String)
-Gurax_DeclareMethodAlias(wxComboBox, SetValue_gurax, "SetValue")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxComboBox, SetValue_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* value = args_gurax.PickString();
-	// Function body
-	pEntity_gurax->SetValue(value);
-	return Gurax::Value::nil();
-}
-
 // wx.ComboBox#Undo()
 Gurax_DeclareMethodAlias(wxComboBox, Undo_gurax, "Undo")
 {
@@ -1367,30 +1443,33 @@ void VType_wxComboBox::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ComboBox_gurax));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(wxComboBox, GetCount_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, GetCurrentSelection_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, GetInsertionPoint_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, IsEmpty_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, GetString_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, SetString_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, FindString_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, SetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, IsListEmpty_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, IsTextEmpty_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, SetValue_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, Popup_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, Dismiss_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetSelection_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, SetStringSelection_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, SetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, FindString_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, GetString_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetStringSelection_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, Select_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, SetString_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, GetCount_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Clear_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Delete_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, HasClientData_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, HasClientObjectData_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, HasClientUntypedData_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Append_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, AppendItems_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, Insert_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, InsertItems_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, Set_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetClientData_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetClientObject_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, SetClientData_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, SetClientObject_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, Insert_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, Set_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, AppendText_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, AutoComplete_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, AutoCompleteFileNames_gurax));
@@ -1403,7 +1482,6 @@ void VType_wxComboBox::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxComboBox, ChangeValue_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Copy_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Cut_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, GetInsertionPoint_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetRange_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetValue_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, IsEditable_gurax));
@@ -1420,7 +1498,6 @@ void VType_wxComboBox::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxComboBox, SetHint_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetHint_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetMargins_gurax));
-	Assign(Gurax_CreateMethod(wxComboBox, SetValue_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Undo_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, WriteText_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, SetMargins_gurax));

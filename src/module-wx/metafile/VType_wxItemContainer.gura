@@ -55,11 +55,15 @@ ItemContainer = Class():mixin {
 	//GetClientObject(n as unsigned_int) as ClientData_p
 	GetClientData(n as unsigned_int) as any = \
 		R'''
-		return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+		auto pClientData = dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n));
+		if (!pClientData) return Value::nil();
+		return pClientData->GetValue().Reference();
 		'''
 	GetClientObject(n as unsigned_int) as any = \
 		R'''
-		return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+		auto pClientData = dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n));
+		if (!pClientData) return Value::nil();
+		return pClientData->GetValue().Reference();
 		'''
 	//SetClientData(n as unsigned_int, data as void_p) as void
 	//SetClientObject(n as unsigned_int, data as ClientData_p) as void

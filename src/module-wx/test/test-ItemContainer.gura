@@ -15,20 +15,70 @@ MyFrame = class(wx.Frame) {
 }
 
 PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		wx.ListBox(this, wx.ID_ANY) {|ctrl|
+		wx.Notebook(this, wx.ID_ANY) {|noteBook|
+			sizerTop.Add(noteBook, wx.SizerFlags(1).Expand())
+			wx.ListBox(noteBook, wx.ID_ANY) {|ctrl|
+				noteBook.AddPage(ctrl, 'ListBox')
+				ctrl.Append('(String)')
+				ctrl.Append('(String)')
+				ctrl.Append('(String, String)', 'User data (String, String)')
+				ctrl.Append(['(List) #1', '(List) #2', '(List) #3'])
+				ctrl.Append(['(List, List) #1', '(List, List) #2', '(List, List) #3'],
+					['User data (List, List) #1', 'User data (List, List) #2', 'User data (List, List) #3'])
+				ctrl.SetClientData(1, 'User data (String)')
+				ctrl.SetClientData(4, 'User data (List) #2')
+				wx.EVT_LISTBOX(ctrl, this.OnListBox, ctrl)
+			}
+			wx.ComboBox(noteBook, wx.ID_ANY) {|ctrl|
+				noteBook.AddPage(ctrl, 'ComboBox')
+				ctrl.Append('(String)')
+				ctrl.Append('(String)')
+				ctrl.Append('(String, String)', 'User data (String, String)')
+				ctrl.Append(['(List) #1', '(List) #2', '(List) #3'])
+				ctrl.Append(['(List, List) #1', '(List, List) #2', '(List, List) #3'],
+					['User data (List, List) #1', 'User data (List, List) #2', 'User data (List, List) #3'])
+				ctrl.SetClientData(1, 'User data (String)')
+				ctrl.SetClientData(4, 'User data (List) #2')
+				wx.EVT_COMBOBOX(ctrl, this.OnComboBox, ctrl)
+				ctrl.SetSelection(0)
+			}
+			wx.Choice(noteBook, wx.ID_ANY) {|ctrl|
+				noteBook.AddPage(ctrl, 'Choice')
+				ctrl.Append('(String)')
+				ctrl.Append('(String)')
+				ctrl.Append('(String, String)', 'User data (String, String)')
+				ctrl.Append(['(List) #1', '(List) #2', '(List) #3'])
+				ctrl.Append(['(List, List) #1', '(List, List) #2', '(List, List) #3'],
+					['User data (List, List) #1', 'User data (List, List) #2', 'User data (List, List) #3'])
+				ctrl.SetClientData(1, 'User data (String)')
+				ctrl.SetClientData(4, 'User data (List) #2')
+				wx.EVT_CHOICE(ctrl, this.OnChoice, ctrl)
+				ctrl.SetSelection(0)
+			}
+		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
-			ctrl.Append('Item1')
-			ctrl.Append('Item2', 'data-2')
-			ctrl.Append(['Item3', 'Item4', 'Item5'])
-			ctrl.Append(['Item6', 'Item7', 'Item8'], ['data-6', 'data-7', 'data-8'])
-			wx.EVT_LISTBOX(ctrl, this.OnListBox, 'hoge')
+			this.textCtrl = ctrl
 		}
 	}
 	OnListBox(event) = {
-		Printf('hello %s %s\n', event.GetSelection(), event.GetEventObject())
+		ctrl = event.GetEventUserData()
+		pos = event.GetSelection()
+		this.textCtrl.WriteText(Format('Position=%d UserData=%s\n', pos, ctrl.GetClientData(pos)))
+	}
+	OnComboBox(event) = {
+		ctrl = event.GetEventUserData()
+		pos = event.GetSelection()
+		this.textCtrl.WriteText(Format('Position=%d UserData=%s\n', pos, ctrl.GetClientData(pos)))
+	}
+	OnChoice(event) = {
+		ctrl = event.GetEventUserData()
+		pos = event.GetSelection()
+		this.textCtrl.WriteText(Format('Position=%d UserData=%s\n', pos, ctrl.GetClientData(pos)))
 	}
 }
 

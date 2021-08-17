@@ -248,7 +248,9 @@ Gurax_ImplementMethodEx(wxListBox, GetClientData_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+	auto pClientData = dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n));
+	if (!pClientData) return Value::nil();
+	return pClientData->GetValue().Reference();
 }
 
 // wx.ListBox#GetClientObject(n as Number)
@@ -271,7 +273,9 @@ Gurax_ImplementMethodEx(wxListBox, GetClientObject_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	return dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n))->GetValue().Reference();
+	auto pClientData = dynamic_cast<ClientData*>(pEntity_gurax->GetClientObject(n));
+	if (!pClientData) return Value::nil();
+	return pClientData->GetValue().Reference();
 }
 
 // wx.ListBox#SetClientData(n as Number, data as Any)
