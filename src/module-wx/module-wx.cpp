@@ -15,11 +15,25 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
-	AssignConsts(GetFrame());
-	AssignEvents(GetFrame());
-	AssignFunctions(GetFrame());
-	AssignMultiEvents(GetFrame());
-	AssignVTypes(GetFrame());
+	Frame& frame = GetFrame();
+	AssignConsts(frame);
+	AssignEvents(frame);
+	AssignFunctions(frame);
+	AssignMultiEvents(frame);
+	AssignVTypes(frame);
+	do { // Predefined Objects of wxColour
+		//frame.Assign("NullColour", new Value_Color(wxNullColour));
+		/*
+		Gura_AssignWxObjectEx(NullColour,		Colour, &wxNullColour);
+		Gura_AssignWxObject(BLACK,				Colour);
+		Gura_AssignWxObject(WHITE,				Colour);
+		Gura_AssignWxObject(RED,				Colour);
+		Gura_AssignWxObject(BLUE,				Colour);
+		Gura_AssignWxObject(GREEN,				Colour);
+		Gura_AssignWxObject(CYAN,				Colour);
+		Gura_AssignWxObject(LIGHT_GREY,			Colour);
+		*/
+	} while (0);
 	return true;
 }
 

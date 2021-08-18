@@ -19,25 +19,74 @@ PanelTop = class(wx.Panel) {
 		this.SetBackgroundColour(wx.Colour(0, 128, 0))
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		sizer = wx.GridSizer(4)
-		sizerTop.Add(sizer, wx.SizerFlags(1).Expand())
-		sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
-		sizer.Add(wx.Button(this, wx.ID_ANY, '(no flag)'), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_TOP | BU_LEFT', style = wx.BU_TOP | wx.BU_LEFT), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_TOP', style = wx.BU_TOP), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_TOP | BU_RIGHT', style = wx.BU_TOP | wx.BU_RIGHT), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_LEFT', style = wx.BU_LEFT), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_RIGHT', style = wx.BU_RIGHT), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_BOTTOM | BU_LEFT', style = wx.BU_BOTTOM | wx.BU_LEFT), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_BOTTOM', style = wx.BU_BOTTOM), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_BOTTOM | BU_RIGHT', style = wx.BU_BOTTOM | wx.BU_RIGHT), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_EXACTFIT', style = wx.BU_EXACTFIT), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_NOTEXT', style = wx.BU_NOTEXT), sizerFlags)
-		sizer.Add(wx.Button(this, wx.ID_ANY, 'BORDER_NONE', style = wx.BORDER_NONE), sizerFlags)
-		//sizer.Add(wx.ToggleButton(this, wx.ID_ANY, 'Toggle Button 1'), sizerFlags)
-		//sizer.Add(wx.ToggleButton(this, wx.ID_ANY, 'Toggle Button 2'), sizerFlags)
-		//sizer.Add(wx.ToggleButton(this, wx.ID_ANY, 'Toggle Button 3'), sizerFlags)
-		//sizer.Add(wx.CommandLinkButton(this, wx.ID_ANY, 'Button 4', 'Note 4'), sizerFlags)
+		wx.GridSizer(4) {|sizer|
+			sizerTop.Add(sizer, wx.SizerFlags(1).Expand())
+			sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
+			sizer.Add(wx.Button(this, wx.ID_ANY, '(no flag)'), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_TOP | BU_LEFT', style = wx.BU_TOP | wx.BU_LEFT), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_TOP', style = wx.BU_TOP), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_TOP | BU_RIGHT', style = wx.BU_TOP | wx.BU_RIGHT), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_LEFT', style = wx.BU_LEFT), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_RIGHT', style = wx.BU_RIGHT), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_BOTTOM | BU_LEFT', style = wx.BU_BOTTOM | wx.BU_LEFT), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_BOTTOM', style = wx.BU_BOTTOM), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_BOTTOM | BU_RIGHT', style = wx.BU_BOTTOM | wx.BU_RIGHT), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_EXACTFIT', style = wx.BU_EXACTFIT), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BU_NOTEXT', style = wx.BU_NOTEXT), sizerFlags)
+			sizer.Add(wx.Button(this, wx.ID_ANY, 'BORDER_NONE', style = wx.BORDER_NONE), sizerFlags)
+		}
+		wx.GridSizer(4) {|sizer|
+			sizerTop.Add(sizer, wx.SizerFlags(1).Expand())
+			sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
+			wx.RadioButton(this, wx.ID_ANY, '(no flag)') {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_TOP | BU_LEFT', style = wx.BU_TOP | wx.BU_LEFT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_TOP', style = wx.BU_TOP) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_TOP | BU_RIGHT', style = wx.BU_TOP | wx.BU_RIGHT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_LEFT', style = wx.BU_LEFT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_RIGHT', style = wx.BU_RIGHT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM | BU_LEFT', style = wx.BU_BOTTOM | wx.BU_LEFT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM', style = wx.BU_BOTTOM) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM | BU_RIGHT', style = wx.BU_BOTTOM | wx.BU_RIGHT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_EXACTFIT', style = wx.BU_EXACTFIT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_NOTEXT', style = wx.BU_NOTEXT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BORDER_NONE', style = wx.BORDER_NONE) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+		}
 	}
 }
 
