@@ -84,17 +84,17 @@ PanelTop = class(wx.Panel) {
 	OnListBox(event) = {
 		ctrl = event.GetEventUserData()
 		pos = event.GetSelection()
-		this.textCtrl.WriteText(Format('Position=%d UserData=%s\n', pos, ctrl.GetClientData(pos)))
+		this.textCtrl.WriteText(Format('ListBox(Position=%d, UserData=%s)\n', pos, ctrl.GetClientData(pos)))
 	}
 	OnComboBox(event) = {
 		ctrl = event.GetEventUserData()
 		pos = event.GetSelection()
-		this.textCtrl.WriteText(Format('Position=%d UserData=%s\n', pos, ctrl.GetClientData(pos)))
+		this.textCtrl.WriteText(Format('ComboBox(Position=%d, UserData=%s)\n', pos, ctrl.GetClientData(pos)))
 	}
 	OnChoice(event) = {
 		ctrl = event.GetEventUserData()
 		pos = event.GetSelection()
-		this.textCtrl.WriteText(Format('Position=%d UserData=%s\n', pos, ctrl.GetClientData(pos)))
+		this.textCtrl.WriteText(Format('Choice(Position=%d, UserData=%s)\n', pos, ctrl.GetClientData(pos)))
 	}
 }
 
