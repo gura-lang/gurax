@@ -10,3 +10,12 @@ Button = Class(AnyButton) {
 	SetDefault() as Window_p
 	SetLabel(label as String) as void
 }
+
+@const[
+	BU_LEFT
+	BU_TOP
+	BU_RIGHT
+	BU_BOTTOM
+	BU_EXACTFIT
+	BU_NOTEXT
+]
