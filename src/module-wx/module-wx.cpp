@@ -20,8 +20,8 @@ Gurax_ModulePrepare()
 	AssignEvents(frame);
 	AssignFunctions(frame);
 	AssignMultiEvents(frame);
-	AssignObjects(frame);
 	AssignVTypes(frame);
+	AssignObjects(frame);
 	return true;
 }
 

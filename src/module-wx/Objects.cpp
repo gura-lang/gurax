@@ -9,17 +9,14 @@ Gurax_BeginModuleScope(wx)
 void AssignObjects(Frame& frame)
 {
 	do { // Predefined Objects of wxColour
-		//frame.Assign("NullColour", new Value_Color(wxNullColour));
-		/*
-		Gura_AssignWxObjectEx(NullColour,		Colour, &wxNullColour);
-		Gura_AssignWxObject(BLACK,				Colour);
-		Gura_AssignWxObject(WHITE,				Colour);
-		Gura_AssignWxObject(RED,				Colour);
-		Gura_AssignWxObject(BLUE,				Colour);
-		Gura_AssignWxObject(GREEN,				Colour);
-		Gura_AssignWxObject(CYAN,				Colour);
-		Gura_AssignWxObject(LIGHT_GREY,			Colour);
-		*/
+		frame.Assign("NullColour",	new Value_wxColour(wxNullColour));
+		frame.Assign("BLACK",		new Value_wxColour(*wxBLACK));
+		frame.Assign("WHITE",		new Value_wxColour(*wxWHITE));
+		frame.Assign("RED",			new Value_wxColour(*wxRED));
+		frame.Assign("BLUE",		new Value_wxColour(*wxBLUE));
+		frame.Assign("GREEN",		new Value_wxColour(*wxGREEN));
+		frame.Assign("CYAN",		new Value_wxColour(*wxCYAN));
+		frame.Assign("LIGHT_GREY",	new Value_wxColour(*wxLIGHT_GREY));
 	} while (0);
 }
 
