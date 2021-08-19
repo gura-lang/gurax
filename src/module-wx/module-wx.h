@@ -10,6 +10,7 @@
 #include "Events.h"
 #include "Functions.h"
 #include "MultiEvents.h"
+#include "Objects.h"
 #include "VTypes.h"
 
 Gurax_BeginModuleHeader(wx)
