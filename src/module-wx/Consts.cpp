@@ -60,6 +60,10 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CAL_SHOW_SURROUNDING_WEEKS", new Value_Number(wxCAL_SHOW_SURROUNDING_WEEKS));
 	frame.Assign("CAL_SHOW_WEEK_NUMBERS", new Value_Number(wxCAL_SHOW_WEEK_NUMBERS));
 	frame.Assign("CAL_SUNDAY_FIRST", new Value_Number(wxCAL_SUNDAY_FIRST));
+	frame.Assign("CAP_BUTT", new Value_Number(wxCAP_BUTT));
+	frame.Assign("CAP_INVALID", new Value_Number(wxCAP_INVALID));
+	frame.Assign("CAP_PROJECTING", new Value_Number(wxCAP_PROJECTING));
+	frame.Assign("CAP_ROUND", new Value_Number(wxCAP_ROUND));
 	frame.Assign("CB_DROPDOWN", new Value_Number(wxCB_DROPDOWN));
 	frame.Assign("CB_READONLY", new Value_Number(wxCB_READONLY));
 	frame.Assign("CB_SIMPLE", new Value_Number(wxCB_SIMPLE));
@@ -176,6 +180,10 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ID_ZOOM_FIT", new Value_Number(wxID_ZOOM_FIT));
 	frame.Assign("ID_ZOOM_IN", new Value_Number(wxID_ZOOM_IN));
 	frame.Assign("ID_ZOOM_OUT", new Value_Number(wxID_ZOOM_OUT));
+	frame.Assign("JOIN_BEVEL", new Value_Number(wxJOIN_BEVEL));
+	frame.Assign("JOIN_INVALID", new Value_Number(wxJOIN_INVALID));
+	frame.Assign("JOIN_MITER", new Value_Number(wxJOIN_MITER));
+	frame.Assign("JOIN_ROUND", new Value_Number(wxJOIN_ROUND));
 	frame.Assign("LB_ALWAYS_SB", new Value_Number(wxLB_ALWAYS_SB));
 	frame.Assign("LB_EXTENDED", new Value_Number(wxLB_EXTENDED));
 	frame.Assign("LB_HSCROLL", new Value_Number(wxLB_HSCROLL));
