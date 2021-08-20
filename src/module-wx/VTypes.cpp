@@ -12,6 +12,23 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxAuiToolBar);
+	frame.Assign(VTYPE_wxCollapsiblePane);
+	frame.Assign(VTYPE_wxDataViewCtrl);
+	frame.Assign(VTYPE_wxDatePickerCtrl);
+	frame.Assign(VTYPE_wxFileCtrl);
+	frame.Assign(VTYPE_wxGenericDirCtrl);
+	frame.Assign(VTYPE_wxHeaderCtrl);
+	frame.Assign(VTYPE_wxHyperlinkCtrl);
+	frame.Assign(VTYPE_wxInfoBar);
+	frame.Assign(VTYPE_wxMediaCtrl);
+	frame.Assign(VTYPE_wxPickerBase);
+	frame.Assign(VTYPE_wxPropertyGrid);
+	frame.Assign(VTYPE_wxRibbonControl);
+	frame.Assign(VTYPE_wxRichTextCtrl);
+	frame.Assign(VTYPE_wxSpinCtrlDouble);
+	frame.Assign(VTYPE_wxStaticBitmap);
+	frame.Assign(VTYPE_wxTimePickerCtrl);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);

@@ -1,3 +1,74 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+AuiToolBar = Class(Control) {
+	@include['wx/aui/auibar.h']
+}
+
+CollapsiblePane = Class(Control) {
+	@include['wx/collpane.h']
+}
+
+DataViewCtrl = Class(Control) {
+	@include['wx/dataview.h']
+}
+
+DatePickerCtrl = Class(Control) {
+	@include['wx/datectrl.h']
+}
+
+FileCtrl = Class(Control) {
+	@include['wx/filectrl.h']
+}
+
+GenericDirCtrl = Class(Control) {
+	@include['wx/dirctrl.h']
+}
+
+HeaderCtrl = Class(Control) {
+	@include['wx/headerctrl.h']
+}
+
+HyperlinkCtrl = Class(Control) {
+	@include['wx/hyperlink.h']
+}
+
+InfoBar = Class(Control) {
+	@include['wx/infobar.h']
+}
+
+MediaCtrl = Class(Control) {
+	@include['wx/mediactrl.h']
+}
+
+PickerBase = Class(Control) {
+	@include['wx/pickerbase.h']
+}
+
+PropertyGrid = Class(Control) {
+	@include['wx/propgrid/propgrid.h']
+}
+
+RibbonControl = Class(Control) {
+	@include['wx/ribbon/control.h']
+}
+
+RichTextCtrl = Class(Control) {
+	@include['wx/richtext/richtextctrl.h']
+}
+
+//RichTextStyledListCtrl = Class(Control) {
+//	@include['wx/richtext/richtextstyles.h']
+//}
+
+SpinCtrlDouble = Class(Control) {
+	@include['wx/spinctrl.h']
+}
+
+StaticBitmap = Class(Control) {
+	@include['wx/statbmp.h']
+}
+
+TimePickerCtrl = Class(Control) {
+	@include['wx/timectrl.h']
+}

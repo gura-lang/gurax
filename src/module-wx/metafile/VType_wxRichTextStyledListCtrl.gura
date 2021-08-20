@@ -1,0 +1,10 @@
+//==============================================================================
+// VType_wxRichTextStyledListCtrl.gura
+//==============================================================================
+//RichTextStyledListCtrl = Class(Control) {
+//	@include['wx/richtext/richtextstyles.h']
+//}
+
+SpinCtrlDouble = Class(Control) {
+	@include['wx/spinctrl.h']
+}

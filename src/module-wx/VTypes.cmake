@@ -4,6 +4,23 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxAuiToolBar.cpp
+	VType_wxCollapsiblePane.cpp
+	VType_wxDataViewCtrl.cpp
+	VType_wxDatePickerCtrl.cpp
+	VType_wxFileCtrl.cpp
+	VType_wxGenericDirCtrl.cpp
+	VType_wxHeaderCtrl.cpp
+	VType_wxHyperlinkCtrl.cpp
+	VType_wxInfoBar.cpp
+	VType_wxMediaCtrl.cpp
+	VType_wxPickerBase.cpp
+	VType_wxPropertyGrid.cpp
+	VType_wxRibbonControl.cpp
+	VType_wxRichTextCtrl.cpp
+	VType_wxSpinCtrlDouble.cpp
+	VType_wxStaticBitmap.cpp
+	VType_wxTimePickerCtrl.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
