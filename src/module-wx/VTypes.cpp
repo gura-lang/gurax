@@ -24,8 +24,9 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGridCellTextEditor);
 	frame.Assign(VTYPE_wxGridCellAutoWrapStringEditor);
 	frame.Assign(VTYPE_wxGridCellRenderer);
-	frame.Assign(VTYPE_wxGridCellRenderer);
+	frame.Assign(VTYPE_wxGridCellStringRenderer);
 	frame.Assign(VTYPE_wxGridCellBoolEditor);
+	frame.Assign(VTYPE_wxGridCellBoolRenderer);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);

@@ -46,11 +46,7 @@ GridCellRenderer = Class(RefCounter) {
 	@include['wx/grid.h']
 }
 
-//GridCellStringRenderer = Class(GridCellRenderer) {
-//	@include['wx/grid.h']
-//}
-
-GridCellRenderer = Class(ClientDataContainer) {
+GridCellStringRenderer = Class(GridCellRenderer) {
 	@include['wx/grid.h']
 }
 
@@ -58,6 +54,6 @@ GridCellBoolEditor = Class(GridCellEditor) {
 	@include['wx/grid.h']
 }
 
-//GridCellBoolRenderer = Class(GridCellRenderer) {
-//	@include['wx/grid.h']
-//}
+GridCellBoolRenderer = Class(GridCellRenderer) {
+	@include['wx/grid.h']
+}

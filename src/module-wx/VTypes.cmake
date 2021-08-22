@@ -16,8 +16,9 @@ set(SRCFILES_VTYPE
 	VType_wxGridCellTextEditor.cpp
 	VType_wxGridCellAutoWrapStringEditor.cpp
 	VType_wxGridCellRenderer.cpp
-	VType_wxGridCellRenderer.cpp
+	VType_wxGridCellStringRenderer.cpp
 	VType_wxGridCellBoolEditor.cpp
+	VType_wxGridCellBoolRenderer.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
