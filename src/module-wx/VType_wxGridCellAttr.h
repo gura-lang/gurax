@@ -8,7 +8,7 @@
 #include <wx/wx.h>
 #include <wx/grid.h>
 #include "Util.h"
-#include "VType_wxRefCounter.h"
+#include "VType_wxClientDataContainer.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -26,21 +26,19 @@ extern GURAX_DLLDECLARE VType_wxGridCellAttr VTYPE_wxGridCellAttr;
 //------------------------------------------------------------------------------
 // Value_wxGridCellAttr
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxGridCellAttr : public Value_wxRefCounter {
+class GURAX_DLLDECLARE Value_wxGridCellAttr : public Value_wxClientDataContainer {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxGridCellAttr);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGridCellAttr");
-protected:
-	wxObjectDataPtr<wxGridCellAttr> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxGridCellAttr() = delete;
-	explicit Value_wxGridCellAttr(const wxObjectDataPtr<wxGridCellAttr>& pEntity, VType& vtype = VTYPE_wxGridCellAttr) :
-		Value_wxRefCounter(wxObjectDataPtr<wxRefCounter>(pEntity.get()), vtype), _pEntity(pEntity) {}
+	explicit Value_wxGridCellAttr(const wxClientDataContainer& entity, VType& vtype = VTYPE_wxGridCellAttr) :
+		Value_wxClientDataContainer(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGridCellAttr(const Value_wxGridCellAttr& src) = delete;
 	Value_wxGridCellAttr& operator=(const Value_wxGridCellAttr& src) = delete;
@@ -51,10 +49,18 @@ protected:
 	// Destructor
 	~Value_wxGridCellAttr() = default;
 public:
-	wxGridCellAttr& GetEntity() { return *_pEntity; }
-	const wxGridCellAttr& GetEntity() const { return *_pEntity; }
-	wxGridCellAttr* GetEntityPtr() { return _pEntity.get(); }
-	const wxGridCellAttr* GetEntityPtr() const { return _pEntity.get(); }
+	wxGridCellAttr& GetEntity() {
+		return reinterpret_cast<wxGridCellAttr&>(Value_wxClientDataContainer::GetEntity());
+	}
+	const wxGridCellAttr& GetEntity() const {
+		return reinterpret_cast<const wxGridCellAttr&>(Value_wxClientDataContainer::GetEntity());
+	}
+	wxGridCellAttr* GetEntityPtr() {
+		return reinterpret_cast<wxGridCellAttr*>(Value_wxClientDataContainer::GetEntityPtr());
+	}
+	const wxGridCellAttr* GetEntityPtr() const {
+		return reinterpret_cast<const wxGridCellAttr*>(Value_wxClientDataContainer::GetEntityPtr());
+	}
 public:
 	static wxGridCellAttr& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGridCellAttr&>(value).GetEntity();

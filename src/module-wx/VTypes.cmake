@@ -9,6 +9,15 @@ set(SRCFILES_VTYPE
 	VType_wxGrid.cpp
 	VType_wxRefCounter.cpp
 	VType_wxGridCellAttr.cpp
+	VType_wxClientDataContainer.cpp
+	VType_wxGridCellAttr.cpp
+	VType_wxGridCellAttrProvider.cpp
+	VType_wxGridCellEditor.cpp
+	VType_wxGridCellTextEditor.cpp
+	VType_wxGridCellAutoWrapStringEditor.cpp
+	VType_wxGridCellRenderer.cpp
+	VType_wxGridCellRenderer.cpp
+	VType_wxGridCellBoolEditor.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

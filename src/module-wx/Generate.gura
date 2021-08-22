@@ -207,7 +207,7 @@ ${if (className == 'EvtHandler' || classInfo.loosePointerFlag)}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'RefCounter')}
-	explicit Value_wx${className}(const wxObjectDataPtr<wx${className}>& pEntity, VType& vtype = VTYPE_wx${className}) :
+	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'Event')}
 	explicit Value_wx${className}(const wx${className}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
@@ -222,8 +222,8 @@ ${elsif (classNameRoot == 'EvtHandler' || classInfoRoot.loosePointerFlag)}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(pEntity, vtype), _pEntity(pEntity) {}
 ${elsif (classNameRoot == 'RefCounter')}
-	explicit Value_wx${className}(const wxObjectDataPtr<wx${className}>& pEntity, VType& vtype = VTYPE_wx${className}) :
-		Value_wx${classNameParent}(wxObjectDataPtr<wx${classNameParent}>(pEntity.get()), vtype), _pEntity(pEntity) {}
+	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(pEntity, vtype), _pEntity(pEntity) { pEntity->IncRef(); }
 ${elsif (eventDerivFlag)}
 	Value_wx${className}(const wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(entity, pValueUserData, vtype) {}
@@ -777,7 +777,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${if (funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
-	wxObjectDataPtr<${funcInfo.GetTypeInfo().vtype}> pEntity_gurax(new ${funcInfo.GetTypeInfo().vtype}(${funcInfo.ComposeArgs()}));
+	${funcInfo.GetTypeInfo().vtype}* pEntity_gurax = new ${funcInfo.GetTypeInfo().vtype}(${funcInfo.ComposeArgs()});
 	RefPtr<Value_${funcInfo.GetTypeInfo().vtype}> pValue_gurax(new Value_${funcInfo.GetTypeInfo().vtype}(pEntity_gurax));
 	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 	${end}

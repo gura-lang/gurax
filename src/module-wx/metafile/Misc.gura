@@ -17,3 +17,47 @@ RefCounter = Class {
 GridCellAttr = Class(RefCounter) {
 	@include['wx/grid.h']
 }
+
+ClientDataContainer = Class {
+	@include['wx/grid.h']
+}
+
+GridCellAttr = Class(ClientDataContainer) {
+	@include['wx/grid.h']
+}
+
+GridCellAttrProvider = Class(ClientDataContainer) {
+	@include['wx/grid.h']
+}
+
+GridCellEditor = Class(ClientDataContainer) {
+	@include['wx/grid.h']
+}
+
+GridCellTextEditor = Class(GridCellEditor) {
+	@include['wx/grid.h']
+}
+
+GridCellAutoWrapStringEditor = Class(GridCellTextEditor) {
+	@include['wx/grid.h']
+}
+
+GridCellRenderer = Class(RefCounter) {
+	@include['wx/grid.h']
+}
+
+//GridCellStringRenderer = Class(GridCellRenderer) {
+//	@include['wx/grid.h']
+//}
+
+GridCellRenderer = Class(ClientDataContainer) {
+	@include['wx/grid.h']
+}
+
+GridCellBoolEditor = Class(GridCellEditor) {
+	@include['wx/grid.h']
+}
+
+//GridCellBoolRenderer = Class(GridCellRenderer) {
+//	@include['wx/grid.h']
+//}

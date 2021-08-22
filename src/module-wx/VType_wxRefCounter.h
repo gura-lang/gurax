@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxRefCounter() = delete;
-	explicit Value_wxRefCounter(const wxObjectDataPtr<wxRefCounter>& pEntity, VType& vtype = VTYPE_wxRefCounter) :
+	explicit Value_wxRefCounter(wxRefCounter* pEntity, VType& vtype = VTYPE_wxRefCounter) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxRefCounter(const Value_wxRefCounter& src) = delete;
