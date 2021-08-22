@@ -4,23 +4,9 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxAuiToolBar.cpp
-	VType_wxCollapsiblePane.cpp
-	VType_wxDataViewCtrl.cpp
-	VType_wxDatePickerCtrl.cpp
-	VType_wxFileCtrl.cpp
-	VType_wxGenericDirCtrl.cpp
-	VType_wxHeaderCtrl.cpp
-	VType_wxHyperlinkCtrl.cpp
-	VType_wxInfoBar.cpp
-	VType_wxMediaCtrl.cpp
-	VType_wxPickerBase.cpp
-	VType_wxPropertyGrid.cpp
-	VType_wxRibbonControl.cpp
-	VType_wxRichTextCtrl.cpp
-	VType_wxSpinCtrlDouble.cpp
-	VType_wxStaticBitmap.cpp
-	VType_wxTimePickerCtrl.cpp
+	VType_wxScrolledWindow.cpp
+	VType_wxScrolledCanvas.cpp
+	VType_wxGrid.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -33,6 +19,7 @@ set(SRCFILES_VTYPE
 	VType_wxAuiMDIParentFrame.cpp
 	VType_wxAuiNotebook.cpp
 	VType_wxAuiNotebookEvent.cpp
+	VType_wxAuiToolBar.cpp
 	VType_wxBitmap.cpp
 	VType_wxBitmapButton.cpp
 	VType_wxBitmapHandler.cpp
@@ -51,6 +38,7 @@ set(SRCFILES_VTYPE
 	VType_wxChoice.cpp
 	VType_wxChoicebook.cpp
 	VType_wxCmdLineParser.cpp
+	VType_wxCollapsiblePane.cpp
 	VType_wxColour.cpp
 	VType_wxComboBox.cpp
 	VType_wxCommandEvent.cpp
@@ -59,6 +47,8 @@ set(SRCFILES_VTYPE
 	VType_wxContextMenuEvent.cpp
 	VType_wxControl.cpp
 	VType_wxCursor.cpp
+	VType_wxDataViewCtrl.cpp
+	VType_wxDatePickerCtrl.cpp
 	VType_wxDateTime.cpp
 	VType_wxDC.cpp
 	VType_wxDropFilesEvent.cpp
@@ -67,6 +57,7 @@ set(SRCFILES_VTYPE
 	VType_wxEvent.cpp
 	VType_wxEventLoopBase.cpp
 	VType_wxEvtHandler.cpp
+	VType_wxFileCtrl.cpp
 	VType_wxFlexGridSizer.cpp
 	VType_wxFocusEvent.cpp
 	VType_wxFont.cpp
@@ -78,14 +69,18 @@ set(SRCFILES_VTYPE
 	VType_wxGBSpan.cpp
 	VType_wxGDIImageHandler.cpp
 	VType_wxGDIObject.cpp
+	VType_wxGenericDirCtrl.cpp
 	VType_wxGridBagSizer.cpp
 	VType_wxGridSizer.cpp
+	VType_wxHeaderCtrl.cpp
 	VType_wxHelpEvent.cpp
+	VType_wxHyperlinkCtrl.cpp
 	VType_wxIcon.cpp
 	VType_wxIconBundle.cpp
 	VType_wxIdleEvent.cpp
 	VType_wxImage.cpp
 	VType_wxImageList.cpp
+	VType_wxInfoBar.cpp
 	VType_wxJoystickEvent.cpp
 	VType_wxKeyEvent.cpp
 	VType_wxLayoutConstraints.cpp
@@ -94,6 +89,7 @@ set(SRCFILES_VTYPE
 	VType_wxListCtrl.cpp
 	VType_wxListItem.cpp
 	VType_wxMask.cpp
+	VType_wxMediaCtrl.cpp
 	VType_wxMemoryBuffer.cpp
 	VType_wxMemoryDC.cpp
 	VType_wxMenu.cpp
@@ -111,14 +107,19 @@ set(SRCFILES_VTYPE
 	VType_wxPalette.cpp
 	VType_wxPanel.cpp
 	VType_wxPen.cpp
+	VType_wxPickerBase.cpp
 	VType_wxPoint.cpp
 	VType_wxPowerEvent.cpp
 	VType_wxPrintData.cpp
+	VType_wxPropertyGrid.cpp
 	VType_wxRadioBox.cpp
 	VType_wxRadioButton.cpp
 	VType_wxRect.cpp
 	VType_wxRegion.cpp
+	VType_wxRibbonControl.cpp
 	VType_wxRichTextAttr.cpp
+	VType_wxRichTextCtrl.cpp
+	VType_wxSpinCtrlDouble.cpp
 	VType_wxSashWindow.cpp
 	VType_wxScreenDC.cpp
 	VType_wxScrollBar.cpp
@@ -133,6 +134,7 @@ set(SRCFILES_VTYPE
 	VType_wxSlider.cpp
 	VType_wxSpinButton.cpp
 	VType_wxSpinCtrl.cpp
+	VType_wxStaticBitmap.cpp
 	VType_wxStaticBox.cpp
 	VType_wxStaticBoxSizer.cpp
 	VType_wxStaticLine.cpp
@@ -144,6 +146,7 @@ set(SRCFILES_VTYPE
 	VType_wxSysColourChangedEvent.cpp
 	VType_wxTextAttr.cpp
 	VType_wxTextCtrl.cpp
+	VType_wxTimePickerCtrl.cpp
 	VType_wxToggleButton.cpp
 	VType_wxToolBar.cpp
 	VType_wxToolbook.cpp

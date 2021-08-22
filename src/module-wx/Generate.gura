@@ -164,6 +164,9 @@ public:
 ${if (evtHandlerOrDerivFlag)}
 protected:
 	wxWeakRef<wx${className}> _pEntity;
+${elsif (refCounterOrDerivFlag)}
+protected:
+	wxObjectDataPtr<wx${className}> _pEntity;
 ${elsif (classInfo.loosePointerFlag || (classInfoRoot && classInfoRoot.loosePointerFlag))}
 protected:
 	wx${className}* _pEntity;
@@ -203,6 +206,9 @@ public:
 ${if (className == 'EvtHandler' || classInfo.loosePointerFlag)}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+${elsif (className == 'RefCounter')}
+	explicit Value_wx${className}(const wxObjectDataPtr<wx${className}>& pEntity, VType& vtype = VTYPE_wx${className}) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'Event')}
 	explicit Value_wx${className}(const wx${className}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(entity.Clone()), _pValueUserData(pValueUserData) {}
@@ -214,6 +220,9 @@ ${elsif (!classNameParent)}
 		Value_Object(vtype), _entity(entity) {}
 ${elsif (classNameRoot == 'EvtHandler' || classInfoRoot.loosePointerFlag)}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(pEntity, vtype), _pEntity(pEntity) {}
+${elsif (classNameRoot == 'RefCounter')}
+	explicit Value_wx${className}(const wxObjectDataPtr<wx${className}>& pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(pEntity, vtype), _pEntity(pEntity) {}
 ${elsif (eventDerivFlag)}
 	Value_wx${className}(const wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
@@ -233,6 +242,11 @@ protected:
 	~Value_wx${className}() = default;
 public:
 ${if (evtHandlerOrDerivFlag || className in ['Event'])}
+	wx${className}& GetEntity() { return *_pEntity; }
+	const wx${className}& GetEntity() const { return *_pEntity; }
+	wx${className}* GetEntityPtr() { return _pEntity.get(); }
+	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
+${elsif (refCounterOrDerivFlag)}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
@@ -549,6 +563,11 @@ ClassInfo = class {
 		classInfo = this.GetClassInfoRoot()
 		classInfo && classInfo.className == 'EvtHandler'
 	}
+	IsRefCounterOrDeriv() = {
+		(this.className == 'RefCounter') && return(true)
+		classInfo = this.GetClassInfoRoot()
+		classInfo && classInfo.className == 'RefCounter'
+	}
 	IsLoosePointer() = {
 		this.loosePointerFlag && return(true)
 		classInfo = this.GetClassInfoRoot()
@@ -735,6 +754,36 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 }
 '''
 
+tmplConstructorImplementation_RefCounter = tR'''
+// ${funcInfo.ToString()} {block?}
+Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
+{
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.${className}.");
+}
+
+Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
+{
+	${if (!funcInfo.argInfoTbl.IsEmpty())}
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	${funcInfo.argInfoTbl::ComposeImplementation()}
+	${end}
+	// Function body
+	${if (funcInfo.tmplFunctionBody)}
+	${funcInfo.tmplFunctionBody.Eval()}
+	${else}
+	wxObjectDataPtr<${funcInfo.GetTypeInfo().vtype}> pEntity_gurax(new ${funcInfo.GetTypeInfo().vtype}(${funcInfo.ComposeArgs()}));
+	RefPtr<Value_${funcInfo.GetTypeInfo().vtype}> pValue_gurax(new Value_${funcInfo.GetTypeInfo().vtype}(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+	${end}
+}
+'''
+
 tmplEvents = tR'''
 //==============================================================================
 // Events.cpp
@@ -791,7 +840,7 @@ r.DeclareType('EventType', 'wxEventType', 'wxEventType', 'wxEventType',
 	''')
 
 classInfoTbl.Each {|classInfo|
-	if (classInfo.IsEvtHandlerOrDeriv() || classInfo.IsLoosePointer()) {
+	if (classInfo.IsEvtHandlerOrDeriv() || classInfo.IsLoosePointer() || classInfo.IsRefCounterOrDeriv()) {
 		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
 			'wx' + classInfo.className, 'wx.' + classInfo.className,
 			codePicker = R'''
@@ -890,6 +939,9 @@ classInfoTbl.Each {|classInfo|
 	} elsif (classInfo.IsLoosePointer()) {
 		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_LoosePointer
+	} elsif (classInfo.IsRefCounterOrDeriv()) {
+		classInfo.typeInfo = typeInfo_p
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_RefCounter
 	} else {
 		classInfo.typeInfo = typeInfo
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Object
@@ -919,6 +971,7 @@ GenerateVType(classInfoTbl[] as ClassInfo) = {
 		classNames.Add(className)
 		eventDerivFlag = classInfo.IsEventDeriv()
 		evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
+		refCounterOrDerivFlag = classInfo.IsRefCounterOrDeriv()
 		Println(className)
 		tmplHeader.Render(fileNameHeader)
 		tmplSource.Render(fileNameSource)
