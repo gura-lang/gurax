@@ -11,8 +11,9 @@ Grid = Class(ScrolledCanvas) {
 	@include['wx/grid.h']
 }
 
-//RefCounter = Class {
-//}
+RefCounter = Class {
+}
 
-//GridCellAttr = Class(RefCounter) {
-//}
+GridCellAttr = Class(RefCounter) {
+	@include['wx/grid.h']
+}

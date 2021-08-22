@@ -7,6 +7,8 @@ set(SRCFILES_VTYPE
 	VType_wxScrolledWindow.cpp
 	VType_wxScrolledCanvas.cpp
 	VType_wxGrid.cpp
+	VType_wxRefCounter.cpp
+	VType_wxGridCellAttr.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

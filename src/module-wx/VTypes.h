@@ -10,6 +10,8 @@
 #include "VType_wxScrolledWindow.h"
 #include "VType_wxScrolledCanvas.h"
 #include "VType_wxGrid.h"
+#include "VType_wxRefCounter.h"
+#include "VType_wxGridCellAttr.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"

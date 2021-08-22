@@ -15,6 +15,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxScrolledWindow);
 	frame.Assign(VTYPE_wxScrolledCanvas);
 	frame.Assign(VTYPE_wxGrid);
+	frame.Assign(VTYPE_wxRefCounter);
+	frame.Assign(VTYPE_wxGridCellAttr);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);

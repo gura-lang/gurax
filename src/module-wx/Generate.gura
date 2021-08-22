@@ -223,7 +223,7 @@ ${elsif (classNameRoot == 'EvtHandler' || classInfoRoot.loosePointerFlag)}
 		Value_wx${classNameParent}(pEntity, vtype), _pEntity(pEntity) {}
 ${elsif (classNameRoot == 'RefCounter')}
 	explicit Value_wx${className}(const wxObjectDataPtr<wx${className}>& pEntity, VType& vtype = VTYPE_wx${className}) :
-		Value_wx${classNameParent}(pEntity, vtype), _pEntity(pEntity) {}
+		Value_wx${classNameParent}(wxObjectDataPtr<wx${classNameParent}>(pEntity.get()), vtype), _pEntity(pEntity) {}
 ${elsif (eventDerivFlag)}
 	Value_wx${className}(const wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(entity, pValueUserData, vtype) {}
