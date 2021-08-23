@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridCellAttrProvider.gura
 //==============================================================================
+GridCellAttrProvider = Class(ClientDataContainer) {
+	@include['wx/grid.h']
+}

@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridCellDateTimeRenderer.gura
 //==============================================================================
+GridCellDateTimeRenderer = Class(GridCellStringRenderer) {
+	@include['wx/grid.h']
+}

@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridCellBoolEditor.gura
 //==============================================================================
+GridCellBoolEditor = Class(GridCellEditor) {
+	@include['wx/grid.h']
+}

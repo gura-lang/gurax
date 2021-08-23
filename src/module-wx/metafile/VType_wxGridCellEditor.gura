@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridCellEditor.gura
 //==============================================================================
+GridCellEditor = Class(ClientDataContainer) {
+	@include['wx/grid.h']
+}

@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridCellBoolRenderer.gura
 //==============================================================================
+GridCellBoolRenderer = Class(GridCellRenderer) {
+	@include['wx/grid.h']
+}
