@@ -2,4 +2,69 @@
 // VType_wxDialog.gura
 //==============================================================================
 Dialog = Class(TopLevelWindow) {
+	__init__(parent as Window_p, id as WindowID, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxDEFAULT_DIALOG_STYLE, name as String = wxDialogNameStr)
+	AddMainButtonId(id as WindowID) as void
+	CanDoLayoutAdaptation() as bool
+	Centre(direction as int = wxBOTH) as void
+	Create(parent as Window_p, id as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE, name as const_String_r = wxDialogNameStr) as bool
+	CreateButtonSizer(flags as long) as Sizer_p
+	CreateSeparatedButtonSizer(flags as long) as Sizer_p
+	CreateSeparatedSizer(sizer as Sizer_p) as Sizer_p
+	CreateStdDialogButtonSizer(flags as long) as StdDialogButtonSizer_p
+	CreateTextSizer(message as const_String_r) as Sizer_p
+	DoLayoutAdaptation() as bool
+	DoOK() as bool
+	EndModal(retCode as int) as void
+	GetAffirmativeId() as int
+	GetContentWindow() as Window_p
+	GetEscapeId() as int
+	GetLayoutAdaptationDone() as bool
+	GetLayoutAdaptationLevel() as int
+	GetLayoutAdaptationMode() as DialogLayoutAdaptationMode
+	//GetMainButtonIds() as ArrayInt
+	GetReturnCode() as int
+	GetToolBar() as ToolBar_p
+	Iconize(iconize as bool = true) as void
+	IsIconized() as bool
+	IsMainButtonId(id as WindowID) as bool
+	IsModal() as bool
+	SetAffirmativeId(id as int) as void
+	SetEscapeId(id as int) as void
+	SetIcon(icon as const_Icon_r) as void
+	SetIcons(icons as const_IconBundle_r) as void
+	SetLayoutAdaptationDone(done as bool) as void
+	SetLayoutAdaptationLevel(level as int) as void
+	SetLayoutAdaptationMode(mode as DialogLayoutAdaptationMode) as void
+	SetReturnCode(retCode as int) as void
+	Show(show as bool = 1) as bool
+	ShowModal() as int
+	ShowWindowModal() as void
 }
+
+@const[
+	CAPTION
+	DEFAULT_DIALOG_STYLE
+	RESIZE_BORDER
+	SYSTEM_MENU
+	CLOSE_BOX
+	MAXIMIZE_BOX
+	MINIMIZE_BOX
+	THICK_FRAME
+	STAY_ON_TOP
+	NO_3D
+	DIALOG_NO_PARENT
+	DIALOG_EX_CONTEXTHELP
+	DIALOG_EX_METAL
+]
+
+@const[
+	DIALOG_ADAPTATION_MODE_DEFAULT
+	DIALOG_ADAPTATION_MODE_ENABLED
+	DIALOG_ADAPTATION_MODE_DISABLED
+]
+
+@event[
+	EVT_CLOSE		>> CloseEvent
+	EVT_INIT_DIALOG	>> InitDialogEvent
+]

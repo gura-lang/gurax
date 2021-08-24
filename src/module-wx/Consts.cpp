@@ -60,6 +60,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CAL_SHOW_SURROUNDING_WEEKS", new Value_Number(wxCAL_SHOW_SURROUNDING_WEEKS));
 	frame.Assign("CAL_SHOW_WEEK_NUMBERS", new Value_Number(wxCAL_SHOW_WEEK_NUMBERS));
 	frame.Assign("CAL_SUNDAY_FIRST", new Value_Number(wxCAL_SUNDAY_FIRST));
+	frame.Assign("CAPTION", new Value_Number(wxCAPTION));
 	frame.Assign("CAP_BUTT", new Value_Number(wxCAP_BUTT));
 	frame.Assign("CAP_INVALID", new Value_Number(wxCAP_INVALID));
 	frame.Assign("CAP_PROJECTING", new Value_Number(wxCAP_PROJECTING));
@@ -71,6 +72,14 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CC_SPECIAL_DCLICK", new Value_Number(wxCC_SPECIAL_DCLICK));
 	frame.Assign("CC_STD_BUTTON", new Value_Number(wxCC_STD_BUTTON));
 	frame.Assign("CLIP_CHILDREN", new Value_Number(wxCLIP_CHILDREN));
+	frame.Assign("CLOSE_BOX", new Value_Number(wxCLOSE_BOX));
+	frame.Assign("DEFAULT_DIALOG_STYLE", new Value_Number(wxDEFAULT_DIALOG_STYLE));
+	frame.Assign("DIALOG_ADAPTATION_MODE_DEFAULT", new Value_Number(wxDIALOG_ADAPTATION_MODE_DEFAULT));
+	frame.Assign("DIALOG_ADAPTATION_MODE_DISABLED", new Value_Number(wxDIALOG_ADAPTATION_MODE_DISABLED));
+	frame.Assign("DIALOG_ADAPTATION_MODE_ENABLED", new Value_Number(wxDIALOG_ADAPTATION_MODE_ENABLED));
+	frame.Assign("DIALOG_EX_CONTEXTHELP", new Value_Number(wxDIALOG_EX_CONTEXTHELP));
+	frame.Assign("DIALOG_EX_METAL", new Value_Number(wxDIALOG_EX_METAL));
+	frame.Assign("DIALOG_NO_PARENT", new Value_Number(wxDIALOG_NO_PARENT));
 	frame.Assign("EXPAND", new Value_Number(wxEXPAND));
 	frame.Assign("FIXED_MINSIZE", new Value_Number(wxFIXED_MINSIZE));
 	frame.Assign("FULL_REPAINT_ON_RESIZE", new Value_Number(wxFULL_REPAINT_ON_RESIZE));
@@ -210,6 +219,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("LC_VIRTUAL", new Value_Number(wxLC_VIRTUAL));
 	frame.Assign("LC_VRULES", new Value_Number(wxLC_VRULES));
 	frame.Assign("LEFT", new Value_Number(wxLEFT));
+	frame.Assign("MAXIMIZE_BOX", new Value_Number(wxMAXIMIZE_BOX));
+	frame.Assign("MINIMIZE_BOX", new Value_Number(wxMINIMIZE_BOX));
 	frame.Assign("NB_BOTTOM", new Value_Number(wxNB_BOTTOM));
 	frame.Assign("NB_FIXEDWIDTH", new Value_Number(wxNB_FIXEDWIDTH));
 	frame.Assign("NB_LEFT", new Value_Number(wxNB_LEFT));
@@ -217,6 +228,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("NB_NOPAGETHEME", new Value_Number(wxNB_NOPAGETHEME));
 	frame.Assign("NB_RIGHT", new Value_Number(wxNB_RIGHT));
 	frame.Assign("NB_TOP", new Value_Number(wxNB_TOP));
+	frame.Assign("NO_3D", new Value_Number(wxNO_3D));
 	frame.Assign("NO_FULL_REPAINT_ON_RESIZE", new Value_Number(wxNO_FULL_REPAINT_ON_RESIZE));
 	frame.Assign("OK", new Value_Number(wxOK));
 	frame.Assign("PENSTYLE_BDIAGONAL_HATCH", new Value_Number(wxPENSTYLE_BDIAGONAL_HATCH));
@@ -239,12 +251,15 @@ void AssignConsts(Frame& frame)
 	frame.Assign("PENSTYLE_USER_DASH", new Value_Number(wxPENSTYLE_USER_DASH));
 	frame.Assign("PENSTYLE_VERTICAL_HATCH", new Value_Number(wxPENSTYLE_VERTICAL_HATCH));
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
+	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
 	frame.Assign("SHAPED", new Value_Number(wxSHAPED));
+	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));
 	frame.Assign("ST_ELLIPSIZE_END", new Value_Number(wxST_ELLIPSIZE_END));
 	frame.Assign("ST_ELLIPSIZE_MIDDLE", new Value_Number(wxST_ELLIPSIZE_MIDDLE));
 	frame.Assign("ST_ELLIPSIZE_START", new Value_Number(wxST_ELLIPSIZE_START));
 	frame.Assign("ST_NO_AUTORESIZE", new Value_Number(wxST_NO_AUTORESIZE));
+	frame.Assign("SYSTEM_MENU", new Value_Number(wxSYSTEM_MENU));
 	frame.Assign("TAB_TRAVERSAL", new Value_Number(wxTAB_TRAVERSAL));
 	frame.Assign("TE_AUTO_URL", new Value_Number(wxTE_AUTO_URL));
 	frame.Assign("TE_BESTWRAP", new Value_Number(wxTE_BESTWRAP));
@@ -264,6 +279,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("TE_RICH2", new Value_Number(wxTE_RICH2));
 	frame.Assign("TE_RIGHT", new Value_Number(wxTE_RIGHT));
 	frame.Assign("TE_WORDWRAP", new Value_Number(wxTE_WORDWRAP));
+	frame.Assign("THICK_FRAME", new Value_Number(wxTHICK_FRAME));
 	frame.Assign("TOP", new Value_Number(wxTOP));
 	frame.Assign("TRANSPARENT_WINDOW", new Value_Number(wxTRANSPARENT_WINDOW));
 	frame.Assign("VERTICAL", new Value_Number(wxVERTICAL));

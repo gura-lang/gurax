@@ -42,6 +42,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_ENTER, wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_BUTTON_CLICKED, wxCommandEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU, wxContextMenuEvent);
+	Gurax_AssignEvent(EVT_CLOSE, wxCloseEvent);
+	Gurax_AssignEvent(EVT_INIT_DIALOG, wxInitDialogEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES, wxDropFilesEvent);
 	Gurax_AssignEvent(EVT_ERASE_BACKGROUND, wxEraseEvent);
 	Gurax_AssignEvent(EVT_SET_FOCUS, wxFocusEvent);

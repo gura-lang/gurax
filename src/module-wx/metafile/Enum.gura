@@ -10,6 +10,7 @@
 	CalendarDateBorder
 	Coord
 	Dash
+	DialogLayoutAdaptationMode
 	Direction
 	DragResult
 	EventCategory
