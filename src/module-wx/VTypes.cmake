@@ -4,31 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxScrolledWindow.cpp
-	VType_wxScrolledCanvas.cpp
-	VType_wxGrid.cpp
-	VType_wxRefCounter.cpp
-	VType_wxGridCellAttr.cpp
-	VType_wxClientDataContainer.cpp
-	VType_wxGridCellAttr.cpp
-	VType_wxGridCellAttrProvider.cpp
-	VType_wxGridCellEditor.cpp
-	VType_wxGridCellTextEditor.cpp
-	VType_wxGridCellAutoWrapStringEditor.cpp
-	VType_wxGridCellRenderer.cpp
-	VType_wxGridCellStringRenderer.cpp
-	VType_wxGridCellBoolEditor.cpp
-	VType_wxGridCellBoolRenderer.cpp
-	VType_wxGridCellChoiceEditor.cpp
-	VType_wxGridCellCoords.cpp
-	VType_wxGridCellDateTimeRenderer.cpp
-	VType_wxGridCellEnumEditor.cpp
-	VType_wxGridCellEnumRenderer.cpp
-	VType_wxGridCellFloatEditor.cpp
-	VType_wxGridCellFloatRenderer.cpp
-	VType_wxGridCellNumberEditor.cpp
-	VType_wxGridCellNumberRenderer.cpp
-	VType_wxGridEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -59,10 +34,13 @@ set(SRCFILES_VTYPE
 	VType_wxChildFocusEvent.cpp
 	VType_wxChoice.cpp
 	VType_wxChoicebook.cpp
+	VType_wxClientDataContainer.cpp
 	VType_wxCmdLineParser.cpp
 	VType_wxCollapsiblePane.cpp
 	VType_wxColour.cpp
 	VType_wxComboBox.cpp
+	VType_wxComboCtrl.cpp
+	VType_wxComboPopup.cpp
 	VType_wxCommandEvent.cpp
 	VType_wxCommandLinkButton.cpp
 	VType_wxContextHelpButton.cpp
@@ -92,7 +70,27 @@ set(SRCFILES_VTYPE
 	VType_wxGDIImageHandler.cpp
 	VType_wxGDIObject.cpp
 	VType_wxGenericDirCtrl.cpp
+	VType_wxGrid.cpp
 	VType_wxGridBagSizer.cpp
+	VType_wxGridCellAttr.cpp
+	VType_wxGridCellAttrProvider.cpp
+	VType_wxGridCellAutoWrapStringEditor.cpp
+	VType_wxGridCellBoolEditor.cpp
+	VType_wxGridCellBoolRenderer.cpp
+	VType_wxGridCellChoiceEditor.cpp
+	VType_wxGridCellCoords.cpp
+	VType_wxGridCellDateTimeRenderer.cpp
+	VType_wxGridCellEditor.cpp
+	VType_wxGridCellEnumEditor.cpp
+	VType_wxGridCellEnumRenderer.cpp
+	VType_wxGridCellFloatEditor.cpp
+	VType_wxGridCellFloatRenderer.cpp
+	VType_wxGridCellNumberEditor.cpp
+	VType_wxGridCellNumberRenderer.cpp
+	VType_wxGridCellRenderer.cpp
+	VType_wxGridCellStringRenderer.cpp
+	VType_wxGridCellTextEditor.cpp
+	VType_wxGridEvent.cpp
 	VType_wxGridSizer.cpp
 	VType_wxHeaderCtrl.cpp
 	VType_wxHelpEvent.cpp
@@ -137,6 +135,7 @@ set(SRCFILES_VTYPE
 	VType_wxRadioBox.cpp
 	VType_wxRadioButton.cpp
 	VType_wxRect.cpp
+	VType_wxRefCounter.cpp
 	VType_wxRegion.cpp
 	VType_wxRibbonControl.cpp
 	VType_wxRichTextAttr.cpp
@@ -145,6 +144,8 @@ set(SRCFILES_VTYPE
 	VType_wxSashWindow.cpp
 	VType_wxScreenDC.cpp
 	VType_wxScrollBar.cpp
+	VType_wxScrolledCanvas.cpp
+	VType_wxScrolledWindow.cpp
 	VType_wxScrollWinEvent.cpp
 	VType_wxSetCursorEvent.cpp
 	VType_wxSimplebook.cpp

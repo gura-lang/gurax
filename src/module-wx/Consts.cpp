@@ -68,6 +68,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CB_READONLY", new Value_Number(wxCB_READONLY));
 	frame.Assign("CB_SIMPLE", new Value_Number(wxCB_SIMPLE));
 	frame.Assign("CB_SORT", new Value_Number(wxCB_SORT));
+	frame.Assign("CC_SPECIAL_DCLICK", new Value_Number(wxCC_SPECIAL_DCLICK));
+	frame.Assign("CC_STD_BUTTON", new Value_Number(wxCC_STD_BUTTON));
 	frame.Assign("CLIP_CHILDREN", new Value_Number(wxCLIP_CHILDREN));
 	frame.Assign("EXPAND", new Value_Number(wxEXPAND));
 	frame.Assign("FIXED_MINSIZE", new Value_Number(wxFIXED_MINSIZE));
