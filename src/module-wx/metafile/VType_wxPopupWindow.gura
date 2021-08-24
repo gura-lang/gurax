@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxPopupWindow.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+PopupWindow = Class(NonOwnedWindow) {
+	@include['wx/popupwin.h']
 }

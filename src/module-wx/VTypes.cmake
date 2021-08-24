@@ -38,6 +38,7 @@ set(SRCFILES_VTYPE
 	VType_wxCmdLineParser.cpp
 	VType_wxCollapsiblePane.cpp
 	VType_wxColour.cpp
+	VType_wxColourDialog.cpp
 	VType_wxComboBox.cpp
 	VType_wxComboCtrl.cpp
 	VType_wxComboPopup.cpp
@@ -51,6 +52,12 @@ set(SRCFILES_VTYPE
 	VType_wxDatePickerCtrl.cpp
 	VType_wxDateTime.cpp
 	VType_wxDC.cpp
+	VType_wxDialog.cpp
+	VType_wxDirDialog.cpp
+	VType_wxDocChildFrame.cpp
+	VType_wxDocMDIChildFrame.cpp
+	VType_wxDocMDIParentFrame.cpp
+	VType_wxDocParentFrame.cpp
 	VType_wxDropFilesEvent.cpp
 	VType_wxDropTarget.cpp
 	VType_wxEraseEvent.cpp
@@ -58,9 +65,12 @@ set(SRCFILES_VTYPE
 	VType_wxEventLoopBase.cpp
 	VType_wxEvtHandler.cpp
 	VType_wxFileCtrl.cpp
+	VType_wxFileDialog.cpp
+	VType_wxFindReplaceDialog.cpp
 	VType_wxFlexGridSizer.cpp
 	VType_wxFocusEvent.cpp
 	VType_wxFont.cpp
+	VType_wxFontDialog.cpp
 	VType_wxFontMetrics.cpp
 	VType_wxFrame.cpp
 	VType_wxGauge.cpp
@@ -70,6 +80,7 @@ set(SRCFILES_VTYPE
 	VType_wxGDIImageHandler.cpp
 	VType_wxGDIObject.cpp
 	VType_wxGenericDirCtrl.cpp
+	VType_wxGenericProgressDialog.cpp
 	VType_wxGrid.cpp
 	VType_wxGridBagSizer.cpp
 	VType_wxGridCellAttr.cpp
@@ -94,6 +105,8 @@ set(SRCFILES_VTYPE
 	VType_wxGridSizer.cpp
 	VType_wxHeaderCtrl.cpp
 	VType_wxHelpEvent.cpp
+	VType_wxHtmlHelpDialog.cpp
+	VType_wxHtmlHelpFrame.cpp
 	VType_wxHyperlinkCtrl.cpp
 	VType_wxIcon.cpp
 	VType_wxIconBundle.cpp
@@ -109,31 +122,48 @@ set(SRCFILES_VTYPE
 	VType_wxListCtrl.cpp
 	VType_wxListItem.cpp
 	VType_wxMask.cpp
+	VType_wxMDIChildFrame.cpp
+	VType_wxMDIParentFrame.cpp
 	VType_wxMediaCtrl.cpp
 	VType_wxMemoryBuffer.cpp
 	VType_wxMemoryDC.cpp
 	VType_wxMenu.cpp
 	VType_wxMenuBar.cpp
 	VType_wxMenuItem.cpp
+	VType_wxMessageDialog.cpp
 	VType_wxMetafileDC.cpp
+	VType_wxMiniFrame.cpp
 	VType_wxMirrorDC.cpp
 	VType_wxMouseCaptureChangedEvent.cpp
 	VType_wxMouseCaptureLostEvent.cpp
 	VType_wxMouseEvent.cpp
+	VType_wxMultiChoiceDialog.cpp
+	VType_wxNonOwnedWindow.cpp
 	VType_wxNotebook.cpp
 	VType_wxNotifyEvent.cpp
+	VType_wxNumberEntryDialog.cpp
 	VType_wxObject.cpp
 	VType_wxPaintEvent.cpp
 	VType_wxPalette.cpp
 	VType_wxPanel.cpp
+	VType_wxPasswordEntryDialog.cpp
 	VType_wxPen.cpp
+	VType_wxPGArrayEditorDialog.cpp
+	VType_wxPGArrayStringEditorDialog.cpp
 	VType_wxPickerBase.cpp
 	VType_wxPoint.cpp
+	VType_wxPopupTransientWindow.cpp
+	VType_wxPopupWindow.cpp
 	VType_wxPowerEvent.cpp
+	VType_wxPreviewFrame.cpp
+	VType_wxPrintAbortDialog.cpp
 	VType_wxPrintData.cpp
+	VType_wxProgressDialog.cpp
 	VType_wxPropertyGrid.cpp
+	VType_wxPropertySheetDialog.cpp
 	VType_wxRadioBox.cpp
 	VType_wxRadioButton.cpp
+	VType_wxRearrangeDialog.cpp
 	VType_wxRect.cpp
 	VType_wxRefCounter.cpp
 	VType_wxRegion.cpp
@@ -141,6 +171,7 @@ set(SRCFILES_VTYPE
 	VType_wxRichTextAttr.cpp
 	VType_wxRichTextCtrl.cpp
 	VType_wxSpinCtrlDouble.cpp
+	VType_wxRichTextStyleOrganiserDialog.cpp
 	VType_wxSashWindow.cpp
 	VType_wxScreenDC.cpp
 	VType_wxScrollBar.cpp
@@ -149,6 +180,7 @@ set(SRCFILES_VTYPE
 	VType_wxScrollWinEvent.cpp
 	VType_wxSetCursorEvent.cpp
 	VType_wxSimplebook.cpp
+	VType_wxSingleChoiceDialog.cpp
 	VType_wxSize.cpp
 	VType_wxSizeEvent.cpp
 	VType_wxSizer.cpp
@@ -157,6 +189,7 @@ set(SRCFILES_VTYPE
 	VType_wxSlider.cpp
 	VType_wxSpinButton.cpp
 	VType_wxSpinCtrl.cpp
+	VType_wxSplashScreen.cpp
 	VType_wxStaticBitmap.cpp
 	VType_wxStaticBox.cpp
 	VType_wxStaticBoxSizer.cpp
@@ -166,14 +199,17 @@ set(SRCFILES_VTYPE
 	VType_wxStdDialogButtonSizer.cpp
 	VType_wxStyledTextCtrl.cpp
 	VType_wxStyledTextEvent.cpp
+	VType_wxSymbolPickerDialog.cpp
 	VType_wxSysColourChangedEvent.cpp
 	VType_wxTextAttr.cpp
 	VType_wxTextCtrl.cpp
+	VType_wxTextEntryDialog.cpp
 	VType_wxTimePickerCtrl.cpp
 	VType_wxToggleButton.cpp
 	VType_wxToolBar.cpp
 	VType_wxToolbook.cpp
 	VType_wxToolTip.cpp
+	VType_wxTopLevelWindow.cpp
 	VType_wxTreebook.cpp
 	VType_wxTreeCtrl.cpp
 	VType_wxTreeItemData.cpp
@@ -181,5 +217,6 @@ set(SRCFILES_VTYPE
 	VType_wxValidator.cpp
 	VType_wxVisualAttributes.cpp
 	VType_wxWindow.cpp
+	VType_wxWizard.cpp
 	VType_wxWrapSizer.cpp
 )

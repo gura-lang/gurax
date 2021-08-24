@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxComboPopup.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+ComboPopup = Class():loosePointer {
+	@include['wx/combo.h']
 }

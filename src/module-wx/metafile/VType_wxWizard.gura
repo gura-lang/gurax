@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxWizard.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+Wizard = Class(Dialog) {
+	@include['wx/wizard.h']
 }

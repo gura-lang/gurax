@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxMDIParentFrame.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+MDIParentFrame = Class(Frame) {
+	@include['wx/mdi.h']
 }

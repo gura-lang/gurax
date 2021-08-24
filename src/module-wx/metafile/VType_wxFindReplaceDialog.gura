@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxFindReplaceDialog.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+FindReplaceDialog = Class(Dialog) {
+	@include['wx/fdrepdlg.h']
 }

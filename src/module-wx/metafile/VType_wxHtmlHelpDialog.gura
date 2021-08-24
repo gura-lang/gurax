@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxHtmlHelpDialog.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+HtmlHelpDialog = Class(Dialog) {
+	@include['wx/html/helpdlg.h']
 }

@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxProgressDialog.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+ProgressDialog = Class(GenericProgressDialog) {
+	@include['wx/progdlg.h']
 }

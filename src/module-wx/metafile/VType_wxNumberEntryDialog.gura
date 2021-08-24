@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxNumberEntryDialog.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+NumberEntryDialog = Class(Dialog) {
+	@include['wx/numdlg.h']
 }

@@ -1,6 +1,5 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxTopLevelWindow.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+TopLevelWindow = Class(NonOwnedWindow) {
 }

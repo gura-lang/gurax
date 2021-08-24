@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxRichTextStyleOrganiserDialog.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+RichTextStyleOrganiserDialog = Class(Dialog) {
+	@include['wx/richtext/richtextstyledlg.h']
 }

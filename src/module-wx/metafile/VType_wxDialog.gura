@@ -1,6 +1,5 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxDialog.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+Dialog = Class(TopLevelWindow) {
 }

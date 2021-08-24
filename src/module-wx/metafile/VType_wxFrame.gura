@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxFrame.gura
 //==============================================================================
-Frame = Class(Window) {
+Frame = Class(TopLevelWindow) {
 	__init__(parent:nil as Window_p, id as WindowID, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxDEFAULT_FRAME_STYLE, name as String = wxFrameNameStr)
 	CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as WindowID = 0, name as String = wxStatusBarNameStr) as StatusBar_p

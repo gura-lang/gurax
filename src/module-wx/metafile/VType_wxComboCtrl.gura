@@ -1,0 +1,67 @@
+//==============================================================================
+// VType_wxComboCtrl.gura
+//==============================================================================
+ComboCtrl = Class(Control) {
+	@mixin[TextEntry]
+	@include['wx/combo.h']
+ 	__init__(parent as Window_p, id as WindowID = wxID_ANY, value as String = '', pos as Point = wxDefaultPosition,
+	 	size as Size = wxDefaultSize, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxComboBoxNameStr)
+	Copy() as void
+	Cut() as void
+	Dismiss() as void
+	EnablePopupAnimation(enable as bool = true) as void
+	IsKeyPopupToggle(event as const_KeyEvent_r) as bool
+	PrepareBackground(dc as DC_r, rect as const_Rect_r, flags as int) as void
+	ShouldDrawFocus() as bool
+	GetBitmapDisabled() as Bitmap
+	GetBitmapHover() as Bitmap
+	GetBitmapNormal() as Bitmap
+	GetBitmapPressed() as Bitmap
+	GetButtonSize() as Size
+	GetCustomPaintWidth() as int
+	GetHint() as String
+	GetInsertionPoint() as long
+	GetLastPosition() as long
+	GetMargins() as Point
+	GetPopupControl() as ComboPopup_p
+	GetPopupWindow() as Window_p
+	GetTextCtrl() as TextCtrl_p
+	//GetTextIndent() as Coord
+	GetTextRect() as Rect
+	GetValue() as String
+	HidePopup(generateEvent as bool = false) as void
+	IsPopupShown() as bool
+	IsPopupWindowState(state as int) as bool
+	OnButtonClick() as void
+	Paste() as void
+	Popup() as void
+	Remove(from as long, to as long) as void
+	Replace(from as long, to as long, text as const_String_r) as void
+	SetButtonBitmaps(bmpNormal as const_Bitmap_r, pushButtonBg as bool = false, bmpPressed as const_Bitmap_r = wxNullBitmap, bmpHover as const_Bitmap_r = wxNullBitmap, bmpDisabled as const_Bitmap_r = wxNullBitmap) as void
+	SetButtonPosition(width as int = -1, height as int = -1, side as int = wxRIGHT, spacingX as int = 0) as void
+	SetCustomPaintWidth(width as int) as void
+	SetHint(hint as const_String_r) as bool
+	SetInsertionPoint(pos as long) as void
+	SetInsertionPointEnd() as void
+	SetPopupAnchor(anchorSide as int) as void
+	SetPopupControl(popup as ComboPopup_p) as void
+	SetPopupExtents(extLeft as int, extRight as int) as void
+	SetPopupMaxHeight(height as int) as void
+	SetPopupMinWidth(width as int) as void
+	SetSelection(from as long, to as long) as void
+	SetText(value as const_String_r) as void
+	SetTextCtrlStyle(style as int) as void
+	//SetTextIndent(indent as int) as void
+	SetValue(value as const_String_r) as void
+	SetValueByUser(value as const_String_r) as void
+	ShowPopup() as void
+	Undo() as void
+	UseAltPopupWindow(enable as bool = true) as void
+	//SetMargins(pt as const_Point_r) as bool
+	SetMargins(left as Coord, top as Coord = -1) as bool
+}
+
+@const[
+	CC_SPECIAL_DCLICK
+	CC_STD_BUTTON
+]

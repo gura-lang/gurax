@@ -1,6 +1,7 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxNonOwnedWindow.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+NonOwnedWindow = Class(Window) {
+	SetShape(region as const_Region_r) as bool
+	//SetShape(path as const_GraphicsPath_r) as bool
 }

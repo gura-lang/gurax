@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxPGArrayEditorDialog.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+PGArrayEditorDialog = Class(Dialog) {
+	@include['wx/propgrid/props.h']
 }

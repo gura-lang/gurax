@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxAuiMDIParentFrame.gura
+// VType_wxSymbolPickerDialog.gura
 //==============================================================================
-AuiMDIParentFrame = Class(Frame) {
-	@include['wx/aui/tabmdi.h']
+SymbolPickerDialog = Class(Dialog) {
+	@include['wx/richtext/richtextsymboldlg.h']
 }

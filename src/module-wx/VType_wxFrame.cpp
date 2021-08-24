@@ -161,7 +161,7 @@ void VType_wxFrame::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Frame_gurax));
+	Declare(VTYPE_wxTopLevelWindow, Flag::Mutable, Gurax_CreateConstructor(Frame_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxFrame, CreateStatusBar_gurax));
 	Assign(Gurax_CreateMethod(wxFrame, SetStatusText_gurax));
