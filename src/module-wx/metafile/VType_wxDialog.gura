@@ -7,7 +7,7 @@ Dialog = Class(TopLevelWindow) {
 	AddMainButtonId(id as WindowID) as void
 	CanDoLayoutAdaptation() as bool
 	Centre(direction as int = wxBOTH) as void
-	Create(parent as Window_p, id as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE, name as const_String_r = wxDialogNameStr) as bool
+	//Create(parent as Window_p, id as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE, name as const_String_r = wxDialogNameStr) as bool
 	CreateButtonSizer(flags as long) as Sizer_p
 	CreateSeparatedButtonSizer(flags as long) as Sizer_p
 	CreateSeparatedSizer(sizer as Sizer_p) as Sizer_p

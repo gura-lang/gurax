@@ -158,6 +158,32 @@ const Value& LookupEventType(wxEventType eventType)
 	return *iter->second;
 }
 
+void ConvertToWxImage(Image& imageGura, wxImage& image)
+{
+	do {
+		Image::Scanner scanner(Image::Scanner::LeftTopHorz(imageGura));
+		UInt8* pBuffDst = image.GetData();
+		do {
+			const UInt8* pPixel = scanner.GetPointerC();
+			*(pBuffDst + 0) = *(pPixel + Image::offsetR);
+			*(pBuffDst + 1) = *(pPixel + Image::offsetG);
+			*(pBuffDst + 2) = *(pPixel + Image::offsetB);
+			pBuffDst += 3;
+		} while (scanner.Next());
+	} while (0);
+	if (imageGura.IsFormat(Image::Format::RGBA)) {
+		Image::Scanner scanner(Image::Scanner::LeftTopHorz(imageGura));
+		image.SetAlpha();
+		UInt8* pBuffDst = image.GetData();
+		do {
+			const UInt8* pPixel = scanner.GetPointerC();
+			*pBuffDst = *(pPixel + Image::offsetA);
+			pBuffDst++;
+		} while (scanner.Next());
+
+	}
+}
+
 void ExitMainLoop()
 {
 	wxWindow* window = wxDynamicCast(wxApp::GetInstance(), wxApp)->GetTopWindow();
