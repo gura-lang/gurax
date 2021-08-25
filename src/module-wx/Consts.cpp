@@ -228,7 +228,6 @@ void AssignConsts(Frame& frame)
 	frame.Assign("NB_NOPAGETHEME", new Value_Number(wxNB_NOPAGETHEME));
 	frame.Assign("NB_RIGHT", new Value_Number(wxNB_RIGHT));
 	frame.Assign("NB_TOP", new Value_Number(wxNB_TOP));
-	frame.Assign("NO_3D", new Value_Number(wxNO_3D));
 	frame.Assign("NO_FULL_REPAINT_ON_RESIZE", new Value_Number(wxNO_FULL_REPAINT_ON_RESIZE));
 	frame.Assign("OK", new Value_Number(wxOK));
 	frame.Assign("PENSTYLE_BDIAGONAL_HATCH", new Value_Number(wxPENSTYLE_BDIAGONAL_HATCH));
@@ -279,7 +278,6 @@ void AssignConsts(Frame& frame)
 	frame.Assign("TE_RICH2", new Value_Number(wxTE_RICH2));
 	frame.Assign("TE_RIGHT", new Value_Number(wxTE_RIGHT));
 	frame.Assign("TE_WORDWRAP", new Value_Number(wxTE_WORDWRAP));
-	frame.Assign("THICK_FRAME", new Value_Number(wxTHICK_FRAME));
 	frame.Assign("TOP", new Value_Number(wxTOP));
 	frame.Assign("TRANSPARENT_WINDOW", new Value_Number(wxTRANSPARENT_WINDOW));
 	frame.Assign("VERTICAL", new Value_Number(wxVERTICAL));

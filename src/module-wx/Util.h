@@ -100,6 +100,11 @@ wxArrayShort CreateArrayShort(const ValueList& values);
 wxArrayInt CreateArrayInt(const ValueList& values);
 wxArrayDouble CreateArrayDouble(const ValueList& values);
 wxArrayLong CreateArrayLong(const ValueList& values);
+Value* CreateList(const wxArrayString& array);
+Value* CreateList(const wxArrayShort& array);
+Value* CreateList(const wxArrayInt& array);
+Value* CreateList(const wxArrayDouble& array);
+Value* CreateList(const wxArrayLong& array);
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory);
 const Value& LookupEventType(wxEventType eventType);

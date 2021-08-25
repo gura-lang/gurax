@@ -313,26 +313,6 @@ Gurax_ImplementMethodEx(wxDialog, DoLayoutAdaptation_gurax, processor_gurax, arg
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.Dialog#DoOK()
-Gurax_DeclareMethodAlias(wxDialog, DoOK_gurax, "DoOK")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDialog, DoOK_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	bool rtn = pEntity_gurax->DoOK();
-	return new Gurax::Value_Bool(rtn);
-}
-
 // wx.Dialog#EndModal(retCode as Number)
 Gurax_DeclareMethodAlias(wxDialog, EndModal_gurax, "EndModal")
 {
@@ -477,6 +457,26 @@ Gurax_ImplementMethodEx(wxDialog, GetLayoutAdaptationMode_gurax, processor_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
+// wx.Dialog#GetMainButtonIds()
+Gurax_DeclareMethodAlias(wxDialog, GetMainButtonIds_gurax, "GetMainButtonIds")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDialog, GetMainButtonIds_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxArrayInt rtn = pEntity_gurax->GetMainButtonIds();
+	return Util::CreateList(rtn);
+}
+
 // wx.Dialog#GetReturnCode()
 Gurax_DeclareMethodAlias(wxDialog, GetReturnCode_gurax, "GetReturnCode")
 {
@@ -495,26 +495,6 @@ Gurax_ImplementMethodEx(wxDialog, GetReturnCode_gurax, processor_gurax, argument
 	// Function body
 	int rtn = pEntity_gurax->GetReturnCode();
 	return new Gurax::Value_Number(rtn);
-}
-
-// wx.Dialog#GetToolBar()
-Gurax_DeclareMethodAlias(wxDialog, GetToolBar_gurax, "GetToolBar")
-{
-	Declare(VTYPE_wxToolBar, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDialog, GetToolBar_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxToolBar(
-		pEntity_gurax->GetToolBar()));
 }
 
 // wx.Dialog#Iconize(iconize? as Bool)
@@ -889,7 +869,6 @@ void VType_wxDialog::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDialog, CreateStdDialogButtonSizer_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, CreateTextSizer_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, DoLayoutAdaptation_gurax));
-	Assign(Gurax_CreateMethod(wxDialog, DoOK_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, EndModal_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, GetAffirmativeId_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, GetContentWindow_gurax));
@@ -897,8 +876,8 @@ void VType_wxDialog::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDialog, GetLayoutAdaptationDone_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, GetLayoutAdaptationLevel_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, GetLayoutAdaptationMode_gurax));
+	Assign(Gurax_CreateMethod(wxDialog, GetMainButtonIds_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, GetReturnCode_gurax));
-	Assign(Gurax_CreateMethod(wxDialog, GetToolBar_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, Iconize_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, IsIconized_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, IsMainButtonId_gurax));

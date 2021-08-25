@@ -33,29 +33,74 @@ r.DeclareType('const_String_r', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(rtn);
 	''')
 
-r.DeclareType('const_ArrayString_r', 'const ArrayString&', 'String[]',
+r.DeclareType('const_ArrayString_r', 'const wxArrayString&', 'String[]',
 	codePickerVec = R'''
 	wxArrayString ${varName} = Util::CreateArrayString(args_gurax.PickList());
 	''')
 
-r.DeclareType('const_ArrayShort_r', 'const ArrayShort&', 'Number[]',
+r.DeclareType('const_ArrayShort_r', 'const wxArrayShort&', 'Number[]',
 	codePickerVec = R'''
 	wxArrayShort ${varName} = Util::CreateArrayShort(args_gurax.PickList());
 	''')
 
-r.DeclareType('const_ArrayInt_r', 'const ArrayInt&', 'Number[]',
+r.DeclareType('const_ArrayInt_r', 'const wxArrayInt&', 'Number[]',
 	codePickerVec = R'''
 	wxArrayInt ${varName} = Util::CreateArrayInt(args_gurax.PickList());
 	''')
 
-r.DeclareType('const_ArrayDouble_r', 'const ArrayDouble&', 'Number[]',
+r.DeclareType('const_ArrayDouble_r', 'const wxArrayDouble&', 'Number[]',
 	codePickerVec = R'''
 	wxArrayDouble ${varName} = Util::CreateArrayDouble(args_gurax.PickList());
 	''')
 
-r.DeclareType('const_ArrayLong_r', 'const ArrayLong&', 'Number[]',
+r.DeclareType('const_ArrayLong_r', 'const wxArrayLong&', 'Number[]',
 	codePickerVec = R'''
 	wxArrayLong ${varName} = Util::CreateArrayLong(args_gurax.PickList());
+	''')
+
+r.DeclareType('ArrayString', 'wxArrayString', 'Number[]',
+	codePickerVec = R'''
+	wxArrayString ${varName} = Util::CreateArrayString(args_gurax.PickList());
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return Util::CreateList(rtn);
+	''')
+
+r.DeclareType('ArrayShort', 'wxArrayShort', 'Number[]',
+	codePickerVec = R'''
+	wxArrayShort ${varName} = Util::CreateArrayShort(args_gurax.PickList());
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return Util::CreateList(rtn);
+	''')
+
+r.DeclareType('ArrayInt', 'wxArrayInt', 'Number[]',
+	codePickerVec = R'''
+	wxArrayInt ${varName} = Util::CreateArrayInt(args_gurax.PickList());
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return Util::CreateList(rtn);
+	''')
+
+r.DeclareType('ArrayDouble', 'wxArrayDouble', 'Number[]',
+	codePickerVec = R'''
+	wxArrayDouble ${varName} = Util::CreateArrayDouble(args_gurax.PickList());
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return Util::CreateList(rtn);
+	''')
+
+r.DeclareType('ArrayLong', 'wxArrayLong', 'Number[]',
+	codePickerVec = R'''
+	wxArrayLong ${varName} = Util::CreateArrayLong(args_gurax.PickList());
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return Util::CreateList(rtn);
 	''')
 
 tmplVTypesCMake = tR'''

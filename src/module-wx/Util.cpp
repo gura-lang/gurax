@@ -95,6 +95,46 @@ wxArrayLong CreateArrayLong(const ValueList& values)
 	return rtn;
 }
 
+Value* CreateList(const wxArrayString& array)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(array.size());
+	for (const wxString& str : array) pValueOwner->push_back(new Value_String(str.utf8_str().data()));
+	return new Value_List(VTYPE_String, pValueOwner.release());
+}
+
+Value* CreateList(const wxArrayShort& array)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(array.size());
+	for (Short num : array) pValueOwner->push_back(new Value_Number(num));
+	return new Value_List(VTYPE_String, pValueOwner.release());
+}
+
+Value* CreateList(const wxArrayInt& array)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(array.size());
+	for (Int num : array) pValueOwner->push_back(new Value_Number(num));
+	return new Value_List(VTYPE_String, pValueOwner.release());
+}
+
+Value* CreateList(const wxArrayDouble& array)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(array.size());
+	for (Double num : array) pValueOwner->push_back(new Value_Number(num));
+	return new Value_List(VTYPE_String, pValueOwner.release());
+}
+
+Value* CreateList(const wxArrayLong& array)
+{
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	pValueOwner->reserve(array.size());
+	for (Long num : array) pValueOwner->push_back(new Value_Number(num));
+	return new Value_List(VTYPE_String, pValueOwner.release());
+}
+
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory)
 {

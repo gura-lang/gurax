@@ -14,7 +14,7 @@ Dialog = Class(TopLevelWindow) {
 	CreateStdDialogButtonSizer(flags as long) as StdDialogButtonSizer_p
 	CreateTextSizer(message as const_String_r) as Sizer_p
 	DoLayoutAdaptation() as bool
-	DoOK() as bool
+	//DoOK() as bool
 	EndModal(retCode as int) as void
 	GetAffirmativeId() as int
 	GetContentWindow() as Window_p
@@ -22,9 +22,9 @@ Dialog = Class(TopLevelWindow) {
 	GetLayoutAdaptationDone() as bool
 	GetLayoutAdaptationLevel() as int
 	GetLayoutAdaptationMode() as DialogLayoutAdaptationMode
-	//GetMainButtonIds() as ArrayInt
+	GetMainButtonIds() as ArrayInt
 	GetReturnCode() as int
-	GetToolBar() as ToolBar_p
+	//GetToolBar() as ToolBar_p
 	Iconize(iconize as bool = true) as void
 	IsIconized() as bool
 	IsMainButtonId(id as WindowID) as bool
@@ -50,9 +50,9 @@ Dialog = Class(TopLevelWindow) {
 	CLOSE_BOX
 	MAXIMIZE_BOX
 	MINIMIZE_BOX
-	THICK_FRAME
+	//THICK_FRAME
 	STAY_ON_TOP
-	NO_3D
+	//NO_3D
 	DIALOG_NO_PARENT
 	DIALOG_EX_CONTEXTHELP
 	DIALOG_EX_METAL
@@ -65,6 +65,6 @@ Dialog = Class(TopLevelWindow) {
 ]
 
 @event[
-	EVT_CLOSE		>> CloseEvent
+	//EVT_CLOSE		>> CloseEvent
 	EVT_INIT_DIALOG	>> InitDialogEvent
 ]
