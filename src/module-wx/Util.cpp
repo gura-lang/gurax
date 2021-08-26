@@ -158,30 +158,35 @@ const Value& LookupEventType(wxEventType eventType)
 	return *iter->second;
 }
 
-void ConvertToWxImage(Image& imageGura, wxImage& image)
+wxImage ConvertToWxImage(const Image& imageGura)
 {
-	do {
-		Image::Scanner scanner(Image::Scanner::LeftTopHorz(imageGura));
-		UInt8* pBuffDst = image.GetData();
-		do {
-			const UInt8* pPixel = scanner.GetPointerC();
-			*(pBuffDst + 0) = *(pPixel + Image::offsetR);
-			*(pBuffDst + 1) = *(pPixel + Image::offsetG);
-			*(pBuffDst + 2) = *(pPixel + Image::offsetB);
-			pBuffDst += 3;
-		} while (scanner.Next());
-	} while (0);
+	wxImage image(imageGura.GetWidth(), imageGura.GetHeight(), false);
+	size_t nPixels = imageGura.GetWidth() * imageGura.GetHeight();
+	size_t bytesPerPixel = imageGura.GetBytesPerPixel();
+	const UInt8* pBuffSrc = imageGura.GetPointerC();
+	UInt8* pBuffDst = image.GetData();
 	if (imageGura.IsFormat(Image::Format::RGBA)) {
-		Image::Scanner scanner(Image::Scanner::LeftTopHorz(imageGura));
 		image.SetAlpha();
-		UInt8* pBuffDst = image.GetData();
-		do {
-			const UInt8* pPixel = scanner.GetPointerC();
-			*pBuffDst = *(pPixel + Image::offsetA);
-			pBuffDst++;
-		} while (scanner.Next());
-
+		UInt8* pBuffDstAlpha = image.GetAlpha();
+		for (size_t i = 0; i < nPixels; i++) {
+			*(pBuffDst + 0) = *(pBuffSrc + Image::offsetR);
+			*(pBuffDst + 1) = *(pBuffSrc + Image::offsetG);
+			*(pBuffDst + 2) = *(pBuffSrc + Image::offsetB);
+			*pBuffDstAlpha = *(pBuffSrc + Image::offsetA);
+			pBuffSrc += bytesPerPixel;
+			pBuffDst += 3;
+			pBuffDstAlpha++;
+		}
+	} else {
+		for (size_t i = 0; i < nPixels; i++) {
+			*(pBuffDst + 0) = *(pBuffSrc + Image::offsetR);
+			*(pBuffDst + 1) = *(pBuffSrc + Image::offsetG);
+			*(pBuffDst + 2) = *(pBuffSrc + Image::offsetB);
+			pBuffSrc += bytesPerPixel;
+			pBuffDst += 3;
+		}
 	}
+	return image;
 }
 
 void ExitMainLoop()
