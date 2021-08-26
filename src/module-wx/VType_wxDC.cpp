@@ -1192,8 +1192,10 @@ Gurax_ImplementMethodEx(wxDC, DrawLabel_gurax, processor_gurax, argument_gurax)
 	const char* text = args_gurax.PickString();
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	const wxRect& rect = value_rect.GetEntity();
-	int alignment = args_gurax.IsValid()? args_gurax.PickNumber<int>() : (wxALIGN_LEFT | wxALIGN_TOP);
-	int indexAccel = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	bool alignment_validFlag = args_gurax.IsValid();
+	int alignment = alignment_validFlag? args_gurax.PickNumber<int>() : (wxALIGN_LEFT | wxALIGN_TOP);
+	bool indexAccel_validFlag = args_gurax.IsValid();
+	int indexAccel = indexAccel_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
 	pEntity_gurax->DrawLabel(text, rect, alignment, indexAccel);
 	return Gurax::Value::nil();
@@ -1692,7 +1694,8 @@ Gurax_ImplementMethodEx(wxDC, GradientFillLinear_gurax, processor_gurax, argumen
 	const wxColour& initialColour = value_initialColour.GetEntity();
 	Value_wxColour& value_destColour = args_gurax.Pick<Value_wxColour>();
 	const wxColour& destColour = value_destColour.GetEntity();
-	wxDirection nDirection = args_gurax.IsValid()? args_gurax.PickNumber<wxDirection>() : wxRIGHT;
+	bool nDirection_validFlag = args_gurax.IsValid();
+	wxDirection nDirection = nDirection_validFlag? args_gurax.PickNumber<wxDirection>() : wxRIGHT;
 	// Function body
 	pEntity_gurax->GradientFillLinear(rect, initialColour, destColour, nDirection);
 	return Gurax::Value::nil();
@@ -1723,7 +1726,8 @@ Gurax_ImplementMethodEx(wxDC, FloodFillXY_gurax, processor_gurax, argument_gurax
 	wxCoord y = args_gurax.PickNumber<wxCoord>();
 	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
 	const wxColour& colour = value_colour.GetEntity();
-	wxFloodFillStyle style = args_gurax.IsValid()? args_gurax.PickNumber<wxFloodFillStyle>() : wxFLOOD_SURFACE;
+	bool style_validFlag = args_gurax.IsValid();
+	wxFloodFillStyle style = style_validFlag? args_gurax.PickNumber<wxFloodFillStyle>() : wxFLOOD_SURFACE;
 	// Function body
 	pEntity_gurax->FloodFill(x, y, colour, style);
 	return Gurax::Value::nil();
@@ -1753,7 +1757,8 @@ Gurax_ImplementMethodEx(wxDC, FloodFill_gurax, processor_gurax, argument_gurax)
 	const wxPoint& pt = value_pt.GetEntity();
 	Value_wxColour& value_col = args_gurax.Pick<Value_wxColour>();
 	const wxColour& col = value_col.GetEntity();
-	wxFloodFillStyle style = args_gurax.IsValid()? args_gurax.PickNumber<wxFloodFillStyle>() : wxFLOOD_SURFACE;
+	bool style_validFlag = args_gurax.IsValid();
+	wxFloodFillStyle style = style_validFlag? args_gurax.PickNumber<wxFloodFillStyle>() : wxFLOOD_SURFACE;
 	// Function body
 	pEntity_gurax->FloodFill(pt, col, style);
 	return Gurax::Value::nil();
@@ -2536,10 +2541,13 @@ Gurax_ImplementMethodEx(wxDC, Blit_gurax, processor_gurax, argument_gurax)
 	wxDC* source = value_source.GetEntityPtr();
 	wxCoord xsrc = args_gurax.PickNumber<wxCoord>();
 	wxCoord ysrc = args_gurax.PickNumber<wxCoord>();
-	wxRasterOperationMode logicalFunc = args_gurax.IsValid()? args_gurax.PickNumber<wxRasterOperationMode>() : wxCOPY;
+	bool logicalFunc_validFlag = args_gurax.IsValid();
+	wxRasterOperationMode logicalFunc = logicalFunc_validFlag? args_gurax.PickNumber<wxRasterOperationMode>() : wxCOPY;
 	bool useMask = args_gurax.IsValid()? args_gurax.PickBool() : false;
-	wxCoord xsrcMask = args_gurax.IsValid()? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
-	wxCoord ysrcMask = args_gurax.IsValid()? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
+	bool xsrcMask_validFlag = args_gurax.IsValid();
+	wxCoord xsrcMask = xsrcMask_validFlag? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
+	bool ysrcMask_validFlag = args_gurax.IsValid();
+	wxCoord ysrcMask = ysrcMask_validFlag? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
 	// Function body
 	bool rtn = pEntity_gurax->Blit(xdest, ydest, width, height, source, xsrc, ysrc, logicalFunc, useMask, xsrcMask, ysrcMask);
 	return new Gurax::Value_Bool(rtn);
@@ -2585,10 +2593,13 @@ Gurax_ImplementMethodEx(wxDC, StretchBlit_gurax, processor_gurax, argument_gurax
 	wxCoord ysrc = args_gurax.PickNumber<wxCoord>();
 	wxCoord srcWidth = args_gurax.PickNumber<wxCoord>();
 	wxCoord srcHeight = args_gurax.PickNumber<wxCoord>();
-	wxRasterOperationMode logicalFunc = args_gurax.IsValid()? args_gurax.PickNumber<wxRasterOperationMode>() : wxCOPY;
+	bool logicalFunc_validFlag = args_gurax.IsValid();
+	wxRasterOperationMode logicalFunc = logicalFunc_validFlag? args_gurax.PickNumber<wxRasterOperationMode>() : wxCOPY;
 	bool useMask = args_gurax.IsValid()? args_gurax.PickBool() : false;
-	wxCoord xsrcMask = args_gurax.IsValid()? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
-	wxCoord ysrcMask = args_gurax.IsValid()? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
+	bool xsrcMask_validFlag = args_gurax.IsValid();
+	wxCoord xsrcMask = xsrcMask_validFlag? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
+	bool ysrcMask_validFlag = args_gurax.IsValid();
+	wxCoord ysrcMask = ysrcMask_validFlag? args_gurax.PickNumber<wxCoord>() : wxDefaultCoord;
 	// Function body
 	bool rtn = pEntity_gurax->StretchBlit(xdest, ydest, dstWidth, dstHeight, source, xsrc, ysrc, srcWidth, srcHeight, logicalFunc, useMask, xsrcMask, ysrcMask);
 	return new Gurax::Value_Bool(rtn);

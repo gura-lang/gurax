@@ -59,8 +59,10 @@ Gurax_ImplementConstructorEx(RadioBox_gurax, processor_gurax, argument_gurax)
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
-	int majorDimension = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxRA_SPECIFY_COLS;
+	bool majorDimension_validFlag = args_gurax.IsValid();
+	int majorDimension = majorDimension_validFlag? args_gurax.PickNumber<int>() : 0;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxRA_SPECIFY_COLS;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxRadioBoxNameStr;
 	// Function body

@@ -55,7 +55,8 @@ Gurax_ImplementConstructorEx(StaticText_gurax, processor_gurax, argument_gurax)
 	const char* label = args_gurax.PickString();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxStaticTextNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxStaticText::EntityT(parent, id, label, pos, size, style, name);

@@ -53,7 +53,8 @@ Gurax_ImplementConstructorEx(Treebook_gurax, processor_gurax, argument_gurax)
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxBK_DEFAULT;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxBK_DEFAULT;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "";
 	// Function body
 	auto pEntity_gurax = new Value_wxTreebook::EntityT(parent, id, pos, size, style, name);
@@ -90,7 +91,8 @@ Gurax_ImplementMethodEx(wxTreebook, AddPage_gurax, processor_gurax, argument_gur
 	wxWindow* page = value_page.GetEntityPtr();
 	const char* text = args_gurax.PickString();
 	bool bSelect = args_gurax.IsValid()? args_gurax.PickBool() : false;
-	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNOT_FOUND;
+	bool imageId_validFlag = args_gurax.IsValid();
+	int imageId = imageId_validFlag? args_gurax.PickNumber<int>() : wxNOT_FOUND;
 	// Function body
 	bool rtn = pEntity_gurax->AddPage(page, text, bSelect, imageId);
 	return new Gurax::Value_Bool(rtn);
@@ -121,7 +123,8 @@ Gurax_ImplementMethodEx(wxTreebook, AddSubPage_gurax, processor_gurax, argument_
 	wxWindow* page = value_page.GetEntityPtr();
 	const char* text = args_gurax.PickString();
 	bool bSelect = args_gurax.IsValid()? args_gurax.PickBool() : false;
-	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNOT_FOUND;
+	bool imageId_validFlag = args_gurax.IsValid();
+	int imageId = imageId_validFlag? args_gurax.PickNumber<int>() : wxNOT_FOUND;
 	// Function body
 	bool rtn = pEntity_gurax->AddSubPage(page, text, bSelect, imageId);
 	return new Gurax::Value_Bool(rtn);
@@ -272,7 +275,8 @@ Gurax_ImplementMethodEx(wxTreebook, InsertPage_gurax, processor_gurax, argument_
 	wxWindow* page = value_page.GetEntityPtr();
 	const char* text = args_gurax.PickString();
 	bool bSelect = args_gurax.IsValid()? args_gurax.PickBool() : false;
-	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNOT_FOUND;
+	bool imageId_validFlag = args_gurax.IsValid();
+	int imageId = imageId_validFlag? args_gurax.PickNumber<int>() : wxNOT_FOUND;
 	// Function body
 	bool rtn = pEntity_gurax->InsertPage(pagePos, page, text, bSelect, imageId);
 	return new Gurax::Value_Bool(rtn);
@@ -305,7 +309,8 @@ Gurax_ImplementMethodEx(wxTreebook, InsertSubPage_gurax, processor_gurax, argume
 	wxWindow* page = value_page.GetEntityPtr();
 	const char* text = args_gurax.PickString();
 	bool bSelect = args_gurax.IsValid()? args_gurax.PickBool() : false;
-	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNOT_FOUND;
+	bool imageId_validFlag = args_gurax.IsValid();
+	int imageId = imageId_validFlag? args_gurax.PickNumber<int>() : wxNOT_FOUND;
 	// Function body
 	bool rtn = pEntity_gurax->InsertSubPage(pagePos, page, text, bSelect, imageId);
 	return new Gurax::Value_Bool(rtn);

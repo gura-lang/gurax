@@ -236,7 +236,8 @@ Gurax_ImplementMethodEx(wxEvent, SetTimestamp_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	long timeStamp = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
+	bool timeStamp_validFlag = args_gurax.IsValid();
+	long timeStamp = timeStamp_validFlag? args_gurax.PickNumber<long>() : 0;
 	// Function body
 	pEntity_gurax->SetTimestamp(timeStamp);
 	return Gurax::Value::nil();

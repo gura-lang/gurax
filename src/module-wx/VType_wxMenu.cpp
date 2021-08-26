@@ -74,7 +74,8 @@ Gurax_ImplementMethodEx(wxMenu, Append_gurax, processor_gurax, argument_gurax)
 	int id = args_gurax.PickNumber<int>();
 	const char* item = args_gurax.IsValid()? args_gurax.PickString() : "";
 	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
-	wxItemKind kind = args_gurax.IsValid()? args_gurax.PickNumber<wxItemKind>() : wxITEM_NORMAL;
+	bool kind_validFlag = args_gurax.IsValid();
+	wxItemKind kind = kind_validFlag? args_gurax.PickNumber<wxItemKind>() : wxITEM_NORMAL;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
 		*pEntity_gurax->Append(id, item, helpString, kind)));

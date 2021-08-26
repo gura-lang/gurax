@@ -54,14 +54,19 @@ Gurax_ImplementConstructorEx(SpinCtrl_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	wxWindowID id = args_gurax.IsValid()? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
 	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxSP_ARROW_KEYS;
-	int min = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
-	int max = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 100;
-	int initial = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSP_ARROW_KEYS;
+	bool min_validFlag = args_gurax.IsValid();
+	int min = min_validFlag? args_gurax.PickNumber<int>() : 0;
+	bool max_validFlag = args_gurax.IsValid();
+	int max = max_validFlag? args_gurax.PickNumber<int>() : 100;
+	bool initial_validFlag = args_gurax.IsValid();
+	int initial = initial_validFlag? args_gurax.PickNumber<int>() : 0;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : "wxSpinCtrl";
 	// Function body
 	auto pEntity_gurax = new Value_wxSpinCtrl::EntityT(parent, id, value, pos, size, style, min, max, initial, name);

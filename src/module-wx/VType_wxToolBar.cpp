@@ -53,7 +53,8 @@ Gurax_ImplementConstructorEx(ToolBar_gurax, processor_gurax, argument_gurax)
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxTB_HORIZONTAL;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxTB_HORIZONTAL;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxToolBarNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxToolBar::EntityT(parent, id, pos, size, style, name);

@@ -76,8 +76,10 @@ Gurax_ImplementMethodEx(wxEvtHandler, Bind_gurax, processor_gurax, argument_gura
 	wxEventType eventType = value_eventType.GetEntity();
 	const Gurax::Value& funct = args_gurax.PickValue();
 	const Gurax::Value& userData = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
-	int id = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxID_ANY;
-	int lastId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxID_ANY;
+	bool id_validFlag = args_gurax.IsValid();
+	int id = id_validFlag? args_gurax.PickNumber<int>() : wxID_ANY;
+	bool lastId_validFlag = args_gurax.IsValid();
+	int lastId = lastId_validFlag? args_gurax.PickNumber<int>() : wxID_ANY;
 	// Function body
 	const EventValueFactory& eventValueFactory = value_eventType.GetEventValueFactory();
 	pEntity_gurax->Bind(eventType, &EventUserData::HandlerFunc, id, lastId,

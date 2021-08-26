@@ -52,11 +52,13 @@ Gurax_ImplementConstructorEx(ComboCtrl_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	wxWindowID id = args_gurax.IsValid()? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
 	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxComboBoxNameStr;
 	// Function body
@@ -764,10 +766,14 @@ Gurax_ImplementMethodEx(wxComboCtrl, SetButtonPosition_gurax, processor_gurax, a
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int width = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
-	int height = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
-	int side = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxRIGHT;
-	int spacingX = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool width_validFlag = args_gurax.IsValid();
+	int width = width_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool height_validFlag = args_gurax.IsValid();
+	int height = height_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool side_validFlag = args_gurax.IsValid();
+	int side = side_validFlag? args_gurax.PickNumber<int>() : wxRIGHT;
+	bool spacingX_validFlag = args_gurax.IsValid();
+	int spacingX = spacingX_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	pEntity_gurax->SetButtonPosition(width, height, side, spacingX);
 	return Gurax::Value::nil();
@@ -1194,7 +1200,8 @@ Gurax_ImplementMethodEx(wxComboCtrl, SetMargins_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxCoord left = args_gurax.PickNumber<wxCoord>();
-	wxCoord top = args_gurax.IsValid()? args_gurax.PickNumber<wxCoord>() : -1;
+	bool top_validFlag = args_gurax.IsValid();
+	wxCoord top = top_validFlag? args_gurax.PickNumber<wxCoord>() : -1;
 	// Function body
 	bool rtn = pEntity_gurax->SetMargins(left, top);
 	return new Gurax::Value_Bool(rtn);

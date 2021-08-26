@@ -1513,7 +1513,8 @@ Gurax_ImplementMethodEx(wxWindow, SendSizeEvent_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int flags = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	pEntity_gurax->SendSizeEvent(flags);
 	return Gurax::Value::nil();
@@ -1537,7 +1538,8 @@ Gurax_ImplementMethodEx(wxWindow, SendSizeEventToParent_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int flags = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	pEntity_gurax->SendSizeEventToParent(flags);
 	return Gurax::Value::nil();
@@ -1820,7 +1822,8 @@ Gurax_ImplementMethodEx(wxWindow, SetSize_gurax, processor_gurax, argument_gurax
 	int y = args_gurax.PickNumber<int>();
 	int width = args_gurax.PickNumber<int>();
 	int height = args_gurax.PickNumber<int>();
-	int sizeFlags = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxSIZE_AUTO;
+	bool sizeFlags_validFlag = args_gurax.IsValid();
+	int sizeFlags = sizeFlags_validFlag? args_gurax.PickNumber<int>() : wxSIZE_AUTO;
 	// Function body
 	pEntity_gurax->SetSize(x, y, width, height, sizeFlags);
 	return Gurax::Value::nil();
@@ -1975,7 +1978,8 @@ Gurax_ImplementMethodEx(wxWindow, Center_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int dir = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxBOTH;
+	bool dir_validFlag = args_gurax.IsValid();
+	int dir = dir_validFlag? args_gurax.PickNumber<int>() : wxBOTH;
 	// Function body
 	pEntity_gurax->Center(dir);
 	return Gurax::Value::nil();
@@ -1999,7 +2003,8 @@ Gurax_ImplementMethodEx(wxWindow, CenterOnParent_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int dir = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxBOTH;
+	bool dir_validFlag = args_gurax.IsValid();
+	int dir = dir_validFlag? args_gurax.PickNumber<int>() : wxBOTH;
 	// Function body
 	pEntity_gurax->CenterOnParent(dir);
 	return Gurax::Value::nil();
@@ -2023,7 +2028,8 @@ Gurax_ImplementMethodEx(wxWindow, Centre_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int direction = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxBOTH;
+	bool direction_validFlag = args_gurax.IsValid();
+	int direction = direction_validFlag? args_gurax.PickNumber<int>() : wxBOTH;
 	// Function body
 	pEntity_gurax->Centre(direction);
 	return Gurax::Value::nil();
@@ -2047,7 +2053,8 @@ Gurax_ImplementMethodEx(wxWindow, CentreOnParent_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int direction = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxBOTH;
+	bool direction_validFlag = args_gurax.IsValid();
+	int direction = direction_validFlag? args_gurax.PickNumber<int>() : wxBOTH;
 	// Function body
 	pEntity_gurax->CentreOnParent(direction);
 	return Gurax::Value::nil();
@@ -2237,7 +2244,8 @@ Gurax_ImplementMethodEx(wxWindow, MoveXY_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int x = args_gurax.PickNumber<int>();
 	int y = args_gurax.PickNumber<int>();
-	int flags = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxSIZE_USE_EXISTING;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxSIZE_USE_EXISTING;
 	// Function body
 	pEntity_gurax->Move(x, y, flags);
 	return Gurax::Value::nil();
@@ -2264,7 +2272,8 @@ Gurax_ImplementMethodEx(wxWindow, Move_gurax, processor_gurax, argument_gurax)
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
 	const wxPoint& pt = value_pt.GetEntity();
-	int flags = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxSIZE_USE_EXISTING;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxSIZE_USE_EXISTING;
 	// Function body
 	pEntity_gurax->Move(pt, flags);
 	return Gurax::Value::nil();
@@ -3819,7 +3828,8 @@ Gurax_ImplementMethodEx(wxWindow, Navigate_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int flags = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNavigationKeyEvent::IsForward;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxNavigationKeyEvent::IsForward;
 	// Function body
 	bool rtn = pEntity_gurax->Navigate(flags);
 	return new Gurax::Value_Bool(rtn);
@@ -3843,7 +3853,8 @@ Gurax_ImplementMethodEx(wxWindow, NavigateIn_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int flags = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxNavigationKeyEvent::IsForward;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxNavigationKeyEvent::IsForward;
 	// Function body
 	bool rtn = pEntity_gurax->NavigateIn(flags);
 	return new Gurax::Value_Bool(rtn);
@@ -3929,7 +3940,8 @@ Gurax_ImplementMethodEx(wxWindow, HideWithEffect_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxShowEffect effect = args_gurax.PickNumber<wxShowEffect>();
-	unsigned int timeout = args_gurax.IsValid()? args_gurax.PickNumber<unsigned int>() : 0;
+	bool timeout_validFlag = args_gurax.IsValid();
+	unsigned int timeout = timeout_validFlag? args_gurax.PickNumber<unsigned int>() : 0;
 	// Function body
 	bool rtn = pEntity_gurax->HideWithEffect(effect, timeout);
 	return new Gurax::Value_Bool(rtn);
@@ -4189,7 +4201,8 @@ Gurax_ImplementMethodEx(wxWindow, ShowWithEffect_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	wxShowEffect effect = args_gurax.PickNumber<wxShowEffect>();
-	unsigned int timeout = args_gurax.IsValid()? args_gurax.PickNumber<unsigned int>() : 0;
+	bool timeout_validFlag = args_gurax.IsValid();
+	unsigned int timeout = timeout_validFlag? args_gurax.PickNumber<unsigned int>() : 0;
 	// Function body
 	bool rtn = pEntity_gurax->ShowWithEffect(effect, timeout);
 	return new Gurax::Value_Bool(rtn);
@@ -5654,7 +5667,8 @@ Gurax_ImplementMethodEx(wxWindow, UpdateWindowUI_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	long flags = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxUPDATE_UI_NONE;
+	bool flags_validFlag = args_gurax.IsValid();
+	long flags = flags_validFlag? args_gurax.PickNumber<long>() : wxUPDATE_UI_NONE;
 	// Function body
 	pEntity_gurax->UpdateWindowUI(flags);
 	return Gurax::Value::nil();

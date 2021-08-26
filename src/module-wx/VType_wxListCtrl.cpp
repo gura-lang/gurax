@@ -54,7 +54,8 @@ Gurax_ImplementConstructorEx(ListCtrl_gurax, processor_gurax, argument_gurax)
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxLC_ICON;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxLC_ICON;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxListCtrlNameStr;
 	// Function body
@@ -88,8 +89,10 @@ Gurax_ImplementMethodEx(wxListCtrl, AppendColumn_gurax, processor_gurax, argumen
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* heading = args_gurax.PickString();
-	wxListColumnFormat format = args_gurax.IsValid()? args_gurax.PickNumber<wxListColumnFormat>() : wxLIST_FORMAT_LEFT;
-	int width = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	bool format_validFlag = args_gurax.IsValid();
+	wxListColumnFormat format = format_validFlag? args_gurax.PickNumber<wxListColumnFormat>() : wxLIST_FORMAT_LEFT;
+	bool width_validFlag = args_gurax.IsValid();
+	int width = width_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
 	long rtn = pEntity_gurax->AppendColumn(heading, format, width);
 	return new Gurax::Value_Number(rtn);
@@ -113,7 +116,8 @@ Gurax_ImplementMethodEx(wxListCtrl, Arrange_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int flag = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_ALIGN_DEFAULT;
+	bool flag_validFlag = args_gurax.IsValid();
+	int flag = flag_validFlag? args_gurax.PickNumber<int>() : wxLIST_ALIGN_DEFAULT;
 	// Function body
 	bool rtn = pEntity_gurax->Arrange(flag);
 	return new Gurax::Value_Bool(rtn);
@@ -195,7 +199,8 @@ Gurax_ImplementMethodEx(wxListCtrl, Create_gurax, processor_gurax, argument_gura
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxLC_ICON;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxLC_ICON;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxListCtrlNameStr;
 	// Function body
@@ -741,7 +746,8 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemRect_gurax, processor_gurax, argument
 	long item = args_gurax.PickNumber<long>();
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	wxRect& rect = value_rect.GetEntity();
-	int code = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_RECT_BOUNDS;
+	bool code_validFlag = args_gurax.IsValid();
+	int code = code_validFlag? args_gurax.PickNumber<int>() : wxLIST_RECT_BOUNDS;
 	// Function body
 	bool rtn = pEntity_gurax->GetItemRect(item, rect, code);
 	return new Gurax::Value_Bool(rtn);
@@ -813,7 +819,8 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemText_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long item = args_gurax.PickNumber<long>();
-	int col = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool col_validFlag = args_gurax.IsValid();
+	int col = col_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	const char* rtn = pEntity_gurax->GetItemText(item, col);
 	return new Gurax::Value_String(rtn);
@@ -864,8 +871,10 @@ Gurax_ImplementMethodEx(wxListCtrl, GetNextItem_gurax, processor_gurax, argument
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long item = args_gurax.PickNumber<long>();
-	int geometry = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_NEXT_ALL;
-	int state = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_STATE_DONTCARE;
+	bool geometry_validFlag = args_gurax.IsValid();
+	int geometry = geometry_validFlag? args_gurax.PickNumber<int>() : wxLIST_NEXT_ALL;
+	bool state_validFlag = args_gurax.IsValid();
+	int state = state_validFlag? args_gurax.PickNumber<int>() : wxLIST_STATE_DONTCARE;
 	// Function body
 	long rtn = pEntity_gurax->GetNextItem(item, geometry, state);
 	return new Gurax::Value_Number(rtn);
@@ -916,7 +925,8 @@ Gurax_ImplementMethodEx(wxListCtrl, GetSubItemRect_gurax, processor_gurax, argum
 	long subItem = args_gurax.PickNumber<long>();
 	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
 	wxRect& rect = value_rect.GetEntity();
-	int code = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxLIST_RECT_BOUNDS;
+	bool code_validFlag = args_gurax.IsValid();
+	int code = code_validFlag? args_gurax.PickNumber<int>() : wxLIST_RECT_BOUNDS;
 	// Function body
 	bool rtn = pEntity_gurax->GetSubItemRect(item, subItem, rect, code);
 	return new Gurax::Value_Bool(rtn);
@@ -1459,7 +1469,8 @@ Gurax_ImplementMethodEx(wxListCtrl, SetItemImage_gurax, processor_gurax, argumen
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	long item = args_gurax.PickNumber<long>();
 	int image = args_gurax.PickNumber<int>();
-	int selImage = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	bool selImage_validFlag = args_gurax.IsValid();
+	int selImage = selImage_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
 	bool rtn = pEntity_gurax->SetItemImage(item, image, selImage);
 	return new Gurax::Value_Bool(rtn);

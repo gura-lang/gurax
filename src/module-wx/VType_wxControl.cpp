@@ -53,7 +53,8 @@ Gurax_ImplementConstructorEx(Control_gurax, processor_gurax, argument_gurax)
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	int style = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool style_validFlag = args_gurax.IsValid();
+	int style = style_validFlag? args_gurax.PickNumber<int>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxControlNameStr;
 	// Function body
@@ -151,7 +152,8 @@ Gurax_ImplementMethodEx(wxControl, GetSizeFromTextSizeXY_gurax, processor_gurax,
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int xlen = args_gurax.PickNumber<int>();
-	int ylen = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	bool ylen_validFlag = args_gurax.IsValid();
+	int ylen = ylen_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
 		pEntity_gurax->GetSizeFromTextSize(xlen, ylen)));

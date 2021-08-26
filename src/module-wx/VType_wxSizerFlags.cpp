@@ -43,7 +43,8 @@ Gurax_ImplementConstructorEx(SizerFlags_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int proportion = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool proportion_validFlag = args_gurax.IsValid();
+	int proportion = proportion_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerFlags(
 		wxSizerFlags(proportion)));
@@ -180,7 +181,8 @@ Gurax_ImplementMethodEx(wxSizerFlags, DoubleBorder_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int direction = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxALL;
+	bool direction_validFlag = args_gurax.IsValid();
+	int direction = direction_validFlag? args_gurax.PickNumber<int>() : wxALL;
 	// Function body
 	pEntity_gurax->DoubleBorder(direction);
 	return valueThis_gurax.Reference();
@@ -388,7 +390,8 @@ Gurax_ImplementMethodEx(wxSizerFlags, TripleBorder_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int direction = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxALL;
+	bool direction_validFlag = args_gurax.IsValid();
+	int direction = direction_validFlag? args_gurax.PickNumber<int>() : wxALL;
 	// Function body
 	pEntity_gurax->TripleBorder(direction);
 	return valueThis_gurax.Reference();

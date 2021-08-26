@@ -49,10 +49,12 @@ Gurax_ImplementConstructorEx(ContextHelpButton_gurax, processor_gurax, argument_
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	wxWindowID id = args_gurax.IsValid()? args_gurax.PickNumber<wxWindowID>() : wxID_CONTEXT_HELP;
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_CONTEXT_HELP;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxBU_AUTODRAW;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxBU_AUTODRAW;
 	// Function body
 	auto pEntity_gurax = new Value_wxContextHelpButton::EntityT(parent, id, pos, size, style);
 	RefPtr<Value_wxContextHelpButton> pValue_gurax(new Value_wxContextHelpButton(pEntity_gurax));

@@ -50,10 +50,12 @@ Gurax_ImplementConstructorEx(StyledTextCtrl_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	wxWindowID id = args_gurax.IsValid()? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxSTCNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxStyledTextCtrl::EntityT(parent, id, pos, size, style, name);
@@ -4457,7 +4459,8 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, FindText_gurax, processor_gurax, argum
 	int minPos = args_gurax.PickNumber<int>();
 	int maxPos = args_gurax.PickNumber<int>();
 	const char* text = args_gurax.PickString();
-	int flags = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	int rtn = pEntity_gurax->FindText(minPos, maxPos, text, flags);
 	return new Gurax::Value_Number(rtn);
@@ -13541,7 +13544,8 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, StyleSetFontAttr_gurax, processor_gura
 	bool bold = args_gurax.PickBool();
 	bool italic = args_gurax.PickBool();
 	bool underline = args_gurax.PickBool();
-	wxFontEncoding encoding = args_gurax.IsValid()? args_gurax.PickNumber<wxFontEncoding>() : wxFONTENCODING_DEFAULT;
+	bool encoding_validFlag = args_gurax.IsValid();
+	wxFontEncoding encoding = encoding_validFlag? args_gurax.PickNumber<wxFontEncoding>() : wxFONTENCODING_DEFAULT;
 	// Function body
 	pEntity_gurax->StyleSetFontAttr(styleNum, size, faceName, bold, italic, underline, encoding);
 	return Gurax::Value::nil();
@@ -13963,7 +13967,8 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, AddTextRaw_gurax, processor_gurax, arg
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* text = args_gurax.PickString();
-	int length = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	bool length_validFlag = args_gurax.IsValid();
+	int length = length_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
 	pEntity_gurax->AddTextRaw(text, length);
 	return Gurax::Value::nil();
@@ -14129,7 +14134,8 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, AppendTextRaw_gurax, processor_gurax, 
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* text = args_gurax.PickString();
-	int length = args_gurax.IsValid()? args_gurax.PickNumber<int>() : -1;
+	bool length_validFlag = args_gurax.IsValid();
+	int length = length_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
 	pEntity_gurax->AppendTextRaw(text, length);
 	return Gurax::Value::nil();

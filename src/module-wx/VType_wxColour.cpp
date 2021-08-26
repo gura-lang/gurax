@@ -46,10 +46,14 @@ Gurax_ImplementConstructorEx(Colour_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	unsigned char red = args_gurax.IsValid()? args_gurax.PickNumber<unsigned char>() : 0;
-	unsigned char green = args_gurax.IsValid()? args_gurax.PickNumber<unsigned char>() : 0;
-	unsigned char blue = args_gurax.IsValid()? args_gurax.PickNumber<unsigned char>() : 0;
-	unsigned char alpha = args_gurax.IsValid()? args_gurax.PickNumber<unsigned char>() : wxALPHA_OPAQUE;
+	bool red_validFlag = args_gurax.IsValid();
+	unsigned char red = red_validFlag? args_gurax.PickNumber<unsigned char>() : 0;
+	bool green_validFlag = args_gurax.IsValid();
+	unsigned char green = green_validFlag? args_gurax.PickNumber<unsigned char>() : 0;
+	bool blue_validFlag = args_gurax.IsValid();
+	unsigned char blue = blue_validFlag? args_gurax.PickNumber<unsigned char>() : 0;
+	bool alpha_validFlag = args_gurax.IsValid();
+	unsigned char alpha = alpha_validFlag? args_gurax.PickNumber<unsigned char>() : wxALPHA_OPAQUE;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
 		wxColour(red, green, blue, alpha)));

@@ -54,7 +54,8 @@ Gurax_ImplementConstructorEx(Frame_gurax, processor_gurax, argument_gurax)
 	const char* title = args_gurax.PickString();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxDEFAULT_FRAME_STYLE;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_FRAME_STYLE;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxFrameNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxFrame::EntityT(parent, id, title, pos, size, style, name);
@@ -87,9 +88,12 @@ Gurax_ImplementMethodEx(wxFrame, CreateStatusBar_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int number = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 1;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxSTB_DEFAULT_STYLE;
-	wxWindowID id = args_gurax.IsValid()? args_gurax.PickNumber<wxWindowID>() : 0;
+	bool number_validFlag = args_gurax.IsValid();
+	int number = number_validFlag? args_gurax.PickNumber<int>() : 1;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSTB_DEFAULT_STYLE;
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : 0;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxStatusBarNameStr;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(
@@ -116,7 +120,8 @@ Gurax_ImplementMethodEx(wxFrame, SetStatusText_gurax, processor_gurax, argument_
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* text = args_gurax.PickString();
-	int number = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool number_validFlag = args_gurax.IsValid();
+	int number = number_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	pEntity_gurax->SetStatusText(text, number);
 	return Gurax::Value::nil();

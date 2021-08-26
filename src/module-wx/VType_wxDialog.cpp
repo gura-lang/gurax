@@ -55,7 +55,8 @@ Gurax_ImplementConstructorEx(Dialog_gurax, processor_gurax, argument_gurax)
 	const char* title = args_gurax.PickString();
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxDEFAULT_DIALOG_STYLE;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_DIALOG_STYLE;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxDialogNameStr;
 	// Function body
 	auto pEntity_gurax = new Value_wxDialog::EntityT(parent, id, title, pos, size, style, name);
@@ -129,47 +130,11 @@ Gurax_ImplementMethodEx(wxDialog, Centre_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int direction = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxBOTH;
+	bool direction_validFlag = args_gurax.IsValid();
+	int direction = direction_validFlag? args_gurax.PickNumber<int>() : wxBOTH;
 	// Function body
 	pEntity_gurax->Centre(direction);
 	return Gurax::Value::nil();
-}
-
-// wx.Dialog#Create(parent as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String)
-Gurax_DeclareMethodAlias(wxDialog, Create_gurax, "Create")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDialog, Create_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
-	wxWindow* parent = value_parent.GetEntityPtr();
-	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* title = args_gurax.PickString();
-	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
-	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : wxDEFAULT_DIALOG_STYLE;
-	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxDialogNameStr;
-	// Function body
-	bool rtn = pEntity_gurax->Create(parent, id, title, pos, size, style, name);
-	return new Gurax::Value_Bool(rtn);
 }
 
 // wx.Dialog#CreateButtonSizer(flags as Number)
@@ -862,7 +827,6 @@ void VType_wxDialog::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDialog, AddMainButtonId_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, CanDoLayoutAdaptation_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, Centre_gurax));
-	Assign(Gurax_CreateMethod(wxDialog, Create_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, CreateButtonSizer_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, CreateSeparatedButtonSizer_gurax));
 	Assign(Gurax_CreateMethod(wxDialog, CreateSeparatedSizer_gurax));

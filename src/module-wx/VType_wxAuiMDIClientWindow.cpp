@@ -46,7 +46,8 @@ Gurax_ImplementConstructorEx(AuiMDIClientWindow_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxAuiMDIParentFrame& value_parent = args_gurax.Pick<Value_wxAuiMDIParentFrame>();
 	wxAuiMDIParentFrame* parent = value_parent.GetEntityPtr();
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	// Function body
 	auto pEntity_gurax = new Value_wxAuiMDIClientWindow::EntityT(parent, style);
 	RefPtr<Value_wxAuiMDIClientWindow> pValue_gurax(new Value_wxAuiMDIClientWindow(pEntity_gurax));

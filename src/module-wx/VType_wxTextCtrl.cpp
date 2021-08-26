@@ -56,7 +56,8 @@ Gurax_ImplementConstructorEx(TextCtrl_gurax, processor_gurax, argument_gurax)
 	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-	long style = args_gurax.IsValid()? args_gurax.PickNumber<long>() : 0;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
 	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTextCtrlNameStr;
 	// Function body
@@ -309,7 +310,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, LoadFile_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* filename = args_gurax.PickString();
-	int fileType = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxTEXT_TYPE_ANY;
+	bool fileType_validFlag = args_gurax.IsValid();
+	int fileType = fileType_validFlag? args_gurax.PickNumber<int>() : wxTEXT_TYPE_ANY;
 	// Function body
 	bool rtn = pEntity_gurax->LoadFile(filename, fileType);
 	return new Gurax::Value_Bool(rtn);
@@ -404,7 +406,8 @@ Gurax_ImplementMethodEx(wxTextCtrl, SaveFile_gurax, processor_gurax, argument_gu
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* filename = args_gurax.IsValid()? args_gurax.PickString() : "";
-	int fileType = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxTEXT_TYPE_ANY;
+	bool fileType_validFlag = args_gurax.IsValid();
+	int fileType = fileType_validFlag? args_gurax.PickNumber<int>() : wxTEXT_TYPE_ANY;
 	// Function body
 	bool rtn = pEntity_gurax->SaveFile(filename, fileType);
 	return new Gurax::Value_Bool(rtn);

@@ -246,8 +246,10 @@ Gurax_ImplementMethodEx(wxGridBagSizer, Add_gurax, processor_gurax, argument_gur
 	Value_wxGBPosition& value_pos = args_gurax.Pick<Value_wxGBPosition>();
 	const wxGBPosition& pos = value_pos.GetEntity();
 	const wxGBSpan& span = args_gurax.IsValid()? args_gurax.Pick<Value_wxGBSpan>().GetEntity() : wxDefaultSpan;
-	int flag = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
-	int border = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool flag_validFlag = args_gurax.IsValid();
+	int flag = flag_validFlag? args_gurax.PickNumber<int>() : 0;
+	bool border_validFlag = args_gurax.IsValid();
+	int border = border_validFlag? args_gurax.PickNumber<int>() : 0;
 	wxObject* userData = args_gurax.IsValid()? args_gurax.Pick<Value_wxObject>().GetEntityPtr() : nullptr;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(

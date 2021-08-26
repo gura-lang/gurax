@@ -194,7 +194,8 @@ Gurax_ImplementMethodEx(wxMouseEvent, ButtonDClick_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxMouseButton but = args_gurax.IsValid()? args_gurax.PickNumber<wxMouseButton>() : wxMOUSE_BTN_ANY;
+	bool but_validFlag = args_gurax.IsValid();
+	wxMouseButton but = but_validFlag? args_gurax.PickNumber<wxMouseButton>() : wxMOUSE_BTN_ANY;
 	// Function body
 	bool rtn = pEntity_gurax->ButtonDClick(but);
 	return new Gurax::Value_Bool(rtn);
@@ -218,7 +219,8 @@ Gurax_ImplementMethodEx(wxMouseEvent, ButtonDown_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxMouseButton but = args_gurax.IsValid()? args_gurax.PickNumber<wxMouseButton>() : wxMOUSE_BTN_ANY;
+	bool but_validFlag = args_gurax.IsValid();
+	wxMouseButton but = but_validFlag? args_gurax.PickNumber<wxMouseButton>() : wxMOUSE_BTN_ANY;
 	// Function body
 	bool rtn = pEntity_gurax->ButtonDown(but);
 	return new Gurax::Value_Bool(rtn);
@@ -242,7 +244,8 @@ Gurax_ImplementMethodEx(wxMouseEvent, ButtonUp_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxMouseButton but = args_gurax.IsValid()? args_gurax.PickNumber<wxMouseButton>() : wxMOUSE_BTN_ANY;
+	bool but_validFlag = args_gurax.IsValid();
+	wxMouseButton but = but_validFlag? args_gurax.PickNumber<wxMouseButton>() : wxMOUSE_BTN_ANY;
 	// Function body
 	bool rtn = pEntity_gurax->ButtonUp(but);
 	return new Gurax::Value_Bool(rtn);

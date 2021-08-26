@@ -142,7 +142,8 @@ Gurax_ImplementMethodEx(wxFlexGridSizer, AddGrowableCol_gurax, processor_gurax, 
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t idx = args_gurax.PickNumber<size_t>();
-	int proportion = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool proportion_validFlag = args_gurax.IsValid();
+	int proportion = proportion_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	pEntity_gurax->AddGrowableCol(idx, proportion);
 	return Gurax::Value::nil();
@@ -168,7 +169,8 @@ Gurax_ImplementMethodEx(wxFlexGridSizer, AddGrowableRow_gurax, processor_gurax, 
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t idx = args_gurax.PickNumber<size_t>();
-	int proportion = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool proportion_validFlag = args_gurax.IsValid();
+	int proportion = proportion_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	pEntity_gurax->AddGrowableRow(idx, proportion);
 	return Gurax::Value::nil();

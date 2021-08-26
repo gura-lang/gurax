@@ -346,7 +346,8 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, AddPage_gurax, processor_gurax, argument
 	wxWindow* page = value_page.GetEntityPtr();
 	const char* text = args_gurax.PickString();
 	bool select = args_gurax.IsValid()? args_gurax.PickBool() : false;
-	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxBookCtrlBase::NO_IMAGE;
+	bool imageId_validFlag = args_gurax.IsValid();
+	int imageId = imageId_validFlag? args_gurax.PickNumber<int>() : wxBookCtrlBase::NO_IMAGE;
 	// Function body
 	bool rtn = pEntity_gurax->AddPage(page, text, select, imageId);
 	return new Gurax::Value_Bool(rtn);
@@ -423,7 +424,8 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, InsertPage_gurax, processor_gurax, argum
 	wxWindow* page = value_page.GetEntityPtr();
 	const char* text = args_gurax.PickString();
 	bool select = args_gurax.IsValid()? args_gurax.PickBool() : false;
-	int imageId = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxBookCtrlBase::NO_IMAGE;
+	bool imageId_validFlag = args_gurax.IsValid();
+	int imageId = imageId_validFlag? args_gurax.PickNumber<int>() : wxBookCtrlBase::NO_IMAGE;
 	// Function body
 	bool rtn = pEntity_gurax->InsertPage(index, page, text, select, imageId);
 	return new Gurax::Value_Bool(rtn);

@@ -44,8 +44,10 @@ Gurax_ImplementConstructorEx(Point_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int x = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
-	int y = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool x_validFlag = args_gurax.IsValid();
+	int x = x_validFlag? args_gurax.PickNumber<int>() : 0;
+	bool y_validFlag = args_gurax.IsValid();
+	int y = y_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
 		wxPoint(x, y)));

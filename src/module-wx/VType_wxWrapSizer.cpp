@@ -45,7 +45,8 @@ Gurax_ImplementConstructorEx(WrapSizer_gurax, processor_gurax, argument_gurax)
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int orient = args_gurax.PickNumber<int>();
-	int flag = args_gurax.IsValid()? args_gurax.PickNumber<int>() : wxWRAPSIZER_DEFAULT_FLAGS;
+	bool flag_validFlag = args_gurax.IsValid();
+	int flag = flag_validFlag? args_gurax.PickNumber<int>() : wxWRAPSIZER_DEFAULT_FLAGS;
 	// Function body
 	auto pEntity_gurax = new wxWrapSizer(orient, flag);
 	RefPtr<Value_wxWrapSizer> pValue_gurax(new Value_wxWrapSizer(pEntity_gurax));

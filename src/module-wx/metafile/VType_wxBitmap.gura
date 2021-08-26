@@ -2,6 +2,7 @@
 // VType_wxBitmap.gura
 //==============================================================================
 Bitmap = Class(GDIObject) {
+	__init__()
 	ConvertToImage() as Image
 	CopyFromIcon(icon as const_Icon_r) as bool
 	//Create(width as int, height as int, depth as int = wxBITMAP_SCREEN_DEPTH) as bool
@@ -31,6 +32,15 @@ Bitmap = Class(GDIObject) {
 	//GetHandlers():static as List
 	InitStandardHandlers():static as void
 	InsertHandler(handler as GDIImageHandler_p):static as void
-	NewFromPNGData(data as const_void_p, size as size_t):static as Bitmap
+	NewFrom(image as Image@gurax):static as Bitmap = \
+		R'''
+		return new Value_wxBitmap(wxBitmap(Util::CreateImage(*image)));
+		'''
+	//NewFromPNGData(data as const_void_p, size as size_t):static as Bitmap
+	NewFromPNGData(data as Pointer@gurax, size? as size_t):static as Bitmap = \
+		R'''
+		auto rtn = wxBitmap::NewFromPNGData(data->GetPointerC<void>(), size_validFlag? size : data->GetBytesAvailable());
+		return new Value_wxBitmap(rtn);
+		'''
 	RemoveHandler(name as const_String_r):static as bool
 }

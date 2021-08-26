@@ -158,7 +158,7 @@ const Value& LookupEventType(wxEventType eventType)
 	return *iter->second;
 }
 
-wxImage ConvertToWxImage(const Image& imageGura)
+wxImage CreateImage(const Image& imageGura)
 {
 	wxImage image(imageGura.GetWidth(), imageGura.GetHeight(), false);
 	size_t nPixels = imageGura.GetWidth() * imageGura.GetHeight();

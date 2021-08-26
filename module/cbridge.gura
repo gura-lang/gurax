@@ -321,7 +321,8 @@ Renderer = class {
 		${this.cType} ${varName} = args_gurax.PickNumber<${this.cType}>();
 		'''
 		codePickerValidation = R'''
-		${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickNumber<${this.cType}>() : ${defaultValue || '0'};
+		bool ${varName}_validFlag = args_gurax.IsValid();
+		${this.cType} ${varName} = ${varName}_validFlag? args_gurax.PickNumber<${this.cType}>() : ${defaultValue || '0'};
 		'''
 		codePickerVec = R'''
 		auto ${varName} = args_gurax.PickNumList<${this.cType}>();
@@ -425,12 +426,30 @@ Renderer.__init__() = {
 		'''
 		codePickerVec = ''
 		codeFunctionBody = '')
+	this.DeclareType('Image@gurax', '', 'Image',
+		codePicker = R'''
+		RefPtr<Image> ${varName}(args_gurax.PickImage().Reference());
+		'''
+		codePickerValidation = R'''
+		RefPtr<Image> ${varName}(args_gurax.IsValid()? args_gurax.PickImage().Reference() : ${defaultValue || 'nullptr'});
+		'''
+		codePickerVec = ''
+		codeFunctionBody = '')
 	this.DeclareType('Stream@gurax', '', 'Stream',
 		codePicker = R'''
 		RefPtr<Stream> ${varName}(args_gurax.PickStream().Reference());
 		'''
 		codePickerValidation = R'''
 		RefPtr<Stream> ${varName}(args_gurax.IsValid()? args_gurax.PickStream().Reference() : ${defaultValue || 'nullptr'});
+		'''
+		codePickerVec = ''
+		codeFunctionBody = '')
+	this.DeclareType('Pointer@gurax', '', 'Pointer',
+		codePicker = R'''
+		RefPtr<Pointer> ${varName}(args_gurax.PickPointer().Reference());
+		'''
+		codePickerValidation = R'''
+		RefPtr<Pointer> ${varName}(args_gurax.IsValid()? args_gurax.PickPointer().Reference() : ${defaultValue || 'nullptr'});
 		'''
 		codePickerVec = ''
 		codeFunctionBody = '')

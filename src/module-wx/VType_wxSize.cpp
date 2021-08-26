@@ -44,8 +44,10 @@ Gurax_ImplementConstructorEx(Size_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int width = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
-	int height = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 0;
+	bool width_validFlag = args_gurax.IsValid();
+	int width = width_validFlag? args_gurax.PickNumber<int>() : 0;
+	bool height_validFlag = args_gurax.IsValid();
+	int height = height_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
 		wxSize(width, height)));

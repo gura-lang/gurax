@@ -108,7 +108,7 @@ Value* CreateList(const wxArrayLong& array);
 void BindMultiEvents(Processor& processor, Argument& argument,
 		const wxEventType eventTypes[], size_t n, const EventValueFactory& eventValueFactory);
 const Value& LookupEventType(wxEventType eventType);
-wxImage ConvertToWxImage(const Image& imageGura);
+wxImage CreateImage(const Image& imageGura);
 void ExitMainLoop();
 
 };
