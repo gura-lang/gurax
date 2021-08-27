@@ -22,6 +22,7 @@
 	FontWeight
 	FontSymbolicSize
 	HitTest
+	ImageResizeQuality
 	ItemKind
 	LayoutDirection
 	ListColumnFormat

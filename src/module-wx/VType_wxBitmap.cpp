@@ -660,6 +660,14 @@ void VType_wxBitmap::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxBitmap, RemoveHandler_gurax));
 }
 
+Value* VType_wxBitmap::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Image)) {
+		return new Value_wxBitmap(wxBitmap(Util::CreateImage(Value_Image::GetImage(value))));
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_wxBitmap
 //------------------------------------------------------------------------------

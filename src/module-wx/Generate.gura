@@ -189,6 +189,9 @@ class GURAX_DLLDECLARE VType_wx${className} : public VType {
 public:
 	using VType::VType;
 	virtual void DoPrepare(Frame& frameOuter) override;
+${if (funcInfoCast)}
+	virtual Value* DoCastFrom(const Value& value, DeclArg::Flags flags) const override;
+${end}
 };
 
 extern GURAX_DLLDECLARE VType_wx${className} VTYPE_wx${className};
@@ -425,6 +428,17 @@ ${end}
 	${//(codePrefix + cbriege.EvalTmplFunctionAssignment(funcInfoTbl.Each())).Join('\n')}
 }
 
+${if (funcInfoCast)}
+Value* VType_wx${className}::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	${if (funcInfoCast.tmplFunctionBody)}
+	${funcInfoCast.tmplFunctionBody.Eval()}
+	${else}
+	return nullptr;
+	${end}
+}
+
+${end}
 //------------------------------------------------------------------------------
 // Value_wx${className}
 //------------------------------------------------------------------------------
@@ -578,6 +592,7 @@ ClassInfo = class {
 	classNameParent:nil as String
 	classInfoParent:nil as ClassInfo
 	funcInfoConstructor as cbridge.FuncInfo
+	funcInfoCast as cbridge.FuncInfo
 	tmplConstructorImplementation as Template
 	loosePointerFlag as Bool = false
 	funcInfoTbl[] as cbridge.FuncInfo = []
@@ -668,6 +683,8 @@ path.Glob('metafile/*.gura').Each {|pathName|
 					if (funcInfo.name == '__init__') {
 						funcInfo.name = classInfo.className
 						classInfo.funcInfoConstructor = funcInfo
+					} elsif (funcInfo.name == '__cast__') {
+						classInfo.funcInfoCast = funcInfo
 					} else {
 						classInfo.funcInfoTbl.Add(funcInfo)
 					}
@@ -1007,6 +1024,7 @@ GenerateVType(classInfoTbl[] as ClassInfo) = {
 		classNameParent = cond(classInfoParent, classInfoParent.className)
 		classNameRoot = cond(classInfoRoot, classInfoRoot.className)
 		funcInfoConstructor = classInfo.funcInfoConstructor
+		funcInfoCast = classInfo.funcInfoCast
 		funcInfoTbl = classInfo.funcInfoTbl
 		funcInfoVirtualTbl = funcInfoTbl.Filter(funcInfoTbl:*virtualFlag):list
 		fileNameHeader = Format('VType_wx%s.h', className)

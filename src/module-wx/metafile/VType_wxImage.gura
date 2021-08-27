@@ -2,4 +2,105 @@
 // VType_wxImage.gura
 //==============================================================================
 Image = Class(Object) {
+	Copy() as Image
+	//Create(width as int, height as int, clear as bool = true) as bool
+	//Create(sz as const_Size_r, clear as bool = true) as bool
+	//Create(width as int, height as int, data as unsigned_char_p, static_data as bool = false) as bool
+	//Create(sz as const_Size_r, data as unsigned_char_p, static_data as bool = false) as bool
+	//Create(width as int, height as int, data as unsigned_char_p, alpha as unsigned_char_p, static_data as bool = false) as bool
+	//Create(sz as const_Size_r, data as unsigned_char_p, alpha as unsigned_char_p, static_data as bool = false) as bool
+	Clear(value as unsigned_char = 0) as void
+	Destroy() as void
+	InitAlpha() as void
+	BlurHorizontal(blurRadius as int) as Image
+	BlurVertical(blurRadius as int) as Image
+	Mirror(horizontally as bool = true) as Image
+	Paste(image as const_Image_r, x as int, y as int) as void
+	Replace(r1 as unsigned_char, g1 as unsigned_char, b1 as unsigned_char, r2 as unsigned_char, g2 as unsigned_char, b2 as unsigned_char) as void
+	Rescale(width as int, height as int, quality as ImageResizeQuality = wxIMAGE_QUALITY_NORMAL) as Image
+	Resize(size as const_Size_r, pos as const_Point_r, red as int = -1, green as int = -1, blue as int = -1) as Image
+	Rotate(angle as double, rotationCentre as const_Point_r, interpolating as bool = true, offsetAfterRotation as Point_p = NULL) as Image
+	Rotate90(clockwise as bool = true) as Image
+	Rotate180() as Image
+	RotateHue(angle as double) as void
+	Scale(width as int, height as int, quality as ImageResizeQuality = wxIMAGE_QUALITY_NORMAL) as Image
+	Size(size as const_Size_r, pos as const_Point_r, red as int = -1, green as int = -1, blue as int = -1) as Image
+	ConvertAlphaToMask(threshold as unsigned_char = wxIMAGE_ALPHA_THRESHOLD) as bool
+	//ConvertAlphaToMask(mr as unsigned_char, mg as unsigned_char, mb as unsigned_char, threshold as unsigned_char = wxIMAGE_ALPHA_THRESHOLD) as bool
+	ConvertToGreyscale(weight_r as double, weight_g as double, weight_b as double) as Image
+	//ConvertToGreyscale() as Image
+	ConvertToMono(r as unsigned_char, g as unsigned_char, b as unsigned_char) as Image
+	ConvertToDisabled(brightness as unsigned_char = 255) as Image
+	ComputeHistogram(histogram as ImageHistogram_r) as unsigned_long
+	//FindFirstUnusedColour(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p, startR as unsigned_char = 1, startG as unsigned_char = 0, startB as unsigned_char = 0) as bool
+	//GetAlpha() as unsigned_char_p
+	//GetData() as unsigned_char_p
+	//GetAlpha(x as int, y as int) as unsigned_char
+	GetRed(x as int, y as int) as unsigned_char
+	GetGreen(x as int, y as int) as unsigned_char
+	GetBlue(x as int, y as int) as unsigned_char
+	GetMaskRed() as unsigned_char
+	GetMaskGreen() as unsigned_char
+	GetMaskBlue() as unsigned_char
+	GetWidth() as int
+	GetHeight() as int
+	GetSize() as Size
+	GetOption(name as const_String_r) as String
+	GetOptionInt(name as const_String_r) as int
+	//GetOrFindMaskColour(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p) as bool
+	GetPalette() as Palette
+	GetSubImage(rect as const_Rect_r) as Image
+	GetType() as BitmapType
+	HasAlpha() as bool
+	HasMask() as bool
+	HasOption(name as const_String_r) as bool
+	IsOk() as bool
+	IsTransparent(x as int, y as int, threshold as unsigned_char = wxIMAGE_ALPHA_THRESHOLD) as bool
+	LoadFile(stream as InputStream_r, type as BitmapType = wxBITMAP_TYPE_ANY, index as int = -1) as bool
+	//LoadFile(name as const_String_r, type as BitmapType = wxBITMAP_TYPE_ANY, index as int = -1) as bool
+	//LoadFile(name as const_String_r, mimetype as const_String_r, index as int = -1) as bool
+	//LoadFile(stream as InputStream_r, mimetype as const_String_r, index as int = -1) as bool
+	SaveFile(stream as OutputStream_r, mimetype as const_String_r) as bool
+	//SaveFile(name as const_String_r, type as BitmapType) as bool
+	//SaveFile(name as const_String_r, mimetype as const_String_r) as bool
+	//SaveFile(name as const_String_r) as bool
+	//SaveFile(stream as OutputStream_r, type as BitmapType) as bool
+	//SetAlpha(alpha as unsigned_char_p = NULL, static_data as bool = false) as void
+	//SetAlpha(x as int, y as int, alpha as unsigned_char) as void
+	ClearAlpha() as void
+	//SetData(data as unsigned_char_p, static_data as bool = false) as void
+	//SetData(data as unsigned_char_p, new_width as int, new_height as int, static_data as bool = false) as void
+	SetMask(hasMask as bool = true) as void
+	SetMaskColour(red as unsigned_char, green as unsigned_char, blue as unsigned_char) as void
+	SetMaskFromImage(mask as const_Image_r, mr as unsigned_char, mg as unsigned_char, mb as unsigned_char) as bool
+	SetOption(name as const_String_r, value as const_String_r) as void
+	//SetOption(name as const_String_r, value as int) as void
+	SetPalette(palette as const_Palette_r) as void
+	//SetRGB(x as int, y as int, r as unsigned_char, g as unsigned_char, b as unsigned_char) as void
+	//SetRGB(rect as const_Rect_r, red as unsigned_char, green as unsigned_char, blue as unsigned_char) as void
+	SetType(type as BitmapType) as void
+	CanRead(filename as const_String_r):static as bool
+	//CanRead(stream as InputStream_r):static as bool
+	GetImageExtWildcard():static as String
+	//RGBtoHSV(rgb as const_Image::RGBValue_r):static as Image::HSVValue
+	//HSVtoRGB(hsv as const_Image::HSVValue_r):static as Image::RGBValue
+	AddHandler(handler as ImageHandler_p):static as void
+	CleanUpHandlers():static as void
+	FindHandler(name as const_String_r):static as ImageHandler_p
+	//FindHandler(extension as const_String_r, imageType as BitmapType):static as ImageHandler_p
+	//FindHandler(imageType as BitmapType):static as ImageHandler_p
+	FindHandlerMime(mimetype as const_String_r):static as ImageHandler_p
+	//GetHandlers():static as List
+	InitStandardHandlers():static as void
+	InsertHandler(handler as ImageHandler_p):static as void
+	RemoveHandler(name as const_String_r):static as bool
+	GetImageCount(filename as const_String_r, type as BitmapType = wxBITMAP_TYPE_ANY):static as int
+	//GetImageCount(stream as InputStream_r, type as BitmapType = wxBITMAP_TYPE_ANY):static as int
+	__cast__() = \
+		R'''
+		if (value.IsType(VTYPE_Image)) {
+			return new Value_wxImage(Util::CreateImage(Value_Image::GetImage(value)));
+		}
+		return nullptr;
+		'''
 }

@@ -13,6 +13,11 @@ void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
 	frame.Assign(VTYPE_wxInitDialogEvent);
+	frame.Assign(VTYPE_wxImageHistogram);
+	frame.Assign(VTYPE_wxStreamBase);
+	frame.Assign(VTYPE_wxInputStream);
+	frame.Assign(VTYPE_wxOutputStream);
+	frame.Assign(VTYPE_wxImageHandler);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);

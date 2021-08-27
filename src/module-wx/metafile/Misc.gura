@@ -3,3 +3,18 @@
 //==============================================================================
 InitDialogEvent = Class(Event) {
 }
+
+ImageHistogram = Class {
+}
+
+StreamBase = Class():loosePointer {
+}
+
+InputStream = Class(StreamBase) {
+}
+
+OutputStream = Class(StreamBase) {
+}
+
+ImageHandler = Class(Object) {
+}

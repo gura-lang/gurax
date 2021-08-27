@@ -5,6 +5,11 @@
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
 	VType_wxInitDialogEvent.cpp
+	VType_wxImageHistogram.cpp
+	VType_wxStreamBase.cpp
+	VType_wxInputStream.cpp
+	VType_wxOutputStream.cpp
+	VType_wxImageHandler.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

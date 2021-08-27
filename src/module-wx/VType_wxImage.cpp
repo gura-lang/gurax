@@ -32,6 +32,1440 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Image#Copy()
+Gurax_DeclareMethodAlias(wxImage, Copy_gurax, "Copy")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Copy_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->Copy()));
+}
+
+// wx.Image#Clear(value? as Number)
+Gurax_DeclareMethodAlias(wxImage, Clear_gurax, "Clear")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Clear_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool value_validFlag = args_gurax.IsValid();
+	unsigned char value = value_validFlag? args_gurax.PickNumber<unsigned char>() : 0;
+	// Function body
+	pEntity_gurax->Clear(value);
+	return Gurax::Value::nil();
+}
+
+// wx.Image#Destroy()
+Gurax_DeclareMethodAlias(wxImage, Destroy_gurax, "Destroy")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Destroy_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Destroy();
+	return Gurax::Value::nil();
+}
+
+// wx.Image#InitAlpha()
+Gurax_DeclareMethodAlias(wxImage, InitAlpha_gurax, "InitAlpha")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, InitAlpha_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->InitAlpha();
+	return Gurax::Value::nil();
+}
+
+// wx.Image#BlurHorizontal(blurRadius as Number)
+Gurax_DeclareMethodAlias(wxImage, BlurHorizontal_gurax, "BlurHorizontal")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("blurRadius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, BlurHorizontal_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int blurRadius = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->BlurHorizontal(blurRadius)));
+}
+
+// wx.Image#BlurVertical(blurRadius as Number)
+Gurax_DeclareMethodAlias(wxImage, BlurVertical_gurax, "BlurVertical")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("blurRadius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, BlurVertical_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int blurRadius = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->BlurVertical(blurRadius)));
+}
+
+// wx.Image#Mirror(horizontally? as Bool)
+Gurax_DeclareMethodAlias(wxImage, Mirror_gurax, "Mirror")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("horizontally", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Mirror_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool horizontally = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->Mirror(horizontally)));
+}
+
+// wx.Image#Paste(image as wx.Image, x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxImage, Paste_gurax, "Paste")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("image", VTYPE_wxImage, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Paste_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImage& value_image = args_gurax.Pick<Value_wxImage>();
+	const wxImage& image = value_image.GetEntity();
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->Paste(image, x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.Image#Replace(r1 as Number, g1 as Number, b1 as Number, r2 as Number, g2 as Number, b2 as Number)
+Gurax_DeclareMethodAlias(wxImage, Replace_gurax, "Replace")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("r1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Replace_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned char r1 = args_gurax.PickNumber<unsigned char>();
+	unsigned char g1 = args_gurax.PickNumber<unsigned char>();
+	unsigned char b1 = args_gurax.PickNumber<unsigned char>();
+	unsigned char r2 = args_gurax.PickNumber<unsigned char>();
+	unsigned char g2 = args_gurax.PickNumber<unsigned char>();
+	unsigned char b2 = args_gurax.PickNumber<unsigned char>();
+	// Function body
+	pEntity_gurax->Replace(r1, g1, b1, r2, g2, b2);
+	return Gurax::Value::nil();
+}
+
+// wx.Image#Rescale(width as Number, height as Number, quality? as Number)
+Gurax_DeclareMethodAlias(wxImage, Rescale_gurax, "Rescale")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("quality", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Rescale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	bool quality_validFlag = args_gurax.IsValid();
+	wxImageResizeQuality quality = quality_validFlag? args_gurax.PickNumber<wxImageResizeQuality>() : wxIMAGE_QUALITY_NORMAL;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->Rescale(width, height, quality)));
+}
+
+// wx.Image#Resize(size as wx.Size, pos as wx.Point, red? as Number, green? as Number, blue? as Number)
+Gurax_DeclareMethodAlias(wxImage, Resize_gurax, "Resize")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("red", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("green", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Resize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	Value_wxPoint& value_pos = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pos = value_pos.GetEntity();
+	bool red_validFlag = args_gurax.IsValid();
+	int red = red_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool green_validFlag = args_gurax.IsValid();
+	int green = green_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool blue_validFlag = args_gurax.IsValid();
+	int blue = blue_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->Resize(size, pos, red, green, blue)));
+}
+
+// wx.Image#Rotate(angle as Number, rotationCentre as wx.Point, interpolating? as Bool, offsetAfterRotation? as wx.Point)
+Gurax_DeclareMethodAlias(wxImage, Rotate_gurax, "Rotate")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rotationCentre", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("interpolating", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("offsetAfterRotation", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Rotate_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	double angle = args_gurax.PickNumber<double>();
+	Value_wxPoint& value_rotationCentre = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& rotationCentre = value_rotationCentre.GetEntity();
+	bool interpolating = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	wxPoint* offsetAfterRotation = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntityPtr() : nullptr;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->Rotate(angle, rotationCentre, interpolating, offsetAfterRotation)));
+}
+
+// wx.Image#Rotate90(clockwise? as Bool)
+Gurax_DeclareMethodAlias(wxImage, Rotate90_gurax, "Rotate90")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("clockwise", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Rotate90_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool clockwise = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->Rotate90(clockwise)));
+}
+
+// wx.Image#Rotate180()
+Gurax_DeclareMethodAlias(wxImage, Rotate180_gurax, "Rotate180")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Rotate180_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->Rotate180()));
+}
+
+// wx.Image#RotateHue(angle as Number)
+Gurax_DeclareMethodAlias(wxImage, RotateHue_gurax, "RotateHue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, RotateHue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	double angle = args_gurax.PickNumber<double>();
+	// Function body
+	pEntity_gurax->RotateHue(angle);
+	return Gurax::Value::nil();
+}
+
+// wx.Image#Scale(width as Number, height as Number, quality? as Number)
+Gurax_DeclareMethodAlias(wxImage, Scale_gurax, "Scale")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("quality", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Scale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	bool quality_validFlag = args_gurax.IsValid();
+	wxImageResizeQuality quality = quality_validFlag? args_gurax.PickNumber<wxImageResizeQuality>() : wxIMAGE_QUALITY_NORMAL;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->Scale(width, height, quality)));
+}
+
+// wx.Image#Size(size as wx.Size, pos as wx.Point, red? as Number, green? as Number, blue? as Number)
+Gurax_DeclareMethodAlias(wxImage, Size_gurax, "Size")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("red", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("green", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, Size_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	Value_wxPoint& value_pos = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pos = value_pos.GetEntity();
+	bool red_validFlag = args_gurax.IsValid();
+	int red = red_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool green_validFlag = args_gurax.IsValid();
+	int green = green_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool blue_validFlag = args_gurax.IsValid();
+	int blue = blue_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->Size(size, pos, red, green, blue)));
+}
+
+// wx.Image#ConvertAlphaToMask(threshold? as Number)
+Gurax_DeclareMethodAlias(wxImage, ConvertAlphaToMask_gurax, "ConvertAlphaToMask")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("threshold", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, ConvertAlphaToMask_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool threshold_validFlag = args_gurax.IsValid();
+	unsigned char threshold = threshold_validFlag? args_gurax.PickNumber<unsigned char>() : wxIMAGE_ALPHA_THRESHOLD;
+	// Function body
+	bool rtn = pEntity_gurax->ConvertAlphaToMask(threshold);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image#ConvertToGreyscale(weight_r as Number, weight_g as Number, weight_b as Number)
+Gurax_DeclareMethodAlias(wxImage, ConvertToGreyscale_gurax, "ConvertToGreyscale")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("weight_r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("weight_g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("weight_b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, ConvertToGreyscale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	double weight_r = args_gurax.PickNumber<double>();
+	double weight_g = args_gurax.PickNumber<double>();
+	double weight_b = args_gurax.PickNumber<double>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->ConvertToGreyscale(weight_r, weight_g, weight_b)));
+}
+
+// wx.Image#ConvertToMono(r as Number, g as Number, b as Number)
+Gurax_DeclareMethodAlias(wxImage, ConvertToMono_gurax, "ConvertToMono")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, ConvertToMono_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned char r = args_gurax.PickNumber<unsigned char>();
+	unsigned char g = args_gurax.PickNumber<unsigned char>();
+	unsigned char b = args_gurax.PickNumber<unsigned char>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->ConvertToMono(r, g, b)));
+}
+
+// wx.Image#ConvertToDisabled(brightness? as Number)
+Gurax_DeclareMethodAlias(wxImage, ConvertToDisabled_gurax, "ConvertToDisabled")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, ConvertToDisabled_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool brightness_validFlag = args_gurax.IsValid();
+	unsigned char brightness = brightness_validFlag? args_gurax.PickNumber<unsigned char>() : 255;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->ConvertToDisabled(brightness)));
+}
+
+// wx.Image#ComputeHistogram(histogram as wx.ImageHistogram)
+Gurax_DeclareMethodAlias(wxImage, ComputeHistogram_gurax, "ComputeHistogram")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("histogram", VTYPE_wxImageHistogram, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, ComputeHistogram_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImageHistogram& value_histogram = args_gurax.Pick<Value_wxImageHistogram>();
+	wxImageHistogram& histogram = value_histogram.GetEntity();
+	// Function body
+	unsigned long rtn = pEntity_gurax->ComputeHistogram(histogram);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetRed(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxImage, GetRed_gurax, "GetRed")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetRed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	unsigned char rtn = pEntity_gurax->GetRed(x, y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetGreen(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxImage, GetGreen_gurax, "GetGreen")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetGreen_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	unsigned char rtn = pEntity_gurax->GetGreen(x, y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetBlue(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxImage, GetBlue_gurax, "GetBlue")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetBlue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	unsigned char rtn = pEntity_gurax->GetBlue(x, y);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetMaskRed()
+Gurax_DeclareMethodAlias(wxImage, GetMaskRed_gurax, "GetMaskRed")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetMaskRed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned char rtn = pEntity_gurax->GetMaskRed();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetMaskGreen()
+Gurax_DeclareMethodAlias(wxImage, GetMaskGreen_gurax, "GetMaskGreen")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetMaskGreen_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned char rtn = pEntity_gurax->GetMaskGreen();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetMaskBlue()
+Gurax_DeclareMethodAlias(wxImage, GetMaskBlue_gurax, "GetMaskBlue")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetMaskBlue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned char rtn = pEntity_gurax->GetMaskBlue();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetWidth()
+Gurax_DeclareMethodAlias(wxImage, GetWidth_gurax, "GetWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetWidth();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetHeight()
+Gurax_DeclareMethodAlias(wxImage, GetHeight_gurax, "GetHeight")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetHeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetHeight();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetSize()
+Gurax_DeclareMethodAlias(wxImage, GetSize_gurax, "GetSize")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetSize()));
+}
+
+// wx.Image#GetOption(name as String)
+Gurax_DeclareMethodAlias(wxImage, GetOption_gurax, "GetOption")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetOption_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	const char* rtn = pEntity_gurax->GetOption(name);
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.Image#GetOptionInt(name as String)
+Gurax_DeclareMethodAlias(wxImage, GetOptionInt_gurax, "GetOptionInt")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetOptionInt_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	int rtn = pEntity_gurax->GetOptionInt(name);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#GetPalette()
+Gurax_DeclareMethodAlias(wxImage, GetPalette_gurax, "GetPalette")
+{
+	Declare(VTYPE_wxPalette, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetPalette_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPalette(
+		pEntity_gurax->GetPalette()));
+}
+
+// wx.Image#GetSubImage(rect as wx.Rect)
+Gurax_DeclareMethodAlias(wxImage, GetSubImage_gurax, "GetSubImage")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetSubImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->GetSubImage(rect)));
+}
+
+// wx.Image#GetType()
+Gurax_DeclareMethodAlias(wxImage, GetType_gurax, "GetType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, GetType_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxBitmapType rtn = pEntity_gurax->GetType();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Image#HasAlpha()
+Gurax_DeclareMethodAlias(wxImage, HasAlpha_gurax, "HasAlpha")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, HasAlpha_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasAlpha();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image#HasMask()
+Gurax_DeclareMethodAlias(wxImage, HasMask_gurax, "HasMask")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, HasMask_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasMask();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image#HasOption(name as String)
+Gurax_DeclareMethodAlias(wxImage, HasOption_gurax, "HasOption")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, HasOption_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->HasOption(name);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image#IsOk()
+Gurax_DeclareMethodAlias(wxImage, IsOk_gurax, "IsOk")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, IsOk_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsOk();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image#IsTransparent(x as Number, y as Number, threshold? as Number)
+Gurax_DeclareMethodAlias(wxImage, IsTransparent_gurax, "IsTransparent")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("threshold", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, IsTransparent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	bool threshold_validFlag = args_gurax.IsValid();
+	unsigned char threshold = threshold_validFlag? args_gurax.PickNumber<unsigned char>() : wxIMAGE_ALPHA_THRESHOLD;
+	// Function body
+	bool rtn = pEntity_gurax->IsTransparent(x, y, threshold);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image#LoadFile(stream as wx.InputStream, type? as Number, index? as Number)
+Gurax_DeclareMethodAlias(wxImage, LoadFile_gurax, "LoadFile")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("stream", VTYPE_wxInputStream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, LoadFile_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxInputStream& value_stream = args_gurax.Pick<Value_wxInputStream>();
+	wxInputStream& stream = value_stream.GetEntity();
+	bool type_validFlag = args_gurax.IsValid();
+	wxBitmapType type = type_validFlag? args_gurax.PickNumber<wxBitmapType>() : wxBITMAP_TYPE_ANY;
+	bool index_validFlag = args_gurax.IsValid();
+	int index = index_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	bool rtn = pEntity_gurax->LoadFile(stream, type, index);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image#SaveFile(stream as wx.OutputStream, mimetype as String)
+Gurax_DeclareMethodAlias(wxImage, SaveFile_gurax, "SaveFile")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("stream", VTYPE_wxOutputStream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mimetype", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, SaveFile_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxOutputStream& value_stream = args_gurax.Pick<Value_wxOutputStream>();
+	wxOutputStream& stream = value_stream.GetEntity();
+	const char* mimetype = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->SaveFile(stream, mimetype);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image#ClearAlpha()
+Gurax_DeclareMethodAlias(wxImage, ClearAlpha_gurax, "ClearAlpha")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, ClearAlpha_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->ClearAlpha();
+	return Gurax::Value::nil();
+}
+
+// wx.Image#SetMask(hasMask? as Bool)
+Gurax_DeclareMethodAlias(wxImage, SetMask_gurax, "SetMask")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("hasMask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, SetMask_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool hasMask = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetMask(hasMask);
+	return Gurax::Value::nil();
+}
+
+// wx.Image#SetMaskColour(red as Number, green as Number, blue as Number)
+Gurax_DeclareMethodAlias(wxImage, SetMaskColour_gurax, "SetMaskColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, SetMaskColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned char red = args_gurax.PickNumber<unsigned char>();
+	unsigned char green = args_gurax.PickNumber<unsigned char>();
+	unsigned char blue = args_gurax.PickNumber<unsigned char>();
+	// Function body
+	pEntity_gurax->SetMaskColour(red, green, blue);
+	return Gurax::Value::nil();
+}
+
+// wx.Image#SetMaskFromImage(mask as wx.Image, mr as Number, mg as Number, mb as Number)
+Gurax_DeclareMethodAlias(wxImage, SetMaskFromImage_gurax, "SetMaskFromImage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("mask", VTYPE_wxImage, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mr", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mg", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mb", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, SetMaskFromImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImage& value_mask = args_gurax.Pick<Value_wxImage>();
+	const wxImage& mask = value_mask.GetEntity();
+	unsigned char mr = args_gurax.PickNumber<unsigned char>();
+	unsigned char mg = args_gurax.PickNumber<unsigned char>();
+	unsigned char mb = args_gurax.PickNumber<unsigned char>();
+	// Function body
+	bool rtn = pEntity_gurax->SetMaskFromImage(mask, mr, mg, mb);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image#SetOption(name as String, value as String)
+Gurax_DeclareMethodAlias(wxImage, SetOption_gurax, "SetOption")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, SetOption_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	const char* value = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetOption(name, value);
+	return Gurax::Value::nil();
+}
+
+// wx.Image#SetPalette(palette as wx.Palette)
+Gurax_DeclareMethodAlias(wxImage, SetPalette_gurax, "SetPalette")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("palette", VTYPE_wxPalette, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, SetPalette_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPalette& value_palette = args_gurax.Pick<Value_wxPalette>();
+	const wxPalette& palette = value_palette.GetEntity();
+	// Function body
+	pEntity_gurax->SetPalette(palette);
+	return Gurax::Value::nil();
+}
+
+// wx.Image#SetType(type as Number)
+Gurax_DeclareMethodAlias(wxImage, SetType_gurax, "SetType")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImage, SetType_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxBitmapType type = args_gurax.PickNumber<wxBitmapType>();
+	// Function body
+	pEntity_gurax->SetType(type);
+	return Gurax::Value::nil();
+}
+
+// wx.Image.CanRead(filename as String)
+Gurax_DeclareClassMethodAlias(wxImage, CanRead_gurax, "CanRead")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, CanRead_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* filename = args_gurax.PickString();
+	// Function body
+	bool rtn = wxImage::CanRead(filename);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image.GetImageExtWildcard()
+Gurax_DeclareClassMethodAlias(wxImage, GetImageExtWildcard_gurax, "GetImageExtWildcard")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, GetImageExtWildcard_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	const char* rtn = wxImage::GetImageExtWildcard();
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.Image.AddHandler(handler as wx.ImageHandler)
+Gurax_DeclareClassMethodAlias(wxImage, AddHandler_gurax, "AddHandler")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("handler", VTYPE_wxImageHandler, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, AddHandler_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImageHandler& value_handler = args_gurax.Pick<Value_wxImageHandler>();
+	wxImageHandler* handler = value_handler.GetEntityPtr();
+	// Function body
+	wxImage::AddHandler(handler);
+	return Gurax::Value::nil();
+}
+
+// wx.Image.CleanUpHandlers()
+Gurax_DeclareClassMethodAlias(wxImage, CleanUpHandlers_gurax, "CleanUpHandlers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, CleanUpHandlers_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxImage::CleanUpHandlers();
+	return Gurax::Value::nil();
+}
+
+// wx.Image.FindHandler(name as String)
+Gurax_DeclareClassMethodAlias(wxImage, FindHandler_gurax, "FindHandler")
+{
+	Declare(VTYPE_wxImageHandler, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, FindHandler_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageHandler(
+		*wxImage::FindHandler(name)));
+}
+
+// wx.Image.FindHandlerMime(mimetype as String)
+Gurax_DeclareClassMethodAlias(wxImage, FindHandlerMime_gurax, "FindHandlerMime")
+{
+	Declare(VTYPE_wxImageHandler, Flag::None);
+	DeclareArg("mimetype", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, FindHandlerMime_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* mimetype = args_gurax.PickString();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageHandler(
+		*wxImage::FindHandlerMime(mimetype)));
+}
+
+// wx.Image.InitStandardHandlers()
+Gurax_DeclareClassMethodAlias(wxImage, InitStandardHandlers_gurax, "InitStandardHandlers")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, InitStandardHandlers_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxImage::InitStandardHandlers();
+	return Gurax::Value::nil();
+}
+
+// wx.Image.InsertHandler(handler as wx.ImageHandler)
+Gurax_DeclareClassMethodAlias(wxImage, InsertHandler_gurax, "InsertHandler")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("handler", VTYPE_wxImageHandler, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, InsertHandler_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImageHandler& value_handler = args_gurax.Pick<Value_wxImageHandler>();
+	wxImageHandler* handler = value_handler.GetEntityPtr();
+	// Function body
+	wxImage::InsertHandler(handler);
+	return Gurax::Value::nil();
+}
+
+// wx.Image.RemoveHandler(name as String)
+Gurax_DeclareClassMethodAlias(wxImage, RemoveHandler_gurax, "RemoveHandler")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, RemoveHandler_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	bool rtn = wxImage::RemoveHandler(name);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Image.GetImageCount(filename as String, type? as Number)
+Gurax_DeclareClassMethodAlias(wxImage, GetImageCount_gurax, "GetImageCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxImage, GetImageCount_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* filename = args_gurax.PickString();
+	bool type_validFlag = args_gurax.IsValid();
+	wxBitmapType type = type_validFlag? args_gurax.PickNumber<wxBitmapType>() : wxBITMAP_TYPE_ANY;
+	// Function body
+	int rtn = wxImage::GetImageCount(filename, type);
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +1483,74 @@ void VType_wxImage::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxImage, Copy_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Clear_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Destroy_gurax));
+	Assign(Gurax_CreateMethod(wxImage, InitAlpha_gurax));
+	Assign(Gurax_CreateMethod(wxImage, BlurHorizontal_gurax));
+	Assign(Gurax_CreateMethod(wxImage, BlurVertical_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Mirror_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Paste_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Replace_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Rescale_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Resize_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Rotate_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Rotate90_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Rotate180_gurax));
+	Assign(Gurax_CreateMethod(wxImage, RotateHue_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Scale_gurax));
+	Assign(Gurax_CreateMethod(wxImage, Size_gurax));
+	Assign(Gurax_CreateMethod(wxImage, ConvertAlphaToMask_gurax));
+	Assign(Gurax_CreateMethod(wxImage, ConvertToGreyscale_gurax));
+	Assign(Gurax_CreateMethod(wxImage, ConvertToMono_gurax));
+	Assign(Gurax_CreateMethod(wxImage, ConvertToDisabled_gurax));
+	Assign(Gurax_CreateMethod(wxImage, ComputeHistogram_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetRed_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetGreen_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetBlue_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetMaskRed_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetMaskGreen_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetMaskBlue_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetWidth_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetHeight_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetSize_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetOption_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetOptionInt_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetPalette_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetSubImage_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetType_gurax));
+	Assign(Gurax_CreateMethod(wxImage, HasAlpha_gurax));
+	Assign(Gurax_CreateMethod(wxImage, HasMask_gurax));
+	Assign(Gurax_CreateMethod(wxImage, HasOption_gurax));
+	Assign(Gurax_CreateMethod(wxImage, IsOk_gurax));
+	Assign(Gurax_CreateMethod(wxImage, IsTransparent_gurax));
+	Assign(Gurax_CreateMethod(wxImage, LoadFile_gurax));
+	Assign(Gurax_CreateMethod(wxImage, SaveFile_gurax));
+	Assign(Gurax_CreateMethod(wxImage, ClearAlpha_gurax));
+	Assign(Gurax_CreateMethod(wxImage, SetMask_gurax));
+	Assign(Gurax_CreateMethod(wxImage, SetMaskColour_gurax));
+	Assign(Gurax_CreateMethod(wxImage, SetMaskFromImage_gurax));
+	Assign(Gurax_CreateMethod(wxImage, SetOption_gurax));
+	Assign(Gurax_CreateMethod(wxImage, SetPalette_gurax));
+	Assign(Gurax_CreateMethod(wxImage, SetType_gurax));
+	Assign(Gurax_CreateMethod(wxImage, CanRead_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetImageExtWildcard_gurax));
+	Assign(Gurax_CreateMethod(wxImage, AddHandler_gurax));
+	Assign(Gurax_CreateMethod(wxImage, CleanUpHandlers_gurax));
+	Assign(Gurax_CreateMethod(wxImage, FindHandler_gurax));
+	Assign(Gurax_CreateMethod(wxImage, FindHandlerMime_gurax));
+	Assign(Gurax_CreateMethod(wxImage, InitStandardHandlers_gurax));
+	Assign(Gurax_CreateMethod(wxImage, InsertHandler_gurax));
+	Assign(Gurax_CreateMethod(wxImage, RemoveHandler_gurax));
+	Assign(Gurax_CreateMethod(wxImage, GetImageCount_gurax));
+}
+
+Value* VType_wxImage::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_Image)) {
+		return new Value_wxImage(Util::CreateImage(Value_Image::GetImage(value)));
+	}
+	return nullptr;
 }
 
 //------------------------------------------------------------------------------
