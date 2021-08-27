@@ -25,6 +25,7 @@ void BasicVType::Prepare(Frame& frame)
 	frame.Assign(VTYPE_Color);
 	frame.Assign(VTYPE_Complex);
 	frame.Assign(VTYPE_DateTime);
+	frame.Assign(VTYPE_DeclArg);
 	frame.Assign(VTYPE_Dict);
 	frame.Assign(VTYPE_Directory);
 	frame.Assign(VTYPE_Error);

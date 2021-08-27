@@ -124,6 +124,7 @@ target_sources(guraxcore PRIVATE
 	VType_Color.cpp
 	VType_Complex.cpp
 	VType_DateTime.cpp
+	VType_DeclArg.cpp
 	VType_Dict.cpp
 	VType_Directory.cpp
 	VType_Error.cpp

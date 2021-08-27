@@ -58,13 +58,16 @@ private:
 	RefPtr<ValueOwner> _pValuesPropOfInstInit;
 	RefPtr<ValueOwner> _pValuesPropOfClass;
 	RefPtr<Function> _pDestructor;
+	RefPtr<Function> _pCastFunction;
 public:
 	VTypeCustom();
 public:
 	void Inherit();
 	void SetConstructor(Function* pConstructor) { _pConstructor.reset(pConstructor); }
 	void SetDestructor(Function* pDestructor) { _pDestructor.reset(pDestructor); }
+	void SetCastFunction(Function* pCastFunction) { _pCastFunction.reset(pCastFunction); }
 	const Function& GetDestructor() const { return *_pDestructor; }
+	const Function& GetCastFunction() const { return *_pCastFunction; }
 	ValueOwner& GetValuesPropOfInstInit() { return *_pValuesPropOfInstInit; }
 	const ValueOwner& GetValuesPropOfInstInit() const { return *_pValuesPropOfInstInit; }
 	ValueOwner& GetValuesPropOfClass() { return *_pValuesPropOfClass; }

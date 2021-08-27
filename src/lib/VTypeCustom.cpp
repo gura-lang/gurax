@@ -11,9 +11,10 @@ namespace Gurax {
 VTypeCustom::VTypeCustom() :
 	VType(Symbol::Empty), _pValuesPropOfInstInit(new ValueOwner()), _pValuesPropOfClass(new ValueOwner())
 {
-	// _pConstructor and _pDestructor must be initialized here
+	// _pConstructor, _pDestructor and _pCastFunction must be initialized.
 	_pConstructor.reset(Function::Empty.Reference());
 	_pDestructor.reset(Function::Empty.Reference());
+	_pCastFunction.reset(Function::Empty.Reference());
 }
 
 void VTypeCustom::Inherit()
@@ -90,6 +91,8 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 
 Value* VTypeCustom::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
+	//if (GetCastFunction().IsEmpty()) return nullptr;
+	//GetCastFunction().EvalEasy(GetProcessor(), value.Reference(), new Value_DeclArg());
 	return value.Reference();
 }
 
@@ -115,6 +118,10 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 		}
 		pFunction->SetFrameOuter(GetFrame());
 		SetDestructor(pFunction.release());
+		return true;
+	} else if (pSymbol->IsIdentical(Gurax_Symbol(__cast__))) {
+		pFunction->SetFrameOuter(GetFrame());
+		SetCastFunction(pFunction.release());
 		return true;
 	}
 	return VType::DoAssignCustomMethod(pFunction.release());

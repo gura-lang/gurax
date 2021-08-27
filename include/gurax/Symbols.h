@@ -10,6 +10,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Predefined Symbols
 //------------------------------------------------------------------------------
+Gurax_DeclareSymbol(__cast__);
 Gurax_DeclareSymbol(__del__);
 Gurax_DeclareSymbol(__file__);
 Gurax_DeclareSymbol(__init__);

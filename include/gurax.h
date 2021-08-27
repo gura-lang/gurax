@@ -103,6 +103,7 @@
 #include "gurax/VType_Color.h"
 #include "gurax/VType_Complex.h"
 #include "gurax/VType_DateTime.h"
+#include "gurax/VType_DeclArg.h"
 #include "gurax/VType_Dict.h"
 #include "gurax/VType_Directory.h"
 #include "gurax/VType_Error.h"
