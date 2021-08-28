@@ -20,6 +20,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ALIGN_LEFT", new Value_Number(wxALIGN_LEFT));
 	frame.Assign("ALIGN_RIGHT", new Value_Number(wxALIGN_RIGHT));
 	frame.Assign("ALIGN_RIGHT", new Value_Number(wxALIGN_RIGHT));
+	frame.Assign("ALIGN_RIGHT", new Value_Number(wxALIGN_RIGHT));
 	frame.Assign("ALIGN_TOP", new Value_Number(wxALIGN_TOP));
 	frame.Assign("ALL", new Value_Number(wxALL));
 	frame.Assign("ALWAYS_SHOW_SB", new Value_Number(wxALWAYS_SHOW_SB));
@@ -71,6 +72,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CB_SORT", new Value_Number(wxCB_SORT));
 	frame.Assign("CC_SPECIAL_DCLICK", new Value_Number(wxCC_SPECIAL_DCLICK));
 	frame.Assign("CC_STD_BUTTON", new Value_Number(wxCC_STD_BUTTON));
+	frame.Assign("CHK_2STATE", new Value_Number(wxCHK_2STATE));
+	frame.Assign("CHK_3STATE", new Value_Number(wxCHK_3STATE));
+	frame.Assign("CHK_ALLOW_3RD_STATE_FOR_USER", new Value_Number(wxCHK_ALLOW_3RD_STATE_FOR_USER));
 	frame.Assign("CLIP_CHILDREN", new Value_Number(wxCLIP_CHILDREN));
 	frame.Assign("CLOSE_BOX", new Value_Number(wxCLOSE_BOX));
 	frame.Assign("DEFAULT_DIALOG_STYLE", new Value_Number(wxDEFAULT_DIALOG_STYLE));

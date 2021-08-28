@@ -45,8 +45,9 @@ Bitmap = Class(GDIObject) {
 	RemoveHandler(name as const_String_r):static as bool
 	__cast__() = \
 		R'''
-		if (value.IsType(VTYPE_Image)) {
-			return new Value_wxBitmap(wxBitmap(Util::CreateImage(Value_Image::GetImage(value))));
+		RefPtr<Value_Image> pValueCasted(value.Cast<Value_Image>(flags));
+		if (pValueCasted) {
+			return new Value_wxBitmap(wxBitmap(Util::CreateImage(pValueCasted->GetImage())));
 		}
 		return nullptr;
 		'''

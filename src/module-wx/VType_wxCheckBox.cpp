@@ -70,6 +70,153 @@ Gurax_ImplementConstructorEx(CheckBox_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.CheckBox#GetValue()
+Gurax_DeclareMethodAlias(wxCheckBox, GetValue_gurax, "GetValue")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCheckBox, GetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->GetValue();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.CheckBox#Get3StateValue()
+Gurax_DeclareMethodAlias(wxCheckBox, Get3StateValue_gurax, "Get3StateValue")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCheckBox, Get3StateValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCheckBoxState rtn = pEntity_gurax->Get3StateValue();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.CheckBox#Is3State()
+Gurax_DeclareMethodAlias(wxCheckBox, Is3State_gurax, "Is3State")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCheckBox, Is3State_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->Is3State();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.CheckBox#Is3rdStateAllowedForUser()
+Gurax_DeclareMethodAlias(wxCheckBox, Is3rdStateAllowedForUser_gurax, "Is3rdStateAllowedForUser")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCheckBox, Is3rdStateAllowedForUser_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->Is3rdStateAllowedForUser();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.CheckBox#IsChecked()
+Gurax_DeclareMethodAlias(wxCheckBox, IsChecked_gurax, "IsChecked")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCheckBox, IsChecked_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsChecked();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.CheckBox#SetValue(state as Bool)
+Gurax_DeclareMethodAlias(wxCheckBox, SetValue_gurax, "SetValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("state", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCheckBox, SetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool state = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetValue(state);
+	return Gurax::Value::nil();
+}
+
+// wx.CheckBox#Set3StateValue(state as Number)
+Gurax_DeclareMethodAlias(wxCheckBox, Set3StateValue_gurax, "Set3StateValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCheckBox, Set3StateValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCheckBoxState state = args_gurax.PickNumber<wxCheckBoxState>();
+	// Function body
+	pEntity_gurax->Set3StateValue(state);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -87,6 +234,13 @@ void VType_wxCheckBox::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CheckBox_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxCheckBox, GetValue_gurax));
+	Assign(Gurax_CreateMethod(wxCheckBox, Get3StateValue_gurax));
+	Assign(Gurax_CreateMethod(wxCheckBox, Is3State_gurax));
+	Assign(Gurax_CreateMethod(wxCheckBox, Is3rdStateAllowedForUser_gurax));
+	Assign(Gurax_CreateMethod(wxCheckBox, IsChecked_gurax));
+	Assign(Gurax_CreateMethod(wxCheckBox, SetValue_gurax));
+	Assign(Gurax_CreateMethod(wxCheckBox, Set3StateValue_gurax));
 }
 
 //------------------------------------------------------------------------------

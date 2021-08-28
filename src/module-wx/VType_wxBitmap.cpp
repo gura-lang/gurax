@@ -662,8 +662,9 @@ void VType_wxBitmap::DoPrepare(Frame& frameOuter)
 
 Value* VType_wxBitmap::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
-	if (value.IsType(VTYPE_Image)) {
-		return new Value_wxBitmap(wxBitmap(Util::CreateImage(Value_Image::GetImage(value))));
+	RefPtr<Value_Image> pValueCasted(value.Cast<Value_Image>(flags));
+	if (pValueCasted) {
+		return new Value_wxBitmap(wxBitmap(Util::CreateImage(pValueCasted->GetImage())));
 	}
 	return nullptr;
 }

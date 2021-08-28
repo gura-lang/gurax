@@ -4,4 +4,18 @@
 CheckBox = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxCheckBoxNameStr)
+	GetValue() as bool
+	Get3StateValue() as CheckBoxState
+	Is3State() as bool
+	Is3rdStateAllowedForUser() as bool
+	IsChecked() as bool
+	SetValue(state as bool) as void
+	Set3StateValue(state as CheckBoxState) as void
 }
+
+@const[
+	CHK_2STATE
+	CHK_3STATE
+	CHK_ALLOW_3RD_STATE_FOR_USER
+	ALIGN_RIGHT
+]

@@ -8,6 +8,7 @@
 	BrushStyle
 	Byte
 	CalendarDateBorder
+	CheckBoxState
 	Coord
 	Dash
 	DialogLayoutAdaptationMode

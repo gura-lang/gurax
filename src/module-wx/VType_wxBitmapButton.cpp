@@ -71,6 +71,28 @@ Gurax_ImplementConstructorEx(BitmapButton_gurax, processor_gurax, argument_gurax
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.BitmapButton.NewCloseButton(parent as wx.Window, winid as Number)
+Gurax_DeclareClassMethodAlias(wxBitmapButton, NewCloseButton_gurax, "NewCloseButton")
+{
+	Declare(VTYPE_wxBitmapButton, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("winid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxBitmapButton, NewCloseButton_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID winid = args_gurax.PickNumber<wxWindowID>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmapButton(
+		wxBitmapButton::NewCloseButton(parent, winid)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -88,6 +110,7 @@ void VType_wxBitmapButton::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxButton, Flag::Mutable, Gurax_CreateConstructor(BitmapButton_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxBitmapButton, NewCloseButton_gurax));
 }
 
 //------------------------------------------------------------------------------
