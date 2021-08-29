@@ -12,11 +12,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxGraphicsObject);
-	frame.Assign(VTYPE_wxRect2DDouble);
-	frame.Assign(VTYPE_wxPoint2DDouble);
-	frame.Assign(VTYPE_wxGraphicsMatrix);
-	frame.Assign(VTYPE_wxGraphicsPath);
+	frame.Assign(VTYPE_wxToolBarToolBase);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -96,6 +92,9 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGDIObject);
 	frame.Assign(VTYPE_wxGenericDirCtrl);
 	frame.Assign(VTYPE_wxGenericProgressDialog);
+	frame.Assign(VTYPE_wxGraphicsMatrix);
+	frame.Assign(VTYPE_wxGraphicsObject);
+	frame.Assign(VTYPE_wxGraphicsPath);
 	frame.Assign(VTYPE_wxGrid);
 	frame.Assign(VTYPE_wxGridBagSizer);
 	frame.Assign(VTYPE_wxGridCellAttr);
@@ -173,6 +172,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPGArrayStringEditorDialog);
 	frame.Assign(VTYPE_wxPickerBase);
 	frame.Assign(VTYPE_wxPoint);
+	frame.Assign(VTYPE_wxPoint2DDouble);
 	frame.Assign(VTYPE_wxPopupTransientWindow);
 	frame.Assign(VTYPE_wxPopupWindow);
 	frame.Assign(VTYPE_wxPowerEvent);
@@ -186,6 +186,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRadioButton);
 	frame.Assign(VTYPE_wxRearrangeDialog);
 	frame.Assign(VTYPE_wxRect);
+	frame.Assign(VTYPE_wxRect2DDouble);
 	frame.Assign(VTYPE_wxRefCounter);
 	frame.Assign(VTYPE_wxRegion);
 	frame.Assign(VTYPE_wxRibbonControl);

@@ -4,11 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxGraphicsObject.cpp
-	VType_wxRect2DDouble.cpp
-	VType_wxPoint2DDouble.cpp
-	VType_wxGraphicsMatrix.cpp
-	VType_wxGraphicsPath.cpp
+	VType_wxToolBarToolBase.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -88,6 +84,9 @@ set(SRCFILES_VTYPE
 	VType_wxGDIObject.cpp
 	VType_wxGenericDirCtrl.cpp
 	VType_wxGenericProgressDialog.cpp
+	VType_wxGraphicsMatrix.cpp
+	VType_wxGraphicsObject.cpp
+	VType_wxGraphicsPath.cpp
 	VType_wxGrid.cpp
 	VType_wxGridBagSizer.cpp
 	VType_wxGridCellAttr.cpp
@@ -165,6 +164,7 @@ set(SRCFILES_VTYPE
 	VType_wxPGArrayStringEditorDialog.cpp
 	VType_wxPickerBase.cpp
 	VType_wxPoint.cpp
+	VType_wxPoint2DDouble.cpp
 	VType_wxPopupTransientWindow.cpp
 	VType_wxPopupWindow.cpp
 	VType_wxPowerEvent.cpp
@@ -178,6 +178,7 @@ set(SRCFILES_VTYPE
 	VType_wxRadioButton.cpp
 	VType_wxRearrangeDialog.cpp
 	VType_wxRect.cpp
+	VType_wxRect2DDouble.cpp
 	VType_wxRefCounter.cpp
 	VType_wxRegion.cpp
 	VType_wxRibbonControl.cpp

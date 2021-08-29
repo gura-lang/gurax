@@ -4,4 +4,74 @@
 ToolBar = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxTB_HORIZONTAL, name as String = wxToolBarNameStr)
+	AddCheckTool(toolId as int, label as const_String_r, bitmap1 as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, shortHelp as const_String_r = '', longHelp as const_String_r = '', clientData as Object_p = NULL) as ToolBarToolBase_p
+	AddControl(control as Control_p, label as const_String_r = '') as ToolBarToolBase_p
+	AddRadioTool(toolId as int, label as const_String_r, bitmap1 as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, shortHelp as const_String_r = '', longHelp as const_String_r = '', clientData as Object_p = NULL) as ToolBarToolBase_p
+	AddSeparator() as ToolBarToolBase_p
+	AddStretchableSpace() as ToolBarToolBase_p
+	ClearTools() as void
+	DeleteTool(toolId as int) as bool
+	DeleteToolByPos(pos as size_t) as bool
+	EnableTool(toolId as int, enable as bool) as void
+	FindById(id as int) as ToolBarToolBase_p
+	FindControl(id as int) as Control_p
+	FindToolForPosition(x as Coord, y as Coord) as ToolBarToolBase_p
+	GetMargins() as Size
+	GetToolBitmapSize() as Size
+	GetToolByPos(pos as int) as ToolBarToolBase_p
+	GetToolClientData(toolId as int) as Object_p
+	GetToolEnabled(toolId as int) as bool
+	GetToolLongHelp(toolId as int) as String
+	GetToolPacking() as int
+	GetToolPos(toolId as int) as int
+	GetToolSeparation() as int
+	GetToolShortHelp(toolId as int) as String
+	GetToolSize() as Size
+	GetToolState(toolId as int) as bool
+	GetToolsCount() as size_t
+	InsertControl(pos as size_t, control as Control_p, label as const_String_r = '') as ToolBarToolBase_p
+	InsertSeparator(pos as size_t) as ToolBarToolBase_p
+	InsertStretchableSpace(pos as size_t) as ToolBarToolBase_p
+	OnLeftClick(toolId as int, toggleDown as bool) as bool
+	OnMouseEnter(toolId as int) as void
+	OnRightClick(toolId as int, x as long, y as long) as void
+	Realize() as bool
+	RemoveTool(id as int) as ToolBarToolBase_p
+	//SetBitmapResource(resourceId as int) as void
+	SetDropdownMenu(id as int, menu as Menu_p) as bool
+	SetToolBitmapSize(size as const_Size_r) as void
+	SetToolClientData(id as int, clientData as Object_p) as void
+	SetToolDisabledBitmap(id as int, bitmap as const_Bitmap_r) as void
+	SetToolLongHelp(toolId as int, helpString as const_String_r) as void
+	SetToolNormalBitmap(id as int, bitmap as const_Bitmap_r) as void
+	SetToolPacking(packing as int) as void
+	SetToolSeparation(separation as int) as void
+	SetToolShortHelp(toolId as int, helpString as const_String_r) as void
+	ToggleTool(toolId as int, toggle as bool) as void
+	CreateTool(toolId as int, label as const_String_r, bmpNormal as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, kind as ItemKind = wxITEM_NORMAL, clientData as Object_p = NULL, shortHelp as const_String_r = '', longHelp as const_String_r = '') as ToolBarToolBase_p
+	//CreateTool(control as Control_p, label as const_String_r) as ToolBarToolBase_p
+	AddTool(tool as ToolBarToolBase_p) as ToolBarToolBase_p
+	//AddTool(toolId as int, label as const_String_r, bitmap as const_Bitmap_r, shortHelp as const_String_r = '', kind as ItemKind = wxITEM_NORMAL) as ToolBarToolBase_p
+	//AddTool(toolId as int, label as const_String_r, bitmap as const_Bitmap_r, bmpDisabled as const_Bitmap_r, kind as ItemKind = wxITEM_NORMAL, shortHelpString as const_String_r = '', longHelpString as const_String_r = '', clientData as Object_p = NULL) as ToolBarToolBase_p
+	InsertTool(pos as size_t, toolId as int, label as const_String_r, bitmap as const_Bitmap_r, bmpDisabled as const_Bitmap_r = wxNullBitmap, kind as ItemKind = wxITEM_NORMAL, shortHelp as const_String_r = '', longHelp as const_String_r = '', clientData as Object_p = NULL) as ToolBarToolBase_p
+	//InsertTool(pos as size_t, tool as ToolBarToolBase_p) as ToolBarToolBase_p
+	SetMargins(x as int, y as int) as void
+	//SetMargins(size as const_Size_r) as void
+}
+
+@const {
+	TB_FLAT
+	TB_DOCKABLE
+	TB_HORIZONTAL
+	TB_VERTICAL
+	TB_TEXT
+	TB_NOICONS
+	TB_NODIVIDER
+	TB_NOALIGN
+	TB_HORZ_LAYOUT
+	TB_HORZ_TEXT
+	TB_NO_TOOLTIPS
+	TB_BOTTOM
+	TB_RIGHT
+	TB_DEFAULT_STYLE
 }
