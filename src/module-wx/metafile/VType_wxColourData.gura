@@ -1,0 +1,15 @@
+//==============================================================================
+// VType_wxColourData.gura
+//==============================================================================
+ColourData = Class(Object) {
+	@include['wx/colourdata.h']
+	__init__()
+	GetChooseFull() as bool
+	GetColour() as Colour
+	GetCustomColour(i as int) as Colour
+	SetChooseFull(flag as bool) as void
+	SetColour(colour as const_Colour_r) as void
+	SetCustomColour(i as int, colour as const_Colour_r) as void
+	ToString() as String
+	FromString(str as const_String_r) as bool
+}

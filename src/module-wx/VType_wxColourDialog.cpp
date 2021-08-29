@@ -28,10 +28,101 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.ColourDialog(parent as wx.Window, data? as wx.ColourData) {block?}
+Gurax_DeclareConstructorAlias(ColourDialog_gurax, "ColourDialog")
+{
+	Declare(VTYPE_wxColourDialog, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_wxColourData, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.ColourDialog.");
+}
+
+Gurax_ImplementConstructorEx(ColourDialog_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxColourData* data = args_gurax.IsValid()? args_gurax.Pick<Value_wxColourData>().GetEntityPtr() : nullptr;
+	// Function body
+	auto pEntity_gurax = new Value_wxColourDialog::EntityT(parent, data);
+	RefPtr<Value_wxColourDialog> pValue_gurax(new Value_wxColourDialog(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ColourDialog#Create(parent as wx.Window, data? as wx.ColourData)
+Gurax_DeclareMethodAlias(wxColourDialog, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_wxColourData, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColourDialog, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxColourData* data = args_gurax.IsValid()? args_gurax.Pick<Value_wxColourData>().GetEntityPtr() : nullptr;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, data);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ColourDialog#GetColourData()
+Gurax_DeclareMethodAlias(wxColourDialog, GetColourData_gurax, "GetColourData")
+{
+	Declare(VTYPE_wxColourData, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColourDialog, GetColourData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColourData(
+		pEntity_gurax->GetColourData()));
+}
+
+// wx.ColourDialog#ShowModal()
+Gurax_DeclareMethodAlias(wxColourDialog, ShowModal_gurax, "ShowModal")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColourDialog, ShowModal_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->ShowModal();
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +138,11 @@ void VType_wxColourDialog::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxDialog, Flag::Mutable);
+	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(ColourDialog_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxColourDialog, Create_gurax));
+	Assign(Gurax_CreateMethod(wxColourDialog, GetColourData_gurax));
+	Assign(Gurax_CreateMethod(wxColourDialog, ShowModal_gurax));
 }
 
 //------------------------------------------------------------------------------

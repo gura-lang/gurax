@@ -4,12 +4,11 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxInitDialogEvent.cpp
-	VType_wxImageHistogram.cpp
-	VType_wxStreamBase.cpp
-	VType_wxInputStream.cpp
-	VType_wxOutputStream.cpp
-	VType_wxImageHandler.cpp
+	VType_wxGraphicsObject.cpp
+	VType_wxRect2DDouble.cpp
+	VType_wxPoint2DDouble.cpp
+	VType_wxGraphicsMatrix.cpp
+	VType_wxGraphicsPath.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -44,6 +43,7 @@ set(SRCFILES_VTYPE
 	VType_wxCmdLineParser.cpp
 	VType_wxCollapsiblePane.cpp
 	VType_wxColour.cpp
+	VType_wxColourData.cpp
 	VType_wxColourDialog.cpp
 	VType_wxComboBox.cpp
 	VType_wxComboCtrl.cpp
@@ -72,6 +72,7 @@ set(SRCFILES_VTYPE
 	VType_wxEvtHandler.cpp
 	VType_wxFileCtrl.cpp
 	VType_wxFileDialog.cpp
+	VType_wxFindReplaceData.cpp
 	VType_wxFindReplaceDialog.cpp
 	VType_wxFlexGridSizer.cpp
 	VType_wxFocusEvent.cpp
@@ -118,8 +119,12 @@ set(SRCFILES_VTYPE
 	VType_wxIconBundle.cpp
 	VType_wxIdleEvent.cpp
 	VType_wxImage.cpp
+	VType_wxImageHandler.cpp
+	VType_wxImageHistogram.cpp
 	VType_wxImageList.cpp
 	VType_wxInfoBar.cpp
+	VType_wxInitDialogEvent.cpp
+	VType_wxInputStream.cpp
 	VType_wxJoystickEvent.cpp
 	VType_wxKeyEvent.cpp
 	VType_wxLayoutConstraints.cpp
@@ -144,11 +149,13 @@ set(SRCFILES_VTYPE
 	VType_wxMouseCaptureLostEvent.cpp
 	VType_wxMouseEvent.cpp
 	VType_wxMultiChoiceDialog.cpp
+	VType_wxNavigationKeyEvent.cpp
 	VType_wxNonOwnedWindow.cpp
 	VType_wxNotebook.cpp
 	VType_wxNotifyEvent.cpp
 	VType_wxNumberEntryDialog.cpp
 	VType_wxObject.cpp
+	VType_wxOutputStream.cpp
 	VType_wxPaintEvent.cpp
 	VType_wxPalette.cpp
 	VType_wxPanel.cpp
@@ -203,6 +210,7 @@ set(SRCFILES_VTYPE
 	VType_wxStaticText.cpp
 	VType_wxStatusBar.cpp
 	VType_wxStdDialogButtonSizer.cpp
+	VType_wxStreamBase.cpp
 	VType_wxStyledTextCtrl.cpp
 	VType_wxStyledTextEvent.cpp
 	VType_wxSymbolPickerDialog.cpp

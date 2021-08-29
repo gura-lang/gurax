@@ -12,12 +12,11 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxInitDialogEvent);
-	frame.Assign(VTYPE_wxImageHistogram);
-	frame.Assign(VTYPE_wxStreamBase);
-	frame.Assign(VTYPE_wxInputStream);
-	frame.Assign(VTYPE_wxOutputStream);
-	frame.Assign(VTYPE_wxImageHandler);
+	frame.Assign(VTYPE_wxGraphicsObject);
+	frame.Assign(VTYPE_wxRect2DDouble);
+	frame.Assign(VTYPE_wxPoint2DDouble);
+	frame.Assign(VTYPE_wxGraphicsMatrix);
+	frame.Assign(VTYPE_wxGraphicsPath);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -52,6 +51,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxCmdLineParser);
 	frame.Assign(VTYPE_wxCollapsiblePane);
 	frame.Assign(VTYPE_wxColour);
+	frame.Assign(VTYPE_wxColourData);
 	frame.Assign(VTYPE_wxColourDialog);
 	frame.Assign(VTYPE_wxComboBox);
 	frame.Assign(VTYPE_wxComboCtrl);
@@ -80,6 +80,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxEvtHandler);
 	frame.Assign(VTYPE_wxFileCtrl);
 	frame.Assign(VTYPE_wxFileDialog);
+	frame.Assign(VTYPE_wxFindReplaceData);
 	frame.Assign(VTYPE_wxFindReplaceDialog);
 	frame.Assign(VTYPE_wxFlexGridSizer);
 	frame.Assign(VTYPE_wxFocusEvent);
@@ -126,8 +127,12 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxIconBundle);
 	frame.Assign(VTYPE_wxIdleEvent);
 	frame.Assign(VTYPE_wxImage);
+	frame.Assign(VTYPE_wxImageHandler);
+	frame.Assign(VTYPE_wxImageHistogram);
 	frame.Assign(VTYPE_wxImageList);
 	frame.Assign(VTYPE_wxInfoBar);
+	frame.Assign(VTYPE_wxInitDialogEvent);
+	frame.Assign(VTYPE_wxInputStream);
 	frame.Assign(VTYPE_wxJoystickEvent);
 	frame.Assign(VTYPE_wxKeyEvent);
 	frame.Assign(VTYPE_wxLayoutConstraints);
@@ -152,11 +157,13 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxMouseCaptureLostEvent);
 	frame.Assign(VTYPE_wxMouseEvent);
 	frame.Assign(VTYPE_wxMultiChoiceDialog);
+	frame.Assign(VTYPE_wxNavigationKeyEvent);
 	frame.Assign(VTYPE_wxNonOwnedWindow);
 	frame.Assign(VTYPE_wxNotebook);
 	frame.Assign(VTYPE_wxNotifyEvent);
 	frame.Assign(VTYPE_wxNumberEntryDialog);
 	frame.Assign(VTYPE_wxObject);
+	frame.Assign(VTYPE_wxOutputStream);
 	frame.Assign(VTYPE_wxPaintEvent);
 	frame.Assign(VTYPE_wxPalette);
 	frame.Assign(VTYPE_wxPanel);
@@ -211,6 +218,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxStaticText);
 	frame.Assign(VTYPE_wxStatusBar);
 	frame.Assign(VTYPE_wxStdDialogButtonSizer);
+	frame.Assign(VTYPE_wxStreamBase);
 	frame.Assign(VTYPE_wxStyledTextCtrl);
 	frame.Assign(VTYPE_wxStyledTextEvent);
 	frame.Assign(VTYPE_wxSymbolPickerDialog);

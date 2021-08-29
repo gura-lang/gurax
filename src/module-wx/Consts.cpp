@@ -61,6 +61,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CAL_SHOW_SURROUNDING_WEEKS", new Value_Number(wxCAL_SHOW_SURROUNDING_WEEKS));
 	frame.Assign("CAL_SHOW_WEEK_NUMBERS", new Value_Number(wxCAL_SHOW_WEEK_NUMBERS));
 	frame.Assign("CAL_SUNDAY_FIRST", new Value_Number(wxCAL_SUNDAY_FIRST));
+	frame.Assign("CANCEL", new Value_Number(wxCANCEL));
+	frame.Assign("CANCEL_DEFAULT", new Value_Number(wxCANCEL_DEFAULT));
 	frame.Assign("CAPTION", new Value_Number(wxCAPTION));
 	frame.Assign("CAP_BUTT", new Value_Number(wxCAP_BUTT));
 	frame.Assign("CAP_INVALID", new Value_Number(wxCAP_INVALID));
@@ -72,6 +74,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CB_SORT", new Value_Number(wxCB_SORT));
 	frame.Assign("CC_SPECIAL_DCLICK", new Value_Number(wxCC_SPECIAL_DCLICK));
 	frame.Assign("CC_STD_BUTTON", new Value_Number(wxCC_STD_BUTTON));
+	frame.Assign("CENTRE", new Value_Number(wxCENTRE));
 	frame.Assign("CHK_2STATE", new Value_Number(wxCHK_2STATE));
 	frame.Assign("CHK_3STATE", new Value_Number(wxCHK_3STATE));
 	frame.Assign("CHK_ALLOW_3RD_STATE_FOR_USER", new Value_Number(wxCHK_ALLOW_3RD_STATE_FOR_USER));
@@ -87,9 +90,17 @@ void AssignConsts(Frame& frame)
 	frame.Assign("EXPAND", new Value_Number(wxEXPAND));
 	frame.Assign("FIXED_MINSIZE", new Value_Number(wxFIXED_MINSIZE));
 	frame.Assign("FULL_REPAINT_ON_RESIZE", new Value_Number(wxFULL_REPAINT_ON_RESIZE));
+	frame.Assign("HELP", new Value_Number(wxHELP));
 	frame.Assign("HORIZONTAL", new Value_Number(wxHORIZONTAL));
 	frame.Assign("HSCROLL", new Value_Number(wxHSCROLL));
+	frame.Assign("ICON_AUTH_NEEDED", new Value_Number(wxICON_AUTH_NEEDED));
+	frame.Assign("ICON_ERROR", new Value_Number(wxICON_ERROR));
+	frame.Assign("ICON_EXCLAMATION", new Value_Number(wxICON_EXCLAMATION));
+	frame.Assign("ICON_HAND", new Value_Number(wxICON_HAND));
 	frame.Assign("ICON_INFORMATION", new Value_Number(wxICON_INFORMATION));
+	frame.Assign("ICON_INFORMATION", new Value_Number(wxICON_INFORMATION));
+	frame.Assign("ICON_NONE", new Value_Number(wxICON_NONE));
+	frame.Assign("ICON_QUESTION", new Value_Number(wxICON_QUESTION));
 	frame.Assign("ID_ABORT", new Value_Number(wxID_ABORT));
 	frame.Assign("ID_ABOUT", new Value_Number(wxID_ABOUT));
 	frame.Assign("ID_ADD", new Value_Number(wxID_ADD));
@@ -232,8 +243,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("NB_NOPAGETHEME", new Value_Number(wxNB_NOPAGETHEME));
 	frame.Assign("NB_RIGHT", new Value_Number(wxNB_RIGHT));
 	frame.Assign("NB_TOP", new Value_Number(wxNB_TOP));
+	frame.Assign("NO_DEFAULT", new Value_Number(wxNO_DEFAULT));
 	frame.Assign("NO_FULL_REPAINT_ON_RESIZE", new Value_Number(wxNO_FULL_REPAINT_ON_RESIZE));
 	frame.Assign("OK", new Value_Number(wxOK));
+	frame.Assign("OK", new Value_Number(wxOK));
+	frame.Assign("OK_DEFAULT", new Value_Number(wxOK_DEFAULT));
 	frame.Assign("PENSTYLE_BDIAGONAL_HATCH", new Value_Number(wxPENSTYLE_BDIAGONAL_HATCH));
 	frame.Assign("PENSTYLE_CROSSDIAG_HATCH", new Value_Number(wxPENSTYLE_CROSSDIAG_HATCH));
 	frame.Assign("PENSTYLE_CROSS_HATCH", new Value_Number(wxPENSTYLE_CROSS_HATCH));
@@ -257,6 +271,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
 	frame.Assign("SHAPED", new Value_Number(wxSHAPED));
+	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));
 	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));
 	frame.Assign("ST_ELLIPSIZE_END", new Value_Number(wxST_ELLIPSIZE_END));
 	frame.Assign("ST_ELLIPSIZE_MIDDLE", new Value_Number(wxST_ELLIPSIZE_MIDDLE));
@@ -293,6 +308,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("WS_EX_PROCESS_UI_UPDATES", new Value_Number(wxWS_EX_PROCESS_UI_UPDATES));
 	frame.Assign("WS_EX_TRANSIENT", new Value_Number(wxWS_EX_TRANSIENT));
 	frame.Assign("WS_EX_VALIDATE_RECURSIVELY", new Value_Number(wxWS_EX_VALIDATE_RECURSIVELY));
+	frame.Assign("YES_DEFAULT", new Value_Number(wxYES_DEFAULT));
+	frame.Assign("YES_NO", new Value_Number(wxYES_NO));
 }
 
 Gurax_EndModuleScope(wx)

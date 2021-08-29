@@ -28,10 +28,153 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.DirDialog(parent as wx.Window, message? as String, defaultPath? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?}
+Gurax_DeclareConstructorAlias(DirDialog_gurax, "DirDialog")
+{
+	Declare(VTYPE_wxDirDialog, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("message", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("defaultPath", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.DirDialog.");
+}
+
+Gurax_ImplementConstructorEx(DirDialog_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	const char* message = args_gurax.IsValid()? args_gurax.PickString() : wxDirSelectorPromptStr;
+	const char* defaultPath = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDD_DEFAULT_STYLE;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxDirDialogNameStr;
+	// Function body
+	auto pEntity_gurax = new Value_wxDirDialog::EntityT(parent, message, defaultPath, style, pos, size, name);
+	RefPtr<Value_wxDirDialog> pValue_gurax(new Value_wxDirDialog(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.DirDialog#GetMessage()
+Gurax_DeclareMethodAlias(wxDirDialog, GetMessage_gurax, "GetMessage")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDirDialog, GetMessage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	const char* rtn = pEntity_gurax->GetMessage();
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.DirDialog#GetPath()
+Gurax_DeclareMethodAlias(wxDirDialog, GetPath_gurax, "GetPath")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDirDialog, GetPath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	const char* rtn = pEntity_gurax->GetPath();
+	return new Gurax::Value_String(rtn);
+}
+
+// wx.DirDialog#SetMessage(message as String)
+Gurax_DeclareMethodAlias(wxDirDialog, SetMessage_gurax, "SetMessage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDirDialog, SetMessage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* message = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetMessage(message);
+	return Gurax::Value::nil();
+}
+
+// wx.DirDialog#SetPath(path as String)
+Gurax_DeclareMethodAlias(wxDirDialog, SetPath_gurax, "SetPath")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDirDialog, SetPath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* path = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetPath(path);
+	return Gurax::Value::nil();
+}
+
+// wx.DirDialog#ShowModal()
+Gurax_DeclareMethodAlias(wxDirDialog, ShowModal_gurax, "ShowModal")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDirDialog, ShowModal_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->ShowModal();
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +190,13 @@ void VType_wxDirDialog::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxDialog, Flag::Mutable);
+	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(DirDialog_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxDirDialog, GetMessage_gurax));
+	Assign(Gurax_CreateMethod(wxDirDialog, GetPath_gurax));
+	Assign(Gurax_CreateMethod(wxDirDialog, SetMessage_gurax));
+	Assign(Gurax_CreateMethod(wxDirDialog, SetPath_gurax));
+	Assign(Gurax_CreateMethod(wxDirDialog, ShowModal_gurax));
 }
 
 //------------------------------------------------------------------------------

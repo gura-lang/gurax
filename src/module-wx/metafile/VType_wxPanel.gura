@@ -4,4 +4,11 @@
 Panel = Class(Window) {
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxTAB_TRAVERSAL, name as String = wxPanelNameStr)
+	AcceptsFocus() as bool
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxTAB_TRAVERSAL, name as const_String_r = wxPanelNameStr) as bool
+	InitDialog() as void
+	Layout() as bool
+	OnSysColourChanged(event as SysColourChangedEvent_r) as void
+	SetFocus() as void
+	SetFocusIgnoringChildren() as void
 }

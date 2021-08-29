@@ -3,6 +3,21 @@ import(cbridge)
 
 r = cbridge.Renderer()
 
+r.DeclareType('const_wxChar_p', 'const wxChar*', 'String',
+	codePicker = R'''
+	${this.cType} ${varName} = args_gurax.PickString();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : ${defaultValue || 'nullptr'};
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<${this.cType}>(Gurax::Value_${this.vtype}::ValueForVector);
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_${this.vtype}(rtn);
+	''')
+
 r.DeclareType('String', 'const char*', 'String',
 	codePicker = R'''
 	${this.cType} ${varName} = args_gurax.PickString();

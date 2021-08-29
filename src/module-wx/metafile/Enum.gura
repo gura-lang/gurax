@@ -30,12 +30,22 @@
 	MouseButton
 	MouseWheelAxis
 	MappingMode
+	NavigationKeyEventFlags
 	PenCap
 	PenJoin
 	PenStyle
+	PolygonFillMode
 	RasterOperationMode
 	ShowEffect
 	TextCoord
+	Uint32
 	WindowID
 	WindowVariant
+]
+
+@const[
+	//IsBackward
+	//IsForward
+	//WinChange
+	//FromTab
 ]

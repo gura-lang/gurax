@@ -3,4 +3,45 @@
 //==============================================================================
 MessageDialog = Class(Dialog) {
 	@include['wx/msgdlg.h']
+	__init__(parent as Window_p, message as String, caption as String = wxMessageBoxCaptionStr,
+		style as long = wxOK | wxCENTRE, pos as Point = wxDefaultPosition)
+	SetExtendedMessage(extendedMessage as const_String_r) as void
+	//SetHelpLabel(help as const_ButtonLabel_r) as bool
+	SetMessage(message as const_String_r) as void
+	//SetOKCancelLabels(ok as const_ButtonLabel_r, cancel as const_ButtonLabel_r) as bool
+	//SetOKLabel(ok as const_ButtonLabel_r) as bool
+	//SetYesNoCancelLabels(yes as const_ButtonLabel_r, no as const_ButtonLabel_r, cancel as const_ButtonLabel_r) as bool
+	//SetYesNoLabels(yes as const_ButtonLabel_r, no as const_ButtonLabel_r) as bool
+	ShowModal() as int
+	GetCaption() as String
+	GetMessage() as String
+	GetExtendedMessage() as String
+	GetMessageDialogStyle() as long
+	HasCustomLabels() as bool
+	GetYesLabel() as String
+	GetNoLabel() as String
+	GetOKLabel() as String
+	GetCancelLabel() as String
+	GetHelpLabel() as String
+	GetEffectiveIcon() as long
 }
+
+@const[
+	OK
+	CANCEL
+	YES_NO
+	HELP
+	NO_DEFAULT
+	CANCEL_DEFAULT
+	YES_DEFAULT
+	OK_DEFAULT
+	ICON_NONE
+	ICON_EXCLAMATION
+	ICON_ERROR
+	ICON_HAND
+	ICON_QUESTION
+	ICON_INFORMATION
+	ICON_AUTH_NEEDED
+	STAY_ON_TOP
+	CENTRE
+]

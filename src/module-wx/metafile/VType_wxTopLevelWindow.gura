@@ -2,4 +2,48 @@
 // VType_wxTopLevelWindow.gura
 //==============================================================================
 TopLevelWindow = Class(NonOwnedWindow) {
+	__init__(parent:nil as Window_p, id as WindowID, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = wxDEFAULT_FRAME_STYLE, name as String = wxFrameNameStr)
+	CanSetTransparent() as bool
+	CenterOnScreen(direction as int = wxBOTH) as void
+	CentreOnScreen(direction as int = wxBOTH) as void
+	EnableCloseButton(enable as bool = true) as bool
+	GetDefaultItem() as Window_p
+	GetIcon() as Icon
+	GetIcons() as IconBundle
+	GetTitle() as String
+	//HandleSettingChange(wParam as WXWPARAM, lParam as WXLPARAM) as bool
+	Iconize(iconize as bool = true) as void
+	IsActive() as bool
+	IsAlwaysMaximized() as bool
+	IsFullScreen() as bool
+	IsIconized() as bool
+	IsMaximized() as bool
+	//IsUsingNativeDecorations() as bool
+	Layout() as bool
+	Maximize(maximize as bool = true) as void
+	MSWGetSystemMenu() as Menu_p
+	RequestUserAttention(flags as int = wxUSER_ATTENTION_INFO) as void
+	Restore() as void
+	SetDefaultItem(win as Window_p) as Window_p
+	SetTmpDefaultItem(win as Window_p) as Window_p
+	GetTmpDefaultItem() as Window_p
+	SetIcon(icon as const_Icon_r) as void
+	SetIcons(icons as const_IconBundle_r) as void
+	//SetLeftMenu(id as int = wxID_ANY, label as const_String_r = '', subMenu as Menu_p = NULL) as void
+	SetMaxSize(size as const_Size_r) as void
+	SetMinSize(size as const_Size_r) as void
+	//SetRightMenu(id as int = wxID_ANY, label as const_String_r = '', subMenu as Menu_p = NULL) as void
+	SetSizeHints(minW as int, minH as int, maxW as int = -1, maxH as int = -1, incW as int = -1, incH as int = -1) as void
+	//SetSizeHints(minSize as const_Size_r, maxSize as const_Size_r = wxDefaultSize, incSize as const_Size_r = wxDefaultSize) as void
+	SetTitle(title as const_String_r) as void
+	SetTransparent(alpha as Byte) as bool
+	ShouldPreventAppExit() as bool
+	OSXSetModified(modified as bool) as void
+	OSXIsModified() as bool
+	SetRepresentedFilename(filename as const_String_r) as void
+	ShowWithoutActivating() as void
+	ShowFullScreen(show as bool, style as long = wxFULLSCREEN_ALL) as bool
+	//UseNativeDecorations(native as bool = true) as void
+	//UseNativeDecorationsByDefault(native as bool = true) as void
 }
