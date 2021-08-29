@@ -1,0 +1,18 @@
+//==============================================================================
+// VType_wxNavigationKeyEvent.gura
+//==============================================================================
+NavigationKeyEvent = Class(Event) {
+	GetCurrentFocus() as Window_p
+	GetDirection() as bool
+	IsFromTab() as bool
+	IsWindowChange() as bool
+	SetCurrentFocus(currentFocus as Window_p) as void
+	SetDirection(direction as bool) as void
+	SetFlags(flags as long) as void
+	SetFromTab(fromTab as bool) as void
+	SetWindowChange(windowChange as bool) as void
+}
+
+@event[
+	EVT_NAVIGATION_KEY	>> NavigationKeyEvent
+]

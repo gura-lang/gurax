@@ -1,0 +1,13 @@
+//==============================================================================
+// VType_wxFindReplaceData.gura
+//==============================================================================
+FindReplaceData = Class(Object) {
+	@include['wx/fdrepdlg.h']
+	__init__(flags as Uint32 = 0)
+	GetFindString() as String
+	GetFlags() as int
+	GetReplaceString() as String
+	SetFindString(str as const_String_r) as void
+	SetFlags(flags as Uint32) as void
+	SetReplaceString(str as const_String_r) as void
+}
