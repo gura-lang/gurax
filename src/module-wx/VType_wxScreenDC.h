@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxScreenDC() = delete;
-	explicit Value_wxScreenDC(const wxObject& entity, VType& vtype = VTYPE_wxScreenDC) :
+	explicit Value_wxScreenDC(const wxScreenDC& entity, VType& vtype = VTYPE_wxScreenDC) :
 		Value_wxDC(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxScreenDC(const Value_wxScreenDC& src) = delete;

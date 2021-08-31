@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxMask() = delete;
-	explicit Value_wxMask(const wxObject& entity, VType& vtype = VTYPE_wxMask) :
+	explicit Value_wxMask(const wxMask& entity, VType& vtype = VTYPE_wxMask) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxMask(const Value_wxMask& src) = delete;

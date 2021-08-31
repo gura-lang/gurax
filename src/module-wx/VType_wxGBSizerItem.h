@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxGBSizerItem() = delete;
-	explicit Value_wxGBSizerItem(const wxObject& entity, VType& vtype = VTYPE_wxGBSizerItem) :
+	explicit Value_wxGBSizerItem(const wxGBSizerItem& entity, VType& vtype = VTYPE_wxGBSizerItem) :
 		Value_wxSizerItem(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGBSizerItem(const Value_wxGBSizerItem& src) = delete;

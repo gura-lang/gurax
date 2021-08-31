@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxPalette() = delete;
-	explicit Value_wxPalette(const wxObject& entity, VType& vtype = VTYPE_wxPalette) :
+	explicit Value_wxPalette(const wxPalette& entity, VType& vtype = VTYPE_wxPalette) :
 		Value_wxGDIObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxPalette(const Value_wxPalette& src) = delete;

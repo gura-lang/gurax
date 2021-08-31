@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxFont() = delete;
-	explicit Value_wxFont(const wxObject& entity, VType& vtype = VTYPE_wxFont) :
+	explicit Value_wxFont(const wxFont& entity, VType& vtype = VTYPE_wxFont) :
 		Value_wxGDIObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxFont(const Value_wxFont& src) = delete;

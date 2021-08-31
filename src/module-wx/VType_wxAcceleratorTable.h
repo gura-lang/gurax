@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxAcceleratorTable() = delete;
-	explicit Value_wxAcceleratorTable(const wxObject& entity, VType& vtype = VTYPE_wxAcceleratorTable) :
+	explicit Value_wxAcceleratorTable(const wxAcceleratorTable& entity, VType& vtype = VTYPE_wxAcceleratorTable) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxAcceleratorTable(const Value_wxAcceleratorTable& src) = delete;

@@ -291,7 +291,7 @@ ${elsif (eventDerivFlag)}
 	Value_wx${className}(const wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(entity, pValueUserData, vtype) {}
 ${else}
-	explicit Value_wx${className}(const wx${classNameRoot}& entity, VType& vtype = VTYPE_wx${className}) :
+	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(entity, vtype) {}
 ${end}
 	// Copy constructor/operator

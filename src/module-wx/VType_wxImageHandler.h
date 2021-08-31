@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxImageHandler() = delete;
-	explicit Value_wxImageHandler(const wxObject& entity, VType& vtype = VTYPE_wxImageHandler) :
+	explicit Value_wxImageHandler(const wxImageHandler& entity, VType& vtype = VTYPE_wxImageHandler) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxImageHandler(const Value_wxImageHandler& src) = delete;

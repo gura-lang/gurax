@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxToolTip() = delete;
-	explicit Value_wxToolTip(const wxObject& entity, VType& vtype = VTYPE_wxToolTip) :
+	explicit Value_wxToolTip(const wxToolTip& entity, VType& vtype = VTYPE_wxToolTip) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxToolTip(const Value_wxToolTip& src) = delete;

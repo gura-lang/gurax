@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxDC() = delete;
-	explicit Value_wxDC(const wxObject& entity, VType& vtype = VTYPE_wxDC) :
+	explicit Value_wxDC(const wxDC& entity, VType& vtype = VTYPE_wxDC) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxDC(const Value_wxDC& src) = delete;

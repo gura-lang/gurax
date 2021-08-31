@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxFindReplaceData() = delete;
-	explicit Value_wxFindReplaceData(const wxObject& entity, VType& vtype = VTYPE_wxFindReplaceData) :
+	explicit Value_wxFindReplaceData(const wxFindReplaceData& entity, VType& vtype = VTYPE_wxFindReplaceData) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxFindReplaceData(const Value_wxFindReplaceData& src) = delete;

@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxBitmap() = delete;
-	explicit Value_wxBitmap(const wxObject& entity, VType& vtype = VTYPE_wxBitmap) :
+	explicit Value_wxBitmap(const wxBitmap& entity, VType& vtype = VTYPE_wxBitmap) :
 		Value_wxGDIObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxBitmap(const Value_wxBitmap& src) = delete;

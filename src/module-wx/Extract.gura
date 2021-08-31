@@ -2,75 +2,20 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-int 	GetId () const
+bool 	Create (wxWindow *parent, wxWindowID id, const wxBitmap &label, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0, const wxString &name=wxStaticBitmapNameStr)
+ 	Creation function, for two-step construction. More...
  
-wxControl * 	GetControl () const
+virtual wxBitmap 	GetBitmap () const
+ 	Returns the bitmap currently used in the control. More...
  
-wxToolBarBase * 	GetToolBar () const
+virtual wxIcon 	GetIcon () const
+ 	Returns the icon currently used in the control. More...
  
-bool 	IsStretchable () const
+virtual void 	SetBitmap (const wxBitmap &label)
+ 	Sets the bitmap label. More...
  
-bool 	IsButton () const
- 
-bool 	IsControl () const
- 
-bool 	IsSeparator () const
- 
-bool 	IsStretchableSpace () const
- 
-int 	GetStyle () const
- 
-wxItemKind 	GetKind () const
- 
-void 	MakeStretchable ()
- 
-bool 	IsEnabled () const
- 
-bool 	IsToggled () const
- 
-bool 	CanBeToggled () const
- 
-const wxBitmap & 	GetNormalBitmap () const
- 
-const wxBitmap & 	GetDisabledBitmap () const
- 
-const wxBitmap & 	GetBitmap () const
- 
-const wxString & 	GetLabel () const
- 
-const wxString & 	GetShortHelp () const
- 
-const wxString & 	GetLongHelp () const
- 
-wxObject * 	GetClientData () const
- 
-virtual bool 	Enable (bool enable)
- 
-virtual bool 	Toggle (bool toggle)
- 
-virtual bool 	SetToggle (bool toggle)
- 
-virtual bool 	SetShortHelp (const wxString &help)
- 
-virtual bool 	SetLongHelp (const wxString &help)
- 
-void 	Toggle ()
- 
-virtual void 	SetNormalBitmap (const wxBitmap &bmp)
- 
-virtual void 	SetDisabledBitmap (const wxBitmap &bmp)
- 
-virtual void 	SetLabel (const wxString &label)
- 
-void 	SetClientData (wxObject *clientData)
- 
-virtual void 	Detach ()
- 
-virtual void 	Attach (wxToolBarBase *tbar)
- 
-virtual void 	SetDropdownMenu (wxMenu *menu)
- 
-wxMenu * 	GetDropdownMenu () const
+virtual void 	SetIcon (const wxIcon &label)
+ 	Sets the label to the given icon. More...
 '''
 //------------------------------------------------------------------------------
 

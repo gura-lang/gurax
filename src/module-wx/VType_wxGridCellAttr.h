@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxGridCellAttr() = delete;
-	explicit Value_wxGridCellAttr(const wxClientDataContainer& entity, VType& vtype = VTYPE_wxGridCellAttr) :
+	explicit Value_wxGridCellAttr(const wxGridCellAttr& entity, VType& vtype = VTYPE_wxGridCellAttr) :
 		Value_wxClientDataContainer(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGridCellAttr(const Value_wxGridCellAttr& src) = delete;

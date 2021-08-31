@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxGraphicsMatrix() = delete;
-	explicit Value_wxGraphicsMatrix(const wxObject& entity, VType& vtype = VTYPE_wxGraphicsMatrix) :
+	explicit Value_wxGraphicsMatrix(const wxGraphicsMatrix& entity, VType& vtype = VTYPE_wxGraphicsMatrix) :
 		Value_wxGraphicsObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGraphicsMatrix(const Value_wxGraphicsMatrix& src) = delete;

@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxAccessible() = delete;
-	explicit Value_wxAccessible(const wxObject& entity, VType& vtype = VTYPE_wxAccessible) :
+	explicit Value_wxAccessible(const wxAccessible& entity, VType& vtype = VTYPE_wxAccessible) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxAccessible(const Value_wxAccessible& src) = delete;

@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxMetafileDC() = delete;
-	explicit Value_wxMetafileDC(const wxObject& entity, VType& vtype = VTYPE_wxMetafileDC) :
+	explicit Value_wxMetafileDC(const wxMetafileDC& entity, VType& vtype = VTYPE_wxMetafileDC) :
 		Value_wxDC(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxMetafileDC(const Value_wxMetafileDC& src) = delete;

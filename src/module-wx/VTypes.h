@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxToolBarToolBase.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -225,6 +224,7 @@
 #include "VType_wxTimePickerCtrl.h"
 #include "VType_wxToggleButton.h"
 #include "VType_wxToolBar.h"
+#include "VType_wxToolBarToolBase.h"
 #include "VType_wxToolbook.h"
 #include "VType_wxToolTip.h"
 #include "VType_wxTopLevelWindow.h"

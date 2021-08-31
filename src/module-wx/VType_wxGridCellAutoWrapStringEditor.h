@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxGridCellAutoWrapStringEditor() = delete;
-	explicit Value_wxGridCellAutoWrapStringEditor(const wxClientDataContainer& entity, VType& vtype = VTYPE_wxGridCellAutoWrapStringEditor) :
+	explicit Value_wxGridCellAutoWrapStringEditor(const wxGridCellAutoWrapStringEditor& entity, VType& vtype = VTYPE_wxGridCellAutoWrapStringEditor) :
 		Value_wxGridCellTextEditor(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGridCellAutoWrapStringEditor(const Value_wxGridCellAutoWrapStringEditor& src) = delete;

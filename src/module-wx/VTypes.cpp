@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxToolBarToolBase);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -230,6 +229,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTimePickerCtrl);
 	frame.Assign(VTYPE_wxToggleButton);
 	frame.Assign(VTYPE_wxToolBar);
+	frame.Assign(VTYPE_wxToolBarToolBase);
 	frame.Assign(VTYPE_wxToolbook);
 	frame.Assign(VTYPE_wxToolTip);
 	frame.Assign(VTYPE_wxTopLevelWindow);

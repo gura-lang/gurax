@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxColourData() = delete;
-	explicit Value_wxColourData(const wxObject& entity, VType& vtype = VTYPE_wxColourData) :
+	explicit Value_wxColourData(const wxColourData& entity, VType& vtype = VTYPE_wxColourData) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxColourData(const Value_wxColourData& src) = delete;

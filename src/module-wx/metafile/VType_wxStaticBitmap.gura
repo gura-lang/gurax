@@ -3,4 +3,11 @@
 //==============================================================================
 StaticBitmap = Class(Control) {
 	@include['wx/statbmp.h']
+	__init__(parent as Window_p, id as WindowID, label as const_Bitmap_r, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
+		style as long = 0, name as String = wxStaticBitmapNameStr)
+	Create(parent as Window_p, id as WindowID, label as const_Bitmap_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxStaticBitmapNameStr) as bool
+	GetBitmap() as Bitmap
+	GetIcon() as Icon
+	SetBitmap(label as const_Bitmap_r) as void
+	SetIcon(label as const_Icon_r) as void
 }

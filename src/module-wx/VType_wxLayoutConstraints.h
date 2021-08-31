@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxLayoutConstraints() = delete;
-	explicit Value_wxLayoutConstraints(const wxObject& entity, VType& vtype = VTYPE_wxLayoutConstraints) :
+	explicit Value_wxLayoutConstraints(const wxLayoutConstraints& entity, VType& vtype = VTYPE_wxLayoutConstraints) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxLayoutConstraints(const Value_wxLayoutConstraints& src) = delete;

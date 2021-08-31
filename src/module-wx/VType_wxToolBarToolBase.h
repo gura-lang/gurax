@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxToolBarToolBase() = delete;
-	explicit Value_wxToolBarToolBase(const wxObject& entity, VType& vtype = VTYPE_wxToolBarToolBase) :
+	explicit Value_wxToolBarToolBase(const wxToolBarToolBase& entity, VType& vtype = VTYPE_wxToolBarToolBase) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxToolBarToolBase(const Value_wxToolBarToolBase& src) = delete;

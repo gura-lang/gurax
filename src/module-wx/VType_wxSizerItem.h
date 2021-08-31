@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxSizerItem() = delete;
-	explicit Value_wxSizerItem(const wxObject& entity, VType& vtype = VTYPE_wxSizerItem) :
+	explicit Value_wxSizerItem(const wxSizerItem& entity, VType& vtype = VTYPE_wxSizerItem) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxSizerItem(const Value_wxSizerItem& src) = delete;

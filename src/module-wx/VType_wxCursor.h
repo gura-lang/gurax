@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxCursor() = delete;
-	explicit Value_wxCursor(const wxObject& entity, VType& vtype = VTYPE_wxCursor) :
+	explicit Value_wxCursor(const wxCursor& entity, VType& vtype = VTYPE_wxCursor) :
 		Value_wxGDIObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxCursor(const Value_wxCursor& src) = delete;

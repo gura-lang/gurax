@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxRegion() = delete;
-	explicit Value_wxRegion(const wxObject& entity, VType& vtype = VTYPE_wxRegion) :
+	explicit Value_wxRegion(const wxRegion& entity, VType& vtype = VTYPE_wxRegion) :
 		Value_wxGDIObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxRegion(const Value_wxRegion& src) = delete;

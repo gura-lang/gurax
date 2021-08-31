@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxGDIObject() = delete;
-	explicit Value_wxGDIObject(const wxObject& entity, VType& vtype = VTYPE_wxGDIObject) :
+	explicit Value_wxGDIObject(const wxGDIObject& entity, VType& vtype = VTYPE_wxGDIObject) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGDIObject(const Value_wxGDIObject& src) = delete;

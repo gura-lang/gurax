@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxListItem() = delete;
-	explicit Value_wxListItem(const wxObject& entity, VType& vtype = VTYPE_wxListItem) :
+	explicit Value_wxListItem(const wxListItem& entity, VType& vtype = VTYPE_wxListItem) :
 		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxListItem(const Value_wxListItem& src) = delete;

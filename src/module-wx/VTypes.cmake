@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxToolBarToolBase.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -222,6 +221,7 @@ set(SRCFILES_VTYPE
 	VType_wxTimePickerCtrl.cpp
 	VType_wxToggleButton.cpp
 	VType_wxToolBar.cpp
+	VType_wxToolBarToolBase.cpp
 	VType_wxToolbook.cpp
 	VType_wxToolTip.cpp
 	VType_wxTopLevelWindow.cpp

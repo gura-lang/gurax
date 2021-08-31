@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxPen() = delete;
-	explicit Value_wxPen(const wxObject& entity, VType& vtype = VTYPE_wxPen) :
+	explicit Value_wxPen(const wxPen& entity, VType& vtype = VTYPE_wxPen) :
 		Value_wxGDIObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxPen(const Value_wxPen& src) = delete;

@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxGraphicsPath() = delete;
-	explicit Value_wxGraphicsPath(const wxObject& entity, VType& vtype = VTYPE_wxGraphicsPath) :
+	explicit Value_wxGraphicsPath(const wxGraphicsPath& entity, VType& vtype = VTYPE_wxGraphicsPath) :
 		Value_wxGraphicsObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGraphicsPath(const Value_wxGraphicsPath& src) = delete;

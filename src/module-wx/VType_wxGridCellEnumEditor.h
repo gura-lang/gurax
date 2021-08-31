@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxGridCellEnumEditor() = delete;
-	explicit Value_wxGridCellEnumEditor(const wxClientDataContainer& entity, VType& vtype = VTYPE_wxGridCellEnumEditor) :
+	explicit Value_wxGridCellEnumEditor(const wxGridCellEnumEditor& entity, VType& vtype = VTYPE_wxGridCellEnumEditor) :
 		Value_wxGridCellChoiceEditor(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGridCellEnumEditor(const Value_wxGridCellEnumEditor& src) = delete;

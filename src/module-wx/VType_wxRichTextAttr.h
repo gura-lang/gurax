@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxRichTextAttr() = delete;
-	explicit Value_wxRichTextAttr(const wxTextAttr& entity, VType& vtype = VTYPE_wxRichTextAttr) :
+	explicit Value_wxRichTextAttr(const wxRichTextAttr& entity, VType& vtype = VTYPE_wxRichTextAttr) :
 		Value_wxTextAttr(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxRichTextAttr(const Value_wxRichTextAttr& src) = delete;

@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxGridCellChoiceEditor() = delete;
-	explicit Value_wxGridCellChoiceEditor(const wxClientDataContainer& entity, VType& vtype = VTYPE_wxGridCellChoiceEditor) :
+	explicit Value_wxGridCellChoiceEditor(const wxGridCellChoiceEditor& entity, VType& vtype = VTYPE_wxGridCellChoiceEditor) :
 		Value_wxGridCellEditor(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGridCellChoiceEditor(const Value_wxGridCellChoiceEditor& src) = delete;

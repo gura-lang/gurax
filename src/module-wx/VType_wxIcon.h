@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxIcon() = delete;
-	explicit Value_wxIcon(const wxObject& entity, VType& vtype = VTYPE_wxIcon) :
+	explicit Value_wxIcon(const wxIcon& entity, VType& vtype = VTYPE_wxIcon) :
 		Value_wxGDIObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxIcon(const Value_wxIcon& src) = delete;

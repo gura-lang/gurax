@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxGridCellFloatEditor() = delete;
-	explicit Value_wxGridCellFloatEditor(const wxClientDataContainer& entity, VType& vtype = VTYPE_wxGridCellFloatEditor) :
+	explicit Value_wxGridCellFloatEditor(const wxGridCellFloatEditor& entity, VType& vtype = VTYPE_wxGridCellFloatEditor) :
 		Value_wxGridCellTextEditor(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGridCellFloatEditor(const Value_wxGridCellFloatEditor& src) = delete;

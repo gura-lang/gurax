@@ -36,7 +36,7 @@ public:
 public:
 	// Constructor
 	Value_wxBrush() = delete;
-	explicit Value_wxBrush(const wxObject& entity, VType& vtype = VTYPE_wxBrush) :
+	explicit Value_wxBrush(const wxBrush& entity, VType& vtype = VTYPE_wxBrush) :
 		Value_wxGDIObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxBrush(const Value_wxBrush& src) = delete;

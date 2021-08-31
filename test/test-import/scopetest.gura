@@ -1,0 +1,5 @@
+Type = class {
+	text = 'Successfully accessed'
+}
+
+func(t as Type) = { t.text }
