@@ -278,9 +278,12 @@ ${elsif (className == 'Event')}
 ${elsif (className == 'CmdLineParser')}
 	explicit Value_wx${className}(wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
-${elsif (!classNameParent || classInfo.holdEntityFlag)}
+${elsif (!classNameParent)}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
+${elsif (classInfo.holdEntityFlag)}
+	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(entity, vtype), _entity(entity) {}
 ${elsif (classNameRoot == 'EvtHandler' || classInfoRoot.loosePointerFlag)}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(pEntity, vtype), _pEntity(pEntity) {}

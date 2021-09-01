@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxBitmap);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxBitmap");
+protected:
+	wxBitmap _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxBitmap() = delete;
 	explicit Value_wxBitmap(const wxBitmap& entity, VType& vtype = VTYPE_wxBitmap) :
-		Value_wxGDIObject(entity, vtype) {}
+		Value_wxGDIObject(entity, vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxBitmap(const Value_wxBitmap& src) = delete;
 	Value_wxBitmap& operator=(const Value_wxBitmap& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxBitmap() = default;
 public:
-	wxBitmap& GetEntity() {
-		return reinterpret_cast<wxBitmap&>(Value_wxObject::GetEntity());
-	}
-	const wxBitmap& GetEntity() const {
-		return reinterpret_cast<const wxBitmap&>(Value_wxObject::GetEntity());
-	}
-	wxBitmap* GetEntityPtr() {
-		return reinterpret_cast<wxBitmap*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxBitmap* GetEntityPtr() const {
-		return reinterpret_cast<const wxBitmap*>(Value_wxObject::GetEntityPtr());
-	}
+	wxBitmap& GetEntity() { return _entity; }
+	const wxBitmap& GetEntity() const { return _entity; }
+	wxBitmap* GetEntityPtr() { return &_entity; }
+	const wxBitmap* GetEntityPtr() const { return &_entity; }
 public:
 	static wxBitmap& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxBitmap&>(value).GetEntity();

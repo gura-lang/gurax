@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxBitmap.gura
 //==============================================================================
-Bitmap = Class(GDIObject) {
+Bitmap = Class(GDIObject):holdEntity {
 	__init__()
 	ConvertToImage() as Image
 	CopyFromIcon(icon as const_Icon_r) as bool
