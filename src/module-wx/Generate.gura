@@ -242,7 +242,7 @@ protected:
 	RefPtr<Value> _pValueUserData;
 public:
 	const Value& GetValueUserData() const { return *_pValueUserData; }
-${elsif (!classNameParent)}
+${elsif (!classNameParent || classInfo.holdEntityFlag)}
 protected:
 	wx${className} _entity;
 ${end}
@@ -278,7 +278,7 @@ ${elsif (className == 'Event')}
 ${elsif (className == 'CmdLineParser')}
 	explicit Value_wx${className}(wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
-${elsif (!classNameParent)}
+${elsif (!classNameParent || classInfo.holdEntityFlag)}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
 ${elsif (classNameRoot == 'EvtHandler' || classInfoRoot.loosePointerFlag)}
@@ -319,7 +319,7 @@ ${elsif (classInfo.loosePointerFlag || (classInfoRoot && classInfoRoot.loosePoin
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity; }
 	const wx${className}* GetEntityPtr() const { return _pEntity; }
-${elsif (!classNameRoot)}
+${elsif (!classNameRoot || classInfo.holdEntityFlag)}
 	wx${className}& GetEntity() { return _entity; }
 	const wx${className}& GetEntity() const { return _entity; }
 	wx${className}* GetEntityPtr() { return &_entity; }
@@ -610,6 +610,7 @@ ClassInfo = class {
 	funcInfoCast as cbridge.FuncInfo
 	tmplConstructorImplementation as Template
 	loosePointerFlag as Bool = false
+	holdEntityFlag as Bool = false
 	funcInfoTbl[] as cbridge.FuncInfo = []
 	includeFiles[] as String = []
 	classNamesToMixin[] as String = []
@@ -678,6 +679,7 @@ path.Glob('metafile/*.gura').Each {|pathName|
 			}
 			classInfo = ClassInfo(className, classNameParent)
 			classInfo.loosePointerFlag = expr.right.attr.IsSet(`loosePointer)
+			classInfo.holdEntityFlag = expr.right.attr.IsSet(`holdEntity)
 			expr.right.block.EachElem {|expr|
 				if (expr.IsIndexer()) {
 					params = expr.EachParam():list
