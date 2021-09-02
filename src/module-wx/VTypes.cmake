@@ -83,6 +83,8 @@ set(SRCFILES_VTYPE
 	VType_wxGDIObject.cpp
 	VType_wxGenericDirCtrl.cpp
 	VType_wxGenericProgressDialog.cpp
+	VType_wxGLCanvas.cpp
+	VType_wxGLContext.cpp
 	VType_wxGraphicsMatrix.cpp
 	VType_wxGraphicsObject.cpp
 	VType_wxGraphicsPath.cpp
@@ -162,6 +164,7 @@ set(SRCFILES_VTYPE
 	VType_wxPGArrayEditorDialog.cpp
 	VType_wxPGArrayStringEditorDialog.cpp
 	VType_wxPickerBase.cpp
+	VType_wxPNGHandler.cpp
 	VType_wxPoint.cpp
 	VType_wxPoint2DDouble.cpp
 	VType_wxPopupTransientWindow.cpp

@@ -91,6 +91,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGDIObject);
 	frame.Assign(VTYPE_wxGenericDirCtrl);
 	frame.Assign(VTYPE_wxGenericProgressDialog);
+	frame.Assign(VTYPE_wxGLCanvas);
+	frame.Assign(VTYPE_wxGLContext);
 	frame.Assign(VTYPE_wxGraphicsMatrix);
 	frame.Assign(VTYPE_wxGraphicsObject);
 	frame.Assign(VTYPE_wxGraphicsPath);
@@ -170,6 +172,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPGArrayEditorDialog);
 	frame.Assign(VTYPE_wxPGArrayStringEditorDialog);
 	frame.Assign(VTYPE_wxPickerBase);
+	frame.Assign(VTYPE_wxPNGHandler);
 	frame.Assign(VTYPE_wxPoint);
 	frame.Assign(VTYPE_wxPoint2DDouble);
 	frame.Assign(VTYPE_wxPopupTransientWindow);

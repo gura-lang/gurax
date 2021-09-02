@@ -118,6 +118,22 @@ Gurax_ImplementFunction(ImplementApp)
 	return Value::nil();
 }
 
+// wx.InitAllImageHandlers()
+Gurax_DeclareFunction(InitAllImageHandlers)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(InitAllImageHandlers)
+{
+	// Function Body
+	::wxInitAllImageHandlers();
+	return Value::nil();
+}
+
 // wx.MessageBox(message as String, caption? as String, style? as Number, parent? as wx.Window, x? as Number, y? as Number)
 Gurax_DeclareFunctionAlias(MessageBox_, "MessageBox")
 {
@@ -155,6 +171,7 @@ void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(Test));
 	frame.Assign(Gurax_CreateFunction(ImplementApp));
+	frame.Assign(Gurax_CreateFunction(InitAllImageHandlers));
 	frame.Assign(Gurax_CreateFunction(MessageBox_));
 }
 
