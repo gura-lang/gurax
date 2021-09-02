@@ -1,0 +1,97 @@
+#!/usr/bin/env gurax
+import(wx)
+import(image)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		this.SetBackgroundColour(wx.Colour(0, 128, 0))
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.GridSizer(4) {|sizer|
+			sizerTop.Add(sizer, wx.SizerFlags(1).Expand())
+			sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_TOP | wx.BU_LEFT), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_TOP), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_TOP | wx.BU_RIGHT), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_LEFT), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_RIGHT), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_BOTTOM | wx.BU_LEFT), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_BOTTOM), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_BOTTOM | wx.BU_RIGHT), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_EXACTFIT), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BU_NOTEXT), sizerFlags)
+			sizer.Add(wx.BitmapButton(this, wx.ID_ANY, image.kangaroo, style = wx.BU_AUTODRAW | wx.BORDER_NONE), sizerFlags)
+			sizer.Add(wx.BitmapButton.NewCloseButton(this, wx.ID_ANY), sizerFlags)
+		}
+		/*
+		wx.GridSizer(4) {|sizer|
+			sizerTop.Add(sizer, wx.SizerFlags(1).Expand())
+			sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
+			wx.RadioButton(this, wx.ID_ANY, '(no flag)') {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_TOP | BU_LEFT', style = wx.BU_TOP | wx.BU_LEFT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_TOP', style = wx.BU_TOP) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_TOP | BU_RIGHT', style = wx.BU_TOP | wx.BU_RIGHT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_LEFT', style = wx.BU_LEFT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_RIGHT', style = wx.BU_RIGHT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM | BU_LEFT', style = wx.BU_BOTTOM | wx.BU_LEFT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM', style = wx.BU_BOTTOM) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM | BU_RIGHT', style = wx.BU_BOTTOM | wx.BU_RIGHT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_EXACTFIT', style = wx.BU_EXACTFIT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BU_NOTEXT', style = wx.BU_NOTEXT) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+			wx.RadioButton(this, wx.ID_ANY, 'BORDER_NONE', style = wx.BORDER_NONE) {|ctrl|
+				sizer.Add(ctrl, sizerFlags)
+				ctrl.SetBackgroundColour(wx.WHITE)
+			}
+		}
+		*/
+	}
+}
+
+wx.ImplementApp(MyApp())

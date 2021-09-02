@@ -578,6 +578,30 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Iterator_Uniq
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Uniq : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Uniq");
+private:
+	RefPtr<Iterator> _pIteratorSrc;
+	RefPtr<Value> _pValuePrev;
+	bool _doneFlag;
+public:
+	Iterator_Uniq(Iterator* pIteratorSrc) : _pIteratorSrc(pIteratorSrc), _pValuePrev(Value::undefined()), _doneFlag(false) {}
+public:
+	Iterator& GetIteratorSrc() { return *_pIteratorSrc; }
+	const Iterator& GetIteratorSrc() const { return *_pIteratorSrc; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return GetIteratorSrc().GetFlags() & Flag::Finite; }
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Offset
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Offset : public Iterator {

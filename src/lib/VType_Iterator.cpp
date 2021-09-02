@@ -1515,6 +1515,26 @@ Gurax_ImplementMethod(Iterator, Tail)
 	return argument.ReturnIterator(processor, new Iterator_Each(pValueOwner.release()));
 }
 
+// Iterator#Uniq() {block?}
+Gurax_DeclareMethod(Iterator, Uniq)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Iterator, Uniq)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iteratorSrc = valueThis.GetIterator();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Uniq(iteratorSrc.Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Iterator#Until(criteria) {block?}
 Gurax_DeclareMethod(Iterator, Until)
 {
@@ -1703,6 +1723,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, Std));
 	Assign(Gurax_CreateMethod(Iterator, Sum));
 	Assign(Gurax_CreateMethod(Iterator, Tail));
+	Assign(Gurax_CreateMethod(Iterator, Uniq));
 	Assign(Gurax_CreateMethod(Iterator, Until));
 	Assign(Gurax_CreateMethod(Iterator, Var));
 	Assign(Gurax_CreateMethod(Iterator, While));

@@ -785,6 +785,16 @@ TestCase('List#Tail()') {
 	Tester(`[0..4].Tail(6):list)
 }
 
+TestCase('List#Uniq()') {
+	Tester(`[].Uniq():list)
+	Tester(`[1].Uniq():list)
+	Tester(`[1, 2, 3, 4, 5, 6, 7, 8, 9].Uniq():list)
+	Tester(`[1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 6, 7, 8, 9].Uniq():list)
+	Tester(`['orange'].Uniq():list)
+	Tester(`['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi'].Uniq():list)
+	Tester(`['orange', 'grape', 'grape', 'apple', 'apple', 'apple', 'peach', 'melon', 'kiwi', 'kiwi', 'kiwi'].Uniq():list)
+}
+
 TestCase('List#Until()') {
 	x = [4, 3, 6, 1, 2, 3, -1, 4, 4, 4, 0]
 	Tester(`x.Until(&{$i < 0}):list)

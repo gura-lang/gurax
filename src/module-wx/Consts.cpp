@@ -47,6 +47,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("BRUSHSTYLE_STIPPLE_MASK_OPAQUE", new Value_Number(wxBRUSHSTYLE_STIPPLE_MASK_OPAQUE));
 	frame.Assign("BRUSHSTYLE_TRANSPARENT", new Value_Number(wxBRUSHSTYLE_TRANSPARENT));
 	frame.Assign("BRUSHSTYLE_VERTICAL_HATCH", new Value_Number(wxBRUSHSTYLE_VERTICAL_HATCH));
+	frame.Assign("BU_AUTODRAW", new Value_Number(wxBU_AUTODRAW));
 	frame.Assign("BU_BOTTOM", new Value_Number(wxBU_BOTTOM));
 	frame.Assign("BU_EXACTFIT", new Value_Number(wxBU_EXACTFIT));
 	frame.Assign("BU_LEFT", new Value_Number(wxBU_LEFT));

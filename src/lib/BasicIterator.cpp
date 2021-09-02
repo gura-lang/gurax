@@ -523,6 +523,32 @@ String Iterator_Head::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Iterator_Uniq
+//------------------------------------------------------------------------------
+Value* Iterator_Uniq::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	for (;;) {
+		RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
+		if (!pValueElem) {
+			_pValuePrev.reset(Value::undefined());
+			_doneFlag = true;
+			break;
+		}
+		if (!pValueElem->IsEqualTo(*_pValuePrev)) {
+			_pValuePrev.reset(pValueElem.Reference());
+			return pValueElem.release();
+		}
+	}
+	return nullptr;
+}
+
+String Iterator_Uniq::ToString(const StringStyle& ss) const
+{
+	return String().Format("Uniq");
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Offset
 //------------------------------------------------------------------------------
 Value* Iterator_Offset::DoNextValue()
