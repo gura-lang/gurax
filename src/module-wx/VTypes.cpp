@@ -48,6 +48,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxColour);
 	frame.Assign(VTYPE_wxColourData);
 	frame.Assign(VTYPE_wxColourDialog);
+	frame.Assign(VTYPE_wxColourPickerCtrl);
 	frame.Assign(VTYPE_wxComboBox);
 	frame.Assign(VTYPE_wxComboCtrl);
 	frame.Assign(VTYPE_wxComboPopup);
@@ -63,6 +64,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxDC);
 	frame.Assign(VTYPE_wxDialog);
 	frame.Assign(VTYPE_wxDirDialog);
+	frame.Assign(VTYPE_wxDirPickerCtrl);
 	frame.Assign(VTYPE_wxDocChildFrame);
 	frame.Assign(VTYPE_wxDocMDIChildFrame);
 	frame.Assign(VTYPE_wxDocMDIParentFrame);
@@ -75,6 +77,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxEvtHandler);
 	frame.Assign(VTYPE_wxFileCtrl);
 	frame.Assign(VTYPE_wxFileDialog);
+	frame.Assign(VTYPE_wxFilePickerCtrl);
 	frame.Assign(VTYPE_wxFindReplaceData);
 	frame.Assign(VTYPE_wxFindReplaceDialog);
 	frame.Assign(VTYPE_wxFlexGridSizer);
@@ -82,6 +85,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFont);
 	frame.Assign(VTYPE_wxFontDialog);
 	frame.Assign(VTYPE_wxFontMetrics);
+	frame.Assign(VTYPE_wxFontPickerCtrl);
 	frame.Assign(VTYPE_wxFrame);
 	frame.Assign(VTYPE_wxGauge);
 	frame.Assign(VTYPE_wxGBPosition);

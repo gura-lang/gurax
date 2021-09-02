@@ -40,6 +40,7 @@ set(SRCFILES_VTYPE
 	VType_wxColour.cpp
 	VType_wxColourData.cpp
 	VType_wxColourDialog.cpp
+	VType_wxColourPickerCtrl.cpp
 	VType_wxComboBox.cpp
 	VType_wxComboCtrl.cpp
 	VType_wxComboPopup.cpp
@@ -55,6 +56,7 @@ set(SRCFILES_VTYPE
 	VType_wxDC.cpp
 	VType_wxDialog.cpp
 	VType_wxDirDialog.cpp
+	VType_wxDirPickerCtrl.cpp
 	VType_wxDocChildFrame.cpp
 	VType_wxDocMDIChildFrame.cpp
 	VType_wxDocMDIParentFrame.cpp
@@ -67,6 +69,7 @@ set(SRCFILES_VTYPE
 	VType_wxEvtHandler.cpp
 	VType_wxFileCtrl.cpp
 	VType_wxFileDialog.cpp
+	VType_wxFilePickerCtrl.cpp
 	VType_wxFindReplaceData.cpp
 	VType_wxFindReplaceDialog.cpp
 	VType_wxFlexGridSizer.cpp
@@ -74,6 +77,7 @@ set(SRCFILES_VTYPE
 	VType_wxFont.cpp
 	VType_wxFontDialog.cpp
 	VType_wxFontMetrics.cpp
+	VType_wxFontPickerCtrl.cpp
 	VType_wxFrame.cpp
 	VType_wxGauge.cpp
 	VType_wxGBPosition.cpp

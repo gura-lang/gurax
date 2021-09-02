@@ -3,4 +3,26 @@
 //==============================================================================
 PickerBase = Class(Control) {
 	@include['wx/pickerbase.h']
+	CreateBase(parent as Window_p, id as WindowID, text as const_String_r = '', pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxButtonNameStr) as bool
+	GetInternalMargin() as int
+	GetPickerCtrlProportion() as int
+	GetTextCtrl() as TextCtrl_p
+	GetPickerCtrl() as Control_p
+	GetTextCtrlProportion() as int
+	HasTextCtrl() as bool
+	IsPickerCtrlGrowable() as bool
+	IsTextCtrlGrowable() as bool
+	SetInternalMargin(margin as int) as void
+	SetPickerCtrlGrowable(grow as bool = true) as void
+	SetPickerCtrlProportion(prop as int) as void
+	SetTextCtrlGrowable(grow as bool = true) as void
+	SetTextCtrlProportion(prop as int) as void
+	SetTextCtrl(text as TextCtrl_p) as void
+	SetPickerCtrl(picker as Control_p) as void
+	UpdatePickerFromTextCtrl() as void
+	UpdateTextCtrlFromPicker() as void
 }
+
+@const[
+	PB_USE_TEXTCTRL
+]

@@ -2,17 +2,54 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxGLCanvas (wxWindow *parent, wxWindowID id=wxID_ANY, const int *attribList=NULL, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0, const wxString &name="GLCanvas", const wxPalette &palette=wxNullPalette)
- 	Creates a window with the given parameters. More...
+bool 	CreateBase (wxWindow *parent, wxWindowID id, const wxString &text=wxEmptyString, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0, const wxValidator &validator=wxDefaultValidator, const wxString &name=wxButtonNameStr)
  
-bool 	SetColour (const wxString &colour)
- 	Sets the current colour for this window (using glcolor3f()), using the wxWidgets colour database to find a named colour. More...
+int 	GetInternalMargin () const
+ 	Returns the margin (in pixel) between the picker and the text control. More...
  
-bool 	SetCurrent (const wxGLContext &context) const
- 	Makes the OpenGL state that is represented by the OpenGL rendering context context current, i.e. More...
+int 	GetPickerCtrlProportion () const
+ 	Returns the proportion value of the picker. More...
  
-virtual bool 	SwapBuffers ()
- 	Swaps the double-buffer of this window, making the back-buffer the front-buffer and vice versa, so that the output of the previous OpenGL commands is displayed on the window. More...
+wxTextCtrl * 	GetTextCtrl ()
+ 	Returns a pointer to the text control handled by this window or NULL if the wxPB_USE_TEXTCTRL style was not specified when this control was created. More...
+ 
+wxControl * 	GetPickerCtrl ()
+ 	Returns the native implementation of the real picker control. More...
+ 
+int 	GetTextCtrlProportion () const
+ 	Returns the proportion value of the text control. More...
+ 
+bool 	HasTextCtrl () const
+ 	Returns true if this window has a valid text control (i.e. if the wxPB_USE_TEXTCTRL style was given when creating this control). More...
+ 
+bool 	IsPickerCtrlGrowable () const
+ 	Returns true if the picker control is growable. More...
+ 
+bool 	IsTextCtrlGrowable () const
+ 	Returns true if the text control is growable. More...
+ 
+void 	SetInternalMargin (int margin)
+ 	Sets the margin (in pixel) between the picker and the text control. More...
+ 
+void 	SetPickerCtrlGrowable (bool grow=true)
+ 	Sets the picker control as growable when grow is true. More...
+ 
+void 	SetPickerCtrlProportion (int prop)
+ 	Sets the proportion value of the picker. More...
+ 
+void 	SetTextCtrlGrowable (bool grow=true)
+ 	Sets the text control as growable when grow is true. More...
+ 
+void 	SetTextCtrlProportion (int prop)
+ 	Sets the proportion value of the text control. More...
+ 
+void 	SetTextCtrl (wxTextCtrl *text)
+ 
+void 	SetPickerCtrl (wxControl *picker)
+ 
+virtual void 	UpdatePickerFromTextCtrl ()=0
+ 
+virtual void 	UpdateTextCtrlFromPicker ()=0
 '''
 //------------------------------------------------------------------------------
 
