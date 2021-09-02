@@ -14,12 +14,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ALIGN_CENTER_VERTICAL", new Value_Number(wxALIGN_CENTER_VERTICAL));
 	frame.Assign("ALIGN_CENTRE", new Value_Number(wxALIGN_CENTRE));
 	frame.Assign("ALIGN_CENTRE_HORIZONTAL", new Value_Number(wxALIGN_CENTRE_HORIZONTAL));
-	frame.Assign("ALIGN_CENTRE_HORIZONTAL", new Value_Number(wxALIGN_CENTRE_HORIZONTAL));
 	frame.Assign("ALIGN_CENTRE_VERTICAL", new Value_Number(wxALIGN_CENTRE_VERTICAL));
 	frame.Assign("ALIGN_LEFT", new Value_Number(wxALIGN_LEFT));
-	frame.Assign("ALIGN_LEFT", new Value_Number(wxALIGN_LEFT));
-	frame.Assign("ALIGN_RIGHT", new Value_Number(wxALIGN_RIGHT));
-	frame.Assign("ALIGN_RIGHT", new Value_Number(wxALIGN_RIGHT));
 	frame.Assign("ALIGN_RIGHT", new Value_Number(wxALIGN_RIGHT));
 	frame.Assign("ALIGN_TOP", new Value_Number(wxALIGN_TOP));
 	frame.Assign("ALL", new Value_Number(wxALL));
@@ -98,7 +94,6 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ICON_ERROR", new Value_Number(wxICON_ERROR));
 	frame.Assign("ICON_EXCLAMATION", new Value_Number(wxICON_EXCLAMATION));
 	frame.Assign("ICON_HAND", new Value_Number(wxICON_HAND));
-	frame.Assign("ICON_INFORMATION", new Value_Number(wxICON_INFORMATION));
 	frame.Assign("ICON_INFORMATION", new Value_Number(wxICON_INFORMATION));
 	frame.Assign("ICON_NONE", new Value_Number(wxICON_NONE));
 	frame.Assign("ICON_QUESTION", new Value_Number(wxICON_QUESTION));
@@ -247,7 +242,6 @@ void AssignConsts(Frame& frame)
 	frame.Assign("NO_DEFAULT", new Value_Number(wxNO_DEFAULT));
 	frame.Assign("NO_FULL_REPAINT_ON_RESIZE", new Value_Number(wxNO_FULL_REPAINT_ON_RESIZE));
 	frame.Assign("OK", new Value_Number(wxOK));
-	frame.Assign("OK", new Value_Number(wxOK));
 	frame.Assign("OK_DEFAULT", new Value_Number(wxOK_DEFAULT));
 	frame.Assign("PENSTYLE_BDIAGONAL_HATCH", new Value_Number(wxPENSTYLE_BDIAGONAL_HATCH));
 	frame.Assign("PENSTYLE_CROSSDIAG_HATCH", new Value_Number(wxPENSTYLE_CROSSDIAG_HATCH));
@@ -272,7 +266,6 @@ void AssignConsts(Frame& frame)
 	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
 	frame.Assign("SHAPED", new Value_Number(wxSHAPED));
-	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));
 	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));
 	frame.Assign("ST_ELLIPSIZE_END", new Value_Number(wxST_ELLIPSIZE_END));
 	frame.Assign("ST_ELLIPSIZE_MIDDLE", new Value_Number(wxST_ELLIPSIZE_MIDDLE));
