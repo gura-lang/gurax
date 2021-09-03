@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxCalendarEvent.gura
+//==============================================================================
+CalendarEvent = Class(DateEvent) {
+	@include['wx/calctrl.h']
+	//GetWeekDay() as DateTime::WeekDay
+	//SetWeekDay(day as DateTime::WeekDay)
+}

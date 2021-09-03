@@ -12,6 +12,8 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxDateEvent);
+	frame.Assign(VTYPE_wxCalendarEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -33,7 +35,9 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxBookCtrlEvent);
 	frame.Assign(VTYPE_wxBoxSizer);
 	frame.Assign(VTYPE_wxBrush);
+	frame.Assign(VTYPE_wxBusyCursor);
 	frame.Assign(VTYPE_wxButton);
+	frame.Assign(VTYPE_wxCalculateLayoutEvent);
 	frame.Assign(VTYPE_wxCalendarCtrl);
 	frame.Assign(VTYPE_wxCalendarDateAttr);
 	frame.Assign(VTYPE_wxCaret);

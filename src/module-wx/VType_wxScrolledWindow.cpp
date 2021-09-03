@@ -67,6 +67,33 @@ Gurax_ImplementConstructorEx(ScrolledWindow_gurax, processor_gurax, argument_gur
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ScrolledWindow#CalcScrolledPositionXY(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxScrolledWindow, CalcScrolledPositionXY_gurax, "CalcScrolledPositionXY")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrolledWindow, CalcScrolledPositionXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	int xx, yy;
+	pEntity_gurax->CalcScrolledPosition(x, y, &xx, &yy);
+	return Value_Tuple::Create(new Value_Number(xx), new Value_Number(yy));
+}
+
 // wx.ScrolledWindow#CalcScrolledPosition(pt as wx.Point)
 Gurax_DeclareMethodAlias(wxScrolledWindow, CalcScrolledPosition_gurax, "CalcScrolledPosition")
 {
@@ -90,6 +117,33 @@ Gurax_ImplementMethodEx(wxScrolledWindow, CalcScrolledPosition_gurax, processor_
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
 		pEntity_gurax->CalcScrolledPosition(pt)));
+}
+
+// wx.ScrolledWindow#CalcUnscrolledPositionXY(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxScrolledWindow, CalcUnscrolledPositionXY_gurax, "CalcUnscrolledPositionXY")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrolledWindow, CalcUnscrolledPositionXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	int xx, yy;
+	pEntity_gurax->CalcUnscrolledPosition(x, y, &xx, &yy);
+	return Value_Tuple::Create(new Value_Number(xx), new Value_Number(yy));
 }
 
 // wx.ScrolledWindow#CalcUnscrolledPosition(pt as wx.Point)
@@ -214,6 +268,48 @@ Gurax_ImplementMethodEx(wxScrolledWindow, ShowScrollbars_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
+// wx.ScrolledWindow#GetScrollPixelsPerUnit()
+Gurax_DeclareMethodAlias(wxScrolledWindow, GetScrollPixelsPerUnit_gurax, "GetScrollPixelsPerUnit")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrolledWindow, GetScrollPixelsPerUnit_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int xUnit, yUnit;
+	pEntity_gurax->GetScrollPixelsPerUnit(&xUnit, &yUnit);
+	return Value_Tuple::Create(new Value_Number(xUnit), new Value_Number(yUnit));
+}
+
+// wx.ScrolledWindow#GetViewStartXY()
+Gurax_DeclareMethodAlias(wxScrolledWindow, GetViewStartXY_gurax, "GetViewStartXY")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrolledWindow, GetViewStartXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int x, y;
+	pEntity_gurax->GetViewStart(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
 // wx.ScrolledWindow#GetViewStart()
 Gurax_DeclareMethodAlias(wxScrolledWindow, GetViewStart_gurax, "GetViewStart")
 {
@@ -232,6 +328,27 @@ Gurax_ImplementMethodEx(wxScrolledWindow, GetViewStart_gurax, processor_gurax, a
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
 		pEntity_gurax->GetViewStart()));
+}
+
+// wx.ScrolledWindow#GetVirtualSize()
+Gurax_DeclareMethodAlias(wxScrolledWindow, GetVirtualSize_gurax, "GetVirtualSize")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrolledWindow, GetVirtualSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int x, y;
+	pEntity_gurax->GetVirtualSize(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 }
 
 // wx.ScrolledWindow#IsRetained()
@@ -304,12 +421,37 @@ Gurax_ImplementMethodEx(wxScrolledWindow, PrepareDC_gurax, processor_gurax, argu
 	return Gurax::Value::nil();
 }
 
-// wx.ScrolledWindow#Scroll(x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxScrolledWindow, Scroll_gurax, "Scroll")
+// wx.ScrolledWindow#ScrollXY(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxScrolledWindow, ScrollXY_gurax, "ScrollXY")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrolledWindow, ScrollXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->Scroll(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.ScrolledWindow#Scroll(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxScrolledWindow, Scroll_gurax, "Scroll")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -323,10 +465,10 @@ Gurax_ImplementMethodEx(wxScrolledWindow, Scroll_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int x = args_gurax.PickNumber<int>();
-	int y = args_gurax.PickNumber<int>();
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
 	// Function body
-	pEntity_gurax->Scroll(x, y);
+	pEntity_gurax->Scroll(pt);
 	return Gurax::Value::nil();
 }
 
@@ -725,16 +867,22 @@ void VType_wxScrolledWindow::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(ScrolledWindow_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxScrolledWindow, CalcScrolledPositionXY_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, CalcScrolledPosition_gurax));
+	Assign(Gurax_CreateMethod(wxScrolledWindow, CalcUnscrolledPositionXY_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, CalcUnscrolledPosition_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, DisableKeyboardScrolling_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, DoPrepareDC_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, EnableScrolling_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, ShowScrollbars_gurax));
+	Assign(Gurax_CreateMethod(wxScrolledWindow, GetScrollPixelsPerUnit_gurax));
+	Assign(Gurax_CreateMethod(wxScrolledWindow, GetViewStartXY_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, GetViewStart_gurax));
+	Assign(Gurax_CreateMethod(wxScrolledWindow, GetVirtualSize_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, IsRetained_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, OnDraw_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, PrepareDC_gurax));
+	Assign(Gurax_CreateMethod(wxScrolledWindow, ScrollXY_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, Scroll_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, SetScrollRate_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, SetScrollbars_gurax));

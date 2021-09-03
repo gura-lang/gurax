@@ -3,8 +3,20 @@
 //==============================================================================
 Scrolled = Class():mixin {
 	//CalcScrolledPosition(x as int, y as int, xx as int_p, yy as int_p) as void
+	CalcScrolledPositionXY(x as int, y as int) = \
+		R'''
+		int xx, yy;
+		pEntity_gurax->CalcScrolledPosition(x, y, &xx, &yy);
+		return Value_Tuple::Create(new Value_Number(xx), new Value_Number(yy));
+		'''
 	CalcScrolledPosition(pt as const_Point_r) as Point
 	//CalcUnscrolledPosition(x as int, y as int, xx as int_p, yy as int_p) as void
+	CalcUnscrolledPositionXY(x as int, y as int) = \
+		R'''
+		int xx, yy;
+		pEntity_gurax->CalcUnscrolledPosition(x, y, &xx, &yy);
+		return Value_Tuple::Create(new Value_Number(xx), new Value_Number(yy));
+		'''
 	CalcUnscrolledPosition(pt as const_Point_r) as Point
 	//Create(parent as Window_p, id as WindowID = -1, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxHSCROLL|wxVSCROLL, name as const_String_r = "scrolledWindow") as bool
 	DisableKeyboardScrolling() as void
@@ -12,13 +24,31 @@ Scrolled = Class():mixin {
 	EnableScrolling(xScrolling as bool, yScrolling as bool) as void
 	ShowScrollbars(horz as ScrollbarVisibility, vert as ScrollbarVisibility) as void
 	//GetScrollPixelsPerUnit(xUnit as int_p, yUnit as int_p) as void
+	GetScrollPixelsPerUnit() = \
+		R'''
+		int xUnit, yUnit;
+		pEntity_gurax->GetScrollPixelsPerUnit(&xUnit, &yUnit);
+		return Value_Tuple::Create(new Value_Number(xUnit), new Value_Number(yUnit));
+		'''
 	//GetViewStart(x as int_p, y as int_p) as void
+	GetViewStartXY() = \
+		R'''
+		int x, y;
+		pEntity_gurax->GetViewStart(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
 	GetViewStart() as Point
 	//GetVirtualSize(x as int_p, y as int_p) as void
+	GetVirtualSize() = \
+		R'''
+		int x, y;
+		pEntity_gurax->GetVirtualSize(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
 	IsRetained() as bool
 	OnDraw(dc as DC_r) as void
 	PrepareDC(dc as DC_r) as void
-	Scroll(x as int, y as int) as void
+	ScrollXY(x as int, y as int) as void = Scroll
 	Scroll(pt as const_Point_r) as void
 	SetScrollRate(xstep as int, ystep as int) as void
 	SetScrollbars(pixelsPerUnitX as int, pixelsPerUnitY as int, noUnitsX as int, noUnitsY as int, xPos as int = 0, yPos as int = 0, noRefresh as bool = false) as void

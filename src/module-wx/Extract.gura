@@ -2,98 +2,20 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxScrolled (wxWindow *parent, wxWindowID id=-1, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxHSCROLL|wxVSCROLL, const wxString &name="scrolledWindow")
+a 	wxCalculateLayoutEvent (wxWindowID id=0)
  	Constructor. More...
  
-void 	CalcScrolledPosition (int x, int y, int *xx, int *yy) const
- 	Translates the logical coordinates to the device ones. More...
+int 	GetFlags () const
+ 	Returns the flags associated with this event. More...
  
-wxPoint 	CalcScrolledPosition (const wxPoint &pt) const
+wxRect 	GetRect () const
+ 	Before the event handler is entered, returns the remaining parent client area that the window could occupy. More...
  
-void 	CalcUnscrolledPosition (int x, int y, int *xx, int *yy) const
- 	Translates the device coordinates to the logical ones. More...
+void 	SetFlags (int flags)
+ 	Sets the flags associated with this event. More...
  
-wxPoint 	CalcUnscrolledPosition (const wxPoint &pt) const
- 
-bool 	Create (wxWindow *parent, wxWindowID id=-1, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxHSCROLL|wxVSCROLL, const wxString &name="scrolledWindow")
- 	Creates the window for two-step construction. More...
- 
-void 	DisableKeyboardScrolling ()
- 	Disable use of keyboard keys for scrolling. More...
- 
-void 	DoPrepareDC (wxDC &dc)
- 	Call this function to prepare the device context for drawing a scrolled image. More...
- 
-void 	EnableScrolling (bool xScrolling, bool yScrolling)
- 	Enable or disable use of wxWindow::ScrollWindow() for scrolling. More...
- 
-void 	ShowScrollbars (wxScrollbarVisibility horz, wxScrollbarVisibility vert)
- 	Set the scrollbar visibility. More...
- 
-void 	GetScrollPixelsPerUnit (int *xUnit, int *yUnit) const
- 	Get the number of pixels per scroll unit (line), in each direction, as set by SetScrollbars(). More...
- 
-void 	GetViewStart (int *x, int *y) const
- 	Get the position at which the visible portion of the window starts. More...
- 
-wxPoint 	GetViewStart () const
- 	This is a simple overload of GetViewStart(int*,int*); see that function for more info. More...
- 
-void 	GetVirtualSize (int *x, int *y) const
- 	Gets the size in device units of the scrollable window area (as opposed to the client size, which is the area of the window currently visible). More...
- 
-bool 	IsRetained () const
- 	Motif only: true if the window has a backing bitmap. More...
- 
-virtual void 	OnDraw (wxDC &dc)
- 	Called by the default paint event handler to allow the application to define painting behaviour without having to worry about calling DoPrepareDC(). More...
- 
-void 	PrepareDC (wxDC &dc)
- 	This function is for backwards compatibility only and simply calls DoPrepareDC() now. More...
- 
-void 	Scroll (int x, int y)
- 	Scrolls a window so the view start is at the given point. More...
- 
-void 	Scroll (const wxPoint &pt)
- 	This is an overload of Scroll(int,int); see that function for more info. More...
- 
-void 	SetScrollRate (int xstep, int ystep)
- 	Set the horizontal and vertical scrolling increment only. More...
- 
-void 	SetScrollbars (int pixelsPerUnitX, int pixelsPerUnitY, int noUnitsX, int noUnitsY, int xPos=0, int yPos=0, bool noRefresh=false)
- 	Sets up vertical and/or horizontal scrollbars. More...
- 
-void 	SetTargetWindow (wxWindow *window)
- 	Call this function to tell wxScrolled to perform the actual scrolling on a different window (and not on itself). More...
- 
-wxWindow * 	GetTargetWindow () const
- 
-void 	SetTargetRect (const wxRect &rect)
- 
-wxRect 	GetTargetRect () const
- 
-int 	GetScrollPageSize (int orient) const
- 
-void 	SetScrollPageSize (int orient, int pageSize)
- 
-int 	GetScrollLines (int orient) const
- 
-void 	SetScale (double xs, double ys)
- 
-double 	GetScaleX () const
- 
-double 	GetScaleY () const
- 
-virtual void 	AdjustScrollbars ()
- 
-bool 	IsAutoScrolling () const
- 	Are we generating the autoscroll events? More...
- 
-void 	StopAutoScrolling ()
- 	Stop generating the scroll events when mouse is held outside the window. More...
- 
-virtual bool 	SendAutoScrollEvents (wxScrollWinEvent &event) const
- 	This method can be overridden in a derived class to forbid sending the auto scroll events - note that unlike StopAutoScrolling() it doesn't stop the timer, so it will be called repeatedly and will typically return different values depending on the current mouse position. More...
+void 	SetRect (const wxRect &rect)
+ 	Call this to specify the new remaining parent client area, after the space occupied by the window has been subtracted. More...
 '''
 //------------------------------------------------------------------------------
 

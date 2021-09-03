@@ -1,0 +1,15 @@
+//==============================================================================
+// VType_wxCalculateLayoutEvent.gura
+//==============================================================================
+CalculateLayoutEvent = Class(Event) {
+	@include['wx/laywin.h']
+	//__init__(id as WindowID = 0)
+	GetFlags() as int
+	GetRect() as Rect
+	SetFlags(flags as int) as void
+	SetRect(rect as const_Rect_r) as void
+}
+
+@event[
+	EVT_CALCULATE_LAYOUT >> CalculateLayoutEvent
+]

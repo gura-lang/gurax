@@ -7,6 +7,8 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
+#include "VType_wxDateEvent.h"
+#include "VType_wxCalendarEvent.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -28,7 +30,9 @@
 #include "VType_wxBookCtrlEvent.h"
 #include "VType_wxBoxSizer.h"
 #include "VType_wxBrush.h"
+#include "VType_wxBusyCursor.h"
 #include "VType_wxButton.h"
+#include "VType_wxCalculateLayoutEvent.h"
 #include "VType_wxCalendarCtrl.h"
 #include "VType_wxCalendarDateAttr.h"
 #include "VType_wxCaret.h"

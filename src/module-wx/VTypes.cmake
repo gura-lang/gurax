@@ -4,6 +4,8 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxDateEvent.cpp
+	VType_wxCalendarEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -25,7 +27,9 @@ set(SRCFILES_VTYPE
 	VType_wxBookCtrlEvent.cpp
 	VType_wxBoxSizer.cpp
 	VType_wxBrush.cpp
+	VType_wxBusyCursor.cpp
 	VType_wxButton.cpp
+	VType_wxCalculateLayoutEvent.cpp
 	VType_wxCalendarCtrl.cpp
 	VType_wxCalendarDateAttr.cpp
 	VType_wxCaret.cpp
