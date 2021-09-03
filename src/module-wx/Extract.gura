@@ -2,54 +2,23 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-bool 	CreateBase (wxWindow *parent, wxWindowID id, const wxString &text=wxEmptyString, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0, const wxValidator &validator=wxDefaultValidator, const wxString &name=wxButtonNameStr)
+virtual wxObject * 	Clone () const
+ 	All validator classes must implement the Clone() function, which returns an identical copy of itself. More...
  
-int 	GetInternalMargin () const
- 	Returns the margin (in pixel) between the picker and the text control. More...
+wxWindow * 	GetWindow () const
+ 	Returns the window associated with the validator. More...
  
-int 	GetPickerCtrlProportion () const
- 	Returns the proportion value of the picker. More...
+void 	SetWindow (wxWindow *window)
+ 	Associates a window with the validator. More...
  
-wxTextCtrl * 	GetTextCtrl ()
- 	Returns a pointer to the text control handled by this window or NULL if the wxPB_USE_TEXTCTRL style was not specified when this control was created. More...
+virtual bool 	TransferFromWindow ()
+ 	This overridable function is called when the value in the window must be transferred to the validator. More...
  
-wxControl * 	GetPickerCtrl ()
- 	Returns the native implementation of the real picker control. More...
+virtual bool 	TransferToWindow ()
+ 	This overridable function is called when the value associated with the validator must be transferred to the window. More...
  
-int 	GetTextCtrlProportion () const
- 	Returns the proportion value of the text control. More...
- 
-bool 	HasTextCtrl () const
- 	Returns true if this window has a valid text control (i.e. if the wxPB_USE_TEXTCTRL style was given when creating this control). More...
- 
-bool 	IsPickerCtrlGrowable () const
- 	Returns true if the picker control is growable. More...
- 
-bool 	IsTextCtrlGrowable () const
- 	Returns true if the text control is growable. More...
- 
-void 	SetInternalMargin (int margin)
- 	Sets the margin (in pixel) between the picker and the text control. More...
- 
-void 	SetPickerCtrlGrowable (bool grow=true)
- 	Sets the picker control as growable when grow is true. More...
- 
-void 	SetPickerCtrlProportion (int prop)
- 	Sets the proportion value of the picker. More...
- 
-void 	SetTextCtrlGrowable (bool grow=true)
- 	Sets the text control as growable when grow is true. More...
- 
-void 	SetTextCtrlProportion (int prop)
- 	Sets the proportion value of the text control. More...
- 
-void 	SetTextCtrl (wxTextCtrl *text)
- 
-void 	SetPickerCtrl (wxControl *picker)
- 
-virtual void 	UpdatePickerFromTextCtrl ()=0
- 
-virtual void 	UpdateTextCtrlFromPicker ()=0
+virtual bool 	Validate (wxWindow *parent)
+ 	This overridable function is called when the value in the associated window must be validated. More...
 '''
 //------------------------------------------------------------------------------
 

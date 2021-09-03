@@ -3,4 +3,10 @@
 //==============================================================================
 Validator = Class(EvtHandler) {
 	__init__()
+	//Clone() as Object_p
+	GetWindow() as Window_p
+	SetWindow(window as Window_p) as void
+	TransferFromWindow() as bool
+	TransferToWindow() as bool
+	Validate(parent as Window_p) as bool
 }
