@@ -1,0 +1,17 @@
+//==============================================================================
+// VType_wxFilePickerCtrl.gura
+//==============================================================================
+FilePickerCtrl = Class(PickerBase) {
+	@include['wx/filepicker.h']
+}
+
+@const[
+	FLP_DEFAULT_STYLE
+	FLP_USE_TEXTCTRL
+	FLP_OPEN
+	FLP_SAVE
+	FLP_OVERWRITE_PROMPT
+	FLP_FILE_MUST_EXIST
+	FLP_CHANGE_DIR
+	FLP_SMALL
+]

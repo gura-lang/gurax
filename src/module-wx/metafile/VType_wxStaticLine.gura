@@ -5,4 +5,11 @@ StaticLine = Class(Control) {
 	@include['wx/statline.h']
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxLI_HORIZONTAL, name as String = wxStaticLineNameStr)
+	IsVertical() as bool
+	GetDefaultSize():static as int
 }
+
+@const[
+	LI_HORIZONTAL
+	LI_VERTICAL
+]

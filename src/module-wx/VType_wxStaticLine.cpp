@@ -67,6 +67,41 @@ Gurax_ImplementConstructorEx(StaticLine_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.StaticLine#IsVertical()
+Gurax_DeclareMethodAlias(wxStaticLine, IsVertical_gurax, "IsVertical")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStaticLine, IsVertical_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsVertical();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.StaticLine.GetDefaultSize()
+Gurax_DeclareClassMethodAlias(wxStaticLine, GetDefaultSize_gurax, "GetDefaultSize")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxStaticLine, GetDefaultSize_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	int rtn = wxStaticLine::GetDefaultSize();
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -84,6 +119,8 @@ void VType_wxStaticLine::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticLine_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxStaticLine, IsVertical_gurax));
+	Assign(Gurax_CreateMethod(wxStaticLine, GetDefaultSize_gurax));
 }
 
 //------------------------------------------------------------------------------

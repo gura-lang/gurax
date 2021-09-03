@@ -250,6 +250,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("LC_VIRTUAL", new Value_Number(wxLC_VIRTUAL));
 	frame.Assign("LC_VRULES", new Value_Number(wxLC_VRULES));
 	frame.Assign("LEFT", new Value_Number(wxLEFT));
+	frame.Assign("LI_HORIZONTAL", new Value_Number(wxLI_HORIZONTAL));
+	frame.Assign("LI_VERTICAL", new Value_Number(wxLI_VERTICAL));
 	frame.Assign("MAXIMIZE_BOX", new Value_Number(wxMAXIMIZE_BOX));
 	frame.Assign("MINIMIZE_BOX", new Value_Number(wxMINIMIZE_BOX));
 	frame.Assign("NB_BOTTOM", new Value_Number(wxNB_BOTTOM));
@@ -285,6 +287,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("PENSTYLE_VERTICAL_HATCH", new Value_Number(wxPENSTYLE_VERTICAL_HATCH));
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
 	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
+	frame.Assign("RETAINED", new Value_Number(wxRETAINED));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
 	frame.Assign("SHAPED", new Value_Number(wxSHAPED));
 	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));

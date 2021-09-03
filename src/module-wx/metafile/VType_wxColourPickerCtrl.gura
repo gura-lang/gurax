@@ -1,0 +1,12 @@
+//==============================================================================
+// VType_wxColourPickerCtrl.gura
+//==============================================================================
+ColourPickerCtrl = Class(PickerBase) {
+	@include['wx/clrpicker.h']
+}
+
+@const[
+	CLRP_DEFAULT_STYLE
+	CLRP_USE_TEXTCTRL
+	CLRP_SHOW_LABEL
+]

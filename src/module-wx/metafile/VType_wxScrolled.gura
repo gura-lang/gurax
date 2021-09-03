@@ -1,0 +1,39 @@
+//==============================================================================
+// VType_wxScrolled.gura
+//==============================================================================
+Scrolled = Class():mixin {
+	//CalcScrolledPosition(x as int, y as int, xx as int_p, yy as int_p) as void
+	CalcScrolledPosition(pt as const_Point_r) as Point
+	//CalcUnscrolledPosition(x as int, y as int, xx as int_p, yy as int_p) as void
+	CalcUnscrolledPosition(pt as const_Point_r) as Point
+	//Create(parent as Window_p, id as WindowID = -1, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxHSCROLL|wxVSCROLL, name as const_String_r = "scrolledWindow") as bool
+	DisableKeyboardScrolling() as void
+	DoPrepareDC(dc as DC_r) as void
+	EnableScrolling(xScrolling as bool, yScrolling as bool) as void
+	ShowScrollbars(horz as ScrollbarVisibility, vert as ScrollbarVisibility) as void
+	//GetScrollPixelsPerUnit(xUnit as int_p, yUnit as int_p) as void
+	//GetViewStart(x as int_p, y as int_p) as void
+	GetViewStart() as Point
+	//GetVirtualSize(x as int_p, y as int_p) as void
+	IsRetained() as bool
+	OnDraw(dc as DC_r) as void
+	PrepareDC(dc as DC_r) as void
+	Scroll(x as int, y as int) as void
+	Scroll(pt as const_Point_r) as void
+	SetScrollRate(xstep as int, ystep as int) as void
+	SetScrollbars(pixelsPerUnitX as int, pixelsPerUnitY as int, noUnitsX as int, noUnitsY as int, xPos as int = 0, yPos as int = 0, noRefresh as bool = false) as void
+	SetTargetWindow(window as Window_p) as void
+	GetTargetWindow() as Window_p
+	SetTargetRect(rect as const_Rect_r) as void
+	GetTargetRect() as Rect
+	GetScrollPageSize(orient as int) as int
+	SetScrollPageSize(orient as int, pageSize as int) as void
+	GetScrollLines(orient as int) as int
+	SetScale(xs as double, ys as double) as void
+	GetScaleX() as double
+	GetScaleY() as double
+	AdjustScrollbars() as void
+	IsAutoScrolling() as bool
+	StopAutoScrolling() as void
+	SendAutoScrollEvents(event as ScrollWinEvent_r) as bool
+}

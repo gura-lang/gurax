@@ -1,0 +1,13 @@
+//==============================================================================
+// VType_wxFontPickerCtrl.gura
+//==============================================================================
+FontPickerCtrl = Class(PickerBase) {
+	@include['wx/fontpicker.h']
+}
+
+@const[
+	FNTP_DEFAULT_STYLE
+	FNTP_USE_TEXTCTRL
+	FNTP_FONTDESC_AS_LABEL
+	FNTP_USEFONT_FOR_LABEL
+]
