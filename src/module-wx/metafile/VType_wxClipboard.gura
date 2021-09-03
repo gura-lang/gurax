@@ -1,0 +1,18 @@
+//==============================================================================
+// VType_wxClipboard.gura
+//==============================================================================
+Clipboard = Class(Object) {
+	@include['wx/clipbrd.h']
+	__init__()
+	AddData(data as DataObject_p) as bool
+	Clear() as void
+	Close() as void
+	Flush() as bool
+	GetData(data as DataObject_r) as bool
+	IsOpened() as bool
+	IsSupported(format as const_DataFormat_r) as bool
+	IsUsingPrimarySelection() as bool
+	Open() as bool
+	SetData(data as DataObject_p) as bool
+	UsePrimarySelection(primary as bool = false) as void
+}

@@ -4,8 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxDateEvent.cpp
-	VType_wxCalendarEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -32,6 +30,7 @@ set(SRCFILES_VTYPE
 	VType_wxCalculateLayoutEvent.cpp
 	VType_wxCalendarCtrl.cpp
 	VType_wxCalendarDateAttr.cpp
+	VType_wxCalendarEvent.cpp
 	VType_wxCaret.cpp
 	VType_wxCharBuffer.cpp
 	VType_wxCheckBox.cpp
@@ -39,6 +38,7 @@ set(SRCFILES_VTYPE
 	VType_wxChoice.cpp
 	VType_wxChoicebook.cpp
 	VType_wxClientDataContainer.cpp
+	VType_wxClipboard.cpp
 	VType_wxCmdLineParser.cpp
 	VType_wxCollapsiblePane.cpp
 	VType_wxColour.cpp
@@ -54,7 +54,10 @@ set(SRCFILES_VTYPE
 	VType_wxContextMenuEvent.cpp
 	VType_wxControl.cpp
 	VType_wxCursor.cpp
+	VType_wxDataFormat.cpp
+	VType_wxDataObject.cpp
 	VType_wxDataViewCtrl.cpp
+	VType_wxDateEvent.cpp
 	VType_wxDatePickerCtrl.cpp
 	VType_wxDateTime.cpp
 	VType_wxDC.cpp

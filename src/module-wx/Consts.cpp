@@ -81,6 +81,12 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CLRP_SHOW_LABEL", new Value_Number(wxCLRP_SHOW_LABEL));
 	frame.Assign("CLRP_USE_TEXTCTRL", new Value_Number(wxCLRP_USE_TEXTCTRL));
 	frame.Assign("DEFAULT_DIALOG_STYLE", new Value_Number(wxDEFAULT_DIALOG_STYLE));
+	frame.Assign("DF_BITMAP", new Value_Number(wxDF_BITMAP));
+	frame.Assign("DF_FILENAME", new Value_Number(wxDF_FILENAME));
+	frame.Assign("DF_HTML", new Value_Number(wxDF_HTML));
+	frame.Assign("DF_INVALID", new Value_Number(wxDF_INVALID));
+	frame.Assign("DF_METAFILE", new Value_Number(wxDF_METAFILE));
+	frame.Assign("DF_TEXT", new Value_Number(wxDF_TEXT));
 	frame.Assign("DIALOG_ADAPTATION_MODE_DEFAULT", new Value_Number(wxDIALOG_ADAPTATION_MODE_DEFAULT));
 	frame.Assign("DIALOG_ADAPTATION_MODE_DISABLED", new Value_Number(wxDIALOG_ADAPTATION_MODE_DISABLED));
 	frame.Assign("DIALOG_ADAPTATION_MODE_ENABLED", new Value_Number(wxDIALOG_ADAPTATION_MODE_ENABLED));

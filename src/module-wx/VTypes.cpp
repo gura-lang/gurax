@@ -12,8 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxDateEvent);
-	frame.Assign(VTYPE_wxCalendarEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -40,6 +38,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxCalculateLayoutEvent);
 	frame.Assign(VTYPE_wxCalendarCtrl);
 	frame.Assign(VTYPE_wxCalendarDateAttr);
+	frame.Assign(VTYPE_wxCalendarEvent);
 	frame.Assign(VTYPE_wxCaret);
 	frame.Assign(VTYPE_wxCharBuffer);
 	frame.Assign(VTYPE_wxCheckBox);
@@ -47,6 +46,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxChoice);
 	frame.Assign(VTYPE_wxChoicebook);
 	frame.Assign(VTYPE_wxClientDataContainer);
+	frame.Assign(VTYPE_wxClipboard);
 	frame.Assign(VTYPE_wxCmdLineParser);
 	frame.Assign(VTYPE_wxCollapsiblePane);
 	frame.Assign(VTYPE_wxColour);
@@ -62,7 +62,10 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxContextMenuEvent);
 	frame.Assign(VTYPE_wxControl);
 	frame.Assign(VTYPE_wxCursor);
+	frame.Assign(VTYPE_wxDataFormat);
+	frame.Assign(VTYPE_wxDataObject);
 	frame.Assign(VTYPE_wxDataViewCtrl);
+	frame.Assign(VTYPE_wxDateEvent);
 	frame.Assign(VTYPE_wxDatePickerCtrl);
 	frame.Assign(VTYPE_wxDateTime);
 	frame.Assign(VTYPE_wxDC);
