@@ -30,7 +30,7 @@ TextCtrl = Class(Control) {
 	XYToPosition(x as long, y as long) as long
 }
 
-@const {
+@const { // Styles
 	TE_PROCESS_ENTER
 	TE_PROCESS_TAB
 	TE_MULTILINE

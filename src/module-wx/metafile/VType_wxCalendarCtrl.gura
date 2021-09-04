@@ -29,7 +29,7 @@ CalendarCtrl = Class(Control) {
 	GetDateRange(lowerdate as DateTime_p, upperdate as DateTime_p) as bool
 }
 
-@const {
+@const { // Styles
 	CAL_SUNDAY_FIRST
 	CAL_MONDAY_FIRST
 	CAL_SHOW_HOLIDAYS

@@ -5,13 +5,10 @@
 	BackgroundStyle
 	BitmapType
 	Border
-	BrushStyle
 	Byte
 	CheckBoxState
 	Coord
 	Dash
-	DataFormatId
-	DialogLayoutAdaptationMode
 	Direction
 	DragResult
 	EventCategory
@@ -31,9 +28,6 @@
 	MouseWheelAxis
 	MappingMode
 	NavigationKeyEventFlags
-	PenCap
-	PenJoin
-	PenStyle
 	PolygonFillMode
 	RasterOperationMode
 	ScrollbarVisibility

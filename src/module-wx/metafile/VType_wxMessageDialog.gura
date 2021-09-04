@@ -26,7 +26,7 @@ MessageDialog = Class(Dialog) {
 	GetEffectiveIcon() as long
 }
 
-@const {
+@const { // Styles
 	OK
 	CANCEL
 	YES_NO

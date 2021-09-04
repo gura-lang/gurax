@@ -5,7 +5,7 @@ FontPickerCtrl = Class(PickerBase) {
 	@include['wx/fontpicker.h']
 }
 
-@const {
+@const { // Styles
 	FNTP_DEFAULT_STYLE
 	FNTP_USE_TEXTCTRL
 	FNTP_FONTDESC_AS_LABEL

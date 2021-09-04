@@ -13,7 +13,7 @@ ListBox = Class(Control) {
 		'''
 }
 
-@const {
+@const { // Styles
 	LB_SINGLE
 	LB_MULTIPLE
 	LB_EXTENDED

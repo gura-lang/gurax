@@ -11,7 +11,7 @@ Button = Class(AnyButton) {
 	SetLabel(label as String) as void
 }
 
-@const {
+@const { // Styles
 	BU_LEFT
 	BU_TOP
 	BU_RIGHT

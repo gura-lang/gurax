@@ -8,7 +8,7 @@ StaticText = Class(Control) {
 	Wrap(width as int) as void
 }
 
-@const {
+@const { // Styles
 	ALIGN_LEFT
 	ALIGN_RIGHT
 	ALIGN_CENTRE_HORIZONTAL

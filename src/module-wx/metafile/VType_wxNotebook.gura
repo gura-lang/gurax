@@ -19,7 +19,7 @@ Notebook = Class(BookCtrlBase) {
 	InsertPage(index as size_t, page as Window_p, text as const_String_r, select as bool = false, imageId as int = wxNotebook::NO_IMAGE) as bool
 }
 
-@const {
+@const { // Styles
 	NB_TOP
 	NB_LEFT
 	NB_RIGHT

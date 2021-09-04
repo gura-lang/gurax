@@ -59,7 +59,7 @@ ToolBar = Class(Control) {
 	//SetMargins(size as const_Size_r) as void
 }
 
-@const {
+@const { // Styles
 	TB_FLAT
 	TB_DOCKABLE
 	TB_HORIZONTAL

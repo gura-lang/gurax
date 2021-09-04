@@ -5,7 +5,7 @@ DirPickerCtrl = Class(PickerBase) {
 	@include['wx/filepicker.h']
 }
 
-@const {
+@const { // Styles
 	DIRP_DEFAULT_STYLE
 	DIRP_USE_TEXTCTRL
 	DIRP_DIR_MUST_EXIST

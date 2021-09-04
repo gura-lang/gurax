@@ -84,7 +84,7 @@ ListCtrl = Class(Control) {
 	//SortItems(fnSortCallBack as ListCtrlCompare, data as IntPtr) as bool
 }
 
-@const {
+@const { // Styles
 	LC_LIST
 	LC_REPORT
 	LC_VIRTUAL

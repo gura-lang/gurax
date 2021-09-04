@@ -61,7 +61,10 @@ ComboCtrl = Class(Control) {
 	SetMargins(left as Coord, top as Coord = -1) as bool
 }
 
-@const {
+@const { // Styles
+	CB_READONLY
+	CB_SORT
+	TE_PROCESS_ENTER
 	CC_SPECIAL_DCLICK
 	CC_STD_BUTTON
 }

@@ -9,7 +9,7 @@ StaticLine = Class(Control) {
 	GetDefaultSize():static as int
 }
 
-@const {
+@const { // Styles
 	LI_HORIZONTAL
 	LI_VERTICAL
 }

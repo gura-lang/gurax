@@ -112,7 +112,7 @@ Sizer = Class():loosePointer {
 		'''
 }
 
-@const {
+@const { // Flags
 	TOP
 	BOTTOM
 	LEFT

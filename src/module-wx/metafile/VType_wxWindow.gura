@@ -328,7 +328,7 @@ Window = Class(EvtHandler) {
 	UpdateWindowUI(flags as long = wxUPDATE_UI_NONE) as void
 }
 
-@const {
+@const { // Styles
 	BORDER_DEFAULT
 	BORDER_SIMPLE
 	BORDER_SUNKEN
