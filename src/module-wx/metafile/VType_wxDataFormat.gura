@@ -3,14 +3,3 @@
 //==============================================================================
 DataFormat = Class {
 }
-
-@enum {
-	DataFormatId {
-		DF_INVALID
-		DF_TEXT
-		DF_BITMAP
-		DF_METAFILE
-		DF_FILENAME
-		DF_HTML
-	}
-}
