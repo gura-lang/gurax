@@ -28,6 +28,62 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.CalendarDateAttr(args* as Any) {block?}
+Gurax_DeclareConstructorAlias(CalendarDateAttr_gurax, "CalendarDateAttr")
+{
+	Declare(VTYPE_wxCalendarDateAttr, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.CalendarDateAttr.");
+}
+
+Gurax_ImplementConstructorEx(CalendarDateAttr_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("border", VTYPE_Number);
+			pDeclCallable->DeclareArg("colBorder", VTYPE_wxColour, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		wxCalendarDateBorder border = args.PickNumber<wxCalendarDateBorder>();
+		const wxColour& colBorder = args.IsValid()? args.Pick<Value_wxColour>().GetEntity() : wxNullColour;
+		wxCalendarDateAttr rtn(border, colBorder);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxCalendarDateAttr(rtn));
+	} while (0);
+	Error::Clear();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("colText", VTYPE_wxColour, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("colBack", VTYPE_wxColour, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("colBorder", VTYPE_wxColour, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("font", VTYPE_wxFont, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("border", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		const wxColour& colText = args.IsValid()? args.Pick<Value_wxColour>().GetEntity() : wxNullColour;
+		const wxColour& colBack = args.IsValid()? args.Pick<Value_wxColour>().GetEntity() : wxNullColour;
+		const wxColour& colBorder = args.IsValid()? args.Pick<Value_wxColour>().GetEntity() : wxNullColour;
+		const wxFont& font = args.IsValid()? args.Pick<Value_wxFont>().GetEntity() : wxNullFont;
+		wxCalendarDateBorder border = args.IsValid()? args.PickNumber<wxCalendarDateBorder>() : wxCAL_BORDER_NONE;
+		wxCalendarDateAttr rtn(colText, colBack, colBorder, font, border);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxCalendarDateAttr(rtn));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -451,7 +507,7 @@ void VType_wxCalendarDateAttr::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(CalendarDateAttr_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxCalendarDateAttr, GetBackgroundColour_gurax));
 	Assign(Gurax_CreateMethod(wxCalendarDateAttr, GetBorder_gurax));
