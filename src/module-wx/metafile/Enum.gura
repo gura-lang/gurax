@@ -7,7 +7,6 @@
 	Border
 	BrushStyle
 	Byte
-	CalendarDateBorder
 	CheckBoxState
 	Coord
 	Dash
@@ -43,11 +42,4 @@
 	Uint32
 	WindowID
 	WindowVariant
-}
-
-@const {
-	//IsBackward
-	//IsForward
-	//WinChange
-	//FromTab
 }

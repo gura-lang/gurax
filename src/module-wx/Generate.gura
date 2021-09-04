@@ -724,7 +724,15 @@ path.Glob('metafile/*.gura').Each {|pathName|
 			if (expr.car.symbolName == '@const') {
 				constNameTbl.Append(params:*symbolName)
 			} elsif (expr.car.symbolName == '@enum') {
-				enumNameTbl.Append(params:*symbolName)
+				params.Each {|param|
+					if (param.IsIdentifier()) {
+						enumNameTbl.Append(param.symbolName)
+					} elsif (param.IsCaller()) {
+						enumNameTbl.Append(param.car.symbolName)
+						constNameTbl.Append(param.block.EachElem():*symbolName)
+					}
+				}
+				//enumNameTbl.Append(params:*symbolName)
 			} elsif (expr.car.symbolName == '@event') {
 				params.Each {|param|
 					if (param.IsBinaryOp()) {

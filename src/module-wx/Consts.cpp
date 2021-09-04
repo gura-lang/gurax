@@ -50,6 +50,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("BU_NOTEXT", new Value_Number(wxBU_NOTEXT));
 	frame.Assign("BU_RIGHT", new Value_Number(wxBU_RIGHT));
 	frame.Assign("BU_TOP", new Value_Number(wxBU_TOP));
+	frame.Assign("CAL_BORDER_NONE", new Value_Number(wxCAL_BORDER_NONE));
+	frame.Assign("CAL_BORDER_ROUND", new Value_Number(wxCAL_BORDER_ROUND));
+	frame.Assign("CAL_BORDER_SQUARE", new Value_Number(wxCAL_BORDER_SQUARE));
 	frame.Assign("CAL_MONDAY_FIRST", new Value_Number(wxCAL_MONDAY_FIRST));
 	frame.Assign("CAL_NO_MONTH_CHANGE", new Value_Number(wxCAL_NO_MONTH_CHANGE));
 	frame.Assign("CAL_NO_YEAR_CHANGE", new Value_Number(wxCAL_NO_YEAR_CHANGE));

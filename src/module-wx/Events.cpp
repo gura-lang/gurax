@@ -13,6 +13,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_ACTIVATE, wxActivateEvent);
 	Gurax_AssignEvent(EVT_ACTIVATE_APP, wxActivateEvent);
 	Gurax_AssignEvent(EVT_HIBERNATE, wxActivateEvent);
+	Gurax_AssignEvent(EVT_CALCULATE_LAYOUT, wxCalculateLayoutEvent);
+	Gurax_AssignEvent(EVT_CHILD_FOCUS, wxChildFocusEvent);
 	Gurax_AssignEvent(EVT_BUTTON, wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHECKBOX, wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHOICE, wxCommandEvent);

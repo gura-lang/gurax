@@ -64,3 +64,11 @@ CalendarDateAttr = Class {
 	GetMark():static as CalendarDateAttr
 	SetMark(m as const_CalendarDateAttr_r):static as void
 }
+
+@enum {
+	CalendarDateBorder {
+		CAL_BORDER_NONE
+		CAL_BORDER_SQUARE
+		CAL_BORDER_ROUND
+	}
+}
