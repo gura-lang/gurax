@@ -1,14 +1,14 @@
 //==============================================================================
 // ID.gura
 //==============================================================================
-@const[
+@const {
 	OK
 	ICON_INFORMATION
 	VERTICAL
 	HORIZONTAL
-]
+}
 
-@const[
+@const {
 	ID_ANY
 	ID_LOWEST
 	ID_OPEN
@@ -117,4 +117,4 @@
 	// IDs used by generic file dialog (13 consecutive starting from this value)
 	ID_FILEDLGG
 	ID_HIGHEST
-]
+}

@@ -4,9 +4,9 @@
 JoystickEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_JOY_BUTTON_DOWN	>> JoystickEvent
 	EVT_JOY_BUTTON_UP	>> JoystickEvent
 	EVT_JOY_MOVE		>> JoystickEvent
 	EVT_JOY_ZMOVE		>> JoystickEvent
-]
+}

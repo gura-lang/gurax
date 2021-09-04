@@ -4,7 +4,7 @@
 ScrollWinEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_SCROLLWIN_TOP			>> ScrollWinEvent
 	EVT_SCROLLWIN_BOTTOM		>> ScrollWinEvent
 	EVT_SCROLLWIN_LINEUP		>> ScrollWinEvent
@@ -13,4 +13,4 @@ ScrollWinEvent = Class(Event) {
 	EVT_SCROLLWIN_PAGEDOWN		>> ScrollWinEvent
 	EVT_SCROLLWIN_THUMBTRACK	>> ScrollWinEvent
 	EVT_SCROLLWIN_THUMBRELEASE	>> ScrollWinEvent
-]
+}

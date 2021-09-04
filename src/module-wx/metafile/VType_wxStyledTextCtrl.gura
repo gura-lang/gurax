@@ -664,7 +664,7 @@ StyledTextCtrl = Class(Control) {
 	//HitTest(pt as const_Point_r, col as TextCoord_p, row as TextCoord_p) as TextCtrlHitTestResult
 }
 
-@event[
+@event {
 	EVT_STC_CHANGE					>> StyledTextEvent
 	EVT_STC_STYLENEEDED				>> StyledTextEvent
 	EVT_STC_CHARADDED				>> StyledTextEvent
@@ -696,4 +696,4 @@ StyledTextCtrl = Class(Control) {
 	EVT_STC_AUTOCOMP_CANCELLED		>> StyledTextEvent
 	EVT_STC_AUTOCOMP_CHAR_DELETED	>> StyledTextEvent
 	EVT_STC_HOTSPOT_RELEASE_CLICK	>> StyledTextEvent
-]
+}

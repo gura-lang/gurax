@@ -1,17 +1,6 @@
 //==============================================================================
 // VType_wxNotebook.gura
 //==============================================================================
-@const[
-	NB_TOP
-	NB_LEFT
-	NB_RIGHT
-	NB_BOTTOM
-	NB_FIXEDWIDTH
-	NB_MULTILINE
-	NB_NOPAGETHEME
-	//NB_FLAT
-]
-
 Notebook = Class(BookCtrlBase) {
 	@include['wx/notebook.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
@@ -30,7 +19,18 @@ Notebook = Class(BookCtrlBase) {
 	InsertPage(index as size_t, page as Window_p, text as const_String_r, select as bool = false, imageId as int = wxNotebook::NO_IMAGE) as bool
 }
 
-@event[
+@const {
+	NB_TOP
+	NB_LEFT
+	NB_RIGHT
+	NB_BOTTOM
+	NB_FIXEDWIDTH
+	NB_MULTILINE
+	NB_NOPAGETHEME
+	//NB_FLAT
+}
+
+@event {
 	EVT_NOTEBOOK_PAGE_CHANGED	>> BookCtrlEvent
 	EVT_NOTEBOOK_PAGE_CHANGING	>> BookCtrlEvent
-]
+}

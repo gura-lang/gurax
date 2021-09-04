@@ -19,9 +19,9 @@ KeyEvent = Class(Event) {
 		'''
 }
 
-@event[
+@event {
 	EVT_KEY_DOWN	>> KeyEvent
 	EVT_KEY_UP		>> KeyEvent
 	EVT_CHAR		>> KeyEvent
 	EVT_CHAR_HOOK	>> KeyEvent
-]
+}

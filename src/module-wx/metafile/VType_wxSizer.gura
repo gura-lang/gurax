@@ -112,7 +112,7 @@ Sizer = Class():loosePointer {
 		'''
 }
 
-@const[
+@const {
 	TOP
 	BOTTOM
 	LEFT
@@ -132,4 +132,4 @@ Sizer = Class():loosePointer {
 	ALIGN_CENTRE_VERTICAL
 	ALIGN_CENTER_HORIZONTAL
 	ALIGN_CENTRE_HORIZONTAL
-]
+}

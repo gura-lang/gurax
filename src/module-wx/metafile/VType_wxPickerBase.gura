@@ -23,6 +23,6 @@ PickerBase = Class(Control) {
 	UpdateTextCtrlFromPicker() as void
 }
 
-@const[
+@const {
 	PB_USE_TEXTCTRL
-]
+}

@@ -4,6 +4,6 @@
 DropFilesEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_DROP_FILES >> DropFilesEvent
-]
+}

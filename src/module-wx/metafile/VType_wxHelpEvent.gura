@@ -4,6 +4,6 @@
 HelpEvent = Class(CommandEvent) {
 }
 
-@event[
+@event {
 	EVT_HELP >> HelpEvent
-]
+}

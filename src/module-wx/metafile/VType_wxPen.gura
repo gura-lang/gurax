@@ -34,21 +34,21 @@ Pen = Class(GDIObject) {
 	SetColourRGB(red as unsigned_char, green as unsigned_char, blue as unsigned_char) as void = SetColour
 }
 
-@const[	// wxPenCap
+@const {	// wxPenCap
 	CAP_INVALID
 	CAP_ROUND
 	CAP_PROJECTING
 	CAP_BUTT
-]
+}
 
-@const[	// wxPenJoin
+@const {	// wxPenJoin
 	JOIN_INVALID
 	JOIN_BEVEL
 	JOIN_MITER
 	JOIN_ROUND
-]
+}
 
-@const[ // wxPenStyle
+@const { // wxPenStyle
 	PENSTYLE_INVALID 	
 	PENSTYLE_SOLID 	
 	PENSTYLE_DOT 	
@@ -68,4 +68,4 @@ Pen = Class(GDIObject) {
 	PENSTYLE_VERTICAL_HATCH 	
 	PENSTYLE_FIRST_HATCH 	
 	PENSTYLE_LAST_HATCH 	
-]
+}

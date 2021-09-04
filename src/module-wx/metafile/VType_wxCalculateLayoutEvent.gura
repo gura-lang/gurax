@@ -10,6 +10,6 @@ CalculateLayoutEvent = Class(Event) {
 	SetRect(rect as const_Rect_r) as void
 }
 
-@event[
+@event {
 	EVT_CALCULATE_LAYOUT >> CalculateLayoutEvent
-]
+}

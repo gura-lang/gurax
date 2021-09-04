@@ -4,8 +4,8 @@
 ActivateEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_ACTIVATE		>> ActivateEvent
 	EVT_ACTIVATE_APP	>> ActivateEvent
 	EVT_HIBERNATE		>> ActivateEvent
-]
+}

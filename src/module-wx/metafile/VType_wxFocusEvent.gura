@@ -4,7 +4,7 @@
 FocusEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_SET_FOCUS	>> FocusEvent
 	EVT_KILL_FOCUS	>> FocusEvent
-]
+}

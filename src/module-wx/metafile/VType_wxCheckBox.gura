@@ -13,9 +13,9 @@ CheckBox = Class(Control) {
 	Set3StateValue(state as CheckBoxState) as void
 }
 
-@const[
+@const {
 	CHK_2STATE
 	CHK_3STATE
 	CHK_ALLOW_3RD_STATE_FOR_USER
 	ALIGN_RIGHT
-]
+}

@@ -42,7 +42,7 @@ Dialog = Class(TopLevelWindow) {
 	ShowWindowModal() as void
 }
 
-@const[
+@const {
 	CAPTION
 	DEFAULT_DIALOG_STYLE
 	RESIZE_BORDER
@@ -56,15 +56,15 @@ Dialog = Class(TopLevelWindow) {
 	DIALOG_NO_PARENT
 	DIALOG_EX_CONTEXTHELP
 	DIALOG_EX_METAL
-]
+}
 
-@const[
+@const {
 	DIALOG_ADAPTATION_MODE_DEFAULT
 	DIALOG_ADAPTATION_MODE_ENABLED
 	DIALOG_ADAPTATION_MODE_DISABLED
-]
+}
 
-@event[
+@event {
 	//EVT_CLOSE		>> CloseEvent
 	EVT_INIT_DIALOG	>> InitDialogEvent
-]
+}

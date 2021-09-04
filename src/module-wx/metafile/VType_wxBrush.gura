@@ -15,7 +15,7 @@ Brush = Class(GDIObject) {
 	SetColourRGB(red as unsigned_char, green as unsigned_char, blue as unsigned_char) as void = SetColour
 }
 
-@const[
+@const {
 	BRUSHSTYLE_INVALID 	
 	BRUSHSTYLE_SOLID 	
 	BRUSHSTYLE_TRANSPARENT 	
@@ -30,4 +30,4 @@ Brush = Class(GDIObject) {
 	BRUSHSTYLE_VERTICAL_HATCH 	
 	BRUSHSTYLE_FIRST_HATCH 	
 	BRUSHSTYLE_LAST_HATCH 	
-]
+}

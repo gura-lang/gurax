@@ -4,6 +4,6 @@
 MouseCaptureChangedEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_MOUSE_CAPTURE_CHANGED >> MouseCaptureChangedEvent
-]
+}

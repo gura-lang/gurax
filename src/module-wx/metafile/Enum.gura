@@ -1,7 +1,7 @@
 //==============================================================================
 // Enum.gura
 //==============================================================================
-@enum[
+@enum {
 	BackgroundStyle
 	BitmapType
 	Border
@@ -43,11 +43,11 @@
 	Uint32
 	WindowID
 	WindowVariant
-]
+}
 
-@const[
+@const {
 	//IsBackward
 	//IsForward
 	//WinChange
 	//FromTab
-]
+}

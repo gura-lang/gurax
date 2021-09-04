@@ -13,6 +13,6 @@ NavigationKeyEvent = Class(Event) {
 	SetWindowChange(windowChange as bool) as void
 }
 
-@event[
+@event {
 	EVT_NAVIGATION_KEY	>> NavigationKeyEvent
-]
+}

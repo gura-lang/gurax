@@ -4,6 +4,6 @@
 SysColourChangedEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_SYS_COLOUR_CHANGED >> SysColourChangedEvent
-]
+}

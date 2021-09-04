@@ -24,9 +24,9 @@ ComboBox = Class(Control) {
 	GetCount() as unsigned_int
 }
 
-@const[
+@const {
 	CB_SIMPLE
 	CB_DROPDOWN
 	CB_READONLY
 	CB_SORT
-]
+}

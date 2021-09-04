@@ -11,11 +11,11 @@ Button = Class(AnyButton) {
 	SetLabel(label as String) as void
 }
 
-@const[
+@const {
 	BU_LEFT
 	BU_TOP
 	BU_RIGHT
 	BU_BOTTOM
 	BU_EXACTFIT
 	BU_NOTEXT
-]
+}

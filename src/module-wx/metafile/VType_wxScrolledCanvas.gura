@@ -7,9 +7,9 @@ ScrolledCanvas = Class(Window) {
 		style as long = wxHSCROLL | wxVSCROLL, name as const_String_r = "scrolledWindow")
 }
 
-@const[
+@const {
 	HSCROLL
 	VSCROLL
 	ALWAYS_SHOW_SB
 	RETAINED
-]
+}

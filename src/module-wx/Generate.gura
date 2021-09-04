@@ -715,8 +715,8 @@ path.Glob('metafile/*.gura').Each {|pathName|
 			} else {
 				classInfoTbl.Add(classInfo)
 			}
-		} elsif (expr.IsIndexer()) {
-			params = expr.EachParam():list
+		} elsif (expr.IsCaller()) {
+			params = expr.block.EachElem():list
 			if (!expr.car.IsIdentifier()) {
 				sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
 				sys.Exit(1)

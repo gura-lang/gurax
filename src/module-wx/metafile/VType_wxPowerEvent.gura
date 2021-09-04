@@ -5,9 +5,9 @@ PowerEvent = Class(Event) {
 	@include['wx/power.h']
 }
 
-@event[
+@event {
 	EVT_POWER_SUSPENDING		>> PowerEvent
 	EVT_POWER_SUSPENDED			>> PowerEvent
 	EVT_POWER_SUSPEND_CANCEL	>> PowerEvent
 	EVT_POWER_RESUME			>> PowerEvent
-]
+}

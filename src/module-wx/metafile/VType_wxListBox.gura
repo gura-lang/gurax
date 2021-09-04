@@ -13,7 +13,7 @@ ListBox = Class(Control) {
 		'''
 }
 
-@const[
+@const {
 	LB_SINGLE
 	LB_MULTIPLE
 	LB_EXTENDED
@@ -22,4 +22,4 @@ ListBox = Class(Control) {
 	LB_NEEDED_SB
 	LB_NO_SB
 	LB_SORT
-]
+}

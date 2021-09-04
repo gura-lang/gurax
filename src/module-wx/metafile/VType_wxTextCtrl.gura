@@ -30,7 +30,7 @@ TextCtrl = Class(Control) {
 	XYToPosition(x as long, y as long) as long
 }
 
-@const[
+@const {
 	TE_PROCESS_ENTER
 	TE_PROCESS_TAB
 	TE_MULTILINE
@@ -49,4 +49,4 @@ TextCtrl = Class(Control) {
 	TE_WORDWRAP
 	TE_BESTWRAP
 	TE_CAPITALIZE
-]
+}

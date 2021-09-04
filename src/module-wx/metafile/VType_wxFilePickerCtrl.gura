@@ -5,7 +5,7 @@ FilePickerCtrl = Class(PickerBase) {
 	@include['wx/filepicker.h']
 }
 
-@const[
+@const {
 	FLP_DEFAULT_STYLE
 	FLP_USE_TEXTCTRL
 	FLP_OPEN
@@ -14,4 +14,4 @@ FilePickerCtrl = Class(PickerBase) {
 	FLP_FILE_MUST_EXIST
 	FLP_CHANGE_DIR
 	FLP_SMALL
-]
+}

@@ -4,6 +4,6 @@
 ContextMenuEvent = Class(CommandEvent) {
 }
 
-@event[
+@event {
 	EVT_CONTEXT_MENU >> ContextMenuEvent
-]
+}

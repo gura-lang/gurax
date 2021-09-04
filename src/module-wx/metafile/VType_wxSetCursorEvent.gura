@@ -4,6 +4,6 @@
 SetCursorEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_SET_CURSOR >> SetCursorEvent
-]
+}

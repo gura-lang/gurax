@@ -4,6 +4,6 @@
 IdleEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_IDLE >> IdleEvent
-]
+}

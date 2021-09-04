@@ -5,8 +5,8 @@ ColourPickerCtrl = Class(PickerBase) {
 	@include['wx/clrpicker.h']
 }
 
-@const[
+@const {
 	CLRP_DEFAULT_STYLE
 	CLRP_USE_TEXTCTRL
 	CLRP_SHOW_LABEL
-]
+}

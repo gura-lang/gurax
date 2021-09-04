@@ -13,7 +13,7 @@ CommandEvent = Class(Event) {
 	SetString(string as String) as void
 }
 
-@event[
+@event {
 	EVT_BUTTON					>> CommandEvent
 	EVT_CHECKBOX				>> CommandEvent
 	EVT_CHOICE					>> CommandEvent
@@ -42,4 +42,4 @@ CommandEvent = Class(Event) {
 	EVT_COMMAND_KILL_FOCUS		>> CommandEvent
 	EVT_COMMAND_ENTER			>> CommandEvent
 	EVT_COMMAND_BUTTON_CLICKED	>> CommandEvent
-]
+}

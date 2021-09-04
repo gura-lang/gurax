@@ -4,6 +4,6 @@
 EraseEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_ERASE_BACKGROUND >> EraseEvent
-]
+}

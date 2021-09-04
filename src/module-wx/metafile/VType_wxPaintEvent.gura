@@ -4,6 +4,6 @@
 PaintEvent = Class(Event) {
 }
 
-@event[
+@event {
 	EVT_PAINT >> PaintEvent
-]
+}

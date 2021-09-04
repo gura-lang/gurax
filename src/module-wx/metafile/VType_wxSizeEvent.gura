@@ -8,6 +8,6 @@ SizeEvent = Class(Event) {
 	SetRect(rect as Rect) as void
 }
 
-@event[
+@event {
 	EVT_SIZE >> SizeEvent
-]
+}

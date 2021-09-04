@@ -61,7 +61,7 @@ ComboCtrl = Class(Control) {
 	SetMargins(left as Coord, top as Coord = -1) as bool
 }
 
-@const[
+@const {
 	CC_SPECIAL_DCLICK
 	CC_STD_BUTTON
-]
+}

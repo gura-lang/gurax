@@ -38,7 +38,7 @@ MouseEvent = Class(Event) {
 	RightUp() as bool
 }
 
-@event[
+@event {
 	EVT_LEFT_DOWN				>> MouseEvent
 	EVT_LEFT_UP					>> MouseEvent
 	EVT_LEFT_DCLICK				>> MouseEvent
@@ -58,4 +58,4 @@ MouseEvent = Class(Event) {
 	EVT_ENTER_WINDOW			>> MouseEvent
 	EVT_LEAVE_WINDOW			>> MouseEvent
 	EVT_MOUSEWHEEL				>> MouseEvent
-]
+}

@@ -328,7 +328,7 @@ Window = Class(EvtHandler) {
 	UpdateWindowUI(flags as long = wxUPDATE_UI_NONE) as void
 }
 
-@const[
+@const {
 	BORDER_DEFAULT
 	BORDER_SIMPLE
 	BORDER_SUNKEN
@@ -352,4 +352,4 @@ Window = Class(EvtHandler) {
 	WS_EX_CONTEXTHELP
 	WS_EX_PROCESS_IDLE
 	WS_EX_PROCESS_UI_UPDATES
-]
+}

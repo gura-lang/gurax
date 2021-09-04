@@ -8,7 +8,7 @@ StaticText = Class(Control) {
 	Wrap(width as int) as void
 }
 
-@const[
+@const {
 	ALIGN_LEFT
 	ALIGN_RIGHT
 	ALIGN_CENTRE_HORIZONTAL
@@ -16,4 +16,4 @@ StaticText = Class(Control) {
 	ST_ELLIPSIZE_START
 	ST_ELLIPSIZE_MIDDLE
 	ST_ELLIPSIZE_END
-]
+}

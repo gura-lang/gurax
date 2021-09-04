@@ -4,6 +4,6 @@
 ChildFocusEvent = Class(CommandEvent) {
 }
 
-@event[
+@event {
 	EVT_CHILD_FOCUS >> ChildFocusEvent
-]
+}

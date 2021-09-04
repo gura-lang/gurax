@@ -17,9 +17,9 @@ Treebook = Class(BookCtrlBase) {
 	IsNodeExpanded(pageId as size_t) as bool
 }
 
-@event[
+@event {
 	EVT_TREEBOOK_PAGE_CHANGED	>> BookCtrlEvent
 	EVT_TREEBOOK_PAGE_CHANGING	>> BookCtrlEvent
 	EVT_TREEBOOK_NODE_COLLAPSED	>> BookCtrlEvent
 	EVT_TREEBOOK_NODE_EXPANDED	>> BookCtrlEvent
-]
+}
