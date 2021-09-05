@@ -17,6 +17,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAccessible);
 	frame.Assign(VTYPE_wxActivateEvent);
 	frame.Assign(VTYPE_wxAffineMatrix2D);
+	frame.Assign(VTYPE_wxAnimationCtrl);
 	frame.Assign(VTYPE_wxAnyButton);
 	frame.Assign(VTYPE_wxApp);
 	frame.Assign(VTYPE_wxAppConsole);
@@ -27,6 +28,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAuiToolBar);
 	frame.Assign(VTYPE_wxBitmap);
 	frame.Assign(VTYPE_wxBitmapButton);
+	frame.Assign(VTYPE_wxBitmapComboBox);
 	frame.Assign(VTYPE_wxBitmapHandler);
 	frame.Assign(VTYPE_wxBitmapToggleButton);
 	frame.Assign(VTYPE_wxBookCtrlBase);
@@ -42,6 +44,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxCaret);
 	frame.Assign(VTYPE_wxCharBuffer);
 	frame.Assign(VTYPE_wxCheckBox);
+	frame.Assign(VTYPE_wxCheckListBox);
 	frame.Assign(VTYPE_wxChildFocusEvent);
 	frame.Assign(VTYPE_wxChoice);
 	frame.Assign(VTYPE_wxChoicebook);
@@ -65,12 +68,15 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxDataFormat);
 	frame.Assign(VTYPE_wxDataObject);
 	frame.Assign(VTYPE_wxDataViewCtrl);
+	frame.Assign(VTYPE_wxDataViewListCtrl);
+	frame.Assign(VTYPE_wxDataViewTreeCtrl);
 	frame.Assign(VTYPE_wxDateEvent);
 	frame.Assign(VTYPE_wxDatePickerCtrl);
 	frame.Assign(VTYPE_wxDateTime);
 	frame.Assign(VTYPE_wxDC);
 	frame.Assign(VTYPE_wxDialog);
 	frame.Assign(VTYPE_wxDirDialog);
+	frame.Assign(VTYPE_wxDirFilterListCtrl);
 	frame.Assign(VTYPE_wxDirPickerCtrl);
 	frame.Assign(VTYPE_wxDocChildFrame);
 	frame.Assign(VTYPE_wxDocMDIChildFrame);
@@ -130,6 +136,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGridEvent);
 	frame.Assign(VTYPE_wxGridSizer);
 	frame.Assign(VTYPE_wxHeaderCtrl);
+	frame.Assign(VTYPE_wxHeaderCtrlSimple);
 	frame.Assign(VTYPE_wxHelpEvent);
 	frame.Assign(VTYPE_wxHtmlHelpDialog);
 	frame.Assign(VTYPE_wxHtmlHelpFrame);
@@ -151,6 +158,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxListBox);
 	frame.Assign(VTYPE_wxListCtrl);
 	frame.Assign(VTYPE_wxListItem);
+	frame.Assign(VTYPE_wxListView);
 	frame.Assign(VTYPE_wxMask);
 	frame.Assign(VTYPE_wxMDIChildFrame);
 	frame.Assign(VTYPE_wxMDIParentFrame);
@@ -175,6 +183,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxNumberEntryDialog);
 	frame.Assign(VTYPE_wxObject);
 	frame.Assign(VTYPE_wxOutputStream);
+	frame.Assign(VTYPE_wxOwnerDrawnComboBox);
 	frame.Assign(VTYPE_wxPaintEvent);
 	frame.Assign(VTYPE_wxPalette);
 	frame.Assign(VTYPE_wxPanel);
@@ -198,14 +207,22 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRadioBox);
 	frame.Assign(VTYPE_wxRadioButton);
 	frame.Assign(VTYPE_wxRearrangeDialog);
+	frame.Assign(VTYPE_wxRearrangeList);
 	frame.Assign(VTYPE_wxRect);
 	frame.Assign(VTYPE_wxRect2DDouble);
 	frame.Assign(VTYPE_wxRefCounter);
 	frame.Assign(VTYPE_wxRegion);
+	frame.Assign(VTYPE_wxRibbonBar);
+	frame.Assign(VTYPE_wxRibbonButtonBar);
 	frame.Assign(VTYPE_wxRibbonControl);
+	frame.Assign(VTYPE_wxRibbonGallery);
+	frame.Assign(VTYPE_wxRibbonPage);
+	frame.Assign(VTYPE_wxRibbonPanel);
+	frame.Assign(VTYPE_wxRibbonToolBar);
 	frame.Assign(VTYPE_wxRichTextAttr);
 	frame.Assign(VTYPE_wxRichTextCtrl);
-	frame.Assign(VTYPE_wxSpinCtrlDouble);
+	frame.Assign(VTYPE_wxRichTextStyleComboCtrl);
+	frame.Assign(VTYPE_wxRichTextStyleListCtrl);
 	frame.Assign(VTYPE_wxRichTextStyleOrganiserDialog);
 	frame.Assign(VTYPE_wxSashWindow);
 	frame.Assign(VTYPE_wxScreenDC);

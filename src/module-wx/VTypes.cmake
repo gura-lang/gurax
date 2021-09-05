@@ -9,6 +9,7 @@ set(SRCFILES_VTYPE
 	VType_wxAccessible.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAffineMatrix2D.cpp
+	VType_wxAnimationCtrl.cpp
 	VType_wxAnyButton.cpp
 	VType_wxApp.cpp
 	VType_wxAppConsole.cpp
@@ -19,6 +20,7 @@ set(SRCFILES_VTYPE
 	VType_wxAuiToolBar.cpp
 	VType_wxBitmap.cpp
 	VType_wxBitmapButton.cpp
+	VType_wxBitmapComboBox.cpp
 	VType_wxBitmapHandler.cpp
 	VType_wxBitmapToggleButton.cpp
 	VType_wxBookCtrlBase.cpp
@@ -34,6 +36,7 @@ set(SRCFILES_VTYPE
 	VType_wxCaret.cpp
 	VType_wxCharBuffer.cpp
 	VType_wxCheckBox.cpp
+	VType_wxCheckListBox.cpp
 	VType_wxChildFocusEvent.cpp
 	VType_wxChoice.cpp
 	VType_wxChoicebook.cpp
@@ -57,12 +60,15 @@ set(SRCFILES_VTYPE
 	VType_wxDataFormat.cpp
 	VType_wxDataObject.cpp
 	VType_wxDataViewCtrl.cpp
+	VType_wxDataViewListCtrl.cpp
+	VType_wxDataViewTreeCtrl.cpp
 	VType_wxDateEvent.cpp
 	VType_wxDatePickerCtrl.cpp
 	VType_wxDateTime.cpp
 	VType_wxDC.cpp
 	VType_wxDialog.cpp
 	VType_wxDirDialog.cpp
+	VType_wxDirFilterListCtrl.cpp
 	VType_wxDirPickerCtrl.cpp
 	VType_wxDocChildFrame.cpp
 	VType_wxDocMDIChildFrame.cpp
@@ -122,6 +128,7 @@ set(SRCFILES_VTYPE
 	VType_wxGridEvent.cpp
 	VType_wxGridSizer.cpp
 	VType_wxHeaderCtrl.cpp
+	VType_wxHeaderCtrlSimple.cpp
 	VType_wxHelpEvent.cpp
 	VType_wxHtmlHelpDialog.cpp
 	VType_wxHtmlHelpFrame.cpp
@@ -143,6 +150,7 @@ set(SRCFILES_VTYPE
 	VType_wxListBox.cpp
 	VType_wxListCtrl.cpp
 	VType_wxListItem.cpp
+	VType_wxListView.cpp
 	VType_wxMask.cpp
 	VType_wxMDIChildFrame.cpp
 	VType_wxMDIParentFrame.cpp
@@ -167,6 +175,7 @@ set(SRCFILES_VTYPE
 	VType_wxNumberEntryDialog.cpp
 	VType_wxObject.cpp
 	VType_wxOutputStream.cpp
+	VType_wxOwnerDrawnComboBox.cpp
 	VType_wxPaintEvent.cpp
 	VType_wxPalette.cpp
 	VType_wxPanel.cpp
@@ -190,14 +199,22 @@ set(SRCFILES_VTYPE
 	VType_wxRadioBox.cpp
 	VType_wxRadioButton.cpp
 	VType_wxRearrangeDialog.cpp
+	VType_wxRearrangeList.cpp
 	VType_wxRect.cpp
 	VType_wxRect2DDouble.cpp
 	VType_wxRefCounter.cpp
 	VType_wxRegion.cpp
+	VType_wxRibbonBar.cpp
+	VType_wxRibbonButtonBar.cpp
 	VType_wxRibbonControl.cpp
+	VType_wxRibbonGallery.cpp
+	VType_wxRibbonPage.cpp
+	VType_wxRibbonPanel.cpp
+	VType_wxRibbonToolBar.cpp
 	VType_wxRichTextAttr.cpp
 	VType_wxRichTextCtrl.cpp
-	VType_wxSpinCtrlDouble.cpp
+	VType_wxRichTextStyleComboCtrl.cpp
+	VType_wxRichTextStyleListCtrl.cpp
 	VType_wxRichTextStyleOrganiserDialog.cpp
 	VType_wxSashWindow.cpp
 	VType_wxScreenDC.cpp

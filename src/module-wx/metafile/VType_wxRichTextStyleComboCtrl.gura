@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxRichTextStyleComboCtrl.gura
+//==============================================================================
+RichTextStyleComboCtrl = Class(ComboCtrl) {
+	@include['wx/richtext/richtextstyles.h']
+}

@@ -213,8 +213,6 @@
 		ITEM_DROPDOWN
 		ITEM_MAX
 	}
-	KeyCategoryFlags
-	/*
 	KeyCategoryFlags {
 		WXK_CATEGORY_ARROW
 		WXK_CATEGORY_PAGING
@@ -223,9 +221,6 @@
 		WXK_CATEGORY_CUT
 		WXK_CATEGORY_NAVIGATION
 	}
-	*/
-	KeyCode
-	/*
 	KeyCode {
 		WXK_NONE
 		WXK_CONTROL_A
@@ -379,7 +374,6 @@
 		WXK_SPECIAL19
 		WXK_SPECIAL20
 	}
-	*/
 	KeyModifier {
 		MOD_NONE
 		MOD_ALT
@@ -438,6 +432,14 @@
 		MOUSE_WHEEL_HORIZONTAL
 	}
 	NavigationKeyEventFlags
+	/*
+	NavigationKeyEventFlags {
+		IsBackward
+		IsForward
+		WinChange
+		FromTab
+	}
+	*/
 	Orientation {
 		HORIZONTAL
 		VERTICAL
@@ -601,7 +603,7 @@
 		SHOW_SB_DEFAULT
 		SHOW_SB_ALWAYS
 	}
-	ShowEvffect {
+	ShowEffect {
 		SHOW_EFFECT_NONE 	
 		SHOW_EFFECT_ROLL_TO_LEFT 	
 		SHOW_EFFECT_ROLL_TO_RIGHT 	

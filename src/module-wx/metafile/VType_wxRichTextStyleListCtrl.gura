@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxRichTextStyleListCtrl.gura
+//==============================================================================
+RichTextStyleListCtrl = Class(Control) {
+	@include['wx/richtext/richtextstyles.h']
+}

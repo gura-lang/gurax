@@ -593,7 +593,7 @@ Gurax_BeginModuleScope(wx)
 void AssignConsts(Frame& frame)
 {
 	${constNameTbl.Each {|constName|}}
-	frame.Assign("${constName}", new Value_Number(wx${constName}));
+	frame.Assign("${constName}", new Value_Number(${cond(constName.StartsWith('WXK_'), '', 'wx') + constName}));
 	${end}
 }
 
