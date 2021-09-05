@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxRichTextFormattingDialog.gura
+//==============================================================================
+RichTextFormattingDialog = Class(PropertySheetDialog) {
+	@include['wx/richtext/richtextformatdlg.h']
+}

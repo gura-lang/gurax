@@ -13,6 +13,7 @@ set(SRCFILES_VTYPE
 	VType_wxAnyButton.cpp
 	VType_wxApp.cpp
 	VType_wxAppConsole.cpp
+	VType_wxAuiMDIChildFrame.cpp
 	VType_wxAuiMDIClientWindow.cpp
 	VType_wxAuiMDIParentFrame.cpp
 	VType_wxAuiNotebook.cpp
@@ -76,6 +77,7 @@ set(SRCFILES_VTYPE
 	VType_wxDocParentFrame.cpp
 	VType_wxDropFilesEvent.cpp
 	VType_wxDropTarget.cpp
+	VType_wxEditableListBox.cpp
 	VType_wxEraseEvent.cpp
 	VType_wxEvent.cpp
 	VType_wxEventLoopBase.cpp
@@ -130,8 +132,12 @@ set(SRCFILES_VTYPE
 	VType_wxHeaderCtrl.cpp
 	VType_wxHeaderCtrlSimple.cpp
 	VType_wxHelpEvent.cpp
+	VType_wxHScrolledWindow.cpp
 	VType_wxHtmlHelpDialog.cpp
 	VType_wxHtmlHelpFrame.cpp
+	VType_wxHtmlHelpWindow.cpp
+	VType_wxHtmlListBox.cpp
+	VType_wxHVScrolledWindow.cpp
 	VType_wxHyperlinkCtrl.cpp
 	VType_wxIcon.cpp
 	VType_wxIconBundle.cpp
@@ -190,14 +196,17 @@ set(SRCFILES_VTYPE
 	VType_wxPopupTransientWindow.cpp
 	VType_wxPopupWindow.cpp
 	VType_wxPowerEvent.cpp
+	VType_wxPreviewControlBar.cpp
 	VType_wxPreviewFrame.cpp
 	VType_wxPrintAbortDialog.cpp
 	VType_wxPrintData.cpp
 	VType_wxProgressDialog.cpp
 	VType_wxPropertyGrid.cpp
+	VType_wxPropertyGridManager.cpp
 	VType_wxPropertySheetDialog.cpp
 	VType_wxRadioBox.cpp
 	VType_wxRadioButton.cpp
+	VType_wxRearrangeCtrl.cpp
 	VType_wxRearrangeDialog.cpp
 	VType_wxRearrangeList.cpp
 	VType_wxRect.cpp
@@ -213,7 +222,9 @@ set(SRCFILES_VTYPE
 	VType_wxRibbonToolBar.cpp
 	VType_wxRichTextAttr.cpp
 	VType_wxRichTextCtrl.cpp
+	VType_wxRichTextFormattingDialog.cpp
 	VType_wxRichTextStyleComboCtrl.cpp
+	VType_wxRichTextStyleListBox.cpp
 	VType_wxRichTextStyleListCtrl.cpp
 	VType_wxRichTextStyleOrganiserDialog.cpp
 	VType_wxSashWindow.cpp
@@ -224,6 +235,7 @@ set(SRCFILES_VTYPE
 	VType_wxScrollWinEvent.cpp
 	VType_wxSetCursorEvent.cpp
 	VType_wxSimplebook.cpp
+	VType_wxSimpleHtmlListBox.cpp
 	VType_wxSingleChoiceDialog.cpp
 	VType_wxSize.cpp
 	VType_wxSizeEvent.cpp
@@ -262,7 +274,11 @@ set(SRCFILES_VTYPE
 	VType_wxTreeItemId.cpp
 	VType_wxValidator.cpp
 	VType_wxVisualAttributes.cpp
+	VType_wxVListBox.cpp
+	VType_wxVScrolledWindow.cpp
 	VType_wxWindow.cpp
 	VType_wxWizard.cpp
+	VType_wxWizardPage.cpp
+	VType_wxWizardPageSimple.cpp
 	VType_wxWrapSizer.cpp
 )

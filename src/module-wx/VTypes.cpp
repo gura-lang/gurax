@@ -21,6 +21,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAnyButton);
 	frame.Assign(VTYPE_wxApp);
 	frame.Assign(VTYPE_wxAppConsole);
+	frame.Assign(VTYPE_wxAuiMDIChildFrame);
 	frame.Assign(VTYPE_wxAuiMDIClientWindow);
 	frame.Assign(VTYPE_wxAuiMDIParentFrame);
 	frame.Assign(VTYPE_wxAuiNotebook);
@@ -84,6 +85,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxDocParentFrame);
 	frame.Assign(VTYPE_wxDropFilesEvent);
 	frame.Assign(VTYPE_wxDropTarget);
+	frame.Assign(VTYPE_wxEditableListBox);
 	frame.Assign(VTYPE_wxEraseEvent);
 	frame.Assign(VTYPE_wxEvent);
 	frame.Assign(VTYPE_wxEventLoopBase);
@@ -138,8 +140,12 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxHeaderCtrl);
 	frame.Assign(VTYPE_wxHeaderCtrlSimple);
 	frame.Assign(VTYPE_wxHelpEvent);
+	frame.Assign(VTYPE_wxHScrolledWindow);
 	frame.Assign(VTYPE_wxHtmlHelpDialog);
 	frame.Assign(VTYPE_wxHtmlHelpFrame);
+	frame.Assign(VTYPE_wxHtmlHelpWindow);
+	frame.Assign(VTYPE_wxHtmlListBox);
+	frame.Assign(VTYPE_wxHVScrolledWindow);
 	frame.Assign(VTYPE_wxHyperlinkCtrl);
 	frame.Assign(VTYPE_wxIcon);
 	frame.Assign(VTYPE_wxIconBundle);
@@ -198,14 +204,17 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPopupTransientWindow);
 	frame.Assign(VTYPE_wxPopupWindow);
 	frame.Assign(VTYPE_wxPowerEvent);
+	frame.Assign(VTYPE_wxPreviewControlBar);
 	frame.Assign(VTYPE_wxPreviewFrame);
 	frame.Assign(VTYPE_wxPrintAbortDialog);
 	frame.Assign(VTYPE_wxPrintData);
 	frame.Assign(VTYPE_wxProgressDialog);
 	frame.Assign(VTYPE_wxPropertyGrid);
+	frame.Assign(VTYPE_wxPropertyGridManager);
 	frame.Assign(VTYPE_wxPropertySheetDialog);
 	frame.Assign(VTYPE_wxRadioBox);
 	frame.Assign(VTYPE_wxRadioButton);
+	frame.Assign(VTYPE_wxRearrangeCtrl);
 	frame.Assign(VTYPE_wxRearrangeDialog);
 	frame.Assign(VTYPE_wxRearrangeList);
 	frame.Assign(VTYPE_wxRect);
@@ -221,7 +230,9 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRibbonToolBar);
 	frame.Assign(VTYPE_wxRichTextAttr);
 	frame.Assign(VTYPE_wxRichTextCtrl);
+	frame.Assign(VTYPE_wxRichTextFormattingDialog);
 	frame.Assign(VTYPE_wxRichTextStyleComboCtrl);
+	frame.Assign(VTYPE_wxRichTextStyleListBox);
 	frame.Assign(VTYPE_wxRichTextStyleListCtrl);
 	frame.Assign(VTYPE_wxRichTextStyleOrganiserDialog);
 	frame.Assign(VTYPE_wxSashWindow);
@@ -232,6 +243,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxScrollWinEvent);
 	frame.Assign(VTYPE_wxSetCursorEvent);
 	frame.Assign(VTYPE_wxSimplebook);
+	frame.Assign(VTYPE_wxSimpleHtmlListBox);
 	frame.Assign(VTYPE_wxSingleChoiceDialog);
 	frame.Assign(VTYPE_wxSize);
 	frame.Assign(VTYPE_wxSizeEvent);
@@ -270,8 +282,12 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTreeItemId);
 	frame.Assign(VTYPE_wxValidator);
 	frame.Assign(VTYPE_wxVisualAttributes);
+	frame.Assign(VTYPE_wxVListBox);
+	frame.Assign(VTYPE_wxVScrolledWindow);
 	frame.Assign(VTYPE_wxWindow);
 	frame.Assign(VTYPE_wxWizard);
+	frame.Assign(VTYPE_wxWizardPage);
+	frame.Assign(VTYPE_wxWizardPageSimple);
 	frame.Assign(VTYPE_wxWrapSizer);
 }
 

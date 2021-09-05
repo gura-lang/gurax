@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxRichTextStyleListBox.gura
+//==============================================================================
+RichTextStyleListBox = Class(HtmlListBox) {
+	@include['wx/richtext/richtextstyles.h']
+}
