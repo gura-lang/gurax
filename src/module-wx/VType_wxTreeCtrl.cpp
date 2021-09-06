@@ -1133,6 +1133,76 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetStateImageList_gurax, processor_gurax, ar
 		*pEntity_gurax->GetStateImageList()));
 }
 
+// wx.TreeCtrl#HitTest(point as wx.Point)
+Gurax_DeclareMethodAlias(wxTreeCtrl, HitTest_gurax, "HitTest")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreeCtrl, HitTest_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_point = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& point = value_point.GetEntity();
+	// Function body
+	int flags;
+	wxTreeItemId rtn = pEntity_gurax->HitTest(point, flags);
+	return Value_Tuple::Create(new Value_wxTreeItemId(rtn), new Value_Number(flags));
+}
+
+// wx.TreeCtrl#InsertItem(parent as wx.TreeItemId, pos as Any, text as String, image? as Number, selImage? as Number, data? as wx.TreeItemData)
+Gurax_DeclareMethodAlias(wxTreeCtrl, InsertItem_gurax, "InsertItem")
+{
+	Declare(VTYPE_wxTreeItemId, Flag::None);
+	DeclareArg("parent", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("image", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("selImage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("data", VTYPE_wxTreeItemData, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreeCtrl, InsertItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeItemId& value_parent = args_gurax.Pick<Value_wxTreeItemId>();
+	const wxTreeItemId& parent = value_parent.GetEntity();
+	const Gurax::Value& pos = args_gurax.PickValue();
+	const char* text = args_gurax.PickString();
+	bool image_validFlag = args_gurax.IsValid();
+	int image = image_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool selImage_validFlag = args_gurax.IsValid();
+	int selImage = selImage_validFlag? args_gurax.PickNumber<int>() : -1;
+	wxTreeItemData* data = args_gurax.IsValid()? args_gurax.Pick<Value_wxTreeItemData>().GetEntityPtr() : nullptr;
+	// Function body
+	if (pos.IsType(VTYPE_wxTreeItemId)) {
+		wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_wxTreeItemId::GetEntity(pos), text, image, selImage, data);
+		return new Value_wxTreeItemId(rtn);
+	} else if (pos.IsType(VTYPE_Number)) {
+		wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_Number::GetNumber<size_t>(pos), text, image, selImage, data);
+		return new Value_wxTreeItemId(rtn);
+	}
+	Error::Issue(ErrorType::TypeError, "");
+	return Value::nil();
+}
+
 // wx.TreeCtrl#IsBold(item as wx.TreeItemId)
 Gurax_DeclareMethodAlias(wxTreeCtrl, IsBold_gurax, "IsBold")
 {
@@ -1948,6 +2018,8 @@ void VType_wxTreeCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetRootItem_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetStateImageList_gurax));
+	Assign(Gurax_CreateMethod(wxTreeCtrl, HitTest_gurax));
+	Assign(Gurax_CreateMethod(wxTreeCtrl, InsertItem_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, IsBold_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, IsEmpty_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, IsExpanded_gurax));
