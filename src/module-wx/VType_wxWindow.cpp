@@ -1905,8 +1905,8 @@ Gurax_ImplementMethodEx(wxWindow, SetSizeWH_gurax, processor_gurax, argument_gur
 	return Gurax::Value::nil();
 }
 
-// wx.Window#SetSizeHints(minSize as wx.Size, maxSize? as wx.Size, incSize? as wx.Size)
-Gurax_DeclareMethodAlias(wxWindow, SetSizeHints_gurax, "SetSizeHints")
+// wx.Window#SetSizeHintsSize(minSize as wx.Size, maxSize? as wx.Size, incSize? as wx.Size)
+Gurax_DeclareMethodAlias(wxWindow, SetSizeHintsSize_gurax, "SetSizeHintsSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("minSize", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
@@ -1917,7 +1917,7 @@ Gurax_DeclareMethodAlias(wxWindow, SetSizeHints_gurax, "SetSizeHints")
 		"");
 }
 
-Gurax_ImplementMethodEx(wxWindow, SetSizeHints_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxWindow, SetSizeHintsSize_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -1934,8 +1934,46 @@ Gurax_ImplementMethodEx(wxWindow, SetSizeHints_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// wx.Window#SetVirtualSize(width as Number, height as Number)
-Gurax_DeclareMethodAlias(wxWindow, SetVirtualSize_gurax, "SetVirtualSize")
+// wx.Window#SetSizeHintsWH(minW as Number, minH as Number, maxW? as Number, maxH? as Number, incW? as Number, incH? as Number)
+Gurax_DeclareMethodAlias(wxWindow, SetSizeHintsWH_gurax, "SetSizeHintsWH")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("minW", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("minH", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maxW", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("maxH", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("incW", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("incH", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetSizeHintsWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int minW = args_gurax.PickNumber<int>();
+	int minH = args_gurax.PickNumber<int>();
+	bool maxW_validFlag = args_gurax.IsValid();
+	int maxW = maxW_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool maxH_validFlag = args_gurax.IsValid();
+	int maxH = maxH_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool incW_validFlag = args_gurax.IsValid();
+	int incW = incW_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool incH_validFlag = args_gurax.IsValid();
+	int incH = incH_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	pEntity_gurax->SetSizeHints(minW, minH, maxW, maxH, incW, incH);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetVirtualSizeWH(width as Number, height as Number)
+Gurax_DeclareMethodAlias(wxWindow, SetVirtualSizeWH_gurax, "SetVirtualSizeWH")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1945,7 +1983,7 @@ Gurax_DeclareMethodAlias(wxWindow, SetVirtualSize_gurax, "SetVirtualSize")
 		"");
 }
 
-Gurax_ImplementMethodEx(wxWindow, SetVirtualSize_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxWindow, SetVirtualSizeWH_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -1957,6 +1995,31 @@ Gurax_ImplementMethodEx(wxWindow, SetVirtualSize_gurax, processor_gurax, argumen
 	int height = args_gurax.PickNumber<int>();
 	// Function body
 	pEntity_gurax->SetVirtualSize(width, height);
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetVirtualSizeSize(size as wx.Size)
+Gurax_DeclareMethodAlias(wxWindow, SetVirtualSizeSize_gurax, "SetVirtualSizeSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetVirtualSizeSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	// Function body
+	pEntity_gurax->SetVirtualSize(size);
 	return Gurax::Value::nil();
 }
 
@@ -5772,8 +5835,10 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, SetSizeRect_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetSizeSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetSizeWH_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, SetSizeHints_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, SetVirtualSize_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetSizeHintsSize_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetSizeHintsWH_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetVirtualSizeWH_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetVirtualSizeSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Center_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, CenterOnParent_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Centre_gurax));

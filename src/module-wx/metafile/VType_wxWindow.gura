@@ -102,10 +102,10 @@ Window = Class(EvtHandler) {
 	SetSizeRect(rect as const_Rect_r) as void = SetSize
 	SetSizeSize(size as const_Size_r) as void = SetSize
 	SetSizeWH(width as int, height as int) as void = SetSize
-	SetSizeHints(minSize as const_Size_r, maxSize as const_Size_r = wxDefaultSize, incSize as const_Size_r = wxDefaultSize) as void
-	//SetSizeHints(minW as int, minH as int, maxW as int = -1, maxH as int = -1, incW as int = -1, incH as int = -1) as void
-	SetVirtualSize(width as int, height as int) as void
-	//SetVirtualSize(size as const_Size_r) as void
+	SetSizeHintsSize(minSize as const_Size_r, maxSize as const_Size_r = wxDefaultSize, incSize as const_Size_r = wxDefaultSize) as void = SetSizeHints
+	SetSizeHintsWH(minW as int, minH as int, maxW as int = -1, maxH as int = -1, incW as int = -1, incH as int = -1) as void = SetSizeHints
+	SetVirtualSizeWH(width as int, height as int) as void = SetVirtualSize
+	SetVirtualSizeSize(size as const_Size_r) as void = SetVirtualSize
 	// Positioning functions
 	Center(dir as int = wxBOTH) as void
 	CenterOnParent(dir as int = wxBOTH) as void
