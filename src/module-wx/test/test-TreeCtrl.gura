@@ -14,11 +14,6 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
-TreeItemData = class(wx.TreeItemData) {
-	value
-	__init__(value) = { this.value = value }
-}
-
 PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
@@ -26,12 +21,12 @@ PanelTop = class(wx.Panel) {
 		ctrl = wx.TreeCtrl(this)
 		sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 		ctrl.AddRoot('root') {|itemId|
-			ctrl.AppendItem(itemId, 'child 1', data = TreeItemData(3))
+			ctrl.AppendItem(itemId, 'child 1', data = 'hello 1')
 			ctrl.AppendItem(itemId, 'child 2') {|itemId|
-				ctrl.AppendItem(itemId, 'child 2-1')
-				ctrl.AppendItem(itemId, 'child 2-2')
-				ctrl.AppendItem(itemId, 'child 2-3')
-				ctrl.AppendItem(itemId, 'child 2-4')
+				ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1')
+				ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2')
+				ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3')
+				ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4')
 			}
 			ctrl.AppendItem(itemId, 'child 3')
 			ctrl.AppendItem(itemId, 'child 4')
@@ -48,7 +43,7 @@ PanelTop = class(wx.Panel) {
 	OnTree(event) = {
 		ctrl = event.GetEventUserData()
 		itemId = event.GetItem()
-		Println('OnTree ', ctrl, ' ', itemId)
+		Println('OnTree ', ctrl, ' ', itemId, ' ', ctrl.GetItemData(itemId))
 	}
 }
 
