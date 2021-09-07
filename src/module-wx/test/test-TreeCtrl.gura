@@ -43,6 +43,13 @@ PanelTop = class(wx.Panel) {
 			}
 			ctrl.AppendItem(itemId, 'child 6')
 		}
+		ctrl.Bind(wx.EVT_TREE_SEL_CHANGED, this.OnTree, ctrl)
+	}
+	OnTree(event) = {
+		ctrl = event.GetEventUserData()
+		itemId = event.GetItem()
+		//ctrl.GetItemData(itemId)
+		Println('OnTree ', ctrl, ' ', itemId)
 	}
 }
 

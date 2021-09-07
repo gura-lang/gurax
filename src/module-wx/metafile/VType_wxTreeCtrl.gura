@@ -38,7 +38,7 @@ TreeCtrl = Class(Control) {
 	GetIndent() as unsigned_int
 	GetSpacing() as unsigned_int
 	GetItemBackgroundColour(item as const_TreeItemId_r) as Colour
-	//GetItemData(item as const_TreeItemId_r) as TreeItemData_p
+	GetItemData(item as const_TreeItemId_r) as TreeItemData_p
 	GetItemFont(item as const_TreeItemId_r) as Font
 	//GetItemImage(item as const_TreeItemId_r, which as TreeItemIcon = wxTreeItemIcon_Normal) as int
 	GetItemParent(item as const_TreeItemId_r) as TreeItemId

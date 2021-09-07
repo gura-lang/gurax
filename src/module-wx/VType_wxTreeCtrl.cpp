@@ -810,6 +810,32 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetItemBackgroundColour_gurax, processor_gur
 		pEntity_gurax->GetItemBackgroundColour(item)));
 }
 
+// wx.TreeCtrl#GetItemData(item as wx.TreeItemId) {block?}
+Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemData_gurax, "GetItemData")
+{
+	Declare(VTYPE_wxTreeItemData, Flag::None);
+	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreeCtrl, GetItemData_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
+	const wxTreeItemId& item = value_item.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemData(
+		*pEntity_gurax->GetItemData(item)));
+}
+
 // wx.TreeCtrl#GetItemFont(item as wx.TreeItemId) {block?}
 Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemFont_gurax, "GetItemFont")
 {
@@ -2023,6 +2049,7 @@ void VType_wxTreeCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetIndent_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetSpacing_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetItemBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxTreeCtrl, GetItemData_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetItemFont_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetItemParent_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetItemState_gurax));
