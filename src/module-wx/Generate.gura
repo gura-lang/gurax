@@ -118,6 +118,23 @@ r.DeclareType('ArrayLong', 'wxArrayLong', 'Number[]',
 	return Util::CreateList(rtn);
 	''')
 
+r.DeclareType('TreeItemData_p', 'const Value&', 'Any',
+	codePicker = R'''
+	${this.cType} ${varName} = args_gurax.PickValue();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
+	'''
+	codeArgRef = R'''
+	new TreeItemData(${varName}.Reference())
+	'''
+	codeFunctionBody = R'''
+	TreeItemData* rtn = dynamic_cast<TreeItemData*>(${caller});
+	if (!rtn) return Value::nil();
+	return rtn->GetValue().Reference();
+	'''
+	)
+
 tmplVTypesCMake = tR'''
 #===============================================================================
 # VTypes.cmake

@@ -48,7 +48,6 @@ PanelTop = class(wx.Panel) {
 	OnTree(event) = {
 		ctrl = event.GetEventUserData()
 		itemId = event.GetItem()
-		//ctrl.GetItemData(itemId)
 		Println('OnTree ', ctrl, ' ', itemId)
 	}
 }

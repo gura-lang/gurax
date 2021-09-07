@@ -1,9 +1,0 @@
-//==============================================================================
-// VType_wxTreeItemData.gura
-//==============================================================================
-TreeItemData = Class {
-	@include['wx/treectrl.h']	
-	__init__()
-	GetId() as const_TreeItemId_r
-	SetId(id as const_TreeItemId_r) as void
-}

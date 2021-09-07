@@ -279,7 +279,6 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTopLevelWindow);
 	frame.Assign(VTYPE_wxTreebook);
 	frame.Assign(VTYPE_wxTreeCtrl);
-	frame.Assign(VTYPE_wxTreeItemData);
 	frame.Assign(VTYPE_wxTreeItemId);
 	frame.Assign(VTYPE_wxValidator);
 	frame.Assign(VTYPE_wxVisualAttributes);

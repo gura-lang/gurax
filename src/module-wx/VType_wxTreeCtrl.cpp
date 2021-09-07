@@ -69,14 +69,14 @@ Gurax_ImplementConstructorEx(TreeCtrl_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.TreeCtrl#AddRoot(text as String, image? as Number, selImage? as Number, data? as wx.TreeItemData) {block?}
+// wx.TreeCtrl#AddRoot(text as String, image? as Number, selImage? as Number, data? as Any) {block?}
 Gurax_DeclareMethodAlias(wxTreeCtrl, AddRoot_gurax, "AddRoot")
 {
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("selImage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("data", VTYPE_wxTreeItemData, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -96,13 +96,14 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AddRoot_gurax, processor_gurax, argument_gur
 	int image = image_validFlag? args_gurax.PickNumber<int>() : -1;
 	bool selImage_validFlag = args_gurax.IsValid();
 	int selImage = selImage_validFlag? args_gurax.PickNumber<int>() : -1;
-	wxTreeItemData* data = args_gurax.IsValid()? args_gurax.Pick<Value_wxTreeItemData>().GetEntityPtr() : nullptr;
+	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->AddRoot(text, image, selImage, data)));
+		pEntity_gurax->AddRoot(text, image, selImage, new TreeItemData(data.Reference())
+		)));
 }
 
-// wx.TreeCtrl#AppendItem(parent as wx.TreeItemId, text as String, image? as Number, selImage? as Number, data? as wx.TreeItemData) {block?}
+// wx.TreeCtrl#AppendItem(parent as wx.TreeItemId, text as String, image? as Number, selImage? as Number, data? as Any) {block?}
 Gurax_DeclareMethodAlias(wxTreeCtrl, AppendItem_gurax, "AppendItem")
 {
 	Declare(VTYPE_wxTreeItemId, Flag::None);
@@ -110,7 +111,7 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, AppendItem_gurax, "AppendItem")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("selImage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("data", VTYPE_wxTreeItemData, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -132,10 +133,11 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AppendItem_gurax, processor_gurax, argument_
 	int image = image_validFlag? args_gurax.PickNumber<int>() : -1;
 	bool selImage_validFlag = args_gurax.IsValid();
 	int selImage = selImage_validFlag? args_gurax.PickNumber<int>() : -1;
-	wxTreeItemData* data = args_gurax.IsValid()? args_gurax.Pick<Value_wxTreeItemData>().GetEntityPtr() : nullptr;
+	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->AppendItem(parent, text, image, selImage, data)));
+		pEntity_gurax->AppendItem(parent, text, image, selImage, new TreeItemData(data.Reference())
+		)));
 }
 
 // wx.TreeCtrl#AssignImageList(imageList as wx.ImageList)
@@ -810,12 +812,11 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetItemBackgroundColour_gurax, processor_gur
 		pEntity_gurax->GetItemBackgroundColour(item)));
 }
 
-// wx.TreeCtrl#GetItemData(item as wx.TreeItemId) {block?}
+// wx.TreeCtrl#GetItemData(item as wx.TreeItemId)
 Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemData_gurax, "GetItemData")
 {
-	Declare(VTYPE_wxTreeItemData, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -832,8 +833,9 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetItemData_gurax, processor_gurax, argument
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemData(
-		*pEntity_gurax->GetItemData(item)));
+	TreeItemData* rtn = dynamic_cast<TreeItemData*>(pEntity_gurax->GetItemData(item));
+	if (!rtn) return Value::nil();
+	return rtn->GetValue().Reference();
 }
 
 // wx.TreeCtrl#GetItemFont(item as wx.TreeItemId) {block?}
@@ -1203,7 +1205,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, HitTest_gurax, processor_gurax, argument_gur
 	return Value_Tuple::Create(new Value_wxTreeItemId(rtn), new Value_Number(flags));
 }
 
-// wx.TreeCtrl#InsertItem(parent as wx.TreeItemId, pos as Any, text as String, image? as Number, selImage? as Number, data? as wx.TreeItemData) {block?}
+// wx.TreeCtrl#InsertItem(parent as wx.TreeItemId, pos as Any, text as String, image? as Number, selImage? as Number, data? as Any) {block?}
 Gurax_DeclareMethodAlias(wxTreeCtrl, InsertItem_gurax, "InsertItem")
 {
 	Declare(VTYPE_wxTreeItemId, Flag::None);
@@ -1212,7 +1214,7 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, InsertItem_gurax, "InsertItem")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("selImage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("data", VTYPE_wxTreeItemData, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1235,13 +1237,13 @@ Gurax_ImplementMethodEx(wxTreeCtrl, InsertItem_gurax, processor_gurax, argument_
 	int image = image_validFlag? args_gurax.PickNumber<int>() : -1;
 	bool selImage_validFlag = args_gurax.IsValid();
 	int selImage = selImage_validFlag? args_gurax.PickNumber<int>() : -1;
-	wxTreeItemData* data = args_gurax.IsValid()? args_gurax.Pick<Value_wxTreeItemData>().GetEntityPtr() : nullptr;
+	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	if (pos.IsType(VTYPE_wxTreeItemId)) {
-		wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_wxTreeItemId::GetEntity(pos), text, image, selImage, data);
+		wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_wxTreeItemId::GetEntity(pos), text, image, selImage, new TreeItemData(data.Reference()));
 		return new Value_wxTreeItemId(rtn);
 	} else if (pos.IsType(VTYPE_Number)) {
-		wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_Number::GetNumber<size_t>(pos), text, image, selImage, data);
+		wxTreeItemId rtn = pEntity_gurax->InsertItem(parent, Value_Number::GetNumber<size_t>(pos), text, image, selImage, new TreeItemData(data.Reference()));
 		return new Value_wxTreeItemId(rtn);
 	}
 	Error::Issue(ErrorType::TypeError, "");

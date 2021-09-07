@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_WX_UTIL_H
 #define GURAX_MODULE_WX_UTIL_H
 #include <gurax.h>
+#include <wx/treectrl.h>
 
 #define Gurax_AssignEvent(eventName, eventType) do { \
 RefPtr<Value> pValue(new Value_wxEventType(wx##eventName, #eventName, Value_##eventType::eventValueFactory)); \
@@ -67,6 +68,20 @@ public:
 public:
 	static wxClientData* Create(const Value& value) { return new ClientData(value.Reference()); }
 	static std::vector<wxClientData*> Create(const ValueList& values);
+};
+
+//-----------------------------------------------------------------------------
+// TreeItemData
+//-----------------------------------------------------------------------------
+class TreeItemData : public wxTreeItemData {
+private:
+	RefPtr<Value> _pValue;
+public:
+	TreeItemData(Value* pValue) : _pValue(pValue) {}
+	Value& GetValue() { return *_pValue; }
+	const Value& GetValue() const { return *_pValue; }
+public:
+	static wxClientData* Create(const Value& value) { return new TreeItemData(value.Reference()); }
 };
 
 //-----------------------------------------------------------------------------

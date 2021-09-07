@@ -274,7 +274,6 @@
 #include "VType_wxTopLevelWindow.h"
 #include "VType_wxTreebook.h"
 #include "VType_wxTreeCtrl.h"
-#include "VType_wxTreeItemData.h"
 #include "VType_wxTreeItemId.h"
 #include "VType_wxValidator.h"
 #include "VType_wxVisualAttributes.h"

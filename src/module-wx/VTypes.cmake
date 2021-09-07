@@ -271,7 +271,6 @@ set(SRCFILES_VTYPE
 	VType_wxTopLevelWindow.cpp
 	VType_wxTreebook.cpp
 	VType_wxTreeCtrl.cpp
-	VType_wxTreeItemData.cpp
 	VType_wxTreeItemId.cpp
 	VType_wxValidator.cpp
 	VType_wxVisualAttributes.cpp
