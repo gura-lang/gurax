@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.WrapSizer(orient as Number, flag? as Number) {block?}
+// wx.WrapSizer(orient as Number, flag? as Number) {block?} {block?}
 Gurax_DeclareConstructorAlias(WrapSizer_gurax, "WrapSizer")
 {
 	Declare(VTYPE_wxWrapSizer, Flag::None);
@@ -104,10 +104,11 @@ Gurax_ImplementMethodEx(wxWrapSizer, RecalcSizes_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// wx.WrapSizer#CalcMin()
+// wx.WrapSizer#CalcMin() {block?}
 Gurax_DeclareMethodAlias(wxWrapSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

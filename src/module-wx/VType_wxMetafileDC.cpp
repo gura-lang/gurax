@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MetafileDC(filename? as String) {block?}
+// wx.MetafileDC(filename? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(MetafileDC_gurax, "MetafileDC")
 {
 	Declare(VTYPE_wxMetafileDC, Flag::None);

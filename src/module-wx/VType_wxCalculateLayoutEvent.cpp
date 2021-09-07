@@ -52,10 +52,11 @@ Gurax_ImplementMethodEx(wxCalculateLayoutEvent, GetFlags_gurax, processor_gurax,
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.CalculateLayoutEvent#GetRect()
+// wx.CalculateLayoutEvent#GetRect() {block?}
 Gurax_DeclareMethodAlias(wxCalculateLayoutEvent, GetRect_gurax, "GetRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

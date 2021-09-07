@@ -32,10 +32,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.GridBagSizer#CalcMin()
+// wx.GridBagSizer#CalcMin() {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -52,11 +53,12 @@ Gurax_ImplementMethodEx(wxGridBagSizer, CalcMin_gurax, processor_gurax, argument
 		pEntity_gurax->CalcMin()));
 }
 
-// wx.GridBagSizer#FindItemAtPoint(pt as wx.Point)
+// wx.GridBagSizer#FindItemAtPoint(pt as wx.Point) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, FindItemAtPoint_gurax, "FindItemAtPoint")
 {
 	Declare(VTYPE_wxGBSizerItem, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -77,11 +79,12 @@ Gurax_ImplementMethodEx(wxGridBagSizer, FindItemAtPoint_gurax, processor_gurax, 
 		*pEntity_gurax->FindItemAtPoint(pt)));
 }
 
-// wx.GridBagSizer#FindItemAtPosition(pos as wx.GBPosition)
+// wx.GridBagSizer#FindItemAtPosition(pos as wx.GBPosition) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, FindItemAtPosition_gurax, "FindItemAtPosition")
 {
 	Declare(VTYPE_wxGBSizerItem, Flag::None);
 	DeclareArg("pos", VTYPE_wxGBPosition, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -102,11 +105,12 @@ Gurax_ImplementMethodEx(wxGridBagSizer, FindItemAtPosition_gurax, processor_gura
 		*pEntity_gurax->FindItemAtPosition(pos)));
 }
 
-// wx.GridBagSizer#FindItemWithData(userData as wx.Object)
+// wx.GridBagSizer#FindItemWithData(userData as wx.Object) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, FindItemWithData_gurax, "FindItemWithData")
 {
 	Declare(VTYPE_wxGBSizerItem, Flag::None);
 	DeclareArg("userData", VTYPE_wxObject, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -127,12 +131,13 @@ Gurax_ImplementMethodEx(wxGridBagSizer, FindItemWithData_gurax, processor_gurax,
 		*pEntity_gurax->FindItemWithData(userData)));
 }
 
-// wx.GridBagSizer#GetCellSize(row as Number, col as Number)
+// wx.GridBagSizer#GetCellSize(row as Number, col as Number) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, GetCellSize_gurax, "GetCellSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -153,10 +158,11 @@ Gurax_ImplementMethodEx(wxGridBagSizer, GetCellSize_gurax, processor_gurax, argu
 		pEntity_gurax->GetCellSize(row, col)));
 }
 
-// wx.GridBagSizer#GetEmptyCellSize()
+// wx.GridBagSizer#GetEmptyCellSize() {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, GetEmptyCellSize_gurax, "GetEmptyCellSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -218,7 +224,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, SetEmptyCellSize_gurax, processor_gurax,
 	return Gurax::Value::nil();
 }
 
-// wx.GridBagSizer#Add(window as wx.Window, pos as wx.GBPosition, span? as wx.GBSpan, flag? as Number, border? as Number, userData? as wx.Object)
+// wx.GridBagSizer#Add(window as wx.Window, pos as wx.GBPosition, span? as wx.GBSpan, flag? as Number, border? as Number, userData? as wx.Object) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, Add_gurax, "Add")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
@@ -228,6 +234,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, Add_gurax, "Add")
 	DeclareArg("flag", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("border", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("userData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -283,11 +290,12 @@ Gurax_ImplementMethodEx(wxGridBagSizer, CheckForIntersection_gurax, processor_gu
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.GridBagSizer#FindItem(window as wx.Window)
+// wx.GridBagSizer#FindItem(window as wx.Window) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, FindItem_gurax, "FindItem")
 {
 	Declare(VTYPE_wxGBSizerItem, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -308,11 +316,12 @@ Gurax_ImplementMethodEx(wxGridBagSizer, FindItem_gurax, processor_gurax, argumen
 		*pEntity_gurax->FindItem(window)));
 }
 
-// wx.GridBagSizer#GetItemPosition(window as wx.Window)
+// wx.GridBagSizer#GetItemPosition(window as wx.Window) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, GetItemPosition_gurax, "GetItemPosition")
 {
 	Declare(VTYPE_wxGBPosition, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -333,11 +342,12 @@ Gurax_ImplementMethodEx(wxGridBagSizer, GetItemPosition_gurax, processor_gurax, 
 		pEntity_gurax->GetItemPosition(window)));
 }
 
-// wx.GridBagSizer#GetItemSpan(window as wx.Window)
+// wx.GridBagSizer#GetItemSpan(window as wx.Window) {block?}
 Gurax_DeclareMethodAlias(wxGridBagSizer, GetItemSpan_gurax, "GetItemSpan")
 {
 	Declare(VTYPE_wxGBSpan, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

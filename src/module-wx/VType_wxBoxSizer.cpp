@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.BoxSizer(orient as Number) {block?}
+// wx.BoxSizer(orient as Number) {block?} {block?}
 Gurax_DeclareConstructorAlias(BoxSizer_gurax, "BoxSizer")
 {
 	Declare(VTYPE_wxBoxSizer, Flag::None);
@@ -53,11 +53,12 @@ Gurax_ImplementConstructorEx(BoxSizer_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.BoxSizer#AddSpacer(size as Number)
+// wx.BoxSizer#AddSpacer(size as Number) {block?}
 Gurax_DeclareMethodAlias(wxBoxSizer, AddSpacer_gurax, "AddSpacer")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -77,10 +78,11 @@ Gurax_ImplementMethodEx(wxBoxSizer, AddSpacer_gurax, processor_gurax, argument_g
 		*pEntity_gurax->AddSpacer(size)));
 }
 
-// wx.BoxSizer#CalcMin()
+// wx.BoxSizer#CalcMin() {block?}
 Gurax_DeclareMethodAlias(wxBoxSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

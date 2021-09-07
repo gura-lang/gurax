@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ColourData() {block?}
+// wx.ColourData() {block?} {block?}
 Gurax_DeclareConstructorAlias(ColourData_gurax, "ColourData")
 {
 	Declare(VTYPE_wxColourData, Flag::None);
@@ -68,10 +68,11 @@ Gurax_ImplementMethodEx(wxColourData, GetChooseFull_gurax, processor_gurax, argu
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ColourData#GetColour()
+// wx.ColourData#GetColour() {block?}
 Gurax_DeclareMethodAlias(wxColourData, GetColour_gurax, "GetColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -88,11 +89,12 @@ Gurax_ImplementMethodEx(wxColourData, GetColour_gurax, processor_gurax, argument
 		pEntity_gurax->GetColour()));
 }
 
-// wx.ColourData#GetCustomColour(i as Number)
+// wx.ColourData#GetCustomColour(i as Number) {block?}
 Gurax_DeclareMethodAlias(wxColourData, GetCustomColour_gurax, "GetCustomColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

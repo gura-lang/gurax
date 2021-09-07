@@ -18,6 +18,7 @@ TypeInfo = class {
 	vtypeFullName as String
 	vtypeDisplay as String
 	listVarFlag as Bool
+	blockOccurFlag as Bool
 	moduleName as String = ''
 	vtype as String = ''
 	tmplPicker as Template
@@ -27,7 +28,8 @@ TypeInfo = class {
 	tmplConvToGurax as Template
 	tmplFunctionBody as Template
 	tmplArgRef as Template
-	__init__(decl as String, cType as String, vtypeFullName as String, vtypeDisplay as String, listVarFlag as Bool,
+	__init__(decl as String, cType as String, vtypeFullName as String, vtypeDisplay as String,
+			listVarFlag as Bool, blockOccurFlag as Bool,
 			codePicker as String, codePickerValidation as String, codePickerVec as String,
 			codeConvToC as String, codeConvToGurax as String,
 			codeFunctionBody as String, codeArgRef as String) = {
@@ -36,6 +38,7 @@ TypeInfo = class {
 		this.vtypeFullName = vtypeFullName
 		this.vtypeDisplay = vtypeDisplay
 		this.listVarFlag = listVarFlag
+		this.blockOccurFlag = blockOccurFlag
 		fields = vtypeFullName.Split('.'):list
 		if (!fields.IsEmpty()) {
 			this.moduleName = fields.Head(fields.len - 1).Join('.')
@@ -218,7 +221,8 @@ FuncInfo = class {
 		typeInfo = this.GetTypeInfo()
 		Format('%s %s%s(%s)%s', typeInfo.cType, prefix, this.nameOnCall || this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))
 	}
-	ToString() = Format('%s.%s(%s)', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '))
+	ToString() = Format('%s.%s(%s)%s', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '),
+		cond(this.GetTypeInfo().blockOccurFlag, ' {block?}', ''))
 }
 
 CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
@@ -268,6 +272,9 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	${end}
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -302,6 +309,7 @@ Renderer = class {
 	funcInfoTbl = []
 	typeInfoMap = %{}
 	DeclareType(decl as String, cType as String, vtypeFullName as String, vtypeDisplay? as String,
+			blockOccurFlag as Bool = false,
 			codePicker as String = '', codePickerValidation as String = '', codePickerVec as String = '',
 			codeConvToC as String = '', codeConvToGurax as String = 'new Gurax::Value_${this.vtype}(${varName})',
 			codeFunctionBody as String = '', codeArgRef = '${varName}') = {
@@ -310,7 +318,8 @@ Renderer = class {
 			vtypeFullName = m[1]
 			listVarFlag = true
 		}
-		typeInfo = TypeInfo(decl, cType, vtypeFullName, vtypeDisplay || vtypeFullName, listVarFlag,
+		typeInfo = TypeInfo(decl, cType, vtypeFullName, vtypeDisplay || vtypeFullName,
+				listVarFlag, blockOccurFlag,
 				codePicker, codePickerValidation, codePickerVec,
 				codeConvToC, codeConvToGurax, codeFunctionBody, codeArgRef)
 		this.typeInfoMap[decl] = typeInfo

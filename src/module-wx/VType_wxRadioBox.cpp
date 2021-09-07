@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.RadioBox(parent as wx.Window, id as Number, label as String, pos? as wx.Point, size? as wx.Size, choices[]? as String, majorDimension? as Number, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.RadioBox(parent as wx.Window, id as Number, label as String, pos? as wx.Point, size? as wx.Size, choices[]? as String, majorDimension? as Number, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(RadioBox_gurax, "RadioBox")
 {
 	Declare(VTYPE_wxRadioBox, Flag::None);
@@ -196,11 +196,12 @@ Gurax_ImplementMethodEx(wxRadioBox, GetItemHelpText_gurax, processor_gurax, argu
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.RadioBox#GetItemToolTip(item as Number)
+// wx.RadioBox#GetItemToolTip(item as Number) {block?}
 Gurax_DeclareMethodAlias(wxRadioBox, GetItemToolTip_gurax, "GetItemToolTip")
 {
 	Declare(VTYPE_wxToolTip, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

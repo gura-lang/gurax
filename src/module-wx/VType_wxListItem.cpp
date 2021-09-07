@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ListItem() {block?}
+// wx.ListItem() {block?} {block?}
 Gurax_DeclareConstructorAlias(ListItem_gurax, "ListItem")
 {
 	Declare(VTYPE_wxListItem, Flag::None);
@@ -88,10 +88,11 @@ Gurax_ImplementMethodEx(wxListItem, GetAlign_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.ListItem#GetBackgroundColour()
+// wx.ListItem#GetBackgroundColour() {block?}
 Gurax_DeclareMethodAlias(wxListItem, GetBackgroundColour_gurax, "GetBackgroundColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -128,10 +129,11 @@ Gurax_ImplementMethodEx(wxListItem, GetColumn_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.ListItem#GetFont()
+// wx.ListItem#GetFont() {block?}
 Gurax_DeclareMethodAlias(wxListItem, GetFont_gurax, "GetFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -248,10 +250,11 @@ Gurax_ImplementMethodEx(wxListItem, GetText_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.ListItem#GetTextColour()
+// wx.ListItem#GetTextColour() {block?}
 Gurax_DeclareMethodAlias(wxListItem, GetTextColour_gurax, "GetTextColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

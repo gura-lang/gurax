@@ -52,10 +52,11 @@ Gurax_ImplementMethodEx(wxPen, GetCap_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Pen#GetColour()
+// wx.Pen#GetColour() {block?}
 Gurax_DeclareMethodAlias(wxPen, GetColour_gurax, "GetColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -113,10 +114,11 @@ Gurax_ImplementMethodEx(wxPen, GetJoin_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Pen#GetStipple()
+// wx.Pen#GetStipple() {block?}
 Gurax_DeclareMethodAlias(wxPen, GetStipple_gurax, "GetStipple")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

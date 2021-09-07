@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ToolTip(tip as String) {block?}
+// wx.ToolTip(tip as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(ToolTip_gurax, "ToolTip")
 {
 	Declare(VTYPE_wxToolTip, Flag::None);
@@ -72,10 +72,11 @@ Gurax_ImplementMethodEx(wxToolTip, GetTip_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.ToolTip#GetWindow()
+// wx.ToolTip#GetWindow() {block?}
 Gurax_DeclareMethodAlias(wxToolTip, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

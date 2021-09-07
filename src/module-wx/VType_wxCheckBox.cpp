@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.CheckBox(parent as wx.Window, id as Number, label as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.CheckBox(parent as wx.Window, id as Number, label as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(CheckBox_gurax, "CheckBox")
 {
 	Declare(VTYPE_wxCheckBox, Flag::None);

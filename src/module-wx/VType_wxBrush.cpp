@@ -32,10 +32,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Brush#GetColour()
+// wx.Brush#GetColour() {block?}
 Gurax_DeclareMethodAlias(wxBrush, GetColour_gurax, "GetColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -52,10 +53,11 @@ Gurax_ImplementMethodEx(wxBrush, GetColour_gurax, processor_gurax, argument_gura
 		pEntity_gurax->GetColour()));
 }
 
-// wx.Brush#GetStipple()
+// wx.Brush#GetStipple() {block?}
 Gurax_DeclareMethodAlias(wxBrush, GetStipple_gurax, "GetStipple")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

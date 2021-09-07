@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.EvtHandler() {block?}
+// wx.EvtHandler() {block?} {block?}
 Gurax_DeclareConstructorAlias(EvtHandler_gurax, "EvtHandler")
 {
 	Declare(VTYPE_wxEvtHandler, Flag::None);

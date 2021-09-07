@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Button(parent as wx.Window, id as Number, label? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.Button(parent as wx.Window, id as Number, label? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(Button_gurax, "Button")
 {
 	Declare(VTYPE_wxButton, Flag::None);
@@ -134,10 +134,11 @@ Gurax_ImplementMethodEx(wxButton, SetAuthNeeded_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// wx.Button#SetDefault()
+// wx.Button#SetDefault() {block?}
 Gurax_DeclareMethodAlias(wxButton, SetDefault_gurax, "SetDefault")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

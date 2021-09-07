@@ -204,10 +204,11 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, GetSelection_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.BookCtrlBase#GetCurrentPage()
+// wx.BookCtrlBase#GetCurrentPage() {block?}
 Gurax_DeclareMethodAlias(wxBookCtrlBase, GetCurrentPage_gurax, "GetCurrentPage")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -475,11 +476,12 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, GetPageCount_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.BookCtrlBase#GetPage(page as Number)
+// wx.BookCtrlBase#GetPage(page as Number) {block?}
 Gurax_DeclareMethodAlias(wxBookCtrlBase, GetPage_gurax, "GetPage")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

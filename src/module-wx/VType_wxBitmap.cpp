@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Bitmap() {block?}
+// wx.Bitmap() {block?} {block?}
 Gurax_DeclareConstructorAlias(Bitmap_gurax, "Bitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
@@ -48,10 +48,11 @@ Gurax_ImplementConstructorEx(Bitmap_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Bitmap#ConvertToImage()
+// wx.Bitmap#ConvertToImage() {block?}
 Gurax_DeclareMethodAlias(wxBitmap, ConvertToImage_gurax, "ConvertToImage")
 {
 	Declare(VTYPE_wxImage, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -133,10 +134,11 @@ Gurax_ImplementMethodEx(wxBitmap, GetHeight_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Bitmap#GetMask()
+// wx.Bitmap#GetMask() {block?}
 Gurax_DeclareMethodAlias(wxBitmap, GetMask_gurax, "GetMask")
 {
 	Declare(VTYPE_wxMask, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -153,10 +155,11 @@ Gurax_ImplementMethodEx(wxBitmap, GetMask_gurax, processor_gurax, argument_gurax
 		*pEntity_gurax->GetMask()));
 }
 
-// wx.Bitmap#GetPalette()
+// wx.Bitmap#GetPalette() {block?}
 Gurax_DeclareMethodAlias(wxBitmap, GetPalette_gurax, "GetPalette")
 {
 	Declare(VTYPE_wxPalette, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -173,11 +176,12 @@ Gurax_ImplementMethodEx(wxBitmap, GetPalette_gurax, processor_gurax, argument_gu
 		*pEntity_gurax->GetPalette()));
 }
 
-// wx.Bitmap#GetSubBitmap(rect as wx.Rect)
+// wx.Bitmap#GetSubBitmap(rect as wx.Rect) {block?}
 Gurax_DeclareMethodAlias(wxBitmap, GetSubBitmap_gurax, "GetSubBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -198,10 +202,11 @@ Gurax_ImplementMethodEx(wxBitmap, GetSubBitmap_gurax, processor_gurax, argument_
 		pEntity_gurax->GetSubBitmap(rect)));
 }
 
-// wx.Bitmap#GetSize()
+// wx.Bitmap#GetSize() {block?}
 Gurax_DeclareMethodAlias(wxBitmap, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -218,11 +223,12 @@ Gurax_ImplementMethodEx(wxBitmap, GetSize_gurax, processor_gurax, argument_gurax
 		pEntity_gurax->GetSize()));
 }
 
-// wx.Bitmap#ConvertToDisabled(brightness? as Number)
+// wx.Bitmap#ConvertToDisabled(brightness? as Number) {block?}
 Gurax_DeclareMethodAlias(wxBitmap, ConvertToDisabled_gurax, "ConvertToDisabled")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -497,7 +503,7 @@ Gurax_ImplementClassMethodEx(wxBitmap, CleanUpHandlers_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// wx.Bitmap.FindHandler(name as String)
+// wx.Bitmap.FindHandler(name as String) {block?}
 Gurax_DeclareClassMethodAlias(wxBitmap, FindHandler_gurax, "FindHandler")
 {
 	Declare(VTYPE_wxGDIImageHandler, Flag::None);
@@ -554,7 +560,7 @@ Gurax_ImplementClassMethodEx(wxBitmap, InsertHandler_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// wx.Bitmap.NewFrom(image as Image)
+// wx.Bitmap.NewFrom(image as Image) {block?}
 Gurax_DeclareClassMethodAlias(wxBitmap, NewFrom_gurax, "NewFrom")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
@@ -573,7 +579,7 @@ Gurax_ImplementClassMethodEx(wxBitmap, NewFrom_gurax, processor_gurax, argument_
 	return new Value_wxBitmap(wxBitmap(Util::CreateImage(*image)));
 }
 
-// wx.Bitmap.NewFromPNGData(data as Pointer, size? as Number)
+// wx.Bitmap.NewFromPNGData(data as Pointer, size? as Number) {block?}
 Gurax_DeclareClassMethodAlias(wxBitmap, NewFromPNGData_gurax, "NewFromPNGData")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);

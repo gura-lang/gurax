@@ -32,10 +32,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.DateEvent#GetDate()
+// wx.DateEvent#GetDate() {block?}
 Gurax_DeclareMethodAlias(wxDateEvent, GetDate_gurax, "GetDate")
 {
 	Declare(VTYPE_wxDateTime, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

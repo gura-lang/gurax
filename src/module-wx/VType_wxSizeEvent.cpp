@@ -32,10 +32,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.SizeEvent#GetSize()
+// wx.SizeEvent#GetSize() {block?}
 Gurax_DeclareMethodAlias(wxSizeEvent, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -77,10 +78,11 @@ Gurax_ImplementMethodEx(wxSizeEvent, SetSize_gurax, processor_gurax, argument_gu
 	return Gurax::Value::nil();
 }
 
-// wx.SizeEvent#GetRect()
+// wx.SizeEvent#GetRect() {block?}
 Gurax_DeclareMethodAlias(wxSizeEvent, GetRect_gurax, "GetRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

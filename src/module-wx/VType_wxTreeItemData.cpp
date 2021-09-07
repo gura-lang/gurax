@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.TreeItemData() {block?}
+// wx.TreeItemData() {block?} {block?}
 Gurax_DeclareConstructorAlias(TreeItemData_gurax, "TreeItemData")
 {
 	Declare(VTYPE_wxTreeItemData, Flag::None);
@@ -48,6 +48,51 @@ Gurax_ImplementConstructorEx(TreeItemData_gurax, processor_gurax, argument_gurax
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.TreeItemData#GetId() {block?}
+Gurax_DeclareMethodAlias(wxTreeItemData, GetId_gurax, "GetId")
+{
+	Declare(VTYPE_wxTreeItemId, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreeItemData, GetId_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
+		pEntity_gurax->GetId()));
+}
+
+// wx.TreeItemData#SetId(id as wx.TreeItemId)
+Gurax_DeclareMethodAlias(wxTreeItemData, SetId_gurax, "SetId")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreeItemData, SetId_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTreeItemId& value_id = args_gurax.Pick<Value_wxTreeItemId>();
+	const wxTreeItemId& id = value_id.GetEntity();
+	// Function body
+	pEntity_gurax->SetId(id);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -65,6 +110,8 @@ void VType_wxTreeItemData::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(TreeItemData_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxTreeItemData, GetId_gurax));
+	Assign(Gurax_CreateMethod(wxTreeItemData, SetId_gurax));
 }
 
 //------------------------------------------------------------------------------

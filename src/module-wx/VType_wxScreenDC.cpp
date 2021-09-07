@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ScreenDC() {block?}
+// wx.ScreenDC() {block?} {block?}
 Gurax_DeclareConstructorAlias(ScreenDC_gurax, "ScreenDC")
 {
 	Declare(VTYPE_wxScreenDC, Flag::None);

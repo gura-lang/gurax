@@ -518,11 +518,15 @@ Gurax_EndModuleScope(wx)
 '''
 
 tmplMethodImplementation = tR'''
-// ${Format('%s.%s#%s(%s)', funcInfo.moduleName, className, funcInfo.name, funcInfo.argInfoTbl:*ToString().Join(', '))}
+// ${Format('%s.%s#%s(%s)%s', funcInfo.moduleName, className, funcInfo.name,
+	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
 Gurax_DeclareMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	${end}
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -552,7 +556,8 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 '''
 
 tmplClassMethodImplementation = tR'''
-// ${Format('%s.%s.%s(%s)', funcInfo.moduleName, className, funcInfo.name, funcInfo.argInfoTbl:*ToString().Join(', '))}
+// ${Format('%s.%s.%s(%s)%s', funcInfo.moduleName, className, funcInfo.name,
+	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
 Gurax_DeclareClassMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
@@ -933,6 +938,7 @@ classInfoTbl.Each {|classInfo|
 	if (classInfo.IsEvtHandlerOrDeriv() || classInfo.IsLoosePointer() || classInfo.IsRefCounterOrDeriv()) {
 		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
 			'wx' + classInfo.className, 'wx.' + classInfo.className,
+			blockOccurFlag = true
 			codePicker = R'''
 			Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 			${this.cType} ${varName} = value_${varName}.GetEntityPtr();
@@ -949,6 +955,7 @@ classInfoTbl.Each {|classInfo|
 	} else {
 		typeInfo_p = r.DeclareType(classInfo.className + '_p', 'wx' + classInfo.className + '*',
 			'wx' + classInfo.className, 'wx.' + classInfo.className,
+			blockOccurFlag = true
 			codePicker = R'''
 			Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 			${this.cType} ${varName} = value_${varName}.GetEntityPtr();
@@ -965,6 +972,7 @@ classInfoTbl.Each {|classInfo|
 	}
 	typeInfo = r.DeclareType(classInfo.className, 'wx' + classInfo.className,
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
+		blockOccurFlag = true
 		codePicker = R'''
 		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 		const ${this.cType}& ${varName} = value_${varName}.GetEntity();
@@ -980,6 +988,7 @@ classInfoTbl.Each {|classInfo|
 		''')
 	r.DeclareType('const_' + classInfo.className + '_p', 'const wx' + classInfo.className + '*',
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
+		blockOccurFlag = true
 		codePicker = R'''
 		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 		${this.cType} ${varName} = value_${varName}.GetEntityPtr();
@@ -995,6 +1004,7 @@ classInfoTbl.Each {|classInfo|
 		''')
 	r.DeclareType(classInfo.className + '_r', 'wx' + classInfo.className + '&',
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
+		blockOccurFlag = true
 		codePicker = R'''
 		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 		${this.cType} ${varName} = value_${varName}.GetEntity();
@@ -1010,6 +1020,7 @@ classInfoTbl.Each {|classInfo|
 		''')
 	r.DeclareType('const_' + classInfo.className + '_r', 'const wx' + classInfo.className + '&',
 		'wx' + classInfo.className, 'wx.' + classInfo.className,
+		blockOccurFlag = true
 		codePicker = R'''
 		Value_${this.vtype}& value_${varName} = args_gurax.Pick<Value_${this.vtype}>();
 		${this.cType} ${varName} = value_${varName}.GetEntity();

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ListCtrl(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.ListCtrl(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(ListCtrl_gurax, "ListCtrl")
 {
 	Declare(VTYPE_wxListCtrl, Flag::None);
@@ -559,10 +559,11 @@ Gurax_ImplementMethodEx(wxListCtrl, GetCountPerPage_gurax, processor_gurax, argu
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.ListCtrl#GetEditControl()
+// wx.ListCtrl#GetEditControl() {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, GetEditControl_gurax, "GetEditControl")
 {
 	Declare(VTYPE_wxTextCtrl, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -579,11 +580,12 @@ Gurax_ImplementMethodEx(wxListCtrl, GetEditControl_gurax, processor_gurax, argum
 		pEntity_gurax->GetEditControl()));
 }
 
-// wx.ListCtrl#GetImageList(which as Number)
+// wx.ListCtrl#GetImageList(which as Number) {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, GetImageList_gurax, "GetImageList")
 {
 	Declare(VTYPE_wxImageList, Flag::None);
 	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -628,11 +630,12 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItem_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ListCtrl#GetItemBackgroundColour(item as Number)
+// wx.ListCtrl#GetItemBackgroundColour(item as Number) {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, GetItemBackgroundColour_gurax, "GetItemBackgroundColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -672,11 +675,12 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemCount_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.ListCtrl#GetItemFont(item as Number)
+// wx.ListCtrl#GetItemFont(item as Number) {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, GetItemFont_gurax, "GetItemFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -753,10 +757,11 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemRect_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ListCtrl#GetItemSpacing()
+// wx.ListCtrl#GetItemSpacing() {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, GetItemSpacing_gurax, "GetItemSpacing")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -826,11 +831,12 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemText_gurax, processor_gurax, argument
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.ListCtrl#GetItemTextColour(item as Number)
+// wx.ListCtrl#GetItemTextColour(item as Number) {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, GetItemTextColour_gurax, "GetItemTextColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -932,10 +938,11 @@ Gurax_ImplementMethodEx(wxListCtrl, GetSubItemRect_gurax, processor_gurax, argum
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ListCtrl#GetTextColour()
+// wx.ListCtrl#GetTextColour() {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, GetTextColour_gurax, "GetTextColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -972,10 +979,11 @@ Gurax_ImplementMethodEx(wxListCtrl, GetTopItem_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.ListCtrl#GetViewRect()
+// wx.ListCtrl#GetViewRect() {block?}
 Gurax_DeclareMethodAlias(wxListCtrl, GetViewRect_gurax, "GetViewRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

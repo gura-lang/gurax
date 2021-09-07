@@ -32,10 +32,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Image#Copy()
+// wx.Image#Copy() {block?}
 Gurax_DeclareMethodAlias(wxImage, Copy_gurax, "Copy")
 {
 	Declare(VTYPE_wxImage, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -117,11 +118,12 @@ Gurax_ImplementMethodEx(wxImage, InitAlpha_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// wx.Image#BlurHorizontal(blurRadius as Number)
+// wx.Image#BlurHorizontal(blurRadius as Number) {block?}
 Gurax_DeclareMethodAlias(wxImage, BlurHorizontal_gurax, "BlurHorizontal")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("blurRadius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -141,11 +143,12 @@ Gurax_ImplementMethodEx(wxImage, BlurHorizontal_gurax, processor_gurax, argument
 		pEntity_gurax->BlurHorizontal(blurRadius)));
 }
 
-// wx.Image#BlurVertical(blurRadius as Number)
+// wx.Image#BlurVertical(blurRadius as Number) {block?}
 Gurax_DeclareMethodAlias(wxImage, BlurVertical_gurax, "BlurVertical")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("blurRadius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -165,11 +168,12 @@ Gurax_ImplementMethodEx(wxImage, BlurVertical_gurax, processor_gurax, argument_g
 		pEntity_gurax->BlurVertical(blurRadius)));
 }
 
-// wx.Image#Mirror(horizontally? as Bool)
+// wx.Image#Mirror(horizontally? as Bool) {block?}
 Gurax_DeclareMethodAlias(wxImage, Mirror_gurax, "Mirror")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("horizontally", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -252,13 +256,14 @@ Gurax_ImplementMethodEx(wxImage, Replace_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.Image#Rescale(width as Number, height as Number, quality? as Number)
+// wx.Image#Rescale(width as Number, height as Number, quality? as Number) {block?}
 Gurax_DeclareMethodAlias(wxImage, Rescale_gurax, "Rescale")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("quality", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -281,7 +286,7 @@ Gurax_ImplementMethodEx(wxImage, Rescale_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->Rescale(width, height, quality)));
 }
 
-// wx.Image#Resize(size as wx.Size, pos as wx.Point, red? as Number, green? as Number, blue? as Number)
+// wx.Image#Resize(size as wx.Size, pos as wx.Point, red? as Number, green? as Number, blue? as Number) {block?}
 Gurax_DeclareMethodAlias(wxImage, Resize_gurax, "Resize")
 {
 	Declare(VTYPE_wxImage, Flag::None);
@@ -290,6 +295,7 @@ Gurax_DeclareMethodAlias(wxImage, Resize_gurax, "Resize")
 	DeclareArg("red", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -318,7 +324,7 @@ Gurax_ImplementMethodEx(wxImage, Resize_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->Resize(size, pos, red, green, blue)));
 }
 
-// wx.Image#Rotate(angle as Number, rotationCentre as wx.Point, interpolating? as Bool, offsetAfterRotation? as wx.Point)
+// wx.Image#Rotate(angle as Number, rotationCentre as wx.Point, interpolating? as Bool, offsetAfterRotation? as wx.Point) {block?}
 Gurax_DeclareMethodAlias(wxImage, Rotate_gurax, "Rotate")
 {
 	Declare(VTYPE_wxImage, Flag::None);
@@ -326,6 +332,7 @@ Gurax_DeclareMethodAlias(wxImage, Rotate_gurax, "Rotate")
 	DeclareArg("rotationCentre", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("interpolating", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("offsetAfterRotation", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -349,11 +356,12 @@ Gurax_ImplementMethodEx(wxImage, Rotate_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->Rotate(angle, rotationCentre, interpolating, offsetAfterRotation)));
 }
 
-// wx.Image#Rotate90(clockwise? as Bool)
+// wx.Image#Rotate90(clockwise? as Bool) {block?}
 Gurax_DeclareMethodAlias(wxImage, Rotate90_gurax, "Rotate90")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("clockwise", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -373,10 +381,11 @@ Gurax_ImplementMethodEx(wxImage, Rotate90_gurax, processor_gurax, argument_gurax
 		pEntity_gurax->Rotate90(clockwise)));
 }
 
-// wx.Image#Rotate180()
+// wx.Image#Rotate180() {block?}
 Gurax_DeclareMethodAlias(wxImage, Rotate180_gurax, "Rotate180")
 {
 	Declare(VTYPE_wxImage, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -417,13 +426,14 @@ Gurax_ImplementMethodEx(wxImage, RotateHue_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// wx.Image#Scale(width as Number, height as Number, quality? as Number)
+// wx.Image#Scale(width as Number, height as Number, quality? as Number) {block?}
 Gurax_DeclareMethodAlias(wxImage, Scale_gurax, "Scale")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("quality", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -446,7 +456,7 @@ Gurax_ImplementMethodEx(wxImage, Scale_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->Scale(width, height, quality)));
 }
 
-// wx.Image#Size(size as wx.Size, pos as wx.Point, red? as Number, green? as Number, blue? as Number)
+// wx.Image#Size(size as wx.Size, pos as wx.Point, red? as Number, green? as Number, blue? as Number) {block?}
 Gurax_DeclareMethodAlias(wxImage, Size_gurax, "Size")
 {
 	Declare(VTYPE_wxImage, Flag::None);
@@ -455,6 +465,7 @@ Gurax_DeclareMethodAlias(wxImage, Size_gurax, "Size")
 	DeclareArg("red", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -508,13 +519,14 @@ Gurax_ImplementMethodEx(wxImage, ConvertAlphaToMask_gurax, processor_gurax, argu
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.Image#ConvertToGreyscale(weight_r as Number, weight_g as Number, weight_b as Number)
+// wx.Image#ConvertToGreyscale(weight_r as Number, weight_g as Number, weight_b as Number) {block?}
 Gurax_DeclareMethodAlias(wxImage, ConvertToGreyscale_gurax, "ConvertToGreyscale")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("weight_r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weight_g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weight_b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -536,13 +548,14 @@ Gurax_ImplementMethodEx(wxImage, ConvertToGreyscale_gurax, processor_gurax, argu
 		pEntity_gurax->ConvertToGreyscale(weight_r, weight_g, weight_b)));
 }
 
-// wx.Image#ConvertToMono(r as Number, g as Number, b as Number)
+// wx.Image#ConvertToMono(r as Number, g as Number, b as Number) {block?}
 Gurax_DeclareMethodAlias(wxImage, ConvertToMono_gurax, "ConvertToMono")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -564,11 +577,12 @@ Gurax_ImplementMethodEx(wxImage, ConvertToMono_gurax, processor_gurax, argument_
 		pEntity_gurax->ConvertToMono(r, g, b)));
 }
 
-// wx.Image#ConvertToDisabled(brightness? as Number)
+// wx.Image#ConvertToDisabled(brightness? as Number) {block?}
 Gurax_DeclareMethodAlias(wxImage, ConvertToDisabled_gurax, "ConvertToDisabled")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -792,10 +806,11 @@ Gurax_ImplementMethodEx(wxImage, GetHeight_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Image#GetSize()
+// wx.Image#GetSize() {block?}
 Gurax_DeclareMethodAlias(wxImage, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -860,10 +875,11 @@ Gurax_ImplementMethodEx(wxImage, GetOptionInt_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Image#GetPalette()
+// wx.Image#GetPalette() {block?}
 Gurax_DeclareMethodAlias(wxImage, GetPalette_gurax, "GetPalette")
 {
 	Declare(VTYPE_wxPalette, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -880,11 +896,12 @@ Gurax_ImplementMethodEx(wxImage, GetPalette_gurax, processor_gurax, argument_gur
 		pEntity_gurax->GetPalette()));
 }
 
-// wx.Image#GetSubImage(rect as wx.Rect)
+// wx.Image#GetSubImage(rect as wx.Rect) {block?}
 Gurax_DeclareMethodAlias(wxImage, GetSubImage_gurax, "GetSubImage")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1347,7 +1364,7 @@ Gurax_ImplementClassMethodEx(wxImage, CleanUpHandlers_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// wx.Image.FindHandler(name as String)
+// wx.Image.FindHandler(name as String) {block?}
 Gurax_DeclareClassMethodAlias(wxImage, FindHandler_gurax, "FindHandler")
 {
 	Declare(VTYPE_wxImageHandler, Flag::None);
@@ -1367,7 +1384,7 @@ Gurax_ImplementClassMethodEx(wxImage, FindHandler_gurax, processor_gurax, argume
 		*wxImage::FindHandler(name)));
 }
 
-// wx.Image.FindHandlerMime(mimetype as String)
+// wx.Image.FindHandlerMime(mimetype as String) {block?}
 Gurax_DeclareClassMethodAlias(wxImage, FindHandlerMime_gurax, "FindHandlerMime")
 {
 	Declare(VTYPE_wxImageHandler, Flag::None);

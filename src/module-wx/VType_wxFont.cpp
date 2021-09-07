@@ -152,10 +152,11 @@ Gurax_ImplementMethodEx(wxFont, GetPointSize_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Font#GetPixelSize()
+// wx.Font#GetPixelSize() {block?}
 Gurax_DeclareMethodAlias(wxFont, GetPixelSize_gurax, "GetPixelSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -292,10 +293,11 @@ Gurax_ImplementMethodEx(wxFont, IsOk_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.Font#Bold()
+// wx.Font#Bold() {block?}
 Gurax_DeclareMethodAlias(wxFont, Bold_gurax, "Bold")
 {
 	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -312,10 +314,11 @@ Gurax_ImplementMethodEx(wxFont, Bold_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->Bold()));
 }
 
-// wx.Font#Italic()
+// wx.Font#Italic() {block?}
 Gurax_DeclareMethodAlias(wxFont, Italic_gurax, "Italic")
 {
 	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -332,10 +335,11 @@ Gurax_ImplementMethodEx(wxFont, Italic_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->Italic()));
 }
 
-// wx.Font#Larger()
+// wx.Font#Larger() {block?}
 Gurax_DeclareMethodAlias(wxFont, Larger_gurax, "Larger")
 {
 	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -352,10 +356,11 @@ Gurax_ImplementMethodEx(wxFont, Larger_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->Larger()));
 }
 
-// wx.Font#Smaller()
+// wx.Font#Smaller() {block?}
 Gurax_DeclareMethodAlias(wxFont, Smaller_gurax, "Smaller")
 {
 	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -372,10 +377,11 @@ Gurax_ImplementMethodEx(wxFont, Smaller_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->Smaller()));
 }
 
-// wx.Font#Underlined()
+// wx.Font#Underlined() {block?}
 Gurax_DeclareMethodAlias(wxFont, Underlined_gurax, "Underlined")
 {
 	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -392,10 +398,11 @@ Gurax_ImplementMethodEx(wxFont, Underlined_gurax, processor_gurax, argument_gura
 		pEntity_gurax->Underlined()));
 }
 
-// wx.Font#Strikethrough()
+// wx.Font#Strikethrough() {block?}
 Gurax_DeclareMethodAlias(wxFont, Strikethrough_gurax, "Strikethrough")
 {
 	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -532,11 +539,12 @@ Gurax_ImplementMethodEx(wxFont, MakeStrikethrough_gurax, processor_gurax, argume
 	return valueThis_gurax.Reference();
 }
 
-// wx.Font#Scale(x as Number)
+// wx.Font#Scale(x as Number) {block?}
 Gurax_DeclareMethodAlias(wxFont, Scale_gurax, "Scale")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -556,11 +564,12 @@ Gurax_ImplementMethodEx(wxFont, Scale_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->Scale(x)));
 }
 
-// wx.Font#Scaled(x as Number)
+// wx.Font#Scaled(x as Number) {block?}
 Gurax_DeclareMethodAlias(wxFont, Scaled_gurax, "Scaled")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

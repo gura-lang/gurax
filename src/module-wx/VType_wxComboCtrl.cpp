@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ComboCtrl(parent as wx.Window, id? as Number, value? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.ComboCtrl(parent as wx.Window, id? as Number, value? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(ComboCtrl_gurax, "ComboCtrl")
 {
 	Declare(VTYPE_wxComboCtrl, Flag::None);
@@ -230,10 +230,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, ShouldDrawFocus_gurax, processor_gurax, arg
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ComboCtrl#GetBitmapDisabled()
+// wx.ComboCtrl#GetBitmapDisabled() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetBitmapDisabled_gurax, "GetBitmapDisabled")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -250,10 +251,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetBitmapDisabled_gurax, processor_gurax, a
 		pEntity_gurax->GetBitmapDisabled()));
 }
 
-// wx.ComboCtrl#GetBitmapHover()
+// wx.ComboCtrl#GetBitmapHover() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetBitmapHover_gurax, "GetBitmapHover")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -270,10 +272,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetBitmapHover_gurax, processor_gurax, argu
 		pEntity_gurax->GetBitmapHover()));
 }
 
-// wx.ComboCtrl#GetBitmapNormal()
+// wx.ComboCtrl#GetBitmapNormal() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetBitmapNormal_gurax, "GetBitmapNormal")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -290,10 +293,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetBitmapNormal_gurax, processor_gurax, arg
 		pEntity_gurax->GetBitmapNormal()));
 }
 
-// wx.ComboCtrl#GetBitmapPressed()
+// wx.ComboCtrl#GetBitmapPressed() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetBitmapPressed_gurax, "GetBitmapPressed")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -310,10 +314,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetBitmapPressed_gurax, processor_gurax, ar
 		pEntity_gurax->GetBitmapPressed()));
 }
 
-// wx.ComboCtrl#GetButtonSize()
+// wx.ComboCtrl#GetButtonSize() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetButtonSize_gurax, "GetButtonSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -410,10 +415,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetLastPosition_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.ComboCtrl#GetMargins()
+// wx.ComboCtrl#GetMargins() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetMargins_gurax, "GetMargins")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -430,10 +436,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetMargins_gurax, processor_gurax, argument
 		pEntity_gurax->GetMargins()));
 }
 
-// wx.ComboCtrl#GetPopupControl()
+// wx.ComboCtrl#GetPopupControl() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetPopupControl_gurax, "GetPopupControl")
 {
 	Declare(VTYPE_wxComboPopup, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -450,10 +457,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetPopupControl_gurax, processor_gurax, arg
 		pEntity_gurax->GetPopupControl()));
 }
 
-// wx.ComboCtrl#GetPopupWindow()
+// wx.ComboCtrl#GetPopupWindow() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetPopupWindow_gurax, "GetPopupWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -470,10 +478,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetPopupWindow_gurax, processor_gurax, argu
 		pEntity_gurax->GetPopupWindow()));
 }
 
-// wx.ComboCtrl#GetTextCtrl()
+// wx.ComboCtrl#GetTextCtrl() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetTextCtrl_gurax, "GetTextCtrl")
 {
 	Declare(VTYPE_wxTextCtrl, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -490,10 +499,11 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetTextCtrl_gurax, processor_gurax, argumen
 		pEntity_gurax->GetTextCtrl()));
 }
 
-// wx.ComboCtrl#GetTextRect()
+// wx.ComboCtrl#GetTextRect() {block?}
 Gurax_DeclareMethodAlias(wxComboCtrl, GetTextRect_gurax, "GetTextRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

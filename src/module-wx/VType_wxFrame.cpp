@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Frame(parent:nil as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.Frame(parent:nil as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(Frame_gurax, "Frame")
 {
 	Declare(VTYPE_wxFrame, Flag::None);
@@ -67,7 +67,7 @@ Gurax_ImplementConstructorEx(Frame_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Frame#CreateStatusBar(number? as Number, style? as Number, id? as Number, name? as String)
+// wx.Frame#CreateStatusBar(number? as Number, style? as Number, id? as Number, name? as String) {block?}
 Gurax_DeclareMethodAlias(wxFrame, CreateStatusBar_gurax, "CreateStatusBar")
 {
 	Declare(VTYPE_wxStatusBar, Flag::None);
@@ -75,6 +75,7 @@ Gurax_DeclareMethodAlias(wxFrame, CreateStatusBar_gurax, "CreateStatusBar")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

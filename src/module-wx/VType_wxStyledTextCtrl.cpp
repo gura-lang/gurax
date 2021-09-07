@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.StyledTextCtrl(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.StyledTextCtrl(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(StyledTextCtrl_gurax, "StyledTextCtrl")
 {
 	Declare(VTYPE_wxStyledTextCtrl, Flag::None);
@@ -400,12 +400,13 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SetSavePoint_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#GetStyledText(startPos as Number, endPos as Number)
+// wx.StyledTextCtrl#GetStyledText(startPos as Number, endPos as Number) {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetStyledText_gurax, "GetStyledText")
 {
 	Declare(VTYPE_wxMemoryBuffer, Flag::None);
 	DeclareArg("startPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("endPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1799,11 +1800,12 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, StyleSetUnderline_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#StyleGetForeground(style as Number)
+// wx.StyledTextCtrl#StyleGetForeground(style as Number) {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, StyleGetForeground_gurax, "StyleGetForeground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1823,11 +1825,12 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, StyleGetForeground_gurax, processor_gu
 		pEntity_gurax->StyleGetForeground(style)));
 }
 
-// wx.StyledTextCtrl#StyleGetBackground(style as Number)
+// wx.StyledTextCtrl#StyleGetBackground(style as Number) {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, StyleGetBackground_gurax, "StyleGetBackground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2735,11 +2738,12 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, IndicatorSetForeground_gurax, processo
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#IndicatorGetForeground(indic as Number)
+// wx.StyledTextCtrl#IndicatorGetForeground(indic as Number) {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, IndicatorGetForeground_gurax, "IndicatorGetForeground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("indic", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -3065,10 +3069,11 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SetCaretLineVisible_gurax, processor_g
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#GetCaretLineBackground()
+// wx.StyledTextCtrl#GetCaretLineBackground() {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetCaretLineBackground_gurax, "GetCaretLineBackground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4171,10 +4176,11 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetCodePage_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.StyledTextCtrl#GetCaretForeground()
+// wx.StyledTextCtrl#GetCaretForeground() {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetCaretForeground_gurax, "GetCaretForeground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -8521,10 +8527,11 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SetEdgeMode_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#GetEdgeColour()
+// wx.StyledTextCtrl#GetEdgeColour() {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetEdgeColour_gurax, "GetEdgeColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9375,10 +9382,11 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SetHotspotActiveForeground_gurax, proc
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#GetHotspotActiveForeground()
+// wx.StyledTextCtrl#GetHotspotActiveForeground() {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetHotspotActiveForeground_gurax, "GetHotspotActiveForeground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -9422,10 +9430,11 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SetHotspotActiveBackground_gurax, proc
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#GetHotspotActiveBackground()
+// wx.StyledTextCtrl#GetHotspotActiveBackground() {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetHotspotActiveBackground_gurax, "GetHotspotActiveBackground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -12705,10 +12714,11 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SetAdditionalCaretForeground_gurax, pr
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#GetAdditionalCaretForeground()
+// wx.StyledTextCtrl#GetAdditionalCaretForeground() {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetAdditionalCaretForeground_gurax, "GetAdditionalCaretForeground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13463,11 +13473,12 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, StyleSetSpec_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#StyleGetFont(style as Number)
+// wx.StyledTextCtrl#StyleGetFont(style as Number) {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, StyleGetFont_gurax, "StyleGetFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -13653,11 +13664,12 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SetMargins_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#PointFromPosition(pos as Number)
+// wx.StyledTextCtrl#PointFromPosition(pos as Number) {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, PointFromPosition_gurax, "PointFromPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -14000,11 +14012,12 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, InsertTextRaw_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#GetLineRaw(line as Number)
+// wx.StyledTextCtrl#GetLineRaw(line as Number) {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetLineRaw_gurax, "GetLineRaw")
 {
 	Declare(VTYPE_wxCharBuffer, Flag::None);
 	DeclareArg("line", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -14024,10 +14037,11 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetLineRaw_gurax, processor_gurax, arg
 		pEntity_gurax->GetLineRaw(line)));
 }
 
-// wx.StyledTextCtrl#GetSelectedTextRaw()
+// wx.StyledTextCtrl#GetSelectedTextRaw() {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetSelectedTextRaw_gurax, "GetSelectedTextRaw")
 {
 	Declare(VTYPE_wxCharBuffer, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -14044,12 +14058,13 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelectedTextRaw_gurax, processor_gu
 		pEntity_gurax->GetSelectedTextRaw()));
 }
 
-// wx.StyledTextCtrl#GetTextRangeRaw(startPos as Number, endPos as Number)
+// wx.StyledTextCtrl#GetTextRangeRaw(startPos as Number, endPos as Number) {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetTextRangeRaw_gurax, "GetTextRangeRaw")
 {
 	Declare(VTYPE_wxCharBuffer, Flag::None);
 	DeclareArg("startPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("endPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -14094,10 +14109,11 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, SetTextRaw_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// wx.StyledTextCtrl#GetTextRaw()
+// wx.StyledTextCtrl#GetTextRaw() {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetTextRaw_gurax, "GetTextRaw")
 {
 	Declare(VTYPE_wxCharBuffer, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -14934,10 +14950,11 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetHint_gurax, processor_gurax, argume
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.StyledTextCtrl#GetMargins()
+// wx.StyledTextCtrl#GetMargins() {block?}
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetMargins_gurax, "GetMargins")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

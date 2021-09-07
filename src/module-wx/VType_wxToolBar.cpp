@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ToolBar(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.ToolBar(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(ToolBar_gurax, "ToolBar")
 {
 	Declare(VTYPE_wxToolBar, Flag::None);
@@ -66,7 +66,7 @@ Gurax_ImplementConstructorEx(ToolBar_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.ToolBar#AddCheckTool(toolId as Number, label as String, bitmap1 as wx.Bitmap, bmpDisabled? as wx.Bitmap, shortHelp? as String, longHelp? as String, clientData? as wx.Object)
+// wx.ToolBar#AddCheckTool(toolId as Number, label as String, bitmap1 as wx.Bitmap, bmpDisabled? as wx.Bitmap, shortHelp? as String, longHelp? as String, clientData? as wx.Object) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, AddCheckTool_gurax, "AddCheckTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
@@ -77,6 +77,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddCheckTool_gurax, "AddCheckTool")
 	DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -103,12 +104,13 @@ Gurax_ImplementMethodEx(wxToolBar, AddCheckTool_gurax, processor_gurax, argument
 		*pEntity_gurax->AddCheckTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, clientData)));
 }
 
-// wx.ToolBar#AddControl(control as wx.Control, label? as String)
+// wx.ToolBar#AddControl(control as wx.Control, label? as String) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, AddControl_gurax, "AddControl")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("control", VTYPE_wxControl, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -130,7 +132,7 @@ Gurax_ImplementMethodEx(wxToolBar, AddControl_gurax, processor_gurax, argument_g
 		*pEntity_gurax->AddControl(control, label)));
 }
 
-// wx.ToolBar#AddRadioTool(toolId as Number, label as String, bitmap1 as wx.Bitmap, bmpDisabled? as wx.Bitmap, shortHelp? as String, longHelp? as String, clientData? as wx.Object)
+// wx.ToolBar#AddRadioTool(toolId as Number, label as String, bitmap1 as wx.Bitmap, bmpDisabled? as wx.Bitmap, shortHelp? as String, longHelp? as String, clientData? as wx.Object) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, AddRadioTool_gurax, "AddRadioTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
@@ -141,6 +143,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddRadioTool_gurax, "AddRadioTool")
 	DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -167,10 +170,11 @@ Gurax_ImplementMethodEx(wxToolBar, AddRadioTool_gurax, processor_gurax, argument
 		*pEntity_gurax->AddRadioTool(toolId, label, bitmap1, bmpDisabled, shortHelp, longHelp, clientData)));
 }
 
-// wx.ToolBar#AddSeparator()
+// wx.ToolBar#AddSeparator() {block?}
 Gurax_DeclareMethodAlias(wxToolBar, AddSeparator_gurax, "AddSeparator")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -187,10 +191,11 @@ Gurax_ImplementMethodEx(wxToolBar, AddSeparator_gurax, processor_gurax, argument
 		*pEntity_gurax->AddSeparator()));
 }
 
-// wx.ToolBar#AddStretchableSpace()
+// wx.ToolBar#AddStretchableSpace() {block?}
 Gurax_DeclareMethodAlias(wxToolBar, AddStretchableSpace_gurax, "AddStretchableSpace")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -301,11 +306,12 @@ Gurax_ImplementMethodEx(wxToolBar, EnableTool_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.ToolBar#FindById(id as Number)
+// wx.ToolBar#FindById(id as Number) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, FindById_gurax, "FindById")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -325,11 +331,12 @@ Gurax_ImplementMethodEx(wxToolBar, FindById_gurax, processor_gurax, argument_gur
 		*pEntity_gurax->FindById(id)));
 }
 
-// wx.ToolBar#FindControl(id as Number)
+// wx.ToolBar#FindControl(id as Number) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, FindControl_gurax, "FindControl")
 {
 	Declare(VTYPE_wxControl, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -349,12 +356,13 @@ Gurax_ImplementMethodEx(wxToolBar, FindControl_gurax, processor_gurax, argument_
 		pEntity_gurax->FindControl(id)));
 }
 
-// wx.ToolBar#FindToolForPosition(x as Number, y as Number)
+// wx.ToolBar#FindToolForPosition(x as Number, y as Number) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, FindToolForPosition_gurax, "FindToolForPosition")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -375,10 +383,11 @@ Gurax_ImplementMethodEx(wxToolBar, FindToolForPosition_gurax, processor_gurax, a
 		*pEntity_gurax->FindToolForPosition(x, y)));
 }
 
-// wx.ToolBar#GetMargins()
+// wx.ToolBar#GetMargins() {block?}
 Gurax_DeclareMethodAlias(wxToolBar, GetMargins_gurax, "GetMargins")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -395,10 +404,11 @@ Gurax_ImplementMethodEx(wxToolBar, GetMargins_gurax, processor_gurax, argument_g
 		pEntity_gurax->GetMargins()));
 }
 
-// wx.ToolBar#GetToolBitmapSize()
+// wx.ToolBar#GetToolBitmapSize() {block?}
 Gurax_DeclareMethodAlias(wxToolBar, GetToolBitmapSize_gurax, "GetToolBitmapSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -415,11 +425,12 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolBitmapSize_gurax, processor_gurax, arg
 		pEntity_gurax->GetToolBitmapSize()));
 }
 
-// wx.ToolBar#GetToolByPos(pos as Number)
+// wx.ToolBar#GetToolByPos(pos as Number) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, GetToolByPos_gurax, "GetToolByPos")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -439,11 +450,12 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolByPos_gurax, processor_gurax, argument
 		*pEntity_gurax->GetToolByPos(pos)));
 }
 
-// wx.ToolBar#GetToolClientData(toolId as Number)
+// wx.ToolBar#GetToolClientData(toolId as Number) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, GetToolClientData_gurax, "GetToolClientData")
 {
 	Declare(VTYPE_wxObject, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -599,10 +611,11 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolShortHelp_gurax, processor_gurax, argu
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.ToolBar#GetToolSize()
+// wx.ToolBar#GetToolSize() {block?}
 Gurax_DeclareMethodAlias(wxToolBar, GetToolSize_gurax, "GetToolSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -663,13 +676,14 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolsCount_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.ToolBar#InsertControl(pos as Number, control as wx.Control, label? as String)
+// wx.ToolBar#InsertControl(pos as Number, control as wx.Control, label? as String) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, InsertControl_gurax, "InsertControl")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("control", VTYPE_wxControl, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -692,11 +706,12 @@ Gurax_ImplementMethodEx(wxToolBar, InsertControl_gurax, processor_gurax, argumen
 		*pEntity_gurax->InsertControl(pos, control, label)));
 }
 
-// wx.ToolBar#InsertSeparator(pos as Number)
+// wx.ToolBar#InsertSeparator(pos as Number) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, InsertSeparator_gurax, "InsertSeparator")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -716,11 +731,12 @@ Gurax_ImplementMethodEx(wxToolBar, InsertSeparator_gurax, processor_gurax, argum
 		*pEntity_gurax->InsertSeparator(pos)));
 }
 
-// wx.ToolBar#InsertStretchableSpace(pos as Number)
+// wx.ToolBar#InsertStretchableSpace(pos as Number) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, InsertStretchableSpace_gurax, "InsertStretchableSpace")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -838,11 +854,12 @@ Gurax_ImplementMethodEx(wxToolBar, Realize_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ToolBar#RemoveTool(id as Number)
+// wx.ToolBar#RemoveTool(id as Number) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, RemoveTool_gurax, "RemoveTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1121,7 +1138,7 @@ Gurax_ImplementMethodEx(wxToolBar, ToggleTool_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.ToolBar#CreateTool(toolId as Number, label as String, bmpNormal as wx.Bitmap, bmpDisabled? as wx.Bitmap, kind? as Number, clientData? as wx.Object, shortHelp? as String, longHelp? as String)
+// wx.ToolBar#CreateTool(toolId as Number, label as String, bmpNormal as wx.Bitmap, bmpDisabled? as wx.Bitmap, kind? as Number, clientData? as wx.Object, shortHelp? as String, longHelp? as String) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, CreateTool_gurax, "CreateTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
@@ -1133,6 +1150,7 @@ Gurax_DeclareMethodAlias(wxToolBar, CreateTool_gurax, "CreateTool")
 	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1161,11 +1179,12 @@ Gurax_ImplementMethodEx(wxToolBar, CreateTool_gurax, processor_gurax, argument_g
 		*pEntity_gurax->CreateTool(toolId, label, bmpNormal, bmpDisabled, kind, clientData, shortHelp, longHelp)));
 }
 
-// wx.ToolBar#AddTool(tool as wx.ToolBarToolBase)
+// wx.ToolBar#AddTool(tool as wx.ToolBarToolBase) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, AddTool_gurax, "AddTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("tool", VTYPE_wxToolBarToolBase, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1186,7 +1205,7 @@ Gurax_ImplementMethodEx(wxToolBar, AddTool_gurax, processor_gurax, argument_gura
 		*pEntity_gurax->AddTool(tool)));
 }
 
-// wx.ToolBar#InsertTool(pos as Number, toolId as Number, label as String, bitmap as wx.Bitmap, bmpDisabled? as wx.Bitmap, kind? as Number, shortHelp? as String, longHelp? as String, clientData? as wx.Object)
+// wx.ToolBar#InsertTool(pos as Number, toolId as Number, label as String, bitmap as wx.Bitmap, bmpDisabled? as wx.Bitmap, kind? as Number, shortHelp? as String, longHelp? as String, clientData? as wx.Object) {block?}
 Gurax_DeclareMethodAlias(wxToolBar, InsertTool_gurax, "InsertTool")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
@@ -1199,6 +1218,7 @@ Gurax_DeclareMethodAlias(wxToolBar, InsertTool_gurax, "InsertTool")
 	DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

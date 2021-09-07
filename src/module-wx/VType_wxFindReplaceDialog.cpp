@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FindReplaceDialog(parent as wx.Window, data as wx.FindReplaceData, title as String, style? as Number) {block?}
+// wx.FindReplaceDialog(parent as wx.Window, data as wx.FindReplaceData, title as String, style? as Number) {block?} {block?}
 Gurax_DeclareConstructorAlias(FindReplaceDialog_gurax, "FindReplaceDialog")
 {
 	Declare(VTYPE_wxFindReplaceDialog, Flag::None);
@@ -96,10 +96,11 @@ Gurax_ImplementMethodEx(wxFindReplaceDialog, Create_gurax, processor_gurax, argu
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.FindReplaceDialog#GetData()
+// wx.FindReplaceDialog#GetData() {block?}
 Gurax_DeclareMethodAlias(wxFindReplaceDialog, GetData_gurax, "GetData")
 {
 	Declare(VTYPE_wxFindReplaceData, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

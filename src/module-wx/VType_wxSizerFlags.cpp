@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.SizerFlags(proportion? as Number) {block?}
+// wx.SizerFlags(proportion? as Number) {block?} {block?}
 Gurax_DeclareConstructorAlias(SizerFlags_gurax, "SizerFlags")
 {
 	Declare(VTYPE_wxSizerFlags, Flag::None);

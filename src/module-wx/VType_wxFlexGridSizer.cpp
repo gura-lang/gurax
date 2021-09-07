@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FlexGridSizer(args* as Any) {block?}
+// wx.FlexGridSizer(args* as Any) {block?} {block?}
 Gurax_DeclareConstructorAlias(FlexGridSizer_gurax, "FlexGridSizer")
 {
 	Declare(VTYPE_wxFlexGridSizer, Flag::None);
@@ -426,10 +426,11 @@ Gurax_ImplementMethodEx(wxFlexGridSizer, RecalcSizes_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// wx.FlexGridSizer#CalcMin()
+// wx.FlexGridSizer#CalcMin() {block?}
 Gurax_DeclareMethodAlias(wxFlexGridSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

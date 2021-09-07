@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.BusyCursor(cursor? as wx.Cursor) {block?}
+// wx.BusyCursor(cursor? as wx.Cursor) {block?} {block?}
 Gurax_DeclareConstructorAlias(BusyCursor_gurax, "BusyCursor")
 {
 	Declare(VTYPE_wxBusyCursor, Flag::None);

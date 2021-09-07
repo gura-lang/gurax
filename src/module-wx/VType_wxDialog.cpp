@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Dialog(parent as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.Dialog(parent as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(Dialog_gurax, "Dialog")
 {
 	Declare(VTYPE_wxDialog, Flag::None);
@@ -137,11 +137,12 @@ Gurax_ImplementMethodEx(wxDialog, Centre_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.Dialog#CreateButtonSizer(flags as Number)
+// wx.Dialog#CreateButtonSizer(flags as Number) {block?}
 Gurax_DeclareMethodAlias(wxDialog, CreateButtonSizer_gurax, "CreateButtonSizer")
 {
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -161,11 +162,12 @@ Gurax_ImplementMethodEx(wxDialog, CreateButtonSizer_gurax, processor_gurax, argu
 		pEntity_gurax->CreateButtonSizer(flags)));
 }
 
-// wx.Dialog#CreateSeparatedButtonSizer(flags as Number)
+// wx.Dialog#CreateSeparatedButtonSizer(flags as Number) {block?}
 Gurax_DeclareMethodAlias(wxDialog, CreateSeparatedButtonSizer_gurax, "CreateSeparatedButtonSizer")
 {
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -185,11 +187,12 @@ Gurax_ImplementMethodEx(wxDialog, CreateSeparatedButtonSizer_gurax, processor_gu
 		pEntity_gurax->CreateSeparatedButtonSizer(flags)));
 }
 
-// wx.Dialog#CreateSeparatedSizer(sizer as wx.Sizer)
+// wx.Dialog#CreateSeparatedSizer(sizer as wx.Sizer) {block?}
 Gurax_DeclareMethodAlias(wxDialog, CreateSeparatedSizer_gurax, "CreateSeparatedSizer")
 {
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareArg("sizer", VTYPE_wxSizer, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -210,11 +213,12 @@ Gurax_ImplementMethodEx(wxDialog, CreateSeparatedSizer_gurax, processor_gurax, a
 		pEntity_gurax->CreateSeparatedSizer(sizer)));
 }
 
-// wx.Dialog#CreateStdDialogButtonSizer(flags as Number)
+// wx.Dialog#CreateStdDialogButtonSizer(flags as Number) {block?}
 Gurax_DeclareMethodAlias(wxDialog, CreateStdDialogButtonSizer_gurax, "CreateStdDialogButtonSizer")
 {
 	Declare(VTYPE_wxStdDialogButtonSizer, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -234,11 +238,12 @@ Gurax_ImplementMethodEx(wxDialog, CreateStdDialogButtonSizer_gurax, processor_gu
 		pEntity_gurax->CreateStdDialogButtonSizer(flags)));
 }
 
-// wx.Dialog#CreateTextSizer(message as String)
+// wx.Dialog#CreateTextSizer(message as String) {block?}
 Gurax_DeclareMethodAlias(wxDialog, CreateTextSizer_gurax, "CreateTextSizer")
 {
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -322,10 +327,11 @@ Gurax_ImplementMethodEx(wxDialog, GetAffirmativeId_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Dialog#GetContentWindow()
+// wx.Dialog#GetContentWindow() {block?}
 Gurax_DeclareMethodAlias(wxDialog, GetContentWindow_gurax, "GetContentWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FindReplaceData(flags? as Number) {block?}
+// wx.FindReplaceData(flags? as Number) {block?} {block?}
 Gurax_DeclareConstructorAlias(FindReplaceData_gurax, "FindReplaceData")
 {
 	Declare(VTYPE_wxFindReplaceData, Flag::None);

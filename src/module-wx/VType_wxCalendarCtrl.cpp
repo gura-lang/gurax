@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.CalendarCtrl(parent as wx.Window, id as Number, date? as wx.DateTime, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.CalendarCtrl(parent as wx.Window, id as Number, date? as wx.DateTime, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(CalendarCtrl_gurax, "CalendarCtrl")
 {
 	Declare(VTYPE_wxCalendarCtrl, Flag::None);
@@ -116,11 +116,12 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, EnableMonthChange_gurax, processor_gurax
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.CalendarCtrl#GetAttr(day as Number)
+// wx.CalendarCtrl#GetAttr(day as Number) {block?}
 Gurax_DeclareMethodAlias(wxCalendarCtrl, GetAttr_gurax, "GetAttr")
 {
 	Declare(VTYPE_wxCalendarDateAttr, Flag::None);
 	DeclareArg("day", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -140,10 +141,11 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetAttr_gurax, processor_gurax, argument
 		*pEntity_gurax->GetAttr(day)));
 }
 
-// wx.CalendarCtrl#GetDate()
+// wx.CalendarCtrl#GetDate() {block?}
 Gurax_DeclareMethodAlias(wxCalendarCtrl, GetDate_gurax, "GetDate")
 {
 	Declare(VTYPE_wxDateTime, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -160,10 +162,11 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetDate_gurax, processor_gurax, argument
 		pEntity_gurax->GetDate()));
 }
 
-// wx.CalendarCtrl#GetHeaderColourBg()
+// wx.CalendarCtrl#GetHeaderColourBg() {block?}
 Gurax_DeclareMethodAlias(wxCalendarCtrl, GetHeaderColourBg_gurax, "GetHeaderColourBg")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -180,10 +183,11 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHeaderColourBg_gurax, processor_gurax
 		pEntity_gurax->GetHeaderColourBg()));
 }
 
-// wx.CalendarCtrl#GetHeaderColourFg()
+// wx.CalendarCtrl#GetHeaderColourFg() {block?}
 Gurax_DeclareMethodAlias(wxCalendarCtrl, GetHeaderColourFg_gurax, "GetHeaderColourFg")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -200,10 +204,11 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHeaderColourFg_gurax, processor_gurax
 		pEntity_gurax->GetHeaderColourFg()));
 }
 
-// wx.CalendarCtrl#GetHighlightColourBg()
+// wx.CalendarCtrl#GetHighlightColourBg() {block?}
 Gurax_DeclareMethodAlias(wxCalendarCtrl, GetHighlightColourBg_gurax, "GetHighlightColourBg")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -220,10 +225,11 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHighlightColourBg_gurax, processor_gu
 		pEntity_gurax->GetHighlightColourBg()));
 }
 
-// wx.CalendarCtrl#GetHighlightColourFg()
+// wx.CalendarCtrl#GetHighlightColourFg() {block?}
 Gurax_DeclareMethodAlias(wxCalendarCtrl, GetHighlightColourFg_gurax, "GetHighlightColourFg")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -240,10 +246,11 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHighlightColourFg_gurax, processor_gu
 		pEntity_gurax->GetHighlightColourFg()));
 }
 
-// wx.CalendarCtrl#GetHolidayColourBg()
+// wx.CalendarCtrl#GetHolidayColourBg() {block?}
 Gurax_DeclareMethodAlias(wxCalendarCtrl, GetHolidayColourBg_gurax, "GetHolidayColourBg")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -260,10 +267,11 @@ Gurax_ImplementMethodEx(wxCalendarCtrl, GetHolidayColourBg_gurax, processor_gura
 		pEntity_gurax->GetHolidayColourBg()));
 }
 
-// wx.CalendarCtrl#GetHolidayColourFg()
+// wx.CalendarCtrl#GetHolidayColourFg() {block?}
 Gurax_DeclareMethodAlias(wxCalendarCtrl, GetHolidayColourFg_gurax, "GetHolidayColourFg")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

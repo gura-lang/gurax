@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ColourDialog(parent as wx.Window, data? as wx.ColourData) {block?}
+// wx.ColourDialog(parent as wx.Window, data? as wx.ColourData) {block?} {block?}
 Gurax_DeclareConstructorAlias(ColourDialog_gurax, "ColourDialog")
 {
 	Declare(VTYPE_wxColourDialog, Flag::None);
@@ -84,10 +84,11 @@ Gurax_ImplementMethodEx(wxColourDialog, Create_gurax, processor_gurax, argument_
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ColourDialog#GetColourData()
+// wx.ColourDialog#GetColourData() {block?}
 Gurax_DeclareMethodAlias(wxColourDialog, GetColourData_gurax, "GetColourData")
 {
 	Declare(VTYPE_wxColourData, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

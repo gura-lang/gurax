@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.StaticBitmap(parent as wx.Window, id as Number, label as wx.Bitmap, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.StaticBitmap(parent as wx.Window, id as Number, label as wx.Bitmap, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(StaticBitmap_gurax, "StaticBitmap")
 {
 	Declare(VTYPE_wxStaticBitmap, Flag::None);
@@ -108,10 +108,11 @@ Gurax_ImplementMethodEx(wxStaticBitmap, Create_gurax, processor_gurax, argument_
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.StaticBitmap#GetBitmap()
+// wx.StaticBitmap#GetBitmap() {block?}
 Gurax_DeclareMethodAlias(wxStaticBitmap, GetBitmap_gurax, "GetBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -128,10 +129,11 @@ Gurax_ImplementMethodEx(wxStaticBitmap, GetBitmap_gurax, processor_gurax, argume
 		pEntity_gurax->GetBitmap()));
 }
 
-// wx.StaticBitmap#GetIcon()
+// wx.StaticBitmap#GetIcon() {block?}
 Gurax_DeclareMethodAlias(wxStaticBitmap, GetIcon_gurax, "GetIcon")
 {
 	Declare(VTYPE_wxIcon, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

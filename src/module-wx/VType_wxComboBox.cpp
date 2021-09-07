@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ComboBox(parent as wx.Window, id as Number, value? as String, pos? as wx.Point, size? as wx.Size, choices[]? as String, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.ComboBox(parent as wx.Window, id as Number, value? as String, pos? as wx.Point, size? as wx.Size, choices[]? as String, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(ComboBox_gurax, "ComboBox")
 {
 	Declare(VTYPE_wxComboBox, Flag::None);
@@ -1339,10 +1339,11 @@ Gurax_ImplementMethodEx(wxComboBox, GetHint_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.ComboBox#GetMargins()
+// wx.ComboBox#GetMargins() {block?}
 Gurax_DeclareMethodAlias(wxComboBox, GetMargins_gurax, "GetMargins")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

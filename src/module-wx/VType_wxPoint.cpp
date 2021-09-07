@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Point(x? as Number, y? as Number) {block?}
+// wx.Point(x? as Number, y? as Number) {block?} {block?}
 Gurax_DeclareConstructorAlias(Point_gurax, "Point")
 {
 	Declare(VTYPE_wxPoint, Flag::None);

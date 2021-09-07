@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MemoryDC(bitmap as wx.Bitmap) {block?}
+// wx.MemoryDC(bitmap as wx.Bitmap) {block?} {block?}
 Gurax_DeclareConstructorAlias(MemoryDC_gurax, "MemoryDC")
 {
 	Declare(VTYPE_wxMemoryDC, Flag::None);

@@ -32,11 +32,12 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Sizer#Add(args* as Any)
+// wx.Sizer#Add(args* as Any) {block?}
 Gurax_DeclareMethodAlias(wxSizer, Add_gurax, "Add")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -104,11 +105,12 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.Sizer#AddSpacer(size as Number)
+// wx.Sizer#AddSpacer(size as Number) {block?}
 Gurax_DeclareMethodAlias(wxSizer, AddSpacer_gurax, "AddSpacer")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -128,11 +130,12 @@ Gurax_ImplementMethodEx(wxSizer, AddSpacer_gurax, processor_gurax, argument_gura
 		*pEntity_gurax->AddSpacer(size)));
 }
 
-// wx.Sizer#AddStretchSpacer(prop as Number)
+// wx.Sizer#AddStretchSpacer(prop as Number) {block?}
 Gurax_DeclareMethodAlias(wxSizer, AddStretchSpacer_gurax, "AddStretchSpacer")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("prop", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -152,10 +155,11 @@ Gurax_ImplementMethodEx(wxSizer, AddStretchSpacer_gurax, processor_gurax, argume
 		*pEntity_gurax->AddStretchSpacer(prop)));
 }
 
-// wx.Sizer#CalcMin()
+// wx.Sizer#CalcMin() {block?}
 Gurax_DeclareMethodAlias(wxSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -196,12 +200,13 @@ Gurax_ImplementMethodEx(wxSizer, Clear_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.Sizer#Insert(index as Number, args* as Any)
+// wx.Sizer#Insert(index as Number, args* as Any) {block?}
 Gurax_DeclareMethodAlias(wxSizer, Insert_gurax, "Insert")
 {
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

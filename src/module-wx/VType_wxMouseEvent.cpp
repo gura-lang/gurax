@@ -371,11 +371,12 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetColumnsPerAction_gurax, processor_gurax
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.MouseEvent#GetLogicalPosition(dc as wx.DC)
+// wx.MouseEvent#GetLogicalPosition(dc as wx.DC) {block?}
 Gurax_DeclareMethodAlias(wxMouseEvent, GetLogicalPosition_gurax, "GetLogicalPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

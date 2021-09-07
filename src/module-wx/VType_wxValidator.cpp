@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Validator() {block?}
+// wx.Validator() {block?} {block?}
 Gurax_DeclareConstructorAlias(Validator_gurax, "Validator")
 {
 	Declare(VTYPE_wxValidator, Flag::None);
@@ -50,10 +50,11 @@ Gurax_ImplementConstructorEx(Validator_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Validator#GetWindow()
+// wx.Validator#GetWindow() {block?}
 Gurax_DeclareMethodAlias(wxValidator, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

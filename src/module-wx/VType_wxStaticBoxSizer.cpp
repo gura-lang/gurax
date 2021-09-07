@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.StaticBoxSizer(args* as Any) {block?}
+// wx.StaticBoxSizer(args* as Any) {block?} {block?}
 Gurax_DeclareConstructorAlias(StaticBoxSizer_gurax, "StaticBoxSizer")
 {
 	Declare(VTYPE_wxStaticBoxSizer, Flag::None);
@@ -84,10 +84,11 @@ Gurax_ImplementConstructorEx(StaticBoxSizer_gurax, processor_gurax, argument_gur
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.StaticBoxSizer#GetStaticBox()
+// wx.StaticBoxSizer#GetStaticBox() {block?}
 Gurax_DeclareMethodAlias(wxStaticBoxSizer, GetStaticBox_gurax, "GetStaticBox")
 {
 	Declare(VTYPE_wxStaticBox, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -104,10 +105,11 @@ Gurax_ImplementMethodEx(wxStaticBoxSizer, GetStaticBox_gurax, processor_gurax, a
 		pEntity_gurax->GetStaticBox()));
 }
 
-// wx.StaticBoxSizer#CalcMin()
+// wx.StaticBoxSizer#CalcMin() {block?}
 Gurax_DeclareMethodAlias(wxStaticBoxSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

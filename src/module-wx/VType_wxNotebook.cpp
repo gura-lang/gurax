@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Notebook(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.Notebook(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(Notebook_gurax, "Notebook")
 {
 	Declare(VTYPE_wxNotebook, Flag::None);
@@ -86,10 +86,11 @@ Gurax_ImplementMethodEx(wxNotebook, GetRowCount_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Notebook#GetThemeBackgroundColour()
+// wx.Notebook#GetThemeBackgroundColour() {block?}
 Gurax_DeclareMethodAlias(wxNotebook, GetThemeBackgroundColour_gurax, "GetThemeBackgroundColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

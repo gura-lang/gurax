@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.CalendarDateAttr(args* as Any) {block?}
+// wx.CalendarDateAttr(args* as Any) {block?} {block?}
 Gurax_DeclareConstructorAlias(CalendarDateAttr_gurax, "CalendarDateAttr")
 {
 	Declare(VTYPE_wxCalendarDateAttr, Flag::None);
@@ -88,10 +88,11 @@ Gurax_ImplementConstructorEx(CalendarDateAttr_gurax, processor_gurax, argument_g
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.CalendarDateAttr#GetBackgroundColour()
+// wx.CalendarDateAttr#GetBackgroundColour() {block?}
 Gurax_DeclareMethodAlias(wxCalendarDateAttr, GetBackgroundColour_gurax, "GetBackgroundColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -128,10 +129,11 @@ Gurax_ImplementMethodEx(wxCalendarDateAttr, GetBorder_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.CalendarDateAttr#GetBorderColour()
+// wx.CalendarDateAttr#GetBorderColour() {block?}
 Gurax_DeclareMethodAlias(wxCalendarDateAttr, GetBorderColour_gurax, "GetBorderColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -148,10 +150,11 @@ Gurax_ImplementMethodEx(wxCalendarDateAttr, GetBorderColour_gurax, processor_gur
 		pEntity_gurax->GetBorderColour()));
 }
 
-// wx.CalendarDateAttr#GetFont()
+// wx.CalendarDateAttr#GetFont() {block?}
 Gurax_DeclareMethodAlias(wxCalendarDateAttr, GetFont_gurax, "GetFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -168,10 +171,11 @@ Gurax_ImplementMethodEx(wxCalendarDateAttr, GetFont_gurax, processor_gurax, argu
 		pEntity_gurax->GetFont()));
 }
 
-// wx.CalendarDateAttr#GetTextColour()
+// wx.CalendarDateAttr#GetTextColour() {block?}
 Gurax_DeclareMethodAlias(wxCalendarDateAttr, GetTextColour_gurax, "GetTextColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -456,7 +460,7 @@ Gurax_ImplementMethodEx(wxCalendarDateAttr, SetTextColour_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// wx.CalendarDateAttr.GetMark()
+// wx.CalendarDateAttr.GetMark() {block?}
 Gurax_DeclareClassMethodAlias(wxCalendarDateAttr, GetMark_gurax, "GetMark")
 {
 	Declare(VTYPE_wxCalendarDateAttr, Flag::None);

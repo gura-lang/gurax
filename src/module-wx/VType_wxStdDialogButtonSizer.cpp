@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.StdDialogButtonSizer() {block?}
+// wx.StdDialogButtonSizer() {block?} {block?}
 Gurax_DeclareConstructorAlias(StdDialogButtonSizer_gurax, "StdDialogButtonSizer")
 {
 	Declare(VTYPE_wxStdDialogButtonSizer, Flag::None);
@@ -189,10 +189,11 @@ Gurax_ImplementMethodEx(wxStdDialogButtonSizer, RecalcSizes_gurax, processor_gur
 	return Gurax::Value::nil();
 }
 
-// wx.StdDialogButtonSizer#CalcMin()
+// wx.StdDialogButtonSizer#CalcMin() {block?}
 Gurax_DeclareMethodAlias(wxStdDialogButtonSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

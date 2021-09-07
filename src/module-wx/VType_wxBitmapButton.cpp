@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.BitmapButton(parent as wx.Window, id as Number, bitmap as wx.Bitmap, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.BitmapButton(parent as wx.Window, id as Number, bitmap as wx.Bitmap, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(BitmapButton_gurax, "BitmapButton")
 {
 	Declare(VTYPE_wxBitmapButton, Flag::None);
@@ -71,7 +71,7 @@ Gurax_ImplementConstructorEx(BitmapButton_gurax, processor_gurax, argument_gurax
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.BitmapButton.NewCloseButton(parent as wx.Window, winid as Number)
+// wx.BitmapButton.NewCloseButton(parent as wx.Window, winid as Number) {block?}
 Gurax_DeclareClassMethodAlias(wxBitmapButton, NewCloseButton_gurax, "NewCloseButton")
 {
 	Declare(VTYPE_wxBitmapButton, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ScrolledCanvas(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.ScrolledCanvas(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(ScrolledCanvas_gurax, "ScrolledCanvas")
 {
 	Declare(VTYPE_wxScrolledCanvas, Flag::None);
@@ -94,11 +94,12 @@ Gurax_ImplementMethodEx(wxScrolledCanvas, CalcScrolledPositionXY_gurax, processo
 	return Value_Tuple::Create(new Value_Number(xx), new Value_Number(yy));
 }
 
-// wx.ScrolledCanvas#CalcScrolledPosition(pt as wx.Point)
+// wx.ScrolledCanvas#CalcScrolledPosition(pt as wx.Point) {block?}
 Gurax_DeclareMethodAlias(wxScrolledCanvas, CalcScrolledPosition_gurax, "CalcScrolledPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -146,11 +147,12 @@ Gurax_ImplementMethodEx(wxScrolledCanvas, CalcUnscrolledPositionXY_gurax, proces
 	return Value_Tuple::Create(new Value_Number(xx), new Value_Number(yy));
 }
 
-// wx.ScrolledCanvas#CalcUnscrolledPosition(pt as wx.Point)
+// wx.ScrolledCanvas#CalcUnscrolledPosition(pt as wx.Point) {block?}
 Gurax_DeclareMethodAlias(wxScrolledCanvas, CalcUnscrolledPosition_gurax, "CalcUnscrolledPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -310,10 +312,11 @@ Gurax_ImplementMethodEx(wxScrolledCanvas, GetViewStartXY_gurax, processor_gurax,
 	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 }
 
-// wx.ScrolledCanvas#GetViewStart()
+// wx.ScrolledCanvas#GetViewStart() {block?}
 Gurax_DeclareMethodAlias(wxScrolledCanvas, GetViewStart_gurax, "GetViewStart")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -561,10 +564,11 @@ Gurax_ImplementMethodEx(wxScrolledCanvas, SetTargetWindow_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
-// wx.ScrolledCanvas#GetTargetWindow()
+// wx.ScrolledCanvas#GetTargetWindow() {block?}
 Gurax_DeclareMethodAlias(wxScrolledCanvas, GetTargetWindow_gurax, "GetTargetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -606,10 +610,11 @@ Gurax_ImplementMethodEx(wxScrolledCanvas, SetTargetRect_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
-// wx.ScrolledCanvas#GetTargetRect()
+// wx.ScrolledCanvas#GetTargetRect() {block?}
 Gurax_DeclareMethodAlias(wxScrolledCanvas, GetTargetRect_gurax, "GetTargetRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

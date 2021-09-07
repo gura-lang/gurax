@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.PrintData() {block?}
+// wx.PrintData() {block?} {block?}
 Gurax_DeclareConstructorAlias(PrintData_gurax, "PrintData")
 {
 	Declare(VTYPE_wxPrintData, Flag::None);

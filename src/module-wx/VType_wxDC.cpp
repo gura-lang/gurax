@@ -77,10 +77,11 @@ Gurax_ImplementMethodEx(wxDC, GetDepth_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#GetDeviceOrigin()
+// wx.DC#GetDeviceOrigin() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetDeviceOrigin_gurax, "GetDeviceOrigin")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -137,12 +138,13 @@ Gurax_ImplementMethodEx(wxDC, GetMapMode_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#GetPixel(x as Number, y as Number)
+// wx.DC#GetPixel(x as Number, y as Number) {block?}
 Gurax_DeclareMethodAlias(wxDC, GetPixel_gurax, "GetPixel")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -165,10 +167,11 @@ Gurax_ImplementMethodEx(wxDC, GetPixel_gurax, processor_gurax, argument_gurax)
 	return new Value_wxColour(colour);
 }
 
-// wx.DC#GetPPI()
+// wx.DC#GetPPI() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetPPI_gurax, "GetPPI")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -185,10 +188,11 @@ Gurax_ImplementMethodEx(wxDC, GetPPI_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->GetPPI()));
 }
 
-// wx.DC#GetSize()
+// wx.DC#GetSize() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -205,10 +209,11 @@ Gurax_ImplementMethodEx(wxDC, GetSize_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->GetSize()));
 }
 
-// wx.DC#GetSizeMM()
+// wx.DC#GetSizeMM() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetSizeMM_gurax, "GetSizeMM")
 {
 	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -417,11 +422,12 @@ Gurax_ImplementMethodEx(wxDC, SetUserScale_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// wx.DC#GetAsBitmap(subrect? as wx.Rect)
+// wx.DC#GetAsBitmap(subrect? as wx.Rect) {block?}
 Gurax_DeclareMethodAlias(wxDC, GetAsBitmap_gurax, "GetAsBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("subrect", VTYPE_wxRect, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2004,10 +2010,11 @@ Gurax_ImplementMethodEx(wxDC, GetCharWidth_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#GetFontMetrics()
+// wx.DC#GetFontMetrics() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetFontMetrics_gurax, "GetFontMetrics")
 {
 	Declare(VTYPE_wxFontMetrics, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2024,11 +2031,12 @@ Gurax_ImplementMethodEx(wxDC, GetFontMetrics_gurax, processor_gurax, argument_gu
 		pEntity_gurax->GetFontMetrics()));
 }
 
-// wx.DC#GetMultiLineTextExtent(string as String)
+// wx.DC#GetMultiLineTextExtent(string as String) {block?}
 Gurax_DeclareMethodAlias(wxDC, GetMultiLineTextExtent_gurax, "GetMultiLineTextExtent")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2048,11 +2056,12 @@ Gurax_ImplementMethodEx(wxDC, GetMultiLineTextExtent_gurax, processor_gurax, arg
 		pEntity_gurax->GetMultiLineTextExtent(string)));
 }
 
-// wx.DC#GetTextExtent(string as String)
+// wx.DC#GetTextExtent(string as String) {block?}
 Gurax_DeclareMethodAlias(wxDC, GetTextExtent_gurax, "GetTextExtent")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2092,10 +2101,11 @@ Gurax_ImplementMethodEx(wxDC, GetBackgroundMode_gurax, processor_gurax, argument
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#GetFont()
+// wx.DC#GetFont() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetFont_gurax, "GetFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2132,10 +2142,11 @@ Gurax_ImplementMethodEx(wxDC, GetLayoutDirection_gurax, processor_gurax, argumen
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#GetTextBackground()
+// wx.DC#GetTextBackground() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetTextBackground_gurax, "GetTextBackground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2152,10 +2163,11 @@ Gurax_ImplementMethodEx(wxDC, GetTextBackground_gurax, processor_gurax, argument
 		pEntity_gurax->GetTextBackground()));
 }
 
-// wx.DC#GetTextForeground()
+// wx.DC#GetTextForeground() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetTextForeground_gurax, "GetTextForeground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2605,10 +2617,11 @@ Gurax_ImplementMethodEx(wxDC, StretchBlit_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.DC#GetBackground()
+// wx.DC#GetBackground() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetBackground_gurax, "GetBackground")
 {
 	Declare(VTYPE_wxBrush, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2625,10 +2638,11 @@ Gurax_ImplementMethodEx(wxDC, GetBackground_gurax, processor_gurax, argument_gur
 		pEntity_gurax->GetBackground()));
 }
 
-// wx.DC#GetBrush()
+// wx.DC#GetBrush() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetBrush_gurax, "GetBrush")
 {
 	Declare(VTYPE_wxBrush, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2645,10 +2659,11 @@ Gurax_ImplementMethodEx(wxDC, GetBrush_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->GetBrush()));
 }
 
-// wx.DC#GetPen()
+// wx.DC#GetPen() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetPen_gurax, "GetPen")
 {
 	Declare(VTYPE_wxPen, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2785,10 +2800,11 @@ Gurax_ImplementMethodEx(wxDC, SetTransformMatrix_gurax, processor_gurax, argumen
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.DC#GetTransformMatrix()
+// wx.DC#GetTransformMatrix() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetTransformMatrix_gurax, "GetTransformMatrix")
 {
 	Declare(VTYPE_wxAffineMatrix2D, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2886,10 +2902,11 @@ Gurax_ImplementMethodEx(wxDC, GetLogicalOriginXY_gurax, processor_gurax, argumen
 	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 }
 
-// wx.DC#GetLogicalOrigin()
+// wx.DC#GetLogicalOrigin() {block?}
 Gurax_DeclareMethodAlias(wxDC, GetLogicalOrigin_gurax, "GetLogicalOrigin")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

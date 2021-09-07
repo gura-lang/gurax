@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.TextCtrl(parent as wx.Window, id as Number, value? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.TextCtrl(parent as wx.Window, id as Number, value? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(TextCtrl_gurax, "TextCtrl")
 {
 	Declare(VTYPE_wxTextCtrl, Flag::None);
@@ -115,10 +115,11 @@ Gurax_ImplementMethodEx(wxTextCtrl, EmulateKeyPress_gurax, processor_gurax, argu
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.TextCtrl#GetDefaultStyle()
+// wx.TextCtrl#GetDefaultStyle() {block?}
 Gurax_DeclareMethodAlias(wxTextCtrl, GetDefaultStyle_gurax, "GetDefaultStyle")
 {
 	Declare(VTYPE_wxTextAttr, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -362,11 +363,12 @@ Gurax_ImplementMethodEx(wxTextCtrl, OnDropFiles_gurax, processor_gurax, argument
 	return Gurax::Value::nil();
 }
 
-// wx.TextCtrl#PositionToCoords(pos as Number)
+// wx.TextCtrl#PositionToCoords(pos as Number) {block?}
 Gurax_DeclareMethodAlias(wxTextCtrl, PositionToCoords_gurax, "PositionToCoords")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1235,10 +1237,11 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetHint_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.TextCtrl#GetMargins()
+// wx.TextCtrl#GetMargins() {block?}
 Gurax_DeclareMethodAlias(wxTextCtrl, GetMargins_gurax, "GetMargins")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

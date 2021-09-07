@@ -347,10 +347,11 @@ Gurax_ImplementMethodEx(wxGraphicsPath, Contains_gurax, processor_gurax, argumen
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.GraphicsPath#GetBox()
+// wx.GraphicsPath#GetBox() {block?}
 Gurax_DeclareMethodAlias(wxGraphicsPath, GetBox_gurax, "GetBox")
 {
 	Declare(VTYPE_wxRect2DDouble, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -367,10 +368,11 @@ Gurax_ImplementMethodEx(wxGraphicsPath, GetBox_gurax, processor_gurax, argument_
 		pEntity_gurax->GetBox()));
 }
 
-// wx.GraphicsPath#GetCurrentPoint()
+// wx.GraphicsPath#GetCurrentPoint() {block?}
 Gurax_DeclareMethodAlias(wxGraphicsPath, GetCurrentPoint_gurax, "GetCurrentPoint")
 {
 	Declare(VTYPE_wxPoint2DDouble, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

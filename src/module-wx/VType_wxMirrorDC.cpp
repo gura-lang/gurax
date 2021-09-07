@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MirrorDC(dc as wx.DC, mirror as Bool) {block?}
+// wx.MirrorDC(dc as wx.DC, mirror as Bool) {block?} {block?}
 Gurax_DeclareConstructorAlias(MirrorDC_gurax, "MirrorDC")
 {
 	Declare(VTYPE_wxMirrorDC, Flag::None);

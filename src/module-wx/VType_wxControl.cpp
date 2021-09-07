@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Control(parent:nil as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.Control(parent:nil as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(Control_gurax, "Control")
 {
 	Declare(VTYPE_wxControl, Flag::None);
@@ -132,12 +132,13 @@ Gurax_ImplementMethodEx(wxControl, GetLabelText_gurax, processor_gurax, argument
 	return new Gurax::Value_String(rtn);
 }
 
-// wx.Control#GetSizeFromTextSizeXY(xlen as Number, ylen? as Number)
+// wx.Control#GetSizeFromTextSizeXY(xlen as Number, ylen? as Number) {block?}
 Gurax_DeclareMethodAlias(wxControl, GetSizeFromTextSizeXY_gurax, "GetSizeFromTextSizeXY")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("xlen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ylen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -159,11 +160,12 @@ Gurax_ImplementMethodEx(wxControl, GetSizeFromTextSizeXY_gurax, processor_gurax,
 		pEntity_gurax->GetSizeFromTextSize(xlen, ylen)));
 }
 
-// wx.Control#GetSizeFromTextSize(tsize as wx.Size)
+// wx.Control#GetSizeFromTextSize(tsize as wx.Size) {block?}
 Gurax_DeclareMethodAlias(wxControl, GetSizeFromTextSize_gurax, "GetSizeFromTextSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("tsize", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

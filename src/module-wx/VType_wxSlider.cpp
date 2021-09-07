@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Slider(parent as wx.Window, id as Number, value as Number, minValue as Number, maxValue as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
+// wx.Slider(parent as wx.Window, id as Number, value as Number, minValue as Number, maxValue as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(Slider_gurax, "Slider")
 {
 	Declare(VTYPE_wxSlider, Flag::None);

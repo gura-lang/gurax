@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.TopLevelWindow(parent:nil as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
+// wx.TopLevelWindow(parent:nil as wx.Window, id as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(TopLevelWindow_gurax, "TopLevelWindow")
 {
 	Declare(VTYPE_wxTopLevelWindow, Flag::None);
@@ -161,10 +161,11 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, EnableCloseButton_gurax, processor_gur
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.TopLevelWindow#GetDefaultItem()
+// wx.TopLevelWindow#GetDefaultItem() {block?}
 Gurax_DeclareMethodAlias(wxTopLevelWindow, GetDefaultItem_gurax, "GetDefaultItem")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -181,10 +182,11 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, GetDefaultItem_gurax, processor_gurax,
 		pEntity_gurax->GetDefaultItem()));
 }
 
-// wx.TopLevelWindow#GetIcon()
+// wx.TopLevelWindow#GetIcon() {block?}
 Gurax_DeclareMethodAlias(wxTopLevelWindow, GetIcon_gurax, "GetIcon")
 {
 	Declare(VTYPE_wxIcon, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -201,10 +203,11 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, GetIcon_gurax, processor_gurax, argume
 		pEntity_gurax->GetIcon()));
 }
 
-// wx.TopLevelWindow#GetIcons()
+// wx.TopLevelWindow#GetIcons() {block?}
 Gurax_DeclareMethodAlias(wxTopLevelWindow, GetIcons_gurax, "GetIcons")
 {
 	Declare(VTYPE_wxIconBundle, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -409,10 +412,11 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, Maximize_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
-// wx.TopLevelWindow#MSWGetSystemMenu()
+// wx.TopLevelWindow#MSWGetSystemMenu() {block?}
 Gurax_DeclareMethodAlias(wxTopLevelWindow, MSWGetSystemMenu_gurax, "MSWGetSystemMenu")
 {
 	Declare(VTYPE_wxMenu, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -474,11 +478,12 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, Restore_gurax, processor_gurax, argume
 	return Gurax::Value::nil();
 }
 
-// wx.TopLevelWindow#SetDefaultItem(win as wx.Window)
+// wx.TopLevelWindow#SetDefaultItem(win as wx.Window) {block?}
 Gurax_DeclareMethodAlias(wxTopLevelWindow, SetDefaultItem_gurax, "SetDefaultItem")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -499,11 +504,12 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, SetDefaultItem_gurax, processor_gurax,
 		pEntity_gurax->SetDefaultItem(win)));
 }
 
-// wx.TopLevelWindow#SetTmpDefaultItem(win as wx.Window)
+// wx.TopLevelWindow#SetTmpDefaultItem(win as wx.Window) {block?}
 Gurax_DeclareMethodAlias(wxTopLevelWindow, SetTmpDefaultItem_gurax, "SetTmpDefaultItem")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -524,10 +530,11 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, SetTmpDefaultItem_gurax, processor_gur
 		pEntity_gurax->SetTmpDefaultItem(win)));
 }
 
-// wx.TopLevelWindow#GetTmpDefaultItem()
+// wx.TopLevelWindow#GetTmpDefaultItem() {block?}
 Gurax_DeclareMethodAlias(wxTopLevelWindow, GetTmpDefaultItem_gurax, "GetTmpDefaultItem")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

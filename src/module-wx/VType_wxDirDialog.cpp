@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.DirDialog(parent as wx.Window, message? as String, defaultPath? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?}
+// wx.DirDialog(parent as wx.Window, message? as String, defaultPath? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(DirDialog_gurax, "DirDialog")
 {
 	Declare(VTYPE_wxDirDialog, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Menu() {block?}
+// wx.Menu() {block?} {block?}
 Gurax_DeclareConstructorAlias(Menu_gurax, "Menu")
 {
 	Declare(VTYPE_wxMenu, Flag::None);
@@ -50,7 +50,7 @@ Gurax_ImplementConstructorEx(Menu_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Menu#Append(id as Number, item? as String, helpString? as String, kind? as Number)
+// wx.Menu#Append(id as Number, item? as String, helpString? as String, kind? as Number) {block?}
 Gurax_DeclareMethodAlias(wxMenu, Append_gurax, "Append")
 {
 	Declare(VTYPE_wxMenuItem, Flag::None);
@@ -58,6 +58,7 @@ Gurax_DeclareMethodAlias(wxMenu, Append_gurax, "Append")
 	DeclareArg("item", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -81,10 +82,11 @@ Gurax_ImplementMethodEx(wxMenu, Append_gurax, processor_gurax, argument_gurax)
 		*pEntity_gurax->Append(id, item, helpString, kind)));
 }
 
-// wx.Menu#AppendSeparator()
+// wx.Menu#AppendSeparator() {block?}
 Gurax_DeclareMethodAlias(wxMenu, AppendSeparator_gurax, "AppendSeparator")
 {
 	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

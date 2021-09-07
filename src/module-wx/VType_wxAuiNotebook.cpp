@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.AuiNotebook(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number) {block?}
+// wx.AuiNotebook(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number) {block?} {block?}
 Gurax_DeclareConstructorAlias(AuiNotebook_gurax, "AuiNotebook")
 {
 	Declare(VTYPE_wxAuiNotebook, Flag::None);

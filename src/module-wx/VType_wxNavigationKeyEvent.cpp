@@ -32,10 +32,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.NavigationKeyEvent#GetCurrentFocus()
+// wx.NavigationKeyEvent#GetCurrentFocus() {block?}
 Gurax_DeclareMethodAlias(wxNavigationKeyEvent, GetCurrentFocus_gurax, "GetCurrentFocus")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

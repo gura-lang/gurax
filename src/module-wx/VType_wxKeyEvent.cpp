@@ -196,10 +196,11 @@ Gurax_ImplementMethodEx(wxKeyEvent, IsNextEventAllowed_gurax, processor_gurax, a
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.KeyEvent#GetPosition()
+// wx.KeyEvent#GetPosition() {block?}
 Gurax_DeclareMethodAlias(wxKeyEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

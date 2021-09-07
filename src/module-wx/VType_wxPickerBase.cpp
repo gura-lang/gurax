@@ -112,10 +112,11 @@ Gurax_ImplementMethodEx(wxPickerBase, GetPickerCtrlProportion_gurax, processor_g
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.PickerBase#GetTextCtrl()
+// wx.PickerBase#GetTextCtrl() {block?}
 Gurax_DeclareMethodAlias(wxPickerBase, GetTextCtrl_gurax, "GetTextCtrl")
 {
 	Declare(VTYPE_wxTextCtrl, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -132,10 +133,11 @@ Gurax_ImplementMethodEx(wxPickerBase, GetTextCtrl_gurax, processor_gurax, argume
 		pEntity_gurax->GetTextCtrl()));
 }
 
-// wx.PickerBase#GetPickerCtrl()
+// wx.PickerBase#GetPickerCtrl() {block?}
 Gurax_DeclareMethodAlias(wxPickerBase, GetPickerCtrl_gurax, "GetPickerCtrl")
 {
 	Declare(VTYPE_wxControl, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

@@ -368,10 +368,11 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, HasIcon_gurax, processor_gurax, argum
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.AboutDialogInfo#GetIcon()
+// wx.AboutDialogInfo#GetIcon() {block?}
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetIcon_gurax, "GetIcon")
 {
 	Declare(VTYPE_wxIcon, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
