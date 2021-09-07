@@ -133,6 +133,27 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_TREEBOOK_PAGE_CHANGING, wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_TREEBOOK_NODE_COLLAPSED, wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_TREEBOOK_NODE_EXPANDED, wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_TREE_BEGIN_DRAG, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_BEGIN_RDRAG, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_END_DRAG, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_BEGIN_LABEL_EDIT, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_END_LABEL_EDIT, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_DELETE_ITEM, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_GET_INFO, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_SET_INFO, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_ITEM_ACTIVATED, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_ITEM_COLLAPSED, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_ITEM_COLLAPSING, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_ITEM_EXPANDED, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_ITEM_EXPANDING, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_ITEM_RIGHT_CLICK, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_ITEM_MIDDLE_CLICK, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_SEL_CHANGED, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_SEL_CHANGING, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_KEY_DOWN, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_ITEM_GETTOOLTIP, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_ITEM_MENU, wxTreeEvent);
+	Gurax_AssignEvent(EVT_TREE_STATE_IMAGE_CLICK, wxTreeEvent);
 }
 
 Gurax_EndModuleScope(wx)

@@ -1,3 +1,14 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+TreeEvent = Class(NotifyEvent) {
+	@include['wx/treectrl.h']	
+	GetItem() as TreeItemId
+	GetKeyCode() as int
+	//GetKeyEvent() as KeyEvent
+	GetLabel() as String
+	GetOldItem() as TreeItemId
+	GetPoint() as Point
+	IsEditCancelled() as bool
+	SetToolTip(tooltip as const_String_r) as void
+}
