@@ -35,6 +35,20 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// wx.EventType#name
+Gurax_DeclareProperty_R(wxEventType, name)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(wxEventType, name)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetName());
+}
 
 //------------------------------------------------------------------------------
 // Implementation of operator
@@ -70,7 +84,7 @@ void VType_wxEventType::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	//Assign(Gurax_CreateMethod(EventType, OnInit));
 	// Assignment of property
-	//Assign(Gurax_CreateProperty(EventType, propSkeleton));
+	Assign(Gurax_CreateProperty(wxEventType, name));
 	do {
 		DeclCallable& d = GetDeclCallable();
 		d.Declare(VTYPE_Nil, DeclCallable::Flag::None);
