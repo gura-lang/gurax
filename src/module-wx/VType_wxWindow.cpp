@@ -4327,8 +4327,8 @@ Gurax_ImplementMethodEx(wxWindow, GetHelpText_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetHelpText();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetHelpText();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Window#SetHelpText(helpText as String)
@@ -4392,8 +4392,8 @@ Gurax_ImplementMethodEx(wxWindow, GetToolTipText_gurax, processor_gurax, argumen
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetToolTipText();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetToolTipText();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Window#SetToolTip(tipString as String)
@@ -4694,8 +4694,8 @@ Gurax_ImplementMethodEx(wxWindow, GetLabel_gurax, processor_gurax, argument_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetLabel();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetLabel();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Window#GetLayoutDirection()
@@ -4762,8 +4762,8 @@ Gurax_ImplementMethodEx(wxWindow, GetName_gurax, processor_gurax, argument_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetName();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetName();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Window#GetWindowVariant()

@@ -519,8 +519,8 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolLongHelp_gurax, processor_gurax, argum
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int toolId = args_gurax.PickNumber<int>();
 	// Function body
-	const char* rtn = pEntity_gurax->GetToolLongHelp(toolId);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetToolLongHelp(toolId);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ToolBar#GetToolPacking()
@@ -607,8 +607,8 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolShortHelp_gurax, processor_gurax, argu
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int toolId = args_gurax.PickNumber<int>();
 	// Function body
-	const char* rtn = pEntity_gurax->GetToolShortHelp(toolId);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetToolShortHelp(toolId);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ToolBar#GetToolSize() {block?}

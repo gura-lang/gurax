@@ -827,8 +827,8 @@ Gurax_ImplementMethodEx(wxListCtrl, GetItemText_gurax, processor_gurax, argument
 	bool col_validFlag = args_gurax.IsValid();
 	int col = col_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
-	const char* rtn = pEntity_gurax->GetItemText(item, col);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetItemText(item, col);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ListCtrl#GetItemTextColour(item as Number) {block?}

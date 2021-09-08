@@ -108,8 +108,8 @@ Gurax_ImplementMethodEx(wxControl, GetLabel_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetLabel();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetLabel();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Control#GetLabelText()
@@ -128,8 +128,8 @@ Gurax_ImplementMethodEx(wxControl, GetLabelText_gurax, processor_gurax, argument
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetLabelText();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetLabelText();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Control#GetSizeFromTextSizeXY(xlen as Number, ylen? as Number) {block?}

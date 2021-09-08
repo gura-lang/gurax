@@ -106,8 +106,8 @@ Gurax_ImplementMethodEx(wxButton, GetLabel_gurax, processor_gurax, argument_gura
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetLabel();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetLabel();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Button#SetAuthNeeded(needed? as Bool)

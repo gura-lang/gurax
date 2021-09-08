@@ -99,7 +99,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AddRoot_gurax, processor_gurax, argument_gur
 	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->AddRoot(text, image, selImage, new TreeItemData(data.Reference())
+		pEntity_gurax->AddRoot(text, image, selImage, TreeItemData::Create(data)
 		)));
 }
 
@@ -136,7 +136,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AppendItem_gurax, processor_gurax, argument_
 	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->AppendItem(parent, text, image, selImage, new TreeItemData(data.Reference())
+		pEntity_gurax->AppendItem(parent, text, image, selImage, TreeItemData::Create(data)
 		)));
 }
 
@@ -936,8 +936,8 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetItemText_gurax, processor_gurax, argument
 	Value_wxTreeItemId& value_item = args_gurax.Pick<Value_wxTreeItemId>();
 	const wxTreeItemId& item = value_item.GetEntity();
 	// Function body
-	const char* rtn = pEntity_gurax->GetItemText(item);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetItemText(item);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.TreeCtrl#GetItemTextColour(item as wx.TreeItemId) {block?}

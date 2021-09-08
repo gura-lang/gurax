@@ -202,8 +202,8 @@ Gurax_ImplementMethodEx(wxNotebook, GetPageText_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	size_t nPage = args_gurax.PickNumber<size_t>();
 	// Function body
-	const char* rtn = pEntity_gurax->GetPageText(nPage);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetPageText(nPage);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Notebook#SetPageText(page as Number, text as String)

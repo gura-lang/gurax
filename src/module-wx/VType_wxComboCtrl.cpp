@@ -371,8 +371,8 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetHint_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetHint();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetHint();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ComboCtrl#GetInsertionPoint()
@@ -536,8 +536,8 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetValue_gurax, processor_gurax, argument_g
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetValue();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetValue();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ComboCtrl#HidePopup(generateEvent? as Bool)
@@ -1471,8 +1471,8 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetRange_gurax, processor_gurax, argument_g
 	long from = args_gurax.PickNumber<long>();
 	long to = args_gurax.PickNumber<long>();
 	// Function body
-	const char* rtn = pEntity_gurax->GetRange(from, to);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetRange(from, to);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ComboCtrl#GetStringSelection()
@@ -1491,8 +1491,8 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetStringSelection_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetStringSelection();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetStringSelection();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ComboCtrl#IsEditable()

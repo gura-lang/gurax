@@ -81,7 +81,7 @@ public:
 	Value& GetValue() { return *_pValue; }
 	const Value& GetValue() const { return *_pValue; }
 public:
-	static wxClientData* Create(const Value& value) { return new TreeItemData(value.Reference()); }
+	static TreeItemData* Create(const Value& value) { return new TreeItemData(value.Reference()); }
 };
 
 //-----------------------------------------------------------------------------

@@ -15,35 +15,56 @@ MyFrame = class(wx.Frame) {
 }
 
 PanelTop = class(wx.Panel) {
+	treeCtrl as wx.TreeCtrl
+	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
-		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		ctrl = wx.TreeCtrl(this)
-		sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
-		ctrl.AddRoot('root') {|itemId|
-			ctrl.AppendItem(itemId, 'child 1', data = 'hello 1')
-			ctrl.AppendItem(itemId, 'child 2') {|itemId|
-				ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1')
-				ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2')
-				ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3')
-				ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4')
+		wx.TreeCtrl(this) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(3).Expand())
+			ctrl.AddRoot('root') {|itemId|
+				ctrl.AppendItem(itemId, 'child 1', data = 'hello 1')
+				ctrl.AppendItem(itemId, 'child 2') {|itemId|
+					ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1')
+					ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2')
+					ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3')
+					ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4')
+				}
+				ctrl.AppendItem(itemId, 'child 3')
+				ctrl.AppendItem(itemId, 'child 4')
+				ctrl.AppendItem(itemId, 'child 5') {|itemId|
+					ctrl.AppendItem(itemId, 'child 5-1')
+					ctrl.AppendItem(itemId, 'child 5-2')
+					ctrl.AppendItem(itemId, 'child 5-3')
+					ctrl.AppendItem(itemId, 'child 5-4')
+				}
+				ctrl.AppendItem(itemId, 'child 6')
 			}
-			ctrl.AppendItem(itemId, 'child 3')
-			ctrl.AppendItem(itemId, 'child 4')
-			ctrl.AppendItem(itemId, 'child 5') {|itemId|
-				ctrl.AppendItem(itemId, 'child 5-1')
-				ctrl.AppendItem(itemId, 'child 5-2')
-				ctrl.AppendItem(itemId, 'child 5-3')
-				ctrl.AppendItem(itemId, 'child 5-4')
-			}
-			ctrl.AppendItem(itemId, 'child 6')
+			this.treeCtrl = ctrl
+			wx.EVT_TREE_BEGIN_DRAG(ctrl, this.OnTree, 'TREE_BEGIN_DRAG')
+			wx.EVT_TREE_ITEM_ACTIVATED(ctrl, this.OnTree, 'TREE_ITEM_ACTIVATED')
+			wx.EVT_TREE_ITEM_COLLAPSED(ctrl, this.OnTree, 'TREE_ITEM_COLLAPSED')
+			wx.EVT_TREE_ITEM_COLLAPSING(ctrl, this.OnTree, 'TREE_ITEM_COLLAPSING')
+			wx.EVT_TREE_ITEM_EXPANDED(ctrl, this.OnTree, 'TREE_ITEM_EXPANDED')
+			wx.EVT_TREE_ITEM_EXPANDING(ctrl, this.OnTree, 'TREE_ITEM_EXPANDING')
+			wx.EVT_TREE_ITEM_RIGHT_CLICK(ctrl, this.OnTree, 'TREE_ITEM_RIGHT_CLICK')
+			wx.EVT_TREE_ITEM_MIDDLE_CLICK(ctrl, this.OnTree, 'TREE_ITEM_MIDDLE_CLICK')
+			wx.EVT_TREE_SEL_CHANGED(ctrl, this.OnTree, 'TREE_SEL_CHANGED')
+			wx.EVT_TREE_SEL_CHANGING(ctrl, this.OnTree, 'TREE_SEL_CHANGING')
+			//wx.EVT_TREE_KEY_DOWN(ctrl, this.OnTree, 'TREE_KEY_DOWN')
 		}
-		ctrl.Bind(wx.EVT_TREE_SEL_CHANGED, this.OnTree, ctrl)
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
 	}
 	OnTree(event) = {
-		ctrl = event.GetEventUserData()
+		eventName = event.GetEventUserData()
 		itemId = event.GetItem()
-		Println('OnTree ', ctrl, ' ', itemId, ' ', ctrl.GetItemData(itemId))
+		this.Printf('%s(%s)\n', eventName, this.treeCtrl.GetItemText(itemId))
+	}
+	Printf(format as String, args*) = {
+		this.textCtrl.WriteText(Format(format, args*))
 	}
 }
 

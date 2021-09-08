@@ -68,8 +68,8 @@ Gurax_ImplementMethodEx(wxToolTip, GetTip_gurax, processor_gurax, argument_gurax
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetTip();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetTip();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ToolTip#GetWindow() {block?}

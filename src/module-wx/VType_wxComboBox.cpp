@@ -325,8 +325,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetString_gurax, processor_gurax, argument_g
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	const char* rtn = pEntity_gurax->GetString(n);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetString(n);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ComboBox#GetStringSelection()
@@ -345,8 +345,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetStringSelection_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetStringSelection();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetStringSelection();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ComboBox#SetString(n as Number, text as String)
@@ -1025,8 +1025,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetRange_gurax, processor_gurax, argument_gu
 	long from = args_gurax.PickNumber<long>();
 	long to = args_gurax.PickNumber<long>();
 	// Function body
-	const char* rtn = pEntity_gurax->GetRange(from, to);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetRange(from, to);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ComboBox#GetValue()
@@ -1045,8 +1045,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetValue_gurax, processor_gurax, argument_gu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetValue();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetValue();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ComboBox#IsEditable()
@@ -1335,8 +1335,8 @@ Gurax_ImplementMethodEx(wxComboBox, GetHint_gurax, processor_gurax, argument_gur
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetHint();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetHint();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ComboBox#GetMargins() {block?}

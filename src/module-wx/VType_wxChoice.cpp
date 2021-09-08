@@ -265,8 +265,8 @@ Gurax_ImplementMethodEx(wxChoice, GetString_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	unsigned int n = args_gurax.PickNumber<unsigned int>();
 	// Function body
-	const char* rtn = pEntity_gurax->GetString(n);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetString(n);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Choice#SetString(pos as Number, s as String)

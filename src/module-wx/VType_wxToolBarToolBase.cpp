@@ -372,8 +372,8 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetLabel_gurax, processor_gurax, argu
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetLabel();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetLabel();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ToolBarToolBase#GetShortHelp()
@@ -392,8 +392,8 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetShortHelp_gurax, processor_gurax, 
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetShortHelp();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetShortHelp();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ToolBarToolBase#GetLongHelp()
@@ -412,8 +412,8 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetLongHelp_gurax, processor_gurax, a
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	const char* rtn = pEntity_gurax->GetLongHelp();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetLongHelp();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.ToolBarToolBase#GetClientData() {block?}

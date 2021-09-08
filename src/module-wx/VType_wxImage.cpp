@@ -847,8 +847,8 @@ Gurax_ImplementMethodEx(wxImage, GetOption_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const char* name = args_gurax.PickString();
 	// Function body
-	const char* rtn = pEntity_gurax->GetOption(name);
-	return new Gurax::Value_String(rtn);
+	wxString rtn = pEntity_gurax->GetOption(name);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Image#GetOptionInt(name as String)
@@ -1323,8 +1323,8 @@ Gurax_DeclareClassMethodAlias(wxImage, GetImageExtWildcard_gurax, "GetImageExtWi
 Gurax_ImplementClassMethodEx(wxImage, GetImageExtWildcard_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	const char* rtn = wxImage::GetImageExtWildcard();
-	return new Gurax::Value_String(rtn);
+	wxString rtn = wxImage::GetImageExtWildcard();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
 // wx.Image.AddHandler(handler as wx.ImageHandler)

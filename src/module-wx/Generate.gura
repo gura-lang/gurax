@@ -29,8 +29,8 @@ r.DeclareType('String', 'const char*', 'String',
 	auto ${varName} = args_gurax.PickListT<${this.cType}>(Gurax::Value_${this.vtype}::ValueForVector);
 	'''
 	codeFunctionBody = R'''
-	${this.cType} rtn = ${caller};
-	return new Gurax::Value_${this.vtype}(rtn);
+	wxString rtn = ${caller};
+	return new Gurax::Value_${this.vtype}(static_cast<const char*>(rtn.c_str()));
 	''')
 
 r.DeclareType('const_String_r', 'const char*', 'String',
@@ -126,7 +126,7 @@ r.DeclareType('TreeItemData_p', 'const Value&', 'Any',
 	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	'''
 	codeArgRef = R'''
-	new TreeItemData(${varName}.Reference())
+	TreeItemData::Create(${varName})
 	'''
 	codeFunctionBody = R'''
 	TreeItemData* rtn = dynamic_cast<TreeItemData*>(${caller});
