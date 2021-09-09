@@ -28,10 +28,298 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.ImageList(width as Number, height as Number, mask? as Bool, initialCount? as Number) {block?} {block?}
+Gurax_DeclareConstructorAlias(ImageList_gurax, "ImageList")
+{
+	Declare(VTYPE_wxImageList, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("initialCount", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.ImageList.");
+}
+
+Gurax_ImplementConstructorEx(ImageList_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	bool mask = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	bool initialCount_validFlag = args_gurax.IsValid();
+	int initialCount = initialCount_validFlag? args_gurax.PickNumber<int>() : 1;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
+		wxImageList(width, height, mask, initialCount)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ImageList#Add(bitmap as wx.Bitmap, mask? as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxImageList, Add_gurax, "Add")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mask", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, Add_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const wxBitmap& mask = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+	// Function body
+	int rtn = pEntity_gurax->Add(bitmap, mask);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ImageList#Create(width as Number, height as Number, mask? as Bool, initialCount? as Number)
+Gurax_DeclareMethodAlias(wxImageList, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("initialCount", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	bool mask = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	bool initialCount_validFlag = args_gurax.IsValid();
+	int initialCount = initialCount_validFlag? args_gurax.PickNumber<int>() : 1;
+	// Function body
+	bool rtn = pEntity_gurax->Create(width, height, mask, initialCount);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ImageList#Draw(index as Number, dc as wx.DC, x as Number, y as Number, flags? as Number, solidBackground? as Bool)
+Gurax_DeclareMethodAlias(wxImageList, Draw_gurax, "Draw")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("solidBackground", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, Draw_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	Value_wxDC& value_dc = args_gurax.Pick<Value_wxDC>();
+	wxDC& dc = value_dc.GetEntity();
+	int x = args_gurax.PickNumber<int>();
+	int y = args_gurax.PickNumber<int>();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxIMAGELIST_DRAW_NORMAL;
+	bool solidBackground = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	// Function body
+	bool rtn = pEntity_gurax->Draw(index, dc, x, y, flags, solidBackground);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ImageList#GetBitmap(index as Number) {block?}
+Gurax_DeclareMethodAlias(wxImageList, GetBitmap_gurax, "GetBitmap")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, GetBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetBitmap(index)));
+}
+
+// wx.ImageList#GetIcon(index as Number) {block?}
+Gurax_DeclareMethodAlias(wxImageList, GetIcon_gurax, "GetIcon")
+{
+	Declare(VTYPE_wxIcon, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, GetIcon_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxIcon(
+		pEntity_gurax->GetIcon(index)));
+}
+
+// wx.ImageList#GetImageCount()
+Gurax_DeclareMethodAlias(wxImageList, GetImageCount_gurax, "GetImageCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, GetImageCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetImageCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ImageList#GetSize(index as Number)
+Gurax_DeclareMethodAlias(wxImageList, GetSize_gurax, "GetSize")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, GetSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	int width, height;
+	if (!pEntity_gurax->GetSize(index, width, height)) return Value::nil();
+	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+}
+
+// wx.ImageList#Remove(index as Number)
+Gurax_DeclareMethodAlias(wxImageList, Remove_gurax, "Remove")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, Remove_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->Remove(index);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ImageList#RemoveAll()
+Gurax_DeclareMethodAlias(wxImageList, RemoveAll_gurax, "RemoveAll")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, RemoveAll_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->RemoveAll();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ImageList#Replace(index as Number, bitmap as wx.Bitmap, mask? as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxImageList, Replace_gurax, "Replace")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("mask", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxImageList, Replace_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	const wxBitmap& mask = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+	// Function body
+	bool rtn = pEntity_gurax->Replace(index, bitmap, mask);
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +335,18 @@ void VType_wxImageList::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable);
+	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(ImageList_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxImageList, Add_gurax));
+	Assign(Gurax_CreateMethod(wxImageList, Create_gurax));
+	Assign(Gurax_CreateMethod(wxImageList, Draw_gurax));
+	Assign(Gurax_CreateMethod(wxImageList, GetBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxImageList, GetIcon_gurax));
+	Assign(Gurax_CreateMethod(wxImageList, GetImageCount_gurax));
+	Assign(Gurax_CreateMethod(wxImageList, GetSize_gurax));
+	Assign(Gurax_CreateMethod(wxImageList, Remove_gurax));
+	Assign(Gurax_CreateMethod(wxImageList, RemoveAll_gurax));
+	Assign(Gurax_CreateMethod(wxImageList, Replace_gurax));
 }
 
 //------------------------------------------------------------------------------

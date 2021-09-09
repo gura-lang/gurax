@@ -2,4 +2,23 @@
 // VType_wxImageList.gura
 //==============================================================================
 ImageList = Class(Object) {
+	__init__(width as int, height as int, mask as bool = true, initialCount as int = 1)
+	Add(bitmap as const_Bitmap_r, mask as const_Bitmap_r = wxNullBitmap) as int
+	//Add(bitmap as const_Bitmap_r, maskColour as const_Colour_r) as int
+	//Add(icon as const_Icon_r) as int
+	Create(width as int, height as int, mask as bool = true, initialCount as int = 1) as bool
+	Draw(index as int, dc as DC_r, x as int, y as int, flags as int = wxIMAGELIST_DRAW_NORMAL, solidBackground as bool = false) as bool
+	GetBitmap(index as int) as Bitmap
+	GetIcon(index as int) as Icon
+	GetImageCount() as int
+	GetSize(index as int):nil as Tuple@gurax = \
+		R'''
+		int width, height;
+		if (!pEntity_gurax->GetSize(index, width, height)) return Value::nil();
+		return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+		'''
+	Remove(index as int) as bool
+	RemoveAll() as bool
+	Replace(index as int, bitmap as const_Bitmap_r, mask as const_Bitmap_r = wxNullBitmap) as bool
+	//Replace(index as int, icon as const_Icon_r) as bool
 }
