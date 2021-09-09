@@ -59,12 +59,11 @@ Gurax_ImplementConstructorEx(ImageList_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.ImageList#Add(bitmap as wx.Bitmap, mask? as wx.Bitmap)
+// wx.ImageList#Add(args* as Any)
 Gurax_DeclareMethodAlias(wxImageList, Add_gurax, "Add")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("mask", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -78,12 +77,57 @@ Gurax_ImplementMethodEx(wxImageList, Add_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
-	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const wxBitmap& mask = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	int rtn = pEntity_gurax->Add(bitmap, mask);
-	return new Gurax::Value_Number(rtn);
+	// Add(bitmap as const_Bitmap_r, mask as const_Bitmap_r = wxNullBitmap) as int
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("mask", VTYPE_wxBitmap, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+		const wxBitmap& mask = args.IsValid()? args.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+		int rtn = pEntity_gurax->Add(bitmap, mask);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::Clear();
+	// Add(bitmap as const_Bitmap_r, maskColour as const_Colour_r) as int
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("maskColour", VTYPE_wxColour);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+		const wxColour& maskColour = args.Pick<Value_wxColour>().GetEntity();
+		int rtn = pEntity_gurax->Add(bitmap, maskColour);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::Clear();
+	// Add(icon as const_Icon_r) as int
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("icon", VTYPE_wxIcon);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		const wxIcon& icon = args.Pick<Value_wxIcon>().GetEntity();
+		int rtn = pEntity_gurax->Add(icon);
+		return new Value_Number(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.ImageList#Create(width as Number, height as Number, mask? as Bool, initialCount? as Number)
@@ -292,13 +336,11 @@ Gurax_ImplementMethodEx(wxImageList, RemoveAll_gurax, processor_gurax, argument_
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ImageList#Replace(index as Number, bitmap as wx.Bitmap, mask? as wx.Bitmap)
+// wx.ImageList#Replace(args* as Any)
 Gurax_DeclareMethodAlias(wxImageList, Replace_gurax, "Replace")
 {
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("mask", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -312,13 +354,44 @@ Gurax_ImplementMethodEx(wxImageList, Replace_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int index = args_gurax.PickNumber<int>();
-	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
-	const wxBitmap& bitmap = value_bitmap.GetEntity();
-	const wxBitmap& mask = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	bool rtn = pEntity_gurax->Replace(index, bitmap, mask);
-	return new Gurax::Value_Bool(rtn);
+	// Replace(index as int, bitmap as const_Bitmap_r, mask as const_Bitmap_r = wxNullBitmap) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("index", VTYPE_Number);
+			pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("mask", VTYPE_wxBitmap, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		int index = args.PickNumber<int>();
+		const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+		const wxBitmap& mask = args.IsValid()? args.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+		bool rtn = pEntity_gurax->Replace(index, bitmap, mask);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::Clear();
+	// Replace(index as int, icon as const_Icon_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("index", VTYPE_Number);
+			pDeclCallable->DeclareArg("icon", VTYPE_wxIcon);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		int index = args.PickNumber<int>();
+		const wxIcon& icon = args.Pick<Value_wxIcon>().GetEntity();
+		bool rtn = pEntity_gurax->Replace(index, icon);
+		return new Value_Bool(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------

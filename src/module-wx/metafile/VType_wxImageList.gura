@@ -3,9 +3,58 @@
 //==============================================================================
 ImageList = Class(Object) {
 	__init__(width as int, height as int, mask as bool = true, initialCount as int = 1)
-	Add(bitmap as const_Bitmap_r, mask as const_Bitmap_r = wxNullBitmap) as int
-	//Add(bitmap as const_Bitmap_r, maskColour as const_Colour_r) as int
-	//Add(icon as const_Icon_r) as int
+	Add(args* as any) as int = \
+		R'''
+		// Add(bitmap as const_Bitmap_r, mask as const_Bitmap_r = wxNullBitmap) as int
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("mask", VTYPE_wxBitmap, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+			const wxBitmap& mask = args.IsValid()? args.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+			int rtn = pEntity_gurax->Add(bitmap, mask);
+			return new Value_Number(rtn);
+		} while (0);
+		Error::Clear();
+		// Add(bitmap as const_Bitmap_r, maskColour as const_Colour_r) as int
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("maskColour", VTYPE_wxColour);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+			const wxColour& maskColour = args.Pick<Value_wxColour>().GetEntity();
+			int rtn = pEntity_gurax->Add(bitmap, maskColour);
+			return new Value_Number(rtn);
+		} while (0);
+		Error::Clear();
+		// Add(icon as const_Icon_r) as int
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("icon", VTYPE_wxIcon);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			const wxIcon& icon = args.Pick<Value_wxIcon>().GetEntity();
+			int rtn = pEntity_gurax->Add(icon);
+			return new Value_Number(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	Create(width as int, height as int, mask as bool = true, initialCount as int = 1) as bool
 	Draw(index as int, dc as DC_r, x as int, y as int, flags as int = wxIMAGELIST_DRAW_NORMAL, solidBackground as bool = false) as bool
 	GetBitmap(index as int) as Bitmap
@@ -19,6 +68,43 @@ ImageList = Class(Object) {
 		'''
 	Remove(index as int) as bool
 	RemoveAll() as bool
-	Replace(index as int, bitmap as const_Bitmap_r, mask as const_Bitmap_r = wxNullBitmap) as bool
-	//Replace(index as int, icon as const_Icon_r) as bool
+	Replace(args* as any) as int = \
+		R'''
+		// Replace(index as int, bitmap as const_Bitmap_r, mask as const_Bitmap_r = wxNullBitmap) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("index", VTYPE_Number);
+				pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("mask", VTYPE_wxBitmap, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int index = args.PickNumber<int>();
+			const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+			const wxBitmap& mask = args.IsValid()? args.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+			bool rtn = pEntity_gurax->Replace(index, bitmap, mask);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::Clear();
+		// Replace(index as int, icon as const_Icon_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("index", VTYPE_Number);
+				pDeclCallable->DeclareArg("icon", VTYPE_wxIcon);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			int index = args.PickNumber<int>();
+			const wxIcon& icon = args.Pick<Value_wxIcon>().GetEntity();
+			bool rtn = pEntity_gurax->Replace(index, icon);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 }
