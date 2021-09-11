@@ -262,6 +262,9 @@ public:
 ${elsif (!classNameParent || classInfo.holdEntityFlag)}
 protected:
 	wx${className} _entity;
+${else}
+protected:
+	wx${className}& _entity;
 ${end}
 ${if (evtHandlerOrDerivFlag)}
 public:
@@ -308,11 +311,11 @@ ${elsif (classNameRoot == 'RefCounter')}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(pEntity, vtype), _pEntity(pEntity) { pEntity->IncRef(); }
 ${elsif (eventDerivFlag)}
-	Value_wx${className}(const wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
-		Value_wx${classNameParent}(entity, pValueUserData, vtype) {}
+	Value_wx${className}(wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(entity, pValueUserData, vtype), _entity(dynamic_cast<wx${className}&>(entity)) {}
 ${else}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
-		Value_wx${classNameParent}(entity, vtype) {}
+		Value_wx${classNameParent}(entity, vtype), _entity(const_cast<wx${className}&>(entity)) {}
 ${end}
 	// Copy constructor/operator
 	Value_wx${className}(const Value_wx${className}& src) = delete;
@@ -339,24 +342,11 @@ ${elsif (classInfo.loosePointerFlag || (classInfoRoot && classInfoRoot.loosePoin
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity; }
 	const wx${className}* GetEntityPtr() const { return _pEntity; }
-${elsif (!classNameRoot || classInfo.holdEntityFlag)}
+${else}
 	wx${className}& GetEntity() { return _entity; }
 	const wx${className}& GetEntity() const { return _entity; }
 	wx${className}* GetEntityPtr() { return &_entity; }
 	const wx${className}* GetEntityPtr() const { return &_entity; }
-${else}
-	wx${className}& GetEntity() {
-		return reinterpret_cast<wx${className}&>(Value_wx${classNameRoot}::GetEntity());
-	}
-	const wx${className}& GetEntity() const {
-		return reinterpret_cast<const wx${className}&>(Value_wx${classNameRoot}::GetEntity());
-	}
-	wx${className}* GetEntityPtr() {
-		return reinterpret_cast<wx${className}*>(Value_wx${classNameRoot}::GetEntityPtr());
-	}
-	const wx${className}* GetEntityPtr() const {
-		return reinterpret_cast<const wx${className}*>(Value_wx${classNameRoot}::GetEntityPtr());
-	}
 ${end}
 public:
 	static wx${className}& GetEntity(Value& value) {

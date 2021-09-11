@@ -31,14 +31,16 @@ public:
 	Gurax_DeclareReferable(Value_wxMouseCaptureChangedEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxMouseCaptureChangedEvent");
+protected:
+	wxMouseCaptureChangedEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxMouseCaptureChangedEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxMouseCaptureChangedEvent() = delete;
-	Value_wxMouseCaptureChangedEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxMouseCaptureChangedEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxMouseCaptureChangedEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxMouseCaptureChangedEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxMouseCaptureChangedEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxMouseCaptureChangedEvent(const Value_wxMouseCaptureChangedEvent& src) = delete;
 	Value_wxMouseCaptureChangedEvent& operator=(const Value_wxMouseCaptureChangedEvent& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxMouseCaptureChangedEvent() = default;
 public:
-	wxMouseCaptureChangedEvent& GetEntity() {
-		return reinterpret_cast<wxMouseCaptureChangedEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxMouseCaptureChangedEvent& GetEntity() const {
-		return reinterpret_cast<const wxMouseCaptureChangedEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxMouseCaptureChangedEvent* GetEntityPtr() {
-		return reinterpret_cast<wxMouseCaptureChangedEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxMouseCaptureChangedEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxMouseCaptureChangedEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxMouseCaptureChangedEvent& GetEntity() { return _entity; }
+	const wxMouseCaptureChangedEvent& GetEntity() const { return _entity; }
+	wxMouseCaptureChangedEvent* GetEntityPtr() { return &_entity; }
+	const wxMouseCaptureChangedEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxMouseCaptureChangedEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMouseCaptureChangedEvent&>(value).GetEntity();

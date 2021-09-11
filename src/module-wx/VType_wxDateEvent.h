@@ -32,14 +32,16 @@ public:
 	Gurax_DeclareReferable(Value_wxDateEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxDateEvent");
+protected:
+	wxDateEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxDateEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxDateEvent() = delete;
-	Value_wxDateEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxDateEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxDateEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxDateEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxDateEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxDateEvent(const Value_wxDateEvent& src) = delete;
 	Value_wxDateEvent& operator=(const Value_wxDateEvent& src) = delete;
@@ -50,18 +52,10 @@ protected:
 	// Destructor
 	~Value_wxDateEvent() = default;
 public:
-	wxDateEvent& GetEntity() {
-		return reinterpret_cast<wxDateEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxDateEvent& GetEntity() const {
-		return reinterpret_cast<const wxDateEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxDateEvent* GetEntityPtr() {
-		return reinterpret_cast<wxDateEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxDateEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxDateEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxDateEvent& GetEntity() { return _entity; }
+	const wxDateEvent& GetEntity() const { return _entity; }
+	wxDateEvent* GetEntityPtr() { return &_entity; }
+	const wxDateEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxDateEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxDateEvent&>(value).GetEntity();

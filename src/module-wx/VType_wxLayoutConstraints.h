@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxLayoutConstraints);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxLayoutConstraints");
+protected:
+	wxLayoutConstraints& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxLayoutConstraints() = delete;
 	explicit Value_wxLayoutConstraints(const wxLayoutConstraints& entity, VType& vtype = VTYPE_wxLayoutConstraints) :
-		Value_wxObject(entity, vtype) {}
+		Value_wxObject(entity, vtype), _entity(const_cast<wxLayoutConstraints&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxLayoutConstraints(const Value_wxLayoutConstraints& src) = delete;
 	Value_wxLayoutConstraints& operator=(const Value_wxLayoutConstraints& src) = delete;
@@ -48,18 +50,10 @@ protected:
 	// Destructor
 	~Value_wxLayoutConstraints() = default;
 public:
-	wxLayoutConstraints& GetEntity() {
-		return reinterpret_cast<wxLayoutConstraints&>(Value_wxObject::GetEntity());
-	}
-	const wxLayoutConstraints& GetEntity() const {
-		return reinterpret_cast<const wxLayoutConstraints&>(Value_wxObject::GetEntity());
-	}
-	wxLayoutConstraints* GetEntityPtr() {
-		return reinterpret_cast<wxLayoutConstraints*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxLayoutConstraints* GetEntityPtr() const {
-		return reinterpret_cast<const wxLayoutConstraints*>(Value_wxObject::GetEntityPtr());
-	}
+	wxLayoutConstraints& GetEntity() { return _entity; }
+	const wxLayoutConstraints& GetEntity() const { return _entity; }
+	wxLayoutConstraints* GetEntityPtr() { return &_entity; }
+	const wxLayoutConstraints* GetEntityPtr() const { return &_entity; }
 public:
 	static wxLayoutConstraints& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxLayoutConstraints&>(value).GetEntity();

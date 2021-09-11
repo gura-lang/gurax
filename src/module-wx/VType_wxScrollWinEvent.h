@@ -31,14 +31,16 @@ public:
 	Gurax_DeclareReferable(Value_wxScrollWinEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxScrollWinEvent");
+protected:
+	wxScrollWinEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxScrollWinEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxScrollWinEvent() = delete;
-	Value_wxScrollWinEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxScrollWinEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxScrollWinEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxScrollWinEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxScrollWinEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxScrollWinEvent(const Value_wxScrollWinEvent& src) = delete;
 	Value_wxScrollWinEvent& operator=(const Value_wxScrollWinEvent& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxScrollWinEvent() = default;
 public:
-	wxScrollWinEvent& GetEntity() {
-		return reinterpret_cast<wxScrollWinEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxScrollWinEvent& GetEntity() const {
-		return reinterpret_cast<const wxScrollWinEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxScrollWinEvent* GetEntityPtr() {
-		return reinterpret_cast<wxScrollWinEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxScrollWinEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxScrollWinEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxScrollWinEvent& GetEntity() { return _entity; }
+	const wxScrollWinEvent& GetEntity() const { return _entity; }
+	wxScrollWinEvent* GetEntityPtr() { return &_entity; }
+	const wxScrollWinEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxScrollWinEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxScrollWinEvent&>(value).GetEntity();

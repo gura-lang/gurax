@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxFindReplaceData);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxFindReplaceData");
+protected:
+	wxFindReplaceData& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxFindReplaceData() = delete;
 	explicit Value_wxFindReplaceData(const wxFindReplaceData& entity, VType& vtype = VTYPE_wxFindReplaceData) :
-		Value_wxObject(entity, vtype) {}
+		Value_wxObject(entity, vtype), _entity(const_cast<wxFindReplaceData&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxFindReplaceData(const Value_wxFindReplaceData& src) = delete;
 	Value_wxFindReplaceData& operator=(const Value_wxFindReplaceData& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxFindReplaceData() = default;
 public:
-	wxFindReplaceData& GetEntity() {
-		return reinterpret_cast<wxFindReplaceData&>(Value_wxObject::GetEntity());
-	}
-	const wxFindReplaceData& GetEntity() const {
-		return reinterpret_cast<const wxFindReplaceData&>(Value_wxObject::GetEntity());
-	}
-	wxFindReplaceData* GetEntityPtr() {
-		return reinterpret_cast<wxFindReplaceData*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxFindReplaceData* GetEntityPtr() const {
-		return reinterpret_cast<const wxFindReplaceData*>(Value_wxObject::GetEntityPtr());
-	}
+	wxFindReplaceData& GetEntity() { return _entity; }
+	const wxFindReplaceData& GetEntity() const { return _entity; }
+	wxFindReplaceData* GetEntityPtr() { return &_entity; }
+	const wxFindReplaceData* GetEntityPtr() const { return &_entity; }
 public:
 	static wxFindReplaceData& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxFindReplaceData&>(value).GetEntity();

@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxMask);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxMask");
+protected:
+	wxMask& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxMask() = delete;
 	explicit Value_wxMask(const wxMask& entity, VType& vtype = VTYPE_wxMask) :
-		Value_wxObject(entity, vtype) {}
+		Value_wxObject(entity, vtype), _entity(const_cast<wxMask&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxMask(const Value_wxMask& src) = delete;
 	Value_wxMask& operator=(const Value_wxMask& src) = delete;
@@ -48,18 +50,10 @@ protected:
 	// Destructor
 	~Value_wxMask() = default;
 public:
-	wxMask& GetEntity() {
-		return reinterpret_cast<wxMask&>(Value_wxObject::GetEntity());
-	}
-	const wxMask& GetEntity() const {
-		return reinterpret_cast<const wxMask&>(Value_wxObject::GetEntity());
-	}
-	wxMask* GetEntityPtr() {
-		return reinterpret_cast<wxMask*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxMask* GetEntityPtr() const {
-		return reinterpret_cast<const wxMask*>(Value_wxObject::GetEntityPtr());
-	}
+	wxMask& GetEntity() { return _entity; }
+	const wxMask& GetEntity() const { return _entity; }
+	wxMask* GetEntityPtr() { return &_entity; }
+	const wxMask* GetEntityPtr() const { return &_entity; }
 public:
 	static wxMask& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMask&>(value).GetEntity();

@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxGridCellTextEditor);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGridCellTextEditor");
+protected:
+	wxGridCellTextEditor& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxGridCellTextEditor() = delete;
 	explicit Value_wxGridCellTextEditor(const wxGridCellTextEditor& entity, VType& vtype = VTYPE_wxGridCellTextEditor) :
-		Value_wxGridCellEditor(entity, vtype) {}
+		Value_wxGridCellEditor(entity, vtype), _entity(const_cast<wxGridCellTextEditor&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxGridCellTextEditor(const Value_wxGridCellTextEditor& src) = delete;
 	Value_wxGridCellTextEditor& operator=(const Value_wxGridCellTextEditor& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxGridCellTextEditor() = default;
 public:
-	wxGridCellTextEditor& GetEntity() {
-		return reinterpret_cast<wxGridCellTextEditor&>(Value_wxClientDataContainer::GetEntity());
-	}
-	const wxGridCellTextEditor& GetEntity() const {
-		return reinterpret_cast<const wxGridCellTextEditor&>(Value_wxClientDataContainer::GetEntity());
-	}
-	wxGridCellTextEditor* GetEntityPtr() {
-		return reinterpret_cast<wxGridCellTextEditor*>(Value_wxClientDataContainer::GetEntityPtr());
-	}
-	const wxGridCellTextEditor* GetEntityPtr() const {
-		return reinterpret_cast<const wxGridCellTextEditor*>(Value_wxClientDataContainer::GetEntityPtr());
-	}
+	wxGridCellTextEditor& GetEntity() { return _entity; }
+	const wxGridCellTextEditor& GetEntity() const { return _entity; }
+	wxGridCellTextEditor* GetEntityPtr() { return &_entity; }
+	const wxGridCellTextEditor* GetEntityPtr() const { return &_entity; }
 public:
 	static wxGridCellTextEditor& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGridCellTextEditor&>(value).GetEntity();

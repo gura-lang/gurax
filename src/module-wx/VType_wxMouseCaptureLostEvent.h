@@ -31,14 +31,16 @@ public:
 	Gurax_DeclareReferable(Value_wxMouseCaptureLostEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxMouseCaptureLostEvent");
+protected:
+	wxMouseCaptureLostEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxMouseCaptureLostEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxMouseCaptureLostEvent() = delete;
-	Value_wxMouseCaptureLostEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxMouseCaptureLostEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxMouseCaptureLostEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxMouseCaptureLostEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxMouseCaptureLostEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxMouseCaptureLostEvent(const Value_wxMouseCaptureLostEvent& src) = delete;
 	Value_wxMouseCaptureLostEvent& operator=(const Value_wxMouseCaptureLostEvent& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxMouseCaptureLostEvent() = default;
 public:
-	wxMouseCaptureLostEvent& GetEntity() {
-		return reinterpret_cast<wxMouseCaptureLostEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxMouseCaptureLostEvent& GetEntity() const {
-		return reinterpret_cast<const wxMouseCaptureLostEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxMouseCaptureLostEvent* GetEntityPtr() {
-		return reinterpret_cast<wxMouseCaptureLostEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxMouseCaptureLostEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxMouseCaptureLostEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxMouseCaptureLostEvent& GetEntity() { return _entity; }
+	const wxMouseCaptureLostEvent& GetEntity() const { return _entity; }
+	wxMouseCaptureLostEvent* GetEntityPtr() { return &_entity; }
+	const wxMouseCaptureLostEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxMouseCaptureLostEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMouseCaptureLostEvent&>(value).GetEntity();

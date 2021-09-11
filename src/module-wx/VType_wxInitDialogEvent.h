@@ -31,14 +31,16 @@ public:
 	Gurax_DeclareReferable(Value_wxInitDialogEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxInitDialogEvent");
+protected:
+	wxInitDialogEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxInitDialogEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxInitDialogEvent() = delete;
-	Value_wxInitDialogEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxInitDialogEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxInitDialogEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxInitDialogEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxInitDialogEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxInitDialogEvent(const Value_wxInitDialogEvent& src) = delete;
 	Value_wxInitDialogEvent& operator=(const Value_wxInitDialogEvent& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxInitDialogEvent() = default;
 public:
-	wxInitDialogEvent& GetEntity() {
-		return reinterpret_cast<wxInitDialogEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxInitDialogEvent& GetEntity() const {
-		return reinterpret_cast<const wxInitDialogEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxInitDialogEvent* GetEntityPtr() {
-		return reinterpret_cast<wxInitDialogEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxInitDialogEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxInitDialogEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxInitDialogEvent& GetEntity() { return _entity; }
+	const wxInitDialogEvent& GetEntity() const { return _entity; }
+	wxInitDialogEvent* GetEntityPtr() { return &_entity; }
+	const wxInitDialogEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxInitDialogEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxInitDialogEvent&>(value).GetEntity();

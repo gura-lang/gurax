@@ -44,13 +44,13 @@ public:
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE EventValueFactory {
 public:
-	virtual Value* CreateValue(const wxEvent& event, Value* pValueUserData) const = 0;
+	virtual Value* CreateValue(wxEvent& event, Value* pValueUserData) const = 0;
 };
 
 template<typename T_Value>
 class EventValueFactoryDeriv : public EventValueFactory {
 public:
-	virtual Value* CreateValue(const wxEvent& event, Value* pValueUserData) const override {
+	virtual Value* CreateValue(wxEvent& event, Value* pValueUserData) const override {
 		return new T_Value(event, pValueUserData);
 	}
 };

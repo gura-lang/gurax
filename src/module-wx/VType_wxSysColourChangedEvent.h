@@ -31,14 +31,16 @@ public:
 	Gurax_DeclareReferable(Value_wxSysColourChangedEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxSysColourChangedEvent");
+protected:
+	wxSysColourChangedEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxSysColourChangedEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxSysColourChangedEvent() = delete;
-	Value_wxSysColourChangedEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSysColourChangedEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxSysColourChangedEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSysColourChangedEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxSysColourChangedEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxSysColourChangedEvent(const Value_wxSysColourChangedEvent& src) = delete;
 	Value_wxSysColourChangedEvent& operator=(const Value_wxSysColourChangedEvent& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxSysColourChangedEvent() = default;
 public:
-	wxSysColourChangedEvent& GetEntity() {
-		return reinterpret_cast<wxSysColourChangedEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxSysColourChangedEvent& GetEntity() const {
-		return reinterpret_cast<const wxSysColourChangedEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxSysColourChangedEvent* GetEntityPtr() {
-		return reinterpret_cast<wxSysColourChangedEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxSysColourChangedEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxSysColourChangedEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxSysColourChangedEvent& GetEntity() { return _entity; }
+	const wxSysColourChangedEvent& GetEntity() const { return _entity; }
+	wxSysColourChangedEvent* GetEntityPtr() { return &_entity; }
+	const wxSysColourChangedEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxSysColourChangedEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxSysColourChangedEvent&>(value).GetEntity();

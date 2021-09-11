@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxToolBarToolBase);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxToolBarToolBase");
+protected:
+	wxToolBarToolBase& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxToolBarToolBase() = delete;
 	explicit Value_wxToolBarToolBase(const wxToolBarToolBase& entity, VType& vtype = VTYPE_wxToolBarToolBase) :
-		Value_wxObject(entity, vtype) {}
+		Value_wxObject(entity, vtype), _entity(const_cast<wxToolBarToolBase&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxToolBarToolBase(const Value_wxToolBarToolBase& src) = delete;
 	Value_wxToolBarToolBase& operator=(const Value_wxToolBarToolBase& src) = delete;
@@ -48,18 +50,10 @@ protected:
 	// Destructor
 	~Value_wxToolBarToolBase() = default;
 public:
-	wxToolBarToolBase& GetEntity() {
-		return reinterpret_cast<wxToolBarToolBase&>(Value_wxObject::GetEntity());
-	}
-	const wxToolBarToolBase& GetEntity() const {
-		return reinterpret_cast<const wxToolBarToolBase&>(Value_wxObject::GetEntity());
-	}
-	wxToolBarToolBase* GetEntityPtr() {
-		return reinterpret_cast<wxToolBarToolBase*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxToolBarToolBase* GetEntityPtr() const {
-		return reinterpret_cast<const wxToolBarToolBase*>(Value_wxObject::GetEntityPtr());
-	}
+	wxToolBarToolBase& GetEntity() { return _entity; }
+	const wxToolBarToolBase& GetEntity() const { return _entity; }
+	wxToolBarToolBase* GetEntityPtr() { return &_entity; }
+	const wxToolBarToolBase* GetEntityPtr() const { return &_entity; }
 public:
 	static wxToolBarToolBase& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxToolBarToolBase&>(value).GetEntity();

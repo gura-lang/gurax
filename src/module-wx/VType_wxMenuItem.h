@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxMenuItem);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxMenuItem");
+protected:
+	wxMenuItem& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxMenuItem() = delete;
 	explicit Value_wxMenuItem(const wxMenuItem& entity, VType& vtype = VTYPE_wxMenuItem) :
-		Value_wxObject(entity, vtype) {}
+		Value_wxObject(entity, vtype), _entity(const_cast<wxMenuItem&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxMenuItem(const Value_wxMenuItem& src) = delete;
 	Value_wxMenuItem& operator=(const Value_wxMenuItem& src) = delete;
@@ -48,18 +50,10 @@ protected:
 	// Destructor
 	~Value_wxMenuItem() = default;
 public:
-	wxMenuItem& GetEntity() {
-		return reinterpret_cast<wxMenuItem&>(Value_wxObject::GetEntity());
-	}
-	const wxMenuItem& GetEntity() const {
-		return reinterpret_cast<const wxMenuItem&>(Value_wxObject::GetEntity());
-	}
-	wxMenuItem* GetEntityPtr() {
-		return reinterpret_cast<wxMenuItem*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxMenuItem* GetEntityPtr() const {
-		return reinterpret_cast<const wxMenuItem*>(Value_wxObject::GetEntityPtr());
-	}
+	wxMenuItem& GetEntity() { return _entity; }
+	const wxMenuItem& GetEntity() const { return _entity; }
+	wxMenuItem* GetEntityPtr() { return &_entity; }
+	const wxMenuItem* GetEntityPtr() const { return &_entity; }
 public:
 	static wxMenuItem& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMenuItem&>(value).GetEntity();

@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxRichTextAttr);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxRichTextAttr");
+protected:
+	wxRichTextAttr& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxRichTextAttr() = delete;
 	explicit Value_wxRichTextAttr(const wxRichTextAttr& entity, VType& vtype = VTYPE_wxRichTextAttr) :
-		Value_wxTextAttr(entity, vtype) {}
+		Value_wxTextAttr(entity, vtype), _entity(const_cast<wxRichTextAttr&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxRichTextAttr(const Value_wxRichTextAttr& src) = delete;
 	Value_wxRichTextAttr& operator=(const Value_wxRichTextAttr& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxRichTextAttr() = default;
 public:
-	wxRichTextAttr& GetEntity() {
-		return reinterpret_cast<wxRichTextAttr&>(Value_wxTextAttr::GetEntity());
-	}
-	const wxRichTextAttr& GetEntity() const {
-		return reinterpret_cast<const wxRichTextAttr&>(Value_wxTextAttr::GetEntity());
-	}
-	wxRichTextAttr* GetEntityPtr() {
-		return reinterpret_cast<wxRichTextAttr*>(Value_wxTextAttr::GetEntityPtr());
-	}
-	const wxRichTextAttr* GetEntityPtr() const {
-		return reinterpret_cast<const wxRichTextAttr*>(Value_wxTextAttr::GetEntityPtr());
-	}
+	wxRichTextAttr& GetEntity() { return _entity; }
+	const wxRichTextAttr& GetEntity() const { return _entity; }
+	wxRichTextAttr* GetEntityPtr() { return &_entity; }
+	const wxRichTextAttr* GetEntityPtr() const { return &_entity; }
 public:
 	static wxRichTextAttr& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxRichTextAttr&>(value).GetEntity();

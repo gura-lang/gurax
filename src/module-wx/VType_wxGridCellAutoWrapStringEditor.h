@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxGridCellAutoWrapStringEditor);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGridCellAutoWrapStringEditor");
+protected:
+	wxGridCellAutoWrapStringEditor& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxGridCellAutoWrapStringEditor() = delete;
 	explicit Value_wxGridCellAutoWrapStringEditor(const wxGridCellAutoWrapStringEditor& entity, VType& vtype = VTYPE_wxGridCellAutoWrapStringEditor) :
-		Value_wxGridCellTextEditor(entity, vtype) {}
+		Value_wxGridCellTextEditor(entity, vtype), _entity(const_cast<wxGridCellAutoWrapStringEditor&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxGridCellAutoWrapStringEditor(const Value_wxGridCellAutoWrapStringEditor& src) = delete;
 	Value_wxGridCellAutoWrapStringEditor& operator=(const Value_wxGridCellAutoWrapStringEditor& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxGridCellAutoWrapStringEditor() = default;
 public:
-	wxGridCellAutoWrapStringEditor& GetEntity() {
-		return reinterpret_cast<wxGridCellAutoWrapStringEditor&>(Value_wxClientDataContainer::GetEntity());
-	}
-	const wxGridCellAutoWrapStringEditor& GetEntity() const {
-		return reinterpret_cast<const wxGridCellAutoWrapStringEditor&>(Value_wxClientDataContainer::GetEntity());
-	}
-	wxGridCellAutoWrapStringEditor* GetEntityPtr() {
-		return reinterpret_cast<wxGridCellAutoWrapStringEditor*>(Value_wxClientDataContainer::GetEntityPtr());
-	}
-	const wxGridCellAutoWrapStringEditor* GetEntityPtr() const {
-		return reinterpret_cast<const wxGridCellAutoWrapStringEditor*>(Value_wxClientDataContainer::GetEntityPtr());
-	}
+	wxGridCellAutoWrapStringEditor& GetEntity() { return _entity; }
+	const wxGridCellAutoWrapStringEditor& GetEntity() const { return _entity; }
+	wxGridCellAutoWrapStringEditor* GetEntityPtr() { return &_entity; }
+	const wxGridCellAutoWrapStringEditor* GetEntityPtr() const { return &_entity; }
 public:
 	static wxGridCellAutoWrapStringEditor& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGridCellAutoWrapStringEditor&>(value).GetEntity();

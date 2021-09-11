@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxImageList);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxImageList");
+protected:
+	wxImageList& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxImageList() = delete;
 	explicit Value_wxImageList(const wxImageList& entity, VType& vtype = VTYPE_wxImageList) :
-		Value_wxObject(entity, vtype) {}
+		Value_wxObject(entity, vtype), _entity(const_cast<wxImageList&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxImageList(const Value_wxImageList& src) = delete;
 	Value_wxImageList& operator=(const Value_wxImageList& src) = delete;
@@ -48,18 +50,10 @@ protected:
 	// Destructor
 	~Value_wxImageList() = default;
 public:
-	wxImageList& GetEntity() {
-		return reinterpret_cast<wxImageList&>(Value_wxObject::GetEntity());
-	}
-	const wxImageList& GetEntity() const {
-		return reinterpret_cast<const wxImageList&>(Value_wxObject::GetEntity());
-	}
-	wxImageList* GetEntityPtr() {
-		return reinterpret_cast<wxImageList*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxImageList* GetEntityPtr() const {
-		return reinterpret_cast<const wxImageList*>(Value_wxObject::GetEntityPtr());
-	}
+	wxImageList& GetEntity() { return _entity; }
+	const wxImageList& GetEntity() const { return _entity; }
+	wxImageList* GetEntityPtr() { return &_entity; }
+	const wxImageList* GetEntityPtr() const { return &_entity; }
 public:
 	static wxImageList& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxImageList&>(value).GetEntity();

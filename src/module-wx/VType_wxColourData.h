@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxColourData);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxColourData");
+protected:
+	wxColourData& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxColourData() = delete;
 	explicit Value_wxColourData(const wxColourData& entity, VType& vtype = VTYPE_wxColourData) :
-		Value_wxObject(entity, vtype) {}
+		Value_wxObject(entity, vtype), _entity(const_cast<wxColourData&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxColourData(const Value_wxColourData& src) = delete;
 	Value_wxColourData& operator=(const Value_wxColourData& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxColourData() = default;
 public:
-	wxColourData& GetEntity() {
-		return reinterpret_cast<wxColourData&>(Value_wxObject::GetEntity());
-	}
-	const wxColourData& GetEntity() const {
-		return reinterpret_cast<const wxColourData&>(Value_wxObject::GetEntity());
-	}
-	wxColourData* GetEntityPtr() {
-		return reinterpret_cast<wxColourData*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxColourData* GetEntityPtr() const {
-		return reinterpret_cast<const wxColourData*>(Value_wxObject::GetEntityPtr());
-	}
+	wxColourData& GetEntity() { return _entity; }
+	const wxColourData& GetEntity() const { return _entity; }
+	wxColourData* GetEntityPtr() { return &_entity; }
+	const wxColourData* GetEntityPtr() const { return &_entity; }
 public:
 	static wxColourData& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxColourData&>(value).GetEntity();

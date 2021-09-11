@@ -31,14 +31,16 @@ public:
 	Gurax_DeclareReferable(Value_wxNavigationKeyEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxNavigationKeyEvent");
+protected:
+	wxNavigationKeyEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxNavigationKeyEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxNavigationKeyEvent() = delete;
-	Value_wxNavigationKeyEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxNavigationKeyEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxNavigationKeyEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxNavigationKeyEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxNavigationKeyEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxNavigationKeyEvent(const Value_wxNavigationKeyEvent& src) = delete;
 	Value_wxNavigationKeyEvent& operator=(const Value_wxNavigationKeyEvent& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxNavigationKeyEvent() = default;
 public:
-	wxNavigationKeyEvent& GetEntity() {
-		return reinterpret_cast<wxNavigationKeyEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxNavigationKeyEvent& GetEntity() const {
-		return reinterpret_cast<const wxNavigationKeyEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxNavigationKeyEvent* GetEntityPtr() {
-		return reinterpret_cast<wxNavigationKeyEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxNavigationKeyEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxNavigationKeyEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxNavigationKeyEvent& GetEntity() { return _entity; }
+	const wxNavigationKeyEvent& GetEntity() const { return _entity; }
+	wxNavigationKeyEvent* GetEntityPtr() { return &_entity; }
+	const wxNavigationKeyEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxNavigationKeyEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxNavigationKeyEvent&>(value).GetEntity();

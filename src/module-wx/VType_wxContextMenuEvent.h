@@ -31,14 +31,16 @@ public:
 	Gurax_DeclareReferable(Value_wxContextMenuEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxContextMenuEvent");
+protected:
+	wxContextMenuEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxContextMenuEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxContextMenuEvent() = delete;
-	Value_wxContextMenuEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxContextMenuEvent) :
-		Value_wxCommandEvent(entity, pValueUserData, vtype) {}
+	Value_wxContextMenuEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxContextMenuEvent) :
+		Value_wxCommandEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxContextMenuEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxContextMenuEvent(const Value_wxContextMenuEvent& src) = delete;
 	Value_wxContextMenuEvent& operator=(const Value_wxContextMenuEvent& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxContextMenuEvent() = default;
 public:
-	wxContextMenuEvent& GetEntity() {
-		return reinterpret_cast<wxContextMenuEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxContextMenuEvent& GetEntity() const {
-		return reinterpret_cast<const wxContextMenuEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxContextMenuEvent* GetEntityPtr() {
-		return reinterpret_cast<wxContextMenuEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxContextMenuEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxContextMenuEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxContextMenuEvent& GetEntity() { return _entity; }
+	const wxContextMenuEvent& GetEntity() const { return _entity; }
+	wxContextMenuEvent* GetEntityPtr() { return &_entity; }
+	const wxContextMenuEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxContextMenuEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxContextMenuEvent&>(value).GetEntity();

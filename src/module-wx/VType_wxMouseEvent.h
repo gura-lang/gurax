@@ -31,14 +31,16 @@ public:
 	Gurax_DeclareReferable(Value_wxMouseEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxMouseEvent");
+protected:
+	wxMouseEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxMouseEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxMouseEvent() = delete;
-	Value_wxMouseEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxMouseEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxMouseEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxMouseEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxMouseEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxMouseEvent(const Value_wxMouseEvent& src) = delete;
 	Value_wxMouseEvent& operator=(const Value_wxMouseEvent& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxMouseEvent() = default;
 public:
-	wxMouseEvent& GetEntity() {
-		return reinterpret_cast<wxMouseEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxMouseEvent& GetEntity() const {
-		return reinterpret_cast<const wxMouseEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxMouseEvent* GetEntityPtr() {
-		return reinterpret_cast<wxMouseEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxMouseEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxMouseEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxMouseEvent& GetEntity() { return _entity; }
+	const wxMouseEvent& GetEntity() const { return _entity; }
+	wxMouseEvent* GetEntityPtr() { return &_entity; }
+	const wxMouseEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxMouseEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMouseEvent&>(value).GetEntity();

@@ -31,14 +31,16 @@ public:
 	Gurax_DeclareReferable(Value_wxKeyEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxKeyEvent");
+protected:
+	wxKeyEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxKeyEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxKeyEvent() = delete;
-	Value_wxKeyEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxKeyEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxKeyEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxKeyEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxKeyEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxKeyEvent(const Value_wxKeyEvent& src) = delete;
 	Value_wxKeyEvent& operator=(const Value_wxKeyEvent& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxKeyEvent() = default;
 public:
-	wxKeyEvent& GetEntity() {
-		return reinterpret_cast<wxKeyEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxKeyEvent& GetEntity() const {
-		return reinterpret_cast<const wxKeyEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxKeyEvent* GetEntityPtr() {
-		return reinterpret_cast<wxKeyEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxKeyEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxKeyEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxKeyEvent& GetEntity() { return _entity; }
+	const wxKeyEvent& GetEntity() const { return _entity; }
+	wxKeyEvent* GetEntityPtr() { return &_entity; }
+	const wxKeyEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxKeyEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxKeyEvent&>(value).GetEntity();

@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxGraphicsPath);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGraphicsPath");
+protected:
+	wxGraphicsPath& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxGraphicsPath() = delete;
 	explicit Value_wxGraphicsPath(const wxGraphicsPath& entity, VType& vtype = VTYPE_wxGraphicsPath) :
-		Value_wxGraphicsObject(entity, vtype) {}
+		Value_wxGraphicsObject(entity, vtype), _entity(const_cast<wxGraphicsPath&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxGraphicsPath(const Value_wxGraphicsPath& src) = delete;
 	Value_wxGraphicsPath& operator=(const Value_wxGraphicsPath& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxGraphicsPath() = default;
 public:
-	wxGraphicsPath& GetEntity() {
-		return reinterpret_cast<wxGraphicsPath&>(Value_wxObject::GetEntity());
-	}
-	const wxGraphicsPath& GetEntity() const {
-		return reinterpret_cast<const wxGraphicsPath&>(Value_wxObject::GetEntity());
-	}
-	wxGraphicsPath* GetEntityPtr() {
-		return reinterpret_cast<wxGraphicsPath*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxGraphicsPath* GetEntityPtr() const {
-		return reinterpret_cast<const wxGraphicsPath*>(Value_wxObject::GetEntityPtr());
-	}
+	wxGraphicsPath& GetEntity() { return _entity; }
+	const wxGraphicsPath& GetEntity() const { return _entity; }
+	wxGraphicsPath* GetEntityPtr() { return &_entity; }
+	const wxGraphicsPath* GetEntityPtr() const { return &_entity; }
 public:
 	static wxGraphicsPath& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGraphicsPath&>(value).GetEntity();

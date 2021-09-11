@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxAccessible);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxAccessible");
+protected:
+	wxAccessible& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxAccessible() = delete;
 	explicit Value_wxAccessible(const wxAccessible& entity, VType& vtype = VTYPE_wxAccessible) :
-		Value_wxObject(entity, vtype) {}
+		Value_wxObject(entity, vtype), _entity(const_cast<wxAccessible&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxAccessible(const Value_wxAccessible& src) = delete;
 	Value_wxAccessible& operator=(const Value_wxAccessible& src) = delete;
@@ -48,18 +50,10 @@ protected:
 	// Destructor
 	~Value_wxAccessible() = default;
 public:
-	wxAccessible& GetEntity() {
-		return reinterpret_cast<wxAccessible&>(Value_wxObject::GetEntity());
-	}
-	const wxAccessible& GetEntity() const {
-		return reinterpret_cast<const wxAccessible&>(Value_wxObject::GetEntity());
-	}
-	wxAccessible* GetEntityPtr() {
-		return reinterpret_cast<wxAccessible*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxAccessible* GetEntityPtr() const {
-		return reinterpret_cast<const wxAccessible*>(Value_wxObject::GetEntityPtr());
-	}
+	wxAccessible& GetEntity() { return _entity; }
+	const wxAccessible& GetEntity() const { return _entity; }
+	wxAccessible* GetEntityPtr() { return &_entity; }
+	const wxAccessible* GetEntityPtr() const { return &_entity; }
 public:
 	static wxAccessible& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxAccessible&>(value).GetEntity();

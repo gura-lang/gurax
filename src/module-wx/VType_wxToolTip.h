@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxToolTip);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxToolTip");
+protected:
+	wxToolTip& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxToolTip() = delete;
 	explicit Value_wxToolTip(const wxToolTip& entity, VType& vtype = VTYPE_wxToolTip) :
-		Value_wxObject(entity, vtype) {}
+		Value_wxObject(entity, vtype), _entity(const_cast<wxToolTip&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxToolTip(const Value_wxToolTip& src) = delete;
 	Value_wxToolTip& operator=(const Value_wxToolTip& src) = delete;
@@ -48,18 +50,10 @@ protected:
 	// Destructor
 	~Value_wxToolTip() = default;
 public:
-	wxToolTip& GetEntity() {
-		return reinterpret_cast<wxToolTip&>(Value_wxObject::GetEntity());
-	}
-	const wxToolTip& GetEntity() const {
-		return reinterpret_cast<const wxToolTip&>(Value_wxObject::GetEntity());
-	}
-	wxToolTip* GetEntityPtr() {
-		return reinterpret_cast<wxToolTip*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxToolTip* GetEntityPtr() const {
-		return reinterpret_cast<const wxToolTip*>(Value_wxObject::GetEntityPtr());
-	}
+	wxToolTip& GetEntity() { return _entity; }
+	const wxToolTip& GetEntity() const { return _entity; }
+	wxToolTip* GetEntityPtr() { return &_entity; }
+	const wxToolTip* GetEntityPtr() const { return &_entity; }
 public:
 	static wxToolTip& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxToolTip&>(value).GetEntity();

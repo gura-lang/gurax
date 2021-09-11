@@ -32,14 +32,16 @@ public:
 	Gurax_DeclareReferable(Value_wxCalculateLayoutEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxCalculateLayoutEvent");
+protected:
+	wxCalculateLayoutEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxCalculateLayoutEvent> eventValueFactory;
 public:
 	// Constructor
 	Value_wxCalculateLayoutEvent() = delete;
-	Value_wxCalculateLayoutEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxCalculateLayoutEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype) {}
+	Value_wxCalculateLayoutEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxCalculateLayoutEvent) :
+		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxCalculateLayoutEvent&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxCalculateLayoutEvent(const Value_wxCalculateLayoutEvent& src) = delete;
 	Value_wxCalculateLayoutEvent& operator=(const Value_wxCalculateLayoutEvent& src) = delete;
@@ -50,18 +52,10 @@ protected:
 	// Destructor
 	~Value_wxCalculateLayoutEvent() = default;
 public:
-	wxCalculateLayoutEvent& GetEntity() {
-		return reinterpret_cast<wxCalculateLayoutEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxCalculateLayoutEvent& GetEntity() const {
-		return reinterpret_cast<const wxCalculateLayoutEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxCalculateLayoutEvent* GetEntityPtr() {
-		return reinterpret_cast<wxCalculateLayoutEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxCalculateLayoutEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxCalculateLayoutEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxCalculateLayoutEvent& GetEntity() { return _entity; }
+	const wxCalculateLayoutEvent& GetEntity() const { return _entity; }
+	wxCalculateLayoutEvent* GetEntityPtr() { return &_entity; }
+	const wxCalculateLayoutEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxCalculateLayoutEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxCalculateLayoutEvent&>(value).GetEntity();

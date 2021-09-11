@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxPNGHandler);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxPNGHandler");
+protected:
+	wxPNGHandler& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxPNGHandler() = delete;
 	explicit Value_wxPNGHandler(const wxPNGHandler& entity, VType& vtype = VTYPE_wxPNGHandler) :
-		Value_wxImageHandler(entity, vtype) {}
+		Value_wxImageHandler(entity, vtype), _entity(const_cast<wxPNGHandler&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxPNGHandler(const Value_wxPNGHandler& src) = delete;
 	Value_wxPNGHandler& operator=(const Value_wxPNGHandler& src) = delete;
@@ -48,18 +50,10 @@ protected:
 	// Destructor
 	~Value_wxPNGHandler() = default;
 public:
-	wxPNGHandler& GetEntity() {
-		return reinterpret_cast<wxPNGHandler&>(Value_wxObject::GetEntity());
-	}
-	const wxPNGHandler& GetEntity() const {
-		return reinterpret_cast<const wxPNGHandler&>(Value_wxObject::GetEntity());
-	}
-	wxPNGHandler* GetEntityPtr() {
-		return reinterpret_cast<wxPNGHandler*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxPNGHandler* GetEntityPtr() const {
-		return reinterpret_cast<const wxPNGHandler*>(Value_wxObject::GetEntityPtr());
-	}
+	wxPNGHandler& GetEntity() { return _entity; }
+	const wxPNGHandler& GetEntity() const { return _entity; }
+	wxPNGHandler* GetEntityPtr() { return &_entity; }
+	const wxPNGHandler* GetEntityPtr() const { return &_entity; }
 public:
 	static wxPNGHandler& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxPNGHandler&>(value).GetEntity();
