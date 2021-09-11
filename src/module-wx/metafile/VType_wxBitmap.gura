@@ -5,7 +5,7 @@ Bitmap = Class(GDIObject):holdEntity {
 	__init__()
 	ConvertToImage() as Image
 	CopyFromIcon(icon as const_Icon_r) as bool
-	//Create(width as int, height as int, depth as int = wxBITMAP_SCREEN_DEPTH) as bool
+	Create(width as int, height as int, depth as int = wxBITMAP_SCREEN_DEPTH) as bool
 	//Create(sz as const_Size_r, depth as int = wxBITMAP_SCREEN_DEPTH) as bool
 	GetDepth() as int
 	GetHeight() as int

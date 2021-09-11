@@ -94,6 +94,35 @@ Gurax_ImplementMethodEx(wxBitmap, CopyFromIcon_gurax, processor_gurax, argument_
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.Bitmap#Create(width as Number, height as Number, depth? as Number)
+Gurax_DeclareMethodAlias(wxBitmap, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("depth", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBitmap, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	bool depth_validFlag = args_gurax.IsValid();
+	int depth = depth_validFlag? args_gurax.PickNumber<int>() : wxBITMAP_SCREEN_DEPTH;
+	// Function body
+	bool rtn = pEntity_gurax->Create(width, height, depth);
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.Bitmap#GetDepth()
 Gurax_DeclareMethodAlias(wxBitmap, GetDepth_gurax, "GetDepth")
 {
@@ -640,6 +669,7 @@ void VType_wxBitmap::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxBitmap, ConvertToImage_gurax));
 	Assign(Gurax_CreateMethod(wxBitmap, CopyFromIcon_gurax));
+	Assign(Gurax_CreateMethod(wxBitmap, Create_gurax));
 	Assign(Gurax_CreateMethod(wxBitmap, GetDepth_gurax));
 	Assign(Gurax_CreateMethod(wxBitmap, GetHeight_gurax));
 	Assign(Gurax_CreateMethod(wxBitmap, GetMask_gurax));
