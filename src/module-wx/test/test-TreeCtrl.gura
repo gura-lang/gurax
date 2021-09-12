@@ -24,9 +24,9 @@ PanelTop = class(wx.Panel) {
 		wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(3).Expand())
 			imageList = wx.ImageList(16, 16)
+			ctrl.SetImageList(imageList);
 			idx_folder_image = imageList.Add(image.folder_image)
 			idx_report_picture = imageList.Add(image.report_picture)
-			ctrl.SetImageList(imageList);
 			ctrl.AddRoot('root', image = idx_folder_image) {|itemId|
 				ctrl.AppendItem(itemId, 'child 1', image = idx_report_picture, data = 'hello 1')
 				ctrl.AppendItem(itemId, 'child 2', image = idx_folder_image) {|itemId|
