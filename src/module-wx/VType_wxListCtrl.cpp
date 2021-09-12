@@ -602,7 +602,7 @@ Gurax_ImplementMethodEx(wxListCtrl, GetImageList_gurax, processor_gurax, argumen
 	int which = args_gurax.PickNumber<int>();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
-		*pEntity_gurax->GetImageList(which)));
+		pEntity_gurax->GetImageList(which)));
 }
 
 // wx.ListCtrl#GetItem(info as wx.ListItem)

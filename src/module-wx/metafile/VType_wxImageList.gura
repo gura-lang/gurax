@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxImageList.gura
 //==============================================================================
-ImageList = Class(Object) {
+ImageList = Class():loosePointer {
 	__init__(width as int, height as int, mask as bool = true, initialCount as int = 1)
 	Add(args* as any) as int = \
 		R'''

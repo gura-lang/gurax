@@ -52,8 +52,9 @@ Gurax_ImplementConstructorEx(ImageList_gurax, processor_gurax, argument_gurax)
 	bool initialCount_validFlag = args_gurax.IsValid();
 	int initialCount = initialCount_validFlag? args_gurax.PickNumber<int>() : 1;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
-		wxImageList(width, height, mask, initialCount)));
+	auto pEntity_gurax = new wxImageList(width, height, mask, initialCount);
+	RefPtr<Value_wxImageList> pValue_gurax(new Value_wxImageList(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -408,7 +409,7 @@ void VType_wxImageList::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(ImageList_gurax));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ImageList_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxImageList, Add_gurax));
 	Assign(Gurax_CreateMethod(wxImageList, Create_gurax));

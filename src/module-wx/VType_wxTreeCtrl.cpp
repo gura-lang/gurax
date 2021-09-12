@@ -743,7 +743,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetImageList_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
-		*pEntity_gurax->GetImageList()));
+		pEntity_gurax->GetImageList()));
 }
 
 // wx.TreeCtrl#GetIndent()
@@ -1176,7 +1176,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetStateImageList_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
-		*pEntity_gurax->GetStateImageList()));
+		pEntity_gurax->GetStateImageList()));
 }
 
 // wx.TreeCtrl#HitTest(point as wx.Point)

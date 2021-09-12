@@ -24,29 +24,26 @@ PanelTop = class(wx.Panel) {
 		wx.TreeCtrl(this, style = wx.TR_DEFAULT_STYLE | wx.TR_EDIT_LABELS) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(3).Expand())
 			imageList = wx.ImageList(16, 16)
-			bmp = wx.Bitmap()
-			bmp.Create(16, 16)
-			//Println(bmp.GetWidth(), ' ', bmp.GetHeight())
-			imageList.Add(bmp)
-			//imageList.Add(image.report_picture)
-			//ctrl.SetImageList(imageList);
-			ctrl.AddRoot('root', image = 0) {|itemId|
-				ctrl.AppendItem(itemId, 'child 1', image = 0, data = 'hello 1')
-				ctrl.AppendItem(itemId, 'child 2') {|itemId|
-					ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1')
-					ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2')
-					ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3')
-					ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4')
+			idx_folder_image = imageList.Add(image.folder_image)
+			idx_report_picture = imageList.Add(image.report_picture)
+			ctrl.SetImageList(imageList);
+			ctrl.AddRoot('root', image = idx_folder_image) {|itemId|
+				ctrl.AppendItem(itemId, 'child 1', image = idx_report_picture, data = 'hello 1')
+				ctrl.AppendItem(itemId, 'child 2', image = idx_folder_image) {|itemId|
+					ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = idx_report_picture)
 				}
-				ctrl.AppendItem(itemId, 'child 3')
-				ctrl.AppendItem(itemId, 'child 4')
-				ctrl.AppendItem(itemId, 'child 5') {|itemId|
-					ctrl.AppendItem(itemId, 'child 5-1')
-					ctrl.AppendItem(itemId, 'child 5-2')
-					ctrl.AppendItem(itemId, 'child 5-3')
-					ctrl.AppendItem(itemId, 'child 5-4')
+				ctrl.AppendItem(itemId, 'child 3', image = idx_report_picture)
+				ctrl.AppendItem(itemId, 'child 4', image = idx_report_picture)
+				ctrl.AppendItem(itemId, 'child 5', image = idx_folder_image) {|itemId|
+					ctrl.AppendItem(itemId, 'child 5-1', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 5-2', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 5-3', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 5-4', image = idx_report_picture)
 				}
-				ctrl.AppendItem(itemId, 'child 6')
+				ctrl.AppendItem(itemId, 'child 6', image = idx_report_picture)
 			}
 			this.treeCtrl = ctrl
 			wx.EVT_TREE_BEGIN_DRAG(ctrl, this.OnTree)
