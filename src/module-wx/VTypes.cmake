@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxTreeEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -271,6 +270,7 @@ set(SRCFILES_VTYPE
 	VType_wxTopLevelWindow.cpp
 	VType_wxTreebook.cpp
 	VType_wxTreeCtrl.cpp
+	VType_wxTreeEvent.cpp
 	VType_wxTreeItemId.cpp
 	VType_wxValidator.cpp
 	VType_wxVisualAttributes.cpp

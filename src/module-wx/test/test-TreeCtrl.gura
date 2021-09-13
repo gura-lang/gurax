@@ -78,7 +78,8 @@ PanelTop = class(wx.Panel) {
 	}
 	OnTreeKeyDown(event) = {
 		eventName = event.GetEventType().name
-		this.Printf('%s(%s)\n', eventName, event.GetKeyEvent())
+		//this.Printf('%s(%s)\n', eventName, event.GetKeyEvent())
+		this.Printf('%s(%d)\n', eventName, event.GetKeyCode())
 	}
 	OnTreeItemGetToolTip(event) = {
 		this.PrintTreeEvent(event)
