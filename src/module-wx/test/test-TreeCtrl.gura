@@ -63,7 +63,7 @@ PanelTop = class(wx.Panel) {
 			wx.EVT_TREE_ITEM_MIDDLE_CLICK(ctrl, this.OnTree)
 			wx.EVT_TREE_SEL_CHANGED(ctrl, this.OnTree)
 			wx.EVT_TREE_SEL_CHANGING(ctrl, this.OnTree)
-			//wx.EVT_TREE_KEY_DOWN(ctrl, this.OnTree)
+			wx.EVT_TREE_KEY_DOWN(ctrl, this.OnTreeKeyDown)
 			wx.EVT_TREE_ITEM_GETTOOLTIP(ctrl, this.OnTreeItemGetToolTip)
 			wx.EVT_TREE_ITEM_MENU(ctrl, this.OnTree)
 			wx.EVT_TREE_STATE_IMAGE_CLICK(ctrl, this.OnTree)
@@ -76,6 +76,10 @@ PanelTop = class(wx.Panel) {
 	OnTree(event) = {
 		this.PrintTreeEvent(event)
 	}
+	OnTreeKeyDown(event) = {
+		eventName = event.GetEventType().name
+		this.Printf('%s(%s)\n', eventName, event.GetKeyEvent())
+	}
 	OnTreeItemGetToolTip(event) = {
 		this.PrintTreeEvent(event)
 		itemId = event.GetItem()
@@ -84,7 +88,7 @@ PanelTop = class(wx.Panel) {
 	PrintTreeEvent(event) = {
 		eventName = event.GetEventType().name
 		itemId = event.GetItem()
-		this.Printf('%s(%s)\n', eventName, this.treeCtrl.GetItemText(itemId))
+		this.Printf('%s(\'%s\')\n', eventName, this.treeCtrl.GetItemText(itemId))
 	}
 	Printf(format as String, args*) = {
 		this.textCtrl.WriteText(Format(format, args*))
