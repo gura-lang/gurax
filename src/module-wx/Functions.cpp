@@ -95,7 +95,26 @@ Gurax_ImplementFunction(Test)
 	return Value::nil();
 }
 
-// wx.ImplementApp(app:wx.App)
+// wx.GetKeyCodeName(keyCode as Number)
+Gurax_DeclareFunction(GetKeyCodeName)
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("keyCode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(GetKeyCodeName)
+{
+	// Argument
+	ArgPicker args(argument);
+	int keyCode = args.PickNumber<int>();
+	// Function Body
+	return new Value_String(Util::GetKeyCodeName(keyCode));
+}
+
+// wx.ImplementApp(app as wx.App)
 Gurax_DeclareFunction(ImplementApp)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -170,6 +189,7 @@ Gurax_ImplementFunction(MessageBox_)
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(Test));
+	frame.Assign(Gurax_CreateFunction(GetKeyCodeName));
 	frame.Assign(Gurax_CreateFunction(ImplementApp));
 	frame.Assign(Gurax_CreateFunction(InitAllImageHandlers));
 	frame.Assign(Gurax_CreateFunction(MessageBox_));

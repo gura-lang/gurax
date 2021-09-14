@@ -91,9 +91,7 @@ PanelTop = class(wx.Panel) {
 		itemId = event.GetItem()
 		this.Printf('%s(\'%s\')\n', eventName, this.treeCtrl.GetItemText(itemId))
 	}
-	Printf(format as String, args*) = {
-		this.textCtrl.WriteText(Format(format, args*))
-	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
 
 wx.ImplementApp(MyApp())

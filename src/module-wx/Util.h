@@ -110,6 +110,7 @@ namespace Util {
 
 extern EventTypeMap eventTypeMap;
 
+String GetKeyCodeName(int keyCode);
 wxArrayString CreateArrayString(const ValueList& values);
 wxArrayShort CreateArrayShort(const ValueList& values);
 wxArrayInt CreateArrayInt(const ValueList& values);
