@@ -4,6 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxFontInfo.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

@@ -28,6 +28,117 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.Font(args* as Any) {block?} {block?}
+Gurax_DeclareConstructorAlias(Font_gurax, "Font")
+{
+	Declare(VTYPE_wxFont, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.Font.");
+}
+
+Gurax_ImplementConstructorEx(Font_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// wxFont()
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		return new Value_wxFont(wxFont());
+	} while (0);
+	Error::Clear();
+	// wxFont(fontInfo as wx.FontInfo)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("fontInfo", VTYPE_wxFontInfo);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		const wxFontInfo& fontInfo = args.Pick<Value_wxFontInfo>().GetEntity();
+		return new Value_wxFont(wxFont(fontInfo));
+	} while (0);
+	Error::Clear();
+	// wxFont(pointSize as Number, family as Number, style as Number, weight as Number,
+	//	underline? as Bool, faceName? as String, encoding? as Number)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pointSize", VTYPE_Number);
+			pDeclCallable->DeclareArg("family", VTYPE_Number);
+			pDeclCallable->DeclareArg("style", VTYPE_Number);
+			pDeclCallable->DeclareArg("weight", VTYPE_Number);
+			pDeclCallable->DeclareArg("underline", VTYPE_Bool, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("faceName", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("encoding", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		int pointSize = args.PickNumber<int>();
+		wxFontFamily family = args.PickNumber<wxFontFamily>();
+		wxFontStyle style = args.PickNumber<wxFontStyle>();
+		wxFontWeight weight = args.PickNumber<wxFontWeight>();
+		bool underline = args.IsValid()? args.PickBool() : false;
+		const char* faceName = args.IsValid()? args.PickString(): "";
+		wxFontEncoding encoding = args.IsValid()? args.PickNumber<wxFontEncoding>() : wxFONTENCODING_DEFAULT;
+		return new Value_wxFont(wxFont(pointSize, family, style, weight, underline, faceName, encoding));
+	} while (0);
+	Error::Clear();
+	// wxFont(pixelSize as wx.Size, family as Number, style as Number, weight as Number,
+	//	underline? as Bool, faceName? as String, encoding? as Number)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pixelSize", VTYPE_wxSize);
+			pDeclCallable->DeclareArg("family", VTYPE_Number);
+			pDeclCallable->DeclareArg("style", VTYPE_Number);
+			pDeclCallable->DeclareArg("weight", VTYPE_Number);
+			pDeclCallable->DeclareArg("underline", VTYPE_Bool, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("faceName", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("encoding", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		const wxSize& pixelSize = args.Pick<Value_wxSize>().GetEntity();
+		wxFontFamily family = args.PickNumber<wxFontFamily>();
+		wxFontStyle style = args.PickNumber<wxFontStyle>();
+		wxFontWeight weight = args.PickNumber<wxFontWeight>();
+		bool underline = args.IsValid()? args.PickBool() : false;
+		const char* faceName = args.IsValid()? args.PickString(): "";
+		wxFontEncoding encoding = args.IsValid()? args.PickNumber<wxFontEncoding>() : wxFONTENCODING_DEFAULT;
+		return new Value_wxFont(wxFont(pixelSize, family, style, weight, underline, faceName, encoding));
+	} while (0);
+	Error::Clear();
+	// wxFont(nativeInfoString as String)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("nativeInfoString", VTYPE_String);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		const char* nativeInfoString = args.PickString();
+		return new Value_wxFont(wxFont(nativeInfoString));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -918,7 +1029,7 @@ void VType_wxFont::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGDIObject, Flag::Mutable);
+	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Font_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxFont, GetEncoding_gurax));
 	Assign(Gurax_CreateMethod(wxFont, GetFaceName_gurax));
