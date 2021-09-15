@@ -1,0 +1,39 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
+		this.SetSizer(sizerTop)
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE | wx.TE_READONLY) {|ctrl|
+			//ctrl.SetFont(wx.Font())
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			wx.EVT_KEY_DOWN(ctrl, this.OnKey)
+			wx.EVT_KEY_UP(ctrl, this.OnKey)
+			wx.EVT_CHAR(ctrl, this.OnKey)
+			wx.EVT_CHAR_HOOK(ctrl, this.OnKey)
+			this.textCtrl = ctrl
+		}
+	}
+	OnKey(event) = {
+		this.Printf('%-32s%s\n', event.GetEventType().name, wx.GetKeyCodeName(event.GetKeyCode()))
+		event.Skip()
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+}
+
+wx.ImplementApp(MyApp())
