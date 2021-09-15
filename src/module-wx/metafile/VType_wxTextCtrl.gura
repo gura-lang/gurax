@@ -23,7 +23,7 @@ TextCtrl = Class(Control) {
 	//PositionToXY(pos as long, x as long_p, y as long_p) as bool
 	PositionToCoords(pos as long) as Point
 	SaveFile(filename as const_String_r = '', fileType as int = wxTEXT_TYPE_ANY) as bool
-	SetDefaultStyle(style as const_TextAttr_r) as bool
+	DefaultStyle(style as const_TextAttr_r) as bool
 	SetModified(modified as bool) as void
 	SetStyle(start as long, end as long, style as const_TextAttr_r) as bool
 	ShowPosition(pos as long) as void

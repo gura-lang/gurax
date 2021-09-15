@@ -32,14 +32,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxFont");
 protected:
-	wxFont& _entity;
+	wxFont _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxFont() = delete;
 	explicit Value_wxFont(const wxFont& entity, VType& vtype = VTYPE_wxFont) :
-		Value_wxGDIObject(entity, vtype), _entity(const_cast<wxFont&>(entity)) {}
+		Value_wxGDIObject(entity, vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxFont(const Value_wxFont& src) = delete;
 	Value_wxFont& operator=(const Value_wxFont& src) = delete;
