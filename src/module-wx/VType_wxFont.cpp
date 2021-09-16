@@ -46,16 +46,9 @@ Gurax_ImplementConstructorEx(Font_gurax, processor_gurax, argument_gurax)
 	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
 	// wxFont()
-	do {
-		static DeclCallable* pDeclCallable = nullptr;
-		if (!pDeclCallable) {
-			pDeclCallable = new DeclCallable();
-		}
-		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
-		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+	if (args.empty()) {
 		return new Value_wxFont(wxFont());
-	} while (0);
-	Error::Clear();
+	}
 	// wxFont(fontInfo as wx.FontInfo)
 	do {
 		static DeclCallable* pDeclCallable = nullptr;

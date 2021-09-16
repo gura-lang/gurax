@@ -20,8 +20,8 @@ PanelTop = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
 		this.SetSizer(sizerTop)
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-			ctrl.SetForegroundColour(wx.RED);
-			ctrl.SetFont(wx.Font(100, wx.FONTFAMILY_DEFAULT,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
+			font = wx.Font(14, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+			ctrl.SetFont(font)
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 			wx.EVT_KEY_DOWN(ctrl, this.OnKey)
 			wx.EVT_KEY_UP(ctrl, this.OnKey)
@@ -31,7 +31,7 @@ PanelTop = class(wx.Panel) {
 		}
 	}
 	OnKey(event) = {
-		this.Printf('%-32s%s\n', event.GetEventType().name, wx.GetKeyCodeName(event.GetKeyCode()))
+		this.Printf('%-20s%s\n', event.GetEventType().name, wx.GetKeyCodeName(event.GetKeyCode()))
 		event.Skip()
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
