@@ -22,3 +22,8 @@ RadioBox = Class(Control) {
 	SetString(n as unsigned_int, string as const_String_r) as void
 	GetSelection() as int
 }
+
+@const { // Styles
+	RA_SPECIFY_ROWS
+	RA_SPECIFY_COLS
+}

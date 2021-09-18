@@ -16,14 +16,18 @@ MyFrame = class(wx.Frame) {
 
 PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
+	radioBox_FontWeight as wx.RadioBox
+	radioBox_FontStyle as wx.RadioBox
 	__init__(parent as wx.Window) = {|parent|
 		fontSize = 12
+		fontWeight = wx.FONTWEIGHT_NORMAL
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.TextCtrl(this, wx.ID_ANY, 'A quick brown fox jumps over the lazy dog.', style = wx.TE_MULTILINE) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 			font = ctrl.GetFont()
 			font.SetPointSize(fontSize)
+			font.SetWeight(fontWeight)
 			ctrl.SetFont(font)
 			this.textCtrl = ctrl
 		}
@@ -33,16 +37,38 @@ PanelTop = class(wx.Panel) {
 				vbox.Add(hbox, wx.SizerFlags().Expand())
 				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Point Size'),  wx.SizerFlags().Center())
 				wx.SpinCtrl(this, min = 1, max = 100, initial = fontSize, style = wx.SP_ARROW_KEYS | wx.TE_READONLY) {|ctrl|
-					hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 8))
+					hbox.Add(ctrl, wx.SizerFlags().Center().Border(wx.LEFT, 8))
 					ctrl.Bind(wx.EVT_SPINCTRL, this.OnSpinCtrl_Size)
 				}
-				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Bold'),  wx.SizerFlags().Center())
+				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Font Weight'),  wx.SizerFlags().Center().Border(wx.LEFT, 16))
+				wx.RadioBox(this, wx.ID_ANY, '', choices = ['Normal', 'Light', 'Bold']) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags().Border(wx.LEFT, 8))
+					ctrl.SetSelection(0)
+					ctrl.Bind(wx.EVT_RADIOBOX, this.OnRadioBox)
+					this.radioBox_FontWeight = ctrl
+				}
+				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Font Style'),  wx.SizerFlags().Center().Border(wx.LEFT, 16))
+				wx.RadioBox(this, wx.ID_ANY, '', choices = ['Normal', 'Italic', 'Slant']) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags().Border(wx.LEFT, 8))
+					ctrl.SetSelection(0)
+					ctrl.Bind(wx.EVT_RADIOBOX, this.OnRadioBox)
+					this.radioBox_FontStyle = ctrl
+				}
 			}
 		}
 	}
 	OnSpinCtrl_Size(event as wx.SpinEvent) = {
+		pointSize = event.GetPosition()
 		font = this.textCtrl.GetFont()
-		font.SetPointSize(event.GetPosition())
+		font.SetPointSize(pointSize)
+		this.textCtrl.SetFont(font)
+	}
+	OnRadioBox(event as wx.CommandEvent) = {
+		fontWeight = [wx.FONTWEIGHT_NORMAL, wx.FONTWEIGHT_LIGHT, wx.FONTWEIGHT_BOLD][this.radioBox_FontWeight.GetSelection()]
+		fontStyle = [wx.FONTSTYLE_NORMAL, wx.FONTSTYLE_ITALIC, wx.FONTSTYLE_SLANT][this.radioBox_FontStyle.GetSelection()]
+		font = this.textCtrl.GetFont()
+		font.SetWeight(fontWeight)
+		font.SetStyle(fontStyle)
 		this.textCtrl.SetFont(font)
 	}
 }
