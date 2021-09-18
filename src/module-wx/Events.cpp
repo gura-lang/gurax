@@ -106,6 +106,10 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_SCROLLWIN_THUMBRELEASE, wxScrollWinEvent);
 	Gurax_AssignEvent(EVT_SET_CURSOR, wxSetCursorEvent);
 	Gurax_AssignEvent(EVT_SIZE, wxSizeEvent);
+	Gurax_AssignEvent(EVT_SPINCTRL, wxSpinEvent);
+	Gurax_AssignEvent(EVT_SPIN, wxSpinEvent);
+	Gurax_AssignEvent(EVT_SPIN_UP, wxSpinEvent);
+	Gurax_AssignEvent(EVT_SPIN_DOWN, wxSpinEvent);
 	Gurax_AssignEvent(EVT_STC_CHANGE, wxStyledTextEvent);
 	Gurax_AssignEvent(EVT_STC_STYLENEEDED, wxStyledTextEvent);
 	Gurax_AssignEvent(EVT_STC_CHARADDED, wxStyledTextEvent);

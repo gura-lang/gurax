@@ -255,6 +255,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxSlider);
 	frame.Assign(VTYPE_wxSpinButton);
 	frame.Assign(VTYPE_wxSpinCtrl);
+	frame.Assign(VTYPE_wxSpinEvent);
 	frame.Assign(VTYPE_wxSplashScreen);
 	frame.Assign(VTYPE_wxStaticBitmap);
 	frame.Assign(VTYPE_wxStaticBox);

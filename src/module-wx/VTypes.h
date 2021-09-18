@@ -250,6 +250,7 @@
 #include "VType_wxSlider.h"
 #include "VType_wxSpinButton.h"
 #include "VType_wxSpinCtrl.h"
+#include "VType_wxSpinEvent.h"
 #include "VType_wxSplashScreen.h"
 #include "VType_wxStaticBitmap.h"
 #include "VType_wxStaticBox.h"

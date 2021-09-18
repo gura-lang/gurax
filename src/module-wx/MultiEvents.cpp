@@ -8,7 +8,6 @@ Gurax_BeginModuleScope(wx)
 // wx.EVT_JOYSTICK_EVENTS(handler.wxEvtHandler, id:Number, funct:Any)
 Gurax_DeclareFunction(EVT_JOYSTICK_EVENTS)
 {
-	Declare(VTYPE_Number, Flag::None);
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -33,7 +32,6 @@ Gurax_ImplementFunction(EVT_JOYSTICK_EVENTS)
 // wx.EVT_MOUSE_EVENTS(handler.wxEvtHandler, id:Number, funct:Any)
 Gurax_DeclareFunction(EVT_MOUSE_EVENTS)
 {
-	Declare(VTYPE_Number, Flag::None);
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -70,10 +68,38 @@ Gurax_ImplementFunction(EVT_MOUSE_EVENTS)
 	return Value::nil();
 }
 
+// wx.EVT_SCROLL(handler.wxEvtHandler, id:Number, funct:Any)
+Gurax_DeclareFunction(EVT_SCROLL)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(EVT_SCROLL)
+{
+	static const wxEventType eventTypes[] = {
+		wxEVT_SCROLL_TOP,
+		wxEVT_SCROLL_BOTTOM,
+		wxEVT_SCROLL_LINEUP,
+		wxEVT_SCROLL_LINEDOWN,
+		wxEVT_SCROLL_PAGEUP,
+		wxEVT_SCROLL_PAGEDOWN,
+		wxEVT_SCROLL_THUMBTRACK,
+		wxEVT_SCROLL_THUMBRELEASE,
+		wxEVT_SCROLL_CHANGED,
+	};
+	Util::BindMultiEvents(processor, argument, eventTypes, Gurax_ArraySizeOf(eventTypes), Value_wxScrollEvent::eventValueFactory);
+	return Value::nil();
+}
+
 // wx.EVT_SCROLLWIN(handler.wxEvtHandler, id:Number, funct:Any)
 Gurax_DeclareFunction(EVT_SCROLLWIN)
 {
-	Declare(VTYPE_Number, Flag::None);
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -103,6 +129,7 @@ void AssignMultiEvents(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(EVT_JOYSTICK_EVENTS));
 	frame.Assign(Gurax_CreateFunction(EVT_MOUSE_EVENTS));
+	frame.Assign(Gurax_CreateFunction(EVT_SCROLL));
 	frame.Assign(Gurax_CreateFunction(EVT_SCROLLWIN));
 }
 

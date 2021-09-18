@@ -129,7 +129,6 @@ void ExitMainLoop();
 
 };
 
-
 Gurax_EndModuleScope(wx)
 
 #endif

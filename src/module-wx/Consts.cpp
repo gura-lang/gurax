@@ -776,6 +776,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("SL_VALUE_LABEL", new Value_Number(wxSL_VALUE_LABEL));
 	frame.Assign("SL_VERTICAL", new Value_Number(wxSL_VERTICAL));
 	frame.Assign("SOUTH", new Value_Number(wxSOUTH));
+	frame.Assign("SP_ARROW_KEYS", new Value_Number(wxSP_ARROW_KEYS));
+	frame.Assign("SP_WRAP", new Value_Number(wxSP_WRAP));
 	frame.Assign("SRC_INVERT", new Value_Number(wxSRC_INVERT));
 	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));
 	frame.Assign("STRETCH_MASK", new Value_Number(wxSTRETCH_MASK));

@@ -247,6 +247,7 @@ set(SRCFILES_VTYPE
 	VType_wxSlider.cpp
 	VType_wxSpinButton.cpp
 	VType_wxSpinCtrl.cpp
+	VType_wxSpinEvent.cpp
 	VType_wxSplashScreen.cpp
 	VType_wxStaticBitmap.cpp
 	VType_wxStaticBox.cpp

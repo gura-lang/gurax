@@ -16,3 +16,12 @@ SpinCtrl = Class(Control) {
 	SetValue(text as const_String_r) as void
 	//SetValue(value as int) as void
 }
+
+@event {
+	EVT_SPINCTRL >> SpinEvent
+}
+
+@const { // Styles
+	SP_ARROW_KEYS
+	SP_WRAP
+}
