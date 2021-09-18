@@ -1060,7 +1060,7 @@ classInfoTbl.Each {|classInfo|
 }
 
 AppendTab(str as String, colAlign as Number) = {
-	str + ' '
+	str + '\t' * Int((colAlign - str.width + 1) / 4)
 }
 
 GenerateVType(classInfoTbl[] as ClassInfo) = {
@@ -1104,4 +1104,5 @@ GenerateEvent(eventInfoTbl[] as EventInfo, colAlign as Number) = {
 
 GenerateVType(classInfoTbl)
 GenerateConst(constNameTbl.Sort().Uniq():list)
-GenerateEvent(eventInfoTbl.Sort(keys = eventInfoTbl::eventName), 80)
+eventNames = eventInfoTbl::eventName
+GenerateEvent(eventInfoTbl.Sort(keys = eventNames), Int((('Gurax_AssignEvent' + ',').width + ((eventNames:*len).Max()) + 3) / 4 * 4 + 4))
