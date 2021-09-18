@@ -1,32 +1,3 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
-FontInfo = Class {
-	__init__(arg? as any) = \
-		R'''
-		if (arg.IsInvalid()) {
-			return new Value_wxFontInfo(wxFontInfo());
-		} else if (arg.IsInstanceOf(VTYPE_Number)) {
-			int pointSize = Value_Number::GetNumber<int>(arg);
-			return new Value_wxFontInfo(wxFontInfo(pointSize));
-		} else if (arg.IsInstanceOf(VTYPE_wxSize)) {
-			const wxSize& pixelSize = Value_wxSize::GetEntity(arg);
-			return new Value_wxFontInfo(wxFontInfo(pixelSize));
-		} else {
-			Error::Issue(ErrorType::TypeError,
-				"The argument arg takes a value of Number or wx.Size");
-			return Value::nil();
-		}
-		'''
-	Family(family as FontFamily):returnThis
-	FaceName(faceName as const_String_r):returnThis
-	Bold(bold as bool = true):returnThis
-	Light(light as bool = true):returnThis
-	Italic(italic as bool = true):returnThis
-	Slant(slant as bool = true):returnThis
-	AntiAliased(antiAliased as bool = true):returnThis
-	Underlined(underlined as bool = true):returnThis
-	Strikethrough(strikethrough as bool = true):returnThis
-	Encoding(encoding as FontEncoding):returnThis
-	AllFlags(flags as int):returnThis
-}

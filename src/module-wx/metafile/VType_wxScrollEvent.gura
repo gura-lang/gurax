@@ -1,0 +1,33 @@
+//==============================================================================
+// VType_wxScrollEvent.gura
+//==============================================================================
+ScrollEvent = Class(CommandEvent) {
+	//__init__(commandType as EventType = wxEVT_NULL, id as int = 0, pos as int = 0, orientation as int = 0)
+ 	GetOrientation() as int
+	GetPosition() as int
+	SetOrientation(orient as int) as void
+	SetPosition(pos as int) as void
+}
+
+@event {
+	//EVT_SCROLL						>> ScrollEvent
+	EVT_SCROLL_TOP						>> ScrollEvent
+	EVT_SCROLL_BOTTOM					>> ScrollEvent
+	EVT_SCROLL_LINEUP					>> ScrollEvent
+	EVT_SCROLL_LINEDOWN					>> ScrollEvent
+	EVT_SCROLL_PAGEUP					>> ScrollEvent
+	EVT_SCROLL_PAGEDOWN					>> ScrollEvent
+	EVT_SCROLL_THUMBTRACK				>> ScrollEvent
+	EVT_SCROLL_THUMBRELEASE				>> ScrollEvent
+	EVT_SCROLL_CHANGED					>> ScrollEvent
+	//EVT_COMMAND_SCROLL				>> ScrollEvent
+	//EVT_COMMAND_SCROLL_TOP			>> ScrollEvent
+	//EVT_COMMAND_SCROLL_BOTTOM			>> ScrollEvent
+	//EVT_COMMAND_SCROLL_LINEUP			>> ScrollEvent
+	//EVT_COMMAND_SCROLL_LINEDOWN		>> ScrollEvent
+	//EVT_COMMAND_SCROLL_PAGEUP			>> ScrollEvent
+	//EVT_COMMAND_SCROLL_PAGEDOWN		>> ScrollEvent
+	//EVT_COMMAND_SCROLL_THUMBTRACK		>> ScrollEvent
+	//EVT_COMMAND_SCROLL_THUMBRELEASE	>> ScrollEvent
+	//EVT_COMMAND_SCROLL_CHANGED		>> ScrollEvent
+}

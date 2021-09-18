@@ -763,6 +763,18 @@ void AssignConsts(Frame& frame)
 	frame.Assign("SHOW_SB_NEVER", new Value_Number(wxSHOW_SB_NEVER));
 	frame.Assign("SHRINK", new Value_Number(wxSHRINK));
 	frame.Assign("SIZER_FLAG_BITS_MASK", new Value_Number(wxSIZER_FLAG_BITS_MASK));
+	frame.Assign("SL_AUTOTICKS", new Value_Number(wxSL_AUTOTICKS));
+	frame.Assign("SL_BOTTOM", new Value_Number(wxSL_BOTTOM));
+	frame.Assign("SL_HORIZONTAL", new Value_Number(wxSL_HORIZONTAL));
+	frame.Assign("SL_INVERSE", new Value_Number(wxSL_INVERSE));
+	frame.Assign("SL_LABELS", new Value_Number(wxSL_LABELS));
+	frame.Assign("SL_LEFT", new Value_Number(wxSL_LEFT));
+	frame.Assign("SL_MIN_MAX_LABELS", new Value_Number(wxSL_MIN_MAX_LABELS));
+	frame.Assign("SL_RIGHT", new Value_Number(wxSL_RIGHT));
+	frame.Assign("SL_SELRANGE", new Value_Number(wxSL_SELRANGE));
+	frame.Assign("SL_TOP", new Value_Number(wxSL_TOP));
+	frame.Assign("SL_VALUE_LABEL", new Value_Number(wxSL_VALUE_LABEL));
+	frame.Assign("SL_VERTICAL", new Value_Number(wxSL_VERTICAL));
 	frame.Assign("SOUTH", new Value_Number(wxSOUTH));
 	frame.Assign("SRC_INVERT", new Value_Number(wxSRC_INVERT));
 	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));

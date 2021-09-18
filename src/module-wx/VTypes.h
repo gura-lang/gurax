@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxFontInfo.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -95,6 +94,7 @@
 #include "VType_wxFocusEvent.h"
 #include "VType_wxFont.h"
 #include "VType_wxFontDialog.h"
+#include "VType_wxFontInfo.h"
 #include "VType_wxFontMetrics.h"
 #include "VType_wxFontPickerCtrl.h"
 #include "VType_wxFrame.h"
@@ -236,6 +236,7 @@
 #include "VType_wxScrollBar.h"
 #include "VType_wxScrolledCanvas.h"
 #include "VType_wxScrolledWindow.h"
+#include "VType_wxScrollEvent.h"
 #include "VType_wxScrollWinEvent.h"
 #include "VType_wxSetCursorEvent.h"
 #include "VType_wxSimplebook.h"

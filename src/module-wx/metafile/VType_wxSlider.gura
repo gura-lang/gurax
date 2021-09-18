@@ -4,4 +4,41 @@
 Slider = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, value as int, minValue as int, maxValue as int, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxSL_HORIZONTAL, validator as Validator = wxDefaultValidator, name as String = wxSliderNameStr)
+	ClearSel() as void
+	ClearTicks() as void
+	Create(parent as Window_p, id as WindowID, value as int, minValue as int, maxValue as int, point as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxSL_HORIZONTAL, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxSliderNameStr) as bool
+	GetLineSize() as int
+	GetMax() as int
+	GetMin() as int
+	GetPageSize() as int
+	GetSelEnd() as int
+	GetSelStart() as int
+	GetThumbLength() as int
+	GetTickFreq() as int
+	GetValue() as int
+	SetLineSize(lineSize as int) as void
+	SetMin(minValue as int) as void
+	SetMax(maxValue as int) as void
+	SetPageSize(pageSize as int) as void
+	SetRange(minValue as int, maxValue as int) as void
+	SetSelection(startPos as int, endPos as int) as void
+	SetThumbLength(len as int) as void
+	SetTick(tickPos as int) as void
+	SetTickFreq(n as int) as void
+	SetValue(value as int) as void
+}
+
+@const { // Styles
+	SL_HORIZONTAL
+	SL_VERTICAL
+	SL_AUTOTICKS
+	SL_MIN_MAX_LABELS
+	SL_VALUE_LABEL
+	SL_LABELS
+	SL_LEFT
+	SL_RIGHT
+	SL_TOP
+	SL_BOTTOM
+	SL_SELRANGE
+	SL_INVERSE
 }

@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxFontInfo.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -92,6 +91,7 @@ set(SRCFILES_VTYPE
 	VType_wxFocusEvent.cpp
 	VType_wxFont.cpp
 	VType_wxFontDialog.cpp
+	VType_wxFontInfo.cpp
 	VType_wxFontMetrics.cpp
 	VType_wxFontPickerCtrl.cpp
 	VType_wxFrame.cpp
@@ -233,6 +233,7 @@ set(SRCFILES_VTYPE
 	VType_wxScrollBar.cpp
 	VType_wxScrolledCanvas.cpp
 	VType_wxScrolledWindow.cpp
+	VType_wxScrollEvent.cpp
 	VType_wxScrollWinEvent.cpp
 	VType_wxSetCursorEvent.cpp
 	VType_wxSimplebook.cpp

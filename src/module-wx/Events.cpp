@@ -87,6 +87,15 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_POWER_SUSPENDED, wxPowerEvent);
 	Gurax_AssignEvent(EVT_POWER_SUSPEND_CANCEL, wxPowerEvent);
 	Gurax_AssignEvent(EVT_POWER_RESUME, wxPowerEvent);
+	Gurax_AssignEvent(EVT_SCROLL_TOP, wxScrollEvent);
+	Gurax_AssignEvent(EVT_SCROLL_BOTTOM, wxScrollEvent);
+	Gurax_AssignEvent(EVT_SCROLL_LINEUP, wxScrollEvent);
+	Gurax_AssignEvent(EVT_SCROLL_LINEDOWN, wxScrollEvent);
+	Gurax_AssignEvent(EVT_SCROLL_PAGEUP, wxScrollEvent);
+	Gurax_AssignEvent(EVT_SCROLL_PAGEDOWN, wxScrollEvent);
+	Gurax_AssignEvent(EVT_SCROLL_THUMBTRACK, wxScrollEvent);
+	Gurax_AssignEvent(EVT_SCROLL_THUMBRELEASE, wxScrollEvent);
+	Gurax_AssignEvent(EVT_SCROLL_CHANGED, wxScrollEvent);
 	Gurax_AssignEvent(EVT_SCROLLWIN_TOP, wxScrollWinEvent);
 	Gurax_AssignEvent(EVT_SCROLLWIN_BOTTOM, wxScrollWinEvent);
 	Gurax_AssignEvent(EVT_SCROLLWIN_LINEUP, wxScrollWinEvent);

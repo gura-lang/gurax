@@ -2,6 +2,11 @@
 // VType_wxScrollWinEvent.gura
 //==============================================================================
 ScrollWinEvent = Class(Event) {
+	//__init__(commandType as EventType = wxEVT_NULL, pos as int = 0, orientation as int = 0)
+	GetOrientation() as int
+	GetPosition() as int
+	SetOrientation(orient as int) as void
+	SetPosition(pos as int) as void
 }
 
 @event {
