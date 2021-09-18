@@ -1,0 +1,14 @@
+//==============================================================================
+// VType_wxSpinEvent.gura
+//==============================================================================
+SpinEvent = Class(NotifyEvent) {
+	//__init__(commandType as EventType = wxEVT_NULL, id as int = 0)
+	GetPosition() as int
+	SetPosition(pos as int) as void
+}
+
+@event {
+	EVT_SPIN		>> SpinEvent
+	EVT_SPIN_UP		>> SpinEvent
+	EVT_SPIN_DOWN	>> SpinEvent
+}
