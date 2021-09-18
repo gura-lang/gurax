@@ -17,10 +17,14 @@ MyFrame = class(wx.Frame) {
 PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
+		fontSize = 12
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.TextCtrl(this, wx.ID_ANY, 'A quick brown fox jumps over the lazy dog.', style = wx.TE_MULTILINE) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			font = ctrl.GetFont()
+			font.SetPointSize(fontSize)
+			ctrl.SetFont(font)
 			this.textCtrl = ctrl
 		}
 		wx.BoxSizer(wx.VERTICAL) {|vbox|
@@ -28,14 +32,15 @@ PanelTop = class(wx.Panel) {
 			wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 				vbox.Add(hbox, wx.SizerFlags().Expand())
 				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Point Size'),  wx.SizerFlags().Center())
-				wx.SpinCtrl(this, min = 1, max = 100, initial = 12, style = wx.SP_ARROW_KEYS) {|ctrl|
-					hbox.Add(ctrl, wx.SizerFlags().Expand())
-					ctrl.Bind(wx.EVT_SPINCTRL, this.OnSpin_Size)
+				wx.SpinCtrl(this, min = 1, max = 100, initial = fontSize, style = wx.SP_ARROW_KEYS | wx.TE_READONLY) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 8))
+					ctrl.Bind(wx.EVT_SPINCTRL, this.OnSpinCtrl_Size)
 				}
+				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Bold'),  wx.SizerFlags().Center())
 			}
 		}
 	}
-	OnSpin_Size(event as wx.SpinEvent) = {
+	OnSpinCtrl_Size(event as wx.SpinEvent) = {
 		font = this.textCtrl.GetFont()
 		font.SetPointSize(event.GetPosition())
 		this.textCtrl.SetFont(font)

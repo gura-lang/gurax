@@ -1100,4 +1100,4 @@ GenerateEvent(eventInfoTbl[] as EventInfo) = {
 
 GenerateVType(classInfoTbl)
 GenerateConst(constNameTbl.Sort().Uniq():list)
-GenerateEvent(eventInfoTbl)
+GenerateEvent(eventInfoTbl.Sort(keys = eventInfoTbl::eventName))
