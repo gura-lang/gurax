@@ -900,7 +900,7 @@ Gurax_BeginModuleScope(wx)
 void AssignEvents(Frame& frame)
 {
 	${eventInfoTbl.Each {|eventInfo|}}
-	Gurax_AssignEvent(${eventInfo.eventName}, wx${eventInfo.className});
+	${AppendTab('Gurax_AssignEvent(' + eventInfo.eventName + ',', colAlign)}wx${eventInfo.className});
 	${end}
 }
 
@@ -1059,6 +1059,10 @@ classInfoTbl.Each {|classInfo|
 	}
 }
 
+AppendTab(str as String, colAlign as Number) = {
+	str + ' '
+}
+
 GenerateVType(classInfoTbl[] as ClassInfo) = {
 	fileNamesHeader = []
 	fileNamesSource = []
@@ -1094,10 +1098,10 @@ GenerateConst(constNameTbl[] as String) = {
 	tmplConsts.Render('Consts.cpp')
 }
 
-GenerateEvent(eventInfoTbl[] as EventInfo) = {
+GenerateEvent(eventInfoTbl[] as EventInfo, colAlign as Number) = {
 	tmplEvents.Render('Events.cpp')
 }
 
 GenerateVType(classInfoTbl)
 GenerateConst(constNameTbl.Sort().Uniq():list)
-GenerateEvent(eventInfoTbl.Sort(keys = eventInfoTbl::eventName))
+GenerateEvent(eventInfoTbl.Sort(keys = eventInfoTbl::eventName), 80)
