@@ -2,14 +2,13 @@
 # coding: utf-8
 import(wx)
 
-
 text = R'''
 The quick brown fox jumps over the lazy dog.
 '''
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(640, 300)).Show()
 		true
 	}
 }
