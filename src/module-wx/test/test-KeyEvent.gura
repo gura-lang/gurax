@@ -3,7 +3,7 @@ import(wx)
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(320, 480)).Show()
 		true
 	}
 }
@@ -19,10 +19,11 @@ PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
 		this.SetSizer(sizerTop)
-		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+		wx.TextCtrl(this, wx.ID_ANY, 'Hit any keys\n', style = wx.TE_MULTILINE) {|ctrl|
 			font = wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
 			ctrl.SetFont(font)
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			ctrl.SetInsertionPointEnd()
 			wx.EVT_KEY_DOWN(ctrl, this.OnKey)
 			wx.EVT_KEY_UP(ctrl, this.OnKey)
 			wx.EVT_CHAR(ctrl, this.OnKey)
