@@ -3,4 +3,14 @@
 //==============================================================================
 FontDialog = Class(Dialog) {
 	@include['wx/fontdlg.h']
+	__init__(parent as Window_p, data? as FontData_p) = \
+		R'''
+		if (data) {
+			return new Value_wxFontDialog(new wxFontDialog(parent, *data));
+		} else {
+			return new Value_wxFontDialog(new wxFontDialog(parent));
+		}
+		'''
+	ShowModal() as int
+	GetFontData() as FontData_r
 }

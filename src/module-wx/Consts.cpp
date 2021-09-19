@@ -740,6 +740,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("PRINT_MODE_PREVIEW", new Value_Number(wxPRINT_MODE_PREVIEW));
 	frame.Assign("PRINT_MODE_PRINTER", new Value_Number(wxPRINT_MODE_PRINTER));
 	frame.Assign("PRINT_MODE_STREAM", new Value_Number(wxPRINT_MODE_STREAM));
+	frame.Assign("RA_SPECIFY_COLS", new Value_Number(wxRA_SPECIFY_COLS));
+	frame.Assign("RA_SPECIFY_ROWS", new Value_Number(wxRA_SPECIFY_ROWS));
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
 	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
 	frame.Assign("RETAINED", new Value_Number(wxRETAINED));
