@@ -14,20 +14,51 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
+SelectionItem = struct { value, label as String }
+
 PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
+	comboBox_FontFamily as wx.ComboBox
+	spinCtrl_PointSize as wx.SpinCtrl
 	radioBox_FontWeight as wx.RadioBox
 	radioBox_FontStyle as wx.RadioBox
+	checkBox_Underlined as wx.CheckBox
+	checkBox_Strikethrough as wx.CheckBox
+	fontFamilyTbl = @(SelectionItem) {
+		{ wx.FONTFAMILY_DEFAULT,	'Default'		}
+		{ wx.FONTFAMILY_DECORATIVE,	'Decorative'	}
+		{ wx.FONTFAMILY_ROMAN,		'Roman'			}
+		{ wx.FONTFAMILY_SCRIPT,		'Script'		}
+		{ wx.FONTFAMILY_SWISS,		'Swiss'			}
+		{ wx.FONTFAMILY_MODERN,		'Modern'		}
+		{ wx.FONTFAMILY_TELETYPE,	'Teletype'		}
+	}
+	fontWeightTbl = @(SelectionItem) {
+		{ wx.FONTWEIGHT_NORMAL,		'Normal'		}
+		{ wx.FONTWEIGHT_LIGHT,		'Light'			}
+		{ wx.FONTWEIGHT_BOLD,		'Bold'			}
+	}
+	fontStyleTbl = @(SelectionItem) {
+		{ wx.FONTSTYLE_NORMAL,		'Normal'		}
+		{ wx.FONTSTYLE_ITALIC,		'Italic'		}
+		{ wx.FONTSTYLE_SLANT,		'Slant'			}
+	}
 	__init__(parent as wx.Window) = {|parent|
+		iFontFamily = 0
 		fontSize = 12
-		fontWeight = wx.FONTWEIGHT_NORMAL
+		iFontWeight = 0
+		iFontStyle = 0
+		underlinedFlag = false
+		strikethroughFlag = false
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.TextCtrl(this, wx.ID_ANY, 'A quick brown fox jumps over the lazy dog.', style = wx.TE_MULTILINE) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 			font = ctrl.GetFont()
+			font.SetFamily(this.fontFamilyTbl[iFontFamily].value)
 			font.SetPointSize(fontSize)
-			font.SetWeight(fontWeight)
+			font.SetWeight(this.fontWeightTbl[iFontWeight].value)
+			font.SetStyle(this.fontStyleTbl[iFontStyle].value)
 			ctrl.SetFont(font)
 			this.textCtrl = ctrl
 		}
@@ -35,42 +66,65 @@ PanelTop = class(wx.Panel) {
 			sizerTop.Add(vbox, wx.SizerFlags().Expand().Border(wx.ALL, 8))
 			wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 				vbox.Add(hbox, wx.SizerFlags().Expand())
-				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Point Size'),  wx.SizerFlags().Center())
+				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Font Family'),  wx.SizerFlags().Center())
+				wx.ComboBox(this, wx.ID_ANY, choices = this.fontFamilyTbl::label) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags().Center().Border(wx.LEFT, 8))
+					ctrl.SetSelection(iFontFamily)
+					ctrl.Bind(wx.EVT_COMBOBOX, this.OnComboBox)
+					this.comboBox_FontFamily = ctrl
+				}
+				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Point Size'),  wx.SizerFlags().Center().Border(wx.LEFT, 16))
 				wx.SpinCtrl(this, min = 1, max = 100, initial = fontSize, style = wx.SP_ARROW_KEYS | wx.TE_READONLY) {|ctrl|
 					hbox.Add(ctrl, wx.SizerFlags().Center().Border(wx.LEFT, 8))
 					ctrl.Bind(wx.EVT_SPINCTRL, this.OnSpinCtrl_Size)
+					this.spinCtrl_PointSize = ctrl
 				}
 				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Font Weight'),  wx.SizerFlags().Center().Border(wx.LEFT, 16))
-				wx.RadioBox(this, wx.ID_ANY, '', choices = ['Normal', 'Light', 'Bold']) {|ctrl|
+				wx.RadioBox(this, wx.ID_ANY, '', choices = this.fontWeightTbl::label) {|ctrl|
 					hbox.Add(ctrl, wx.SizerFlags().Border(wx.LEFT, 8))
-					ctrl.SetSelection(0)
+					ctrl.SetSelection(iFontWeight)
 					ctrl.Bind(wx.EVT_RADIOBOX, this.OnRadioBox)
 					this.radioBox_FontWeight = ctrl
 				}
-				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Font Style'),  wx.SizerFlags().Center().Border(wx.LEFT, 16))
-				wx.RadioBox(this, wx.ID_ANY, '', choices = ['Normal', 'Italic', 'Slant']) {|ctrl|
+			}
+			wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+				vbox.Add(hbox, wx.SizerFlags().Expand())
+				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Font Style'),  wx.SizerFlags().Center())
+				wx.RadioBox(this, wx.ID_ANY, '', choices = this.fontStyleTbl::label) {|ctrl|
 					hbox.Add(ctrl, wx.SizerFlags().Border(wx.LEFT, 8))
-					ctrl.SetSelection(0)
+					ctrl.SetSelection(iFontStyle)
 					ctrl.Bind(wx.EVT_RADIOBOX, this.OnRadioBox)
 					this.radioBox_FontStyle = ctrl
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'Underlined') {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags().Center().Border(wx.LEFT, 16))
+					ctrl.SetValue(underlinedFlag)
+					ctrl.Bind(wx.EVT_CHECKBOX, this.OnCheckBox)
+					this.checkBox_Underlined = ctrl
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'Strikethrough') {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags().Center().Border(wx.LEFT, 16))
+					ctrl.SetValue(strikethroughFlag)
+					ctrl.Bind(wx.EVT_CHECKBOX, this.OnCheckBox)
+					this.checkBox_Strikethrough = ctrl
 				}
 			}
 		}
 	}
-	OnSpinCtrl_Size(event as wx.SpinEvent) = {
-		pointSize = event.GetPosition()
+	UpdateFont() = {
 		font = this.textCtrl.GetFont()
-		font.SetPointSize(pointSize)
+		font.SetFamily(this.fontFamilyTbl[this.comboBox_FontFamily.GetSelection()].value)
+		font.SetPointSize(this.spinCtrl_PointSize.GetValue())
+		font.SetWeight(this.fontWeightTbl[this.radioBox_FontWeight.GetSelection()].value)
+		font.SetStyle(this.fontStyleTbl[this.radioBox_FontStyle.GetSelection()].value)
+		font.SetUnderlined(this.checkBox_Underlined.GetValue())
+		font.SetStrikethrough(this.checkBox_Strikethrough.GetValue())
 		this.textCtrl.SetFont(font)
 	}
-	OnRadioBox(event as wx.CommandEvent) = {
-		fontWeight = [wx.FONTWEIGHT_NORMAL, wx.FONTWEIGHT_LIGHT, wx.FONTWEIGHT_BOLD][this.radioBox_FontWeight.GetSelection()]
-		fontStyle = [wx.FONTSTYLE_NORMAL, wx.FONTSTYLE_ITALIC, wx.FONTSTYLE_SLANT][this.radioBox_FontStyle.GetSelection()]
-		font = this.textCtrl.GetFont()
-		font.SetWeight(fontWeight)
-		font.SetStyle(fontStyle)
-		this.textCtrl.SetFont(font)
-	}
+	OnComboBox(event as wx.CommandEvent) = this.UpdateFont()
+	OnSpinCtrl_Size(event as wx.SpinEvent) = this.UpdateFont()
+	OnRadioBox(event as wx.CommandEvent) = this.UpdateFont()
+	OnCheckBox(event as wx.CommandEvent) = this.UpdateFont()
 }
 
 wx.ImplementApp(MyApp())
