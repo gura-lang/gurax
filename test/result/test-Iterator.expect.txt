@@ -598,6 +598,14 @@ words100.Each().Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'r
 0 .. 100.Tail(10):list .. [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
 0 .. 4.Tail(5):list .. [0, 1, 2, 3, 4]
 0 .. 4.Tail(6):list .. [0, 1, 2, 3, 4]
+======== Iterator#Uniq() ========
+[].Each().Uniq():list .. []
+[1].Each().Uniq():list .. [1]
+[1, 2, 3, 4, 5, 6, 7, 8, 9].Each().Uniq():list .. [1, 2, 3, 4, 5, 6, 7, 8, 9]
+[1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 6, 7, 8, 9].Each().Uniq():list .. [1, 2, 3, 4, 5, 6, 7, 8, 9]
+['orange'].Each().Uniq():list .. ['orange']
+['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi'].Each().Uniq():list .. ['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi']
+['orange', 'grape', 'grape', 'apple', 'apple', 'apple', 'peach', 'melon', 'kiwi', 'kiwi', 'kiwi'].Each().Uniq():list .. ['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi']
 ======== Iterator#Until() ========
 x.Each().Until(& {$i < 0}):list .. [4, 3, 6, 1, 2, 3, -1]
 x.Each().Until(x < 0):list .. [4, 3, 6, 1, 2, 3, -1]

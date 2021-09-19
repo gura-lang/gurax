@@ -14,9 +14,12 @@ class GURAX_DLLDECLARE FunctionCustom : public Function {
 protected:
 	RefPtr<Expr> _pExprBody;
 	const PUnit* _pPUnitBody;
+	RefPtr<Frame> _pFrameHolder;	// this may be nullptr
 public:
 	FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable,
 				   Expr* pExprBody, HelpHolder* pHelpHolder = nullptr);
+public:
+	void SetFrameHolder(Frame* pFrameHolder) { _pFrameHolder.reset(pFrameHolder); }
 public:
 	// Virtual functions of Function
 	virtual const Expr& GetExprBody() const override { return *_pExprBody; }

@@ -77,7 +77,7 @@ public:
 	const Expr_Block* GetExprOfBlock() const { return _pExprOfBlock.get(); }
 	Expr_Block* SuspendExprOfBlock() { return _pExprOfBlock.release(); }
 	void ResumeExprOfBlock(Expr_Block* pExpr) { _pExprOfBlock.reset(pExpr); }
-	Function* CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol) const;
+	Function* CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol, bool holdFrameFlag) const;
 	bool HasValueOfDict() const { return _pValueOfDict.get() != nullptr; }
 	Value_Dict* GetValueOfDict() { return _pValueOfDict.get(); }
 	const Value_Dict* GetValueOfDict() const { return _pValueOfDict.get(); }

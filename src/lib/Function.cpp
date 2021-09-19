@@ -15,7 +15,8 @@ void Function::Bootup()
 	Empty.reset(new Function_Empty());
 }
 
-Function* Function::CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol, const Expr_Block& exprOfBlock)
+Function* Function::CreateBlockFunction(Frame& frameOuter,
+		const Symbol* pSymbol, const Expr_Block& exprOfBlock, bool holdFrameFlag)
 {
 	//const PUnit* pPUnit = exprOfBlock.GetPUnitFirst();
 	//if (pPUnit->IsSequenceBegin()) pPUnit = pPUnit->GetPUnitCont();
@@ -23,6 +24,7 @@ Function* Function::CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol
 		Type::Function, pSymbol, exprOfBlock.GetDeclCallable().Reference(), exprOfBlock.Reference()));
 	pFunction->Declare(VTYPE_Any, Flag::CutExtraArgs);
 	pFunction->SetFrameOuter(frameOuter);
+	if (holdFrameFlag) pFunction->SetFrameHolder(frameOuter.Reference());
 	return pFunction.release();
 }
 
@@ -35,8 +37,8 @@ Function* Function::CreateDynamicFunction(
 	}
 	RefPtr<DeclCallable> pDeclCallable(new DeclCallable());
 	if (!pDeclCallable->Prepare(*pExprLink, *Attribute::Empty, nullptr)) return nullptr;
-	RefPtr<FunctionCustom> pFunction(
-		new FunctionCustom(Type::Function, pSymbol, pDeclCallable.release(), exprOfBlock.Reference()));
+	RefPtr<FunctionCustom> pFunction(new FunctionCustom(
+		Type::Function, pSymbol, pDeclCallable.release(), exprOfBlock.Reference()));
 	pFunction->Declare(VTYPE_Any, Flag::None);
 	return pFunction.release();
 }

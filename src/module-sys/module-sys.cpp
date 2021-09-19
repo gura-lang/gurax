@@ -45,7 +45,7 @@ Gurax_ImplementFunction(Presenter)
 {
 	// Argument
 	RefPtr<Function> pFuncPresenter(argument.CreateBlockFunction(
-							processor.GetFrameCur(), Gurax_Symbol(block)));
+							processor.GetFrameCur(), Gurax_Symbol(block), true));
 	// Function body
 	Basement::Inst.SetFuncPresenter(pFuncPresenter.release());
 	return Value::nil();

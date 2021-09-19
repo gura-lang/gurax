@@ -192,7 +192,8 @@ protected:
 	virtual ~Function() = default;
 public:
 	Function* Clone() const { return new Function(*this); }
-	static Function* CreateBlockFunction(Frame& frameOuter, const Symbol* pSymbol, const Expr_Block& exprOfBlock);
+	static Function* CreateBlockFunction(
+		Frame& frameOuter, const Symbol* pSymbol, const Expr_Block& exprOfBlock, bool holdFrameFlag);
 	static Function* CreateDynamicFunction(
 		const Symbol* pSymbol, const ValueList& valuesExpr, const Expr_Block& exprOfBlock);
 public:

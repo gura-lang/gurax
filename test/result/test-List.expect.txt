@@ -788,6 +788,14 @@ words100.Sort(`ascend, [99 .. 0]) .. ['cattle', 'nebulous', 'possess', 'reading'
 [0 .. 100].Tail(10):list .. [91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
 [0 .. 4].Tail(5):list .. [0, 1, 2, 3, 4]
 [0 .. 4].Tail(6):list .. [0, 1, 2, 3, 4]
+======== List#Uniq() ========
+[].Uniq():list .. []
+[1].Uniq():list .. [1]
+[1, 2, 3, 4, 5, 6, 7, 8, 9].Uniq():list .. [1, 2, 3, 4, 5, 6, 7, 8, 9]
+[1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 6, 7, 8, 9].Uniq():list .. [1, 2, 3, 4, 5, 6, 7, 8, 9]
+['orange'].Uniq():list .. ['orange']
+['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi'].Uniq():list .. ['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi']
+['orange', 'grape', 'grape', 'apple', 'apple', 'apple', 'peach', 'melon', 'kiwi', 'kiwi', 'kiwi'].Uniq():list .. ['orange', 'grape', 'apple', 'peach', 'melon', 'kiwi']
 ======== List#Until() ========
 x.Until(& {$i < 0}):list .. [4, 3, 6, 1, 2, 3, -1]
 x.Until(x < 0):list .. [4, 3, 6, 1, 2, 3, -1]
