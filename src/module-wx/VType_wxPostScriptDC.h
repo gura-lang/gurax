@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxPostScriptDC);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxPostScriptDC");
+protected:
+	wxPostScriptDC& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxPostScriptDC() = delete;
-	explicit Value_wxPostScriptDC(const wxObject& entity, VType& vtype = VTYPE_wxPostScriptDC) :
-		Value_wxDC(entity, vtype) {}
+	explicit Value_wxPostScriptDC(const wxPostScriptDC& entity, VType& vtype = VTYPE_wxPostScriptDC) :
+		Value_wxDC(entity, vtype), _entity(const_cast<wxPostScriptDC&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxPostScriptDC(const Value_wxPostScriptDC& src) = delete;
 	Value_wxPostScriptDC& operator=(const Value_wxPostScriptDC& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxPostScriptDC() = default;
 public:
-	wxPostScriptDC& GetEntity() {
-		return reinterpret_cast<wxPostScriptDC&>(Value_wxObject::GetEntity());
-	}
-	const wxPostScriptDC& GetEntity() const {
-		return reinterpret_cast<const wxPostScriptDC&>(Value_wxObject::GetEntity());
-	}
-	wxPostScriptDC* GetEntityPtr() {
-		return reinterpret_cast<wxPostScriptDC*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxPostScriptDC* GetEntityPtr() const {
-		return reinterpret_cast<const wxPostScriptDC*>(Value_wxObject::GetEntityPtr());
-	}
+	wxPostScriptDC& GetEntity() { return _entity; }
+	const wxPostScriptDC& GetEntity() const { return _entity; }
+	wxPostScriptDC* GetEntityPtr() { return &_entity; }
+	const wxPostScriptDC* GetEntityPtr() const { return &_entity; }
 public:
 	static wxPostScriptDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxPostScriptDC&>(value).GetEntity();

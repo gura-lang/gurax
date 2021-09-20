@@ -1,6 +1,8 @@
 //==============================================================================
-// VType_wxScreenDC.gura
+// VType_wxPostScriptDC.gura
 //==============================================================================
-ScreenDC = Class(DC) {
-	@include['wx/dcscreen.h']
+/*
+PostScriptDC = Class(DC) {
+	@include['wx/dcps.h']
 }
+*/

@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxFontData.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -20,6 +19,7 @@ set(SRCFILES_VTYPE
 	VType_wxAuiNotebook.cpp
 	VType_wxAuiNotebookEvent.cpp
 	VType_wxAuiToolBar.cpp
+	VType_wxAutoBufferedPaintDC.cpp
 	VType_wxBitmap.cpp
 	VType_wxBitmapButton.cpp
 	VType_wxBitmapComboBox.cpp
@@ -29,6 +29,8 @@ set(SRCFILES_VTYPE
 	VType_wxBookCtrlEvent.cpp
 	VType_wxBoxSizer.cpp
 	VType_wxBrush.cpp
+	VType_wxBufferedDC.cpp
+	VType_wxBufferedPaintDC.cpp
 	VType_wxBusyCursor.cpp
 	VType_wxButton.cpp
 	VType_wxCalculateLayoutEvent.cpp
@@ -43,6 +45,7 @@ set(SRCFILES_VTYPE
 	VType_wxChoice.cpp
 	VType_wxChoicebook.cpp
 	VType_wxClientDataContainer.cpp
+	VType_wxClientDC.cpp
 	VType_wxClipboard.cpp
 	VType_wxCmdLineParser.cpp
 	VType_wxCollapsiblePane.cpp
@@ -91,6 +94,7 @@ set(SRCFILES_VTYPE
 	VType_wxFlexGridSizer.cpp
 	VType_wxFocusEvent.cpp
 	VType_wxFont.cpp
+	VType_wxFontData.cpp
 	VType_wxFontDialog.cpp
 	VType_wxFontInfo.cpp
 	VType_wxFontMetrics.cpp
@@ -100,6 +104,7 @@ set(SRCFILES_VTYPE
 	VType_wxGBPosition.cpp
 	VType_wxGBSizerItem.cpp
 	VType_wxGBSpan.cpp
+	VType_wxGCDC.cpp
 	VType_wxGDIImageHandler.cpp
 	VType_wxGDIObject.cpp
 	VType_wxGenericDirCtrl.cpp
@@ -184,6 +189,7 @@ set(SRCFILES_VTYPE
 	VType_wxObject.cpp
 	VType_wxOutputStream.cpp
 	VType_wxOwnerDrawnComboBox.cpp
+	VType_wxPaintDC.cpp
 	VType_wxPaintEvent.cpp
 	VType_wxPalette.cpp
 	VType_wxPanel.cpp
@@ -260,6 +266,7 @@ set(SRCFILES_VTYPE
 	VType_wxStreamBase.cpp
 	VType_wxStyledTextCtrl.cpp
 	VType_wxStyledTextEvent.cpp
+	VType_wxSVGFileDC.cpp
 	VType_wxSymbolPickerDialog.cpp
 	VType_wxSysColourChangedEvent.cpp
 	VType_wxTextAttr.cpp
@@ -281,6 +288,7 @@ set(SRCFILES_VTYPE
 	VType_wxVListBox.cpp
 	VType_wxVScrolledWindow.cpp
 	VType_wxWindow.cpp
+	VType_wxWindowDC.cpp
 	VType_wxWizard.cpp
 	VType_wxWizardPage.cpp
 	VType_wxWizardPageSimple.cpp

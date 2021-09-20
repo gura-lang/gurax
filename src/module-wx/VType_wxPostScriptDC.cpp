@@ -28,27 +28,6 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.PostScriptDC(printData as wx.PrintData) {block?}
-Gurax_DeclareConstructorAlias(PostScriptDC_gurax, "PostScriptDC")
-{
-	Declare(VTYPE_wxPostScriptDC, Flag::None);
-	DeclareArg("printData", VTYPE_wxPrintData, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.PostScriptDC.");
-}
-
-Gurax_ImplementConstructorEx(PostScriptDC_gurax, processor_gurax, argument_gurax)
-{
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPrintData& value_printData = args_gurax.Pick<Value_wxPrintData>();
-	const wxPrintData& printData = value_printData.GetEntity();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPostScriptDC(
-		wxPostScriptDC(printData)));
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -68,7 +47,7 @@ void VType_wxPostScriptDC::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxDC, Flag::Mutable, Gurax_CreateConstructor(PostScriptDC_gurax));
+	Declare(VTYPE_wxDC, Flag::Mutable);
 	// Assignment of method
 }
 

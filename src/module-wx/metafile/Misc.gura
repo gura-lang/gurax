@@ -1,20 +1,3 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
-FontData = Class(Object) {
-	@include['wx/fontdata.h']
-	__init__()
-	EnableEffects(enable as bool) as void
-	GetAllowSymbols() as bool
-	GetChosenFont() as Font
-	GetColour() as Colour
-	GetEnableEffects() as bool
-	GetInitialFont() as Font
-	GetShowHelp() as bool
-	SetAllowSymbols(allowSymbols as bool) as void
-	SetChosenFont(font as const_Font_r) as void
-	SetColour(colour as const_Colour_r) as void
-	SetInitialFont(font as const_Font_r) as void
-	SetRange(min as int, max as int) as void
-	SetShowHelp(showHelp as bool) as void
-}

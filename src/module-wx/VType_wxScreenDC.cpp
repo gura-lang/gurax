@@ -28,22 +28,6 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ScreenDC() {block?} {block?}
-Gurax_DeclareConstructorAlias(ScreenDC_gurax, "ScreenDC")
-{
-	Declare(VTYPE_wxScreenDC, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.ScreenDC.");
-}
-
-Gurax_ImplementConstructorEx(ScreenDC_gurax, processor_gurax, argument_gurax)
-{
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxScreenDC(
-		wxScreenDC()));
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -63,7 +47,7 @@ void VType_wxScreenDC::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxDC, Flag::Mutable, Gurax_CreateConstructor(ScreenDC_gurax));
+	Declare(VTYPE_wxDC, Flag::Mutable);
 	// Assignment of method
 }
 

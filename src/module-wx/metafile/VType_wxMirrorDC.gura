@@ -3,5 +3,4 @@
 //==============================================================================
 MirrorDC = Class(DC) {
 	@include['wx/dcmirror.h']
-	__init__(dc as DC_r, mirror as bool)
 }

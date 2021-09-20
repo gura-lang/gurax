@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxScreenDC.gura
+// VType_wxPaintDC.gura
 //==============================================================================
-ScreenDC = Class(DC) {
-	@include['wx/dcscreen.h']
+PaintDC = Class(ClientDC) {
+	@include['wx/dcclient.h']
 }

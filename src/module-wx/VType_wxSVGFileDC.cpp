@@ -28,32 +28,6 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.SVGFileDC(filename as String, width? as Number, height? as Number, dpi? as Number) {block?}
-Gurax_DeclareConstructorAlias(SVGFileDC_gurax, "SVGFileDC")
-{
-	Declare(VTYPE_wxSVGFileDC, Flag::None);
-	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("dpi", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.SVGFileDC.");
-}
-
-Gurax_ImplementConstructorEx(SVGFileDC_gurax, processor_gurax, argument_gurax)
-{
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* filename = args_gurax.PickString();
-	int width = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 320;
-	int height = args_gurax.IsValid()? args_gurax.PickNumber<int>() : 240;
-	double dpi = args_gurax.IsValid()? args_gurax.PickNumber<double>() : 72;
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSVGFileDC(
-		wxSVGFileDC(filename, width, height, dpi)));
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -73,7 +47,7 @@ void VType_wxSVGFileDC::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxDC, Flag::Mutable, Gurax_CreateConstructor(SVGFileDC_gurax));
+	Declare(VTYPE_wxDC, Flag::Mutable);
 	// Assignment of method
 }
 

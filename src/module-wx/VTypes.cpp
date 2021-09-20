@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxFontData);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -28,6 +27,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAuiNotebook);
 	frame.Assign(VTYPE_wxAuiNotebookEvent);
 	frame.Assign(VTYPE_wxAuiToolBar);
+	frame.Assign(VTYPE_wxAutoBufferedPaintDC);
 	frame.Assign(VTYPE_wxBitmap);
 	frame.Assign(VTYPE_wxBitmapButton);
 	frame.Assign(VTYPE_wxBitmapComboBox);
@@ -37,6 +37,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxBookCtrlEvent);
 	frame.Assign(VTYPE_wxBoxSizer);
 	frame.Assign(VTYPE_wxBrush);
+	frame.Assign(VTYPE_wxBufferedDC);
+	frame.Assign(VTYPE_wxBufferedPaintDC);
 	frame.Assign(VTYPE_wxBusyCursor);
 	frame.Assign(VTYPE_wxButton);
 	frame.Assign(VTYPE_wxCalculateLayoutEvent);
@@ -51,6 +53,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxChoice);
 	frame.Assign(VTYPE_wxChoicebook);
 	frame.Assign(VTYPE_wxClientDataContainer);
+	frame.Assign(VTYPE_wxClientDC);
 	frame.Assign(VTYPE_wxClipboard);
 	frame.Assign(VTYPE_wxCmdLineParser);
 	frame.Assign(VTYPE_wxCollapsiblePane);
@@ -99,6 +102,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFlexGridSizer);
 	frame.Assign(VTYPE_wxFocusEvent);
 	frame.Assign(VTYPE_wxFont);
+	frame.Assign(VTYPE_wxFontData);
 	frame.Assign(VTYPE_wxFontDialog);
 	frame.Assign(VTYPE_wxFontInfo);
 	frame.Assign(VTYPE_wxFontMetrics);
@@ -108,6 +112,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGBPosition);
 	frame.Assign(VTYPE_wxGBSizerItem);
 	frame.Assign(VTYPE_wxGBSpan);
+	frame.Assign(VTYPE_wxGCDC);
 	frame.Assign(VTYPE_wxGDIImageHandler);
 	frame.Assign(VTYPE_wxGDIObject);
 	frame.Assign(VTYPE_wxGenericDirCtrl);
@@ -192,6 +197,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxObject);
 	frame.Assign(VTYPE_wxOutputStream);
 	frame.Assign(VTYPE_wxOwnerDrawnComboBox);
+	frame.Assign(VTYPE_wxPaintDC);
 	frame.Assign(VTYPE_wxPaintEvent);
 	frame.Assign(VTYPE_wxPalette);
 	frame.Assign(VTYPE_wxPanel);
@@ -268,6 +274,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxStreamBase);
 	frame.Assign(VTYPE_wxStyledTextCtrl);
 	frame.Assign(VTYPE_wxStyledTextEvent);
+	frame.Assign(VTYPE_wxSVGFileDC);
 	frame.Assign(VTYPE_wxSymbolPickerDialog);
 	frame.Assign(VTYPE_wxSysColourChangedEvent);
 	frame.Assign(VTYPE_wxTextAttr);
@@ -289,6 +296,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxVListBox);
 	frame.Assign(VTYPE_wxVScrolledWindow);
 	frame.Assign(VTYPE_wxWindow);
+	frame.Assign(VTYPE_wxWindowDC);
 	frame.Assign(VTYPE_wxWizard);
 	frame.Assign(VTYPE_wxWizardPage);
 	frame.Assign(VTYPE_wxWizardPageSimple);

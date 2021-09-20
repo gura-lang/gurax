@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxScreenDC.gura
+// VType_wxSVGFileDC.gura
 //==============================================================================
-ScreenDC = Class(DC) {
-	@include['wx/dcscreen.h']
+SVGFileDC = Class(DC) {
+	@include['wx/dcsvg.h']
 }

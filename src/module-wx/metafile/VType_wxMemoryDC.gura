@@ -2,5 +2,5 @@
 // VType_wxMemoryDC.gura
 //==============================================================================
 MemoryDC = Class(DC) {
-	__init__(bitmap as Bitmap_r)
+	@include['wx/dcmemory.h']
 }

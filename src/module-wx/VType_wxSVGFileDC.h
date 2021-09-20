@@ -6,7 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXSVGFILEDC_H
 #include <gurax.h>
 #include <wx/wx.h>
-#include <dcsvg.h>
+#include <wx/dcsvg.h>
 #include "Util.h"
 #include "VType_wxDC.h"
 
@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxSVGFileDC);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxSVGFileDC");
+protected:
+	wxSVGFileDC& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxSVGFileDC() = delete;
-	explicit Value_wxSVGFileDC(const wxObject& entity, VType& vtype = VTYPE_wxSVGFileDC) :
-		Value_wxDC(entity, vtype) {}
+	explicit Value_wxSVGFileDC(const wxSVGFileDC& entity, VType& vtype = VTYPE_wxSVGFileDC) :
+		Value_wxDC(entity, vtype), _entity(const_cast<wxSVGFileDC&>(entity)) {}
 	// Copy constructor/operator
 	Value_wxSVGFileDC(const Value_wxSVGFileDC& src) = delete;
 	Value_wxSVGFileDC& operator=(const Value_wxSVGFileDC& src) = delete;
@@ -49,18 +51,10 @@ protected:
 	// Destructor
 	~Value_wxSVGFileDC() = default;
 public:
-	wxSVGFileDC& GetEntity() {
-		return reinterpret_cast<wxSVGFileDC&>(Value_wxObject::GetEntity());
-	}
-	const wxSVGFileDC& GetEntity() const {
-		return reinterpret_cast<const wxSVGFileDC&>(Value_wxObject::GetEntity());
-	}
-	wxSVGFileDC* GetEntityPtr() {
-		return reinterpret_cast<wxSVGFileDC*>(Value_wxObject::GetEntityPtr());
-	}
-	const wxSVGFileDC* GetEntityPtr() const {
-		return reinterpret_cast<const wxSVGFileDC*>(Value_wxObject::GetEntityPtr());
-	}
+	wxSVGFileDC& GetEntity() { return _entity; }
+	const wxSVGFileDC& GetEntity() const { return _entity; }
+	wxSVGFileDC* GetEntityPtr() { return &_entity; }
+	const wxSVGFileDC* GetEntityPtr() const { return &_entity; }
 public:
 	static wxSVGFileDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxSVGFileDC&>(value).GetEntity();

@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxScreenDC.gura
+// VType_wxBufferedPaintDC.gura
 //==============================================================================
-ScreenDC = Class(DC) {
-	@include['wx/dcscreen.h']
+BufferedPaintDC = Class(DC) {
+	@include['wx/dcbuffer.h']
 }

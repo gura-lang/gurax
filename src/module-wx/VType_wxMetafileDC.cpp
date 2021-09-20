@@ -28,26 +28,6 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MetafileDC(filename? as String) {block?} {block?}
-Gurax_DeclareConstructorAlias(MetafileDC_gurax, "MetafileDC")
-{
-	Declare(VTYPE_wxMetafileDC, Flag::None);
-	DeclareArg("filename", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.MetafileDC.");
-}
-
-Gurax_ImplementConstructorEx(MetafileDC_gurax, processor_gurax, argument_gurax)
-{
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* filename = args_gurax.IsValid()? args_gurax.PickString() : "";
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMetafileDC(
-		wxMetafileDC(filename)));
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -67,7 +47,7 @@ void VType_wxMetafileDC::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxDC, Flag::Mutable, Gurax_CreateConstructor(MetafileDC_gurax));
+	Declare(VTYPE_wxDC, Flag::Mutable);
 	// Assignment of method
 }
 

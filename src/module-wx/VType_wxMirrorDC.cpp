@@ -28,29 +28,6 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MirrorDC(dc as wx.DC, mirror as Bool) {block?} {block?}
-Gurax_DeclareConstructorAlias(MirrorDC_gurax, "MirrorDC")
-{
-	Declare(VTYPE_wxMirrorDC, Flag::None);
-	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("mirror", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.MirrorDC.");
-}
-
-Gurax_ImplementConstructorEx(MirrorDC_gurax, processor_gurax, argument_gurax)
-{
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxDC& value_dc = args_gurax.Pick<Value_wxDC>();
-	wxDC& dc = value_dc.GetEntity();
-	bool mirror = args_gurax.PickBool();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMirrorDC(
-		wxMirrorDC(dc, mirror)));
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -70,7 +47,7 @@ void VType_wxMirrorDC::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxDC, Flag::Mutable, Gurax_CreateConstructor(MirrorDC_gurax));
+	Declare(VTYPE_wxDC, Flag::Mutable);
 	// Assignment of method
 }
 

@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXMEMORYDC_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/dcmemory.h>
 #include "Util.h"
 #include "VType_wxDC.h"
 

@@ -3,5 +3,4 @@
 //==============================================================================
 MetafileDC = Class(DC) {
 	@include['wx/metafile.h']
-	__init__(filename as String = '')
 }
