@@ -46,7 +46,7 @@ Scrolled = Class():mixin {
 		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 		'''
 	IsRetained() as bool
-	OnDraw(dc as DC_r) as void
+	OnDraw(dc as DC_r):virtual as void
 	PrepareDC(dc as DC_r) as void
 	ScrollXY(x as int, y as int) as void = Scroll
 	Scroll(pt as const_Point_r) as void
@@ -62,7 +62,7 @@ Scrolled = Class():mixin {
 	SetScale(xs as double, ys as double) as void
 	GetScaleX() as double
 	GetScaleY() as double
-	AdjustScrollbars() as void
+	AdjustScrollbars():virtual as void
 	IsAutoScrolling() as bool
 	StopAutoScrolling() as void
 	SendAutoScrollEvents(event as ScrollWinEvent_r) as bool
