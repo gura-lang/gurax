@@ -3,4 +3,5 @@
 //==============================================================================
 ClientDC = Class(WindowDC) {
 	@include['wx/dcclient.h']
+	__init__(window as Window_p)
 }

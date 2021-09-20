@@ -28,6 +28,27 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.PaintDC(window as wx.Window) {block?} {block?}
+Gurax_DeclareConstructorAlias(PaintDC_gurax, "PaintDC")
+{
+	Declare(VTYPE_wxPaintDC, Flag::None);
+	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.PaintDC.");
+}
+
+Gurax_ImplementConstructorEx(PaintDC_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* window = value_window.GetEntityPtr();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPaintDC(
+		wxPaintDC(window)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -47,7 +68,7 @@ void VType_wxPaintDC::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxClientDC, Flag::Mutable);
+	Declare(VTYPE_wxClientDC, Flag::Mutable, Gurax_CreateConstructor(PaintDC_gurax));
 	// Assignment of method
 }
 
