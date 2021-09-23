@@ -46,8 +46,9 @@ Gurax_ImplementConstructorEx(PaintDC_gurax, processor_gurax, argument_gurax)
 	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* window = value_window.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPaintDC(
-		wxPaintDC(window)));
+	auto pEntity_gurax = new wxPaintDC(window);
+	RefPtr<Value_wxPaintDC> pValue_gurax(new Value_wxPaintDC(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------

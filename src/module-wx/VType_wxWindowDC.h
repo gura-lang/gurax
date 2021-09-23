@@ -37,8 +37,8 @@ public:
 public:
 	// Constructor
 	Value_wxWindowDC() = delete;
-	explicit Value_wxWindowDC(const wxWindowDC& entity, VType& vtype = VTYPE_wxWindowDC) :
-		Value_wxDC(entity, vtype) {}
+	Value_wxWindowDC(wxDC* pEntity, VType& vtype = VTYPE_wxWindowDC) :
+		Value_wxDC(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxWindowDC(const Value_wxWindowDC& src) = delete;
 	Value_wxWindowDC& operator=(const Value_wxWindowDC& src) = delete;

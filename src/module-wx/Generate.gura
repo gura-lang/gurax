@@ -259,6 +259,9 @@ protected:
 	RefPtr<Value> _pValueUserData;
 public:
 	const Value& GetValueUserData() const { return *_pValueUserData; }
+${elsif (className == 'DC')}
+protected:
+	std::unique_ptr<wx${className}> _pEntity;
 ${elsif (!classNameParent || classInfo.holdEntityFlag)}
 protected:
 	wx${className} _entity;
@@ -292,6 +295,9 @@ ${elsif (className == 'RefCounter')}
 ${elsif (className == 'Event')}
 	explicit Value_wx${className}(const wx${className}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(entity.Clone()), _pValueUserData(pValueUserData) {}
+${elsif (className == 'DC')}
+	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'CmdLineParser')}
 	explicit Value_wx${className}(wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
@@ -310,6 +316,9 @@ ${elsif (classNameRoot == 'RefCounter')}
 ${elsif (eventDerivFlag)}
 	Value_wx${className}(wx${classNameRoot}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(entity, pValueUserData, vtype) {}
+${elsif (dcDerivFlag)}
+	Value_wx${className}(wx${classNameRoot}* pEntity, VType& vtype = VTYPE_wx${className}) :
+		Value_wx${classNameParent}(pEntity, vtype) {}
 ${else}
 	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_wx${classNameParent}(entity, vtype) {}
@@ -324,12 +333,7 @@ protected:
 	// Destructor
 	~Value_wx${className}() = default;
 public:
-${if (evtHandlerOrDerivFlag || className in ['Event'])}
-	wx${className}& GetEntity() { return *_pEntity; }
-	const wx${className}& GetEntity() const { return *_pEntity; }
-	wx${className}* GetEntityPtr() { return _pEntity.get(); }
-	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
-${elsif (refCounterOrDerivFlag)}
+${if (evtHandlerOrDerivFlag || className in ['Event', 'DC'] || refCounterOrDerivFlag)}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
@@ -651,6 +655,15 @@ ClassInfo = class {
 		}
 		false
 	}
+	IsDCDeriv() = {
+		classInfo = this.GetClassInfoRoot()
+		classInfo && classInfo.className == 'DC'
+	}
+	IsDCOrDeriv() = {
+		(this.className == 'DC') && return(true)
+		classInfo = this.GetClassInfoRoot()
+		classInfo && classInfo.className == 'DC'
+	}
 	IsEvtHandlerOrDeriv() = {
 		(this.className == 'EvtHandler') && return(true)
 		classInfo = this.GetClassInfoRoot()
@@ -828,7 +841,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 }
 '''
 
-tmplConstructorImplementation_LoosePointer = tR'''
+tmplConstructorImplementation_Pointer = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
@@ -1046,9 +1059,9 @@ classInfoTbl.Each {|classInfo|
 	if (classInfo.IsEvtHandlerOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_EvtHandler
-	} elsif (classInfo.IsLoosePointer()) {
+	} elsif (classInfo.IsLoosePointer() || classInfo.IsDCOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
-		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_LoosePointer
+		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_Pointer
 	} elsif (classInfo.IsRefCounterOrDeriv()) {
 		classInfo.typeInfo = typeInfo_p
 		classInfo.tmplConstructorImplementation = tmplConstructorImplementation_RefCounter
@@ -1085,6 +1098,7 @@ GenerateVType(classInfoTbl[] as ClassInfo) = {
 		fileNamesSource.Add(fileNameSource)
 		classNames.Add(className)
 		eventDerivFlag = classInfo.IsEventDeriv()
+		dcDerivFlag = classInfo.IsDCDeriv()
 		evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
 		refCounterOrDerivFlag = classInfo.IsRefCounterOrDeriv()
 		Println(className)

@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxDC.gura
 //==============================================================================
-DC = Class(Object) {
+DC = Class {
 	CopyAttributes(dc as const_DC_r) as void
 	GetDepth() as int
 	GetDeviceOrigin() as Point

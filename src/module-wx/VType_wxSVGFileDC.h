@@ -37,8 +37,8 @@ public:
 public:
 	// Constructor
 	Value_wxSVGFileDC() = delete;
-	explicit Value_wxSVGFileDC(const wxSVGFileDC& entity, VType& vtype = VTYPE_wxSVGFileDC) :
-		Value_wxDC(entity, vtype) {}
+	Value_wxSVGFileDC(wxDC* pEntity, VType& vtype = VTYPE_wxSVGFileDC) :
+		Value_wxDC(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxSVGFileDC(const Value_wxSVGFileDC& src) = delete;
 	Value_wxSVGFileDC& operator=(const Value_wxSVGFileDC& src) = delete;

@@ -37,8 +37,8 @@ public:
 public:
 	// Constructor
 	Value_wxGCDC() = delete;
-	explicit Value_wxGCDC(const wxGCDC& entity, VType& vtype = VTYPE_wxGCDC) :
-		Value_wxDC(entity, vtype) {}
+	Value_wxGCDC(wxDC* pEntity, VType& vtype = VTYPE_wxGCDC) :
+		Value_wxDC(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGCDC(const Value_wxGCDC& src) = delete;
 	Value_wxGCDC& operator=(const Value_wxGCDC& src) = delete;

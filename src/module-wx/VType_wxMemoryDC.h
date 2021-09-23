@@ -37,8 +37,8 @@ public:
 public:
 	// Constructor
 	Value_wxMemoryDC() = delete;
-	explicit Value_wxMemoryDC(const wxMemoryDC& entity, VType& vtype = VTYPE_wxMemoryDC) :
-		Value_wxDC(entity, vtype) {}
+	Value_wxMemoryDC(wxDC* pEntity, VType& vtype = VTYPE_wxMemoryDC) :
+		Value_wxDC(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxMemoryDC(const Value_wxMemoryDC& src) = delete;
 	Value_wxMemoryDC& operator=(const Value_wxMemoryDC& src) = delete;

@@ -2937,7 +2937,7 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxDC, CopyAttributes_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetDepth_gurax));

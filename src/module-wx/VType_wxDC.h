@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include <wx/wx.h>
 #include "Util.h"
-#include "VType_wxObject.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -25,19 +24,21 @@ extern GURAX_DLLDECLARE VType_wxDC VTYPE_wxDC;
 //------------------------------------------------------------------------------
 // Value_wxDC
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxDC : public Value_wxObject {
+class GURAX_DLLDECLARE Value_wxDC : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxDC);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxDC");
+protected:
+	std::unique_ptr<wxDC> _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxDC() = delete;
-	explicit Value_wxDC(const wxDC& entity, VType& vtype = VTYPE_wxDC) :
-		Value_wxObject(entity, vtype) {}
+	explicit Value_wxDC(wxDC* pEntity, VType& vtype = VTYPE_wxDC) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxDC(const Value_wxDC& src) = delete;
 	Value_wxDC& operator=(const Value_wxDC& src) = delete;
@@ -48,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxDC() = default;
 public:
-	wxDC& GetEntity() { return reinterpret_cast<wxDC&>(Value_wxObject::GetEntity()); }
-	const wxDC& GetEntity() const { return reinterpret_cast<const wxDC&>(Value_wxObject::GetEntity()); }
-	wxDC* GetEntityPtr() { return reinterpret_cast<wxDC*>(Value_wxObject::GetEntityPtr()); }\
-	const wxDC* GetEntityPtr() const { return reinterpret_cast<const wxDC*>(Value_wxObject::GetEntityPtr()); }
+	wxDC& GetEntity() { return *_pEntity; }
+	const wxDC& GetEntity() const { return *_pEntity; }
+	wxDC* GetEntityPtr() { return _pEntity.get(); }
+	const wxDC* GetEntityPtr() const { return _pEntity.get(); }
 public:
 	static wxDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxDC&>(value).GetEntity();

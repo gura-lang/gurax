@@ -37,8 +37,8 @@ public:
 public:
 	// Constructor
 	Value_wxMirrorDC() = delete;
-	explicit Value_wxMirrorDC(const wxMirrorDC& entity, VType& vtype = VTYPE_wxMirrorDC) :
-		Value_wxDC(entity, vtype) {}
+	Value_wxMirrorDC(wxDC* pEntity, VType& vtype = VTYPE_wxMirrorDC) :
+		Value_wxDC(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxMirrorDC(const Value_wxMirrorDC& src) = delete;
 	Value_wxMirrorDC& operator=(const Value_wxMirrorDC& src) = delete;

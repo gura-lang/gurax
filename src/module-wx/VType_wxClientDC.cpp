@@ -46,8 +46,9 @@ Gurax_ImplementConstructorEx(ClientDC_gurax, processor_gurax, argument_gurax)
 	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* window = value_window.GetEntityPtr();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxClientDC(
-		wxClientDC(window)));
+	auto pEntity_gurax = new wxClientDC(window);
+	RefPtr<Value_wxClientDC> pValue_gurax(new Value_wxClientDC(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------

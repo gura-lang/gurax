@@ -37,8 +37,8 @@ public:
 public:
 	// Constructor
 	Value_wxBufferedDC() = delete;
-	explicit Value_wxBufferedDC(const wxBufferedDC& entity, VType& vtype = VTYPE_wxBufferedDC) :
-		Value_wxDC(entity, vtype) {}
+	Value_wxBufferedDC(wxDC* pEntity, VType& vtype = VTYPE_wxBufferedDC) :
+		Value_wxDC(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxBufferedDC(const Value_wxBufferedDC& src) = delete;
 	Value_wxBufferedDC& operator=(const Value_wxBufferedDC& src) = delete;

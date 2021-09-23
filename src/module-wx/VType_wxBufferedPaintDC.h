@@ -37,8 +37,8 @@ public:
 public:
 	// Constructor
 	Value_wxBufferedPaintDC() = delete;
-	explicit Value_wxBufferedPaintDC(const wxBufferedPaintDC& entity, VType& vtype = VTYPE_wxBufferedPaintDC) :
-		Value_wxDC(entity, vtype) {}
+	Value_wxBufferedPaintDC(wxDC* pEntity, VType& vtype = VTYPE_wxBufferedPaintDC) :
+		Value_wxDC(pEntity, vtype) {}
 	// Copy constructor/operator
 	Value_wxBufferedPaintDC(const Value_wxBufferedPaintDC& src) = delete;
 	Value_wxBufferedPaintDC& operator=(const Value_wxBufferedPaintDC& src) = delete;
