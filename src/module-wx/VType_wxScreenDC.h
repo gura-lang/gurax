@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxScreenDC);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxScreenDC");
-protected:
-	wxScreenDC& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxScreenDC() = delete;
 	explicit Value_wxScreenDC(const wxScreenDC& entity, VType& vtype = VTYPE_wxScreenDC) :
-		Value_wxDC(entity, vtype), _entity(const_cast<wxScreenDC&>(entity)) {}
+		Value_wxDC(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxScreenDC(const Value_wxScreenDC& src) = delete;
 	Value_wxScreenDC& operator=(const Value_wxScreenDC& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxScreenDC() = default;
 public:
-	wxScreenDC& GetEntity() { return _entity; }
-	const wxScreenDC& GetEntity() const { return _entity; }
-	wxScreenDC* GetEntityPtr() { return &_entity; }
-	const wxScreenDC* GetEntityPtr() const { return &_entity; }
+	wxScreenDC& GetEntity() { return reinterpret_cast<wxScreenDC&>(Value_wxDC::GetEntity()); }
+	const wxScreenDC& GetEntity() const { return reinterpret_cast<const wxScreenDC&>(Value_wxDC::GetEntity()); }
+	wxScreenDC* GetEntityPtr() { return reinterpret_cast<wxScreenDC*>(Value_wxDC::GetEntityPtr()); }\
+	const wxScreenDC* GetEntityPtr() const { return reinterpret_cast<const wxScreenDC*>(Value_wxDC::GetEntityPtr()); }
 public:
 	static wxScreenDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxScreenDC&>(value).GetEntity();

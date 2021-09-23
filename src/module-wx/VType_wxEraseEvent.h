@@ -31,8 +31,6 @@ public:
 	Gurax_DeclareReferable(Value_wxEraseEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxEraseEvent");
-protected:
-	wxEraseEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxEraseEvent> eventValueFactory;
@@ -40,7 +38,7 @@ public:
 	// Constructor
 	Value_wxEraseEvent() = delete;
 	Value_wxEraseEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxEraseEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxEraseEvent&>(entity)) {}
+		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxEraseEvent(const Value_wxEraseEvent& src) = delete;
 	Value_wxEraseEvent& operator=(const Value_wxEraseEvent& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxEraseEvent() = default;
 public:
-	wxEraseEvent& GetEntity() { return _entity; }
-	const wxEraseEvent& GetEntity() const { return _entity; }
-	wxEraseEvent* GetEntityPtr() { return &_entity; }
-	const wxEraseEvent* GetEntityPtr() const { return &_entity; }
+	wxEraseEvent& GetEntity() { return reinterpret_cast<wxEraseEvent&>(Value_wxEvent::GetEntity()); }
+	const wxEraseEvent& GetEntity() const { return reinterpret_cast<const wxEraseEvent&>(Value_wxEvent::GetEntity()); }
+	wxEraseEvent* GetEntityPtr() { return reinterpret_cast<wxEraseEvent*>(Value_wxEvent::GetEntityPtr()); }\
+	const wxEraseEvent* GetEntityPtr() const { return reinterpret_cast<const wxEraseEvent*>(Value_wxEvent::GetEntityPtr()); }
 public:
 	static wxEraseEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxEraseEvent&>(value).GetEntity();

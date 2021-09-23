@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxGLContext);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGLContext");
-protected:
-	wxGLContext& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxGLContext() = delete;
 	explicit Value_wxGLContext(const wxGLContext& entity, VType& vtype = VTYPE_wxGLContext) :
-		Value_wxObject(entity, vtype), _entity(const_cast<wxGLContext&>(entity)) {}
+		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGLContext(const Value_wxGLContext& src) = delete;
 	Value_wxGLContext& operator=(const Value_wxGLContext& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxGLContext() = default;
 public:
-	wxGLContext& GetEntity() { return _entity; }
-	const wxGLContext& GetEntity() const { return _entity; }
-	wxGLContext* GetEntityPtr() { return &_entity; }
-	const wxGLContext* GetEntityPtr() const { return &_entity; }
+	wxGLContext& GetEntity() { return reinterpret_cast<wxGLContext&>(Value_wxObject::GetEntity()); }
+	const wxGLContext& GetEntity() const { return reinterpret_cast<const wxGLContext&>(Value_wxObject::GetEntity()); }
+	wxGLContext* GetEntityPtr() { return reinterpret_cast<wxGLContext*>(Value_wxObject::GetEntityPtr()); }\
+	const wxGLContext* GetEntityPtr() const { return reinterpret_cast<const wxGLContext*>(Value_wxObject::GetEntityPtr()); }
 public:
 	static wxGLContext& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGLContext&>(value).GetEntity();

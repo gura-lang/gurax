@@ -31,8 +31,6 @@ public:
 	Gurax_DeclareReferable(Value_wxDropFilesEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxDropFilesEvent");
-protected:
-	wxDropFilesEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxDropFilesEvent> eventValueFactory;
@@ -40,7 +38,7 @@ public:
 	// Constructor
 	Value_wxDropFilesEvent() = delete;
 	Value_wxDropFilesEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxDropFilesEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxDropFilesEvent&>(entity)) {}
+		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxDropFilesEvent(const Value_wxDropFilesEvent& src) = delete;
 	Value_wxDropFilesEvent& operator=(const Value_wxDropFilesEvent& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxDropFilesEvent() = default;
 public:
-	wxDropFilesEvent& GetEntity() { return _entity; }
-	const wxDropFilesEvent& GetEntity() const { return _entity; }
-	wxDropFilesEvent* GetEntityPtr() { return &_entity; }
-	const wxDropFilesEvent* GetEntityPtr() const { return &_entity; }
+	wxDropFilesEvent& GetEntity() { return reinterpret_cast<wxDropFilesEvent&>(Value_wxEvent::GetEntity()); }
+	const wxDropFilesEvent& GetEntity() const { return reinterpret_cast<const wxDropFilesEvent&>(Value_wxEvent::GetEntity()); }
+	wxDropFilesEvent* GetEntityPtr() { return reinterpret_cast<wxDropFilesEvent*>(Value_wxEvent::GetEntityPtr()); }\
+	const wxDropFilesEvent* GetEntityPtr() const { return reinterpret_cast<const wxDropFilesEvent*>(Value_wxEvent::GetEntityPtr()); }
 public:
 	static wxDropFilesEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxDropFilesEvent&>(value).GetEntity();

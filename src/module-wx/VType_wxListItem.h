@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxListItem);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxListItem");
-protected:
-	wxListItem& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxListItem() = delete;
 	explicit Value_wxListItem(const wxListItem& entity, VType& vtype = VTYPE_wxListItem) :
-		Value_wxObject(entity, vtype), _entity(const_cast<wxListItem&>(entity)) {}
+		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxListItem(const Value_wxListItem& src) = delete;
 	Value_wxListItem& operator=(const Value_wxListItem& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxListItem() = default;
 public:
-	wxListItem& GetEntity() { return _entity; }
-	const wxListItem& GetEntity() const { return _entity; }
-	wxListItem* GetEntityPtr() { return &_entity; }
-	const wxListItem* GetEntityPtr() const { return &_entity; }
+	wxListItem& GetEntity() { return reinterpret_cast<wxListItem&>(Value_wxObject::GetEntity()); }
+	const wxListItem& GetEntity() const { return reinterpret_cast<const wxListItem&>(Value_wxObject::GetEntity()); }
+	wxListItem* GetEntityPtr() { return reinterpret_cast<wxListItem*>(Value_wxObject::GetEntityPtr()); }\
+	const wxListItem* GetEntityPtr() const { return reinterpret_cast<const wxListItem*>(Value_wxObject::GetEntityPtr()); }
 public:
 	static wxListItem& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxListItem&>(value).GetEntity();

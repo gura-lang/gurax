@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxClipboard);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxClipboard");
-protected:
-	wxClipboard& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxClipboard() = delete;
 	explicit Value_wxClipboard(const wxClipboard& entity, VType& vtype = VTYPE_wxClipboard) :
-		Value_wxObject(entity, vtype), _entity(const_cast<wxClipboard&>(entity)) {}
+		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxClipboard(const Value_wxClipboard& src) = delete;
 	Value_wxClipboard& operator=(const Value_wxClipboard& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxClipboard() = default;
 public:
-	wxClipboard& GetEntity() { return _entity; }
-	const wxClipboard& GetEntity() const { return _entity; }
-	wxClipboard* GetEntityPtr() { return &_entity; }
-	const wxClipboard* GetEntityPtr() const { return &_entity; }
+	wxClipboard& GetEntity() { return reinterpret_cast<wxClipboard&>(Value_wxObject::GetEntity()); }
+	const wxClipboard& GetEntity() const { return reinterpret_cast<const wxClipboard&>(Value_wxObject::GetEntity()); }
+	wxClipboard* GetEntityPtr() { return reinterpret_cast<wxClipboard*>(Value_wxObject::GetEntityPtr()); }\
+	const wxClipboard* GetEntityPtr() const { return reinterpret_cast<const wxClipboard*>(Value_wxObject::GetEntityPtr()); }
 public:
 	static wxClipboard& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxClipboard&>(value).GetEntity();

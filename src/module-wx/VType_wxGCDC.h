@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxGCDC);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGCDC");
-protected:
-	wxGCDC& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxGCDC() = delete;
 	explicit Value_wxGCDC(const wxGCDC& entity, VType& vtype = VTYPE_wxGCDC) :
-		Value_wxDC(entity, vtype), _entity(const_cast<wxGCDC&>(entity)) {}
+		Value_wxDC(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGCDC(const Value_wxGCDC& src) = delete;
 	Value_wxGCDC& operator=(const Value_wxGCDC& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxGCDC() = default;
 public:
-	wxGCDC& GetEntity() { return _entity; }
-	const wxGCDC& GetEntity() const { return _entity; }
-	wxGCDC* GetEntityPtr() { return &_entity; }
-	const wxGCDC* GetEntityPtr() const { return &_entity; }
+	wxGCDC& GetEntity() { return reinterpret_cast<wxGCDC&>(Value_wxDC::GetEntity()); }
+	const wxGCDC& GetEntity() const { return reinterpret_cast<const wxGCDC&>(Value_wxDC::GetEntity()); }
+	wxGCDC* GetEntityPtr() { return reinterpret_cast<wxGCDC*>(Value_wxDC::GetEntityPtr()); }\
+	const wxGCDC* GetEntityPtr() const { return reinterpret_cast<const wxGCDC*>(Value_wxDC::GetEntityPtr()); }
 public:
 	static wxGCDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGCDC&>(value).GetEntity();

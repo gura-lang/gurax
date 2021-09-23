@@ -31,8 +31,6 @@ public:
 	Gurax_DeclareReferable(Value_wxSetCursorEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxSetCursorEvent");
-protected:
-	wxSetCursorEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxSetCursorEvent> eventValueFactory;
@@ -40,7 +38,7 @@ public:
 	// Constructor
 	Value_wxSetCursorEvent() = delete;
 	Value_wxSetCursorEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSetCursorEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxSetCursorEvent&>(entity)) {}
+		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxSetCursorEvent(const Value_wxSetCursorEvent& src) = delete;
 	Value_wxSetCursorEvent& operator=(const Value_wxSetCursorEvent& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxSetCursorEvent() = default;
 public:
-	wxSetCursorEvent& GetEntity() { return _entity; }
-	const wxSetCursorEvent& GetEntity() const { return _entity; }
-	wxSetCursorEvent* GetEntityPtr() { return &_entity; }
-	const wxSetCursorEvent* GetEntityPtr() const { return &_entity; }
+	wxSetCursorEvent& GetEntity() { return reinterpret_cast<wxSetCursorEvent&>(Value_wxEvent::GetEntity()); }
+	const wxSetCursorEvent& GetEntity() const { return reinterpret_cast<const wxSetCursorEvent&>(Value_wxEvent::GetEntity()); }
+	wxSetCursorEvent* GetEntityPtr() { return reinterpret_cast<wxSetCursorEvent*>(Value_wxEvent::GetEntityPtr()); }\
+	const wxSetCursorEvent* GetEntityPtr() const { return reinterpret_cast<const wxSetCursorEvent*>(Value_wxEvent::GetEntityPtr()); }
 public:
 	static wxSetCursorEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxSetCursorEvent&>(value).GetEntity();

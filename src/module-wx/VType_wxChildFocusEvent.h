@@ -31,8 +31,6 @@ public:
 	Gurax_DeclareReferable(Value_wxChildFocusEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxChildFocusEvent");
-protected:
-	wxChildFocusEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxChildFocusEvent> eventValueFactory;
@@ -40,7 +38,7 @@ public:
 	// Constructor
 	Value_wxChildFocusEvent() = delete;
 	Value_wxChildFocusEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxChildFocusEvent) :
-		Value_wxCommandEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxChildFocusEvent&>(entity)) {}
+		Value_wxCommandEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxChildFocusEvent(const Value_wxChildFocusEvent& src) = delete;
 	Value_wxChildFocusEvent& operator=(const Value_wxChildFocusEvent& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxChildFocusEvent() = default;
 public:
-	wxChildFocusEvent& GetEntity() { return _entity; }
-	const wxChildFocusEvent& GetEntity() const { return _entity; }
-	wxChildFocusEvent* GetEntityPtr() { return &_entity; }
-	const wxChildFocusEvent* GetEntityPtr() const { return &_entity; }
+	wxChildFocusEvent& GetEntity() { return reinterpret_cast<wxChildFocusEvent&>(Value_wxCommandEvent::GetEntity()); }
+	const wxChildFocusEvent& GetEntity() const { return reinterpret_cast<const wxChildFocusEvent&>(Value_wxCommandEvent::GetEntity()); }
+	wxChildFocusEvent* GetEntityPtr() { return reinterpret_cast<wxChildFocusEvent*>(Value_wxCommandEvent::GetEntityPtr()); }\
+	const wxChildFocusEvent* GetEntityPtr() const { return reinterpret_cast<const wxChildFocusEvent*>(Value_wxCommandEvent::GetEntityPtr()); }
 public:
 	static wxChildFocusEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxChildFocusEvent&>(value).GetEntity();

@@ -32,8 +32,6 @@ public:
 	Gurax_DeclareReferable(Value_wxBookCtrlEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxBookCtrlEvent");
-protected:
-	wxBookCtrlEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxBookCtrlEvent> eventValueFactory;
@@ -41,7 +39,7 @@ public:
 	// Constructor
 	Value_wxBookCtrlEvent() = delete;
 	Value_wxBookCtrlEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxBookCtrlEvent) :
-		Value_wxNotifyEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxBookCtrlEvent&>(entity)) {}
+		Value_wxNotifyEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxBookCtrlEvent(const Value_wxBookCtrlEvent& src) = delete;
 	Value_wxBookCtrlEvent& operator=(const Value_wxBookCtrlEvent& src) = delete;
@@ -52,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxBookCtrlEvent() = default;
 public:
-	wxBookCtrlEvent& GetEntity() { return _entity; }
-	const wxBookCtrlEvent& GetEntity() const { return _entity; }
-	wxBookCtrlEvent* GetEntityPtr() { return &_entity; }
-	const wxBookCtrlEvent* GetEntityPtr() const { return &_entity; }
+	wxBookCtrlEvent& GetEntity() { return reinterpret_cast<wxBookCtrlEvent&>(Value_wxNotifyEvent::GetEntity()); }
+	const wxBookCtrlEvent& GetEntity() const { return reinterpret_cast<const wxBookCtrlEvent&>(Value_wxNotifyEvent::GetEntity()); }
+	wxBookCtrlEvent* GetEntityPtr() { return reinterpret_cast<wxBookCtrlEvent*>(Value_wxNotifyEvent::GetEntityPtr()); }\
+	const wxBookCtrlEvent* GetEntityPtr() const { return reinterpret_cast<const wxBookCtrlEvent*>(Value_wxNotifyEvent::GetEntityPtr()); }
 public:
 	static wxBookCtrlEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxBookCtrlEvent&>(value).GetEntity();

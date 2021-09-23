@@ -31,8 +31,6 @@ public:
 	Gurax_DeclareReferable(Value_wxJoystickEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxJoystickEvent");
-protected:
-	wxJoystickEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxJoystickEvent> eventValueFactory;
@@ -40,7 +38,7 @@ public:
 	// Constructor
 	Value_wxJoystickEvent() = delete;
 	Value_wxJoystickEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxJoystickEvent) :
-		Value_wxEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxJoystickEvent&>(entity)) {}
+		Value_wxEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxJoystickEvent(const Value_wxJoystickEvent& src) = delete;
 	Value_wxJoystickEvent& operator=(const Value_wxJoystickEvent& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxJoystickEvent() = default;
 public:
-	wxJoystickEvent& GetEntity() { return _entity; }
-	const wxJoystickEvent& GetEntity() const { return _entity; }
-	wxJoystickEvent* GetEntityPtr() { return &_entity; }
-	const wxJoystickEvent* GetEntityPtr() const { return &_entity; }
+	wxJoystickEvent& GetEntity() { return reinterpret_cast<wxJoystickEvent&>(Value_wxEvent::GetEntity()); }
+	const wxJoystickEvent& GetEntity() const { return reinterpret_cast<const wxJoystickEvent&>(Value_wxEvent::GetEntity()); }
+	wxJoystickEvent* GetEntityPtr() { return reinterpret_cast<wxJoystickEvent*>(Value_wxEvent::GetEntityPtr()); }\
+	const wxJoystickEvent* GetEntityPtr() const { return reinterpret_cast<const wxJoystickEvent*>(Value_wxEvent::GetEntityPtr()); }
 public:
 	static wxJoystickEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxJoystickEvent&>(value).GetEntity();

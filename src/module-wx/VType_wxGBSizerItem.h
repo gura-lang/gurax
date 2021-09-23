@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxGBSizerItem);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGBSizerItem");
-protected:
-	wxGBSizerItem& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxGBSizerItem() = delete;
 	explicit Value_wxGBSizerItem(const wxGBSizerItem& entity, VType& vtype = VTYPE_wxGBSizerItem) :
-		Value_wxSizerItem(entity, vtype), _entity(const_cast<wxGBSizerItem&>(entity)) {}
+		Value_wxSizerItem(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxGBSizerItem(const Value_wxGBSizerItem& src) = delete;
 	Value_wxGBSizerItem& operator=(const Value_wxGBSizerItem& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxGBSizerItem() = default;
 public:
-	wxGBSizerItem& GetEntity() { return _entity; }
-	const wxGBSizerItem& GetEntity() const { return _entity; }
-	wxGBSizerItem* GetEntityPtr() { return &_entity; }
-	const wxGBSizerItem* GetEntityPtr() const { return &_entity; }
+	wxGBSizerItem& GetEntity() { return reinterpret_cast<wxGBSizerItem&>(Value_wxSizerItem::GetEntity()); }
+	const wxGBSizerItem& GetEntity() const { return reinterpret_cast<const wxGBSizerItem&>(Value_wxSizerItem::GetEntity()); }
+	wxGBSizerItem* GetEntityPtr() { return reinterpret_cast<wxGBSizerItem*>(Value_wxSizerItem::GetEntityPtr()); }\
+	const wxGBSizerItem* GetEntityPtr() const { return reinterpret_cast<const wxGBSizerItem*>(Value_wxSizerItem::GetEntityPtr()); }
 public:
 	static wxGBSizerItem& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGBSizerItem&>(value).GetEntity();

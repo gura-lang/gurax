@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxMirrorDC);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxMirrorDC");
-protected:
-	wxMirrorDC& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxMirrorDC() = delete;
 	explicit Value_wxMirrorDC(const wxMirrorDC& entity, VType& vtype = VTYPE_wxMirrorDC) :
-		Value_wxDC(entity, vtype), _entity(const_cast<wxMirrorDC&>(entity)) {}
+		Value_wxDC(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxMirrorDC(const Value_wxMirrorDC& src) = delete;
 	Value_wxMirrorDC& operator=(const Value_wxMirrorDC& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxMirrorDC() = default;
 public:
-	wxMirrorDC& GetEntity() { return _entity; }
-	const wxMirrorDC& GetEntity() const { return _entity; }
-	wxMirrorDC* GetEntityPtr() { return &_entity; }
-	const wxMirrorDC* GetEntityPtr() const { return &_entity; }
+	wxMirrorDC& GetEntity() { return reinterpret_cast<wxMirrorDC&>(Value_wxDC::GetEntity()); }
+	const wxMirrorDC& GetEntity() const { return reinterpret_cast<const wxMirrorDC&>(Value_wxDC::GetEntity()); }
+	wxMirrorDC* GetEntityPtr() { return reinterpret_cast<wxMirrorDC*>(Value_wxDC::GetEntityPtr()); }\
+	const wxMirrorDC* GetEntityPtr() const { return reinterpret_cast<const wxMirrorDC*>(Value_wxDC::GetEntityPtr()); }
 public:
 	static wxMirrorDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxMirrorDC&>(value).GetEntity();

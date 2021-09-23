@@ -31,8 +31,6 @@ public:
 	Gurax_DeclareReferable(Value_wxScrollEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxScrollEvent");
-protected:
-	wxScrollEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxScrollEvent> eventValueFactory;
@@ -40,7 +38,7 @@ public:
 	// Constructor
 	Value_wxScrollEvent() = delete;
 	Value_wxScrollEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxScrollEvent) :
-		Value_wxCommandEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxScrollEvent&>(entity)) {}
+		Value_wxCommandEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxScrollEvent(const Value_wxScrollEvent& src) = delete;
 	Value_wxScrollEvent& operator=(const Value_wxScrollEvent& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxScrollEvent() = default;
 public:
-	wxScrollEvent& GetEntity() { return _entity; }
-	const wxScrollEvent& GetEntity() const { return _entity; }
-	wxScrollEvent* GetEntityPtr() { return &_entity; }
-	const wxScrollEvent* GetEntityPtr() const { return &_entity; }
+	wxScrollEvent& GetEntity() { return reinterpret_cast<wxScrollEvent&>(Value_wxCommandEvent::GetEntity()); }
+	const wxScrollEvent& GetEntity() const { return reinterpret_cast<const wxScrollEvent&>(Value_wxCommandEvent::GetEntity()); }
+	wxScrollEvent* GetEntityPtr() { return reinterpret_cast<wxScrollEvent*>(Value_wxCommandEvent::GetEntityPtr()); }\
+	const wxScrollEvent* GetEntityPtr() const { return reinterpret_cast<const wxScrollEvent*>(Value_wxCommandEvent::GetEntityPtr()); }
 public:
 	static wxScrollEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxScrollEvent&>(value).GetEntity();

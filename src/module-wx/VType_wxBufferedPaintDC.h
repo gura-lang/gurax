@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxBufferedPaintDC);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxBufferedPaintDC");
-protected:
-	wxBufferedPaintDC& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxBufferedPaintDC() = delete;
 	explicit Value_wxBufferedPaintDC(const wxBufferedPaintDC& entity, VType& vtype = VTYPE_wxBufferedPaintDC) :
-		Value_wxDC(entity, vtype), _entity(const_cast<wxBufferedPaintDC&>(entity)) {}
+		Value_wxDC(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxBufferedPaintDC(const Value_wxBufferedPaintDC& src) = delete;
 	Value_wxBufferedPaintDC& operator=(const Value_wxBufferedPaintDC& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxBufferedPaintDC() = default;
 public:
-	wxBufferedPaintDC& GetEntity() { return _entity; }
-	const wxBufferedPaintDC& GetEntity() const { return _entity; }
-	wxBufferedPaintDC* GetEntityPtr() { return &_entity; }
-	const wxBufferedPaintDC* GetEntityPtr() const { return &_entity; }
+	wxBufferedPaintDC& GetEntity() { return reinterpret_cast<wxBufferedPaintDC&>(Value_wxDC::GetEntity()); }
+	const wxBufferedPaintDC& GetEntity() const { return reinterpret_cast<const wxBufferedPaintDC&>(Value_wxDC::GetEntity()); }
+	wxBufferedPaintDC* GetEntityPtr() { return reinterpret_cast<wxBufferedPaintDC*>(Value_wxDC::GetEntityPtr()); }\
+	const wxBufferedPaintDC* GetEntityPtr() const { return reinterpret_cast<const wxBufferedPaintDC*>(Value_wxDC::GetEntityPtr()); }
 public:
 	static wxBufferedPaintDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxBufferedPaintDC&>(value).GetEntity();

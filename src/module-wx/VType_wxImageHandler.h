@@ -31,15 +31,13 @@ public:
 	Gurax_DeclareReferable(Value_wxImageHandler);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxImageHandler");
-protected:
-	wxImageHandler& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxImageHandler() = delete;
 	explicit Value_wxImageHandler(const wxImageHandler& entity, VType& vtype = VTYPE_wxImageHandler) :
-		Value_wxObject(entity, vtype), _entity(const_cast<wxImageHandler&>(entity)) {}
+		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxImageHandler(const Value_wxImageHandler& src) = delete;
 	Value_wxImageHandler& operator=(const Value_wxImageHandler& src) = delete;
@@ -50,10 +48,10 @@ protected:
 	// Destructor
 	~Value_wxImageHandler() = default;
 public:
-	wxImageHandler& GetEntity() { return _entity; }
-	const wxImageHandler& GetEntity() const { return _entity; }
-	wxImageHandler* GetEntityPtr() { return &_entity; }
-	const wxImageHandler* GetEntityPtr() const { return &_entity; }
+	wxImageHandler& GetEntity() { return reinterpret_cast<wxImageHandler&>(Value_wxObject::GetEntity()); }
+	const wxImageHandler& GetEntity() const { return reinterpret_cast<const wxImageHandler&>(Value_wxObject::GetEntity()); }
+	wxImageHandler* GetEntityPtr() { return reinterpret_cast<wxImageHandler*>(Value_wxObject::GetEntityPtr()); }\
+	const wxImageHandler* GetEntityPtr() const { return reinterpret_cast<const wxImageHandler*>(Value_wxObject::GetEntityPtr()); }
 public:
 	static wxImageHandler& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxImageHandler&>(value).GetEntity();

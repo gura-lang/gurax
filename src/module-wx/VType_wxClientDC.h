@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxClientDC);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxClientDC");
-protected:
-	wxClientDC& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxClientDC() = delete;
 	explicit Value_wxClientDC(const wxClientDC& entity, VType& vtype = VTYPE_wxClientDC) :
-		Value_wxWindowDC(entity, vtype), _entity(const_cast<wxClientDC&>(entity)) {}
+		Value_wxWindowDC(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxClientDC(const Value_wxClientDC& src) = delete;
 	Value_wxClientDC& operator=(const Value_wxClientDC& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxClientDC() = default;
 public:
-	wxClientDC& GetEntity() { return _entity; }
-	const wxClientDC& GetEntity() const { return _entity; }
-	wxClientDC* GetEntityPtr() { return &_entity; }
-	const wxClientDC* GetEntityPtr() const { return &_entity; }
+	wxClientDC& GetEntity() { return reinterpret_cast<wxClientDC&>(Value_wxWindowDC::GetEntity()); }
+	const wxClientDC& GetEntity() const { return reinterpret_cast<const wxClientDC&>(Value_wxWindowDC::GetEntity()); }
+	wxClientDC* GetEntityPtr() { return reinterpret_cast<wxClientDC*>(Value_wxWindowDC::GetEntityPtr()); }\
+	const wxClientDC* GetEntityPtr() const { return reinterpret_cast<const wxClientDC*>(Value_wxWindowDC::GetEntityPtr()); }
 public:
 	static wxClientDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxClientDC&>(value).GetEntity();

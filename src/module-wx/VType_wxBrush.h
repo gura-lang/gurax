@@ -31,15 +31,13 @@ public:
 	Gurax_DeclareReferable(Value_wxBrush);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxBrush");
-protected:
-	wxBrush& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxBrush() = delete;
 	explicit Value_wxBrush(const wxBrush& entity, VType& vtype = VTYPE_wxBrush) :
-		Value_wxGDIObject(entity, vtype), _entity(const_cast<wxBrush&>(entity)) {}
+		Value_wxGDIObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxBrush(const Value_wxBrush& src) = delete;
 	Value_wxBrush& operator=(const Value_wxBrush& src) = delete;
@@ -50,10 +48,10 @@ protected:
 	// Destructor
 	~Value_wxBrush() = default;
 public:
-	wxBrush& GetEntity() { return _entity; }
-	const wxBrush& GetEntity() const { return _entity; }
-	wxBrush* GetEntityPtr() { return &_entity; }
-	const wxBrush* GetEntityPtr() const { return &_entity; }
+	wxBrush& GetEntity() { return reinterpret_cast<wxBrush&>(Value_wxGDIObject::GetEntity()); }
+	const wxBrush& GetEntity() const { return reinterpret_cast<const wxBrush&>(Value_wxGDIObject::GetEntity()); }
+	wxBrush* GetEntityPtr() { return reinterpret_cast<wxBrush*>(Value_wxGDIObject::GetEntityPtr()); }\
+	const wxBrush* GetEntityPtr() const { return reinterpret_cast<const wxBrush*>(Value_wxGDIObject::GetEntityPtr()); }
 public:
 	static wxBrush& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxBrush&>(value).GetEntity();

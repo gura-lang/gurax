@@ -32,8 +32,6 @@ public:
 	Gurax_DeclareReferable(Value_wxStyledTextEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxStyledTextEvent");
-protected:
-	wxStyledTextEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxStyledTextEvent> eventValueFactory;
@@ -41,7 +39,7 @@ public:
 	// Constructor
 	Value_wxStyledTextEvent() = delete;
 	Value_wxStyledTextEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxStyledTextEvent) :
-		Value_wxCommandEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxStyledTextEvent&>(entity)) {}
+		Value_wxCommandEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxStyledTextEvent(const Value_wxStyledTextEvent& src) = delete;
 	Value_wxStyledTextEvent& operator=(const Value_wxStyledTextEvent& src) = delete;
@@ -52,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxStyledTextEvent() = default;
 public:
-	wxStyledTextEvent& GetEntity() { return _entity; }
-	const wxStyledTextEvent& GetEntity() const { return _entity; }
-	wxStyledTextEvent* GetEntityPtr() { return &_entity; }
-	const wxStyledTextEvent* GetEntityPtr() const { return &_entity; }
+	wxStyledTextEvent& GetEntity() { return reinterpret_cast<wxStyledTextEvent&>(Value_wxCommandEvent::GetEntity()); }
+	const wxStyledTextEvent& GetEntity() const { return reinterpret_cast<const wxStyledTextEvent&>(Value_wxCommandEvent::GetEntity()); }
+	wxStyledTextEvent* GetEntityPtr() { return reinterpret_cast<wxStyledTextEvent*>(Value_wxCommandEvent::GetEntityPtr()); }\
+	const wxStyledTextEvent* GetEntityPtr() const { return reinterpret_cast<const wxStyledTextEvent*>(Value_wxCommandEvent::GetEntityPtr()); }
 public:
 	static wxStyledTextEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxStyledTextEvent&>(value).GetEntity();

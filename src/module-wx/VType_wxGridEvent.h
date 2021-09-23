@@ -31,8 +31,6 @@ public:
 	Gurax_DeclareReferable(Value_wxGridEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxGridEvent");
-protected:
-	wxGridEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxGridEvent> eventValueFactory;
@@ -40,7 +38,7 @@ public:
 	// Constructor
 	Value_wxGridEvent() = delete;
 	Value_wxGridEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxGridEvent) :
-		Value_wxNotifyEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxGridEvent&>(entity)) {}
+		Value_wxNotifyEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxGridEvent(const Value_wxGridEvent& src) = delete;
 	Value_wxGridEvent& operator=(const Value_wxGridEvent& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxGridEvent() = default;
 public:
-	wxGridEvent& GetEntity() { return _entity; }
-	const wxGridEvent& GetEntity() const { return _entity; }
-	wxGridEvent* GetEntityPtr() { return &_entity; }
-	const wxGridEvent* GetEntityPtr() const { return &_entity; }
+	wxGridEvent& GetEntity() { return reinterpret_cast<wxGridEvent&>(Value_wxNotifyEvent::GetEntity()); }
+	const wxGridEvent& GetEntity() const { return reinterpret_cast<const wxGridEvent&>(Value_wxNotifyEvent::GetEntity()); }
+	wxGridEvent* GetEntityPtr() { return reinterpret_cast<wxGridEvent*>(Value_wxNotifyEvent::GetEntityPtr()); }\
+	const wxGridEvent* GetEntityPtr() const { return reinterpret_cast<const wxGridEvent*>(Value_wxNotifyEvent::GetEntityPtr()); }
 public:
 	static wxGridEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxGridEvent&>(value).GetEntity();

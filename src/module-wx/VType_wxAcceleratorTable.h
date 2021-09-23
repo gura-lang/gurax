@@ -31,15 +31,13 @@ public:
 	Gurax_DeclareReferable(Value_wxAcceleratorTable);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxAcceleratorTable");
-protected:
-	wxAcceleratorTable& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxAcceleratorTable() = delete;
 	explicit Value_wxAcceleratorTable(const wxAcceleratorTable& entity, VType& vtype = VTYPE_wxAcceleratorTable) :
-		Value_wxObject(entity, vtype), _entity(const_cast<wxAcceleratorTable&>(entity)) {}
+		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxAcceleratorTable(const Value_wxAcceleratorTable& src) = delete;
 	Value_wxAcceleratorTable& operator=(const Value_wxAcceleratorTable& src) = delete;
@@ -50,10 +48,10 @@ protected:
 	// Destructor
 	~Value_wxAcceleratorTable() = default;
 public:
-	wxAcceleratorTable& GetEntity() { return _entity; }
-	const wxAcceleratorTable& GetEntity() const { return _entity; }
-	wxAcceleratorTable* GetEntityPtr() { return &_entity; }
-	const wxAcceleratorTable* GetEntityPtr() const { return &_entity; }
+	wxAcceleratorTable& GetEntity() { return reinterpret_cast<wxAcceleratorTable&>(Value_wxObject::GetEntity()); }
+	const wxAcceleratorTable& GetEntity() const { return reinterpret_cast<const wxAcceleratorTable&>(Value_wxObject::GetEntity()); }
+	wxAcceleratorTable* GetEntityPtr() { return reinterpret_cast<wxAcceleratorTable*>(Value_wxObject::GetEntityPtr()); }\
+	const wxAcceleratorTable* GetEntityPtr() const { return reinterpret_cast<const wxAcceleratorTable*>(Value_wxObject::GetEntityPtr()); }
 public:
 	static wxAcceleratorTable& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxAcceleratorTable&>(value).GetEntity();

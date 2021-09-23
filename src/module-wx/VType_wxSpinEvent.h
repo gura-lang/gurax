@@ -31,8 +31,6 @@ public:
 	Gurax_DeclareReferable(Value_wxSpinEvent);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxSpinEvent");
-protected:
-	wxSpinEvent& _entity;
 public:
 	static VType& vtype;
 	static EventValueFactoryDeriv<Value_wxSpinEvent> eventValueFactory;
@@ -40,7 +38,7 @@ public:
 	// Constructor
 	Value_wxSpinEvent() = delete;
 	Value_wxSpinEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxSpinEvent) :
-		Value_wxNotifyEvent(entity, pValueUserData, vtype), _entity(dynamic_cast<wxSpinEvent&>(entity)) {}
+		Value_wxNotifyEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxSpinEvent(const Value_wxSpinEvent& src) = delete;
 	Value_wxSpinEvent& operator=(const Value_wxSpinEvent& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxSpinEvent() = default;
 public:
-	wxSpinEvent& GetEntity() { return _entity; }
-	const wxSpinEvent& GetEntity() const { return _entity; }
-	wxSpinEvent* GetEntityPtr() { return &_entity; }
-	const wxSpinEvent* GetEntityPtr() const { return &_entity; }
+	wxSpinEvent& GetEntity() { return reinterpret_cast<wxSpinEvent&>(Value_wxNotifyEvent::GetEntity()); }
+	const wxSpinEvent& GetEntity() const { return reinterpret_cast<const wxSpinEvent&>(Value_wxNotifyEvent::GetEntity()); }
+	wxSpinEvent* GetEntityPtr() { return reinterpret_cast<wxSpinEvent*>(Value_wxNotifyEvent::GetEntityPtr()); }\
+	const wxSpinEvent* GetEntityPtr() const { return reinterpret_cast<const wxSpinEvent*>(Value_wxNotifyEvent::GetEntityPtr()); }
 public:
 	static wxSpinEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxSpinEvent&>(value).GetEntity();

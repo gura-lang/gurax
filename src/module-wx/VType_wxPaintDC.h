@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxPaintDC);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxPaintDC");
-protected:
-	wxPaintDC& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxPaintDC() = delete;
 	explicit Value_wxPaintDC(const wxPaintDC& entity, VType& vtype = VTYPE_wxPaintDC) :
-		Value_wxClientDC(entity, vtype), _entity(const_cast<wxPaintDC&>(entity)) {}
+		Value_wxClientDC(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxPaintDC(const Value_wxPaintDC& src) = delete;
 	Value_wxPaintDC& operator=(const Value_wxPaintDC& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxPaintDC() = default;
 public:
-	wxPaintDC& GetEntity() { return _entity; }
-	const wxPaintDC& GetEntity() const { return _entity; }
-	wxPaintDC* GetEntityPtr() { return &_entity; }
-	const wxPaintDC* GetEntityPtr() const { return &_entity; }
+	wxPaintDC& GetEntity() { return reinterpret_cast<wxPaintDC&>(Value_wxClientDC::GetEntity()); }
+	const wxPaintDC& GetEntity() const { return reinterpret_cast<const wxPaintDC&>(Value_wxClientDC::GetEntity()); }
+	wxPaintDC* GetEntityPtr() { return reinterpret_cast<wxPaintDC*>(Value_wxClientDC::GetEntityPtr()); }\
+	const wxPaintDC* GetEntityPtr() const { return reinterpret_cast<const wxPaintDC*>(Value_wxClientDC::GetEntityPtr()); }
 public:
 	static wxPaintDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxPaintDC&>(value).GetEntity();

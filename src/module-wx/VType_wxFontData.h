@@ -32,15 +32,13 @@ public:
 	Gurax_DeclareReferable(Value_wxFontData);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxFontData");
-protected:
-	wxFontData& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxFontData() = delete;
 	explicit Value_wxFontData(const wxFontData& entity, VType& vtype = VTYPE_wxFontData) :
-		Value_wxObject(entity, vtype), _entity(const_cast<wxFontData&>(entity)) {}
+		Value_wxObject(entity, vtype) {}
 	// Copy constructor/operator
 	Value_wxFontData(const Value_wxFontData& src) = delete;
 	Value_wxFontData& operator=(const Value_wxFontData& src) = delete;
@@ -51,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxFontData() = default;
 public:
-	wxFontData& GetEntity() { return _entity; }
-	const wxFontData& GetEntity() const { return _entity; }
-	wxFontData* GetEntityPtr() { return &_entity; }
-	const wxFontData* GetEntityPtr() const { return &_entity; }
+	wxFontData& GetEntity() { return reinterpret_cast<wxFontData&>(Value_wxObject::GetEntity()); }
+	const wxFontData& GetEntity() const { return reinterpret_cast<const wxFontData&>(Value_wxObject::GetEntity()); }
+	wxFontData* GetEntityPtr() { return reinterpret_cast<wxFontData*>(Value_wxObject::GetEntityPtr()); }\
+	const wxFontData* GetEntityPtr() const { return reinterpret_cast<const wxFontData*>(Value_wxObject::GetEntityPtr()); }
 public:
 	static wxFontData& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxFontData&>(value).GetEntity();
