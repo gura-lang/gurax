@@ -16,9 +16,12 @@ MyFrame = class(wx.Frame) {
 
 PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
-		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
-		this.SetSizer(sizerTop)
-		sizerTop.Add(wx.Button(this, wx.ID_ANY, 'Hello World'), wx.SizerFlags(1).Expand())
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		dc = wx.PaintDC(this)
+		dc.DrawLineXY(0, 0, 100, 100)
+		dc = nil
 	}
 }
 
