@@ -261,7 +261,8 @@ public:
 	const Value& GetValueUserData() const { return *_pValueUserData; }
 ${elsif (className == 'DC')}
 protected:
-	std::unique_ptr<wx${className}> _pEntity;
+	std::unique_ptr<wx${className}> _pEntityHolder;	// this may be nullptr
+	wx${className}& _entity;
 ${elsif (!classNameParent || classInfo.holdEntityFlag)}
 protected:
 	wx${className} _entity;
@@ -297,7 +298,9 @@ ${elsif (className == 'Event')}
 		Value_Object(vtype), _pEntity(entity.Clone()), _pValueUserData(pValueUserData) {}
 ${elsif (className == 'DC')}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+		Value_Object(vtype), _pEntityHolder(pEntity), _entity(*pEntity) {}
+	explicit Value_wx${className}(wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
+		Value_Object(vtype), _entity(entity) {}
 ${elsif (className == 'CmdLineParser')}
 	explicit Value_wx${className}(wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _entity(entity) {}
@@ -333,7 +336,7 @@ protected:
 	// Destructor
 	~Value_wx${className}() = default;
 public:
-${if (evtHandlerOrDerivFlag || className in ['Event', 'DC'] || refCounterOrDerivFlag)}
+${if (evtHandlerOrDerivFlag || className in ['Event'] || refCounterOrDerivFlag)}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
@@ -343,7 +346,7 @@ ${elsif (classInfo.loosePointerFlag || (classInfoRoot && classInfoRoot.loosePoin
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity; }
 	const wx${className}* GetEntityPtr() const { return _pEntity; }
-${elsif (!classNameParent || classInfo.holdEntityFlag)}
+${elsif (className in ['DC'] || !classNameParent || classInfo.holdEntityFlag)}
 	wx${className}& GetEntity() { return _entity; }
 	const wx${className}& GetEntity() const { return _entity; }
 	wx${className}* GetEntityPtr() { return &_entity; }

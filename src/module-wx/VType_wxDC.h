@@ -31,14 +31,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxDC");
 protected:
-	std::unique_ptr<wxDC> _pEntity;
+	std::unique_ptr<wxDC> _pEntityHolder;	// this may be nullptr
+	wxDC& _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxDC() = delete;
 	explicit Value_wxDC(wxDC* pEntity, VType& vtype = VTYPE_wxDC) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+		Value_Object(vtype), _pEntityHolder(pEntity), _entity(*pEntity) {}
+	explicit Value_wxDC(wxDC& entity, VType& vtype = VTYPE_wxDC) :
+		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxDC(const Value_wxDC& src) = delete;
 	Value_wxDC& operator=(const Value_wxDC& src) = delete;
@@ -49,10 +52,10 @@ protected:
 	// Destructor
 	~Value_wxDC() = default;
 public:
-	wxDC& GetEntity() { return *_pEntity; }
-	const wxDC& GetEntity() const { return *_pEntity; }
-	wxDC* GetEntityPtr() { return _pEntity.get(); }
-	const wxDC* GetEntityPtr() const { return _pEntity.get(); }
+	wxDC& GetEntity() { return _entity; }
+	const wxDC& GetEntity() const { return _entity; }
+	wxDC* GetEntityPtr() { return &_entity; }
+	const wxDC* GetEntityPtr() const { return &_entity; }
 public:
 	static wxDC& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxDC&>(value).GetEntity();

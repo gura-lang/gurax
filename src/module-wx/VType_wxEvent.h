@@ -54,7 +54,7 @@ protected:
 	~Value_wxEvent() = default;
 public:
 	wxEvent& GetEntity() { return *_pEntity; }
-	const wxEvent& GetEntity() const { return *_pEntity; }
+	const wxEvent& GetEntity() const { return *_pEntity.get(); }
 	wxEvent* GetEntityPtr() { return _pEntity.get(); }
 	const wxEvent* GetEntityPtr() const { return _pEntity.get(); }
 public:
