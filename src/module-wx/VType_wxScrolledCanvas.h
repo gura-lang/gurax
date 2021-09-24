@@ -39,6 +39,7 @@ public:
 		using wxScrolledCanvas::wxScrolledCanvas;
 	public:
 		EntityCore core_gurax;
+		virtual void OnDraw(wxDC& dc) override;
 		virtual void AdjustScrollbars() override;
 	};
 public:

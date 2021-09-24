@@ -374,6 +374,56 @@ Gurax_ImplementMethodEx(wxScrolledWindow, IsRetained_gurax, processor_gurax, arg
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.ScrolledWindow#OnDraw(dc as wx.DC)
+Gurax_DeclareMethodAlias(wxScrolledWindow, OnDraw_gurax, "OnDraw")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrolledWindow, OnDraw_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDC& value_dc = args_gurax.Pick<Value_wxDC>();
+	wxDC& dc = value_dc.GetEntity();
+	// Function body
+	pEntity_gurax->OnDraw(dc);
+	return Gurax::Value::nil();
+}
+
+// wx.ScrolledWindow#PrepareDC(dc as wx.DC)
+Gurax_DeclareMethodAlias(wxScrolledWindow, PrepareDC_gurax, "PrepareDC")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrolledWindow, PrepareDC_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDC& value_dc = args_gurax.Pick<Value_wxDC>();
+	wxDC& dc = value_dc.GetEntity();
+	// Function body
+	pEntity_gurax->PrepareDC(dc);
+	return Gurax::Value::nil();
+}
+
 // wx.ScrolledWindow#ScrollXY(x as Number, y as Number)
 Gurax_DeclareMethodAlias(wxScrolledWindow, ScrollXY_gurax, "ScrollXY")
 {
@@ -835,6 +885,8 @@ void VType_wxScrolledWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxScrolledWindow, GetViewStart_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, GetVirtualSize_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, IsRetained_gurax));
+	Assign(Gurax_CreateMethod(wxScrolledWindow, OnDraw_gurax));
+	Assign(Gurax_CreateMethod(wxScrolledWindow, PrepareDC_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, ScrollXY_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, Scroll_gurax));
 	Assign(Gurax_CreateMethod(wxScrolledWindow, SetScrollRate_gurax));
@@ -868,6 +920,27 @@ String Value_wxScrolledWindow::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxScrolledWindow::EntityT
 //------------------------------------------------------------------------------
+void Value_wxScrolledWindow::EntityT::OnDraw(wxDC& dc)
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnDraw");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) break;
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+}
+
 void Value_wxScrolledWindow::EntityT::AdjustScrollbars()
 {
 	static const Symbol* pSymbolFunc = nullptr;
