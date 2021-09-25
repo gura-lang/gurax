@@ -116,6 +116,7 @@ wxArrayShort CreateArrayShort(const ValueList& values);
 wxArrayInt CreateArrayInt(const ValueList& values);
 wxArrayDouble CreateArrayDouble(const ValueList& values);
 wxArrayLong CreateArrayLong(const ValueList& values);
+wxPointList* CreatePointList(const ValueList& values);
 Value* CreateList(const wxArrayString& array);
 Value* CreateList(const wxArrayShort& array);
 Value* CreateList(const wxArrayInt& array);

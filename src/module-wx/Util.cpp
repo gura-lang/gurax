@@ -268,6 +268,13 @@ wxArrayLong CreateArrayLong(const ValueList& values)
 	return rtn;
 }
 
+wxPointList* CreatePointList(const ValueList& values)
+{
+	std::unique_ptr<wxPointList> rtn(new wxPointList());
+	for (const Value* pValue : values) rtn->push_back(new wxPoint(Value_wxPoint::GetEntity(*pValue)));
+	return rtn.release();
+}
+
 Value* CreateList(const wxArrayString& array)
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
