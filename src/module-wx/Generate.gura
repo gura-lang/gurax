@@ -118,6 +118,12 @@ r.DeclareType('ArrayLong', 'wxArrayLong', 'Number[]',
 	return Util::CreateList(rtn);
 	''')
 
+r.DeclareType('const_PointList_p', 'wxPointList', 'wxPoint[]', 'wx.Point',
+	codePickerVec = R'''
+	std::unique_ptr<wxPointList> ${varName}(Util::CreatePointList(args_gurax.PickList()));
+	'''
+	codeArgRef = '${varName}.get()')
+
 r.DeclareType('TreeItemData_p', 'const Value&', 'Any',
 	codePicker = R'''
 	${this.cType} ${varName} = args_gurax.PickValue();
@@ -125,9 +131,7 @@ r.DeclareType('TreeItemData_p', 'const Value&', 'Any',
 	codePickerValidation = R'''
 	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	'''
-	codeArgRef = R'''
-	TreeItemData::Create(${varName})
-	'''
+	codeArgRef = 'TreeItemData::Create(${varName})'
 	codeFunctionBody = R'''
 	TreeItemData* rtn = dynamic_cast<TreeItemData*>(${caller});
 	if (!rtn) return Value::nil();

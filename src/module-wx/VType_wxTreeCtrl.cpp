@@ -99,8 +99,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AddRoot_gurax, processor_gurax, argument_gur
 	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->AddRoot(text, image, selImage, TreeItemData::Create(data)
-		)));
+		pEntity_gurax->AddRoot(text, image, selImage, TreeItemData::Create(data))));
 }
 
 // wx.TreeCtrl#AppendItem(parent as wx.TreeItemId, text as String, image? as Number, selImage? as Number, data? as Any) {block?}
@@ -136,8 +135,7 @@ Gurax_ImplementMethodEx(wxTreeCtrl, AppendItem_gurax, processor_gurax, argument_
 	const Value& data = args_gurax.IsValid()? args_gurax.PickValue() : Value::C_nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
-		pEntity_gurax->AppendItem(parent, text, image, selImage, TreeItemData::Create(data)
-		)));
+		pEntity_gurax->AppendItem(parent, text, image, selImage, TreeItemData::Create(data))));
 }
 
 // wx.TreeCtrl#AssignImageList(imageList as wx.ImageList)

@@ -70,10 +70,10 @@ DC = Class {
 	DrawLabel(text as String, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1) as void
 	DrawLineXY(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord) as void = DrawLine
 	DrawLine(pt1 as const_Point_r, pt2 as const_Point_r) as void
-	//DrawLines(const wxPointList *points, xoffset as Coord=0, yoffset as Coord=0) as void
+	DrawLines(points as const_PointList_p, xoffset as Coord = 0, yoffset as Coord = 0) as void
 	DrawPointXY(x as Coord, y as Coord) as void = DrawPoint
 	DrawPoint(pt as const_Point_r) as void
-	//DrawPolygon(const wxPointList *points, xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
+	DrawPolygon(points as const_PointList_p, xoffset as Coord = 0, yoffset as Coord = 0, fill_style as PolygonFillMode = wxODDEVEN_RULE) as void
 	//DrawPolyPolygon(int n, const int count[], const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
 	DrawRectangleXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = DrawRectangle
 	DrawRectangle(pt as const_Point_r, sz as const_Size_r) as void
@@ -83,8 +83,8 @@ DC = Class {
 	DrawRoundedRectangleXY(x as Coord, y as Coord, width as Coord, height as Coord, radius as double) as void = DrawRoundedRectangle
 	DrawRoundedRectangle(pt as const_Point_r, sz as const_Size_r, radius as double) as void
 	DrawRoundedRectangleRect(rect as const_Rect_r, radius as double) as void = DrawRoundedRectangle
-	//DrawSpline(const wxPointList *points) as void
-	DrawSpline(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord, x3 as Coord, y3 as Coord) as void
+	DrawSpline(points as const_PointList_p) as void
+	DrawSplineXY(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord, x3 as Coord, y3 as Coord) as void = DrawSpline
 	DrawTextXY(text as String, x as Coord, y as Coord) as void = DrawText
 	DrawText(text as String, pt as const_Point_r) as void
 	GradientFillConcentric(rect as const_Rect_r, initialColour as const_Colour_r, destColour as const_Colour_r, circleCenter? as const_Point_p) as void = \

@@ -1265,6 +1265,36 @@ Gurax_ImplementMethodEx(wxDC, DrawLine_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// wx.DC#DrawLines(points[] as wx.Point, xoffset? as Number, yoffset? as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawLines_gurax, "DrawLines")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("points", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawLines_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	std::unique_ptr<wxPointList> points(Util::CreatePointList(args_gurax.PickList()));
+	bool xoffset_validFlag = args_gurax.IsValid();
+	wxCoord xoffset = xoffset_validFlag? args_gurax.PickNumber<wxCoord>() : 0;
+	bool yoffset_validFlag = args_gurax.IsValid();
+	wxCoord yoffset = yoffset_validFlag? args_gurax.PickNumber<wxCoord>() : 0;
+	// Function body
+	pEntity_gurax->DrawLines(points.get(), xoffset, yoffset);
+	return Gurax::Value::nil();
+}
+
 // wx.DC#DrawPointXY(x as Number, y as Number)
 Gurax_DeclareMethodAlias(wxDC, DrawPointXY_gurax, "DrawPointXY")
 {
@@ -1313,6 +1343,39 @@ Gurax_ImplementMethodEx(wxDC, DrawPoint_gurax, processor_gurax, argument_gurax)
 	const wxPoint& pt = value_pt.GetEntity();
 	// Function body
 	pEntity_gurax->DrawPoint(pt);
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawPolygon(points[] as wx.Point, xoffset? as Number, yoffset? as Number, fill_style? as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawPolygon_gurax, "DrawPolygon")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("points", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("fill_style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawPolygon_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	std::unique_ptr<wxPointList> points(Util::CreatePointList(args_gurax.PickList()));
+	bool xoffset_validFlag = args_gurax.IsValid();
+	wxCoord xoffset = xoffset_validFlag? args_gurax.PickNumber<wxCoord>() : 0;
+	bool yoffset_validFlag = args_gurax.IsValid();
+	wxCoord yoffset = yoffset_validFlag? args_gurax.PickNumber<wxCoord>() : 0;
+	bool fill_style_validFlag = args_gurax.IsValid();
+	wxPolygonFillMode fill_style = fill_style_validFlag? args_gurax.PickNumber<wxPolygonFillMode>() : wxODDEVEN_RULE;
+	// Function body
+	pEntity_gurax->DrawPolygon(points.get(), xoffset, yoffset, fill_style);
 	return Gurax::Value::nil();
 }
 
@@ -1547,8 +1610,32 @@ Gurax_ImplementMethodEx(wxDC, DrawRoundedRectangleRect_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawSpline(x1 as Number, y1 as Number, x2 as Number, y2 as Number, x3 as Number, y3 as Number)
+// wx.DC#DrawSpline(points[] as wx.Point)
 Gurax_DeclareMethodAlias(wxDC, DrawSpline_gurax, "DrawSpline")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("points", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawSpline_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	std::unique_ptr<wxPointList> points(Util::CreatePointList(args_gurax.PickList()));
+	// Function body
+	pEntity_gurax->DrawSpline(points.get());
+	return Gurax::Value::nil();
+}
+
+// wx.DC#DrawSplineXY(x1 as Number, y1 as Number, x2 as Number, y2 as Number, x3 as Number, y3 as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawSplineXY_gurax, "DrawSplineXY")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1562,7 +1649,7 @@ Gurax_DeclareMethodAlias(wxDC, DrawSpline_gurax, "DrawSpline")
 		"");
 }
 
-Gurax_ImplementMethodEx(wxDC, DrawSpline_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxDC, DrawSplineXY_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -2987,8 +3074,10 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, DrawLabel_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawLineXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawLine_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawLines_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawPointXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawPoint_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawPolygon_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRectangleXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRectangle_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRectangleRect_gurax));
@@ -2998,6 +3087,7 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, DrawRoundedRectangle_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRoundedRectangleRect_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawSpline_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawSplineXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawTextXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawText_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GradientFillConcentric_gurax));
