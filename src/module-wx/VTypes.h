@@ -276,6 +276,8 @@
 #include "VType_wxTextCtrl.h"
 #include "VType_wxTextEntryDialog.h"
 #include "VType_wxTimePickerCtrl.h"
+#include "VType_wxTimer.h"
+#include "VType_wxTimerEvent.h"
 #include "VType_wxToggleButton.h"
 #include "VType_wxToolBar.h"
 #include "VType_wxToolBarToolBase.h"

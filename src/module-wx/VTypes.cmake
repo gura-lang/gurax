@@ -273,6 +273,8 @@ set(SRCFILES_VTYPE
 	VType_wxTextCtrl.cpp
 	VType_wxTextEntryDialog.cpp
 	VType_wxTimePickerCtrl.cpp
+	VType_wxTimer.cpp
+	VType_wxTimerEvent.cpp
 	VType_wxToggleButton.cpp
 	VType_wxToolBar.cpp
 	VType_wxToolBarToolBase.cpp

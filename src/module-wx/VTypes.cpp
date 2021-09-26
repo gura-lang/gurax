@@ -281,6 +281,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTextCtrl);
 	frame.Assign(VTYPE_wxTextEntryDialog);
 	frame.Assign(VTYPE_wxTimePickerCtrl);
+	frame.Assign(VTYPE_wxTimer);
+	frame.Assign(VTYPE_wxTimerEvent);
 	frame.Assign(VTYPE_wxToggleButton);
 	frame.Assign(VTYPE_wxToolBar);
 	frame.Assign(VTYPE_wxToolBarToolBase);
