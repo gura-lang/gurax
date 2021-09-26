@@ -38,15 +38,15 @@ PanelTop = class(wx.Panel) {
 		{ wx.FONTFAMILY_MODERN,		'Modern'		}
 		{ wx.FONTFAMILY_TELETYPE,	'Teletype'		}
 	}
-	fontWeightTbl = @(SelectionItem) {
-		{ wx.FONTWEIGHT_NORMAL,		'Normal'		}
-		{ wx.FONTWEIGHT_LIGHT,		'Light'			}
-		{ wx.FONTWEIGHT_BOLD,		'Bold'			}
-	}
 	fontStyleTbl = @(SelectionItem) {
 		{ wx.FONTSTYLE_NORMAL,		'Normal'		}
 		{ wx.FONTSTYLE_ITALIC,		'Italic'		}
 		{ wx.FONTSTYLE_SLANT,		'Slant'			}
+	}
+	fontWeightTbl = @(SelectionItem) {
+		{ wx.FONTWEIGHT_NORMAL,		'Normal'		}
+		{ wx.FONTWEIGHT_LIGHT,		'Light'			}
+		{ wx.FONTWEIGHT_BOLD,		'Bold'			}
 	}
 	__init__(parent as wx.Window) = {|parent|
 		iFontFamily = 0
