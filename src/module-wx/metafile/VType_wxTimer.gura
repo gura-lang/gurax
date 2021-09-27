@@ -2,4 +2,22 @@
 // VType_wxTimer.gura
 //==============================================================================
 Timer = Class(EvtHandler) {
+	__init__(owner? as EvtHandler_p, id as int = -1) = \
+		R'''
+		if (owner) {
+			return new Value_wxTimer(new wxTimer(owner, id));
+		} else {
+			return new Value_wxTimer(new wxTimer());
+		}
+		'''
+	GetId() as int
+	GetInterval() as int
+	GetOwner() as EvtHandler_p
+	IsOneShot() as bool
+	IsRunning() as bool
+	Notify():virtual as void
+	SetOwner(owner as EvtHandler_p, id as int = -1) as void
+	Start(milliseconds as int = -1, oneShot as bool = wxTIMER_CONTINUOUS):virtual as bool
+	StartOnce(milliseconds as int = -1) as bool
+	Stop():virtual as void
 }
