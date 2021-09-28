@@ -3,4 +3,8 @@
 //==============================================================================
 BookCtrlEvent = Class(NotifyEvent) {
 	@include['wx/bookctrl.h']
+	GetOldSelection() as int
+	GetSelection() as int
+	SetOldSelection(page as int) as void
+	SetSelection(page as int) as void
 }

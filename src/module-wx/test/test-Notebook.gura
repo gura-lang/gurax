@@ -53,6 +53,8 @@ PanelTop = class(wx.Panel) {
 				wx.Listbook(this, wx.ID_ANY) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand())
 					this.SetupPages(book)
+					book.Bind(wx.EVT_LISTBOOK_PAGE_CHANGED, this.OnBook)
+					book.Bind(wx.EVT_LISTBOOK_PAGE_CHANGING, this.OnBook)
 				}
 			}
 			wx.BoxSizer(wx.VERTICAL) {|vbox|
@@ -78,6 +80,8 @@ PanelTop = class(wx.Panel) {
 				wx.Choicebook(this, wx.ID_ANY) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand())
 					this.SetupPages(book)
+					book.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGED, this.OnBook)
+					book.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGING, this.OnBook)
 				}
 			}
 		}

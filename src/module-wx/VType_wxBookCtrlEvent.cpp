@@ -32,6 +32,93 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.BookCtrlEvent#GetOldSelection()
+Gurax_DeclareMethodAlias(wxBookCtrlEvent, GetOldSelection_gurax, "GetOldSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBookCtrlEvent, GetOldSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetOldSelection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.BookCtrlEvent#GetSelection()
+Gurax_DeclareMethodAlias(wxBookCtrlEvent, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBookCtrlEvent, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetSelection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.BookCtrlEvent#SetOldSelection(page as Number)
+Gurax_DeclareMethodAlias(wxBookCtrlEvent, SetOldSelection_gurax, "SetOldSelection")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBookCtrlEvent, SetOldSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int page = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetOldSelection(page);
+	return Gurax::Value::nil();
+}
+
+// wx.BookCtrlEvent#SetSelection(page as Number)
+Gurax_DeclareMethodAlias(wxBookCtrlEvent, SetSelection_gurax, "SetSelection")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBookCtrlEvent, SetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int page = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetSelection(page);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +136,10 @@ void VType_wxBookCtrlEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxBookCtrlEvent, GetOldSelection_gurax));
+	Assign(Gurax_CreateMethod(wxBookCtrlEvent, GetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxBookCtrlEvent, SetOldSelection_gurax));
+	Assign(Gurax_CreateMethod(wxBookCtrlEvent, SetSelection_gurax));
 }
 
 //------------------------------------------------------------------------------
