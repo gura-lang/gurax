@@ -26,6 +26,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_CHECKLISTBOX,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHILD_FOCUS,					wxChildFocusEvent);
 	Gurax_AssignEvent(EVT_CHOICE,						wxCommandEvent);
+	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGED,		wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGING,		wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_COMBOBOX,						wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_BUTTON_CLICKED,		wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_ENTER,				wxCommandEvent);
@@ -35,8 +37,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,			wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxCommandEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES,					wxDropFilesEvent);
 	Gurax_AssignEvent(EVT_ENTER_WINDOW,					wxMouseEvent);
 	Gurax_AssignEvent(EVT_ERASE_BACKGROUND,				wxEraseEvent);
@@ -55,6 +57,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_LEFT_DCLICK,					wxMouseEvent);
 	Gurax_AssignEvent(EVT_LEFT_DOWN,					wxMouseEvent);
 	Gurax_AssignEvent(EVT_LEFT_UP,						wxMouseEvent);
+	Gurax_AssignEvent(EVT_LISTBOOK_PAGE_CHANGED,		wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_LISTBOOK_PAGE_CHANGING,		wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_LISTBOX,						wxCommandEvent);
 	Gurax_AssignEvent(EVT_LISTBOX_DCLICK,				wxCommandEvent);
 	Gurax_AssignEvent(EVT_MENU,							wxCommandEvent);
@@ -140,6 +144,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_TEXT_ENTER,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_TEXT_MAXLEN,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_TOOL,							wxCommandEvent);
+	Gurax_AssignEvent(EVT_TOOLBOOK_PAGE_CHANGED,		wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_TOOLBOOK_PAGE_CHANGING,		wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_TOOL_ENTER,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_TOOL_RCLICKED,				wxCommandEvent);
 	Gurax_AssignEvent(EVT_TREEBOOK_NODE_COLLAPSED,		wxBookCtrlEvent);

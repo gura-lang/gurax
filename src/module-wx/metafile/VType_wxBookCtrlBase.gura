@@ -3,6 +3,7 @@
 //==============================================================================
 BookCtrlBase = Class(Control) {
 	@include['wx/bookctrl.h']
+	@mixin[WithImages]
 	SetPageSize(size as const_Size_r) as void
 	//HitTest(pt as const_Point_r, flags as long_p = NULL) as int
 	HitTest(pt as const_Point_r) as Tuple@gurax = \

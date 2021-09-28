@@ -5,4 +5,18 @@ Choicebook = Class(BookCtrlBase) {
 	@include['wx/choicebk.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = '')
+	GetChoiceCtrl() as Choice_p
+}
+
+@const { // Styles
+	CHB_DEFAULT
+	CHB_TOP
+	CHB_LEFT
+	CHB_RIGHT
+	CHB_BOTTOM
+}
+
+@event {
+	EVT_CHOICEBOOK_PAGE_CHANGED		>> BookCtrlEvent
+	EVT_CHOICEBOOK_PAGE_CHANGING	>> BookCtrlEvent
 }

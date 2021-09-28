@@ -501,6 +501,77 @@ Gurax_ImplementMethodEx(wxBookCtrlBase, GetPage_gurax, processor_gurax, argument
 		pEntity_gurax->GetPage(page)));
 }
 
+// wx.BookCtrlBase#AssignImageList(imageList as wx.ImageList)
+Gurax_DeclareMethodAlias(wxBookCtrlBase, AssignImageList_gurax, "AssignImageList")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBookCtrlBase, AssignImageList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImageList& value_imageList = args_gurax.Pick<Value_wxImageList>();
+	wxImageList* imageList = value_imageList.GetEntityPtr();
+	// Function body
+	pEntity_gurax->AssignImageList(imageList);
+	return Gurax::Value::nil();
+}
+
+// wx.BookCtrlBase#SetImageList(imageList as wx.ImageList)
+Gurax_DeclareMethodAlias(wxBookCtrlBase, SetImageList_gurax, "SetImageList")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBookCtrlBase, SetImageList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxImageList& value_imageList = args_gurax.Pick<Value_wxImageList>();
+	wxImageList* imageList = value_imageList.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetImageList(imageList);
+	return Gurax::Value::nil();
+}
+
+// wx.BookCtrlBase#GetImageList() {block?}
+Gurax_DeclareMethodAlias(wxBookCtrlBase, GetImageList_gurax, "GetImageList")
+{
+	Declare(VTYPE_wxImageList, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBookCtrlBase, GetImageList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImageList(
+		pEntity_gurax->GetImageList()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -536,6 +607,9 @@ void VType_wxBookCtrlBase::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxBookCtrlBase, RemovePage_gurax));
 	Assign(Gurax_CreateMethod(wxBookCtrlBase, GetPageCount_gurax));
 	Assign(Gurax_CreateMethod(wxBookCtrlBase, GetPage_gurax));
+	Assign(Gurax_CreateMethod(wxBookCtrlBase, AssignImageList_gurax));
+	Assign(Gurax_CreateMethod(wxBookCtrlBase, SetImageList_gurax));
+	Assign(Gurax_CreateMethod(wxBookCtrlBase, GetImageList_gurax));
 }
 
 //------------------------------------------------------------------------------

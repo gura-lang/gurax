@@ -6,3 +6,13 @@ Toolbook = Class(BookCtrlBase) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = '')
 }
+
+@const {
+	TBK_BUTTONBAR
+	TBK_HORZ_LAYOUT
+}
+
+@event {
+	EVT_TOOLBOOK_PAGE_CHANGED	>> BookCtrlEvent
+	EVT_TOOLBOOK_PAGE_CHANGING	>> BookCtrlEvent
+}

@@ -6,3 +6,16 @@ Listbook = Class(BookCtrlBase) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = '')
 }
+
+@const {
+	LB_DEFAULT
+	LB_TOP
+	LB_LEFT
+	LB_RIGHT
+	LB_BOTTOM
+}
+
+@event {
+	EVT_LISTBOOK_PAGE_CHANGED	>> BookCtrlEvent
+	EVT_LISTBOOK_PAGE_CHANGING	>> BookCtrlEvent
+}

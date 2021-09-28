@@ -6,3 +6,19 @@ AuiNotebook = Class(BookCtrlBase) {
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxAUI_NB_DEFAULT_STYLE)
 }
+
+@const { // Styles
+	AUI_NB_DEFAULT_STYLE
+	AUI_NB_TAB_SPLIT
+	AUI_NB_TAB_MOVE
+	AUI_NB_TAB_EXTERNAL_MOVE
+	AUI_NB_TAB_FIXED_WIDTH
+	AUI_NB_SCROLL_BUTTONS
+	AUI_NB_WINDOWLIST_BUTTON
+	AUI_NB_CLOSE_BUTTON
+	AUI_NB_CLOSE_ON_ACTIVE_TAB
+	AUI_NB_CLOSE_ON_ALL_TABS
+	AUI_NB_MIDDLE_CLICK_CLOSE
+	AUI_NB_TOP
+	AUI_NB_BOTTOM
+}

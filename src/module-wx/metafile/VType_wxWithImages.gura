@@ -1,0 +1,8 @@
+//==============================================================================
+// VType_wxWithImages.gura
+//==============================================================================
+WithImages = Class():mixin {
+	AssignImageList(imageList as ImageList_p) as void
+	SetImageList(imageList as ImageList_p) as void
+	GetImageList() as ImageList_p
+}

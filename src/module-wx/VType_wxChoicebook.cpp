@@ -66,6 +66,26 @@ Gurax_ImplementConstructorEx(Choicebook_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Choicebook#GetChoiceCtrl() {block?}
+Gurax_DeclareMethodAlias(wxChoicebook, GetChoiceCtrl_gurax, "GetChoiceCtrl")
+{
+	Declare(VTYPE_wxChoice, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxChoicebook, GetChoiceCtrl_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxChoice(
+		pEntity_gurax->GetChoiceCtrl()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -83,6 +103,7 @@ void VType_wxChoicebook::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Choicebook_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxChoicebook, GetChoiceCtrl_gurax));
 }
 
 //------------------------------------------------------------------------------
