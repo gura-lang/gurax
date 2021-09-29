@@ -737,6 +737,360 @@ Gurax_ImplementMethodEx(wxMouseEvent, RightUp_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.MouseEvent#GetX()
+Gurax_DeclareMethodAlias(wxMouseEvent, GetX_gurax, "GetX")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, GetX_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->GetX();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.MouseEvent#GetY()
+Gurax_DeclareMethodAlias(wxMouseEvent, GetY_gurax, "GetY")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, GetY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxCoord rtn = pEntity_gurax->GetY();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.MouseEvent#LeftIsDown()
+Gurax_DeclareMethodAlias(wxMouseEvent, LeftIsDown_gurax, "LeftIsDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, LeftIsDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->LeftIsDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.MouseEvent#MiddleIsDown()
+Gurax_DeclareMethodAlias(wxMouseEvent, MiddleIsDown_gurax, "MiddleIsDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, MiddleIsDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->MiddleIsDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.MouseEvent#RightIsDown()
+Gurax_DeclareMethodAlias(wxMouseEvent, RightIsDown_gurax, "RightIsDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, RightIsDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->RightIsDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.MouseEvent#Aux1IsDown()
+Gurax_DeclareMethodAlias(wxMouseEvent, Aux1IsDown_gurax, "Aux1IsDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, Aux1IsDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->Aux1IsDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.MouseEvent#Aux2IsDown()
+Gurax_DeclareMethodAlias(wxMouseEvent, Aux2IsDown_gurax, "Aux2IsDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, Aux2IsDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->Aux2IsDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.MouseEvent#SetX(x as Number)
+Gurax_DeclareMethodAlias(wxMouseEvent, SetX_gurax, "SetX")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, SetX_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord x = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->SetX(x);
+	return Gurax::Value::nil();
+}
+
+// wx.MouseEvent#SetY(y as Number)
+Gurax_DeclareMethodAlias(wxMouseEvent, SetY_gurax, "SetY")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, SetY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	// Function body
+	pEntity_gurax->SetY(y);
+	return Gurax::Value::nil();
+}
+
+// wx.MouseEvent#SetPosition(pos as wx.Point)
+Gurax_DeclareMethodAlias(wxMouseEvent, SetPosition_gurax, "SetPosition")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, SetPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pos = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pos = value_pos.GetEntity();
+	// Function body
+	pEntity_gurax->SetPosition(pos);
+	return Gurax::Value::nil();
+}
+
+// wx.MouseEvent#SetLeftDown(down as Bool)
+Gurax_DeclareMethodAlias(wxMouseEvent, SetLeftDown_gurax, "SetLeftDown")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, SetLeftDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetLeftDown(down);
+	return Gurax::Value::nil();
+}
+
+// wx.MouseEvent#SetMiddleDown(down as Bool)
+Gurax_DeclareMethodAlias(wxMouseEvent, SetMiddleDown_gurax, "SetMiddleDown")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, SetMiddleDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetMiddleDown(down);
+	return Gurax::Value::nil();
+}
+
+// wx.MouseEvent#SetRightDown(down as Bool)
+Gurax_DeclareMethodAlias(wxMouseEvent, SetRightDown_gurax, "SetRightDown")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, SetRightDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetRightDown(down);
+	return Gurax::Value::nil();
+}
+
+// wx.MouseEvent#SetAux1Down(down as Bool)
+Gurax_DeclareMethodAlias(wxMouseEvent, SetAux1Down_gurax, "SetAux1Down")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, SetAux1Down_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetAux1Down(down);
+	return Gurax::Value::nil();
+}
+
+// wx.MouseEvent#SetAux2Down(down as Bool)
+Gurax_DeclareMethodAlias(wxMouseEvent, SetAux2Down_gurax, "SetAux2Down")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, SetAux2Down_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetAux2Down(down);
+	return Gurax::Value::nil();
+}
+
+// wx.MouseEvent#GetPosition() {block?}
+Gurax_DeclareMethodAlias(wxMouseEvent, GetPosition_gurax, "GetPosition")
+{
+	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, GetPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
+		pEntity_gurax->GetPosition()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -787,6 +1141,22 @@ void VType_wxMouseEvent::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxMouseEvent, RightDClick_gurax));
 	Assign(Gurax_CreateMethod(wxMouseEvent, RightDown_gurax));
 	Assign(Gurax_CreateMethod(wxMouseEvent, RightUp_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, GetX_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, GetY_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, LeftIsDown_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, MiddleIsDown_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, RightIsDown_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, Aux1IsDown_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, Aux2IsDown_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, SetX_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, SetY_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, SetPosition_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, SetLeftDown_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, SetMiddleDown_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, SetRightDown_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, SetAux1Down_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, SetAux2Down_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, GetPosition_gurax));
 }
 
 //------------------------------------------------------------------------------

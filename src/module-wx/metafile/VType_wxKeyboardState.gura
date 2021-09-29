@@ -1,0 +1,19 @@
+//==============================================================================
+// VType_wxKeyboardState.gura
+//==============================================================================
+KeyboardState = Class():mixin {
+	GetModifiers() as int
+	HasAnyModifiers() as bool
+	HasModifiers() as bool
+	ControlDown() as bool
+	RawControlDown() as bool
+	ShiftDown() as bool
+	MetaDown() as bool
+	AltDown() as bool
+	CmdDown() as bool
+	SetControlDown(down as bool) as void
+	SetRawControlDown(down as bool) as void
+	SetShiftDown(down as bool) as void
+	SetAltDown(down as bool) as void
+	SetMetaDown(down as bool) as void
+}

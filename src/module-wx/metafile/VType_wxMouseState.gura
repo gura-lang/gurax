@@ -1,0 +1,24 @@
+//==============================================================================
+// VType_wxMouseState.gura
+//==============================================================================
+MouseState = Class():mixin {
+	@mixin[KeyboardState]
+	GetX() as Coord
+	GetY() as Coord
+	LeftIsDown() as bool
+	MiddleIsDown() as bool
+	RightIsDown() as bool
+	Aux1IsDown() as bool
+	Aux2IsDown() as bool
+	SetX(x as Coord) as void
+	SetY(y as Coord) as void
+	SetPosition(pos as Point) as void
+	SetLeftDown(down as bool) as void
+	SetMiddleDown(down as bool) as void
+	SetRightDown(down as bool) as void
+	SetAux1Down(down as bool) as void
+	SetAux2Down(down as bool) as void
+	//SetState(state as const_MouseState_r) as void
+	GetPosition() as Point
+	GetPosition(x as int_p, y as int_p) as void
+}

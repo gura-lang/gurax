@@ -2,19 +2,43 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-void 	SetEffects (wxShowEffect showEffect, wxShowEffect hideEffect)
- 	Set the effects to use for showing and hiding the pages. More...
  
-void 	SetEffect (wxShowEffect effect)
- 	Set the same effect to use for both showing and hiding the pages. More...
+int 	GetModifiers () const
+ 	Return the bit mask of all pressed modifier keys. More...
  
-void 	SetEffectsTimeouts (unsigned showTimeout, unsigned hideTimeout)
- 	Set the effect timeout to use for showing and hiding the pages. More...
+bool 	HasAnyModifiers () const
+ 	Returns true if any modifiers at all are pressed. More...
  
-void 	SetEffectTimeout (unsigned timeout)
- 	Set the same effect timeout to use for both showing and hiding the pages. More...
+bool 	HasModifiers () const
+ 	Returns true if Control or Alt are pressed. More...
  
-bool 	ShowNewPage (wxWindow *page)
+bool 	ControlDown () const
+ 	Returns true if the Control key or Apple/Command key under OS X is pressed. More...
+ 
+bool 	RawControlDown () const
+ 	Returns true if the Control key (also under OS X). More...
+ 
+bool 	ShiftDown () const
+ 	Returns true if the Shift key is pressed. More...
+ 
+bool 	MetaDown () const
+ 	Returns true if the Meta/Windows/Apple key is pressed. More...
+ 
+bool 	AltDown () const
+ 	Returns true if the Alt key is pressed. More...
+ 
+bool 	CmdDown () const
+ 	Returns true if the key used for command accelerators is pressed. More...
+ 
+void 	SetControlDown (bool down)
+ 
+void 	SetRawControlDown (bool down)
+ 
+void 	SetShiftDown (bool down)
+ 
+void 	SetAltDown (bool down)
+ 
+void 	SetMetaDown (bool down)
 '''
 //------------------------------------------------------------------------------
 

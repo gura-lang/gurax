@@ -2,6 +2,7 @@
 // VType_wxMouseEvent.gura
 //==============================================================================
 MouseEvent = Class(Event) {
+	@mixin[MouseState]
 	Aux1DClick() as bool
 	Aux1Down() as bool
 	Aux1Up() as bool
