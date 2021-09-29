@@ -16,7 +16,9 @@ MyFrame = class(wx.Frame) {
 }
 
 PanelTop = class(wx.Panel) {
+	nPage as Number = 0
 	textCtrl as wx.TextCtrl
+	simplebook as wx.SimpleBook
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
@@ -59,10 +61,20 @@ PanelTop = class(wx.Panel) {
 			}
 			wx.BoxSizer(wx.VERTICAL) {|vbox|
 				hbox.Add(vbox, wx.SizerFlags(1).Expand().Border(wx.LEFT, 16))
-				vbox.Add(wx.StaticText(this, wx.ID_ANY, 'Simplebook'), wx.SizerFlags().Expand())
+				wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+					vbox.Add(hbox, wx.SizerFlags().Expand())
+					hbox.Add(wx.StaticText(this, wx.ID_ANY, 'Simplebook'), wx.SizerFlags().Align(wx.CENTER))
+					wx.Button(this, wx.ID_ANY, 'Next') {|ctrl|
+						hbox.AddStretchSpacer(1)
+						hbox.Add(ctrl, wx.SizerFlags())
+						ctrl.Bind(wx.EVT_BUTTON, this.OnButton_Next)
+					}
+				}
 				wx.Simplebook(this, wx.ID_ANY) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand())
-					this.SetupPages(book)
+					book.SetEffect(wx.SHOW_EFFECT_ROLL_TO_LEFT)
+					book.SetEffectTimeout(1000)
+					this.simplebook = book
 				}
 				vbox.Add(wx.StaticText(this, wx.ID_ANY, 'Toolbook'), wx.SizerFlags().Expand())
 				wx.Toolbook(this, wx.ID_ANY) {|book|
@@ -93,6 +105,12 @@ PanelTop = class(wx.Panel) {
 	OnBook(event as wx.BookCtrlEvent) = {
 		eventName = event.GetEventType().name
 		this.Printf('%s\n', eventName)
+	}
+	OnButton_Next(event) = {
+		this.nPage += 1
+		wx.Button(this.simplebook, wx.ID_ANY, Format('Page#%d', this.nPage)) {|ctrl|
+			this.simplebook.ShowNewPage(ctrl)
+		}
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 	SetupPages(book as wx.BookCtrlBase) = {

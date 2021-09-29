@@ -469,6 +469,7 @@ Renderer.__init__() = {
 	this.DeclareType_Number('long_long', 'long long')
 	this.DeclareType_Number('float')
 	this.DeclareType_Number('double')
+	this.DeclareType_Number('unsigned')
 	this.DeclareType_Number('unsigned_char', 'unsigned char')
 	this.DeclareType_Number('unsigned_short', 'unsigned short')
 	this.DeclareType_Number('unsigned_long', 'unsigned long')

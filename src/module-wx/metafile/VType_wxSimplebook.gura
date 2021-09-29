@@ -5,4 +5,9 @@ Simplebook = Class(BookCtrlBase) {
 	@include['wx/simplebook.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = '')
+	SetEffects(showEffect as ShowEffect, hideEffect as ShowEffect) as void
+	SetEffect(effect as ShowEffect) as void
+	SetEffectsTimeouts(showTimeout as unsigned, hideTimeout as unsigned) as void
+	SetEffectTimeout(timeout as unsigned) as void
+	ShowNewPage(page as Window_p) as bool
 }

@@ -66,6 +66,130 @@ Gurax_ImplementConstructorEx(Simplebook_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Simplebook#SetEffects(showEffect as Number, hideEffect as Number)
+Gurax_DeclareMethodAlias(wxSimplebook, SetEffects_gurax, "SetEffects")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("showEffect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("hideEffect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSimplebook, SetEffects_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxShowEffect showEffect = args_gurax.PickNumber<wxShowEffect>();
+	wxShowEffect hideEffect = args_gurax.PickNumber<wxShowEffect>();
+	// Function body
+	pEntity_gurax->SetEffects(showEffect, hideEffect);
+	return Gurax::Value::nil();
+}
+
+// wx.Simplebook#SetEffect(effect as Number)
+Gurax_DeclareMethodAlias(wxSimplebook, SetEffect_gurax, "SetEffect")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSimplebook, SetEffect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxShowEffect effect = args_gurax.PickNumber<wxShowEffect>();
+	// Function body
+	pEntity_gurax->SetEffect(effect);
+	return Gurax::Value::nil();
+}
+
+// wx.Simplebook#SetEffectsTimeouts(showTimeout as Number, hideTimeout as Number)
+Gurax_DeclareMethodAlias(wxSimplebook, SetEffectsTimeouts_gurax, "SetEffectsTimeouts")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("showTimeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("hideTimeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSimplebook, SetEffectsTimeouts_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned showTimeout = args_gurax.PickNumber<unsigned>();
+	unsigned hideTimeout = args_gurax.PickNumber<unsigned>();
+	// Function body
+	pEntity_gurax->SetEffectsTimeouts(showTimeout, hideTimeout);
+	return Gurax::Value::nil();
+}
+
+// wx.Simplebook#SetEffectTimeout(timeout as Number)
+Gurax_DeclareMethodAlias(wxSimplebook, SetEffectTimeout_gurax, "SetEffectTimeout")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("timeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSimplebook, SetEffectTimeout_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned timeout = args_gurax.PickNumber<unsigned>();
+	// Function body
+	pEntity_gurax->SetEffectTimeout(timeout);
+	return Gurax::Value::nil();
+}
+
+// wx.Simplebook#ShowNewPage(page as wx.Window)
+Gurax_DeclareMethodAlias(wxSimplebook, ShowNewPage_gurax, "ShowNewPage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("page", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSimplebook, ShowNewPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_page = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* page = value_page.GetEntityPtr();
+	// Function body
+	bool rtn = pEntity_gurax->ShowNewPage(page);
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -83,6 +207,11 @@ void VType_wxSimplebook::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Simplebook_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxSimplebook, SetEffects_gurax));
+	Assign(Gurax_CreateMethod(wxSimplebook, SetEffect_gurax));
+	Assign(Gurax_CreateMethod(wxSimplebook, SetEffectsTimeouts_gurax));
+	Assign(Gurax_CreateMethod(wxSimplebook, SetEffectTimeout_gurax));
+	Assign(Gurax_CreateMethod(wxSimplebook, ShowNewPage_gurax));
 }
 
 //------------------------------------------------------------------------------
