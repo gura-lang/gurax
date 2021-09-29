@@ -23,15 +23,15 @@ PanelTop = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
-			sizerTop.Add(hbox, wx.SizerFlags(5).Expand())
+			sizerTop.Add(hbox, wx.SizerFlags(4).Expand())
 			wx.BoxSizer(wx.VERTICAL) {|vbox|
 				hbox.Add(vbox, wx.SizerFlags(1).Expand())
 				vbox.Add(wx.StaticText(this, wx.ID_ANY, 'Notebook'), wx.SizerFlags().Expand())
 				wx.Notebook(this, wx.ID_ANY) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand())
 					this.SetupPages(book)
-					book.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, this.OnBook)
-					book.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGING, this.OnBook)
+					book.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, this.OnBook, book)
+					book.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGING, this.OnBook, book)
 				}
 				vbox.Add(wx.StaticText(this, wx.ID_ANY, 'Treebook'), wx.SizerFlags().Expand())
 				wx.Treebook(this, wx.ID_ANY) {|book|
@@ -46,17 +46,17 @@ PanelTop = class(wx.Panel) {
 							book.AddSubPage(panel, 'hoge')
 						}
 					}
-					book.Bind(wx.EVT_TREEBOOK_PAGE_CHANGED, this.OnBook)
-					book.Bind(wx.EVT_TREEBOOK_PAGE_CHANGING, this.OnBook)
-					book.Bind(wx.EVT_TREEBOOK_NODE_COLLAPSED, this.OnBook)
-					book.Bind(wx.EVT_TREEBOOK_NODE_EXPANDED, this.OnBook)
+					book.Bind(wx.EVT_TREEBOOK_PAGE_CHANGED, this.OnBook, book)
+					book.Bind(wx.EVT_TREEBOOK_PAGE_CHANGING, this.OnBook, book)
+					book.Bind(wx.EVT_TREEBOOK_NODE_COLLAPSED, this.OnBook, book)
+					book.Bind(wx.EVT_TREEBOOK_NODE_EXPANDED, this.OnBook, book)
 				}
 				vbox.Add(wx.StaticText(this, wx.ID_ANY, 'Listbook'), wx.SizerFlags().Expand())
 				wx.Listbook(this, wx.ID_ANY) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand())
 					this.SetupPages(book)
-					book.Bind(wx.EVT_LISTBOOK_PAGE_CHANGED, this.OnBook)
-					book.Bind(wx.EVT_LISTBOOK_PAGE_CHANGING, this.OnBook)
+					book.Bind(wx.EVT_LISTBOOK_PAGE_CHANGED, this.OnBook, book)
+					book.Bind(wx.EVT_LISTBOOK_PAGE_CHANGING, this.OnBook, book)
 				}
 			}
 			wx.BoxSizer(wx.VERTICAL) {|vbox|
@@ -92,8 +92,8 @@ PanelTop = class(wx.Panel) {
 				wx.Choicebook(this, wx.ID_ANY) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand())
 					this.SetupPages(book)
-					book.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGED, this.OnBook)
-					book.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGING, this.OnBook)
+					book.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGED, this.OnBook, book)
+					book.Bind(wx.EVT_CHOICEBOOK_PAGE_CHANGING, this.OnBook, book)
 				}
 			}
 		}
@@ -103,8 +103,10 @@ PanelTop = class(wx.Panel) {
 		}
 	}
 	OnBook(event as wx.BookCtrlEvent) = {
+		nPage = event.GetSelection()
 		eventName = event.GetEventType().name
-		this.Printf('%s\n', eventName)
+		book = event.GetEventUserData()
+		this.Printf('%s(%s)\n', eventName, book.GetPageText(nPage))
 	}
 	OnButton_Next(event) = {
 		this.nPage += 1
