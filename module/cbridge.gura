@@ -240,7 +240,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		}
 		expr = expr.left
 	}
-	typeName = ''
+	typeName = 'any'
 	virtualFlag = false
 	returnThisFlag = false
 	constFlag = false
@@ -268,10 +268,10 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	} elsif (expr.IsMember()) {
 		!expr.target.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
 		!codeFunctionBody && ErrorDone(expr, 'Function body must be specified')
-		if (expr.symbol == `get) {
-			type = `propGet
-		} elsif (expr.symbol == `set) {
-			type = `propSet
+		if (expr.symbol == `getter) {
+			type = `propGetter
+		} elsif (expr.symbol == `setter) {
+			type = `propSetter
 		} else {
 			ErrorDone(expr, 'Invalid property declaration')
 		}

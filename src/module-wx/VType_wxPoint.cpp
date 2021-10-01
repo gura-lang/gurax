@@ -60,6 +60,27 @@ Gurax_ImplementConstructorEx(Point_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+Gurax_DeclareProperty_RW(wxPoint, x)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(wxPoint, x)
+{
+	auto& valueThis_gurax = GetValueThis(valueTarget);
+	return new Value_Number(valueThis_gurax.GetEntity().x);
+}
+
+Gurax_ImplementPropertySetter(wxPoint, x)
+{
+	auto& valueThis_gurax = GetValueThis(valueTarget);
+	auto& value_gurax = value;
+	int x = Value_Number::GetNumber<int>(value_gurax);
+	valueThis_gurax.GetEntity().x = x;
+}
 
 //------------------------------------------------------------------------------
 // VType_wxPoint
@@ -73,6 +94,8 @@ void VType_wxPoint::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Point_gurax));
 	// Assignment of method
+	// Assignment of property
+	Assign(Gurax_CreateProperty(wxPoint, x));
 }
 
 //------------------------------------------------------------------------------

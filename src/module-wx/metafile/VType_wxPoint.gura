@@ -3,4 +3,13 @@
 //==============================================================================
 Point = Class {
 	__init__(x? as int, y? as int)
+	x.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().x);
+		'''
+	x.setter as int = \
+		R'''
+		int x = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().x = x;
+		'''
 }

@@ -469,7 +469,7 @@ ${end}
 	${if (!propInfoTbl.IsEmpty())}
 	// Assignment of property
 	${propInfoTbl.Each {|propInfo|}}
-	//Assign(Gurax_CreateProperty(wx${className}, propInfo.GetName());
+	Assign(Gurax_CreateProperty(wx${className}, ${propInfo.GetName()}));
 	${end}
 	${end}
 	${//(codePrefix + cbriege.EvalTmplFunctionAssignment(funcInfoTbl.Each())).Join('\n')}
@@ -615,7 +615,60 @@ Gurax_ImplementClassMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_g
 }
 '''
 
-tmplPropertyImplementation = tR'''
+tmplPropertyImplementation_R = tR'''
+Gurax_DeclareProperty_R(wx${className}, ${propInfo.GetName()})
+{
+	Declare(VTYPE_${propInfo.GetTypeInfo().vtype}, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(wx${className}, ${propInfo.GetName()})
+{
+	auto& valueThis_gurax = GetValueThis(valueTarget);
+	${propInfo.funcInfo_propGetter.tmplFunctionBody.Eval()}
+}
+'''
+
+tmplPropertyImplementation_W = tR'''
+Gurax_DeclareProperty_W(wx${className}, ${propInfo.GetName()})
+{
+	Declare(VTYPE_${propInfo.GetTypeInfo().vtype}, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertySetter(wx${className}, ${propInfo.GetName()})
+{
+	auto& valueThis_gurax = GetValueThis(valueTarget);
+	auto& value_gurax = value;
+	${propInfo.funcInfo_propSetter.tmplFunctionBody.Eval()}
+}
+'''
+
+tmplPropertyImplementation_RW = tR'''
+Gurax_DeclareProperty_RW(wx${className}, ${propInfo.GetName()})
+{
+	Declare(VTYPE_${propInfo.GetTypeInfo().vtype}, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(wx${className}, ${propInfo.GetName()})
+{
+	auto& valueThis_gurax = GetValueThis(valueTarget);
+	${propInfo.funcInfo_propGetter.tmplFunctionBody.Eval()}
+}
+
+Gurax_ImplementPropertySetter(wx${className}, ${propInfo.GetName()})
+{
+	auto& valueThis_gurax = GetValueThis(valueTarget);
+	auto& value_gurax = value;
+	${propInfo.funcInfo_propSetter.tmplFunctionBody.Eval()}
+}
 '''
 
 tmplConsts = tR'''
@@ -638,9 +691,10 @@ Gurax_EndModuleScope(wx)
 '''
 
 PropInfo = class {
-	funcInfo_propSet as cbridge.FuncInfo
-	funcInfo_propGet as cbridge.FuncInfo
-	GetName() = (this.funcInfo_Set || this.funcInfo_Get).name
+	funcInfo_propSetter as cbridge.FuncInfo
+	funcInfo_propGetter as cbridge.FuncInfo
+	GetName() = (this.funcInfo_propSetter || this.funcInfo_propGetter).name
+	GetTypeInfo() = (this.funcInfo_propGetter || this.funcInfo_propSetter).GetTypeInfo()
 }
 
 EvalTmplMethodImplementation(className as String, funcInfo as cbridge.FuncInfo):map = {
@@ -648,7 +702,13 @@ EvalTmplMethodImplementation(className as String, funcInfo as cbridge.FuncInfo):
 }
 
 EvalTmplPropertyImplementation(className as String, propInfo as PropInfo):map = {
-	tmplPropertyImplementation.Eval()
+	if (propInfo.funcInfo_propGetter && !propInfo.funcInfo_propSetter) {
+		tmplPropertyImplementation_R.Eval()
+	} elsif (!propInfo.funcInfo_propGetter && propInfo.funcInfo_propSetter) {
+		tmplPropertyImplementation_W.Eval()
+	} else {
+		tmplPropertyImplementation_RW.Eval()
+	}
 }
 
 ClassInfo = class {
@@ -764,12 +824,16 @@ path.Glob('metafile/*.gura').Each {|pathName|
 						classInfo.funcInfoCast = funcInfo
 					} elsif (funcInfo.type == `function) {
 						classInfo.funcInfoTbl.Add(funcInfo)
-					} elsif (funcInfo.type == `propGet || funcInfo.type == `propSet) {
-						propInfo = classInfo.propInfoTbl.Find(classInfo.propInfoTbl:*GetName() == funcInfo.name) || PropInfo()
-						if (funcInfo.type == `propGet) {
-							propInfo.funcInfo.propGet = funcInfo
+					} elsif (funcInfo.type == `propGetter || funcInfo.type == `propSetter) {
+						propInfo = classInfo.propInfoTbl.Find(classInfo.propInfoTbl:*GetName() == funcInfo.name)
+						if (!propInfo) {
+							propInfo = PropInfo()
+							classInfo.propInfoTbl.Add(propInfo)
+						}
+						if (funcInfo.type == `propGetter) {
+							propInfo.funcInfo_propGetter = funcInfo
 						} else {
-							propInfo.funcInfo.propSet = funcInfo
+							propInfo.funcInfo_propSetter = funcInfo
 						}
 					}
 				}
