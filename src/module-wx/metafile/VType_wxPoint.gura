@@ -12,4 +12,13 @@ Point = Class {
 		int x = Value_Number::GetNumber<int>(value_gurax);
 		valueThis_gurax.GetEntity().x = x;
 		'''
+	y.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().y);
+		'''
+	y.setter as int = \
+		R'''
+		int y = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().y = y;
+		'''
 }
