@@ -48,8 +48,15 @@ PanelTop = class(wx.Panel) {
 	}
 	OnMouse(event as wx.MouseEvent) = {
 		eventName = event.GetEventType().name
-		
-		this.Printf('%s(%d, %d)\n', eventName, event.GetX(), event.GetY())
+		pt = event.GetPosition()
+		this.Printf('%s(%d, %d)%s%s%s%s%s%s\n', eventName, event.GetX(), event.GetY(),
+			cond(event.ControlDown(), ',Control', '')
+			cond(event.RawControlDown(), ',RawControl', '')
+			cond(event.ShiftDown(), ',Shift', '')
+			cond(event.MetaDown(), ',Meta', '')
+			cond(event.AltDown(), ',Alt', '')
+			cond(event.CmdDown(), ',Cmd', '')
+			)
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
