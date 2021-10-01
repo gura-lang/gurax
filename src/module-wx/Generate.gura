@@ -772,6 +772,29 @@ ClassInfo = class {
 	EvalTmplConstructorImplementation(className as String, funcInfo as cbridge.FuncInfo):map = {
 		this.tmplConstructorImplementation.Eval()
 	}
+	PrepareClassInfoParent() = {
+		if (this.classNameParent) {
+			this.classInfoParent = classInfoTbl.Find(classInfoTbl:*className == this.classNameParent)
+			if (!this.classInfoParent) {
+				sys.cerr.Printf('class is not found: %s\n', this.classNameParent)
+				sys.Exit(1)
+			}
+		}
+	}
+	DoMixin() = {
+		this.classNamesToMixin.Each {|classNameToMixin|
+			classInfoToMixin = classInfoToMixinTbl.Find(classInfoToMixinTbl:*className == classNameToMixin)
+			if (!classInfoToMixin) {
+				sys.cerr.Printf('class is not found: %s\n', classNameToMixin)
+				sys.Exit(1)
+			}
+			classInfoToMixin.funcInfoTbl.Each {|funcInfo|
+				if (!(this.funcInfoTbl:*name == funcInfo.name).Or()) {
+					this.funcInfoTbl.Add(funcInfo)
+				}
+			}
+		}
+	}
 }
 
 EventInfo = struct { eventName as String, className as String }
@@ -1024,25 +1047,8 @@ Gurax_EndModuleScope(wx)
 '''
 
 classInfoTbl.Each {|classInfo|
-	if (classInfo.classNameParent) {
-		classInfo.classInfoParent = classInfoTbl.Find(classInfoTbl:*className == classInfo.classNameParent)
-		if (!classInfo.classInfoParent) {
-			sys.cerr.Printf('class is not found: %s\n', classInfo.classNameParent)
-			sys.Exit(1)
-		}
-	}
-	classInfo.classNamesToMixin.Each {|classNameToMixin|
-		classInfoToMixin = classInfoToMixinTbl.Find(classInfoToMixinTbl:*className == classNameToMixin)
-		if (!classInfoToMixin) {
-			sys.cerr.Printf('class is not found: %s\n', classNameToMixin)
-			sys.Exit(1)
-		}
-		classInfoToMixin.funcInfoTbl.Each {|funcInfo|
-			if (!(classInfo.funcInfoTbl:*name == funcInfo.name).Or()) {
-				classInfo.funcInfoTbl.Add(funcInfo)
-			}
-		}
-	}
+	classInfo.PrepareClassInfoParent()
+	classInfo.DoMixin()
 }
 
 r.DeclareType('EventType', 'wxEventType', 'wxEventType', 'wxEventType',

@@ -48,6 +48,7 @@ PanelTop = class(wx.Panel) {
 	}
 	OnMouse(event as wx.MouseEvent) = {
 		eventName = event.GetEventType().name
+		
 		this.Printf('%s(%d, %d)\n', eventName, event.GetX(), event.GetY())
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
