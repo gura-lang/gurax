@@ -441,6 +441,9 @@ ${end}
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+${if (!propInfoTbl.IsEmpty())}
+${EvalTmplPropertyImplementation(className, propInfoTbl.Each()).Join('\n')}
+${end}
 
 //------------------------------------------------------------------------------
 // VType_wx${className}
@@ -462,6 +465,12 @@ ${end}
 	// Assignment of method
 	${funcInfoTbl.Each {|funcInfo|}}
 	Assign(Gurax_CreateMethod(wx${className}, ${funcInfo.name}_gurax));
+	${end}
+	${if (!propInfoTbl.IsEmpty())}
+	// Assignment of property
+	${propInfoTbl.Each {|propInfo|}}
+	//Assign(Gurax_CreateProperty(wx${className}, propInfo.GetName());
+	${end}
 	${end}
 	${//(codePrefix + cbriege.EvalTmplFunctionAssignment(funcInfoTbl.Each())).Join('\n')}
 }
@@ -606,6 +615,9 @@ Gurax_ImplementClassMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_g
 }
 '''
 
+tmplPropertyImplementation = tR'''
+'''
+
 tmplConsts = tR'''
 //==============================================================================
 // Consts.cpp
@@ -625,8 +637,18 @@ void AssignConsts(Frame& frame)
 Gurax_EndModuleScope(wx)
 '''
 
+PropInfo = class {
+	funcInfo_propSet as cbridge.FuncInfo
+	funcInfo_propGet as cbridge.FuncInfo
+	GetName() = (this.funcInfo_Set || this.funcInfo_Get).name
+}
+
 EvalTmplMethodImplementation(className as String, funcInfo as cbridge.FuncInfo):map = {
 	cond(funcInfo.staticFlag, tmplClassMethodImplementation, tmplMethodImplementation).Eval()
+}
+
+EvalTmplPropertyImplementation(className as String, propInfo as PropInfo):map = {
+	tmplPropertyImplementation.Eval()
 }
 
 ClassInfo = class {
@@ -640,6 +662,7 @@ ClassInfo = class {
 	loosePointerFlag as Bool = false
 	holdEntityFlag as Bool = false
 	funcInfoTbl[] as cbridge.FuncInfo = []
+	propInfoTbl[] as PropInfo = []
 	includeFiles[] as String = []
 	classNamesToMixin[] as String = []
 	__init__(className as String, classNameParent:nil as String) = {
@@ -739,8 +762,15 @@ path.Glob('metafile/*.gura').Each {|pathName|
 						classInfo.funcInfoConstructor = funcInfo
 					} elsif (funcInfo.name == '__cast__') {
 						classInfo.funcInfoCast = funcInfo
-					} else {
+					} elsif (funcInfo.type == `function) {
 						classInfo.funcInfoTbl.Add(funcInfo)
+					} elsif (funcInfo.type == `propGet || funcInfo.type == `propSet) {
+						propInfo = classInfo.propInfoTbl.Find(classInfo.propInfoTbl:*GetName() == funcInfo.name) || PropInfo()
+						if (funcInfo.type == `propGet) {
+							propInfo.funcInfo.propGet = funcInfo
+						} else {
+							propInfo.funcInfo.propSet = funcInfo
+						}
 					}
 				}
 			}
@@ -1098,6 +1128,7 @@ GenerateVType(classInfoTbl[] as ClassInfo) = {
 		funcInfoConstructor = classInfo.funcInfoConstructor
 		funcInfoCast = classInfo.funcInfoCast
 		funcInfoTbl = classInfo.funcInfoTbl
+		propInfoTbl = classInfo.propInfoTbl
 		funcInfoVirtualTbl = funcInfoTbl.Filter(funcInfoTbl:*virtualFlag):list
 		fileNameHeader = Format('VType_wx%s.h', className)
 		fileNameSource = Format('VType_wx%s.cpp', className)

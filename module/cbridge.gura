@@ -202,11 +202,13 @@ FuncInfo = class {
 	returnThisFlag as Bool
 	constFlag as Bool
 	staticFlag as Bool
+	type as Symbol
 	__init__(r as Renderer, moduleName as String, name as String, nameOnCall:nil as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
-			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool, staticFlag as Bool) = {
+			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool, staticFlag as Bool, type as Symbol) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.nameOnCall = nameOnCall
 		this.argInfoTbl = argInfoTbl, this.typeName = typeName
 		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.constFlag = constFlag, this.staticFlag = staticFlag
+		this.type = type
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	GetTypeInfo() = {
@@ -252,18 +254,33 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		}
 		expr = expr.left
 	}
-	!expr.IsCaller() && ErrorDone(expr, 'Caller is expected')
-	!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
-	if (expr.attr.IsSet(`void)) { typeName = 'void' }
-	if (expr.attr.IsSet(`virtual)) { virtualFlag = true }
-	if (expr.attr.IsSet(`returnThis)) { returnThisFlag = true }
-	if (expr.attr.IsSet(`const)) { constFlag = true }
-	if (expr.attr.IsSet(`static)) { staticFlag = true }
-	argInfoTbl = CreateArgInfoTbl(r, expr)
-	if (typeName.IsEmpty()) { typeName = 'any' }
-	symbolName = expr.car.symbolName
-	//(symbolName, argInfoTbl, typeInfo, codeFunctionBody)
-	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag, staticFlag)
+	type = `function
+	if (expr.IsCaller()) {
+		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
+		if (expr.attr.IsSet(`void)) { typeName = 'void' }
+		if (expr.attr.IsSet(`virtual)) { virtualFlag = true }
+		if (expr.attr.IsSet(`returnThis)) { returnThisFlag = true }
+		if (expr.attr.IsSet(`const)) { constFlag = true }
+		if (expr.attr.IsSet(`static)) { staticFlag = true }
+		argInfoTbl = CreateArgInfoTbl(r, expr)
+		if (typeName.IsEmpty()) { typeName = 'any' }
+		symbolName = expr.car.symbolName
+	} elsif (expr.IsMember()) {
+		!expr.target.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
+		!codeFunctionBody && ErrorDone(expr, 'Function body must be specified')
+		if (expr.symbol == `get) {
+			type = `propGet
+		} elsif (expr.symbol == `set) {
+			type = `propSet
+		} else {
+			ErrorDone(expr, 'Invalid property declaration')
+		}
+		argInfoTbl = []
+		symbolName = expr.target.symbolName
+	} else {
+		ErrorDone(expr, 'Caller is expected')
+	}
+	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag, staticFlag, type)
 }
 
 tmplFunctionImplementation = tR'''
