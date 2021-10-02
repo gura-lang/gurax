@@ -238,6 +238,306 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetPositionXY_gurax, processor_gurax, argume
 	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 }
 
+// wx.KeyEvent#GetModifiers()
+Gurax_DeclareMethodAlias(wxKeyEvent, GetModifiers_gurax, "GetModifiers")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, GetModifiers_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetModifiers();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.KeyEvent#HasAnyModifiers()
+Gurax_DeclareMethodAlias(wxKeyEvent, HasAnyModifiers_gurax, "HasAnyModifiers")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, HasAnyModifiers_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasAnyModifiers();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#HasModifiers()
+Gurax_DeclareMethodAlias(wxKeyEvent, HasModifiers_gurax, "HasModifiers")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, HasModifiers_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasModifiers();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#ControlDown()
+Gurax_DeclareMethodAlias(wxKeyEvent, ControlDown_gurax, "ControlDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, ControlDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->ControlDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#RawControlDown()
+Gurax_DeclareMethodAlias(wxKeyEvent, RawControlDown_gurax, "RawControlDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, RawControlDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->RawControlDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#ShiftDown()
+Gurax_DeclareMethodAlias(wxKeyEvent, ShiftDown_gurax, "ShiftDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, ShiftDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->ShiftDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#MetaDown()
+Gurax_DeclareMethodAlias(wxKeyEvent, MetaDown_gurax, "MetaDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, MetaDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->MetaDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#AltDown()
+Gurax_DeclareMethodAlias(wxKeyEvent, AltDown_gurax, "AltDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, AltDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->AltDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#CmdDown()
+Gurax_DeclareMethodAlias(wxKeyEvent, CmdDown_gurax, "CmdDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, CmdDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->CmdDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.KeyEvent#SetControlDown(down as Bool)
+Gurax_DeclareMethodAlias(wxKeyEvent, SetControlDown_gurax, "SetControlDown")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, SetControlDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetControlDown(down);
+	return Gurax::Value::nil();
+}
+
+// wx.KeyEvent#SetRawControlDown(down as Bool)
+Gurax_DeclareMethodAlias(wxKeyEvent, SetRawControlDown_gurax, "SetRawControlDown")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, SetRawControlDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetRawControlDown(down);
+	return Gurax::Value::nil();
+}
+
+// wx.KeyEvent#SetShiftDown(down as Bool)
+Gurax_DeclareMethodAlias(wxKeyEvent, SetShiftDown_gurax, "SetShiftDown")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, SetShiftDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetShiftDown(down);
+	return Gurax::Value::nil();
+}
+
+// wx.KeyEvent#SetAltDown(down as Bool)
+Gurax_DeclareMethodAlias(wxKeyEvent, SetAltDown_gurax, "SetAltDown")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, SetAltDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetAltDown(down);
+	return Gurax::Value::nil();
+}
+
+// wx.KeyEvent#SetMetaDown(down as Bool)
+Gurax_DeclareMethodAlias(wxKeyEvent, SetMetaDown_gurax, "SetMetaDown")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxKeyEvent, SetMetaDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool down = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetMetaDown(down);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -264,6 +564,20 @@ void VType_wxKeyEvent::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxKeyEvent, IsNextEventAllowed_gurax));
 	Assign(Gurax_CreateMethod(wxKeyEvent, GetPosition_gurax));
 	Assign(Gurax_CreateMethod(wxKeyEvent, GetPositionXY_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, GetModifiers_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, HasAnyModifiers_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, HasModifiers_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, ControlDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, RawControlDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, ShiftDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, MetaDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, AltDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, CmdDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, SetControlDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, SetRawControlDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, SetShiftDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, SetAltDown_gurax));
+	Assign(Gurax_CreateMethod(wxKeyEvent, SetMetaDown_gurax));
 }
 
 //------------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 // VType_wxKeyEvent.gura
 //==============================================================================
 KeyEvent = Class(Event) {
+	@mixin[KeyboardState]
 	GetKeyCode() as int
 	IsKeyInCategory(category as int) as bool
 	GetRawKeyFlags() as UInt32

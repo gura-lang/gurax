@@ -3,7 +3,7 @@ import(wx)
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(320, 480)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 480)).Show()
 		true
 	}
 }
@@ -32,7 +32,14 @@ PanelTop = class(wx.Panel) {
 		}
 	}
 	OnKey(event) = {
-		this.Printf('%-20s%s\n', event.GetEventType().name, wx.GetKeyCodeName(event.GetKeyCode()))
+		this.Printf('%-20s%-16s%s%s%s%s%s%s\n', event.GetEventType().name,
+			'[' + wx.GetKeyCodeName(event.GetKeyCode()) + ']',
+			cond(event.ControlDown(), ' Control', '')
+			cond(event.RawControlDown(), ' RawControl', '')
+			cond(event.ShiftDown(), ' Shift', '')
+			cond(event.MetaDown(), ' Meta', '')
+			cond(event.AltDown(), ' Alt', '')
+			cond(event.CmdDown(), ' Cmd', ''))
 		event.Skip()
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
