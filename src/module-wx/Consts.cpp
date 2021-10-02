@@ -22,6 +22,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ALIGN_RIGHT", new Value_Number(wxALIGN_RIGHT));
 	frame.Assign("ALIGN_TOP", new Value_Number(wxALIGN_TOP));
 	frame.Assign("ALL", new Value_Number(wxALL));
+	frame.Assign("ALPHA_OPAQUE", new Value_Number(wxALPHA_OPAQUE));
+	frame.Assign("ALPHA_TRANSPARENT", new Value_Number(wxALPHA_TRANSPARENT));
 	frame.Assign("ALWAYS_SHOW_SB", new Value_Number(wxALWAYS_SHOW_SB));
 	frame.Assign("AND", new Value_Number(wxAND));
 	frame.Assign("AND_INVERT", new Value_Number(wxAND_INVERT));
@@ -121,6 +123,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("BU_NOTEXT", new Value_Number(wxBU_NOTEXT));
 	frame.Assign("BU_RIGHT", new Value_Number(wxBU_RIGHT));
 	frame.Assign("BU_TOP", new Value_Number(wxBU_TOP));
+	frame.Assign("C2S_CSS_SYNTAX", new Value_Number(wxC2S_CSS_SYNTAX));
+	frame.Assign("C2S_HTML_SYNTAX", new Value_Number(wxC2S_HTML_SYNTAX));
+	frame.Assign("C2S_NAME", new Value_Number(wxC2S_NAME));
 	frame.Assign("CAL_BORDER_NONE", new Value_Number(wxCAL_BORDER_NONE));
 	frame.Assign("CAL_BORDER_ROUND", new Value_Number(wxCAL_BORDER_ROUND));
 	frame.Assign("CAL_BORDER_SQUARE", new Value_Number(wxCAL_BORDER_SQUARE));

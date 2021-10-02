@@ -1,0 +1,35 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		dc = wx.PaintDC(this)
+		dc.DrawLineXY(0, 0, 100, 100)
+		dc.DrawArcXY(100, 100, 200, 200, 50, 50)
+		dc.DrawCircleXY(200, 200, 100)
+		dc.DrawEllipseXY(300, 200, 100, 50)
+		dc.DrawLines(@(wx.Point) {{0, 0}, {30, 100}, {50, 50}}, 300, 50)
+		dc.DrawTextXY('Hello World', 30, 200)
+		dc.SetFont(wx.Font(30, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+		dc.DrawTextXY('Hello World', 30, 240)
+		dc = nil
+	}
+}
+
+wx.ImplementApp(MyApp())

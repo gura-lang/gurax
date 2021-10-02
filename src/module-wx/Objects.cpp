@@ -24,13 +24,15 @@ void AssignObjects(Frame& frame)
 	} while (0);
 	do { // Predefined Objects of wxColour
 		frame.Assign("NullColour",			new Value_wxColour(wxNullColour));
+		frame.Assign("TransparentColour",	new Value_wxColour(wxTransparentColour));
 		frame.Assign("BLACK",				new Value_wxColour(*wxBLACK));
-		frame.Assign("WHITE",				new Value_wxColour(*wxWHITE));
-		frame.Assign("RED",					new Value_wxColour(*wxRED));
 		frame.Assign("BLUE",				new Value_wxColour(*wxBLUE));
-		frame.Assign("GREEN",				new Value_wxColour(*wxGREEN));
 		frame.Assign("CYAN",				new Value_wxColour(*wxCYAN));
+		frame.Assign("GREEN",				new Value_wxColour(*wxGREEN));
+		frame.Assign("YELLOW",				new Value_wxColour(*wxYELLOW));
 		frame.Assign("LIGHT_GREY",			new Value_wxColour(*wxLIGHT_GREY));
+		frame.Assign("RED",					new Value_wxColour(*wxRED));
+		frame.Assign("WHITE",				new Value_wxColour(*wxWHITE));
 	} while (0);
 	do { // Predefined Objects of wxCursor
 		frame.Assign("NullCursor",			new Value_wxCursor(wxNullCursor));

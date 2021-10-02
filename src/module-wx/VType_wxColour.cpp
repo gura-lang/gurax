@@ -28,14 +28,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Colour(red? as Number, green? as Number, blue? as Number, alpha? as Number) {block?} {block?}
+// wx.Colour(args* as Any) {block?} {block?}
 Gurax_DeclareConstructorAlias(Colour_gurax, "Colour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
-	DeclareArg("red", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("green", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("blue", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("alpha", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -46,22 +43,365 @@ Gurax_ImplementConstructorEx(Colour_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	bool red_validFlag = args_gurax.IsValid();
-	unsigned char red = red_validFlag? args_gurax.PickNumber<unsigned char>() : 0;
-	bool green_validFlag = args_gurax.IsValid();
-	unsigned char green = green_validFlag? args_gurax.PickNumber<unsigned char>() : 0;
-	bool blue_validFlag = args_gurax.IsValid();
-	unsigned char blue = blue_validFlag? args_gurax.PickNumber<unsigned char>() : 0;
-	bool alpha_validFlag = args_gurax.IsValid();
-	unsigned char alpha = alpha_validFlag? args_gurax.PickNumber<unsigned char>() : wxALPHA_OPAQUE;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		wxColour(red, green, blue, alpha)));
+	// wx.Colour(colourName as String)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("colourName", VTYPE_String);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		const char* colourName = args.PickString();
+		return new Value_wxColour(wxColour(colourName));
+	} while (0);
+	Error::Clear();
+	// wx.Colour(red as unsigned_char = 0, green as unsigned_char = 0, blue as unsigned_char = 0, alpha as unsigned_char = wxALPHA_OPAQUE)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("red", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("green", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("blue", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("alpha", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		unsigned char red = args.IsValid()? args.PickNumber<unsigned char>() : 0;
+		unsigned char green = args.IsValid()? args.PickNumber<unsigned char>() : 0;
+		unsigned char blue = args.IsValid()? args.PickNumber<unsigned char>() : 0;
+		unsigned char alpha = args.IsValid()? args.PickNumber<unsigned char>() : wxALPHA_OPAQUE;
+		return new Value_wxColour(wxColour(red, green, blue, alpha));
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Colour#Alpha()
+Gurax_DeclareMethodAlias(wxColour, Alpha_gurax, "Alpha")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, Alpha_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned char rtn = pEntity_gurax->Alpha();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Colour#Blue()
+Gurax_DeclareMethodAlias(wxColour, Blue_gurax, "Blue")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, Blue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned char rtn = pEntity_gurax->Blue();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Colour#GetAsString(flags? as Number)
+Gurax_DeclareMethodAlias(wxColour, GetAsString_gurax, "GetAsString")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, GetAsString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool flags_validFlag = args_gurax.IsValid();
+	long flags = flags_validFlag? args_gurax.PickNumber<long>() : (wxC2S_NAME | wxC2S_CSS_SYNTAX);
+	// Function body
+	wxString rtn = pEntity_gurax->GetAsString(flags);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.Colour#Green()
+Gurax_DeclareMethodAlias(wxColour, Green_gurax, "Green")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, Green_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned char rtn = pEntity_gurax->Green();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Colour#IsOk()
+Gurax_DeclareMethodAlias(wxColour, IsOk_gurax, "IsOk")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, IsOk_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsOk();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Colour#Red()
+Gurax_DeclareMethodAlias(wxColour, Red_gurax, "Red")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, Red_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned char rtn = pEntity_gurax->Red();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Colour#MakeDisabled(brightness? as Number) {block?}
+Gurax_DeclareMethodAlias(wxColour, MakeDisabled_gurax, "MakeDisabled")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, MakeDisabled_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool brightness_validFlag = args_gurax.IsValid();
+	unsigned char brightness = brightness_validFlag? args_gurax.PickNumber<unsigned char>() : 255;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->MakeDisabled(brightness)));
+}
+
+// wx.Colour#ChangeLightness(ialpha as Number) {block?}
+Gurax_DeclareMethodAlias(wxColour, ChangeLightness_gurax, "ChangeLightness")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareArg("ialpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, ChangeLightness_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int ialpha = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->ChangeLightness(ialpha)));
+}
+
+// wx.Colour#SetRGB(colRGB as Number)
+Gurax_DeclareMethodAlias(wxColour, SetRGB_gurax, "SetRGB")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colRGB", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, SetRGB_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxUint32 colRGB = args_gurax.PickNumber<wxUint32>();
+	// Function body
+	pEntity_gurax->SetRGB(colRGB);
+	return Gurax::Value::nil();
+}
+
+// wx.Colour#SetRGBA(colRGBA as Number)
+Gurax_DeclareMethodAlias(wxColour, SetRGBA_gurax, "SetRGBA")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colRGBA", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, SetRGBA_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxUint32 colRGBA = args_gurax.PickNumber<wxUint32>();
+	// Function body
+	pEntity_gurax->SetRGBA(colRGBA);
+	return Gurax::Value::nil();
+}
+
+// wx.Colour#GetRGB()
+Gurax_DeclareMethodAlias(wxColour, GetRGB_gurax, "GetRGB")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, GetRGB_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxUint32 rtn = pEntity_gurax->GetRGB();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Colour#GetRGBA()
+Gurax_DeclareMethodAlias(wxColour, GetRGBA_gurax, "GetRGBA")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, GetRGBA_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxUint32 rtn = pEntity_gurax->GetRGBA();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Colour#Set(red as Number, green as Number, blue as Number, alpha? as Number)
+Gurax_DeclareMethodAlias(wxColour, Set_gurax, "Set")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("alpha", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColour, Set_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned char red = args_gurax.PickNumber<unsigned char>();
+	unsigned char green = args_gurax.PickNumber<unsigned char>();
+	unsigned char blue = args_gurax.PickNumber<unsigned char>();
+	bool alpha_validFlag = args_gurax.IsValid();
+	unsigned char alpha = alpha_validFlag? args_gurax.PickNumber<unsigned char>() : wxALPHA_OPAQUE;
+	// Function body
+	pEntity_gurax->Set(red, green, blue, alpha);
+	return Gurax::Value::nil();
+}
+
+// wx.Colour.AlphaBlend(fg as Number, bg as Number, alpha as Number)
+Gurax_DeclareClassMethodAlias(wxColour, AlphaBlend_gurax, "AlphaBlend")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("fg", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bg", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxColour, AlphaBlend_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned char fg = args_gurax.PickNumber<unsigned char>();
+	unsigned char bg = args_gurax.PickNumber<unsigned char>();
+	double alpha = args_gurax.PickNumber<double>();
+	// Function body
+	unsigned char rtn = wxColour::AlphaBlend(fg, bg, alpha);
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -79,6 +419,20 @@ void VType_wxColour::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Colour_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxColour, Alpha_gurax));
+	Assign(Gurax_CreateMethod(wxColour, Blue_gurax));
+	Assign(Gurax_CreateMethod(wxColour, GetAsString_gurax));
+	Assign(Gurax_CreateMethod(wxColour, Green_gurax));
+	Assign(Gurax_CreateMethod(wxColour, IsOk_gurax));
+	Assign(Gurax_CreateMethod(wxColour, Red_gurax));
+	Assign(Gurax_CreateMethod(wxColour, MakeDisabled_gurax));
+	Assign(Gurax_CreateMethod(wxColour, ChangeLightness_gurax));
+	Assign(Gurax_CreateMethod(wxColour, SetRGB_gurax));
+	Assign(Gurax_CreateMethod(wxColour, SetRGBA_gurax));
+	Assign(Gurax_CreateMethod(wxColour, GetRGB_gurax));
+	Assign(Gurax_CreateMethod(wxColour, GetRGBA_gurax));
+	Assign(Gurax_CreateMethod(wxColour, Set_gurax));
+	Assign(Gurax_CreateMethod(wxColour, AlphaBlend_gurax));
 }
 
 //------------------------------------------------------------------------------

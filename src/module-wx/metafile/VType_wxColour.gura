@@ -2,5 +2,71 @@
 // VType_wxColour.gura
 //==============================================================================
 Colour = Class {
-	__init__(red as unsigned_char = 0, green as unsigned_char = 0, blue as unsigned_char = 0, alpha as unsigned_char = wxALPHA_OPAQUE)
+	__init__(args* as any) = \
+		R'''
+		// wx.Colour(colourName as String)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("colourName", VTYPE_String);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			const char* colourName = args.PickString();
+			return new Value_wxColour(wxColour(colourName));
+		} while (0);
+		Error::Clear();
+		// wx.Colour(red as unsigned_char = 0, green as unsigned_char = 0, blue as unsigned_char = 0, alpha as unsigned_char = wxALPHA_OPAQUE)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("red", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("green", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("blue", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("alpha", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			ArgPicker args(*pArgument);
+			unsigned char red = args.IsValid()? args.PickNumber<unsigned char>() : 0;
+			unsigned char green = args.IsValid()? args.PickNumber<unsigned char>() : 0;
+			unsigned char blue = args.IsValid()? args.PickNumber<unsigned char>() : 0;
+			unsigned char alpha = args.IsValid()? args.PickNumber<unsigned char>() : wxALPHA_OPAQUE;
+			return new Value_wxColour(wxColour(red, green, blue, alpha));
+		} while (0);
+		return Value::nil();
+		'''
+	Alpha() as unsigned_char
+	Blue() as unsigned_char
+	GetAsString(flags as long = wxC2S_NAME | wxC2S_CSS_SYNTAX) as String
+	//GetPixel() as IntPtr
+	Green() as unsigned_char
+	IsOk() as bool
+	Red() as unsigned_char
+	MakeDisabled(brightness as unsigned_char = 255) as Colour
+	ChangeLightness(ialpha as int) as Colour
+	SetRGB(colRGB as Uint32) as void
+	SetRGBA(colRGBA as Uint32) as void
+	GetRGB() as Uint32
+	GetRGBA() as Uint32
+	Set(red as unsigned_char, green as unsigned_char, blue as unsigned_char, alpha as unsigned_char = wxALPHA_OPAQUE) as void
+	//Set(RGB as unsigned_long) as void
+	//Set(str as const_String_r) as bool
+	//MakeMono(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p, on as bool):static as void
+	//MakeDisabled(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p, brightness as unsigned_char = 255):static as void
+	//MakeGrey(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p):static as void
+	//MakeGrey(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p, weight_r as double, weight_g as double, weight_b as double):static as void
+	AlphaBlend(fg as unsigned_char, bg as unsigned_char, alpha as double):static as unsigned_char
+	//ChangeLightness(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p, ialpha as int):static as void
+}
+
+@const {
+	ALPHA_OPAQUE
+	ALPHA_TRANSPARENT
+	C2S_NAME
+	C2S_CSS_SYNTAX
+	C2S_HTML_SYNTAX
 }
