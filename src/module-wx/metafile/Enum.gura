@@ -788,4 +788,9 @@
  	Uint32
 	WindowID
 	WindowVariant
+	RegionContain {
+		OutRegion
+		PartRegion
+		InRegion
+	}
 }

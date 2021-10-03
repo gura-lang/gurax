@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxRegion);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxRegion");
+protected:
+	wxRegion _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxRegion() = delete;
 	explicit Value_wxRegion(const wxRegion& entity, VType& vtype = VTYPE_wxRegion) :
-		Value_wxGDIObject(entity, vtype) {}
+		Value_wxGDIObject(entity, vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxRegion(const Value_wxRegion& src) = delete;
 	Value_wxRegion& operator=(const Value_wxRegion& src) = delete;
@@ -48,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxRegion() = default;
 public:
-	wxRegion& GetEntity() { return reinterpret_cast<wxRegion&>(Value_wxGDIObject::GetEntity()); }
-	const wxRegion& GetEntity() const { return reinterpret_cast<const wxRegion&>(Value_wxGDIObject::GetEntity()); }
-	wxRegion* GetEntityPtr() { return reinterpret_cast<wxRegion*>(Value_wxGDIObject::GetEntityPtr()); }\
-	const wxRegion* GetEntityPtr() const { return reinterpret_cast<const wxRegion*>(Value_wxGDIObject::GetEntityPtr()); }
+	wxRegion& GetEntity() { return _entity; }
+	const wxRegion& GetEntity() const { return _entity; }
+	wxRegion* GetEntityPtr() { return &_entity; }
+	const wxRegion* GetEntityPtr() const { return &_entity; }
 public:
 	static wxRegion& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxRegion&>(value).GetEntity();

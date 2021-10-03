@@ -1,5 +1,35 @@
 //==============================================================================
 // VType_wxRegion.gura
 //==============================================================================
-Region = Class(GDIObject) {
+Region = Class(GDIObject):holdEntity {
+	Clear() as void
+	ContainsXY(x as Coord, y as Coord) as RegionContain = Contains
+	ContainsPoint(pt as const_Point_r) as RegionContain = Contains
+	ContainsXYWH(x as Coord, y as Coord, width as Coord, height as Coord) as RegionContain = Contains
+	ContainsRect(rect as const_Rect_r) as RegionContain = Contains
+	ConvertToBitmap() as Bitmap
+	IntersectXYWH(x as Coord, y as Coord, width as Coord, height as Coord) as bool = Intersect
+	IntersectRect(rect as const_Rect_r) as bool = Intersect
+	Intersect(region as const_Region_r) as bool
+	IsEmpty() as bool
+	IsEqual(region as const_Region_r) as bool
+	SubtractRect(rect as const_Rect_r) as bool = Subtract
+	Subtract(region as const_Region_r) as bool
+	UnionXYWH(x as Coord, y as Coord, width as Coord, height as Coord) as bool = Union
+	UnionRect(rect as const_Rect_r) as bool = Union
+	Union(region as const_Region_r) as bool
+	UnionBitmap(bmp as const_Bitmap_r) as bool = Union
+	UnionBitmapTrans(bmp as const_Bitmap_r, transColour as const_Colour_r, tolerance as int = 0) as bool = Union
+	XorXYWH(x as Coord, y as Coord, width as Coord, height as Coord) as bool = Xor
+	XorRect(rect as const_Rect_r) as bool = Xor
+	Xor(region as const_Region_r) as bool
+	GetBoxXYWH() = \
+		R'''
+		wxCoord x, y, width, height;
+		pEntity_gurax->GetBox(x, y, width, height);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y), new Value_Number(width), new Value_Number(height));
+		'''
+	GetBoxRect() as Rect = GetBox
+	OffsetXY(x as Coord, y as Coord) as bool = Offset
+	OffsetPoint(pt as const_Point_r) as bool = Offset
 }

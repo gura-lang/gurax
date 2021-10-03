@@ -516,6 +516,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ITEM_NORMAL", new Value_Number(wxITEM_NORMAL));
 	frame.Assign("ITEM_RADIO", new Value_Number(wxITEM_RADIO));
 	frame.Assign("ITEM_SEPARATOR", new Value_Number(wxITEM_SEPARATOR));
+	frame.Assign("InRegion", new Value_Number(wxInRegion));
 	frame.Assign("JOIN_BEVEL", new Value_Number(wxJOIN_BEVEL));
 	frame.Assign("JOIN_INVALID", new Value_Number(wxJOIN_INVALID));
 	frame.Assign("JOIN_MITER", new Value_Number(wxJOIN_MITER));
@@ -621,6 +622,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ORIENTATION_MASK", new Value_Number(wxORIENTATION_MASK));
 	frame.Assign("OR_INVERT", new Value_Number(wxOR_INVERT));
 	frame.Assign("OR_REVERSE", new Value_Number(wxOR_REVERSE));
+	frame.Assign("OutRegion", new Value_Number(wxOutRegion));
 	frame.Assign("PAPER_10X11", new Value_Number(wxPAPER_10X11));
 	frame.Assign("PAPER_10X14", new Value_Number(wxPAPER_10X14));
 	frame.Assign("PAPER_11X17", new Value_Number(wxPAPER_11X17));
@@ -768,6 +770,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("PRINT_MODE_PREVIEW", new Value_Number(wxPRINT_MODE_PREVIEW));
 	frame.Assign("PRINT_MODE_PRINTER", new Value_Number(wxPRINT_MODE_PRINTER));
 	frame.Assign("PRINT_MODE_STREAM", new Value_Number(wxPRINT_MODE_STREAM));
+	frame.Assign("PartRegion", new Value_Number(wxPartRegion));
 	frame.Assign("RA_SPECIFY_COLS", new Value_Number(wxRA_SPECIFY_COLS));
 	frame.Assign("RA_SPECIFY_ROWS", new Value_Number(wxRA_SPECIFY_ROWS));
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
