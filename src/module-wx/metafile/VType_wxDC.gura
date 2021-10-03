@@ -75,6 +75,25 @@ DC = Class {
 	DrawPoint(pt as const_Point_r) as void
 	DrawPolygon(points as const_PointList_p, xoffset as Coord = 0, yoffset as Coord = 0, fill_style as PolygonFillMode = wxODDEVEN_RULE) as void
 	//DrawPolyPolygon(int n, const int count[], const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
+	DrawPolyPolygon(count[] as int, points[] as any, xoffset as Coord = 0, yoffset as Coord = 0, fill_style as PolygonFillMode = wxODDEVEN_RULE) as void = \
+		R'''
+		std::vector<wxPoint> points_;
+		points_.reserve(points.size());
+		int n = count.size();
+		if (n != points.size()) {
+			Error::Issue(ErrorType::RangeError, "count and points must have the same length.");
+			return Value::nil();
+		}
+		for (const Value* pValue : points) {
+			if (!pValue->IsType(VTYPE_wxPoint)) {
+				Error::Issue(ErrorType::TypeError, "the element must be of wx.Point.");
+				return Value::nil();
+			}
+			points_.push_back(Value_wxPoint::GetEntity(*pValue));
+		}
+		pEntity_gurax->DrawPolyPolygon(n, count.data(), points_.data(), xoffset, yoffset, fill_style);
+		return Value::nil();
+		'''
 	DrawRectangleXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = DrawRectangle
 	DrawRectangle(pt as const_Point_r, sz as const_Size_r) as void
 	DrawRectangleRect(rect as const_Rect_r) as void = DrawRectangle

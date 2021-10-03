@@ -42,6 +42,8 @@ PanelTop = class(wx.Panel) {
 		colours.Each {|colour|
 			this.Printf('%-30s%-30s%-10s\n', colour.GetAsString(), colour.GetAsString(wx.C2S_CSS_SYNTAX), colour.GetAsString(wx.C2S_HTML_SYNTAX))
 		}
+		//[r, g, b] = wx.Colour.MakeMonoRGB(255, 255, 192, false)
+		//this.Printf('%d, %d, %d\n', r, g, b)
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }

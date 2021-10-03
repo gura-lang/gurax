@@ -46,8 +46,8 @@ Colour = Class {
 	Green() as unsigned_char
 	IsOk() as bool
 	Red() as unsigned_char
-	MakeDisabled(brightness as unsigned_char = 255) as Colour
-	ChangeLightness(ialpha as int) as Colour
+	MakeDisabled(brightness as unsigned_char = 255):returnThis
+	ChangeLightness(ialpha as int):returnThis
 	SetRGB(colRGB as Uint32) as void
 	SetRGBA(colRGBA as Uint32) as void
 	GetRGB() as Uint32
@@ -56,11 +56,31 @@ Colour = Class {
 	//Set(RGB as unsigned_long) as void
 	//Set(str as const_String_r) as bool
 	//MakeMono(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p, on as bool):static as void
+	MakeMonoRGB(r as unsigned_char, g as unsigned_char, b as unsigned_char, on as bool):static = \
+		R'''
+		wxColour::MakeMono(&r, &g, &b, on);
+		return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+		'''
 	//MakeDisabled(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p, brightness as unsigned_char = 255):static as void
+	MakeDisabledRGB(r as unsigned_char, g as unsigned_char, b as unsigned_char, brightness as unsigned_char = 255):static = \
+		R'''
+		wxColour::MakeDisabled(&r, &g, &b, brightness);
+		return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+		'''
 	//MakeGrey(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p):static as void
 	//MakeGrey(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p, weight_r as double, weight_g as double, weight_b as double):static as void
+	MakeGreyRGB(r as unsigned_char, g as unsigned_char, b as unsigned_char, weight_r as double = 1., weight_g as double = 1., weight_b as double = 1.):static = \
+		R'''
+		wxColour::MakeGrey(&r, &g, &b, weight_r, weight_g, weight_b);
+		return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+		'''
 	AlphaBlend(fg as unsigned_char, bg as unsigned_char, alpha as double):static as unsigned_char
 	//ChangeLightness(r as unsigned_char_p, g as unsigned_char_p, b as unsigned_char_p, ialpha as int):static as void
+	ChangeLightnessRGB(r as unsigned_char, g as unsigned_char, b as unsigned_char, ialpha as int):static = \
+		R'''
+		wxColour::ChangeLightness(&r, &g, &b, ialpha);
+		return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+		'''
 }
 
 @const {

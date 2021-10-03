@@ -209,12 +209,11 @@ Gurax_ImplementMethodEx(wxColour, Red_gurax, processor_gurax, argument_gurax)
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Colour#MakeDisabled(brightness? as Number) {block?}
+// wx.Colour#MakeDisabled(brightness? as Number)
 Gurax_DeclareMethodAlias(wxColour, MakeDisabled_gurax, "MakeDisabled")
 {
-	Declare(VTYPE_wxColour, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -231,16 +230,15 @@ Gurax_ImplementMethodEx(wxColour, MakeDisabled_gurax, processor_gurax, argument_
 	bool brightness_validFlag = args_gurax.IsValid();
 	unsigned char brightness = brightness_validFlag? args_gurax.PickNumber<unsigned char>() : 255;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->MakeDisabled(brightness)));
+	pEntity_gurax->MakeDisabled(brightness);
+	return valueThis_gurax.Reference();
 }
 
-// wx.Colour#ChangeLightness(ialpha as Number) {block?}
+// wx.Colour#ChangeLightness(ialpha as Number)
 Gurax_DeclareMethodAlias(wxColour, ChangeLightness_gurax, "ChangeLightness")
 {
-	Declare(VTYPE_wxColour, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("ialpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -256,8 +254,8 @@ Gurax_ImplementMethodEx(wxColour, ChangeLightness_gurax, processor_gurax, argume
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	int ialpha = args_gurax.PickNumber<int>();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
-		pEntity_gurax->ChangeLightness(ialpha)));
+	pEntity_gurax->ChangeLightness(ialpha);
+	return valueThis_gurax.Reference();
 }
 
 // wx.Colour#SetRGB(colRGB as Number)
@@ -379,6 +377,92 @@ Gurax_ImplementMethodEx(wxColour, Set_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// wx.Colour.MakeMonoRGB(r as Number, g as Number, b as Number, on as Bool)
+Gurax_DeclareClassMethodAlias(wxColour, MakeMonoRGB_gurax, "MakeMonoRGB")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("on", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxColour, MakeMonoRGB_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned char r = args_gurax.PickNumber<unsigned char>();
+	unsigned char g = args_gurax.PickNumber<unsigned char>();
+	unsigned char b = args_gurax.PickNumber<unsigned char>();
+	bool on = args_gurax.PickBool();
+	// Function body
+	wxColour::MakeMono(&r, &g, &b, on);
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+}
+
+// wx.Colour.MakeDisabledRGB(r as Number, g as Number, b as Number, brightness? as Number)
+Gurax_DeclareClassMethodAlias(wxColour, MakeDisabledRGB_gurax, "MakeDisabledRGB")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxColour, MakeDisabledRGB_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned char r = args_gurax.PickNumber<unsigned char>();
+	unsigned char g = args_gurax.PickNumber<unsigned char>();
+	unsigned char b = args_gurax.PickNumber<unsigned char>();
+	bool brightness_validFlag = args_gurax.IsValid();
+	unsigned char brightness = brightness_validFlag? args_gurax.PickNumber<unsigned char>() : 255;
+	// Function body
+	wxColour::MakeDisabled(&r, &g, &b, brightness);
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+}
+
+// wx.Colour.MakeGreyRGB(r as Number, g as Number, b as Number, weight_r? as Number, weight_g? as Number, weight_b? as Number)
+Gurax_DeclareClassMethodAlias(wxColour, MakeGreyRGB_gurax, "MakeGreyRGB")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("weight_r", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("weight_g", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("weight_b", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxColour, MakeGreyRGB_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned char r = args_gurax.PickNumber<unsigned char>();
+	unsigned char g = args_gurax.PickNumber<unsigned char>();
+	unsigned char b = args_gurax.PickNumber<unsigned char>();
+	bool weight_r_validFlag = args_gurax.IsValid();
+	double weight_r = weight_r_validFlag? args_gurax.PickNumber<double>() : 1.;
+	bool weight_g_validFlag = args_gurax.IsValid();
+	double weight_g = weight_g_validFlag? args_gurax.PickNumber<double>() : 1.;
+	bool weight_b_validFlag = args_gurax.IsValid();
+	double weight_b = weight_b_validFlag? args_gurax.PickNumber<double>() : 1.;
+	// Function body
+	wxColour::MakeGrey(&r, &g, &b, weight_r, weight_g, weight_b);
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
+}
+
 // wx.Colour.AlphaBlend(fg as Number, bg as Number, alpha as Number)
 Gurax_DeclareClassMethodAlias(wxColour, AlphaBlend_gurax, "AlphaBlend")
 {
@@ -401,6 +485,32 @@ Gurax_ImplementClassMethodEx(wxColour, AlphaBlend_gurax, processor_gurax, argume
 	// Function body
 	unsigned char rtn = wxColour::AlphaBlend(fg, bg, alpha);
 	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Colour.ChangeLightnessRGB(r as Number, g as Number, b as Number, ialpha as Number)
+Gurax_DeclareClassMethodAlias(wxColour, ChangeLightnessRGB_gurax, "ChangeLightnessRGB")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ialpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxColour, ChangeLightnessRGB_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned char r = args_gurax.PickNumber<unsigned char>();
+	unsigned char g = args_gurax.PickNumber<unsigned char>();
+	unsigned char b = args_gurax.PickNumber<unsigned char>();
+	int ialpha = args_gurax.PickNumber<int>();
+	// Function body
+	wxColour::ChangeLightness(&r, &g, &b, ialpha);
+	return Value_Tuple::Create(new Value_Number(r), new Value_Number(g), new Value_Number(b));
 }
 
 //-----------------------------------------------------------------------------
@@ -432,7 +542,11 @@ void VType_wxColour::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxColour, GetRGB_gurax));
 	Assign(Gurax_CreateMethod(wxColour, GetRGBA_gurax));
 	Assign(Gurax_CreateMethod(wxColour, Set_gurax));
+	Assign(Gurax_CreateMethod(wxColour, MakeMonoRGB_gurax));
+	Assign(Gurax_CreateMethod(wxColour, MakeDisabledRGB_gurax));
+	Assign(Gurax_CreateMethod(wxColour, MakeGreyRGB_gurax));
 	Assign(Gurax_CreateMethod(wxColour, AlphaBlend_gurax));
+	Assign(Gurax_CreateMethod(wxColour, ChangeLightnessRGB_gurax));
 }
 
 //------------------------------------------------------------------------------

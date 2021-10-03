@@ -1379,6 +1379,55 @@ Gurax_ImplementMethodEx(wxDC, DrawPolygon_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
+// wx.DC#DrawPolyPolygon(count[] as Number, points[] as Any, xoffset? as Number, yoffset? as Number, fill_style? as Number)
+Gurax_DeclareMethodAlias(wxDC, DrawPolyPolygon_gurax, "DrawPolyPolygon")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("points", VTYPE_Any, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("xoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("yoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("fill_style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDC, DrawPolyPolygon_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto count = args_gurax.PickNumList<int>();
+	const Gurax::ValueList& points = args_gurax.PickList();
+	bool xoffset_validFlag = args_gurax.IsValid();
+	wxCoord xoffset = xoffset_validFlag? args_gurax.PickNumber<wxCoord>() : 0;
+	bool yoffset_validFlag = args_gurax.IsValid();
+	wxCoord yoffset = yoffset_validFlag? args_gurax.PickNumber<wxCoord>() : 0;
+	bool fill_style_validFlag = args_gurax.IsValid();
+	wxPolygonFillMode fill_style = fill_style_validFlag? args_gurax.PickNumber<wxPolygonFillMode>() : wxODDEVEN_RULE;
+	// Function body
+	std::vector<wxPoint> points_;
+	points_.reserve(points.size());
+	int n = count.size();
+	if (n != points.size()) {
+		Error::Issue(ErrorType::RangeError, "count and points must have the same length.");
+		return Value::nil();
+	}
+	for (const Value* pValue : points) {
+		if (!pValue->IsType(VTYPE_wxPoint)) {
+			Error::Issue(ErrorType::TypeError, "the element must be of wx.Point.");
+			return Value::nil();
+		}
+		points_.push_back(Value_wxPoint::GetEntity(*pValue));
+	}
+	pEntity_gurax->DrawPolyPolygon(n, count.data(), points_.data(), xoffset, yoffset, fill_style);
+	return Value::nil();
+}
+
 // wx.DC#DrawRectangleXY(x as Number, y as Number, width as Number, height as Number)
 Gurax_DeclareMethodAlias(wxDC, DrawRectangleXY_gurax, "DrawRectangleXY")
 {
@@ -3078,6 +3127,7 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, DrawPointXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawPoint_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawPolygon_gurax));
+	Assign(Gurax_CreateMethod(wxDC, DrawPolyPolygon_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRectangleXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRectangle_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRectangleRect_gurax));
