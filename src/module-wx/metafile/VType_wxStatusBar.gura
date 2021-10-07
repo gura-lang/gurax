@@ -2,5 +2,45 @@
 // VType_wxStatusBar.gura
 //==============================================================================
 StatusBar = Class(Control) {
-	__init__()
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, style as long = wxSTB_DEFAULT_STYLE, name as const_String_r = wxStatusBarNameStr)
+	Create(parent as Window_p, id as WindowID = wxID_ANY, style as long = wxSTB_DEFAULT_STYLE, name as const_String_r = wxStatusBarNameStr) as bool
+	GetFieldRect(i as int, rect as Rect_r) as bool
+	GetFieldsCount() as int
+	GetField(n as int) as StatusBarPane
+	GetBorders() as Size
+	GetStatusText(i as int = 0) as String
+	GetStatusWidth(n as int) as int
+	GetStatusStyle(n as int) as int
+	PopStatusText(field as int = 0) as void
+	PushStatusText(string as const_String_r, field as int = 0) as void
+	//SetFieldsCount(number as int = 1, widths as const_int_p = nullptr) as void
+	SetFieldsCount(widths[]? as int) as void = \
+		R'''
+		if (widths.empty()) {
+			pEntity_gurax->SetFieldsCount();
+		} else {
+			pEntity_gurax->SetFieldsCount(widths.sizeT<int>(), widths.data());
+		}
+		'''
+	SetMinHeight(height as int) as void
+	//SetStatusStyles(n as int, styles as const_int_p) as void
+	SetStatusStyles(styles[] as int) as void = \
+		R'''
+		pEntity_gurax->SetStatusStyles(styles.sizeT<int>(), styles.data());
+		'''
+	SetStatusText(text as const_String_r, i as int = 0) as void
+	//SetStatusWidths(n as int, widths_field as const_int_p) as void
+	SetStatusWidths(widths_field[] as int) as void = \
+		R'''
+		pEntity_gurax->SetStatusWidths(widths_field.sizeT<int>(), widths_field.data());
+		'''
+}
+
+@const {
+	STB_SIZEGRIP
+	STB_SHOW_TIPS
+	STB_ELLIPSIZE_START
+	STB_ELLIPSIZE_MIDDLE
+	STB_ELLIPSIZE_END
+	STB_DEFAULT_STYLE
 }

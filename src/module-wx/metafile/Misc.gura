@@ -1,3 +1,9 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+StatusBarPane = Class {
+	__init__(style as int = wxSB_NORMAL, width as int = 0)
+	GetWidth() as int
+	GetStyle() as int
+	GetText() as String
+}

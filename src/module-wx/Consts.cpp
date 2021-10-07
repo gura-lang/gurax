@@ -813,6 +813,12 @@ void AssignConsts(Frame& frame)
 	frame.Assign("SP_WRAP", new Value_Number(wxSP_WRAP));
 	frame.Assign("SRC_INVERT", new Value_Number(wxSRC_INVERT));
 	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));
+	frame.Assign("STB_DEFAULT_STYLE", new Value_Number(wxSTB_DEFAULT_STYLE));
+	frame.Assign("STB_ELLIPSIZE_END", new Value_Number(wxSTB_ELLIPSIZE_END));
+	frame.Assign("STB_ELLIPSIZE_MIDDLE", new Value_Number(wxSTB_ELLIPSIZE_MIDDLE));
+	frame.Assign("STB_ELLIPSIZE_START", new Value_Number(wxSTB_ELLIPSIZE_START));
+	frame.Assign("STB_SHOW_TIPS", new Value_Number(wxSTB_SHOW_TIPS));
+	frame.Assign("STB_SIZEGRIP", new Value_Number(wxSTB_SIZEGRIP));
 	frame.Assign("STRETCH_MASK", new Value_Number(wxSTRETCH_MASK));
 	frame.Assign("STRETCH_NOT", new Value_Number(wxSTRETCH_NOT));
 	frame.Assign("ST_ELLIPSIZE_END", new Value_Number(wxST_ELLIPSIZE_END));

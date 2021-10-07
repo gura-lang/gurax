@@ -3,7 +3,7 @@
 //==============================================================================
 BufferedDC = Class(DC) {
 	@include['wx/dcbuffer.h']
-	Unmask() as void
+	//Unmask() as void
 	SetStyle(style as int) as void
 	GetStyle() as int
 }
