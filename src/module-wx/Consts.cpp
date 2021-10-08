@@ -171,6 +171,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CLRP_USE_TEXTCTRL", new Value_Number(wxCLRP_USE_TEXTCTRL));
 	frame.Assign("COPY", new Value_Number(wxCOPY));
 	frame.Assign("DEFAULT_DIALOG_STYLE", new Value_Number(wxDEFAULT_DIALOG_STYLE));
+	frame.Assign("DEFAULT_FRAME_STYLE", new Value_Number(wxDEFAULT_FRAME_STYLE));
 	frame.Assign("DF_BITMAP", new Value_Number(wxDF_BITMAP));
 	frame.Assign("DF_FILENAME", new Value_Number(wxDF_FILENAME));
 	frame.Assign("DF_HTML", new Value_Number(wxDF_HTML));
@@ -365,6 +366,12 @@ void AssignConsts(Frame& frame)
 	frame.Assign("FONTWEIGHT_LIGHT", new Value_Number(wxFONTWEIGHT_LIGHT));
 	frame.Assign("FONTWEIGHT_MAX", new Value_Number(wxFONTWEIGHT_MAX));
 	frame.Assign("FONTWEIGHT_NORMAL", new Value_Number(wxFONTWEIGHT_NORMAL));
+	frame.Assign("FRAME_EX_CONTEXTHELP", new Value_Number(wxFRAME_EX_CONTEXTHELP));
+	frame.Assign("FRAME_EX_METAL", new Value_Number(wxFRAME_EX_METAL));
+	frame.Assign("FRAME_FLOAT_ON_PARENT", new Value_Number(wxFRAME_FLOAT_ON_PARENT));
+	frame.Assign("FRAME_NO_TASKBAR", new Value_Number(wxFRAME_NO_TASKBAR));
+	frame.Assign("FRAME_SHAPED", new Value_Number(wxFRAME_SHAPED));
+	frame.Assign("FRAME_TOOL_WINDOW", new Value_Number(wxFRAME_TOOL_WINDOW));
 	frame.Assign("FULL_REPAINT_ON_RESIZE", new Value_Number(wxFULL_REPAINT_ON_RESIZE));
 	frame.Assign("GROW", new Value_Number(wxGROW));
 	frame.Assign("HELP", new Value_Number(wxHELP));
@@ -386,6 +393,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("HT_WINDOW_INSIDE", new Value_Number(wxHT_WINDOW_INSIDE));
 	frame.Assign("HT_WINDOW_OUTSIDE", new Value_Number(wxHT_WINDOW_OUTSIDE));
 	frame.Assign("HT_WINDOW_VERT_SCROLLBAR", new Value_Number(wxHT_WINDOW_VERT_SCROLLBAR));
+	frame.Assign("ICONIZE", new Value_Number(wxICONIZE));
 	frame.Assign("ICON_AUTH_NEEDED", new Value_Number(wxICON_AUTH_NEEDED));
 	frame.Assign("ICON_ERROR", new Value_Number(wxICON_ERROR));
 	frame.Assign("ICON_EXCLAMATION", new Value_Number(wxICON_EXCLAMATION));
@@ -575,7 +583,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("Layout_Default", new Value_Number(wxLayout_Default));
 	frame.Assign("Layout_LeftToRight", new Value_Number(wxLayout_LeftToRight));
 	frame.Assign("Layout_RightToLeft", new Value_Number(wxLayout_RightToLeft));
+	frame.Assign("MAXIMIZE", new Value_Number(wxMAXIMIZE));
 	frame.Assign("MAXIMIZE_BOX", new Value_Number(wxMAXIMIZE_BOX));
+	frame.Assign("MINIMIZE", new Value_Number(wxMINIMIZE));
 	frame.Assign("MINIMIZE_BOX", new Value_Number(wxMINIMIZE_BOX));
 	frame.Assign("MM_LOMETRIC", new Value_Number(wxMM_LOMETRIC));
 	frame.Assign("MM_METRIC", new Value_Number(wxMM_METRIC));
@@ -777,6 +787,10 @@ void AssignConsts(Frame& frame)
 	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
 	frame.Assign("RETAINED", new Value_Number(wxRETAINED));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
+	frame.Assign("SB_FLAT", new Value_Number(wxSB_FLAT));
+	frame.Assign("SB_NORMAL", new Value_Number(wxSB_NORMAL));
+	frame.Assign("SB_RAISED", new Value_Number(wxSB_RAISED));
+	frame.Assign("SB_SUNKEN", new Value_Number(wxSB_SUNKEN));
 	frame.Assign("SET", new Value_Number(wxSET));
 	frame.Assign("SHAPED", new Value_Number(wxSHAPED));
 	frame.Assign("SHOW_EFFECT_BLEND", new Value_Number(wxSHOW_EFFECT_BLEND));

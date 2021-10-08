@@ -21,26 +21,36 @@ StatusBar = Class(Control) {
 		} else {
 			pEntity_gurax->SetFieldsCount(widths.sizeT<int>(), widths.data());
 		}
+		return Value::nil();
 		'''
 	SetMinHeight(height as int) as void
 	//SetStatusStyles(n as int, styles as const_int_p) as void
 	SetStatusStyles(styles[] as int) as void = \
 		R'''
 		pEntity_gurax->SetStatusStyles(styles.sizeT<int>(), styles.data());
+		return Value::nil();
 		'''
 	SetStatusText(text as const_String_r, i as int = 0) as void
 	//SetStatusWidths(n as int, widths_field as const_int_p) as void
 	SetStatusWidths(widths_field[] as int) as void = \
 		R'''
 		pEntity_gurax->SetStatusWidths(widths_field.sizeT<int>(), widths_field.data());
+		return Value::nil();
 		'''
 }
 
-@const {
+@const { // Styles
 	STB_SIZEGRIP
 	STB_SHOW_TIPS
 	STB_ELLIPSIZE_START
 	STB_ELLIPSIZE_MIDDLE
 	STB_ELLIPSIZE_END
 	STB_DEFAULT_STYLE
+}
+
+@const {
+	SB_NORMAL
+	SB_FLAT
+	SB_RAISED
+	SB_SUNKEN
 }

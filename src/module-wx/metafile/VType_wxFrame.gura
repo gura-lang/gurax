@@ -4,7 +4,52 @@
 Frame = Class(TopLevelWindow) {
 	__init__(parent:nil as Window_p, id as WindowID, title as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxDEFAULT_FRAME_STYLE, name as String = wxFrameNameStr)
-	CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as WindowID = 0, name as String = wxStatusBarNameStr) as StatusBar_p
-	SetStatusText(text as String, number as int = 0) as void
+	Centre(direction as int = wxBOTH) as void
+	Create(parent as Window_p, id as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_FRAME_STYLE, name as const_String_r = wxFrameNameStr) as bool
+	CreateStatusBar(number as int = 1, style as long = wxSTB_DEFAULT_STYLE, id as WindowID = 0, name as const_String_r = wxStatusBarNameStr) as StatusBar_p
+	CreateToolBar(style as long = wxTB_DEFAULT_STYLE, id as WindowID = wxID_ANY, name as const_String_r = wxToolBarNameStr) as ToolBar_p
+	GetClientAreaOrigin() as Point
+	GetMenuBar() as MenuBar_p
+	GetStatusBar() as StatusBar_p
+	GetStatusBarPane() as int
+	GetToolBar() as ToolBar_p
+	//OnCreateStatusBar(number as int, style as long, id as WindowID, name as const_String_r) as StatusBar_p
+	//OnCreateToolBar(style as long, id as WindowID, name as const_String_r) as ToolBar_p
+	ProcessCommand(id as int) as bool
 	SetMenuBar(menuBar as MenuBar_p) as void
+	SetStatusBar(statusBar as StatusBar_p) as void
+	SetStatusBarPane(n as int) as void
+	SetStatusText(text as const_String_r, number as int = 0) as void
+	//SetStatusWidths(n as int, widths_field as const_int_p) as void
+	SetStatusWidths(widths_field[] as int) as void = \
+		R'''
+		pEntity_gurax->SetStatusWidths(widths_field.sizeT<int>(), widths_field.data());
+		return Value::nil();
+		'''
+	SetToolBar(toolBar as ToolBar_p) as void
+	PushStatusText(text as const_String_r, number as int = 0) as void
+	PopStatusText(number as int = 0) as void
+}
+
+@const { // Styles
+	DEFAULT_FRAME_STYLE
+	ICONIZE
+	CAPTION
+	MINIMIZE
+	MINIMIZE_BOX
+	MAXIMIZE
+	MAXIMIZE_BOX
+	CLOSE_BOX
+	STAY_ON_TOP
+	SYSTEM_MENU
+	RESIZE_BORDER
+	FRAME_TOOL_WINDOW
+	FRAME_NO_TASKBAR
+	FRAME_FLOAT_ON_PARENT
+	FRAME_SHAPED
+}
+
+@const { // Extra Styles
+	FRAME_EX_CONTEXTHELP
+	FRAME_EX_METAL
 }

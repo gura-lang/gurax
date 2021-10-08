@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxStatusBarPane);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -56,6 +55,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxClientDataContainer);
 	frame.Assign(VTYPE_wxClientDC);
 	frame.Assign(VTYPE_wxClipboard);
+	frame.Assign(VTYPE_wxCloseEvent);
 	frame.Assign(VTYPE_wxCmdLineParser);
 	frame.Assign(VTYPE_wxCollapsiblePane);
 	frame.Assign(VTYPE_wxColour);
@@ -81,6 +81,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxDateTime);
 	frame.Assign(VTYPE_wxDC);
 	frame.Assign(VTYPE_wxDialog);
+	frame.Assign(VTYPE_wxDialUpEvent);
 	frame.Assign(VTYPE_wxDirDialog);
 	frame.Assign(VTYPE_wxDirFilterListCtrl);
 	frame.Assign(VTYPE_wxDirPickerCtrl);
@@ -271,6 +272,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxStaticLine);
 	frame.Assign(VTYPE_wxStaticText);
 	frame.Assign(VTYPE_wxStatusBar);
+	frame.Assign(VTYPE_wxStatusBarPane);
 	frame.Assign(VTYPE_wxStdDialogButtonSizer);
 	frame.Assign(VTYPE_wxStreamBase);
 	frame.Assign(VTYPE_wxStyledTextCtrl);

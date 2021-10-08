@@ -339,6 +339,7 @@ Gurax_ImplementMethodEx(wxStatusBar, SetFieldsCount_gurax, processor_gurax, argu
 	} else {
 		pEntity_gurax->SetFieldsCount(widths.sizeT<int>(), widths.data());
 	}
+	return Value::nil();
 }
 
 // wx.StatusBar#SetMinHeight(height as Number)
@@ -386,6 +387,7 @@ Gurax_ImplementMethodEx(wxStatusBar, SetStatusStyles_gurax, processor_gurax, arg
 	auto styles = args_gurax.PickNumList<int>();
 	// Function body
 	pEntity_gurax->SetStatusStyles(styles.sizeT<int>(), styles.data());
+	return Value::nil();
 }
 
 // wx.StatusBar#SetStatusText(text as String, i? as Number)
@@ -436,6 +438,7 @@ Gurax_ImplementMethodEx(wxStatusBar, SetStatusWidths_gurax, processor_gurax, arg
 	auto widths_field = args_gurax.PickNumList<int>();
 	// Function body
 	pEntity_gurax->SetStatusWidths(widths_field.sizeT<int>(), widths_field.data());
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------

@@ -1,0 +1,11 @@
+//==============================================================================
+// VType_wxDialUpEvent.gura
+//==============================================================================
+DialUpEvent = Class(Event) {
+	@include['wx/dialup.h']
+}
+
+@event {
+	EVT_DIALUP_CONNECTED	>> DialUpEvent
+	EVT_DIALUP_DISCONNECTED	>> DialUpEvent
+}

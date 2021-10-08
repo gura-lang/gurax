@@ -1,3 +1,10 @@
 //==============================================================================
-// Misc.gura
+// VType_wxCloseEvent.gura
 //==============================================================================
+CloseEvent = Class(Event) {
+}
+
+@event {
+	EVT_QUERY_END_SESSION	>> CloseEvent
+	EVT_QUERY_END_SESSION	>> CloseEvent
+}

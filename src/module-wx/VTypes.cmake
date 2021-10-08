@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxStatusBarPane.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -48,6 +47,7 @@ set(SRCFILES_VTYPE
 	VType_wxClientDataContainer.cpp
 	VType_wxClientDC.cpp
 	VType_wxClipboard.cpp
+	VType_wxCloseEvent.cpp
 	VType_wxCmdLineParser.cpp
 	VType_wxCollapsiblePane.cpp
 	VType_wxColour.cpp
@@ -73,6 +73,7 @@ set(SRCFILES_VTYPE
 	VType_wxDateTime.cpp
 	VType_wxDC.cpp
 	VType_wxDialog.cpp
+	VType_wxDialUpEvent.cpp
 	VType_wxDirDialog.cpp
 	VType_wxDirFilterListCtrl.cpp
 	VType_wxDirPickerCtrl.cpp
@@ -263,6 +264,7 @@ set(SRCFILES_VTYPE
 	VType_wxStaticLine.cpp
 	VType_wxStaticText.cpp
 	VType_wxStatusBar.cpp
+	VType_wxStatusBarPane.cpp
 	VType_wxStdDialogButtonSizer.cpp
 	VType_wxStreamBase.cpp
 	VType_wxStyledTextCtrl.cpp

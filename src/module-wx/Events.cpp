@@ -37,8 +37,10 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,			wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxContextMenuEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxCommandEvent);
+	Gurax_AssignEvent(EVT_DIALUP_CONNECTED,				wxDialUpEvent);
+	Gurax_AssignEvent(EVT_DIALUP_DISCONNECTED,			wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES,					wxDropFilesEvent);
 	Gurax_AssignEvent(EVT_ENTER_WINDOW,					wxMouseEvent);
 	Gurax_AssignEvent(EVT_ERASE_BACKGROUND,				wxEraseEvent);
@@ -77,6 +79,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_POWER_SUSPENDED,				wxPowerEvent);
 	Gurax_AssignEvent(EVT_POWER_SUSPENDING,				wxPowerEvent);
 	Gurax_AssignEvent(EVT_POWER_SUSPEND_CANCEL,			wxPowerEvent);
+	Gurax_AssignEvent(EVT_QUERY_END_SESSION,			wxCloseEvent);
+	Gurax_AssignEvent(EVT_QUERY_END_SESSION,			wxCloseEvent);
 	Gurax_AssignEvent(EVT_RADIOBOX,						wxCommandEvent);
 	Gurax_AssignEvent(EVT_RADIOBUTTON,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_RIGHT_DCLICK,					wxMouseEvent);
