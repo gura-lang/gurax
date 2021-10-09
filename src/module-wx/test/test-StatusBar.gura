@@ -5,15 +5,22 @@ MyApp = class(wx.App) {
 	OnInit() = {
 		Frame1(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 100)).Show()
 		Frame2(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 150), wx.Size(800, 100)).Show()
-		Frame3(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 250), wx.Size(800, 100)).Show()
-		Frame4(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 350), wx.Size(800, 100)).Show()
 		true
+	}
+}
+
+PrepareContent(parent as wx.Window, text as String) = {
+	wx.Panel(parent) {|panel|
+		vbox = wx.BoxSizer(wx.VERTICAL)
+		panel.SetSizer(vbox)
+		vbox.Add(wx.StaticText(panel, wx.ID_ANY, text), wx.SizerFlags().Centre())
 	}
 }
 
 Frame1 = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		statBar = this.CreateStatusBar(4)
+		PrepareContent(this, 'wx.Frame.SetStatusText()')
 		statBar.SetStatusStyles([wx.SB_NORMAL, wx.SB_FLAT, wx.SB_RAISED, wx.SB_SUNKEN])
 		statBar.SetStatusText('NORMAL', 0)
 		statBar.SetStatusText('FLAT', 1)
@@ -24,25 +31,9 @@ Frame1 = class(wx.Frame) {
 
 Frame2 = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
-		statBar = this.CreateStatusBar(4)
-		statBar.SetStatusStyles([wx.SB_NORMAL, wx.SB_FLAT, wx.SB_RAISED, wx.SB_SUNKEN])
-		statBar.SetStatusText('NORMAL', 0)
-		statBar.SetStatusText('FLAT', 1)
-		statBar.SetStatusText('RAISED', 2)
-		statBar.SetStatusText('SUNKEN', 3)
-	}
-}
-
-Frame3 = class(wx.Frame) {
-	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
-		statBar = this.CreateStatusBar(4)
-		statBar.SetStatusWidths([50, 80, 110, 140])
-	}
-}
-
-Frame4 = class(wx.Frame) {
-	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
-		statBar = this.CreateStatusBar(4)
+		this.CreateStatusBar(4)
+		PrepareContent(this, 'wx.Frame.SetStatusText()')
+		statBar = this.GetStatusBar()
 		statBar.SetStatusStyles([wx.SB_NORMAL, wx.SB_FLAT, wx.SB_RAISED, wx.SB_SUNKEN])
 		statBar.SetStatusText('NORMAL', 0)
 		statBar.SetStatusText('FLAT', 1)
