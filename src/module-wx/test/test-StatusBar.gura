@@ -4,7 +4,8 @@ import(wx)
 MyApp = class(wx.App) {
 	OnInit() = {
 		Frame1(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 100)).Show()
-		Frame2(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 150), wx.Size(800, 100)).Show()
+		Frame2(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50 + 100 * 1), wx.Size(800, 100)).Show()
+		Frame3(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50 + 100 * 2), wx.Size(800, 100)).Show()
 		true
 	}
 }
@@ -39,6 +40,19 @@ Frame2 = class(wx.Frame) {
 		statBar.SetStatusText('FLAT', 1)
 		statBar.SetStatusText('RAISED', 2)
 		statBar.SetStatusText('SUNKEN', 3)
+	}
+}
+
+Frame3 = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		this.CreateStatusBar(4)
+		PrepareContent(this, 'wx.Frame.SetStatusText()')
+		statBar = this.GetStatusBar()
+		statBar.SetStatusWidths([50, 100, 150, 2000])
+		statBar.SetStatusText('50', 0)
+		statBar.SetStatusText('100', 1)
+		statBar.SetStatusText('150', 2)
+		statBar.SetStatusText('200', 3)
 	}
 }
 
