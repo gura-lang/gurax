@@ -3,4 +3,38 @@
 //==============================================================================
 VListBox = Class(VScrolledWindow) {
 	@include['wx/vlbox.h']
+	//__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr) as a
+	Clear() as void
+	//Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxVListBoxNameStr) as bool
+	DeselectAll() as bool
+	//GetFirstSelected(cookie as unsigned_long_r) as int
+	GetFirstSelected(cookie as unsigned_long) as Tuple@gurax = \
+		R'''
+		int rtn = pEntity_gurax->GetFirstSelected(cookie);
+		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(cookie));
+		'''
+	GetItemCount() as size_t
+	GetMargins() as Point
+	GetItemRect(item as size_t) as Rect
+	//GetNextSelected(cookie as unsigned_long_r) as int = \
+	GetNextSelected(cookie as unsigned_long) as Tuple@gurax = \
+		R'''
+		int rtn = pEntity_gurax->GetNextSelected(cookie);
+		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(cookie));
+		'''
+	GetSelectedCount() as size_t
+	GetSelection() as int
+	GetSelectionBackground() as Colour
+	HasMultipleSelection() as bool
+	IsCurrent(item as size_t) as bool
+	IsSelected(item as size_t) as bool
+	Select(item as size_t, select as bool = true) as bool
+	SelectAll() as bool
+	SelectRange(from as size_t, to as size_t) as bool
+	SetItemCount(count as size_t) as void
+	SetSelection(selection as int) as void
+	SetSelectionBackground(col as const_Colour_r) as void
+	Toggle(item as size_t) as void
+	SetMargins(pt as const_Point_r) as void
+	SetMarginsXY(x as Coord, y as Coord) as void = SetMargins
 }
