@@ -3,4 +3,18 @@
 //==============================================================================
 HtmlListBox = Class(VListBox) {
 	@include['wx/htmllbox.h']
+	//__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxHtmlListBoxNameStr) as a
+	//Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxHtmlListBoxNameStr) as bool
+	GetFileSystem() as FileSystem
+	//OnLinkClicked(n as size_t, link as const_HtmlLinkInfo_r):virtual as void
+	//GetSelectedTextBgColour(colBg as const_Colour_r):virtual as Colour
+	//GetSelectedTextColour(colFg as const_Colour_r):virtual as Colour
+	//OnGetItemMarkup(n as size_t):virtual as String
+	//OnGetItem(n as size_t):virtual as String
+}
+
+@event {
+	EVT_HTML_CELL_CLICKED	>> HtmlLinkEvent
+	EVT_HTML_CELL_HOVER		>> HtmlLinkEvent
+	EVT_HTML_LINK_CLICKED	>> HtmlLinkEvent
 }

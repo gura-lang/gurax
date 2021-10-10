@@ -37,8 +37,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,			wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxCommandEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_DIALUP_CONNECTED,				wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DIALUP_DISCONNECTED,			wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES,					wxDropFilesEvent);
@@ -46,6 +46,9 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_ERASE_BACKGROUND,				wxEraseEvent);
 	Gurax_AssignEvent(EVT_HELP,							wxHelpEvent);
 	Gurax_AssignEvent(EVT_HIBERNATE,					wxActivateEvent);
+	Gurax_AssignEvent(EVT_HTML_CELL_CLICKED,			wxHtmlLinkEvent);
+	Gurax_AssignEvent(EVT_HTML_CELL_HOVER,				wxHtmlLinkEvent);
+	Gurax_AssignEvent(EVT_HTML_LINK_CLICKED,			wxHtmlLinkEvent);
 	Gurax_AssignEvent(EVT_IDLE,							wxIdleEvent);
 	Gurax_AssignEvent(EVT_INIT_DIALOG,					wxInitDialogEvent);
 	Gurax_AssignEvent(EVT_JOY_BUTTON_DOWN,				wxJoystickEvent);

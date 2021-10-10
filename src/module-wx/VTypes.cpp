@@ -99,6 +99,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFileCtrl);
 	frame.Assign(VTYPE_wxFileDialog);
 	frame.Assign(VTYPE_wxFilePickerCtrl);
+	frame.Assign(VTYPE_wxFileSystem);
 	frame.Assign(VTYPE_wxFindReplaceData);
 	frame.Assign(VTYPE_wxFindReplaceDialog);
 	frame.Assign(VTYPE_wxFlexGridSizer);
@@ -153,6 +154,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxHtmlHelpDialog);
 	frame.Assign(VTYPE_wxHtmlHelpFrame);
 	frame.Assign(VTYPE_wxHtmlHelpWindow);
+	frame.Assign(VTYPE_wxHtmlLinkEvent);
+	frame.Assign(VTYPE_wxHtmlLinkInfo);
 	frame.Assign(VTYPE_wxHtmlListBox);
 	frame.Assign(VTYPE_wxHVScrolledWindow);
 	frame.Assign(VTYPE_wxHyperlinkCtrl);

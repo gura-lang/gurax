@@ -91,6 +91,7 @@ set(SRCFILES_VTYPE
 	VType_wxFileCtrl.cpp
 	VType_wxFileDialog.cpp
 	VType_wxFilePickerCtrl.cpp
+	VType_wxFileSystem.cpp
 	VType_wxFindReplaceData.cpp
 	VType_wxFindReplaceDialog.cpp
 	VType_wxFlexGridSizer.cpp
@@ -145,6 +146,8 @@ set(SRCFILES_VTYPE
 	VType_wxHtmlHelpDialog.cpp
 	VType_wxHtmlHelpFrame.cpp
 	VType_wxHtmlHelpWindow.cpp
+	VType_wxHtmlLinkEvent.cpp
+	VType_wxHtmlLinkInfo.cpp
 	VType_wxHtmlListBox.cpp
 	VType_wxHVScrolledWindow.cpp
 	VType_wxHyperlinkCtrl.cpp
