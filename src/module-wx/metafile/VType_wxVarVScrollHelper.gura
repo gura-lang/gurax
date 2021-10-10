@@ -1,7 +1,7 @@
 //==============================================================================
-// VType_wxVScrolledWindow.gura
+// VType_wxVarVScrollHelper.gura
 //==============================================================================
-VScrolledWindow = Class(Panel) {
+VarVScrollHelper = Class():mixin {
 	@include['wx/vscroll.h']
-	@mixin[VarVScrollHelper]
+	@mixin[VarScrollHelperBase]
 }

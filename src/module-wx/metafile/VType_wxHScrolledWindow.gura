@@ -3,4 +3,5 @@
 //==============================================================================
 HScrolledWindow = Class(Panel) {
 	@include['wx/vscroll.h']
+	@mixin[VarHScrollHelper]
 }
