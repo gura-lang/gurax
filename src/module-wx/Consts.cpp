@@ -751,6 +751,14 @@ void AssignConsts(Frame& frame)
 	frame.Assign("PAPER_TABLOID", new Value_Number(wxPAPER_TABLOID));
 	frame.Assign("PAPER_TABLOID_EXTRA", new Value_Number(wxPAPER_TABLOID_EXTRA));
 	frame.Assign("PB_USE_TEXTCTRL", new Value_Number(wxPB_USE_TEXTCTRL));
+	frame.Assign("PD_APP_MODAL", new Value_Number(wxPD_APP_MODAL));
+	frame.Assign("PD_AUTO_HIDE", new Value_Number(wxPD_AUTO_HIDE));
+	frame.Assign("PD_CAN_ABORT", new Value_Number(wxPD_CAN_ABORT));
+	frame.Assign("PD_CAN_SKIP", new Value_Number(wxPD_CAN_SKIP));
+	frame.Assign("PD_ELAPSED_TIME", new Value_Number(wxPD_ELAPSED_TIME));
+	frame.Assign("PD_ESTIMATED_TIME", new Value_Number(wxPD_ESTIMATED_TIME));
+	frame.Assign("PD_REMAINING_TIME", new Value_Number(wxPD_REMAINING_TIME));
+	frame.Assign("PD_SMOOTH", new Value_Number(wxPD_SMOOTH));
 	frame.Assign("PENSTYLE_BDIAGONAL_HATCH", new Value_Number(wxPENSTYLE_BDIAGONAL_HATCH));
 	frame.Assign("PENSTYLE_CROSSDIAG_HATCH", new Value_Number(wxPENSTYLE_CROSSDIAG_HATCH));
 	frame.Assign("PENSTYLE_CROSS_HATCH", new Value_Number(wxPENSTYLE_CROSS_HATCH));

@@ -4,3 +4,14 @@
 GenericProgressDialog = Class(Dialog) {
 	@include['wx/progdlg.h']
 }
+
+@const {
+	PD_APP_MODAL
+	PD_AUTO_HIDE
+	PD_SMOOTH
+	PD_CAN_ABORT
+	PD_CAN_SKIP
+	PD_ELAPSED_TIME
+	PD_ESTIMATED_TIME
+	PD_REMAINING_TIME
+}

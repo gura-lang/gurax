@@ -28,6 +28,38 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.ProgressDialog(title as String, message as String, maximum? as Number, parent? as wx.Window, style? as Number) {block?} {block?}
+Gurax_DeclareConstructorAlias(ProgressDialog_gurax, "ProgressDialog")
+{
+	Declare(VTYPE_wxProgressDialog, Flag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("maximum", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.ProgressDialog.");
+}
+
+Gurax_ImplementConstructorEx(ProgressDialog_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* title = args_gurax.PickString();
+	const char* message = args_gurax.PickString();
+	bool maximum_validFlag = args_gurax.IsValid();
+	int maximum = maximum_validFlag? args_gurax.PickNumber<int>() : 100;
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
+	bool style_validFlag = args_gurax.IsValid();
+	int style = style_validFlag? args_gurax.PickNumber<int>() : (wxPD_APP_MODAL | wxPD_AUTO_HIDE);
+	// Function body
+	auto pEntity_gurax = new Value_wxProgressDialog::EntityT(title, message, maximum, parent, style);
+	RefPtr<Value_wxProgressDialog> pValue_gurax(new Value_wxProgressDialog(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -47,7 +79,7 @@ void VType_wxProgressDialog::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGenericProgressDialog, Flag::Mutable);
+	Declare(VTYPE_wxGenericProgressDialog, Flag::Mutable, Gurax_CreateConstructor(ProgressDialog_gurax));
 	// Assignment of method
 }
 

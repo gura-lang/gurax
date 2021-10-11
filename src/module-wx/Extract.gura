@@ -2,30 +2,7 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxHtmlListBox (wxWindow *parent, wxWindowID id=wxID_ANY, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0, const wxString &name=wxHtmlListBoxNameStr)
- 	Normal constructor which calls Create() internally. More...
- 
-bool 	Create (wxWindow *parent, wxWindowID id=wxID_ANY, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0, const wxString &name=wxHtmlListBoxNameStr)
- 	Creates the control and optionally sets the initial number of items in it (it may also be set or changed later with wxVListBox::SetItemCount). More...
- 
-wxFileSystem & 	GetFileSystem () const
- 	Returns the wxFileSystem used by the HTML parser of this object. More...
- 
-const wxFileSystem & 	GetFileSystem () const
-virtual void 	OnLinkClicked (size_t n, const wxHtmlLinkInfo &link)
- 	Called when the user clicks on hypertext link. More...
- 
-virtual wxColour 	GetSelectedTextBgColour (const wxColour &colBg) const
- 	This virtual function may be overridden to change the appearance of the background of the selected cells in the same way as GetSelectedTextColour(). More...
- 
-virtual wxColour 	GetSelectedTextColour (const wxColour &colFg) const
- 	This virtual function may be overridden to customize the appearance of the selected cells. More...
- 
-virtual wxString 	OnGetItemMarkup (size_t n) const
- 	This function may be overridden to decorate HTML returned by OnGetItem(). More...
- 
-virtual wxString 	OnGetItem (size_t n) const =0
- 	This method must be implemented in the derived class and should return the body (i.e. More...
+a	wxProgressDialog 	( 	const wxString &  	title, const wxString &  	message, int  	maximum = 100, wxWindow *  	parent = NULL, int  	style = wxPD_APP_MODAL|wxPD_AUTO_HIDE)
 '''
 //------------------------------------------------------------------------------
 
