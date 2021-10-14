@@ -2,8 +2,29 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a	wxProgressDialog 	( 	const wxString &  	title, const wxString &  	message, int  	maximum = 100, wxWindow *  	parent = NULL, int  	style = wxPD_APP_MODAL|wxPD_AUTO_HIDE)
-'''
+bool 	IsEarlierThan (const wxDateTime &datetime) const
+ 	Returns true if this date precedes the given one. More...
+ 
+bool 	IsEqualTo (const wxDateTime &datetime) const
+ 	Returns true if the two dates are strictly identical. More...
+ 
+bool 	IsEqualUpTo (const wxDateTime &dt, const wxTimeSpan &ts) const
+ 	Returns true if the date is equal to another one up to the given time interval, i.e. if the absolute difference between the two dates is less than this interval. More...
+ 
+bool 	IsLaterThan (const wxDateTime &datetime) const
+ 	Returns true if this date is later than the given one. More...
+ 
+bool 	IsSameDate (const wxDateTime &dt) const
+ 	Returns true if the date is the same without comparing the time parts. More...
+ 
+bool 	IsSameTime (const wxDateTime &dt) const
+ 	Returns true if the time is the same (although dates may differ). More...
+ 
+bool 	IsStrictlyBetween (const wxDateTime &t1, const wxDateTime &t2) const
+ 	Returns true if this date lies strictly between the two given dates. More...
+ 
+bool 	IsBetween (const wxDateTime &t1, const wxDateTime &t2) const
+ '''
 //------------------------------------------------------------------------------
 
 txt.EachLine {|line, iLine|
