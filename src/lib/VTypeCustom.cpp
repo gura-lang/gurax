@@ -29,10 +29,14 @@ void VTypeCustom::Inherit()
 bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, VType* pVType,
 									PropSlot::Flags flags, RefPtr<Value> pValueInit)
 {
+	if (pValueInit->IsNil()) {
+		flags |= PropSlot::Flag::Nil;
+	} else if (pValueInit->IsVType()) {
+		flags |= PropSlot::Flag::OfClass;
+	}
 	bool ofClassFlag = (flags & PropSlot::Flag::OfClass);
 	ValueOwner& valuesProp = ofClassFlag? GetValuesPropOfClass() : GetValuesPropOfInstInit();
 	size_t iProp = valuesProp.size();
-	if (pValueInit->IsNil()) flags |= PropSlot::Flag::Nil;
 	if (pVType) {
 		if (!pValueInit->IsNil()) {
 			pValueInit.reset(pVType->Cast(*pValueInit, pSymbol, flags));
