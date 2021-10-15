@@ -382,22 +382,22 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 template<bool discardValueFlag, bool initializerFlag>
 void PUnit_AssignPropSlot<discardValueFlag, initializerFlag>::Exec(Processor& processor) const
 {
-	Frame& frame = processor.GetFrameCur();
+	//Frame& frame = processor.GetFrameCur();
 	bool rtn;
 	if constexpr (!initializerFlag) {
 		VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
 				Value_VType::GetVTypeThis(processor.PeekValue(0)));
-		rtn = vtypeCustom.AssignPropSlot(frame, GetSymbol(),
+		rtn = vtypeCustom.AssignPropSlot(processor, GetSymbol(),
 				GetDottedSymbol(), GetFlags(), Value::nil());
 	} else if constexpr (discardValueFlag) {
 		VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
 				Value_VType::GetVTypeThis(processor.PeekValue(1)));
-		rtn = vtypeCustom.AssignPropSlot(frame, GetSymbol(),
+		rtn = vtypeCustom.AssignPropSlot(processor, GetSymbol(),
 				GetDottedSymbol(), GetFlags(), processor.PopValue());
 	} else {
 		VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
 				Value_VType::GetVTypeThis(processor.PeekValue(1)));
-		rtn = vtypeCustom.AssignPropSlot(frame, GetSymbol(),
+		rtn = vtypeCustom.AssignPropSlot(processor, GetSymbol(),
 				GetDottedSymbol(), GetFlags(), processor.PeekValue(0).Reference());
 	}
 	if (!rtn) {

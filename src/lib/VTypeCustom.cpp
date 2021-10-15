@@ -26,12 +26,15 @@ void VTypeCustom::Inherit()
 	}
 }
 
-bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, VType* pVType,
+bool VTypeCustom::AssignPropSlot(Processor& processor, const Symbol* pSymbol, VType* pVType,
 									PropSlot::Flags flags, RefPtr<Value> pValueInit)
 {
 	if (pValueInit->IsNil()) {
 		flags |= PropSlot::Flag::Nil;
 	} else if (pValueInit->IsVType()) {
+		//VType& vtype = Value_VType::GetVTypeThis(*pValueInit);
+		//vtype.SetFrameOuter(pFrame->Reference());
+		//vtype.PrepareForAssignment(processor, GetSymbol());
 		flags |= PropSlot::Flag::OfClass;
 	}
 	bool ofClassFlag = (flags & PropSlot::Flag::OfClass);
@@ -71,13 +74,14 @@ bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, VType* pVT
 	return true;
 }
 
-bool VTypeCustom::AssignPropSlot(Frame& frame, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
+bool VTypeCustom::AssignPropSlot(Processor& processor, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
 									PropSlot::Flags flags, RefPtr<Value> pValueInit)
 {
+	Frame& frame = processor.GetFrameCur();
 	RefPtr<Value> pValue(frame.Retrieve(dottedSymbol));
 	VType* pVType = (pValue && pValue->IsType(VTYPE_VType))?
 					&dynamic_cast<Value_VType&>(*pValue).GetVTypeThis() : nullptr;
-	return AssignPropSlot(frame, pSymbol, pVType, flags, pValueInit.release());
+	return AssignPropSlot(processor, pSymbol, pVType, flags, pValueInit.release());
 }
 
 void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymbol)
