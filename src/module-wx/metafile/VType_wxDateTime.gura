@@ -16,7 +16,7 @@ DateTime = Class {
 			Country_Unknown
 			Country_Default
 			Country_WesternEurope_Start
-			Country_EEC = Country_WesternEurope_Start
+			Country_EEC
 			France
 			Germany
 			UK

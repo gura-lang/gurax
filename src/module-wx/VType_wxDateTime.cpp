@@ -64,6 +64,49 @@ void VType_wxDateTime::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(DateTime_gurax));
+	// Assignment of constant value
+	GetFrame().Assign("Local", new Value_Number(wxDateTime::Local));
+	GetFrame().Assign("GMT_12", new Value_Number(wxDateTime::GMT_12));
+	GetFrame().Assign("GMT_11", new Value_Number(wxDateTime::GMT_11));
+	GetFrame().Assign("Gregorian", new Value_Number(wxDateTime::Gregorian));
+	GetFrame().Assign("Julian", new Value_Number(wxDateTime::Julian));
+	GetFrame().Assign("Country_Unknown", new Value_Number(wxDateTime::Country_Unknown));
+	GetFrame().Assign("Country_Default", new Value_Number(wxDateTime::Country_Default));
+	GetFrame().Assign("Country_WesternEurope_Start", new Value_Number(wxDateTime::Country_WesternEurope_Start));
+	GetFrame().Assign("Country_EEC", new Value_Number(wxDateTime::Country_EEC));
+	GetFrame().Assign("France", new Value_Number(wxDateTime::France));
+	GetFrame().Assign("Germany", new Value_Number(wxDateTime::Germany));
+	GetFrame().Assign("UK", new Value_Number(wxDateTime::UK));
+	GetFrame().Assign("Country_WesternEurope_End", new Value_Number(wxDateTime::Country_WesternEurope_End));
+	GetFrame().Assign("Russia", new Value_Number(wxDateTime::Russia));
+	GetFrame().Assign("USA", new Value_Number(wxDateTime::USA));
+	GetFrame().Assign("Jan", new Value_Number(wxDateTime::Jan));
+	GetFrame().Assign("Feb", new Value_Number(wxDateTime::Feb));
+	GetFrame().Assign("Mar", new Value_Number(wxDateTime::Mar));
+	GetFrame().Assign("Apr", new Value_Number(wxDateTime::Apr));
+	GetFrame().Assign("May", new Value_Number(wxDateTime::May));
+	GetFrame().Assign("Jun", new Value_Number(wxDateTime::Jun));
+	GetFrame().Assign("Jul", new Value_Number(wxDateTime::Jul));
+	GetFrame().Assign("Aug", new Value_Number(wxDateTime::Aug));
+	GetFrame().Assign("Sep", new Value_Number(wxDateTime::Sep));
+	GetFrame().Assign("Oct", new Value_Number(wxDateTime::Oct));
+	GetFrame().Assign("Nov", new Value_Number(wxDateTime::Nov));
+	GetFrame().Assign("Dec", new Value_Number(wxDateTime::Dec));
+	GetFrame().Assign("Inv_Month", new Value_Number(wxDateTime::Inv_Month));
+	GetFrame().Assign("Sun", new Value_Number(wxDateTime::Sun));
+	GetFrame().Assign("Mon", new Value_Number(wxDateTime::Mon));
+	GetFrame().Assign("Tue", new Value_Number(wxDateTime::Tue));
+	GetFrame().Assign("Wed", new Value_Number(wxDateTime::Wed));
+	GetFrame().Assign("Thu", new Value_Number(wxDateTime::Thu));
+	GetFrame().Assign("Fri", new Value_Number(wxDateTime::Fri));
+	GetFrame().Assign("Sat", new Value_Number(wxDateTime::Sat));
+	GetFrame().Assign("Inv_WeekDay", new Value_Number(wxDateTime::Inv_WeekDay));
+	GetFrame().Assign("Inv_Year", new Value_Number(wxDateTime::Inv_Year));
+	GetFrame().Assign("Name_Full", new Value_Number(wxDateTime::Name_Full));
+	GetFrame().Assign("Name_Abbr", new Value_Number(wxDateTime::Name_Abbr));
+	GetFrame().Assign("Default_First", new Value_Number(wxDateTime::Default_First));
+	GetFrame().Assign("Monday_First", new Value_Number(wxDateTime::Monday_First));
+	GetFrame().Assign("Sunday_First", new Value_Number(wxDateTime::Sunday_First));
 	// Assignment of method
 }
 

@@ -462,6 +462,12 @@ ${else}
 	Declare(VTYPE_Object, Flag::Mutable${if (funcInfoConstructor) {
 		Format(', Gurax_CreateConstructor(%s_gurax)', funcInfoConstructor.name) }});
 ${end}
+${if (!classInfo.constNameTbl.IsEmpty())}
+	// Assignment of constant value
+${classInfo.constNameTbl.Each {|constName|}}
+	GetFrame().Assign("${constName}", new Value_Number(wx${className}::${constName}));
+${end}
+${end}
 	// Assignment of method
 	${funcInfoTbl.Each {|funcInfo|}}
 	Assign(Gurax_CreateMethod(wx${className}, ${funcInfo.name}_gurax));
