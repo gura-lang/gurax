@@ -32,9 +32,9 @@ bool VTypeCustom::AssignPropSlot(Processor& processor, const Symbol* pSymbol, VT
 	if (pValueInit->IsNil()) {
 		flags |= PropSlot::Flag::Nil;
 	} else if (pValueInit->IsVType()) {
-		//VType& vtype = Value_VType::GetVTypeThis(*pValueInit);
-		//vtype.SetFrameOuter(pFrame->Reference());
-		//vtype.PrepareForAssignment(processor, GetSymbol());
+		VType& vtype = Value_VType::GetVTypeThis(*pValueInit);
+		vtype.SetFrameOuter(GetFrame().Reference());
+		vtype.PrepareForAssignment(processor, pSymbol);
 		flags |= PropSlot::Flag::OfClass;
 	}
 	bool ofClassFlag = (flags & PropSlot::Flag::OfClass);

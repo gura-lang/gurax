@@ -725,6 +725,8 @@ ClassInfo = class {
 	propInfoTbl[] as PropInfo = []
 	includeFiles[] as String = []
 	classNamesToMixin[] as String = []
+	enumNameTbl[] as String = []
+	constNameTbl[] as String = []
 	mixinDoneFlag as Bool = false
 	__init__(className as String, classNameParent:nil as String) = {
 		this.className = className
@@ -841,6 +843,16 @@ path.Glob('metafile/*.gura').Each {|pathName|
 						sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
 						sys.Exit(1)
 					}
+				} elsif (expr.IsCaller() && expr.car.symbolName == '@enum') {
+					params = expr.block.EachElem():list
+					params.Each {|param|
+						if (param.IsIdentifier()) {
+							classInfo.enumNameTbl.Append(param.symbolName)
+						} elsif (param.IsCaller()) {
+							classInfo.enumNameTbl.Append(param.car.symbolName)
+							classInfo.constNameTbl.Append(param.block.EachElem():*symbolName)
+						}
+					}
 				} else {
 					funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
 					if (funcInfo.name == '__init__') {
@@ -886,7 +898,6 @@ path.Glob('metafile/*.gura').Each {|pathName|
 						constNameTbl.Append(param.block.EachElem():*symbolName)
 					}
 				}
-				//enumNameTbl.Append(params:*symbolName)
 			} elsif (expr.car.symbolName == '@event') {
 				params.Each {|param|
 					if (param.IsBinaryOp()) {

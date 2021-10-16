@@ -2,6 +2,66 @@
 // VType_wxDateTime.gura
 //==============================================================================
 DateTime = Class {
+	@enum {
+		TZ {
+			Local
+			GMT_12
+			GMT_11
+		}
+		Calendar {
+			Gregorian
+			Julian
+		}
+		Country {
+			Country_Unknown
+			Country_Default
+			Country_WesternEurope_Start
+			Country_EEC = Country_WesternEurope_Start
+			France
+			Germany
+			UK
+			Country_WesternEurope_End
+			Russia
+			USA
+		}
+		Month {
+			Jan
+			Feb
+			Mar
+			Apr
+			May
+			Jun
+			Jul
+			Aug
+			Sep
+			Oct
+			Nov
+			Dec
+			Inv_Month
+		}
+		WeekDay {
+			Sun
+			Mon
+			Tue
+			Wed
+			Thu
+			Fri
+			Sat
+			Inv_WeekDay
+		}
+		Year {
+			Inv_Year
+		}
+		NameFlags {
+			Name_Full
+			Name_Abbr
+		}
+		WeekFlags {
+			Default_First
+			Monday_First
+			Sunday_First
+		}
+	}
 	__init__()
 	/*
 	// Setters

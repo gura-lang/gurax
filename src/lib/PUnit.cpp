@@ -382,7 +382,6 @@ PUnit* PUnitFactory_AssignMethod::Create(bool discardValueFlag)
 template<bool discardValueFlag, bool initializerFlag>
 void PUnit_AssignPropSlot<discardValueFlag, initializerFlag>::Exec(Processor& processor) const
 {
-	//Frame& frame = processor.GetFrameCur();
 	bool rtn;
 	if constexpr (!initializerFlag) {
 		VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(
