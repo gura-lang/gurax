@@ -76,7 +76,7 @@ DateTime = Class {
 	SetHour(hour as unsigned_short):returnThis
 	SetMillisecond(millisecond as unsigned_short):returnThis
 	SetMinute(minute as unsigned_short):returnThis
-	SetMonth(month as DateTime@Month):returnThis
+	SetMonth(month as DateTime.Month):returnThis
 	SetSecond(second as unsigned_short):returnThis
 	SetToCurrent():returnThis
 	SetYear(year as int):returnThis
@@ -100,16 +100,16 @@ DateTime = Class {
 	GetWeekOfMonth(flags as WeekFlags = Monday_First, tz as const_TimeZone_r = Local) as DateTime_t
 	GetWeekOfYear(flags as WeekFlags = Monday_First, tz as const_TimeZone_r = Local) as DateTime_t
 	GetYear(tz as const_TimeZone_r = Local) as int
+*/
 	IsValid() as bool
-	IsWorkDay(country as Country = Country_Default) as bool
+	IsWorkDay(country as DateTime.Country = wxDateTime::Country_Default) as bool
 	// Date Comparision
 	IsEarlierThan(datetime as const_DateTime_r) as bool
 	IsEqualTo(datetime as const_DateTime_r) as bool
-	IsEqualUpTo(dt as const_DateTime_r, ts as const_TimeSpan_r) as bool
+	//IsEqualUpTo(dt as const_DateTime_r, ts as const_TimeSpan_r) as bool
 	IsLaterThan(datetime as const_DateTime_r) as bool
 	IsSameDate(dt as const_DateTime_r) as bool
 	IsSameTime(dt as const_DateTime_r) as bool
 	IsStrictlyBetween(t1 as const_DateTime_r, t2 as const_DateTime_r) as bool
 	IsBetween(t1 as const_DateTime_r, t2 as const_DateTime_r) as bool
-*/
 }

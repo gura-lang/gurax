@@ -300,6 +300,232 @@ Gurax_ImplementMethodEx(wxDateTime, GetAsDOS_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Number(rtn);
 }
 
+// wx.DateTime#IsValid()
+Gurax_DeclareMethodAlias(wxDateTime, IsValid_gurax, "IsValid")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, IsValid_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsValid();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DateTime#IsWorkDay(country? as Number)
+Gurax_DeclareMethodAlias(wxDateTime, IsWorkDay_gurax, "IsWorkDay")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("country", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, IsWorkDay_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool country_validFlag = args_gurax.IsValid();
+	wxDateTime::Country country = country_validFlag? args_gurax.PickNumber<wxDateTime::Country>() : wxDateTime::Country_Default;
+	// Function body
+	bool rtn = pEntity_gurax->IsWorkDay(country);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DateTime#IsEarlierThan(datetime as wx.DateTime)
+Gurax_DeclareMethodAlias(wxDateTime, IsEarlierThan_gurax, "IsEarlierThan")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("datetime", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, IsEarlierThan_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDateTime& value_datetime = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& datetime = value_datetime.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsEarlierThan(datetime);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DateTime#IsEqualTo(datetime as wx.DateTime)
+Gurax_DeclareMethodAlias(wxDateTime, IsEqualTo_gurax, "IsEqualTo")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("datetime", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, IsEqualTo_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDateTime& value_datetime = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& datetime = value_datetime.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsEqualTo(datetime);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DateTime#IsLaterThan(datetime as wx.DateTime)
+Gurax_DeclareMethodAlias(wxDateTime, IsLaterThan_gurax, "IsLaterThan")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("datetime", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, IsLaterThan_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDateTime& value_datetime = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& datetime = value_datetime.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsLaterThan(datetime);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DateTime#IsSameDate(dt as wx.DateTime)
+Gurax_DeclareMethodAlias(wxDateTime, IsSameDate_gurax, "IsSameDate")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, IsSameDate_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDateTime& value_dt = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& dt = value_dt.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsSameDate(dt);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DateTime#IsSameTime(dt as wx.DateTime)
+Gurax_DeclareMethodAlias(wxDateTime, IsSameTime_gurax, "IsSameTime")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, IsSameTime_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDateTime& value_dt = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& dt = value_dt.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsSameTime(dt);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DateTime#IsStrictlyBetween(t1 as wx.DateTime, t2 as wx.DateTime)
+Gurax_DeclareMethodAlias(wxDateTime, IsStrictlyBetween_gurax, "IsStrictlyBetween")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("t1", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t2", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, IsStrictlyBetween_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDateTime& value_t1 = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& t1 = value_t1.GetEntity();
+	Value_wxDateTime& value_t2 = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& t2 = value_t2.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsStrictlyBetween(t1, t2);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.DateTime#IsBetween(t1 as wx.DateTime, t2 as wx.DateTime)
+Gurax_DeclareMethodAlias(wxDateTime, IsBetween_gurax, "IsBetween")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("t1", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t2", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, IsBetween_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDateTime& value_t1 = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& t1 = value_t1.GetEntity();
+	Value_wxDateTime& value_t2 = args_gurax.Pick<Value_wxDateTime>();
+	const wxDateTime& t2 = value_t2.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->IsBetween(t1, t2);
+	return new Gurax::Value_Bool(rtn);
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -370,6 +596,15 @@ void VType_wxDateTime::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDateTime, SetToCurrent_gurax));
 	Assign(Gurax_CreateMethod(wxDateTime, SetYear_gurax));
 	Assign(Gurax_CreateMethod(wxDateTime, GetAsDOS_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, IsValid_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, IsWorkDay_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, IsEarlierThan_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, IsEqualTo_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, IsLaterThan_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, IsSameDate_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, IsSameTime_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, IsStrictlyBetween_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, IsBetween_gurax));
 }
 
 //------------------------------------------------------------------------------

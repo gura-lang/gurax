@@ -146,8 +146,9 @@ CreateArgInfoTbl(r as Renderer, expr as Expr) = {
 		}
 		if (exprParam.IsBinaryOp()) {
 			if (exprParam.operator.symbol == `as) {
-				!exprParam.right.IsIdentifier() && ErrorDone('invalid format for value type')
-				typeName = exprParam.right.symbolName
+				//!exprParam.right.IsIdentifier() && ErrorDone('invalid format for value type')
+				//typeName = exprParam.right.symbolName
+				typeName = exprParam.right.__str__()
 			} else {
 				ErrorDone(exprParam, 'invalid format of parameter')
 			}

@@ -927,7 +927,7 @@ enumNameTbl.Each {|enumName|
 
 classInfoTbl.Each {|classInfo|
 	classInfo.enumNameTbl.Each {|enumName|
-		r.DeclareType_Number(classInfo.className + '@' + enumName,
+		r.DeclareType_Number(classInfo.className + '.' + enumName,
 						'wx' + classInfo.className + '::' + enumName)
 	}
 }
