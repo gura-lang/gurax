@@ -63,7 +63,6 @@ DateTime = Class {
 		}
 	}
 	__init__()
-	/*
 	// Setters
 	ResetTime():returnThis
 	//Set(timet as time_t):returnThis
@@ -77,14 +76,15 @@ DateTime = Class {
 	SetHour(hour as unsigned_short):returnThis
 	SetMillisecond(millisecond as unsigned_short):returnThis
 	SetMinute(minute as unsigned_short):returnThis
-	SetMonth(month as Month):returnThis
+	SetMonth(month as DateTime@Month):returnThis
 	SetSecond(second as unsigned_short):returnThis
 	SetToCurrent():returnThis
 	SetYear(year as int):returnThis
 	// Accessors
 	GetAsDOS() as unsigned_long
-	SetFromMSWSysTime(st as const_struct__SYSTEMTIME_r) as DateTime
-	GetAsMSWSysTime(st as struct__SYSTEMTIME_p) as void
+	//SetFromMSWSysTime(st as const_struct__SYSTEMTIME_r) as DateTime
+	//GetAsMSWSysTime(st as struct__SYSTEMTIME_p) as void
+/*
 	GetCentury(tz as const_TimeZone_r = Local) as int
 	GetDateOnly() as DateTime
 	GetDay(tz as const_TimeZone_r = Local) as unsigned_short
@@ -111,5 +111,5 @@ DateTime = Class {
 	IsSameTime(dt as const_DateTime_r) as bool
 	IsStrictlyBetween(t1 as const_DateTime_r, t2 as const_DateTime_r) as bool
 	IsBetween(t1 as const_DateTime_r, t2 as const_DateTime_r) as bool
-	*/
+*/
 }

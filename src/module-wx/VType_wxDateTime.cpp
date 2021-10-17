@@ -48,6 +48,257 @@ Gurax_ImplementConstructorEx(DateTime_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.DateTime#ResetTime()
+Gurax_DeclareMethodAlias(wxDateTime, ResetTime_gurax, "ResetTime")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, ResetTime_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->ResetTime();
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#SetDay(day as Number)
+Gurax_DeclareMethodAlias(wxDateTime, SetDay_gurax, "SetDay")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("day", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, SetDay_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned short day = args_gurax.PickNumber<unsigned short>();
+	// Function body
+	pEntity_gurax->SetDay(day);
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#SetFromDOS(ddt as Number)
+Gurax_DeclareMethodAlias(wxDateTime, SetFromDOS_gurax, "SetFromDOS")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("ddt", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, SetFromDOS_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned long ddt = args_gurax.PickNumber<unsigned long>();
+	// Function body
+	pEntity_gurax->SetFromDOS(ddt);
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#SetHour(hour as Number)
+Gurax_DeclareMethodAlias(wxDateTime, SetHour_gurax, "SetHour")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("hour", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, SetHour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned short hour = args_gurax.PickNumber<unsigned short>();
+	// Function body
+	pEntity_gurax->SetHour(hour);
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#SetMillisecond(millisecond as Number)
+Gurax_DeclareMethodAlias(wxDateTime, SetMillisecond_gurax, "SetMillisecond")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("millisecond", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, SetMillisecond_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned short millisecond = args_gurax.PickNumber<unsigned short>();
+	// Function body
+	pEntity_gurax->SetMillisecond(millisecond);
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#SetMinute(minute as Number)
+Gurax_DeclareMethodAlias(wxDateTime, SetMinute_gurax, "SetMinute")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("minute", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, SetMinute_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned short minute = args_gurax.PickNumber<unsigned short>();
+	// Function body
+	pEntity_gurax->SetMinute(minute);
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#SetMonth(month as Number)
+Gurax_DeclareMethodAlias(wxDateTime, SetMonth_gurax, "SetMonth")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("month", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, SetMonth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxDateTime::Month month = args_gurax.PickNumber<wxDateTime::Month>();
+	// Function body
+	pEntity_gurax->SetMonth(month);
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#SetSecond(second as Number)
+Gurax_DeclareMethodAlias(wxDateTime, SetSecond_gurax, "SetSecond")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("second", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, SetSecond_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned short second = args_gurax.PickNumber<unsigned short>();
+	// Function body
+	pEntity_gurax->SetSecond(second);
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#SetToCurrent()
+Gurax_DeclareMethodAlias(wxDateTime, SetToCurrent_gurax, "SetToCurrent")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, SetToCurrent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->SetToCurrent();
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#SetYear(year as Number)
+Gurax_DeclareMethodAlias(wxDateTime, SetYear_gurax, "SetYear")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("year", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, SetYear_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int year = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetYear(year);
+	return valueThis_gurax.Reference();
+}
+
+// wx.DateTime#GetAsDOS()
+Gurax_DeclareMethodAlias(wxDateTime, GetAsDOS_gurax, "GetAsDOS")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDateTime, GetAsDOS_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned long rtn = pEntity_gurax->GetAsDOS();
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -108,6 +359,17 @@ void VType_wxDateTime::DoPrepare(Frame& frameOuter)
 	GetFrame().Assign("Monday_First", new Value_Number(wxDateTime::Monday_First));
 	GetFrame().Assign("Sunday_First", new Value_Number(wxDateTime::Sunday_First));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxDateTime, ResetTime_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, SetDay_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, SetFromDOS_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, SetHour_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, SetMillisecond_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, SetMinute_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, SetMonth_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, SetSecond_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, SetToCurrent_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, SetYear_gurax));
+	Assign(Gurax_CreateMethod(wxDateTime, GetAsDOS_gurax));
 }
 
 //------------------------------------------------------------------------------

@@ -925,6 +925,13 @@ enumNameTbl.Each {|enumName|
 	r.DeclareType_Number(enumName, 'wx' + enumName)
 }
 
+classInfoTbl.Each {|classInfo|
+	classInfo.enumNameTbl.Each {|enumName|
+		r.DeclareType_Number(classInfo.className + '@' + enumName,
+						'wx' + classInfo.className + '::' + enumName)
+	}
+}
+
 tmplConstructorImplementation_Object = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
