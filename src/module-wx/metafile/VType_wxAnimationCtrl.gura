@@ -3,4 +3,29 @@
 //==============================================================================
 AnimationCtrl = Class(Control) {
 	@include['wx/animate.h']
+	__init__(parent as Window_p, id as WindowID, anim as const_Animation_r = wxNullAnimation, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxAC_DEFAULT_STYLE, name as const_String_r = wxAnimationCtrlNameStr)
+	Create(parent as Window_p, id as WindowID, anim as const_Animation_r = wxNullAnimation, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxAC_DEFAULT_STYLE, name as const_String_r = wxAnimationCtrlNameStr) as bool
+	GetAnimation() as Animation
+	GetInactiveBitmap() as Bitmap
+	IsPlaying() as bool
+	LoadFile(file as const_String_r, animType as AnimationType = wxANIMATION_TYPE_ANY) as bool
+	Load(file as InputStream_r, animType as AnimationType = wxANIMATION_TYPE_ANY) as bool
+	Play() as bool
+	SetAnimation(anim as const_Animation_r) as void
+	SetInactiveBitmap(bmp as const_Bitmap_r) as void
+	Stop() as void
+}
+
+@const {
+	AC_DEFAULT_STYLE
+	AC_NO_AUTORESIZE
+}
+
+@enum {
+	AnimationType {
+		ANIMATION_TYPE_INVALID
+		ANIMATION_TYPE_GIF
+		ANIMATION_TYPE_ANI
+		ANIMATION_TYPE_ANY
+	}
 }

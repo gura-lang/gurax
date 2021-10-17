@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(wx)
 
 void AssignConsts(Frame& frame)
 {
+	frame.Assign("AC_DEFAULT_STYLE", new Value_Number(wxAC_DEFAULT_STYLE));
+	frame.Assign("AC_NO_AUTORESIZE", new Value_Number(wxAC_NO_AUTORESIZE));
 	frame.Assign("ALIGN_BOTTOM", new Value_Number(wxALIGN_BOTTOM));
 	frame.Assign("ALIGN_CENTER", new Value_Number(wxALIGN_CENTER));
 	frame.Assign("ALIGN_CENTER_HORIZONTAL", new Value_Number(wxALIGN_CENTER_HORIZONTAL));
@@ -28,6 +30,10 @@ void AssignConsts(Frame& frame)
 	frame.Assign("AND", new Value_Number(wxAND));
 	frame.Assign("AND_INVERT", new Value_Number(wxAND_INVERT));
 	frame.Assign("AND_REVERSE", new Value_Number(wxAND_REVERSE));
+	frame.Assign("ANIMATION_TYPE_ANI", new Value_Number(wxANIMATION_TYPE_ANI));
+	frame.Assign("ANIMATION_TYPE_ANY", new Value_Number(wxANIMATION_TYPE_ANY));
+	frame.Assign("ANIMATION_TYPE_GIF", new Value_Number(wxANIMATION_TYPE_GIF));
+	frame.Assign("ANIMATION_TYPE_INVALID", new Value_Number(wxANIMATION_TYPE_INVALID));
 	frame.Assign("AUI_NB_BOTTOM", new Value_Number(wxAUI_NB_BOTTOM));
 	frame.Assign("AUI_NB_CLOSE_BUTTON", new Value_Number(wxAUI_NB_CLOSE_BUTTON));
 	frame.Assign("AUI_NB_CLOSE_ON_ACTIVE_TAB", new Value_Number(wxAUI_NB_CLOSE_ON_ACTIVE_TAB));
