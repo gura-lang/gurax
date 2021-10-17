@@ -1092,12 +1092,11 @@ Gurax_ImplementMethodEx(wxListCtrl, InReportView_gurax, processor_gurax, argumen
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ListCtrl#InsertColumn(col as Number, info as wx.ListItem)
+// wx.ListCtrl#InsertColumn(args* as Any)
 Gurax_DeclareMethodAlias(wxListCtrl, InsertColumn_gurax, "InsertColumn")
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("info", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1111,19 +1110,53 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertColumn_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	long col = args_gurax.PickNumber<long>();
-	Value_wxListItem& value_info = args_gurax.Pick<Value_wxListItem>();
-	const wxListItem& info = value_info.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	long rtn = pEntity_gurax->InsertColumn(col, info);
-	return new Gurax::Value_Number(rtn);
+	// InsertColumn(col as long, info as const_ListItem_r) as long
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("col", VTYPE_Number);
+			pDeclCallable->DeclareArg("info", VTYPE_wxListItem);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		long col = args.PickNumber<long>();
+		const wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
+		long rtn = pEntity_gurax->InsertColumn(col, info);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::Clear();
+	// InsertColumn(col as long, heading as const_String_r, format as int = wxLIST_FORMAT_LEFT, width as int = wxLIST_AUTOSIZE) as long
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("col", VTYPE_Number);
+			pDeclCallable->DeclareArg("heading", VTYPE_String);
+			pDeclCallable->DeclareArg("format", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("width", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		long col = args.PickNumber<long>();
+		const char* heading = args.PickString();
+		int format = args.IsValid()? args.PickNumber<int>() : wxLIST_FORMAT_LEFT;
+		int width = args.IsValid()? args.PickNumber<int>() : wxLIST_AUTOSIZE;
+		long rtn = pEntity_gurax->InsertColumn(col, heading, format, width);
+		return new Value_Number(rtn);
+	} while (0);
+	return Value::nil();
 }
 
-// wx.ListCtrl#InsertItem(info as wx.ListItem)
+// wx.ListCtrl#InsertItem(args* as Any)
 Gurax_DeclareMethodAlias(wxListCtrl, InsertItem_gurax, "InsertItem")
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("info", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1137,11 +1170,76 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxListItem& value_info = args_gurax.Pick<Value_wxListItem>();
-	wxListItem& info = value_info.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	long rtn = pEntity_gurax->InsertItem(info);
-	return new Gurax::Value_Number(rtn);
+	// InsertItem(info as ListItem_r) as long
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("info", VTYPE_wxListItem);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		const wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
+		long rtn = pEntity_gurax->InsertItem(info);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::Clear();
+	// InsertItem(index as long, label as const_String_r) as long
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("index", VTYPE_Number);
+			pDeclCallable->DeclareArg("info", VTYPE_wxListItem);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		long index = args.PickNumber<long>();
+		const wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
+		long rtn = pEntity_gurax->InsertItem(index, info);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::Clear();
+	// InsertItem(index as long, imageIndex as int) as long
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("index", VTYPE_Number);
+			pDeclCallable->DeclareArg("imageIndex", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		long index = args.PickNumber<long>();
+		int imageIndex = args.PickNumber<int>();
+		long rtn = pEntity_gurax->InsertItem(index, imageIndex);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::Clear();
+	// InsertItem(index as long, label as const_String_r, imageIndex as int) as long
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("index", VTYPE_Number);
+			pDeclCallable->DeclareArg("label", VTYPE_String);
+			pDeclCallable->DeclareArg("imageIndex", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		long index = args.PickNumber<long>();
+		const char* label = args.PickString();
+		int imageIndex = args.PickNumber<int>();
+		long rtn = pEntity_gurax->InsertItem(index, label, imageIndex);
+		return new Value_Number(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.ListCtrl#IsVirtual()
