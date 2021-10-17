@@ -1467,11 +1467,11 @@ Gurax_ImplementMethodEx(wxListCtrl, SetImageList_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// wx.ListCtrl#SetItem(info as wx.ListItem)
+// wx.ListCtrl#SetItem(args* as Any)
 Gurax_DeclareMethodAlias(wxListCtrl, SetItem_gurax, "SetItem")
 {
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("info", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1485,11 +1485,44 @@ Gurax_ImplementMethodEx(wxListCtrl, SetItem_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxListItem& value_info = args_gurax.Pick<Value_wxListItem>();
-	wxListItem& info = value_info.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	bool rtn = pEntity_gurax->SetItem(info);
-	return new Gurax::Value_Bool(rtn);
+	// SetItem(info as ListItem_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("info", VTYPE_wxListItem);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
+		bool rtn = pEntity_gurax->SetItem(info);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::Clear();
+	// SetItem(index as long, column as int, label as const_String_r, imageId as int = -1) as long
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("index", VTYPE_Number);
+			pDeclCallable->DeclareArg("column", VTYPE_Number);
+			pDeclCallable->DeclareArg("label", VTYPE_String);
+			pDeclCallable->DeclareArg("imageId", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		long index = args.PickNumber<long>();
+		int column = args.PickNumber<int>();
+		const char* label = args.PickString();
+		int imageId = args.IsValid()? args.PickNumber<int>() : -1;
+		long rtn = pEntity_gurax->SetItem(index, column, label, imageId);
+		return new Value_Number(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.ListCtrl#SetItemBackgroundColour(item as Number, col as wx.Colour)
