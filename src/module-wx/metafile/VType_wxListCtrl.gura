@@ -26,7 +26,7 @@ ListCtrl = Class(Control) {
 	GetColumnIndexFromOrder(pos as int) as int
 	GetColumnOrder(col as int) as int
 	GetColumnWidth(col as int) as int
-	//GetColumnsOrder() as ArrayInt
+	GetColumnsOrder() as ArrayInt
 	GetCountPerPage() as int
 	GetEditControl() as TextCtrl_p
 	GetImageList(which as int) as ImageList_p
@@ -49,6 +49,13 @@ ListCtrl = Class(Control) {
 	GetViewRect() as Rect
 	SetAlternateRowColour(colour as const_Colour_r) as void
 	//HitTest(point as const_Point_r, flags as int_r, ptrSubItem as long_p = NULL) as long
+	HitTest(point as const_Point_r) as Tuple@gurax = \
+		R'''
+		int flags;
+		long ptrSubItem;
+		long rtn = pEntity_gurax->HitTest(point, flags, &ptrSubItem);
+		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(flags), new Value_Number(ptrSubItem));
+		'''
 	InReportView() as bool
 	InsertColumn(col as long, info as const_ListItem_r) as long
 	//InsertColumn(col as long, heading as const_String_r, format as int = wxLIST_FORMAT_LEFT, width as int = wxLIST_AUTOSIZE) as long
@@ -63,7 +70,7 @@ ListCtrl = Class(Control) {
 	SetBackgroundColour(col as const_Colour_r) as bool
 	SetColumn(col as int, item as ListItem_r) as bool
 	SetColumnWidth(col as int, width as int) as bool
-	//SetColumnsOrder(orders as const_ArrayInt_r) as bool
+	SetColumnsOrder(orders as const_ArrayInt_r) as bool
 	SetImageList(imageList as ImageList_p, which as int) as void
 	SetItem(info as ListItem_r) as bool
 	//SetItem(index as long, column as int, label as const_String_r, imageId as int = -1) as long

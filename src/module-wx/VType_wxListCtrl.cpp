@@ -539,6 +539,26 @@ Gurax_ImplementMethodEx(wxListCtrl, GetColumnWidth_gurax, processor_gurax, argum
 	return new Gurax::Value_Number(rtn);
 }
 
+// wx.ListCtrl#GetColumnsOrder()
+Gurax_DeclareMethodAlias(wxListCtrl, GetColumnsOrder_gurax, "GetColumnsOrder")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, GetColumnsOrder_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxArrayInt rtn = pEntity_gurax->GetColumnsOrder();
+	return Util::CreateList(rtn);
+}
+
 // wx.ListCtrl#GetCountPerPage()
 Gurax_DeclareMethodAlias(wxListCtrl, GetCountPerPage_gurax, "GetCountPerPage")
 {
@@ -1025,6 +1045,33 @@ Gurax_ImplementMethodEx(wxListCtrl, SetAlternateRowColour_gurax, processor_gurax
 	return Gurax::Value::nil();
 }
 
+// wx.ListCtrl#HitTest(point as wx.Point)
+Gurax_DeclareMethodAlias(wxListCtrl, HitTest_gurax, "HitTest")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, HitTest_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_point = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& point = value_point.GetEntity();
+	// Function body
+	int flags;
+	long ptrSubItem;
+	long rtn = pEntity_gurax->HitTest(point, flags, &ptrSubItem);
+	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(flags), new Value_Number(ptrSubItem));
+}
+
 // wx.ListCtrl#InReportView()
 Gurax_DeclareMethodAlias(wxListCtrl, InReportView_gurax, "InReportView")
 {
@@ -1268,6 +1315,30 @@ Gurax_ImplementMethodEx(wxListCtrl, SetColumnWidth_gurax, processor_gurax, argum
 	int width = args_gurax.PickNumber<int>();
 	// Function body
 	bool rtn = pEntity_gurax->SetColumnWidth(col, width);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListCtrl#SetColumnsOrder(orders[] as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, SetColumnsOrder_gurax, "SetColumnsOrder")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("orders", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, SetColumnsOrder_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxArrayInt orders = Util::CreateArrayInt(args_gurax.PickList());
+	// Function body
+	bool rtn = pEntity_gurax->SetColumnsOrder(orders);
 	return new Gurax::Value_Bool(rtn);
 }
 
@@ -1702,6 +1773,7 @@ void VType_wxListCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxListCtrl, GetColumnIndexFromOrder_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, GetColumnOrder_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, GetColumnWidth_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, GetColumnsOrder_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, GetCountPerPage_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, GetEditControl_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, GetImageList_gurax));
@@ -1722,6 +1794,7 @@ void VType_wxListCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxListCtrl, GetTopItem_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, GetViewRect_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, SetAlternateRowColour_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, HitTest_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, InReportView_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, InsertColumn_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, InsertItem_gurax));
@@ -1732,6 +1805,7 @@ void VType_wxListCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxListCtrl, SetBackgroundColour_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, SetColumn_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, SetColumnWidth_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, SetColumnsOrder_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, SetImageList_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, SetItem_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, SetItemBackgroundColour_gurax));

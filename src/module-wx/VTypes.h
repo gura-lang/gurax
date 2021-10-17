@@ -7,12 +7,12 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxAnimation.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
 #include "VType_wxActivateEvent.h"
 #include "VType_wxAffineMatrix2D.h"
+#include "VType_wxAnimation.h"
 #include "VType_wxAnimationCtrl.h"
 #include "VType_wxAnyButton.h"
 #include "VType_wxApp.h"

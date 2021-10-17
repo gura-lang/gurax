@@ -4,12 +4,12 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxAnimation.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
 	VType_wxActivateEvent.cpp
 	VType_wxAffineMatrix2D.cpp
+	VType_wxAnimation.cpp
 	VType_wxAnimationCtrl.cpp
 	VType_wxAnyButton.cpp
 	VType_wxApp.cpp
