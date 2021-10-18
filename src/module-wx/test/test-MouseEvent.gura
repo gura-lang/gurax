@@ -19,6 +19,9 @@ PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
+		wx.StaticText(this, wx.ID_ANY, 'Move Mouse in This Window') {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
+		}
 		wx.Panel(this, wx.ID_ANY) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 			ctrl.Bind(wx.EVT_LEFT_DOWN,		this.OnMouse)

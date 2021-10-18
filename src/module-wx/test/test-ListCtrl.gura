@@ -1,0 +1,46 @@
+#!/usr/bin/env gurax
+import(wx)
+import(image)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	listCtrl as wx.TreeCtrl
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags(3).Expand())
+			wx.ListCtrl(this, wx.ID_ANY, style = wx.LC_LIST) {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
+				ctrl.AppendColumn('Column#1')
+				ctrl.AppendColumn('Column#2')
+				ctrl.AppendColumn('Column#3')
+				ctrl.AppendColumn('Column#4')
+				ctrl.InsertItem(0, 'hoge', -1)
+				ctrl.InsertItem(1, 'hoge', -1)
+				imageList = wx.ImageList(16, 16)
+				//ctrl.SetImageList(imageList);
+			}
+		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+}
+
+wx.ImplementApp(MyApp())
