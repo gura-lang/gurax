@@ -315,28 +315,30 @@ bool Iterator_DirectoryGlob::Init(const char* pattern)
 	const char* patternTop = pattern;
 	for (const char* p = pattern; ; p++) {
 		char ch = *p;
-		if (PathName::IsSep(ch)) {
+		if (PathName::IsSep(ch) || ch == '\0') {
 			patternTop = p;
 			pathName += field;
 			if (ch == '\0') break;
 			patternTop++;
 			pathName += ch;
 			field.clear();
-		} else if (ch == '\0' || PathName::IsWildCardChar(ch)) {
+		} else if (PathName::IsWildCardChar(ch)) {
 			break;
 		} else {
 			field += ch;
 		}
 	}
 	field.clear();
-	for (const char* p = patternTop; ; p++) {
-		char ch = *p;
-		if (PathName::IsSep(ch) || ch == '\0') {
-			_patternSegs.push_back(field);
-			if (ch == '\0') break;
-			field.clear();
-		} else {
-			field += ch;
+	if (*patternTop) {
+		for (const char* p = patternTop; ; p++) {
+			char ch = *p;
+			if (PathName::IsSep(ch) || ch == '\0') {
+				_patternSegs.push_back(field);
+				if (ch == '\0') break;
+				field.clear();
+			} else {
+				field += ch;
+			}
 		}
 	}
 	_pDirectoryCur.reset(PathMgr::OpenDirectory(pathName.c_str()));
@@ -345,7 +347,22 @@ bool Iterator_DirectoryGlob::Init(const char* pattern)
 
 Value* Iterator_DirectoryGlob::DoNextValue()
 {
+	if (!_pDirectoryCur) return nullptr;
 	RefPtr<Value> pValueRtn;
+	if (_patternSegs.empty()) {
+		RefPtr<Directory> pDirectoryChild(_pDirectoryCur.release());
+		if ((pDirectoryChild->IsLikeFolder() && _dirFlag) ||
+		   (!pDirectoryChild->IsLikeFolder() && _fileFlag)) {
+			if (_statFlag) {
+				pValueRtn.reset(pDirectoryChild->CreateStatValue());
+			} else {
+				pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(_addSepFlag)));
+			}
+			return pValueRtn.release();
+		} else {
+			return nullptr;
+		}
+	}
 	for (;;) {
 		RefPtr<Directory> pDirectoryChild;
 		for (;;) {
