@@ -315,14 +315,14 @@ bool Iterator_DirectoryGlob::Init(const char* pattern)
 	const char* patternTop = pattern;
 	for (const char* p = pattern; ; p++) {
 		char ch = *p;
-		if (PathName::IsSep(ch) || ch == '\0') {
+		if (PathName::IsSep(ch)) {
 			patternTop = p;
 			pathName += field;
 			if (ch == '\0') break;
 			patternTop++;
 			pathName += ch;
 			field.clear();
-		} else if (PathName::IsWildCardChar(ch)) {
+		} else if (ch == '\0' || PathName::IsWildCardChar(ch)) {
 			break;
 		} else {
 			field += ch;

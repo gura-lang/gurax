@@ -514,6 +514,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ID_ZOOM_FIT", new Value_Number(wxID_ZOOM_FIT));
 	frame.Assign("ID_ZOOM_IN", new Value_Number(wxID_ZOOM_IN));
 	frame.Assign("ID_ZOOM_OUT", new Value_Number(wxID_ZOOM_OUT));
+	frame.Assign("IMAGE_LIST_NORMAL", new Value_Number(wxIMAGE_LIST_NORMAL));
+	frame.Assign("IMAGE_LIST_SMALL", new Value_Number(wxIMAGE_LIST_SMALL));
+	frame.Assign("IMAGE_LIST_STATE", new Value_Number(wxIMAGE_LIST_STATE));
 	frame.Assign("IMAGE_QUALITY_BICUBIC", new Value_Number(wxIMAGE_QUALITY_BICUBIC));
 	frame.Assign("IMAGE_QUALITY_BILINEAR", new Value_Number(wxIMAGE_QUALITY_BILINEAR));
 	frame.Assign("IMAGE_QUALITY_BOX_AVERAGE", new Value_Number(wxIMAGE_QUALITY_BOX_AVERAGE));

@@ -251,3 +251,9 @@ ListCtrl = Class(Control) {
 	LC_HRULES
 	LC_VRULES
 }
+
+@const {
+	IMAGE_LIST_NORMAL
+	IMAGE_LIST_SMALL
+	IMAGE_LIST_STATE
+}
