@@ -2,38 +2,58 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxAnimationCtrl (wxWindow *parent, wxWindowID id, const wxAnimation &anim=wxNullAnimation, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxAC_DEFAULT_STYLE, const wxString &name=wxAnimationCtrlNameStr)
- 	Initializes the object and calls Create() with all the parameters. More...
+long 	GetCacheFrom () const
+ 	For EVT_LIST_CACHE_HINT event only: return the first item which the list control advises us to cache. More...
  
-bool 	Create (wxWindow *parent, wxWindowID id, const wxAnimation &anim=wxNullAnimation, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxAC_DEFAULT_STYLE, const wxString &name=wxAnimationCtrlNameStr)
- 	Creates the control with the given anim animation. More...
+long 	GetCacheTo () const
+ 	For EVT_LIST_CACHE_HINT event only: return the last item (inclusive) which the list control advises us to cache. More...
  
-virtual wxAnimation 	GetAnimation () const
- 	Returns the animation associated with this control. More...
+int 	GetColumn () const
+ 	The column position: it is only used with COL events. More...
  
-wxBitmap 	GetInactiveBitmap () const
- 	Returns the inactive bitmap shown in this control when the; see SetInactiveBitmap() for more info. More...
+wxUIntPtr 	GetData () const
+ 	The data. More...
  
-virtual bool 	IsPlaying () const
- 	Returns true if the animation is being played. More...
+int 	GetImage () const
+ 	The image. More...
  
-virtual bool 	LoadFile (const wxString &file, wxAnimationType animType=wxANIMATION_TYPE_ANY)
- 	Loads the animation from the given file and calls SetAnimation(). More...
+long 	GetIndex () const
+ 	The item index. More...
  
-virtual bool 	Load (wxInputStream &file, wxAnimationType animType=wxANIMATION_TYPE_ANY)
- 	Loads the animation from the given stream and calls SetAnimation(). More...
+const wxListItem & 	GetItem () const
+ 	An item object, used by some events. More...
  
-virtual bool 	Play ()
- 	Starts playing the animation. More...
+int 	GetKeyCode () const
+ 	Key code if the event is a keypress event. More...
  
-virtual void 	SetAnimation (const wxAnimation &anim)
- 	Sets the animation to play in this control. More...
+const wxString & 	GetLabel () const
+ 	The (new) item label for EVT_LIST_END_LABEL_EDIT event. More...
  
-virtual void 	SetInactiveBitmap (const wxBitmap &bmp)
- 	Sets the bitmap to show on the control when it's not playing an animation. More...
+long 	GetMask () const
+ 	The mask. More...
  
-virtual void 	Stop ()
- 	Stops playing the animation. More...
+wxPoint 	GetPoint () const
+ 	The position of the mouse pointer if the event is a drag event. More...
+ 
+const wxString & 	GetText () const
+ 	The text. More...
+ 
+bool 	IsEditCancelled () const
+ 	This method only makes sense for EVT_LIST_END_LABEL_EDIT message and returns true if it the label editing has been cancelled by the user (GetLabel() returns an empty string in this case but it doesn't allow the application to distinguish between really cancelling the edit and the admittedly rare case when the user wants to rename it to an empty string). More...
+ 
+void 	SetKeyCode (int code)
+ 
+void 	SetIndex (long index)
+ 
+void 	SetColumn (int col)
+ 
+void 	SetPoint (const wxPoint &point)
+ 
+void 	SetItem (const wxListItem &item)
+ 
+void 	SetCacheFrom (long cacheFrom)
+ 
+void 	SetCacheTo (long cacheTo)
 '''
 //------------------------------------------------------------------------------
 

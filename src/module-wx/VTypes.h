@@ -171,6 +171,7 @@
 #include "VType_wxListbook.h"
 #include "VType_wxListBox.h"
 #include "VType_wxListCtrl.h"
+#include "VType_wxListEvent.h"
 #include "VType_wxListItem.h"
 #include "VType_wxListView.h"
 #include "VType_wxMask.h"

@@ -168,6 +168,7 @@ set(SRCFILES_VTYPE
 	VType_wxListbook.cpp
 	VType_wxListBox.cpp
 	VType_wxListCtrl.cpp
+	VType_wxListEvent.cpp
 	VType_wxListItem.cpp
 	VType_wxListView.cpp
 	VType_wxMask.cpp

@@ -41,10 +41,31 @@ PanelTop = class(wx.Panel) {
 				ctrl.AppendColumn('Column#2')
 				ctrl.AppendColumn('Column#3')
 				ctrl.AppendColumn('Column#4')
-				ctrl.InsertItem(0, 'hoge', -1)
-				ctrl.SetItem(0, 1, 'foo', idx_cat16)
-				ctrl.InsertItem(1, 'hoge', -1)
-				ctrl.SetItem(1, 1, 'foo', idx_dog16)
+				ctrl.InsertItem(0, 'hoge', idx_cat16)
+				ctrl.InsertItem(1, 'hoge', idx_dog16)
+				ctrl.InsertItem(2, 'hoge', idx_monkey16)
+				ctrl.InsertItem(3, 'hoge', idx_pig16)
+				ctrl.InsertItem(4, 'hoge', idx_wolf16)
+				wx.EVT_LIST_BEGIN_DRAG(ctrl, this.OnList)
+				wx.EVT_LIST_BEGIN_RDRAG(ctrl, this.OnList)
+				wx.EVT_LIST_BEGIN_LABEL_EDIT(ctrl, this.OnList)
+				wx.EVT_LIST_END_LABEL_EDIT(ctrl, this.OnList)
+				wx.EVT_LIST_DELETE_ITEM(ctrl, this.OnList)
+				wx.EVT_LIST_DELETE_ALL_ITEMS(ctrl, this.OnList)
+				wx.EVT_LIST_ITEM_SELECTED(ctrl, this.OnList)
+				wx.EVT_LIST_ITEM_DESELECTED(ctrl, this.OnList)
+				wx.EVT_LIST_ITEM_ACTIVATED(ctrl, this.OnList)
+				wx.EVT_LIST_ITEM_FOCUSED(ctrl, this.OnList)
+				wx.EVT_LIST_ITEM_MIDDLE_CLICK(ctrl, this.OnList)
+				wx.EVT_LIST_ITEM_RIGHT_CLICK(ctrl, this.OnList)
+				wx.EVT_LIST_KEY_DOWN(ctrl, this.OnList)
+				wx.EVT_LIST_INSERT_ITEM(ctrl, this.OnList)
+				wx.EVT_LIST_COL_CLICK(ctrl, this.OnList)
+				wx.EVT_LIST_COL_RIGHT_CLICK(ctrl, this.OnList)
+				wx.EVT_LIST_COL_BEGIN_DRAG(ctrl, this.OnList)
+				wx.EVT_LIST_COL_DRAGGING(ctrl, this.OnList)
+				wx.EVT_LIST_COL_END_DRAG(ctrl, this.OnList)
+				wx.EVT_LIST_CACHE_HINT(ctrl, this.OnList)
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
@@ -52,7 +73,15 @@ PanelTop = class(wx.Panel) {
 			this.textCtrl = ctrl
 		}
 	}
+	OnList(event) = {
+		this.PrintListEvent(event)
+	}
+	PrintListEvent(event) = {
+		eventName = event.GetEventType().name
+		this.Printf('%s()\n', eventName)
+	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+
 }
 
 wx.ImplementApp(MyApp())
