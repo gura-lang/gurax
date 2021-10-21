@@ -1,0 +1,17 @@
+#!/usr/bin/env gurax
+import(argopt)
+argopt.Parser {|p|
+	p.OptString('output', 'o', 'output filename')
+	[argv, opt] = p.Parse(sys.argv)
+}
+dst = sys.cout
+if (opt['output']) {
+	dst = Stream(opt['output'], 'w')
+}
+fileNames = path.Glob(argv):list
+fileNames.Each {|fileName, idx|
+	(idx > 0) && dst.Println()
+	dst.Printf("%s = Image(b'''\n", path.BaseName(fileName))
+	base64.Encode(fileName, dst)
+	dst.Println("'''base64)")
+}

@@ -1,0 +1,48 @@
+//==============================================================================
+// VType_wxListEvent.gura
+//==============================================================================
+ListEvent = Class(NotifyEvent) {
+	GetCacheFrom() as long
+	GetCacheTo() as long
+	GetColumn() as int
+	//GetData() as UIntPtr
+	GetImage() as int
+	GetIndex() as long
+	GetItem() as ListItem
+	GetKeyCode() as int
+	GetLabel() as String
+	GetMask() as long
+	GetPoint() as Point
+	GetText() as String
+	IsEditCancelled() as bool
+	SetKeyCode(code as int) as void
+	SetIndex(index as long) as void
+	SetColumn(col as int) as void
+	SetPoint(point as const_Point_r) as void
+	SetItem(item as const_ListItem_r) as void
+	SetCacheFrom(cacheFrom as long) as void
+	SetCacheTo(cacheTo as long) as void
+}
+
+@event {
+	EVT_LIST_BEGIN_DRAG			>> ListEvent
+	EVT_LIST_BEGIN_RDRAG		>> ListEvent
+	EVT_LIST_BEGIN_LABEL_EDIT	>> ListEvent
+	EVT_LIST_END_LABEL_EDIT		>> ListEvent
+	EVT_LIST_DELETE_ITEM		>> ListEvent
+	EVT_LIST_DELETE_ALL_ITEMS	>> ListEvent
+	EVT_LIST_ITEM_SELECTED		>> ListEvent
+	EVT_LIST_ITEM_DESELECTED	>> ListEvent
+	EVT_LIST_ITEM_ACTIVATED		>> ListEvent
+	EVT_LIST_ITEM_FOCUSED		>> ListEvent
+	EVT_LIST_ITEM_MIDDLE_CLICK	>> ListEvent
+	EVT_LIST_ITEM_RIGHT_CLICK	>> ListEvent
+	EVT_LIST_KEY_DOWN			>> ListEvent
+	EVT_LIST_INSERT_ITEM		>> ListEvent
+	EVT_LIST_COL_CLICK			>> ListEvent
+	EVT_LIST_COL_RIGHT_CLICK	>> ListEvent
+	EVT_LIST_COL_BEGIN_DRAG		>> ListEvent
+	EVT_LIST_COL_DRAGGING		>> ListEvent
+	EVT_LIST_COL_END_DRAG		>> ListEvent
+	EVT_LIST_CACHE_HINT			>> ListEvent
+}
