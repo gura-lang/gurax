@@ -72,6 +72,7 @@ PanelTop = class(wx.Panel) {
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 			this.textCtrl = ctrl
 		}
+		Println(image.cat16)
 	}
 	OnList(event) = {
 		this.PrintListEvent(event)
