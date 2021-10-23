@@ -27,25 +27,25 @@ PanelTop = class(wx.Panel) {
 				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
 				imageList = wx.ImageList(16, 16)
 				ctrl.SetImageList(imageList);
-				idx_folder_image = imageList.Add(image.folder_image)
-				idx_report_picture = imageList.Add(image.report_picture)
-				ctrl.AddRoot('root', image = idx_folder_image) {|itemId|
-					ctrl.AppendItem(itemId, 'child 1', image = idx_report_picture, data = 'hello 1')
-					ctrl.AppendItem(itemId, 'child 2', image = idx_folder_image) {|itemId|
-						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = idx_report_picture)
+				idx_folder = imageList.Add(image.folder)
+				idx_page = imageList.Add(image.page)
+				ctrl.AddRoot('root', image = idx_folder) {|itemId|
+					ctrl.AppendItem(itemId, 'child 1', image = idx_page, data = 'hello 1')
+					ctrl.AppendItem(itemId, 'child 2', image = idx_folder) {|itemId|
+						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = idx_page)
 					}
-					ctrl.AppendItem(itemId, 'child 3', image = idx_report_picture)
-					ctrl.AppendItem(itemId, 'child 4', image = idx_report_picture)
-					ctrl.AppendItem(itemId, 'child 5', image = idx_folder_image) {|itemId|
-						ctrl.AppendItem(itemId, 'child 5-1', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 5-2', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 5-3', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 5-4', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 3', image = idx_page)
+					ctrl.AppendItem(itemId, 'child 4', image = idx_page)
+					ctrl.AppendItem(itemId, 'child 5', image = idx_folder) {|itemId|
+						ctrl.AppendItem(itemId, 'child 5-1', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 5-2', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 5-3', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 5-4', image = idx_page)
 					}
-					ctrl.AppendItem(itemId, 'child 6', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 6', image = idx_page)
 				}
 				this.treeCtrl = ctrl
 				wx.EVT_TREE_BEGIN_DRAG(ctrl, this.OnTree)
@@ -75,26 +75,26 @@ PanelTop = class(wx.Panel) {
 				imageList = wx.ImageList(16, 16)
 				ctrl.SetImageList(imageList);
 				ctrl.SetIndent(50)
-				idx_folder_image = imageList.Add(image.folder_image)
-				idx_report_picture = imageList.Add(image.report_picture)
-				ctrl.AddRoot('root', image = idx_folder_image) {|itemId|
-					ctrl.AppendItem(itemId, 'child 1', image = idx_report_picture, data = 'hello 1')
-					ctrl.AppendItem(itemId, 'child 2', image = idx_folder_image) {|itemId|
-						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = idx_report_picture)
+				idx_folder = imageList.Add(image.folder)
+				idx_page = imageList.Add(image.page)
+				ctrl.AddRoot('root', image = idx_folder) {|itemId|
+					ctrl.AppendItem(itemId, 'child 1', image = idx_page, data = 'hello 1')
+					ctrl.AppendItem(itemId, 'child 2', image = idx_folder) {|itemId|
+						ctrl.AppendItem(itemId, 'child 2-1', data = 'hello 2-1', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 2-2', data = 'hello 2-2', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 2-3', data = 'hello 2-3', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 2-4', data = 'hello 2-4', image = idx_page)
 					}
-					ctrl.AppendItem(itemId, 'child 3', image = idx_report_picture)
-					ctrl.AppendItem(itemId, 'child 4', image = idx_report_picture)
-					ctrl.AppendItem(itemId, 'child 5', image = idx_folder_image) {|itemId|
-						ctrl.AppendItem(itemId, 'child 5-1', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 5-2', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 5-3', image = idx_report_picture)
-						ctrl.AppendItem(itemId, 'child 5-4', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 3', image = idx_page)
+					ctrl.AppendItem(itemId, 'child 4', image = idx_page)
+					ctrl.AppendItem(itemId, 'child 5', image = idx_folder) {|itemId|
+						ctrl.AppendItem(itemId, 'child 5-1', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 5-2', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 5-3', image = idx_page)
+						ctrl.AppendItem(itemId, 'child 5-4', image = idx_page)
 						ctrl.Expand(itemId)
 					}
-					ctrl.AppendItem(itemId, 'child 6', image = idx_report_picture)
+					ctrl.AppendItem(itemId, 'child 6', image = idx_page)
 					ctrl.Expand(itemId)
 				}
 			}
