@@ -49,7 +49,7 @@ public:
 	void Assign(RefPtr<Value> pValueKey, RefPtr<Value> pValue);
 	bool Store(const ValueDict& valDict, StoreMode storeMode);
 	bool Store(const Value& valueKey, const Value& value, StoreMode storeMode);
-	Value* Lookup(const Value& valueKey) const {
+	const Value* Lookup(const Value& valueKey) const {
 		auto pPair = _map.find(const_cast<Value*>(&valueKey));
 		return (pPair == _map.end())? nullptr : pPair->second;
 	}

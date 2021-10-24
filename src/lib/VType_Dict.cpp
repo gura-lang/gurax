@@ -423,7 +423,7 @@ bool Value_Dict::DoEmptyIndexSet(RefPtr<Value> pValue)
 
 bool Value_Dict::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
-	Value* pValue = GetValueDict().Lookup(valueIndex);
+	const Value* pValue = GetValueDict().Lookup(valueIndex);
 	if (pValue) {
 		*ppValue = pValue->Reference();
 		return true;
