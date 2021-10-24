@@ -46,7 +46,7 @@ public:
 	void Clear();
 	ValueDict* Clone() const;
 	ValueDict* CloneDeep() const;
-	void Assign(Value* pValueKey, Value* pValue);
+	void Assign(RefPtr<Value> pValueKey, RefPtr<Value> pValue);
 	bool Store(const ValueDict& valDict, StoreMode storeMode);
 	bool Store(const Value& valueKey, const Value& value, StoreMode storeMode);
 	Value* Lookup(const Value& valueKey) const {

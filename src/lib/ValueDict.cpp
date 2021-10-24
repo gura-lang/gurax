@@ -41,21 +41,22 @@ ValueDict* ValueDict::CloneDeep() const
 	return pValueDict.release();
 }
 
-void ValueDict::Assign(Value* pValueKey, Value* pValue)
+void ValueDict::Assign(RefPtr<Value> pValueKey, RefPtr<Value> pValue)
 {
-	auto pPair = _map.find(pValueKey);
+	auto pPair = _map.find(pValueKey.get());
 	if (pPair == _map.end()) {
-		_map.emplace(pValueKey, pValue);
+		//_map.emplace(pValueKey.release(), pValue.release());
+		_map.insert(Map::value_type(pValueKey.release(), pValue.release()));
 	} else {
 		Value::Delete(pPair->second);
-		pPair->second = pValue;
+		pPair->second = pValue.release();
 	}
 }
 
 bool ValueDict::Store(const ValueDict& valDict, StoreMode storeMode)
 {
 	for (auto pairSrc : valDict._map) {
-		const Value *pValueKey = pairSrc.first;
+		const Value* pValueKey = pairSrc.first;
 		auto pPairDst = _map.find(const_cast<Value*>(pValueKey));
 		if (pPairDst == _map.end()) {
 			_map.insert(Map::value_type(pairSrc.first->Reference(), pairSrc.second->Reference()));
