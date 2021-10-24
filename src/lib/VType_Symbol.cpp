@@ -42,6 +42,21 @@ Gurax_ImplementPropertyGetter(Symbol, symbolName)
 	return new Value_String(valueThis.GetSymbol()->GetName());
 }
 
+// Symbol#uniqId
+Gurax_DeclareProperty_R(Symbol, uniqId)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The unique ID of the symbol.");
+}
+
+Gurax_ImplementPropertyGetter(Symbol, uniqId)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetSymbol()->GetUniqId());
+}
+
 //------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
@@ -66,6 +81,7 @@ void VType_Symbol::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Symbol, symbolName));
+	Assign(Gurax_CreateProperty(Symbol, uniqId));
 	// Implementation of operator
 	Gurax_AssignOpBinary(Eq, Symbol, Symbol);
 }
