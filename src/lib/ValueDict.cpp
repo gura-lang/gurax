@@ -22,7 +22,8 @@ ValueDict* ValueDict::Clone() const
 	RefPtr<ValueDict> pValueDict(new ValueDict());
 	pValueDict->_map.reserve(_map.size());
 	for (auto pair : _map) {
-		pValueDict->_map.emplace(pair.first->Reference(), pair.second->Reference());
+		//pValueDict->_map.emplace(pair.first->Reference(), pair.second->Reference());
+		pValueDict->_map.insert(Map::value_type(pair.first->Reference(), pair.second->Reference()));
 	}
 	return pValueDict.release();
 }
@@ -32,11 +33,12 @@ ValueDict* ValueDict::CloneDeep() const
 	RefPtr<ValueDict> pValueDict(new ValueDict());
 	pValueDict->_map.reserve(_map.size());
 	for (auto pair : _map) {
-		Value* pValueKeyCloned = pair.first->Clone();
+		RefPtr<Value> pValueKeyCloned(pair.first->Clone());
 		if (!pValueKeyCloned) return nullptr;
-		Value* pValueCloned = pair.second->Clone();
+		RefPtr<Value> pValueCloned(pair.second->Clone());
 		if (!pValueCloned) return nullptr;
-		pValueDict->_map.emplace(pValueKeyCloned, pValueCloned);
+		//pValueDict->_map.emplace(pValueKeyCloned.release(), pValueCloned.release());
+		pValueDict->_map.insert(Map::value_type(pValueKeyCloned.release(), pValueCloned.release()));
 	}
 	return pValueDict.release();
 }
