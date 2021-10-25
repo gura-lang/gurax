@@ -56,9 +56,7 @@ public:
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
-	virtual size_t DoCalcHash() const override {
-		return GetExpr().CalcHash();
-	}
+	virtual size_t DoCalcHash() const override;
 	virtual bool IsEqualTo(const Value& value) const override;
 	virtual bool IsLessThan(const Value& value) const override;
 	virtual String ToString(const StringStyle& ss) const override;

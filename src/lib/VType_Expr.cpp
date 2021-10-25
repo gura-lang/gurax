@@ -870,10 +870,21 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_Expr::vtype = VTYPE_Expr;
 
+size_t Value_Expr::DoCalcHash() const
+{
+	const Symbol* pSymbol = GetExpr().GetPureSymbol();
+	if (pSymbol) return pSymbol->CalcHash();
+	return GetExpr().CalcHash();
+}
+
 bool Value_Expr::IsEqualTo(const Value& value) const
 {
 	if (IsSameType(value)) {
-		return GetExpr().IsEqualTo(dynamic_cast<const Value_Expr&>(value).GetExpr());
+		const Value_Expr& valueEx = dynamic_cast<const Value_Expr&>(value);
+		const Symbol* pSymbol1 = GetExpr().GetPureSymbol();
+		const Symbol* pSymbol2 = valueEx.GetExpr().GetPureSymbol();
+		if (pSymbol1 && pSymbol2) return pSymbol1->IsIdentical(pSymbol2);
+		return GetExpr().IsEqualTo(valueEx.GetExpr());
 	} else if (value.IsType(VTYPE_Symbol)) {
 		return GetExpr().HasPureSymbol(dynamic_cast<const Value_Symbol&>(value).GetSymbol());
 	}
