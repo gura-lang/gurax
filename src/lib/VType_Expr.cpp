@@ -719,6 +719,23 @@ Gurax_ImplementPropertyGetter(Expr, type)
 	return new Value_Symbol(Symbol::Add(valueThis.GetExpr().GetTypeInfo().GetName()));
 }
 
+// Expr#uniqId
+Gurax_DeclareProperty_R(Expr, uniqId)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The unique ID of symbol that is associated with identifier or member.\n");
+}
+
+Gurax_ImplementPropertyGetter(Expr, uniqId)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const Symbol* pSymbol = valueThis.GetExpr().InspectSymbol();
+	if (!pSymbol) return Value::nil();
+	return new Value_Number(pSymbol->GetUniqId());
+}
+
 // Expr#value
 Gurax_DeclareProperty_R(Expr, value)
 {
@@ -837,6 +854,7 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Expr, target));
 	Assign(Gurax_CreateProperty(Expr, trailer));
 	Assign(Gurax_CreateProperty(Expr, type));
+	Assign(Gurax_CreateProperty(Expr, uniqId));
 	Assign(Gurax_CreateProperty(Expr, value));
 	// Assignment of operator
 	Gurax_AssignOpBinary(Eq, Expr, Expr);
