@@ -290,7 +290,7 @@ Iterator* ExprLink::CreateIterator() const
 //------------------------------------------------------------------------------
 // Expr_Empty
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Empty::typeInfo("Empty");
+const Expr::TypeInfo Expr_Empty::typeInfo(TypeId::Empty, "Empty");
 
 //------------------------------------------------------------------------------
 // Expr_Node
@@ -325,7 +325,7 @@ void Expr_Composite::AddExprParam(Expr* pExprParam)
 //------------------------------------------------------------------------------
 // Expr_Member
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Member::typeInfo("Member");
+const Expr::TypeInfo Expr_Member::typeInfo(TypeId::Member, "Member");
 
 void Expr_Member::Compose(Composer& composer)
 {
@@ -451,7 +451,7 @@ String Expr_Member::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Value : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Value::typeInfo("Value");
+const Expr::TypeInfo Expr_Value::typeInfo(TypeId::Value, "Value");
 
 void Expr_Value::Compose(Composer& composer)
 {
@@ -482,7 +482,7 @@ Value* Expr_Value::InspectValue() const
 //------------------------------------------------------------------------------
 // Expr_Identifier : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Identifier::typeInfo("Identifier");
+const Expr::TypeInfo Expr_Identifier::typeInfo(TypeId::Identifier, "Identifier");
 
 DeclCallable* Expr_Identifier::RetrieveDeclCallable() const
 {
@@ -590,11 +590,22 @@ String Expr_Identifier::ToString(const StringStyle& ss, const char* strInsert) c
 	return str;
 }
 
+size_t Expr_Identifier::CalcHash() const
+{
+	return GetSymbol()->CalcHash();
+}
+
 bool Expr_Identifier::IsEqualTo(const Expr& expr) const
 {
 	if (!expr.IsType<Expr_Identifier>()) return false;
-	const Expr_Identifier& exprEx = dynamic_cast<const Expr_Identifier&>(expr);
-	return GetSymbol()->IsIdentical(exprEx.GetSymbol());
+	return GetSymbol()->IsIdentical(dynamic_cast<const Expr_Identifier&>(expr).GetSymbol());
+}
+
+bool Expr_Identifier::IsLessThan(const Expr& expr) const
+{
+	return expr.IsType<Expr_Identifier>()?
+		(::strcmp(GetSymbol()->GetName(), dynamic_cast<const Expr_Identifier&>(expr).GetSymbol()->GetName()) < 0) :
+		GetTypeId() < expr.GetTypeId();
 }
 
 bool Expr_Identifier::ParseAttr(bool* pExternFlag) const
@@ -615,7 +626,7 @@ bool Expr_Identifier::ParseAttr(bool* pExternFlag) const
 //------------------------------------------------------------------------------
 // Expr_String : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_String::typeInfo("String");
+const Expr::TypeInfo Expr_String::typeInfo(TypeId::String, "String");
 
 void Expr_String::Compose(Composer& composer)
 {
@@ -645,7 +656,7 @@ String Expr_String::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Suffixed : Expr_Node
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Suffixed::typeInfo("Suffixed");
+const Expr::TypeInfo Expr_Suffixed::typeInfo(TypeId::Suffixed, "Suffixed");
 
 void Expr_Suffixed::Compose(Composer& composer)
 {
@@ -669,7 +680,7 @@ String Expr_Suffixed::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_UnaryOp : Expr_Unary
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_UnaryOp::typeInfo("UnaryOp");
+const Expr::TypeInfo Expr_UnaryOp::typeInfo(TypeId::UnaryOp, "UnaryOp");
 
 void Expr_UnaryOp::Compose(Composer& composer)
 {
@@ -751,7 +762,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_BinaryOp : Expr_Binary
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_BinaryOp::typeInfo("BinaryOp");
+const Expr::TypeInfo Expr_BinaryOp::typeInfo(TypeId::BinaryOp, "BinaryOp");
 
 void Expr_BinaryOp::Compose(Composer& composer)
 {
@@ -859,7 +870,7 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Assign : Expr_Binary
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Assign::typeInfo("Assign");
+const Expr::TypeInfo Expr_Assign::typeInfo(TypeId::Assign, "Assign");
 
 bool Expr_Assign::DoPrepare()
 {
@@ -925,7 +936,7 @@ String Expr_Assign::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Root : Expr_Collector
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Root::typeInfo("Root");
+const Expr::TypeInfo Expr_Root::typeInfo(TypeId::Root, "Root");
 
 void Expr_Root::Compose(Composer& composer)
 {
@@ -965,7 +976,7 @@ String Expr_Root::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Block : Expr_Collector
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Block::typeInfo("Block");
+const Expr::TypeInfo Expr_Block::typeInfo(TypeId::Block, "Block");
 
 bool Expr_Block::DoPrepare()
 {
@@ -1081,7 +1092,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Tuple : Expr_Collector
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Tuple::typeInfo("Tuple");
+const Expr::TypeInfo Expr_Tuple::typeInfo(TypeId::Tuple, "Tuple");
 
 void Expr_Tuple::Compose(Composer& composer)
 {
@@ -1131,7 +1142,7 @@ String Expr_Tuple::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Lister : Expr_Collector
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Lister::typeInfo("Lister");
+const Expr::TypeInfo Expr_Lister::typeInfo(TypeId::Lister, "Lister");
 
 void Expr_Lister::Compose(Composer& composer)
 {
@@ -1190,7 +1201,7 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Expr_Indexer : Expr_Compound
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Indexer::typeInfo("Indexer");
+const Expr::TypeInfo Expr_Indexer::typeInfo(TypeId::Indexer, "Indexer");
 
 void Expr_Indexer::Compose(Composer& composer)
 {
@@ -1296,7 +1307,7 @@ String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) cons
 //------------------------------------------------------------------------------
 // Expr_Caller : Expr_Compound
 //------------------------------------------------------------------------------
-const Expr::TypeInfo Expr_Caller::typeInfo("Caller");
+const Expr::TypeInfo Expr_Caller::typeInfo(TypeId::Caller, "Caller");
 
 void Expr_Caller::Compose(Composer& composer)
 {

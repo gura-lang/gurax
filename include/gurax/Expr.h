@@ -74,11 +74,33 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Expr);
 public:
+	enum class TypeId {
+		Empty,
+		Member,
+		Value,
+		Identifier,
+		String,
+		Suffixed,
+		UnaryOp,
+		BinaryOp,
+		Assign,
+		Root,
+		Block,
+		Tuple,
+		Lister,
+		Indexer,
+		Caller,
+		TmplString,
+		TmplScript,
+		Template,
+	};
 	class GURAX_DLLDECLARE TypeInfo {
 	private:
+		TypeId _typeId;
 		const char* _name;
 	public:
-		TypeInfo(const char* name) : _name(name) {}
+		TypeInfo(TypeId typeId, const char* name) : _typeId(typeId), _name(name) {}
+		TypeId GetTypeId() const { return _typeId; }
 		const char* GetName() const { return _name; }
 		bool IsIdentical(const TypeInfo& typeInfo) const { return this == &typeInfo; }
 	};
@@ -159,6 +181,7 @@ public:
 	int CalcIndentLevel() const;
 	String MakeIndent(const StringStyle& ss) const;
 	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
+	TypeId GetTypeId() const { return _typeInfo.GetTypeId(); }
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
 	template<typename T> static bool IsType(const Expr* pExpr) { return pExpr && pExpr->IsType<T>(); }
 	bool Prepare();
@@ -214,10 +237,11 @@ public:
 	virtual Iterator* EachParam() const;
 	virtual Iterator* EachElem() const;
 public:
-	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Expr& expr) const { return this == &expr; }
+	virtual size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	virtual bool IsEqualTo(const Expr& expr) const { return IsIdentical(expr); }
-	bool IsLessThan(const Expr& expr) const { return this < &expr; }
+	virtual bool IsLessThan(const Expr& expr) const { return this < &expr; }
+public:
+	bool IsIdentical(const Expr& expr) const { return this == &expr; }
 	String ToString() const { return ToString(StringStyle::Empty); }
 	virtual String ToString(const StringStyle& ss) const = 0;
 };
@@ -583,7 +607,10 @@ public:
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
+public:
+	virtual size_t CalcHash() const override;
 	virtual bool IsEqualTo(const Expr& expr) const override;
+	virtual bool IsLessThan(const Expr& expr) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual const Symbol* InspectSymbol() const override { return _pSymbol; }

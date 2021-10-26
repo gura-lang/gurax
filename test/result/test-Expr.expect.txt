@@ -52,6 +52,7 @@ Expr
   #target           Expr         R
   #trailer          Expr         R
   #type             Symbol       R
+  #uniqId           Number       R
   #value            Any          R
 ======== Assignment ========
 {[x] = [], [x]} .. insufficient number of values
