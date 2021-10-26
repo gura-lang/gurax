@@ -48,6 +48,7 @@ Gurax_DeclareSymbol(ascend);
 Gurax_DeclareSymbol(ascii);
 Gurax_DeclareSymbol(asctime);
 Gurax_DeclareSymbol(asSource);
+Gurax_DeclareSymbol(assign);
 Gurax_DeclareSymbol(asValue);
 Gurax_DeclareSymbol(at_bool);
 Gurax_DeclareSymbol(at_int8);

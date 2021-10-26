@@ -46,6 +46,7 @@ Gurax_RealizeSymbol(ascend);
 Gurax_RealizeSymbol(ascii);
 Gurax_RealizeSymbol(asctime);
 Gurax_RealizeSymbol(asSource);
+Gurax_RealizeSymbol(asssign);
 Gurax_RealizeSymbol(asValue);
 Gurax_RealizeSymbolAlias(at_bool, "@bool");
 Gurax_RealizeSymbolAlias(at_int8, "@int8");

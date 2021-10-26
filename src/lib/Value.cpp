@@ -235,6 +235,11 @@ bool Value::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Att
 		}
 		return pPropSlot->SetValue(*this, *pValue, attr);
 	}
+	//if (attr.IsSet(Gurax_Symbol(assign))) {
+	//	RefPtr<PropSlot> pPropSlot(new PropSlot(pSymbol, PropSlot::Flag::Readable | PropSlot::Flag::Writable));
+	//	vtype.Assign(pPropSlot.Reference());
+	//	return pPropSlot->SetValue(*this, *pValue, attr);
+	//}
 	Error::Issue(ErrorType::PropertyError,
 				 "value type '%s' doesn't have a property '%s'",
 				 vtype.MakeFullName().c_str(), pSymbol->GetName());
