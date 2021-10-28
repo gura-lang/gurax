@@ -68,10 +68,9 @@ PanelTop = class(wx.Panel) {
 	}
 	PrintListEvent(event) = {
 		eventName = event.GetEventType().name
-		this.Printf('%s()\n', eventName)
+		this.Printf('%s(index=%d label="%s")\n', eventName, event.GetIndex(), event.GetLabel())
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
-
 }
 
 wx.ImplementApp(MyApp())
