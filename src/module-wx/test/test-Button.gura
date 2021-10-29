@@ -3,7 +3,7 @@ import(wx)
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(1200, 600)).Show()
 		true
 	}
 }
@@ -20,120 +20,187 @@ PanelTop = class(wx.Panel) {
 		this.SetBackgroundColour(wx.Colour(0, 128, 0))
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		wx.GridSizer(4) {|sizer|
-			sizerTop.Add(sizer, wx.SizerFlags(1).Expand())
-			sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
-			wx.Button(this, wx.ID_ANY, '(no flag)') {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
+		wx.GridSizer(2) {|sizerOuter|
+			sizerTop.Add(sizerOuter, wx.SizerFlags(3).Expand())
+			wx.GridSizer(4) {|sizer|
+				sizerOuter.Add(sizer, wx.SizerFlags(1).Expand())
+				sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
+				wx.Button(this, wx.ID_ANY, '(no flag)') {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_TOP | BU_LEFT', style = wx.BU_TOP | wx.BU_LEFT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_TOP', style = wx.BU_TOP) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_TOP | BU_RIGHT', style = wx.BU_TOP | wx.BU_RIGHT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_LEFT', style = wx.BU_LEFT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_RIGHT', style = wx.BU_RIGHT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_BOTTOM | BU_LEFT', style = wx.BU_BOTTOM | wx.BU_LEFT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_BOTTOM', style = wx.BU_BOTTOM) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_BOTTOM | BU_RIGHT', style = wx.BU_BOTTOM | wx.BU_RIGHT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_EXACTFIT', style = wx.BU_EXACTFIT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BU_NOTEXT', style = wx.BU_NOTEXT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
+				wx.Button(this, wx.ID_ANY, 'BORDER_NONE', style = wx.BORDER_NONE) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					wx.EVT_BUTTON(ctrl, this.OnButton)
+				}
 			}
-			wx.Button(this, wx.ID_ANY, 'BU_TOP | BU_LEFT', style = wx.BU_TOP | wx.BU_LEFT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
+			wx.GridSizer(4) {|sizer|
+				sizerOuter.Add(sizer, wx.SizerFlags(1).Expand())
+				sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
+				wx.RadioButton(this, wx.ID_ANY, '(no flag)') {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_TOP | BU_LEFT', style = wx.BU_TOP | wx.BU_LEFT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_TOP', style = wx.BU_TOP) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_TOP | BU_RIGHT', style = wx.BU_TOP | wx.BU_RIGHT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_LEFT', style = wx.BU_LEFT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_RIGHT', style = wx.BU_RIGHT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM | BU_LEFT', style = wx.BU_BOTTOM | wx.BU_LEFT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM', style = wx.BU_BOTTOM) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM | BU_RIGHT', style = wx.BU_BOTTOM | wx.BU_RIGHT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_EXACTFIT', style = wx.BU_EXACTFIT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BU_NOTEXT', style = wx.BU_NOTEXT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'BORDER_NONE', style = wx.BORDER_NONE) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+				}
 			}
-			wx.Button(this, wx.ID_ANY, 'BU_TOP', style = wx.BU_TOP) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-			wx.Button(this, wx.ID_ANY, 'BU_TOP | BU_RIGHT', style = wx.BU_TOP | wx.BU_RIGHT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-			wx.Button(this, wx.ID_ANY, 'BU_LEFT', style = wx.BU_LEFT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-			wx.Button(this, wx.ID_ANY, 'BU_RIGHT', style = wx.BU_RIGHT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-			wx.Button(this, wx.ID_ANY, 'BU_BOTTOM | BU_LEFT', style = wx.BU_BOTTOM | wx.BU_LEFT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-			wx.Button(this, wx.ID_ANY, 'BU_BOTTOM', style = wx.BU_BOTTOM) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-			wx.Button(this, wx.ID_ANY, 'BU_BOTTOM | BU_RIGHT', style = wx.BU_BOTTOM | wx.BU_RIGHT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-			wx.Button(this, wx.ID_ANY, 'BU_EXACTFIT', style = wx.BU_EXACTFIT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-			wx.Button(this, wx.ID_ANY, 'BU_NOTEXT', style = wx.BU_NOTEXT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-			wx.Button(this, wx.ID_ANY, 'BORDER_NONE', style = wx.BORDER_NONE) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				wx.EVT_BUTTON(ctrl, this.OnButton)
-			}
-		}
-		wx.GridSizer(4) {|sizer|
-			sizerTop.Add(sizer, wx.SizerFlags(1).Expand())
-			sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
-			wx.RadioButton(this, wx.ID_ANY, '(no flag)') {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_TOP | BU_LEFT', style = wx.BU_TOP | wx.BU_LEFT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_TOP', style = wx.BU_TOP) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_TOP | BU_RIGHT', style = wx.BU_TOP | wx.BU_RIGHT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_LEFT', style = wx.BU_LEFT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_RIGHT', style = wx.BU_RIGHT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM | BU_LEFT', style = wx.BU_BOTTOM | wx.BU_LEFT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM', style = wx.BU_BOTTOM) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_BOTTOM | BU_RIGHT', style = wx.BU_BOTTOM | wx.BU_RIGHT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_EXACTFIT', style = wx.BU_EXACTFIT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BU_NOTEXT', style = wx.BU_NOTEXT) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
-			}
-			wx.RadioButton(this, wx.ID_ANY, 'BORDER_NONE', style = wx.BORDER_NONE) {|ctrl|
-				sizer.Add(ctrl, sizerFlags)
-				ctrl.SetBackgroundColour(wx.WHITE)
-				wx.EVT_RADIOBUTTON(ctrl, this.OnButton)
+			wx.GridSizer(4) {|sizer|
+				sizerOuter.Add(sizer, wx.SizerFlags(1).Expand())
+				sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
+				wx.CheckBox(this, wx.ID_ANY, '(no flag)') {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_TOP | BU_LEFT', style = wx.BU_TOP | wx.BU_LEFT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_TOP', style = wx.BU_TOP) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_TOP | BU_RIGHT', style = wx.BU_TOP | wx.BU_RIGHT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_LEFT', style = wx.BU_LEFT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_RIGHT', style = wx.BU_RIGHT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_BOTTOM | BU_LEFT', style = wx.BU_BOTTOM | wx.BU_LEFT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_BOTTOM', style = wx.BU_BOTTOM) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_BOTTOM | BU_RIGHT', style = wx.BU_BOTTOM | wx.BU_RIGHT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_EXACTFIT', style = wx.BU_EXACTFIT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BU_NOTEXT', style = wx.BU_NOTEXT) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
+				wx.CheckBox(this, wx.ID_ANY, 'BORDER_NONE', style = wx.BORDER_NONE) {|ctrl|
+					sizer.Add(ctrl, sizerFlags)
+					ctrl.SetBackgroundColour(wx.WHITE)
+					wx.EVT_CHECKBOX(ctrl, this.OnButton)
+				}
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
@@ -143,7 +210,7 @@ PanelTop = class(wx.Panel) {
 	}
 	OnButton(event) = {
 		eventName = event.GetEventType().name
-		this.Printf('%s\n', eventName)
+		this.Printf('%s(%s)\n', eventName, event.IsChecked())
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
