@@ -16,39 +16,56 @@ MyFrame = class(wx.Frame) {
 }
 
 PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		this.SetBackgroundColour(wx.Colour(0, 128, 0))
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.GridSizer(4) {|sizer|
-			sizerTop.Add(sizer, wx.SizerFlags(1).Expand())
+			sizerTop.Add(sizer, wx.SizerFlags(5).Expand())
 			sizerFlags = wx.SizerFlags().Expand().Border(wx.ALL, 4)
 			wx.BitmapButton(this, wx.ID_ANY, image.cat512.Resize(96, 96)) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton, 'cat')
 			}
 			wx.BitmapButton(this, wx.ID_ANY, image.dragon512.Resize(96, 96)) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton, 'dragon')
 			}
 			wx.BitmapButton(this, wx.ID_ANY, image.hen512.Resize(96, 96)) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton, 'hen')
 			}
 			wx.BitmapButton(this, wx.ID_ANY, image.lion512.Resize(96, 96)) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton, 'lion')
 			}
 			wx.BitmapButton(this, wx.ID_ANY, image.octopus512.Resize(96, 96)) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton, 'octopus')
 			}
 			wx.BitmapButton(this, wx.ID_ANY, image.penguin512.Resize(96, 96)) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton, 'penguin')
 			}
 			wx.BitmapButton(this, wx.ID_ANY, image.whale512.Resize(96, 96)) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton, 'whale')
 			}
 			wx.BitmapButton(this, wx.ID_ANY, image.wild_boar512.Resize(96, 96)) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags(1).Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton, 'wild_boar')
 			}
 		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
 	}
+	OnButton(event as wx.CommandEvent) = {
+		this.Printf('OnButton(%s)\n', event.GetEventUserData())
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
 
 wx.ImplementApp(MyApp())
