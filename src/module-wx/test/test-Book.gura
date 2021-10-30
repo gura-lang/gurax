@@ -21,6 +21,7 @@ PanelTop = class(wx.Panel) {
 	simplebook as wx.SimpleBook
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		[imageList, indices] = image.InitImageList()
 		this.SetSizer(sizerTop)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 			sizerTop.Add(hbox, wx.SizerFlags(4).Expand())
@@ -29,6 +30,7 @@ PanelTop = class(wx.Panel) {
 				vbox.Add(wx.StaticText(this, wx.ID_ANY, 'Notebook'), wx.SizerFlags().Expand())
 				wx.Notebook(this, wx.ID_ANY) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand())
+					book.SetImageList(imageList)
 					this.SetupPages(book)
 					book.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, this.OnBook, book)
 					book.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGING, this.OnBook, book)
@@ -79,13 +81,7 @@ PanelTop = class(wx.Panel) {
 				vbox.Add(wx.StaticText(this, wx.ID_ANY, 'Toolbook'), wx.SizerFlags().Expand())
 				wx.Toolbook(this, wx.ID_ANY) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand())
-					imageList = wx.ImageList(16, 16)
 					book.SetImageList(imageList);
-					imageList.Add(image.folder_image)
-					imageList.Add(image.report_picture)
-					imageList.Add(image.photo)
-					imageList.Add(image.resultset_next)
-					imageList.Add(image.resultset_previous)
 					//this.SetupPages(book)
 				}
 				vbox.Add(wx.StaticText(this, wx.ID_ANY, 'Choicebook'), wx.SizerFlags().Expand())
@@ -118,7 +114,7 @@ PanelTop = class(wx.Panel) {
 	SetupPages(book as wx.BookCtrlBase) = {
 		['Page1', 'Page2', 'Page3', 'Page4', 'Page5'].Each {|label|
 			wx.Panel(book) {|panel|
-				book.AddPage(panel, label)
+				book.AddPage(panel, label, imageId = 0)
 				wx.BoxSizer(wx.VERTICAL) {|vbox|
 					panel.SetSizer(vbox)
 					vbox.Add(wx.Button(panel, wx.ID_ANY, 'Content of ' + label), wx.SizerFlags(1).Expand())
