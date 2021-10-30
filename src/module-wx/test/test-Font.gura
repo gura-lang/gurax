@@ -73,7 +73,7 @@ PanelTop = class(wx.Panel) {
 			wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 				vbox.Add(hbox, wx.SizerFlags().Expand())
 				hbox.Add(wx.StaticText(this, wx.ID_ANY, label = 'Font &Family'),  wx.SizerFlags().Center())
-				wx.ComboBox(this, wx.ID_ANY, choices = this.fontFamilyTbl::label) {|ctrl|
+				wx.ComboBox(this, wx.ID_ANY, choices = this.fontFamilyTbl::label, style = wx.CB_READONLY) {|ctrl|
 					hbox.Add(ctrl, wx.SizerFlags().Center().Border(wx.LEFT, 8))
 					ctrl.SetSelection(iFontFamily)
 					ctrl.Bind(wx.EVT_COMBOBOX, this.OnEvent)
