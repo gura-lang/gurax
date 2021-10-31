@@ -1,3 +1,14 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+GridTableBase = Class(Object) {
+	@include['wx/grid.h']
+}
+
+GridTableMessage = Class():noCopyConstructor {
+	@include['wx/grid.h']
+}
+
+GridSizesInfo = Class {
+	@include['wx/grid.h']
+}

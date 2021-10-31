@@ -3,4 +3,305 @@
 //==============================================================================
 Grid = Class(ScrolledCanvas) {
 	@include['wx/grid.h']
+	@enum {
+		wxGridSelectionModes {
+			wxGridSelectCells
+			wxGridSelectRows
+			wxGridSelectColumns
+			wxGridSelectRowsOrColumns
+		}
+		CellSpan {
+			CellSpan_Inside
+			CellSpan_None
+			CellSpan_Main
+		}
+		TabBehaviour {
+			Tab_Stop
+			Tab_Wrap
+			Tab_Leave
+		}
+	}
+	DrawCellHighlight(dc as DC_r, attr as const_GridCellAttr_p) as void
+	DrawRowLabels(dc as DC_r, rows as const_ArrayInt_r) as void
+	DrawRowLabel(dc as DC_r, row as int):virtual as void
+	DrawColLabels(dc as DC_r, cols as const_ArrayInt_r) as void
+	DrawColLabel(dc as DC_r, col as int):virtual as void
+	DrawCornerLabel(dc as DC_r):virtual as void
+	DrawTextRectangle(dc as DC_r, text as const_String_r, rect as const_Rect_r, horizontalAlignment as int = wxALIGN_LEFT, verticalAlignment as int = wxALIGN_TOP, textOrientation as int = wxHORIZONTAL) as void
+	//DrawTextRectangle(dc as DC_r, lines as const_ArrayString_r, rect as const_Rect_r, horizontalAlignment as int = wxALIGN_LEFT, verticalAlignment as int = wxALIGN_TOP, textOrientation as int = wxHORIZONTAL) as void
+	GetCellHighlightColour() as Colour
+	GetCellHighlightPenWidth() as int
+	GetCellHighlightROPenWidth() as int
+	SetCellHighlightColour(colour as const_Colour_r) as void
+	SetCellHighlightPenWidth(width as int) as void
+	SetCellHighlightROPenWidth(width as int) as void
+	// Constructors and Initialization
+	__init__(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxWANTS_CHARS, name as const_String_r = wxGridNameStr) as a
+	Create(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxWANTS_CHARS, name as const_String_r = wxGridNameStr) as bool
+	CreateGrid(numRows as int, numCols as int, selmode as Grid.wxGridSelectionModes = wxGrid::wxGridSelectCells) as bool
+	SetTable(table as GridTableBase_p, takeOwnership as bool = false, selmode as Grid.wxGridSelectionModes = wxGrid::wxGridSelectCells) as bool
+	ProcessTableMessage(msg as GridTableMessage_r) as bool
+	// Grid Line Formatting
+	EnableGridLines(enable as bool = true) as void
+	GetColGridLinePen(col as int):virtual as Pen
+	GetDefaultGridLinePen():virtual as Pen
+	GetGridLineColour() as Colour
+	GetRowGridLinePen(row as int):virtual as Pen
+	GridLinesEnabled() as bool
+	SetGridLineColour(colour as const_Colour_r) as void
+	// Label Values and Formatting
+	//GetColLabelAlignment(horiz as int, vert as int) as void
+	GetColLabelTextOrientation() as int
+	GetColLabelValue(col as int) as String
+	GetLabelBackgroundColour() as Colour
+	GetLabelFont() as Font
+	GetLabelTextColour() as Colour
+	//GetRowLabelAlignment(horiz as int_p, vert as int_p) as void
+	GetRowLabelValue(row as int) as String
+	HideColLabels() as void
+	HideRowLabels() as void
+	SetColLabelAlignment(horiz as int, vert as int) as void
+	SetColLabelTextOrientation(textOrientation as int) as void
+	SetColLabelValue(col as int, value as const_String_r) as void
+	SetLabelBackgroundColour(colour as const_Colour_r) as void
+	SetLabelFont(font as const_Font_r) as void
+	SetLabelTextColour(colour as const_Colour_r) as void
+	SetRowLabelAlignment(horiz as int, vert as int) as void
+	SetRowLabelValue(row as int, value as const_String_r) as void
+	SetUseNativeColLabels(native as bool = true) as void
+	UseNativeColHeader(native as bool = true) as void
+	// Cell Formatting
+	//GetCellAlignment(row as int, col as int, horiz as int_p, vert as int_p) as void
+	GetCellBackgroundColour(row as int, col as int) as Colour
+	GetCellFont(row as int, col as int) as Font
+	GetCellTextColour(row as int, col as int) as Colour
+	//GetDefaultCellAlignment(horiz as int_p, vert as int_p) as void
+	GetDefaultCellBackgroundColour() as Colour
+	GetDefaultCellFont() as Font
+	GetDefaultCellTextColour() as Colour
+	SetCellAlignment(row as int, col as int, horiz as int, vert as int) as void
+	//SetCellAlignment(align as int, row as int, col as int) as void
+	SetCellBackgroundColour(row as int, col as int, colour as const_Colour_r) as void
+	SetCellFont(row as int, col as int, font as const_Font_r) as void
+	SetCellTextColour(row as int, col as int, colour as const_Colour_r) as void
+	//SetCellTextColour(val as const_Colour_r, row as int, col as int) as void
+	//SetCellTextColour(colour as const_Colour_r) as void
+	SetDefaultCellAlignment(horiz as int, vert as int) as void
+	SetDefaultCellBackgroundColour(colour as const_Colour_r) as void
+	SetDefaultCellFont(font as const_Font_r) as void
+	SetDefaultCellTextColour(colour as const_Colour_r) as void
+	// Cell Values, Editors, and Renderers
+	CanEnableCellControl() as bool
+	DisableCellEditControl() as void
+	EnableCellEditControl(enable as bool = true) as void
+	EnableEditing(edit as bool) as void
+	GetCellEditor(row as int, col as int) as GridCellEditor_p
+	GetCellRenderer(row as int, col as int) as GridCellRenderer_p
+	GetCellValue(row as int, col as int) as String
+	//GetCellValue(coords as const_GridCellCoords_r) as String
+	GetDefaultEditor() as GridCellEditor_p
+	GetDefaultEditorForCell(row as int, col as int) as GridCellEditor_p
+	//GetDefaultEditorForCell(c as const_GridCellCoords_r) as GridCellEditor_p
+	GetDefaultEditorForType(typeName as const_String_r) as GridCellEditor_p
+	GetDefaultRenderer() as GridCellRenderer_p
+	GetDefaultRendererForCell(row as int, col as int) as GridCellRenderer_p
+	GetDefaultRendererForType(typeName as const_String_r) as GridCellRenderer_p
+	HideCellEditControl() as void
+	IsCellEditControlEnabled() as bool
+	IsCellEditControlShown() as bool
+	IsCurrentCellReadOnly() as bool
+	IsEditable() as bool
+	IsReadOnly(row as int, col as int) as bool
+	RegisterDataType(typeName as const_String_r, renderer as GridCellRenderer_p, editor as GridCellEditor_p) as void
+	SaveEditControlValue() as void
+	SetCellEditor(row as int, col as int, editor as GridCellEditor_p) as void
+	SetCellRenderer(row as int, col as int, renderer as GridCellRenderer_p) as void
+	SetCellValue(row as int, col as int, s as const_String_r) as void
+	//SetCellValue(coords as const_GridCellCoords_r, s as const_String_r) as void
+	//SetCellValue(val as const_String_r, row as int, col as int) as void
+	SetColFormatBool(col as int) as void
+	SetColFormatCustom(col as int, typeName as const_String_r) as void
+	SetColFormatFloat(col as int, width as int = -1, precision as int = -1) as void
+	SetColFormatNumber(col as int) as void
+	SetDefaultEditor(editor as GridCellEditor_p) as void
+	SetDefaultRenderer(renderer as GridCellRenderer_p) as void
+	SetReadOnly(row as int, col as int, isReadOnly as bool = true) as void
+	ShowCellEditControl() as void
+	// Column and Row Sizes
+	AutoSize() as void
+	AutoSizeColLabelSize(col as int) as void
+	AutoSizeColumn(col as int, setAsMin as bool = true) as void
+	AutoSizeColumns(setAsMin as bool = true) as void
+	AutoSizeRow(row as int, setAsMin as bool = true) as void
+	AutoSizeRowLabelSize(col as int) as void
+	AutoSizeRows(setAsMin as bool = true) as void
+	GetCellOverflow(row as int, col as int) as bool
+	GetColLabelSize() as int
+	GetColMinimalAcceptableWidth() as int
+	GetColSize(col as int) as int
+	IsColShown(col as int) as bool
+	GetDefaultCellOverflow() as bool
+	GetDefaultColLabelSize() as int
+	GetDefaultColSize() as int
+	GetDefaultRowLabelSize() as int
+	GetDefaultRowSize() as int
+	GetRowMinimalAcceptableHeight() as int
+	GetRowLabelSize() as int
+	GetRowSize(row as int) as int
+	IsRowShown(row as int) as bool
+	SetCellOverflow(row as int, col as int, allow as bool) as void
+	SetColLabelSize(height as int) as void
+	SetColMinimalAcceptableWidth(width as int) as void
+	SetColMinimalWidth(col as int, width as int) as void
+	SetColSize(col as int, width as int) as void
+	HideCol(col as int) as void
+	ShowCol(col as int) as void
+	SetDefaultCellOverflow(allow as bool) as void
+	SetDefaultColSize(width as int, resizeExistingCols as bool = false) as void
+	SetDefaultRowSize(height as int, resizeExistingRows as bool = false) as void
+	SetRowLabelSize(width as int) as void
+	SetRowMinimalAcceptableHeight(height as int) as void
+	SetRowMinimalHeight(row as int, height as int) as void
+	SetRowSize(row as int, height as int) as void
+	HideRow(col as int) as void
+	ShowRow(col as int) as void
+	GetColSizes() as GridSizesInfo
+	GetRowSizes() as GridSizesInfo
+	SetColSizes(sizeInfo as const_GridSizesInfo_r) as void
+	SetRowSizes(sizeInfo as const_GridSizesInfo_r) as void
+	SetCellSize(row as int, col as int, num_rows as int, num_cols as int) as void
+	//GetCellSize(row as int, col as int, num_rows as int_p, num_cols as int_p) as CellSpan
+	GetCellSize(coords as const_GridCellCoords_r) as Size
+	// User-Resizing and Dragging
+	CanDragCell() as bool
+	CanDragColMove() as bool
+	CanDragColSize(col as int) as bool
+	CanDragGridSize() as bool
+	CanDragRowSize(row as int) as bool
+	DisableColResize(col as int) as void
+	DisableRowResize(row as int) as void
+	DisableDragColMove() as void
+	DisableDragColSize() as void
+	DisableDragGridSize() as void
+	DisableDragRowSize() as void
+	EnableDragCell(enable as bool = true) as void
+	EnableDragColMove(enable as bool = true) as void
+	EnableDragColSize(enable as bool = true) as void
+	EnableDragGridSize(enable as bool = true) as void
+	EnableDragRowSize(enable as bool = true) as void
+	GetColAt(colPos as int) as int
+	GetColPos(colID as int) as int
+	SetColPos(colID as int, newPos as int) as void
+	SetColumnsOrder(order as const_ArrayInt_r) as void
+	ResetColPos() as void
+	// Cursor Movement
+	GetGridCursorCol() as int
+	GetGridCursorRow() as int
+	GoToCell(row as int, col as int) as void
+	//GoToCell(coords as const_GridCellCoords_r) as void
+	MoveCursorDown(expandSelection as bool) as bool
+	MoveCursorDownBlock(expandSelection as bool) as bool
+	MoveCursorLeft(expandSelection as bool) as bool
+	MoveCursorLeftBlock(expandSelection as bool) as bool
+	MoveCursorRight(expandSelection as bool) as bool
+	MoveCursorRightBlock(expandSelection as bool) as bool
+	MoveCursorUp(expandSelection as bool) as bool
+	MoveCursorUpBlock(expandSelection as bool) as bool
+	MovePageDown() as bool
+	MovePageUp() as bool
+	SetGridCursor(row as int, col as int) as void
+	//SetGridCursor(coords as const_GridCellCoords_r) as void
+	SetTabBehaviour(behaviour as Grid.TabBehaviour) as void
+	// User Selection
+	ClearSelection() as void
+	DeselectRow(row as int) as void
+	DeselectCol(col as int) as void
+	DeselectCell(row as int, col as int) as void
+	//GetSelectedCells() as GridCellCoordsArray
+	GetSelectedCols() as ArrayInt
+	GetSelectedRows() as ArrayInt
+	GetSelectionBackground() as Colour
+	//GetSelectionBlockBottomRight() as GridCellCoordsArray
+	//GetSelectionBlockTopLeft() as GridCellCoordsArray
+	GetSelectionForeground() as Colour
+	GetSelectionMode() as Grid.wxGridSelectionModes
+	IsInSelection(row as int, col as int) as bool
+	//IsInSelection(coords as const_GridCellCoords_r) as bool
+	IsSelection() as bool
+	SelectAll() as void
+	SelectBlock(topRow as int, leftCol as int, bottomRow as int, rightCol as int, addToSelected as bool = false) as void
+	//SelectBlock(topLeft as const_GridCellCoords_r, bottomRight as const_GridCellCoords_r, addToSelected as bool = false) as void
+	SelectCol(col as int, addToSelected as bool = false) as void
+	SelectRow(row as int, addToSelected as bool = false) as void
+	SetSelectionBackground(c as const_Colour_r) as void
+	SetSelectionForeground(c as const_Colour_r) as void
+	SetSelectionMode(selmode as Grid.wxGridSelectionModes) as void
+	// Scrolling
+	GetScrollLineX() as int
+	GetScrollLineY() as int
+	IsVisible(row as int, col as int, wholeCellVisible as bool = true) as bool
+	//IsVisible(coords as const_GridCellCoords_r, wholeCellVisible as bool = true) as bool
+	MakeCellVisible(row as int, col as int) as void
+	//MakeCellVisible(coords as const_GridCellCoords_r) as void
+	SetScrollLineX(x as int) as void
+	SetScrollLineY(y as int) as void
+	// Cell and Device Coordinate Translation
+	BlockToDeviceRect(topLeft as const_GridCellCoords_r, bottomRight as const_GridCellCoords_r) as Rect
+	CellToRect(row as int, col as int) as Rect
+	//CellToRect(coords as const_GridCellCoords_r) as Rect
+	XToCol(x as int, clipToMinMax as bool = false) as int
+	XToEdgeOfCol(x as int) as int
+	XYToCell(x as int, y as int) as GridCellCoords
+	//XYToCell(pos as const_Point_r) as GridCellCoords
+	YToEdgeOfRow(y as int) as int
+	YToRow(y as int, clipToMinMax as bool = false) as int
+	// Miscellaneous Functions
+	AppendCols(numCols as int = 1, updateLabels as bool = true) as bool
+	AppendRows(numRows as int = 1, updateLabels as bool = true) as bool
+	AreHorzGridLinesClipped() as bool
+	AreVertGridLinesClipped() as bool
+	BeginBatch() as void
+	ClearGrid() as void
+	ClipHorzGridLines(clip as bool) as void
+	ClipVertGridLines(clip as bool) as void
+	DeleteCols(pos as int = 0, numCols as int = 1, updateLabels as bool = true) as bool
+	DeleteRows(pos as int = 0, numRows as int = 1, updateLabels as bool = true) as bool
+	EndBatch() as void
+	Fit():virtual as void
+	ForceRefresh() as void
+	GetBatchCount() as int
+	GetNumberCols() as int
+	GetNumberRows() as int
+	GetOrCreateCellAttr(row as int, col as int) as GridCellAttr_p
+	GetTable() as GridTableBase_p
+	InsertCols(pos as int = 0, numCols as int = 1, updateLabels as bool = true) as bool
+	InsertRows(pos as int = 0, numRows as int = 1, updateLabels as bool = true) as bool
+	RefreshAttr(row as int, col as int) as void
+	//Render(dc as DC_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, topLeft as const_GridCellCoords_r = wxGridCellCoords, bottomRight as const_GridCellCoords_r = wxGridCellCoords, style as int = wxGRID_DRAW_DEFAULT) as void
+	SetAttr(row as int, col as int, attr as GridCellAttr_p) as void
+	SetColAttr(col as int, attr as GridCellAttr_p) as void
+	SetMargins(extraWidth as int, extraHeight as int) as void
+	SetRowAttr(row as int, attr as GridCellAttr_p) as void
+	CalcRowLabelsExposed(reg as const_Region_r) as ArrayInt
+	CalcColLabelsExposed(reg as const_Region_r) as ArrayInt
+	//CalcCellsExposed(reg as const_Region_r) as GridCellCoordsArray
+	// Sorting Support
+	GetSortingColumn() as int
+	IsSortingBy(col as int) as bool
+	IsSortOrderAscending() as bool
+	SetSortingColumn(col as int, ascending as bool = true) as void
+	UnsetSortingColumn() as void
+	// Accessors and Component Windows
+	GetGridWindow() as Window_p
+	GetGridRowLabelWindow() as Window_p
+	GetGridColLabelWindow() as Window_p
+	GetGridCornerLabelWindow() as Window_p
+	GetGridColHeader() as HeaderCtrl_p
+	// Protected Member Functions
+	//CanHaveAttributes() as bool
+	//GetColMinimalWidth(col as int) as int
+	//GetColRight(col as int) as int
+	//GetColLeft(col as int) as int
+	//GetRowMinimalHeight(col as int) as int
 }
+

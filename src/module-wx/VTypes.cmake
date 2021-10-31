@@ -4,6 +4,9 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxGridTableBase.cpp
+	VType_wxGridTableMessage.cpp
+	VType_wxGridSizesInfo.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

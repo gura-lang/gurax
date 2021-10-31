@@ -291,7 +291,9 @@ ${end}
 public:
 	// Constructor
 	Value_wx${className}() = delete;
-${if (className == 'EvtHandler' || classInfo.loosePointerFlag)}
+${if (classInfo.noCopyConstructorFlag)}
+	explicit Value_wx${className}(VType& vtype = VTYPE_wx${className}) : Value_Object(vtype) {}
+${elsif (className == 'EvtHandler' || classInfo.loosePointerFlag)}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'RefCounter')}
@@ -727,6 +729,7 @@ ClassInfo = class {
 	tmplConstructorImplementation as Template
 	loosePointerFlag as Bool = false
 	holdEntityFlag as Bool = false
+	noCopyConstructorFlag as Bool = false
 	funcInfoTbl[] as cbridge.FuncInfo = []
 	propInfoTbl[] as PropInfo = []
 	includeFiles[] as String = []
@@ -834,6 +837,7 @@ path.Glob('metafile/*.gura').Each {|pathName|
 			classInfo = ClassInfo(className, classNameParent)
 			classInfo.loosePointerFlag = expr.right.attr.IsSet(`loosePointer)
 			classInfo.holdEntityFlag = expr.right.attr.IsSet(`holdEntity)
+			classInfo.noCopyConstructorFlag = expr.right.attr.IsSet(`noCopyConstructor)
 			expr.right.block.EachElem {|expr|
 				if (expr.IsIndexer()) {
 					params = expr.EachParam():list

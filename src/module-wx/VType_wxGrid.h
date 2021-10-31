@@ -40,6 +40,13 @@ public:
 		using wxGrid::wxGrid;
 	public:
 		EntityCore core_gurax;
+		virtual void DrawRowLabel(wxDC& dc, int row) override;
+		virtual void DrawColLabel(wxDC& dc, int col) override;
+		virtual void DrawCornerLabel(wxDC& dc) override;
+		virtual wxPen GetColGridLinePen(int col) override;
+		virtual wxPen GetDefaultGridLinePen() override;
+		virtual wxPen GetRowGridLinePen(int row) override;
+		virtual void Fit() override;
 	};
 public:
 	static VType& vtype;

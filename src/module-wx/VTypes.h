@@ -7,6 +7,9 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
+#include "VType_wxGridTableBase.h"
+#include "VType_wxGridTableMessage.h"
+#include "VType_wxGridSizesInfo.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"

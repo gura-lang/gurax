@@ -248,8 +248,9 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	staticFlag = false
 	if (expr.IsBinaryOp()) {
 		if (expr.operator.symbol == `as) {
-			!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
-			typeName = expr.right.symbolName
+			//!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
+			//typeName = expr.right.symbolName
+			typeName = expr.right.__str__()
 		} else {
 			ErrorDone(expr, 'invalid format of parameter')
 		}
