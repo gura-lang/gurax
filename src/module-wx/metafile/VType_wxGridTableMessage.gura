@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridTableMessage.gura
 //==============================================================================
+GridTableMessage = Class():noCopyConstructor {
+	@include['wx/grid.h']
+}
