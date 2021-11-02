@@ -1,0 +1,79 @@
+
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	grid as wx.Grid
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.Grid(this, wx.ID_ANY) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			nRows = 20, nCols = 20
+			ctrl.CreateGrid(nRows, nCols)
+			//ctrl.SetRowSize(0, 60)
+			//ctrl.SetColSize(0, 120)
+			ctrl.SetColLabelValue(0, 'Column1')
+			ctrl.SetColLabelValue(1, 'Column2')
+			ctrl.SetColLabelValue(2, 'Column3')
+			ctrl.SetRowLabelValue(0, 'Row1')
+			ctrl.SetRowLabelValue(1, 'Row2')
+			ctrl.SetRowLabelValue(2, 'Row3')
+			//ctrl.SetColLabelTextOrientation(wx.VERTICAL)
+			repeat (nRows) {|iRow|
+				repeat (nCols) {|iCol|
+					ctrl.SetCellValue(iRow, iCol, Format('%d,%d', iCol, iRow))
+				}
+			}
+			ctrl.SetCellTextColour(3, 3, wx.GREEN)
+			ctrl.SetCellBackgroundColour(3, 3, wx.LIGHT_GREY)
+			//ctrl.EnableGridLines(true)
+			wx.EVT_GRID_CELL_CHANGING(ctrl, this.OnGrid)
+			wx.EVT_GRID_CELL_CHANGED(ctrl, this.OnGrid)
+			wx.EVT_GRID_CELL_LEFT_CLICK(ctrl, this.OnGrid)
+			wx.EVT_GRID_CELL_LEFT_DCLICK(ctrl, this.OnGrid)
+			wx.EVT_GRID_CELL_RIGHT_CLICK(ctrl, this.OnGrid)
+			wx.EVT_GRID_CELL_RIGHT_DCLICK(ctrl, this.OnGrid)
+			wx.EVT_GRID_EDITOR_HIDDEN(ctrl, this.OnGrid)
+			wx.EVT_GRID_EDITOR_SHOWN(ctrl, this.OnGrid)
+			wx.EVT_GRID_LABEL_LEFT_CLICK(ctrl, this.OnGrid)
+			wx.EVT_GRID_LABEL_LEFT_DCLICK(ctrl, this.OnGrid)
+			wx.EVT_GRID_LABEL_RIGHT_CLICK(ctrl, this.OnGrid)
+			wx.EVT_GRID_LABEL_RIGHT_DCLICK(ctrl, this.OnGrid)
+			wx.EVT_GRID_SELECT_CELL(ctrl, this.OnGrid)
+			wx.EVT_GRID_COL_MOVE(ctrl, this.OnGrid)
+			wx.EVT_GRID_COL_SORT(ctrl, this.OnGrid)
+			wx.EVT_GRID_TABBING(ctrl, this.OnGrid)
+		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
+		//this.grid.ForceRefresh()
+		//this.grid.Layout()
+	}
+	OnGrid(event) = {
+		this.PrintGridEvent(event)
+	}
+	PrintGridEvent(event) = {
+		eventName = event.GetEventType().name
+		this.Printf('%s()\n', eventName)
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+}
+
+wx.ImplementApp(MyApp())
