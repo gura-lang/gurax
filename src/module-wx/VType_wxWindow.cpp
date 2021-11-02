@@ -6175,6 +6175,7 @@ void Value_wxWindow::EntityT::SetCanFocus(bool canFocus)
 		}
 		return;
 	} while (0);
+	wxWindow::SetCanFocus(canFocus);
 }
 
 Gurax_EndModuleScope(wx)

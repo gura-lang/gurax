@@ -338,6 +338,7 @@ void Value_wxTimer::EntityT::Notify()
 		}
 		return;
 	} while (0);
+	wxTimer::Notify();
 }
 
 bool Value_wxTimer::EntityT::Start(int milliseconds, bool oneShot)
@@ -383,6 +384,7 @@ void Value_wxTimer::EntityT::Stop()
 		}
 		return;
 	} while (0);
+	wxTimer::Stop();
 }
 
 Gurax_EndModuleScope(wx)

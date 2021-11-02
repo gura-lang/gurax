@@ -5995,6 +5995,7 @@ void Value_wxGrid::EntityT::DrawRowLabel(wxDC& dc, int row)
 		}
 		return;
 	} while (0);
+	wxGrid::DrawRowLabel(dc, row);
 }
 
 void Value_wxGrid::EntityT::DrawColLabel(wxDC& dc, int col)
@@ -6017,6 +6018,7 @@ void Value_wxGrid::EntityT::DrawColLabel(wxDC& dc, int col)
 		}
 		return;
 	} while (0);
+	wxGrid::DrawColLabel(dc, col);
 }
 
 void Value_wxGrid::EntityT::DrawCornerLabel(wxDC& dc)
@@ -6038,6 +6040,7 @@ void Value_wxGrid::EntityT::DrawCornerLabel(wxDC& dc)
 		}
 		return;
 	} while (0);
+	wxGrid::DrawCornerLabel(dc);
 }
 
 wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
@@ -6129,6 +6132,7 @@ void Value_wxGrid::EntityT::Fit()
 		}
 		return;
 	} while (0);
+	wxGrid::Fit();
 }
 
 Gurax_EndModuleScope(wx)

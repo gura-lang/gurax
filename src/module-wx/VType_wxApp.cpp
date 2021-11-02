@@ -422,6 +422,7 @@ void Value_wxApp::EntityT::OnFatalException()
 		}
 		return;
 	} while (0);
+	wxApp::OnFatalException();
 }
 
 bool Value_wxApp::EntityT::OnInit()
@@ -465,6 +466,7 @@ void Value_wxApp::EntityT::OnUnhandledException()
 		}
 		return;
 	} while (0);
+	wxApp::OnUnhandledException();
 }
 
 Gurax_EndModuleScope(wx)

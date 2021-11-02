@@ -3,3 +3,22 @@
 //==============================================================================
 GridEvent = Class(NotifyEvent) {
 }
+
+@event {
+	EVT_GRID_CELL_CHANGING		>> GridEvent
+	EVT_GRID_CELL_CHANGED		>> GridEvent
+	EVT_GRID_CELL_LEFT_CLICK	>> GridEvent
+	EVT_GRID_CELL_LEFT_DCLICK	>> GridEvent
+	EVT_GRID_CELL_RIGHT_CLICK	>> GridEvent
+	EVT_GRID_CELL_RIGHT_DCLICK	>> GridEvent
+	EVT_GRID_EDITOR_HIDDEN		>> GridEvent
+	EVT_GRID_EDITOR_SHOWN		>> GridEvent
+	EVT_GRID_LABEL_LEFT_CLICK	>> GridEvent
+	EVT_GRID_LABEL_LEFT_DCLICK	>> GridEvent
+	EVT_GRID_LABEL_RIGHT_CLICK	>> GridEvent
+	EVT_GRID_LABEL_RIGHT_DCLICK	>> GridEvent
+	EVT_GRID_SELECT_CELL		>> GridEvent
+	EVT_GRID_COL_MOVE			>> GridEvent
+	EVT_GRID_COL_SORT			>> GridEvent
+	EVT_GRID_TABBING			>> GridEvent
+}

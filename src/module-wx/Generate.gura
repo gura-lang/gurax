@@ -543,7 +543,9 @@ ${funcInfo.ComposeCDecl('Value_wx' + className + '::EntityT::')}
 		return ${funcInfo.GetTypeInfo().ComposeConvToC('*pValueRtn')};
 		${end}
 	} while (0);
-	${if (!funcInfo.IsVoid())}
+	${if (funcInfo.IsVoid())}
+	wx${className}::${funcInfo.ComposeCaller()};
+	${else}
 	return wx${className}::${funcInfo.ComposeCaller()};
 	${end}
 }
