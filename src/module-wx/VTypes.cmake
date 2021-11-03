@@ -245,6 +245,7 @@ set(SRCFILES_VTYPE
 	VType_wxRichTextStyleListBox.cpp
 	VType_wxRichTextStyleListCtrl.cpp
 	VType_wxRichTextStyleOrganiserDialog.cpp
+	VType_wxSashEvent.cpp
 	VType_wxSashWindow.cpp
 	VType_wxScreenDC.cpp
 	VType_wxScrollBar.cpp

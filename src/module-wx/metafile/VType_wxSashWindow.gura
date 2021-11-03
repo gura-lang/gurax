@@ -6,3 +6,24 @@ SashWindow = Class(Window) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxCLIP_CHILDREN | wxSW_3D, name as String = 'sashWindow')
 }
+
+@enum {
+	SashDragStatus {
+		SASH_STATUS_OK
+		SASH_STATUS_OUT_OF_RANGE
+	}
+	SashEdgePosition {
+		SASH_TOP
+		SASH_RIGHT
+		SASH_BOTTOM
+		SASH_LEFT
+		SASH_NONE
+	}
+}
+
+@const { // Styles
+	SW_3D
+	SW_3DSASH
+	SW_3DBORDER
+	SW_BORDER
+}

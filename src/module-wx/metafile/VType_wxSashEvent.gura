@@ -1,0 +1,15 @@
+//==============================================================================
+// VType_wxSashEvent.gura
+//==============================================================================
+SashEvent = Class(CommandEvent) {
+	GetDragStatus() as SashDragStatus
+	GetEdge() as SashEdgePosition
+	SetEdge(edge as SashEdgePosition) as void
+	SetDragRect(rect as const_Rect_r) as void
+	SetDragStatus(status as SashDragStatus) as void
+}
+
+@event {
+	EVT_SASH_DRAGGED		>> SashEvent
+	EVT_SASH_DRAGGED_RANGE	>> SashEvent
+}

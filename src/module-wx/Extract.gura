@@ -2,29 +2,20 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-bool 	AltDown () const
- 	Returns true if the Alt key was down at the time of the event. More...
+ wxRect 	GetDragRect () const
+ 	Returns the rectangle representing the new size the window would be if the resize was applied. More...
  
-bool 	ControlDown () const
- 	Returns true if the Control key was down at the time of the event. More...
+wxSashDragStatus 	GetDragStatus () const
+ 	Returns the status of the sash: one of wxSASH_STATUS_OK, wxSASH_STATUS_OUT_OF_RANGE. More...
  
-virtual int 	GetCol ()
- 	Column at which the event occurred. More...
+wxSashEdgePosition 	GetEdge () const
+ 	Returns the dragged edge. More...
  
-wxPoint 	GetPosition ()
- 	Position in pixels at which the event occurred. More...
+void 	SetEdge (wxSashEdgePosition edge)
  
-virtual int 	GetRow ()
- 	Row at which the event occurred. More...
+void 	SetDragRect (const wxRect &rect)
  
-bool 	MetaDown () const
- 	Returns true if the Meta key was down at the time of the event. More...
- 
-bool 	Selecting ()
- 	Returns true if the user is selecting grid cells, or false if deselecting. More...
- 
-bool 	ShiftDown () const
- 	Returns true if the Shift key was down at the time of the event. More...
+void 	SetDragStatus (wxSashDragStatus status)
 '''
 //------------------------------------------------------------------------------
 

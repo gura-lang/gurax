@@ -248,6 +248,7 @@
 #include "VType_wxRichTextStyleListBox.h"
 #include "VType_wxRichTextStyleListCtrl.h"
 #include "VType_wxRichTextStyleOrganiserDialog.h"
+#include "VType_wxSashEvent.h"
 #include "VType_wxSashWindow.h"
 #include "VType_wxScreenDC.h"
 #include "VType_wxScrollBar.h"

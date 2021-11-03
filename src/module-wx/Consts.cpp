@@ -818,6 +818,13 @@ void AssignConsts(Frame& frame)
 	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
 	frame.Assign("RETAINED", new Value_Number(wxRETAINED));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
+	frame.Assign("SASH_BOTTOM", new Value_Number(wxSASH_BOTTOM));
+	frame.Assign("SASH_LEFT", new Value_Number(wxSASH_LEFT));
+	frame.Assign("SASH_NONE", new Value_Number(wxSASH_NONE));
+	frame.Assign("SASH_RIGHT", new Value_Number(wxSASH_RIGHT));
+	frame.Assign("SASH_STATUS_OK", new Value_Number(wxSASH_STATUS_OK));
+	frame.Assign("SASH_STATUS_OUT_OF_RANGE", new Value_Number(wxSASH_STATUS_OUT_OF_RANGE));
+	frame.Assign("SASH_TOP", new Value_Number(wxSASH_TOP));
 	frame.Assign("SB_FLAT", new Value_Number(wxSB_FLAT));
 	frame.Assign("SB_NORMAL", new Value_Number(wxSB_NORMAL));
 	frame.Assign("SB_RAISED", new Value_Number(wxSB_RAISED));
@@ -870,6 +877,10 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ST_ELLIPSIZE_MIDDLE", new Value_Number(wxST_ELLIPSIZE_MIDDLE));
 	frame.Assign("ST_ELLIPSIZE_START", new Value_Number(wxST_ELLIPSIZE_START));
 	frame.Assign("ST_NO_AUTORESIZE", new Value_Number(wxST_NO_AUTORESIZE));
+	frame.Assign("SW_3D", new Value_Number(wxSW_3D));
+	frame.Assign("SW_3DBORDER", new Value_Number(wxSW_3DBORDER));
+	frame.Assign("SW_3DSASH", new Value_Number(wxSW_3DSASH));
+	frame.Assign("SW_BORDER", new Value_Number(wxSW_BORDER));
 	frame.Assign("SYSTEM_MENU", new Value_Number(wxSYSTEM_MENU));
 	frame.Assign("TAB_TRAVERSAL", new Value_Number(wxTAB_TRAVERSAL));
 	frame.Assign("TBK_BUTTONBAR", new Value_Number(wxTBK_BUTTONBAR));

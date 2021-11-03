@@ -125,6 +125,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_RIGHT_DCLICK,					wxMouseEvent);
 	Gurax_AssignEvent(EVT_RIGHT_DOWN,					wxMouseEvent);
 	Gurax_AssignEvent(EVT_RIGHT_UP,						wxMouseEvent);
+	Gurax_AssignEvent(EVT_SASH_DRAGGED,					wxSashEvent);
+	Gurax_AssignEvent(EVT_SASH_DRAGGED_RANGE,			wxSashEvent);
 	Gurax_AssignEvent(EVT_SCROLLBAR,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_SCROLLWIN_BOTTOM,				wxScrollWinEvent);
 	Gurax_AssignEvent(EVT_SCROLLWIN_LINEDOWN,			wxScrollWinEvent);

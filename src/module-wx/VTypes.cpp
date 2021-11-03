@@ -253,6 +253,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRichTextStyleListBox);
 	frame.Assign(VTYPE_wxRichTextStyleListCtrl);
 	frame.Assign(VTYPE_wxRichTextStyleOrganiserDialog);
+	frame.Assign(VTYPE_wxSashEvent);
 	frame.Assign(VTYPE_wxSashWindow);
 	frame.Assign(VTYPE_wxScreenDC);
 	frame.Assign(VTYPE_wxScrollBar);
