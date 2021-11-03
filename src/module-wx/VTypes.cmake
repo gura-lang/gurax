@@ -222,6 +222,7 @@ set(SRCFILES_VTYPE
 	VType_wxPropertyGrid.cpp
 	VType_wxPropertyGridManager.cpp
 	VType_wxPropertySheetDialog.cpp
+	VType_wxQueryLayoutInfoEvent.cpp
 	VType_wxRadioBox.cpp
 	VType_wxRadioButton.cpp
 	VType_wxRearrangeCtrl.cpp
@@ -246,6 +247,7 @@ set(SRCFILES_VTYPE
 	VType_wxRichTextStyleListCtrl.cpp
 	VType_wxRichTextStyleOrganiserDialog.cpp
 	VType_wxSashEvent.cpp
+	VType_wxSashLayoutWindow.cpp
 	VType_wxSashWindow.cpp
 	VType_wxScreenDC.cpp
 	VType_wxScrollBar.cpp

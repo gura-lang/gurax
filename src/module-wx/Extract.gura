@@ -2,20 +2,35 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
- wxRect 	GetDragRect () const
- 	Returns the rectangle representing the new size the window would be if the resize was applied. More...
+wxLayoutAlignment 	GetAlignment () const
+ 	Specifies the alignment of the window (which side of the remaining parent client area the window sticks to). More...
  
-wxSashDragStatus 	GetDragStatus () const
- 	Returns the status of the sash: one of wxSASH_STATUS_OK, wxSASH_STATUS_OUT_OF_RANGE. More...
+int 	GetFlags () const
+ 	Returns the flags associated with this event. More...
  
-wxSashEdgePosition 	GetEdge () const
- 	Returns the dragged edge. More...
+wxLayoutOrientation 	GetOrientation () const
+ 	Returns the orientation that the event handler specified to the event object. More...
  
-void 	SetEdge (wxSashEdgePosition edge)
+int 	GetRequestedLength () const
+ 	Returns the requested length of the window in the direction of the window orientation. More...
  
-void 	SetDragRect (const wxRect &rect)
+wxSize 	GetSize () const
+ 	Returns the size that the event handler specified to the event object as being the requested size of the window. More...
  
-void 	SetDragStatus (wxSashDragStatus status)
+void 	SetAlignment (wxLayoutAlignment alignment)
+ 	Call this to specify the alignment of the window (which side of the remaining parent client area the window sticks to). More...
+ 
+void 	SetFlags (int flags)
+ 	Sets the flags associated with this event. More...
+ 
+void 	SetOrientation (wxLayoutOrientation orientation)
+ 	Call this to specify the orientation of the window. More...
+ 
+void 	SetRequestedLength (int length)
+ 	Sets the requested length of the window in the direction of the window orientation. More...
+ 
+void 	SetSize (const wxSize &size)
+ 	Call this to let the calling code know what the size of the window is. More...
 '''
 //------------------------------------------------------------------------------
 

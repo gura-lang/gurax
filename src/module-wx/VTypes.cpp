@@ -230,6 +230,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPropertyGrid);
 	frame.Assign(VTYPE_wxPropertyGridManager);
 	frame.Assign(VTYPE_wxPropertySheetDialog);
+	frame.Assign(VTYPE_wxQueryLayoutInfoEvent);
 	frame.Assign(VTYPE_wxRadioBox);
 	frame.Assign(VTYPE_wxRadioButton);
 	frame.Assign(VTYPE_wxRearrangeCtrl);
@@ -254,6 +255,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRichTextStyleListCtrl);
 	frame.Assign(VTYPE_wxRichTextStyleOrganiserDialog);
 	frame.Assign(VTYPE_wxSashEvent);
+	frame.Assign(VTYPE_wxSashLayoutWindow);
 	frame.Assign(VTYPE_wxSashWindow);
 	frame.Assign(VTYPE_wxScreenDC);
 	frame.Assign(VTYPE_wxScrollBar);

@@ -5,6 +5,23 @@ SashWindow = Class(Window) {
 	@include['wx/sashwin.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxCLIP_CHILDREN | wxSW_3D, name as String = 'sashWindow')
+	GetMaximumSizeX() as int
+	GetMaximumSizeY() as int
+	GetMinimumSizeX() as int
+	GetMinimumSizeY() as int
+	GetSashVisible(edge as SashEdgePosition) as bool
+	SetMaximumSizeX(min as int) as void
+	SetMaximumSizeY(min as int) as void
+	SetMinimumSizeX(min as int) as void
+	SetMinimumSizeY(min as int) as void
+	SetSashVisible(edge as SashEdgePosition, visible as bool) as void
+	GetEdgeMargin(edge as SashEdgePosition) as int
+	SetDefaultBorderSize(width as int) as void
+	GetDefaultBorderSize() as int
+	SetExtraBorderSize(width as int) as void
+	GetExtraBorderSize() as int
+	SashHitTest(x as int, y as int, tolerance as int = 2) as SashEdgePosition
+	SizeWindows() as void
 }
 
 @enum {

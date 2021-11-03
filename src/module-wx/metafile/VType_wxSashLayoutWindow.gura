@@ -1,0 +1,14 @@
+//==============================================================================
+// VType_wxSashLayoutWindow.gura
+//==============================================================================
+SashLayoutWindow = Class(SashWindow) {
+	__init__(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxCLIP_CHILDREN | wxSW_3D, name as const_String_r = "layoutWindow")
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxCLIP_CHILDREN | wxSW_3D, name as const_String_r = "layoutWindow") as bool
+	GetAlignment() as LayoutAlignment
+	GetOrientation() as LayoutOrientation
+	OnCalculateLayout(event as CalculateLayoutEvent_r) as void
+	OnQueryLayoutInfo(event as QueryLayoutInfoEvent_r) as void
+	SetAlignment(alignment as LayoutAlignment) as void
+	SetDefaultSize(size as const_Size_r) as void
+	SetOrientation(orientation as LayoutOrientation) as void
+}

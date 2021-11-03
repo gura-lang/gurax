@@ -1,0 +1,19 @@
+//==============================================================================
+// VType_wxQueryLayoutInfoEvent.gura
+//==============================================================================
+QueryLayoutInfoEvent = Class(Event) {
+	GetAlignment() as LayoutAlignment
+	GetFlags() as int
+	GetOrientation() as LayoutOrientation
+	GetRequestedLength() as int
+	GetSize() as Size
+	SetAlignment(alignment as LayoutAlignment) as void
+	SetFlags(flags as int) as void
+	SetOrientation(orientation as LayoutOrientation) as void
+	SetRequestedLength(length as int) as void
+	SetSize(size as const_Size_r) as void
+}
+
+@event {
+	EVT_QUERY_LAYOUT_INFO > QueryLayoutInfoEvent
+}

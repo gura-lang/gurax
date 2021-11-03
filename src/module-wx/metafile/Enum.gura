@@ -530,10 +530,21 @@
 		MOD_CMD
 		MOD_ALL
 	}
+	LayoutAlignment {
+		LAYOUT_NONE
+		LAYOUT_TOP
+		LAYOUT_LEFT
+		LAYOUT_RIGHT
+		LAYOUT_BOTTOM
+	}
 	LayoutDirection {
 		Layout_Default
 		Layout_LeftToRight
 		Layout_RightToLeft
+	}
+	LayoutOrientation {
+		LAYOUT_HORIZONTAL
+		LAYOUT_VERTICAL
 	}
 	ListColumnFormat
 	LocaleCategory {

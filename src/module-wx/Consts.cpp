@@ -546,6 +546,13 @@ void AssignConsts(Frame& frame)
 	frame.Assign("JOY_BUTTON4", new Value_Number(wxJOY_BUTTON4));
 	frame.Assign("JOY_BUTTON_ANY", new Value_Number(wxJOY_BUTTON_ANY));
 	frame.Assign("LANDSCAPE", new Value_Number(wxLANDSCAPE));
+	frame.Assign("LAYOUT_BOTTOM", new Value_Number(wxLAYOUT_BOTTOM));
+	frame.Assign("LAYOUT_HORIZONTAL", new Value_Number(wxLAYOUT_HORIZONTAL));
+	frame.Assign("LAYOUT_LEFT", new Value_Number(wxLAYOUT_LEFT));
+	frame.Assign("LAYOUT_NONE", new Value_Number(wxLAYOUT_NONE));
+	frame.Assign("LAYOUT_RIGHT", new Value_Number(wxLAYOUT_RIGHT));
+	frame.Assign("LAYOUT_TOP", new Value_Number(wxLAYOUT_TOP));
+	frame.Assign("LAYOUT_VERTICAL", new Value_Number(wxLAYOUT_VERTICAL));
 	frame.Assign("LB_ALWAYS_SB", new Value_Number(wxLB_ALWAYS_SB));
 	frame.Assign("LB_BOTTOM", new Value_Number(wxLB_BOTTOM));
 	frame.Assign("LB_DEFAULT", new Value_Number(wxLB_DEFAULT));
