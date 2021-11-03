@@ -32,6 +32,166 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.GridEvent#AltDown()
+Gurax_DeclareMethodAlias(wxGridEvent, AltDown_gurax, "AltDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridEvent, AltDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->AltDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GridEvent#ControlDown()
+Gurax_DeclareMethodAlias(wxGridEvent, ControlDown_gurax, "ControlDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridEvent, ControlDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->ControlDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GridEvent#GetCol()
+Gurax_DeclareMethodAlias(wxGridEvent, GetCol_gurax, "GetCol")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridEvent, GetCol_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetCol();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GridEvent#GetPosition() {block?}
+Gurax_DeclareMethodAlias(wxGridEvent, GetPosition_gurax, "GetPosition")
+{
+	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridEvent, GetPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
+		pEntity_gurax->GetPosition()));
+}
+
+// wx.GridEvent#GetRow()
+Gurax_DeclareMethodAlias(wxGridEvent, GetRow_gurax, "GetRow")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridEvent, GetRow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetRow();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GridEvent#MetaDown()
+Gurax_DeclareMethodAlias(wxGridEvent, MetaDown_gurax, "MetaDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridEvent, MetaDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->MetaDown();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GridEvent#Selecting()
+Gurax_DeclareMethodAlias(wxGridEvent, Selecting_gurax, "Selecting")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridEvent, Selecting_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->Selecting();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GridEvent#ShiftDown()
+Gurax_DeclareMethodAlias(wxGridEvent, ShiftDown_gurax, "ShiftDown")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridEvent, ShiftDown_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->ShiftDown();
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +209,14 @@ void VType_wxGridEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGridEvent, AltDown_gurax));
+	Assign(Gurax_CreateMethod(wxGridEvent, ControlDown_gurax));
+	Assign(Gurax_CreateMethod(wxGridEvent, GetCol_gurax));
+	Assign(Gurax_CreateMethod(wxGridEvent, GetPosition_gurax));
+	Assign(Gurax_CreateMethod(wxGridEvent, GetRow_gurax));
+	Assign(Gurax_CreateMethod(wxGridEvent, MetaDown_gurax));
+	Assign(Gurax_CreateMethod(wxGridEvent, Selecting_gurax));
+	Assign(Gurax_CreateMethod(wxGridEvent, ShiftDown_gurax));
 }
 
 //------------------------------------------------------------------------------

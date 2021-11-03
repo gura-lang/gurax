@@ -2,6 +2,14 @@
 // VType_wxGridEvent.gura
 //==============================================================================
 GridEvent = Class(NotifyEvent) {
+	AltDown() as bool
+	ControlDown() as bool
+	GetCol() as int
+	GetPosition() as Point
+	GetRow() as int
+	MetaDown() as bool
+	Selecting() as bool
+	ShiftDown() as bool
 }
 
 @event {

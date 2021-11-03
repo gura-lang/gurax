@@ -63,15 +63,16 @@ PanelTop = class(wx.Panel) {
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 			this.textCtrl = ctrl
 		}
-		//this.grid.ForceRefresh()
-		//this.grid.Layout()
 	}
 	OnGrid(event) = {
 		this.PrintGridEvent(event)
+		event.Skip()
 	}
 	PrintGridEvent(event) = {
 		eventName = event.GetEventType().name
-		this.Printf('%s()\n', eventName)
+		pt = event.GetPosition()
+		this.Printf('%s([%d, %d], [%d, %d], Shift=%s, Control=%s, Alt=%s, Meta=%s)\n', eventName,
+			event.GetRow(), event.GetCol(), pt.x, pt.y, event.ShiftDown(), event.ControlDown(), event.AltDown(), event.MetaDown())
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
