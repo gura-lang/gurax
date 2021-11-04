@@ -175,6 +175,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxInputStream);
 	frame.Assign(VTYPE_wxJoystickEvent);
 	frame.Assign(VTYPE_wxKeyEvent);
+	frame.Assign(VTYPE_wxLayoutAlgorithm);
 	frame.Assign(VTYPE_wxLayoutConstraints);
 	frame.Assign(VTYPE_wxListbook);
 	frame.Assign(VTYPE_wxListBox);

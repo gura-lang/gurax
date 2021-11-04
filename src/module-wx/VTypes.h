@@ -170,6 +170,7 @@
 #include "VType_wxInputStream.h"
 #include "VType_wxJoystickEvent.h"
 #include "VType_wxKeyEvent.h"
+#include "VType_wxLayoutAlgorithm.h"
 #include "VType_wxLayoutConstraints.h"
 #include "VType_wxListbook.h"
 #include "VType_wxListBox.h"

@@ -1,0 +1,53 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	panel as wx.Panel
+	sashTop as wx.SashLayoutWindow
+	__init__(parent as wx.Window) = {|parent|
+		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
+			sash.SetDefaultSize(wx.Size(1000, 100));
+			sash.SetOrientation(wx.LAYOUT_HORIZONTAL);
+			sash.SetAlignment(wx.LAYOUT_TOP);
+			sash.SetSashVisible(wx.SASH_BOTTOM, true);
+			this.sashTop = sash
+		}
+		wx.Panel(this.sashTop, wx.ID_ANY, style = wx.BORDER_SUNKEN)
+		wx.Panel(this, wx.ID_ANY, style = wx.BORDER_SUNKEN) {|panel|
+			this.panel = panel
+		}
+		wx.EVT_SIZE(this, this.OnSize)
+		wx.EVT_SASH_DRAGGED(this, this.OnSashDragged)
+	}
+	OnSize(event) = {
+		wx.LayoutAlgorithm().LayoutWindow(this, this.panel)
+		event.Skip()
+	}
+	OnSashDragged(event) = {
+		if (event.GetDragStatus() != wx.SASH_STATUS_OUT_OF_RANGE) {
+			id = event.GetId()
+			if (id == this.sashTop.GetId()) {
+				//g.htSashTop = event.GetDragRect().GetHeight() + 2
+				htSashTop = event.GetDragRect().GetHeight() + 2
+				this.sashTop.SetDefaultSize(wx.Size(1000, htSashTop))
+			}
+			wx.LayoutAlgorithm().LayoutWindow(this, this.panel)
+			this.panel.Refresh()
+		}
+	}
+}
+
+wx.ImplementApp(MyApp())

@@ -167,6 +167,7 @@ set(SRCFILES_VTYPE
 	VType_wxInputStream.cpp
 	VType_wxJoystickEvent.cpp
 	VType_wxKeyEvent.cpp
+	VType_wxLayoutAlgorithm.cpp
 	VType_wxLayoutConstraints.cpp
 	VType_wxListbook.cpp
 	VType_wxListBox.cpp
