@@ -3,4 +3,89 @@
 //==============================================================================
 Rect = Class {
 	__init__(x as int = 0, y as int = 0, width as int = 0, height as int = 0)
+	Contains(x as int, y as int) as bool
+	//Contains(pt as const_Point_r) as bool
+	//Contains(rect as const_Rect_r) as bool
+	GetBottom() as int
+	GetBottomLeft() as Point
+	GetBottomRight() as Point
+	GetHeight() as int
+	GetLeft() as int
+	GetPosition() as Point
+	GetRight() as int
+	GetSize() as Size
+	GetTop() as int
+	GetTopLeft() as Point
+	GetTopRight() as Point
+	GetWidth() as int
+	GetX() as int
+	GetY() as int
+	Intersect(rect as const_Rect_r) as Rect
+	//Intersect(rect as const_Rect_r) as Rect
+	//Intersects(rect as const_Rect_r) as bool
+	IsEmpty() as bool
+	SetHeight(height as int) as void
+	SetPosition(pos as const_Point_r) as void
+	SetSize(s as const_Size_r) as void
+	SetWidth(width as int) as void
+	SetX(x as int) as void
+	SetY(y as int) as void
+	SetLeft(left as int) as void
+	SetRight(right as int) as void
+	SetTop(top as int) as void
+	SetBottom(bottom as int) as void
+	SetTopLeft(p as const_Point_r) as void
+	SetBottomRight(p as const_Point_r) as void
+	SetTopRight(p as const_Point_r) as void
+	SetBottomLeft(p as const_Point_r) as void
+	CentreIn(r as const_Rect_r, dir as int = wxBOTH) as Rect
+	//CenterIn(r as const_Rect_r, dir as int = wxBOTH) as Rect
+	Deflate(dx as Coord, dy as Coord):returnThis
+	//Deflate(diff as const_Size_r):returnThis
+	//Deflate(diff as Coord):returnThis
+	//Deflate(dx as Coord, dy as Coord):returnThis
+	Inflate(dx as Coord, dy as Coord):returnThis
+	//Inflate(diff as const_Size_r):returnThis
+	//Inflate(diff as Coord):returnThis
+	//Inflate(dx as Coord, dy as Coord):returnThis
+	Offset(dx as Coord, dy as Coord) as void
+	//Offset(pt as const_Point_r) as void
+	Union(rect as const_Rect_r):returnThis
+	//Union(rect as const_Rect_r):returnThis
+	width.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().width);
+		'''
+	width.setter as int = \
+		R'''
+		int width = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().width = width;
+		'''
+	height.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().height);
+		'''
+	height.setter as int = \
+		R'''
+		int height = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().height = height;
+		'''
+	x.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().x);
+		'''
+	x.setter as int = \
+		R'''
+		int x = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().x = x;
+		'''
+	y.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().y);
+		'''
+	y.setter as int = \
+		R'''
+		int y = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().y = y;
+		'''
 }

@@ -2,7 +2,7 @@
 // VType_wxSashEvent.gura
 //==============================================================================
 SashEvent = Class(CommandEvent) {
-	//GetDrawRect() as Rect
+	GetDragRect() as Rect
 	GetDragStatus() as SashDragStatus
 	GetEdge() as SashEdgePosition
 	SetEdge(edge as SashEdgePosition) as void

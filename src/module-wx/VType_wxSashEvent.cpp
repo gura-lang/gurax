@@ -32,6 +32,27 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.SashEvent#GetDragRect() {block?}
+Gurax_DeclareMethodAlias(wxSashEvent, GetDragRect_gurax, "GetDragRect")
+{
+	Declare(VTYPE_wxRect, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSashEvent, GetDragRect_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
+		pEntity_gurax->GetDragRect()));
+}
+
 // wx.SashEvent#GetDragStatus()
 Gurax_DeclareMethodAlias(wxSashEvent, GetDragStatus_gurax, "GetDragStatus")
 {
@@ -161,6 +182,7 @@ void VType_wxSashEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxSashEvent, GetDragRect_gurax));
 	Assign(Gurax_CreateMethod(wxSashEvent, GetDragStatus_gurax));
 	Assign(Gurax_CreateMethod(wxSashEvent, GetEdge_gurax));
 	Assign(Gurax_CreateMethod(wxSashEvent, SetEdge_gurax));
