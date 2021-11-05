@@ -19,7 +19,7 @@ PanelTop = class(wx.Panel) {
 	sashTop as wx.SashLayoutWindow
 	__init__(parent as wx.Window) = {|parent|
 		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
-			sash.SetDefaultSize(wx.Size(1000, 100));
+			sash.SetDefaultSize(wx.Size(100, 100));
 			sash.SetOrientation(wx.LAYOUT_HORIZONTAL);
 			sash.SetAlignment(wx.LAYOUT_TOP);
 			sash.SetSashVisible(wx.SASH_BOTTOM, true);
