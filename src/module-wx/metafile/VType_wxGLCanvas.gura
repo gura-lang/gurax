@@ -9,4 +9,6 @@ GLCanvas = Class(Window) {
 	SetColour(colour as const_String_r) as bool
 	SetCurrent(context as const_GLContext_r) as bool
 	SwapBuffers() as bool
+	//IsDisplaySupported(const int *attribList):static as bool
+	IsExtensionSupported(extension as const_char_p):static as bool
 }

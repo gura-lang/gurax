@@ -140,6 +140,26 @@ Gurax_ImplementMethodEx(wxGLCanvas, SwapBuffers_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.GLCanvas.IsExtensionSupported(extension as String)
+Gurax_DeclareClassMethodAlias(wxGLCanvas, IsExtensionSupported_gurax, "IsExtensionSupported")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("extension", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxGLCanvas, IsExtensionSupported_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* extension = args_gurax.PickString();
+	// Function body
+	bool rtn = wxGLCanvas::IsExtensionSupported(extension);
+	return new Gurax::Value_Bool(rtn);
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -159,6 +179,7 @@ void VType_wxGLCanvas::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxGLCanvas, SetColour_gurax));
 	Assign(Gurax_CreateMethod(wxGLCanvas, SetCurrent_gurax));
 	Assign(Gurax_CreateMethod(wxGLCanvas, SwapBuffers_gurax));
+	Assign(Gurax_CreateMethod(wxGLCanvas, IsExtensionSupported_gurax));
 }
 
 //------------------------------------------------------------------------------

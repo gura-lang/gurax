@@ -2,4 +2,15 @@
 // VType_wxIcon.gura
 //==============================================================================
 Icon = Class(GDIObject) {
+	//CreateFromHICON(icon as WXHICON) as bool
+	//ConvertToDisabled(brightness as unsigned_char = 255) as Icon
+	CopyFromBitmap(bmp as const_Bitmap_r) as void
+	GetDepth() as int
+	GetHeight() as int
+	GetWidth() as int
+	IsOk() as bool
+	LoadFile(name as const_String_r, type as BitmapType = wxICON_DEFAULT_TYPE, desiredWidth as int = -1, desiredHeight as int = -1) as bool
+	SetDepth(depth as int) as void
+	SetHeight(height as int) as void
+	SetWidth(width as int) as void
 }
