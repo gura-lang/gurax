@@ -3,7 +3,7 @@
 //==============================================================================
 GLCanvas = Class(Window) {
 	@include['wx/glcanvas.h']
-	__init__(parent as Window_p, id as WindowID = wxID_ANY, attribList[] as int,
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, attribList[]? as int,
 		pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0,
 		name as const_String_r = "GLCanvas", palette as const_Palette_r = wxNullPalette)
 	SetColour(colour as const_String_r) as bool
