@@ -16,16 +16,25 @@ MyFrame = class(wx.Frame) {
 
 PanelTop = class(wx.Panel) {
 	panel as wx.Panel
-	sashTop as wx.SashLayoutWindow
+	sash1 as wx.SashLayoutWindow
+	sash2 as wx.SashLayoutWindow
 	__init__(parent as wx.Window) = {|parent|
 		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
 			sash.SetDefaultSize(wx.Size(1000, 100));
 			sash.SetOrientation(wx.LAYOUT_HORIZONTAL);
 			sash.SetAlignment(wx.LAYOUT_TOP);
 			sash.SetSashVisible(wx.SASH_BOTTOM, true);
-			this.sashTop = sash
+			this.sash1 = sash
 		}
-		wx.Panel(this.sashTop, wx.ID_ANY, style = wx.BORDER_SUNKEN)
+		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
+			sash.SetDefaultSize(wx.Size(1000, 100));
+			sash.SetOrientation(wx.LAYOUT_HORIZONTAL);
+			sash.SetAlignment(wx.LAYOUT_TOP);
+			sash.SetSashVisible(wx.SASH_BOTTOM, true);
+			this.sash2 = sash
+		}
+		wx.StaticText(this.sash1, wx.ID_ANY, 'sash1', style = wx.BORDER_SUNKEN)
+		wx.StaticText(this.sash2, wx.ID_ANY, 'sash2', style = wx.BORDER_SUNKEN)
 		wx.Panel(this, wx.ID_ANY, style = wx.BORDER_SUNKEN) {|panel|
 			this.panel = panel
 		}
@@ -39,10 +48,12 @@ PanelTop = class(wx.Panel) {
 	OnSashDragged(event) = {
 		if (event.GetDragStatus() != wx.SASH_STATUS_OUT_OF_RANGE) {
 			id = event.GetId()
-			if (id == this.sashTop.GetId()) {
-				//g.htSashTop = event.GetDragRect().GetHeight() + 2
+			if (id == this.sash1.GetId()) {
 				htSashTop = event.GetDragRect().GetHeight() + 2
-				this.sashTop.SetDefaultSize(wx.Size(1000, htSashTop))
+				this.sash1.SetDefaultSize(wx.Size(1000, htSashTop))
+			} elsif (id == this.sash2.GetId()) {
+				htSashTop = event.GetDragRect().GetHeight() + 2
+				this.sash2.SetDefaultSize(wx.Size(1000, htSashTop))
 			}
 			wx.LayoutAlgorithm().LayoutWindow(this, this.panel)
 			this.panel.Refresh()
