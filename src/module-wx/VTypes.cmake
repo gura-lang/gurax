@@ -300,6 +300,7 @@ set(SRCFILES_VTYPE
 	VType_wxTreeCtrl.cpp
 	VType_wxTreeEvent.cpp
 	VType_wxTreeItemId.cpp
+	VType_wxUpdateUIEvent.cpp
 	VType_wxValidator.cpp
 	VType_wxVisualAttributes.cpp
 	VType_wxVListBox.cpp

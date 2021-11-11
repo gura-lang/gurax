@@ -303,6 +303,7 @@
 #include "VType_wxTreeCtrl.h"
 #include "VType_wxTreeEvent.h"
 #include "VType_wxTreeItemId.h"
+#include "VType_wxUpdateUIEvent.h"
 #include "VType_wxValidator.h"
 #include "VType_wxVisualAttributes.h"
 #include "VType_wxVListBox.h"

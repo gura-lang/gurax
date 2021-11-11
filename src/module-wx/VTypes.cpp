@@ -308,6 +308,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTreeCtrl);
 	frame.Assign(VTYPE_wxTreeEvent);
 	frame.Assign(VTYPE_wxTreeItemId);
+	frame.Assign(VTYPE_wxUpdateUIEvent);
 	frame.Assign(VTYPE_wxValidator);
 	frame.Assign(VTYPE_wxVisualAttributes);
 	frame.Assign(VTYPE_wxVListBox);

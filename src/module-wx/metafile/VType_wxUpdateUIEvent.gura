@@ -1,0 +1,17 @@
+//==============================================================================
+// VType_wxUpdateUIEvent.gura
+//==============================================================================
+UpdateUIEvent = Class(CommandEvent) {
+	Check(check as bool) as void
+	Enable(enable as bool) as void
+	GetChecked() as bool
+	GetEnabled() as bool
+	GetSetChecked() as bool
+	GetSetEnabled() as bool
+	GetSetShown() as bool
+	GetSetText() as bool
+	GetShown() as bool
+	GetText() as String
+	SetText(text as const_String_r) as void
+	Show(show as bool) as void
+}

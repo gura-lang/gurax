@@ -37,7 +37,7 @@ public:
 public:
 	// Constructor
 	Value_wxUpdateUIEvent() = delete;
-	Value_wxUpdateUIEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxUpdateUIEvent) :
+	Value_wxUpdateUIEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxUpdateUIEvent) :
 		Value_wxCommandEvent(entity, pValueUserData, vtype) {}
 	// Copy constructor/operator
 	Value_wxUpdateUIEvent(const Value_wxUpdateUIEvent& src) = delete;
@@ -49,18 +49,10 @@ protected:
 	// Destructor
 	~Value_wxUpdateUIEvent() = default;
 public:
-	wxUpdateUIEvent& GetEntity() {
-		return reinterpret_cast<wxUpdateUIEvent&>(Value_wxEvent::GetEntity());
-	}
-	const wxUpdateUIEvent& GetEntity() const {
-		return reinterpret_cast<const wxUpdateUIEvent&>(Value_wxEvent::GetEntity());
-	}
-	wxUpdateUIEvent* GetEntityPtr() {
-		return reinterpret_cast<wxUpdateUIEvent*>(Value_wxEvent::GetEntityPtr());
-	}
-	const wxUpdateUIEvent* GetEntityPtr() const {
-		return reinterpret_cast<const wxUpdateUIEvent*>(Value_wxEvent::GetEntityPtr());
-	}
+	wxUpdateUIEvent& GetEntity() { return reinterpret_cast<wxUpdateUIEvent&>(Value_wxCommandEvent::GetEntity()); }
+	const wxUpdateUIEvent& GetEntity() const { return reinterpret_cast<const wxUpdateUIEvent&>(Value_wxCommandEvent::GetEntity()); }
+	wxUpdateUIEvent* GetEntityPtr() { return reinterpret_cast<wxUpdateUIEvent*>(Value_wxCommandEvent::GetEntityPtr()); }\
+	const wxUpdateUIEvent* GetEntityPtr() const { return reinterpret_cast<const wxUpdateUIEvent*>(Value_wxCommandEvent::GetEntityPtr()); }
 public:
 	static wxUpdateUIEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxUpdateUIEvent&>(value).GetEntity();

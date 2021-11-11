@@ -1,0 +1,48 @@
+#!/usr/bin/env gurax
+import(wx)
+import(opengl) {*}
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+GLCanvas = class(wx.GLCanvas) {
+	m_context as wx.GLContext
+	__init__(parent as wx.Window) = {|parent, wx.ID_ANY|
+		this.m_context = wx.GLContext(this)
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event as wx.PaintEvent) = {
+		glEnable(GL_DEPTH_TEST)
+		glEnable(GL_LIGHTING)
+		glEnable(GL_LIGHT0)
+		dc = wx.PaintDC(this)
+		this.m_context.SetCurrent(this)
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glFlush()
+		this.SwapBuffers()
+		dc = nil
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
+		this.SetSizer(sizerTop)
+		GLCanvas(this) {|canvas|
+			sizerTop.Add(canvas, wx.SizerFlags(1).Expand())
+		}
+	}
+}
+
+wx.ImplementApp(MyApp())
