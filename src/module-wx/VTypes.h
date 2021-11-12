@@ -54,6 +54,7 @@
 #include "VType_wxCloseEvent.h"
 #include "VType_wxCmdLineParser.h"
 #include "VType_wxCollapsiblePane.h"
+#include "VType_wxCollapsiblePaneEvent.h"
 #include "VType_wxColour.h"
 #include "VType_wxColourData.h"
 #include "VType_wxColourDialog.h"

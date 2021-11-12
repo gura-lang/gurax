@@ -59,6 +59,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxCloseEvent);
 	frame.Assign(VTYPE_wxCmdLineParser);
 	frame.Assign(VTYPE_wxCollapsiblePane);
+	frame.Assign(VTYPE_wxCollapsiblePaneEvent);
 	frame.Assign(VTYPE_wxColour);
 	frame.Assign(VTYPE_wxColourData);
 	frame.Assign(VTYPE_wxColourDialog);

@@ -1,0 +1,7 @@
+//==============================================================================
+// VType_wxCollapsiblePaneEvent.gura
+//==============================================================================
+CollapsiblePaneEvent = Class(CommandEvent) {
+	GetCollapsed() as bool
+	SetCollapsed(collapsed as bool) as void
+}

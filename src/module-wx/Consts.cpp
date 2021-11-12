@@ -176,6 +176,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("CLRP_SHOW_LABEL", new Value_Number(wxCLRP_SHOW_LABEL));
 	frame.Assign("CLRP_USE_TEXTCTRL", new Value_Number(wxCLRP_USE_TEXTCTRL));
 	frame.Assign("COPY", new Value_Number(wxCOPY));
+	frame.Assign("CP_DEFAULT_STYLE", new Value_Number(wxCP_DEFAULT_STYLE));
+	frame.Assign("CP_NO_TLW_RESIZE", new Value_Number(wxCP_NO_TLW_RESIZE));
 	frame.Assign("DEFAULT_DIALOG_STYLE", new Value_Number(wxDEFAULT_DIALOG_STYLE));
 	frame.Assign("DEFAULT_FRAME_STYLE", new Value_Number(wxDEFAULT_FRAME_STYLE));
 	frame.Assign("DF_BITMAP", new Value_Number(wxDF_BITMAP));
