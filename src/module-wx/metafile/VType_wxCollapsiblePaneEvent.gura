@@ -5,3 +5,7 @@ CollapsiblePaneEvent = Class(CommandEvent) {
 	GetCollapsed() as bool
 	SetCollapsed(collapsed as bool) as void
 }
+
+@event {
+	EVT_COLLAPSIBLEPANE_CHANGED >> CollapsiblePaneEvent
+}

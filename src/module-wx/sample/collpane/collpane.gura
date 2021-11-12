@@ -39,11 +39,22 @@ PANE_ABOUT = wx.ID_ABOUT
 MyApp = class(wx.App) {
 	__init__() = {}
 	OnInit() = {
+		//if ( !wxApp::OnInit() )
+		//	return false;
+
+		// create and show the main frame
+		frame = MyFrame()
+
+		frame.Show(true)
+
+		true
 	}
 }
 
 MyFrame = class(wx.Frame) {
-	__init__() = {}
+	__init__() = {|nil, wx.ID_ANY, ''|
+		this.EventTable()
+	}
 	// Menu commands
 	OnCollapse(event as wx.CommandEvent) = {
 	}
@@ -70,56 +81,35 @@ MyFrame = class(wx.Frame) {
 	m_collPane as wx.CollapsiblePane
 	m_collHeaderCtrl as wx.CollapsibleHeaderCtrl
 	m_paneSizer as wx.BoxSizer
+	
+	EventTable() = {
+		wx.EVT_MENU(this, id = PANE_COLLAPSE, this.OnCollapse)
+		wx.EVT_MENU(this, id = PANE_EXPAND, this.OnExpand)
+		wx.EVT_MENU(this, id = PANE_SETLABEL, this.OnSetLabel)
+		wx.EVT_MENU(this, id = PANE_SHOWDLG, this.OnShowDialog)
+		wx.EVT_MENU(this, id = PANE_ABOUT, this.OnAbout)
+		wx.EVT_MENU(this, id = PANE_QUIT, this.Quit)
+
+		//wx.EVT_UPDATE_UI(this, id = PANE_COLLAPSE, this.OnCollapseUpdateUI)
+		//wx.EVT_UPDATE_UI(this, id = PANE_EXPAND, this.OnExpandUpdateUI)
+
+		//wx.EVT_COLLAPSIBLEHEADER_CHANGED(this, id = wxID_ANY, this.OnCollapsibleHeaderChanged)
+	}
 }
 
-/*
+MyDialog = class(wx.Dialog) {
+	__init__(parent as wx.Frame) = {
+	}
+	OnToggleStatus(event as wx.CommandEvent) = {
+	}
+	OnAlignButton(event as wx.CommandEvent) = {
+	}
+	OnPaneChanged(event as wx.CollapsiblePaneEvent) = {
+	}
 
-class MyFrame: public wxFrame
-{
-public:
-	MyFrame();
-	virtual ~MyFrame();
-
-	// Menu commands
-	void OnCollapse(wxCommandEvent& event);
-	void OnExpand(wxCommandEvent& event);
-	void OnSetLabel(wxCommandEvent& event);
-	void OnShowDialog(wxCommandEvent& event);
-	void Quit(wxCommandEvent& event);
-	void OnAbout(wxCommandEvent& event);
-
-	// UI update handlers
-	void OnCollapseUpdateUI(wxUpdateUIEvent& event);
-	void OnExpandUpdateUI(wxUpdateUIEvent& event);
-
-	void OnCollapsibleHeaderChanged(wxCommandEvent& event);
-
-private:
-	wxCollapsiblePane *m_collPane;
-	wxCollapsibleHeaderCtrl *m_collHeaderCtrl;
-	wxBoxSizer *m_paneSizer;
-
-	wxDECLARE_EVENT_TABLE();
-	wxDECLARE_NO_COPY_CLASS(MyFrame);
-};
-
-class MyDialog : public wxDialog
-{
-public:
-	MyDialog(wxFrame *parent);
-	void OnToggleStatus(wxCommandEvent& WXUNUSED(ev));
-	void OnAlignButton(wxCommandEvent& WXUNUSED(ev));
-	void OnPaneChanged(wxCollapsiblePaneEvent& event);
-
-private:
-	wxCollapsiblePane *m_collPane;
-	wxGridSizer *m_paneSizer;
-
-	wxDECLARE_EVENT_TABLE();
-	wxDECLARE_NO_COPY_CLASS(MyDialog);
-};
-
-
+	m_collPane as wx.CollapsiblePane
+	m_paneSizer as wx.GridSizer
+}
 
 // ============================================================================
 // implementation
@@ -129,38 +119,14 @@ private:
 // MyApp
 // ----------------------------------------------------------------------------
 
-wxIMPLEMENT_APP(MyApp);
+wx.ImplementApp(MyApp())
 
-bool MyApp::OnInit()
-{
-	if ( !wxApp::OnInit() )
-		return false;
-
-	// create and show the main frame
-	MyFrame* frame = new MyFrame;
-
-	frame->Show(true);
-
-	return true;
-}
+/*
 
 // ----------------------------------------------------------------------------
 // MyFrame
 // ----------------------------------------------------------------------------
 
-wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
-	EVT_MENU(PANE_COLLAPSE, MyFrame::OnCollapse)
-	EVT_MENU(PANE_EXPAND, MyFrame::OnExpand)
-	EVT_MENU(PANE_SETLABEL, MyFrame::OnSetLabel)
-	EVT_MENU(PANE_SHOWDLG, MyFrame::OnShowDialog)
-	EVT_MENU(PANE_ABOUT, MyFrame::OnAbout)
-	EVT_MENU(PANE_QUIT, MyFrame::Quit)
-
-	EVT_UPDATE_UI(PANE_COLLAPSE, MyFrame::OnCollapseUpdateUI)
-	EVT_UPDATE_UI(PANE_EXPAND, MyFrame::OnExpandUpdateUI)
-
-	EVT_COLLAPSIBLEHEADER_CHANGED(wxID_ANY, MyFrame::OnCollapsibleHeaderChanged)
-wxEND_EVENT_TABLE()
 
 // My frame constructor
 MyFrame::MyFrame()

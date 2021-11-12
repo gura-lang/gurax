@@ -15,3 +15,7 @@ UpdateUIEvent = Class(CommandEvent) {
 	SetText(text as const_String_r) as void
 	Show(show as bool) as void
 }
+
+@event {
+	EVT_UPDATE_UI	>> UpdateUIEvent
+}
