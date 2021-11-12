@@ -90,10 +90,10 @@ MyFrame = class(wx.Frame) {
 		wx.EVT_MENU(this, id = PANE_ABOUT, this.OnAbout)
 		wx.EVT_MENU(this, id = PANE_QUIT, this.Quit)
 
-		//wx.EVT_UPDATE_UI(this, id = PANE_COLLAPSE, this.OnCollapseUpdateUI)
-		//wx.EVT_UPDATE_UI(this, id = PANE_EXPAND, this.OnExpandUpdateUI)
+		wx.EVT_UPDATE_UI(this, id = PANE_COLLAPSE, this.OnCollapseUpdateUI)
+		wx.EVT_UPDATE_UI(this, id = PANE_EXPAND, this.OnExpandUpdateUI)
 
-		//wx.EVT_COLLAPSIBLEHEADER_CHANGED(this, id = wxID_ANY, this.OnCollapsibleHeaderChanged)
+		wx.EVT_COLLAPSIBLEHEADER_CHANGED(this, id = wxID_ANY, this.OnCollapsibleHeaderChanged)
 	}
 }
 

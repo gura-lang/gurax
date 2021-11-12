@@ -29,7 +29,6 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGED,		wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGING,		wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_COLLAPSIBLEPANE_CHANGED,		wxCollapsiblePaneEvent);
-	Gurax_AssignEvent(EVT_COLLAPSIBLEPANE_CHANGED,		wxCollapsiblePaneEvent);
 	Gurax_AssignEvent(EVT_COMBOBOX,						wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_BUTTON_CLICKED,		wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_ENTER,				wxCommandEvent);
@@ -39,8 +38,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,			wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxCommandEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_DIALUP_CONNECTED,				wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DIALUP_DISCONNECTED,			wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES,					wxDropFilesEvent);
@@ -112,7 +111,6 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_MOUSEWHEEL,					wxMouseEvent);
 	Gurax_AssignEvent(EVT_MOUSE_CAPTURE_CHANGED,		wxMouseCaptureChangedEvent);
 	Gurax_AssignEvent(EVT_MOUSE_CAPTURE_LOST,			wxMouseCaptureLostEvent);
-	Gurax_AssignEvent(EVT_NAVIGATION_KEY,				wxNavigationKeyEvent);
 	Gurax_AssignEvent(EVT_NAVIGATION_KEY,				wxNavigationKeyEvent);
 	Gurax_AssignEvent(EVT_NOTEBOOK_PAGE_CHANGED,		wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_NOTEBOOK_PAGE_CHANGING,		wxBookCtrlEvent);

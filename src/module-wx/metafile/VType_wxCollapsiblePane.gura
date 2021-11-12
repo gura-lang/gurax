@@ -16,8 +16,3 @@ CollapsiblePane = Class(Control) {
 	CP_DEFAULT_STYLE
 	CP_NO_TLW_RESIZE
 }
-
-@event {
-	EVT_COLLAPSIBLEPANE_CHANGED	>> CollapsiblePaneEvent
-	EVT_NAVIGATION_KEY			>> NavigationKeyEvent
-}
