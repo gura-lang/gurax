@@ -62,6 +62,9 @@ void AssignObjects(Frame& frame)
 		frame.Assign("TRANSPARENT_PEN",		new Value_wxPen(*wxTRANSPARENT_PEN));
 		frame.Assign("WHITE_PEN",			new Value_wxPen(*wxWHITE_PEN));
 	} while (0);
+	do { // Predefined Objects of wxPoint
+		frame.Assign("DefaultPosition",		new Value_wxPoint(wxDefaultPosition));
+	} while (0);
 }
 
 Gurax_EndModuleScope(wx)

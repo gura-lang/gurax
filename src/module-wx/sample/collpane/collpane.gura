@@ -52,7 +52,7 @@ MyApp = class(wx.App) {
 }
 
 MyFrame = class(wx.Frame) {
-	__init__() = {|nil, wx.ID_ANY, ''|
+	__init__() = {|nil, wx.ID_ANY, 'wxCollapsiblePane sample', wx.DefaultPosition, wx.Size(420, 300)|
 		this.EventTable()
 	}
 	// Menu commands
