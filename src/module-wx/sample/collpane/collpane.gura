@@ -53,7 +53,51 @@ MyApp = class(wx.App) {
 
 MyFrame = class(wx.Frame) {
 	__init__() = {|nil, wx.ID_ANY, 'wxCollapsiblePane sample', wx.DefaultPosition, wx.Size(420, 300)|
-		this.EventTable()
+		//SetIcon(wxICON(sample));
+		this.CreateStatusBar(2);
+
+		// Make a menubar
+		paneMenu = wx.Menu()
+		paneMenu.Append(PANE_COLLAPSE, "Collapse\tCtrl-C");
+		paneMenu.Append(PANE_EXPAND, "Expand\tCtrl-E");
+		paneMenu.AppendSeparator();
+		paneMenu.Append(PANE_SETLABEL, "Set label...\tCtrl-L");
+		paneMenu.AppendSeparator();
+		paneMenu.Append(PANE_SHOWDLG, "Show dialog...\tCtrl-S");
+		paneMenu.AppendSeparator();
+		paneMenu.Append(PANE_QUIT);
+
+		helpMenu = wx.Menu();
+		helpMenu.Append(PANE_ABOUT);
+
+		menuBar = wx.MenuBar();
+		menuBar.Append(paneMenu, "&Pane");
+		menuBar.Append(helpMenu, "&Help");
+		this.SetMenuBar(menuBar);
+
+		this.m_collPane = wx.CollapsiblePane(this, -1, "This is a wxCollapsiblePane");
+		win = this.m_collPane.GetPane();
+
+		this.m_paneSizer = wx.BoxSizer( wx.HORIZONTAL );
+		paneSubSizer = wx.BoxSizer( wx.VERTICAL );
+		this.m_paneSizer.AddSpacer( 20 );
+		//this.m_paneSizer.Add( paneSubSizer, 1 );
+		/*
+		paneSubSizer.Add( wx.StaticText(win, -1, "Static text" ), 0, wx.ALIGN_LEFT | wx.ALL, 3 );
+		paneSubSizer.Add( wx.StaticText(win, -1, "Yet another one!" ), 0, wx.ALIGN_LEFT | wx.ALL, 3 );
+		paneSubSizer.Add( wx.TextCtrl(win, PANE_TEXTCTRL, "Text control", wx.DefaultPosition, wx.Size(80,-1) ), 0, wx.ALIGN_LEFT | wx.ALL, 3 );
+		paneSubSizer.Add( wx.Button(win, PANE_BUTTON, "Press to align right" ), 0, wx.ALIGN_LEFT | wx.ALL, 3 );
+
+		win.SetSizer( this.m_paneSizer );
+
+		this.m_collHeaderCtrl = wx.CollapsibleHeaderCtrl(this, wx.ID_ANY, "Collapsed wx.CollapsibleHeaderCtrl");
+
+		sizerTop = wx.BoxSizer(wx.VERTICAL);
+		sizerTop.Add(this.m_collPane, wx.SizerFlags(1).Expand());
+		sizerTop.Add(this.m_collHeaderCtrl);
+		this.SetSizer(sizerTop);
+		*/
+		//this.EventTable()
 	}
 	// Menu commands
 	OnCollapse(event as wx.CommandEvent) = {
@@ -133,52 +177,6 @@ MyFrame::MyFrame()
 	   : wxFrame(NULL, wxID_ANY, "wxCollapsiblePane sample",
 				 wxDefaultPosition, wxSize(420, 300))
 {
-	SetIcon(wxICON(sample));
-
-#if wxUSE_STATUSBAR
-	CreateStatusBar(2);
-#endif // wxUSE_STATUSBAR
-
-	// Make a menubar
-	wxMenu *paneMenu = new wxMenu;
-	paneMenu->Append(PANE_COLLAPSE, "Collapse\tCtrl-C");
-	paneMenu->Append(PANE_EXPAND, "Expand\tCtrl-E");
-	paneMenu->AppendSeparator();
-	paneMenu->Append(PANE_SETLABEL, "Set label...\tCtrl-L");
-	paneMenu->AppendSeparator();
-	paneMenu->Append(PANE_SHOWDLG, "Show dialog...\tCtrl-S");
-	paneMenu->AppendSeparator();
-	paneMenu->Append(PANE_QUIT);
-
-	wxMenu *helpMenu = new wxMenu;
-	helpMenu->Append(PANE_ABOUT);
-
-	wxMenuBar *menuBar = new wxMenuBar;
-	menuBar->Append(paneMenu, "&Pane");
-	menuBar->Append(helpMenu, "&Help");
-	SetMenuBar(menuBar);
-
-	m_collPane = new wxCollapsiblePane(this, -1, "This is a wxCollapsiblePane");
-	wxWindow *win = m_collPane->GetPane();
-
-	m_paneSizer = new wxBoxSizer( wxHORIZONTAL );
-	wxBoxSizer* paneSubSizer = new wxBoxSizer( wxVERTICAL );
-	m_paneSizer->AddSpacer( 20 );
-	m_paneSizer->Add( paneSubSizer, 1 );
-
-	paneSubSizer->Add( new wxStaticText(win, -1, "Static text" ), 0, wxALIGN_LEFT | wxALL, 3 );
-	paneSubSizer->Add( new wxStaticText(win, -1, "Yet another one!" ), 0, wxALIGN_LEFT | wxALL, 3 );
-	paneSubSizer->Add( new wxTextCtrl(win, PANE_TEXTCTRL, "Text control", wxDefaultPosition, wxSize(80,-1) ), 0, wxALIGN_LEFT | wxALL, 3 );
-	paneSubSizer->Add( new wxButton(win, PANE_BUTTON, "Press to align right" ), 0, wxALIGN_LEFT | wxALL, 3 );
-
-	win->SetSizer( m_paneSizer );
-
-	m_collHeaderCtrl = new wxCollapsibleHeaderCtrl(this, wxID_ANY, "Collapsed wxCollapsibleHeaderCtrl");
-
-	wxSizer* const sizerTop = new wxBoxSizer(wxVERTICAL);
-	sizerTop->Add(m_collPane, wxSizerFlags(1).Expand());
-	sizerTop->Add(m_collHeaderCtrl);
-	SetSizer(sizerTop);
 }
 
 MyFrame::~MyFrame()
@@ -194,12 +192,12 @@ void MyFrame::Quit(wxCommandEvent& WXUNUSED(event) )
 
 void MyFrame::OnCollapse(wxCommandEvent& WXUNUSED(event) )
 {
-	m_collPane->Collapse();
+	m_collPane.Collapse();
 }
 
 void MyFrame::OnExpand(wxCommandEvent& WXUNUSED(event) )
 {
-	m_collPane->Expand();
+	m_collPane.Expand();
 }
 
 void MyFrame::OnSetLabel(wxCommandEvent& WXUNUSED(event) )
@@ -208,9 +206,9 @@ void MyFrame::OnSetLabel(wxCommandEvent& WXUNUSED(event) )
 					(
 						"Enter new label",
 						wxGetTextFromUserPromptStr,
-						m_collPane->GetLabel()
+						m_collPane.GetLabel()
 					);
-	m_collPane->SetLabel(text);
+	m_collPane.SetLabel(text);
 }
 
 void MyFrame::OnShowDialog(wxCommandEvent& WXUNUSED(event) )
@@ -231,22 +229,22 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event) )
 
 void MyFrame::OnCollapseUpdateUI(wxUpdateUIEvent& event)
 {
-	event.Enable(!m_collPane->IsCollapsed());
+	event.Enable(!m_collPane.IsCollapsed());
 }
 
 void MyFrame::OnExpandUpdateUI(wxUpdateUIEvent& event)
 {
-	event.Enable(m_collPane->IsCollapsed());
+	event.Enable(m_collPane.IsCollapsed());
 }
 
 void MyFrame::OnCollapsibleHeaderChanged(wxCommandEvent& WXUNUSED(event))
 {
-	m_collHeaderCtrl->SetLabel
+	m_collHeaderCtrl.SetLabel
 		(
 			wxString::Format
 			(
 				"%s wxCollapsibleHeaderCtrl",
-				m_collHeaderCtrl->IsCollapsed() ? "Collapsed" : "Expanded"
+				m_collHeaderCtrl.IsCollapsed() ? "Collapsed" : "Expanded"
 			)
 		);
 }
@@ -272,44 +270,44 @@ MyDialog::MyDialog(wxFrame *parent)
 							wxRESIZE_BORDER|wxDEFAULT_DIALOG_STYLE )
 {
 	wxSizer *sz = new wxBoxSizer(wxVERTICAL);
-	sz->Add(new wxStaticText(this, -1,
+	sz.Add(new wxStaticText(this, -1,
 		"This dialog allows you to test the wxCollapsiblePane control"),
 		0, wxALL, 5);
-	sz->Add(new wxButton(this, PANEDLG_TOGGLESTATUS_BTN, "Change status"),
+	sz.Add(new wxButton(this, PANEDLG_TOGGLESTATUS_BTN, "Change status"),
 		1, wxGROW|wxALL, 5);
 
 	m_collPane = new wxCollapsiblePane(this, -1, "Click here for a surprise");
-	sz->Add(m_collPane, 0, wxGROW|wxALL, 5);
-	sz->Add(new wxTextCtrl(this, -1, "just a test"), 0, wxGROW|wxALL, 5);
-	sz->AddSpacer(10);
-	sz->Add(new wxButton(this, wxID_OK), 0, wxALIGN_RIGHT|wxALL, 5);
+	sz.Add(m_collPane, 0, wxGROW|wxALL, 5);
+	sz.Add(new wxTextCtrl(this, -1, "just a test"), 0, wxGROW|wxALL, 5);
+	sz.AddSpacer(10);
+	sz.Add(new wxButton(this, wxID_OK), 0, wxALIGN_RIGHT|wxALL, 5);
 
 	// now add test controls in the collapsible pane
-	wxWindow *win = m_collPane->GetPane();
+	wxWindow *win = m_collPane.GetPane();
 	m_paneSizer = new wxGridSizer(4, 1, 5, 5);
 
-	m_paneSizer->Add( new wxStaticText(win, -1, "Static text" ), 0, wxALIGN_LEFT );
-	m_paneSizer->Add( new wxStaticText(win, -1, "Yet another one!" ), 0, wxALIGN_LEFT );
-	m_paneSizer->Add( new wxTextCtrl(win, PANE_TEXTCTRL, "Text control", wxDefaultPosition, wxSize(80,-1) ), 0, wxALIGN_LEFT );
-	m_paneSizer->Add( new wxButton(win, PANE_BUTTON, "Press to align right" ), 0, wxALIGN_LEFT );
-	win->SetSizer( m_paneSizer );
+	m_paneSizer.Add( new wxStaticText(win, -1, "Static text" ), 0, wxALIGN_LEFT );
+	m_paneSizer.Add( new wxStaticText(win, -1, "Yet another one!" ), 0, wxALIGN_LEFT );
+	m_paneSizer.Add( new wxTextCtrl(win, PANE_TEXTCTRL, "Text control", wxDefaultPosition, wxSize(80,-1) ), 0, wxALIGN_LEFT );
+	m_paneSizer.Add( new wxButton(win, PANE_BUTTON, "Press to align right" ), 0, wxALIGN_LEFT );
+	win.SetSizer( m_paneSizer );
 
-	win->SetSizer( m_paneSizer );
-	m_paneSizer->SetSizeHints(win);
+	win.SetSizer( m_paneSizer );
+	m_paneSizer.SetSizeHints(win);
 
 	SetSizer(sz);
-	sz->SetSizeHints(this);
+	sz.SetSizeHints(this);
 }
 
 void MyDialog::OnToggleStatus(wxCommandEvent& WXUNUSED(ev))
 {
-	m_collPane->Collapse(!m_collPane->IsCollapsed());
+	m_collPane.Collapse(!m_collPane.IsCollapsed());
 }
 
 void MyDialog::OnAlignButton(wxCommandEvent& WXUNUSED(ev))
 {
-   wxSizerItem *item = m_paneSizer->GetItem( FindWindow(PANE_TEXTCTRL), true );
-   item->SetFlag(  wxALIGN_RIGHT );
+   wxSizerItem *item = m_paneSizer.GetItem( FindWindow(PANE_TEXTCTRL), true );
+   item.SetFlag(  wxALIGN_RIGHT );
 
    Layout();
 }

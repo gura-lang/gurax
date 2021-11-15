@@ -89,6 +89,48 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
 			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("sizer", VTYPE_wxSizer);
+			pDeclCallable->DeclareArg("proportion", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("flag", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("border", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		wxSizer* sizer = args.Pick<Value_wxSizer>().GetEntityPtr();
+		int proportion = args.IsValid()? args.PickNumber<int>() : 0;
+		int flag = args.IsValid()? args.PickNumber<int>() : 0;
+		int border = args.IsValid()? args.PickNumber<int>() : 0;
+		wxSizerItem* rtn = pEntity_gurax->Add(sizer, proportion, flag, border);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+	} while (0);
+	Error::Clear();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("width", VTYPE_Number);
+			pDeclCallable->DeclareArg("height", VTYPE_Number);
+			pDeclCallable->DeclareArg("proportion", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("flag", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("border", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		ArgPicker args(*pArgument);
+		int width = args.PickNumber<int>();
+		int height = args.PickNumber<int>();
+		int proportion = args.IsValid()? args.PickNumber<int>() : 0;
+		int flag = args.IsValid()? args.PickNumber<int>() : 0;
+		int border = args.IsValid()? args.PickNumber<int>() : 0;
+		wxSizerItem* rtn = pEntity_gurax->Add(width, height, proportion, flag, border);
+		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
+	} while (0);
+	Error::Clear();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
 			pDeclCallable->DeclareArg("width", VTYPE_Number);
 			pDeclCallable->DeclareArg("height", VTYPE_Number);
 			pDeclCallable->DeclareArg("flags", VTYPE_wxSizerFlags);
