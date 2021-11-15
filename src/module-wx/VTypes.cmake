@@ -50,6 +50,7 @@ set(SRCFILES_VTYPE
 	VType_wxClipboard.cpp
 	VType_wxCloseEvent.cpp
 	VType_wxCmdLineParser.cpp
+	VType_wxCollapsibleHeaderCtrl.cpp
 	VType_wxCollapsiblePane.cpp
 	VType_wxCollapsiblePaneEvent.cpp
 	VType_wxColour.cpp

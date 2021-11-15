@@ -81,8 +81,8 @@ MyFrame = class(wx.Frame) {
 		this.m_paneSizer = wx.BoxSizer( wx.HORIZONTAL );
 		paneSubSizer = wx.BoxSizer( wx.VERTICAL );
 		this.m_paneSizer.AddSpacer( 20 );
-		//this.m_paneSizer.Add( paneSubSizer, 1 );
-		/*
+		this.m_paneSizer.Add( paneSubSizer, 1 );
+		
 		paneSubSizer.Add( wx.StaticText(win, -1, "Static text" ), 0, wx.ALIGN_LEFT | wx.ALL, 3 );
 		paneSubSizer.Add( wx.StaticText(win, -1, "Yet another one!" ), 0, wx.ALIGN_LEFT | wx.ALL, 3 );
 		paneSubSizer.Add( wx.TextCtrl(win, PANE_TEXTCTRL, "Text control", wx.DefaultPosition, wx.Size(80,-1) ), 0, wx.ALIGN_LEFT | wx.ALL, 3 );
@@ -96,8 +96,7 @@ MyFrame = class(wx.Frame) {
 		sizerTop.Add(this.m_collPane, wx.SizerFlags(1).Expand());
 		sizerTop.Add(this.m_collHeaderCtrl);
 		this.SetSizer(sizerTop);
-		*/
-		//this.EventTable()
+		this.EventTable()
 	}
 	// Menu commands
 	OnCollapse(event as wx.CommandEvent) = {
@@ -137,7 +136,7 @@ MyFrame = class(wx.Frame) {
 		wx.EVT_UPDATE_UI(this, id = PANE_COLLAPSE, this.OnCollapseUpdateUI)
 		wx.EVT_UPDATE_UI(this, id = PANE_EXPAND, this.OnExpandUpdateUI)
 
-		wx.EVT_COLLAPSIBLEHEADER_CHANGED(this, id = wxID_ANY, this.OnCollapsibleHeaderChanged)
+		//wx.EVT_COLLAPSIBLEHEADER_CHANGED(this, id = wxID_ANY, this.OnCollapsibleHeaderChanged)
 	}
 }
 
