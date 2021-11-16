@@ -168,101 +168,56 @@ MyFrame = class(wx.Frame) {
 }
 
 MyDialog = class(wx.Dialog) {
-	__init__(parent as wx.Frame) = {
+	__init__(parent as wx.Frame) = {|parent, wx.ID_ANY, "Test dialog",
+							wx.DefaultPosition, wx.DefaultSize,
+							(wx.RESIZE_BORDER | wx.DEFAULT_DIALOG_STYLE)|
+		sz = wx.BoxSizer(wx.VERTICAL);
+		sz.Add(wx.StaticText(this, -1,
+			"This dialog allows you to test the wx.CollapsiblePane control"),
+			0, wx.ALL, 5);
+		sz.Add(wx.Button(this, PANEDLG_TOGGLESTATUS_BTN, "Change status"),
+			1, wx.GROW|wx.ALL, 5);
+
+		m_collPane = wx.CollapsiblePane(this, -1, "Click here for a surprise");
+		sz.Add(this.this.m_collPane, 0, wx.GROW|wx.ALL, 5);
+		sz.Add(wx.TextCtrl(this, -1, "just a test"), 0, wx.GROW|wx.ALL, 5);
+		sz.AddSpacer(10);
+		sz.Add(wx.Button(this, wx.ID_OK), 0, wx.ALIGN_RIGHT|wx.ALL, 5);
+
+		// now add test controls in the collapsible pane
+		win = this.m_collPane.GetPane();
+		this.m_paneSizer = wx.GridSizer(4, 1, 5, 5);
+
+		this.m_paneSizer.Add( wx.StaticText(win, -1, "Static text" ), 0, wx.ALIGN_LEFT );
+		this.m_paneSizer.Add( wx.StaticText(win, -1, "Yet another one!" ), 0, wx.ALIGN_LEFT );
+		this.m_paneSizer.Add( wx.TextCtrl(win, PANE_TEXTCTRL, "Text control", wx.DefaultPosition, wx.Size(80,-1) ), 0, wx.ALIGN_LEFT );
+		this.m_paneSizer.Add( wx.Button(win, PANE_BUTTON, "Press to align right" ), 0, wx.ALIGN_LEFT );
+		win.SetSizer( this.m_paneSizer );
+
+		win.SetSizer( this.m_paneSizer );
+		this.m_paneSizer.SetSizeHints(win);
+
+		this.SetSizer(sz);
+		sz.SetSizeHints(this);
 	}
 	OnToggleStatus(event as wx.CommandEvent) = {
+		m_collPane.Collapse(!m_collPane.IsCollapsed());
 	}
 	OnAlignButton(event as wx.CommandEvent) = {
+		item = this.m_paneSizer.GetItem( this.FindWindow(PANE_TEXTCTRL), true );
+		item.SetFlag(  wx.ALIGN_RIGHT );
+		this.Layout();
 	}
 	OnPaneChanged(event as wx.CollapsiblePaneEvent) = {
+		wx.LogMessage("The pane has just been %s by the user",
+				cond(event.GetCollapsed(), "collapsed", "expanded"));
 	}
 
 	m_collPane as wx.CollapsiblePane
 	m_paneSizer as wx.GridSizer
+	EventTable() = {
+		EVT_BUTTON(this, id = PANEDLG_TOGGLESTATUS_BTN, this.OnToggleStatus)
+		EVT_COLLAPSIBLEPANE_CHANGED(this, id = wx.ID_ANY, this.OnPaneChanged)
+		EVT_BUTTON(this, this.PANE_BUTTON, this.OnAlignButton)
+	}
 }
-
-// ============================================================================
-// implementation
-// ============================================================================
-
-// ----------------------------------------------------------------------------
-// MyApp
-// ----------------------------------------------------------------------------
-
-wx.ImplementApp(MyApp())
-
-/*
-
-void MyFrame::OnCollapsibleHeaderChanged(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-// ----------------------------------------------------------------------------
-// MyDialog
-// ----------------------------------------------------------------------------
-
-enum
-{
-	PANEDLG_TOGGLESTATUS_BTN = wxID_HIGHEST
-};
-
-wxBEGIN_EVENT_TABLE(MyDialog, wxDialog)
-	EVT_BUTTON(PANEDLG_TOGGLESTATUS_BTN, MyDialog::OnToggleStatus)
-	EVT_COLLAPSIBLEPANE_CHANGED(wxID_ANY, MyDialog::OnPaneChanged)
-	EVT_BUTTON(PANE_BUTTON, MyDialog::OnAlignButton)
-wxEND_EVENT_TABLE()
-
-MyDialog::MyDialog(wxFrame *parent)
-				: wxDialog(parent, wxID_ANY, "Test dialog",
-							wxDefaultPosition, wxDefaultSize,
-							wxRESIZE_BORDER|wxDEFAULT_DIALOG_STYLE )
-{
-	wxSizer *sz = new wxBoxSizer(wxVERTICAL);
-	sz.Add(new wxStaticText(this, -1,
-		"This dialog allows you to test the wxCollapsiblePane control"),
-		0, wxALL, 5);
-	sz.Add(new wxButton(this, PANEDLG_TOGGLESTATUS_BTN, "Change status"),
-		1, wxGROW|wxALL, 5);
-
-	m_collPane = new wxCollapsiblePane(this, -1, "Click here for a surprise");
-	sz.Add(m_collPane, 0, wxGROW|wxALL, 5);
-	sz.Add(new wxTextCtrl(this, -1, "just a test"), 0, wxGROW|wxALL, 5);
-	sz.AddSpacer(10);
-	sz.Add(new wxButton(this, wxID_OK), 0, wxALIGN_RIGHT|wxALL, 5);
-
-	// now add test controls in the collapsible pane
-	wxWindow *win = m_collPane.GetPane();
-	m_paneSizer = new wxGridSizer(4, 1, 5, 5);
-
-	m_paneSizer.Add( new wxStaticText(win, -1, "Static text" ), 0, wxALIGN_LEFT );
-	m_paneSizer.Add( new wxStaticText(win, -1, "Yet another one!" ), 0, wxALIGN_LEFT );
-	m_paneSizer.Add( new wxTextCtrl(win, PANE_TEXTCTRL, "Text control", wxDefaultPosition, wxSize(80,-1) ), 0, wxALIGN_LEFT );
-	m_paneSizer.Add( new wxButton(win, PANE_BUTTON, "Press to align right" ), 0, wxALIGN_LEFT );
-	win.SetSizer( m_paneSizer );
-
-	win.SetSizer( m_paneSizer );
-	m_paneSizer.SetSizeHints(win);
-
-	SetSizer(sz);
-	sz.SetSizeHints(this);
-}
-
-void MyDialog::OnToggleStatus(wxCommandEvent& WXUNUSED(ev))
-{
-	m_collPane.Collapse(!m_collPane.IsCollapsed());
-}
-
-void MyDialog::OnAlignButton(wxCommandEvent& WXUNUSED(ev))
-{
-   wxSizerItem *item = m_paneSizer.GetItem( FindWindow(PANE_TEXTCTRL), true );
-   item.SetFlag(  wxALIGN_RIGHT );
-
-   Layout();
-}
-
-void MyDialog::OnPaneChanged(wxCollapsiblePaneEvent& event)
-{
-	wxLogMessage("The pane has just been %s by the user",
-			   event.GetCollapsed() ? "collapsed" : "expanded");
-}
-*/
