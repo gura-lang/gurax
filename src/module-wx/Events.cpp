@@ -28,6 +28,7 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_CHOICE,						wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGED,		wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGING,		wxBookCtrlEvent);
+	Gurax_AssignEvent(EVT_COLLAPSIBLEHEADER_CHANGED,	wxCommandEvent);
 	Gurax_AssignEvent(EVT_COLLAPSIBLEPANE_CHANGED,		wxCollapsiblePaneEvent);
 	Gurax_AssignEvent(EVT_COMBOBOX,						wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_BUTTON_CLICKED,		wxCommandEvent);

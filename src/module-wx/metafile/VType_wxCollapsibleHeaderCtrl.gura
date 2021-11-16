@@ -5,4 +5,10 @@ CollapsibleHeaderCtrl = Class(Control) {
 	@include['wx/collheaderctrl.h']
 	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxBORDER_NONE, validator as Validator = wxDefaultValidator, name as String = wxCollapsibleHeaderCtrlNameStr)
+	SetCollapsed(collapsed as bool = true) as void
+	IsCollapsed() as bool
+}
+
+@event {
+	EVT_COLLAPSIBLEHEADER_CHANGED	>> CommandEvent
 }

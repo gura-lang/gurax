@@ -70,6 +70,49 @@ Gurax_ImplementConstructorEx(CollapsibleHeaderCtrl_gurax, processor_gurax, argum
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.CollapsibleHeaderCtrl#SetCollapsed(collapsed? as Bool)
+Gurax_DeclareMethodAlias(wxCollapsibleHeaderCtrl, SetCollapsed_gurax, "SetCollapsed")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("collapsed", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCollapsibleHeaderCtrl, SetCollapsed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool collapsed = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetCollapsed(collapsed);
+	return Gurax::Value::nil();
+}
+
+// wx.CollapsibleHeaderCtrl#IsCollapsed()
+Gurax_DeclareMethodAlias(wxCollapsibleHeaderCtrl, IsCollapsed_gurax, "IsCollapsed")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCollapsibleHeaderCtrl, IsCollapsed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsCollapsed();
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -87,6 +130,8 @@ void VType_wxCollapsibleHeaderCtrl::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CollapsibleHeaderCtrl_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxCollapsibleHeaderCtrl, SetCollapsed_gurax));
+	Assign(Gurax_CreateMethod(wxCollapsibleHeaderCtrl, IsCollapsed_gurax));
 }
 
 //------------------------------------------------------------------------------

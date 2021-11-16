@@ -42,5 +42,4 @@ CommandEvent = Class(Event) {
 	EVT_COMMAND_KILL_FOCUS			>> CommandEvent
 	EVT_COMMAND_ENTER				>> CommandEvent
 	EVT_COMMAND_BUTTON_CLICKED		>> CommandEvent
-	//EVT_COLLAPSIBLEHEADER_CHANGED	>> CommandEvent
 }
