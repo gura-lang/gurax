@@ -221,3 +221,5 @@ MyDialog = class(wx.Dialog) {
 		EVT_BUTTON(this, this.PANE_BUTTON, this.OnAlignButton)
 	}
 }
+
+wx.ImplementApp(MyApp())
