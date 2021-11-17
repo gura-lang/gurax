@@ -700,6 +700,29 @@ void AssignConsts(Frame& frame)
 Gurax_EndModuleScope(wx)
 '''
 
+tmplFunctions = tR'''
+//==============================================================================
+// Functions.cpp
+//==============================================================================
+#include "stdafx.h"
+Gurax_BeginModuleScope(wx)
+
+//------------------------------------------------------------------------------
+// Implementation of function
+//------------------------------------------------------------------------------
+${//cbridge.EvalTmplFunctionImplementation(funcInfoTbl)}
+
+//------------------------------------------------------------------------------
+// Assignment
+//------------------------------------------------------------------------------
+void AssignFunctions(Frame& frame)
+{
+	${//cbridge.EvalTmplFunctionAssignment(funcInfoTbl)}
+}
+
+Gurax_EndModuleScope(wx)
+'''
+
 PropInfo = class {
 	funcInfo_propSetter as cbridge.FuncInfo
 	funcInfo_propGetter as cbridge.FuncInfo
@@ -815,6 +838,7 @@ ClassInfo = class {
 
 EventInfo = struct { eventName as String, className as String }
 
+funcInfoTbl = []
 classInfoTbl = []
 classInfoToMixinTbl = []
 constNameTbl = []
@@ -920,9 +944,12 @@ path.Glob('metafile/*.gura').Each {|pathName|
 					}
 				}
 			} else {
-				sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
-				sys.Exit(1)
+				funcInfoTbl.Add(cbridge.CreateFuncInfo(r, 'wx', expr))
+				//sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
+				//sys.Exit(1)
 			}
+		} else {
+			funcInfoTbl.Add(cbridge.CreateFuncInfo(r, 'wx', expr))
 		}
 	}
 }
@@ -1259,7 +1286,12 @@ GenerateEvent(eventInfoTbl[] as EventInfo, colAlign as Number) = {
 	tmplEvents.Render('Events.cpp')
 }
 
+GenerateFunction(funcInfoTbl[] as cbridge.FuncInfo) = {
+	tmplFunctions.Render('FunctionsX.cpp')
+}
+
 GenerateVType(classInfoTbl)
 GenerateConst(constNameTbl.Sort().Uniq():list)
 eventNames = eventInfoTbl::eventName
 GenerateEvent(eventInfoTbl.Sort(keys = eventNames), Int((('Gurax_AssignEvent' + ',').width + ((eventNames:*len).Max()) + 3) / 4 * 4 + 4))
+GenerateFunction(funcInfoTbl.Sort(keys = funcInfoTbl::name))
