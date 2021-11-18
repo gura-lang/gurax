@@ -1,0 +1,29 @@
+AboutBox(info as const_AboutDialogInfo_r, parent as Window_p = NULL) as void
+//GenericAboutBox(info as const_AboutDialogInfo_r, parent as Window_p = NULL) as void
+GetSingleChoiceIndex(message as const_String_r, caption as const_String_r, aChoices as const_ArrayString_r, parent as Window_p = NULL, x as int = wxDefaultCoord, y as int = wxDefaultCoord, centre as bool = true, width as int = wxCHOICE_WIDTH, height as int = wxCHOICE_HEIGHT, initialSelection as int = 0) as int
+//GetSingleChoiceIndex(message as const_String_r, caption as const_String_r, choices as const_ArrayString_r, initialSelection as int, parent as Window_p = NULL) as int
+//GetSingleChoiceIndex(message as const_String_r, caption as const_String_r, n as int, choices as const_String_p, initialSelection as int, parent as Window_p = NULL) as int
+GetSingleChoice(message as const_String_r, caption as const_String_r, aChoices as const_ArrayString_r, parent as Window_p = NULL, x as int = wxDefaultCoord, y as int = wxDefaultCoord, centre as bool = true, width as int = wxCHOICE_WIDTH, height as int = wxCHOICE_HEIGHT, initialSelection as int = 0) as String
+//GetSingleChoice(message as const_String_r, caption as const_String_r, choices as const_ArrayString_r, initialSelection as int, parent as Window_p = NULL) as String
+//GetSingleChoice(message as const_String_r, caption as const_String_r, n as int, choices as const_String_p, initialSelection as int, parent as Window_p = NULL) as String
+//GetSingleChoiceData(message as const_String_r, caption as const_String_r, choices as const_ArrayString_r, client_data as void_p_p, initialSelection as int, parent as Window_p = NULL) as void_p
+//GetSingleChoiceData(message as const_String_r, caption as const_String_r, n as int, choices as const_String_p, client_data as void_p_p, initialSelection as int, parent as Window_p = NULL) as void_p
+//GetSelectedChoices(selections as ArrayInt_r, message as const_String_r, caption as const_String_r, aChoices as const_ArrayString_r, parent as Window_p = NULL, x as int = wxDefaultCoord, y as int = wxDefaultCoord, centre as bool = true, width as int = wxCHOICE_WIDTH, height as int = wxCHOICE_HEIGHT) as int
+GetColourFromUser(parent as Window_p, colInit as const_Colour_r, caption as const_String_r = "", data as ColourData_p = NULL) as Colour
+DirSelector(message as const_String_r = wxDirSelectorPromptStr, default_path as const_String_r = "", style as long = 0, pos as const_Point_r = wxDefaultPosition, parent as Window_p = NULL) as String
+FileSelector(message as const_String_r, default_path as const_String_r = "", default_filename as const_String_r = "", default_extension as const_String_r = "", wildcard as const_String_r = wxFileSelectorDefaultWildcardStr, flags as int = 0, parent as Window_p = NULL, x as int = wxDefaultCoord, y as int = wxDefaultCoord) as String
+//FileSelectorEx(message as const_String_r = wxFileSelectorPromptStr, default_path as const_String_r = "", default_filename as const_String_r = "", indexDefaultExtension as int_p = NULL, wildcard as const_String_r = wxFileSelectorDefaultWildcardStr, flags as int = 0, parent as Window_p = NULL, x as int = wxDefaultCoord, y as int = wxDefaultCoord) as String
+LoadFileSelector(what as const_String_r, extension as const_String_r, default_name as const_String_r = "", parent as Window_p = NULL) as String
+SaveFileSelector(what as const_String_r, extension as const_String_r, default_name as const_String_r = "", parent as Window_p = NULL) as String
+GetFontFromUser(parent as Window_p, fontInit as const_Font_r, caption as const_String_r = "") as Font
+MessageBox(message as const_String_r, caption as const_String_r = wxMessageBoxCaptionStr, style as int = wxOK|wxCENTRE, parent as Window_p = NULL, x as int = wxDefaultCoord, y as int = wxDefaultCoord) as int
+GetNumberFromUser(message as const_String_r, prompt as const_String_r, caption as const_String_r, value as long, min as long = 0, max as long = 100, parent as Window_p = NULL, pos as const_Point_r = wxDefaultPosition) as long
+GetTextFromUser(message as const_String_r, caption as const_String_r = wxGetTextFromUserPromptStr, default_value as const_String_r = "", parent as Window_p = NULL, x as int = wxDefaultCoord, y as int = wxDefaultCoord, centre as bool = true) as String
+GetPasswordFromUser(message as const_String_r, caption as const_String_r = wxGetPasswordFromUserPromptStr, default_value as const_String_r = "", parent as Window_p = NULL, x as int = wxDefaultCoord, y as int = wxDefaultCoord, centre as bool = true) as String
+//CreateFileTipProvider(filename as const_String_r, currentTip as size_t) as TipProvider_p
+//ShowTip(parent as Window_p, tipProvider as TipProvider_p, showAtStartup as bool = true) as bool
+BeginBusyCursor(cursor as const_Cursor_p = wxHOURGLASS_CURSOR) as void
+EndBusyCursor() as void
+IsBusy() as bool
+Bell() as void
+InfoMessageBox(parent as Window_p) as void

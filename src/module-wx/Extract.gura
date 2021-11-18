@@ -2,25 +2,98 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxCollapsiblePane (wxWindow *parent, wxWindowID id, const wxString &label, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxCP_DEFAULT_STYLE, const wxValidator &validator=wxDefaultValidator, const wxString &name=wxCollapsiblePaneNameStr)
- 	Initializes the object and calls Create() with all the parameters. More...
+void 	wxAboutBox (const wxAboutDialogInfo &info, wxWindow *parent=NULL)
+ 	This function shows the standard about dialog containing the information specified in info. More...
  
-bool 	Create (wxWindow *parent, wxWindowID id, const wxString &label, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxCP_DEFAULT_STYLE, const wxValidator &validator=wxDefaultValidator, const wxString &name=wxCollapsiblePaneNameStr)
+void 	wxGenericAboutBox (const wxAboutDialogInfo &info, wxWindow *parent=NULL)
+ 	This function does the same thing as wxAboutBox() except that it always uses the generic wxWidgets version of the dialog instead of the native one. More...
  
-virtual void 	Collapse (bool collapse=true)
- 	Collapses or expands the pane window. More...
+int 	wxGetSingleChoiceIndex (const wxString &message, const wxString &caption, const wxArrayString &aChoices, wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true, int width=wxCHOICE_WIDTH, int height=wxCHOICE_HEIGHT, int initialSelection=0)
+ 	Same as wxGetSingleChoice() but returns the index representing the selected string. More...
  
-void 	Expand ()
- 	Same as calling Collapse(false). More...
+//int 	wxGetSingleChoiceIndex (const wxString &message, const wxString &caption, int n, const wxString &choices[], wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true, int width=wxCHOICE_WIDTH, int height=wxCHOICE_HEIGHT, int initialSelection=0)
  
-virtual wxWindow * 	GetPane () const
- 	Returns a pointer to the pane window. More...
+int 	wxGetSingleChoiceIndex (const wxString &message, const wxString &caption, const wxArrayString &choices, int initialSelection, wxWindow *parent=NULL)
  
-virtual bool 	IsCollapsed () const
- 	Returns true if the pane window is currently hidden. More...
+int 	wxGetSingleChoiceIndex (const wxString &message, const wxString &caption, int n, const wxString *choices, int initialSelection, wxWindow *parent=NULL)
  
-bool 	IsExpanded () const
-'''
+wxString 	wxGetSingleChoice (const wxString &message, const wxString &caption, const wxArrayString &aChoices, wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true, int width=wxCHOICE_WIDTH, int height=wxCHOICE_HEIGHT, int initialSelection=0)
+ 	Pops up a dialog box containing a message, OK/Cancel buttons and a single-selection listbox. More...
+ 
+//wxString 	wxGetSingleChoice (const wxString &message, const wxString &caption, int n, const wxString &choices[], wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true, int width=wxCHOICE_WIDTH, int height=wxCHOICE_HEIGHT, int initialSelection=0)
+ 
+wxString 	wxGetSingleChoice (const wxString &message, const wxString &caption, const wxArrayString &choices, int initialSelection, wxWindow *parent=NULL)
+ 
+wxString 	wxGetSingleChoice (const wxString &message, const wxString &caption, int n, const wxString *choices, int initialSelection, wxWindow *parent=NULL)
+ 
+//wxString 	wxGetSingleChoiceData (const wxString &message, const wxString &caption, const wxArrayString &aChoices, const wxString &client_data[], wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true, int width=wxCHOICE_WIDTH, int height=wxCHOICE_HEIGHT, int initialSelection=0)
+ 	Same as wxGetSingleChoice but takes an array of client data pointers corresponding to the strings, and returns one of these pointers or NULL if Cancel was pressed. More...
+ 
+//wxString 	wxGetSingleChoiceData (const wxString &message, const wxString &caption, int n, const wxString &choices[], const wxString &client_data[], wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true, int width=wxCHOICE_WIDTH, int height=wxCHOICE_HEIGHT, int initialSelection=0)
+ 
+void * 	wxGetSingleChoiceData (const wxString &message, const wxString &caption, const wxArrayString &choices, void **client_data, int initialSelection, wxWindow *parent=NULL)
+ 
+void * 	wxGetSingleChoiceData (const wxString &message, const wxString &caption, int n, const wxString *choices, void **client_data, int initialSelection, wxWindow *parent=NULL)
+ 
+int 	wxGetSelectedChoices (wxArrayInt &selections, const wxString &message, const wxString &caption, const wxArrayString &aChoices, wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true, int width=wxCHOICE_WIDTH, int height=wxCHOICE_HEIGHT)
+ 	Pops up a dialog box containing a message, OK/Cancel buttons and a multiple-selection listbox. More...
+ 
+//int 	wxGetSelectedChoices (wxArrayInt &selections, const wxString &message, const wxString &caption, int n, const wxString &choices[], wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true, int width=wxCHOICE_WIDTH, int height=wxCHOICE_HEIGHT)
+ 
+wxColour 	wxGetColourFromUser (wxWindow *parent, const wxColour &colInit, const wxString &caption=wxEmptyString, wxColourData *data=NULL)
+ 	Shows the colour selection dialog and returns the colour selected by user or invalid colour (use wxColour::IsOk() to test whether a colour is valid) if the dialog was cancelled. More...
+ 
+wxString 	wxDirSelector (const wxString &message=wxDirSelectorPromptStr, const wxString &default_path=wxEmptyString, long style=0, const wxPoint &pos=wxDefaultPosition, wxWindow *parent=NULL)
+ 	Pops up a directory selector dialog. More...
+ 
+wxString 	wxFileSelector (const wxString &message, const wxString &default_path=wxEmptyString, const wxString &default_filename=wxEmptyString, const wxString &default_extension=wxEmptyString, const wxString &wildcard=wxFileSelectorDefaultWildcardStr, int flags=0, wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord)
+ 	Pops up a file selector box. More...
+ 
+wxString 	wxFileSelectorEx (const wxString &message=wxFileSelectorPromptStr, const wxString &default_path=wxEmptyString, const wxString &default_filename=wxEmptyString, int *indexDefaultExtension=NULL, const wxString &wildcard=wxFileSelectorDefaultWildcardStr, int flags=0, wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord)
+ 	An extended version of wxFileSelector. More...
+ 
+wxString 	wxLoadFileSelector (const wxString &what, const wxString &extension, const wxString &default_name=wxEmptyString, wxWindow *parent=NULL)
+ 	Ask for filename to load. More...
+ 
+wxString 	wxSaveFileSelector (const wxString &what, const wxString &extension, const wxString &default_name=wxEmptyString, wxWindow *parent=NULL)
+ 	Ask for filename to save. More...
+ 
+wxFont 	wxGetFontFromUser (wxWindow *parent, const wxFont &fontInit, const wxString &caption=wxEmptyString)
+ 	Shows the font selection dialog and returns the font selected by user or invalid font (use wxFont::IsOk() to test whether a font is valid) if the dialog was cancelled. More...
+ 
+int 	wxMessageBox (const wxString &message, const wxString &caption=wxMessageBoxCaptionStr, int style=wxOK|wxCENTRE, wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord)
+ 	Show a general purpose message dialog. More...
+ 
+long 	wxGetNumberFromUser (const wxString &message, const wxString &prompt, const wxString &caption, long value, long min=0, long max=100, wxWindow *parent=NULL, const wxPoint &pos=wxDefaultPosition)
+ 	Shows a dialog asking the user for numeric input. More...
+ 
+wxString 	wxGetTextFromUser (const wxString &message, const wxString &caption=wxGetTextFromUserPromptStr, const wxString &default_value=wxEmptyString, wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true)
+ 	Pop up a dialog box with title set to caption, message, and a default_value. More...
+ 
+wxString 	wxGetPasswordFromUser (const wxString &message, const wxString &caption=wxGetPasswordFromUserPromptStr, const wxString &default_value=wxEmptyString, wxWindow *parent=NULL, int x=wxDefaultCoord, int y=wxDefaultCoord, bool centre=true)
+ 	Similar to wxGetTextFromUser() but the text entered in the dialog is not shown on screen but replaced with stars. More...
+ 
+wxTipProvider * 	wxCreateFileTipProvider (const wxString &filename, size_t currentTip)
+ 	This function creates a wxTipProvider which may be used with wxShowTip(). More...
+ 
+bool 	wxShowTip (wxWindow *parent, wxTipProvider *tipProvider, bool showAtStartup=true)
+ 	This function shows a "startup tip" to the user. More...
+ 
+void 	wxBeginBusyCursor (const wxCursor *cursor=wxHOURGLASS_CURSOR)
+ 	Changes the cursor to the given cursor for all windows in the application. More...
+ 
+void 	wxEndBusyCursor ()
+ 	Changes the cursor back to the original cursor, for all windows in the application. More...
+ 
+bool 	wxIsBusy ()
+ 	Returns true if between two wxBeginBusyCursor() and wxEndBusyCursor() calls. More...
+ 
+void 	wxBell ()
+ 	Ring the system bell. More...
+ 
+void 	wxInfoMessageBox (wxWindow *parent)
+ 	Shows a message box with the information about the wxWidgets build used, including its version, most important build parameters and the version of the underlying GUI toolkit. More...
+ '''
 //------------------------------------------------------------------------------
 
 txt.EachLine {|line, iLine|
