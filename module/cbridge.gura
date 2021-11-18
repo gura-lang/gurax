@@ -219,7 +219,7 @@ FuncInfo = class {
 	IsVoid() = (this.typeName == 'void')
 	ComposeArgs() = this.argInfoTbl:*ComposeArgRef().Join(', ')
 	ComposeArgsCDecl() = this.argInfoTbl:*ComposeArgCDecl().Join(', ')
-	ComposeCaller() = Format('%s(%s)', this.nameOnCall || this.name, this.ComposeArgs())
+	ComposeCaller(prefix as String = '') = Format('%s%s(%s)', prefix, this.nameOnCall || this.name, this.ComposeArgs())
 	ComposeCDecl(prefix as String = '') = {
 		typeInfo = this.GetTypeInfo()
 		Format('%s %s%s(%s)%s', typeInfo.cType, prefix, this.nameOnCall || this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))

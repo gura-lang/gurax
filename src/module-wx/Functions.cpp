@@ -2,83 +2,13 @@
 // Functions.cpp
 //==============================================================================
 #include "stdafx.h"
-
-class MyApp: public wxApp
-{
-public:
-	virtual bool OnInit();
-};
-class MyFrame: public wxFrame
-{
-public:
-	MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
-private:
-	void OnHello(wxCommandEvent& event);
-	void OnExit(wxCommandEvent& event);
-	void OnAbout(wxCommandEvent& event);
-	wxDECLARE_EVENT_TABLE();
-};
-enum
-{
-	ID_Hello = 1
-};
-wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
-	EVT_MENU(ID_Hello,   MyFrame::OnHello)
-	EVT_MENU(wxID_EXIT,  MyFrame::OnExit)
-	EVT_MENU(wxID_ABOUT, MyFrame::OnAbout)
-wxEND_EVENT_TABLE()
-//wxIMPLEMENT_APP(MyApp);
-bool MyApp::OnInit()
-{
-	MyFrame *frame = new MyFrame( "Hello World", wxPoint(50, 50), wxSize(450, 340) );
-	frame->Show( true );
-	return true;
-}
-MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
-		: wxFrame(NULL, wxID_ANY, title, pos, size)
-{
-	wxMenu *menuFile = new wxMenu;
-	menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
-					 "Help string shown in status bar for this menu item");
-	menuFile->AppendSeparator();
-	menuFile->Append(wxID_EXIT);
-	wxMenu *menuHelp = new wxMenu;
-	menuHelp->Append(wxID_ABOUT);
-	wxMenuBar *menuBar = new wxMenuBar;
-	menuBar->Append( menuFile, "&File" );
-	menuBar->Append( menuHelp, "&Help" );
-	SetMenuBar( menuBar );
-	CreateStatusBar();
-	SetStatusText( "Welcome to wxWidgets!" );
-	wxPanel* pPanel = new wxPanel(this);
-	wxSizer* sizerTop = new wxBoxSizer(wxVERTICAL);
-	pPanel->SetSizer(sizerTop);
-	::printf("check\n");
-	sizerTop->Add(new wxComboBox(pPanel, wxID_ANY), wxSizerFlags().Expand());
-	//sizerTop->Add(new wxButton(pPanel, wxID_ANY, "push"), wxSizerFlags().Expand());
-	//sizerTop->Add(new wxButton(pPanel, wxID_ANY, "push"), wxSizerFlags(1).Expand());
-}
-void MyFrame::OnExit(wxCommandEvent& event)
-{
-	Close( true );
-}
-void MyFrame::OnAbout(wxCommandEvent& event)
-{
-	wxMessageBox( "This is a wxWidgets' Hello world sample",
-				  "About Hello World", wxOK | wxICON_INFORMATION );
-}
-void MyFrame::OnHello(wxCommandEvent& event)
-{
-	wxLogMessage("Hello world from wxWidgets!");
-}
-
 Gurax_BeginModuleScope(wx)
 
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// wx.Test()
-Gurax_DeclareFunction(Test)
+// wx.Bell()
+Gurax_DeclareFunctionAlias(Bell_gurax, "Bell")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -86,50 +16,49 @@ Gurax_DeclareFunction(Test)
 		"");
 }
 
-Gurax_ImplementFunction(Test)
+Gurax_ImplementFunctionEx(Bell_gurax, processor_gurax, argument_gurax)
 {
-	int argc = 0;
-	char* argv[1] = { nullptr };
-	wxApp::SetInstance(new MyApp());
-	::wxEntry(argc, argv);
-	return Value::nil();
+	// Function body
+	wxBell();
+	return Gurax::Value::nil();
 }
 
 // wx.GetKeyCodeName(keyCode as Number)
-Gurax_DeclareFunction(GetKeyCodeName)
+Gurax_DeclareFunctionAlias(GetKeyCodeName_gurax, "GetKeyCodeName")
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("keyCode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementFunction(GetKeyCodeName)
+Gurax_ImplementFunctionEx(GetKeyCodeName_gurax, processor_gurax, argument_gurax)
 {
-	// Argument
-	ArgPicker args(argument);
-	int keyCode = args.PickNumber<int>();
-	// Function Body
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int keyCode = args_gurax.PickNumber<int>();
+	// Function body
 	return new Value_String(Util::GetKeyCodeName(keyCode));
 }
 
 // wx.ImplementApp(app as wx.App)
-Gurax_DeclareFunction(ImplementApp)
+Gurax_DeclareFunctionAlias(ImplementApp_gurax, "ImplementApp")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("app", VTYPE_wxApp, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementFunction(ImplementApp)
+Gurax_ImplementFunctionEx(ImplementApp_gurax, processor_gurax, argument_gurax)
 {
-	// Argument
-	ArgPicker args(argument);
-	auto app = Value_wxApp::GetEntityPtr(args.PickValue());
-	// Function Body
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxApp& value_app = args_gurax.Pick<Value_wxApp>();
+	wxApp* app = value_app.GetEntityPtr();
+	// Function body
 	wxApp::SetInstance(app);
 	int argc = 0;
 	char* argv[1] = { nullptr };
@@ -138,7 +67,7 @@ Gurax_ImplementFunction(ImplementApp)
 }
 
 // wx.InitAllImageHandlers()
-Gurax_DeclareFunction(InitAllImageHandlers)
+Gurax_DeclareFunctionAlias(InitAllImageHandlers_gurax, "InitAllImageHandlers")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
@@ -146,17 +75,17 @@ Gurax_DeclareFunction(InitAllImageHandlers)
 		"");
 }
 
-Gurax_ImplementFunction(InitAllImageHandlers)
+Gurax_ImplementFunctionEx(InitAllImageHandlers_gurax, processor_gurax, argument_gurax)
 {
-	// Function Body
-	::wxInitAllImageHandlers();
-	return Value::nil();
+	// Function body
+	wxInitAllImageHandlers();
+	return Gurax::Value::nil();
 }
 
 // wx.MessageBox(message as String, caption? as String, style? as Number, parent? as wx.Window, x? as Number, y? as Number)
-Gurax_DeclareFunctionAlias(MessageBox_, "MessageBox")
+Gurax_DeclareFunctionAlias(MessageBox_gurax, "MessageBox")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("caption", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -168,19 +97,22 @@ Gurax_DeclareFunctionAlias(MessageBox_, "MessageBox")
 		"");
 }
 
-Gurax_ImplementFunction(MessageBox_)
+Gurax_ImplementFunctionEx(MessageBox_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
-	ArgPicker args(argument);
-	const char* message = args.PickString();
-	const char* caption = args.IsValid()? args.PickString() : wxMessageBoxCaptionStr;
-	int style = args.IsValid()? args.PickNumber<int>() : (wxOK | wxCENTRE);
-	wxWindow* parent = args.IsValid()? args.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
-	int x = args.IsValid()? args.PickNumber<int>() : wxDefaultCoord;
-	int y = args.IsValid()? args.PickNumber<int>() : wxDefaultCoord;
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* message = args_gurax.PickString();
+	const char* caption = args_gurax.IsValid()? args_gurax.PickString() : wxMessageBoxCaptionStr;
+	bool style_validFlag = args_gurax.IsValid();
+	int style = style_validFlag? args_gurax.PickNumber<int>() : (wxOK | wxCENTRE);
+	wxWindow* parent = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
+	bool x_validFlag = args_gurax.IsValid();
+	int x = x_validFlag? args_gurax.PickNumber<int>() : wxDefaultCoord;
+	bool y_validFlag = args_gurax.IsValid();
+	int y = y_validFlag? args_gurax.PickNumber<int>() : wxDefaultCoord;
 	// Function body
-	int rtn = wxMessageBox(message, caption, style, parent, x, y);
-	return new Value_Number(rtn);
+	wxMessageBox(message, caption, style, parent, x, y);
+	return Gurax::Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -188,11 +120,11 @@ Gurax_ImplementFunction(MessageBox_)
 //------------------------------------------------------------------------------
 void AssignFunctions(Frame& frame)
 {
-	frame.Assign(Gurax_CreateFunction(Test));
-	frame.Assign(Gurax_CreateFunction(GetKeyCodeName));
-	frame.Assign(Gurax_CreateFunction(ImplementApp));
-	frame.Assign(Gurax_CreateFunction(InitAllImageHandlers));
-	frame.Assign(Gurax_CreateFunction(MessageBox_));
+	frame.Assign(Gurax_CreateFunction(Bell_gurax));
+	frame.Assign(Gurax_CreateFunction(GetKeyCodeName_gurax));
+	frame.Assign(Gurax_CreateFunction(ImplementApp_gurax));
+	frame.Assign(Gurax_CreateFunction(InitAllImageHandlers_gurax));
+	frame.Assign(Gurax_CreateFunction(MessageBox_gurax));
 }
 
 Gurax_EndModuleScope(wx)

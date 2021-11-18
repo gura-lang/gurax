@@ -710,14 +710,44 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-${//cbridge.EvalTmplFunctionImplementation(funcInfoTbl)}
+${funcInfoTbl.Each() {|funcInfo|}}
+// ${funcInfo.ToString()}
+Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
+{
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	${funcInfo.argInfoTbl::ComposeDeclaration()}
+	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	${end}
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
 
+Gurax_ImplementFunctionEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
+{
+	${if (!funcInfo.argInfoTbl.IsEmpty())}
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	${funcInfo.argInfoTbl::ComposeImplementation()}
+	${end}
+	// Function body
+	${if (funcInfo.tmplFunctionBody)}
+	${funcInfo.tmplFunctionBody.Eval()}
+	${else}
+	${funcInfo.GetTypeInfo().ComposeFunctionBody(funcInfo.ComposeCaller('wx'))}
+	${end}
+}
+
+${end}
 //------------------------------------------------------------------------------
 // Assignment
 //------------------------------------------------------------------------------
 void AssignFunctions(Frame& frame)
 {
-	${//cbridge.EvalTmplFunctionAssignment(funcInfoTbl)}
+	${funcInfoTbl.Each() {|funcInfo|}}
+	frame.Assign(Gurax_CreateFunction(${funcInfo.name}_gurax));
+	${end}
 }
 
 Gurax_EndModuleScope(wx)
@@ -918,14 +948,15 @@ path.Glob('metafile/*.gura').Each {|pathName|
 				classInfoTbl.Add(classInfo)
 			}
 		} elsif (expr.IsCaller()) {
-			params = expr.block.EachElem():list
 			if (!expr.car.IsIdentifier()) {
 				sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
 				sys.Exit(1)
 			}
 			if (expr.car.symbolName == '@const') {
+				params = expr.block.EachElem():list
 				constNameTbl.Append(params:*symbolName)
 			} elsif (expr.car.symbolName == '@enum') {
+				params = expr.block.EachElem():list
 				params.Each {|param|
 					if (param.IsIdentifier()) {
 						enumNameTbl.Append(param.symbolName)
@@ -935,6 +966,7 @@ path.Glob('metafile/*.gura').Each {|pathName|
 					}
 				}
 			} elsif (expr.car.symbolName == '@event') {
+				params = expr.block.EachElem():list
 				params.Each {|param|
 					if (param.IsBinaryOp()) {
 						eventInfoTbl.Add(EventInfo(param.left.symbolName, param.right.symbolName))
@@ -1287,7 +1319,7 @@ GenerateEvent(eventInfoTbl[] as EventInfo, colAlign as Number) = {
 }
 
 GenerateFunction(funcInfoTbl[] as cbridge.FuncInfo) = {
-	tmplFunctions.Render('FunctionsX.cpp')
+	tmplFunctions.Render('Functions.cpp')
 }
 
 GenerateVType(classInfoTbl)

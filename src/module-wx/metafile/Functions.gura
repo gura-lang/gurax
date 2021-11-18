@@ -2,3 +2,17 @@
 // Functions.gura
 //==============================================================================
 Bell() as void
+GetKeyCodeName(keyCode as int) = \
+	R'''
+	return new Value_String(Util::GetKeyCodeName(keyCode));
+	'''
+ImplementApp(app as App_p) = \
+	R'''
+	wxApp::SetInstance(app);
+	int argc = 0;
+	char* argv[1] = { nullptr };
+	::wxEntry(argc, argv);
+	return Value::nil();
+	'''
+InitAllImageHandlers() as void
+MessageBox(message as const_String_r, caption as const_String_r = wxMessageBoxCaptionStr, style as int = wxOK | wxCENTRE, parent? as Window_p, x as int = wxDefaultCoord, y as int = wxDefaultCoord)
