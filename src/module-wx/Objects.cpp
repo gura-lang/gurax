@@ -63,7 +63,14 @@ void AssignObjects(Frame& frame)
 		frame.Assign("WHITE_PEN",			new Value_wxPen(*wxWHITE_PEN));
 	} while (0);
 	do { // Predefined Objects of wxPoint
-		frame.Assign("DefaultPosition",		new Value_wxPoint(wxDefaultPosition));
+		frame.Assign("DefaultPosition", new Value_wxPoint(wxDefaultPosition));
+	} while (0);
+	do { // Predefined Objects of wxSize
+		frame.Assign("DefaultSize", new Value_wxSize(wxDefaultSize));
+	} while (0);
+	do { // textdlg.h
+		frame.Assign("GetTextFromUserPromptStr", new Value_String(wxGetTextFromUserPromptStr));
+		frame.Assign("GetPasswordFromUserPromptStr", new Value_String(wxGetPasswordFromUserPromptStr));
 	} while (0);
 }
 

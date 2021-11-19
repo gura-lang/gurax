@@ -28,6 +28,22 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.AboutDialogInfo() {block?} {block?}
+Gurax_DeclareConstructorAlias(AboutDialogInfo_gurax, "AboutDialogInfo")
+{
+	Declare(VTYPE_wxAboutDialogInfo, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.AboutDialogInfo.");
+}
+
+Gurax_ImplementConstructorEx(AboutDialogInfo_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAboutDialogInfo(
+		wxAboutDialogInfo()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -796,7 +812,7 @@ void VType_wxAboutDialogInfo::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AboutDialogInfo_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxAboutDialogInfo, AddArtist_gurax));
 	Assign(Gurax_CreateMethod(wxAboutDialogInfo, AddDeveloper_gurax));

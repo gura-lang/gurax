@@ -3,6 +3,7 @@
 //==============================================================================
 AboutDialogInfo = Class {
 	@include['wx/aboutdlg.h']
+	__init__()
 	AddArtist(artist as const_String_r) as void
 	AddDeveloper(developer as const_String_r) as void
 	AddDocWriter(docwriter as const_String_r) as void

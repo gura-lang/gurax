@@ -106,8 +106,7 @@ MyFrame = class(wx.Frame) {
 		this.m_collPane.Expand();
 	}
 	OnSetLabel(event as wx.CommandEvent) = {
-		text = wx.GetTextFromUser
-			(
+		text = wx.GetTextFromUser(
 				"Enter new label",
 				wx.GetTextFromUserPromptStr,
 				this.m_collPane.GetLabel()
