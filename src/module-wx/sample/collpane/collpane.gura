@@ -32,6 +32,8 @@ PANE_ABOUT = wx.ID_ABOUT
 	PANE_TEXTCTRL
 ] = wx.ID_EXIT..
 
+PANEDLG_TOGGLESTATUS_BTN = wx.ID_HIGHEST
+
 // ----------------------------------------------------------------------------
 // our classes
 // ----------------------------------------------------------------------------
@@ -178,7 +180,7 @@ MyDialog = class(wx.Dialog) {
 			1, wx.GROW|wx.ALL, 5);
 
 		m_collPane = wx.CollapsiblePane(this, -1, "Click here for a surprise");
-		sz.Add(this.this.m_collPane, 0, wx.GROW|wx.ALL, 5);
+		sz.Add(this.m_collPane, 0, wx.GROW|wx.ALL, 5);
 		sz.Add(wx.TextCtrl(this, -1, "just a test"), 0, wx.GROW|wx.ALL, 5);
 		sz.AddSpacer(10);
 		sz.Add(wx.Button(this, wx.ID_OK), 0, wx.ALIGN_RIGHT|wx.ALL, 5);
