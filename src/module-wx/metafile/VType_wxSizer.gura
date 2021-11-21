@@ -119,9 +119,37 @@ Sizer = Class():loosePointer {
 		return Value::nil();
 		'''
 	AddSpacer(size as int) as SizerItem_p
-	AddStretchSpacer(prop as int) as SizerItem_p
+	AddStretchSpacer(prop as int = 1) as SizerItem_p
 	CalcMin() as Size
 	Clear(delete_windows as bool = false) as void
+	ComputeFittingClientSize(window as Window_p) as Size
+	ComputeFittingWindowSize(window as Window_p) as Size
+	Detach(window as Window_p) as bool
+	//Detach(sizer as Sizer_p) as bool
+	//Detach(index as int) as bool
+	Fit(window as Window_p) as Size
+	FitInside(window as Window_p) as void
+	InformFirstDirection(direction as int, size as int, availableOtherDir as int) as bool
+	GetContainingWindow() as Window_p
+	SetContainingWindow(window as Window_p) as void
+	GetItemCount() as size_t
+	GetItem(window as Window_p, recursive as bool = false) as SizerItem_p
+	//GetItem(sizer as Sizer_p, recursive as bool = false) as SizerItem_p
+	//GetItem(index as size_t) as SizerItem_p
+	GetItemById(id as int, recursive as bool = false) as SizerItem_p
+	GetMinSize() as Size
+	GetPosition() as Point
+	GetSize() as Size
+	Hide(window as Window_p, recursive as bool = false) as bool
+	//Hide(sizer as Sizer_p, recursive as bool = false) as bool
+	//Hide(index as size_t) as bool
+	//Insert(index as size_t, window as Window_p, flags as const_SizerFlags_r) as SizerItem_p
+	//Insert(index as size_t, window as Window_p, proportion as int = 0, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	//Insert(index as size_t, sizer as Sizer_p, flags as const_SizerFlags_r) as SizerItem_p
+	//Insert(index as size_t, sizer as Sizer_p, proportion as int = 0, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	//Insert(index as size_t, width as int, height as int, proportion as int = 0, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	//Insert(index as size_t, width as int, height as int, flags as const_SizerFlags_r) as SizerItem_p
+	//Insert(index as size_t, item as SizerItem_p) as SizerItem_p
 	Insert(index as size_t, args* as any) as SizerItem_p = \
 		R'''
 		do {
@@ -172,6 +200,47 @@ Sizer = Class():loosePointer {
 		} while (0);
 		return Value::nil();
 		'''
+	InsertSpacer(index as size_t, size as int) as SizerItem_p
+	InsertStretchSpacer(index as size_t, prop as int = 1) as SizerItem_p
+	IsEmpty() as bool
+	IsShown(window as Window_p) as bool
+	//IsShown(sizer as Sizer_p) as bool
+	//IsShown(index as size_t) as bool
+	Layout() as void
+	Prepend(window as Window_p, flags as const_SizerFlags_r) as SizerItem_p
+	//Prepend(window as Window_p, proportion as int = 0, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	//Prepend(sizer as Sizer_p, flags as const_SizerFlags_r) as SizerItem_p
+	//Prepend(sizer as Sizer_p, proportion as int = 0, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	//Prepend(width as int, height as int, proportion as int = 0, flag as int = 0, border as int = 0, userData as Object_p = NULL) as SizerItem_p
+	//Prepend(width as int, height as int, flags as const_SizerFlags_r) as SizerItem_p
+	//Prepend(item as SizerItem_p) as SizerItem_p
+	PrependSpacer(size as int) as SizerItem_p
+	PrependStretchSpacer(prop as int = 1) as SizerItem_p
+	RecalcSizes() as void
+	//Remove(window as Window_p) as bool
+	//Remove(sizer as Sizer_p) as bool
+	//Remove(index as int) as bool
+	Replace(oldwin as Window_p, newwin as Window_p, recursive as bool = false) as bool
+	//Replace(oldsz as Sizer_p, newsz as Sizer_p, recursive as bool = false) as bool
+	//Replace(index as size_t, newitem as SizerItem_p) as bool
+	SetDimension(x as int, y as int, width as int, height as int) as void
+	//SetDimension(pos as const_Point_r, size as const_Size_r) as void
+	SetMinSize(size as const_Size_r) as void
+	//SetMinSize(width as int, height as int) as void
+	SetSizeHints(window as Window_p) as void
+	//SetVirtualSizeHints(window as Window_p) as void
+	Show(window as Window_p, show as bool = true, recursive as bool = false) as bool
+	//Show(sizer as Sizer_p, show as bool = true, recursive as bool = false) as bool
+	//Show(index as size_t, show as bool = true) as bool
+	ShowItems(show as bool) as void
+	//GetChildren() as SizerItemList
+	//GetChildren() as SizerItemList
+	SetItemMinSize(window as Window_p, width as int, height as int) as bool
+	//SetItemMinSize(window as Window_p, size as const_Size_r) as bool
+	//SetItemMinSize(sizer as Sizer_p, width as int, height as int) as bool
+	//SetItemMinSize(sizer as Sizer_p, size as const_Size_r) as bool
+	//SetItemMinSize(index as size_t, width as int, height as int) as bool
+	//SetItemMinSize(index as size_t, size as const_Size_r) as bool
 }
 
 @const { // Flags
