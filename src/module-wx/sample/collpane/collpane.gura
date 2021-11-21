@@ -176,7 +176,7 @@ MyDialog = class(wx.Dialog) {
 		sz.Add(wx.StaticText(this, -1,
 			"This dialog allows you to test the wx.CollapsiblePane control"),
 			0, wx.ALL, 5);
-		sz.Add(wx.Button(this, PANEDLG_TOGGLESTATUS_BTN, "Change status"),
+		sz.Add('aa', wx.Button(this, PANEDLG_TOGGLESTATUS_BTN, "Change status"),
 			1, wx.GROW|wx.ALL, 5);
 
 		this.m_collPane = wx.CollapsiblePane(this, -1, "Click here for a surprise");

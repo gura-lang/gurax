@@ -58,11 +58,12 @@ Gurax_ImplementConstructorEx(Font_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		const wxFontInfo& fontInfo = args.Pick<Value_wxFontInfo>().GetEntity();
 		return new Value_wxFont(wxFont(fontInfo));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	// wxFont(pointSize as Number, family as Number, style as Number, weight as Number,
 	//	underline? as Bool, faceName? as String, encoding? as Number)
 	do {
@@ -79,6 +80,7 @@ Gurax_ImplementConstructorEx(Font_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		int pointSize = args.PickNumber<int>();
 		wxFontFamily family = args.PickNumber<wxFontFamily>();
@@ -89,7 +91,7 @@ Gurax_ImplementConstructorEx(Font_gurax, processor_gurax, argument_gurax)
 		wxFontEncoding encoding = args.IsValid()? args.PickNumber<wxFontEncoding>() : wxFONTENCODING_DEFAULT;
 		return new Value_wxFont(wxFont(pointSize, family, style, weight, underline, faceName, encoding));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	// wxFont(pixelSize as wx.Size, family as Number, style as Number, weight as Number,
 	//	underline? as Bool, faceName? as String, encoding? as Number)
 	do {
@@ -106,6 +108,7 @@ Gurax_ImplementConstructorEx(Font_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		const wxSize& pixelSize = args.Pick<Value_wxSize>().GetEntity();
 		wxFontFamily family = args.PickNumber<wxFontFamily>();
@@ -116,7 +119,7 @@ Gurax_ImplementConstructorEx(Font_gurax, processor_gurax, argument_gurax)
 		wxFontEncoding encoding = args.IsValid()? args.PickNumber<wxFontEncoding>() : wxFONTENCODING_DEFAULT;
 		return new Value_wxFont(wxFont(pixelSize, family, style, weight, underline, faceName, encoding));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	// wxFont(nativeInfoString as String)
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
@@ -126,6 +129,7 @@ Gurax_ImplementConstructorEx(Font_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		const char* nativeInfoString = args.PickString();
 		return new Value_wxFont(wxFont(nativeInfoString));

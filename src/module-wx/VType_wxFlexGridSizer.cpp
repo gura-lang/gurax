@@ -55,6 +55,7 @@ Gurax_ImplementConstructorEx(FlexGridSizer_gurax, processor_gurax, argument_gura
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		int cols = args.PickNumber<int>();
 		int vgap = args.PickNumber<int>();
@@ -62,7 +63,7 @@ Gurax_ImplementConstructorEx(FlexGridSizer_gurax, processor_gurax, argument_gura
 		wxFlexGridSizer* rtn = new wxFlexGridSizer(cols, vgap, hgap);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -72,13 +73,14 @@ Gurax_ImplementConstructorEx(FlexGridSizer_gurax, processor_gurax, argument_gura
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		int cols = args.PickNumber<int>();
 		const wxSize& gap = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxSize(0, 0);
 		wxFlexGridSizer* rtn = new wxFlexGridSizer(cols, gap);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -90,6 +92,7 @@ Gurax_ImplementConstructorEx(FlexGridSizer_gurax, processor_gurax, argument_gura
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		int rows = args.PickNumber<int>();
 		int cols = args.PickNumber<int>();
@@ -98,7 +101,7 @@ Gurax_ImplementConstructorEx(FlexGridSizer_gurax, processor_gurax, argument_gura
 		wxFlexGridSizer* rtn = new wxFlexGridSizer(rows, cols, vgap, hgap);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxFlexGridSizer(rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -109,6 +112,7 @@ Gurax_ImplementConstructorEx(FlexGridSizer_gurax, processor_gurax, argument_gura
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		int rows = args.PickNumber<int>();
 		int cols = args.PickNumber<int>();

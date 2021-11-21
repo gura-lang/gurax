@@ -62,13 +62,14 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
 		wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
 		wxSizerItem* rtn = pEntity_gurax->Add(window, flags);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -80,6 +81,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
 		int proportion = args.IsValid()? args.PickNumber<int>() : 0;
@@ -88,7 +90,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		wxSizerItem* rtn = pEntity_gurax->Add(window, proportion, flag, border);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -98,13 +100,14 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		wxSizer* sizer = args.Pick<Value_wxSizer>().GetEntityPtr();
 		wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
 		wxSizerItem* rtn = pEntity_gurax->Add(sizer, flags);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -116,6 +119,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		wxSizer* sizer = args.Pick<Value_wxSizer>().GetEntityPtr();
 		int proportion = args.IsValid()? args.PickNumber<int>() : 0;
@@ -124,7 +128,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		wxSizerItem* rtn = pEntity_gurax->Add(sizer, proportion, flag, border);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -137,6 +141,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		int width = args.PickNumber<int>();
 		int height = args.PickNumber<int>();
@@ -146,7 +151,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		wxSizerItem* rtn = pEntity_gurax->Add(width, height, proportion, flag, border);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -157,6 +162,7 @@ Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		int width = args.PickNumber<int>();
 		int height = args.PickNumber<int>();
@@ -661,13 +667,14 @@ Gurax_ImplementMethodEx(wxSizer, Insert_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
 		wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
 		wxSizerItem* rtn = pEntity_gurax->Insert(index, window, flags);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -676,13 +683,14 @@ Gurax_ImplementMethodEx(wxSizer, Insert_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		wxSizer* sizer = args.Pick<Value_wxSizer>().GetEntityPtr();
 		wxSizerFlags& flags = args.Pick<Value_wxSizerFlags>().GetEntity();
 		wxSizerItem* rtn = pEntity_gurax->Insert(index, sizer, flags);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizerItem(*rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -692,6 +700,7 @@ Gurax_ImplementMethodEx(wxSizer, Insert_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		int width = args.PickNumber<int>();
 		int height = args.PickNumber<int>();

@@ -54,13 +54,14 @@ Gurax_ImplementConstructorEx(StaticBoxSizer_gurax, processor_gurax, argument_gur
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		wxStaticBox* box = args.Pick<Value_wxStaticBox>().GetEntityPtr();
 		int orient = args.PickNumber<int>();
 		wxStaticBoxSizer* rtn = new wxStaticBoxSizer(box, orient);
 		return argument_gurax.ReturnValue(processor_gurax, new Value_wxStaticBoxSizer(rtn));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -71,6 +72,7 @@ Gurax_ImplementConstructorEx(StaticBoxSizer_gurax, processor_gurax, argument_gur
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		int orient = args.PickNumber<int>();
 		wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();

@@ -54,11 +54,12 @@ Gurax_ImplementConstructorEx(Colour_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		const char* colourName = args.PickString();
 		return new Value_wxColour(wxColour(colourName));
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	// wx.Colour(red as unsigned_char = 0, green as unsigned_char = 0, blue as unsigned_char = 0, alpha as unsigned_char = wxALPHA_OPAQUE)
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
@@ -71,6 +72,7 @@ Gurax_ImplementConstructorEx(Colour_gurax, processor_gurax, argument_gurax)
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		unsigned char red = args.IsValid()? args.PickNumber<unsigned char>() : 0;
 		unsigned char green = args.IsValid()? args.PickNumber<unsigned char>() : 0;

@@ -1122,13 +1122,14 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertColumn_gurax, processor_gurax, argumen
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		long col = args.PickNumber<long>();
 		const wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
 		long rtn = pEntity_gurax->InsertColumn(col, info);
 		return new Value_Number(rtn);
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	// InsertColumn(col as long, heading as const_String_r, format as int = wxLIST_FORMAT_LEFT, width as int = wxLIST_AUTOSIZE) as long
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
@@ -1141,6 +1142,7 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertColumn_gurax, processor_gurax, argumen
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		long col = args.PickNumber<long>();
 		const char* heading = args.PickString();
@@ -1181,12 +1183,13 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		const wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
 		long rtn = pEntity_gurax->InsertItem(info);
 		return new Value_Number(rtn);
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	// InsertItem(index as long, label as const_String_r) as long
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
@@ -1197,13 +1200,14 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		long index = args.PickNumber<long>();
 		const wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
 		long rtn = pEntity_gurax->InsertItem(index, info);
 		return new Value_Number(rtn);
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	// InsertItem(index as long, imageIndex as int) as long
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
@@ -1214,13 +1218,14 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		long index = args.PickNumber<long>();
 		int imageIndex = args.PickNumber<int>();
 		long rtn = pEntity_gurax->InsertItem(index, imageIndex);
 		return new Value_Number(rtn);
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	// InsertItem(index as long, label as const_String_r, imageIndex as int) as long
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
@@ -1232,6 +1237,7 @@ Gurax_ImplementMethodEx(wxListCtrl, InsertItem_gurax, processor_gurax, argument_
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		long index = args.PickNumber<long>();
 		const char* label = args.PickString();
@@ -1496,12 +1502,13 @@ Gurax_ImplementMethodEx(wxListCtrl, SetItem_gurax, processor_gurax, argument_gur
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
 		bool rtn = pEntity_gurax->SetItem(info);
 		return new Value_Bool(rtn);
 	} while (0);
-	Error::Clear();
+	Error::ClearIssuedFlag();
 	// SetItem(index as long, column as int, label as const_String_r, imageId as int = -1) as long
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
@@ -1514,6 +1521,7 @@ Gurax_ImplementMethodEx(wxListCtrl, SetItem_gurax, processor_gurax, argument_gur
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
 		ArgPicker args(*pArgument);
 		long index = args.PickNumber<long>();
 		int column = args.PickNumber<int>();
