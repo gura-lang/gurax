@@ -14,3 +14,7 @@ ImplementApp(app as App_p) = \
 	return Value::nil();
 	'''
 InitAllImageHandlers() as void
+T(str as String) = \
+	R'''
+	return new Value_String(str);
+	'''

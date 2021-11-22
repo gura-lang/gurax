@@ -577,6 +577,25 @@ Gurax_ImplementFunctionEx(SaveFileSelector_gurax, processor_gurax, argument_gura
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
+// wx.T(str as String)
+Gurax_DeclareFunctionAlias(T_gurax, "T")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunctionEx(T_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* str = args_gurax.PickString();
+	// Function body
+	return new Value_String(str);
+}
+
 //------------------------------------------------------------------------------
 // Assignment
 //------------------------------------------------------------------------------
@@ -603,6 +622,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(LoadFileSelector_gurax));
 	frame.Assign(Gurax_CreateFunction(MessageBox_gurax));
 	frame.Assign(Gurax_CreateFunction(SaveFileSelector_gurax));
+	frame.Assign(Gurax_CreateFunction(T_gurax));
 }
 
 Gurax_EndModuleScope(wx)
