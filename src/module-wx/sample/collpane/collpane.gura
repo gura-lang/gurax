@@ -54,7 +54,8 @@ MyApp = class(wx.App) {
 }
 
 MyFrame = class(wx.Frame) {
-	__init__() = {|nil, wx.ID_ANY, 'wxCollapsiblePane sample', wx.DefaultPosition, wx.Size(420, 300)|
+	__init__() = {|nil, wx.ID_ANY, 'wxCollapsiblePane sample',
+					wx.DefaultPosition, wx.Size(420, 300)|
 		//SetIcon(wxICON(sample));
 		this.CreateStatusBar(2);
 
@@ -100,6 +101,7 @@ MyFrame = class(wx.Frame) {
 		this.SetSizer(sizerTop);
 		this.EventTable()
 	}
+
 	// Menu commands
 	OnCollapse(event as wx.CommandEvent) = {
 		this.m_collPane.Collapse();
@@ -140,8 +142,7 @@ MyFrame = class(wx.Frame) {
 	}
 
 	OnCollapsibleHeaderChanged(event as wx.CommandEvent) = {
-		this.m_collHeaderCtrl.SetLabel
-			(
+		this.m_collHeaderCtrl.SetLabel(
 				Format(
 					"%s wxCollapsibleHeaderCtrl",
 					cond(this.m_collHeaderCtrl.IsCollapsed(), "Collapsed", "Expanded")
