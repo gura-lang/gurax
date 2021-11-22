@@ -239,7 +239,13 @@ ListCtrl = Class(Control) {
 	SetSingleStyle(style as long, add as bool = true) as void
 	SetTextColour(col as const_Colour_r) as void
 	SetWindowStyleFlag(style as long) as void
-	//SortItems(fnSortCallBack as ListCtrlCompare, data as IntPtr) as bool
+	/*
+	SortItems(fnSortCallBack as Function, data as any) as bool = \
+		R'''
+		bool rtn = pEntity_gurax->SortItems();
+		return new Value_Bool(rtn);
+		'''
+	*/
 }
 
 @const { // Styles

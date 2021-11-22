@@ -48,6 +48,22 @@ void EventUserData::Eval(wxEvent& event)
 	if (Error::IsIssued()) Util::ExitMainLoop();
 }
 
+/*
+class ListCtrlSortItems {
+private:
+	RefPtr<Value> _pValue;
+public:
+	ListCtrlSortItems(Value* pValue) : _pValue(pValue) {}
+	static int CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
+};
+
+int ListCtrlSortItems::CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
+{
+	ListCtrlSortItems& sortData = *reinterpret_cast<ListCtrlSortItems*>(sortData);
+
+}
+*/
+
 //------------------------------------------------------------------------------
 // Utility
 //------------------------------------------------------------------------------
