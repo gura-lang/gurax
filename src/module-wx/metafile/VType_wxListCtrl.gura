@@ -228,7 +228,12 @@ ListCtrl = Class(Control) {
 	SetItemBackgroundColour(item as long, col as const_Colour_r) as void
 	SetItemColumnImage(item as long, column as long, image as int) as bool
 	SetItemCount(count as long) as void
-	SetItemData(item as long, data as long) as bool
+	//SetItemData(item as long, data as long) as bool
+	SetItemData(item as long, data as any) as bool = \
+		R'''
+		bool rtn = pEntity_gurax->SetItemPtrData(item, reinterpret_cast<wxUIntPtr>(data.Reference()));
+		return new Value_Bool(rtn);
+		'''
 	SetItemFont(item as long, font as const_Font_r) as void
 	SetItemImage(item as long, image as int, selImage as int = -1) as bool
 	SetItemPosition(item as long, pos as const_Point_r) as bool
@@ -239,13 +244,12 @@ ListCtrl = Class(Control) {
 	SetSingleStyle(style as long, add as bool = true) as void
 	SetTextColour(col as const_Colour_r) as void
 	SetWindowStyleFlag(style as long) as void
-	/*
-	SortItems(fnSortCallBack as Function, data as any) as bool = \
+	SortItems(fnSortCallBack as Function@gurax, data as any) as bool = \
 		R'''
-		bool rtn = pEntity_gurax->SortItems();
+		ListCtrlSortItems listCtrlSortItems(fnSortCallBack.Reference(), processor_gurax.Reference(), data.Reference());
+		bool rtn = pEntity_gurax->SortItems(ListCtrlSortItems::CompareFunction, reinterpret_cast<wxIntPtr>(&listCtrlSortItems));
 		return new Value_Bool(rtn);
 		'''
-	*/
 }
 
 @const { // Styles

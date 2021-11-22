@@ -48,21 +48,22 @@ void EventUserData::Eval(wxEvent& event)
 	if (Error::IsIssued()) Util::ExitMainLoop();
 }
 
-/*
-class ListCtrlSortItems {
-private:
-	RefPtr<Value> _pValue;
-public:
-	ListCtrlSortItems(Value* pValue) : _pValue(pValue) {}
-	static int CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
-};
-
+//------------------------------------------------------------------------------
+// ListCtrlSortItems
+//------------------------------------------------------------------------------
 int ListCtrlSortItems::CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 {
-	ListCtrlSortItems& sortData = *reinterpret_cast<ListCtrlSortItems*>(sortData);
-
+	ListCtrlSortItems& listCtrlSortItems = *reinterpret_cast<ListCtrlSortItems*>(sortData);
+	const Value& valueItem1 = item1? *reinterpret_cast<Value*>(item1) : Value::C_nil();
+	const Value& valueItem2 = item2? *reinterpret_cast<Value*>(item2) : Value::C_nil();
+	RefPtr<Value> pValueRtn(listCtrlSortItems.GetFunction().EvalEasy(listCtrlSortItems.GetProcessor(),
+		valueItem1.Reference(), valueItem2.Reference(), listCtrlSortItems.GetValue().Reference()));
+	if (pValueRtn->IsType(VTYPE_Number)) {
+		Error::Issue(ErrorType::TypeError, "Return value must be of Number type");
+		return 0;
+	}
+	return Value_Number::GetNumber<int>(*pValueRtn);
 }
-*/
 
 //------------------------------------------------------------------------------
 // Utility

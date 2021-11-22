@@ -104,6 +104,23 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// ListCtrlSortItems
+//------------------------------------------------------------------------------
+class ListCtrlSortItems {
+private:
+	RefPtr<Function> _pFunc;
+	RefPtr<Processor> _pProcessor;
+	RefPtr<Value> _pValue;
+public:
+	ListCtrlSortItems(Function* pFunc, Processor* pProcessor, Value* pValue) :
+		_pFunc(pFunc), _pProcessor(pProcessor), _pValue(pValue) {}
+	static int CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
+	const Function& GetFunction() { return *_pFunc; }
+	Processor& GetProcessor() { return *_pProcessor; }
+	const Value& GetValue() { return *_pValue; }
+};
+
+//------------------------------------------------------------------------------
 // Utility
 //------------------------------------------------------------------------------
 namespace Util {
