@@ -240,6 +240,9 @@ public:
 	virtual size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	virtual bool IsEqualTo(const Expr& expr) const { return IsIdentical(expr); }
 	virtual bool IsLessThan(const Expr& expr) const { return this < &expr; }
+	static int Compare(const Expr& expr1, const Expr& expr2) {
+		return expr1.IsLessThan(expr2)? -1 : expr2.IsLessThan(expr1)? +1 : 0;
+	}
 public:
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
 	String ToString() const { return ToString(StringStyle::Empty); }

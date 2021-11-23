@@ -192,24 +192,24 @@ public:
 	static size_t CalcHash(const char* str);
 	static size_t CalcHash(const char* str, size_t len);
 	size_t CalcHash() const { return CalcHash(c_str(), size()); }
-	static bool IsEqualTo(const char* str1, const char* str2)			{ return ::strcmp(str1, str2) == 0; }
-	bool IsEqualTo(const char* str) const								{ return IsEqualTo(c_str(), str); }
-	bool IsEqualTo(const String& str) const								{ return IsEqualTo(c_str(), str.c_str()); }
-	static bool IsEqualToICase(const char* str1, const char* str2)		{ return ::strcasecmp(str1, str2) == 0; }
-	bool IsEqualToICase(const char* str) const							{ return IsEqualToICase(c_str(), str); }
-	bool IsEqualToICase(const String& str) const						{ return IsEqualToICase(c_str(), str.c_str()); }
-	static bool IsLessThan(const char* str1, const char* str2)			{ return ::strcmp(str1, str2) < 0; }
-	bool IsLessThan(const char* str) const								{ return IsLessThan(c_str(), str); }
-	bool IsLessThan(const String& str) const							{ return IsLessThan(c_str(), str.c_str()); }
-	static bool IsLessThanICase(const char* str1, const char* str2)		{ return ::strcasecmp(str1, str2) < 0; }
-	bool IsLessThanICase(const char* str) const							{ return IsLessThanICase(c_str(), str); }
-	bool IsLessThanICase(const String& str) const						{ return IsLessThanICase(c_str(), str.c_str()); }
 	static int Compare(const char* str1, const char* str2)				{ return ::strcmp(str1, str2); }
 	int Compare(const char* str) const									{ return Compare(c_str(), str); }
 	int Compare(const String& str) const								{ return Compare(c_str(), str.c_str()); }
 	static int CompareICase(const char* str1, const char* str2)			{ return ::strcasecmp(str1, str2); }
 	int CompareICase(const char* str) const								{ return CompareICase(c_str(), str); }
 	int CompareICase(const String& str) const							{ return CompareICase(c_str(), str.c_str()); }
+	static bool IsEqualTo(const char* str1, const char* str2)			{ return Compare(str1, str2) == 0; }
+	bool IsEqualTo(const char* str) const								{ return IsEqualTo(c_str(), str); }
+	bool IsEqualTo(const String& str) const								{ return IsEqualTo(c_str(), str.c_str()); }
+	static bool IsEqualToICase(const char* str1, const char* str2)		{ return CompareICase(str1, str2) == 0; }
+	bool IsEqualToICase(const char* str) const							{ return IsEqualToICase(c_str(), str); }
+	bool IsEqualToICase(const String& str) const						{ return IsEqualToICase(c_str(), str.c_str()); }
+	static bool IsLessThan(const char* str1, const char* str2)			{ return Compare(str1, str2) < 0; }
+	bool IsLessThan(const char* str) const								{ return IsLessThan(c_str(), str); }
+	bool IsLessThan(const String& str) const							{ return IsLessThan(c_str(), str.c_str()); }
+	static bool IsLessThanICase(const char* str1, const char* str2)		{ return CompareICase(str1, str2) < 0; }
+	bool IsLessThanICase(const char* str) const							{ return IsLessThanICase(c_str(), str); }
+	bool IsLessThanICase(const String& str) const						{ return IsLessThanICase(c_str(), str.c_str()); }
 public:
 	template<typename T_CharCmp>
 	static const char* Find(const char* str, const char* sub, const char** pStrNext);

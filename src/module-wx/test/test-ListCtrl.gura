@@ -35,7 +35,7 @@ PanelTop = class(wx.Panel) {
 				keys.Each {|key, i|
 					ctrl.InsertItem(i, '', indices[key])
 					ctrl.SetItem(i, 1, key)
-					ctrl.SetItemData(i, key as String)
+					ctrl.SetItemData(i, key)
 				}
 				wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList)
 				wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList)

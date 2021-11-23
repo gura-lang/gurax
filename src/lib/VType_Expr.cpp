@@ -804,6 +804,46 @@ Gurax_ImplementOpBinary(Ne, Expr, Symbol)
 	return new Value_Bool(!exprL.HasSymbol(pSymbolR));
 }
 
+// Expr >= Expr
+Gurax_ImplementOpBinary(Ge, Expr, Expr)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(!exprL.IsLessThan(exprR));
+}
+
+// Expr > Expr
+Gurax_ImplementOpBinary(Gt, Expr, Expr)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(exprR.IsLessThan(exprL));
+}
+
+// Expr <= Expr
+Gurax_ImplementOpBinary(Le, Expr, Expr)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(!exprR.IsLessThan(exprL));
+}
+
+// Expr < Expr
+Gurax_ImplementOpBinary(Lt, Expr, Expr)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Bool(exprL.IsLessThan(exprR));
+}
+
+// Expr <=> Expr
+Gurax_ImplementOpBinary(Cmp, Expr, Expr)
+{
+	const Expr& exprL = Value_Expr::GetExpr(valueL);
+	const Expr& exprR = Value_Expr::GetExpr(valueR);
+	return new Value_Number(Expr::Compare(exprL, exprR));
+}
+
 //------------------------------------------------------------------------------
 // VType_Expr
 //------------------------------------------------------------------------------
@@ -863,6 +903,11 @@ void VType_Expr::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Ne, Expr, Expr);
 	Gurax_AssignOpBinary(Ne, Symbol, Expr);
 	Gurax_AssignOpBinary(Ne, Expr, Symbol);
+	Gurax_AssignOpBinary(Ge, Expr, Expr);
+	Gurax_AssignOpBinary(Gt, Expr, Expr);
+	Gurax_AssignOpBinary(Le, Expr, Expr);
+	Gurax_AssignOpBinary(Lt, Expr, Expr);
+	Gurax_AssignOpBinary(Cmp, Expr, Expr);
 }
 
 //------------------------------------------------------------------------------
