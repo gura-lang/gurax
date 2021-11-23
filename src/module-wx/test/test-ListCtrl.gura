@@ -16,7 +16,7 @@ MyFrame = class(wx.Frame) {
 }
 
 PanelTop = class(wx.Panel) {
-	listCtrl as wx.TreeCtrl
+	listCtrl as wx.ListCtrl
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
@@ -35,6 +35,7 @@ PanelTop = class(wx.Panel) {
 				keys.Each {|key, i|
 					ctrl.InsertItem(i, '', indices[key])
 					ctrl.SetItem(i, 1, key)
+					ctrl.SetItemData(i, key as String)
 				}
 				wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList)
 				wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList)
@@ -50,12 +51,13 @@ PanelTop = class(wx.Panel) {
 				wx.EVT_LIST_ITEM_RIGHT_CLICK(ctrl,	this.OnList)
 				wx.EVT_LIST_KEY_DOWN(ctrl,			this.OnList)
 				wx.EVT_LIST_INSERT_ITEM(ctrl,		this.OnList)
-				wx.EVT_LIST_COL_CLICK(ctrl,			this.OnList)
+				wx.EVT_LIST_COL_CLICK(ctrl,			this.OnListColClick)
 				wx.EVT_LIST_COL_RIGHT_CLICK(ctrl,	this.OnList)
 				wx.EVT_LIST_COL_BEGIN_DRAG(ctrl,	this.OnList)
 				wx.EVT_LIST_COL_DRAGGING(ctrl,		this.OnList)
 				wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList)
 				wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList)
+				this.listCtrl = ctrl
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
@@ -65,6 +67,10 @@ PanelTop = class(wx.Panel) {
 	}
 	OnList(event) = {
 		this.PrintListEvent(event)
+	}
+	OnListColClick(event) = {
+		this.PrintListEvent(event)
+		this.listCtrl.SortItems(Function(item1, item2, value) {item1 <=> item2}, nil)
 	}
 	PrintListEvent(event) = {
 		eventName = event.GetEventType().name

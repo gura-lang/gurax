@@ -1337,6 +1337,14 @@ Gurax_ImplementOpBinary(Lt, String, String)
 	return new Value_Bool(strL < strR);
 }
 
+// String <=> String
+Gurax_ImplementOpBinary(Cmp, String, String)
+{
+	const String& strL = Value_String::GetStringSTL(valueL);
+	const String& strR = Value_String::GetStringSTL(valueR);
+	return new Value_Number(strL.Compare(strR));
+}
+
 // String * Number
 Gurax_ImplementOpBinary(Mul, String, Number)
 {
@@ -1424,6 +1432,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Gt, String, String);
 	Gurax_AssignOpBinary(Le, String, String);
 	Gurax_AssignOpBinary(Lt, String, String);
+	Gurax_AssignOpBinary(Cmp, String, String);
 	Gurax_AssignOpBinary(Mul, String, Number);
 	Gurax_AssignOpBinary(Ne, String, String);
 }

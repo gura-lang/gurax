@@ -57,8 +57,9 @@ int ListCtrlSortItems::CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr 
 	const Value& valueItem1 = item1? *reinterpret_cast<const Value*>(item1) : Value::C_nil();
 	const Value& valueItem2 = item2? *reinterpret_cast<const Value*>(item2) : Value::C_nil();
 	RefPtr<Value> pValueRtn(listCtrlSortItems.Eval(valueItem1, valueItem2));
-	if (pValueRtn->IsType(VTYPE_Number)) {
-		Error::Issue(ErrorType::TypeError, "Return value must be of Number type");
+	if (Error::IsIssued()) return 0;
+	if (!pValueRtn->IsType(VTYPE_Number)) {
+		if (!Error::IsIssued()) Error::Issue(ErrorType::TypeError, "Return value must be of Number type");
 		return 0;
 	}
 	return Value_Number::GetNumber<int>(*pValueRtn);

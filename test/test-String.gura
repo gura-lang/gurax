@@ -523,6 +523,9 @@ TestCase('Operator') {
 	Tester(`('abcdefg' != 'abcdefg'))
 	Tester(`('abcdefg' != 'hijklmn'))
 	Tester(`('hijklmn' != 'abcdefg'))
+	Tester(`('abcdefg' <=> 'abcdefg'))
+	Tester(`('abcdefg' <=> 'hijklmn'))
+	Tester(`('hijklmn' <=> 'abcdefg'))
 }
 
 TestCase('Indexing') {
