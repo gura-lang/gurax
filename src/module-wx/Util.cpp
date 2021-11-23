@@ -54,10 +54,9 @@ void EventUserData::Eval(wxEvent& event)
 int ListCtrlSortItems::CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 {
 	ListCtrlSortItems& listCtrlSortItems = *reinterpret_cast<ListCtrlSortItems*>(sortData);
-	const Value& valueItem1 = item1? *reinterpret_cast<Value*>(item1) : Value::C_nil();
-	const Value& valueItem2 = item2? *reinterpret_cast<Value*>(item2) : Value::C_nil();
-	RefPtr<Value> pValueRtn(listCtrlSortItems.GetFunction().EvalEasy(listCtrlSortItems.GetProcessor(),
-		valueItem1.Reference(), valueItem2.Reference(), listCtrlSortItems.GetValue().Reference()));
+	const Value& valueItem1 = item1? *reinterpret_cast<const Value*>(item1) : Value::C_nil();
+	const Value& valueItem2 = item2? *reinterpret_cast<const Value*>(item2) : Value::C_nil();
+	RefPtr<Value> pValueRtn(listCtrlSortItems.Eval(valueItem1, valueItem2));
 	if (pValueRtn->IsType(VTYPE_Number)) {
 		Error::Issue(ErrorType::TypeError, "Return value must be of Number type");
 		return 0;
