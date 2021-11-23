@@ -118,9 +118,7 @@ public:
 	const Function& GetFunction() { return *_pFunc; }
 	Processor& GetProcessor() { return *_pProcessor; }
 	const Value& GetValue() { return *_pValue; }
-	Value* Eval(const Value& valueItem1, const Value& valueItem2) {
-		return GetFunction().EvalEasy(GetProcessor(), valueItem1.Reference(), valueItem2.Reference(), GetValue().Reference());
-	}
+	Value* Eval(const Value& valueItem1, const Value& valueItem2);
 };
 
 //------------------------------------------------------------------------------

@@ -51,6 +51,14 @@ void EventUserData::Eval(wxEvent& event)
 //------------------------------------------------------------------------------
 // ListCtrlSortItems
 //------------------------------------------------------------------------------
+Value* ListCtrlSortItems::Eval(const Value& valueItem1, const Value& valueItem2)
+{
+	RefPtr<Argument> pArg(new Argument(GetProcessor(), GetFunction(), DeclCallable::Flag::CutExtraArgs));
+	ArgFeeder args(*pArg, GetProcessor().GetFrameCur());
+	if (!args.FeedValues(valueItem1.Reference(), valueItem2.Reference(), GetValue().Reference())) return Value::nil();
+	return GetFunction().Eval(GetProcessor(), *pArg);
+}
+
 int ListCtrlSortItems::CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 {
 	ListCtrlSortItems& listCtrlSortItems = *reinterpret_cast<ListCtrlSortItems*>(sortData);

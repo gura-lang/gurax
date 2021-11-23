@@ -70,7 +70,7 @@ PanelTop = class(wx.Panel) {
 	}
 	OnListColClick(event) = {
 		this.PrintListEvent(event)
-		this.listCtrl.SortItems(Function(item1, item2, value) {item1 <=> item2}, nil)
+		this.listCtrl.SortItems(Function(item1, item2) {item2 <=> item1}, nil)
 	}
 	PrintListEvent(event) = {
 		eventName = event.GetEventType().name
