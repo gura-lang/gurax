@@ -108,14 +108,14 @@ public:
 //------------------------------------------------------------------------------
 class ListCtrlSortItems {
 private:
-	RefPtr<Function> _pFunc;
+	RefPtr<Value> _pValueCallable;
 	RefPtr<Processor> _pProcessor;
 	RefPtr<Value> _pValue;
 public:
-	ListCtrlSortItems(Function* pFunc, Processor* pProcessor, Value* pValue) :
-		_pFunc(pFunc), _pProcessor(pProcessor), _pValue(pValue) {}
+	ListCtrlSortItems(Value* pValueCallable, Processor* pProcessor, Value* pValue) :
+		_pValueCallable(pValueCallable), _pProcessor(pProcessor), _pValue(pValue) {}
 	static int CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
-	const Function& GetFunction() { return *_pFunc; }
+	Value& GetCallable() { return *_pValueCallable; }
 	Processor& GetProcessor() { return *_pProcessor; }
 	const Value& GetValue() { return *_pValue; }
 	Value* Eval(const Value& valueItem1, const Value& valueItem2);

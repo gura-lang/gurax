@@ -16,9 +16,11 @@ MyFrame = class(wx.Frame) {
 }
 
 PanelTop = class(wx.Panel) {
+	ascentFlag as Bool
 	listCtrl as wx.ListCtrl
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
+		this.ascentFlag = true
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
@@ -65,12 +67,15 @@ PanelTop = class(wx.Panel) {
 			this.textCtrl = ctrl
 		}
 	}
+	SortAscent(item1, item2):static = {item1 <=> item2}
+	SortDescent(item1, item2):static = {item2 <=> item1}
 	OnList(event) = {
 		this.PrintListEvent(event)
 	}
 	OnListColClick(event) = {
 		this.PrintListEvent(event)
-		this.listCtrl.SortItems(Function(item1, item2) {item2 <=> item1}, nil)
+		this.listCtrl.SortItems(cond(this.ascentFlag, this.SortAscent, this.SortDescent), nil)
+		this.ascentFlag = !this.ascentFlag
 	}
 	PrintListEvent(event) = {
 		eventName = event.GetEventType().name

@@ -1877,11 +1877,11 @@ Gurax_ImplementMethodEx(wxListCtrl, SetWindowStyleFlag_gurax, processor_gurax, a
 	return Gurax::Value::nil();
 }
 
-// wx.ListCtrl#SortItems(fnSortCallBack as Function, data as Any)
+// wx.ListCtrl#SortItems(fnSortCallBack as Any, data as Any)
 Gurax_DeclareMethodAlias(wxListCtrl, SortItems_gurax, "SortItems")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("fnSortCallBack", VTYPE_Function, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fnSortCallBack", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1896,7 +1896,7 @@ Gurax_ImplementMethodEx(wxListCtrl, SortItems_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	RefPtr<Function> fnSortCallBack(args_gurax.PickFunction().Reference());
+	const Gurax::Value& fnSortCallBack = args_gurax.PickValue();
 	const Gurax::Value& data = args_gurax.PickValue();
 	// Function body
 	ListCtrlSortItems listCtrlSortItems(fnSortCallBack.Reference(), processor_gurax.Reference(), data.Reference());

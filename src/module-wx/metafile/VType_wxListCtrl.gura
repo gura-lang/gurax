@@ -244,7 +244,7 @@ ListCtrl = Class(Control) {
 	SetSingleStyle(style as long, add as bool = true) as void
 	SetTextColour(col as const_Colour_r) as void
 	SetWindowStyleFlag(style as long) as void
-	SortItems(fnSortCallBack as Function@gurax, data as any) as bool = \
+	SortItems(fnSortCallBack as any, data as any) as bool = \
 		R'''
 		ListCtrlSortItems listCtrlSortItems(fnSortCallBack.Reference(), processor_gurax.Reference(), data.Reference());
 		bool rtn = pEntity_gurax->SortItems(ListCtrlSortItems::CompareFunction, reinterpret_cast<wxIntPtr>(&listCtrlSortItems));
