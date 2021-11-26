@@ -44,75 +44,78 @@ MyCompareFunction(item1, item2) = {
 wxImplementApp(MyApp());
 
 // `Main program' equivalent, creating windows and returning main app frame
-bool MyApp::OnInit()
-{
-	if ( !wxApp::OnInit() )
-		return false;
+class MyApp(wxApp
 
-	// Create the main frame window
-	MyFrame *frame = new MyFrame("wxListCtrl Test");
+MyApp = class(wx.App) {
+	__init__(){ }
 
-	// Show the frame
-	frame->Show(true);
+	OnInit() = {
+		//if ( !wxApp::OnInit() )
+		//	return false;
+		// Create the main frame window
+		frame = MyMyFrame("wxListCtrl Test");
 
-	return true;
-}
+		// Show the frame
+		frame.Show(true);
 
-
+		true;
+	}
+};
 
 // ----------------------------------------------------------------------------
 // MyFrame
 // ----------------------------------------------------------------------------
 
-wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
-	EVT_MENU(LIST_QUIT, MyFrame::OnQuit)
-	EVT_MENU(LIST_ABOUT, MyFrame::OnAbout)
-	EVT_MENU(LIST_LIST_VIEW, MyFrame::OnListView)
-	EVT_MENU(LIST_REPORT_VIEW, MyFrame::OnReportView)
-	EVT_MENU(LIST_ICON_VIEW, MyFrame::OnIconView)
-	EVT_MENU(LIST_ICON_TEXT_VIEW, MyFrame::OnIconTextView)
-	EVT_MENU(LIST_SMALL_ICON_VIEW, MyFrame::OnSmallIconView)
-	EVT_MENU(LIST_SMALL_ICON_TEXT_VIEW, MyFrame::OnSmallIconTextView)
-	EVT_MENU(LIST_VIRTUAL_VIEW, MyFrame::OnVirtualView)
-	EVT_MENU(LIST_SMALL_VIRTUAL_VIEW, MyFrame::OnSmallVirtualView)
+EventTable()
+#of 0
+	wx.EVT_MENU(wx.LIST_QUIT, this.OnQuit)
+	wx.EVT_MENU(wx.LIST_ABOUT, this.OnAbout)
+	wx.EVT_MENU(wx.LIST_LIST_VIEW, this.OnListView)
+	wx.EVT_MENU(wx.LIST_REPORT_VIEW, this.OnReportView)
+	wx.EVT_MENU(wx.LIST_ICON_VIEW, this.OnIconView)
+	wx.EVT_MENU(wx.LIST_ICON_TEXT_VIEW, this.OnIconTextView)
+	wx.EVT_MENU(wx.LIST_SMALL_ICON_VIEW, this.OnSmallIconView)
+	wx.EVT_MENU(wx.LIST_SMALL_ICON_TEXT_VIEW, this.OnSmallIconTextView)
+	wx.EVT_MENU(wx.LIST_VIRTUAL_VIEW, this.OnVirtualView)
+	wx.EVT_MENU(wx.LIST_SMALL_VIRTUAL_VIEW, this.OnSmallVirtualView)
 
-	EVT_MENU(LIST_SET_ITEMS_COUNT, MyFrame::OnSetItemsCount)
+	wx.EVT_MENU(wx.LIST_SET_ITEMS_COUNT, this.OnSetItemsCount)
 
-	EVT_MENU(LIST_GOTO, MyFrame::OnGoTo)
-	EVT_MENU(LIST_FOCUS_LAST, MyFrame::OnFocusLast)
-	EVT_MENU(LIST_TOGGLE_FIRST, MyFrame::OnToggleFirstSel)
-	EVT_MENU(LIST_DESELECT_ALL, MyFrame::OnDeselectAll)
-	EVT_MENU(LIST_SELECT_ALL, MyFrame::OnSelectAll)
-	EVT_MENU(LIST_DELETE, MyFrame::OnDelete)
-	EVT_MENU(LIST_ADD, MyFrame::OnAdd)
-	EVT_MENU(LIST_EDIT, MyFrame::OnEdit)
-	EVT_MENU(LIST_DELETE_ALL, MyFrame::OnDeleteAll)
-	EVT_MENU(LIST_SORT, MyFrame::OnSort)
-	EVT_MENU(LIST_SET_FG_COL, MyFrame::OnSetFgColour)
-	EVT_MENU(LIST_SET_BG_COL, MyFrame::OnSetBgColour)
-	EVT_MENU(LIST_ROW_LINES, MyFrame::OnSetRowLines)
-	EVT_MENU(LIST_CUSTOM_HEADER_ATTR, MyFrame::OnCustomHeaderAttr)
-	EVT_MENU(LIST_TOGGLE_MULTI_SEL, MyFrame::OnToggleMultiSel)
-	EVT_MENU(LIST_SHOW_COL_INFO, MyFrame::OnShowColInfo)
-	EVT_MENU(LIST_SHOW_SEL_INFO, MyFrame::OnShowSelInfo)
-	EVT_MENU(LIST_SHOW_VIEW_RECT, MyFrame::OnShowViewRect)
+	wx.EVT_MENU(wx.LIST_GOTO, this.OnGoTo)
+	wx.EVT_MENU(wx.LIST_FOCUS_LAST, this.OnFocusLast)
+	wx.EVT_MENU(wx.LIST_TOGGLE_FIRST, this.OnToggleFirstSel)
+	wx.EVT_MENU(wx.LIST_DESELECT_ALL, this.OnDeselectAll)
+	wx.EVT_MENU(wx.LIST_SELECT_ALL, this.OnSelectAll)
+	wx.EVT_MENU(wx.LIST_DELETE, this.OnDelete)
+	wx.EVT_MENU(wx.LIST_ADD, this.OnAdd)
+	wx.EVT_MENU(wx.LIST_EDIT, this.OnEdit)
+	wx.EVT_MENU(wx.LIST_DELETE_ALL, this.OnDeleteAll)
+	wx.EVT_MENU(wx.LIST_SORT, this.OnSort)
+	wx.EVT_MENU(wx.LIST_SET_FG_COL, this.OnSetFgColour)
+	wx.EVT_MENU(wx.LIST_SET_BG_COL, this.OnSetBgColour)
+	wx.EVT_MENU(wx.LIST_ROW_LINES, this.OnSetRowLines)
+	wx.EVT_MENU(wx.LIST_CUSTOM_HEADER_ATTR, this.OnCustomHeaderAttr)
+	wx.EVT_MENU(wx.LIST_TOGGLE_MULTI_SEL, this.OnToggleMultiSel)
+	wx.EVT_MENU(wx.LIST_SHOW_COL_INFO, this.OnShowColInfo)
+	wx.EVT_MENU(wx.LIST_SHOW_SEL_INFO, this.OnShowSelInfo)
+	wx.EVT_MENU(wx.LIST_SHOW_VIEW_RECT, this.OnShowViewRect)
 #ifdef wxHAS_LISTCTRL_COLUMN_ORDER
-	EVT_MENU(LIST_SET_COL_ORDER, MyFrame::OnSetColOrder)
-	EVT_MENU(LIST_GET_COL_ORDER, MyFrame::OnGetColOrder)
+	wx.EVT_MENU(wx.LIST_SET_COL_ORDER, this.OnSetColOrder)
+	wx.EVT_MENU(wx.LIST_GET_COL_ORDER, this.OnGetColOrder)
 #endif // wxHAS_LISTCTRL_COLUMN_ORDER
-	EVT_MENU(LIST_FREEZE, MyFrame::OnFreeze)
-	EVT_MENU(LIST_THAW, MyFrame::OnThaw)
-	EVT_MENU(LIST_TOGGLE_LINES, MyFrame::OnToggleLines)
-	EVT_MENU(LIST_TOGGLE_HEADER, MyFrame::OnToggleHeader)
-	EVT_MENU(LIST_TOGGLE_BELL, MyFrame::OnToggleBell)
-	EVT_MENU(LIST_CHECKVISIBILITY, MyFrame::OnCheckVisibility)
+	wx.EVT_MENU(wx.LIST_FREEZE, this.OnFreeze)
+	wx.EVT_MENU(wx.LIST_THAW, this.OnThaw)
+	wx.EVT_MENU(wx.LIST_TOGGLE_LINES, this.OnToggleLines)
+	wx.EVT_MENU(wx.LIST_TOGGLE_HEADER, this.OnToggleHeader)
+	wx.EVT_MENU(wx.LIST_TOGGLE_BELL, this.OnToggleBell)
+	wx.EVT_MENU(wx.LIST_CHECKVISIBILITY, this.OnCheckVisibility)
 #ifdef __WXOSX__
-	EVT_MENU(LIST_MAC_USE_GENERIC, MyFrame::OnToggleMacUseGeneric)
+	wx.EVT_MENU(wx.LIST_MAC_USE_GENERIC, this.OnToggleMacUseGeneric)
 #endif // __WXOSX__
-	EVT_MENU(LIST_FIND, MyFrame::OnFind)
-	EVT_MENU(LIST_TOGGLE_CHECKBOX, MyFrame::OnToggleItemCheckBox)
-	EVT_MENU(LIST_GET_CHECKBOX, MyFrame::OnGetItemCheckBox)
-	EVT_MENU(LIST_TOGGLE_CHECKBOXES, MyFrame::OnToggleCheckBoxes)
+	wx.EVT_MENU(wx.LIST_FIND, this.OnFind)
+	wx.EVT_MENU(wx.LIST_TOGGLE_CHECKBOX, this.OnToggleItemCheckBox)
+	wx.EVT_MENU(wx.LIST_GET_CHECKBOX, this.OnGetItemCheckBox)
+	wx.EVT_MENU(wx.LIST_TOGGLE_CHECKBOXES, this.OnToggleCheckBoxes)
 
 	EVT_UPDATE_UI(LIST_SHOW_COL_INFO, MyFrame::OnUpdateUIEnableInReport)
 	EVT_UPDATE_UI(LIST_TOGGLE_HEADER, MyFrame::OnUpdateUIEnableInReport)
@@ -123,6 +126,7 @@ wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
 	EVT_UPDATE_UI(LIST_TOGGLE_HEADER, MyFrame::OnUpdateToggleHeader)
 	EVT_UPDATE_UI(LIST_ROW_LINES, MyFrame::OnUpdateRowLines)
 wxEND_EVENT_TABLE()
+}
 
 // My frame constructor
 MyFrame::MyFrame(const wxString& title)
@@ -269,6 +273,7 @@ MyFrame::MyFrame(const wxString& title)
 
 	SetClientSize(m_panel->GetBestSize());
 }
+*/
 
 MyFrame::~MyFrame()
 {
