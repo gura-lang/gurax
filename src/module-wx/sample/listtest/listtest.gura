@@ -8,6 +8,58 @@
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
 
+// IDs for the menu commands
+LIST_ABOUT = wxID_ABOUT,
+LIST_QUIT = wxID_EXIT,
+[
+	LIST_LIST_VIEW,
+	LIST_ICON_VIEW,
+	LIST_ICON_TEXT_VIEW,
+	LIST_SMALL_ICON_VIEW,
+	LIST_SMALL_ICON_TEXT_VIEW,
+	LIST_REPORT_VIEW,
+	LIST_VIRTUAL_VIEW,
+	LIST_SMALL_VIRTUAL_VIEW,
+	LIST_SET_ITEMS_COUNT,
+
+	LIST_DESELECT_ALL,
+	LIST_SELECT_ALL,
+	LIST_DELETE_ALL,
+	LIST_DELETE,
+	LIST_ADD,
+	LIST_EDIT,
+	LIST_SORT,
+	LIST_FIND,
+	LIST_SET_FG_COL,
+	LIST_SET_BG_COL,
+	LIST_ROW_LINES,
+	LIST_CUSTOM_HEADER_ATTR,
+	LIST_TOGGLE_MULTI_SEL,
+	LIST_TOGGLE_HEADER,
+	LIST_TOGGLE_BELL,
+	LIST_TOGGLE_CHECKBOX,
+	LIST_GET_CHECKBOX,
+	LIST_TOGGLE_CHECKBOXES,
+	LIST_TOGGLE_FIRST,
+	LIST_SHOW_COL_INFO,
+	LIST_SHOW_SEL_INFO,
+	LIST_SHOW_VIEW_RECT,
+	//#ifdef wxHAS_LISTCTRL_COLUMN_ORDER
+	//LIST_SET_COL_ORDER,
+	//LIST_GET_COL_ORDER,
+	//#endif // wxHAS_LISTCTRL_COLUMN_ORDER
+	LIST_GOTO,
+	LIST_FOCUS_LAST,
+	LIST_FREEZE,
+	LIST_THAW,
+	LIST_TOGGLE_LINES,
+	//#ifdef __WXOSX__
+	//LIST_MAC_USE_GENERIC,
+	//#endif
+	LIST_CHECKVISIBILITY,
+} = wxID_HIGHEST..
+LIST_CTRL                   = 1000
+
 // ----------------------------------------------------------------------------
 // Constants and globals
 // ----------------------------------------------------------------------------
@@ -65,215 +117,297 @@ MyApp = class(wx.App) {
 // ----------------------------------------------------------------------------
 // MyFrame
 // ----------------------------------------------------------------------------
+MyFrame = class(wx.Frame) {
+	// My frame constructor
+	__init__(title as String) {|nil, wx.ID_ANY, title, wx.DefaultPosition, wx.Size(600, 500)|
+		m_listCtrl = NULL;
+		m_logWindow = NULL;
+		m_smallVirtual = false;
+		m_numListItems = 10;
 
-EventTable()
-#of 0
-	wx.EVT_MENU(wx.LIST_QUIT, this.OnQuit)
-	wx.EVT_MENU(wx.LIST_ABOUT, this.OnAbout)
-	wx.EVT_MENU(wx.LIST_LIST_VIEW, this.OnListView)
-	wx.EVT_MENU(wx.LIST_REPORT_VIEW, this.OnReportView)
-	wx.EVT_MENU(wx.LIST_ICON_VIEW, this.OnIconView)
-	wx.EVT_MENU(wx.LIST_ICON_TEXT_VIEW, this.OnIconTextView)
-	wx.EVT_MENU(wx.LIST_SMALL_ICON_VIEW, this.OnSmallIconView)
-	wx.EVT_MENU(wx.LIST_SMALL_ICON_TEXT_VIEW, this.OnSmallIconTextView)
-	wx.EVT_MENU(wx.LIST_VIRTUAL_VIEW, this.OnVirtualView)
-	wx.EVT_MENU(wx.LIST_SMALL_VIRTUAL_VIEW, this.OnSmallVirtualView)
+		// Give it an icon
+		//SetIcon(wxICON(sample));
 
-	wx.EVT_MENU(wx.LIST_SET_ITEMS_COUNT, this.OnSetItemsCount)
+		// Make an image list containing large icons
+		m_imageListNormal = new wxImageList(32, 32, true);
+		m_imageListSmall = new wxImageList(16, 16, true);
 
-	wx.EVT_MENU(wx.LIST_GOTO, this.OnGoTo)
-	wx.EVT_MENU(wx.LIST_FOCUS_LAST, this.OnFocusLast)
-	wx.EVT_MENU(wx.LIST_TOGGLE_FIRST, this.OnToggleFirstSel)
-	wx.EVT_MENU(wx.LIST_DESELECT_ALL, this.OnDeselectAll)
-	wx.EVT_MENU(wx.LIST_SELECT_ALL, this.OnSelectAll)
-	wx.EVT_MENU(wx.LIST_DELETE, this.OnDelete)
-	wx.EVT_MENU(wx.LIST_ADD, this.OnAdd)
-	wx.EVT_MENU(wx.LIST_EDIT, this.OnEdit)
-	wx.EVT_MENU(wx.LIST_DELETE_ALL, this.OnDeleteAll)
-	wx.EVT_MENU(wx.LIST_SORT, this.OnSort)
-	wx.EVT_MENU(wx.LIST_SET_FG_COL, this.OnSetFgColour)
-	wx.EVT_MENU(wx.LIST_SET_BG_COL, this.OnSetBgColour)
-	wx.EVT_MENU(wx.LIST_ROW_LINES, this.OnSetRowLines)
-	wx.EVT_MENU(wx.LIST_CUSTOM_HEADER_ATTR, this.OnCustomHeaderAttr)
-	wx.EVT_MENU(wx.LIST_TOGGLE_MULTI_SEL, this.OnToggleMultiSel)
-	wx.EVT_MENU(wx.LIST_SHOW_COL_INFO, this.OnShowColInfo)
-	wx.EVT_MENU(wx.LIST_SHOW_SEL_INFO, this.OnShowSelInfo)
-	wx.EVT_MENU(wx.LIST_SHOW_VIEW_RECT, this.OnShowViewRect)
-#ifdef wxHAS_LISTCTRL_COLUMN_ORDER
-	wx.EVT_MENU(wx.LIST_SET_COL_ORDER, this.OnSetColOrder)
-	wx.EVT_MENU(wx.LIST_GET_COL_ORDER, this.OnGetColOrder)
-#endif // wxHAS_LISTCTRL_COLUMN_ORDER
-	wx.EVT_MENU(wx.LIST_FREEZE, this.OnFreeze)
-	wx.EVT_MENU(wx.LIST_THAW, this.OnThaw)
-	wx.EVT_MENU(wx.LIST_TOGGLE_LINES, this.OnToggleLines)
-	wx.EVT_MENU(wx.LIST_TOGGLE_HEADER, this.OnToggleHeader)
-	wx.EVT_MENU(wx.LIST_TOGGLE_BELL, this.OnToggleBell)
-	wx.EVT_MENU(wx.LIST_CHECKVISIBILITY, this.OnCheckVisibility)
-#ifdef __WXOSX__
-	wx.EVT_MENU(wx.LIST_MAC_USE_GENERIC, this.OnToggleMacUseGeneric)
-#endif // __WXOSX__
-	wx.EVT_MENU(wx.LIST_FIND, this.OnFind)
-	wx.EVT_MENU(wx.LIST_TOGGLE_CHECKBOX, this.OnToggleItemCheckBox)
-	wx.EVT_MENU(wx.LIST_GET_CHECKBOX, this.OnGetItemCheckBox)
-	wx.EVT_MENU(wx.LIST_TOGGLE_CHECKBOXES, this.OnToggleCheckBoxes)
+	#ifdef wxHAS_IMAGES_IN_RESOURCES
+		m_imageListNormal->Add( wxIcon("icon1", wxBITMAP_TYPE_ICO_RESOURCE) );
+		m_imageListNormal->Add( wxIcon("icon2", wxBITMAP_TYPE_ICO_RESOURCE) );
+		m_imageListNormal->Add( wxIcon("icon3", wxBITMAP_TYPE_ICO_RESOURCE) );
+		m_imageListNormal->Add( wxIcon("icon4", wxBITMAP_TYPE_ICO_RESOURCE) );
+		m_imageListNormal->Add( wxIcon("icon5", wxBITMAP_TYPE_ICO_RESOURCE) );
+		m_imageListNormal->Add( wxIcon("icon6", wxBITMAP_TYPE_ICO_RESOURCE) );
+		m_imageListNormal->Add( wxIcon("icon7", wxBITMAP_TYPE_ICO_RESOURCE) );
+		m_imageListNormal->Add( wxIcon("icon8", wxBITMAP_TYPE_ICO_RESOURCE) );
+		m_imageListNormal->Add( wxIcon("icon9", wxBITMAP_TYPE_ICO_RESOURCE) );
 
-	EVT_UPDATE_UI(LIST_SHOW_COL_INFO, MyFrame::OnUpdateUIEnableInReport)
-	EVT_UPDATE_UI(LIST_TOGGLE_HEADER, MyFrame::OnUpdateUIEnableInReport)
-	EVT_UPDATE_UI(LIST_CUSTOM_HEADER_ATTR, MyFrame::OnUpdateUIEnableInReport)
+		m_imageListSmall->Add( wxIcon("iconsmall", wxBITMAP_TYPE_ICO_RESOURCE) );
 
-	EVT_UPDATE_UI(LIST_TOGGLE_MULTI_SEL, MyFrame::OnUpdateToggleMultiSel)
-	EVT_UPDATE_UI(LIST_TOGGLE_CHECKBOXES, MyFrame::OnUpdateToggleCheckBoxes)
-	EVT_UPDATE_UI(LIST_TOGGLE_HEADER, MyFrame::OnUpdateToggleHeader)
-	EVT_UPDATE_UI(LIST_ROW_LINES, MyFrame::OnUpdateRowLines)
-wxEND_EVENT_TABLE()
+	#else
+		m_imageListNormal->Add( wxIcon( toolbrai_xpm ) );
+		m_imageListNormal->Add( wxIcon( toolchar_xpm ) );
+		m_imageListNormal->Add( wxIcon( tooldata_xpm ) );
+		m_imageListNormal->Add( wxIcon( toolnote_xpm ) );
+		m_imageListNormal->Add( wxIcon( tooltodo_xpm ) );
+		m_imageListNormal->Add( wxIcon( toolchec_xpm ) );
+		m_imageListNormal->Add( wxIcon( toolgame_xpm ) );
+		m_imageListNormal->Add( wxIcon( tooltime_xpm ) );
+		m_imageListNormal->Add( wxIcon( toolword_xpm ) );
+
+		m_imageListSmall->Add( wxIcon( small1_xpm) );
+	#endif
+
+		// Make a menubar
+		wxMenu *menuFile = new wxMenu;
+		menuFile->Append(LIST_ABOUT, "&About");
+		menuFile->AppendSeparator();
+		menuFile->Append(LIST_QUIT, "E&xit\tAlt-X");
+
+		wxMenu *menuView = new wxMenu;
+		menuView->Append(LIST_LIST_VIEW, "&List view\tF1");
+		menuView->Append(LIST_REPORT_VIEW, "&Report view\tF2");
+		menuView->Append(LIST_ICON_VIEW, "&Icon view\tF3");
+		menuView->Append(LIST_ICON_TEXT_VIEW, "Icon view with &text\tF4");
+		menuView->Append(LIST_SMALL_ICON_VIEW, "&Small icon view\tF5");
+		menuView->Append(LIST_SMALL_ICON_TEXT_VIEW, "Small icon &view with text\tF6");
+		menuView->Append(LIST_VIRTUAL_VIEW, "&Virtual view\tF7");
+		menuView->Append(LIST_SMALL_VIRTUAL_VIEW, "Small virtual vie&w\tF8");
+		menuView->AppendSeparator();
+		menuView->Append(LIST_SET_ITEMS_COUNT, "Set &number of items");
+	#ifdef __WXOSX__
+		menuView->AppendSeparator();
+		menuView->AppendCheckItem(LIST_MAC_USE_GENERIC, "Mac: Use Generic Control");
+	#endif
+
+		wxMenu *menuList = new wxMenu;
+		menuList->Append(LIST_GOTO, "&Go to item #3\tCtrl-3");
+		menuList->Append(LIST_FOCUS_LAST, "&Make last item current\tCtrl-L");
+		menuList->Append(LIST_TOGGLE_FIRST, "To&ggle first item\tCtrl-G");
+		menuList->Append(LIST_DESELECT_ALL, "&Deselect All\tCtrl-D");
+		menuList->Append(LIST_SELECT_ALL, "S&elect All\tCtrl-A");
+		menuList->AppendSeparator();
+		menuList->Append(LIST_SHOW_COL_INFO, "Show &column info\tCtrl-C");
+		menuList->Append(LIST_SHOW_SEL_INFO, "Show &selected items\tCtrl-S");
+		menuList->Append(LIST_SHOW_VIEW_RECT, "Show &view rect");
+	#ifdef wxHAS_LISTCTRL_COLUMN_ORDER
+		menuList->Append(LIST_SET_COL_ORDER, "Se&t columns order\tShift-Ctrl-O");
+		menuList->Append(LIST_GET_COL_ORDER, "Sho&w columns order\tCtrl-O");
+	#endif // wxHAS_LISTCTRL_COLUMN_ORDER
+		menuList->AppendSeparator();
+		menuList->Append(LIST_SORT, "Sor&t\tCtrl-T");
+		menuList->Append(LIST_FIND, "Test Find() performance");
+		menuList->AppendSeparator();
+		menuList->Append(LIST_ADD, "&Append an item\tCtrl-P");
+		menuList->Append(LIST_EDIT, "&Edit the item\tCtrl-E");
+		menuList->Append(LIST_DELETE, "&Delete first item\tCtrl-X");
+		menuList->Append(LIST_DELETE_ALL, "Delete &all items");
+		menuList->AppendSeparator();
+		menuList->Append(LIST_FREEZE, "Free&ze\tCtrl-Z");
+		menuList->Append(LIST_THAW, "Tha&w\tCtrl-W");
+		menuList->AppendSeparator();
+		menuList->AppendCheckItem(LIST_TOGGLE_LINES, "Toggle &lines\tCtrl-I");
+		menuList->AppendCheckItem(LIST_TOGGLE_MULTI_SEL,
+								  "&Multiple selection\tCtrl-M");
+		menuList->Check(LIST_TOGGLE_MULTI_SEL, true);
+		menuList->AppendCheckItem(LIST_TOGGLE_HEADER, "Toggle &header\tCtrl-H");
+		menuList->Check(LIST_TOGGLE_HEADER, true);
+		menuList->AppendCheckItem(LIST_TOGGLE_BELL, "Toggle &bell on no match");
+		menuList->Append( LIST_CHECKVISIBILITY, "Check if lines 2 and 9 are visible" );
+		menuList->AppendSeparator();
+		menuList->AppendCheckItem(LIST_TOGGLE_CHECKBOXES,
+								  "&Enable Checkboxes");
+		menuList->Check(LIST_TOGGLE_CHECKBOXES, true);
+		menuList->Append(LIST_TOGGLE_CHECKBOX, "Toggle the item checkbox state");
+		menuList->Append(LIST_GET_CHECKBOX, "Get the item checkbox state");
+
+		wxMenu *menuCol = new wxMenu;
+		menuCol->Append(LIST_SET_FG_COL, "&Foreground colour...");
+		menuCol->Append(LIST_SET_BG_COL, "&Background colour...");
+		menuCol->AppendCheckItem(LIST_ROW_LINES, "Alternating colours");
+		menuCol->AppendCheckItem(LIST_CUSTOM_HEADER_ATTR, "&Custom header attributes");
+
+		wxMenuBar *menubar = new wxMenuBar;
+		menubar->Append(menuFile, "&File");
+		menubar->Append(menuView, "&View");
+		menubar->Append(menuList, "&List");
+		menubar->Append(menuCol, "&Colour");
+		SetMenuBar(menubar);
+
+		m_panel = new wxPanel(this, wxID_ANY);
+		m_logWindow = new wxTextCtrl(m_panel, wxID_ANY, wxEmptyString,
+									 wxDefaultPosition, wxDefaultSize,
+									 wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
+
+		m_logOld = wxLog::SetActiveTarget(new wxLogTextCtrl(m_logWindow));
+
+		RecreateList(wxLC_REPORT | wxLC_SINGLE_SEL);
+
+	#ifdef __WXMSW__
+		// this is useful to know specially when debugging :)
+		wxLogMessage("Your version of comctl32.dll is: %d",
+					 wxApp::GetComCtl32Version());
+	#endif
+
+	#if wxUSE_STATUSBAR
+		CreateStatusBar();
+	#endif // wxUSE_STATUSBAR
+
+		wxBoxSizer* const sizer = new wxBoxSizer(wxVERTICAL);
+		sizer->Add(m_listCtrl, wxSizerFlags(2).Expand().Border());
+		sizer->Add(m_logWindow, wxSizerFlags(1).Expand().Border());
+		m_panel->SetSizer(sizer);
+
+		SetClientSize(m_panel->GetBestSize());
+	}
+
+protected:
+	OnQuit(wxCommandEvent& event);
+	OnAbout(wxCommandEvent& event);
+	OnListView(wxCommandEvent& event);
+	OnReportView(wxCommandEvent& event);
+	OnIconView(wxCommandEvent& event);
+	OnIconTextView(wxCommandEvent& event);
+	OnSmallIconView(wxCommandEvent& event);
+	OnSmallIconTextView(wxCommandEvent& event);
+	OnVirtualView(wxCommandEvent& event);
+	OnSmallVirtualView(wxCommandEvent& event);
+	OnCheckVisibility(wxCommandEvent& event);
+	OnSetItemsCount(wxCommandEvent& event);
+
+
+	OnGoTo(wxCommandEvent& event);
+	OnFocusLast(wxCommandEvent& event);
+	OnToggleFirstSel(wxCommandEvent& event);
+	OnDeselectAll(wxCommandEvent& event);
+	OnSelectAll(wxCommandEvent& event);
+	OnAdd(wxCommandEvent& event);
+	OnEdit(wxCommandEvent& event);
+	OnDelete(wxCommandEvent& event);
+	OnDeleteAll(wxCommandEvent& event);
+	OnSort(wxCommandEvent& event);
+	OnSetFgColour(wxCommandEvent& event);
+	OnSetBgColour(wxCommandEvent& event);
+	OnSetRowLines(wxCommandEvent& event);
+	OnCustomHeaderAttr(wxCommandEvent& event);
+	OnToggleMultiSel(wxCommandEvent& event);
+	OnShowColInfo(wxCommandEvent& event);
+	OnShowSelInfo(wxCommandEvent& event);
+	OnShowViewRect(wxCommandEvent& event);
+	//#ifdef wxHAS_LISTCTRL_COLUMN_ORDER
+	//void OnSetColOrder(wxCommandEvent& event);
+	//void OnGetColOrder(wxCommandEvent& event);
+	//#endif // wxHAS_LISTCTRL_COLUMN_ORDER
+	OnFreeze(wxCommandEvent& event);
+	OnThaw(wxCommandEvent& event);
+	OnToggleLines(wxCommandEvent& event);
+	OnToggleHeader(wxCommandEvent& event);
+	OnToggleBell(wxCommandEvent& event);
+	//#ifdef __WXOSX__
+	//void OnToggleMacUseGeneric(wxCommandEvent& event);
+	//#endif // __WXOSX__
+	OnFind(wxCommandEvent& event);
+	OnToggleItemCheckBox(wxCommandEvent& event);
+	OnGetItemCheckBox(wxCommandEvent& event);
+	OnToggleCheckBoxes(wxCommandEvent& event);
+
+	OnUpdateUIEnableInReport(wxUpdateUIEvent& event);
+	OnUpdateToggleMultiSel(wxUpdateUIEvent& event);
+	OnUpdateToggleCheckBoxes(wxUpdateUIEvent& event);
+	OnUpdateToggleHeader(wxUpdateUIEvent& event);
+	OnUpdateRowLines(wxUpdateUIEvent& event);
+
+	m_imageListNormal as wx.ImageList
+	m_imageListSmall as wx.ImageList
+
+	m_panel as wxPanel
+	m_listCtrl as MyListCtrl
+	m_logWindow as wxTextCtrl
+
+	// recreate the list control with the new flags
+	RecreateList(flags as Number, withText as Bool = true)
+
+	// fill the control with items depending on the view
+	InitWithListItems();
+	InitWithReportItems();
+	InitWithIconItems(withText as bool, sameIcon as Bool = false);
+	InitWithVirtualItems();
+
+	// return true if the control is not in virtual view, give an error message
+	// and return false if it is
+	CheckNonVirtual() as Bool;
+
+
+	m_logOld as wx.Log;
+
+	m_smallVirtual as Bool;
+
+	// number of items to initialize list/report view with
+	m_numListItems as Number
+
+};
+
+EventTable() = {
+	wx.EVT_MENU(this, id = LIST_QUIT, this.OnQuit)
+	wx.EVT_MENU(this, id = LIST_ABOUT, this.OnAbout)
+	wx.EVT_MENU(this, id = LIST_LIST_VIEW, this.OnListView)
+	wx.EVT_MENU(this, id = LIST_REPORT_VIEW, this.OnReportView)
+	wx.EVT_MENU(this, id = LIST_ICON_VIEW, this.OnIconView)
+	wx.EVT_MENU(this, id = LIST_ICON_TEXT_VIEW, this.OnIconTextView)
+	wx.EVT_MENU(this, id = LIST_SMALL_ICON_VIEW, this.OnSmallIconView)
+	wx.EVT_MENU(this, id = LIST_SMALL_ICON_TEXT_VIEW, this.OnSmallIconTextView)
+	wx.EVT_MENU(this, id = LIST_VIRTUAL_VIEW, this.OnVirtualView)
+	wx.EVT_MENU(this, id = LIST_SMALL_VIRTUAL_VIEW, this.OnSmallVirtualView)
+
+	wx.EVT_MENU(this, id = LIST_SET_ITEMS_COUNT, this.OnSetItemsCount)
+
+	wx.EVT_MENU(this, id = LIST_GOTO, this.OnGoTo)
+	wx.EVT_MENU(this, id = LIST_FOCUS_LAST, this.OnFocusLast)
+	wx.EVT_MENU(this, id = LIST_TOGGLE_FIRST, this.OnToggleFirstSel)
+	wx.EVT_MENU(this, id = LIST_DESELECT_ALL, this.OnDeselectAll)
+	wx.EVT_MENU(this, id = LIST_SELECT_ALL, this.OnSelectAll)
+	wx.EVT_MENU(this, id = LIST_DELETE, this.OnDelete)
+	wx.EVT_MENU(this, id = LIST_ADD, this.OnAdd)
+	wx.EVT_MENU(this, id = LIST_EDIT, this.OnEdit)
+	wx.EVT_MENU(this, id = LIST_DELETE_ALL, this.OnDeleteAll)
+	wx.EVT_MENU(this, id = LIST_SORT, this.OnSort)
+	wx.EVT_MENU(this, id = LIST_SET_FG_COL, this.OnSetFgColour)
+	wx.EVT_MENU(this, id = LIST_SET_BG_COL, this.OnSetBgColour)
+	wx.EVT_MENU(this, id = LIST_ROW_LINES, this.OnSetRowLines)
+	wx.EVT_MENU(this, id = LIST_CUSTOM_HEADER_ATTR, this.OnCustomHeaderAttr)
+	wx.EVT_MENU(this, id = LIST_TOGGLE_MULTI_SEL, this.OnToggleMultiSel)
+	wx.EVT_MENU(this, id = LIST_SHOW_COL_INFO, this.OnShowColInfo)
+	wx.EVT_MENU(this, id = LIST_SHOW_SEL_INFO, this.OnShowSelInfo)
+	wx.EVT_MENU(this, id = LIST_SHOW_VIEW_RECT, this.OnShowViewRect)
+	//#ifdef wxHAS_LISTCTRL_COLUMN_ORDER
+	//wx.EVT_MENU(this, id = LIST_SET_COL_ORDER, this.OnSetColOrder)
+	//wx.EVT_MENU(this, id = LIST_GET_COL_ORDER, this.OnGetColOrder)
+	//#endif // wxHAS_LISTCTRL_COLUMN_ORDER
+	wx.EVT_MENU(this, id = LIST_FREEZE, this.OnFreeze)
+	wx.EVT_MENU(this, id = LIST_THAW, this.OnThaw)
+	wx.EVT_MENU(this, id = LIST_TOGGLE_LINES, this.OnToggleLines)
+	wx.EVT_MENU(this, id = LIST_TOGGLE_HEADER, this.OnToggleHeader)
+	wx.EVT_MENU(this, id = LIST_TOGGLE_BELL, this.OnToggleBell)
+	wx.EVT_MENU(this, id = LIST_CHECKVISIBILITY, this.OnCheckVisibility)
+	//#ifdef __WXOSX__
+	//wx.EVT_MENU(this, id = LIST_MAC_USE_GENERIC, this.OnToggleMacUseGeneric)
+	//#endif // __WXOSX__
+	wx.EVT_MENU(this, id = LIST_FIND, this.OnFind)
+	wx.EVT_MENU(this, id = LIST_TOGGLE_CHECKBOX, this.OnToggleItemCheckBox)
+	wx.EVT_MENU(this, id = LIST_GET_CHECKBOX, this.OnGetItemCheckBox)
+	wx.EVT_MENU(this, id = LIST_TOGGLE_CHECKBOXES, this.OnToggleCheckBoxes)
+
+	wx.EVT_UPDATE_UI(this, id = LIST_SHOW_COL_INFO, MyFrame::OnUpdateUIEnableInReport)
+	wx.EVT_UPDATE_UI(this, id = LIST_TOGGLE_HEADER, MyFrame::OnUpdateUIEnableInReport)
+	wx.EVT_UPDATE_UI(this, id = LIST_CUSTOM_HEADER_ATTR, MyFrame::OnUpdateUIEnableInReport)
+
+	wx.EVT_UPDATE_UI(this, id = LIST_TOGGLE_MULTI_SEL, MyFrame::OnUpdateToggleMultiSel)
+	wx.EVT_UPDATE_UI(this, id = LIST_TOGGLE_CHECKBOXES, MyFrame::OnUpdateToggleCheckBoxes)
+	wx.EVT_UPDATE_UI(this, id = LIST_TOGGLE_HEADER, MyFrame::OnUpdateToggleHeader)
+	wx.EVT_UPDATE_UI(this, id = LIST_ROW_LINES, MyFrame::OnUpdateRowLines)
 }
 
-// My frame constructor
-MyFrame::MyFrame(const wxString& title)
-	   : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(600, 500))
-{
-	m_listCtrl = NULL;
-	m_logWindow = NULL;
-	m_smallVirtual = false;
-	m_numListItems = 10;
-
-	// Give it an icon
-	SetIcon(wxICON(sample));
-
-	// Make an image list containing large icons
-	m_imageListNormal = new wxImageList(32, 32, true);
-	m_imageListSmall = new wxImageList(16, 16, true);
-
-#ifdef wxHAS_IMAGES_IN_RESOURCES
-	m_imageListNormal->Add( wxIcon("icon1", wxBITMAP_TYPE_ICO_RESOURCE) );
-	m_imageListNormal->Add( wxIcon("icon2", wxBITMAP_TYPE_ICO_RESOURCE) );
-	m_imageListNormal->Add( wxIcon("icon3", wxBITMAP_TYPE_ICO_RESOURCE) );
-	m_imageListNormal->Add( wxIcon("icon4", wxBITMAP_TYPE_ICO_RESOURCE) );
-	m_imageListNormal->Add( wxIcon("icon5", wxBITMAP_TYPE_ICO_RESOURCE) );
-	m_imageListNormal->Add( wxIcon("icon6", wxBITMAP_TYPE_ICO_RESOURCE) );
-	m_imageListNormal->Add( wxIcon("icon7", wxBITMAP_TYPE_ICO_RESOURCE) );
-	m_imageListNormal->Add( wxIcon("icon8", wxBITMAP_TYPE_ICO_RESOURCE) );
-	m_imageListNormal->Add( wxIcon("icon9", wxBITMAP_TYPE_ICO_RESOURCE) );
-
-	m_imageListSmall->Add( wxIcon("iconsmall", wxBITMAP_TYPE_ICO_RESOURCE) );
-
-#else
-	m_imageListNormal->Add( wxIcon( toolbrai_xpm ) );
-	m_imageListNormal->Add( wxIcon( toolchar_xpm ) );
-	m_imageListNormal->Add( wxIcon( tooldata_xpm ) );
-	m_imageListNormal->Add( wxIcon( toolnote_xpm ) );
-	m_imageListNormal->Add( wxIcon( tooltodo_xpm ) );
-	m_imageListNormal->Add( wxIcon( toolchec_xpm ) );
-	m_imageListNormal->Add( wxIcon( toolgame_xpm ) );
-	m_imageListNormal->Add( wxIcon( tooltime_xpm ) );
-	m_imageListNormal->Add( wxIcon( toolword_xpm ) );
-
-	m_imageListSmall->Add( wxIcon( small1_xpm) );
-#endif
-
-	// Make a menubar
-	wxMenu *menuFile = new wxMenu;
-	menuFile->Append(LIST_ABOUT, "&About");
-	menuFile->AppendSeparator();
-	menuFile->Append(LIST_QUIT, "E&xit\tAlt-X");
-
-	wxMenu *menuView = new wxMenu;
-	menuView->Append(LIST_LIST_VIEW, "&List view\tF1");
-	menuView->Append(LIST_REPORT_VIEW, "&Report view\tF2");
-	menuView->Append(LIST_ICON_VIEW, "&Icon view\tF3");
-	menuView->Append(LIST_ICON_TEXT_VIEW, "Icon view with &text\tF4");
-	menuView->Append(LIST_SMALL_ICON_VIEW, "&Small icon view\tF5");
-	menuView->Append(LIST_SMALL_ICON_TEXT_VIEW, "Small icon &view with text\tF6");
-	menuView->Append(LIST_VIRTUAL_VIEW, "&Virtual view\tF7");
-	menuView->Append(LIST_SMALL_VIRTUAL_VIEW, "Small virtual vie&w\tF8");
-	menuView->AppendSeparator();
-	menuView->Append(LIST_SET_ITEMS_COUNT, "Set &number of items");
-#ifdef __WXOSX__
-	menuView->AppendSeparator();
-	menuView->AppendCheckItem(LIST_MAC_USE_GENERIC, "Mac: Use Generic Control");
-#endif
-
-	wxMenu *menuList = new wxMenu;
-	menuList->Append(LIST_GOTO, "&Go to item #3\tCtrl-3");
-	menuList->Append(LIST_FOCUS_LAST, "&Make last item current\tCtrl-L");
-	menuList->Append(LIST_TOGGLE_FIRST, "To&ggle first item\tCtrl-G");
-	menuList->Append(LIST_DESELECT_ALL, "&Deselect All\tCtrl-D");
-	menuList->Append(LIST_SELECT_ALL, "S&elect All\tCtrl-A");
-	menuList->AppendSeparator();
-	menuList->Append(LIST_SHOW_COL_INFO, "Show &column info\tCtrl-C");
-	menuList->Append(LIST_SHOW_SEL_INFO, "Show &selected items\tCtrl-S");
-	menuList->Append(LIST_SHOW_VIEW_RECT, "Show &view rect");
-#ifdef wxHAS_LISTCTRL_COLUMN_ORDER
-	menuList->Append(LIST_SET_COL_ORDER, "Se&t columns order\tShift-Ctrl-O");
-	menuList->Append(LIST_GET_COL_ORDER, "Sho&w columns order\tCtrl-O");
-#endif // wxHAS_LISTCTRL_COLUMN_ORDER
-	menuList->AppendSeparator();
-	menuList->Append(LIST_SORT, "Sor&t\tCtrl-T");
-	menuList->Append(LIST_FIND, "Test Find() performance");
-	menuList->AppendSeparator();
-	menuList->Append(LIST_ADD, "&Append an item\tCtrl-P");
-	menuList->Append(LIST_EDIT, "&Edit the item\tCtrl-E");
-	menuList->Append(LIST_DELETE, "&Delete first item\tCtrl-X");
-	menuList->Append(LIST_DELETE_ALL, "Delete &all items");
-	menuList->AppendSeparator();
-	menuList->Append(LIST_FREEZE, "Free&ze\tCtrl-Z");
-	menuList->Append(LIST_THAW, "Tha&w\tCtrl-W");
-	menuList->AppendSeparator();
-	menuList->AppendCheckItem(LIST_TOGGLE_LINES, "Toggle &lines\tCtrl-I");
-	menuList->AppendCheckItem(LIST_TOGGLE_MULTI_SEL,
-							  "&Multiple selection\tCtrl-M");
-	menuList->Check(LIST_TOGGLE_MULTI_SEL, true);
-	menuList->AppendCheckItem(LIST_TOGGLE_HEADER, "Toggle &header\tCtrl-H");
-	menuList->Check(LIST_TOGGLE_HEADER, true);
-	menuList->AppendCheckItem(LIST_TOGGLE_BELL, "Toggle &bell on no match");
-	menuList->Append( LIST_CHECKVISIBILITY, "Check if lines 2 and 9 are visible" );
-	menuList->AppendSeparator();
-	menuList->AppendCheckItem(LIST_TOGGLE_CHECKBOXES,
-							  "&Enable Checkboxes");
-	menuList->Check(LIST_TOGGLE_CHECKBOXES, true);
-	menuList->Append(LIST_TOGGLE_CHECKBOX, "Toggle the item checkbox state");
-	menuList->Append(LIST_GET_CHECKBOX, "Get the item checkbox state");
-
-	wxMenu *menuCol = new wxMenu;
-	menuCol->Append(LIST_SET_FG_COL, "&Foreground colour...");
-	menuCol->Append(LIST_SET_BG_COL, "&Background colour...");
-	menuCol->AppendCheckItem(LIST_ROW_LINES, "Alternating colours");
-	menuCol->AppendCheckItem(LIST_CUSTOM_HEADER_ATTR, "&Custom header attributes");
-
-	wxMenuBar *menubar = new wxMenuBar;
-	menubar->Append(menuFile, "&File");
-	menubar->Append(menuView, "&View");
-	menubar->Append(menuList, "&List");
-	menubar->Append(menuCol, "&Colour");
-	SetMenuBar(menubar);
-
-	m_panel = new wxPanel(this, wxID_ANY);
-	m_logWindow = new wxTextCtrl(m_panel, wxID_ANY, wxEmptyString,
-								 wxDefaultPosition, wxDefaultSize,
-								 wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
-
-	m_logOld = wxLog::SetActiveTarget(new wxLogTextCtrl(m_logWindow));
-
-	RecreateList(wxLC_REPORT | wxLC_SINGLE_SEL);
-
-#ifdef __WXMSW__
-	// this is useful to know specially when debugging :)
-	wxLogMessage("Your version of comctl32.dll is: %d",
-				 wxApp::GetComCtl32Version());
-#endif
-
-#if wxUSE_STATUSBAR
-	CreateStatusBar();
-#endif // wxUSE_STATUSBAR
-
-	wxBoxSizer* const sizer = new wxBoxSizer(wxVERTICAL);
-	sizer->Add(m_listCtrl, wxSizerFlags(2).Expand().Border());
-	sizer->Add(m_logWindow, wxSizerFlags(1).Expand().Border());
-	m_panel->SetSizer(sizer);
-
-	SetClientSize(m_panel->GetBestSize());
-}
-*/
 
 MyFrame::~MyFrame()
 {
@@ -539,14 +673,14 @@ void MyFrame::InitWithReportItems()
 
 	// we leave all mask fields to 0 and only change the colour
 	wxListItem item;
-	item.m_itemId = 0;
+	item.m_itemthis, Id = 0;
 	item.SetTextColour(*wxRED);
 	m_listCtrl->SetItem( item );
 
-	item.m_itemId = 2;
+	item.m_itemthis, Id = 2;
 	item.SetTextColour(*wxGREEN);
 	m_listCtrl->SetItem( item );
-	item.m_itemId = 4;
+	item.m_itemthis, Id = 4;
 	item.SetTextColour(*wxLIGHT_GREY);
 	item.SetFont(*wxITALIC_FONT);
 	item.SetBackgroundColour(*wxRED);
@@ -1148,7 +1282,7 @@ void MyListCtrl::OnSelected(wxListEvent& event)
 	if ( GetWindowStyle() & wxLC_REPORT )
 	{
 		wxListItem info;
-		info.m_itemId = event.m_itemIndex;
+		info.m_itemthis, Id = event.m_itemIndex;
 		info.m_col = 1;
 		info.m_mask = wxLIST_MASK_TEXT;
 		if ( GetItem(info) )
@@ -1226,7 +1360,7 @@ void MyListCtrl::OnListKeyDown(wxListEvent& event)
 		case 'C': // colorize
 			{
 				wxListItem info;
-				info.m_itemId = event.GetIndex();
+				info.m_itemthis, Id = event.GetIndex();
 				if ( info.m_itemId == -1 )
 				{
 					// no item

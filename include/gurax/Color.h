@@ -92,7 +92,7 @@ public:
 public:
 	static void Bootup();
 public:
-	static Color* CreateFromString(const char* str, UInt8 alpha);
+	static bool FromString(Color& color, const char* str, UInt8 alpha);
 public:
 	constexpr UInt32 GetPacked() const { return _packed; }
 	void SetPacked(UInt32 packed) { _packed = packed; }

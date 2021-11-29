@@ -57,9 +57,9 @@ Gurax_ImplementConstructor(Color)
 	UInt8 alpha = args.IsValid()? args.PickNumberRanged<UInt8>(0, 255) : 255;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	std::unique_ptr<Color> pColor(Color::CreateFromString(name, alpha));
-	if (!pColor) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Color(*pColor));
+	Color color;
+	if (!Color::FromString(color, name, alpha)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Color(color));
 }
 
 //------------------------------------------------------------------------------
@@ -299,9 +299,9 @@ Value* VType_Color::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_String)) {
 		const char* name = Value_String::GetString(value);
-		std::unique_ptr<Color> pColor(Color::CreateFromString(name, 255));
-		if (!pColor) return nullptr;
-		return new Value_Color(*pColor);
+		Color color;
+		if (!Color::FromString(color, name, 255)) return nullptr;
+		return new Value_Color(color);
 	} else if (value.IsType(VTYPE_Expr)) {
 		const Symbol* pSymbol = Value_Expr::GetExpr(value).GetPureSymbol();
 		if (!pSymbol) return nullptr;
