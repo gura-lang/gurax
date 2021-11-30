@@ -154,7 +154,7 @@ function ExpandFiles([String[]] $fileNames) {
 			7za x -y $fileName
 			7za x -y "${baseName}.tar"
 			Remove-Item -ErrorAction Ignore -Force "${baseName}.tar"
-		} elseif (($fileName -match "/(?<baseName>.+).(?<extName>zip|7z)$")) {
+		} elseif (($fileName -match "(?<baseName>wxWidgets.+).(?<extName>zip|7z)$")) {
 			$baseName = $Matches['baseName']
 			$extName = $Matches['extName']
 			$fileName = "${baseName}.${extName}"
@@ -420,7 +420,7 @@ class Package_pixman {
 	[String[]] $fileNames = @("$($this.baseName).tar.gz")
 	[String] $dirName = $this.baseName
 	Build() {
-		UnxUtils\make.exe -f Makefile.win32 MMX=off pixman
+		make.exe -f Makefile.win32 MMX=off pixman
 	}
 }
 $packages += [Package_pixman]::new()
@@ -445,9 +445,9 @@ $packages += [Package_cairo]::new()
 #---------------------------------------------------------------------------------
 class Package_wx {
 	[String] $name = "wx"
-	[String] $ver = "3.1.4"
+	[String] $ver = "3.1.5"
 	[String] $baseName = "wxWidgets-$($this.ver)"
-	[String[]] $fileNames = @("/$($this.baseName).7z")
+	[String[]] $fileNames = @("$($this.baseName).7z")
 	[String] $dirName = $this.baseName
 	Build() {
 		ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Debug" /p:Platform=x64'
