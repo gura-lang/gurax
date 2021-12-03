@@ -223,6 +223,9 @@ public:
 		static void SetColor(UInt8* p, const Color &color) {
 			SetR(p, color.GetR()), SetG(p, color.GetG()), SetB(p, color.GetB());
 		}
+		static void SetColor(UInt8* p, const Color &color, UInt8 alpha) {
+			SetR(p, color.GetR()), SetG(p, color.GetG()), SetB(p, color.GetB());
+		}
 		static UInt32 GetPacked(const UInt8* p, UInt8 alphaDefault) {
 			return (static_cast<UInt32>(GetR(p)) << 16) + (static_cast<UInt32>(GetG(p)) << 8) +
 				static_cast<UInt32>(GetB(p)) + (static_cast<UInt32>(alphaDefault) << 24);
@@ -239,6 +242,7 @@ public:
 			SetR(static_cast<UInt8>(packed >> 16));
 		}
 		void SetColor(const Color &color) { SetColor(_p, color); }
+		void SetColor(const Color &color, UInt8 alpha) { SetColor(_p, color, alpha); }
 		UInt8 GetA() const { return _metrics.alphaDefault; }
 		UInt32 GetPacked() const { return GetPacked(_p, _metrics.alphaDefault); }
 		Color GetColor() const { return GetColor(_p, _metrics.alphaDefault); }
@@ -246,8 +250,11 @@ public:
 		void PutPixel(const UInt8* p) {
 			SetR(GetR(p)), SetG(GetG(p)), SetB(GetB(p));
 		}
-		void SetColorN(const Color &color, size_t n) {
+		void SetColorN(const Color& color, size_t n) {
 			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
+		}
+		void SetColorN(const Color& color, UInt8 alpha, size_t n) {
+			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color, alpha);
 		}
 	};
 	class GURAX_DLLDECLARE PixelRGBA : public Pixel {
@@ -262,6 +269,7 @@ public:
 		}
 		static void SetPacked(UInt8* p, UInt32 packed) { *reinterpret_cast<UInt32*>(p) = packed; } 
 		static void SetColor(UInt8* p, const Color &color) { SetPacked(p, color.GetPacked()); }
+		static void SetColor(UInt8* p, const Color &color, UInt8 alpha) { SetRGBA(p, color.GetR(), color.GetG(), color.GetB(), alpha); }
 	public:
 		static UInt8 GetA(const UInt8* p) { return *(p + offsetA); }
 		static UInt8 GetA(const UInt8* p, UInt8 alphaDefault) { return GetA(p); }
@@ -273,15 +281,20 @@ public:
 		void SetA(UInt8 a) { SetA(_p, a); }
 		void SetRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a) { SetRGBA(_p, r, g, b, a); }
 		void SetPacked(UInt32 packed) { SetPacked(_p, packed); }
-		void SetColor(const Color &color) { SetColor(_p, color); }
+		void SetColor(const Color& color) { SetColor(_p, color); }
+		void SetColor(const Color& color, UInt8 alpha) { SetColor(_p, color, alpha); }
 	public:
 		UInt8 GetA() const { return GetA(_p); }
 		UInt32 GetPacked() const { return GetPacked(_p); }
 		Color GetColor() const { return Color(GetPacked()); }
 	public:
 		template<typename T_Pixel> void PutPixel(const UInt8* p) {}
-		void SetColorN(const Color &color, size_t n) {
+		void SetColorN(const Color& color, size_t n) {
 			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, color);
+		}
+		void SetColorN(const Color& color, UInt8 alpha, size_t n) {
+			Color colorToSet(color.GetPacked(), alpha);
+			for (UInt8* p = _p; n > 0; n--, p += bytesPerPixel) SetColor(p, colorToSet);
 		}
 	};
 	class GURAX_DLLDECLARE Scanner {

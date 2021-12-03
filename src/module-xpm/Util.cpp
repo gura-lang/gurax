@@ -7,14 +7,70 @@ Gurax_BeginModuleScope(xpm)
 
 class XPMData {
 public:
-	bool Read();
+	using ColorMap = std::map<String, Color>;
+	class LineReader {
+	public:
+		virtual bool DoRead(String& str) = 0;
+	};
+	class LineReader_Iterator : public LineReader {
+	private:
+		Iterator& _iter;
+	public:
+		LineReader_Iterator(Iterator& iter) : _iter(iter) {}
+		virtual bool DoRead(String& str) {
+			RefPtr<Value> pValue(_iter.NextValue());
+			if (!pValue) return false;
+			str = Value_String::GetString(*pValue);
+			return true;
+		}
+	};
+public:
+	Image* Read(const Image::Format& format, LineReader& lineReader);
 private:
-	virtual bool DoReadLine(String& str) = 0;
+	template<typename T_Pixel>
+	static bool ReadData(Image& image, LineReader& lineReader, const ColorMap& colorMap,
+					const String& symbolNull, int width, int height, int nColors, int nBytes);
 };
 
-bool XPMData::Read()
+template<typename T_Pixel>
+bool XPMData::ReadData(Image& image, LineReader& lineReader, const ColorMap& colorMap,
+					const String& symbolNull, int width, int height, int nColors, int nBytes)
 {
-	using ColorMap = std::map<String, Color>;
+	String str;
+	UInt8* pDst = image.GetPointerC();
+	for (int y = 0; y < height; y++) {
+		if (!lineReader.DoRead(str)) {
+			Error::Issue(ErrorType::FormatError, "invalid XPM data");
+			return false;
+		}
+		String symbol;
+		int x = 0;
+		for (String::const_iterator p = str.begin() ; x < width && p != str.end(); p++) {
+			char ch = *p;
+			symbol += ch;
+			if (symbol.size() == nBytes) {
+				if (symbol == symbolNull) {
+					T_Pixel::SetRGBA(pDst, 0, 0, 0, 0);
+				} else {
+					auto iter = colorMap.find(symbol);
+					if (iter == colorMap.end()) {
+						Error::Issue(ErrorType::FormatError, "undefined color symbol");
+						return false;
+					}
+					const Color& color = iter->second;
+					T_Pixel::SetRGBA(pDst, color.GetR(), color.GetG(), color.GetB(), 255);
+				}
+				pDst += T_Pixel::bytesPerPixel;
+				x++;
+				symbol.clear();
+			}
+		}
+	}
+	return true;
+}
+
+Image* XPMData::Read(const Image::Format& format, LineReader& lineReader)
+{
 	String str;
 	int width = 0, height = 0;
 	int nColors = 0, nBytes = 0;
@@ -23,9 +79,9 @@ bool XPMData::Read()
 			WidthPre, Width, HeightPre, Height,
 			NColorsPre, NColors, NBytesPre, NBytes, Finish,
 		} stat = Stat::WidthPre;
-		if (!DoReadLine(str)) {
+		if (!lineReader.DoRead(str)) {
 			Error::Issue(ErrorType::FormatError, "can't find XPM header");
-			return false;
+			return nullptr;
 		}
 		const char *p = str.c_str();
 		for (;;) {
@@ -45,7 +101,7 @@ bool XPMData::Read()
 					stat = Stat::HeightPre;
 				} else {
 					Error::Issue(ErrorType::FormatError, "invalid XPM header");
-					return false;
+					return nullptr;
 				}
 			} else if (stat == Stat::HeightPre) {
 				if (ch == ' ' || ch == '\t') {
@@ -61,7 +117,7 @@ bool XPMData::Read()
 					stat = Stat::NColorsPre;
 				} else {
 					Error::Issue(ErrorType::FormatError, "invalid XPM header");
-					return false;
+					return nullptr;
 				}
 			} else if (stat == Stat::NColorsPre) {
 				if (ch == ' ' || ch == '\t') {
@@ -77,7 +133,7 @@ bool XPMData::Read()
 					stat = Stat::NBytesPre;
 				} else {
 					Error::Issue(ErrorType::FormatError, "invalid XPM header");
-					return false;
+					return nullptr;
 				}
 			} else if (stat == Stat::NBytesPre) {
 				if (ch == ' ' || ch == '\t') {
@@ -93,7 +149,7 @@ bool XPMData::Read()
 					stat = Stat::Finish;
 				} else {
 					Error::Issue(ErrorType::FormatError, "invalid XPM header");
-					return false;
+					return nullptr;
 				}
 			}
 			Gurax_EndPushbackRegion();
@@ -104,12 +160,12 @@ bool XPMData::Read()
 	ColorMap colorMap;
 	String symbolNull;
 	int iColor = 0;
-	for ( ; iColor < nColors && DoReadLine(str); iColor++) {
+	for ( ; iColor < nColors && lineReader.DoRead(str); iColor++) {
 		enum class Stat { Category, CategoryPost, ValuePre, Value } stat = Stat::Category;
-		const char *p = str.c_str();
+		const char* p = str.c_str();
 		if (::strlen(p) < nBytes) {
 			Error::Issue(ErrorType::FormatError, "invalid XPM header");
-			return false;
+			return nullptr;
 		}
 		char chCategory = '\0';
 		String symbol(p, p + nBytes);
@@ -122,7 +178,7 @@ bool XPMData::Read()
 					// nothing to do
 				} else if (ch == '\0') {
 					Error::Issue(ErrorType::FormatError, "invalid XPM header");
-					return false;
+					return nullptr;
 				} else {
 					chCategory = ch;
 					stat = Stat::CategoryPost;
@@ -132,14 +188,14 @@ bool XPMData::Read()
 					stat = Stat::ValuePre;
 				} else {
 					Error::Issue(ErrorType::FormatError, "invalid XPM header");
-					return false;
+					return nullptr;
 				}
 			} else if (stat == Stat::ValuePre) {
 				if (ch == ' ' || ch == '\t') {
 					// nothing to do
 				} else if (ch == '\0') {
 					Error::Issue(ErrorType::FormatError, "invalid XPM header");
-					return false;
+					return nullptr;
 				} else {
 					value.clear();
 					value += ch;
@@ -158,53 +214,57 @@ bool XPMData::Read()
 		if (::strcasecmp(value.c_str(), "None") == 0) {
 			symbolNull = symbol;
 		} else {
-			//Color color = Color::CreateNamedColor(env, value.c_str(), 255);
-			//if (sig.IsSignalled()) return false;
-			//colorMap[symbol] = color;
+			Color color;
+			if (!Color::FromString(color, value.c_str(), 255)) return nullptr;
+			colorMap[symbol] = color;
 		}
 		//::printf("%s .. %s\n", symbol.c_str(), value.c_str());
 	}
 	if (iColor < nColors) {
 		Error::Issue(ErrorType::FormatError, "invalid XPM header");
-		return false;
+		return nullptr;
+	}
+	RefPtr<Image> pImage(new Image(format));
+	if (!pImage->Allocate(width, height)) return nullptr;
+	if (format.IsIdentical(Image::Format::RGBA)) {
+		if (!ReadData<Image::PixelRGBA>(*pImage, lineReader, colorMap, symbolNull, width, height, nColors, nBytes)) return nullptr;
+	} else {
+		if (!ReadData<Image::PixelRGB>(*pImage, lineReader, colorMap, symbolNull, width, height, nColors, nBytes)) return nullptr;
 	}
 #if 0
-	if (!pImage->AllocBuffer(sig, width, height, 0xff)) return false;
-	std::unique_ptr<Image::Scanner>
-					pScannerDst(pImage->CreateScanner(Image::SCAN_LeftTopHorz));
-	bool alphaFlag = (pImage->GetFormat() == Image::FORMAT_RGBA);
-	for (int y = 0; y < height && pValue != valList.end(); y++, pValue++) {
-		const char *p = pValue->GetString();
+	UInt8* pDst = pImage->GetPointerC();
+	String str;
+	for (int y = 0; y < height; y++) {
+		if (!lineReader.DoRead(str)) return nullptr;
 		String symbol;
 		int x = 0;
-		for ( ; x < width && *p != '\0'; p++) {
+		for (String::const_iterator p = str.begin() ; x < width && p != str.end(); p++) {
 			char ch = *p;
 			symbol += ch;
 			if (symbol.size() == nBytes) {
 				if (symbol == symbolNull) {
 					if (alphaFlag) {
-						pScannerDst->StorePixel(0, 0, 0, 0);
+						Image::PixelRGBA::SetPacked(pDst, 0x00000000);
 					} else {
-						pScannerDst->StorePixel(0, 0, 0);
+						Image::PixelRGB::SetRGB(pDst, 0, 0, 0);
 					}
 				} else {
 					ColorMap::iterator iter = colorMap.find(symbol);
 					if (iter == colorMap.end()) {
 						Error::Issue(ErrorType::FormatError, "undefined color symbol");
-						return false;
+						return nullptr;
 					}
-					const Color &color = iter->second;
-					pScannerDst->StorePixel(color.GetR(), color.GetG(), color.GetB(), 255);
+					const Color& color = iter->second;
+					//Image::PixelRGBpScannerDst->StorePixel(color.GetR(), color.GetG(), color.GetB(), 255);
 				}
-				pScannerDst->Next();
+				//pScannerDst->Next();
 				x++;
 				symbol.clear();
 			}
 		}
 	}
 #endif
-	return true;
+	return pImage.release();
 }
-
 
 Gurax_EndModuleScope(xpm)
