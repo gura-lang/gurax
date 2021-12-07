@@ -8,25 +8,28 @@ Gurax_BeginModule(xpm)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// xpm.Test()
-Gurax_DeclareFunction(Test)
+// xpm.ReadStrings(iter as Iterator):[rgb,rgba]
+Gurax_DeclareFunction(ReadStrings)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Image, Flag::None);
+	DeclareArg("iter", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt("rgb");
+	DeclareAttrOpt("rgba");
 	AddHelp(
 		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
+		"Reads XPM data from Iterator.");
 }
 
-Gurax_ImplementFunction(Test)
+Gurax_ImplementFunction(ReadStrings)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
+	Iterator& iter = args.PickIterator();
+	const Image::Format& format =
+		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	// Function body
-	return new Value_String(String::Repeat(str, num));
+	RefPtr<Image> pImage(XPMData::ReadIterator(format, iter));
+	return new Value_Image(pImage.release());
 }
 
 //------------------------------------------------------------------------------
@@ -40,7 +43,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
+	Assign(Gurax_CreateFunction(ReadStrings));
 	return true;
 }
 
