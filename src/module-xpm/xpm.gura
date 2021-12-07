@@ -1,0 +1,8 @@
+#/usr/bin/env gurax
+import(re)
+import(xpm):binary {*}
+
+Read(src as Stream) = {
+	ReadStrings(ReadLines(src):xiter {|line| if (m = line.Match(r'\s*"([^"]+)"')) {m[1]}})
+}
+

@@ -137,7 +137,7 @@ Image* XPMData::Read(const Image::Format& format, LineReader& lineReader)
 					return nullptr;
 				} else {
 					value.clear();
-					value += ch;
+					value += String::ToLower(ch);
 					stat = Stat::Value;
 				}
 			} else if (stat == Stat::Value) {
@@ -145,12 +145,12 @@ Image* XPMData::Read(const Image::Format& format, LineReader& lineReader)
 					if (chCategory == 'c') break;
 					stat = Stat::Category;
 				} else {
-					value += ch;
+					value += String::ToLower(ch);
 				}
 			}
 			if (ch == '\0') break;
 		}
-		if (::strcasecmp(value.c_str(), "None") == 0) {
+		if (::strcasecmp(value.c_str(), "none") == 0) {
 			symbolNull = symbol;
 		} else {
 			Color color;
