@@ -2,7 +2,24 @@
 import(re)
 import(xpm):binary {*}
 
+patImageData = re.Pattern(r'\s*"([^"]+)"')
+patLabel = re.Pattern(r'(\w+)\[\]\s*=')
 Read(src as Stream) = {
-	ReadStrings(ReadLines(src):xiter {|line| if (m = line.Match(r'\s*"([^"]+)"')) {m[1]}})
+	ReadStrings(ReadLines(src):xiter {|line| if (m = line.Match(patImageData)) {m[1]}})
 }
 
+XPMFile = class {
+	label as String
+	image as Image
+	__init__(src as Stream) = {
+		lines = []
+		ReadLines(src) {|line|
+			if (m = line.Match(patImageData)) {
+				lines.Add(m[1]) 
+			} elsif (m = line.Match(patLabel)) {
+				this.label = m[1]
+			}
+		}
+		this.image = ReadStrings(lines)
+	}
+}
