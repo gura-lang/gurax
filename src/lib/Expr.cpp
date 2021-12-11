@@ -1210,7 +1210,7 @@ void Expr_Indexer::Compose(Composer& composer)
 	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Index(Car)]
 	for (Expr* pExprParam = GetExprParamFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
 		pExprParam->ComposeOrNil(composer);										// [Index(Car) Param]
-		composer.Add_FeedIndex(*pExprParam);										// [Index(Car)]
+		composer.Add_FeedIndex(*pExprParam);									// [Index(Car)]
 	}
 	composer.Add_IndexGet(*this);												// [Elems]
 }
@@ -1222,7 +1222,7 @@ void Expr_Indexer::ComposeWithinValueAssignment(Composer& composer, Operator* pO
 	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Elems Index(Car)]
 	for (Expr* pExprParam = GetExprParamFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
 		pExprParam->ComposeOrNil(composer);										// [Elems Index(Car) Param]
-		composer.Add_FeedIndex(*pExprParam);										// [Elems Index(Car)]
+		composer.Add_FeedIndex(*pExprParam);									// [Elems Index(Car)]
 	}
 	if (pOp) {
 		Error::Issue_UnimplementedOperation();
@@ -1242,7 +1242,7 @@ void Expr_Indexer::ComposeWithinAssignment(
 	composer.Add_Index(GetAttr().Reference(), nExprs, *this);					// [Index(Car)]
 	for (Expr* pExprParam = GetExprParamFirst(); pExprParam; pExprParam = pExprParam->GetExprNext()) {
 		pExprParam->ComposeOrNil(composer);										// [Index(Car) Param]
-		composer.Add_FeedIndex(*pExprParam);										// [Index(Car)]
+		composer.Add_FeedIndex(*pExprParam);									// [Index(Car)]
 	}
 	exprAssigned.ComposeOrNil(composer);										// [Index(Car) Elems]
 	if (pOp) {

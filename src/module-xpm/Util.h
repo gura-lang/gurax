@@ -34,10 +34,10 @@ public:
 		}
 	};
 public:
-	static Image* Read(const Image::Format& format, LineReader& lineReader);
-	static Image* ReadIterator(const Image::Format& format, Iterator& iter) {
+	static bool Read(Image& image, LineReader& lineReader);
+	static bool ReadIterator(Image& image, Iterator& iter) {
 		LineReader_Iterator lineReader(iter);
-		return Read(format, lineReader);
+		return Read(image, lineReader);
 	}
 private:
 	template<typename T_Pixel>

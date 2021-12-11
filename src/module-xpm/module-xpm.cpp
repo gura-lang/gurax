@@ -8,8 +8,8 @@ Gurax_BeginModule(xpm)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// xpm.ReadStrings(iter as Iterator):[rgb,rgba]
-Gurax_DeclareFunction(ReadStrings)
+// xpm.ParseIterator(iter as Iterator):[rgb,rgba]
+Gurax_DeclareFunction(ParseIterator)
 {
 	Declare(VTYPE_Image, Flag::None);
 	DeclareArg("iter", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
@@ -20,7 +20,7 @@ Gurax_DeclareFunction(ReadStrings)
 		"Reads XPM data from Iterator.");
 }
 
-Gurax_ImplementFunction(ReadStrings)
+Gurax_ImplementFunction(ParseIterator)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -28,7 +28,8 @@ Gurax_ImplementFunction(ReadStrings)
 	const Image::Format& format =
 		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	// Function body
-	RefPtr<Image> pImage(XPMData::ReadIterator(format, iter));
+	RefPtr<Image> pImage(new Image(format));
+	if (!XPMData::ReadIterator(*pImage, iter)) return Value::nil();
 	return new Value_Image(pImage.release());
 }
 
@@ -43,7 +44,7 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	// Assignment of function
-	Assign(Gurax_CreateFunction(ReadStrings));
+	Assign(Gurax_CreateFunction(ParseIterator));
 	return true;
 }
 

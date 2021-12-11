@@ -415,5 +415,5 @@ strs = [
 "                                                                                                                                                                                  X   X X C ' ' + wXwXwXO Z Z 4 ,X' C X X X .                                                                                                                                                                                   "
 ]
 TestCase('Basic test') {
-	xpm.ReadStrings(strs).Write('a.png')
+	xpm.ParseIterator(strs).Write('a.png')
 }

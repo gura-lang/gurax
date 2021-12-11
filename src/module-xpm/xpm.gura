@@ -4,14 +4,15 @@ import(xpm):binary {*}
 
 patImageData = re.Pattern(r'\s*"([^"]+)"')
 patLabel = re.Pattern(r'(\w+)\[\]\s*=')
-Read(src as Stream) = {
-	ReadStrings(ReadLines(src):xiter {|line| if (m = line.Match(patImageData)) {m[1]}})
+Read(src as Stream, arg%%):[rgb,rgba] = {
+	lines = ReadLines(src):xiter {|line| if (m = line.Match(patImageData)) {m[1]}}
+	return(cond(arg.IsSet(`rgb), ParseIterator(lines):rgb, ParseIterator(lines):rgba))
 }
 
 XPMFile = class {
 	label as String
 	image as Image
-	__init__(src as Stream) = {
+	__init__(src as Stream, arg%%):[rgb,rgba] = {
 		lines = []
 		ReadLines(src) {|line|
 			if (m = line.Match(patImageData)) {
@@ -20,6 +21,6 @@ XPMFile = class {
 				this.label = m[1]
 			}
 		}
-		this.image = ReadStrings(lines)
+		this.image = cond(arg.IsSet(`rgb), ParseIterator(lines):rgb, ParseIterator(lines):rgba)
 	}
 }
