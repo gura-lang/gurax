@@ -54,3 +54,4 @@ target_link_libraries(xpm.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS xpm.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS script/xpm.gura DESTINATION module/site)

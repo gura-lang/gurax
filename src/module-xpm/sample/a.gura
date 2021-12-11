@@ -1,0 +1,6 @@
+import(xpm)
+
+path.Glob('*.xpm') {|fileName|
+	xpmFile = xpm.XPMFile(fileName):rgba
+	Println(xpmFile.label, ' ', xpmFile.image)
+}

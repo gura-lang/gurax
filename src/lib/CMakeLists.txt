@@ -64,6 +64,7 @@ target_sources(guraxcore PRIVATE
 	Help.cpp
 	Image.cpp
 	ImageMgr.cpp
+	ImageMgrCustom.cpp
 	Index.cpp
 	Iterator.cpp
 	Math.cpp
