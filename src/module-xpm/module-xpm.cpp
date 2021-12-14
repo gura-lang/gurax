@@ -8,11 +8,12 @@ Gurax_BeginModule(xpm)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// xpm.ParseIterator(iter as Iterator):[rgb,rgba]
+// xpm.ParseIterator(iter as Iterator, image? as Image):[rgb,rgba]
 Gurax_DeclareFunction(ParseIterator)
 {
 	Declare(VTYPE_Image, Flag::None);
 	DeclareArg("iter", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("image", VTYPE_Image, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt("rgb");
 	DeclareAttrOpt("rgba");
 	AddHelp(
@@ -27,8 +28,8 @@ Gurax_ImplementFunction(ParseIterator)
 	Iterator& iter = args.PickIterator();
 	const Image::Format& format =
 		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
+	RefPtr<Image> pImage(args.IsValid()? args.Pick<Value_Image>().GetImage().Reference() : new Image(format));
 	// Function body
-	RefPtr<Image> pImage(new Image(format));
 	if (!XPMData::ReadIterator(*pImage, iter)) return Value::nil();
 	return new Value_Image(pImage.release());
 }

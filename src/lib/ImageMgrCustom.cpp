@@ -17,6 +17,7 @@ ImageMgrCustom::ImageMgrCustom(String imgTypeName, String description, StringLis
 
 bool ImageMgrCustom::IsResponsible(Stream& stream) const
 {
+	::printf("check\n");
 	return false;
 }
 
@@ -30,12 +31,20 @@ bool ImageMgrCustom::IsResponsibleExtName(const char* extName) const
 
 bool ImageMgrCustom::Read(Stream& stream, Image& image) const
 {
+	if (!_pFuncRead) {
+		Error::Issue(ErrorType::InvalidOperation, "can't read image data of %s", GetImgTypeName());
+		return false;
+	}
 	Value::Delete(_pFuncRead->EvalEasy(*_pProcessor, new Value_Stream(stream.Reference()), new Value_Image(image.Reference())));
 	return !Error::IsIssued();
 }
 
 bool ImageMgrCustom::Write(Stream& stream, const Image& image) const
 {
+	if (!_pFuncWrite) {
+		Error::Issue(ErrorType::InvalidOperation, "can't write image data of %s", GetImgTypeName());
+		return false;
+	}
 	Value::Delete(_pFuncWrite->EvalEasy(*_pProcessor, new Value_Stream(stream.Reference()), new Value_Image(image.Reference())));
 	return !Error::IsIssued();
 }

@@ -48,7 +48,7 @@ Gurax_ImplementClassMethod(ImageMgr, Dir)
 	return new Value_List(pValueOwner.release());
 }
 
-// ImageMgr.Lookup(imgTypeName:String)
+// ImageMgr.Lookup(imgTypeName as String)
 Gurax_DeclareClassMethod(ImageMgr, Lookup)
 {
 	Declare(VTYPE_List, Flag::None);
@@ -71,6 +71,36 @@ Gurax_ImplementClassMethod(ImageMgr, Lookup)
 		return Value::nil();
 	}
 	return new Value_ImageMgr(pImageMgr->Reference());
+}
+
+// ImageMgr.Register(imgTypeName as String, description as String, extNames[] as String, funcRead:nil as Function, funcWrite:nil as Function)
+Gurax_DeclareClassMethod(ImageMgr, Register)
+{
+	Declare(VTYPE_List, Flag::None);
+	DeclareArg("imgTypeName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("description", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("extNames", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("funcRead", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("funcWrite", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Register a new `ImageMgr` instance.\n");
+}
+
+Gurax_ImplementClassMethod(ImageMgr, Register)
+{
+	// Argument
+	ArgPicker args(argument);
+	const char* imgTypeName = args.PickString();
+	const char* description = args.PickString();
+	StringList extNames = args.PickStringList();
+	RefPtr<Function> pFuncRead(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	RefPtr<Function> pFuncWrite(args.IsValid()? args.PickFunction().Reference() : nullptr);
+	// Function body
+	RefPtr<ImageMgr> pImageMgr(new ImageMgrCustom(imgTypeName, description, extNames,
+						processor.Reference(), pFuncRead.release(), pFuncWrite.release()));
+	ImageMgr::Assign(pImageMgr.release());
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -144,6 +174,7 @@ void VType_ImageMgr::DoPrepare(Frame& frameOuter)
 	// Assignment of class method
 	Assign(Gurax_CreateMethod(ImageMgr, Dir));
 	Assign(Gurax_CreateMethod(ImageMgr, Lookup));
+	Assign(Gurax_CreateMethod(ImageMgr, Register));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(ImageMgr, IsResponsible));
 	// Assignment of property

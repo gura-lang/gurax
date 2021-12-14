@@ -9,6 +9,16 @@ Read(src as Stream, arg%%):[rgb,rgba] = {
 	return(cond(arg.IsSet(`rgb), ParseIterator(lines):rgb, ParseIterator(lines):rgba))
 }
 
+ReadFile(src as Stream, image as Image) = {
+	lines = []
+	ReadLines(src) {|line|
+		if (m = line.Match(patImageData)) {
+			lines.Add(m[1]) 
+		}
+	}
+	ParseIterator(lines, image)
+}
+
 XPMFile = class {
 	label as String
 	image as Image
@@ -24,3 +34,5 @@ XPMFile = class {
 		this.image = cond(arg.IsSet(`rgb), ParseIterator(lines):rgb, ParseIterator(lines):rgba)
 	}
 }
+
+ImageMgr.Register('xpm', 'XPM (X PixMap)', ['.xpm'], ReadFile, nil)
