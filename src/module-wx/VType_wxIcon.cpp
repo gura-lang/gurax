@@ -28,6 +28,48 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.Icon(args* as Any) {block?} {block?}
+Gurax_DeclareConstructorAlias(Icon_gurax, "Icon")
+{
+	Declare(VTYPE_wxIcon, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.Icon.");
+}
+
+Gurax_ImplementConstructorEx(Icon_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// wx.Icon()
+	if (args.empty()) {
+		return new Value_wxIcon(wxIcon());
+	}
+	// wx.Icon(bits[] as String)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("bits", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::ListVar);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const ValueList& values = args.PickList();
+		const char** bits(new (const char*[values.size()]));
+		size_t i = 0;
+		for (const Value* pValue : values) bits[i++] = Value_String::GetString(*pValue);
+		RefPtr<Value> pValueRtn(new Value_wxIcon(wxIcon(bits)));
+		delete[] bits;
+		return pValueRtn.release();
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -256,7 +298,7 @@ void VType_wxIcon::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGDIObject, Flag::Mutable);
+	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Icon_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxIcon, CopyFromBitmap_gurax));
 	Assign(Gurax_CreateMethod(wxIcon, GetDepth_gurax));

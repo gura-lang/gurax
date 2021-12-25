@@ -2,6 +2,33 @@
 // VType_wxIcon.gura
 //==============================================================================
 Icon = Class(GDIObject) {
+	__init__(args* as any) = \
+		R'''
+		// wx.Icon()
+		if (args.empty()) {
+			return new Value_wxIcon(wxIcon());
+		}
+		// wx.Icon(bits[] as String)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("bits", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::ListVar);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const ValueList& values = args.PickList();
+			const char** bits(new (const char*[values.size()]));
+			size_t i = 0;
+			for (const Value* pValue : values) bits[i++] = Value_String::GetString(*pValue);
+			RefPtr<Value> pValueRtn(new Value_wxIcon(wxIcon(bits)));
+			delete[] bits;
+			return pValueRtn.release();
+		} while (0);
+		return Value::nil();
+		'''
 	//CreateFromHICON(icon as WXHICON) as bool
 	//ConvertToDisabled(brightness as unsigned_char = 255) as Icon
 	CopyFromBitmap(bmp as const_Bitmap_r) as void
@@ -14,3 +41,4 @@ Icon = Class(GDIObject) {
 	SetHeight(height as int) as void
 	SetWidth(width as int) as void
 }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
