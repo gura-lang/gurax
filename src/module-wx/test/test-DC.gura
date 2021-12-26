@@ -1,5 +1,8 @@
 #!/usr/bin/env gurax
 import(wx)
+import(xpm)
+
+sample_xpm = xpm.XPMFile('sample.xpm').lines
 
 MyApp = class(wx.App) {
 	OnInit() = {
@@ -28,6 +31,7 @@ PanelTop = class(wx.Panel) {
 		dc.DrawTextXY('Hello World', 30, 200)
 		dc.SetFont(wx.Font(30, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
 		dc.DrawTextXY('Hello World', 30, 240)
+		dc.DrawIconXY(wx.Icon(sample_xpm), [200, 240, 280], 20):map
 		dc = nil
 	}
 }

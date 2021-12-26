@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxIcon);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxIcon");
+protected:
+	wxIcon _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxIcon() = delete;
 	explicit Value_wxIcon(const wxIcon& entity, VType& vtype = VTYPE_wxIcon) :
-		Value_wxGDIObject(entity, vtype) {}
+		Value_wxGDIObject(entity, vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxIcon(const Value_wxIcon& src) = delete;
 	Value_wxIcon& operator=(const Value_wxIcon& src) = delete;
@@ -48,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxIcon() = default;
 public:
-	wxIcon& GetEntity() { return reinterpret_cast<wxIcon&>(Value_wxGDIObject::GetEntity()); }
-	const wxIcon& GetEntity() const { return reinterpret_cast<const wxIcon&>(Value_wxGDIObject::GetEntity()); }
-	wxIcon* GetEntityPtr() { return reinterpret_cast<wxIcon*>(Value_wxGDIObject::GetEntityPtr()); }\
-	const wxIcon* GetEntityPtr() const { return reinterpret_cast<const wxIcon*>(Value_wxGDIObject::GetEntityPtr()); }
+	wxIcon& GetEntity() { return _entity; }
+	const wxIcon& GetEntity() const { return _entity; }
+	wxIcon* GetEntityPtr() { return &_entity; }
+	const wxIcon* GetEntityPtr() const { return &_entity; }
 public:
 	static wxIcon& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxIcon&>(value).GetEntity();
