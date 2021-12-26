@@ -11,6 +11,8 @@
 import(wx)
 import(xpm)
 
+sample_xpm = xpm.XPMFile('../sample.xpm').lines
+
 // ============================================================================
 // declarations
 // ============================================================================
@@ -57,7 +59,7 @@ MyApp = class(wx.App) {
 MyFrame = class(wx.Frame) {
 	__init__() = {|nil, wx.ID_ANY, 'wxCollapsiblePane sample',
 					wx.DefaultPosition, wx.Size(420, 300)|
-		//SetIcon(wxICON(sample));
+		//this.SetIcon(wx.Icon(sample_xpm));
 		this.CreateStatusBar(2);
 
 		// Make a menubar
