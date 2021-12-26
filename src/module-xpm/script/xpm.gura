@@ -4,35 +4,29 @@ import(xpm):binary {*}
 
 patImageData = re.Pattern(r'\s*"([^"]+)"')
 patLabel = re.Pattern(r'(\w+)\[\]\s*=')
-Read(src as Stream, arg%%):[rgb,rgba] = {
-	lines = ReadLines(src):xiter {|line| if (m = line.Match(patImageData)) {m[1]}}
-	return(cond(arg.IsSet(`rgb), ParseIterator(lines):rgb, ParseIterator(lines):rgba))
-}
-
-ReadFile(src as Stream, image as Image) = {
-	lines = []
-	ReadLines(src) {|line|
-		if (m = line.Match(patImageData)) {
-			lines.Add(m[1]) 
-		}
-	}
-	ParseIterator(lines, image)
-}
 
 XPMFile = class {
-	label as String
-	image as Image
-	__init__(src as Stream, arg%%):[rgb,rgba] = {
-		lines = []
+	label as String = ''
+	lines[] as String = []
+	__init__(src as Stream) = {
 		ReadLines(src) {|line|
-			if (m = line.Match(patImageData)) {
-				lines.Add(m[1]) 
-			} elsif (m = line.Match(patLabel)) {
+			if (m = line.Match(patLabel)) {
 				this.label = m[1]
+			} elsif (m = line.Match(patImageData)) {
+				this.lines.Add(m[1]) 
 			}
 		}
-		this.image = cond(arg.IsSet(`rgb), ParseIterator(lines):rgb, ParseIterator(lines):rgba)
+	}
+	GetImage(arg%%):[rgb,rgba] = {
+		cond(arg.IsSet(`rgb), ParseIterator(this.lines):rgb, ParseIterator(this.lines):rgba)
+	}
+	ReadToImage(image as Image) = {
+		ParseIterator(this.lines, image)
 	}
 }
 
-ImageMgr.Register('xpm', 'XPM (X PixMap)', ['.xpm'], ReadFile, nil)
+ReadImage(src as Stream, image as Image) = {
+	XPMFile(src).ReadToImage(image)
+}
+
+ImageMgr.Register('xpm', 'XPM (X PixMap)', ['.xpm'], ReadImage, nil)
