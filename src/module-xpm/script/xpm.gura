@@ -29,4 +29,9 @@ ReadImage(src as Stream, image as Image) = {
 	XPMFile(src).ReadToImage(image)
 }
 
+Include(src as Stream) = {
+	xpmFile = XPMFile(src)
+	Frame.GetCurrent().Assign(xpmFile.label, xpmFile.lines)
+}
+
 ImageMgr.Register('xpm', 'XPM (X PixMap)', ['.xpm'], ReadImage, nil)

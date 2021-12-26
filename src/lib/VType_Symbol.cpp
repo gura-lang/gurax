@@ -25,6 +25,29 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// Symbol(name as String):map {block?}
+Gurax_DeclareConstructor(Symbol)
+{
+	Declare(VTYPE_DateTime, Flag::Map);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Symbol` instance.");
+}
+
+Gurax_ImplementConstructor(Symbol)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* name = args.PickString();
+	// Function body
+	return argument.ReturnValue(processor, new Value_Symbol(Symbol::Add(name)));
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // Symbol#symbolName
@@ -78,7 +101,7 @@ void VType_Symbol::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Symbol));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Symbol, symbolName));
 	Assign(Gurax_CreateProperty(Symbol, uniqId));

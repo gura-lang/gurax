@@ -27,7 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// DateTime(str?:String):map:[utc] {block?}
+// DateTime(str? as String):map:[utc] {block?}
 Gurax_DeclareConstructor(DateTime)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
@@ -58,8 +58,8 @@ Gurax_ImplementConstructor(DateTime)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// DateTime.Create(year?:Number, month?:Number, day?:Number,
-//     hour?:Number, min?:Number, sec?:Number, msec?:Number, usec?:Number, minsOff?:Number):map {block?}
+// DateTime.Create(year? as Number, month? as Number, day? as Number,
+//     hour? as Number, min? as Number, sec? as Number, msec? as Number, usec? as Number, minsOff? as Number):map {block?}
 Gurax_DeclareClassMethod(DateTime, Create)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
@@ -123,7 +123,7 @@ Gurax_ImplementClassMethod(DateTime, Now)
 	return argument.ReturnValue(processor, new Value_DateTime(pDt.release()));
 }
 
-// DateTime.FromUnixTime(unixTime:Number):[utc] {block?}
+// DateTime.FromUnixTime(unixTime as Number):[utc] {block?}
 Gurax_DeclareClassMethod(DateTime, FromUnixTime)
 {
 	Declare(VTYPE_DateTime, Flag::None);
