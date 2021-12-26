@@ -61,11 +61,10 @@ Gurax_ImplementConstructorEx(Icon_gurax, processor_gurax, argument_gurax)
 		Error::Clear();
 		ArgPicker args(*pArgument);
 		const ValueList& values = args.PickList();
-		const char** bits(new (const char*[values.size()]));
+		std::unique_ptr<const char*> bits(new (const char*[values.size()]));
 		size_t i = 0;
-		for (const Value* pValue : values) bits[i++] = Value_String::GetString(*pValue);
-		RefPtr<Value> pValueRtn(new Value_wxIcon(wxIcon(bits)));
-		delete[] bits;
+		for (const Value* pValue : values) bits.get()[i++] = Value_String::GetString(*pValue);
+		RefPtr<Value> pValueRtn(new Value_wxIcon(wxIcon(bits.get())));
 		return pValueRtn.release();
 	} while (0);
 	return Value::nil();
