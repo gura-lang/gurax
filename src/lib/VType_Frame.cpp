@@ -118,6 +118,31 @@ Gurax_ImplementClassMethod(Frame, Where)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Frame#Assign(symbol as Symbol, value as any):reduce
+Gurax_DeclareMethod(Frame, Assign)
+{
+	Declare(VTYPE_Image, Flag::Reduce);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Frame, Assign)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Frame& frame = valueThis.GetFrame();
+	// Argument
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	const Value& value = args.PickValue();
+	// Function body
+	frame.Assign(pSymbol, value.Reference());
+	return valueThis.Reference();
+}
+
 // Frame#PrintTree():void
 Gurax_DeclareMethod(Frame, PrintTree)
 {
@@ -242,6 +267,7 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassMethod(Frame, PrintStack));
 	Assign(Gurax_CreateClassMethod(Frame, Where));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Frame, Assign));
 	Assign(Gurax_CreateMethod(Frame, PrintTree));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Frame, id));
