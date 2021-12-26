@@ -6,7 +6,7 @@ patImageData = re.Pattern(r'\s*"([^"]+)"')
 patLabel = re.Pattern(r'(\w+)\[\]\s*=')
 
 XPMFile = class {
-	label as String = ''
+	label as String
 	lines[] as String = []
 	__init__(src as Stream) = {
 		ReadLines(src) {|line|
@@ -31,7 +31,10 @@ ReadImage(src as Stream, image as Image) = {
 
 Include(src as Stream) = {
 	xpmFile = XPMFile(src)
-	Frame.GetCurrent().Assign(xpmFile.label, xpmFile.lines)
+	if (!xpmFile.label) {
+		Error.Raise(Error.FormatError, 'label is not specified in the XPM file')
+	}
+	__root__.Assign(Symbol(xpmFile.label), xpmFile.lines)
 }
 
 ImageMgr.Register('xpm', 'XPM (X PixMap)', ['.xpm'], ReadImage, nil)
