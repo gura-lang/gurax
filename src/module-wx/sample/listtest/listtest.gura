@@ -7,10 +7,24 @@
 // Copyright:   (c) Julian Smart
 // Licence:     wxWindows licence
 /////////////////////////////////////////////////////////////////////////////
+import(wx)
+import(xpm)
+
+xpm.Include('../sample.xpm')
+xpm.Include('bitmaps/toolbrai.xpm')
+xpm.Include('bitmaps/toolchar.xpm')
+xpm.Include('bitmaps/toolchec.xpm')
+xpm.Include('bitmaps/tooldata.xpm')
+xpm.Include('bitmaps/toolgame.xpm')
+xpm.Include('bitmaps/toolnote.xpm')
+xpm.Include('bitmaps/tooltime.xpm')
+xpm.Include('bitmaps/tooltodo.xpm')
+xpm.Include('bitmaps/toolword.xpm')
+xpm.Include('bitmaps/small1.xpm')
 
 // IDs for the menu commands
-LIST_ABOUT = wxID_ABOUT,
-LIST_QUIT = wxID_EXIT,
+LIST_ABOUT = wx.ID_ABOUT
+LIST_QUIT = wx.ID_EXIT
 [
 	LIST_LIST_VIEW,
 	LIST_ICON_VIEW,
@@ -45,8 +59,8 @@ LIST_QUIT = wxID_EXIT,
 	LIST_SHOW_SEL_INFO,
 	LIST_SHOW_VIEW_RECT,
 	//#ifdef wxHAS_LISTCTRL_COLUMN_ORDER
-	//LIST_SET_COL_ORDER,
-	//LIST_GET_COL_ORDER,
+	LIST_SET_COL_ORDER,
+	LIST_GET_COL_ORDER,
 	//#endif // wxHAS_LISTCTRL_COLUMN_ORDER
 	LIST_GOTO,
 	LIST_FOCUS_LAST,
@@ -57,7 +71,7 @@ LIST_QUIT = wxID_EXIT,
 	//LIST_MAC_USE_GENERIC,
 	//#endif
 	LIST_CHECKVISIBILITY,
-} = wxID_HIGHEST..
+] = wx.ID_HIGHEST..
 LIST_CTRL                   = 1000
 
 // ----------------------------------------------------------------------------
@@ -92,20 +106,15 @@ MyCompareFunction(item1, item2) = {
 // ----------------------------------------------------------------------------
 // MyApp
 // ----------------------------------------------------------------------------
-
-wxImplementApp(MyApp());
-
 // `Main program' equivalent, creating windows and returning main app frame
-class MyApp(wxApp
-
 MyApp = class(wx.App) {
-	__init__(){ }
+	__init__() = { }
 
 	OnInit() = {
 		//if ( !wxApp::OnInit() )
 		//	return false;
 		// Create the main frame window
-		frame = MyMyFrame("wxListCtrl Test");
+		frame = MyFrame("wxListCtrl Test");
 
 		// Show the frame
 		frame.Show(true);
@@ -117,6 +126,153 @@ MyApp = class(wx.App) {
 // ----------------------------------------------------------------------------
 // MyFrame
 // ----------------------------------------------------------------------------
+MyFrame = class(wx.Frame) {
+
+	m_imageListNormal as wx.ImageList
+	m_imageListSmall as wx.ImageList
+
+	m_panel as wx.Panel
+	m_listCtrl as MyListCtrl
+	m_logWindow as wx.TextCtrl
+
+	m_logOld as wx.Log
+	m_smallVirtual as Bool
+
+	// number of items to initialize list/report view with
+	m_numListItems as Number
+
+	// My frame constructor
+	__init__(title as String) = {|nil, wx.ID_ANY, title, wx.DefaultPosition, wx.Size(600, 500)|
+		this.m_listCtrl = nil
+		this.m_logWindow = nil
+		this.m_smallVirtual = false
+		this.m_numListItems = 10
+
+		// Give it an icon
+		this.SetIcon(wx.Icon(sample_xpm))
+
+		// Make an image list containing large icons
+		this.m_imageListNormal = wx.ImageList(32, 32, true);
+		this.m_imageListSmall = wx.ImageList(16, 16, true);
+
+		this.m_imageListNormal.Add( wx.Icon( toolbrai_xpm ) );
+		this.m_imageListNormal.Add( wx.Icon( toolchar_xpm ) );
+		this.m_imageListNormal.Add( wx.Icon( tooldata_xpm ) );
+		this.m_imageListNormal.Add( wx.Icon( toolnote_xpm ) );
+		this.m_imageListNormal.Add( wx.Icon( tooltodo_xpm ) );
+		this.m_imageListNormal.Add( wx.Icon( toolchec_xpm ) );
+		this.m_imageListNormal.Add( wx.Icon( toolgame_xpm ) );
+		this.m_imageListNormal.Add( wx.Icon( tooltime_xpm ) );
+		this.m_imageListNormal.Add( wx.Icon( toolword_xpm ) );
+
+		this.m_imageListSmall.Add( wx.Icon( small1_xpm) );
+
+		// Make a menubar
+		menuFile = wx.Menu();
+		menuFile.Append(LIST_ABOUT, "&About");
+		menuFile.AppendSeparator();
+		menuFile.Append(LIST_QUIT, "E&xit\tAlt-X");
+
+		menuView = wx.Menu();
+		menuView.Append(LIST_LIST_VIEW, "&List view\tF1");
+		menuView.Append(LIST_REPORT_VIEW, "&Report view\tF2");
+		menuView.Append(LIST_ICON_VIEW, "&Icon view\tF3");
+		menuView.Append(LIST_ICON_TEXT_VIEW, "Icon view with &text\tF4");
+		menuView.Append(LIST_SMALL_ICON_VIEW, "&Small icon view\tF5");
+		menuView.Append(LIST_SMALL_ICON_TEXT_VIEW, "Small icon &view with text\tF6");
+		menuView.Append(LIST_VIRTUAL_VIEW, "&Virtual view\tF7");
+		menuView.Append(LIST_SMALL_VIRTUAL_VIEW, "Small virtual vie&w\tF8");
+		menuView.AppendSeparator();
+		menuView.Append(LIST_SET_ITEMS_COUNT, "Set &number of items");
+
+		//menuView.AppendSeparator();
+		//menuView.AppendCheckItem(LIST_MAC_USE_GENERIC, "Mac: Use Generic Control");
+
+		menuList = wx.Menu();
+		menuList.Append(LIST_GOTO, "&Go to item #3\tCtrl-3");
+		menuList.Append(LIST_FOCUS_LAST, "&Make last item current\tCtrl-L");
+		menuList.Append(LIST_TOGGLE_FIRST, "To&ggle first item\tCtrl-G");
+		menuList.Append(LIST_DESELECT_ALL, "&Deselect All\tCtrl-D");
+		menuList.Append(LIST_SELECT_ALL, "S&elect All\tCtrl-A");
+		menuList.AppendSeparator();
+		menuList.Append(LIST_SHOW_COL_INFO, "Show &column info\tCtrl-C");
+		menuList.Append(LIST_SHOW_SEL_INFO, "Show &selected items\tCtrl-S");
+		menuList.Append(LIST_SHOW_VIEW_RECT, "Show &view rect");
+		//#ifdef wxHAS_LISTCTRL_COLUMN_ORDER
+		menuList.Append(LIST_SET_COL_ORDER, "Se&t columns order\tShift-Ctrl-O");
+		menuList.Append(LIST_GET_COL_ORDER, "Sho&w columns order\tCtrl-O");
+		//#endif // wxHAS_LISTCTRL_COLUMN_ORDER
+		menuList.AppendSeparator();
+		menuList.Append(LIST_SORT, "Sor&t\tCtrl-T");
+		menuList.Append(LIST_FIND, "Test Find() performance");
+		menuList.AppendSeparator();
+		menuList.Append(LIST_ADD, "&Append an item\tCtrl-P");
+		menuList.Append(LIST_EDIT, "&Edit the item\tCtrl-E");
+		menuList.Append(LIST_DELETE, "&Delete first item\tCtrl-X");
+		menuList.Append(LIST_DELETE_ALL, "Delete &all items");
+		menuList.AppendSeparator();
+		menuList.Append(LIST_FREEZE, "Free&ze\tCtrl-Z");
+		menuList.Append(LIST_THAW, "Tha&w\tCtrl-W");
+		menuList.AppendSeparator();
+		menuList.AppendCheckItem(LIST_TOGGLE_LINES, "Toggle &lines\tCtrl-I");
+		menuList.AppendCheckItem(LIST_TOGGLE_MULTI_SEL,
+								  "&Multiple selection\tCtrl-M");
+		menuList.Check(LIST_TOGGLE_MULTI_SEL, true);
+		menuList.AppendCheckItem(LIST_TOGGLE_HEADER, "Toggle &header\tCtrl-H");
+		menuList.Check(LIST_TOGGLE_HEADER, true);
+		menuList.AppendCheckItem(LIST_TOGGLE_BELL, "Toggle &bell on no match");
+		menuList.Append( LIST_CHECKVISIBILITY, "Check if lines 2 and 9 are visible" );
+		menuList.AppendSeparator();
+		menuList.AppendCheckItem(LIST_TOGGLE_CHECKBOXES,
+								  "&Enable Checkboxes");
+		menuList.Check(LIST_TOGGLE_CHECKBOXES, true);
+		menuList.Append(LIST_TOGGLE_CHECKBOX, "Toggle the item checkbox state");
+		menuList.Append(LIST_GET_CHECKBOX, "Get the item checkbox state");
+
+		menuCol = wx.Menu();
+		menuCol.Append(LIST_SET_FG_COL, "&Foreground colour...");
+		menuCol.Append(LIST_SET_BG_COL, "&Background colour...");
+		menuCol.AppendCheckItem(LIST_ROW_LINES, "Alternating colours");
+		menuCol.AppendCheckItem(LIST_CUSTOM_HEADER_ATTR, "&Custom header attributes");
+
+		menubar = wx.MenuBar();
+		menubar.Append(menuFile, "&File");
+		menubar.Append(menuView, "&View");
+		menubar.Append(menuList, "&List");
+		menubar.Append(menuCol, "&Colour");
+		this.SetMenuBar(menubar);
+
+/*
+		m_panel = new wxPanel(this, wxID_ANY);
+		m_logWindow = new wxTextCtrl(m_panel, wxID_ANY, wxEmptyString,
+									 wxDefaultPosition, wxDefaultSize,
+									 wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
+
+		m_logOld = wxLog::SetActiveTarget(new wxLogTextCtrl(m_logWindow));
+
+		RecreateList(wxLC_REPORT | wxLC_SINGLE_SEL);
+
+	#ifdef __WXMSW__
+		// this is useful to know specially when debugging :)
+		wxLogMessage("Your version of comctl32.dll is: %d",
+					 wxApp::GetComCtl32Version());
+	#endif
+
+	#if wxUSE_STATUSBAR
+		CreateStatusBar();
+	#endif // wxUSE_STATUSBAR
+
+		wxBoxSizer* const sizer = new wxBoxSizer(wxVERTICAL);
+		sizer.Add(m_listCtrl, wxSizerFlags(2).Expand().Border());
+		sizer.Add(m_logWindow, wxSizerFlags(1).Expand().Border());
+		m_panel.SetSizer(sizer);
+
+		SetClientSize(m_panel.GetBestSize());
+*/
+	}
+}
+
+/*
 MyFrame = class(wx.Frame) {
 	// My frame constructor
 	__init__(title as String) {|nil, wx.ID_ANY, title, wx.DefaultPosition, wx.Size(600, 500)|
@@ -1672,3 +1828,6 @@ void MyListCtrl::ShowContextMenu(const wxPoint& pos, long item)
 
 	PopupMenu(&menu, pos.x, pos.y);
 }
+*/
+
+wx.ImplementApp(MyApp());

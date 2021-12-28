@@ -3,6 +3,57 @@
 //==============================================================================
 Menu = Class(EvtHandler) {
 	__init__()
-	Append(id as int, item as String = '', helpString as String = '', kind as ItemKind = wxITEM_NORMAL) as MenuItem_p
+	Append(id as int, item as const_String_r = '', helpString as const_String_r = '', kind as ItemKind = wxITEM_NORMAL) as MenuItem_p
+	//Append(id as int, item as const_String_r, subMenu as Menu_p, helpString as const_String_r = '') as MenuItem_p
+	//Append(menuItem as MenuItem_p) as MenuItem_p
+	AppendCheckItem(id as int, item as const_String_r, help as const_String_r = '') as MenuItem_p
+	AppendRadioItem(id as int, item as const_String_r, help as const_String_r = '') as MenuItem_p
 	AppendSeparator() as MenuItem_p
+	AppendSubMenu(submenu as Menu_p, text as const_String_r, help as const_String_r = '') as MenuItem_p
+	Break() as void
+	Check(id as int, check as bool) as void
+	Delete(id as int) as bool
+	//Delete(item as MenuItem_p) as bool
+	Destroy(id as int) as bool
+	//Destroy(item as MenuItem_p) as bool
+	Enable(id as int, enable as bool) as void
+	//FindChildItem(id as int, pos as size_t_p = NULL) as MenuItem_p
+	FindItem(itemString as const_String_r) as int
+	//FindItem(id as int, menu as Menu_p_p = NULL) as MenuItem_p
+	FindItemByPosition(position as size_t) as MenuItem_p
+	GetHelpString(id as int) as String
+	GetLabel(id as int) as String
+	GetLabelText(id as int) as String
+	GetMenuItemCount() as size_t
+	GetTitle() as String
+	Insert(pos as size_t, menuItem as MenuItem_p) as MenuItem_p
+	//Insert(pos as size_t, id as int, item as const_String_r = '', helpString as const_String_r = '', kind as ItemKind = wxITEM_NORMAL) as MenuItem_p
+	//Insert(pos as size_t, id as int, text as const_String_r, submenu as Menu_p, help as const_String_r = '') as MenuItem_p
+	InsertCheckItem(pos as size_t, id as int, item as const_String_r, helpString as const_String_r = '') as MenuItem_p
+	InsertRadioItem(pos as size_t, id as int, item as const_String_r, helpString as const_String_r = '') as MenuItem_p
+	InsertSeparator(pos as size_t) as MenuItem_p
+	IsChecked(id as int) as bool
+	IsEnabled(id as int) as bool
+	Prepend(item as MenuItem_p) as MenuItem_p
+	//Prepend(id as int, item as const_String_r = '', helpString as const_String_r = '', kind as ItemKind = wxITEM_NORMAL) as MenuItem_p
+	//Prepend(id as int, text as const_String_r, submenu as Menu_p, help as const_String_r = '') as MenuItem_p
+	PrependCheckItem(id as int, item as const_String_r, helpString as const_String_r = '') as MenuItem_p
+	PrependRadioItem(id as int, item as const_String_r, helpString as const_String_r = '') as MenuItem_p
+	PrependSeparator() as MenuItem_p
+	Remove(id as int) as MenuItem_p
+	//Remove(item as MenuItem_p) as MenuItem_p
+	SetHelpString(id as int, helpString as const_String_r) as void
+	SetLabel(id as int, label as const_String_r) as void
+	SetTitle(title as const_String_r) as void
+	UpdateUI(source as EvtHandler_p = NULL) as void
+	SetInvokingWindow(win as Window_p) as void
+	GetInvokingWindow() as Window_p
+	GetWindow() as Window_p
+	GetStyle() as long
+	SetParent(parent as Menu_p) as void
+	GetParent() as Menu_p
+	Attach(menubar as MenuBar_p) as void
+	Detach() as void
+	IsAttached() as bool
+	//GetMenuItems() as MenuItemList
 }

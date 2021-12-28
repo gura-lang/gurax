@@ -82,6 +82,64 @@ Gurax_ImplementMethodEx(wxMenu, Append_gurax, processor_gurax, argument_gurax)
 		*pEntity_gurax->Append(id, item, helpString, kind)));
 }
 
+// wx.Menu#AppendCheckItem(id as Number, item as String, help? as String) {block?}
+Gurax_DeclareMethodAlias(wxMenu, AppendCheckItem_gurax, "AppendCheckItem")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, AppendCheckItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	const char* item = args_gurax.PickString();
+	const char* help = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->AppendCheckItem(id, item, help)));
+}
+
+// wx.Menu#AppendRadioItem(id as Number, item as String, help? as String) {block?}
+Gurax_DeclareMethodAlias(wxMenu, AppendRadioItem_gurax, "AppendRadioItem")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, AppendRadioItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	const char* item = args_gurax.PickString();
+	const char* help = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->AppendRadioItem(id, item, help)));
+}
+
 // wx.Menu#AppendSeparator() {block?}
 Gurax_DeclareMethodAlias(wxMenu, AppendSeparator_gurax, "AppendSeparator")
 {
@@ -103,6 +161,908 @@ Gurax_ImplementMethodEx(wxMenu, AppendSeparator_gurax, processor_gurax, argument
 		*pEntity_gurax->AppendSeparator()));
 }
 
+// wx.Menu#AppendSubMenu(submenu as wx.Menu, text as String, help? as String) {block?}
+Gurax_DeclareMethodAlias(wxMenu, AppendSubMenu_gurax, "AppendSubMenu")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("submenu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("help", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, AppendSubMenu_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxMenu& value_submenu = args_gurax.Pick<Value_wxMenu>();
+	wxMenu* submenu = value_submenu.GetEntityPtr();
+	const char* text = args_gurax.PickString();
+	const char* help = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->AppendSubMenu(submenu, text, help)));
+}
+
+// wx.Menu#Break()
+Gurax_DeclareMethodAlias(wxMenu, Break_gurax, "Break")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Break_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Break();
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#Check(id as Number, check as Bool)
+Gurax_DeclareMethodAlias(wxMenu, Check_gurax, "Check")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("check", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Check_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	bool check = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->Check(id, check);
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#Delete(id as Number)
+Gurax_DeclareMethodAlias(wxMenu, Delete_gurax, "Delete")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Delete_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->Delete(id);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Menu#Destroy(id as Number)
+Gurax_DeclareMethodAlias(wxMenu, Destroy_gurax, "Destroy")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Destroy_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->Destroy(id);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Menu#Enable(id as Number, enable as Bool)
+Gurax_DeclareMethodAlias(wxMenu, Enable_gurax, "Enable")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Enable_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	bool enable = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->Enable(id, enable);
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#FindItem(itemString as String)
+Gurax_DeclareMethodAlias(wxMenu, FindItem_gurax, "FindItem")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("itemString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, FindItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* itemString = args_gurax.PickString();
+	// Function body
+	int rtn = pEntity_gurax->FindItem(itemString);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Menu#FindItemByPosition(position as Number) {block?}
+Gurax_DeclareMethodAlias(wxMenu, FindItemByPosition_gurax, "FindItemByPosition")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, FindItemByPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t position = args_gurax.PickNumber<size_t>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->FindItemByPosition(position)));
+}
+
+// wx.Menu#GetHelpString(id as Number)
+Gurax_DeclareMethodAlias(wxMenu, GetHelpString_gurax, "GetHelpString")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, GetHelpString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	// Function body
+	wxString rtn = pEntity_gurax->GetHelpString(id);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.Menu#GetLabel(id as Number)
+Gurax_DeclareMethodAlias(wxMenu, GetLabel_gurax, "GetLabel")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, GetLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	// Function body
+	wxString rtn = pEntity_gurax->GetLabel(id);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.Menu#GetLabelText(id as Number)
+Gurax_DeclareMethodAlias(wxMenu, GetLabelText_gurax, "GetLabelText")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, GetLabelText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	// Function body
+	wxString rtn = pEntity_gurax->GetLabelText(id);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.Menu#GetMenuItemCount()
+Gurax_DeclareMethodAlias(wxMenu, GetMenuItemCount_gurax, "GetMenuItemCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, GetMenuItemCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	size_t rtn = pEntity_gurax->GetMenuItemCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Menu#GetTitle()
+Gurax_DeclareMethodAlias(wxMenu, GetTitle_gurax, "GetTitle")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, GetTitle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetTitle();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.Menu#Insert(pos as Number, menuItem as wx.MenuItem) {block?}
+Gurax_DeclareMethodAlias(wxMenu, Insert_gurax, "Insert")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("menuItem", VTYPE_wxMenuItem, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Insert_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	Value_wxMenuItem& value_menuItem = args_gurax.Pick<Value_wxMenuItem>();
+	wxMenuItem* menuItem = value_menuItem.GetEntityPtr();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->Insert(pos, menuItem)));
+}
+
+// wx.Menu#InsertCheckItem(pos as Number, id as Number, item as String, helpString? as String) {block?}
+Gurax_DeclareMethodAlias(wxMenu, InsertCheckItem_gurax, "InsertCheckItem")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, InsertCheckItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	int id = args_gurax.PickNumber<int>();
+	const char* item = args_gurax.PickString();
+	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->InsertCheckItem(pos, id, item, helpString)));
+}
+
+// wx.Menu#InsertRadioItem(pos as Number, id as Number, item as String, helpString? as String) {block?}
+Gurax_DeclareMethodAlias(wxMenu, InsertRadioItem_gurax, "InsertRadioItem")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, InsertRadioItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	int id = args_gurax.PickNumber<int>();
+	const char* item = args_gurax.PickString();
+	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->InsertRadioItem(pos, id, item, helpString)));
+}
+
+// wx.Menu#InsertSeparator(pos as Number) {block?}
+Gurax_DeclareMethodAlias(wxMenu, InsertSeparator_gurax, "InsertSeparator")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, InsertSeparator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t pos = args_gurax.PickNumber<size_t>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->InsertSeparator(pos)));
+}
+
+// wx.Menu#IsChecked(id as Number)
+Gurax_DeclareMethodAlias(wxMenu, IsChecked_gurax, "IsChecked")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, IsChecked_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->IsChecked(id);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Menu#IsEnabled(id as Number)
+Gurax_DeclareMethodAlias(wxMenu, IsEnabled_gurax, "IsEnabled")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, IsEnabled_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->IsEnabled(id);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Menu#Prepend(item as wx.MenuItem) {block?}
+Gurax_DeclareMethodAlias(wxMenu, Prepend_gurax, "Prepend")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("item", VTYPE_wxMenuItem, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Prepend_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxMenuItem& value_item = args_gurax.Pick<Value_wxMenuItem>();
+	wxMenuItem* item = value_item.GetEntityPtr();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->Prepend(item)));
+}
+
+// wx.Menu#PrependCheckItem(id as Number, item as String, helpString? as String) {block?}
+Gurax_DeclareMethodAlias(wxMenu, PrependCheckItem_gurax, "PrependCheckItem")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, PrependCheckItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	const char* item = args_gurax.PickString();
+	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->PrependCheckItem(id, item, helpString)));
+}
+
+// wx.Menu#PrependRadioItem(id as Number, item as String, helpString? as String) {block?}
+Gurax_DeclareMethodAlias(wxMenu, PrependRadioItem_gurax, "PrependRadioItem")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, PrependRadioItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	const char* item = args_gurax.PickString();
+	const char* helpString = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->PrependRadioItem(id, item, helpString)));
+}
+
+// wx.Menu#PrependSeparator() {block?}
+Gurax_DeclareMethodAlias(wxMenu, PrependSeparator_gurax, "PrependSeparator")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, PrependSeparator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->PrependSeparator()));
+}
+
+// wx.Menu#Remove(id as Number) {block?}
+Gurax_DeclareMethodAlias(wxMenu, Remove_gurax, "Remove")
+{
+	Declare(VTYPE_wxMenuItem, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Remove_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenuItem(
+		*pEntity_gurax->Remove(id)));
+}
+
+// wx.Menu#SetHelpString(id as Number, helpString as String)
+Gurax_DeclareMethodAlias(wxMenu, SetHelpString_gurax, "SetHelpString")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("helpString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, SetHelpString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	const char* helpString = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetHelpString(id, helpString);
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#SetLabel(id as Number, label as String)
+Gurax_DeclareMethodAlias(wxMenu, SetLabel_gurax, "SetLabel")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, SetLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int id = args_gurax.PickNumber<int>();
+	const char* label = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetLabel(id, label);
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#SetTitle(title as String)
+Gurax_DeclareMethodAlias(wxMenu, SetTitle_gurax, "SetTitle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, SetTitle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* title = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetTitle(title);
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#UpdateUI(source? as wx.EvtHandler)
+Gurax_DeclareMethodAlias(wxMenu, UpdateUI_gurax, "UpdateUI")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("source", VTYPE_wxEvtHandler, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, UpdateUI_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxEvtHandler* source = args_gurax.IsValid()? args_gurax.Pick<Value_wxEvtHandler>().GetEntityPtr() : nullptr;
+	// Function body
+	pEntity_gurax->UpdateUI(source);
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#SetInvokingWindow(win as wx.Window)
+Gurax_DeclareMethodAlias(wxMenu, SetInvokingWindow_gurax, "SetInvokingWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, SetInvokingWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_win = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* win = value_win.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetInvokingWindow(win);
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#GetInvokingWindow() {block?}
+Gurax_DeclareMethodAlias(wxMenu, GetInvokingWindow_gurax, "GetInvokingWindow")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, GetInvokingWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		pEntity_gurax->GetInvokingWindow()));
+}
+
+// wx.Menu#GetWindow() {block?}
+Gurax_DeclareMethodAlias(wxMenu, GetWindow_gurax, "GetWindow")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, GetWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		pEntity_gurax->GetWindow()));
+}
+
+// wx.Menu#GetStyle()
+Gurax_DeclareMethodAlias(wxMenu, GetStyle_gurax, "GetStyle")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, GetStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetStyle();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Menu#SetParent(parent as wx.Menu)
+Gurax_DeclareMethodAlias(wxMenu, SetParent_gurax, "SetParent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("parent", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, SetParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxMenu& value_parent = args_gurax.Pick<Value_wxMenu>();
+	wxMenu* parent = value_parent.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetParent(parent);
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#GetParent() {block?}
+Gurax_DeclareMethodAlias(wxMenu, GetParent_gurax, "GetParent")
+{
+	Declare(VTYPE_wxMenu, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, GetParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxMenu(
+		pEntity_gurax->GetParent()));
+}
+
+// wx.Menu#Attach(menubar as wx.MenuBar)
+Gurax_DeclareMethodAlias(wxMenu, Attach_gurax, "Attach")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("menubar", VTYPE_wxMenuBar, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Attach_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxMenuBar& value_menubar = args_gurax.Pick<Value_wxMenuBar>();
+	wxMenuBar* menubar = value_menubar.GetEntityPtr();
+	// Function body
+	pEntity_gurax->Attach(menubar);
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#Detach()
+Gurax_DeclareMethodAlias(wxMenu, Detach_gurax, "Detach")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, Detach_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Detach();
+	return Gurax::Value::nil();
+}
+
+// wx.Menu#IsAttached()
+Gurax_DeclareMethodAlias(wxMenu, IsAttached_gurax, "IsAttached")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMenu, IsAttached_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsAttached();
+	return new Gurax::Value_Bool(rtn);
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -120,7 +1080,46 @@ void VType_wxMenu::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Menu_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxMenu, Append_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, AppendCheckItem_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, AppendRadioItem_gurax));
 	Assign(Gurax_CreateMethod(wxMenu, AppendSeparator_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, AppendSubMenu_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Break_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Check_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Delete_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Destroy_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Enable_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, FindItem_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, FindItemByPosition_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, GetHelpString_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, GetLabel_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, GetLabelText_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, GetMenuItemCount_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, GetTitle_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Insert_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, InsertCheckItem_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, InsertRadioItem_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, InsertSeparator_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, IsChecked_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, IsEnabled_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Prepend_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, PrependCheckItem_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, PrependRadioItem_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, PrependSeparator_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Remove_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, SetHelpString_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, SetLabel_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, SetTitle_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, UpdateUI_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, SetInvokingWindow_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, GetInvokingWindow_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, GetWindow_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, GetStyle_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, SetParent_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, GetParent_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Attach_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, Detach_gurax));
+	Assign(Gurax_CreateMethod(wxMenu, IsAttached_gurax));
 }
 
 //------------------------------------------------------------------------------
