@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxLog.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -178,6 +177,7 @@ set(SRCFILES_VTYPE
 	VType_wxListEvent.cpp
 	VType_wxListItem.cpp
 	VType_wxListView.cpp
+	VType_wxLog.cpp
 	VType_wxMask.cpp
 	VType_wxMDIChildFrame.cpp
 	VType_wxMDIParentFrame.cpp

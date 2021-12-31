@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxLog.gura
 //==============================================================================
-Log = Class {
+Log = Class():loosePointer {
 	//SetFormatter(formatter as LogFormatter_p) as LogFormatter_p
 	//Flush() as void
 	//LogRecord(level as LogLevel, msg as const_String_r, info as const_LogRecordInfo_r) as void

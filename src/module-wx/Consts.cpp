@@ -654,6 +654,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("NB_TOP", new Value_Number(wxNB_TOP));
 	frame.Assign("NOR", new Value_Number(wxNOR));
 	frame.Assign("NORTH", new Value_Number(wxNORTH));
+	frame.Assign("NO_BORDER", new Value_Number(wxNO_BORDER));
 	frame.Assign("NO_DEFAULT", new Value_Number(wxNO_DEFAULT));
 	frame.Assign("NO_FULL_REPAINT_ON_RESIZE", new Value_Number(wxNO_FULL_REPAINT_ON_RESIZE));
 	frame.Assign("NO_OP", new Value_Number(wxNO_OP));
@@ -821,6 +822,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("PRINT_MODE_PRINTER", new Value_Number(wxPRINT_MODE_PRINTER));
 	frame.Assign("PRINT_MODE_STREAM", new Value_Number(wxPRINT_MODE_STREAM));
 	frame.Assign("PartRegion", new Value_Number(wxPartRegion));
+	frame.Assign("RAISED_BORDER", new Value_Number(wxRAISED_BORDER));
 	frame.Assign("RA_SPECIFY_COLS", new Value_Number(wxRA_SPECIFY_COLS));
 	frame.Assign("RA_SPECIFY_ROWS", new Value_Number(wxRA_SPECIFY_ROWS));
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
@@ -856,6 +858,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("SHOW_SB_DEFAULT", new Value_Number(wxSHOW_SB_DEFAULT));
 	frame.Assign("SHOW_SB_NEVER", new Value_Number(wxSHOW_SB_NEVER));
 	frame.Assign("SHRINK", new Value_Number(wxSHRINK));
+	frame.Assign("SIMPLE_BORDER", new Value_Number(wxSIMPLE_BORDER));
 	frame.Assign("SIZER_FLAG_BITS_MASK", new Value_Number(wxSIZER_FLAG_BITS_MASK));
 	frame.Assign("SL_AUTOTICKS", new Value_Number(wxSL_AUTOTICKS));
 	frame.Assign("SL_BOTTOM", new Value_Number(wxSL_BOTTOM));
@@ -873,6 +876,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("SP_ARROW_KEYS", new Value_Number(wxSP_ARROW_KEYS));
 	frame.Assign("SP_WRAP", new Value_Number(wxSP_WRAP));
 	frame.Assign("SRC_INVERT", new Value_Number(wxSRC_INVERT));
+	frame.Assign("STATIC_BORDER", new Value_Number(wxSTATIC_BORDER));
 	frame.Assign("STAY_ON_TOP", new Value_Number(wxSTAY_ON_TOP));
 	frame.Assign("STB_DEFAULT_STYLE", new Value_Number(wxSTB_DEFAULT_STYLE));
 	frame.Assign("STB_ELLIPSIZE_END", new Value_Number(wxSTB_ELLIPSIZE_END));
@@ -886,6 +890,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("ST_ELLIPSIZE_MIDDLE", new Value_Number(wxST_ELLIPSIZE_MIDDLE));
 	frame.Assign("ST_ELLIPSIZE_START", new Value_Number(wxST_ELLIPSIZE_START));
 	frame.Assign("ST_NO_AUTORESIZE", new Value_Number(wxST_NO_AUTORESIZE));
+	frame.Assign("SUNKEN_BORDER", new Value_Number(wxSUNKEN_BORDER));
 	frame.Assign("SW_3D", new Value_Number(wxSW_3D));
 	frame.Assign("SW_3DBORDER", new Value_Number(wxSW_3DBORDER));
 	frame.Assign("SW_3DSASH", new Value_Number(wxSW_3DSASH));

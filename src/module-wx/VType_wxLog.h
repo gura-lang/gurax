@@ -31,14 +31,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxLog");
 protected:
-	wxLog _entity;
+	wxLog* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxLog() = delete;
-	explicit Value_wxLog(const wxLog& entity, VType& vtype = VTYPE_wxLog) :
-		Value_Object(vtype), _entity(entity) {}
+	explicit Value_wxLog(wxLog* pEntity, VType& vtype = VTYPE_wxLog) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxLog(const Value_wxLog& src) = delete;
 	Value_wxLog& operator=(const Value_wxLog& src) = delete;
@@ -49,10 +49,10 @@ protected:
 	// Destructor
 	~Value_wxLog() = default;
 public:
-	wxLog& GetEntity() { return _entity; }
-	const wxLog& GetEntity() const { return _entity; }
-	wxLog* GetEntityPtr() { return &_entity; }
-	const wxLog* GetEntityPtr() const { return &_entity; }
+	wxLog& GetEntity() { return *_pEntity; }
+	const wxLog& GetEntity() const { return *_pEntity; }
+	wxLog* GetEntityPtr() { return _pEntity; }
+	const wxLog* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxLog& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxLog&>(value).GetEntity();
