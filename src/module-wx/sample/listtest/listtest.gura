@@ -242,34 +242,90 @@ MyFrame = class(wx.Frame) {
 		menubar.Append(menuCol, "&Colour");
 		this.SetMenuBar(menubar);
 
-/*
-		m_panel = new wxPanel(this, wxID_ANY);
-		m_logWindow = new wxTextCtrl(m_panel, wxID_ANY, wxEmptyString,
-									 wxDefaultPosition, wxDefaultSize,
-									 wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
+		this.m_panel = wx.Panel(this, wx.ID_ANY);
+		this.m_logWindow = wx.TextCtrl(this.m_panel, wx.ID_ANY, wx.EmptyString,
+									 wx.DefaultPosition, wx.DefaultSize,
+									 wx.TE_READONLY | wx.TE_MULTILINE | wx.SUNKEN_BORDER);
 
-		m_logOld = wxLog::SetActiveTarget(new wxLogTextCtrl(m_logWindow));
+		this.m_logOld = wx.Log.SetActiveTarget(wx.LogTextCtrl(this.m_logWindow));
 
-		RecreateList(wxLC_REPORT | wxLC_SINGLE_SEL);
+		//this.RecreateList(wx.LC_REPORT | wx.LC_SINGLE_SEL);
 
-	#ifdef __WXMSW__
 		// this is useful to know specially when debugging :)
-		wxLogMessage("Your version of comctl32.dll is: %d",
-					 wxApp::GetComCtl32Version());
-	#endif
+		//wx.LogMessage("Your version of comctl32.dll is: %d",
+		//			 wx.App.GetComCtl32Version());
 
-	#if wxUSE_STATUSBAR
-		CreateStatusBar();
-	#endif // wxUSE_STATUSBAR
+		this.CreateStatusBar();
 
-		wxBoxSizer* const sizer = new wxBoxSizer(wxVERTICAL);
-		sizer.Add(m_listCtrl, wxSizerFlags(2).Expand().Border());
-		sizer.Add(m_logWindow, wxSizerFlags(1).Expand().Border());
-		m_panel.SetSizer(sizer);
+		sizer = wx.BoxSizer(wx.VERTICAL);
+		sizer.Add(m_listCtrl, wx.SizerFlags(2).Expand().Border());
+		sizer.Add(m_logWindow, wx.SizerFlags(1).Expand().Border());
+		this.m_panel.SetSizer(sizer);
 
-		SetClientSize(m_panel.GetBestSize());
-*/
+		this.SetClientSize(this.m_panel.GetBestSize());
 	}
+
+	/*
+	RecreateList(long flags, bool withText) = {
+		// we could avoid recreating it if we don't set/clear the wxLC_VIRTUAL
+		// style, but it is more trouble to do it than not
+	#if 0
+		if ( !m_listCtrl || ((flags & wxLC_VIRTUAL) !=
+				(m_listCtrl->GetWindowStyleFlag() & wxLC_VIRTUAL)) )
+	#endif
+		{
+			wxListCtrl* const old = m_listCtrl;
+
+			m_listCtrl = new MyListCtrl(m_panel, LIST_CTRL,
+										wxDefaultPosition, wxDefaultSize,
+										flags |
+										wxBORDER_THEME | wxLC_EDIT_LABELS);
+
+			if ( old )
+			{
+				wxSizer* const sizer = m_panel->GetSizer();
+				sizer->Replace(old, m_listCtrl);
+
+				delete old;
+
+				sizer->Layout();
+			}
+
+			switch ( flags & wxLC_MASK_TYPE )
+			{
+				case wxLC_LIST:
+					InitWithListItems();
+					break;
+
+				case wxLC_ICON:
+					InitWithIconItems(withText);
+					break;
+
+				case wxLC_SMALL_ICON:
+					InitWithIconItems(withText, true);
+					break;
+
+				case wxLC_REPORT:
+					if ( flags & wxLC_VIRTUAL )
+						InitWithVirtualItems();
+					else
+						InitWithReportItems();
+					break;
+
+				default:
+					wxFAIL_MSG( "unknown listctrl mode" );
+			}
+
+			wxMenuBar* const mb = GetMenuBar();
+			if ( mb )
+				m_listCtrl->EnableBellOnNoMatch(mb->IsChecked(LIST_TOGGLE_BELL));
+		}
+
+		GetMenuBar()->Check(LIST_ROW_LINES, false);
+
+		m_logWindow->Clear();
+	}
+	*/
 }
 
 /*
@@ -715,66 +771,6 @@ void MyFrame::OnSelectAll(wxCommandEvent& WXUNUSED(event))
 // changing listctrl modes
 // ----------------------------------------------------------------------------
 
-void MyFrame::RecreateList(long flags, bool withText)
-{
-	// we could avoid recreating it if we don't set/clear the wxLC_VIRTUAL
-	// style, but it is more trouble to do it than not
-#if 0
-	if ( !m_listCtrl || ((flags & wxLC_VIRTUAL) !=
-			(m_listCtrl->GetWindowStyleFlag() & wxLC_VIRTUAL)) )
-#endif
-	{
-		wxListCtrl* const old = m_listCtrl;
-
-		m_listCtrl = new MyListCtrl(m_panel, LIST_CTRL,
-									wxDefaultPosition, wxDefaultSize,
-									flags |
-									wxBORDER_THEME | wxLC_EDIT_LABELS);
-
-		if ( old )
-		{
-			wxSizer* const sizer = m_panel->GetSizer();
-			sizer->Replace(old, m_listCtrl);
-
-			delete old;
-
-			sizer->Layout();
-		}
-
-		switch ( flags & wxLC_MASK_TYPE )
-		{
-			case wxLC_LIST:
-				InitWithListItems();
-				break;
-
-			case wxLC_ICON:
-				InitWithIconItems(withText);
-				break;
-
-			case wxLC_SMALL_ICON:
-				InitWithIconItems(withText, true);
-				break;
-
-			case wxLC_REPORT:
-				if ( flags & wxLC_VIRTUAL )
-					InitWithVirtualItems();
-				else
-					InitWithReportItems();
-				break;
-
-			default:
-				wxFAIL_MSG( "unknown listctrl mode" );
-		}
-
-		wxMenuBar* const mb = GetMenuBar();
-		if ( mb )
-			m_listCtrl->EnableBellOnNoMatch(mb->IsChecked(LIST_TOGGLE_BELL));
-	}
-
-	GetMenuBar()->Check(LIST_ROW_LINES, false);
-
-	m_logWindow->Clear();
-}
 
 void MyFrame::OnListView(wxCommandEvent& WXUNUSED(event))
 {

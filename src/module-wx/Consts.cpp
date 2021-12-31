@@ -106,6 +106,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("BORDER_STATIC", new Value_Number(wxBORDER_STATIC));
 	frame.Assign("BORDER_SUNKEN", new Value_Number(wxBORDER_SUNKEN));
 	frame.Assign("BORDER_THEME", new Value_Number(wxBORDER_THEME));
+	frame.Assign("SIMPLE_BORDER", new Value_Number(wxSIMPLE_BORDER));
+	frame.Assign("SUNKEN_BORDER", new Value_Number(wxSUNKEN_BORDER));
+	frame.Assign("RAISED_BORDER", new Value_Number(wxRAISED_BORDER));
+	frame.Assign("STATIC_BORDER", new Value_Number(wxSTATIC_BORDER));
+	frame.Assign("NO_BORDER", new Value_Number(wxNO_BORDER));
 	frame.Assign("BOTH", new Value_Number(wxBOTH));
 	frame.Assign("BOTTOM", new Value_Number(wxBOTTOM));
 	frame.Assign("BRUSHSTYLE_BDIAGONAL_HATCH", new Value_Number(wxBRUSHSTYLE_BDIAGONAL_HATCH));
@@ -1119,6 +1124,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("XOR", new Value_Number(wxXOR));
 	frame.Assign("YES_DEFAULT", new Value_Number(wxYES_DEFAULT));
 	frame.Assign("YES_NO", new Value_Number(wxYES_NO));
+	frame.Assign("EmptyString", new Value_String(""));
 }
 
 Gurax_EndModuleScope(wx)
