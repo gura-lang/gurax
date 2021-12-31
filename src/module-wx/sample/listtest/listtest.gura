@@ -247,7 +247,7 @@ MyFrame = class(wx.Frame) {
 									 wx.DefaultPosition, wx.DefaultSize,
 									 wx.TE_READONLY | wx.TE_MULTILINE | wx.SUNKEN_BORDER);
 
-		this.m_logOld = wx.Log.SetActiveTarget(wx.LogTextCtrl(this.m_logWindow));
+		//this.m_logOld = wx.Log.SetActiveTarget(wx.LogTextCtrl(this.m_logWindow));
 
 		//this.RecreateList(wx.LC_REPORT | wx.LC_SINGLE_SEL);
 
@@ -258,8 +258,8 @@ MyFrame = class(wx.Frame) {
 		this.CreateStatusBar();
 
 		sizer = wx.BoxSizer(wx.VERTICAL);
-		sizer.Add(m_listCtrl, wx.SizerFlags(2).Expand().Border());
-		sizer.Add(m_logWindow, wx.SizerFlags(1).Expand().Border());
+		sizer.Add(this.m_listCtrl, wx.SizerFlags(2).Expand().Border());
+		sizer.Add(this.m_logWindow, wx.SizerFlags(1).Expand().Border());
 		this.m_panel.SetSizer(sizer);
 
 		this.SetClientSize(this.m_panel.GetBestSize());

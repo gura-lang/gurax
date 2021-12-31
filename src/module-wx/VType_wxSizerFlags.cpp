@@ -77,12 +77,12 @@ Gurax_ImplementMethodEx(wxSizerFlags, Align_gurax, processor_gurax, argument_gur
 	return valueThis_gurax.Reference();
 }
 
-// wx.SizerFlags#Border(direction as Number, borderinpixels as Number)
+// wx.SizerFlags#Border(direction? as Number, borderinpixels? as Number)
 Gurax_DeclareMethodAlias(wxSizerFlags, Border_gurax, "Border")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("direction", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("borderinpixels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("borderinpixels", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -96,8 +96,10 @@ Gurax_ImplementMethodEx(wxSizerFlags, Border_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int direction = args_gurax.PickNumber<int>();
-	int borderinpixels = args_gurax.PickNumber<int>();
+	bool direction_validFlag = args_gurax.IsValid();
+	int direction = direction_validFlag? args_gurax.PickNumber<int>() : wxALL;
+	bool borderinpixels_validFlag = args_gurax.IsValid();
+	int borderinpixels = borderinpixels_validFlag? args_gurax.PickNumber<int>() : 1;
 	// Function body
 	pEntity_gurax->Border(direction, borderinpixels);
 	return valueThis_gurax.Reference();

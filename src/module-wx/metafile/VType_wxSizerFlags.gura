@@ -4,7 +4,7 @@
 SizerFlags = Class {
 	__init__(proportion as int = 0)
 	Align(alignment as int):returnThis
-	Border(direction as int, borderinpixels as int):returnThis
+	Border(direction as int = wxALL, borderinpixels as int = 1):returnThis
 	Bottom():returnThis
 	Center():returnThis
 	Centre():returnThis

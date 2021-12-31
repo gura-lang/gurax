@@ -1,0 +1,33 @@
+//==============================================================================
+// VType_wxLog.gura
+//==============================================================================
+Log = Class {
+	//SetFormatter(formatter as LogFormatter_p) as LogFormatter_p
+	//Flush() as void
+	//LogRecord(level as LogLevel, msg as const_String_r, info as const_LogRecordInfo_r) as void
+	AddTraceMask(mask as const_String_r):static as void
+	ClearTraceMasks():static as void
+	GetTraceMasks():static as ArrayString
+	IsAllowedTraceMask(mask as const_String_r):static as bool
+	RemoveTraceMask(mask as const_String_r):static as void
+	DontCreateOnDemand():static as void
+	GetActiveTarget():static as Log_p
+	SetActiveTarget(logtarget as Log_p):static as Log_p
+	SetThreadActiveTarget(logger as Log_p):static as Log_p
+	FlushActive():static as void
+	Resume():static as void
+	Suspend():static as void
+	GetLogLevel():static as LogLevel
+	IsLevelEnabled(level as LogLevel, component as String):static as bool
+	SetComponentLevel(component as const_String_r, level as LogLevel):static as void
+	SetLogLevel(logLevel as LogLevel):static as void
+	EnableLogging(enable as bool = true):static as bool
+	IsEnabled():static as bool
+	GetRepetitionCounting():static as bool
+	SetRepetitionCounting(repetCounting as bool = true):static as void
+	GetTimestamp():static as String
+	SetTimestamp(format as const_String_r):static as void
+	DisableTimestamp():static as void
+	GetVerbose():static as bool
+	SetVerbose(verbose as bool = true):static as void
+}
