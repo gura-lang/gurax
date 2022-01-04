@@ -2346,18 +2346,17 @@ Gurax_ImplementMethodEx(wxWindow, SetPosition_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.Window#ClientToScreenXY(x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxWindow, ClientToScreenXY_gurax, "ClientToScreenXY")
+// wx.Window#ClientToScreen(args* as Any)
+Gurax_DeclareMethodAlias(wxWindow, ClientToScreen_gurax, "ClientToScreen")
 {
-	Declare(VTYPE_Tuple, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethodEx(wxWindow, ClientToScreenXY_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxWindow, ClientToScreen_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -2365,37 +2364,40 @@ Gurax_ImplementMethodEx(wxWindow, ClientToScreenXY_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int x = args_gurax.PickNumber<int>();
-	int y = args_gurax.PickNumber<int>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->ClientToScreen(&x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
-}
-
-// wx.Window#ClientToScreenPoint(pt as wx.Point) {block?}
-Gurax_DeclareMethodAlias(wxWindow, ClientToScreenPoint_gurax, "ClientToScreenPoint")
-{
-	Declare(VTYPE_wxPoint, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, ClientToScreenPoint_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->ClientToScreen(pt)));
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		pEntity_gurax->ClientToScreen(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		wxPoint rtn = pEntity_gurax->ClientToScreen(pt);
+		return new Value_wxPoint(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Window#ConvertDialogToPixels(pt as wx.Point) {block?}
@@ -2502,18 +2504,17 @@ Gurax_ImplementMethodEx(wxWindow, ConvertPixelsToDialogSize_gurax, processor_gur
 		pEntity_gurax->ConvertPixelsToDialog(sz)));
 }
 
-// wx.Window#ScreenToClientXY(x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxWindow, ScreenToClientXY_gurax, "ScreenToClientXY")
+// wx.Window#ScreenToClient(args* as Any)
+Gurax_DeclareMethodAlias(wxWindow, ScreenToClient_gurax, "ScreenToClient")
 {
-	Declare(VTYPE_Tuple, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethodEx(wxWindow, ScreenToClientXY_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxWindow, ScreenToClient_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -2521,37 +2522,40 @@ Gurax_ImplementMethodEx(wxWindow, ScreenToClientXY_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int x = args_gurax.PickNumber<int>();
-	int y = args_gurax.PickNumber<int>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->ScreenToClient(&x, &y);
-	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
-}
-
-// wx.Window#ScreenToClientPoint(pt as wx.Point) {block?}
-Gurax_DeclareMethodAlias(wxWindow, ScreenToClientPoint_gurax, "ScreenToClientPoint")
-{
-	Declare(VTYPE_wxPoint, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, ScreenToClientPoint_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->ScreenToClient(pt)));
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		pEntity_gurax->ScreenToClient(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		wxPoint rtn = pEntity_gurax->ScreenToClient(pt);
+		return new Value_wxPoint(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Window#ClearBackground()
@@ -5848,14 +5852,12 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, MoveXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Move_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetPosition_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, ClientToScreenXY_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, ClientToScreenPoint_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ClientToScreen_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertDialogToPixels_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertDialogToPixelsSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertPixelsToDialog_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertPixelsToDialogSize_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, ScreenToClientXY_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, ScreenToClientPoint_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, ScreenToClient_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ClearBackground_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Freeze_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Thaw_gurax));

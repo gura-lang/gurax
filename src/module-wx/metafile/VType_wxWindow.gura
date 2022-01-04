@@ -328,22 +328,80 @@ Window = Class(EvtHandler) {
 	Move(pt as const_Point_r, flags as int = wxSIZE_USE_EXISTING) as void
 	SetPosition(pt as const_Point_r) as void
 	// Coordinate conversion functions
-	ClientToScreenXY(x as int, y as int) as Tuple@gurax = \
+	ClientToScreen(args* as any) = \
 		R'''
-		pEntity_gurax->ClientToScreen(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			pEntity_gurax->ClientToScreen(&x, &y);
+			return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			wxPoint rtn = pEntity_gurax->ClientToScreen(pt);
+			return new Value_wxPoint(rtn);
+		} while (0);
+		return Value::nil();
 		'''
-	ClientToScreenPoint(pt as const_Point_r) as Point = ClientToScreen
 	ConvertDialogToPixels(pt as const_Point_r) as Point
 	ConvertDialogToPixelsSize(sz as const_Size_r) as Size = ConvertDialogToPixels
 	ConvertPixelsToDialog(pt as const_Point_r) as Point
 	ConvertPixelsToDialogSize(sz as const_Size_r) as Size = ConvertPixelsToDialog
-	ScreenToClientXY(x as int, y as int) as Tuple@gurax = \
+	ScreenToClient(args* as any) = \
 		R'''
-		pEntity_gurax->ScreenToClient(&x, &y);
-		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			pEntity_gurax->ScreenToClient(&x, &y);
+			return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			wxPoint rtn = pEntity_gurax->ScreenToClient(pt);
+			return new Value_wxPoint(rtn);
+		} while (0);
+		return Value::nil();
 		'''
-	ScreenToClientPoint(pt as const_Point_r) as Point = ScreenToClient
 	// Drawing-related functions
 	ClearBackground() as void
 	Freeze() as void
