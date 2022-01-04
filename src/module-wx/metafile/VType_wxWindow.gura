@@ -549,10 +549,78 @@ Window = Class(EvtHandler) {
 	Hide() as bool
 	HideWithEffect(effect as ShowEffect, timeout as unsigned_int = 0) as bool
 	IsEnabled() as bool
-	IsExposedXY(x as int, y as int) as bool = IsExposed
-	IsExposed(pt as Point_r) as bool
-	IsExposedXYWH(x as int, y as int, w as int, h as int) as bool = IsExposed
-	IsExposedRect(rect as Rect_r) as bool = IsExposed
+
+	IsExposed(args* as any) as bool = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			bool rtn = pEntity_gurax->IsExposed(x, y);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("w", VTYPE_Number);
+				pDeclCallable->DeclareArg("h", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			int w = args.PickNumber<int>();
+			int h = args.PickNumber<int>();
+			bool rtn = pEntity_gurax->IsExposed(x, y, w, h);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			bool rtn = pEntity_gurax->IsExposed(pt);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			bool rtn = pEntity_gurax->IsExposed(rect);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	IsShown() as bool
 	IsShownOnScreen() as bool
 	Disable() as bool

@@ -4028,37 +4028,11 @@ Gurax_ImplementMethodEx(wxWindow, IsEnabled_gurax, processor_gurax, argument_gur
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.Window#IsExposedXY(x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxWindow, IsExposedXY_gurax, "IsExposedXY")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, IsExposedXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	int x = args_gurax.PickNumber<int>();
-	int y = args_gurax.PickNumber<int>();
-	// Function body
-	bool rtn = pEntity_gurax->IsExposed(x, y);
-	return new Gurax::Value_Bool(rtn);
-}
-
-// wx.Window#IsExposed(pt as wx.Point)
+// wx.Window#IsExposed(args* as Any)
 Gurax_DeclareMethodAlias(wxWindow, IsExposed_gurax, "IsExposed")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4072,66 +4046,76 @@ Gurax_ImplementMethodEx(wxWindow, IsExposed_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	bool rtn = pEntity_gurax->IsExposed(pt);
-	return new Gurax::Value_Bool(rtn);
-}
-
-// wx.Window#IsExposedXYWH(x as Number, y as Number, w as Number, h as Number)
-Gurax_DeclareMethodAlias(wxWindow, IsExposedXYWH_gurax, "IsExposedXYWH")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, IsExposedXYWH_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	int x = args_gurax.PickNumber<int>();
-	int y = args_gurax.PickNumber<int>();
-	int w = args_gurax.PickNumber<int>();
-	int h = args_gurax.PickNumber<int>();
-	// Function body
-	bool rtn = pEntity_gurax->IsExposed(x, y, w, h);
-	return new Gurax::Value_Bool(rtn);
-}
-
-// wx.Window#IsExposedRect(rect as wx.Rect)
-Gurax_DeclareMethodAlias(wxWindow, IsExposedRect_gurax, "IsExposedRect")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, IsExposedRect_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
-	wxRect& rect = value_rect.GetEntity();
-	// Function body
-	bool rtn = pEntity_gurax->IsExposed(rect);
-	return new Gurax::Value_Bool(rtn);
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		bool rtn = pEntity_gurax->IsExposed(&x, &y);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+			pDeclCallable->DeclareArg("w", VTYPE_Number);
+			pDeclCallable->DeclareArg("h", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		int w = args.PickNumber<int>();
+		int h = args.PickNumber<int>();
+		bool rtn = pEntity_gurax->IsExposed(x, y, w, h);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		bool rtn = pEntity_gurax->IsExposed(pt);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+		bool rtn = pEntity_gurax->IsExposed(rect);
+		return new Value_Bool(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Window#IsShown()
@@ -5920,10 +5904,7 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, Hide_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, HideWithEffect_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, IsEnabled_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, IsExposedXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, IsExposed_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, IsExposedXYWH_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, IsExposedRect_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, IsShown_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, IsShownOnScreen_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Disable_gurax));
