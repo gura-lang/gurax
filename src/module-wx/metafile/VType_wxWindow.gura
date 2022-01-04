@@ -17,8 +17,40 @@ Window = Class(EvtHandler) {
 	// Child management functions
 	AddChild(child as Window_p) as void
 	DestroyChildren() as bool
-	FindWindow(id as long) as Window_p
-	FindWindowByName(name as const_String_r) as Window_p = FindWindow
+
+	FindWindow(args* as any) as void = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("id", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			long id = args.PickNumber<long>();
+			wxWindow* rtn = pEntity_gurax->FindWindow(id);
+			return new Value_wxWindow(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("name", VTYPE_String);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const char* name = args.PickString();
+			wxWindow* rtn = pEntity_gurax->FindWindow(name);
+			return new Value_wxWindow(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	//GetChildren() as WindowList
 	//GetChildren() as WindowList
 	RemoveChild(child as Window_p) as void
@@ -549,7 +581,6 @@ Window = Class(EvtHandler) {
 	Hide() as bool
 	HideWithEffect(effect as ShowEffect, timeout as unsigned_int = 0) as bool
 	IsEnabled() as bool
-
 	IsExposed(args* as any) as bool = \
 		R'''
 		do {
@@ -637,10 +668,84 @@ Window = Class(EvtHandler) {
 	//SetToolTip(tip as ToolTip_p) as void
 	UnsetToolTip() as void
 	// Popup/context menu functions
-	GetPopupMenuSelectionFromUser(menu as Menu_r, pos as const_Point_r = wxDefaultPosition) as int
-	GetPopupMenuSelectionFromUserXY(menu as Menu_r, x as int, y as int) as int = GetPopupMenuSelectionFromUser
-	PopupMenu(menu as Menu_p, pos as const_Point_r = wxDefaultPosition) as bool
-	PopupMenuXY(menu as Menu_p, x as int, y as int) as bool = PopupMenu
+	GetPopupMenuSelectionFromUser(args* as any) = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("menu", VTYPE_wxMenu);
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxMenu& menu = args.Pick<Value_wxMenu>().GetEntity();
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			int rtn = pEntity_gurax->GetPopupMenuSelectionFromUser(menu, x, y);
+			return new Value_Number(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("menu", VTYPE_wxMenu);
+				pDeclCallable->DeclareArg("pos", VTYPE_wxPoint, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxMenu& menu = args.Pick<Value_wxMenu>().GetEntity();
+			const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+			int rtn = pEntity_gurax->GetPopupMenuSelectionFromUser(menu, pos);
+			return new Value_Number(rtn);
+		} while (0);
+		return Value::nil();
+		'''
+	PopupMenu(args* as any) = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("menu", VTYPE_wxMenu);
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxMenu* menu = args.Pick<Value_wxMenu>().GetEntityPtr();
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			bool rtn = pEntity_gurax->PopupMenu(menu, x, y);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("menu", VTYPE_wxMenu);
+				pDeclCallable->DeclareArg("pos", VTYPE_wxPoint, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxMenu* menu = args.Pick<Value_wxMenu>().GetEntityPtr();
+			const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+			bool rtn = pEntity_gurax->PopupMenu(menu, pos);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	GetValidator() as Validator_p
 	SetValidator(validator as const_Validator_r) as void
 	TransferDataFromWindow() as bool
@@ -690,8 +795,41 @@ Window = Class(EvtHandler) {
 	SetCursor(cursor as const_Cursor_r) as bool
 	WarpPointer(x as int, y as int) as void
 	// Miscellaneous functions
-	HitTestXY(x as Coord, y as Coord) as HitTest = HitTest
-	HitTest(pt as const_Point_r) as HitTest
+	HitTest(args* as any) = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			wxHitTest rtn = pEntity_gurax->HitTest(x, y);
+			return new Value_Number(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			wxHitTest rtn = pEntity_gurax->HitTest(pt);
+			return new Value_Number(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	GetBorder(flags as long) as Border
 	//GetBorder() as Border
 	//DoUpdateWindowUI(event as UpdateUIEvent_r) as void

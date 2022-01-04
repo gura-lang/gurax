@@ -299,12 +299,11 @@ Gurax_ImplementMethodEx(wxWindow, DestroyChildren_gurax, processor_gurax, argume
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.Window#FindWindow(id as Number) {block?}
+// wx.Window#FindWindow(args* as Any)
 Gurax_DeclareMethodAlias(wxWindow, FindWindow_gurax, "FindWindow")
 {
-	Declare(VTYPE_wxWindow, Flag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -318,35 +317,38 @@ Gurax_ImplementMethodEx(wxWindow, FindWindow_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	long id = args_gurax.PickNumber<long>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->FindWindow(id)));
-}
-
-// wx.Window#FindWindowByName(name as String) {block?}
-Gurax_DeclareMethodAlias(wxWindow, FindWindowByName_gurax, "FindWindowByName")
-{
-	Declare(VTYPE_wxWindow, Flag::None);
-	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, FindWindowByName_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
-		pEntity_gurax->FindWindow(name)));
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("id", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		long id = args.PickNumber<long>();
+		wxWindow* rtn = pEntity_gurax->FindWindow(id);
+		return new Value_wxWindow(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("name", VTYPE_String);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* name = args.PickString();
+		wxWindow* rtn = pEntity_gurax->FindWindow(name);
+		return new Value_wxWindow(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Window#RemoveChild(child as wx.Window)
@@ -4382,12 +4384,11 @@ Gurax_ImplementMethodEx(wxWindow, UnsetToolTip_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// wx.Window#GetPopupMenuSelectionFromUser(menu as wx.Menu, pos? as wx.Point)
+// wx.Window#GetPopupMenuSelectionFromUser(args* as Any)
 Gurax_DeclareMethodAlias(wxWindow, GetPopupMenuSelectionFromUser_gurax, "GetPopupMenuSelectionFromUser")
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4401,49 +4402,51 @@ Gurax_ImplementMethodEx(wxWindow, GetPopupMenuSelectionFromUser_gurax, processor
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxMenu& value_menu = args_gurax.Pick<Value_wxMenu>();
-	wxMenu& menu = value_menu.GetEntity();
-	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	int rtn = pEntity_gurax->GetPopupMenuSelectionFromUser(menu, pos);
-	return new Gurax::Value_Number(rtn);
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("menu", VTYPE_wxMenu);
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxMenu& menu = args.Pick<Value_wxMenu>().GetEntity();
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		int rtn = pEntity_gurax->GetPopupMenuSelectionFromUser(menu, x, y);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("menu", VTYPE_wxMenu);
+			pDeclCallable->DeclareArg("pos", VTYPE_wxPoint, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxMenu& menu = args.Pick<Value_wxMenu>().GetEntity();
+		const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+		int rtn = pEntity_gurax->GetPopupMenuSelectionFromUser(menu, pos);
+		return new Value_Number(rtn);
+	} while (0);
+	return Value::nil();
 }
 
-// wx.Window#GetPopupMenuSelectionFromUserXY(menu as wx.Menu, x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxWindow, GetPopupMenuSelectionFromUserXY_gurax, "GetPopupMenuSelectionFromUserXY")
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, GetPopupMenuSelectionFromUserXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxMenu& value_menu = args_gurax.Pick<Value_wxMenu>();
-	wxMenu& menu = value_menu.GetEntity();
-	int x = args_gurax.PickNumber<int>();
-	int y = args_gurax.PickNumber<int>();
-	// Function body
-	int rtn = pEntity_gurax->GetPopupMenuSelectionFromUser(menu, x, y);
-	return new Gurax::Value_Number(rtn);
-}
-
-// wx.Window#PopupMenu(menu as wx.Menu, pos? as wx.Point)
+// wx.Window#PopupMenu(args* as Any)
 Gurax_DeclareMethodAlias(wxWindow, PopupMenu_gurax, "PopupMenu")
 {
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4457,41 +4460,44 @@ Gurax_ImplementMethodEx(wxWindow, PopupMenu_gurax, processor_gurax, argument_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxMenu& value_menu = args_gurax.Pick<Value_wxMenu>();
-	wxMenu* menu = value_menu.GetEntityPtr();
-	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	bool rtn = pEntity_gurax->PopupMenu(menu, pos);
-	return new Gurax::Value_Bool(rtn);
-}
-
-// wx.Window#PopupMenuXY(menu as wx.Menu, x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxWindow, PopupMenuXY_gurax, "PopupMenuXY")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, PopupMenuXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxMenu& value_menu = args_gurax.Pick<Value_wxMenu>();
-	wxMenu* menu = value_menu.GetEntityPtr();
-	int x = args_gurax.PickNumber<int>();
-	int y = args_gurax.PickNumber<int>();
-	// Function body
-	bool rtn = pEntity_gurax->PopupMenu(menu, x, y);
-	return new Gurax::Value_Bool(rtn);
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("menu", VTYPE_wxMenu);
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxMenu* menu = args.Pick<Value_wxMenu>().GetEntityPtr();
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		bool rtn = pEntity_gurax->PopupMenu(menu, x, y);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("menu", VTYPE_wxMenu);
+			pDeclCallable->DeclareArg("pos", VTYPE_wxPoint, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxMenu* menu = args.Pick<Value_wxMenu>().GetEntityPtr();
+		const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+		bool rtn = pEntity_gurax->PopupMenu(menu, pos);
+		return new Value_Bool(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Window#GetValidator() {block?}
@@ -5366,37 +5372,11 @@ Gurax_ImplementMethodEx(wxWindow, WarpPointer_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.Window#HitTestXY(x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxWindow, HitTestXY_gurax, "HitTestXY")
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, HitTestXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord x = args_gurax.PickNumber<wxCoord>();
-	wxCoord y = args_gurax.PickNumber<wxCoord>();
-	// Function body
-	wxHitTest rtn = pEntity_gurax->HitTest(x, y);
-	return new Gurax::Value_Number(rtn);
-}
-
-// wx.Window#HitTest(pt as wx.Point)
+// wx.Window#HitTest(args* as Any)
 Gurax_DeclareMethodAlias(wxWindow, HitTest_gurax, "HitTest")
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -5410,11 +5390,40 @@ Gurax_ImplementMethodEx(wxWindow, HitTest_gurax, processor_gurax, argument_gurax
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	wxHitTest rtn = pEntity_gurax->HitTest(pt);
-	return new Gurax::Value_Number(rtn);
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		wxHitTest rtn = pEntity_gurax->HitTest(x, y);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		wxHitTest rtn = pEntity_gurax->HitTest(pt);
+		return new Value_Number(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Window#GetBorder(flags as Number)
@@ -5756,7 +5765,6 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, AddChild_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, DestroyChildren_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, FindWindow_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, FindWindowByName_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, RemoveChild_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetGrandParent_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetNextSibling_gurax));
@@ -5918,9 +5926,7 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, SetToolTip_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, UnsetToolTip_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetPopupMenuSelectionFromUser_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, GetPopupMenuSelectionFromUserXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, PopupMenu_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, PopupMenuXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetValidator_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetValidator_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, TransferDataFromWindow_gurax));
@@ -5960,7 +5966,6 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, ReleaseMouse_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetCursor_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, WarpPointer_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, HitTestXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, HitTest_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetBorder_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, HasMultiplePages_gurax));
