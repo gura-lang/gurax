@@ -2400,12 +2400,11 @@ Gurax_ImplementMethodEx(wxWindow, ClientToScreen_gurax, processor_gurax, argumen
 	return Value::nil();
 }
 
-// wx.Window#ConvertDialogToPixels(pt as wx.Point) {block?}
+// wx.Window#ConvertDialogToPixels(args* as Any)
 Gurax_DeclareMethodAlias(wxWindow, ConvertDialogToPixels_gurax, "ConvertDialogToPixels")
 {
-	Declare(VTYPE_wxPoint, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2419,45 +2418,45 @@ Gurax_ImplementMethodEx(wxWindow, ConvertDialogToPixels_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->ConvertDialogToPixels(pt)));
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		wxPoint rtn = pEntity_gurax->ConvertDialogToPixels(pt);
+		return new Value_wxPoint(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("sz", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxSize& sz = args.Pick<Value_wxSize>().GetEntity();
+		wxSize rtn = pEntity_gurax->ConvertDialogToPixels(sz);
+		return new Value_wxSize(rtn);
+	} while (0);
+	return Value::nil();
 }
 
-// wx.Window#ConvertDialogToPixelsSize(sz as wx.Size) {block?}
-Gurax_DeclareMethodAlias(wxWindow, ConvertDialogToPixelsSize_gurax, "ConvertDialogToPixelsSize")
-{
-	Declare(VTYPE_wxSize, Flag::None);
-	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, ConvertDialogToPixelsSize_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
-	const wxSize& sz = value_sz.GetEntity();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->ConvertDialogToPixels(sz)));
-}
-
-// wx.Window#ConvertPixelsToDialog(pt as wx.Point) {block?}
+// wx.Window#ConvertPixelsToDialog(args* as Any)
 Gurax_DeclareMethodAlias(wxWindow, ConvertPixelsToDialog_gurax, "ConvertPixelsToDialog")
 {
-	Declare(VTYPE_wxPoint, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2471,37 +2470,38 @@ Gurax_ImplementMethodEx(wxWindow, ConvertPixelsToDialog_gurax, processor_gurax, 
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
-		pEntity_gurax->ConvertPixelsToDialog(pt)));
-}
-
-// wx.Window#ConvertPixelsToDialogSize(sz as wx.Size) {block?}
-Gurax_DeclareMethodAlias(wxWindow, ConvertPixelsToDialogSize_gurax, "ConvertPixelsToDialogSize")
-{
-	Declare(VTYPE_wxSize, Flag::None);
-	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, ConvertPixelsToDialogSize_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
-	const wxSize& sz = value_sz.GetEntity();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
-		pEntity_gurax->ConvertPixelsToDialog(sz)));
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		wxPoint rtn = pEntity_gurax->ConvertPixelsToDialog(pt);
+		return new Value_wxPoint(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("sz", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxSize& sz = args.Pick<Value_wxSize>().GetEntity();
+		wxSize rtn = pEntity_gurax->ConvertPixelsToDialog(sz);
+		return new Value_wxSize(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Window#ScreenToClient(args* as Any)
@@ -5854,9 +5854,7 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, SetPosition_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ClientToScreen_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertDialogToPixels_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, ConvertDialogToPixelsSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ConvertPixelsToDialog_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, ConvertPixelsToDialogSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ScreenToClient_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ClearBackground_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Freeze_gurax));
