@@ -4061,7 +4061,7 @@ Gurax_ImplementMethodEx(wxWindow, IsExposed_gurax, processor_gurax, argument_gur
 		ArgPicker args(*pArgument);
 		int x = args.PickNumber<int>();
 		int y = args.PickNumber<int>();
-		bool rtn = pEntity_gurax->IsExposed(&x, &y);
+		bool rtn = pEntity_gurax->IsExposed(x, y);
 		return new Value_Bool(rtn);
 	} while (0);
 	Error::ClearIssuedFlag();
