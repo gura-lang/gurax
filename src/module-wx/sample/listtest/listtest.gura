@@ -241,7 +241,6 @@ MyFrame = class(wx.Frame) {
 		menubar.Append(menuList, "&List");
 		menubar.Append(menuCol, "&Colour");
 		this.SetMenuBar(menubar);
-
 		this.m_panel = wx.Panel(this, wx.ID_ANY);
 		this.m_logWindow = wx.TextCtrl(this.m_panel, wx.ID_ANY, wx.EmptyString,
 									 wx.DefaultPosition, wx.DefaultSize,
@@ -265,67 +264,54 @@ MyFrame = class(wx.Frame) {
 		this.SetClientSizeSize(this.m_panel.GetBestSize());
 	}
 
-	/*
-	RecreateList(long flags, bool withText) = {
+/*
+	RecreateList(flags as Number, withText as Bool) = {
 		// we could avoid recreating it if we don't set/clear the wxLC_VIRTUAL
 		// style, but it is more trouble to do it than not
-	#if 0
-		if ( !m_listCtrl || ((flags & wxLC_VIRTUAL) !=
-				(m_listCtrl->GetWindowStyleFlag() & wxLC_VIRTUAL)) )
-	#endif
-		{
-			wxListCtrl* const old = m_listCtrl;
+		/*
+		//if ( !m_listCtrl || ((flags & wxLC_VIRTUAL) !=
+		//		(m_listCtrl->GetWindowStyleFlag() & wxLC_VIRTUAL)) )
+		old = this.m_listCtrl;
 
-			m_listCtrl = new MyListCtrl(m_panel, LIST_CTRL,
-										wxDefaultPosition, wxDefaultSize,
-										flags |
-										wxBORDER_THEME | wxLC_EDIT_LABELS);
+		this.m_listCtrl = MyListCtrl(this.m_panel, LIST_CTRL,
+									wx.DefaultPosition, wx.DefaultSize,
+									flags | wx.BORDER_THEME | wx.LC_EDIT_LABELS);
 
-			if ( old )
-			{
-				wxSizer* const sizer = m_panel->GetSizer();
-				sizer->Replace(old, m_listCtrl);
+		if ( old ) {
+			sizer = this.m_panel.GetSizer();
+			sizer.Replace(old, this.m_listCtrl);
 
-				delete old;
+			old = nil;
 
-				sizer->Layout();
-			}
-
-			switch ( flags & wxLC_MASK_TYPE )
-			{
-				case wxLC_LIST:
-					InitWithListItems();
-					break;
-
-				case wxLC_ICON:
-					InitWithIconItems(withText);
-					break;
-
-				case wxLC_SMALL_ICON:
-					InitWithIconItems(withText, true);
-					break;
-
-				case wxLC_REPORT:
-					if ( flags & wxLC_VIRTUAL )
-						InitWithVirtualItems();
-					else
-						InitWithReportItems();
-					break;
-
-				default:
-					wxFAIL_MSG( "unknown listctrl mode" );
-			}
-
-			wxMenuBar* const mb = GetMenuBar();
-			if ( mb )
-				m_listCtrl->EnableBellOnNoMatch(mb->IsChecked(LIST_TOGGLE_BELL));
+			sizer.Layout();
 		}
 
-		GetMenuBar()->Check(LIST_ROW_LINES, false);
+		flagsMasked = flags & wxLC_MASK_TYPE
+		if (flagsMasked == wx.LC_LIST) {
+			this.InitWithListItems();
+		} elsif (flagsMasked == wx.LC_ICON) {
+			this.InitWithIconItems(withText);
+		} elsif (flagsMasked == wx.LC_SMALL_ICON) {
+			this.InitWithIconItems(withText, true);
+		} elsif (flagsMasked == wx.LC_REPORT) {
+			if ( flags & wxLC_VIRTUAL ) {
+				this.InitWithVirtualItems();
+			} else {
+				this.InitWithReportItems();
+			}
+		} else {
+			wx.FAIL_MSG( "unknown listctrl mode" );
+		}
 
-		m_logWindow->Clear();
+		mb = this.GetMenuBar();
+		if ( mb ) {
+			this.m_listCtrl.EnableBellOnNoMatch(mb.IsChecked(LIST_TOGGLE_BELL));
+		}
+		this.GetMenuBar().Check(LIST_ROW_LINES, false);
+
+		this.m_logWindow.Clear();
 	}
-	*/
+*/
 }
 
 /*

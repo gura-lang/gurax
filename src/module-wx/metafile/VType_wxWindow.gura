@@ -88,7 +88,56 @@ Window = Class(EvtHandler) {
 	PostSizeEventToParent() as void
 	SendSizeEvent(flags as int = 0) as void
 	SendSizeEventToParent(flags as int = 0) as void
-	SetClientSize(width as int, height as int) as void
+	SetClientSize(args* as any) as void = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int width = args.PickNumber<int>();
+			int height = args.PickNumber<int>();
+			pEntity_gurax->SetClientSize(width, height);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->SetClientSize(size);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			pEntity_gurax->SetClientSize(rect);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 	SetClientSizeWH(width as int, height as int) as void = SetClientSize
 	SetClientSizeSize(size as const_Size_r) as void = SetClientSize
 	SetClientSizeRect(rect as const_Rect_r) as void = SetClientSize
