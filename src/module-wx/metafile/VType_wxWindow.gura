@@ -138,23 +138,169 @@ Window = Class(EvtHandler) {
 		} while (0);
 		return Value::nil();
 		'''
-	SetClientSizeWH(width as int, height as int) as void = SetClientSize
-	SetClientSizeSize(size as const_Size_r) as void = SetClientSize
-	SetClientSizeRect(rect as const_Rect_r) as void = SetClientSize
 	SetContainingSizer(sizer as Sizer_p) as void
 	SetInitialSize(size as const_Size_r = wxDefaultSize) as void
 	SetMaxClientSize(size as const_Size_r) as void
 	SetMaxSize(size as const_Size_r) as void
 	SetMinClientSize(size as const_Size_r) as void
 	SetMinSize(size as const_Size_r) as void
-	SetSize(x as int, y as int, width as int, height as int, sizeFlags as int = wxSIZE_AUTO) as void
-	SetSizeRect(rect as const_Rect_r) as void = SetSize
-	SetSizeSize(size as const_Size_r) as void = SetSize
-	SetSizeWH(width as int, height as int) as void = SetSize
-	SetSizeHintsSize(minSize as const_Size_r, maxSize as const_Size_r = wxDefaultSize, incSize as const_Size_r = wxDefaultSize) as void = SetSizeHints
-	SetSizeHintsWH(minW as int, minH as int, maxW as int = -1, maxH as int = -1, incW as int = -1, incH as int = -1) as void = SetSizeHints
-	SetVirtualSizeWH(width as int, height as int) as void = SetVirtualSize
-	SetVirtualSizeSize(size as const_Size_r) as void = SetVirtualSize
+	SetSize(args* as any) as void = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+				pDeclCallable->DeclareArg("sizeFlags", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			int width = args.PickNumber<int>();
+			int height = args.PickNumber<int>();
+			int sizeFlags = args.IsValid()? args.PickNumber<int>() : wxSIZE_AUTO;
+			pEntity_gurax->SetSize(x, y, width, height, sizeFlags);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int width = args.PickNumber<int>();
+			int height = args.PickNumber<int>();
+			pEntity_gurax->SetSize(width, height);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->SetSize(size);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			pEntity_gurax->SetSize(rect);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	SetSizeHints(args* as any) as void = \
+		R'''
+		// SetSizeHints(minSize as const_Size_r, maxSize as const_Size_r = wxDefaultSize, incSize as const_Size_r = wxDefaultSize) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("minSize", VTYPE_wxSize);
+				pDeclCallable->DeclareArg("maxSize", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("incSize", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxSize& minSize = args.Pick<Value_wxSize>().GetEntity();
+			const wxSize& maxSize = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+			const wxSize& incSize = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+			pEntity_gurax->SetSizeHints(minSize, maxSize, incSize);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// SetSizeHints(minW as int, minH as int, maxW as int = -1, maxH as int = -1, incW as int = -1, incH as int = -1) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("minW", VTYPE_Number);
+				pDeclCallable->DeclareArg("minH", VTYPE_Number);
+				pDeclCallable->DeclareArg("maxW", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("maxH", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("incW", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("incH", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int minW = args.PickNumber<int>();
+			int minH = args.PickNumber<int>();
+			int maxW = args.IsValid()? args.PickNumber<int>() : -1;
+			int maxH = args.IsValid()? args.PickNumber<int>() : -1;
+			int incW = args.IsValid()? args.PickNumber<int>() : -1;
+			int incH = args.IsValid()? args.PickNumber<int>() : -1;
+			pEntity_gurax->SetSizeHints(minW, minH, maxW, maxH, incW, incH);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	SetVirtualSize(args* as any) as void = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int width = args.PickNumber<int>();
+			int height = args.PickNumber<int>();
+			pEntity_gurax->SetVirtualSize(width, height);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->SetVirtualSize(size);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 	// Positioning functions
 	Center(dir as int = wxBOTH) as void
 	CenterOnParent(dir as int = wxBOTH) as void
