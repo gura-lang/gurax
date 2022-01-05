@@ -2266,41 +2266,11 @@ Gurax_ImplementMethodEx(wxWindow, GetClientRect_gurax, processor_gurax, argument
 		pEntity_gurax->GetClientRect()));
 }
 
-// wx.Window#MoveXY(x as Number, y as Number, flags? as Number)
-Gurax_DeclareMethodAlias(wxWindow, MoveXY_gurax, "MoveXY")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, MoveXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	int x = args_gurax.PickNumber<int>();
-	int y = args_gurax.PickNumber<int>();
-	bool flags_validFlag = args_gurax.IsValid();
-	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxSIZE_USE_EXISTING;
-	// Function body
-	pEntity_gurax->Move(x, y, flags);
-	return Gurax::Value::nil();
-}
-
-// wx.Window#Move(pt as wx.Point, flags? as Number)
+// wx.Window#Move(args* as Any)
 Gurax_DeclareMethodAlias(wxWindow, Move_gurax, "Move")
 {
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -2314,13 +2284,44 @@ Gurax_ImplementMethodEx(wxWindow, Move_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
-	bool flags_validFlag = args_gurax.IsValid();
-	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxSIZE_USE_EXISTING;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->Move(pt, flags);
-	return Gurax::Value::nil();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+			pDeclCallable->DeclareArg("flags", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		int flags = args.IsValid()? args.PickNumber<int>() : wxSIZE_USE_EXISTING;
+		pEntity_gurax->Move(x, y, flags);
+		return Value::nil();;
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("flags", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		int flags = args.IsValid()? args.PickNumber<int>() : wxSIZE_USE_EXISTING;
+		pEntity_gurax->Move(pt, flags);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Window#SetPosition(pt as wx.Point)
@@ -4340,11 +4341,11 @@ Gurax_ImplementMethodEx(wxWindow, GetToolTipText_gurax, processor_gurax, argumen
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
-// wx.Window#SetToolTip(tipString as String)
+// wx.Window#SetToolTip(args* as Any)
 Gurax_DeclareMethodAlias(wxWindow, SetToolTip_gurax, "SetToolTip")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("tipString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -4358,10 +4359,39 @@ Gurax_ImplementMethodEx(wxWindow, SetToolTip_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* tipString = args_gurax.PickString();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->SetToolTip(tipString);
-	return Gurax::Value::nil();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("tipString", VTYPE_String);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxMenu& menu = args.Pick<Value_wxMenu>().GetEntity();
+		const char* tipString = args.PickString();
+		pEntity_gurax->SetToolTip(tipString);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("tip", VTYPE_wxToolTip);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxToolTip* tip = args.Pick<Value_wxToolTip>().GetEntityPtr();
+		pEntity_gurax->SetToolTip(tip);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Window#UnsetToolTip()
@@ -5841,7 +5871,6 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, GetScreenRect_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetClientAreaOrigin_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetClientRect_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, MoveXY_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Move_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetPosition_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ClientToScreen_gurax));

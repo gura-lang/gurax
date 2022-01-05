@@ -356,8 +356,45 @@ Window = Class(EvtHandler) {
 	GetScreenRect() as Rect
 	GetClientAreaOrigin() as Point
 	GetClientRect() as Rect
-	MoveXY(x as int, y as int, flags as int = wxSIZE_USE_EXISTING) as void = Move
-	Move(pt as const_Point_r, flags as int = wxSIZE_USE_EXISTING) as void
+	Move(args* as any) = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("flags", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			int flags = args.IsValid()? args.PickNumber<int>() : wxSIZE_USE_EXISTING;
+			pEntity_gurax->Move(x, y, flags);
+			return Value::nil();;
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("flags", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			int flags = args.IsValid()? args.PickNumber<int>() : wxSIZE_USE_EXISTING;
+			pEntity_gurax->Move(pt, flags);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 	SetPosition(pt as const_Point_r) as void
 	// Coordinate conversion functions
 	ClientToScreen(args* as any) = \
@@ -664,8 +701,40 @@ Window = Class(EvtHandler) {
 	//GetHelpTextAtPoint(point as const_Point_r, origin as HelpEvent::Origin) as String
 	GetToolTip() as ToolTip_p
 	GetToolTipText() as String
-	SetToolTip(tipString as const_String_r) as void
-	//SetToolTip(tip as ToolTip_p) as void
+	SetToolTip(args* as any) as void = \
+		R'''
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("tipString", VTYPE_String);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxMenu& menu = args.Pick<Value_wxMenu>().GetEntity();
+			const char* tipString = args.PickString();
+			pEntity_gurax->SetToolTip(tipString);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("tip", VTYPE_wxToolTip);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxToolTip* tip = args.Pick<Value_wxToolTip>().GetEntityPtr();
+			pEntity_gurax->SetToolTip(tip);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 	UnsetToolTip() as void
 	// Popup/context menu functions
 	GetPopupMenuSelectionFromUser(args* as any) = \
