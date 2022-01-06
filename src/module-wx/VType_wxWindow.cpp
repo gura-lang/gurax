@@ -1097,27 +1097,6 @@ Gurax_ImplementMethodEx(wxWindow, GetBestWidth_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.Window#GetClientSizeWH()
-Gurax_DeclareMethodAlias(wxWindow, GetClientSizeWH_gurax, "GetClientSizeWH")
-{
-	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxWindow, GetClientSizeWH_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	int width, height;
-	pEntity_gurax->GetClientSize(&width, &height);
-	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
-}
-
 // wx.Window#GetClientSize() {block?}
 Gurax_DeclareMethodAlias(wxWindow, GetClientSize_gurax, "GetClientSize")
 {
@@ -1137,6 +1116,27 @@ Gurax_ImplementMethodEx(wxWindow, GetClientSize_gurax, processor_gurax, argument
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
 		pEntity_gurax->GetClientSize()));
+}
+
+// wx.Window#GetClientSizeWH()
+Gurax_DeclareMethodAlias(wxWindow, GetClientSizeWH_gurax, "GetClientSizeWH")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetClientSizeWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int width, height;
+	pEntity_gurax->GetClientSize(&width, &height);
+	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
 }
 
 // wx.Window#GetEffectiveMinSize() {block?}
@@ -1345,6 +1345,27 @@ Gurax_ImplementMethodEx(wxWindow, GetSize_gurax, processor_gurax, argument_gurax
 		pEntity_gurax->GetSize()));
 }
 
+// wx.Window#GetSizeWH()
+Gurax_DeclareMethodAlias(wxWindow, GetSizeWH_gurax, "GetSizeWH")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetSizeWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int width, height;
+	pEntity_gurax->GetSize(&width, &height);
+	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+}
+
 // wx.Window#GetVirtualSize() {block?}
 Gurax_DeclareMethodAlias(wxWindow, GetVirtualSize_gurax, "GetVirtualSize")
 {
@@ -1364,6 +1385,27 @@ Gurax_ImplementMethodEx(wxWindow, GetVirtualSize_gurax, processor_gurax, argumen
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
 		pEntity_gurax->GetVirtualSize()));
+}
+
+// wx.Window#GetVirtualSizeWH()
+Gurax_DeclareMethodAlias(wxWindow, GetVirtualSizeWH_gurax, "GetVirtualSizeWH")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetVirtualSizeWH_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int width, height;
+	pEntity_gurax->GetVirtualSize(&width, &height);
+	return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
 }
 
 // wx.Window#GetBestVirtualSize() {block?}
@@ -5040,6 +5082,52 @@ Gurax_ImplementMethodEx(wxWindow, IsBeingDeleted_gurax, processor_gurax, argumen
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.Window#GetDropTarget() {block?}
+Gurax_DeclareMethodAlias(wxWindow, GetDropTarget_gurax, "GetDropTarget")
+{
+	Declare(VTYPE_wxDropTarget, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetDropTarget_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDropTarget(
+		pEntity_gurax->GetDropTarget()));
+}
+
+// wx.Window#SetDropTarget(target as wx.DropTarget)
+Gurax_DeclareMethodAlias(wxWindow, SetDropTarget_gurax, "SetDropTarget")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("target", VTYPE_wxDropTarget, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetDropTarget_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDropTarget& value_target = args_gurax.Pick<Value_wxDropTarget>();
+	wxDropTarget* target = value_target.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetDropTarget(target);
+	return Gurax::Value::nil();
+}
+
 // wx.Window#DragAcceptFiles(accept as Bool)
 Gurax_DeclareMethodAlias(wxWindow, DragAcceptFiles_gurax, "DragAcceptFiles")
 {
@@ -5290,6 +5378,27 @@ Gurax_ImplementMethodEx(wxWindow, CaptureMouse_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
+// wx.Window#GetCaret() {block?}
+Gurax_DeclareMethodAlias(wxWindow, GetCaret_gurax, "GetCaret")
+{
+	Declare(VTYPE_wxCaret, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, GetCaret_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxCaret(
+		pEntity_gurax->GetCaret()));
+}
+
 // wx.Window#GetCursor() {block?}
 Gurax_DeclareMethodAlias(wxWindow, GetCursor_gurax, "GetCursor")
 {
@@ -5348,6 +5457,31 @@ Gurax_ImplementMethodEx(wxWindow, ReleaseMouse_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	pEntity_gurax->ReleaseMouse();
+	return Gurax::Value::nil();
+}
+
+// wx.Window#SetCaret(caret as wx.Caret)
+Gurax_DeclareMethodAlias(wxWindow, SetCaret_gurax, "SetCaret")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("caret", VTYPE_wxCaret, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWindow, SetCaret_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxCaret& value_caret = args_gurax.Pick<Value_wxCaret>();
+	wxCaret* caret = value_caret.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetCaret(caret);
 	return Gurax::Value::nil();
 }
 
@@ -5827,8 +5961,8 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, GetBestSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetBestHeight_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetBestWidth_gurax));
-	Assign(Gurax_CreateMethod(wxWindow, GetClientSizeWH_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetClientSize_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetClientSizeWH_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetEffectiveMinSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetMaxClientSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetMaxSize_gurax));
@@ -5839,7 +5973,9 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, GetMaxWidth_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetMaxHeight_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetSize_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetSizeWH_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetVirtualSize_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetVirtualSizeWH_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetBestVirtualSize_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetContentScaleFactor_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetWindowBorderSize_gurax));
@@ -5979,6 +6115,8 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, Close_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, Destroy_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, IsBeingDeleted_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetDropTarget_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetDropTarget_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, DragAcceptFiles_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetContainingSizer_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetSizer_gurax));
@@ -5990,9 +6128,11 @@ void VType_wxWindow::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxWindow, SetAutoLayout_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetAutoLayout_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, CaptureMouse_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, GetCaret_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, GetCursor_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, HasCapture_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, ReleaseMouse_gurax));
+	Assign(Gurax_CreateMethod(wxWindow, SetCaret_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, SetCursor_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, WarpPointer_gurax));
 	Assign(Gurax_CreateMethod(wxWindow, HitTest_gurax));

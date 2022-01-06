@@ -17,7 +17,6 @@ Window = Class(EvtHandler) {
 	// Child management functions
 	AddChild(child as Window_p) as void
 	DestroyChildren() as bool
-
 	FindWindow(args* as any) as void = \
 		R'''
 		do {
@@ -90,14 +89,13 @@ Window = Class(EvtHandler) {
 	GetBestSize() as Size
 	GetBestHeight(width as int) as int
 	GetBestWidth(height as int) as int
-	//GetClientSize(width as int_p, height as int_p) as void
+	GetClientSize() as Size
 	GetClientSizeWH() as Tuple@gurax = \
 		R'''
 		int width, height;
 		pEntity_gurax->GetClientSize(&width, &height);
 		return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
 		'''
-	GetClientSize() as Size
 	GetEffectiveMinSize() as Size
 	GetMaxClientSize() as Size
 	GetMaxSize() as Size
@@ -107,10 +105,20 @@ Window = Class(EvtHandler) {
 	GetMinHeight() as int
 	GetMaxWidth() as int
 	GetMaxHeight() as int
-	//GetSize(width as int_p, height as int_p) as void
 	GetSize() as Size
+	GetSizeWH() as Tuple@gurax = \
+		R'''
+		int width, height;
+		pEntity_gurax->GetSize(&width, &height);
+		return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+		'''
 	GetVirtualSize() as Size
-	//GetVirtualSize(width as int_p, height as int_p) as void
+	GetVirtualSizeWH() as Tuple@gurax = \
+		R'''
+		int width, height;
+		pEntity_gurax->GetVirtualSize(&width, &height);
+		return Value_Tuple::Create(new Value_Number(width), new Value_Number(height));
+		'''
 	GetBestVirtualSize() as Size
 	GetContentScaleFactor() as double
 	GetWindowBorderSize() as Size
@@ -841,8 +849,8 @@ Window = Class(EvtHandler) {
 	Destroy() as bool
 	IsBeingDeleted() as bool
 	// Drag and drop functions
-	//GetDropTarget() as DropTarget_p
-	//SetDropTarget(target as DropTarget_p) as void
+	GetDropTarget() as DropTarget_p
+	SetDropTarget(target as DropTarget_p) as void
 	DragAcceptFiles(accept as bool) as void
 	// Constraints, sizers and window layout functions
 	GetContainingSizer() as Sizer_p
@@ -856,11 +864,11 @@ Window = Class(EvtHandler) {
 	GetAutoLayout() as bool
 	// Mouse functions
 	CaptureMouse() as void
-	//GetCaret() as Caret_p
+	GetCaret() as Caret_p
 	GetCursor() as Cursor
 	HasCapture() as bool
 	ReleaseMouse() as void
-	//SetCaret(caret as Caret_p) as void
+	SetCaret(caret as Caret_p) as void
 	SetCursor(cursor as const_Cursor_r) as bool
 	WarpPointer(x as int, y as int) as void
 	// Miscellaneous functions
