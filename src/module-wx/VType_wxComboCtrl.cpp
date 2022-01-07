@@ -1475,6 +1475,27 @@ Gurax_ImplementMethodEx(wxComboCtrl, GetRange_gurax, processor_gurax, argument_g
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
+// wx.ComboCtrl#GetSelection()
+Gurax_DeclareMethodAlias(wxComboCtrl, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long from, to;
+	pEntity_gurax->GetSelection(&from, &to);
+	return Value_Tuple::Create(new Value_Number(from), new Value_Number(to));
+}
+
 // wx.ComboCtrl#GetStringSelection()
 Gurax_DeclareMethodAlias(wxComboCtrl, GetStringSelection_gurax, "GetStringSelection")
 {
@@ -1745,6 +1766,7 @@ void VType_wxComboCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxComboCtrl, ChangeValue_gurax));
 	Assign(Gurax_CreateMethod(wxComboCtrl, Clear_gurax));
 	Assign(Gurax_CreateMethod(wxComboCtrl, GetRange_gurax));
+	Assign(Gurax_CreateMethod(wxComboCtrl, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxComboCtrl, GetStringSelection_gurax));
 	Assign(Gurax_CreateMethod(wxComboCtrl, IsEditable_gurax));
 	Assign(Gurax_CreateMethod(wxComboCtrl, IsEmpty_gurax));

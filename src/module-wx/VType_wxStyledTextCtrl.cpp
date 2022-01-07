@@ -14802,6 +14802,27 @@ Gurax_ImplementMethodEx(wxStyledTextCtrl, GetRange_gurax, processor_gurax, argum
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
+// wx.StyledTextCtrl#GetSelection()
+Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxStyledTextCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long from, to;
+	pEntity_gurax->GetSelection(&from, &to);
+	return Value_Tuple::Create(new Value_Number(from), new Value_Number(to));
+}
+
 // wx.StyledTextCtrl#GetStringSelection()
 Gurax_DeclareMethodAlias(wxStyledTextCtrl, GetStringSelection_gurax, "GetStringSelection")
 {
@@ -15656,6 +15677,7 @@ void VType_wxStyledTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, CanCut_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, ChangeValue_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetRange_gurax));
+	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetStringSelection_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, GetValue_gurax));
 	Assign(Gurax_CreateMethod(wxStyledTextCtrl, IsEmpty_gurax));

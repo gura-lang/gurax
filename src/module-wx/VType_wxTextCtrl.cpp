@@ -861,6 +861,27 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetRange_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
+// wx.TextCtrl#GetSelection()
+Gurax_DeclareMethodAlias(wxTextCtrl, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long from, to;
+	pEntity_gurax->GetSelection(&from, &to);
+	return Value_Tuple::Create(new Value_Number(from), new Value_Number(to));
+}
+
 // wx.TextCtrl#GetStringSelection()
 Gurax_DeclareMethodAlias(wxTextCtrl, GetStringSelection_gurax, "GetStringSelection")
 {
@@ -1326,11 +1347,11 @@ Gurax_ImplementMethodEx(wxTextCtrl, WriteText_gurax, processor_gurax, argument_g
 	return Gurax::Value::nil();
 }
 
-// wx.TextCtrl#SetMargins(pt as wx.Point)
+// wx.TextCtrl#SetMargins(args* as Any)
 Gurax_DeclareMethodAlias(wxTextCtrl, SetMargins_gurax, "SetMargins")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1344,11 +1365,42 @@ Gurax_ImplementMethodEx(wxTextCtrl, SetMargins_gurax, processor_gurax, argument_
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	bool rtn = pEntity_gurax->SetMargins(pt);
-	return new Gurax::Value_Bool(rtn);
+	// SetMargins(pt as const_Point_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		bool rtn = pEntity_gurax->SetMargins(pt);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	// SetMargins(left as Coord, top as Coord = -1) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("left", VTYPE_Number);
+			pDeclCallable->DeclareArg("top", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord left = args.PickNumber<wxCoord>();
+		wxCoord top = args.IsValid()? args.PickNumber<wxCoord>() : -1;
+		bool rtn = pEntity_gurax->SetMargins(left, top);
+		return new Value_Bool(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -1402,6 +1454,7 @@ void VType_wxTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxTextCtrl, Cut_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetInsertionPoint_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetRange_gurax));
+	Assign(Gurax_CreateMethod(wxTextCtrl, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetStringSelection_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetValue_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, IsEditable_gurax));
