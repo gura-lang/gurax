@@ -1,5 +1,226 @@
 //==============================================================================
 // VType_wxTextAttr.gura
 //==============================================================================
+@enum {
+	TextAttrAlignment {
+		TEXT_ALIGNMENT_DEFAULT 	
+		TEXT_ALIGNMENT_LEFT 	
+		TEXT_ALIGNMENT_CENTRE 	
+		TEXT_ALIGNMENT_CENTER 	
+		TEXT_ALIGNMENT_RIGHT 	
+		//TEXT_ALIGNMENT_JUSTIFIED 	
+	}
+	TextAttrBulletStyle {
+		TEXT_ATTR_BULLET_STYLE_NONE 	
+		TEXT_ATTR_BULLET_STYLE_ARABIC 	
+		TEXT_ATTR_BULLET_STYLE_LETTERS_UPPER 	
+		TEXT_ATTR_BULLET_STYLE_LETTERS_LOWER 	
+		TEXT_ATTR_BULLET_STYLE_ROMAN_UPPER 	
+		TEXT_ATTR_BULLET_STYLE_ROMAN_LOWER 	
+		TEXT_ATTR_BULLET_STYLE_SYMBOL 	
+		//TEXT_ATTR_BULLET_STYLE_BITMAP 	
+		TEXT_ATTR_BULLET_STYLE_PARENTHESES 	
+		TEXT_ATTR_BULLET_STYLE_PERIOD 	
+		TEXT_ATTR_BULLET_STYLE_STANDARD 	
+		TEXT_ATTR_BULLET_STYLE_RIGHT_PARENTHESIS 	
+		TEXT_ATTR_BULLET_STYLE_OUTLINE 	
+		TEXT_ATTR_BULLET_STYLE_ALIGN_LEFT 	
+		TEXT_ATTR_BULLET_STYLE_ALIGN_RIGHT 	
+		TEXT_ATTR_BULLET_STYLE_ALIGN_CENTRE 	
+		TEXT_ATTR_BULLET_STYLE_CONTINUATION 	
+	}
+	TextAttrEffects {
+		TEXT_ATTR_EFFECT_NONE 	
+		TEXT_ATTR_EFFECT_CAPITALS 	
+		TEXT_ATTR_EFFECT_SMALL_CAPITALS 	
+		TEXT_ATTR_EFFECT_STRIKETHROUGH 	
+		TEXT_ATTR_EFFECT_DOUBLE_STRIKETHROUGH 	
+		TEXT_ATTR_EFFECT_SHADOW 	
+		TEXT_ATTR_EFFECT_EMBOSS 	
+		TEXT_ATTR_EFFECT_OUTLINE 	
+		TEXT_ATTR_EFFECT_ENGRAVE 	
+		TEXT_ATTR_EFFECT_SUPERSCRIPT 	
+		TEXT_ATTR_EFFECT_SUBSCRIPT 	
+	}
+	TextAttrFlags {
+		TEXT_ATTR_TEXT_COLOUR 	
+		TEXT_ATTR_BACKGROUND_COLOUR 	
+		TEXT_ATTR_FONT_FACE 	
+		TEXT_ATTR_FONT_POINT_SIZE 	
+		TEXT_ATTR_FONT_PIXEL_SIZE 	
+		TEXT_ATTR_FONT_WEIGHT 	
+		TEXT_ATTR_FONT_ITALIC 	
+		TEXT_ATTR_FONT_UNDERLINE 	
+		TEXT_ATTR_FONT_STRIKETHROUGH 	
+		TEXT_ATTR_FONT_ENCODING 	
+		TEXT_ATTR_FONT_FAMILY 	
+		TEXT_ATTR_FONT_SIZE 	
+		TEXT_ATTR_FONT 	
+		TEXT_ATTR_ALIGNMENT 	
+		TEXT_ATTR_LEFT_INDENT 	
+		TEXT_ATTR_RIGHT_INDENT 	
+		TEXT_ATTR_TABS 	
+		TEXT_ATTR_PARA_SPACING_AFTER 	
+		TEXT_ATTR_PARA_SPACING_BEFORE 	
+		TEXT_ATTR_LINE_SPACING 	
+		TEXT_ATTR_CHARACTER_STYLE_NAME 	
+		TEXT_ATTR_PARAGRAPH_STYLE_NAME 	
+		TEXT_ATTR_LIST_STYLE_NAME 	
+		TEXT_ATTR_BULLET_STYLE 	
+		TEXT_ATTR_BULLET_NUMBER 	
+		TEXT_ATTR_BULLET_TEXT 	
+		TEXT_ATTR_BULLET_NAME 	
+		TEXT_ATTR_BULLET 	
+		TEXT_ATTR_URL 	
+		TEXT_ATTR_PAGE_BREAK 	
+		TEXT_ATTR_EFFECTS 	
+		TEXT_ATTR_OUTLINE_LEVEL 	
+		TEXT_ATTR_CHARACTER 	
+		TEXT_ATTR_PARAGRAPH 	
+		TEXT_ATTR_ALL 	
+	}
+	TextAttrLineSpacing {
+		TEXT_ATTR_LINE_SPACING_NORMAL 	
+		TEXT_ATTR_LINE_SPACING_HALF 	
+		TEXT_ATTR_LINE_SPACING_TWICE 	
+	}
+	TextCtrlHitTestResult {
+		TE_HT_UNKNOWN
+		TE_HT_BEFORE
+		TE_HT_ON_TEXT
+		TE_HT_BELOW
+		TE_HT_BEYOND
+	}
+}
+
 TextAttr = Class {
+	__init__(args* as any) = \
+		R'''
+		if (args.empty()) {
+			return new Value_wxTextAttr(wxTextAttr());
+		}
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("colText", VTYPE_wxColour);
+				pDeclCallable->DeclareArg("colBack", VTYPE_wxColour, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("font", VTYPE_wxFont, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("alignment", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxColour& colText = args.Pick<Value_wxColour>().GetEntity();
+			const wxColour& colBack = args.IsValid()? args.Pick<Value_wxColour>().GetEntity() : wxNullColour;
+			const wxFont& font = args.IsValid()? args.Pick<Value_wxFont>().GetEntity() : wxNullFont;
+			wxTextAttrAlignment alignment = args.IsValid()? args.PickNumber<wxTextAttrAlignment>() : wxTEXT_ALIGNMENT_DEFAULT;
+			return new Value_wxTextAttr(wxTextAttr(colText, colBack, font, alignment));
+		} while (0);
+		return Value::nil();
+		'''
+	Apply(style as const_TextAttr_r, compareWith as const_TextAttr_p = NULL) as bool
+	Merge(overlay as const_TextAttr_r) as void
+	EqPartial(attr as const_TextAttr_r, weakTest as bool = true) as bool
+	GetAlignment() as TextAttrAlignment
+	GetBackgroundColour() as Colour
+	GetBulletFont() as String
+	GetBulletName() as String
+	GetBulletNumber() as int
+	GetBulletStyle() as int
+	GetBulletText() as String
+	GetCharacterStyleName() as String
+	GetFlags() as long
+	GetFont() as Font
+	GetFontAttributes(font as const_Font_r, flags as int = wxTEXT_ATTR_FONT) as bool
+	GetFontEncoding() as FontEncoding
+	GetFontFaceName() as String
+	GetFontFamily() as FontFamily
+	GetFontSize() as int
+	GetFontStyle() as FontStyle
+	GetFontUnderlined() as bool
+	GetFontWeight() as FontWeight
+	GetLeftIndent() as long
+	GetLeftSubIndent() as long
+	GetLineSpacing() as int
+	GetListStyleName() as String
+	GetOutlineLevel() as int
+	GetParagraphSpacingAfter() as int
+	GetParagraphSpacingBefore() as int
+	GetParagraphStyleName() as String
+	GetRightIndent() as long
+	GetTabs() as ArrayInt
+	GetTextColour() as Colour
+	GetTextEffectFlags() as int
+	GetTextEffects() as int
+	GetURL() as String
+	HasAlignment() as bool
+	HasBackgroundColour() as bool
+	HasBulletName() as bool
+	HasBulletNumber() as bool
+	HasBulletStyle() as bool
+	HasBulletText() as bool
+	HasCharacterStyleName() as bool
+	HasFlag(flag as long) as bool
+	HasFont() as bool
+	HasFontEncoding() as bool
+	HasFontFaceName() as bool
+	HasFontFamily() as bool
+	HasFontItalic() as bool
+	HasFontSize() as bool
+	HasFontPointSize() as bool
+	HasFontPixelSize() as bool
+	HasFontUnderlined() as bool
+	HasFontWeight() as bool
+	HasLeftIndent() as bool
+	HasLineSpacing() as bool
+	HasListStyleName() as bool
+	HasOutlineLevel() as bool
+	HasPageBreak() as bool
+	HasParagraphSpacingAfter() as bool
+	HasParagraphSpacingBefore() as bool
+	HasParagraphStyleName() as bool
+	HasRightIndent() as bool
+	HasTabs() as bool
+	HasTextColour() as bool
+	HasTextEffects() as bool
+	HasURL() as bool
+	IsCharacterStyle() as bool
+	IsDefault() as bool
+	IsParagraphStyle() as bool
+	SetAlignment(alignment as TextAttrAlignment) as void
+	SetBackgroundColour(colBack as const_Colour_r) as void
+	SetBulletFont(font as const_String_r) as void
+	SetBulletName(name as const_String_r) as void
+	SetBulletNumber(n as int) as void
+	SetBulletStyle(style as int) as void
+	SetBulletText(text as const_String_r) as void
+	SetCharacterStyleName(name as const_String_r) as void
+	SetFlags(flags as long) as void
+	SetFont(font as const_Font_r, flags as int = wxTEXT_ATTR_FONT &~wxTEXT_ATTR_FONT_PIXEL_SIZE) as void
+	SetFontEncoding(encoding as FontEncoding) as void
+	SetFontFaceName(faceName as const_String_r) as void
+	SetFontFamily(family as FontFamily) as void
+	SetFontSize(pointSize as int) as void
+	SetFontPointSize(pointSize as int) as void
+	SetFontPixelSize(pixelSize as int) as void
+	SetFontStyle(fontStyle as FontStyle) as void
+	SetFontUnderlined(underlined as bool) as void
+	SetFontWeight(fontWeight as FontWeight) as void
+	SetLeftIndent(indent as int, subIndent as int = 0) as void
+	SetLineSpacing(spacing as int) as void
+	SetListStyleName(name as const_String_r) as void
+	SetOutlineLevel(level as int) as void
+	SetPageBreak(pageBreak as bool = true) as void
+	SetParagraphSpacingAfter(spacing as int) as void
+	SetParagraphSpacingBefore(spacing as int) as void
+	SetParagraphStyleName(name as const_String_r) as void
+	SetRightIndent(indent as int) as void
+	SetTabs(tabs as const_ArrayInt_r) as void
+	SetTextColour(colText as const_Colour_r) as void
+	SetTextEffectFlags(flags as int) as void
+	SetTextEffects(effects as int) as void
+	SetURL(url as const_String_r) as void
+	//Merge(base as const_TextAttr_r, overlay as const_TextAttr_r):static as TextAttr
 }

@@ -28,10 +28,2265 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.TextAttr(args* as Any) {block?} {block?}
+Gurax_DeclareConstructorAlias(TextAttr_gurax, "TextAttr")
+{
+	Declare(VTYPE_wxTextAttr, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.TextAttr.");
+}
+
+Gurax_ImplementConstructorEx(TextAttr_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	if (args.empty()) {
+		return new Value_wxTextAttr(wxTextAttr());
+	}
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("colText", VTYPE_wxColour);
+			pDeclCallable->DeclareArg("colBack", VTYPE_wxColour, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("font", VTYPE_wxFont, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("alignment", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxColour& colText = args.Pick<Value_wxColour>().GetEntity();
+		const wxColour& colBack = args.IsValid()? args.Pick<Value_wxColour>().GetEntity() : wxNullColour;
+		const wxFont& font = args.IsValid()? args.Pick<Value_wxFont>().GetEntity() : wxNullFont;
+		wxTextAttrAlignment alignment = args.IsValid()? args.PickNumber<wxTextAttrAlignment>() : wxTEXT_ALIGNMENT_DEFAULT;
+		return new Value_wxTextAttr(wxTextAttr(colText, colBack, font, alignment));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.TextAttr#Apply(style as wx.TextAttr, compareWith? as wx.TextAttr)
+Gurax_DeclareMethodAlias(wxTextAttr, Apply_gurax, "Apply")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("style", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("compareWith", VTYPE_wxTextAttr, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, Apply_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTextAttr& value_style = args_gurax.Pick<Value_wxTextAttr>();
+	const wxTextAttr& style = value_style.GetEntity();
+	const wxTextAttr* compareWith = args_gurax.IsValid()? args_gurax.Pick<Value_wxTextAttr>().GetEntityPtr() : nullptr;
+	// Function body
+	bool rtn = pEntity_gurax->Apply(style, compareWith);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#Merge(overlay as wx.TextAttr)
+Gurax_DeclareMethodAlias(wxTextAttr, Merge_gurax, "Merge")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("overlay", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, Merge_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTextAttr& value_overlay = args_gurax.Pick<Value_wxTextAttr>();
+	const wxTextAttr& overlay = value_overlay.GetEntity();
+	// Function body
+	pEntity_gurax->Merge(overlay);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#EqPartial(attr as wx.TextAttr, weakTest? as Bool)
+Gurax_DeclareMethodAlias(wxTextAttr, EqPartial_gurax, "EqPartial")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("attr", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("weakTest", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, EqPartial_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxTextAttr& value_attr = args_gurax.Pick<Value_wxTextAttr>();
+	const wxTextAttr& attr = value_attr.GetEntity();
+	bool weakTest = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	bool rtn = pEntity_gurax->EqPartial(attr, weakTest);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#GetAlignment()
+Gurax_DeclareMethodAlias(wxTextAttr, GetAlignment_gurax, "GetAlignment")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetAlignment_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxTextAttrAlignment rtn = pEntity_gurax->GetAlignment();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetBackgroundColour() {block?}
+Gurax_DeclareMethodAlias(wxTextAttr, GetBackgroundColour_gurax, "GetBackgroundColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetBackgroundColour()));
+}
+
+// wx.TextAttr#GetBulletFont()
+Gurax_DeclareMethodAlias(wxTextAttr, GetBulletFont_gurax, "GetBulletFont")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetBulletFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetBulletFont();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.TextAttr#GetBulletName()
+Gurax_DeclareMethodAlias(wxTextAttr, GetBulletName_gurax, "GetBulletName")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetBulletName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetBulletName();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.TextAttr#GetBulletNumber()
+Gurax_DeclareMethodAlias(wxTextAttr, GetBulletNumber_gurax, "GetBulletNumber")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetBulletNumber_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetBulletNumber();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetBulletStyle()
+Gurax_DeclareMethodAlias(wxTextAttr, GetBulletStyle_gurax, "GetBulletStyle")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetBulletStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetBulletStyle();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetBulletText()
+Gurax_DeclareMethodAlias(wxTextAttr, GetBulletText_gurax, "GetBulletText")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetBulletText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetBulletText();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.TextAttr#GetCharacterStyleName()
+Gurax_DeclareMethodAlias(wxTextAttr, GetCharacterStyleName_gurax, "GetCharacterStyleName")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetCharacterStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetCharacterStyleName();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.TextAttr#GetFlags()
+Gurax_DeclareMethodAlias(wxTextAttr, GetFlags_gurax, "GetFlags")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFlags_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetFlags();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetFont() {block?}
+Gurax_DeclareMethodAlias(wxTextAttr, GetFont_gurax, "GetFont")
+{
+	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
+		pEntity_gurax->GetFont()));
+}
+
+// wx.TextAttr#GetFontAttributes(font as wx.Font, flags? as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, GetFontAttributes_gurax, "GetFontAttributes")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFontAttributes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxFont& value_font = args_gurax.Pick<Value_wxFont>();
+	const wxFont& font = value_font.GetEntity();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxTEXT_ATTR_FONT;
+	// Function body
+	bool rtn = pEntity_gurax->GetFontAttributes(font, flags);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#GetFontEncoding()
+Gurax_DeclareMethodAlias(wxTextAttr, GetFontEncoding_gurax, "GetFontEncoding")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFontEncoding_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxFontEncoding rtn = pEntity_gurax->GetFontEncoding();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetFontFaceName()
+Gurax_DeclareMethodAlias(wxTextAttr, GetFontFaceName_gurax, "GetFontFaceName")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFontFaceName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetFontFaceName();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.TextAttr#GetFontFamily()
+Gurax_DeclareMethodAlias(wxTextAttr, GetFontFamily_gurax, "GetFontFamily")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFontFamily_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxFontFamily rtn = pEntity_gurax->GetFontFamily();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetFontSize()
+Gurax_DeclareMethodAlias(wxTextAttr, GetFontSize_gurax, "GetFontSize")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFontSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetFontSize();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetFontStyle()
+Gurax_DeclareMethodAlias(wxTextAttr, GetFontStyle_gurax, "GetFontStyle")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFontStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxFontStyle rtn = pEntity_gurax->GetFontStyle();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetFontUnderlined()
+Gurax_DeclareMethodAlias(wxTextAttr, GetFontUnderlined_gurax, "GetFontUnderlined")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFontUnderlined_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->GetFontUnderlined();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#GetFontWeight()
+Gurax_DeclareMethodAlias(wxTextAttr, GetFontWeight_gurax, "GetFontWeight")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetFontWeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxFontWeight rtn = pEntity_gurax->GetFontWeight();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetLeftIndent()
+Gurax_DeclareMethodAlias(wxTextAttr, GetLeftIndent_gurax, "GetLeftIndent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetLeftIndent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetLeftIndent();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetLeftSubIndent()
+Gurax_DeclareMethodAlias(wxTextAttr, GetLeftSubIndent_gurax, "GetLeftSubIndent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetLeftSubIndent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetLeftSubIndent();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetLineSpacing()
+Gurax_DeclareMethodAlias(wxTextAttr, GetLineSpacing_gurax, "GetLineSpacing")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetLineSpacing_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetLineSpacing();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetListStyleName()
+Gurax_DeclareMethodAlias(wxTextAttr, GetListStyleName_gurax, "GetListStyleName")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetListStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetListStyleName();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.TextAttr#GetOutlineLevel()
+Gurax_DeclareMethodAlias(wxTextAttr, GetOutlineLevel_gurax, "GetOutlineLevel")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetOutlineLevel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetOutlineLevel();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetParagraphSpacingAfter()
+Gurax_DeclareMethodAlias(wxTextAttr, GetParagraphSpacingAfter_gurax, "GetParagraphSpacingAfter")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetParagraphSpacingAfter_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetParagraphSpacingAfter();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetParagraphSpacingBefore()
+Gurax_DeclareMethodAlias(wxTextAttr, GetParagraphSpacingBefore_gurax, "GetParagraphSpacingBefore")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetParagraphSpacingBefore_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetParagraphSpacingBefore();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetParagraphStyleName()
+Gurax_DeclareMethodAlias(wxTextAttr, GetParagraphStyleName_gurax, "GetParagraphStyleName")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetParagraphStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetParagraphStyleName();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.TextAttr#GetRightIndent()
+Gurax_DeclareMethodAlias(wxTextAttr, GetRightIndent_gurax, "GetRightIndent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetRightIndent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetRightIndent();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetTabs()
+Gurax_DeclareMethodAlias(wxTextAttr, GetTabs_gurax, "GetTabs")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetTabs_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxArrayInt rtn = pEntity_gurax->GetTabs();
+	return Util::CreateList(rtn);
+}
+
+// wx.TextAttr#GetTextColour() {block?}
+Gurax_DeclareMethodAlias(wxTextAttr, GetTextColour_gurax, "GetTextColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetTextColour()));
+}
+
+// wx.TextAttr#GetTextEffectFlags()
+Gurax_DeclareMethodAlias(wxTextAttr, GetTextEffectFlags_gurax, "GetTextEffectFlags")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetTextEffectFlags_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetTextEffectFlags();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetTextEffects()
+Gurax_DeclareMethodAlias(wxTextAttr, GetTextEffects_gurax, "GetTextEffects")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetTextEffects_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetTextEffects();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.TextAttr#GetURL()
+Gurax_DeclareMethodAlias(wxTextAttr, GetURL_gurax, "GetURL")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, GetURL_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetURL();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.TextAttr#HasAlignment()
+Gurax_DeclareMethodAlias(wxTextAttr, HasAlignment_gurax, "HasAlignment")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasAlignment_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasAlignment();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasBackgroundColour()
+Gurax_DeclareMethodAlias(wxTextAttr, HasBackgroundColour_gurax, "HasBackgroundColour")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasBackgroundColour();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasBulletName()
+Gurax_DeclareMethodAlias(wxTextAttr, HasBulletName_gurax, "HasBulletName")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasBulletName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasBulletName();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasBulletNumber()
+Gurax_DeclareMethodAlias(wxTextAttr, HasBulletNumber_gurax, "HasBulletNumber")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasBulletNumber_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasBulletNumber();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasBulletStyle()
+Gurax_DeclareMethodAlias(wxTextAttr, HasBulletStyle_gurax, "HasBulletStyle")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasBulletStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasBulletStyle();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasBulletText()
+Gurax_DeclareMethodAlias(wxTextAttr, HasBulletText_gurax, "HasBulletText")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasBulletText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasBulletText();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasCharacterStyleName()
+Gurax_DeclareMethodAlias(wxTextAttr, HasCharacterStyleName_gurax, "HasCharacterStyleName")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasCharacterStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasCharacterStyleName();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFlag(flag as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, HasFlag_gurax, "HasFlag")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFlag_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long flag = args_gurax.PickNumber<long>();
+	// Function body
+	bool rtn = pEntity_gurax->HasFlag(flag);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFont()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFont_gurax, "HasFont")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFont();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFontEncoding()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFontEncoding_gurax, "HasFontEncoding")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFontEncoding_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFontEncoding();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFontFaceName()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFontFaceName_gurax, "HasFontFaceName")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFontFaceName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFontFaceName();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFontFamily()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFontFamily_gurax, "HasFontFamily")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFontFamily_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFontFamily();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFontItalic()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFontItalic_gurax, "HasFontItalic")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFontItalic_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFontItalic();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFontSize()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFontSize_gurax, "HasFontSize")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFontSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFontSize();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFontPointSize()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFontPointSize_gurax, "HasFontPointSize")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFontPointSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFontPointSize();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFontPixelSize()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFontPixelSize_gurax, "HasFontPixelSize")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFontPixelSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFontPixelSize();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFontUnderlined()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFontUnderlined_gurax, "HasFontUnderlined")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFontUnderlined_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFontUnderlined();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasFontWeight()
+Gurax_DeclareMethodAlias(wxTextAttr, HasFontWeight_gurax, "HasFontWeight")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasFontWeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFontWeight();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasLeftIndent()
+Gurax_DeclareMethodAlias(wxTextAttr, HasLeftIndent_gurax, "HasLeftIndent")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasLeftIndent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasLeftIndent();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasLineSpacing()
+Gurax_DeclareMethodAlias(wxTextAttr, HasLineSpacing_gurax, "HasLineSpacing")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasLineSpacing_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasLineSpacing();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasListStyleName()
+Gurax_DeclareMethodAlias(wxTextAttr, HasListStyleName_gurax, "HasListStyleName")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasListStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasListStyleName();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasOutlineLevel()
+Gurax_DeclareMethodAlias(wxTextAttr, HasOutlineLevel_gurax, "HasOutlineLevel")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasOutlineLevel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasOutlineLevel();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasPageBreak()
+Gurax_DeclareMethodAlias(wxTextAttr, HasPageBreak_gurax, "HasPageBreak")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasPageBreak_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasPageBreak();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasParagraphSpacingAfter()
+Gurax_DeclareMethodAlias(wxTextAttr, HasParagraphSpacingAfter_gurax, "HasParagraphSpacingAfter")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasParagraphSpacingAfter_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasParagraphSpacingAfter();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasParagraphSpacingBefore()
+Gurax_DeclareMethodAlias(wxTextAttr, HasParagraphSpacingBefore_gurax, "HasParagraphSpacingBefore")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasParagraphSpacingBefore_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasParagraphSpacingBefore();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasParagraphStyleName()
+Gurax_DeclareMethodAlias(wxTextAttr, HasParagraphStyleName_gurax, "HasParagraphStyleName")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasParagraphStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasParagraphStyleName();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasRightIndent()
+Gurax_DeclareMethodAlias(wxTextAttr, HasRightIndent_gurax, "HasRightIndent")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasRightIndent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasRightIndent();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasTabs()
+Gurax_DeclareMethodAlias(wxTextAttr, HasTabs_gurax, "HasTabs")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasTabs_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasTabs();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasTextColour()
+Gurax_DeclareMethodAlias(wxTextAttr, HasTextColour_gurax, "HasTextColour")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasTextColour();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasTextEffects()
+Gurax_DeclareMethodAlias(wxTextAttr, HasTextEffects_gurax, "HasTextEffects")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasTextEffects_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasTextEffects();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#HasURL()
+Gurax_DeclareMethodAlias(wxTextAttr, HasURL_gurax, "HasURL")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, HasURL_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasURL();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#IsCharacterStyle()
+Gurax_DeclareMethodAlias(wxTextAttr, IsCharacterStyle_gurax, "IsCharacterStyle")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, IsCharacterStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsCharacterStyle();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#IsDefault()
+Gurax_DeclareMethodAlias(wxTextAttr, IsDefault_gurax, "IsDefault")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, IsDefault_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsDefault();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#IsParagraphStyle()
+Gurax_DeclareMethodAlias(wxTextAttr, IsParagraphStyle_gurax, "IsParagraphStyle")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, IsParagraphStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsParagraphStyle();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.TextAttr#SetAlignment(alignment as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetAlignment_gurax, "SetAlignment")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("alignment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetAlignment_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxTextAttrAlignment alignment = args_gurax.PickNumber<wxTextAttrAlignment>();
+	// Function body
+	pEntity_gurax->SetAlignment(alignment);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetBackgroundColour(colBack as wx.Colour)
+Gurax_DeclareMethodAlias(wxTextAttr, SetBackgroundColour_gurax, "SetBackgroundColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colBack", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colBack = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colBack = value_colBack.GetEntity();
+	// Function body
+	pEntity_gurax->SetBackgroundColour(colBack);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetBulletFont(font as String)
+Gurax_DeclareMethodAlias(wxTextAttr, SetBulletFont_gurax, "SetBulletFont")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetBulletFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* font = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetBulletFont(font);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetBulletName(name as String)
+Gurax_DeclareMethodAlias(wxTextAttr, SetBulletName_gurax, "SetBulletName")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetBulletName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetBulletName(name);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetBulletNumber(n as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetBulletNumber_gurax, "SetBulletNumber")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetBulletNumber_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int n = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetBulletNumber(n);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetBulletStyle(style as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetBulletStyle_gurax, "SetBulletStyle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetBulletStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int style = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetBulletStyle(style);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetBulletText(text as String)
+Gurax_DeclareMethodAlias(wxTextAttr, SetBulletText_gurax, "SetBulletText")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetBulletText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetBulletText(text);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetCharacterStyleName(name as String)
+Gurax_DeclareMethodAlias(wxTextAttr, SetCharacterStyleName_gurax, "SetCharacterStyleName")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetCharacterStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetCharacterStyleName(name);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFlags(flags as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFlags_gurax, "SetFlags")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFlags_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long flags = args_gurax.PickNumber<long>();
+	// Function body
+	pEntity_gurax->SetFlags(flags);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFont(font as wx.Font, flags? as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFont_gurax, "SetFont")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxFont& value_font = args_gurax.Pick<Value_wxFont>();
+	const wxFont& font = value_font.GetEntity();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : (wxTEXT_ATTR_FONT & (~wxTEXT_ATTR_FONT_PIXEL_SIZE));
+	// Function body
+	pEntity_gurax->SetFont(font, flags);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFontEncoding(encoding as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFontEncoding_gurax, "SetFontEncoding")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("encoding", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFontEncoding_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxFontEncoding encoding = args_gurax.PickNumber<wxFontEncoding>();
+	// Function body
+	pEntity_gurax->SetFontEncoding(encoding);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFontFaceName(faceName as String)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFontFaceName_gurax, "SetFontFaceName")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("faceName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFontFaceName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* faceName = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetFontFaceName(faceName);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFontFamily(family as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFontFamily_gurax, "SetFontFamily")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("family", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFontFamily_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxFontFamily family = args_gurax.PickNumber<wxFontFamily>();
+	// Function body
+	pEntity_gurax->SetFontFamily(family);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFontSize(pointSize as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFontSize_gurax, "SetFontSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pointSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFontSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int pointSize = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetFontSize(pointSize);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFontPointSize(pointSize as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFontPointSize_gurax, "SetFontPointSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pointSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFontPointSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int pointSize = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetFontPointSize(pointSize);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFontPixelSize(pixelSize as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFontPixelSize_gurax, "SetFontPixelSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pixelSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFontPixelSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int pixelSize = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetFontPixelSize(pixelSize);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFontStyle(fontStyle as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFontStyle_gurax, "SetFontStyle")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("fontStyle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFontStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxFontStyle fontStyle = args_gurax.PickNumber<wxFontStyle>();
+	// Function body
+	pEntity_gurax->SetFontStyle(fontStyle);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFontUnderlined(underlined as Bool)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFontUnderlined_gurax, "SetFontUnderlined")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("underlined", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFontUnderlined_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool underlined = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetFontUnderlined(underlined);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetFontWeight(fontWeight as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetFontWeight_gurax, "SetFontWeight")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("fontWeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetFontWeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxFontWeight fontWeight = args_gurax.PickNumber<wxFontWeight>();
+	// Function body
+	pEntity_gurax->SetFontWeight(fontWeight);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetLeftIndent(indent as Number, subIndent? as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetLeftIndent_gurax, "SetLeftIndent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("indent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("subIndent", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetLeftIndent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int indent = args_gurax.PickNumber<int>();
+	bool subIndent_validFlag = args_gurax.IsValid();
+	int subIndent = subIndent_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	pEntity_gurax->SetLeftIndent(indent, subIndent);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetLineSpacing(spacing as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetLineSpacing_gurax, "SetLineSpacing")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("spacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetLineSpacing_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int spacing = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetLineSpacing(spacing);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetListStyleName(name as String)
+Gurax_DeclareMethodAlias(wxTextAttr, SetListStyleName_gurax, "SetListStyleName")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetListStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetListStyleName(name);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetOutlineLevel(level as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetOutlineLevel_gurax, "SetOutlineLevel")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetOutlineLevel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int level = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetOutlineLevel(level);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetPageBreak(pageBreak? as Bool)
+Gurax_DeclareMethodAlias(wxTextAttr, SetPageBreak_gurax, "SetPageBreak")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pageBreak", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetPageBreak_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool pageBreak = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetPageBreak(pageBreak);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetParagraphSpacingAfter(spacing as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetParagraphSpacingAfter_gurax, "SetParagraphSpacingAfter")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("spacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetParagraphSpacingAfter_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int spacing = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetParagraphSpacingAfter(spacing);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetParagraphSpacingBefore(spacing as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetParagraphSpacingBefore_gurax, "SetParagraphSpacingBefore")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("spacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetParagraphSpacingBefore_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int spacing = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetParagraphSpacingBefore(spacing);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetParagraphStyleName(name as String)
+Gurax_DeclareMethodAlias(wxTextAttr, SetParagraphStyleName_gurax, "SetParagraphStyleName")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetParagraphStyleName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetParagraphStyleName(name);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetRightIndent(indent as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetRightIndent_gurax, "SetRightIndent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("indent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetRightIndent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int indent = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetRightIndent(indent);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetTabs(tabs[] as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetTabs_gurax, "SetTabs")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("tabs", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetTabs_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxArrayInt tabs = Util::CreateArrayInt(args_gurax.PickList());
+	// Function body
+	pEntity_gurax->SetTabs(tabs);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetTextColour(colText as wx.Colour)
+Gurax_DeclareMethodAlias(wxTextAttr, SetTextColour_gurax, "SetTextColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colText", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colText = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colText = value_colText.GetEntity();
+	// Function body
+	pEntity_gurax->SetTextColour(colText);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetTextEffectFlags(flags as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetTextEffectFlags_gurax, "SetTextEffectFlags")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetTextEffectFlags_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int flags = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetTextEffectFlags(flags);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetTextEffects(effects as Number)
+Gurax_DeclareMethodAlias(wxTextAttr, SetTextEffects_gurax, "SetTextEffects")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("effects", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetTextEffects_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int effects = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetTextEffects(effects);
+	return Gurax::Value::nil();
+}
+
+// wx.TextAttr#SetURL(url as String)
+Gurax_DeclareMethodAlias(wxTextAttr, SetURL_gurax, "SetURL")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("url", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextAttr, SetURL_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* url = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetURL(url);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +2302,110 @@ void VType_wxTextAttr::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(TextAttr_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxTextAttr, Apply_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, Merge_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, EqPartial_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetAlignment_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetBulletFont_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetBulletName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetBulletNumber_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetBulletStyle_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetBulletText_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetCharacterStyleName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFlags_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFont_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFontAttributes_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFontEncoding_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFontFaceName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFontFamily_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFontSize_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFontStyle_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFontUnderlined_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetFontWeight_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetLeftIndent_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetLeftSubIndent_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetLineSpacing_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetListStyleName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetOutlineLevel_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetParagraphSpacingAfter_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetParagraphSpacingBefore_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetParagraphStyleName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetRightIndent_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetTabs_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetTextEffectFlags_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetTextEffects_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, GetURL_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasAlignment_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasBulletName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasBulletNumber_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasBulletStyle_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasBulletText_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasCharacterStyleName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFlag_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFont_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFontEncoding_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFontFaceName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFontFamily_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFontItalic_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFontSize_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFontPointSize_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFontPixelSize_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFontUnderlined_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasFontWeight_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasLeftIndent_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasLineSpacing_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasListStyleName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasOutlineLevel_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasPageBreak_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasParagraphSpacingAfter_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasParagraphSpacingBefore_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasParagraphStyleName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasRightIndent_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasTabs_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasTextEffects_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, HasURL_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, IsCharacterStyle_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, IsDefault_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, IsParagraphStyle_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetAlignment_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetBulletFont_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetBulletName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetBulletNumber_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetBulletStyle_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetBulletText_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetCharacterStyleName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFlags_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFont_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFontEncoding_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFontFaceName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFontFamily_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFontSize_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFontPointSize_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFontPixelSize_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFontStyle_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFontUnderlined_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetFontWeight_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetLeftIndent_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetLineSpacing_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetListStyleName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetOutlineLevel_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetPageBreak_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetParagraphSpacingAfter_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetParagraphSpacingBefore_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetParagraphStyleName_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetRightIndent_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetTabs_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetTextEffectFlags_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetTextEffects_gurax));
+	Assign(Gurax_CreateMethod(wxTextAttr, SetURL_gurax));
 }
 
 //------------------------------------------------------------------------------

@@ -48,7 +48,6 @@ ListCtrl = Class(Control) {
 	GetTopItem() as long
 	GetViewRect() as Rect
 	SetAlternateRowColour(colour as const_Colour_r) as void
-	//HitTest(point as const_Point_r, flags as int_r, ptrSubItem as long_p = NULL) as long
 	HitTest(point as const_Point_r) as Tuple@gurax = \
 		R'''
 		int flags;
@@ -228,7 +227,6 @@ ListCtrl = Class(Control) {
 	SetItemBackgroundColour(item as long, col as const_Colour_r) as void
 	SetItemColumnImage(item as long, column as long, image as int) as bool
 	SetItemCount(count as long) as void
-	//SetItemData(item as long, data as long) as bool
 	SetItemData(item as long, data as any) as bool = \
 		R'''
 		bool rtn = pEntity_gurax->SetItemPtrData(item, reinterpret_cast<wxUIntPtr>(data.Reference()));
