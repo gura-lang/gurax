@@ -1225,42 +1225,11 @@ Gurax_ImplementMethodEx(wxDC, DrawLabel_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawLineXY(x1 as Number, y1 as Number, x2 as Number, y2 as Number)
-Gurax_DeclareMethodAlias(wxDC, DrawLineXY_gurax, "DrawLineXY")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDC, DrawLineXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord x1 = args_gurax.PickNumber<wxCoord>();
-	wxCoord y1 = args_gurax.PickNumber<wxCoord>();
-	wxCoord x2 = args_gurax.PickNumber<wxCoord>();
-	wxCoord y2 = args_gurax.PickNumber<wxCoord>();
-	// Function body
-	pEntity_gurax->DrawLine(x1, y1, x2, y2);
-	return Gurax::Value::nil();
-}
-
-// wx.DC#DrawLine(pt1 as wx.Point, pt2 as wx.Point)
+// wx.DC#DrawLine(args* as Any)
 Gurax_DeclareMethodAlias(wxDC, DrawLine_gurax, "DrawLine")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pt1", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pt2", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1274,13 +1243,48 @@ Gurax_ImplementMethodEx(wxDC, DrawLine_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt1 = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt1 = value_pt1.GetEntity();
-	Value_wxPoint& value_pt2 = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt2 = value_pt2.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->DrawLine(pt1, pt2);
-	return Gurax::Value::nil();
+	// DrawLine(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x1", VTYPE_Number);
+			pDeclCallable->DeclareArg("y1", VTYPE_Number);
+			pDeclCallable->DeclareArg("x2", VTYPE_Number);
+			pDeclCallable->DeclareArg("y2", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x1 = args.PickNumber<wxCoord>();
+		wxCoord y1 = args.PickNumber<wxCoord>();
+		wxCoord x2 = args.PickNumber<wxCoord>();
+		wxCoord y2 = args.PickNumber<wxCoord>();
+		pEntity_gurax->DrawLine(x1, y1, x2, y2);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DrawLine(pt1 as const_Point_r, pt2 as const_Point_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt1", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("pt2", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt1 = args.Pick<Value_wxPoint>().GetEntity();
+		const wxPoint& pt2 = args.Pick<Value_wxPoint>().GetEntity();
+		pEntity_gurax->DrawLine(pt1, pt2);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.DC#DrawLines(points[] as wx.Point, xoffset? as Number, yoffset? as Number)
@@ -1313,37 +1317,11 @@ Gurax_ImplementMethodEx(wxDC, DrawLines_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawPointXY(x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxDC, DrawPointXY_gurax, "DrawPointXY")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDC, DrawPointXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord x = args_gurax.PickNumber<wxCoord>();
-	wxCoord y = args_gurax.PickNumber<wxCoord>();
-	// Function body
-	pEntity_gurax->DrawPoint(x, y);
-	return Gurax::Value::nil();
-}
-
-// wx.DC#DrawPoint(pt as wx.Point)
+// wx.DC#DrawPoint(args* as Any)
 Gurax_DeclareMethodAlias(wxDC, DrawPoint_gurax, "DrawPoint")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1357,11 +1335,42 @@ Gurax_ImplementMethodEx(wxDC, DrawPoint_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->DrawPoint(pt);
-	return Gurax::Value::nil();
+	// DrawPoint(x as Coord, y as Coord) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		pEntity_gurax->DrawPoint(x, y);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DrawPoint(pt as const_Point_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		pEntity_gurax->DrawPoint(pt);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.DC#DrawPolygon(points[] as wx.Point, xoffset? as Number, yoffset? as Number, fill_style? as Number)
@@ -1524,43 +1533,11 @@ Gurax_ImplementMethodEx(wxDC, DrawRectangle_gurax, processor_gurax, argument_gur
 	return Value::nil();
 }
 
-// wx.DC#DrawRotatedTextXY(text as String, x as Number, y as Number, angle as Number)
-Gurax_DeclareMethodAlias(wxDC, DrawRotatedTextXY_gurax, "DrawRotatedTextXY")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDC, DrawRotatedTextXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
-	wxCoord x = args_gurax.PickNumber<wxCoord>();
-	wxCoord y = args_gurax.PickNumber<wxCoord>();
-	double angle = args_gurax.PickNumber<double>();
-	// Function body
-	pEntity_gurax->DrawRotatedText(text, x, y, angle);
-	return Gurax::Value::nil();
-}
-
-// wx.DC#DrawRotatedText(text as String, point as wx.Point, angle as Number)
+// wx.DC#DrawRotatedText(args* as Any)
 Gurax_DeclareMethodAlias(wxDC, DrawRotatedText_gurax, "DrawRotatedText")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1574,54 +1551,57 @@ Gurax_ImplementMethodEx(wxDC, DrawRotatedText_gurax, processor_gurax, argument_g
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
-	Value_wxPoint& value_point = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& point = value_point.GetEntity();
-	double angle = args_gurax.PickNumber<double>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->DrawRotatedText(text, point, angle);
-	return Gurax::Value::nil();
+	// DrawRotatedText(text as String, x as Coord, y as Coord, angle as double) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("text", VTYPE_String);
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+			pDeclCallable->DeclareArg("angle", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* text = args.PickString();
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		double angle = args.PickNumber<double>();
+		pEntity_gurax->DrawRotatedText(text, x, y, angle);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DrawRotatedText(text as String, point as const_Point_r, angle as double) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("text", VTYPE_String);
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("angle", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* text = args.PickString();
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		double angle = args.PickNumber<double>();
+		pEntity_gurax->DrawRotatedText(text, pt, angle);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
-// wx.DC#DrawRoundedRectangleXY(x as Number, y as Number, width as Number, height as Number, radius as Number)
-Gurax_DeclareMethodAlias(wxDC, DrawRoundedRectangleXY_gurax, "DrawRoundedRectangleXY")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDC, DrawRoundedRectangleXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord x = args_gurax.PickNumber<wxCoord>();
-	wxCoord y = args_gurax.PickNumber<wxCoord>();
-	wxCoord width = args_gurax.PickNumber<wxCoord>();
-	wxCoord height = args_gurax.PickNumber<wxCoord>();
-	double radius = args_gurax.PickNumber<double>();
-	// Function body
-	pEntity_gurax->DrawRoundedRectangle(x, y, width, height, radius);
-	return Gurax::Value::nil();
-}
-
-// wx.DC#DrawRoundedRectangle(pt as wx.Point, sz as wx.Size, radius as Number)
+// wx.DC#DrawRoundedRectangle(args* as Any)
 Gurax_DeclareMethodAlias(wxDC, DrawRoundedRectangle_gurax, "DrawRoundedRectangle")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1635,41 +1615,70 @@ Gurax_ImplementMethodEx(wxDC, DrawRoundedRectangle_gurax, processor_gurax, argum
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
-	Value_wxSize& value_sz = args_gurax.Pick<Value_wxSize>();
-	const wxSize& sz = value_sz.GetEntity();
-	double radius = args_gurax.PickNumber<double>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->DrawRoundedRectangle(pt, sz, radius);
-	return Gurax::Value::nil();
-}
-
-// wx.DC#DrawRoundedRectangleRect(rect as wx.Rect, radius as Number)
-Gurax_DeclareMethodAlias(wxDC, DrawRoundedRectangleRect_gurax, "DrawRoundedRectangleRect")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDC, DrawRoundedRectangleRect_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
-	const wxRect& rect = value_rect.GetEntity();
-	double radius = args_gurax.PickNumber<double>();
-	// Function body
-	pEntity_gurax->DrawRoundedRectangle(rect, radius);
-	return Gurax::Value::nil();
+	// DrawRoundedRectangle(x as Coord, y as Coord, width as Coord, height as Coord, radius as double) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+			pDeclCallable->DeclareArg("width", VTYPE_Number);
+			pDeclCallable->DeclareArg("height", VTYPE_Number);
+			pDeclCallable->DeclareArg("radius", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		wxCoord width = args.PickNumber<wxCoord>();
+		wxCoord height = args.PickNumber<wxCoord>();
+		double radius = args.PickNumber<double>();
+		pEntity_gurax->DrawRoundedRectangle(x, y, width, height, radius);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DrawRoundedRectangle(pt as const_Point_r, sz as const_Size_r, radius as double) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			pDeclCallable->DeclareArg("radius", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+		double radius = args.PickNumber<double>();
+		pEntity_gurax->DrawRoundedRectangle(pt, size, radius);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DrawRoundedRectangle(rect as const_Rect_r, radius as double) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			pDeclCallable->DeclareArg("radius", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+		double radius = args.PickNumber<double>();
+		pEntity_gurax->DrawRoundedRectangle(rect, radius);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.DC#DrawSpline(points[] as wx.Point)
@@ -1730,40 +1739,11 @@ Gurax_ImplementMethodEx(wxDC, DrawSplineXY_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawTextXY(text as String, x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxDC, DrawTextXY_gurax, "DrawTextXY")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDC, DrawTextXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
-	wxCoord x = args_gurax.PickNumber<wxCoord>();
-	wxCoord y = args_gurax.PickNumber<wxCoord>();
-	// Function body
-	pEntity_gurax->DrawText(text, x, y);
-	return Gurax::Value::nil();
-}
-
-// wx.DC#DrawText(text as String, pt as wx.Point)
+// wx.DC#DrawText(args* as Any)
 Gurax_DeclareMethodAlias(wxDC, DrawText_gurax, "DrawText")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1777,12 +1757,46 @@ Gurax_ImplementMethodEx(wxDC, DrawText_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* text = args_gurax.PickString();
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->DrawText(text, pt);
-	return Gurax::Value::nil();
+	// DrawText(text as String, x as Coord, y as Coord) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("text", VTYPE_String);
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* text = args.PickString();
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		pEntity_gurax->DrawText(text, x, y);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DrawText(text as String, pt as const_Point_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("text", VTYPE_String);
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* text = args.PickString();
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		pEntity_gurax->DrawText(text, pt);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.DC#GradientFillConcentric(rect as wx.Rect, initialColour as wx.Colour, destColour as wx.Colour, circleCenter? as wx.Point)
@@ -3121,22 +3135,16 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, DrawEllipticArc_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawIcon_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawLabel_gurax));
-	Assign(Gurax_CreateMethod(wxDC, DrawLineXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawLine_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawLines_gurax));
-	Assign(Gurax_CreateMethod(wxDC, DrawPointXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawPoint_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawPolygon_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawPolyPolygon_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRectangle_gurax));
-	Assign(Gurax_CreateMethod(wxDC, DrawRotatedTextXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRotatedText_gurax));
-	Assign(Gurax_CreateMethod(wxDC, DrawRoundedRectangleXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawRoundedRectangle_gurax));
-	Assign(Gurax_CreateMethod(wxDC, DrawRoundedRectangleRect_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawSpline_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawSplineXY_gurax));
-	Assign(Gurax_CreateMethod(wxDC, DrawTextXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DrawText_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GradientFillConcentric_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GradientFillLinear_gurax));
