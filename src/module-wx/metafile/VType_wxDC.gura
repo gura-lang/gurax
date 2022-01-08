@@ -51,21 +51,336 @@ DC = Class {
 	LogicalToDeviceYRel(y as Coord) as Coord
 	// Drawing function
 	Clear() as void
-	DrawArcXY(xStart as Coord, yStart as Coord, xEnd as Coord, yEnd as Coord, xc as Coord, yc as Coord) as void = DrawArc
-	DrawArc(ptStart as const_Point_r, ptEnd as const_Point_r, centre as const_Point_r) as void
-	DrawBitmapXY(bitmap as const_Bitmap_r, x as Coord, y as Coord, useMask as bool = false) as void = DrawBitmap
-	DrawBitmap(bmp as const_Bitmap_r, pt as const_Point_r, useMask as bool = false) as void
-	DrawCheckMarkXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = DrawCheckMark
-	DrawCheckMark(rect as const_Rect_r) as void
-	DrawCircleXY(x as Coord, y as Coord, radius as Coord) as void = DrawCircle
-	DrawCircle(pt as const_Point_r, radius as Coord) as void
-	DrawEllipseXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = DrawEllipse
-	DrawEllipse(pt as const_Point_r, size as const_Size_r) as void
-	DrawEllipseRect(rect as const_Rect_r) as void = DrawEllipse
-	DrawEllipticArcXY(x as Coord, y as Coord, width as Coord, height as Coord, start as double, end as double) as void = DrawEllipticArc
-	DrawEllipticArc(pt as const_Point_r, sz as const_Size_r, sa as double, ea as double) as void
-	DrawIconXY(icon as const_Icon_r, x as Coord, y as Coord) as void = DrawIcon
-	DrawIcon(icon as const_Icon_r, pt as const_Point_r) as void
+	DrawArc(args* as any) as void = \
+		R'''
+		// DrawArc(xStart as Coord, yStart as Coord, xEnd as Coord, yEnd as Coord, xc as Coord, yc as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("xStart", VTYPE_Number);
+				pDeclCallable->DeclareArg("yStart", VTYPE_Number);
+				pDeclCallable->DeclareArg("xEnd", VTYPE_Number);
+				pDeclCallable->DeclareArg("yEnd", VTYPE_Number);
+				pDeclCallable->DeclareArg("xc", VTYPE_Number);
+				pDeclCallable->DeclareArg("yc", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord xStart = args.PickNumber<wxCoord>();
+			wxCoord yStart = args.PickNumber<wxCoord>();
+			wxCoord xEnd = args.PickNumber<wxCoord>();
+			wxCoord yEnd = args.PickNumber<wxCoord>();
+			wxCoord xc = args.PickNumber<wxCoord>();
+			wxCoord yc = args.PickNumber<wxCoord>();
+			pEntity_gurax->DrawArc(xStart, yStart, xEnd, yEnd, xc, yc);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawArc(ptStart as const_Point_r, ptEnd as const_Point_r, centre as const_Point_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("ptStart", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("ptEnd", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("centre", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& ptStart = args.Pick<Value_wxPoint>().GetEntity();
+			const wxPoint& ptEnd = args.Pick<Value_wxPoint>().GetEntity();
+			const wxPoint& centre = args.Pick<Value_wxPoint>().GetEntity();
+			pEntity_gurax->DrawArc(ptStart, ptEnd, centre);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	DrawBitmap(args* as any) as void = \
+		R'''
+		// DrawBitmap(bitmap as const_Bitmap_r, x as Coord, y as Coord, useMask as bool = false) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("useMask", VTYPE_Bool, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			bool useMask = args.IsValid()? args.PickBool() : false;
+			pEntity_gurax->DrawBitmap(bitmap, x, y, useMask);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawBitmap(bmp as const_Bitmap_r, pt as const_Point_r, useMask as bool = false) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("useMask", VTYPE_Bool, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			bool useMask = args.IsValid()? args.PickBool() : false;
+			pEntity_gurax->DrawBitmap(bitmap, pt, useMask);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	DrawCheckMark(args* as any) as void = \
+		R'''
+		// DrawCheckMark(x as Coord, y as Coord, width as Coord, height as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			pEntity_gurax->DrawCheckMark(x, y, width, height);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawCheckMark(rect as const_Rect_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			pEntity_gurax->DrawCheckMark(rect);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	DrawCircle(args* as any) as void = \
+		R'''
+		// DrawCircle(x as Coord, y as Coord, radius as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("radius", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord radius = args.PickNumber<wxCoord>();
+			pEntity_gurax->DrawCircle(x, y, radius);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawCircle(pt as const_Point_r, radius as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("radius", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			wxCoord radius = args.PickNumber<wxCoord>();
+			pEntity_gurax->DrawCircle(pt, radius);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	DrawEllipse(args* as any) as void = \
+		R'''
+		// DrawEllipse(x as Coord, y as Coord, width as Coord, height as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			pEntity_gurax->DrawEllipse(x, y, width, height);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawEllipse(pt as const_Point_r, size as const_Size_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->DrawEllipse(pt, size);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawEllipse(rect as const_Rect_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			pEntity_gurax->DrawEllipse(rect);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	DrawEllipticArc(args* as any) as void = \
+		R'''
+		// DrawEllipticArc(x as Coord, y as Coord, width as Coord, height as Coord, start as double, end as double) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+				pDeclCallable->DeclareArg("start", VTYPE_Number);
+				pDeclCallable->DeclareArg("end", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			double start = args.PickNumber<double>();
+			double end = args.PickNumber<double>();
+			pEntity_gurax->DrawEllipticArc(x, y, width, height, start, end);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawEllipticArc(pt as const_Point_r, sz as const_Size_r, sa as double, ea as double) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("sz", VTYPE_wxSize);
+				pDeclCallable->DeclareArg("sa", VTYPE_Number);
+				pDeclCallable->DeclareArg("ea", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			const wxSize& sz = args.Pick<Value_wxSize>().GetEntity();
+			double start = args.PickNumber<double>();
+			double end = args.PickNumber<double>();
+			pEntity_gurax->DrawEllipticArc(pt, sz, start, end);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+	DrawIcon(args* as any) as void = \
+		R'''
+		// DrawIcon(icon as const_Icon_r, x as Coord, y as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("icon", VTYPE_wxIcon);
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxIcon& icon = args.Pick<Value_wxIcon>().GetEntity();
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			pEntity_gurax->DrawIcon(icon, x, y);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawIcon(icon as const_Icon_r, pt as const_Point_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("icon", VTYPE_wxIcon);
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxIcon& icon = args.Pick<Value_wxIcon>().GetEntity();
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			pEntity_gurax->DrawIcon(icon, pt);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
+
+
+
 	//DrawLabel(text as String, bitmap as const_Bitmap_r, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP,  indexAccel as int = -1, rectBounding as Rect_r = nullptr) as void
 	DrawLabel(text as String, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1) as void
 	DrawLineXY(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord) as void = DrawLine
@@ -94,9 +409,65 @@ DC = Class {
 		pEntity_gurax->DrawPolyPolygon(n, count.data(), points_.data(), xoffset, yoffset, fill_style);
 		return Value::nil();
 		'''
-	DrawRectangleXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = DrawRectangle
-	DrawRectangle(pt as const_Point_r, sz as const_Size_r) as void
-	DrawRectangleRect(rect as const_Rect_r) as void = DrawRectangle
+	DrawRectangle(args* as any) as void = \
+		R'''
+		// DrawRectangle(x as Coord, y as Coord, width as Coord, height as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			pEntity_gurax->DrawRectangle(x, y, width, height);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawRectangle(pt as const_Point_r, size as const_Size_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->DrawRectangle(pt, size);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// DrawRectangle(rect as const_Rect_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			pEntity_gurax->DrawRectangle(rect);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 	DrawRotatedTextXY(text as String, x as Coord, y as Coord, angle as double) as void = DrawRotatedText
 	DrawRotatedText(text as String, point as const_Point_r, angle as double) as void
 	DrawRoundedRectangleXY(x as Coord, y as Coord, width as Coord, height as Coord, radius as double) as void = DrawRoundedRectangle
@@ -128,9 +499,65 @@ DC = Class {
 		pEntity_gurax->GetClippingBox(&x, &y, &width, &height);
 		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y), new Value_Number(width), new Value_Number(height));
 		'''
-	SetClippingRegionXY(x as Coord, y as Coord, width as Coord, height as Coord) as void = SetClippingRegion
-	SetClippingRegion(pt as const_Point_r, sz as const_Size_r) as void
-	SetClippingRegionRect(rect as const_Rect_r) as void = SetClippingRegion
+	SetClippingRegion(args* as any) as void = \
+		R'''
+		// SetClippingRegion(x as Coord, y as Coord, width as Coord, height as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			pEntity_gurax->SetClippingRegion(x, y, width, height);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// SetClippingRegion(pt as const_Point_r, size as const_Size_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->SetClippingRegion(pt, size);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// SetClippingRegion(rect as const_Rect_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			pEntity_gurax->SetClippingRegion(rect);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 	SetDeviceClippingRegion(region as const_Region_r) as void
 	// Text/character extent functions
 	GetCharHeight() as Coord
