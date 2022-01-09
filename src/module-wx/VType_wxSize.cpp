@@ -56,6 +56,315 @@ Gurax_ImplementConstructorEx(Size_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Size#DecTo(size as wx.Size)
+Gurax_DeclareMethodAlias(wxSize, DecTo_gurax, "DecTo")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, DecTo_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	// Function body
+	pEntity_gurax->DecTo(size);
+	return Gurax::Value::nil();
+}
+
+// wx.Size#DecToIfSpecified(size as wx.Size)
+Gurax_DeclareMethodAlias(wxSize, DecToIfSpecified_gurax, "DecToIfSpecified")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, DecToIfSpecified_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	// Function body
+	pEntity_gurax->DecToIfSpecified(size);
+	return Gurax::Value::nil();
+}
+
+// wx.Size#GetHeight()
+Gurax_DeclareMethodAlias(wxSize, GetHeight_gurax, "GetHeight")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, GetHeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetHeight();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Size#GetWidth()
+Gurax_DeclareMethodAlias(wxSize, GetWidth_gurax, "GetWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, GetWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetWidth();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Size#IncTo(size as wx.Size)
+Gurax_DeclareMethodAlias(wxSize, IncTo_gurax, "IncTo")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, IncTo_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	// Function body
+	pEntity_gurax->IncTo(size);
+	return Gurax::Value::nil();
+}
+
+// wx.Size#IsFullySpecified()
+Gurax_DeclareMethodAlias(wxSize, IsFullySpecified_gurax, "IsFullySpecified")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, IsFullySpecified_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsFullySpecified();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Size#Scale(xscale as Number, yscale as Number)
+Gurax_DeclareMethodAlias(wxSize, Scale_gurax, "Scale")
+{
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("xscale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yscale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, Scale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	float xscale = args_gurax.PickNumber<float>();
+	float yscale = args_gurax.PickNumber<float>();
+	// Function body
+	pEntity_gurax->Scale(xscale, yscale);
+	return valueThis_gurax.Reference();
+}
+
+// wx.Size#Set(width as Number, height as Number)
+Gurax_DeclareMethodAlias(wxSize, Set_gurax, "Set")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, Set_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	int height = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->Set(width, height);
+	return Gurax::Value::nil();
+}
+
+// wx.Size#SetDefaults(sizeDefault as wx.Size)
+Gurax_DeclareMethodAlias(wxSize, SetDefaults_gurax, "SetDefaults")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("sizeDefault", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, SetDefaults_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_sizeDefault = args_gurax.Pick<Value_wxSize>();
+	const wxSize& sizeDefault = value_sizeDefault.GetEntity();
+	// Function body
+	pEntity_gurax->SetDefaults(sizeDefault);
+	return Gurax::Value::nil();
+}
+
+// wx.Size#SetHeight(height as Number)
+Gurax_DeclareMethodAlias(wxSize, SetHeight_gurax, "SetHeight")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, SetHeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int height = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetHeight(height);
+	return Gurax::Value::nil();
+}
+
+// wx.Size#SetWidth(width as Number)
+Gurax_DeclareMethodAlias(wxSize, SetWidth_gurax, "SetWidth")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, SetWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetWidth(width);
+	return Gurax::Value::nil();
+}
+
+// wx.Size#DecBy(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxSize, DecBy_gurax, "DecBy")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, DecBy_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	pEntity_gurax->DecBy(pt);
+	return Gurax::Value::nil();
+}
+
+// wx.Size#IncBy(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxSize, IncBy_gurax, "IncBy")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSize, IncBy_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	pEntity_gurax->IncBy(pt);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -73,6 +382,19 @@ void VType_wxSize::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Size_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxSize, DecTo_gurax));
+	Assign(Gurax_CreateMethod(wxSize, DecToIfSpecified_gurax));
+	Assign(Gurax_CreateMethod(wxSize, GetHeight_gurax));
+	Assign(Gurax_CreateMethod(wxSize, GetWidth_gurax));
+	Assign(Gurax_CreateMethod(wxSize, IncTo_gurax));
+	Assign(Gurax_CreateMethod(wxSize, IsFullySpecified_gurax));
+	Assign(Gurax_CreateMethod(wxSize, Scale_gurax));
+	Assign(Gurax_CreateMethod(wxSize, Set_gurax));
+	Assign(Gurax_CreateMethod(wxSize, SetDefaults_gurax));
+	Assign(Gurax_CreateMethod(wxSize, SetHeight_gurax));
+	Assign(Gurax_CreateMethod(wxSize, SetWidth_gurax));
+	Assign(Gurax_CreateMethod(wxSize, DecBy_gurax));
+	Assign(Gurax_CreateMethod(wxSize, IncBy_gurax));
 }
 
 //------------------------------------------------------------------------------

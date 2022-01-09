@@ -3,9 +3,59 @@
 //==============================================================================
 Rect = Class {
 	__init__(x as int = 0, y as int = 0, width as int = 0, height as int = 0)
-	Contains(x as int, y as int) as bool
-	//Contains(pt as const_Point_r) as bool
-	//Contains(rect as const_Rect_r) as bool
+	Contains(args* as any) as void = \
+		R'''
+		// Contains(x as int, y as int) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int x = args.PickNumber<int>();
+			int y = args.PickNumber<int>();
+			bool rtn = pEntity_gurax->Contains(x, y);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Contains(pt as const_Point_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			bool rtn = pEntity_gurax->Contains(pt);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Contains(rect as const_Rect_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			bool rtn = pEntity_gurax->Contains(rect);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	GetBottom() as int
 	GetBottomLeft() as Point
 	GetBottomRight() as Point
@@ -21,7 +71,6 @@ Rect = Class {
 	GetX() as int
 	GetY() as int
 	Intersect(rect as const_Rect_r) as Rect
-	//Intersect(rect as const_Rect_r) as Rect
 	//Intersects(rect as const_Rect_r) as bool
 	IsEmpty() as bool
 	SetHeight(height as int) as void
@@ -39,15 +88,113 @@ Rect = Class {
 	SetTopRight(p as const_Point_r) as void
 	SetBottomLeft(p as const_Point_r) as void
 	CentreIn(r as const_Rect_r, dir as int = wxBOTH) as Rect
-	//CenterIn(r as const_Rect_r, dir as int = wxBOTH) as Rect
-	Deflate(dx as Coord, dy as Coord):returnThis
-	//Deflate(diff as const_Size_r):returnThis
-	//Deflate(diff as Coord):returnThis
-	//Deflate(dx as Coord, dy as Coord):returnThis
-	Inflate(dx as Coord, dy as Coord):returnThis
-	//Inflate(diff as const_Size_r):returnThis
-	//Inflate(diff as Coord):returnThis
-	//Inflate(dx as Coord, dy as Coord):returnThis
+	CenterIn(r as const_Rect_r, dir as int = wxBOTH) as Rect
+	Deflate(args* as any):returnThis = \
+		R'''
+		// Deflate(dx as Coord, dy as Coord):returnThis
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("dx", VTYPE_Number);
+				pDeclCallable->DeclareArg("dy", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord dx = args.PickNumber<wxCoord>();
+			wxCoord dy = args.PickNumber<wxCoord>();
+			pEntity_gurax->Deflate(dx, dy);
+			return valueThis_gurax.Reference();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Deflate(diff as const_Size_r):returnThis
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("diff", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxSize& diff = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->Deflate(diff);
+			return valueThis_gurax.Reference();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Deflate(diff as Coord):returnThis
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("diff", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord diff = args.PickNumber<wxCoord>();
+			pEntity_gurax->Deflate(diff);
+			return valueThis_gurax.Reference();
+		} while (0);
+		return Value::nil();
+		'''
+	Inflate(args* as any):returnThis = \
+		R'''
+		// Inflate(dx as Coord, dy as Coord):returnThis
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("dx", VTYPE_Number);
+				pDeclCallable->DeclareArg("dy", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord dx = args.PickNumber<wxCoord>();
+			wxCoord dy = args.PickNumber<wxCoord>();
+			pEntity_gurax->Inflate(dx, dy);
+			return valueThis_gurax.Reference();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Inflate(diff as const_Size_r):returnThis
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("diff", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxSize& diff = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->Inflate(diff);
+			return valueThis_gurax.Reference();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Inflate(diff as Coord):returnThis
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("diff", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord diff = args.PickNumber<wxCoord>();
+			pEntity_gurax->Inflate(diff);
+			return valueThis_gurax.Reference();
+		} while (0);
+		return Value::nil();
+		'''
 	Offset(dx as Coord, dy as Coord) as void
 	//Offset(pt as const_Point_r) as void
 	Union(rect as const_Rect_r):returnThis

@@ -1870,45 +1870,11 @@ Gurax_ImplementMethodEx(wxDC, GradientFillLinear_gurax, processor_gurax, argumen
 	return Gurax::Value::nil();
 }
 
-// wx.DC#FloodFillXY(x as Number, y as Number, colour as wx.Colour, style? as Number)
-Gurax_DeclareMethodAlias(wxDC, FloodFillXY_gurax, "FloodFillXY")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDC, FloodFillXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord x = args_gurax.PickNumber<wxCoord>();
-	wxCoord y = args_gurax.PickNumber<wxCoord>();
-	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
-	const wxColour& colour = value_colour.GetEntity();
-	bool style_validFlag = args_gurax.IsValid();
-	wxFloodFillStyle style = style_validFlag? args_gurax.PickNumber<wxFloodFillStyle>() : wxFLOOD_SURFACE;
-	// Function body
-	pEntity_gurax->FloodFill(x, y, colour, style);
-	return Gurax::Value::nil();
-}
-
-// wx.DC#FloodFill(pt as wx.Point, col as wx.Colour, style? as Number)
+// wx.DC#FloodFill(args* as Any)
 Gurax_DeclareMethodAlias(wxDC, FloodFill_gurax, "FloodFill")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1922,48 +1888,57 @@ Gurax_ImplementMethodEx(wxDC, FloodFill_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
-	Value_wxColour& value_col = args_gurax.Pick<Value_wxColour>();
-	const wxColour& col = value_col.GetEntity();
-	bool style_validFlag = args_gurax.IsValid();
-	wxFloodFillStyle style = style_validFlag? args_gurax.PickNumber<wxFloodFillStyle>() : wxFLOOD_SURFACE;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->FloodFill(pt, col, style);
-	return Gurax::Value::nil();
+	// FloodFill(x as Coord, y as Coord, colour as const_Colour_r, style as FloodFillStyle = wxFLOOD_SURFACE) as void = FloodFill
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+			pDeclCallable->DeclareArg("colour", VTYPE_wxColour);
+			pDeclCallable->DeclareArg("style", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		const wxColour& colour = args.Pick<Value_wxColour>().GetEntity();
+		wxFloodFillStyle style = args.PickNumber<wxFloodFillStyle>();
+		pEntity_gurax->FloodFill(x, y, colour, style);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// FloodFill(pt as const_Point_r, col as const_Colour_r, style as FloodFillStyle = wxFLOOD_SURFACE) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("colour", VTYPE_wxColour);
+			pDeclCallable->DeclareArg("style", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		const wxColour& colour = args.Pick<Value_wxColour>().GetEntity();
+		wxFloodFillStyle style = args.PickNumber<wxFloodFillStyle>();
+		pEntity_gurax->FloodFill(pt, colour, style);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
-// wx.DC#CrossHairXY(x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxDC, CrossHairXY_gurax, "CrossHairXY")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDC, CrossHairXY_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord x = args_gurax.PickNumber<wxCoord>();
-	wxCoord y = args_gurax.PickNumber<wxCoord>();
-	// Function body
-	pEntity_gurax->CrossHair(x, y);
-	return Gurax::Value::nil();
-}
-
-// wx.DC#CrossHair(pt as wx.Point)
+// wx.DC#CrossHair(args* as Any)
 Gurax_DeclareMethodAlias(wxDC, CrossHair_gurax, "CrossHair")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1977,11 +1952,42 @@ Gurax_ImplementMethodEx(wxDC, CrossHair_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->CrossHair(pt);
-	return Gurax::Value::nil();
+	// CrossHair(x as Coord, y as Coord) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		pEntity_gurax->CrossHair(x, y);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// CrossHair(pt as const_Point_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		pEntity_gurax->CrossHair(pt);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.DC#DestroyClippingRegion()
@@ -3148,9 +3154,7 @@ void VType_wxDC::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDC, DrawText_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GradientFillConcentric_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GradientFillLinear_gurax));
-	Assign(Gurax_CreateMethod(wxDC, FloodFillXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, FloodFill_gurax));
-	Assign(Gurax_CreateMethod(wxDC, CrossHairXY_gurax));
 	Assign(Gurax_CreateMethod(wxDC, CrossHair_gurax));
 	Assign(Gurax_CreateMethod(wxDC, DestroyClippingRegion_gurax));
 	Assign(Gurax_CreateMethod(wxDC, GetClippingBox_gurax));

@@ -62,12 +62,11 @@ Gurax_ImplementConstructorEx(Rect_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.Rect#Contains(x as Number, y as Number)
+// wx.Rect#Contains(args* as Any)
 Gurax_DeclareMethodAlias(wxRect, Contains_gurax, "Contains")
 {
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -81,11 +80,58 @@ Gurax_ImplementMethodEx(wxRect, Contains_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int x = args_gurax.PickNumber<int>();
-	int y = args_gurax.PickNumber<int>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	bool rtn = pEntity_gurax->Contains(x, y);
-	return new Gurax::Value_Bool(rtn);
+	// Contains(x as int, y as int) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		bool rtn = pEntity_gurax->Contains(x, y);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Contains(pt as const_Point_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		bool rtn = pEntity_gurax->Contains(pt);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Contains(rect as const_Rect_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+		bool rtn = pEntity_gurax->Contains(rect);
+		return new Value_Bool(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Rect#GetBottom()
@@ -791,12 +837,40 @@ Gurax_ImplementMethodEx(wxRect, CentreIn_gurax, processor_gurax, argument_gurax)
 		pEntity_gurax->CentreIn(r, dir)));
 }
 
-// wx.Rect#Deflate(dx as Number, dy as Number)
+// wx.Rect#CenterIn(r as wx.Rect, dir? as Number) {block?}
+Gurax_DeclareMethodAlias(wxRect, CenterIn_gurax, "CenterIn")
+{
+	Declare(VTYPE_wxRect, Flag::None);
+	DeclareArg("r", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dir", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRect, CenterIn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_r = args_gurax.Pick<Value_wxRect>();
+	const wxRect& r = value_r.GetEntity();
+	bool dir_validFlag = args_gurax.IsValid();
+	int dir = dir_validFlag? args_gurax.PickNumber<int>() : wxBOTH;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect(
+		pEntity_gurax->CenterIn(r, dir)));
+}
+
+// wx.Rect#Deflate(args* as Any)
 Gurax_DeclareMethodAlias(wxRect, Deflate_gurax, "Deflate")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -810,19 +884,65 @@ Gurax_ImplementMethodEx(wxRect, Deflate_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord dx = args_gurax.PickNumber<wxCoord>();
-	wxCoord dy = args_gurax.PickNumber<wxCoord>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->Deflate(dx, dy);
-	return valueThis_gurax.Reference();
+	// Deflate(dx as Coord, dy as Coord):returnThis
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("dx", VTYPE_Number);
+			pDeclCallable->DeclareArg("dy", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord dx = args.PickNumber<wxCoord>();
+		wxCoord dy = args.PickNumber<wxCoord>();
+		pEntity_gurax->Deflate(dx, dy);
+		return valueThis_gurax.Reference();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Deflate(diff as const_Size_r):returnThis
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("diff", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxSize& diff = args.Pick<Value_wxSize>().GetEntity();
+		pEntity_gurax->Deflate(diff);
+		return valueThis_gurax.Reference();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Deflate(diff as Coord):returnThis
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("diff", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord diff = args.PickNumber<wxCoord>();
+		pEntity_gurax->Deflate(diff);
+		return valueThis_gurax.Reference();
+	} while (0);
+	return Value::nil();
 }
 
-// wx.Rect#Inflate(dx as Number, dy as Number)
+// wx.Rect#Inflate(args* as Any)
 Gurax_DeclareMethodAlias(wxRect, Inflate_gurax, "Inflate")
 {
 	Declare(VTYPE_Any, Flag::None);
-	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -836,11 +956,58 @@ Gurax_ImplementMethodEx(wxRect, Inflate_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord dx = args_gurax.PickNumber<wxCoord>();
-	wxCoord dy = args_gurax.PickNumber<wxCoord>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->Inflate(dx, dy);
-	return valueThis_gurax.Reference();
+	// Inflate(dx as Coord, dy as Coord):returnThis
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("dx", VTYPE_Number);
+			pDeclCallable->DeclareArg("dy", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord dx = args.PickNumber<wxCoord>();
+		wxCoord dy = args.PickNumber<wxCoord>();
+		pEntity_gurax->Inflate(dx, dy);
+		return valueThis_gurax.Reference();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Inflate(diff as const_Size_r):returnThis
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("diff", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxSize& diff = args.Pick<Value_wxSize>().GetEntity();
+		pEntity_gurax->Inflate(diff);
+		return valueThis_gurax.Reference();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Inflate(diff as Coord):returnThis
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("diff", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord diff = args.PickNumber<wxCoord>();
+		pEntity_gurax->Inflate(diff);
+		return valueThis_gurax.Reference();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Rect#Offset(dx as Number, dy as Number)
@@ -1029,6 +1196,7 @@ void VType_wxRect::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRect, SetTopRight_gurax));
 	Assign(Gurax_CreateMethod(wxRect, SetBottomLeft_gurax));
 	Assign(Gurax_CreateMethod(wxRect, CentreIn_gurax));
+	Assign(Gurax_CreateMethod(wxRect, CenterIn_gurax));
 	Assign(Gurax_CreateMethod(wxRect, Deflate_gurax));
 	Assign(Gurax_CreateMethod(wxRect, Inflate_gurax));
 	Assign(Gurax_CreateMethod(wxRect, Offset_gurax));
