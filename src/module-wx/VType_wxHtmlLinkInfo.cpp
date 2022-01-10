@@ -28,10 +28,92 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlLinkInfo(href as String, target? as String) {block?} {block?}
+Gurax_DeclareConstructorAlias(HtmlLinkInfo_gurax, "HtmlLinkInfo")
+{
+	Declare(VTYPE_wxHtmlLinkInfo, Flag::None);
+	DeclareArg("href", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("target", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.HtmlLinkInfo.");
+}
+
+Gurax_ImplementConstructorEx(HtmlLinkInfo_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* href = args_gurax.PickString();
+	const char* target = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlLinkInfo(
+		wxHtmlLinkInfo(href, target)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.HtmlLinkInfo#GetHref()
+Gurax_DeclareMethodAlias(wxHtmlLinkInfo, GetHref_gurax, "GetHref")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetHref_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetHref();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.HtmlLinkInfo#GetHtmlCell() {block?}
+Gurax_DeclareMethodAlias(wxHtmlLinkInfo, GetHtmlCell_gurax, "GetHtmlCell")
+{
+	Declare(VTYPE_wxHtmlCell, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetHtmlCell_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlCell(
+		*pEntity_gurax->GetHtmlCell()));
+}
+
+// wx.HtmlLinkInfo#GetTarget()
+Gurax_DeclareMethodAlias(wxHtmlLinkInfo, GetTarget_gurax, "GetTarget")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetTarget_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetTarget();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +129,11 @@ void VType_wxHtmlLinkInfo::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable);
+	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(HtmlLinkInfo_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxHtmlLinkInfo, GetHref_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlLinkInfo, GetHtmlCell_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlLinkInfo, GetTarget_gurax));
 }
 
 //------------------------------------------------------------------------------

@@ -3,4 +3,9 @@
 //==============================================================================
 HtmlLinkInfo = Class(Object) {
 	@include['wx/html/htmlcell.h']
+	__init__(href as const_String_r, target as const_String_r = "")
+	//GetEvent() as MouseEvent_p
+	GetHref() as String
+	GetHtmlCell() as HtmlCell_p
+	GetTarget() as String
 }
