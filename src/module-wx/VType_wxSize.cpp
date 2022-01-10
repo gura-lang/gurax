@@ -316,11 +316,11 @@ Gurax_ImplementMethodEx(wxSize, SetWidth_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.Size#DecBy(pt as wx.Point)
+// wx.Size#DecBy(args* as Any)
 Gurax_DeclareMethodAlias(wxSize, DecBy_gurax, "DecBy")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -334,18 +334,81 @@ Gurax_ImplementMethodEx(wxSize, DecBy_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->DecBy(pt);
-	return Gurax::Value::nil();
+	// DecBy(pt as const_Point_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		pEntity_gurax->DecBy(pt);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DecBy(size as const_Size_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+		pEntity_gurax->DecBy(size);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DecBy(dx as int, dy as int) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("dx", VTYPE_Number);
+			pDeclCallable->DeclareArg("dy", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int dx = args.PickNumber<int>();
+		int dy = args.PickNumber<int>();
+		pEntity_gurax->DecBy(dx, dy);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// DecBy(d as int) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("d", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int d = args.PickNumber<int>();
+		pEntity_gurax->DecBy(d);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
-// wx.Size#IncBy(pt as wx.Point)
+// wx.Size#IncBy(args* as Any)
 Gurax_DeclareMethodAlias(wxSize, IncBy_gurax, "IncBy")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -359,11 +422,74 @@ Gurax_ImplementMethodEx(wxSize, IncBy_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->IncBy(pt);
-	return Gurax::Value::nil();
+	// IncBy(pt as const_Point_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		pEntity_gurax->IncBy(pt);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// IncBy(size as const_Size_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxSize& size = args.Pick<Value_wxSize>().GetEntity();
+		pEntity_gurax->IncBy(size);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// IncBy(dx as int, dy as int) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("dx", VTYPE_Number);
+			pDeclCallable->DeclareArg("dy", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int dx = args.PickNumber<int>();
+		int dy = args.PickNumber<int>();
+		pEntity_gurax->IncBy(dx, dy);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// IncBy(d as int) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("d", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int d = args.PickNumber<int>();
+		pEntity_gurax->IncBy(d);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
