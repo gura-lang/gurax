@@ -4,7 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxHtmlCell.cpp
+	VType_wxHtmlWindow.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -150,12 +150,19 @@ set(SRCFILES_VTYPE
 	VType_wxHeaderCtrlSimple.cpp
 	VType_wxHelpEvent.cpp
 	VType_wxHScrolledWindow.cpp
+	VType_wxHtmlCell.cpp
+	VType_wxHtmlColourCell.cpp
+	VType_wxHtmlContainerCell.cpp
+	VType_wxHtmlFontCell.cpp
 	VType_wxHtmlHelpDialog.cpp
 	VType_wxHtmlHelpFrame.cpp
 	VType_wxHtmlHelpWindow.cpp
 	VType_wxHtmlLinkEvent.cpp
 	VType_wxHtmlLinkInfo.cpp
 	VType_wxHtmlListBox.cpp
+	VType_wxHtmlWidgetCell.cpp
+	VType_wxHtmlWordCell.cpp
+	VType_wxHtmlWordWithTabsCell.cpp
 	VType_wxHVScrolledWindow.cpp
 	VType_wxHyperlinkCtrl.cpp
 	VType_wxIcon.cpp

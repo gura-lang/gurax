@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxHtmlContainerCell.gura
 //==============================================================================
+HtmlContainerCell = Class(HtmlCell) {
+	@include['wx/html/htmlcell.h']
+}

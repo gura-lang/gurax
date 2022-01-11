@@ -1,3 +1,7 @@
 //==============================================================================
-// Misc.gura
+// VType_wxHtmlWindow.gura
 //==============================================================================
+HtmlWindow = Class(ScrolledWindow) {
+	@include['wx/html/htmlwin.h']
+	@mixin[HtmlWindowInterface]
+}

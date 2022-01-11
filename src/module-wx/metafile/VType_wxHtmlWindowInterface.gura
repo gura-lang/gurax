@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxHtmlWindowInterface.gura
 //==============================================================================
+HtmlWindowInterface = Class():mixin {
+	@include['wx/html/htmlwin.h']
+}
