@@ -231,6 +231,58 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetStyle_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.TextCtrl#HitTestPos(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxTextCtrl, HitTestPos_gurax, "HitTestPos")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextCtrl, HitTestPos_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	long pos;
+	wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &pos);
+	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(pos));
+}
+
+// wx.TextCtrl#HitTestCoord(pt as wx.Point)
+Gurax_DeclareMethodAlias(wxTextCtrl, HitTestCoord_gurax, "HitTestCoord")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextCtrl, HitTestCoord_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pt = value_pt.GetEntity();
+	// Function body
+	wxTextCoord col, row;
+	wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &col, &row);
+	return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(col), new Value_Number(row));
+}
+
 // wx.TextCtrl#IsModified()
 Gurax_DeclareMethodAlias(wxTextCtrl, IsModified_gurax, "IsModified")
 {
@@ -361,6 +413,31 @@ Gurax_ImplementMethodEx(wxTextCtrl, OnDropFiles_gurax, processor_gurax, argument
 	// Function body
 	pEntity_gurax->OnDropFiles(event);
 	return Gurax::Value::nil();
+}
+
+// wx.TextCtrl#PositionToXY(pos as Number)
+Gurax_DeclareMethodAlias(wxTextCtrl, PositionToXY_gurax, "PositionToXY")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextCtrl, PositionToXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long pos = args_gurax.PickNumber<long>();
+	// Function body
+	long x, y;
+	bool rtn = pEntity_gurax->PositionToXY(pos, &x, &y);
+	return rtn? Value_Tuple::Create(new Value_Number(x), new Value_Number(y)) : Value::nil();
 }
 
 // wx.TextCtrl#PositionToCoords(pos as Number) {block?}
@@ -1426,12 +1503,15 @@ void VType_wxTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetLineText_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetNumberOfLines_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetStyle_gurax));
+	Assign(Gurax_CreateMethod(wxTextCtrl, HitTestPos_gurax));
+	Assign(Gurax_CreateMethod(wxTextCtrl, HitTestCoord_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, IsModified_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, IsMultiLine_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, IsSingleLine_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, LoadFile_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, MarkDirty_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, OnDropFiles_gurax));
+	Assign(Gurax_CreateMethod(wxTextCtrl, PositionToXY_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, PositionToCoords_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, SaveFile_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, SetDefaultStyle_gurax));

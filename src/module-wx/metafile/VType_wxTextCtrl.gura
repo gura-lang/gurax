@@ -12,15 +12,30 @@ TextCtrl = Class(Control) {
 	GetLineText(lineNo as long) as String
 	GetNumberOfLines() as int
 	GetStyle(position as long, style as TextAttr_r) as bool
-	//HitTest(pt as const_Point_r, pos as long_p) as TextCtrlHitTestResult
-	//HitTest(pt as const_Point_r, col as TextCoord_p, row as TextCoord_p) as TextCtrlHitTestResult
+	HitTestPos(pt as const_Point_r) as Tuple@gurax = \
+		R'''
+		long pos;
+		wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &pos);
+		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(pos));
+		'''
+	HitTestCoord(pt as const_Point_r) as Tuple@gurax = \
+		R'''
+		wxTextCoord col, row;
+		wxTextCtrlHitTestResult rtn = pEntity_gurax->HitTest(pt, &col, &row);
+		return Value_Tuple::Create(new Value_Number(rtn), new Value_Number(col), new Value_Number(row));
+		'''
 	IsModified() as bool
 	IsMultiLine() as bool
 	IsSingleLine() as bool
 	LoadFile(filename as const_String_r, fileType as int = wxTEXT_TYPE_ANY) as bool
 	MarkDirty() as void
 	OnDropFiles(event as DropFilesEvent_r) as void
-	//PositionToXY(pos as long, x as long_p, y as long_p) as bool
+	PositionToXY(pos as long) as Tuple@gurax = \
+		R'''
+		long x, y;
+		bool rtn = pEntity_gurax->PositionToXY(pos, &x, &y);
+		return rtn? Value_Tuple::Create(new Value_Number(x), new Value_Number(y)) : Value::nil();
+		'''
 	PositionToCoords(pos as long) as Point
 	SaveFile(filename as const_String_r = '', fileType as int = wxTEXT_TYPE_ANY) as bool
 	SetDefaultStyle(style as const_TextAttr_r) as bool
