@@ -2,9 +2,47 @@
 // VType_wxPen.gura
 //==============================================================================
 Pen = Class(GDIObject) {
+	__init__(args* as any) = \
+		R'''
+		// wx.Pen(colour as const_Colour_r, width as int = 1, style as PenStyle = wxPENSTYLE_SOLID)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("colour", VTYPE_wxColour);
+				pDeclCallable->DeclareArg("width", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxColour& colour = args.Pick<Value_wxColour>().GetEntity();
+			int width = args.IsValid()? args.PickNumber<int>() : 1;
+			wxPenStyle style = args.IsValid()? args.PickNumber<wxPenStyle>() : wxPENSTYLE_SOLID;
+			return new Value_wxPen(wxPen(colour, width, style));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wx.Pen(stipple as const_Bitmap_r, width as int)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("stipple", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxBitmap& stipple = args.Pick<Value_wxBitmap>().GetEntity();
+			int width = args.IsValid()? args.PickNumber<int>() : 1;
+			return new Value_wxPen(wxPen(stipple, width));
+		} while (0);
+		return Value::nil();
+		'''
 	GetCap() as PenCap
 	GetColour() as Colour
-	//GetDashes(dashes as Dash_p_p) as int
 	GetDashes() as List@gurax = \
 		R'''
 		wxDash* dashes;
@@ -19,7 +57,6 @@ Pen = Class(GDIObject) {
 	IsNonTransparent() as bool
 	IsTransparent() as bool
 	SetCap(capStyle as PenCap) as void
-	//SetDashes(n as int, dash as const_Dash_p) as void
 	SetDashes(dash[] as Dash) as void = \
 		R'''
 		int n = dash.sizeT<int>();
@@ -30,8 +67,45 @@ Pen = Class(GDIObject) {
 	SetStipple(stipple as const_Bitmap_r) as void
 	SetStyle(style as PenStyle) as void
 	SetWidth(width as int) as void
-	SetColour(colour as Colour_r) as void
-	SetColourRGB(red as unsigned_char, green as unsigned_char, blue as unsigned_char) as void = SetColour
+	SetColour(args* as any) as void = \
+		R'''
+		// SetColour(colour as Colour_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("colour", VTYPE_wxColour);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxColour& colour = args.Pick<Value_wxColour>().GetEntity();
+			pEntity_gurax->SetColour(colour);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// SetColour(red as unsigned_char, green as unsigned_char, blue as unsigned_char) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("red", VTYPE_Number);
+				pDeclCallable->DeclareArg("green", VTYPE_Number);
+				pDeclCallable->DeclareArg("blue", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			unsigned char red = args.PickNumber<unsigned char>();
+			unsigned char green = args.PickNumber<unsigned char>();
+			unsigned char blue = args.PickNumber<unsigned char>();
+			pEntity_gurax->SetColour(red, green, blue);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 }
 
 @enum {

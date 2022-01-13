@@ -1010,12 +1010,11 @@ Gurax_ImplementMethodEx(wxRect, Inflate_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.Rect#Offset(dx as Number, dy as Number)
+// wx.Rect#Offset(args* as Any)
 Gurax_DeclareMethodAlias(wxRect, Offset_gurax, "Offset")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -1029,11 +1028,42 @@ Gurax_ImplementMethodEx(wxRect, Offset_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord dx = args_gurax.PickNumber<wxCoord>();
-	wxCoord dy = args_gurax.PickNumber<wxCoord>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->Offset(dx, dy);
-	return Gurax::Value::nil();
+	// Offset(dx as Coord, dy as Coord) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("dx", VTYPE_Number);
+			pDeclCallable->DeclareArg("dy", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord dx = args.PickNumber<wxCoord>();
+		wxCoord dy = args.PickNumber<wxCoord>();
+		pEntity_gurax->Offset(dx, dy);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Offset(pt as const_Point_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		pEntity_gurax->Offset(pt);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Rect#Union(rect as wx.Rect)

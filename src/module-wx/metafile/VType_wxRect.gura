@@ -195,8 +195,43 @@ Rect = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	Offset(dx as Coord, dy as Coord) as void
-	//Offset(pt as const_Point_r) as void
+	Offset(args* as any) as void = \
+		R'''
+		// Offset(dx as Coord, dy as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("dx", VTYPE_Number);
+				pDeclCallable->DeclareArg("dy", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord dx = args.PickNumber<wxCoord>();
+			wxCoord dy = args.PickNumber<wxCoord>();
+			pEntity_gurax->Offset(dx, dy);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Offset(pt as const_Point_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			pEntity_gurax->Offset(pt);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 	Union(rect as const_Rect_r):returnThis
 	//Union(rect as const_Rect_r):returnThis
 	width.getter as int = \

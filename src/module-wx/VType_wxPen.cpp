@@ -28,6 +28,60 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.Pen(args* as Any) {block?} {block?}
+Gurax_DeclareConstructorAlias(Pen_gurax, "Pen")
+{
+	Declare(VTYPE_wxPen, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.Pen.");
+}
+
+Gurax_ImplementConstructorEx(Pen_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// wx.Pen(colour as const_Colour_r, width as int = 1, style as PenStyle = wxPENSTYLE_SOLID)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("colour", VTYPE_wxColour);
+			pDeclCallable->DeclareArg("width", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxColour& colour = args.Pick<Value_wxColour>().GetEntity();
+		int width = args.IsValid()? args.PickNumber<int>() : 1;
+		wxPenStyle style = args.IsValid()? args.PickNumber<wxPenStyle>() : wxPENSTYLE_SOLID;
+		return new Value_wxPen(wxPen(colour, width, style));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wx.Pen(stipple as const_Bitmap_r, width as int)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("stipple", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("width", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxBitmap& stipple = args.Pick<Value_wxBitmap>().GetEntity();
+		int width = args.IsValid()? args.PickNumber<int>() : 1;
+		return new Value_wxPen(wxPen(stipple, width));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -381,11 +435,11 @@ Gurax_ImplementMethodEx(wxPen, SetWidth_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.Pen#SetColour(colour as wx.Colour)
+// wx.Pen#SetColour(args* as Any)
 Gurax_DeclareMethodAlias(wxPen, SetColour_gurax, "SetColour")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -399,39 +453,44 @@ Gurax_ImplementMethodEx(wxPen, SetColour_gurax, processor_gurax, argument_gurax)
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
-	wxColour& colour = value_colour.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->SetColour(colour);
-	return Gurax::Value::nil();
-}
-
-// wx.Pen#SetColourRGB(red as Number, green as Number, blue as Number)
-Gurax_DeclareMethodAlias(wxPen, SetColourRGB_gurax, "SetColourRGB")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPen, SetColourRGB_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	unsigned char red = args_gurax.PickNumber<unsigned char>();
-	unsigned char green = args_gurax.PickNumber<unsigned char>();
-	unsigned char blue = args_gurax.PickNumber<unsigned char>();
-	// Function body
-	pEntity_gurax->SetColour(red, green, blue);
-	return Gurax::Value::nil();
+	// SetColour(colour as Colour_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("colour", VTYPE_wxColour);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxColour& colour = args.Pick<Value_wxColour>().GetEntity();
+		pEntity_gurax->SetColour(colour);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// SetColour(red as unsigned_char, green as unsigned_char, blue as unsigned_char) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("red", VTYPE_Number);
+			pDeclCallable->DeclareArg("green", VTYPE_Number);
+			pDeclCallable->DeclareArg("blue", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		unsigned char red = args.PickNumber<unsigned char>();
+		unsigned char green = args.PickNumber<unsigned char>();
+		unsigned char blue = args.PickNumber<unsigned char>();
+		pEntity_gurax->SetColour(red, green, blue);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -448,7 +507,7 @@ void VType_wxPen::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGDIObject, Flag::Mutable);
+	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Pen_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxPen, GetCap_gurax));
 	Assign(Gurax_CreateMethod(wxPen, GetColour_gurax));
@@ -467,7 +526,6 @@ void VType_wxPen::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxPen, SetStyle_gurax));
 	Assign(Gurax_CreateMethod(wxPen, SetWidth_gurax));
 	Assign(Gurax_CreateMethod(wxPen, SetColour_gurax));
-	Assign(Gurax_CreateMethod(wxPen, SetColourRGB_gurax));
 }
 
 //------------------------------------------------------------------------------
