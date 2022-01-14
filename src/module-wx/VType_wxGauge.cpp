@@ -70,6 +70,201 @@ Gurax_ImplementConstructorEx(Gauge_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Gauge#GetRange()
+Gurax_DeclareMethodAlias(wxGauge, GetRange_gurax, "GetRange")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, GetRange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetRange();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Gauge#GetShadowWidth()
+Gurax_DeclareMethodAlias(wxGauge, GetShadowWidth_gurax, "GetShadowWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, GetShadowWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetShadowWidth();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Gauge#GetValue()
+Gurax_DeclareMethodAlias(wxGauge, GetValue_gurax, "GetValue")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, GetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetValue();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Gauge#IsVertical()
+Gurax_DeclareMethodAlias(wxGauge, IsVertical_gurax, "IsVertical")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, IsVertical_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsVertical();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Gauge#Pulse()
+Gurax_DeclareMethodAlias(wxGauge, Pulse_gurax, "Pulse")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, Pulse_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Pulse();
+	return Gurax::Value::nil();
+}
+
+// wx.Gauge#SetBezelFace(width as Number)
+Gurax_DeclareMethodAlias(wxGauge, SetBezelFace_gurax, "SetBezelFace")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, SetBezelFace_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetBezelFace(width);
+	return Gurax::Value::nil();
+}
+
+// wx.Gauge#SetRange(range as Number)
+Gurax_DeclareMethodAlias(wxGauge, SetRange_gurax, "SetRange")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, SetRange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int range = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetRange(range);
+	return Gurax::Value::nil();
+}
+
+// wx.Gauge#SetShadowWidth(width as Number)
+Gurax_DeclareMethodAlias(wxGauge, SetShadowWidth_gurax, "SetShadowWidth")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, SetShadowWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetShadowWidth(width);
+	return Gurax::Value::nil();
+}
+
+// wx.Gauge#SetValue(pos as Number)
+Gurax_DeclareMethodAlias(wxGauge, SetValue_gurax, "SetValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, SetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int pos = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetValue(pos);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -87,6 +282,15 @@ void VType_wxGauge::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Gauge_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGauge, GetRange_gurax));
+	Assign(Gurax_CreateMethod(wxGauge, GetShadowWidth_gurax));
+	Assign(Gurax_CreateMethod(wxGauge, GetValue_gurax));
+	Assign(Gurax_CreateMethod(wxGauge, IsVertical_gurax));
+	Assign(Gurax_CreateMethod(wxGauge, Pulse_gurax));
+	Assign(Gurax_CreateMethod(wxGauge, SetBezelFace_gurax));
+	Assign(Gurax_CreateMethod(wxGauge, SetRange_gurax));
+	Assign(Gurax_CreateMethod(wxGauge, SetShadowWidth_gurax));
+	Assign(Gurax_CreateMethod(wxGauge, SetValue_gurax));
 }
 
 //------------------------------------------------------------------------------

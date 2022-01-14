@@ -28,6 +28,56 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.Brush(args* as Any) {block?} {block?}
+Gurax_DeclareConstructorAlias(Brush_gurax, "Brush")
+{
+	Declare(VTYPE_wxBrush, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.Brush.");
+}
+
+Gurax_ImplementConstructorEx(Brush_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// wx.Brush(colour as const_Colour_r, style as BrushStyle = wxBRUSHSTYLE_SOLID)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("colour", VTYPE_wxColour);
+			pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxColour& colour = args.Pick<Value_wxColour>().GetEntity();
+		wxBrushStyle style = args.IsValid()? args.PickNumber<wxBrushStyle>() : wxBRUSHSTYLE_SOLID;
+		return new Value_wxBrush(wxBrush(colour, style));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wx.Pen(stippleBitmap as const_Bitmap_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("stippleBitmap", VTYPE_wxBitmap);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxBitmap& stippleBitmap = args.Pick<Value_wxBitmap>().GetEntity();
+		return new Value_wxBrush(wxBrush(stippleBitmap));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -290,7 +340,7 @@ void VType_wxBrush::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGDIObject, Flag::Mutable);
+	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Brush_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxBrush, GetColour_gurax));
 	Assign(Gurax_CreateMethod(wxBrush, GetStipple_gurax));

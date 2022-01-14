@@ -381,6 +381,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("FRAME_SHAPED", new Value_Number(wxFRAME_SHAPED));
 	frame.Assign("FRAME_TOOL_WINDOW", new Value_Number(wxFRAME_TOOL_WINDOW));
 	frame.Assign("FULL_REPAINT_ON_RESIZE", new Value_Number(wxFULL_REPAINT_ON_RESIZE));
+	frame.Assign("GA_HORIZONTAL", new Value_Number(wxGA_HORIZONTAL));
+	frame.Assign("GA_SMOOTH", new Value_Number(wxGA_SMOOTH));
+	frame.Assign("GA_VERTICAL", new Value_Number(wxGA_VERTICAL));
 	frame.Assign("GROW", new Value_Number(wxGROW));
 	frame.Assign("HELP", new Value_Number(wxHELP));
 	frame.Assign("HORIZONTAL", new Value_Number(wxHORIZONTAL));

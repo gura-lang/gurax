@@ -2,6 +2,41 @@
 // VType_wxBrush.gura
 //==============================================================================
 Brush = Class(GDIObject) {
+	__init__(args* as any) = \
+		R'''
+		// wx.Brush(colour as const_Colour_r, style as BrushStyle = wxBRUSHSTYLE_SOLID)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("colour", VTYPE_wxColour);
+				pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxColour& colour = args.Pick<Value_wxColour>().GetEntity();
+			wxBrushStyle style = args.IsValid()? args.PickNumber<wxBrushStyle>() : wxBRUSHSTYLE_SOLID;
+			return new Value_wxBrush(wxBrush(colour, style));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wx.Pen(stippleBitmap as const_Bitmap_r)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("stippleBitmap", VTYPE_wxBitmap);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxBitmap& stippleBitmap = args.Pick<Value_wxBitmap>().GetEntity();
+			return new Value_wxBrush(wxBrush(stippleBitmap));
+		} while (0);
+		return Value::nil();
+		'''
 	GetColour() as Colour
 	GetStipple() as Bitmap_p
 	GetStyle() as BrushStyle

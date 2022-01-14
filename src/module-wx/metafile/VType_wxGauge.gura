@@ -4,4 +4,19 @@
 Gauge = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, range as int, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxGA_HORIZONTAL, validator as Validator = wxDefaultValidator, name as String = wxGaugeNameStr)
+	GetRange() as int
+	GetShadowWidth() as int
+	GetValue() as int
+	IsVertical() as bool
+	Pulse() as void
+	SetBezelFace(width as int) as void
+	SetRange(range as int) as void
+	SetShadowWidth(width as int) as void
+	SetValue(pos as int) as void
+}
+
+@const { // Styles
+	GA_HORIZONTAL
+	GA_VERTICAL
+	GA_SMOOTH
 }
