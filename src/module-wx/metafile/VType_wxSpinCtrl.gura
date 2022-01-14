@@ -22,6 +22,8 @@ SpinCtrl = Class(Control) {
 }
 
 @const { // Styles
+	SP_HORIZONTAL
+	SP_VERTICAL
 	SP_ARROW_KEYS
 	SP_WRAP
 }

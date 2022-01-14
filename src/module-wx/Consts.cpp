@@ -877,6 +877,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("SL_VERTICAL", new Value_Number(wxSL_VERTICAL));
 	frame.Assign("SOUTH", new Value_Number(wxSOUTH));
 	frame.Assign("SP_ARROW_KEYS", new Value_Number(wxSP_ARROW_KEYS));
+	frame.Assign("SP_HORIZONTAL", new Value_Number(wxSP_HORIZONTAL));
+	frame.Assign("SP_VERTICAL", new Value_Number(wxSP_VERTICAL));
 	frame.Assign("SP_WRAP", new Value_Number(wxSP_WRAP));
 	frame.Assign("SRC_INVERT", new Value_Number(wxSRC_INVERT));
 	frame.Assign("STATIC_BORDER", new Value_Number(wxSTATIC_BORDER));

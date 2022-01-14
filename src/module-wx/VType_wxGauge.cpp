@@ -70,6 +70,26 @@ Gurax_ImplementConstructorEx(Gauge_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Gauge#GetBezelFace()
+Gurax_DeclareMethodAlias(wxGauge, GetBezelFace_gurax, "GetBezelFace")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGauge, GetBezelFace_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetBezelFace();
+	return new Gurax::Value_Number(rtn);
+}
+
 // wx.Gauge#GetRange()
 Gurax_DeclareMethodAlias(wxGauge, GetRange_gurax, "GetRange")
 {
@@ -282,6 +302,7 @@ void VType_wxGauge::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Gauge_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGauge, GetBezelFace_gurax));
 	Assign(Gurax_CreateMethod(wxGauge, GetRange_gurax));
 	Assign(Gurax_CreateMethod(wxGauge, GetShadowWidth_gurax));
 	Assign(Gurax_CreateMethod(wxGauge, GetValue_gurax));

@@ -67,6 +67,115 @@ Gurax_ImplementConstructorEx(SpinButton_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.SpinButton#GetMax()
+Gurax_DeclareMethodAlias(wxSpinButton, GetMax_gurax, "GetMax")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSpinButton, GetMax_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetMax();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.SpinButton#GetMin()
+Gurax_DeclareMethodAlias(wxSpinButton, GetMin_gurax, "GetMin")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSpinButton, GetMin_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetMin();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.SpinButton#GetValue()
+Gurax_DeclareMethodAlias(wxSpinButton, GetValue_gurax, "GetValue")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSpinButton, GetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetValue();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.SpinButton#SetRange(min as Number, max as Number)
+Gurax_DeclareMethodAlias(wxSpinButton, SetRange_gurax, "SetRange")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("max", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSpinButton, SetRange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int min = args_gurax.PickNumber<int>();
+	int max = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetRange(min, max);
+	return Gurax::Value::nil();
+}
+
+// wx.SpinButton#SetValue(value as Number)
+Gurax_DeclareMethodAlias(wxSpinButton, SetValue_gurax, "SetValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSpinButton, SetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int value = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetValue(value);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -84,6 +193,11 @@ void VType_wxSpinButton::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(SpinButton_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxSpinButton, GetMax_gurax));
+	Assign(Gurax_CreateMethod(wxSpinButton, GetMin_gurax));
+	Assign(Gurax_CreateMethod(wxSpinButton, GetValue_gurax));
+	Assign(Gurax_CreateMethod(wxSpinButton, SetRange_gurax));
+	Assign(Gurax_CreateMethod(wxSpinButton, SetValue_gurax));
 }
 
 //------------------------------------------------------------------------------

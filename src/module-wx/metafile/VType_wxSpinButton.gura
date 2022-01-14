@@ -5,4 +5,15 @@ SpinButton = Class(Control) {
 	@include['wx/spinbutt.h']
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxSP_VERTICAL, name as String = 'wxSpinButton')
+	GetMax() as int
+	GetMin() as int
+	GetValue() as int
+	SetRange(min as int, max as int) as void
+	SetValue(value as int) as void
+}
+
+@event {
+	EVT_SPIN >> SpinEvent
+	EVT_SPIN_UP >> SpinEvent
+	EVT_SPIN_DOWN >> SpinEvent
 }

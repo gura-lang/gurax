@@ -4,6 +4,7 @@
 Gauge = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, range as int, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxGA_HORIZONTAL, validator as Validator = wxDefaultValidator, name as String = wxGaugeNameStr)
+	GetBezelFace() as int
 	GetRange() as int
 	GetShadowWidth() as int
 	GetValue() as int

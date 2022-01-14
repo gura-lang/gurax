@@ -152,8 +152,11 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_SIZE,							wxSizeEvent);
 	Gurax_AssignEvent(EVT_SLIDER,						wxCommandEvent);
 	Gurax_AssignEvent(EVT_SPIN,							wxSpinEvent);
+	Gurax_AssignEvent(EVT_SPIN,							wxSpinEvent);
 	Gurax_AssignEvent(EVT_SPINCTRL,						wxSpinEvent);
 	Gurax_AssignEvent(EVT_SPIN_DOWN,					wxSpinEvent);
+	Gurax_AssignEvent(EVT_SPIN_DOWN,					wxSpinEvent);
+	Gurax_AssignEvent(EVT_SPIN_UP,						wxSpinEvent);
 	Gurax_AssignEvent(EVT_SPIN_UP,						wxSpinEvent);
 	Gurax_AssignEvent(EVT_STC_AUTOCOMP_CANCELLED,		wxStyledTextEvent);
 	Gurax_AssignEvent(EVT_STC_AUTOCOMP_CHAR_DELETED,	wxStyledTextEvent);
