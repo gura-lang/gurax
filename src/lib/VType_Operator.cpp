@@ -126,6 +126,59 @@ Gurax_ImplementClassMethod(Operator, UnaryPost)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// Operator#Assign(args as Any) as void
+Gurax_DeclareMethod(Operator, Assign)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Operator, Assign)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Operator& op = valueThis.GetOperator();
+	ArgPicker args(argument);
+	const ValueList& args_ = args.PickList();
+	// Function body
+	if (op.IsUnary() || op.IsUnaryPost() || op.IsMathUnary()) {
+		// Operator#Assign(vtype as VType, funct as Any) as void
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("vtype", VTYPE_VType);
+			pDeclCallable->DeclareArg("funct", VTYPE_Any);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor, args_)) return Value::nil();
+		ArgPicker args(*pArgument);
+		VType& vtype = args.Pick<Value_VType>().GetVTypeOfEntity();
+		Value& valueFunct = args.PickValue();
+		op.AssignEntry(vtype, new OpEntryCustom_Unary(valueFunct.Reference()));
+		return Value::nil();
+	} else {
+		// Operator#Assign(vtypeL as VType, vtypeR as VType, funct as Any) as void
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("vtypeL", VTYPE_VType);
+			pDeclCallable->DeclareArg("vtypeR", VTYPE_VType);
+			pDeclCallable->DeclareArg("funct", VTYPE_Any);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor, args_)) return Value::nil();
+		ArgPicker args(*pArgument);
+		VType& vtypeL = args.Pick<Value_VType>().GetVTypeOfEntity();
+		VType& vtypeR = args.Pick<Value_VType>().GetVTypeOfEntity();
+		Value& valueFunct = args.PickValue();
+		op.AssignEntry(vtypeL, vtypeR, new OpEntryCustom_Binary(valueFunct.Reference()));
+		return Value::nil();
+	}
+}
+
 // Operator#IsBinary()
 Gurax_DeclareMethod(Operator, IsBinary)
 {
@@ -263,6 +316,7 @@ void VType_Operator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Operator, Unary));
 	Assign(Gurax_CreateMethod(Operator, UnaryPost));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Operator, Assign));
 	Assign(Gurax_CreateMethod(Operator, IsBinary));
 	Assign(Gurax_CreateMethod(Operator, IsMath));
 	Assign(Gurax_CreateMethod(Operator, IsUnary));

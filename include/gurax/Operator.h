@@ -160,6 +160,28 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// OpEntryCustom_Unary
+//------------------------------------------------------------------------------
+class OpEntryCustom_Unary : public OpEntry {
+private:
+	RefPtr<Value> _pValueFunct;
+public:
+	OpEntryCustom_Unary(Value* pValueFunct) : _pValueFunct(pValueFunct) {}
+	virtual Value* EvalUnary(Processor& processor, Value& value) const override;
+};
+
+//------------------------------------------------------------------------------
+// OpEntryCustom_Binary
+//------------------------------------------------------------------------------
+class OpEntryCustom_Binary : public OpEntry {
+private:
+	RefPtr<Value> _pValueFunct;
+public:
+	OpEntryCustom_Binary(Value* pValueFunct) : _pValueFunct(pValueFunct) {}
+	virtual Value* EvalBinary(Processor& processor, Value& valueL, Value& valueR) const override;
+};
+
+//------------------------------------------------------------------------------
 // OpEntryMap
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE OpEntryMap {
