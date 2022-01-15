@@ -75,3 +75,12 @@ TestCase('Constructor') {
 	Tester(`Operator.Math(`Tanh))
 	Tester(`Operator.Math(`Unitstep))
 }
+
+TestCase('Operator#Assign()') {
+	Operator.Unary(`-).Assign(String, &{$str.Each().Reverse().Join()})
+	Operator.Binary(`+).Assign(String, Number, &{$str.Left($n)})
+	Operator.Binary(`-).Assign(String, Number, &{$str.Right($n)})
+	Tester(`(-'A quick brown fox jumps over the lazy dog.'))
+	Tester(`('A quick brown fox jumps over the lazy dog.' + 10))
+	Tester(`('A quick brown fox jumps over the lazy dog.' - 10))
+}

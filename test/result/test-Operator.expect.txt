@@ -1,0 +1,77 @@
+======== Constructor ========
+Operator.Unary(`~) .. <Operator:Unary:Inv:~:(a as Any):map>
+Operator.Unary(`-) .. <Operator:Unary:Neg:-:(a as Any):map>
+Operator.Unary(`!) .. <Operator:Unary:Not:!:(a as Any):map>
+Operator.Unary(`+) .. <Operator:Unary:Pos:+:(a as Any):map>
+Operator.Unary(`?) .. <Operator:Unary:Question:?:(a as Any):map>
+Operator.UnaryPost(`%) .. <Operator:UnaryPost:PostMod:%:(a as Any):map>
+Operator.UnaryPost(`%%) .. <Operator:UnaryPost:PostModMod:%%:(a as Any):map>
+Operator.UnaryPost(`*) .. <Operator:UnaryPost:PostMul:*:(a as Any):map>
+Operator.UnaryPost(`+) .. <Operator:UnaryPost:PostPos:+:(a as Any):map>
+Operator.UnaryPost(`?) .. <Operator:UnaryPost:PostQuestion:?:(a as Any):map>
+Operator.UnaryPost(`..) .. <Operator:UnaryPost:PostSeq:..:(a as Any):map>
+Operator.Binary(`+) .. <Operator:Binary:Add:+:(a as Any,b as Any):map>
+Operator.Binary(`&) .. <Operator:Binary:And:&:(a as Any,b as Any):map>
+Operator.Binary(`&&) .. <Operator:Binary:AndAnd:&&:(a as Any,b as Any)>
+Operator.Binary(`<=>) .. <Operator:Binary:Cmp:<=>:(a as Any,b as Any):map>
+Operator.Binary(`|+|) .. <Operator:Binary:Concat:|+|:(a as Any,b as Any)>
+Operator.Binary(`in) .. <Operator:Binary:Contains:in:(a as Any,b as Any)>
+Operator.Binary(`|^|) .. <Operator:Binary:Cross:|^|:(a as Any,b as Any)>
+Operator.Binary(`|-|) .. <Operator:Binary:Difference:|-|:(a as Any,b as Any)>
+Operator.Binary(`/) .. <Operator:Binary:Div:/:(a as Any,b as Any):map>
+Operator.Binary(`|.|) .. <Operator:Binary:Dot:|.|:(a as Any,b as Any)>
+Operator.Binary(`==) .. <Operator:Binary:Eq:==:(a as Any,b as Any):map>
+Operator.Binary(`|*|) .. <Operator:Binary:Gear:|*|:(a as Any,b as Any)>
+Operator.Binary(`>=) .. <Operator:Binary:Ge:>=:(a as Any,b as Any):map>
+Operator.Binary(`>) .. <Operator:Binary:Gt:>:(a as Any,b as Any):map>
+Operator.Binary(`|&|) .. <Operator:Binary:Intersection:|&|:(a as Any,b as Any)>
+Operator.Binary(`<=) .. <Operator:Binary:Le:<=:(a as Any,b as Any):map>
+Operator.Binary(`<) .. <Operator:Binary:Lt:<:(a as Any,b as Any):map>
+Operator.Binary(`%) .. <Operator:Binary:Mod:%:(a as Any,b as Any):map>
+Operator.Binary(`%%) .. <Operator:Binary:ModMod:%%:(a as Any,b as Any):map>
+Operator.Binary(`*) .. <Operator:Binary:Mul:*:(a as Any,b as Any):map>
+Operator.Binary(`!=) .. <Operator:Binary:Ne:!=:(a as Any,b as Any):map>
+Operator.Binary(`|) .. <Operator:Binary:Or:|:(a as Any,b as Any):map>
+Operator.Binary(`||) .. <Operator:Binary:OrOr:||:(a as Any,b as Any)>
+Operator.Binary(`=>) .. <Operator:Binary:Pair:=>:(a as Any,b as Any)>
+Operator.Binary(`**) .. <Operator:Binary:Pow:**:(a as Any,b as Any):map>
+Operator.Binary(`..) .. <Operator:Binary:Seq:..:(a as Any,b as Any):map>
+Operator.Binary(`<<) .. <Operator:Binary:Shl:<<:(a as Any,b as Any):map>
+Operator.Binary(`>>) .. <Operator:Binary:Shr:>>:(a as Any,b as Any):map>
+Operator.Binary(`-) .. <Operator:Binary:Sub:-:(a as Any,b as Any):map>
+Operator.Binary(`|||) .. <Operator:Binary:Union:|||:(a as Any,b as Any)>
+Operator.Binary(`^) .. <Operator:Binary:Xor:^:(a as Any,b as Any):map>
+Operator.Math(`Abs) .. <Operator:MathUnary:Abs:(a as Any):map>
+Operator.Math(`Acos) .. <Operator:MathUnary:Acos:(a as Any):map>
+Operator.Math(`Arg) .. <Operator:MathUnary:Arg:(a as Any):map>
+Operator.Math(`Asin) .. <Operator:MathUnary:Asin:(a as Any):map>
+Operator.Math(`Atan) .. <Operator:MathUnary:Atan:(a as Any):map>
+Operator.Math(`Atan2) .. <Operator:MathBinary:Atan2:(a as Any,b as Any):map>
+Operator.Math(`Ceil) .. <Operator:MathUnary:Ceil:(a as Any):map>
+Operator.Math(`Conj) .. <Operator:MathUnary:Conj:(a as Any):map>
+Operator.Math(`Cos) .. <Operator:MathUnary:Cos:(a as Any):map>
+Operator.Math(`Cosh) .. <Operator:MathUnary:Cosh:(a as Any):map>
+Operator.Math(`Covariance) .. <Operator:MathUnary:Covariance:(a as Any):map>
+Operator.Math(`Cross) .. <Operator:MathUnary:Cross:(a as Any):map>
+Operator.Math(`Delta) .. <Operator:MathUnary:Delta:(a as Any):map>
+Operator.Math(`Dot) .. <Operator:MathUnary:Dot:(a as Any):map>
+Operator.Math(`Exp) .. <Operator:MathUnary:Exp:(a as Any):map>
+Operator.Math(`Floor) .. <Operator:MathUnary:Floor:(a as Any):map>
+Operator.Math(`Hypot) .. <Operator:MathBinary:Hypot:(a as Any,b as Any):map>
+Operator.Math(`Imag) .. <Operator:MathUnary:Imag:(a as Any):map>
+Operator.Math(`Log) .. <Operator:MathUnary:Log:(a as Any):map>
+Operator.Math(`Log10) .. <Operator:MathUnary:Log10:(a as Any):map>
+Operator.Math(`Norm) .. <Operator:MathUnary:Norm:(a as Any):map>
+Operator.Math(`Real) .. <Operator:MathUnary:Real:(a as Any):map>
+Operator.Math(`Relu) .. <Operator:MathUnary:Relu:(a as Any):map>
+Operator.Math(`Sigmoid) .. <Operator:MathUnary:Sigmoid:(a as Any):map>
+Operator.Math(`Sin) .. <Operator:MathUnary:Sin:(a as Any):map>
+Operator.Math(`Sinh) .. <Operator:MathUnary:Sinh:(a as Any):map>
+Operator.Math(`Sqrt) .. <Operator:MathUnary:Sqrt:(a as Any):map>
+Operator.Math(`Tan) .. <Operator:MathUnary:Tan:(a as Any):map>
+Operator.Math(`Tanh) .. <Operator:MathUnary:Tanh:(a as Any):map>
+Operator.Math(`Unitstep) .. <Operator:MathUnary:Unitstep:(a as Any):map>
+======== Operator#Assign() ========
+-'A quick brown fox jumps over the lazy dog.' .. .god yzal eht revo spmuj xof nworb kciuq A
+'A quick brown fox jumps over the lazy dog.' + 10 .. A quick br
+'A quick brown fox jumps over the lazy dog.' - 10 ..  lazy dog.

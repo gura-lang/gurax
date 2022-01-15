@@ -155,7 +155,7 @@ Gurax_ImplementMethod(Operator, Assign)
 		RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor, args_)) return Value::nil();
 		ArgPicker args(*pArgument);
-		VType& vtype = args.Pick<Value_VType>().GetVTypeOfEntity();
+		VType& vtype = args.Pick<Value_VType>().GetVTypeThis();
 		Value& valueFunct = args.PickValue();
 		op.AssignEntry(vtype, new OpEntryCustom_Unary(valueFunct.Reference()));
 		return Value::nil();
@@ -171,8 +171,8 @@ Gurax_ImplementMethod(Operator, Assign)
 		RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor, args_)) return Value::nil();
 		ArgPicker args(*pArgument);
-		VType& vtypeL = args.Pick<Value_VType>().GetVTypeOfEntity();
-		VType& vtypeR = args.Pick<Value_VType>().GetVTypeOfEntity();
+		VType& vtypeL = args.Pick<Value_VType>().GetVTypeThis();
+		VType& vtypeR = args.Pick<Value_VType>().GetVTypeThis();
 		Value& valueFunct = args.PickValue();
 		op.AssignEntry(vtypeL, vtypeR, new OpEntryCustom_Binary(valueFunct.Reference()));
 		return Value::nil();
