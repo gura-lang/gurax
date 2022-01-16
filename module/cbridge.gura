@@ -343,7 +343,37 @@ Gurax_ImplementFunctionEx(${funcInfo.name}_gurax, processor_gurax, argument_gura
 }
 '''
 
+tmplOpUnaryImplementation = tR'''
+Gurax_ImplementOpUnary(${funcInfo.name}, ${funcInfo.argInfoTbl[0].typeInfo.vtype}, ${funcInfo.argInfoTbl[1].typeInfo.vtype})
+{
+	//const Array& elemL = Value_Array::GetArray(valueL);
+	//const Array& elemR = Value_Array::GetArray(valueR);
+	//auto elemResult = elemL ${operator.symbol} elemR;
+	//return new Value_Array(elemResult);
+	return Value::nil();
+}
+'''
+
+tmplOpBinaryImplementation = tR'''
+Gurax_ImplementOpBinary(${funcInfo.name}, ${funcInfo.argInfoTbl[0].typeInfo.vtype})
+{
+	//const Array& elemL = Value_Array::GetArray(valueL);
+	//const Array& elemR = Value_Array::GetArray(valueR);
+	//auto elemResult = elemL ${operator.symbol} elemR;
+	//return new Value_Array(elemResult);
+	return Value::nil();
+}
+'''
+
 EvalTmplFunctionImplementation(funcInfo as FuncInfo):map = tmplFunctionImplementation.Eval()
+
+EvalTmplOperatorlementation(funcInfo as FuncInfo):map = {
+	if (funcInfo.argInfoTbl.len == 1) {
+		tmplOpUnaryImplementation.Eval()
+	} else {
+		tmplOpBinaryImplementation.Eval()
+	}
+}
 
 tmplFunctionAssignment = t'Assign(Gurax_CreateFunction(${funcInfo.name}_gurax));'
 

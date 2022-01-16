@@ -753,6 +753,37 @@ void AssignFunctions(Frame& frame)
 Gurax_EndModuleScope(wx)
 '''
 
+
+tmplOperators = tR'''
+//==============================================================================
+// Operators.cpp
+//==============================================================================
+#include "stdafx.h"
+Gurax_BeginModuleScope(wx)
+
+//------------------------------------------------------------------------------
+// Implementation of function
+//------------------------------------------------------------------------------
+${funcInfoTbl.Each() {|funcInfo|}}
+// ${funcInfo.name}
+
+${end}
+//------------------------------------------------------------------------------
+// Assignment
+//------------------------------------------------------------------------------
+void AssignOperators(Frame& frame)
+{
+	${funcInfoTbl.Each() {|funcInfo|}}
+	//frame.Assign(Gurax_CreateFunction(${funcInfo.name}_gurax));
+	${end}
+}
+
+Gurax_EndModuleScope(wx)
+'''
+
+
+
+
 PropInfo = class {
 	funcInfo_propSetter as cbridge.FuncInfo
 	funcInfo_propGetter as cbridge.FuncInfo
@@ -991,17 +1022,6 @@ path.Glob('metafile/*.gura').Each {|pathName|
 		}
 	}
 }
-
-'''
-// Array + Array
-Gurax_ImplementOpBinary(${operator.name}, Array, Array)
-{
-	const Array& elemL = Value_Array::GetArray(valueL);
-	const Array& elemR = Value_Array::GetArray(valueR);
-	auto elemResult = elemL ${operator.symbol} elemR;
-	return new Value_Array(elemResult);
-}
-'''
 
 enumNameTbl.Each {|enumName|
 	r.DeclareType_Number(enumName, 'wx' + enumName)
@@ -1339,8 +1359,13 @@ GenerateFunction(funcInfoTbl[] as cbridge.FuncInfo) = {
 	tmplFunctions.Render('Functions.cpp')
 }
 
+GenerateOperator(funcInfoTbl[] as cbridge.FuncInfo) = {
+	tmplOperators.Render('Operator.cpp')
+}
+
 GenerateVType(classInfoTbl)
 GenerateConst(constNameTbl.Sort().Uniq():list)
 eventNames = eventInfoTbl::eventName
 GenerateEvent(eventInfoTbl.Sort(keys = eventNames), Int((('Gurax_AssignEvent' + ',').width + ((eventNames:*len).Max()) + 3) / 4 * 4 + 4))
 GenerateFunction(funcInfoTbl.Sort(keys = funcInfoTbl::name))
+GenerateOperator(funcInfoOpTbl)
