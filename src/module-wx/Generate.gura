@@ -869,6 +869,7 @@ ClassInfo = class {
 EventInfo = struct { eventName as String, className as String }
 
 funcInfoTbl = []
+funcInfoOpTbl = []
 classInfoTbl = []
 classInfoToMixinTbl = []
 constNameTbl = []
@@ -980,22 +981,13 @@ path.Glob('metafile/*.gura').Each {|pathName|
 				//sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
 				//sys.Exit(1)
 			}
-		} elsif (expr.IsBinaryOp() && expr.left.IsBinaryOp()) {
-			if (expr.operator.symbol == `as) {
-				Println(expr.right, ' ', expr.left.left, ' ', expr.left.right, ' ', expr.left.operator)
-			} else {
-				sys.cerr.Printf('invalid syntax of operator assignment\n')
-				sys.Exit(1)
-			}
-		} elsif (expr.IsBinaryOp() && expr.left.IsUnaryOp()) {
-			if (expr.operator.symbol == `as) {
-				Println(expr.right, ' ', expr.left.child, ' ', expr.left.operator)
-			} else {
-				sys.cerr.Printf('invalid syntax of operator assignment\n')
-				sys.Exit(1)
-			}
 		} else {
-			funcInfoTbl.Add(cbridge.CreateFuncInfo(r, 'wx', expr))
+			funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
+			if (funcInfo.type == `function) {
+				funcInfoTbl.Add(funcInfo)
+			} elsif (funcInfo.type == `operator) {
+				funcInfoOpTbl.Add(funcInfo)
+			}
 		}
 	}
 }

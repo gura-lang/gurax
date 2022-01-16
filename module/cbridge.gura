@@ -77,15 +77,21 @@ ArgInfo = class {
 	typeInfo as TypeInfo
 	tmplDeclaration:static as Template
 	tmplRangeCheck:static as Template
-	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue:nil as String, attr as Attribute, listVarFlag as Bool, occurSymbol as Symbol) = {
+	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue:nil as String, attr:nil as Attribute, listVarFlag as Bool, occurSymbol as Symbol) = {
 		this.name = name
 		this.typeName = typeName
 		this.defaultValue = defaultValue
 		this.listVarFlag = listVarFlag
 		this.occurSymbol = occurSymbol
-		this.nilFlag = attr.IsSet(`nil)
-		this.streamWFlag = attr.IsSet(`w)
-		this.streamRFlag = attr.IsSet(`r)
+		if (attr) {
+			this.nilFlag = attr.IsSet(`nil)
+			this.streamWFlag = attr.IsSet(`w)
+			this.streamRFlag = attr.IsSet(`r)
+		} else {
+			this.nilFlag = false
+			this.streamWFlag = false
+			this.streamRFlag = false
+		}
 	}
 	IsList() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
@@ -279,6 +285,28 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		}
 		argInfoTbl = []
 		symbolName = expr.target.symbolName
+	} elsif (expr.IsBinaryOp()) {
+		defaultValue = nil
+		attr = nil
+		listVarFlag = false
+		occurSymbol = `Once
+		type = `operator
+		symbolName = expr.operator.name
+		argInfoTbl = [
+			ArgInfo(r, 'left', expr.left.__str__(), defaultValue, attr, listVarFlag, occurSymbol)
+			ArgInfo(r, 'right', expr.right.__str__(), defaultValue, attr, listVarFlag, occurSymbol)
+		]
+	} elsif (expr.IsUnaryOp()) {
+		symbolName = expr.operator.name
+		defaultValue = nil
+		attr = nil
+		listVarFlag = false
+		occurSymbol = `Once
+		type = `operator
+		symbolName = expr.operator.name
+		argInfoTbl = [
+			ArgInfo(r, 'value', expr.child.__str__(), defaultValue, attr, listVarFlag, occurSymbol)
+		]
 	} else {
 		ErrorDone(expr, 'Caller is expected')
 	}
