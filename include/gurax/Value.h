@@ -197,6 +197,13 @@ public:
 public:
 	void Call(Processor& processor, Argument& argument) { DoCall(processor, argument); }
 	Value* Eval(Processor& processor, Argument& argument) const { return DoEval(processor, argument); }
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg, DeclCallable::Flags flags = DeclCallable::Flag::None);
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						DeclCallable::Flags flags = DeclCallable::Flag::None);
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						RefPtr<Value> pValueArg3, DeclCallable::Flags flags = DeclCallable::Flag::None);
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, DeclCallable::Flags flags = DeclCallable::Flag::None);
 	Value* IndexGet(const Index& index) const { return DoIndexGet(index); }
 	void IndexSet(const Index& index, Value* pValue) { return DoIndexSet(index, pValue); }
 	Value* GetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag) {

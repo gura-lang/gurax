@@ -256,12 +256,13 @@ public:
 	void LinkHelp(VType& vtype, const Symbol* pSymbol);
 	void Exec(Processor& processor, Argument& argument) const;
 	Value* Eval(Processor& processor, Argument& argument) const;
-	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg) const;
-	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2) const;
-	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1,
-						RefPtr<Value> pValueArg2, RefPtr<Value> pValueArg3) const;
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg, DeclCallable::Flags flags = DeclCallable::Flag::None) const;
 	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
-						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4) const;
+						DeclCallable::Flags flags = DeclCallable::Flag::None) const;
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						RefPtr<Value> pValueArg3, DeclCallable::Flags flags = DeclCallable::Flag::None) const;
+	Value* EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefPtr<Value> pValueArg2,
+						RefPtr<Value> pValueArg3, RefPtr<Value> pValueArg4, DeclCallable::Flags flags = DeclCallable::Flag::None) const;
 	void Call(Processor& processor, Argument& argument) const;
 	void Compose(Composer& composer, Expr_Caller& exprCaller) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;

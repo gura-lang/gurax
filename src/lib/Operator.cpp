@@ -348,12 +348,7 @@ Value* OpEntry::EvalBinary(Processor& processor, Value& valueL, Value& valueR) c
 //------------------------------------------------------------------------------
 Value* OpEntryCustom_Unary::EvalUnary(Processor& processor, Value& value) const
 {
-	const DeclCallable* pDeclCallable = _pValueFunct->GetDeclCallableWithError();
-	if (!pDeclCallable) return Value::nil();
-	RefPtr<Argument> pArg(new Argument(processor, pDeclCallable->Reference()));
-	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValue(value.Reference())) return Value::nil();
-	return _pValueFunct->Eval(processor, *pArg);
+	return _pValueFunct->EvalEasy(processor, value.Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -361,13 +356,7 @@ Value* OpEntryCustom_Unary::EvalUnary(Processor& processor, Value& value) const
 //------------------------------------------------------------------------------
 Value* OpEntryCustom_Binary::EvalBinary(Processor& processor, Value& valueL, Value& valueR) const
 {
-	const DeclCallable* pDeclCallable = _pValueFunct->GetDeclCallableWithError();
-	if (!pDeclCallable) return Value::nil();
-	RefPtr<Argument> pArg(new Argument(processor, pDeclCallable->Reference()));
-	ArgFeeder args(*pArg, processor.GetFrameCur());
-	if (!args.FeedValue(valueL.Reference())) return Value::nil();
-	if (!args.FeedValue(valueR.Reference())) return Value::nil();
-	return _pValueFunct->Eval(processor, *pArg);
+	return _pValueFunct->EvalEasy(processor, valueL.Reference(), valueR.Reference());
 }
 
 //------------------------------------------------------------------------------
