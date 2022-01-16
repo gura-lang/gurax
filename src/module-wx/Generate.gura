@@ -980,11 +980,36 @@ path.Glob('metafile/*.gura').Each {|pathName|
 				//sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
 				//sys.Exit(1)
 			}
+		} elsif (expr.IsBinaryOp() && expr.left.IsBinaryOp()) {
+			if (expr.operator.symbol == `as) {
+				Println(expr.right, ' ', expr.left.left, ' ', expr.left.right, ' ', expr.left.operator)
+			} else {
+				sys.cerr.Printf('invalid syntax of operator assignment\n')
+				sys.Exit(1)
+			}
+		} elsif (expr.IsBinaryOp() && expr.left.IsUnaryOp()) {
+			if (expr.operator.symbol == `as) {
+				Println(expr.right, ' ', expr.left.child, ' ', expr.left.operator)
+			} else {
+				sys.cerr.Printf('invalid syntax of operator assignment\n')
+				sys.Exit(1)
+			}
 		} else {
 			funcInfoTbl.Add(cbridge.CreateFuncInfo(r, 'wx', expr))
 		}
 	}
 }
+
+'''
+// Array + Array
+Gurax_ImplementOpBinary(${operator.name}, Array, Array)
+{
+	const Array& elemL = Value_Array::GetArray(valueL);
+	const Array& elemR = Value_Array::GetArray(valueR);
+	auto elemResult = elemL ${operator.symbol} elemR;
+	return new Value_Array(elemResult);
+}
+'''
 
 enumNameTbl.Each {|enumName|
 	r.DeclareType_Number(enumName, 'wx' + enumName)

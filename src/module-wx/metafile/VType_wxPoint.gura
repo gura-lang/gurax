@@ -23,4 +23,5 @@ Point = Class {
 		'''
 }
 
-//(const_Point_r + const_Point_r) as Point
+(const_Point_r + const_Point_r) as Point
+(-const_Point_r) as Point
