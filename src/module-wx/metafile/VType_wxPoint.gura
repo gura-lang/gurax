@@ -22,3 +22,5 @@ Point = Class {
 		valueThis_gurax.GetEntity().y = y;
 		'''
 }
+
+//(const_Point_r + const_Point_r) as Point
