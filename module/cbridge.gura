@@ -372,7 +372,7 @@ Gurax_ImplementOpBinary(${funcInfo.name}, ${funcInfo.argInfoTbl[0].GetTypeInfo()
 
 EvalTmplFunctionImplementation(funcInfo as FuncInfo):map = tmplFunctionImplementation.Eval()
 
-EvalTmplOperatorlementation(funcInfo as FuncInfo):map = {
+EvalTmplOperatorImplementation(funcInfo as FuncInfo):map = {
 	if (funcInfo.argInfoTbl.len == 1) {
 		tmplOpUnaryImplementation.Eval()
 	} else {
@@ -381,8 +381,17 @@ EvalTmplOperatorlementation(funcInfo as FuncInfo):map = {
 }
 
 tmplFunctionAssignment = t'Assign(Gurax_CreateFunction(${funcInfo.name}_gurax));'
+tmplOpUnaryAssignment = t'Gurax_AssignOpUnary(${funcInfo.operator.name}, ${funcInfo.argInfoTbl[0].GetTypeInfo().vtype});'
+tmplOpBinaryAssignment = t'Gurax_AssignOpBinary(${funcInfo.operator.name}, ${funcInfo.argInfoTbl[0].GetTypeInfo().vtype}, ${funcInfo.argInfoTbl[1].GetTypeInfo().vtype});'
 
 EvalTmplFunctionAssignment(funcInfo as FuncInfo):map = tmplFunctionAssignment.Eval()
+EvalTmplOperatorAssignment(funcInfo as FuncInfo):map = {
+	if (funcInfo.argInfoTbl.len == 1) {
+		tmplOpUnaryAssignment.Eval()
+	} else {
+		tmplOpBinaryAssignment.Eval()
+	}
+}
 
 //------------------------------------------------------------------------------
 // Renderer

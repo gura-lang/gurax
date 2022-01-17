@@ -765,7 +765,7 @@ Gurax_BeginModuleScope(wx)
 // Implementation of function
 //------------------------------------------------------------------------------
 ${funcInfoTbl.Each() {|funcInfo|}}
-${cbridge.EvalTmplOperatorlementation(funcInfo)}
+${cbridge.EvalTmplOperatorImplementation(funcInfo)}
 
 ${end}
 //------------------------------------------------------------------------------
@@ -774,7 +774,7 @@ ${end}
 void AssignOperators(Frame& frame)
 {
 	${funcInfoTbl.Each() {|funcInfo|}}
-	//frame.Assign(Gurax_CreateFunction(${funcInfo.name}_gurax));
+	${cbridge.EvalTmplOperatorAssignment(funcInfo)}
 	${end}
 }
 
