@@ -765,7 +765,7 @@ Gurax_BeginModuleScope(wx)
 // Implementation of function
 //------------------------------------------------------------------------------
 ${funcInfoTbl.Each() {|funcInfo|}}
-// ${funcInfo.name}
+${cbridge.EvalTmplOperatorlementation(funcInfo)}
 
 ${end}
 //------------------------------------------------------------------------------
@@ -1360,7 +1360,7 @@ GenerateFunction(funcInfoTbl[] as cbridge.FuncInfo) = {
 }
 
 GenerateOperator(funcInfoTbl[] as cbridge.FuncInfo) = {
-	tmplOperators.Render('Operator.cpp')
+	tmplOperators.Render('Operators.cpp')
 }
 
 GenerateVType(classInfoTbl)

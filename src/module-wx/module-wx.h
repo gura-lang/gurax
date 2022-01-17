@@ -9,6 +9,7 @@
 #include "Consts.h"
 #include "Events.h"
 #include "Functions.h"
+#include "Operators.h"
 #include "MultiEvents.h"
 #include "Objects.h"
 #include "VTypes.h"

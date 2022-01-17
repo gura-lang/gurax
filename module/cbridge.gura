@@ -108,6 +108,10 @@ ArgInfo = class {
 		strArgFlags = ('ArgFlag::' + argFlags).Join(' | ')
 		this.tmplDeclaration.Eval()
 	}
+	GetTypeInfo() = {
+		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
+		this.typeInfo
+	}
 	ComposeImplementation() = {
 		if (!this.typeInfo) { this.typeInfo = r.typeInfoMap[this.typeName] }
 		this.typeInfo.ComposePicker(this.name, this.defaultValue,
@@ -210,12 +214,13 @@ FuncInfo = class {
 	constFlag as Bool
 	staticFlag as Bool
 	type as Symbol
+	operator as Operator
 	__init__(r as Renderer, moduleName as String, name as String, nameOnCall:nil as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
-			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool, staticFlag as Bool, type as Symbol) = {
+			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool, staticFlag as Bool, type as Symbol, operator? as Operator) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.nameOnCall = nameOnCall
 		this.argInfoTbl = argInfoTbl, this.typeName = typeName
 		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.constFlag = constFlag, this.staticFlag = staticFlag
-		this.type = type
+		this.type = type, this.operator = operator
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	GetTypeInfo() = {
@@ -263,6 +268,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		expr = expr.left
 	}
 	type = `function
+	operator = nil
 	if (expr.IsCaller()) {
 		!expr.car.IsIdentifier() && ErrorDone(expr, 'Identifier is expected')
 		if (expr.attr.IsSet(`void)) { typeName = 'void' }
@@ -291,6 +297,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		listVarFlag = false
 		occurSymbol = `Once
 		type = `operator
+		operator = expr.operator
 		symbolName = expr.operator.name
 		argInfoTbl = [
 			ArgInfo(r, 'left', expr.left.__str__(), defaultValue, attr, listVarFlag, occurSymbol)
@@ -303,6 +310,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		listVarFlag = false
 		occurSymbol = `Once
 		type = `operator
+		operator = expr.operator
 		symbolName = expr.operator.name
 		argInfoTbl = [
 			ArgInfo(r, 'value', expr.child.__str__(), defaultValue, attr, listVarFlag, occurSymbol)
@@ -310,7 +318,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	} else {
 		ErrorDone(expr, 'Caller is expected')
 	}
-	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag, staticFlag, type)
+	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag, staticFlag, type, operator)
 }
 
 tmplFunctionImplementation = tR'''
@@ -344,24 +352,21 @@ Gurax_ImplementFunctionEx(${funcInfo.name}_gurax, processor_gurax, argument_gura
 '''
 
 tmplOpUnaryImplementation = tR'''
-Gurax_ImplementOpUnary(${funcInfo.name}, ${funcInfo.argInfoTbl[0].typeInfo.vtype}, ${funcInfo.argInfoTbl[1].typeInfo.vtype})
+Gurax_ImplementOpUnary(${funcInfo.name}, ${funcInfo.argInfoTbl[0].GetTypeInfo().vtype})
 {
-	//const Array& elemL = Value_Array::GetArray(valueL);
-	//const Array& elemR = Value_Array::GetArray(valueR);
-	//auto elemResult = elemL ${operator.symbol} elemR;
-	//return new Value_Array(elemResult);
-	return Value::nil();
+	const auto& elem = ${funcInfo.argInfoTbl[0].GetTypeInfo().ComposeConvToC('value')};
+	auto elemResult = ${funcInfo.operator.symbol.symbolName}elem;
+	return ${funcInfo.GetTypeInfo().ComposeConvToGurax('elemResult')};
 }
 '''
 
 tmplOpBinaryImplementation = tR'''
-Gurax_ImplementOpBinary(${funcInfo.name}, ${funcInfo.argInfoTbl[0].typeInfo.vtype})
+Gurax_ImplementOpBinary(${funcInfo.name}, ${funcInfo.argInfoTbl[0].GetTypeInfo().vtype}, ${funcInfo.argInfoTbl[1].GetTypeInfo().vtype})
 {
-	//const Array& elemL = Value_Array::GetArray(valueL);
-	//const Array& elemR = Value_Array::GetArray(valueR);
-	//auto elemResult = elemL ${operator.symbol} elemR;
-	//return new Value_Array(elemResult);
-	return Value::nil();
+	const auto& elemL = ${funcInfo.argInfoTbl[0].GetTypeInfo().ComposeConvToC('valueL')};
+	const auto& elemR = ${funcInfo.argInfoTbl[1].GetTypeInfo().ComposeConvToC('valueL')};
+	auto elemResult = elemL ${funcInfo.operator.symbol.symbolName} elemR;
+	return ${funcInfo.GetTypeInfo().ComposeConvToGurax('elemResult')};
 }
 '''
 

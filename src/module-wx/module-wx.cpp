@@ -19,6 +19,7 @@ Gurax_ModulePrepare()
 	AssignConsts(frame);
 	AssignEvents(frame);
 	AssignFunctions(frame);
+	AssignOperators(frame);
 	AssignMultiEvents(frame);
 	AssignVTypes(frame);
 	AssignObjects(frame);

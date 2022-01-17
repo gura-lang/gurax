@@ -42,6 +42,7 @@ target_sources(wx.gurd PRIVATE
 	Consts.cpp
 	Events.cpp
 	Functions.cpp
+	Operators.cpp
 	MultiEvents.cpp
 	Objects.cpp
 	Util.cpp
