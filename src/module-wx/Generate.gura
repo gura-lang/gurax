@@ -753,7 +753,6 @@ void AssignFunctions(Frame& frame)
 Gurax_EndModuleScope(wx)
 '''
 
-
 tmplOperators = tR'''
 //==============================================================================
 // Operators.cpp

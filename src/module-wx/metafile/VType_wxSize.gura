@@ -153,3 +153,11 @@ Size = Class {
 		return Value::nil();
 		'''
 }
+
+(const_Size_r == const_Size_r) as bool
+(const_Size_r != const_Size_r) as bool
+(const_Size_r + const_Size_r) as Size
+(const_Size_r - const_Size_r) as Size
+(const_Size_r / int) as Size
+(const_Size_r * int) as Size
+(int * const_Size_r) as Size

@@ -364,7 +364,7 @@ tmplOpBinaryImplementation = tR'''
 Gurax_ImplementOpBinary(${funcInfo.name}, ${funcInfo.argInfoTbl[0].GetTypeInfo().vtype}, ${funcInfo.argInfoTbl[1].GetTypeInfo().vtype})
 {
 	const auto& elemL = ${funcInfo.argInfoTbl[0].GetTypeInfo().ComposeConvToC('valueL')};
-	const auto& elemR = ${funcInfo.argInfoTbl[1].GetTypeInfo().ComposeConvToC('valueL')};
+	const auto& elemR = ${funcInfo.argInfoTbl[1].GetTypeInfo().ComposeConvToC('valueR')};
 	auto elemResult = elemL ${funcInfo.operator.symbol.symbolName} elemR;
 	return ${funcInfo.GetTypeInfo().ComposeConvToGurax('elemResult')};
 }

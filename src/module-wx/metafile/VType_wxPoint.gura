@@ -33,5 +33,4 @@ Point = Class {
 (const_Size_r - const_Point_r) as Point
 (const_Point_r / int) as Point
 (const_Point_r * int) as Point
-(int * const_Size_r) as Size
 (-const_Point_r) as Point

@@ -271,3 +271,8 @@ Rect = Class {
 		valueThis_gurax.GetEntity().y = y;
 		'''
 }
+
+(const_Rect_r != const_Rect_r) as bool
+(const_Rect_r == const_Rect_r) as bool
+(const_Rect_r + const_Rect_r) as Rect
+(const_Rect_r * const_Rect_r) as Rect
