@@ -288,36 +288,11 @@ Gurax_ImplementMethodEx(wxRegion, IsEqual_gurax, processor_gurax, argument_gurax
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.Region#SubtractRect(rect as wx.Rect)
-Gurax_DeclareMethodAlias(wxRegion, SubtractRect_gurax, "SubtractRect")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxRegion, SubtractRect_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
-	const wxRect& rect = value_rect.GetEntity();
-	// Function body
-	bool rtn = pEntity_gurax->Subtract(rect);
-	return new Gurax::Value_Bool(rtn);
-}
-
-// wx.Region#Subtract(region as wx.Region)
+// wx.Region#Subtract(args* as Any)
 Gurax_DeclareMethodAlias(wxRegion, Subtract_gurax, "Subtract")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("region", VTYPE_wxRegion, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -331,11 +306,40 @@ Gurax_ImplementMethodEx(wxRegion, Subtract_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxRegion& value_region = args_gurax.Pick<Value_wxRegion>();
-	const wxRegion& region = value_region.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	bool rtn = pEntity_gurax->Subtract(region);
-	return new Gurax::Value_Bool(rtn);
+	// Subtract(rect as const_Rect_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+		bool rtn = pEntity_gurax->Subtract(rect);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Subtract(region as const_Region_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("region", VTYPE_wxRegion);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxRegion& region = args.Pick<Value_wxRegion>().GetEntity();
+		bool rtn = pEntity_gurax->Subtract(region);
+		return new Value_Bool(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.Region#Union(args* as Any)
@@ -411,63 +415,43 @@ Gurax_ImplementMethodEx(wxRegion, Union_gurax, processor_gurax, argument_gurax)
 		bool rtn = pEntity_gurax->Union(region);
 		return new Value_Bool(rtn);
 	} while (0);
+	Error::ClearIssuedFlag();
+	// Union(bmp as const_Bitmap_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("bmp", VTYPE_wxBitmap);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxBitmap& bmp = args.Pick<Value_wxBitmap>().GetEntity();
+		bool rtn = pEntity_gurax->Union(bmp);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Union(bmp as const_Bitmap_r, transColour as const_Colour_r, tolerance as int = 0) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("bmp", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("transColour", VTYPE_wxColour);
+			pDeclCallable->DeclareArg("tolerance", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxBitmap& bmp = args.Pick<Value_wxBitmap>().GetEntity();
+		const wxColour& transColour = args.Pick<Value_wxColour>().GetEntity();
+		int tolerance = args.PickNumber<int>();
+		bool rtn = pEntity_gurax->Union(bmp, transColour, tolerance);
+		return new Value_Bool(rtn);
+	} while (0);
 	return Value::nil();
-}
-
-// wx.Region#UnionBitmap(bmp as wx.Bitmap)
-Gurax_DeclareMethodAlias(wxRegion, UnionBitmap_gurax, "UnionBitmap")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxRegion, UnionBitmap_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxBitmap& value_bmp = args_gurax.Pick<Value_wxBitmap>();
-	const wxBitmap& bmp = value_bmp.GetEntity();
-	// Function body
-	bool rtn = pEntity_gurax->Union(bmp);
-	return new Gurax::Value_Bool(rtn);
-}
-
-// wx.Region#UnionBitmapTrans(bmp as wx.Bitmap, transColour as wx.Colour, tolerance? as Number)
-Gurax_DeclareMethodAlias(wxRegion, UnionBitmapTrans_gurax, "UnionBitmapTrans")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("transColour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("tolerance", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxRegion, UnionBitmapTrans_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxBitmap& value_bmp = args_gurax.Pick<Value_wxBitmap>();
-	const wxBitmap& bmp = value_bmp.GetEntity();
-	Value_wxColour& value_transColour = args_gurax.Pick<Value_wxColour>();
-	const wxColour& transColour = value_transColour.GetEntity();
-	bool tolerance_validFlag = args_gurax.IsValid();
-	int tolerance = tolerance_validFlag? args_gurax.PickNumber<int>() : 0;
-	// Function body
-	bool rtn = pEntity_gurax->Union(bmp, transColour, tolerance);
-	return new Gurax::Value_Bool(rtn);
 }
 
 // wx.Region#Xor(args* as Any)
@@ -588,18 +572,17 @@ Gurax_ImplementMethodEx(wxRegion, GetBoxRect_gurax, processor_gurax, argument_gu
 		pEntity_gurax->GetBox()));
 }
 
-// wx.Region#OffsetXY(x as Number, y as Number)
-Gurax_DeclareMethodAlias(wxRegion, OffsetXY_gurax, "OffsetXY")
+// wx.Region#Offset(args* as Any)
+Gurax_DeclareMethodAlias(wxRegion, Offset_gurax, "Offset")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementMethodEx(wxRegion, OffsetXY_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxRegion, Offset_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -607,36 +590,42 @@ Gurax_ImplementMethodEx(wxRegion, OffsetXY_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	wxCoord x = args_gurax.PickNumber<wxCoord>();
-	wxCoord y = args_gurax.PickNumber<wxCoord>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	bool rtn = pEntity_gurax->Offset(x, y);
-	return new Gurax::Value_Bool(rtn);
-}
-
-// wx.Region#OffsetPoint(pt as wx.Point)
-Gurax_DeclareMethodAlias(wxRegion, OffsetPoint_gurax, "OffsetPoint")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxRegion, OffsetPoint_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_pt = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pt = value_pt.GetEntity();
-	// Function body
-	bool rtn = pEntity_gurax->Offset(pt);
-	return new Gurax::Value_Bool(rtn);
+	// Offset(x as Coord, y as Coord) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		bool rtn = pEntity_gurax->Offset(x, y);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Offset(pt as const_Point_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		bool rtn = pEntity_gurax->Offset(pt);
+		return new Value_Bool(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -661,16 +650,12 @@ void VType_wxRegion::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRegion, Intersect_gurax));
 	Assign(Gurax_CreateMethod(wxRegion, IsEmpty_gurax));
 	Assign(Gurax_CreateMethod(wxRegion, IsEqual_gurax));
-	Assign(Gurax_CreateMethod(wxRegion, SubtractRect_gurax));
 	Assign(Gurax_CreateMethod(wxRegion, Subtract_gurax));
 	Assign(Gurax_CreateMethod(wxRegion, Union_gurax));
-	Assign(Gurax_CreateMethod(wxRegion, UnionBitmap_gurax));
-	Assign(Gurax_CreateMethod(wxRegion, UnionBitmapTrans_gurax));
 	Assign(Gurax_CreateMethod(wxRegion, Xor_gurax));
 	Assign(Gurax_CreateMethod(wxRegion, GetBoxXYWH_gurax));
 	Assign(Gurax_CreateMethod(wxRegion, GetBoxRect_gurax));
-	Assign(Gurax_CreateMethod(wxRegion, OffsetXY_gurax));
-	Assign(Gurax_CreateMethod(wxRegion, OffsetPoint_gurax));
+	Assign(Gurax_CreateMethod(wxRegion, Offset_gurax));
 }
 
 //------------------------------------------------------------------------------

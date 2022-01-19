@@ -138,8 +138,41 @@ Region = Class(GDIObject):holdEntity {
 		'''
 	IsEmpty() as bool
 	IsEqual(region as const_Region_r) as bool
-	SubtractRect(rect as const_Rect_r) as bool = Subtract
-	Subtract(region as const_Region_r) as bool
+	Subtract(args* as any) as bool = \
+		R'''
+		// Subtract(rect as const_Rect_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			bool rtn = pEntity_gurax->Subtract(rect);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Subtract(region as const_Region_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("region", VTYPE_wxRegion);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRegion& region = args.Pick<Value_wxRegion>().GetEntity();
+			bool rtn = pEntity_gurax->Subtract(region);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	Union(args* as any) as bool = \
 		R'''
 		// Union(x as Coord, y as Coord, width as Coord, height as Coord) as bool
@@ -195,10 +228,44 @@ Region = Class(GDIObject):holdEntity {
 			bool rtn = pEntity_gurax->Union(region);
 			return new Value_Bool(rtn);
 		} while (0);
+		Error::ClearIssuedFlag();
+		// Union(bmp as const_Bitmap_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("bmp", VTYPE_wxBitmap);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxBitmap& bmp = args.Pick<Value_wxBitmap>().GetEntity();
+			bool rtn = pEntity_gurax->Union(bmp);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Union(bmp as const_Bitmap_r, transColour as const_Colour_r, tolerance as int = 0) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("bmp", VTYPE_wxBitmap);
+				pDeclCallable->DeclareArg("transColour", VTYPE_wxColour);
+				pDeclCallable->DeclareArg("tolerance", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxBitmap& bmp = args.Pick<Value_wxBitmap>().GetEntity();
+			const wxColour& transColour = args.Pick<Value_wxColour>().GetEntity();
+			int tolerance = args.PickNumber<int>();
+			bool rtn = pEntity_gurax->Union(bmp, transColour, tolerance);
+			return new Value_Bool(rtn);
+		} while (0);
 		return Value::nil();
 		'''
-	UnionBitmap(bmp as const_Bitmap_r) as bool = Union
-	UnionBitmapTrans(bmp as const_Bitmap_r, transColour as const_Colour_r, tolerance as int = 0) as bool = Union
 	Xor(args* as any) as bool = \
 		R'''
 		// Xor(x as Coord, y as Coord, width as Coord, height as Coord) as bool
@@ -263,6 +330,41 @@ Region = Class(GDIObject):holdEntity {
 		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y), new Value_Number(width), new Value_Number(height));
 		'''
 	GetBoxRect() as Rect = GetBox
-	OffsetXY(x as Coord, y as Coord) as bool = Offset
-	OffsetPoint(pt as const_Point_r) as bool = Offset
+	Offset(args* as any) as bool = \
+		R'''
+		// Offset(x as Coord, y as Coord) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			bool rtn = pEntity_gurax->Offset(x, y);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Offset(pt as const_Point_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			bool rtn = pEntity_gurax->Offset(pt);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 }
