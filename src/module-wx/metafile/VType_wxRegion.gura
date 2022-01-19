@@ -3,26 +3,259 @@
 //==============================================================================
 Region = Class(GDIObject):holdEntity {
 	Clear() as void
-	ContainsXY(x as Coord, y as Coord) as RegionContain = Contains
-	ContainsPoint(pt as const_Point_r) as RegionContain = Contains
-	ContainsXYWH(x as Coord, y as Coord, width as Coord, height as Coord) as RegionContain = Contains
-	ContainsRect(rect as const_Rect_r) as RegionContain = Contains
+	Contains(args* as any) as RegionContain = \
+		R'''
+		// Contains(x as Coord, y as Coord) as RegionContain
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxRegionContain rtn = pEntity_gurax->Contains(x, y);
+			return new Value_Number(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Contains(pt as const_Point_r) as RegionContain
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			wxRegionContain rtn = pEntity_gurax->Contains(pt);
+			return new Value_Number(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Contains(x as Coord, y as Coord, width as Coord, height as Coord) as RegionContain
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			wxRegionContain rtn = pEntity_gurax->Contains(x, y, width, height);
+			return new Value_Number(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Contains(rect as const_Rect_r) as RegionContain
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			wxRegionContain rtn = pEntity_gurax->Contains(rect);
+			return new Value_Number(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	ConvertToBitmap() as Bitmap
-	IntersectXYWH(x as Coord, y as Coord, width as Coord, height as Coord) as bool = Intersect
-	IntersectRect(rect as const_Rect_r) as bool = Intersect
-	Intersect(region as const_Region_r) as bool
+	Intersect(args* as any) as bool = \
+		R'''
+		// Intersect(x as Coord, y as Coord, width as Coord, height as Coord) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			bool rtn = pEntity_gurax->Intersect(x, y, width, height);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Intersect(rect as const_Rect_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			bool rtn = pEntity_gurax->Intersect(rect);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Intersect(region as const_Region_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("region", VTYPE_wxRegion);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRegion& region = args.Pick<Value_wxRegion>().GetEntity();
+			bool rtn = pEntity_gurax->Intersect(region);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	IsEmpty() as bool
 	IsEqual(region as const_Region_r) as bool
 	SubtractRect(rect as const_Rect_r) as bool = Subtract
 	Subtract(region as const_Region_r) as bool
-	UnionXYWH(x as Coord, y as Coord, width as Coord, height as Coord) as bool = Union
-	UnionRect(rect as const_Rect_r) as bool = Union
-	Union(region as const_Region_r) as bool
+	Union(args* as any) as bool = \
+		R'''
+		// Union(x as Coord, y as Coord, width as Coord, height as Coord) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			bool rtn = pEntity_gurax->Union(x, y, width, height);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Union(rect as const_Rect_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			bool rtn = pEntity_gurax->Union(rect);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Union(region as const_Region_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("region", VTYPE_wxRegion);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRegion& region = args.Pick<Value_wxRegion>().GetEntity();
+			bool rtn = pEntity_gurax->Union(region);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	UnionBitmap(bmp as const_Bitmap_r) as bool = Union
 	UnionBitmapTrans(bmp as const_Bitmap_r, transColour as const_Colour_r, tolerance as int = 0) as bool = Union
-	XorXYWH(x as Coord, y as Coord, width as Coord, height as Coord) as bool = Xor
-	XorRect(rect as const_Rect_r) as bool = Xor
-	Xor(region as const_Region_r) as bool
+	Xor(args* as any) as bool = \
+		R'''
+		// Xor(x as Coord, y as Coord, width as Coord, height as Coord) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			wxCoord width = args.PickNumber<wxCoord>();
+			wxCoord height = args.PickNumber<wxCoord>();
+			bool rtn = pEntity_gurax->Xor(x, y, width, height);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Xor(rect as const_Rect_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+			bool rtn = pEntity_gurax->Xor(rect);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Xor(region as const_Region_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("region", VTYPE_wxRegion);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRegion& region = args.Pick<Value_wxRegion>().GetEntity();
+			bool rtn = pEntity_gurax->Xor(region);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	GetBoxXYWH() = \
 		R'''
 		wxCoord x, y, width, height;
