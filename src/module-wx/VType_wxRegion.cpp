@@ -28,6 +28,131 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.Region(args* as Any) {block?} {block?}
+Gurax_DeclareConstructorAlias(Region_gurax, "Region")
+{
+	Declare(VTYPE_wxRegion, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.Region.");
+}
+
+Gurax_ImplementConstructorEx(Region_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// wx.Region(x as Coord, y as Coord, width as Coord, height as Coord)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+			pDeclCallable->DeclareArg("width", VTYPE_Number);
+			pDeclCallable->DeclareArg("height", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		wxCoord width = args.PickNumber<wxCoord>();
+		wxCoord height = args.PickNumber<wxCoord>();
+		return new Value_wxRegion(wxRegion(x, y, width, height));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wx.Region(topLeft as const_Point_r, bottomRight as const_Point_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("topLeft", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("bottomRight", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& topLeft = args.Pick<Value_wxPoint>().GetEntity();
+		const wxPoint& bottomRight = args.Pick<Value_wxPoint>().GetEntity();
+		return new Value_wxRegion(wxRegion(topLeft, bottomRight));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wx.Region(points[] as const_Point_r, fillStyle as PolygonFillMode)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("points", VTYPE_wxPoint, DeclareArg::Occur::Once, DeclareArg::Flag::ListVar);
+			pDeclCallable->DeclareArg("fillStyle", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const ValueList& values = args.PickList();
+		std::unique_ptr<wxPoint> points(new wxPoint[values.size()]);
+		size_t i = 0;
+		for (const Value* pValue : values) points.get()[i++] = Value_wxPoint::GetEntity(*pValue);
+		wxPolygonFillMode fillStyle = args.PickNumber<wxPolygonFillMode>();
+		return new Value_wxRegion(wxRegion(values.size(), points.get(), fillStyle));
+		} while (0);
+	Error::ClearIssuedFlag();
+	// wx.Region(rect as const_Rect_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("rect", VTYPE_wxRect);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxRect& rect = args.Pick<Value_wxRect>().GetEntity();
+		return new Value_wxRegion(wxRegion(rect));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wx.Region(bmp as const_Bitmap_r)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("bmp", VTYPE_wxBitmap);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxBitmap& bmp = args.Pick<Value_wxBitmap>().GetEntity();
+		return new Value_wxRegion(wxRegion(bmp));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wx.Region(bmp as const_Bitmap_r, transColour as const_Colour_r, tolerance as int = 0)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("bmp", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("transColour", VTYPE_wxColour);
+			pDeclCallable->DeclareArg("tolerance", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxBitmap& bmp = args.Pick<Value_wxBitmap>().GetEntity();
+		const wxColour& transColour = args.Pick<Value_wxColour>().GetEntity();
+		int tolerance = args.PickNumber<int>();
+		return new Value_wxRegion(wxRegion(bmp, transColour, tolerance));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -642,7 +767,7 @@ void VType_wxRegion::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGDIObject, Flag::Mutable);
+	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Region_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxRegion, Clear_gurax));
 	Assign(Gurax_CreateMethod(wxRegion, Contains_gurax));

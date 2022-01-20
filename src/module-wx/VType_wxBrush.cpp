@@ -62,7 +62,7 @@ Gurax_ImplementConstructorEx(Brush_gurax, processor_gurax, argument_gurax)
 		return new Value_wxBrush(wxBrush(colour, style));
 	} while (0);
 	Error::ClearIssuedFlag();
-	// wx.Pen(stippleBitmap as const_Bitmap_r)
+	// wx.Brush(stippleBitmap as const_Bitmap_r)
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
