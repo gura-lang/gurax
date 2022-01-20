@@ -88,7 +88,7 @@ Gurax_ImplementConstructorEx(Region_gurax, processor_gurax, argument_gurax)
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
 			pDeclCallable = new DeclCallable();
-			pDeclCallable->DeclareArg("points", VTYPE_wxPoint, DeclareArg::Occur::Once, DeclareArg::Flag::ListVar);
+			pDeclCallable->DeclareArg("points", VTYPE_wxPoint, DeclArg::Occur::Once, DeclArg::Flag::ListVar);
 			pDeclCallable->DeclareArg("fillStyle", VTYPE_Number);
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
