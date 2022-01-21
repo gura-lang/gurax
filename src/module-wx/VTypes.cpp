@@ -12,9 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxAuiToolBarArt);
-	frame.Assign(VTYPE_wxAuiDefaultToolBarArt);
-	frame.Assign(VTYPE_wxAuiToolBarItem);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -25,13 +22,16 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAnyButton);
 	frame.Assign(VTYPE_wxApp);
 	frame.Assign(VTYPE_wxAppConsole);
+	frame.Assign(VTYPE_wxAuiDefaultToolBarArt);
 	frame.Assign(VTYPE_wxAuiMDIChildFrame);
 	frame.Assign(VTYPE_wxAuiMDIClientWindow);
 	frame.Assign(VTYPE_wxAuiMDIParentFrame);
 	frame.Assign(VTYPE_wxAuiNotebook);
 	frame.Assign(VTYPE_wxAuiNotebookEvent);
 	frame.Assign(VTYPE_wxAuiToolBar);
+	frame.Assign(VTYPE_wxAuiToolBarArt);
 	frame.Assign(VTYPE_wxAuiToolBarEvent);
+	frame.Assign(VTYPE_wxAuiToolBarItem);
 	frame.Assign(VTYPE_wxAutoBufferedPaintDC);
 	frame.Assign(VTYPE_wxBitmap);
 	frame.Assign(VTYPE_wxBitmapButton);

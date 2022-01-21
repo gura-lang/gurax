@@ -180,6 +180,104 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetFont_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.AuiToolBar#AddTool(args* as Any) {block?}
+Gurax_DeclareMethodAlias(wxAuiToolBar, AddTool_gurax, "AddTool")
+{
+	Declare(VTYPE_wxAuiToolBarItem, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAuiToolBar, AddTool_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// AddTool(tool_id as int, label as const_String_r, bitmap as const_Bitmap_r, short_help_string as const_String_r = "", kind as ItemKind = wxITEM_NORMAL) as AuiToolBarItem_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("tool_id", VTYPE_Number);
+			pDeclCallable->DeclareArg("label", VTYPE_String);
+			pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("short_help_string", VTYPE_String);
+			pDeclCallable->DeclareArg("kind", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int tool_id = args.PickNumber<int>();
+		const char* label = args.PickString();
+		const wxBitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+		const char* short_help_string = args.PickString();
+		wxItemKind kind = args.PickNumber<wxItemKind>();
+		wxAuiToolBarItem* rtn = pEntity_gurax->AddTool(tool_id, label, bitmap, short_help_string, kind);
+		return new Value_wxAuiToolBarItem(*rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	/*
+	// AddTool(tool_id as int, label as const_String_r, bitmap as const_Bitmap_r, disabled_bitmap as const_Bitmap_r, kind as ItemKind, short_help_string as const_String_r, long_help_string as const_String_r, client_data as Object_p) as AuiToolBarItem_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("tool_id", VTYPE_Number);
+			pDeclCallable->DeclareArg("label", VTYPE_String);
+			pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("disabled_bitmap", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("kind", VTYPE_Number);
+			pDeclCallable->DeclareArg("short_help_string", VTYPE_String);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int tool_id = args.PickNumber<int>();
+		const char* label = args.PickString();
+		const Bitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+		const char* short_help_string = args.PickString();
+		wxItemKind kind = args.PickNumber<wxItemKind>();\
+				wxAuiToolBarItem* rtn = pEntity_gurax->AddTool(tool_id, label, bitmap, short_help_string, kind);
+		return new Value_wxAuiToolBarItem(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	// AddTool(tool_id as int, bitmap as const_Bitmap_r, disabled_bitmap as const_Bitmap_r, toggle as bool = false, client_data as Object_p = NULL, short_help_string as const_String_r = "", long_help_string as const_String_r = "") as AuiToolBarItem_p
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("tool_id", VTYPE_Number);
+			pDeclCallable->DeclareArg("label", VTYPE_String);
+			pDeclCallable->DeclareArg("bitmap", VTYPE_wxBitmap);
+			pDeclCallable->DeclareArg("short_help_string", VTYPE_String);
+			pDeclCallable->DeclareArg("kind", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int tool_id = args.PickNumber<int>();
+		const char* label = args.PickString();
+		const Bitmap& bitmap = args.Pick<Value_wxBitmap>().GetEntity();
+		const char* short_help_string = args.PickString();
+		wxItemKind kind = args.PickNumber<wxItemKind>();\
+				wxAuiToolBarItem* rtn = pEntity_gurax->AddTool(tool_id, label, bitmap, short_help_string, kind);
+		return new Value_wxAuiToolBarItem(rtn);
+	} while (0);
+	*/
+	return Value::nil();
+}
+
 // wx.AuiToolBar#AddLabel(tool_id as Number, label? as String, width? as Number) {block?}
 Gurax_DeclareMethodAlias(wxAuiToolBar, AddLabel_gurax, "AddLabel")
 {
@@ -1337,6 +1435,7 @@ void VType_wxAuiToolBar::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxAuiToolBar, SetArtProvider_gurax));
 	Assign(Gurax_CreateMethod(wxAuiToolBar, GetArtProvider_gurax));
 	Assign(Gurax_CreateMethod(wxAuiToolBar, SetFont_gurax));
+	Assign(Gurax_CreateMethod(wxAuiToolBar, AddTool_gurax));
 	Assign(Gurax_CreateMethod(wxAuiToolBar, AddLabel_gurax));
 	Assign(Gurax_CreateMethod(wxAuiToolBar, Realize_gurax));
 	Assign(Gurax_CreateMethod(wxAuiToolBar, FindControl_gurax));

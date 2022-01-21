@@ -4,9 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxAuiToolBarArt.cpp
-	VType_wxAuiDefaultToolBarArt.cpp
-	VType_wxAuiToolBarItem.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -17,13 +14,16 @@ set(SRCFILES_VTYPE
 	VType_wxAnyButton.cpp
 	VType_wxApp.cpp
 	VType_wxAppConsole.cpp
+	VType_wxAuiDefaultToolBarArt.cpp
 	VType_wxAuiMDIChildFrame.cpp
 	VType_wxAuiMDIClientWindow.cpp
 	VType_wxAuiMDIParentFrame.cpp
 	VType_wxAuiNotebook.cpp
 	VType_wxAuiNotebookEvent.cpp
 	VType_wxAuiToolBar.cpp
+	VType_wxAuiToolBarArt.cpp
 	VType_wxAuiToolBarEvent.cpp
+	VType_wxAuiToolBarItem.cpp
 	VType_wxAutoBufferedPaintDC.cpp
 	VType_wxBitmap.cpp
 	VType_wxBitmapButton.cpp
