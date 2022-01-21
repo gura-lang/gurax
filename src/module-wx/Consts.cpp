@@ -47,6 +47,17 @@ void AssignConsts(Frame& frame)
 	frame.Assign("AUI_NB_TAB_SPLIT", new Value_Number(wxAUI_NB_TAB_SPLIT));
 	frame.Assign("AUI_NB_TOP", new Value_Number(wxAUI_NB_TOP));
 	frame.Assign("AUI_NB_WINDOWLIST_BUTTON", new Value_Number(wxAUI_NB_WINDOWLIST_BUTTON));
+	frame.Assign("AUI_TB_DEFAULT_STYLE", new Value_Number(wxAUI_TB_DEFAULT_STYLE));
+	frame.Assign("AUI_TB_GRIPPER", new Value_Number(wxAUI_TB_GRIPPER));
+	frame.Assign("AUI_TB_HORIZONTAL", new Value_Number(wxAUI_TB_HORIZONTAL));
+	frame.Assign("AUI_TB_HORZ_LAYOUT", new Value_Number(wxAUI_TB_HORZ_LAYOUT));
+	frame.Assign("AUI_TB_HORZ_TEXT", new Value_Number(wxAUI_TB_HORZ_TEXT));
+	frame.Assign("AUI_TB_NO_AUTORESIZE", new Value_Number(wxAUI_TB_NO_AUTORESIZE));
+	frame.Assign("AUI_TB_NO_TOOLTIPS", new Value_Number(wxAUI_TB_NO_TOOLTIPS));
+	frame.Assign("AUI_TB_OVERFLOW", new Value_Number(wxAUI_TB_OVERFLOW));
+	frame.Assign("AUI_TB_PLAIN_BACKGROUND", new Value_Number(wxAUI_TB_PLAIN_BACKGROUND));
+	frame.Assign("AUI_TB_TEXT", new Value_Number(wxAUI_TB_TEXT));
+	frame.Assign("AUI_TB_VERTICAL", new Value_Number(wxAUI_TB_VERTICAL));
 	frame.Assign("BG_STYLE_COLOUR", new Value_Number(wxBG_STYLE_COLOUR));
 	frame.Assign("BG_STYLE_ERASE", new Value_Number(wxBG_STYLE_ERASE));
 	frame.Assign("BG_STYLE_PAINT", new Value_Number(wxBG_STYLE_PAINT));

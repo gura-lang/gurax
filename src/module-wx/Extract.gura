@@ -2,20 +2,148 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-virtual int 	GetMax () const
- 	Returns the maximum permissible value. More...
+a 	wxAuiToolBar (wxWindow *parent, wxWindowID id=wxID_ANY, const wxPoint &position=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxAUI_TB_DEFAULT_STYLE)
+ 	Constructor creating and initializing the object. More...
  
-virtual int 	GetMin () const
- 	Returns the minimum permissible value. More...
+void 	SetWindowStyleFlag (long style)
+ 	Sets the style of the window. More...
  
-virtual int 	GetValue () const
- 	Returns the current spin button value. More...
+long 	GetWindowStyleFlag () const
+ 	Gets the window style that was passed to the constructor or Create() method. More...
  
-virtual void 	SetRange (int min, int max)
- 	Sets the range of the spin button. More...
+void 	SetArtProvider (wxAuiToolBarArt *art)
  
-virtual void 	SetValue (int value)
- 	Sets the value of the spin button. More...
+wxAuiToolBarArt * 	GetArtProvider () const
+ 
+bool 	SetFont (const wxFont &font)
+ 	Sets the font for this window. More...
+ 
+wxAuiToolBarItem * 	AddTool (int tool_id, const wxString &label, const wxBitmap &bitmap, const wxString &short_help_string=wxEmptyString, wxItemKind kind=wxITEM_NORMAL)
+ 
+wxAuiToolBarItem * 	AddTool (int tool_id, const wxString &label, const wxBitmap &bitmap, const wxBitmap &disabled_bitmap, wxItemKind kind, const wxString &short_help_string, const wxString &long_help_string, wxObject *client_data)
+ 
+wxAuiToolBarItem * 	AddTool (int tool_id, const wxBitmap &bitmap, const wxBitmap &disabled_bitmap, bool toggle=false, wxObject *client_data=NULL, const wxString &short_help_string=wxEmptyString, const wxString &long_help_string=wxEmptyString)
+ 
+wxAuiToolBarItem * 	AddLabel (int tool_id, const wxString &label=wxEmptyString, const int width=-1)
+ 
+wxAuiToolBarItem * 	AddControl (wxControl *control, const wxString &label=wxEmptyString)
+ 
+wxAuiToolBarItem * 	AddSeparator ()
+ 
+wxAuiToolBarItem * 	AddSpacer (int pixels)
+ 
+wxAuiToolBarItem * 	AddStretchSpacer (int proportion=1)
+ 
+bool 	Realize ()
+ 
+wxControl * 	FindControl (int window_id)
+ 
+wxAuiToolBarItem * 	FindToolByPosition (wxCoord x, wxCoord y) const
+ 
+wxAuiToolBarItem * 	FindToolByIndex (int idx) const
+ 
+wxAuiToolBarItem * 	FindTool (int tool_id) const
+ 
+void 	ClearTools ()
+ 
+void 	Clear ()
+ 
+bool 	DeleteTool (int tool_id)
+ 
+bool 	DeleteByIndex (int tool_id)
+ 
+size_t 	GetToolCount () const
+ 
+int 	GetToolPos (int tool_id) const
+ 
+int 	GetToolIndex (int tool_id) const
+ 
+bool 	GetToolFits (int tool_id) const
+ 
+wxRect 	GetToolRect (int tool_id) const
+ 
+bool 	GetToolFitsByIndex (int tool_id) const
+ 
+bool 	GetToolBarFits () const
+ 
+void 	SetMargins (const wxSize &size)
+ 
+void 	SetMargins (int x, int y)
+ 
+void 	SetMargins (int left, int right, int top, int bottom)
+ 
+void 	SetToolBitmapSize (const wxSize &size)
+ 
+wxSize 	GetToolBitmapSize () const
+ 
+bool 	GetOverflowVisible () const
+ 
+void 	SetOverflowVisible (bool visible)
+ 
+bool 	GetGripperVisible () const
+ 
+void 	SetGripperVisible (bool visible)
+ 
+void 	ToggleTool (int tool_id, bool state)
+ 
+bool 	GetToolToggled (int tool_id) const
+ 
+void 	EnableTool (int tool_id, bool state)
+ 
+bool 	GetToolEnabled (int tool_id) const
+ 
+void 	SetToolDropDown (int tool_id, bool dropdown)
+ 	Set whether the specified toolbar item has a drop down button. More...
+ 
+bool 	GetToolDropDown (int tool_id) const
+ 	Returns whether the specified toolbar item has an associated drop down button. More...
+ 
+void 	SetToolBorderPadding (int padding)
+ 
+int 	GetToolBorderPadding () const
+ 
+void 	SetToolTextOrientation (int orientation)
+ 
+int 	GetToolTextOrientation () const
+ 
+void 	SetToolPacking (int packing)
+ 
+int 	GetToolPacking () const
+ 
+void 	SetToolProportion (int tool_id, int proportion)
+ 
+int 	GetToolProportion (int tool_id) const
+ 
+void 	SetToolSeparation (int separation)
+ 
+int 	GetToolSeparation () const
+ 
+void 	SetToolSticky (int tool_id, bool sticky)
+ 
+bool 	GetToolSticky (int tool_id) const
+ 
+wxString 	GetToolLabel (int tool_id) const
+ 
+void 	SetToolLabel (int tool_id, const wxString &label)
+ 
+wxBitmap 	GetToolBitmap (int tool_id) const
+ 
+void 	SetToolBitmap (int tool_id, const wxBitmap &bitmap)
+ 
+wxString 	GetToolShortHelp (int tool_id) const
+ 
+void 	SetToolShortHelp (int tool_id, const wxString &help_string)
+ 
+wxString 	GetToolLongHelp (int tool_id) const
+ 
+void 	SetToolLongHelp (int tool_id, const wxString &help_string)
+ 
+void 	SetCustomOverflowItems (const wxAuiToolBarItemArray &prepend, const wxAuiToolBarItemArray &append)
+ 
+wxSize 	GetHintSize (int dock_direction) const
+ 	get size of hint rectangle for a particular dock location More...
+ 
+bool 	IsPaneValid (const wxAuiPaneInfo &pane) const
 '''
 //------------------------------------------------------------------------------
 

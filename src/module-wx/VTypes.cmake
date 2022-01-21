@@ -4,8 +4,9 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxDateSpan.cpp
-	VType_wxTimeSpan.cpp
+	VType_wxAuiToolBarArt.cpp
+	VType_wxAuiDefaultToolBarArt.cpp
+	VType_wxAuiToolBarItem.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -22,6 +23,7 @@ set(SRCFILES_VTYPE
 	VType_wxAuiNotebook.cpp
 	VType_wxAuiNotebookEvent.cpp
 	VType_wxAuiToolBar.cpp
+	VType_wxAuiToolBarEvent.cpp
 	VType_wxAutoBufferedPaintDC.cpp
 	VType_wxBitmap.cpp
 	VType_wxBitmapButton.cpp
@@ -75,6 +77,7 @@ set(SRCFILES_VTYPE
 	VType_wxDataViewTreeCtrl.cpp
 	VType_wxDateEvent.cpp
 	VType_wxDatePickerCtrl.cpp
+	VType_wxDateSpan.cpp
 	VType_wxDateTime.cpp
 	VType_wxDC.cpp
 	VType_wxDialog.cpp
@@ -303,6 +306,7 @@ set(SRCFILES_VTYPE
 	VType_wxTimePickerCtrl.cpp
 	VType_wxTimer.cpp
 	VType_wxTimerEvent.cpp
+	VType_wxTimeSpan.cpp
 	VType_wxToggleButton.cpp
 	VType_wxToolBar.cpp
 	VType_wxToolBarToolBase.cpp

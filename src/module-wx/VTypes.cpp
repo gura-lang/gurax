@@ -12,8 +12,9 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxDateSpan);
-	frame.Assign(VTYPE_wxTimeSpan);
+	frame.Assign(VTYPE_wxAuiToolBarArt);
+	frame.Assign(VTYPE_wxAuiDefaultToolBarArt);
+	frame.Assign(VTYPE_wxAuiToolBarItem);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -30,6 +31,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAuiNotebook);
 	frame.Assign(VTYPE_wxAuiNotebookEvent);
 	frame.Assign(VTYPE_wxAuiToolBar);
+	frame.Assign(VTYPE_wxAuiToolBarEvent);
 	frame.Assign(VTYPE_wxAutoBufferedPaintDC);
 	frame.Assign(VTYPE_wxBitmap);
 	frame.Assign(VTYPE_wxBitmapButton);
@@ -83,6 +85,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxDataViewTreeCtrl);
 	frame.Assign(VTYPE_wxDateEvent);
 	frame.Assign(VTYPE_wxDatePickerCtrl);
+	frame.Assign(VTYPE_wxDateSpan);
 	frame.Assign(VTYPE_wxDateTime);
 	frame.Assign(VTYPE_wxDC);
 	frame.Assign(VTYPE_wxDialog);
@@ -311,6 +314,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTimePickerCtrl);
 	frame.Assign(VTYPE_wxTimer);
 	frame.Assign(VTYPE_wxTimerEvent);
+	frame.Assign(VTYPE_wxTimeSpan);
 	frame.Assign(VTYPE_wxToggleButton);
 	frame.Assign(VTYPE_wxToolBar);
 	frame.Assign(VTYPE_wxToolBarToolBase);

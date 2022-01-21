@@ -50,6 +50,385 @@ Gurax_ImplementConstructorEx(AnyButton_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.AnyButton#GetBitmap() {block?}
+Gurax_DeclareMethodAlias(wxAnyButton, GetBitmap_gurax, "GetBitmap")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, GetBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetBitmap()));
+}
+
+// wx.AnyButton#GetBitmapCurrent() {block?}
+Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapCurrent_gurax, "GetBitmapCurrent")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, GetBitmapCurrent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetBitmapCurrent()));
+}
+
+// wx.AnyButton#GetBitmapDisabled() {block?}
+Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapDisabled_gurax, "GetBitmapDisabled")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, GetBitmapDisabled_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetBitmapDisabled()));
+}
+
+// wx.AnyButton#GetBitmapFocus() {block?}
+Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapFocus_gurax, "GetBitmapFocus")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, GetBitmapFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetBitmapFocus()));
+}
+
+// wx.AnyButton#GetBitmapLabel() {block?}
+Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapLabel_gurax, "GetBitmapLabel")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, GetBitmapLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetBitmapLabel()));
+}
+
+// wx.AnyButton#GetBitmapPressed() {block?}
+Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapPressed_gurax, "GetBitmapPressed")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, GetBitmapPressed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetBitmapPressed()));
+}
+
+// wx.AnyButton#SetBitmap(bitmap as wx.Bitmap, dir? as Number)
+Gurax_DeclareMethodAlias(wxAnyButton, SetBitmap_gurax, "SetBitmap")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dir", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, SetBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	bool dir_validFlag = args_gurax.IsValid();
+	wxDirection dir = dir_validFlag? args_gurax.PickNumber<wxDirection>() : wxLEFT;
+	// Function body
+	pEntity_gurax->SetBitmap(bitmap, dir);
+	return Gurax::Value::nil();
+}
+
+// wx.AnyButton#SetBitmapCurrent(bitmap as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapCurrent_gurax, "SetBitmapCurrent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, SetBitmapCurrent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	// Function body
+	pEntity_gurax->SetBitmapCurrent(bitmap);
+	return Gurax::Value::nil();
+}
+
+// wx.AnyButton#SetBitmapDisabled(bitmap as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapDisabled_gurax, "SetBitmapDisabled")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, SetBitmapDisabled_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	// Function body
+	pEntity_gurax->SetBitmapDisabled(bitmap);
+	return Gurax::Value::nil();
+}
+
+// wx.AnyButton#SetBitmapFocus(bitmap as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapFocus_gurax, "SetBitmapFocus")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, SetBitmapFocus_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	// Function body
+	pEntity_gurax->SetBitmapFocus(bitmap);
+	return Gurax::Value::nil();
+}
+
+// wx.AnyButton#SetBitmapLabel(bitmap as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapLabel_gurax, "SetBitmapLabel")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, SetBitmapLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	// Function body
+	pEntity_gurax->SetBitmapLabel(bitmap);
+	return Gurax::Value::nil();
+}
+
+// wx.AnyButton#SetBitmapPressed(bitmap as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapPressed_gurax, "SetBitmapPressed")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, SetBitmapPressed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	// Function body
+	pEntity_gurax->SetBitmapPressed(bitmap);
+	return Gurax::Value::nil();
+}
+
+// wx.AnyButton#GetBitmapMargins() {block?}
+Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapMargins_gurax, "GetBitmapMargins")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, GetBitmapMargins_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetBitmapMargins()));
+}
+
+// wx.AnyButton#SetBitmapPosition(dir as Number)
+Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapPosition_gurax, "SetBitmapPosition")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dir", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, SetBitmapPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxDirection dir = args_gurax.PickNumber<wxDirection>();
+	// Function body
+	pEntity_gurax->SetBitmapPosition(dir);
+	return Gurax::Value::nil();
+}
+
+// wx.AnyButton#SetBitmapMargins(args* as Any)
+Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapMargins_gurax, "SetBitmapMargins")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnyButton, SetBitmapMargins_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// SetBitmapMargins(x as Coord, y as Coord) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxCoord x = args.PickNumber<wxCoord>();
+		wxCoord y = args.PickNumber<wxCoord>();
+		pEntity_gurax->SetBitmapMargins(x, y);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// SetBitmapMargins(sz as const_Size_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("sz", VTYPE_wxSize);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxSize& sz = args.Pick<Value_wxSize>().GetEntity();
+		pEntity_gurax->SetBitmapMargins(sz);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -67,6 +446,21 @@ void VType_wxAnyButton::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(AnyButton_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxAnyButton, GetBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, GetBitmapCurrent_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, GetBitmapDisabled_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, GetBitmapFocus_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, GetBitmapLabel_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, GetBitmapPressed_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, SetBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, SetBitmapCurrent_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, SetBitmapDisabled_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, SetBitmapFocus_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, SetBitmapLabel_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, SetBitmapPressed_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, GetBitmapMargins_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, SetBitmapPosition_gurax));
+	Assign(Gurax_CreateMethod(wxAnyButton, SetBitmapMargins_gurax));
 }
 
 //------------------------------------------------------------------------------

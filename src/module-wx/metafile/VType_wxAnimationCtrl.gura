@@ -16,7 +16,7 @@ AnimationCtrl = Class(Control) {
 	Stop() as void
 }
 
-@const {
+@const { // Styles
 	AC_DEFAULT_STYLE
 	AC_NO_AUTORESIZE
 }

@@ -3,4 +3,56 @@
 //==============================================================================
 AnyButton = Class(Control) {
 	__init__()
+	@include['wx/anybutton.h']
+	GetBitmap() as Bitmap
+	GetBitmapCurrent() as Bitmap
+	GetBitmapDisabled() as Bitmap
+	GetBitmapFocus() as Bitmap
+	GetBitmapLabel() as Bitmap
+	GetBitmapPressed() as Bitmap
+	SetBitmap(bitmap as const_Bitmap_r, dir as Direction = wxLEFT) as void
+	SetBitmapCurrent(bitmap as const_Bitmap_r) as void
+	SetBitmapDisabled(bitmap as const_Bitmap_r) as void
+	SetBitmapFocus(bitmap as const_Bitmap_r) as void
+	SetBitmapLabel(bitmap as const_Bitmap_r) as void
+	SetBitmapPressed(bitmap as const_Bitmap_r) as void
+	GetBitmapMargins() as Size
+	SetBitmapPosition(dir as Direction) as void
+	SetBitmapMargins(args* as any) as void = \
+		R'''
+		// SetBitmapMargins(x as Coord, y as Coord) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_Number);
+				pDeclCallable->DeclareArg("y", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxCoord x = args.PickNumber<wxCoord>();
+			wxCoord y = args.PickNumber<wxCoord>();
+			pEntity_gurax->SetBitmapMargins(x, y);
+			return Value::nil();
+		} while (0);
+		Error::ClearIssuedFlag();
+		// SetBitmapMargins(sz as const_Size_r) as void
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("sz", VTYPE_wxSize);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxSize& sz = args.Pick<Value_wxSize>().GetEntity();
+			pEntity_gurax->SetBitmapMargins(sz);
+			return Value::nil();
+		} while (0);
+		return Value::nil();
+		'''
 }

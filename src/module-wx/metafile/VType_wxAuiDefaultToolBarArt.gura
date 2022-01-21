@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxAuiDefaultToolBarArt.gura
 //==============================================================================
+AuiDefaultToolBarArt = Class(AuiToolBarArt) {
+	@include['wx/aui/auibar.h']
+}

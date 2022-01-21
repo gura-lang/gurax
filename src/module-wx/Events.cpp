@@ -12,6 +12,11 @@ void AssignEvents(Frame& frame)
 {
 	Gurax_AssignEvent(EVT_ACTIVATE,						wxActivateEvent);
 	Gurax_AssignEvent(EVT_ACTIVATE_APP,					wxActivateEvent);
+	Gurax_AssignEvent(EVT_AUITOOLBAR_BEGIN_DRAG,		wxAuiToolBarEvent);
+	Gurax_AssignEvent(EVT_AUITOOLBAR_MIDDLE_CLICK,		wxAuiToolBarEvent);
+	Gurax_AssignEvent(EVT_AUITOOLBAR_OVERFLOW_CLICK,	wxAuiToolBarEvent);
+	Gurax_AssignEvent(EVT_AUITOOLBAR_RIGHT_CLICK,		wxAuiToolBarEvent);
+	Gurax_AssignEvent(EVT_AUITOOLBAR_TOOL_DROPDOWN,		wxAuiToolBarEvent);
 	Gurax_AssignEvent(EVT_AUX1_DCLICK,					wxMouseEvent);
 	Gurax_AssignEvent(EVT_AUX1_DOWN,					wxMouseEvent);
 	Gurax_AssignEvent(EVT_AUX1_UP,						wxMouseEvent);
@@ -39,8 +44,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,			wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,			wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxContextMenuEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_DIALUP_CONNECTED,				wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DIALUP_DISCONNECTED,			wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES,					wxDropFilesEvent);

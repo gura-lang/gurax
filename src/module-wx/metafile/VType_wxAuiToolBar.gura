@@ -3,4 +3,94 @@
 //==============================================================================
 AuiToolBar = Class(Control) {
 	@include['wx/aui/auibar.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, position as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxAUI_TB_DEFAULT_STYLE)
+	SetWindowStyleFlag(style as long) as void
+	GetWindowStyleFlag() as long
+	SetArtProvider(art as AuiToolBarArt_p) as void
+	GetArtProvider() as AuiToolBarArt_p
+	SetFont(font as const_Font_r) as bool
+	//AddTool(tool_id as int, label as const_String_r, bitmap as const_Bitmap_r, short_help_string as const_String_r = "", kind as ItemKind = wxITEM_NORMAL) as AuiToolBarItem_p
+	//AddTool(tool_id as int, label as const_String_r, bitmap as const_Bitmap_r, disabled_bitmap as const_Bitmap_r, kind as ItemKind, short_help_string as const_String_r, long_help_string as const_String_r, client_data as Object_p) as AuiToolBarItem_p
+	//AddTool(tool_id as int, bitmap as const_Bitmap_r, disabled_bitmap as const_Bitmap_r, toggle as bool = false, client_data as Object_p = NULL, short_help_string as const_String_r = "", long_help_string as const_String_r = "") as AuiToolBarItem_p
+	AddLabel(tool_id as int, label as const_String_r = "", width as int = -1) as AuiToolBarItem_p
+	//AddControl(control as Control_p, label as const_String_r = "") as AuiToolBarItem_p
+	//AddSeparator() as AuiToolBarItem_p
+	//AddSpacer(pixels as int) as AuiToolBarItem_p
+	//AddStretchSpacer(proportion as int = 1) as AuiToolBarItem_p
+	Realize() as bool
+	FindControl(window_id as int) as Control_p
+	//FindToolByPosition(x as Coord, y as Coord) as AuiToolBarItem_p
+	//FindToolByIndex(idx as int) as AuiToolBarItem_p
+	//FindTool(tool_id as int) as AuiToolBarItem_p
+	ClearTools() as void
+	Clear() as void
+	DeleteTool(tool_id as int) as bool
+	DeleteByIndex(tool_id as int) as bool
+	GetToolCount() as size_t
+	GetToolPos(tool_id as int) as int
+	GetToolIndex(tool_id as int) as int
+	GetToolFits(tool_id as int) as bool
+	GetToolRect(tool_id as int) as Rect
+	GetToolFitsByIndex(tool_id as int) as bool
+	GetToolBarFits() as bool
+	SetMargins(size as const_Size_r) as void
+	//SetMargins(x as int, y as int) as void
+	//SetMargins(left as int, right as int, top as int, bottom as int) as void
+	SetToolBitmapSize(size as const_Size_r) as void
+	GetToolBitmapSize() as Size
+	GetOverflowVisible() as bool
+	SetOverflowVisible(visible as bool) as void
+	GetGripperVisible() as bool
+	SetGripperVisible(visible as bool) as void
+	ToggleTool(tool_id as int, state as bool) as void
+	GetToolToggled(tool_id as int) as bool
+	EnableTool(tool_id as int, state as bool) as void
+	GetToolEnabled(tool_id as int) as bool
+	SetToolDropDown(tool_id as int, dropdown as bool) as void
+	GetToolDropDown(tool_id as int) as bool
+	SetToolBorderPadding(padding as int) as void
+	GetToolBorderPadding() as int
+	SetToolTextOrientation(orientation as int) as void
+	GetToolTextOrientation() as int
+	SetToolPacking(packing as int) as void
+	GetToolPacking() as int
+	SetToolProportion(tool_id as int, proportion as int) as void
+	GetToolProportion(tool_id as int) as int
+	SetToolSeparation(separation as int) as void
+	GetToolSeparation() as int
+	SetToolSticky(tool_id as int, sticky as bool) as void
+	GetToolSticky(tool_id as int) as bool
+	GetToolLabel(tool_id as int) as String
+	SetToolLabel(tool_id as int, label as const_String_r) as void
+	GetToolBitmap(tool_id as int) as Bitmap
+	SetToolBitmap(tool_id as int, bitmap as const_Bitmap_r) as void
+	GetToolShortHelp(tool_id as int) as String
+	SetToolShortHelp(tool_id as int, help_string as const_String_r) as void
+	GetToolLongHelp(tool_id as int) as String
+	SetToolLongHelp(tool_id as int, help_string as const_String_r) as void
+	//SetCustomOverflowItems(prepend as const_AuiToolBarItemArray_r, append as const_AuiToolBarItemArray_r) as void
+	GetHintSize(dock_direction as int) as Size
+	//IsPaneValid(pane as const_AuiPaneInfo_r) as bool
+}
+
+@const { // Styles
+	AUI_TB_TEXT
+	AUI_TB_NO_TOOLTIPS
+	AUI_TB_NO_AUTORESIZE
+	AUI_TB_GRIPPER
+	AUI_TB_OVERFLOW
+	AUI_TB_VERTICAL
+	AUI_TB_HORZ_LAYOUT
+	AUI_TB_HORIZONTAL
+	AUI_TB_PLAIN_BACKGROUND
+	AUI_TB_HORZ_TEXT
+	AUI_TB_DEFAULT_STYLE
+}
+
+@event {
+	EVT_AUITOOLBAR_TOOL_DROPDOWN	>> AuiToolBarEvent
+	EVT_AUITOOLBAR_OVERFLOW_CLICK	>> AuiToolBarEvent
+	EVT_AUITOOLBAR_RIGHT_CLICK		>> AuiToolBarEvent
+	EVT_AUITOOLBAR_MIDDLE_CLICK		>> AuiToolBarEvent
+	EVT_AUITOOLBAR_BEGIN_DRAG		>> AuiToolBarEvent
 }
