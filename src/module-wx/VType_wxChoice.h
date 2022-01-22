@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXCHOICE_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/choice.h>
 #include "Util.h"
 #include "VType_wxControl.h"
 

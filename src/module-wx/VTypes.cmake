@@ -73,6 +73,7 @@ set(SRCFILES_VTYPE
 	VType_wxDataFormat.cpp
 	VType_wxDataObject.cpp
 	VType_wxDataViewCtrl.cpp
+	VType_wxDataViewEvent.cpp
 	VType_wxDataViewListCtrl.cpp
 	VType_wxDataViewTreeCtrl.cpp
 	VType_wxDateEvent.cpp

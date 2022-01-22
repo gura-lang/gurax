@@ -2,8 +2,8 @@
 // VType_wxComboCtrl.gura
 //==============================================================================
 ComboCtrl = Class(Control) {
-	@mixin[TextEntry]
 	@include['wx/combo.h']
+	@mixin[TextEntry]
  	__init__(parent as Window_p, id as WindowID = wxID_ANY, value as String = '', pos as Point = wxDefaultPosition,
 	 	size as Size = wxDefaultSize, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxComboBoxNameStr)
 	Copy() as void

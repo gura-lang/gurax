@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXCHECKBOX_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/checkbox.h>
 #include "Util.h"
 #include "VType_wxControl.h"
 

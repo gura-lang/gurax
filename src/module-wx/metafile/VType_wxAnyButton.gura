@@ -2,8 +2,8 @@
 // VType_wxAnyButton.gura
 //==============================================================================
 AnyButton = Class(Control) {
-	__init__()
 	@include['wx/anybutton.h']
+	__init__()
 	GetBitmap() as Bitmap
 	GetBitmapCurrent() as Bitmap
 	GetBitmapDisabled() as Bitmap

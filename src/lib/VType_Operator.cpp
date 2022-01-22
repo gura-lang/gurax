@@ -299,6 +299,21 @@ Gurax_ImplementPropertyGetter(Operator, symbol)
 	return new Value_Symbol(valueThis.GetOperator().GetSymbol());
 }
 
+// Operator#typeId
+Gurax_DeclareProperty_R(Operator, typeId)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Type of the operator.");
+}
+
+Gurax_ImplementPropertyGetter(Operator, typeId)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(static_cast<int>(valueThis.GetOperator().GetType()));
+}
+
 //------------------------------------------------------------------------------
 // VType_Operator
 //------------------------------------------------------------------------------
@@ -325,6 +340,7 @@ void VType_Operator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Operator, name));
 	Assign(Gurax_CreateProperty(Operator, style));
 	Assign(Gurax_CreateProperty(Operator, symbol));
+	Assign(Gurax_CreateProperty(Operator, typeId));
 }
 
 //------------------------------------------------------------------------------

@@ -76,6 +76,7 @@
 #include "VType_wxDataFormat.h"
 #include "VType_wxDataObject.h"
 #include "VType_wxDataViewCtrl.h"
+#include "VType_wxDataViewEvent.h"
 #include "VType_wxDataViewListCtrl.h"
 #include "VType_wxDataViewTreeCtrl.h"
 #include "VType_wxDateEvent.h"

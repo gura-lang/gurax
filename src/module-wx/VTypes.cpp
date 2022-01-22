@@ -81,6 +81,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxDataFormat);
 	frame.Assign(VTYPE_wxDataObject);
 	frame.Assign(VTYPE_wxDataViewCtrl);
+	frame.Assign(VTYPE_wxDataViewEvent);
 	frame.Assign(VTYPE_wxDataViewListCtrl);
 	frame.Assign(VTYPE_wxDataViewTreeCtrl);
 	frame.Assign(VTYPE_wxDateEvent);

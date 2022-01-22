@@ -213,6 +213,13 @@ void AssignConsts(Frame& frame)
 	frame.Assign("DUPLEX_HORIZONTAL", new Value_Number(wxDUPLEX_HORIZONTAL));
 	frame.Assign("DUPLEX_SIMPLEX", new Value_Number(wxDUPLEX_SIMPLEX));
 	frame.Assign("DUPLEX_VERTICAL", new Value_Number(wxDUPLEX_VERTICAL));
+	frame.Assign("DV_HORIZ_RULES", new Value_Number(wxDV_HORIZ_RULES));
+	frame.Assign("DV_MULTIPLE", new Value_Number(wxDV_MULTIPLE));
+	frame.Assign("DV_NO_HEADER", new Value_Number(wxDV_NO_HEADER));
+	frame.Assign("DV_ROW_LINES", new Value_Number(wxDV_ROW_LINES));
+	frame.Assign("DV_SINGLE", new Value_Number(wxDV_SINGLE));
+	frame.Assign("DV_VARIABLE_LINE_HEIGHT", new Value_Number(wxDV_VARIABLE_LINE_HEIGHT));
+	frame.Assign("DV_VERT_RULES", new Value_Number(wxDV_VERT_RULES));
 	frame.Assign("DragCancel", new Value_Number(wxDragCancel));
 	frame.Assign("DragCopy", new Value_Number(wxDragCopy));
 	frame.Assign("DragError", new Value_Number(wxDragError));

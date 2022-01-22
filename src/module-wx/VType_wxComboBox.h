@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXCOMBOBOX_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/combobox.h>
 #include "Util.h"
 #include "VType_wxControl.h"
 

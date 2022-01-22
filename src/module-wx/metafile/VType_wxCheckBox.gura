@@ -2,6 +2,7 @@
 // VType_wxCheckBox.gura
 //==============================================================================
 CheckBox = Class(Control) {
+	@include['wx/checkbox.h']
 	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxCheckBoxNameStr)
 	GetValue() as bool

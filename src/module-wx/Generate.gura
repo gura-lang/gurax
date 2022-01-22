@@ -780,9 +780,6 @@ void AssignOperators(Frame& frame)
 Gurax_EndModuleScope(wx)
 '''
 
-
-
-
 PropInfo = class {
 	funcInfo_propSetter as cbridge.FuncInfo
 	funcInfo_propGetter as cbridge.FuncInfo
@@ -1367,4 +1364,4 @@ GenerateConst(constNameTbl.Sort().Uniq():list)
 eventNames = eventInfoTbl::eventName
 GenerateEvent(eventInfoTbl.Sort(keys = eventNames), Int((('Gurax_AssignEvent' + ',').width + ((eventNames:*len).Max()) + 3) / 4 * 4 + 4))
 GenerateFunction(funcInfoTbl.Sort(keys = funcInfoTbl::name))
-GenerateOperator(funcInfoOpTbl)
+GenerateOperator(funcInfoOpTbl.Sort(keys = funcInfoOpTbl:*operator::typeId):stable)
