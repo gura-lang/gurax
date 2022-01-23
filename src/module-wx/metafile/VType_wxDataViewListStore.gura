@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxDataViewListStore.gura
+//==============================================================================
+DataViewListStore = Class(DataViewIndexListModel) {
+	@include['wx/dataview.h']
+}

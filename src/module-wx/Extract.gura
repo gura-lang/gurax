@@ -2,148 +2,84 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxAuiToolBar (wxWindow *parent, wxWindowID id=wxID_ANY, const wxPoint &position=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxAUI_TB_DEFAULT_STYLE)
- 	Constructor creating and initializing the object. More...
+a 	wxDataViewEvent (wxEventType commandType=wxEVT_NULL, int winid=0)
+ 	Constructor. More...
  
-void 	SetWindowStyleFlag (long style)
- 	Sets the style of the window. More...
+int 	GetColumn () const
+ 	Returns the position of the column in the control or -1 if no column field was set by the event emitter. More...
  
-long 	GetWindowStyleFlag () const
- 	Gets the window style that was passed to the constructor or Create() method. More...
+wxDataViewColumn * 	GetDataViewColumn () const
+ 	Returns a pointer to the wxDataViewColumn from which the event was emitted or NULL. More...
  
-void 	SetArtProvider (wxAuiToolBarArt *art)
+wxDataViewModel * 	GetModel () const
+ 	Returns the wxDataViewModel associated with the event. More...
  
-wxAuiToolBarArt * 	GetArtProvider () const
+wxPoint 	GetPosition () const
+ 	Returns the position of a context menu event in screen coordinates. More...
  
-bool 	SetFont (const wxFont &font)
- 	Sets the font for this window. More...
+const wxVariant & 	GetValue () const
+ 	Returns a reference to a value. More...
  
-wxAuiToolBarItem * 	AddTool (int tool_id, const wxString &label, const wxBitmap &bitmap, const wxString &short_help_string=wxEmptyString, wxItemKind kind=wxITEM_NORMAL)
+bool 	IsEditCancelled () const
+ 	Can be used to determine whether the new value is going to be accepted in wxEVT_DATAVIEW_ITEM_EDITING_DONE handler. More...
  
-wxAuiToolBarItem * 	AddTool (int tool_id, const wxString &label, const wxBitmap &bitmap, const wxBitmap &disabled_bitmap, wxItemKind kind, const wxString &short_help_string, const wxString &long_help_string, wxObject *client_data)
+void 	SetColumn (int col)
+ 	Sets the column index associated with this event. More...
  
-wxAuiToolBarItem * 	AddTool (int tool_id, const wxBitmap &bitmap, const wxBitmap &disabled_bitmap, bool toggle=false, wxObject *client_data=NULL, const wxString &short_help_string=wxEmptyString, const wxString &long_help_string=wxEmptyString)
+void 	SetDataViewColumn (wxDataViewColumn *col)
+ 	For wxEVT_DATAVIEW_COLUMN_HEADER_CLICK only. More...
  
-wxAuiToolBarItem * 	AddLabel (int tool_id, const wxString &label=wxEmptyString, const int width=-1)
+void 	SetModel (wxDataViewModel *model)
+ 	Sets the dataview model associated with this event. More...
  
-wxAuiToolBarItem * 	AddControl (wxControl *control, const wxString &label=wxEmptyString)
+void 	SetValue (const wxVariant &value)
+ 	Sets the value associated with this event. More...
  
-wxAuiToolBarItem * 	AddSeparator ()
+void 	SetDataObject (wxDataObject *obj)
+ 	Set wxDataObject for data transfer within a drag operation. More...
  
-wxAuiToolBarItem * 	AddSpacer (int pixels)
+wxDataFormat 	GetDataFormat () const
+ 	Gets the wxDataFormat during a drop operation. More...
  
-wxAuiToolBarItem * 	AddStretchSpacer (int proportion=1)
+size_t 	GetDataSize () const
+ 	Gets the data size for a drop data transfer. More...
  
-bool 	Realize ()
+void * 	GetDataBuffer () const
+ 	Gets the data buffer for a drop data transfer. More...
  
-wxControl * 	FindControl (int window_id)
+void 	SetDragFlags (int flags)
+ 	Specify the kind of the drag operation to perform. More...
  
-wxAuiToolBarItem * 	FindToolByPosition (wxCoord x, wxCoord y) const
+wxDragResult 	GetDropEffect () const
+ 	Returns the effect the user requested to happen to the dropped data. More...
  
-wxAuiToolBarItem * 	FindToolByIndex (int idx) const
+int 	GetCacheFrom () const
+ 	Return the first row that will be displayed. More...
  
-wxAuiToolBarItem * 	FindTool (int tool_id) const
+int 	GetCacheTo () const
+ 	Return the last row that will be displayed. More...
  
-void 	ClearTools ()
+wxDataViewItem 	GetItem () const
  
-void 	Clear ()
+void 	SetItem (const wxDataViewItem &item)
  
-bool 	DeleteTool (int tool_id)
+void 	SetEditCanceled (bool editCancelled)
  
-bool 	DeleteByIndex (int tool_id)
+void 	SetPosition (int x, int y)
  
-size_t 	GetToolCount () const
+void 	SetCache (int from, int to)
  
-int 	GetToolPos (int tool_id) const
+wxDataObject * 	GetDataObject () const
  
-int 	GetToolIndex (int tool_id) const
+void 	SetDataFormat (const wxDataFormat &format)
  
-bool 	GetToolFits (int tool_id) const
+void 	SetDataSize (size_t size)
  
-wxRect 	GetToolRect (int tool_id) const
+void 	SetDataBuffer (void *buf)
  
-bool 	GetToolFitsByIndex (int tool_id) const
+int 	GetDragFlags () const
  
-bool 	GetToolBarFits () const
- 
-void 	SetMargins (const wxSize &size)
- 
-void 	SetMargins (int x, int y)
- 
-void 	SetMargins (int left, int right, int top, int bottom)
- 
-void 	SetToolBitmapSize (const wxSize &size)
- 
-wxSize 	GetToolBitmapSize () const
- 
-bool 	GetOverflowVisible () const
- 
-void 	SetOverflowVisible (bool visible)
- 
-bool 	GetGripperVisible () const
- 
-void 	SetGripperVisible (bool visible)
- 
-void 	ToggleTool (int tool_id, bool state)
- 
-bool 	GetToolToggled (int tool_id) const
- 
-void 	EnableTool (int tool_id, bool state)
- 
-bool 	GetToolEnabled (int tool_id) const
- 
-void 	SetToolDropDown (int tool_id, bool dropdown)
- 	Set whether the specified toolbar item has a drop down button. More...
- 
-bool 	GetToolDropDown (int tool_id) const
- 	Returns whether the specified toolbar item has an associated drop down button. More...
- 
-void 	SetToolBorderPadding (int padding)
- 
-int 	GetToolBorderPadding () const
- 
-void 	SetToolTextOrientation (int orientation)
- 
-int 	GetToolTextOrientation () const
- 
-void 	SetToolPacking (int packing)
- 
-int 	GetToolPacking () const
- 
-void 	SetToolProportion (int tool_id, int proportion)
- 
-int 	GetToolProportion (int tool_id) const
- 
-void 	SetToolSeparation (int separation)
- 
-int 	GetToolSeparation () const
- 
-void 	SetToolSticky (int tool_id, bool sticky)
- 
-bool 	GetToolSticky (int tool_id) const
- 
-wxString 	GetToolLabel (int tool_id) const
- 
-void 	SetToolLabel (int tool_id, const wxString &label)
- 
-wxBitmap 	GetToolBitmap (int tool_id) const
- 
-void 	SetToolBitmap (int tool_id, const wxBitmap &bitmap)
- 
-wxString 	GetToolShortHelp (int tool_id) const
- 
-void 	SetToolShortHelp (int tool_id, const wxString &help_string)
- 
-wxString 	GetToolLongHelp (int tool_id) const
- 
-void 	SetToolLongHelp (int tool_id, const wxString &help_string)
- 
-void 	SetCustomOverflowItems (const wxAuiToolBarItemArray &prepend, const wxAuiToolBarItemArray &append)
- 
-wxSize 	GetHintSize (int dock_direction) const
- 	get size of hint rectangle for a particular dock location More...
- 
-bool 	IsPaneValid (const wxAuiPaneInfo &pane) const
+void 	SetDropEffect (wxDragResult effect)
 '''
 //------------------------------------------------------------------------------
 

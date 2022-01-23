@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxDataViewVirtualListModel.gura
+//==============================================================================
+DataViewVirtualListModel = Class(DataViewListModel) {
+	@include['wx/dataview.h']
+}

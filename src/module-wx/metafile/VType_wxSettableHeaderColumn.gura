@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxSettableHeaderColumn.gura
+//==============================================================================
+SettableHeaderColumn = Class(HeaderColumn) {
+	@include['wx/headercol.h']
+}

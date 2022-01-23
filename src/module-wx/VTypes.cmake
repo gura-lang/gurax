@@ -4,6 +4,16 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxHeaderColumn.cpp
+	VType_wxSettableHeaderColumn.cpp
+	VType_wxDataViewModel.cpp
+	VType_wxDataViewColumn.cpp
+	VType_wxDataViewItem.cpp
+	VType_wxDataViewListModel.cpp
+	VType_wxDataViewTreeStore.cpp
+	VType_wxDataViewIndexListModel.cpp
+	VType_wxDataViewVirtualListModel.cpp
+	VType_wxDataViewListStore.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

@@ -12,6 +12,16 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxHeaderColumn);
+	frame.Assign(VTYPE_wxSettableHeaderColumn);
+	frame.Assign(VTYPE_wxDataViewModel);
+	frame.Assign(VTYPE_wxDataViewColumn);
+	frame.Assign(VTYPE_wxDataViewItem);
+	frame.Assign(VTYPE_wxDataViewListModel);
+	frame.Assign(VTYPE_wxDataViewTreeStore);
+	frame.Assign(VTYPE_wxDataViewIndexListModel);
+	frame.Assign(VTYPE_wxDataViewVirtualListModel);
+	frame.Assign(VTYPE_wxDataViewListStore);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);

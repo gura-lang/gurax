@@ -3,4 +3,34 @@
 //==============================================================================
 DataViewEvent = Class(NotifyEvent) {
 	@include['wx/dataview.h']
+	//wxDataViewEvent(commandType as EventType = wxEVT_NULL, winid as int = 0)
+	GetColumn() as int
+	GetDataViewColumn() as DataViewColumn_p
+	GetModel() as DataViewModel_p
+	GetPosition() as Point
+	//GetValue() as Variant
+	IsEditCancelled() as bool
+	SetColumn(col as int) as void
+	SetDataViewColumn(col as DataViewColumn_p) as void
+	SetModel(model as DataViewModel_p) as void
+	//SetValue(value as const_Variant_r) as void
+	SetDataObject(obj as DataObject_p) as void
+	GetDataFormat() as DataFormat
+	GetDataSize() as size_t
+	GetDataBuffer() as void_p
+	SetDragFlags(flags as int) as void
+	GetDropEffect() as DragResult
+	GetCacheFrom() as int
+	GetCacheTo() as int
+	GetItem() as DataViewItem
+	SetItem(item as const_DataViewItem_r) as void
+	//SetEditCanceled(editCancelled as bool) as void
+	SetPosition(x as int, y as int) as void
+	SetCache(from as int, to as int) as void
+	GetDataObject() as DataObject_p
+	SetDataFormat(format as const_DataFormat_r) as void
+	SetDataSize(size as size_t) as void
+	SetDataBuffer(buf as void_p) as void
+	GetDragFlags() as int
+	SetDropEffect(effect as DragResult) as void
 }
