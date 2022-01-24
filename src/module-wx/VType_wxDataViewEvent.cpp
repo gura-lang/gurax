@@ -275,25 +275,6 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetDataSize_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DataViewEvent#GetDataBuffer()
-Gurax_DeclareMethodAlias(wxDataViewEvent, GetDataBuffer_gurax, "GetDataBuffer")
-{
-	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxDataViewEvent, GetDataBuffer_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	
-}
-
 // wx.DataViewEvent#SetDragFlags(flags as Number)
 Gurax_DeclareMethodAlias(wxDataViewEvent, SetDragFlags_gurax, "SetDragFlags")
 {
@@ -645,7 +626,6 @@ void VType_wxDataViewEvent::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDataViewEvent, SetDataObject_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, GetDataFormat_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, GetDataSize_gurax));
-	Assign(Gurax_CreateMethod(wxDataViewEvent, GetDataBuffer_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, SetDragFlags_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, GetDropEffect_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, GetCacheFrom_gurax));

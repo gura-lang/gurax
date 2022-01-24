@@ -12,16 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxHeaderColumn);
-	frame.Assign(VTYPE_wxSettableHeaderColumn);
-	frame.Assign(VTYPE_wxDataViewModel);
-	frame.Assign(VTYPE_wxDataViewColumn);
-	frame.Assign(VTYPE_wxDataViewItem);
-	frame.Assign(VTYPE_wxDataViewListModel);
-	frame.Assign(VTYPE_wxDataViewTreeStore);
-	frame.Assign(VTYPE_wxDataViewIndexListModel);
-	frame.Assign(VTYPE_wxDataViewVirtualListModel);
-	frame.Assign(VTYPE_wxDataViewListStore);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -90,10 +80,18 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxCursor);
 	frame.Assign(VTYPE_wxDataFormat);
 	frame.Assign(VTYPE_wxDataObject);
+	frame.Assign(VTYPE_wxDataViewColumn);
 	frame.Assign(VTYPE_wxDataViewCtrl);
 	frame.Assign(VTYPE_wxDataViewEvent);
+	frame.Assign(VTYPE_wxDataViewIndexListModel);
+	frame.Assign(VTYPE_wxDataViewItem);
 	frame.Assign(VTYPE_wxDataViewListCtrl);
+	frame.Assign(VTYPE_wxDataViewListModel);
+	frame.Assign(VTYPE_wxDataViewListStore);
+	frame.Assign(VTYPE_wxDataViewModel);
 	frame.Assign(VTYPE_wxDataViewTreeCtrl);
+	frame.Assign(VTYPE_wxDataViewTreeStore);
+	frame.Assign(VTYPE_wxDataViewVirtualListModel);
 	frame.Assign(VTYPE_wxDateEvent);
 	frame.Assign(VTYPE_wxDatePickerCtrl);
 	frame.Assign(VTYPE_wxDateSpan);
@@ -169,6 +167,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGridSizesInfo);
 	frame.Assign(VTYPE_wxGridTableBase);
 	frame.Assign(VTYPE_wxGridTableMessage);
+	frame.Assign(VTYPE_wxHeaderColumn);
 	frame.Assign(VTYPE_wxHeaderCtrl);
 	frame.Assign(VTYPE_wxHeaderCtrlSimple);
 	frame.Assign(VTYPE_wxHelpEvent);
@@ -292,6 +291,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxScrollEvent);
 	frame.Assign(VTYPE_wxScrollWinEvent);
 	frame.Assign(VTYPE_wxSetCursorEvent);
+	frame.Assign(VTYPE_wxSettableHeaderColumn);
 	frame.Assign(VTYPE_wxSimplebook);
 	frame.Assign(VTYPE_wxSimpleHtmlListBox);
 	frame.Assign(VTYPE_wxSingleChoiceDialog);

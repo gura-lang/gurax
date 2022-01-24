@@ -17,7 +17,7 @@ DataViewEvent = Class(NotifyEvent) {
 	SetDataObject(obj as DataObject_p) as void
 	GetDataFormat() as DataFormat
 	GetDataSize() as size_t
-	GetDataBuffer() as void_p
+	//GetDataBuffer() as void_p
 	SetDragFlags(flags as int) as void
 	GetDropEffect() as DragResult
 	GetCacheFrom() as int

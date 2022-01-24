@@ -4,16 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxHeaderColumn.cpp
-	VType_wxSettableHeaderColumn.cpp
-	VType_wxDataViewModel.cpp
-	VType_wxDataViewColumn.cpp
-	VType_wxDataViewItem.cpp
-	VType_wxDataViewListModel.cpp
-	VType_wxDataViewTreeStore.cpp
-	VType_wxDataViewIndexListModel.cpp
-	VType_wxDataViewVirtualListModel.cpp
-	VType_wxDataViewListStore.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -82,10 +72,18 @@ set(SRCFILES_VTYPE
 	VType_wxCursor.cpp
 	VType_wxDataFormat.cpp
 	VType_wxDataObject.cpp
+	VType_wxDataViewColumn.cpp
 	VType_wxDataViewCtrl.cpp
 	VType_wxDataViewEvent.cpp
+	VType_wxDataViewIndexListModel.cpp
+	VType_wxDataViewItem.cpp
 	VType_wxDataViewListCtrl.cpp
+	VType_wxDataViewListModel.cpp
+	VType_wxDataViewListStore.cpp
+	VType_wxDataViewModel.cpp
 	VType_wxDataViewTreeCtrl.cpp
+	VType_wxDataViewTreeStore.cpp
+	VType_wxDataViewVirtualListModel.cpp
 	VType_wxDateEvent.cpp
 	VType_wxDatePickerCtrl.cpp
 	VType_wxDateSpan.cpp
@@ -161,6 +159,7 @@ set(SRCFILES_VTYPE
 	VType_wxGridSizesInfo.cpp
 	VType_wxGridTableBase.cpp
 	VType_wxGridTableMessage.cpp
+	VType_wxHeaderColumn.cpp
 	VType_wxHeaderCtrl.cpp
 	VType_wxHeaderCtrlSimple.cpp
 	VType_wxHelpEvent.cpp
@@ -284,6 +283,7 @@ set(SRCFILES_VTYPE
 	VType_wxScrollEvent.cpp
 	VType_wxScrollWinEvent.cpp
 	VType_wxSetCursorEvent.cpp
+	VType_wxSettableHeaderColumn.cpp
 	VType_wxSimplebook.cpp
 	VType_wxSimpleHtmlListBox.cpp
 	VType_wxSingleChoiceDialog.cpp

@@ -3,6 +3,71 @@
 //==============================================================================
 DataViewCtrl = Class(Control) {
 	@include['wx/dataview.h']
+	__init__(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxDataViewCtrlNameStr)
+	Create(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxDataViewCtrlNameStr) as bool
+	AppendColumn(col as DataViewColumn_p) as bool
+	PrependColumn(col as DataViewColumn_p) as bool
+	InsertColumn(pos as unsigned_int, col as DataViewColumn_p) as bool
+	AssociateModel(model as DataViewModel_p) as bool
+	ClearColumns() as bool
+	Collapse(item as const_DataViewItem_r) as void
+	DeleteColumn(column as DataViewColumn_p) as bool
+	EditItem(item as const_DataViewItem_r, column as const_DataViewColumn_p) as void
+	EnableDragSource(format as const_DataFormat_r) as bool
+	EnableDropTarget(format as const_DataFormat_r) as bool
+	EnsureVisible(item as const_DataViewItem_r, column as const_DataViewColumn_p = NULL) as void
+	Expand(item as const_DataViewItem_r) as void
+	ExpandAncestors(item as const_DataViewItem_r) as void
+	GetColumn(pos as unsigned_int) as DataViewColumn_p
+	GetColumnCount() as unsigned_int
+	GetColumnPosition(column as const_DataViewColumn_p) as int
+	GetExpanderColumn() as DataViewColumn_p
+	GetCurrentItem() as DataViewItem
+	GetCurrentColumn() as DataViewColumn_p
+	GetIndent() as int
+	GetItemRect(item as const_DataViewItem_r, col as const_DataViewColumn_p = NULL) as Rect
+	GetModel() as DataViewModel_p
+	GetSelectedItemsCount() as int
+	GetSelection() as DataViewItem
+	//GetSelections(sel as DataViewItemArray_r) as int
+	GetSortingColumn() as DataViewColumn_p
+	HasSelection() as bool
+	//HitTest(point as const_Point_r, item as DataViewItem_r, col as DataViewColumn_p_r) as void
+	IsExpanded(item as const_DataViewItem_r) as bool
+	IsSelected(item as const_DataViewItem_r) as bool
+	Select(item as const_DataViewItem_r) as void
+	SelectAll() as void
+	SetExpanderColumn(col as DataViewColumn_p) as void
+	SetCurrentItem(item as const_DataViewItem_r) as void
+	SetIndent(indent as int) as void
+	//SetSelections(sel as const_DataViewItemArray_r) as void
+	Unselect(item as const_DataViewItem_r) as void
+	UnselectAll() as void
+	SetRowHeight(rowHeight as int) as bool
+	//AppendBitmapColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendBitmapColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependBitmapColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependBitmapColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendDateColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_ACTIVATABLE, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendDateColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_ACTIVATABLE, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependDateColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_ACTIVATABLE, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependDateColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_ACTIVATABLE, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendIconTextColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendIconTextColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependIconTextColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependIconTextColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendProgressColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 80, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendProgressColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 80, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependProgressColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 80, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependProgressColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 80, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendTextColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendTextColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependTextColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependTextColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = -1, align as Alignment = wxALIGN_NOT, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendToggleColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 30, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//AppendToggleColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 30, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependToggleColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 30, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
+	//PrependToggleColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 30, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
 }
 
 @const { // Styles
