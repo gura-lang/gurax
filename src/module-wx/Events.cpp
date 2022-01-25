@@ -64,11 +64,16 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_DATAVIEW_ITEM_EXPANDING,				wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_ITEM_VALUE_CHANGED,			wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_SELECTION_CHANGED,			wxDataViewEvent);
+	Gurax_AssignEvent(EVT_DATE_CHANGED,							wxDateEvent);
 	Gurax_AssignEvent(EVT_DIALUP_CONNECTED,						wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DIALUP_DISCONNECTED,					wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES,							wxDropFilesEvent);
 	Gurax_AssignEvent(EVT_ENTER_WINDOW,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_ERASE_BACKGROUND,						wxEraseEvent);
+	Gurax_AssignEvent(EVT_FILECTRL_FILEACTIVATED,				wxFileCtrlEvent);
+	Gurax_AssignEvent(EVT_FILECTRL_FILTERCHANGED,				wxFileCtrlEvent);
+	Gurax_AssignEvent(EVT_FILECTRL_FOLDERCHANGED,				wxFileCtrlEvent);
+	Gurax_AssignEvent(EVT_FILECTRL_SELECTIONCHANGED,				wxFileCtrlEvent);
 	Gurax_AssignEvent(EVT_GRID_CELL_CHANGED,						wxGridEvent);
 	Gurax_AssignEvent(EVT_GRID_CELL_CHANGING,					wxGridEvent);
 	Gurax_AssignEvent(EVT_GRID_CELL_LEFT_CLICK,					wxGridEvent);

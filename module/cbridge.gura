@@ -78,6 +78,9 @@ ArgInfo = class {
 	tmplDeclaration:static as Template
 	tmplRangeCheck:static as Template
 	__init__(r as Renderer, name as String, typeName:nil as String, defaultValue:nil as String, attr:nil as Attribute, listVarFlag as Bool, occurSymbol as Symbol) = {
+		if (defaultValue == 'wxEmptyString') {
+			defaultValue = '""'
+		}
 		this.name = name
 		this.typeName = typeName
 		this.defaultValue = defaultValue

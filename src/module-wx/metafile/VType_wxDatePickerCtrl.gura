@@ -3,4 +3,22 @@
 //==============================================================================
 DatePickerCtrl = Class(Control) {
 	@include['wx/datectrl.h']
+	__init__(parent as Window_p, id as WindowID, dt as const_DateTime_r = wxDefaultDateTime, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDP_DEFAULT|wxDP_SHOWCENTURY, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = "datectrl")
+	Create(parent as Window_p, id as WindowID, dt as const_DateTime_r = wxDefaultDateTime, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDP_DEFAULT|wxDP_SHOWCENTURY, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = "datectrl") as bool
+	GetRange(dt1 as DateTime_p, dt2 as DateTime_p) as bool
+	GetValue() as DateTime
+	SetRange(dt1 as const_DateTime_r, dt2 as const_DateTime_r) as void
+	SetValue(dt as const_DateTime_r) as void
+}
+
+@const { // Styles
+	DP_SPIN
+	DP_DROPDOWN
+	DP_DEFAULT
+	DP_ALLOWNONE
+	DP_SHOWCENTURY
+}
+
+@event {
+	EVT_DATE_CHANGED >> DateEvent
 }

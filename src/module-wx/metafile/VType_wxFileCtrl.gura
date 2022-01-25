@@ -3,4 +3,35 @@
 //==============================================================================
 FileCtrl = Class(Control) {
 	@include['wx/filectrl.h']
+	__init__(parent as Window_p, id as WindowID, defaultDirectory as const_String_r = wxEmptyString, defaultFilename as const_String_r = wxEmptyString, wildCard as const_String_r = wxFileSelectorDefaultWildcardStr, style as long = wxFC_DEFAULT_STYLE, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, name as const_String_r = wxFileCtrlNameStr)
+	Create(parent as Window_p, id as WindowID, defaultDirectory as const_String_r = wxEmptyString, defaultFilename as const_String_r = wxEmptyString, wildCard as const_String_r = wxFileSelectorDefaultWildcardStr, style as long = wxFC_DEFAULT_STYLE, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, name as const_String_r = wxFileCtrlNameStr) as bool
+	GetDirectory() as String
+	GetFilename() as String
+	//GetFilenames(filenames as ArrayString_r) as void
+	GetFilterIndex() as int
+	GetPath() as String
+	//GetPaths(paths as ArrayString_r) as void
+	GetWildcard() as String
+	SetDirectory(directory as const_String_r) as bool
+	SetFilename(filename as const_String_r) as bool
+	SetPath(path as const_String_r) as bool
+	SetFilterIndex(filterIndex as int) as void
+	SetWildcard(wildCard as const_String_r) as void
+	ShowHidden(show as bool) as void
 }
+
+@const {
+	FC_DEFAULT_STYLE
+	FC_OPEN
+	FC_SAVE
+	FC_MULTIPLE
+	FC_NOSHOWHIDDEN
+}
+
+@event {
+	EVT_FILECTRL_FILEACTIVATED		>> FileCtrlEvent
+	EVT_FILECTRL_SELECTIONCHANGED	>> FileCtrlEvent
+	EVT_FILECTRL_FOLDERCHANGED		>> FileCtrlEvent
+	EVT_FILECTRL_FILTERCHANGED		>> FileCtrlEvent
+}
+

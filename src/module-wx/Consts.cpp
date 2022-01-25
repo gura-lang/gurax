@@ -210,6 +210,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("DIRP_SMALL", new Value_Number(wxDIRP_SMALL));
 	frame.Assign("DIRP_USE_TEXTCTRL", new Value_Number(wxDIRP_USE_TEXTCTRL));
 	frame.Assign("DOWN", new Value_Number(wxDOWN));
+	frame.Assign("DP_ALLOWNONE", new Value_Number(wxDP_ALLOWNONE));
+	frame.Assign("DP_DEFAULT", new Value_Number(wxDP_DEFAULT));
+	frame.Assign("DP_DROPDOWN", new Value_Number(wxDP_DROPDOWN));
+	frame.Assign("DP_SHOWCENTURY", new Value_Number(wxDP_SHOWCENTURY));
+	frame.Assign("DP_SPIN", new Value_Number(wxDP_SPIN));
 	frame.Assign("DUPLEX_HORIZONTAL", new Value_Number(wxDUPLEX_HORIZONTAL));
 	frame.Assign("DUPLEX_SIMPLEX", new Value_Number(wxDUPLEX_SIMPLEX));
 	frame.Assign("DUPLEX_VERTICAL", new Value_Number(wxDUPLEX_VERTICAL));
@@ -240,6 +245,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("EVT_CATEGORY_UI", new Value_Number(wxEVT_CATEGORY_UI));
 	frame.Assign("EVT_CATEGORY_USER_INPUT", new Value_Number(wxEVT_CATEGORY_USER_INPUT));
 	frame.Assign("EXPAND", new Value_Number(wxEXPAND));
+	frame.Assign("FC_DEFAULT_STYLE", new Value_Number(wxFC_DEFAULT_STYLE));
+	frame.Assign("FC_MULTIPLE", new Value_Number(wxFC_MULTIPLE));
+	frame.Assign("FC_NOSHOWHIDDEN", new Value_Number(wxFC_NOSHOWHIDDEN));
+	frame.Assign("FC_OPEN", new Value_Number(wxFC_OPEN));
+	frame.Assign("FC_SAVE", new Value_Number(wxFC_SAVE));
 	frame.Assign("FIXED_MINSIZE", new Value_Number(wxFIXED_MINSIZE));
 	frame.Assign("FLOOD_BORDER", new Value_Number(wxFLOOD_BORDER));
 	frame.Assign("FLOOD_SURFACE", new Value_Number(wxFLOOD_SURFACE));
