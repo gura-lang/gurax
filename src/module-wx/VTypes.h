@@ -8,6 +8,7 @@
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
 #include "VType_wxFileCtrlEvent.h"
+#include "VType_wxHeaderCtrlEvent.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"

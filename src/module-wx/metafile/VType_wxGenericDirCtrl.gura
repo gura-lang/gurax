@@ -3,4 +3,39 @@
 //==============================================================================
 GenericDirCtrl = Class(Control) {
 	@include['wx/dirctrl.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, dir as const_String_r = wxDirDialogDefaultFolderStr, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDIRCTRL_3D_INTERNAL, filter as const_String_r = wxEmptyString, defaultFilter as int = 0, name as const_String_r = wxTreeCtrlNameStr)
+	CollapsePath(path as const_String_r) as bool
+	CollapseTree() as void
+	Create(parent as Window_p, id as WindowID = wxID_ANY, dir as const_String_r = wxDirDialogDefaultFolderStr, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDIRCTRL_3D_INTERNAL, filter as const_String_r = wxEmptyString, defaultFilter as int = 0, name as const_String_r = wxTreeCtrlNameStr) as bool
+	ExpandPath(path as const_String_r) as bool
+	GetDefaultPath() as String
+	GetFilePath() as String
+	//GetFilePaths(paths as ArrayString_r) as void
+	GetFilter() as String
+	GetFilterIndex() as int
+	GetFilterListCtrl() as DirFilterListCtrl_p
+	GetPath() as String
+	//GetPath(itemId as TreeItemId) as String
+	//GetPaths(paths as ArrayString_r) as void
+	GetRootId() as TreeItemId
+	GetTreeCtrl() as TreeCtrl_p
+	Init() as void
+	ReCreateTree() as void
+	SetDefaultPath(path as const_String_r) as void
+	SetFilter(filter as const_String_r) as void
+	SetFilterIndex(n as int) as void
+	SetPath(path as const_String_r) as void
+	ShowHidden(show as bool) as void
+	SelectPath(path as const_String_r, select as bool = true) as void
+	SelectPaths(paths as const_ArrayString_r) as void
+	UnselectAll() as void
+}
+
+@const { // Styles
+	DIRCTRL_DIR_ONLY
+	DIRCTRL_3D_INTERNAL
+	DIRCTRL_SELECT_FIRST
+	DIRCTRL_SHOW_FILTERS
+	DIRCTRL_EDIT_LABELS
+	DIRCTRL_MULTIPLE
 }

@@ -13,6 +13,7 @@ void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
 	frame.Assign(VTYPE_wxFileCtrlEvent);
+	frame.Assign(VTYPE_wxHeaderCtrlEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);

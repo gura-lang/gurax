@@ -4,3 +4,7 @@
 FileCtrlEvent = Class(CommandEvent) {
 	@include['wx/filectrl.h']
 }
+
+HeaderCtrlEvent = Class(NotifyEvent) {
+	@include['wx/headerctrl.h']
+}

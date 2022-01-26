@@ -3,4 +3,42 @@
 //==============================================================================
 HeaderCtrl = Class(Control) {
 	@include['wx/headerctrl.h']
+	//__init__(parent as Window_p, winid as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxHD_DEFAULT_STYLE, name as const_String_r = wxHeaderCtrlNameStr)
+	Create(parent as Window_p, winid as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxHD_DEFAULT_STYLE, name as const_String_r = wxHeaderCtrlNameStr) as bool
+	SetColumnCount(count as unsigned_int) as void
+	GetColumnCount() as unsigned_int
+	IsEmpty() as bool
+	UpdateColumn(idx as unsigned_int) as void
+	SetColumnsOrder(order as const_ArrayInt_r) as void
+	GetColumnsOrder() as ArrayInt
+	GetColumnAt(pos as unsigned_int) as unsigned_int
+	GetColumnPos(idx as unsigned_int) as unsigned_int
+	ResetColumnsOrder() as void
+	ShowColumnsMenu(pt as const_Point_r, title as const_String_r = '') as bool
+	AddColumnsItems(menu as Menu_r, idColumnsBase as int = 0) as void
+	ShowCustomizeDialog() as bool
+	GetColumnTitleWidth(col as const_HeaderColumn_r) as int
+	//MoveColumnInOrderArray(order as ArrayInt_r, idx as unsigned_int, pos as unsigned_int):static as void
+}
+
+@const { // Styles
+	HD_ALLOW_REORDER
+	HD_ALLOW_HIDE
+	HD_DEFAULT_STYLE
+}
+
+@event {
+	EVT_HEADER_CLICK				>> HeaderCtrlEvent
+	EVT_HEADER_RIGHT_CLICK			>> HeaderCtrlEvent
+	EVT_HEADER_MIDDLE_CLICK			>> HeaderCtrlEvent
+	EVT_HEADER_DCLICK				>> HeaderCtrlEvent
+	EVT_HEADER_RIGHT_DCLICK			>> HeaderCtrlEvent
+	EVT_HEADER_MIDDLE_DCLICK		>> HeaderCtrlEvent
+	EVT_HEADER_SEPARATOR_DCLICK		>> HeaderCtrlEvent
+	EVT_HEADER_BEGIN_RESIZE			>> HeaderCtrlEvent
+	EVT_HEADER_RESIZING				>> HeaderCtrlEvent
+	EVT_HEADER_END_RESIZE			>> HeaderCtrlEvent
+	EVT_HEADER_BEGIN_REORDER		>> HeaderCtrlEvent
+	EVT_HEADER_END_REORDER			>> HeaderCtrlEvent
+	EVT_HEADER_DRAGGING_CANCELLED	>> HeaderCtrlEvent
 }

@@ -2,50 +2,7 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxFileCtrl (wxWindow *parent, wxWindowID id, const wxString &defaultDirectory=wxEmptyString, const wxString &defaultFilename=wxEmptyString, const wxString &wildCard=wxFileSelectorDefaultWildcardStr, long style=wxFC_DEFAULT_STYLE, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, const wxString &name=wxFileCtrlNameStr)
- 	Constructs the window. More...
- 
-bool 	Create (wxWindow *parent, wxWindowID id, const wxString &defaultDirectory=wxEmptyString, const wxString &defaultFilename=wxEmptyString, const wxString &wildCard=wxFileSelectorDefaultWildcardStr, long style=wxFC_DEFAULT_STYLE, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, const wxString &name=wxFileCtrlNameStr)
- 	Create function for two-step construction. More...
- 
-virtual wxString 	GetDirectory () const
- 	Returns the current directory of the file control (i.e. the directory shown by it). More...
- 
-virtual wxString 	GetFilename () const
- 	Returns the currently selected filename. More...
- 
-virtual void 	GetFilenames (wxArrayString &filenames) const
- 	Fills the array filenames with the filenames only of selected items. More...
- 
-virtual int 	GetFilterIndex () const
- 	Returns the zero-based index of the currently selected filter. More...
- 
-virtual wxString 	GetPath () const
- 	Returns the full path (directory and filename) of the currently selected file. More...
- 
-virtual void 	GetPaths (wxArrayString &paths) const
- 	Fills the array paths with the full paths of the files chosen. More...
- 
-virtual wxString 	GetWildcard () const
- 	Returns the current wildcard. More...
- 
-virtual bool 	SetDirectory (const wxString &directory)
- 	Sets(changes) the current directory displayed in the control. More...
- 
-virtual bool 	SetFilename (const wxString &filename)
- 	Selects a certain file. More...
- 
-virtual bool 	SetPath (const wxString &path)
- 	Changes to a certain directory and selects a certain file. More...
- 
-virtual void 	SetFilterIndex (int filterIndex)
- 	Sets the current filter index, starting from zero. More...
- 
-virtual void 	SetWildcard (const wxString &wildCard)
- 	Sets the wildcard, which can contain multiple file types, for example: "BMP files (*.bmp)|*.bmp|GIF files (*.gif)|*.gif". More...
- 
-virtual void 	ShowHidden (bool show)
- 	Sets whether hidden files and folders are shown or not. More...
+static void 	MoveColumnInOrderArray (wxArrayInt &order, unsigned int idx, unsigned int pos)
 '''
 //------------------------------------------------------------------------------
 

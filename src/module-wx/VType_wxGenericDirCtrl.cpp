@@ -28,10 +28,556 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.GenericDirCtrl(parent as wx.Window, id? as Number, dir? as String, pos? as wx.Point, size? as wx.Size, style? as Number, filter? as String, defaultFilter? as Number, name? as String) {block?} {block?}
+Gurax_DeclareConstructorAlias(GenericDirCtrl_gurax, "GenericDirCtrl")
+{
+	Declare(VTYPE_wxGenericDirCtrl, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("dir", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("filter", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("defaultFilter", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.GenericDirCtrl.");
+}
+
+Gurax_ImplementConstructorEx(GenericDirCtrl_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const char* dir = args_gurax.IsValid()? args_gurax.PickString() : wxDirDialogDefaultFolderStr;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDIRCTRL_3D_INTERNAL;
+	const char* filter = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool defaultFilter_validFlag = args_gurax.IsValid();
+	int defaultFilter = defaultFilter_validFlag? args_gurax.PickNumber<int>() : 0;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeCtrlNameStr;
+	// Function body
+	auto pEntity_gurax = new Value_wxGenericDirCtrl::EntityT(parent, id, dir, pos, size, style, filter, defaultFilter, name);
+	RefPtr<Value_wxGenericDirCtrl> pValue_gurax(new Value_wxGenericDirCtrl(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.GenericDirCtrl#CollapsePath(path as String)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, CollapsePath_gurax, "CollapsePath")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, CollapsePath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* path = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->CollapsePath(path);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GenericDirCtrl#CollapseTree()
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, CollapseTree_gurax, "CollapseTree")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, CollapseTree_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->CollapseTree();
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#Create(parent as wx.Window, id? as Number, dir? as String, pos? as wx.Point, size? as wx.Size, style? as Number, filter? as String, defaultFilter? as Number, name? as String)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("dir", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("filter", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("defaultFilter", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const char* dir = args_gurax.IsValid()? args_gurax.PickString() : wxDirDialogDefaultFolderStr;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDIRCTRL_3D_INTERNAL;
+	const char* filter = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool defaultFilter_validFlag = args_gurax.IsValid();
+	int defaultFilter = defaultFilter_validFlag? args_gurax.PickNumber<int>() : 0;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxTreeCtrlNameStr;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, dir, pos, size, style, filter, defaultFilter, name);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GenericDirCtrl#ExpandPath(path as String)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, ExpandPath_gurax, "ExpandPath")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, ExpandPath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* path = args_gurax.PickString();
+	// Function body
+	bool rtn = pEntity_gurax->ExpandPath(path);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GenericDirCtrl#GetDefaultPath()
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, GetDefaultPath_gurax, "GetDefaultPath")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, GetDefaultPath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetDefaultPath();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.GenericDirCtrl#GetFilePath()
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, GetFilePath_gurax, "GetFilePath")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, GetFilePath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetFilePath();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.GenericDirCtrl#GetFilter()
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, GetFilter_gurax, "GetFilter")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, GetFilter_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetFilter();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.GenericDirCtrl#GetFilterIndex()
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, GetFilterIndex_gurax, "GetFilterIndex")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, GetFilterIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetFilterIndex();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GenericDirCtrl#GetFilterListCtrl() {block?}
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, GetFilterListCtrl_gurax, "GetFilterListCtrl")
+{
+	Declare(VTYPE_wxDirFilterListCtrl, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, GetFilterListCtrl_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDirFilterListCtrl(
+		pEntity_gurax->GetFilterListCtrl()));
+}
+
+// wx.GenericDirCtrl#GetPath()
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, GetPath_gurax, "GetPath")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, GetPath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetPath();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.GenericDirCtrl#GetRootId() {block?}
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, GetRootId_gurax, "GetRootId")
+{
+	Declare(VTYPE_wxTreeItemId, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, GetRootId_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeItemId(
+		pEntity_gurax->GetRootId()));
+}
+
+// wx.GenericDirCtrl#GetTreeCtrl() {block?}
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, GetTreeCtrl_gurax, "GetTreeCtrl")
+{
+	Declare(VTYPE_wxTreeCtrl, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, GetTreeCtrl_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxTreeCtrl(
+		pEntity_gurax->GetTreeCtrl()));
+}
+
+// wx.GenericDirCtrl#Init()
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, Init_gurax, "Init")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, Init_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Init();
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#ReCreateTree()
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, ReCreateTree_gurax, "ReCreateTree")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, ReCreateTree_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->ReCreateTree();
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#SetDefaultPath(path as String)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, SetDefaultPath_gurax, "SetDefaultPath")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, SetDefaultPath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* path = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetDefaultPath(path);
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#SetFilter(filter as String)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, SetFilter_gurax, "SetFilter")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("filter", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, SetFilter_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* filter = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetFilter(filter);
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#SetFilterIndex(n as Number)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, SetFilterIndex_gurax, "SetFilterIndex")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, SetFilterIndex_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int n = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetFilterIndex(n);
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#SetPath(path as String)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, SetPath_gurax, "SetPath")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, SetPath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* path = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetPath(path);
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#ShowHidden(show as Bool)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, ShowHidden_gurax, "ShowHidden")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("show", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, ShowHidden_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool show = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->ShowHidden(show);
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#SelectPath(path as String, select? as Bool)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, SelectPath_gurax, "SelectPath")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, SelectPath_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* path = args_gurax.PickString();
+	bool select = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SelectPath(path, select);
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#SelectPaths(paths[] as String)
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, SelectPaths_gurax, "SelectPaths")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("paths", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, SelectPaths_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxArrayString paths = Util::CreateArrayString(args_gurax.PickList());
+	// Function body
+	pEntity_gurax->SelectPaths(paths);
+	return Gurax::Value::nil();
+}
+
+// wx.GenericDirCtrl#UnselectAll()
+Gurax_DeclareMethodAlias(wxGenericDirCtrl, UnselectAll_gurax, "UnselectAll")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGenericDirCtrl, UnselectAll_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->UnselectAll();
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +593,30 @@ void VType_wxGenericDirCtrl::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxControl, Flag::Mutable);
+	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(GenericDirCtrl_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, CollapsePath_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, CollapseTree_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, Create_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, ExpandPath_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, GetDefaultPath_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, GetFilePath_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, GetFilter_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, GetFilterIndex_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, GetFilterListCtrl_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, GetPath_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, GetRootId_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, GetTreeCtrl_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, Init_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, ReCreateTree_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, SetDefaultPath_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, SetFilter_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, SetFilterIndex_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, SetPath_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, ShowHidden_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, SelectPath_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, SelectPaths_gurax));
+	Assign(Gurax_CreateMethod(wxGenericDirCtrl, UnselectAll_gurax));
 }
 
 //------------------------------------------------------------------------------

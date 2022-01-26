@@ -203,6 +203,12 @@ void AssignConsts(Frame& frame)
 	frame.Assign("DIALOG_EX_CONTEXTHELP", new Value_Number(wxDIALOG_EX_CONTEXTHELP));
 	frame.Assign("DIALOG_EX_METAL", new Value_Number(wxDIALOG_EX_METAL));
 	frame.Assign("DIALOG_NO_PARENT", new Value_Number(wxDIALOG_NO_PARENT));
+	frame.Assign("DIRCTRL_3D_INTERNAL", new Value_Number(wxDIRCTRL_3D_INTERNAL));
+	frame.Assign("DIRCTRL_DIR_ONLY", new Value_Number(wxDIRCTRL_DIR_ONLY));
+	frame.Assign("DIRCTRL_EDIT_LABELS", new Value_Number(wxDIRCTRL_EDIT_LABELS));
+	frame.Assign("DIRCTRL_MULTIPLE", new Value_Number(wxDIRCTRL_MULTIPLE));
+	frame.Assign("DIRCTRL_SELECT_FIRST", new Value_Number(wxDIRCTRL_SELECT_FIRST));
+	frame.Assign("DIRCTRL_SHOW_FILTERS", new Value_Number(wxDIRCTRL_SHOW_FILTERS));
 	frame.Assign("DIRECTION_MASK", new Value_Number(wxDIRECTION_MASK));
 	frame.Assign("DIRP_CHANGE_DIR", new Value_Number(wxDIRP_CHANGE_DIR));
 	frame.Assign("DIRP_DEFAULT_STYLE", new Value_Number(wxDIRP_DEFAULT_STYLE));
@@ -413,6 +419,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("GA_SMOOTH", new Value_Number(wxGA_SMOOTH));
 	frame.Assign("GA_VERTICAL", new Value_Number(wxGA_VERTICAL));
 	frame.Assign("GROW", new Value_Number(wxGROW));
+	frame.Assign("HD_ALLOW_HIDE", new Value_Number(wxHD_ALLOW_HIDE));
+	frame.Assign("HD_ALLOW_REORDER", new Value_Number(wxHD_ALLOW_REORDER));
+	frame.Assign("HD_DEFAULT_STYLE", new Value_Number(wxHD_DEFAULT_STYLE));
 	frame.Assign("HELP", new Value_Number(wxHELP));
 	frame.Assign("HORIZONTAL", new Value_Number(wxHORIZONTAL));
 	frame.Assign("HSCROLL", new Value_Number(wxHSCROLL));
