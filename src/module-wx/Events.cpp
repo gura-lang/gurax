@@ -108,6 +108,7 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_HTML_CELL_CLICKED,						wxHtmlLinkEvent);
 	Gurax_AssignEvent(EVT_HTML_CELL_HOVER,						wxHtmlLinkEvent);
 	Gurax_AssignEvent(EVT_HTML_LINK_CLICKED,						wxHtmlLinkEvent);
+	Gurax_AssignEvent(EVT_HYPERLINK,								wxHyperlinkEvent);
 	Gurax_AssignEvent(EVT_IDLE,									wxIdleEvent);
 	Gurax_AssignEvent(EVT_INIT_DIALOG,							wxInitDialogEvent);
 	Gurax_AssignEvent(EVT_JOY_BUTTON_DOWN,						wxJoystickEvent);

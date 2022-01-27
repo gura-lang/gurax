@@ -423,6 +423,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("HD_ALLOW_REORDER", new Value_Number(wxHD_ALLOW_REORDER));
 	frame.Assign("HD_DEFAULT_STYLE", new Value_Number(wxHD_DEFAULT_STYLE));
 	frame.Assign("HELP", new Value_Number(wxHELP));
+	frame.Assign("HL_ALIGN_CENTRE", new Value_Number(wxHL_ALIGN_CENTRE));
+	frame.Assign("HL_ALIGN_LEFT", new Value_Number(wxHL_ALIGN_LEFT));
+	frame.Assign("HL_ALIGN_RIGHT", new Value_Number(wxHL_ALIGN_RIGHT));
+	frame.Assign("HL_CONTEXTMENU", new Value_Number(wxHL_CONTEXTMENU));
+	frame.Assign("HL_DEFAULT_STYLE", new Value_Number(wxHL_DEFAULT_STYLE));
 	frame.Assign("HORIZONTAL", new Value_Number(wxHORIZONTAL));
 	frame.Assign("HSCROLL", new Value_Number(wxHSCROLL));
 	frame.Assign("HT_MAX", new Value_Number(wxHT_MAX));

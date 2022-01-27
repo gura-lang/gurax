@@ -3,4 +3,28 @@
 //==============================================================================
 HyperlinkCtrl = Class(Control) {
 	@include['wx/hyperlink.h']
+	__init__(parent as Window_p, id as WindowID, label as const_String_r, url as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxHL_DEFAULT_STYLE, name as const_String_r = wxHyperlinkCtrlNameStr)
+	Create(parent as Window_p, id as WindowID, label as const_String_r, url as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxHL_DEFAULT_STYLE, name as const_String_r = wxHyperlinkCtrlNameStr) as bool
+	GetHoverColour() as Colour
+	GetNormalColour() as Colour
+	GetURL() as String
+	GetVisited() as bool
+	GetVisitedColour() as Colour
+	SetHoverColour(colour as const_Colour_r) as void
+	SetNormalColour(colour as const_Colour_r) as void
+	SetURL(url as const_String_r) as void
+	SetVisited(visited as bool = true) as void
+	SetVisitedColour(colour as const_Colour_r) as void
+}
+
+@const { // Styles
+	HL_ALIGN_LEFT
+	HL_ALIGN_RIGHT
+	HL_ALIGN_CENTRE
+	HL_CONTEXTMENU
+	HL_DEFAULT_STYLE
+}
+
+@event {
+	EVT_HYPERLINK >> HyperlinkEvent
 }

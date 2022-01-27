@@ -2,8 +2,41 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-static void 	MoveColumnInOrderArray (wxArrayInt &order, unsigned int idx, unsigned int pos)
-'''
+a 	wxHyperlinkCtrl (wxWindow *parent, wxWindowID id, const wxString &label, const wxString &url, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxHL_DEFAULT_STYLE, const wxString &name=wxHyperlinkCtrlNameStr)
+ 	Constructor. More...
+ 
+bool 	Create (wxWindow *parent, wxWindowID id, const wxString &label, const wxString &url, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxHL_DEFAULT_STYLE, const wxString &name=wxHyperlinkCtrlNameStr)
+ 	Creates the hyperlink control. More...
+ 
+virtual wxColour 	GetHoverColour () const
+ 	Returns the colour used to print the label of the hyperlink when the mouse is over the control. More...
+ 
+virtual wxColour 	GetNormalColour () const
+ 	Returns the colour used to print the label when the link has never been clicked before (i.e. the link has not been visited) and the mouse is not over the control. More...
+ 
+virtual wxString 	GetURL () const
+ 	Returns the URL associated with the hyperlink. More...
+ 
+virtual bool 	GetVisited () const =0
+ 	Returns true if the hyperlink has already been clicked by the user at least one time. More...
+ 
+virtual wxColour 	GetVisitedColour () const
+ 	Returns the colour used to print the label when the mouse is not over the control and the link has already been clicked before (i.e. the link has been visited). More...
+ 
+virtual void 	SetHoverColour (const wxColour &colour)
+ 	Sets the colour used to print the label of the hyperlink when the mouse is over the control. More...
+ 
+virtual void 	SetNormalColour (const wxColour &colour)
+ 	Sets the colour used to print the label when the link has never been clicked before (i.e. the link has not been visited) and the mouse is not over the control. More...
+ 
+virtual void 	SetURL (const wxString &url)
+ 	Sets the URL associated with the hyperlink. More...
+ 
+virtual void 	SetVisited (bool visited=true)=0
+ 	Marks the hyperlink as visited (see wxHyperlinkCtrl::SetVisitedColour). More...
+ 
+virtual void 	SetVisitedColour (const wxColour &colour)
+ 	Sets the colour used to print the label when the mouse is not over the control and the link has already been clicked before (i.e. the link has been visited). More...'''
 //------------------------------------------------------------------------------
 
 txt.EachLine {|line, iLine|

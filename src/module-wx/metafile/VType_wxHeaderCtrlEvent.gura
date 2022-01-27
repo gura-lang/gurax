@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxHeaderCtrlEvent.gura
 //==============================================================================
+HeaderCtrlEvent = Class(NotifyEvent) {
+	@include['wx/headerctrl.h']
+}
