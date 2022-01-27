@@ -4,9 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxFileCtrlEvent.cpp
-	VType_wxHeaderCtrlEvent.cpp
-	VType_wxHyperlinkEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -109,6 +106,7 @@ set(SRCFILES_VTYPE
 	VType_wxEventLoopBase.cpp
 	VType_wxEvtHandler.cpp
 	VType_wxFileCtrl.cpp
+	VType_wxFileCtrlEvent.cpp
 	VType_wxFileDialog.cpp
 	VType_wxFilePickerCtrl.cpp
 	VType_wxFileSystem.cpp
@@ -164,6 +162,7 @@ set(SRCFILES_VTYPE
 	VType_wxGridTableMessage.cpp
 	VType_wxHeaderColumn.cpp
 	VType_wxHeaderCtrl.cpp
+	VType_wxHeaderCtrlEvent.cpp
 	VType_wxHeaderCtrlSimple.cpp
 	VType_wxHelpEvent.cpp
 	VType_wxHScrolledWindow.cpp
@@ -183,6 +182,7 @@ set(SRCFILES_VTYPE
 	VType_wxHtmlWordWithTabsCell.cpp
 	VType_wxHVScrolledWindow.cpp
 	VType_wxHyperlinkCtrl.cpp
+	VType_wxHyperlinkEvent.cpp
 	VType_wxIcon.cpp
 	VType_wxIconBundle.cpp
 	VType_wxIdleEvent.cpp

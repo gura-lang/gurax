@@ -4,13 +4,27 @@
 ListBox = Class(Control) {
 	@mixin[ItemContainer]
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
-		choices? as const_ArrayString_r, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxListBoxNameStr) = \
-		R'''
-		auto pEntity_gurax = new Value_wxListBox::EntityT(parent, id, pos, size, choices, style, validator, name);
-		RefPtr<Value_wxListBox> pValue_gurax(new Value_wxListBox(pEntity_gurax));
-		pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
-		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
-		'''
+		choices? as const_ArrayString_r, style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxListBoxNameStr)
+	Deselect(n as int) as void
+	SetSelection(n as int) as void
+	GetSelection() as int
+	SetStringSelection(s as const_String_r, select as bool = true) as bool
+	//SetStringSelection(s as const_String_r) as bool
+	//GetSelections(selections as ArrayInt_r) as int
+	HitTest(point as const_Point_r) as int
+	//HitTest(x as int, y as int) as int
+	//InsertItems(nItems as unsigned_int, items as const_String_p, pos as unsigned_int) as void
+	InsertItems(items as const_ArrayString_r, pos as unsigned_int) as void
+	IsSelected(n as int) as bool
+	SetFirstItem(n as int) as void
+	//SetFirstItem(string as const_String_r) as void
+	EnsureVisible(n as int) as void
+	IsSorted() as bool
+	GetCount() as unsigned_int
+	GetString(n as unsigned_int) as String
+	SetString(n as unsigned_int, s as const_String_r) as void
+	FindString(s as const_String_r, bCase as bool = false) as int
+	Create(parent as Window_p, id as WindowID, pos as const_Point_r, size as const_Size_r, choices as const_ArrayString_r, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxListBoxNameStr) as bool
 }
 
 @const { // Styles

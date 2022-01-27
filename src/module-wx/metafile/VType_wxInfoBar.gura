@@ -3,4 +3,16 @@
 //==============================================================================
 InfoBar = Class(Control) {
 	@include['wx/infobar.h']
+	__init__(parent as Window_p, winid as WindowID = wxID_ANY)
+	Create(parent as Window_p, winid as WindowID = wxID_ANY) as bool
+	AddButton(btnid as WindowID, label as String  = '')
+	Dismiss() as void
+	RemoveButton(btnid as WindowID) as void
+	ShowMessage(msg as const_String_r, flags as int = wxICON_INFORMATION) as void
+	SetShowHideEffects(showEffect as ShowEffect, hideEffect as ShowEffect) as void
+	GetShowEffect() as ShowEffect
+	GetHideEffect() as ShowEffect
+	SetEffectDuration(duration as int) as void
+	GetEffectDuration() as int
+	SetFont(font as const_Font_r) as bool
 }

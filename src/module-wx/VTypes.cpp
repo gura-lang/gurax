@@ -12,9 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxFileCtrlEvent);
-	frame.Assign(VTYPE_wxHeaderCtrlEvent);
-	frame.Assign(VTYPE_wxHyperlinkEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -117,6 +114,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxEventLoopBase);
 	frame.Assign(VTYPE_wxEvtHandler);
 	frame.Assign(VTYPE_wxFileCtrl);
+	frame.Assign(VTYPE_wxFileCtrlEvent);
 	frame.Assign(VTYPE_wxFileDialog);
 	frame.Assign(VTYPE_wxFilePickerCtrl);
 	frame.Assign(VTYPE_wxFileSystem);
@@ -172,6 +170,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGridTableMessage);
 	frame.Assign(VTYPE_wxHeaderColumn);
 	frame.Assign(VTYPE_wxHeaderCtrl);
+	frame.Assign(VTYPE_wxHeaderCtrlEvent);
 	frame.Assign(VTYPE_wxHeaderCtrlSimple);
 	frame.Assign(VTYPE_wxHelpEvent);
 	frame.Assign(VTYPE_wxHScrolledWindow);
@@ -191,6 +190,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxHtmlWordWithTabsCell);
 	frame.Assign(VTYPE_wxHVScrolledWindow);
 	frame.Assign(VTYPE_wxHyperlinkCtrl);
+	frame.Assign(VTYPE_wxHyperlinkEvent);
 	frame.Assign(VTYPE_wxIcon);
 	frame.Assign(VTYPE_wxIconBundle);
 	frame.Assign(VTYPE_wxIdleEvent);
