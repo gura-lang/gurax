@@ -164,11 +164,32 @@ Gurax_ImplementMethodEx(wxListBox, SetStringSelection_gurax, processor_gurax, ar
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ListBox#HitTest(point as wx.Point)
+// wx.ListBox#GetSelections()
+Gurax_DeclareMethodAlias(wxListBox, GetSelections_gurax, "GetSelections")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListBox, GetSelections_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxArrayInt selections;
+	pEntity_gurax->GetSelections(selections);
+	return Util::CreateList(selections);
+}
+
+// wx.ListBox#HitTest(args* as Any)
 Gurax_DeclareMethodAlias(wxListBox, HitTest_gurax, "HitTest")
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Any, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -182,11 +203,40 @@ Gurax_ImplementMethodEx(wxListBox, HitTest_gurax, processor_gurax, argument_gura
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPoint& value_point = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& point = value_point.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	int rtn = pEntity_gurax->HitTest(point);
-	return new Gurax::Value_Number(rtn);
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("point", VTYPE_wxPoint);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxPoint& point = args.Pick<Value_wxPoint>().GetEntity();
+		int rtn = pEntity_gurax->HitTest(point);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_Number);
+			pDeclCallable->DeclareArg("y", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int x = args.PickNumber<int>();
+		int y = args.PickNumber<int>();
+		int rtn = pEntity_gurax->HitTest(x, y);
+		return new Value_Number(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.ListBox#InsertItems(items[] as String, pos as Number)
@@ -239,11 +289,11 @@ Gurax_ImplementMethodEx(wxListBox, IsSelected_gurax, processor_gurax, argument_g
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ListBox#SetFirstItem(n as Number)
+// wx.ListBox#SetFirstItem(args* as Any)
 Gurax_DeclareMethodAlias(wxListBox, SetFirstItem_gurax, "SetFirstItem")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -257,10 +307,38 @@ Gurax_ImplementMethodEx(wxListBox, SetFirstItem_gurax, processor_gurax, argument
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int n = args_gurax.PickNumber<int>();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->SetFirstItem(n);
-	return Gurax::Value::nil();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("n", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int n = args.PickNumber<int>();
+		pEntity_gurax->SetFirstItem(n);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("string", VTYPE_String);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* string = args.PickString();
+		pEntity_gurax->SetFirstItem(string);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 // wx.ListBox#EnsureVisible(n as Number)
@@ -821,6 +899,7 @@ void VType_wxListBox::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxListBox, SetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxListBox, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxListBox, SetStringSelection_gurax));
+	Assign(Gurax_CreateMethod(wxListBox, GetSelections_gurax));
 	Assign(Gurax_CreateMethod(wxListBox, HitTest_gurax));
 	Assign(Gurax_CreateMethod(wxListBox, InsertItems_gurax));
 	Assign(Gurax_CreateMethod(wxListBox, IsSelected_gurax));
