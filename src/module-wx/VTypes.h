@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxURI.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -336,6 +335,7 @@
 #include "VType_wxTreeEvent.h"
 #include "VType_wxTreeItemId.h"
 #include "VType_wxUpdateUIEvent.h"
+#include "VType_wxURI.h"
 #include "VType_wxValidator.h"
 #include "VType_wxVisualAttributes.h"
 #include "VType_wxVListBox.h"

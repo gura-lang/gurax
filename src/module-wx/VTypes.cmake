@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxURI.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -333,6 +332,7 @@ set(SRCFILES_VTYPE
 	VType_wxTreeEvent.cpp
 	VType_wxTreeItemId.cpp
 	VType_wxUpdateUIEvent.cpp
+	VType_wxURI.cpp
 	VType_wxValidator.cpp
 	VType_wxVisualAttributes.cpp
 	VType_wxVListBox.cpp
