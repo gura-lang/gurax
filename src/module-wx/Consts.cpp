@@ -415,6 +415,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("FRAME_SHAPED", new Value_Number(wxFRAME_SHAPED));
 	frame.Assign("FRAME_TOOL_WINDOW", new Value_Number(wxFRAME_TOOL_WINDOW));
 	frame.Assign("FULL_REPAINT_ON_RESIZE", new Value_Number(wxFULL_REPAINT_ON_RESIZE));
+	frame.Assign("FromCurrent", new Value_Number(wxFromCurrent));
+	frame.Assign("FromEnd", new Value_Number(wxFromEnd));
+	frame.Assign("FromStart", new Value_Number(wxFromStart));
 	frame.Assign("GA_HORIZONTAL", new Value_Number(wxGA_HORIZONTAL));
 	frame.Assign("GA_SMOOTH", new Value_Number(wxGA_SMOOTH));
 	frame.Assign("GA_VERTICAL", new Value_Number(wxGA_VERTICAL));
@@ -662,6 +665,13 @@ void AssignConsts(Frame& frame)
 	frame.Assign("Layout_RightToLeft", new Value_Number(wxLayout_RightToLeft));
 	frame.Assign("MAXIMIZE", new Value_Number(wxMAXIMIZE));
 	frame.Assign("MAXIMIZE_BOX", new Value_Number(wxMAXIMIZE_BOX));
+	frame.Assign("MEDIACTRLPLAYERCONTROLS_DEFAULT", new Value_Number(wxMEDIACTRLPLAYERCONTROLS_DEFAULT));
+	frame.Assign("MEDIACTRLPLAYERCONTROLS_NONE", new Value_Number(wxMEDIACTRLPLAYERCONTROLS_NONE));
+	frame.Assign("MEDIACTRLPLAYERCONTROLS_STEP", new Value_Number(wxMEDIACTRLPLAYERCONTROLS_STEP));
+	frame.Assign("MEDIACTRLPLAYERCONTROLS_VOLUME", new Value_Number(wxMEDIACTRLPLAYERCONTROLS_VOLUME));
+	frame.Assign("MEDIASTATE_PAUSED", new Value_Number(wxMEDIASTATE_PAUSED));
+	frame.Assign("MEDIASTATE_PLAYING", new Value_Number(wxMEDIASTATE_PLAYING));
+	frame.Assign("MEDIASTATE_STOPPED", new Value_Number(wxMEDIASTATE_STOPPED));
 	frame.Assign("MINIMIZE", new Value_Number(wxMINIMIZE));
 	frame.Assign("MINIMIZE_BOX", new Value_Number(wxMINIMIZE_BOX));
 	frame.Assign("MM_LOMETRIC", new Value_Number(wxMM_LOMETRIC));

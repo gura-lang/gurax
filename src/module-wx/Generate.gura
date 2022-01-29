@@ -3,6 +3,8 @@ import(cbridge)
 
 r = cbridge.Renderer()
 
+r.DeclareType_Number('FileOffset', 'wxFileOffset')
+
 r.DeclareType('const_wxChar_p', 'const wxChar*', 'String',
 	codePicker = R'''
 	${this.cType} ${varName} = args_gurax.PickString();

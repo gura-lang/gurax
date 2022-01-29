@@ -3,4 +3,24 @@
 //==============================================================================
 MediaCtrl = Class(Control) {
 	@include['wx/mediactrl.h']
+	__init__(parent as Window_p, id as WindowID, fileName as const_String_r = wxEmptyString, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, szBackend as const_String_r = wxEmptyString, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = "mediaCtrl")
+	Create(parent as Window_p, id as WindowID, fileName as const_String_r = wxEmptyString, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, szBackend as const_String_r = wxEmptyString, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = "mediaCtrl") as bool
+	GetBestSize() as Size
+	GetPlaybackRate() as double
+	GetState() as MediaState
+	GetVolume() as double
+	Length() as FileOffset
+	Load(fileName as const_String_r) as bool
+	//Load(uri as const_URI_r) as bool
+	//Load(uri as const_URI_r, proxy as const_URI_r) as bool
+	LoadURI(uri as const_String_r) as bool
+	LoadURIWithProxy(uri as const_String_r, proxy as const_String_r) as bool
+	Pause() as bool
+	Play() as bool
+	Seek(where as FileOffset, mode as SeekMode = wxFromStart) as FileOffset
+	SetPlaybackRate(dRate as double) as bool
+	SetVolume(dVolume as double) as bool
+	ShowPlayerControls(flags as MediaCtrlPlayerControls = wxMEDIACTRLPLAYERCONTROLS_DEFAULT) as bool
+	Stop() as bool
+	Tell() as FileOffset
 }
