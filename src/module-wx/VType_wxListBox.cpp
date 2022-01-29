@@ -205,6 +205,7 @@ Gurax_ImplementMethodEx(wxListBox, HitTest_gurax, processor_gurax, argument_gura
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
+	// HitTest(point as const_Point_r) as int
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -220,6 +221,7 @@ Gurax_ImplementMethodEx(wxListBox, HitTest_gurax, processor_gurax, argument_gura
 		return new Value_Number(rtn);
 	} while (0);
 	Error::ClearIssuedFlag();
+	// HitTest(x as int, y as int) as int
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -309,6 +311,7 @@ Gurax_ImplementMethodEx(wxListBox, SetFirstItem_gurax, processor_gurax, argument
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
+	// SetFirstItem(n as int) as void
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
@@ -324,6 +327,7 @@ Gurax_ImplementMethodEx(wxListBox, SetFirstItem_gurax, processor_gurax, argument
 		return Value::nil();
 	} while (0);
 	Error::ClearIssuedFlag();
+	// SetFirstItem(string as const_String_r) as void
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {

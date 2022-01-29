@@ -18,9 +18,50 @@ ListCtrl = Class(Control) {
 	EnableBellOnNoMatch(on as bool = true) as void
 	EndEditLabel(cancel as bool) as bool
 	EnsureVisible(item as long) as bool
-	FindItem(start as long, str as const_String_r, partial as bool = false) as long
-	//FindItem(start as long, data as UIntPtr) as long
-	//FindItem(start as long, pt as const_Point_r, direction as int) as long
+	FindItem(args* as any) as long = \
+		R'''
+		// FindItem(start as long, str as const_String_r, partial as bool = false) as long
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("start", VTYPE_Number);
+				pDeclCallable->DeclareArg("str", VTYPE_String);
+				pDeclCallable->DeclareArg("partial", VTYPE_Bool, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			long start = args.PickNumber<long>();
+			const char* str = args.PickString();
+			bool partial = args.PickBool();
+			int rtn = pEntity_gurax->FindItem(start, str, partial);
+			return new Value_Number(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// FindItem(start as long, data as UIntPtr) as long
+		// FindItem(start as long, pt as const_Point_r, direction as int) as long
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("start", VTYPE_Number);
+				pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+				pDeclCallable->DeclareArg("direction", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			long start = args.PickNumber<long>();
+			const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+			int direction = args.PickNumber<int>();
+			int rtn = pEntity_gurax->FindItem(start, pt, direction);
+			return new Value_Number(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	GetColumn(col as int, item as ListItem_r) as bool
 	GetColumnCount() as int
 	GetColumnIndexFromOrder(pos as int) as int

@@ -17,10 +17,9 @@ ListBox = Class(Control) {
 		pEntity_gurax->GetSelections(selections);
 		return Util::CreateList(selections);
 		'''
-	//HitTest(point as const_Point_r) as int
-	//HitTest(x as int, y as int) as int
 	HitTest(args* as any) = \
 		R'''
+		// HitTest(point as const_Point_r) as int
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
@@ -36,6 +35,7 @@ ListBox = Class(Control) {
 			return new Value_Number(rtn);
 		} while (0);
 		Error::ClearIssuedFlag();
+		// HitTest(x as int, y as int) as int
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
@@ -57,10 +57,9 @@ ListBox = Class(Control) {
 	//InsertItems(nItems as unsigned_int, items as const_String_p, pos as unsigned_int) as void
 	InsertItems(items as const_ArrayString_r, pos as unsigned_int) as void
 	IsSelected(n as int) as bool
-	//SetFirstItem(n as int) as void
-	//SetFirstItem(string as const_String_r) as void
 	SetFirstItem(args* as any) as void = \
 		R'''
+		// SetFirstItem(n as int) as void
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {
@@ -76,6 +75,7 @@ ListBox = Class(Control) {
 			return Value::nil();
 		} while (0);
 		Error::ClearIssuedFlag();
+		// SetFirstItem(string as const_String_r) as void
 		do {
 			static DeclCallable* pDeclCallable = nullptr;
 			if (!pDeclCallable) {

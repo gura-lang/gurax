@@ -392,13 +392,11 @@ Gurax_ImplementMethodEx(wxListCtrl, EnsureVisible_gurax, processor_gurax, argume
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ListCtrl#FindItem(start as Number, str as String, partial? as Bool)
+// wx.ListCtrl#FindItem(args* as Any)
 Gurax_DeclareMethodAlias(wxListCtrl, FindItem_gurax, "FindItem")
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("start", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("partial", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -412,12 +410,49 @@ Gurax_ImplementMethodEx(wxListCtrl, FindItem_gurax, processor_gurax, argument_gu
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	long start = args_gurax.PickNumber<long>();
-	const char* str = args_gurax.PickString();
-	bool partial = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	long rtn = pEntity_gurax->FindItem(start, str, partial);
-	return new Gurax::Value_Number(rtn);
+	// FindItem(start as long, str as const_String_r, partial as bool = false) as long
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("start", VTYPE_Number);
+			pDeclCallable->DeclareArg("str", VTYPE_String);
+			pDeclCallable->DeclareArg("partial", VTYPE_Bool, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		long start = args.PickNumber<long>();
+		const char* str = args.PickString();
+		bool partial = args.PickBool();
+		int rtn = pEntity_gurax->FindItem(start, str, partial);
+		return new Value_Number(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	// FindItem(start as long, data as UIntPtr) as long
+	// FindItem(start as long, pt as const_Point_r, direction as int) as long
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("start", VTYPE_Number);
+			pDeclCallable->DeclareArg("pt", VTYPE_wxPoint);
+			pDeclCallable->DeclareArg("direction", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		long start = args.PickNumber<long>();
+		const wxPoint& pt = args.Pick<Value_wxPoint>().GetEntity();
+		int direction = args.PickNumber<int>();
+		int rtn = pEntity_gurax->FindItem(start, pt, direction);
+		return new Value_Number(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.ListCtrl#GetColumn(col as Number, item as wx.ListItem)
