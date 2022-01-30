@@ -3,4 +3,106 @@
 //==============================================================================
 PropertyGrid = Class(Control) {
 	@include['wx/propgrid/propgrid.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxPG_DEFAULT_STYLE, name as const_String_r = wxPropertyGridNameStr)
+	AddActionTrigger(action as int, keycode as int, modifiers as int = 0) as void
+	//AddToSelection(id as PGPropArg) as bool
+	BeginLabelEdit(colIndex as unsigned_int = 0) as void
+	//ChangePropertyValue(id as PGPropArg, newValue as Variant) as bool
+	CenterSplitter(enableAutoResizing as bool = false) as void
+	Clear() as void
+	ClearActionTriggers(action as int) as void
+	CommitChangesFromEditor(flags as Uint32 = 0) as bool
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxPG_DEFAULT_STYLE, name as const_String_r = wxPropertyGridNameStr) as bool
+	DedicateKey(keycode as int) as void
+	EnableCategories(enable as bool) as bool
+	EndLabelEdit(commit as bool = true) as void
+	//EnsureVisible(id as PGPropArg) as bool
+	FitColumns() as Size
+	GetLabelEditor() as TextCtrl_p
+	GetPanel() as Window_p
+	GetCaptionBackgroundColour() as Colour
+	GetCaptionFont() as Font
+	GetCaptionForegroundColour() as Colour
+	GetCellBackgroundColour() as Colour
+	GetCellDisabledTextColour() as Colour
+	GetCellTextColour() as Colour
+	GetColumnCount() as unsigned_int
+	GetEmptySpaceColour() as Colour
+	GetFontHeight() as int
+	GetGrid() as PropertyGrid_p
+	GetImageRect(property as PGProperty_p, item as int) as Rect
+	GetImageSize(property as PGProperty_p = NULL, item as int = -1) as Size
+	GetLastItem(flags as int = wxPG_ITERATE_DEFAULT) as PGProperty_p
+	GetLineColour() as Colour
+	GetMarginColour() as Colour
+	GetRoot() as PGProperty_p
+	GetRowHeight() as int
+	GetSelectedProperty() as PGProperty_p
+	GetSelection() as PGProperty_p
+	GetSelectionBackgroundColour() as Colour
+	GetSelectionForegroundColour() as Colour
+	//GetSortFunction() as PGSortCallback
+	GetSplitterPosition(splitterIndex as unsigned_int = 0) as int
+	GetEditorTextCtrl() as TextCtrl_p
+	//GetUnspecifiedValueAppearance() as PGCell
+	GetUnspecifiedValueText(argFlags as int = 0) as String
+	GetVerticalSpacing() as int
+	//HitTest(pt as const_Point_r) as PropertyGridHitTestResult
+	IsAnyModified() as bool
+	IsEditorFocused() as bool
+	IsFrozen() as bool
+	MakeColumnEditable(column as unsigned_int, editable as bool = true) as void
+	OnTLPChanging(newTLP as Window_p) as void
+	RefreshEditor() as void
+	RefreshProperty(p as PGProperty_p) as void
+	ResetColours() as void
+	ResetColumnSizes(enableAutoResizing as bool = false) as void
+	// RemoveFromSelection(id as PGPropArg) as bool
+	// SelectProperty(id as PGPropArg, focus as bool = false) as bool
+	SetCaptionBackgroundColour(col as const_Colour_r) as void
+	SetCaptionTextColour(col as const_Colour_r) as void
+	SetCellBackgroundColour(col as const_Colour_r) as void
+	SetCellDisabledTextColour(col as const_Colour_r) as void
+	SetCellTextColour(col as const_Colour_r) as void
+	SetColumnCount(colCount as int) as void
+	// SetCurrentCategory(id as PGPropArg) as void
+	SetEmptySpaceColour(col as const_Colour_r) as void
+	SetLineColour(col as const_Colour_r) as void
+	SetMarginColour(col as const_Colour_r) as void
+	//SetSelection(newSelection as const_ArrayPGProperty_r) as void
+	SetSelectionBackgroundColour(col as const_Colour_r) as void
+	SetSelectionTextColour(col as const_Colour_r) as void
+	//SetSortFunction(sortFunction as PGSortCallback) as void
+	SetSplitterPosition(newxpos as int, col as int = 0) as void
+	SetSplitterLeft(privateChildrenToo as bool = false) as void
+	//SetUnspecifiedValueAppearance(cell as const_PGCell_r) as void
+	SetVerticalSpacing(vspacing as int) as void
+	//DoShowPropertyError(property as PGProperty_p, msg as const_String_r):virtual as void
+	//DoHidePropertyError(property as PGProperty_p):virtual as void
+	GetStatusBar():virtual as StatusBar_p
+	EditorsValueWasModified() as void
+	EditorsValueWasNotModified() as void
+	//GetUncommittedPropertyValue() as Variant
+	IsEditorsValueModified() as bool
+	// ShowPropertyError(id as PGPropArg, msg as const_String_r) as void
+	WasValueChangedInEvent() as bool
+	AutoGetTranslation(enable as bool):static as void
+	//RegisterEditorClass(editor as PGEditor_p, noDefCheck as bool = false):static as PGEditor_p
+	//	DoRegisterEditorClass(editor as PGEditor_p, name as const_String_r, noDefCheck as bool = false):static as PGEditor_p
+}
+
+@event {
+	EVT_PG_SELECTED				>> PropertyGridEvent
+	EVT_PG_CHANGED				>> PropertyGridEvent
+	EVT_PG_CHANGING				>> PropertyGridEvent
+	EVT_PG_HIGHLIGHTED			>> PropertyGridEvent
+	EVT_PG_RIGHT_CLICK			>> PropertyGridEvent
+	EVT_PG_DOUBLE_CLICK			>> PropertyGridEvent
+	EVT_PG_ITEM_COLLAPSED		>> PropertyGridEvent
+	EVT_PG_ITEM_EXPANDED		>> PropertyGridEvent
+	EVT_PG_LABEL_EDIT_BEGIN		>> PropertyGridEvent
+	EVT_PG_LABEL_EDIT_ENDING	>> PropertyGridEvent
+	EVT_PG_COL_BEGIN_DRAG		>> PropertyGridEvent
+	EVT_PG_COL_DRAGGING 		>> PropertyGridEvent
+	EVT_PG_COL_END_DRAG			>> PropertyGridEvent
 }

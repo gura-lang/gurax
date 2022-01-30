@@ -40,6 +40,7 @@ public:
 		using wxPropertyGrid::wxPropertyGrid;
 	public:
 		EntityCore core_gurax;
+		virtual wxStatusBar* GetStatusBar() override;
 	};
 public:
 	static VType& vtype;

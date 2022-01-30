@@ -1,3 +1,91 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+PGProperty = Class {
+	@include['wx/propgrid/property.h']
+}
+
+ArrayStringProperty = Class(PGProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+BoolProperty = Class(PGProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+DateProperty = Class(PGProperty) {
+	@include['wx/propgrid/advprops.h']
+}
+
+EnumProperty = Class(PGProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+FileProperty = Class(PGProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+FlagsProperty = Class(PGProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+FloatProperty = Class(PGProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+FontProperty = Class(PGProperty) {
+	@include['wx/propgrid/advprops.h']
+}
+
+IntProperty = Class(PGProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+//LongStringProperty = Class(PGProperty) {
+//	@include['wx/propgrid/props.h']
+//}
+
+MultiChoiceProperty = Class(PGProperty) {
+	@include['wx/propgrid/advprops.h']
+}
+
+PropertyCategory = Class(PGProperty) {
+	@include['wx/propgrid/property.h']
+}
+
+StringProperty = Class(PGProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+UIntProperty = Class(PGProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+CursorProperty = Class(EnumProperty) {
+	@include['wx/propgrid/advprops.h']
+}
+
+EditEnumProperty = Class(EnumProperty) {
+	@include['wx/propgrid/props.h']
+}
+
+SystemColourProperty = Class(EnumProperty) {
+	@include['wx/propgrid/advprops.h']
+}
+
+ColourProperty = Class(SystemColourProperty) {
+	@include['wx/propgrid/advprops.h']
+}
+
+ImageFileProperty = Class(FileProperty) {
+	@include['wx/propgrid/advprops.h']
+}
+
+//DirProperty = Class(LongStringProperty) {
+//	@include['wx/propgrid/props.h']
+//}
+
+PropertyGridEvent = Class(CommandEvent) {
+	@include['wx/propgrid/propgrid.h']
+}
+

@@ -4,6 +4,26 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxPGProperty.cpp
+	VType_wxArrayStringProperty.cpp
+	VType_wxBoolProperty.cpp
+	VType_wxDateProperty.cpp
+	VType_wxEnumProperty.cpp
+	VType_wxFileProperty.cpp
+	VType_wxFlagsProperty.cpp
+	VType_wxFloatProperty.cpp
+	VType_wxFontProperty.cpp
+	VType_wxIntProperty.cpp
+	VType_wxMultiChoiceProperty.cpp
+	VType_wxPropertyCategory.cpp
+	VType_wxStringProperty.cpp
+	VType_wxUIntProperty.cpp
+	VType_wxCursorProperty.cpp
+	VType_wxEditEnumProperty.cpp
+	VType_wxSystemColourProperty.cpp
+	VType_wxColourProperty.cpp
+	VType_wxImageFileProperty.cpp
+	VType_wxPropertyGridEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

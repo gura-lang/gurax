@@ -12,6 +12,26 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxPGProperty);
+	frame.Assign(VTYPE_wxArrayStringProperty);
+	frame.Assign(VTYPE_wxBoolProperty);
+	frame.Assign(VTYPE_wxDateProperty);
+	frame.Assign(VTYPE_wxEnumProperty);
+	frame.Assign(VTYPE_wxFileProperty);
+	frame.Assign(VTYPE_wxFlagsProperty);
+	frame.Assign(VTYPE_wxFloatProperty);
+	frame.Assign(VTYPE_wxFontProperty);
+	frame.Assign(VTYPE_wxIntProperty);
+	frame.Assign(VTYPE_wxMultiChoiceProperty);
+	frame.Assign(VTYPE_wxPropertyCategory);
+	frame.Assign(VTYPE_wxStringProperty);
+	frame.Assign(VTYPE_wxUIntProperty);
+	frame.Assign(VTYPE_wxCursorProperty);
+	frame.Assign(VTYPE_wxEditEnumProperty);
+	frame.Assign(VTYPE_wxSystemColourProperty);
+	frame.Assign(VTYPE_wxColourProperty);
+	frame.Assign(VTYPE_wxImageFileProperty);
+	frame.Assign(VTYPE_wxPropertyGridEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
