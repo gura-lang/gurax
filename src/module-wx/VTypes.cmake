@@ -4,26 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxPGProperty.cpp
-	VType_wxArrayStringProperty.cpp
-	VType_wxBoolProperty.cpp
-	VType_wxDateProperty.cpp
-	VType_wxEnumProperty.cpp
-	VType_wxFileProperty.cpp
-	VType_wxFlagsProperty.cpp
-	VType_wxFloatProperty.cpp
-	VType_wxFontProperty.cpp
-	VType_wxIntProperty.cpp
-	VType_wxMultiChoiceProperty.cpp
-	VType_wxPropertyCategory.cpp
-	VType_wxStringProperty.cpp
-	VType_wxUIntProperty.cpp
-	VType_wxCursorProperty.cpp
-	VType_wxEditEnumProperty.cpp
-	VType_wxSystemColourProperty.cpp
-	VType_wxColourProperty.cpp
-	VType_wxImageFileProperty.cpp
-	VType_wxPropertyGridEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -34,6 +14,7 @@ set(SRCFILES_VTYPE
 	VType_wxAnyButton.cpp
 	VType_wxApp.cpp
 	VType_wxAppConsole.cpp
+	VType_wxArrayStringProperty.cpp
 	VType_wxAuiDefaultToolBarArt.cpp
 	VType_wxAuiMDIChildFrame.cpp
 	VType_wxAuiMDIClientWindow.cpp
@@ -52,6 +33,7 @@ set(SRCFILES_VTYPE
 	VType_wxBitmapToggleButton.cpp
 	VType_wxBookCtrlBase.cpp
 	VType_wxBookCtrlEvent.cpp
+	VType_wxBoolProperty.cpp
 	VType_wxBoxSizer.cpp
 	VType_wxBrush.cpp
 	VType_wxBufferedDC.cpp
@@ -81,6 +63,7 @@ set(SRCFILES_VTYPE
 	VType_wxColourData.cpp
 	VType_wxColourDialog.cpp
 	VType_wxColourPickerCtrl.cpp
+	VType_wxColourProperty.cpp
 	VType_wxComboBox.cpp
 	VType_wxComboCtrl.cpp
 	VType_wxComboPopup.cpp
@@ -90,6 +73,7 @@ set(SRCFILES_VTYPE
 	VType_wxContextMenuEvent.cpp
 	VType_wxControl.cpp
 	VType_wxCursor.cpp
+	VType_wxCursorProperty.cpp
 	VType_wxDataFormat.cpp
 	VType_wxDataObject.cpp
 	VType_wxDataViewColumn.cpp
@@ -106,6 +90,7 @@ set(SRCFILES_VTYPE
 	VType_wxDataViewVirtualListModel.cpp
 	VType_wxDateEvent.cpp
 	VType_wxDatePickerCtrl.cpp
+	VType_wxDateProperty.cpp
 	VType_wxDateSpan.cpp
 	VType_wxDateTime.cpp
 	VType_wxDC.cpp
@@ -114,6 +99,7 @@ set(SRCFILES_VTYPE
 	VType_wxDirDialog.cpp
 	VType_wxDirFilterListCtrl.cpp
 	VType_wxDirPickerCtrl.cpp
+	VType_wxPropertyGridEvent.cpp
 	VType_wxDocChildFrame.cpp
 	VType_wxDocMDIChildFrame.cpp
 	VType_wxDocMDIParentFrame.cpp
@@ -121,6 +107,8 @@ set(SRCFILES_VTYPE
 	VType_wxDropFilesEvent.cpp
 	VType_wxDropTarget.cpp
 	VType_wxEditableListBox.cpp
+	VType_wxEditEnumProperty.cpp
+	VType_wxEnumProperty.cpp
 	VType_wxEraseEvent.cpp
 	VType_wxEvent.cpp
 	VType_wxEventLoopBase.cpp
@@ -129,10 +117,13 @@ set(SRCFILES_VTYPE
 	VType_wxFileCtrlEvent.cpp
 	VType_wxFileDialog.cpp
 	VType_wxFilePickerCtrl.cpp
+	VType_wxFileProperty.cpp
 	VType_wxFileSystem.cpp
 	VType_wxFindReplaceData.cpp
 	VType_wxFindReplaceDialog.cpp
+	VType_wxFlagsProperty.cpp
 	VType_wxFlexGridSizer.cpp
+	VType_wxFloatProperty.cpp
 	VType_wxFocusEvent.cpp
 	VType_wxFont.cpp
 	VType_wxFontData.cpp
@@ -140,6 +131,7 @@ set(SRCFILES_VTYPE
 	VType_wxFontInfo.cpp
 	VType_wxFontMetrics.cpp
 	VType_wxFontPickerCtrl.cpp
+	VType_wxFontProperty.cpp
 	VType_wxFrame.cpp
 	VType_wxGauge.cpp
 	VType_wxGBPosition.cpp
@@ -207,12 +199,14 @@ set(SRCFILES_VTYPE
 	VType_wxIconBundle.cpp
 	VType_wxIdleEvent.cpp
 	VType_wxImage.cpp
+	VType_wxImageFileProperty.cpp
 	VType_wxImageHandler.cpp
 	VType_wxImageHistogram.cpp
 	VType_wxImageList.cpp
 	VType_wxInfoBar.cpp
 	VType_wxInitDialogEvent.cpp
 	VType_wxInputStream.cpp
+	VType_wxIntProperty.cpp
 	VType_wxJoystickEvent.cpp
 	VType_wxKeyEvent.cpp
 	VType_wxLayoutAlgorithm.cpp
@@ -224,6 +218,7 @@ set(SRCFILES_VTYPE
 	VType_wxListItem.cpp
 	VType_wxListView.cpp
 	VType_wxLog.cpp
+	VType_wxMultiChoiceProperty.cpp
 	VType_wxMask.cpp
 	VType_wxMDIChildFrame.cpp
 	VType_wxMDIParentFrame.cpp
@@ -257,6 +252,7 @@ set(SRCFILES_VTYPE
 	VType_wxPen.cpp
 	VType_wxPGArrayEditorDialog.cpp
 	VType_wxPGArrayStringEditorDialog.cpp
+	VType_wxPGProperty.cpp
 	VType_wxPickerBase.cpp
 	VType_wxPNGHandler.cpp
 	VType_wxPoint.cpp
@@ -269,6 +265,7 @@ set(SRCFILES_VTYPE
 	VType_wxPrintAbortDialog.cpp
 	VType_wxPrintData.cpp
 	VType_wxProgressDialog.cpp
+	VType_wxPropertyCategory.cpp
 	VType_wxPropertyGrid.cpp
 	VType_wxPropertyGridManager.cpp
 	VType_wxPropertySheetDialog.cpp
@@ -329,11 +326,13 @@ set(SRCFILES_VTYPE
 	VType_wxStatusBarPane.cpp
 	VType_wxStdDialogButtonSizer.cpp
 	VType_wxStreamBase.cpp
+	VType_wxStringProperty.cpp
 	VType_wxStyledTextCtrl.cpp
 	VType_wxStyledTextEvent.cpp
 	VType_wxSVGFileDC.cpp
 	VType_wxSymbolPickerDialog.cpp
 	VType_wxSysColourChangedEvent.cpp
+	VType_wxSystemColourProperty.cpp
 	VType_wxTextAttr.cpp
 	VType_wxTextCtrl.cpp
 	VType_wxTextEntryDialog.cpp
@@ -351,6 +350,7 @@ set(SRCFILES_VTYPE
 	VType_wxTreeCtrl.cpp
 	VType_wxTreeEvent.cpp
 	VType_wxTreeItemId.cpp
+	VType_wxUIntProperty.cpp
 	VType_wxUpdateUIEvent.cpp
 	VType_wxURI.cpp
 	VType_wxValidator.cpp

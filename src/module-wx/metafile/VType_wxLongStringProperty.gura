@@ -1,0 +1,10 @@
+//==============================================================================
+// VType_wxLongStringProperty.gura
+//==============================================================================
+//LongStringProperty = Class(PGProperty) {
+//	@include['wx/propgrid/props.h']
+//}
+
+MultiChoiceProperty = Class(PGProperty) {
+	@include['wx/propgrid/advprops.h']
+}

@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxEditEnumProperty.gura
 //==============================================================================
+EditEnumProperty = Class(EnumProperty) {
+	@include['wx/propgrid/props.h']
+}

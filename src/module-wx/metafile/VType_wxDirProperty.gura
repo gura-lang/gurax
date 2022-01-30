@@ -1,0 +1,10 @@
+//==============================================================================
+// VType_wxDirProperty.gura
+//==============================================================================
+//DirProperty = Class(LongStringProperty) {
+//	@include['wx/propgrid/props.h']
+//}
+
+PropertyGridEvent = Class(CommandEvent) {
+	@include['wx/propgrid/propgrid.h']
+}

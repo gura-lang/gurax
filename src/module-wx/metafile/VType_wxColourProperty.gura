@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxColourProperty.gura
 //==============================================================================
+ColourProperty = Class(SystemColourProperty) {
+	@include['wx/propgrid/advprops.h']
+}

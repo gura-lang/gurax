@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxPropertyCategory.gura
 //==============================================================================
+PropertyCategory = Class(PGProperty) {
+	@include['wx/propgrid/property.h']
+}
