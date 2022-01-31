@@ -1,3 +1,9 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+RibbonArtProvider = Class():loosePointer {
+	@include['wx/ribbon/art.h']
+}
+
+RibbonBarEvent = Class(NotifyEvent) {
+}

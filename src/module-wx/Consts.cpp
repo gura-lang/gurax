@@ -883,6 +883,16 @@ void AssignConsts(Frame& frame)
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
 	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
 	frame.Assign("RETAINED", new Value_Number(wxRETAINED));
+	frame.Assign("RIBBON_BAR_DEFAULT_STYLE", new Value_Number(wxRIBBON_BAR_DEFAULT_STYLE));
+	frame.Assign("RIBBON_BAR_FLOW_HORIZONTAL", new Value_Number(wxRIBBON_BAR_FLOW_HORIZONTAL));
+	frame.Assign("RIBBON_BAR_FLOW_VERTICAL", new Value_Number(wxRIBBON_BAR_FLOW_VERTICAL));
+	frame.Assign("RIBBON_BAR_FOLDBAR_STYLE", new Value_Number(wxRIBBON_BAR_FOLDBAR_STYLE));
+	frame.Assign("RIBBON_BAR_SHOW_HELP_BUTTON", new Value_Number(wxRIBBON_BAR_SHOW_HELP_BUTTON));
+	frame.Assign("RIBBON_BAR_SHOW_PAGE_ICONS", new Value_Number(wxRIBBON_BAR_SHOW_PAGE_ICONS));
+	frame.Assign("RIBBON_BAR_SHOW_PAGE_LABELS", new Value_Number(wxRIBBON_BAR_SHOW_PAGE_LABELS));
+	frame.Assign("RIBBON_BAR_SHOW_PANEL_EXT_BUTTONS", new Value_Number(wxRIBBON_BAR_SHOW_PANEL_EXT_BUTTONS));
+	frame.Assign("RIBBON_BAR_SHOW_PANEL_MINIMISE_BUTTONS", new Value_Number(wxRIBBON_BAR_SHOW_PANEL_MINIMISE_BUTTONS));
+	frame.Assign("RIBBON_BAR_SHOW_TOGGLE_BUTTON", new Value_Number(wxRIBBON_BAR_SHOW_TOGGLE_BUTTON));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
 	frame.Assign("SASH_BOTTOM", new Value_Number(wxSASH_BOTTOM));
 	frame.Assign("SASH_LEFT", new Value_Number(wxSASH_LEFT));

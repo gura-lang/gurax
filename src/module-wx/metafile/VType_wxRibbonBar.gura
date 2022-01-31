@@ -3,4 +3,52 @@
 //==============================================================================
 RibbonBar = Class(RibbonControl) {
 	@include['wx/ribbon/bar.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxRIBBON_BAR_DEFAULT_STYLE)
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxRIBBON_BAR_DEFAULT_STYLE) as bool
+	SetTabCtrlMargins(left as int, right as int) as void
+	SetArtProvider(art as RibbonArtProvider_p) as void
+	SetActivePage(page as size_t) as bool
+	//SetActivePage(page as RibbonPage_p) as bool
+	GetActivePage() as int
+	GetPage(n as int) as RibbonPage_p
+	GetPageCount() as size_t
+	DismissExpandedPanel() as bool
+	GetPageNumber(page as RibbonPage_p) as int
+	DeletePage(n as size_t) as void
+	ClearPages() as void
+	IsPageShown(page as size_t) as bool
+	ShowPage(page as size_t, show_tab as bool = true) as void
+	HidePage(page as size_t) as void
+	IsPageHighlighted(page as size_t) as bool
+	AddPageHighlight(page as size_t, highlight as bool = true) as void
+	RemovePageHighlight(page as size_t) as void
+	ShowPanels(show as bool = true) as void
+	HidePanels() as void
+	ArePanelsShown() as bool
+	Realize() as bool
+}
+
+@const { // Styles
+	RIBBON_BAR_DEFAULT_STYLE
+	RIBBON_BAR_FOLDBAR_STYLE
+	RIBBON_BAR_SHOW_PAGE_LABELS
+	RIBBON_BAR_SHOW_PAGE_ICONS
+	RIBBON_BAR_FLOW_HORIZONTAL
+	RIBBON_BAR_FLOW_VERTICAL
+	RIBBON_BAR_SHOW_PANEL_EXT_BUTTONS
+	RIBBON_BAR_SHOW_PANEL_MINIMISE_BUTTONS
+	RIBBON_BAR_SHOW_TOGGLE_BUTTON
+	RIBBON_BAR_SHOW_HELP_BUTTON
+}
+
+@event {
+	EVT_RIBBONBAR_PAGE_CHANGED		>> RibbonBarEvent
+	EVT_RIBBONBAR_PAGE_CHANGING		>> RibbonBarEvent
+	EVT_RIBBONBAR_TAB_MIDDLE_DOWN	>> RibbonBarEvent
+	EVT_RIBBONBAR_TAB_MIDDLE_UP		>> RibbonBarEvent
+	EVT_RIBBONBAR_TAB_RIGHT_DOWN	>> RibbonBarEvent
+	EVT_RIBBONBAR_TAB_RIGHT_UP		>> RibbonBarEvent
+	EVT_RIBBONBAR_TAB_LEFT_DCLICK	>> RibbonBarEvent
+	EVT_RIBBONBAR_TOGGLED			>> RibbonBarEvent
+	EVT_RIBBONBAR_HELP_CLICK		>> RibbonBarEvent
 }

@@ -3,4 +3,16 @@
 //==============================================================================
 RibbonControl = Class(Control) {
 	@include['wx/ribbon/control.h']
+	__init__(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxControlNameStr)
+	SetArtProvider(art as RibbonArtProvider_p) as void
+	GetArtProvider() as RibbonArtProvider_p
+	IsSizingContinuous() as bool
+	GetNextSmallerSize(direction as Orientation) as Size
+	//GetNextSmallerSize(direction as Orientation, relative_to as Size) as Size
+	GetNextLargerSize(direction as Orientation) as Size
+	//GetNextLargerSize(direction as Orientation, relative_to as Size) as Size
+	Realize() as bool
+	Realise() as bool
+	GetAncestorRibbonBar() as RibbonBar_p
+	GetBestSizeForParentSize(parentSize as const_Size_r) as Size
 }

@@ -180,6 +180,15 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_QUERY_LAYOUT_INFO,						wxQueryLayoutInfoEvent);
 	Gurax_AssignEvent(EVT_RADIOBOX,								wxCommandEvent);
 	Gurax_AssignEvent(EVT_RADIOBUTTON,							wxCommandEvent);
+	Gurax_AssignEvent(EVT_RIBBONBAR_HELP_CLICK,					wxRibbonBarEvent);
+	Gurax_AssignEvent(EVT_RIBBONBAR_PAGE_CHANGED,				wxRibbonBarEvent);
+	Gurax_AssignEvent(EVT_RIBBONBAR_PAGE_CHANGING,				wxRibbonBarEvent);
+	Gurax_AssignEvent(EVT_RIBBONBAR_TAB_LEFT_DCLICK,				wxRibbonBarEvent);
+	Gurax_AssignEvent(EVT_RIBBONBAR_TAB_MIDDLE_DOWN,				wxRibbonBarEvent);
+	Gurax_AssignEvent(EVT_RIBBONBAR_TAB_MIDDLE_UP,				wxRibbonBarEvent);
+	Gurax_AssignEvent(EVT_RIBBONBAR_TAB_RIGHT_DOWN,				wxRibbonBarEvent);
+	Gurax_AssignEvent(EVT_RIBBONBAR_TAB_RIGHT_UP,				wxRibbonBarEvent);
+	Gurax_AssignEvent(EVT_RIBBONBAR_TOGGLED,						wxRibbonBarEvent);
 	Gurax_AssignEvent(EVT_RIGHT_DCLICK,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_RIGHT_DOWN,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_RIGHT_UP,								wxMouseEvent);
