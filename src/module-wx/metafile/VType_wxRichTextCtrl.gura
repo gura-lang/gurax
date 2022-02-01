@@ -3,4 +3,329 @@
 //==============================================================================
 RichTextCtrl = Class(Control) {
 	@include['wx/richtext/richtextctrl.h']
+	__init__(parent as Window_p, id as WindowID = -1, value as const_String_r = wxEmptyString, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxRE_MULTILINE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxTextCtrlNameStr)
+	Create(parent as Window_p, id as WindowID = -1, value as const_String_r = wxEmptyString, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxRE_MULTILINE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxTextCtrlNameStr) as bool
+	Init() as void
+	GetRange(from as long, to as long) as String
+	GetLineLength(lineNo as long) as int
+	GetLineText(lineNo as long) as String
+	GetNumberOfLines() as int
+	IsModified() as bool
+	IsEditable() as bool
+	IsSingleLine() as bool
+	IsMultiLine() as bool
+	GetStringSelection() as String
+	GetFilename() as String
+	SetFilename(filename as const_String_r) as void
+	SetDelayedLayoutThreshold(threshold as long) as void
+	GetDelayedLayoutThreshold() as long
+	GetFullLayoutRequired() as bool
+	SetFullLayoutRequired(b as bool) as void
+	//GetFullLayoutTime() as LongLong
+	//SetFullLayoutTime(t as LongLong) as void
+	GetFullLayoutSavedPosition() as long
+	SetFullLayoutSavedPosition(p as long) as void
+	ForceDelayedLayout() as void
+	SetTextCursor(cursor as const_Cursor_r) as void
+	GetTextCursor() as Cursor
+	SetURLCursor(cursor as const_Cursor_r) as void
+	GetURLCursor() as Cursor
+	GetCaretAtLineStart() as bool
+	SetCaretAtLineStart(atStart as bool) as void
+	GetDragging() as bool
+	SetDragging(dragging as bool) as void
+	GetPreDrag() as bool
+	SetPreDrag(pd as bool) as void
+	GetDragStartPoint() as Point
+	SetDragStartPoint(sp as Point) as void
+	GetDragStartTime() as DateTime
+	SetDragStartTime(st as DateTime) as void
+	GetContextMenu() as Menu_p
+	SetContextMenu(menu as Menu_p) as void
+	GetSelectionAnchor() as long
+	SetSelectionAnchor(anchor as long) as void
+	//GetSelectionAnchorObject() as RichTextObject_p
+	//SetSelectionAnchorObject(anchor as RichTextObject_p) as void
+	//GetFocusObject() as RichTextParagraphLayoutBox_p
+	//StoreFocusObject(obj as RichTextParagraphLayoutBox_p) as void
+	//SetFocusObject(obj as RichTextParagraphLayoutBox_p, setCaretPosition as bool = true) as bool
+	Invalidate() as void
+	Clear() as void
+	Replace(from as long, to as long, value as const_String_r) as void
+	Remove(from as long, to as long) as void
+	LoadFile(file as const_String_r, type as int = wxRICHTEXT_TYPE_ANY) as bool
+	DoLoadFile(file as const_String_r, fileType as int) as bool
+	SaveFile(file as const_String_r = wxEmptyString, type as int = wxRICHTEXT_TYPE_ANY) as bool
+	DoSaveFile(file as const_String_r = wxEmptyString, fileType as int = wxRICHTEXT_TYPE_ANY) as bool
+	SetHandlerFlags(flags as int) as void
+	GetHandlerFlags() as int
+	MarkDirty() as void
+	DiscardEdits() as void
+	SetModified(modified as bool) as void
+	SetMaxLength(len as unsigned_long) as void
+	WriteText(text as const_String_r) as void
+	AppendText(text as const_String_r) as void
+	//SetStyle(obj as RichTextObject_p, textAttr as const_RichTextAttr_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO) as void
+	//SetStyleEx(range as const_RichTextRange_r, style as const_RichTextAttr_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO) as bool
+	//GetDefaultStyleEx() as RichTextAttr
+	//ClearListStyle(range as const_RichTextRange_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO) as bool
+	//SetProperties(range as const_RichTextRange_r, properties as const_RichTextProperties_r, flags as int = wxRICHTEXT_SETPROPERTIES_WITH_UNDO) as bool
+	//Delete(range as const_RichTextRange_r) as bool
+	XYToPosition(x as long, y as long) as long
+	//PositionToXY(pos as long, x as long_p, y as long_p) as bool
+	ShowPosition(pos as long) as void
+	Copy() as void
+	Cut() as void
+	Paste() as void
+	DeleteSelection() as void
+	CanCopy() as bool
+	CanCut() as bool
+	CanPaste() as bool
+	CanDeleteSelection() as bool
+	Undo() as void
+	Redo() as void
+	CanUndo() as bool
+	CanRedo() as bool
+	SetInsertionPoint(pos as long) as void
+	SetInsertionPointEnd() as void
+	GetInsertionPoint() as long
+	//GetLastPosition() as TextPos
+	SelectAll() as void
+	SetEditable(editable as bool) as void
+	HasSelection() as bool
+	HasUnfocusedSelection() as bool
+	//wxRichTextAttr() as bool_WriteImage_(const_Stringfilename,_BitmapType_bitmapType,_const_RichTextAttrtextAttr=
+	//wxRichTextAttr() as bool_WriteImage_(const_RichTextImageBlockimageBlock,_const_RichTextAttrtextAttr=
+	//wxRichTextAttr() as RichTextBox_p_WriteTextBox_(const_RichTextAttrtextAttr=
+	//wxRichTextAttr() as RichTextField_p_WriteField_(const_StringfieldType,_const_RichTextPropertiesproperties,_const_RichTextAttrtextAttr=
+	//wxRichTextAttr() as RichTextTable_p_WriteTable_(int_rows,_int_cols,_const_RichTextAttrtableAttr=wxRichTextAttr(),_const_RichTextAttrcellAttr=
+	Newline() as bool
+	LineBreak() as bool
+	SetBasicStyle(style as const_RichTextAttr_r) as void
+	GetBasicStyle() as RichTextAttr
+	BeginStyle(style as const_RichTextAttr_r) as bool
+	EndStyle() as bool
+	EndAllStyles() as bool
+	BeginBold() as bool
+	EndBold() as bool
+	BeginItalic() as bool
+	EndItalic() as bool
+	BeginUnderline() as bool
+	EndUnderline() as bool
+	BeginFontSize(pointSize as int) as bool
+	EndFontSize() as bool
+	BeginFont(font as const_Font_r) as bool
+	EndFont() as bool
+	BeginTextColour(colour as const_Colour_r) as bool
+	EndTextColour() as bool
+	//BeginAlignment(alignment as TextAttrAlignment) as bool
+	EndAlignment() as bool
+	BeginLeftIndent(leftIndent as int, leftSubIndent as int = 0) as bool
+	EndLeftIndent() as bool
+	BeginRightIndent(rightIndent as int) as bool
+	EndRightIndent() as bool
+	BeginParagraphSpacing(before as int, after as int) as bool
+	EndParagraphSpacing() as bool
+	BeginLineSpacing(lineSpacing as int) as bool
+	EndLineSpacing() as bool
+	BeginNumberedBullet(bulletNumber as int, leftIndent as int, leftSubIndent as int, bulletStyle as int = wxTEXT_ATTR_BULLET_STYLE_ARABIC|wxTEXT_ATTR_BULLET_STYLE_PERIOD) as bool
+	EndNumberedBullet() as bool
+	BeginSymbolBullet(symbol as const_String_r, leftIndent as int, leftSubIndent as int, bulletStyle as int = wxTEXT_ATTR_BULLET_STYLE_SYMBOL) as bool
+	EndSymbolBullet() as bool
+	BeginStandardBullet(bulletName as const_String_r, leftIndent as int, leftSubIndent as int, bulletStyle as int = wxTEXT_ATTR_BULLET_STYLE_STANDARD) as bool
+	EndStandardBullet() as bool
+	BeginCharacterStyle(characterStyle as const_String_r) as bool
+	EndCharacterStyle() as bool
+	BeginParagraphStyle(paragraphStyle as const_String_r) as bool
+	EndParagraphStyle() as bool
+	BeginListStyle(listStyle as const_String_r, level as int = 1, number as int = 1) as bool
+	EndListStyle() as bool
+	BeginURL(url as const_String_r, characterStyle as const_String_r = wxEmptyString) as bool
+	EndURL() as bool
+	SetDefaultStyleToCursorStyle() as bool
+	SelectNone() as void
+	SelectWord(position as long) as bool
+	//GetSelectionRange() as RichTextRange
+	//SetSelectionRange(range as const_RichTextRange_r) as void
+	//GetInternalSelectionRange() as RichTextRange
+	//SetInternalSelectionRange(range as const_RichTextRange_r) as void
+	//AddParagraph(text as const_String_r) as RichTextRange
+	//AddImage(image as const_Image_r) as RichTextRange
+	LayoutContent(onlyVisibleRect as bool = false) as bool
+	//MoveCaret(pos as long, showAtLineStart as bool = false, container as RichTextParagraphLayoutBox_p = NULL) as bool
+	MoveRight(noPositions as int = 1, flags as int = 0) as bool
+	MoveLeft(noPositions as int = 1, flags as int = 0) as bool
+	MoveUp(noLines as int = 1, flags as int = 0) as bool
+	MoveDown(noLines as int = 1, flags as int = 0) as bool
+	MoveToLineEnd(flags as int = 0) as bool
+	MoveToLineStart(flags as int = 0) as bool
+	MoveToParagraphEnd(flags as int = 0) as bool
+	MoveToParagraphStart(flags as int = 0) as bool
+	MoveHome(flags as int = 0) as bool
+	MoveEnd(flags as int = 0) as bool
+	PageUp(noPages as int = 1, flags as int = 0) as bool
+	PageDown(noPages as int = 1, flags as int = 0) as bool
+	WordLeft(noPages as int = 1, flags as int = 0) as bool
+	WordRight(noPages as int = 1, flags as int = 0) as bool
+	BeginBatchUndo(cmdName as const_String_r) as bool
+	EndBatchUndo() as bool
+	BatchingUndo() as bool
+	BeginSuppressUndo() as bool
+	EndSuppressUndo() as bool
+	SuppressingUndo() as bool
+	//HasCharacterAttributes(range as const_RichTextRange_r, style as const_RichTextAttr_r) as bool
+	//HasParagraphAttributes(range as const_RichTextRange_r, style as const_RichTextAttr_r) as bool
+	IsSelectionBold() as bool
+	IsSelectionItalics() as bool
+	IsSelectionUnderlined() as bool
+	DoesSelectionHaveTextEffectFlag(flag as int) as bool
+	//IsSelectionAligned(alignment as TextAttrAlignment) as bool
+	ApplyBoldToSelection() as bool
+	ApplyItalicToSelection() as bool
+	ApplyUnderlineToSelection() as bool
+	ApplyTextEffectToSelection(flags as int) as bool
+	//ApplyAlignmentToSelection(alignment as TextAttrAlignment) as bool
+	//ApplyStyle(def as RichTextStyleDefinition_p) as bool
+	//SetStyleSheet(styleSheet as RichTextStyleSheet_p) as void
+	//GetStyleSheet() as RichTextStyleSheet_p
+	//PushStyleSheet(styleSheet as RichTextStyleSheet_p) as bool
+	//PopStyleSheet() as RichTextStyleSheet_p
+	//ApplyStyleSheet(styleSheet as RichTextStyleSheet_p = NULL) as bool
+	ShowContextMenu(menu as Menu_p, pt as const_Point_r, addPropertyCommands as bool) as bool
+	PrepareContextMenu(menu as Menu_p, pt as const_Point_r, addPropertyCommands as bool) as int
+	//CanEditProperties(obj as RichTextObject_p) as bool
+	//EditProperties(obj as RichTextObject_p, parent as Window_p) as bool
+	//GetPropertiesMenuLabel(obj as RichTextObject_p) as String
+	//PrepareContent(container as RichTextParagraphLayoutBox_r) as void
+	//CanDeleteRange(container as RichTextParagraphLayoutBox_r, range as const_RichTextRange_r) as bool
+	//CanInsertContent(container as RichTextParagraphLayoutBox_r, pos as long) as bool
+	EnableVerticalScrollbar(enable as bool) as void
+	GetVerticalScrollbarEnabled() as bool
+	SetFontScale(fontScale as double, refresh as bool = false) as void
+	GetFontScale() as double
+	SetDimensionScale(dimScale as double, refresh as bool = false) as void
+	GetDimensionScale() as double
+	SetScale(scale as double, refresh as bool = false) as void
+	GetScale() as double
+	GetUnscaledPoint(pt as const_Point_r) as Point
+	GetScaledPoint(pt as const_Point_r) as Point
+	GetUnscaledSize(sz as const_Size_r) as Size
+	GetScaledSize(sz as const_Size_r) as Size
+	GetUnscaledRect(rect as const_Rect_r) as Rect
+	GetScaledRect(rect as const_Rect_r) as Rect
+	GetVirtualAttributesEnabled() as bool
+	EnableVirtualAttributes(b as bool) as void
+	Command(event as CommandEvent_r) as void
+	OnDropFiles(event as DropFilesEvent_r) as void
+	OnCaptureLost(event as MouseCaptureLostEvent_r) as void
+	OnSysColourChanged(event as SysColourChangedEvent_r) as void
+	OnCut(event as CommandEvent_r) as void
+	OnCopy(event as CommandEvent_r) as void
+	OnPaste(event as CommandEvent_r) as void
+	OnUndo(event as CommandEvent_r) as void
+	OnRedo(event as CommandEvent_r) as void
+	OnSelectAll(event as CommandEvent_r) as void
+	OnProperties(event as CommandEvent_r) as void
+	OnClear(event as CommandEvent_r) as void
+	OnUpdateCut(event as UpdateUIEvent_r) as void
+	OnUpdateCopy(event as UpdateUIEvent_r) as void
+	OnUpdatePaste(event as UpdateUIEvent_r) as void
+	OnUpdateUndo(event as UpdateUIEvent_r) as void
+	OnUpdateRedo(event as UpdateUIEvent_r) as void
+	OnUpdateSelectAll(event as UpdateUIEvent_r) as void
+	OnUpdateProperties(event as UpdateUIEvent_r) as void
+	OnUpdateClear(event as UpdateUIEvent_r) as void
+	OnContextMenu(event as ContextMenuEvent_r) as void
+	OnPaint(event as PaintEvent_r) as void
+	OnEraseBackground(event as EraseEvent_r) as void
+	OnLeftClick(event as MouseEvent_r) as void
+	OnLeftUp(event as MouseEvent_r) as void
+	OnMoveMouse(event as MouseEvent_r) as void
+	OnLeftDClick(event as MouseEvent_r) as void
+	OnMiddleClick(event as MouseEvent_r) as void
+	OnRightClick(event as MouseEvent_r) as void
+	OnChar(event as KeyEvent_r) as void
+	OnSize(event as SizeEvent_r) as void
+	OnSetFocus(event as FocusEvent_r) as void
+	OnKillFocus(event as FocusEvent_r) as void
+	OnIdle(event as IdleEvent_r) as void
+	OnScroll(event as ScrollWinEvent_r) as void
+	SetFont(font as const_Font_r) as bool
+	SetupScrollbars(atTop as bool = false) as void
+	KeyboardNavigate(keyCode as int, flags as int) as bool
+	PaintBackground(dc as DC_r) as void
+	PaintAboveContent(dc as DC_r) as void
+	DoWriteText(value as const_String_r, flags as int = 0) as void
+	ShouldInheritColours() as bool
+	//PositionCaret(container as RichTextParagraphLayoutBox_p = NULL) as void
+	ExtendSelection(oldPosition as long, newPosition as long, flags as int) as bool
+	ScrollIntoView(position as long, keyCode as int) as bool
+	//RefreshForSelectionChange(oldSelection as const_RichTextSelection_r, newSelection as const_RichTextSelection_r) as bool
+	SetCaretPosition(position as long, showAtLineStart as bool = false) as void
+	GetCaretPosition() as long
+	GetAdjustedCaretPosition(caretPos as long) as long
+	MoveCaretForward(oldPosition as long) as void
+	MoveCaretBack(oldPosition as long) as void
+	//GetCaretPositionForIndex(position as long, rect as Rect_r, container as RichTextParagraphLayoutBox_p = NULL) as bool
+	//GetVisibleLineForCaretPosition(caretPosition as long) as RichTextLine_p
+	//GetCommandProcessor() as CommandProcessor_p
+	//DeleteSelectedContent(newPos as long_p = NULL) as bool
+	GetPhysicalPoint(ptLogical as const_Point_r) as Point
+	GetLogicalPoint(ptPhysical as const_Point_r) as Point
+	FindNextWordPosition(direction as int = 1) as long
+	IsPositionVisible(pos as long) as bool
+	GetFirstVisiblePosition() as long
+	GetCaretPositionForDefaultStyle() as long
+	SetCaretPositionForDefaultStyle(pos as long) as void
+	IsDefaultStyleShowing() as bool
+	//SetAndShowDefaultStyle(attr as const_RichTextAttr_r) as void
+	GetFirstVisiblePoint() as Point
+	GetValue() as String
+	SetValue(value as const_String_r) as void
+	ProcessBackKey(event as KeyEvent_r, flags as int) as bool
+	//FindRangeForList(pos as long, isNumberedList as bool_r) as RichTextRange
+	//SetCaretPositionAfterClick(container as RichTextParagraphLayoutBox_p, position as long, hitTestFlags as int, extendSelection as bool = false) as bool
+	//FindCaretPositionForCharacterPosition(position as long, hitTestFlags as int, container as RichTextParagraphLayoutBox_p, caretLineStart as bool_r) as long
+	//ProcessMouseMovement(container as RichTextParagraphLayoutBox_p, obj as RichTextObject_p, position as long, pos as const_Point_r) as bool
+	DoGetValue() as String
+	//GetSelection(from as long_p, to as long_p) as void
+	//GetSelection() as RichTextSelection
+	//GetSelection() as RichTextSelection
+	//GetContextMenuPropertiesInfo() as RichTextContextMenuPropertiesInfo
+	//GetContextMenuPropertiesInfo() as RichTextContextMenuPropertiesInfo
+	GetStyle(position as long, style as TextAttr_r) as bool
+	//GetStyle(position as long, style as RichTextAttr_r) as bool
+	//GetStyle(position as long, style as RichTextAttr_r, container as RichTextParagraphLayoutBox_p) as bool
+	//SetStyle(start as long, end as long, style as const_TextAttr_r) as bool
+	//SetStyle(start as long, end as long, style as const_RichTextAttr_r) as bool
+	//SetStyle(range as const_RichTextRange_r, style as const_TextAttr_r) as bool
+	//SetStyle(range as const_RichTextRange_r, style as const_RichTextAttr_r) as bool
+	//GetStyleForRange(range as const_RichTextRange_r, style as TextAttr_r) as bool
+	//GetStyleForRange(range as const_RichTextRange_r, style as RichTextAttr_r) as bool
+	//GetStyleForRange(range as const_RichTextRange_r, style as RichTextAttr_r, container as RichTextParagraphLayoutBox_p) as bool
+	//GetUncombinedStyle(position as long, style as RichTextAttr_r) as bool
+	//GetUncombinedStyle(position as long, style as RichTextAttr_r, container as RichTextParagraphLayoutBox_p) as bool
+	SetDefaultStyle(style as const_TextAttr_r) as bool
+	//SetDefaultStyle(style as const_RichTextAttr_r) as bool
+	//SetListStyle(range as const_RichTextRange_r, def as RichTextListStyleDefinition_p, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
+	//SetListStyle(range as const_RichTextRange_r, defName as const_String_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
+	//NumberList(range as const_RichTextRange_r, def as RichTextListStyleDefinition_p = NULL, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
+	//NumberList(range as const_RichTextRange_r, defName as const_String_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
+	//PromoteList(promoteBy as int, range as const_RichTextRange_r, def as RichTextListStyleDefinition_p = NULL, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, specifiedLevel as int = -1) as bool
+	//PromoteList(promoteBy as int, range as const_RichTextRange_r, defName as const_String_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, specifiedLevel as int = -1) as bool
+	//HitTest(pt as const_Point_r, pos as long_p) as TextCtrlHitTestResult
+	//HitTest(pt as const_Point_r, col as TextCoord_p, row as TextCoord_p) as TextCtrlHitTestResult
+	//FindContainerAtPoint(pt as const_Point, position as long_r, hit as int_r, hitObj as RichTextObject_p, flags as int = 0) as RichTextParagraphLayoutBox_p
+	SetSelection(from as long, to as long) as void
+	//SetSelection(sel as const_RichTextSelection_r) as void
+	//wxRichTextAttr() as bool_WriteImage_(const_Imageimage,_BitmapType_bitmapType=wxBITMAP_TYPE_PNG,_const_RichTextAttrtextAttr=
+	//wxRichTextAttr() as bool_WriteImage_(const_Bitmapbitmap,_BitmapType_bitmapType=wxBITMAP_TYPE_PNG,_const_RichTextAttrtextAttr=
+	//GetBuffer() as RichTextBuffer
+	//GetBuffer() as RichTextBuffer
+}
+
+@const { // Styles
+	RE_CENTRE_CARET
+	RE_MULTILINE
+	RE_READONLY
 }

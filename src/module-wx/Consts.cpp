@@ -883,6 +883,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
 	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
 	frame.Assign("RETAINED", new Value_Number(wxRETAINED));
+	frame.Assign("RE_CENTRE_CARET", new Value_Number(wxRE_CENTRE_CARET));
+	frame.Assign("RE_MULTILINE", new Value_Number(wxRE_MULTILINE));
+	frame.Assign("RE_READONLY", new Value_Number(wxRE_READONLY));
 	frame.Assign("RIBBON_BAR_DEFAULT_STYLE", new Value_Number(wxRIBBON_BAR_DEFAULT_STYLE));
 	frame.Assign("RIBBON_BAR_FLOW_HORIZONTAL", new Value_Number(wxRIBBON_BAR_FLOW_HORIZONTAL));
 	frame.Assign("RIBBON_BAR_FLOW_VERTICAL", new Value_Number(wxRIBBON_BAR_FLOW_VERTICAL));
