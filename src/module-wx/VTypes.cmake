@@ -6,6 +6,22 @@ set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
 	VType_wxRibbonArtProvider.cpp
 	VType_wxRibbonBarEvent.cpp
+	VType_wxRichTextRange.cpp
+	VType_wxRichTextObject.cpp
+	VType_wxRichTextCompositeObject.cpp
+	VType_wxRichTextParagraph.cpp
+	VType_wxRichTextParagraphLayoutBox.cpp
+	VType_wxRichTextBox.cpp
+	VType_wxRichTextBuffer.cpp
+	VType_wxRichTextField.cpp
+	VType_wxRichTextCell.cpp
+	VType_wxRichTextTable.cpp
+	VType_wxRichTextAttr.cpp
+	VType_wxRichTextProperties.cpp
+	VType_wxRichTextStyleDefinition.cpp
+	VType_wxRichTextCharacterStyleDefinition.cpp
+	VType_wxRichTextParagraphStyleDefinition.cpp
+	VType_wxRichTextListStyleDefinition.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

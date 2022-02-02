@@ -1309,6 +1309,121 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, AppendText_gurax, processor_gurax, argum
 	return Gurax::Value::nil();
 }
 
+// wx.RichTextCtrl#SetStyleEx(range as wx.RichTextRange, style as wx.RichTextAttr, flags? as Number)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, SetStyleEx_gurax, "SetStyleEx")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, SetStyleEx_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	Value_wxRichTextAttr& value_style = args_gurax.Pick<Value_wxRichTextAttr>();
+	const wxRichTextAttr& style = value_style.GetEntity();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxRICHTEXT_SETSTYLE_WITH_UNDO;
+	// Function body
+	bool rtn = pEntity_gurax->SetStyleEx(range, style, flags);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RichTextCtrl#ClearListStyle(range as wx.RichTextRange, flags? as Number)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, ClearListStyle_gurax, "ClearListStyle")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, ClearListStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxRICHTEXT_SETSTYLE_WITH_UNDO;
+	// Function body
+	bool rtn = pEntity_gurax->ClearListStyle(range, flags);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RichTextCtrl#SetProperties(range as wx.RichTextRange, properties as wx.RichTextProperties, flags? as Number)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, SetProperties_gurax, "SetProperties")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("properties", VTYPE_wxRichTextProperties, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, SetProperties_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	Value_wxRichTextProperties& value_properties = args_gurax.Pick<Value_wxRichTextProperties>();
+	const wxRichTextProperties& properties = value_properties.GetEntity();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxRICHTEXT_SETPROPERTIES_WITH_UNDO;
+	// Function body
+	bool rtn = pEntity_gurax->SetProperties(range, properties, flags);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RichTextCtrl#Delete(range as wx.RichTextRange)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, Delete_gurax, "Delete")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, Delete_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->Delete(range);
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.RichTextCtrl#XYToPosition(x as Number, y as Number)
 Gurax_DeclareMethodAlias(wxRichTextCtrl, XYToPosition_gurax, "XYToPosition")
 {
@@ -2754,6 +2869,56 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, SelectWord_gurax, processor_gurax, argum
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.RichTextCtrl#SetSelectionRange(range as wx.RichTextRange)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, SetSelectionRange_gurax, "SetSelectionRange")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, SetSelectionRange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	// Function body
+	pEntity_gurax->SetSelectionRange(range);
+	return Gurax::Value::nil();
+}
+
+// wx.RichTextCtrl#SetInternalSelectionRange(range as wx.RichTextRange)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, SetInternalSelectionRange_gurax, "SetInternalSelectionRange")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, SetInternalSelectionRange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	// Function body
+	pEntity_gurax->SetInternalSelectionRange(range);
+	return Gurax::Value::nil();
+}
+
 // wx.RichTextCtrl#LayoutContent(onlyVisibleRect? as Bool)
 Gurax_DeclareMethodAlias(wxRichTextCtrl, LayoutContent_gurax, "LayoutContent")
 {
@@ -3276,6 +3441,62 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, SuppressingUndo_gurax, processor_gurax, 
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.RichTextCtrl#HasCharacterAttributes(range as wx.RichTextRange, style as wx.RichTextAttr)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, HasCharacterAttributes_gurax, "HasCharacterAttributes")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, HasCharacterAttributes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	Value_wxRichTextAttr& value_style = args_gurax.Pick<Value_wxRichTextAttr>();
+	const wxRichTextAttr& style = value_style.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->HasCharacterAttributes(range, style);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RichTextCtrl#HasParagraphAttributes(range as wx.RichTextRange, style as wx.RichTextAttr)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, HasParagraphAttributes_gurax, "HasParagraphAttributes")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, HasParagraphAttributes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	Value_wxRichTextAttr& value_style = args_gurax.Pick<Value_wxRichTextAttr>();
+	const wxRichTextAttr& style = value_style.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->HasParagraphAttributes(range, style);
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.RichTextCtrl#IsSelectionBold()
 Gurax_DeclareMethodAlias(wxRichTextCtrl, IsSelectionBold_gurax, "IsSelectionBold")
 {
@@ -3502,6 +3723,34 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, PrepareContextMenu_gurax, processor_gura
 	// Function body
 	int rtn = pEntity_gurax->PrepareContextMenu(menu, pt, addPropertyCommands);
 	return new Gurax::Value_Number(rtn);
+}
+
+// wx.RichTextCtrl#CanDeleteRange(container as wx.RichTextParagraphLayoutBox, range as wx.RichTextRange)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, CanDeleteRange_gurax, "CanDeleteRange")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("container", VTYPE_wxRichTextParagraphLayoutBox, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, CanDeleteRange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextParagraphLayoutBox& value_container = args_gurax.Pick<Value_wxRichTextParagraphLayoutBox>();
+	wxRichTextParagraphLayoutBox& container = value_container.GetEntity();
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->CanDeleteRange(container, range);
+	return new Gurax::Value_Bool(rtn);
 }
 
 // wx.RichTextCtrl#EnableVerticalScrollbar(enable as Bool)
@@ -5429,6 +5678,62 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, GetStyle_gurax, processor_gurax, argumen
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.RichTextCtrl#SetStyle(range as wx.RichTextRange, style as wx.TextAttr)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, SetStyle_gurax, "SetStyle")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, SetStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	Value_wxTextAttr& value_style = args_gurax.Pick<Value_wxTextAttr>();
+	const wxTextAttr& style = value_style.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetStyle(range, style);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RichTextCtrl#GetStyleForRange(range as wx.RichTextRange, style as wx.TextAttr)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, GetStyleForRange_gurax, "GetStyleForRange")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, GetStyleForRange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	Value_wxTextAttr& value_style = args_gurax.Pick<Value_wxTextAttr>();
+	wxTextAttr& style = value_style.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->GetStyleForRange(range, style);
+	return new Gurax::Value_Bool(rtn);
+}
+
 // wx.RichTextCtrl#SetDefaultStyle(style as wx.TextAttr)
 Gurax_DeclareMethodAlias(wxRichTextCtrl, SetDefaultStyle_gurax, "SetDefaultStyle")
 {
@@ -5451,6 +5756,114 @@ Gurax_ImplementMethodEx(wxRichTextCtrl, SetDefaultStyle_gurax, processor_gurax, 
 	const wxTextAttr& style = value_style.GetEntity();
 	// Function body
 	bool rtn = pEntity_gurax->SetDefaultStyle(style);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RichTextCtrl#SetListStyle(range as wx.RichTextRange, def as wx.RichTextListStyleDefinition, flags? as Number, startFrom? as Number, specifiedLevel? as Number)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, SetListStyle_gurax, "SetListStyle")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("def", VTYPE_wxRichTextListStyleDefinition, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("startFrom", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("specifiedLevel", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, SetListStyle_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	Value_wxRichTextListStyleDefinition& value_def = args_gurax.Pick<Value_wxRichTextListStyleDefinition>();
+	wxRichTextListStyleDefinition* def = value_def.GetEntityPtr();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxRICHTEXT_SETSTYLE_WITH_UNDO;
+	bool startFrom_validFlag = args_gurax.IsValid();
+	int startFrom = startFrom_validFlag? args_gurax.PickNumber<int>() : 1;
+	bool specifiedLevel_validFlag = args_gurax.IsValid();
+	int specifiedLevel = specifiedLevel_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	bool rtn = pEntity_gurax->SetListStyle(range, def, flags, startFrom, specifiedLevel);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RichTextCtrl#NumberList(range as wx.RichTextRange, def? as wx.RichTextListStyleDefinition, flags? as Number, startFrom? as Number, specifiedLevel? as Number)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, NumberList_gurax, "NumberList")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("def", VTYPE_wxRichTextListStyleDefinition, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("startFrom", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("specifiedLevel", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, NumberList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	wxRichTextListStyleDefinition* def = args_gurax.IsValid()? args_gurax.Pick<Value_wxRichTextListStyleDefinition>().GetEntityPtr() : nullptr;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxRICHTEXT_SETSTYLE_WITH_UNDO;
+	bool startFrom_validFlag = args_gurax.IsValid();
+	int startFrom = startFrom_validFlag? args_gurax.PickNumber<int>() : 1;
+	bool specifiedLevel_validFlag = args_gurax.IsValid();
+	int specifiedLevel = specifiedLevel_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	bool rtn = pEntity_gurax->NumberList(range, def, flags, startFrom, specifiedLevel);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.RichTextCtrl#PromoteList(promoteBy as Number, range as wx.RichTextRange, def? as wx.RichTextListStyleDefinition, flags? as Number, specifiedLevel? as Number)
+Gurax_DeclareMethodAlias(wxRichTextCtrl, PromoteList_gurax, "PromoteList")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("promoteBy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("def", VTYPE_wxRichTextListStyleDefinition, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("specifiedLevel", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextCtrl, PromoteList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int promoteBy = args_gurax.PickNumber<int>();
+	Value_wxRichTextRange& value_range = args_gurax.Pick<Value_wxRichTextRange>();
+	const wxRichTextRange& range = value_range.GetEntity();
+	wxRichTextListStyleDefinition* def = args_gurax.IsValid()? args_gurax.Pick<Value_wxRichTextListStyleDefinition>().GetEntityPtr() : nullptr;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxRICHTEXT_SETSTYLE_WITH_UNDO;
+	bool specifiedLevel_validFlag = args_gurax.IsValid();
+	int specifiedLevel = specifiedLevel_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	bool rtn = pEntity_gurax->PromoteList(promoteBy, range, def, flags, specifiedLevel);
 	return new Gurax::Value_Bool(rtn);
 }
 
@@ -5550,6 +5963,10 @@ void VType_wxRichTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetMaxLength_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, WriteText_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, AppendText_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetStyleEx_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, ClearListStyle_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetProperties_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, Delete_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, XYToPosition_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, ShowPosition_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, Copy_gurax));
@@ -5616,6 +6033,8 @@ void VType_wxRichTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetDefaultStyleToCursorStyle_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, SelectNone_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, SelectWord_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetSelectionRange_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetInternalSelectionRange_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, LayoutContent_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, MoveRight_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, MoveLeft_gurax));
@@ -5637,6 +6056,8 @@ void VType_wxRichTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, BeginSuppressUndo_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, EndSuppressUndo_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, SuppressingUndo_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, HasCharacterAttributes_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, HasParagraphAttributes_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, IsSelectionBold_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, IsSelectionItalics_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, IsSelectionUnderlined_gurax));
@@ -5647,6 +6068,7 @@ void VType_wxRichTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, ApplyTextEffectToSelection_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, ShowContextMenu_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, PrepareContextMenu_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, CanDeleteRange_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, EnableVerticalScrollbar_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, GetVerticalScrollbarEnabled_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetFontScale_gurax));
@@ -5726,7 +6148,12 @@ void VType_wxRichTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, ProcessBackKey_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, DoGetValue_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, GetStyle_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetStyle_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, GetStyleForRange_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetDefaultStyle_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetListStyle_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, NumberList_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextCtrl, PromoteList_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextCtrl, SetSelection_gurax));
 }
 

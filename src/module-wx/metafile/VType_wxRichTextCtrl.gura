@@ -66,11 +66,11 @@ RichTextCtrl = Class(Control) {
 	WriteText(text as const_String_r) as void
 	AppendText(text as const_String_r) as void
 	//SetStyle(obj as RichTextObject_p, textAttr as const_RichTextAttr_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO) as void
-	//SetStyleEx(range as const_RichTextRange_r, style as const_RichTextAttr_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO) as bool
+	SetStyleEx(range as const_RichTextRange_r, style as const_RichTextAttr_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO) as bool
 	//GetDefaultStyleEx() as RichTextAttr
-	//ClearListStyle(range as const_RichTextRange_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO) as bool
-	//SetProperties(range as const_RichTextRange_r, properties as const_RichTextProperties_r, flags as int = wxRICHTEXT_SETPROPERTIES_WITH_UNDO) as bool
-	//Delete(range as const_RichTextRange_r) as bool
+	ClearListStyle(range as const_RichTextRange_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO) as bool
+	SetProperties(range as const_RichTextRange_r, properties as const_RichTextProperties_r, flags as int = wxRICHTEXT_SETPROPERTIES_WITH_UNDO) as bool
+	Delete(range as const_RichTextRange_r) as bool
 	XYToPosition(x as long, y as long) as long
 	//PositionToXY(pos as long, x as long_p, y as long_p) as bool
 	ShowPosition(pos as long) as void
@@ -146,9 +146,9 @@ RichTextCtrl = Class(Control) {
 	SelectNone() as void
 	SelectWord(position as long) as bool
 	//GetSelectionRange() as RichTextRange
-	//SetSelectionRange(range as const_RichTextRange_r) as void
+	SetSelectionRange(range as const_RichTextRange_r) as void
 	//GetInternalSelectionRange() as RichTextRange
-	//SetInternalSelectionRange(range as const_RichTextRange_r) as void
+	SetInternalSelectionRange(range as const_RichTextRange_r) as void
 	//AddParagraph(text as const_String_r) as RichTextRange
 	//AddImage(image as const_Image_r) as RichTextRange
 	LayoutContent(onlyVisibleRect as bool = false) as bool
@@ -173,8 +173,8 @@ RichTextCtrl = Class(Control) {
 	BeginSuppressUndo() as bool
 	EndSuppressUndo() as bool
 	SuppressingUndo() as bool
-	//HasCharacterAttributes(range as const_RichTextRange_r, style as const_RichTextAttr_r) as bool
-	//HasParagraphAttributes(range as const_RichTextRange_r, style as const_RichTextAttr_r) as bool
+	HasCharacterAttributes(range as const_RichTextRange_r, style as const_RichTextAttr_r) as bool
+	HasParagraphAttributes(range as const_RichTextRange_r, style as const_RichTextAttr_r) as bool
 	IsSelectionBold() as bool
 	IsSelectionItalics() as bool
 	IsSelectionUnderlined() as bool
@@ -197,7 +197,7 @@ RichTextCtrl = Class(Control) {
 	//EditProperties(obj as RichTextObject_p, parent as Window_p) as bool
 	//GetPropertiesMenuLabel(obj as RichTextObject_p) as String
 	//PrepareContent(container as RichTextParagraphLayoutBox_r) as void
-	//CanDeleteRange(container as RichTextParagraphLayoutBox_r, range as const_RichTextRange_r) as bool
+	CanDeleteRange(container as RichTextParagraphLayoutBox_r, range as const_RichTextRange_r) as bool
 	//CanInsertContent(container as RichTextParagraphLayoutBox_r, pos as long) as bool
 	EnableVerticalScrollbar(enable as bool) as void
 	GetVerticalScrollbarEnabled() as bool
@@ -298,20 +298,20 @@ RichTextCtrl = Class(Control) {
 	//GetStyle(position as long, style as RichTextAttr_r, container as RichTextParagraphLayoutBox_p) as bool
 	//SetStyle(start as long, end as long, style as const_TextAttr_r) as bool
 	//SetStyle(start as long, end as long, style as const_RichTextAttr_r) as bool
-	//SetStyle(range as const_RichTextRange_r, style as const_TextAttr_r) as bool
+	SetStyle(range as const_RichTextRange_r, style as const_TextAttr_r) as bool
 	//SetStyle(range as const_RichTextRange_r, style as const_RichTextAttr_r) as bool
-	//GetStyleForRange(range as const_RichTextRange_r, style as TextAttr_r) as bool
+	GetStyleForRange(range as const_RichTextRange_r, style as TextAttr_r) as bool
 	//GetStyleForRange(range as const_RichTextRange_r, style as RichTextAttr_r) as bool
 	//GetStyleForRange(range as const_RichTextRange_r, style as RichTextAttr_r, container as RichTextParagraphLayoutBox_p) as bool
 	//GetUncombinedStyle(position as long, style as RichTextAttr_r) as bool
 	//GetUncombinedStyle(position as long, style as RichTextAttr_r, container as RichTextParagraphLayoutBox_p) as bool
 	SetDefaultStyle(style as const_TextAttr_r) as bool
 	//SetDefaultStyle(style as const_RichTextAttr_r) as bool
-	//SetListStyle(range as const_RichTextRange_r, def as RichTextListStyleDefinition_p, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
+	SetListStyle(range as const_RichTextRange_r, def as RichTextListStyleDefinition_p, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
 	//SetListStyle(range as const_RichTextRange_r, defName as const_String_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
-	//NumberList(range as const_RichTextRange_r, def as RichTextListStyleDefinition_p = NULL, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
+	NumberList(range as const_RichTextRange_r, def as RichTextListStyleDefinition_p = NULL, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
 	//NumberList(range as const_RichTextRange_r, defName as const_String_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, startFrom as int = 1, specifiedLevel as int = -1) as bool
-	//PromoteList(promoteBy as int, range as const_RichTextRange_r, def as RichTextListStyleDefinition_p = NULL, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, specifiedLevel as int = -1) as bool
+	PromoteList(promoteBy as int, range as const_RichTextRange_r, def as RichTextListStyleDefinition_p = NULL, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, specifiedLevel as int = -1) as bool
 	//PromoteList(promoteBy as int, range as const_RichTextRange_r, defName as const_String_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO, specifiedLevel as int = -1) as bool
 	//HitTest(pt as const_Point_r, pos as long_p) as TextCtrlHitTestResult
 	//HitTest(pt as const_Point_r, col as TextCoord_p, row as TextCoord_p) as TextCtrlHitTestResult
