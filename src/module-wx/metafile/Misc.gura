@@ -7,3 +7,42 @@ RibbonArtProvider = Class():loosePointer {
 
 RibbonBarEvent = Class(NotifyEvent) {
 }
+
+RichTextRange = Class {
+}
+
+RichTextObjet = Class():loosePointer {
+}
+
+RichTextCompositeObject = Class(RichTextObject) {
+}
+
+RichTextParagraph = Class(RichTextCompositeObject) {
+}
+
+RichTextParagraphLayoutBox = Class(RichTextCompositeObject) {
+}
+
+RichTextBox = Class(RichTextParagraphLayoutBox) {
+}
+
+RichTextBuffer = Class(RichTextParagraphLayoutBox) {
+}
+
+RichTextField = Class(RichTextParagraphLayoutBox) {
+}
+
+RichTextCell = Class(RichTextBox) {
+}
+
+RichTextTable = Class(RichTextBox) {
+}
+
+RichTextAttr = Class(TextAttr) {
+}
+
+RichTextProperties = Clas {
+}
+
+RichTextProperties = Classs {
+}
