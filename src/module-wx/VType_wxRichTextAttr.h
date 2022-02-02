@@ -6,7 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXRICHTEXTATTR_H
 #include <gurax.h>
 #include <wx/wx.h>
-#include <wx/richtext/richtextctrl.h>
+#include <wx/richtext/richtextbuffer.h>
 #include "Util.h"
 #include "VType_wxTextAttr.h"
 

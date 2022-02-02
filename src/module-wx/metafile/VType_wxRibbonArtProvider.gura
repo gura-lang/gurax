@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxRichTextAttr.gura
+// VType_wxRibbonArtProvider.gura
 //==============================================================================
-RichTextAttr = Class(TextAttr) {
-	@include['wx/richtext/richtextbuffer.h']
+RibbonArtProvider = Class():loosePointer {
+	@include['wx/ribbon/art.h']
 }

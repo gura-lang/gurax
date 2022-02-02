@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxRichTextAttr.gura
+// VType_wxRichTextCharacterStyleDefinition.gura
 //==============================================================================
-RichTextAttr = Class(TextAttr) {
-	@include['wx/richtext/richtextbuffer.h']
+RichTextCharacterStyleDefinition = Class(RichTextStyleDefinition) {
+	@include['wx/richtext/richtextstyles.h']
 }

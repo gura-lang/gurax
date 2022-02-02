@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxRichTextAttr.gura
+// VType_wxRichTextTable.gura
 //==============================================================================
-RichTextAttr = Class(TextAttr) {
+RichTextTable = Class(RichTextBox) {
 	@include['wx/richtext/richtextbuffer.h']
 }

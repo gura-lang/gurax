@@ -4,24 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxRibbonArtProvider.cpp
-	VType_wxRibbonBarEvent.cpp
-	VType_wxRichTextRange.cpp
-	VType_wxRichTextObject.cpp
-	VType_wxRichTextCompositeObject.cpp
-	VType_wxRichTextParagraph.cpp
-	VType_wxRichTextParagraphLayoutBox.cpp
-	VType_wxRichTextBox.cpp
-	VType_wxRichTextBuffer.cpp
-	VType_wxRichTextField.cpp
-	VType_wxRichTextCell.cpp
-	VType_wxRichTextTable.cpp
-	VType_wxRichTextAttr.cpp
-	VType_wxRichTextProperties.cpp
-	VType_wxRichTextStyleDefinition.cpp
-	VType_wxRichTextCharacterStyleDefinition.cpp
-	VType_wxRichTextParagraphStyleDefinition.cpp
-	VType_wxRichTextListStyleDefinition.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -297,7 +279,9 @@ set(SRCFILES_VTYPE
 	VType_wxRect2DDouble.cpp
 	VType_wxRefCounter.cpp
 	VType_wxRegion.cpp
+	VType_wxRibbonArtProvider.cpp
 	VType_wxRibbonBar.cpp
+	VType_wxRibbonBarEvent.cpp
 	VType_wxRibbonButtonBar.cpp
 	VType_wxRibbonControl.cpp
 	VType_wxRibbonGallery.cpp
@@ -305,12 +289,27 @@ set(SRCFILES_VTYPE
 	VType_wxRibbonPanel.cpp
 	VType_wxRibbonToolBar.cpp
 	VType_wxRichTextAttr.cpp
+	VType_wxRichTextBox.cpp
+	VType_wxRichTextBuffer.cpp
+	VType_wxRichTextCell.cpp
+	VType_wxRichTextCharacterStyleDefinition.cpp
+	VType_wxRichTextCompositeObject.cpp
 	VType_wxRichTextCtrl.cpp
+	VType_wxRichTextField.cpp
 	VType_wxRichTextFormattingDialog.cpp
+	VType_wxRichTextListStyleDefinition.cpp
+	VType_wxRichTextObject.cpp
+	VType_wxRichTextParagraph.cpp
+	VType_wxRichTextParagraphLayoutBox.cpp
+	VType_wxRichTextParagraphStyleDefinition.cpp
+	VType_wxRichTextProperties.cpp
+	VType_wxRichTextRange.cpp
 	VType_wxRichTextStyleComboCtrl.cpp
+	VType_wxRichTextStyleDefinition.cpp
 	VType_wxRichTextStyleListBox.cpp
 	VType_wxRichTextStyleListCtrl.cpp
 	VType_wxRichTextStyleOrganiserDialog.cpp
+	VType_wxRichTextTable.cpp
 	VType_wxSashEvent.cpp
 	VType_wxSashLayoutWindow.cpp
 	VType_wxSashWindow.cpp

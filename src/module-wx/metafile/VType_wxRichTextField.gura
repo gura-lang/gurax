@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxRichTextAttr.gura
+// VType_wxRichTextField.gura
 //==============================================================================
-RichTextAttr = Class(TextAttr) {
+RichTextField = Class(RichTextParagraphLayoutBox) {
 	@include['wx/richtext/richtextbuffer.h']
 }

@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxRichTextAttr.gura
+// VType_wxRibbonBarEvent.gura
 //==============================================================================
-RichTextAttr = Class(TextAttr) {
-	@include['wx/richtext/richtextbuffer.h']
+RibbonBarEvent = Class(NotifyEvent) {
+	@include['wx/ribbon/bar.h']
 }
