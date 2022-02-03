@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxRichTextSelection.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -308,6 +307,7 @@ set(SRCFILES_VTYPE
 	VType_wxRichTextParagraphStyleDefinition.cpp
 	VType_wxRichTextProperties.cpp
 	VType_wxRichTextRange.cpp
+	VType_wxRichTextSelection.cpp
 	VType_wxRichTextStyleComboCtrl.cpp
 	VType_wxRichTextStyleDefinition.cpp
 	VType_wxRichTextStyleListBox.cpp

@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxRichTextSelection.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -311,6 +310,7 @@
 #include "VType_wxRichTextParagraphStyleDefinition.h"
 #include "VType_wxRichTextProperties.h"
 #include "VType_wxRichTextRange.h"
+#include "VType_wxRichTextSelection.h"
 #include "VType_wxRichTextStyleComboCtrl.h"
 #include "VType_wxRichTextStyleDefinition.h"
 #include "VType_wxRichTextStyleListBox.h"

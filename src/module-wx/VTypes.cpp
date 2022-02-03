@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxRichTextSelection);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -316,6 +315,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRichTextParagraphStyleDefinition);
 	frame.Assign(VTYPE_wxRichTextProperties);
 	frame.Assign(VTYPE_wxRichTextRange);
+	frame.Assign(VTYPE_wxRichTextSelection);
 	frame.Assign(VTYPE_wxRichTextStyleComboCtrl);
 	frame.Assign(VTYPE_wxRichTextStyleDefinition);
 	frame.Assign(VTYPE_wxRichTextStyleListBox);
