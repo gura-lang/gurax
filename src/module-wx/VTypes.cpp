@@ -12,10 +12,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxRichTextStyleSheet);
 	frame.Assign(VTYPE_wxRichTextSelection);
-	frame.Assign(VTYPE_wxRichTextLine);
-	frame.Assign(VTYPE_wxRichTextContextMenuPropertiesInfo);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -38,6 +35,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAuiToolBarEvent);
 	frame.Assign(VTYPE_wxAuiToolBarItem);
 	frame.Assign(VTYPE_wxAutoBufferedPaintDC);
+	frame.Assign(VTYPE_wxBannerWindow);
 	frame.Assign(VTYPE_wxBitmap);
 	frame.Assign(VTYPE_wxBitmapButton);
 	frame.Assign(VTYPE_wxBitmapComboBox);
@@ -306,9 +304,11 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRichTextCell);
 	frame.Assign(VTYPE_wxRichTextCharacterStyleDefinition);
 	frame.Assign(VTYPE_wxRichTextCompositeObject);
+	frame.Assign(VTYPE_wxRichTextContextMenuPropertiesInfo);
 	frame.Assign(VTYPE_wxRichTextCtrl);
 	frame.Assign(VTYPE_wxRichTextField);
 	frame.Assign(VTYPE_wxRichTextFormattingDialog);
+	frame.Assign(VTYPE_wxRichTextLine);
 	frame.Assign(VTYPE_wxRichTextListStyleDefinition);
 	frame.Assign(VTYPE_wxRichTextObject);
 	frame.Assign(VTYPE_wxRichTextParagraph);
@@ -321,6 +321,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRichTextStyleListBox);
 	frame.Assign(VTYPE_wxRichTextStyleListCtrl);
 	frame.Assign(VTYPE_wxRichTextStyleOrganiserDialog);
+	frame.Assign(VTYPE_wxRichTextStyleSheet);
 	frame.Assign(VTYPE_wxRichTextTable);
 	frame.Assign(VTYPE_wxSashEvent);
 	frame.Assign(VTYPE_wxSashLayoutWindow);
@@ -346,6 +347,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxSpinCtrl);
 	frame.Assign(VTYPE_wxSpinEvent);
 	frame.Assign(VTYPE_wxSplashScreen);
+	frame.Assign(VTYPE_wxSplitterWindow);
 	frame.Assign(VTYPE_wxStaticBitmap);
 	frame.Assign(VTYPE_wxStaticBox);
 	frame.Assign(VTYPE_wxStaticBoxSizer);
@@ -369,6 +371,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTimer);
 	frame.Assign(VTYPE_wxTimerEvent);
 	frame.Assign(VTYPE_wxTimeSpan);
+	frame.Assign(VTYPE_wxTipWindow);
 	frame.Assign(VTYPE_wxToggleButton);
 	frame.Assign(VTYPE_wxToolBar);
 	frame.Assign(VTYPE_wxToolBarToolBase);
@@ -379,6 +382,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTreeCtrl);
 	frame.Assign(VTYPE_wxTreeEvent);
 	frame.Assign(VTYPE_wxTreeItemId);
+	frame.Assign(VTYPE_wxTreeListCtrl);
 	frame.Assign(VTYPE_wxUIntProperty);
 	frame.Assign(VTYPE_wxUpdateUIEvent);
 	frame.Assign(VTYPE_wxURI);

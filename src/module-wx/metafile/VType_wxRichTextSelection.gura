@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxRichTextSelection.gura
 //==============================================================================
+RichTextSelection = Class {
+	@include['wx/richtext/richtextbuffer.h']
+}

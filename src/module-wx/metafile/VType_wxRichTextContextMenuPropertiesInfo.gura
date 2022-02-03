@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxRichTextContextMenuPropertiesInfo.gura
 //==============================================================================
+RichTextContextMenuPropertiesInfo = Class {
+	@include['wx/richtext/richtextctrl.h']
+}

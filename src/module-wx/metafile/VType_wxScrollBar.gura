@@ -4,4 +4,17 @@
 ScrollBar = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxSB_HORIZONTAL, validator as Validator = wxDefaultValidator, name as String = wxScrollBarNameStr)
+	Create(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxSB_HORIZONTAL, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxScrollBarNameStr) as bool
+	GetPageSize() as int
+	GetRange() as int
+	GetThumbPosition() as int
+	GetThumbSize() as int
+	SetScrollbar(position as int, thumbSize as int, range as int, pageSize as int, refresh as bool = true) as void
+	SetThumbPosition(viewStart as int) as void
+	IsVertical() as bool
+}
+
+@const {
+	SB_HORIZONTAL
+	SB_VERTICAL
 }

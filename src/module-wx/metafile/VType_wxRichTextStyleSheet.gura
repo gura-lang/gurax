@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxRichTextStyleSheet.gura
 //==============================================================================
+RichTextStyleSheet = Class {
+	@include['wx/richtext/richtextstyles.h']
+}

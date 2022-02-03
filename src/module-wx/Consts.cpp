@@ -905,9 +905,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("SASH_STATUS_OUT_OF_RANGE", new Value_Number(wxSASH_STATUS_OUT_OF_RANGE));
 	frame.Assign("SASH_TOP", new Value_Number(wxSASH_TOP));
 	frame.Assign("SB_FLAT", new Value_Number(wxSB_FLAT));
+	frame.Assign("SB_HORIZONTAL", new Value_Number(wxSB_HORIZONTAL));
 	frame.Assign("SB_NORMAL", new Value_Number(wxSB_NORMAL));
 	frame.Assign("SB_RAISED", new Value_Number(wxSB_RAISED));
 	frame.Assign("SB_SUNKEN", new Value_Number(wxSB_SUNKEN));
+	frame.Assign("SB_VERTICAL", new Value_Number(wxSB_VERTICAL));
 	frame.Assign("SET", new Value_Number(wxSET));
 	frame.Assign("SHAPED", new Value_Number(wxSHAPED));
 	frame.Assign("SHOW_EFFECT_BLEND", new Value_Number(wxSHOW_EFFECT_BLEND));

@@ -4,10 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxRichTextStyleSheet.cpp
 	VType_wxRichTextSelection.cpp
-	VType_wxRichTextLine.cpp
-	VType_wxRichTextContextMenuPropertiesInfo.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -30,6 +27,7 @@ set(SRCFILES_VTYPE
 	VType_wxAuiToolBarEvent.cpp
 	VType_wxAuiToolBarItem.cpp
 	VType_wxAutoBufferedPaintDC.cpp
+	VType_wxBannerWindow.cpp
 	VType_wxBitmap.cpp
 	VType_wxBitmapButton.cpp
 	VType_wxBitmapComboBox.cpp
@@ -298,9 +296,11 @@ set(SRCFILES_VTYPE
 	VType_wxRichTextCell.cpp
 	VType_wxRichTextCharacterStyleDefinition.cpp
 	VType_wxRichTextCompositeObject.cpp
+	VType_wxRichTextContextMenuPropertiesInfo.cpp
 	VType_wxRichTextCtrl.cpp
 	VType_wxRichTextField.cpp
 	VType_wxRichTextFormattingDialog.cpp
+	VType_wxRichTextLine.cpp
 	VType_wxRichTextListStyleDefinition.cpp
 	VType_wxRichTextObject.cpp
 	VType_wxRichTextParagraph.cpp
@@ -313,6 +313,7 @@ set(SRCFILES_VTYPE
 	VType_wxRichTextStyleListBox.cpp
 	VType_wxRichTextStyleListCtrl.cpp
 	VType_wxRichTextStyleOrganiserDialog.cpp
+	VType_wxRichTextStyleSheet.cpp
 	VType_wxRichTextTable.cpp
 	VType_wxSashEvent.cpp
 	VType_wxSashLayoutWindow.cpp
@@ -338,6 +339,7 @@ set(SRCFILES_VTYPE
 	VType_wxSpinCtrl.cpp
 	VType_wxSpinEvent.cpp
 	VType_wxSplashScreen.cpp
+	VType_wxSplitterWindow.cpp
 	VType_wxStaticBitmap.cpp
 	VType_wxStaticBox.cpp
 	VType_wxStaticBoxSizer.cpp
@@ -361,6 +363,7 @@ set(SRCFILES_VTYPE
 	VType_wxTimer.cpp
 	VType_wxTimerEvent.cpp
 	VType_wxTimeSpan.cpp
+	VType_wxTipWindow.cpp
 	VType_wxToggleButton.cpp
 	VType_wxToolBar.cpp
 	VType_wxToolBarToolBase.cpp
@@ -371,6 +374,7 @@ set(SRCFILES_VTYPE
 	VType_wxTreeCtrl.cpp
 	VType_wxTreeEvent.cpp
 	VType_wxTreeItemId.cpp
+	VType_wxTreeListCtrl.cpp
 	VType_wxUIntProperty.cpp
 	VType_wxUpdateUIEvent.cpp
 	VType_wxURI.cpp

@@ -68,6 +68,199 @@ Gurax_ImplementConstructorEx(ScrollBar_gurax, processor_gurax, argument_gurax)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ScrollBar#Create(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String)
+Gurax_DeclareMethodAlias(wxScrollBar, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrollBar, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxSB_HORIZONTAL;
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxScrollBarNameStr;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, pos, size, style, validator, name);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ScrollBar#GetPageSize()
+Gurax_DeclareMethodAlias(wxScrollBar, GetPageSize_gurax, "GetPageSize")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrollBar, GetPageSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetPageSize();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ScrollBar#GetRange()
+Gurax_DeclareMethodAlias(wxScrollBar, GetRange_gurax, "GetRange")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrollBar, GetRange_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetRange();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ScrollBar#GetThumbPosition()
+Gurax_DeclareMethodAlias(wxScrollBar, GetThumbPosition_gurax, "GetThumbPosition")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrollBar, GetThumbPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetThumbPosition();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ScrollBar#GetThumbSize()
+Gurax_DeclareMethodAlias(wxScrollBar, GetThumbSize_gurax, "GetThumbSize")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrollBar, GetThumbSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetThumbSize();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ScrollBar#SetScrollbar(position as Number, thumbSize as Number, range as Number, pageSize as Number, refresh? as Bool)
+Gurax_DeclareMethodAlias(wxScrollBar, SetScrollbar_gurax, "SetScrollbar")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("thumbSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("refresh", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrollBar, SetScrollbar_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int position = args_gurax.PickNumber<int>();
+	int thumbSize = args_gurax.PickNumber<int>();
+	int range = args_gurax.PickNumber<int>();
+	int pageSize = args_gurax.PickNumber<int>();
+	bool refresh = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetScrollbar(position, thumbSize, range, pageSize, refresh);
+	return Gurax::Value::nil();
+}
+
+// wx.ScrollBar#SetThumbPosition(viewStart as Number)
+Gurax_DeclareMethodAlias(wxScrollBar, SetThumbPosition_gurax, "SetThumbPosition")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("viewStart", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrollBar, SetThumbPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int viewStart = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetThumbPosition(viewStart);
+	return Gurax::Value::nil();
+}
+
+// wx.ScrollBar#IsVertical()
+Gurax_DeclareMethodAlias(wxScrollBar, IsVertical_gurax, "IsVertical")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxScrollBar, IsVertical_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsVertical();
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -85,6 +278,14 @@ void VType_wxScrollBar::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ScrollBar_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxScrollBar, Create_gurax));
+	Assign(Gurax_CreateMethod(wxScrollBar, GetPageSize_gurax));
+	Assign(Gurax_CreateMethod(wxScrollBar, GetRange_gurax));
+	Assign(Gurax_CreateMethod(wxScrollBar, GetThumbPosition_gurax));
+	Assign(Gurax_CreateMethod(wxScrollBar, GetThumbSize_gurax));
+	Assign(Gurax_CreateMethod(wxScrollBar, SetScrollbar_gurax));
+	Assign(Gurax_CreateMethod(wxScrollBar, SetThumbPosition_gurax));
+	Assign(Gurax_CreateMethod(wxScrollBar, IsVertical_gurax));
 }
 
 //------------------------------------------------------------------------------
