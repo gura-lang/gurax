@@ -4,6 +4,10 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxRichTextStyleSheet.cpp
+	VType_wxRichTextSelection.cpp
+	VType_wxRichTextLine.cpp
+	VType_wxRichTextContextMenuPropertiesInfo.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

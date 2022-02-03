@@ -1,3 +1,18 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+RichTextStyleSheet = Class {
+	@include['wx/richtext/richtextstyles.h']
+}
+
+RichTextSelection  = Class {
+	@include['wx/richtext/richtextctrl.h']
+}
+
+RichTextLine = Class {
+	@include['wx/richtext/richtextctrl.h']
+}
+
+RichTextContextMenuPropertiesInfo = Class {
+	@include['wx/richtext/richtextctrl.h']
+}

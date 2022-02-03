@@ -586,6 +586,8 @@ Renderer.__init__() = {
 	this.DeclareType_Number('UInt')
 	this.DeclareType_Number('Long')
 	this.DeclareType_Number('ULong')
+	this.DeclareType_Number('LongLong', 'long long')
+	this.DeclareType_Number('ULongLong', 'unsigned long long')
 	this.DeclareType_Number('Int8')
 	this.DeclareType_Number('UInt8')
 	this.DeclareType_Number('Int16')
