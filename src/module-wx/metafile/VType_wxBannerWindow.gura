@@ -3,4 +3,55 @@
 //==============================================================================
 BannerWindow = Class(Window) {
 	@include['wx/bannerwindow.h']
+	__init__(args* as any) = \
+		R'''
+		// wxBannerWindow(parent as Window_p, dir as Direction = wxLEFT)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("dir", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+			wxDirection dir = args.IsValid()? args.PickNumber<wxDirection>() : wxLEFT;
+			return new Value_wxBannerWindow(new wxBannerWindow(parent, dir));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxBannerWindow(parent as Window_p, winid as WindowID, dir as Direction = wxLEFT, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxBannerWindowNameStr)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("winid", VTYPE_Number);
+				pDeclCallable->DeclareArg("dir", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("pos", VTYPE_wxPoint, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("name", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+			wxWindowID winid = args.PickNumber<wxWindowID>();
+			wxDirection dir = args.IsValid()? args.PickNumber<wxDirection>() : wxLEFT;
+			const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+			const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+			long style = args.IsValid()? args.PickNumber<long>() : 0;
+			wxString name = args.IsValid()? args.PickString() : wxBannerWindowNameStr;
+			return new Value_wxBannerWindow(new wxBannerWindow(parent, winid, dir, pos, size, style, name));
+		} while (0);
+		return Value::nil();
+		'''
+	Create(parent as Window_p, winid as WindowID, dir as Direction = wxLEFT, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxBannerWindowNameStr) as bool
+	SetBitmap(bmp as const_Bitmap_r) as void
+	SetText(title as const_String_r, message as const_String_r) as void
+	SetGradient(start as const_Colour_r, end as const_Colour_r) as void
 }
