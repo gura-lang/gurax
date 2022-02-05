@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxHelpControllerBase.gura
 //==============================================================================
+HelpControllerBase = Class():loosePointer {
+	@include['wx/help.h']
+}

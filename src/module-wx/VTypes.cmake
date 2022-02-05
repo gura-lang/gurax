@@ -4,12 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxHelpControllerBase.cpp
-	VType_wxHtmlHelpController.cpp
-	VType_wxHtmlHelpData.cpp
-	VType_wxConfigBase.cpp
-	VType_wxFileConfig.cpp
-	VType_wxRegConfig.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -76,6 +70,7 @@ set(SRCFILES_VTYPE
 	VType_wxComboPopup.cpp
 	VType_wxCommandEvent.cpp
 	VType_wxCommandLinkButton.cpp
+	VType_wxConfigBase.cpp
 	VType_wxContextHelpButton.cpp
 	VType_wxContextMenuEvent.cpp
 	VType_wxControl.cpp
@@ -120,6 +115,7 @@ set(SRCFILES_VTYPE
 	VType_wxEvent.cpp
 	VType_wxEventLoopBase.cpp
 	VType_wxEvtHandler.cpp
+	VType_wxFileConfig.cpp
 	VType_wxFileCtrl.cpp
 	VType_wxFileCtrlEvent.cpp
 	VType_wxFileDialog.cpp
@@ -183,12 +179,15 @@ set(SRCFILES_VTYPE
 	VType_wxHeaderCtrl.cpp
 	VType_wxHeaderCtrlEvent.cpp
 	VType_wxHeaderCtrlSimple.cpp
+	VType_wxHelpControllerBase.cpp
 	VType_wxHelpEvent.cpp
 	VType_wxHScrolledWindow.cpp
 	VType_wxHtmlCell.cpp
 	VType_wxHtmlColourCell.cpp
 	VType_wxHtmlContainerCell.cpp
 	VType_wxHtmlFontCell.cpp
+	VType_wxHtmlHelpController.cpp
+	VType_wxHtmlHelpData.cpp
 	VType_wxHtmlHelpDialog.cpp
 	VType_wxHtmlHelpFrame.cpp
 	VType_wxHtmlHelpWindow.cpp
@@ -285,6 +284,7 @@ set(SRCFILES_VTYPE
 	VType_wxRect.cpp
 	VType_wxRect2DDouble.cpp
 	VType_wxRefCounter.cpp
+	VType_wxRegConfig.cpp
 	VType_wxRegion.cpp
 	VType_wxRibbonArtProvider.cpp
 	VType_wxRibbonBar.cpp

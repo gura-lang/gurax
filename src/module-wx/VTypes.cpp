@@ -12,12 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxHelpControllerBase);
-	frame.Assign(VTYPE_wxHtmlHelpController);
-	frame.Assign(VTYPE_wxHtmlHelpData);
-	frame.Assign(VTYPE_wxConfigBase);
-	frame.Assign(VTYPE_wxFileConfig);
-	frame.Assign(VTYPE_wxRegConfig);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -84,6 +78,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxComboPopup);
 	frame.Assign(VTYPE_wxCommandEvent);
 	frame.Assign(VTYPE_wxCommandLinkButton);
+	frame.Assign(VTYPE_wxConfigBase);
 	frame.Assign(VTYPE_wxContextHelpButton);
 	frame.Assign(VTYPE_wxContextMenuEvent);
 	frame.Assign(VTYPE_wxControl);
@@ -128,6 +123,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxEvent);
 	frame.Assign(VTYPE_wxEventLoopBase);
 	frame.Assign(VTYPE_wxEvtHandler);
+	frame.Assign(VTYPE_wxFileConfig);
 	frame.Assign(VTYPE_wxFileCtrl);
 	frame.Assign(VTYPE_wxFileCtrlEvent);
 	frame.Assign(VTYPE_wxFileDialog);
@@ -191,12 +187,15 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxHeaderCtrl);
 	frame.Assign(VTYPE_wxHeaderCtrlEvent);
 	frame.Assign(VTYPE_wxHeaderCtrlSimple);
+	frame.Assign(VTYPE_wxHelpControllerBase);
 	frame.Assign(VTYPE_wxHelpEvent);
 	frame.Assign(VTYPE_wxHScrolledWindow);
 	frame.Assign(VTYPE_wxHtmlCell);
 	frame.Assign(VTYPE_wxHtmlColourCell);
 	frame.Assign(VTYPE_wxHtmlContainerCell);
 	frame.Assign(VTYPE_wxHtmlFontCell);
+	frame.Assign(VTYPE_wxHtmlHelpController);
+	frame.Assign(VTYPE_wxHtmlHelpData);
 	frame.Assign(VTYPE_wxHtmlHelpDialog);
 	frame.Assign(VTYPE_wxHtmlHelpFrame);
 	frame.Assign(VTYPE_wxHtmlHelpWindow);
@@ -293,6 +292,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRect);
 	frame.Assign(VTYPE_wxRect2DDouble);
 	frame.Assign(VTYPE_wxRefCounter);
+	frame.Assign(VTYPE_wxRegConfig);
 	frame.Assign(VTYPE_wxRegion);
 	frame.Assign(VTYPE_wxRibbonArtProvider);
 	frame.Assign(VTYPE_wxRibbonBar);
