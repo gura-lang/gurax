@@ -1,3 +1,26 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+HelpControllerBase = Class():loosePointer {
+	@include['wx/help.h']
+}
+
+HtmlHelpController = Class(HelpControllerBase) {
+	@include['wx/html/helpctrl.h']
+}
+
+HtmlHelpData = Class():loosePointer {
+	@include['wx/html/helpdata.h']
+}
+
+ConfigBase = Class():loosePointer {
+	@include['wx/config.h']
+}
+
+FileConfig = Class(ConfigBase) {
+	@include['wx/fileconf.h']
+}
+
+RegConfig = Class(ConfigBase) {
+	@include['wx/msw/regconf.h']
+}

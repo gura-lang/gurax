@@ -2,24 +2,48 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxBannerWindow (wxWindow *parent, wxDirection dir=wxLEFT)
- 	Convenient constructor that should be used in the majority of cases. More...
+a 	wxHtmlHelpWindow (wxHtmlHelpData *data=NULL)
  
-a 	wxBannerWindow (wxWindow *parent, wxWindowID winid, wxDirection dir=wxLEFT, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0, const wxString &name=wxBannerWindowNameStr)
- 	Full constructor provided for consistency with the other classes only. More...
+a 	wxHtmlHelpWindow (wxWindow *parent, int wxWindowID, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, int style=wxTAB_TRAVERSAL|wxBORDER_NONE, int helpStyle=wxHF_DEFAULT_STYLE, wxHtmlHelpData *data=NULL)
+ 	Constructor. More...
  
-bool 	Create (wxWindow *parent, wxWindowID winid, wxDirection dir=wxLEFT, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=0, const wxString &name=wxBannerWindowNameStr)
- 	Really create the banner window for the objects created using the default constructor. More...
+bool 	Create (wxWindow *parent, wxWindowID id, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, int style=wxTAB_TRAVERSAL|wxBORDER_NONE, int helpStyle=wxHF_DEFAULT_STYLE)
+ 	Creates the help window. More...
  
-void 	SetBitmap (const wxBitmap &bmp)
- 	Provide the bitmap to use as background. More...
+bool 	Display (const wxString &x)
+ 	Displays page x. More...
  
-void 	SetText (const wxString &title, const wxString &message)
- 	Set the text to display. More...
+bool 	Display (const int id)
+ 	This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.This form takes numeric ID as the parameter (uses an extension to MS format, param name="ID" value=id). More...
  
-void 	SetGradient (const wxColour &start, const wxColour &end)
- 	Set the colours between which the gradient runs. More...
- '''
+bool 	DisplayContents ()
+ 	Displays contents panel. More...
+ 
+bool 	DisplayIndex ()
+ 	Displays index panel. More...
+ 
+wxHtmlHelpData * 	GetData ()
+ 	Returns the wxHtmlHelpData object, which is usually a pointer to the controller's data. More...
+ 
+bool 	KeywordSearch (const wxString &keyword, wxHelpSearchMode mode=wxHELP_SEARCH_ALL)
+ 	Search for given keyword. More...
+ 
+void 	ReadCustomization (wxConfigBase *cfg, const wxString &path=wxEmptyString)
+ 	Reads the user's settings for this window. More...
+ 
+void 	UseConfig (wxConfigBase *config, const wxString &rootpath=wxEmptyString)
+ 	Associates a wxConfig object with the help window. More...
+ 
+void 	WriteCustomization (wxConfigBase *cfg, const wxString &path=wxEmptyString)
+ 	Saves the user's settings for this window. More...
+ 
+void 	RefreshLists ()
+ 	Refresh all panels. More...
+ 
+wxHtmlHelpController * 	GetController () const
+ 
+void 	SetController (wxHtmlHelpController *controller)
+'''
 //------------------------------------------------------------------------------
 
 txt.EachLine {|line, iLine|

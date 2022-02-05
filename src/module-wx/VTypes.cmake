@@ -4,6 +4,12 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxHelpControllerBase.cpp
+	VType_wxHtmlHelpController.cpp
+	VType_wxHtmlHelpData.cpp
+	VType_wxConfigBase.cpp
+	VType_wxFileConfig.cpp
+	VType_wxRegConfig.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp

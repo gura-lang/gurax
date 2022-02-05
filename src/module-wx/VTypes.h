@@ -7,6 +7,12 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
+#include "VType_wxHelpControllerBase.h"
+#include "VType_wxHtmlHelpController.h"
+#include "VType_wxHtmlHelpData.h"
+#include "VType_wxConfigBase.h"
+#include "VType_wxFileConfig.h"
+#include "VType_wxRegConfig.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"

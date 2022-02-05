@@ -313,6 +313,10 @@
 		CENTRE
 		CENTER
 	}
+	HelpSearchMode {
+		HELP_SEARCH_INDEX
+		HELP_SEARCH_ALL
+	}
 	HitTest {
 		HT_NOWHERE 	
 		HT_SCROLLBAR_FIRST 	

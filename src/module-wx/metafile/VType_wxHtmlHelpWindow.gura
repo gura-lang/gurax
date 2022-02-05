@@ -3,4 +3,77 @@
 //==============================================================================
 HtmlHelpWindow = Class(Window) {
 	@include['wx/html/helpwnd.h']
+	__init__(args* as any) = \
+		R'''
+		// wxHtmlHelpWindow(data as HtmlHelpData_p = NULL)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+			return new Value_wxHtmlHelpWindow(new wxHtmlHelpWindow(data));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxHtmlHelpWindow(parent as Window_p, winid as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as int = wxTAB_TRAVERSAL|wxBORDER_NONE, helpStyle as int = wxHF_DEFAULT_STYLE, data as HtmlHelpData_p = NULL)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("winid", VTYPE_Number);
+				pDeclCallable->DeclareArg("pos", VTYPE_wxPoint, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("size", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+			wxWindowID winid = args.PickNumber<wxWindowID>();
+			const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+			const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+			long style = args.IsValid()? args.PickNumber<long>() : wxTAB_TRAVERSAL | wxBORDER_NONE;
+			int helpStyle = args.IsValid()? args.PickNumber<int>() : wxHF_DEFAULT_STYLE;
+			wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+			return new Value_wxHtmlHelpWindow(new wxHtmlHelpWindow(parent, winid, pos, size, style, helpStyle, data));
+		} while (0);
+		return Value::nil();
+		'''
+	Create(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as int = wxTAB_TRAVERSAL | wxBORDER_NONE, helpStyle as int = wxHF_DEFAULT_STYLE) as bool
+	Display(x as const_String_r) as bool
+	//Display(id as int) as bool
+	DisplayContents() as bool
+	DisplayIndex() as bool
+	GetData() as HtmlHelpData_p
+	KeywordSearch(keyword as const_String_r, mode as HelpSearchMode = wxHELP_SEARCH_ALL) as bool
+	ReadCustomization(cfg as ConfigBase_p, path as const_String_r = wxEmptyString) as void
+	UseConfig(config as ConfigBase_p, rootpath as const_String_r = wxEmptyString) as void
+	WriteCustomization(cfg as ConfigBase_p, path as const_String_r = wxEmptyString) as void
+	RefreshLists() as void
+	GetController() as HtmlHelpController_p
+	SetController(controller as HtmlHelpController_p) as void
+}
+
+@const {
+	HF_TOOLBAR
+	HF_CONTENTS
+	HF_INDEX
+	HF_SEARCH
+	HF_BOOKMARKS
+	HF_OPEN_FILES
+	HF_PRINT
+	HF_FLAT_TOOLBAR
+	HF_MERGE_BOOKS
+	HF_ICONS_BOOK
+	HF_ICONS_BOOK_CHAPTER
+	HF_ICONS_FOLDER
+	HF_DEFAULT_STYLE
 }
