@@ -2,6 +2,36 @@
 // VType_wxMenuBar.gura
 //==============================================================================
 MenuBar = Class(Window) {
-	__init__()
+	__init__(style as long = 0)
 	Append(menu as Menu_p, title as String) as bool
+	//Append(menu as Menu_p, title as const_String_r) as bool
+	Check(id as int, check as bool) as void
+	Enable(id as int, enable as bool) as void
+	IsEnabledTop(pos as size_t) as bool
+	EnableTop(pos as size_t, enable as bool) as void
+	//FindItem(id as int, menu as Menu_p_p = NULL) as MenuItem_p
+	FindMenu(title as const_String_r) as int
+	FindMenuItem(menuString as const_String_r, itemString as const_String_r) as int
+	GetHelpString(id as int) as String
+	GetLabel(id as int) as String
+	//GetLabelTop(pos as size_t) as String
+	GetMenu(menuIndex as size_t) as Menu_p
+	GetMenuCount() as size_t
+	GetMenuLabel(pos as size_t) as String
+	GetMenuLabelText(pos as size_t) as String
+	Insert(pos as size_t, menu as Menu_p, title as const_String_r) as bool
+	IsChecked(id as int) as bool
+	IsEnabled(id as int) as bool
+	Refresh(eraseBackground as bool = true, rect as const_Rect_p = NULL) as void
+	Remove(pos as size_t) as Menu_p
+	Replace(pos as size_t, menu as Menu_p, title as const_String_r) as Menu_p
+	SetHelpString(id as int, helpString as const_String_r) as void
+	SetLabel(id as int, label as const_String_r) as void
+	//SetLabelTop(pos as size_t, label as const_String_r) as void
+	SetMenuLabel(pos as size_t, label as const_String_r) as void
+	//OSXGetAppleMenu() as Menu_p
+	GetFrame() as Frame_p
+	IsAttached() as bool
+	Attach(frame as Frame_p) as void
+	Detach() as void
 }
