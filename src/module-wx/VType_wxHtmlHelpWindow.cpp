@@ -128,11 +128,11 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, Create_gurax, processor_gurax, argumen
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.HtmlHelpWindow#Display(x as String)
+// wx.HtmlHelpWindow#Display(args* as Any)
 Gurax_DeclareMethodAlias(wxHtmlHelpWindow, Display_gurax, "Display")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("x", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -146,10 +146,40 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, Display_gurax, processor_gurax, argume
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* x = args_gurax.PickString();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	bool rtn = pEntity_gurax->Display(x);
-	return new Gurax::Value_Bool(rtn);
+	// Display(x as const_String_r) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("x", VTYPE_String);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const char* x = args.PickString();
+		bool rtn = pEntity_gurax->Display(x);
+		return new Value_Bool(rtn);
+	} while (0);
+	Error::ClearIssuedFlag();
+	// Display(id as int) as bool
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("id", VTYPE_Number);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		int id = args.PickNumber<int>();
+		bool rtn = pEntity_gurax->Display(id);
+		return new Value_Bool(rtn);
+	} while (0);
+	return Value::nil();
 }
 
 // wx.HtmlHelpWindow#DisplayContents()

@@ -48,8 +48,41 @@ HtmlHelpWindow = Class(Window) {
 		return Value::nil();
 		'''
 	Create(parent as Window_p, id as WindowID, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as int = wxTAB_TRAVERSAL | wxBORDER_NONE, helpStyle as int = wxHF_DEFAULT_STYLE) as bool
-	Display(x as const_String_r) as bool
-	//Display(id as int) as bool
+	Display(args* as any) as bool = \
+		R'''
+		// Display(x as const_String_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("x", VTYPE_String);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const char* x = args.PickString();
+			bool rtn = pEntity_gurax->Display(x);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// Display(id as int) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("id", VTYPE_Number);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int id = args.PickNumber<int>();
+			bool rtn = pEntity_gurax->Display(id);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 	DisplayContents() as bool
 	DisplayIndex() as bool
 	GetData() as HtmlHelpData_p
