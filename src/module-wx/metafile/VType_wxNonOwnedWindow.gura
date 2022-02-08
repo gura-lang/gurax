@@ -2,6 +2,39 @@
 // VType_wxNonOwnedWindow.gura
 //==============================================================================
 NonOwnedWindow = Class(Window) {
-	SetShape(region as const_Region_r) as bool
-	//SetShape(path as const_GraphicsPath_r) as bool
+	SetShape(args* as any) as bool = \
+		R'''
+		// SetShape(region as const_Region_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("region", VTYPE_wxRegion);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxRegion& region = args.Pick<Value_wxRegion>().GetEntity();
+			bool rtn = pEntity_gurax->SetShape(region);
+			return new Value_Bool(rtn);
+		} while (0);
+		Error::ClearIssuedFlag();
+		// SetShape(path as const_GraphicsPath_r) as bool
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("path", VTYPE_wxRegion);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxGraphicsPath& path = args.Pick<Value_wxGraphicsPath>().GetEntity();
+			bool rtn = pEntity_gurax->SetShape(path);
+			return new Value_Bool(rtn);
+		} while (0);
+		return Value::nil();
+		'''
 }
