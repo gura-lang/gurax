@@ -2,98 +2,67 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxMenuBar (long style=0)
- 	Construct an empty menu bar. More...
+a 	wxAuiMDIChildFrame (wxAuiMDIParentFrame *parent, wxWindowID winid, const wxString &title, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE, const wxString &name=wxFrameNameStr)
  
- 	wxMenuBar (size_t n, wxMenu *menus[], const wxString titles[], long style=0)
- 	Construct a menu bar from arrays of menus and titles. More...
+bool 	Create (wxAuiMDIParentFrame *parent, wxWindowID winid, const wxString &title, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE, const wxString &name=wxFrameNameStr)
  
-virtual bool 	Append (wxMenu *menu, const wxString &title)
- 	Adds the item to the end of the menu bar. More...
+virtual void 	SetMenuBar (wxMenuBar *menuBar)
  
-void 	Check (int id, bool check)
- 	Checks or unchecks a menu item. More...
+virtual wxMenuBar * 	GetMenuBar () const
  
-void 	Enable (int id, bool enable)
- 	Enables or disables (greys out) a menu item. More...
+virtual void 	SetTitle (const wxString &title)
  
-bool 	IsEnabledTop (size_t pos) const
- 	Returns true if the menu with the given index is enabled. More...
+virtual wxString 	GetTitle () const
  
-virtual void 	EnableTop (size_t pos, bool enable)
- 	Enables or disables a whole menu. More...
+virtual void 	SetIcons (const wxIconBundle &icons)
  
-virtual wxMenuItem * 	FindItem (int id, wxMenu **menu=NULL) const
- 	Finds the menu item object associated with the given menu item identifier. More...
+virtual const wxIconBundle & 	GetIcons () const
  
-int 	FindMenu (const wxString &title) const
- 	Returns the index of the menu with the given title or wxNOT_FOUND if no such menu exists in this menubar. More...
+virtual void 	SetIcon (const wxIcon &icon)
  
-virtual int 	FindMenuItem (const wxString &menuString, const wxString &itemString) const
- 	Finds the menu item id for a menu name/menu item string pair. More...
+virtual const wxIcon & 	GetIcon () const
  
-wxString 	GetHelpString (int id) const
- 	Gets the help string associated with the menu item identifier. More...
+virtual void 	Activate ()
  
-wxString 	GetLabel (int id) const
- 	Gets the label associated with a menu item. More...
+virtual bool 	Destroy ()
+ 	Destroys the window safely. More...
  
-wxString 	GetLabelTop (size_t pos) const
- 	Returns the label of a top-level menu. More...
+virtual bool 	Show (bool show=true)
+ 	Shows or hides the window. More...
  
-wxMenu * 	GetMenu (size_t menuIndex) const
- 	Returns the menu at menuIndex (zero-based). More...
+virtual wxStatusBar * 	CreateStatusBar (int number=1, long style=1, wxWindowID winid=1, const wxString &name=wxEmptyString)
  
-size_t 	GetMenuCount () const
- 	Returns the number of menus in this menubar. More...
+virtual wxStatusBar * 	GetStatusBar () const
  
-virtual wxString 	GetMenuLabel (size_t pos) const
- 	Returns the label of a top-level menu. More...
+virtual void 	SetStatusText (const wxString &text, int number=0)
  
-virtual wxString 	GetMenuLabelText (size_t pos) const
- 	Returns the label of a top-level menu. More...
+virtual void 	SetStatusWidths (int n, const int widths_field[])
  
-virtual bool 	Insert (size_t pos, wxMenu *menu, const wxString &title)
- 	Inserts the menu at the given position into the menu bar. More...
+virtual wxToolBar * 	CreateToolBar (long style, wxWindowID winid, const wxString &name)
  
-bool 	IsChecked (int id) const
- 	Determines whether an item is checked. More...
+virtual wxToolBar * 	GetToolBar () const
  
-bool 	IsEnabled (int id) const
- 	Determines whether an item is enabled. More...
+virtual void 	Maximize (bool maximize=true)
  
-virtual void 	Refresh (bool eraseBackground=true, const wxRect *rect=NULL)
- 	Redraw the menu bar. More...
+virtual void 	Restore ()
  
-virtual wxMenu * 	Remove (size_t pos)
- 	Removes the menu from the menu bar and returns the menu object - the caller is responsible for deleting it. More...
+virtual void 	Iconize (bool iconize=true)
  
-virtual wxMenu * 	Replace (size_t pos, wxMenu *menu, const wxString &title)
- 	Replaces the menu at the given position with another one. More...
+virtual bool 	IsMaximized () const
  
-void 	SetHelpString (int id, const wxString &helpString)
- 	Sets the help string associated with a menu item. More...
+virtual bool 	IsIconized () const
  
-void 	SetLabel (int id, const wxString &label)
- 	Sets the label of a menu item. More...
+virtual bool 	ShowFullScreen (bool show, long style)
  
-void 	SetLabelTop (size_t pos, const wxString &label)
- 	Sets the label of a top-level menu. More...
+virtual bool 	IsFullScreen () const
  
-virtual void 	SetMenuLabel (size_t pos, const wxString &label)
- 	Sets the label of a top-level menu. More...
+virtual bool 	IsTopLevel () const
+ 	Returns true if the given window is a top-level one. More...
  
-wxMenu * 	OSXGetAppleMenu () const
- 	Returns the Apple menu. More...
+void 	SetMDIParentFrame (wxAuiMDIParentFrame *parent)
  
-wxFrame * 	GetFrame () const
- 
-bool 	IsAttached () const
- 
-virtual void 	Attach (wxFrame *frame)
- 
-virtual void 	Detach ()
-'''
+wxAuiMDIParentFrame * 	GetMDIParentFrame () const
+ '''
 //------------------------------------------------------------------------------
 
 txt.EachLine {|line, iLine|
