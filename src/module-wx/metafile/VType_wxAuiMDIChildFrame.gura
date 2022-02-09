@@ -3,4 +3,37 @@
 //==============================================================================
 AuiMDIChildFrame = Class(Frame) {
 	@include['wx/aui/tabmdi.h']
+	__init__(parent as AuiMDIParentFrame_p, winid as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_FRAME_STYLE, name as const_String_r = wxFrameNameStr)
+	Create(parent as AuiMDIParentFrame_p, winid as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_FRAME_STYLE, name as const_String_r = wxFrameNameStr) as bool
+	SetMenuBar(menuBar as MenuBar_p) as void
+	GetMenuBar() as MenuBar_p
+	SetTitle(title as const_String_r) as void
+	GetTitle() as String
+	SetIcons(icons as const_IconBundle_r) as void
+	GetIcons() as IconBundle
+	SetIcon(icon as const_Icon_r) as void
+	GetIcon() as Icon
+	Activate() as void
+	Destroy() as bool
+	Show(show as bool = true) as bool
+	CreateStatusBar(number as int = 1, style as long = 1, winid as WindowID = 1, name as const_String_r = wxEmptyString) as StatusBar_p
+	GetStatusBar() as StatusBar_p
+	SetStatusText(text as const_String_r, number as int = 0) as void
+	SetStatusWidths(widths_field[] as int) as void = \
+		R'''
+		pEntity_gurax->SetStatusWidths(widths_field.sizeT<int>(), widths_field);
+		return Value::nil();
+		'''
+	CreateToolBar(style as long, winid as WindowID, name as const_String_r) as ToolBar_p
+	GetToolBar() as ToolBar_p
+	Maximize(maximize as bool = true) as void
+	Restore() as void
+	Iconize(iconize as bool = true) as void
+	IsMaximized() as bool
+	IsIconized() as bool
+	ShowFullScreen(show as bool, style as long) as bool
+	IsFullScreen() as bool
+	IsTopLevel() as bool
+	SetMDIParentFrame(parent as AuiMDIParentFrame_p) as void
+	GetMDIParentFrame() as AuiMDIParentFrame_p
 }

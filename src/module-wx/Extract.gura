@@ -36,7 +36,7 @@ virtual wxStatusBar * 	GetStatusBar () const
  
 virtual void 	SetStatusText (const wxString &text, int number=0)
  
-virtual void 	SetStatusWidths (int n, const int widths_field[])
+virtual void 	SetStatusWidths (int n, const int *widths_field)
  
 virtual wxToolBar * 	CreateToolBar (long style, wxWindowID winid, const wxString &name)
  
