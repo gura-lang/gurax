@@ -3,4 +3,34 @@
 //==============================================================================
 FileDialog = Class(Dialog) {
 	@include['wx/filedlg.h']
+	__init__(parent as Window_p, message as const_String_r = wxFileSelectorPromptStr, defaultDir as const_String_r = wxEmptyString, defaultFile as const_String_r = wxEmptyString, wildcard as const_String_r = wxFileSelectorDefaultWildcardStr, style as long = wxFD_DEFAULT_STYLE, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, name as const_String_r = wxFileDialogNameStr)
+	GetCurrentlySelectedFilename() as String
+	GetDirectory() as String
+	GetExtraControl() as Window_p
+	GetFilename() as String
+	//GetFilenames(filenames as ArrayString_r) as void
+	GetFilterIndex() as int
+	GetMessage() as String
+	GetPath() as String
+	//GetPaths(paths as ArrayString_r) as void
+	GetWildcard() as String
+	SetDirectory(directory as const_String_r) as void
+	//SetExtraControlCreator(creator as ExtraControlCreatorFunction) as bool
+	SetFilename(setfilename as const_String_r) as void
+	SetFilterIndex(filterIndex as int) as void
+	SetMessage(message as const_String_r) as void
+	SetPath(path as const_String_r) as void
+	SetWildcard(wildCard as const_String_r) as void
+	ShowModal() as int
 }
+
+@const { // Styles
+	FD_DEFAULT_STYLE
+	FD_OPEN
+	FD_SAVE
+	FD_OVERWRITE_PROMPT
+	FD_FILE_MUST_EXIST
+	FD_MULTIPLE
+	FD_CHANGE_DIR
+	FD_PREVIEW
+}	

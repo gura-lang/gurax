@@ -2,67 +2,63 @@ import(re)
 
 //------------------------------------------------------------------------------
 txt = R'''
-a 	wxAuiMDIChildFrame (wxAuiMDIParentFrame *parent, wxWindowID winid, const wxString &title, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE, const wxString &name=wxFrameNameStr)
+a 	wxFileDialog (wxWindow *parent, const wxString &message=wxFileSelectorPromptStr, const wxString &defaultDir=wxEmptyString, const wxString &defaultFile=wxEmptyString, const wxString &wildcard=wxFileSelectorDefaultWildcardStr, long style=wxFD_DEFAULT_STYLE, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, const wxString &name=wxFileDialogNameStr)
+ 	Constructor. More...
  
-bool 	Create (wxAuiMDIParentFrame *parent, wxWindowID winid, const wxString &title, const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE, const wxString &name=wxFrameNameStr)
+virtual wxString 	GetCurrentlySelectedFilename () const
+ 	Returns the path of the file currently selected in dialog. More...
  
-virtual void 	SetMenuBar (wxMenuBar *menuBar)
+virtual wxString 	GetDirectory () const
+ 	Returns the default directory. More...
  
-virtual wxMenuBar * 	GetMenuBar () const
+wxWindow * 	GetExtraControl () const
+ 	If functions SetExtraControlCreator() and ShowModal() were called, returns the extra window. More...
  
-virtual void 	SetTitle (const wxString &title)
+virtual wxString 	GetFilename () const
+ 	Returns the default filename. More...
  
-virtual wxString 	GetTitle () const
+virtual void 	GetFilenames (wxArrayString &filenames) const
+ 	Fills the array filenames with the names of the files chosen. More...
  
-virtual void 	SetIcons (const wxIconBundle &icons)
+virtual int 	GetFilterIndex () const
+ 	Returns the index into the list of filters supplied, optionally, in the wildcard parameter. More...
  
-virtual const wxIconBundle & 	GetIcons () const
+virtual wxString 	GetMessage () const
+ 	Returns the message that will be displayed on the dialog. More...
  
-virtual void 	SetIcon (const wxIcon &icon)
+virtual wxString 	GetPath () const
+ 	Returns the full path (directory and filename) of the selected file. More...
  
-virtual const wxIcon & 	GetIcon () const
+virtual void 	GetPaths (wxArrayString &paths) const
+ 	Fills the array paths with the full paths of the files chosen. More...
  
-virtual void 	Activate ()
+virtual wxString 	GetWildcard () const
+ 	Returns the file dialog wildcard. More...
  
-virtual bool 	Destroy ()
- 	Destroys the window safely. More...
+virtual void 	SetDirectory (const wxString &directory)
+ 	Sets the default directory. More...
  
-virtual bool 	Show (bool show=true)
- 	Shows or hides the window. More...
+bool 	SetExtraControlCreator (ExtraControlCreatorFunction creator)
+ 	Customize file dialog by adding extra window, which is typically placed below the list of files and above the buttons. More...
  
-virtual wxStatusBar * 	CreateStatusBar (int number=1, long style=1, wxWindowID winid=1, const wxString &name=wxEmptyString)
+virtual void 	SetFilename (const wxString &setfilename)
+ 	Sets the default filename. More...
  
-virtual wxStatusBar * 	GetStatusBar () const
+virtual void 	SetFilterIndex (int filterIndex)
+ 	Sets the default filter index, starting from zero. More...
  
-virtual void 	SetStatusText (const wxString &text, int number=0)
+virtual void 	SetMessage (const wxString &message)
+ 	Sets the message that will be displayed on the dialog. More...
  
-virtual void 	SetStatusWidths (int n, const int *widths_field)
+virtual void 	SetPath (const wxString &path)
+ 	Sets the path (the combined directory and filename that will be returned when the dialog is dismissed). More...
  
-virtual wxToolBar * 	CreateToolBar (long style, wxWindowID winid, const wxString &name)
+virtual void 	SetWildcard (const wxString &wildCard)
+ 	Sets the wildcard, which can contain multiple file types, for example: "BMP files (*.bmp)|*.bmp|GIF files (*.gif)|*.gif". More...
  
-virtual wxToolBar * 	GetToolBar () const
- 
-virtual void 	Maximize (bool maximize=true)
- 
-virtual void 	Restore ()
- 
-virtual void 	Iconize (bool iconize=true)
- 
-virtual bool 	IsMaximized () const
- 
-virtual bool 	IsIconized () const
- 
-virtual bool 	ShowFullScreen (bool show, long style)
- 
-virtual bool 	IsFullScreen () const
- 
-virtual bool 	IsTopLevel () const
- 	Returns true if the given window is a top-level one. More...
- 
-void 	SetMDIParentFrame (wxAuiMDIParentFrame *parent)
- 
-wxAuiMDIParentFrame * 	GetMDIParentFrame () const
- '''
+virtual int 	ShowModal ()
+ 	Shows the dialog, returning wxID_OK if the user pressed OK, and wxID_CANCEL otherwise. More...
+'''
 //------------------------------------------------------------------------------
 
 txt.EachLine {|line, iLine|

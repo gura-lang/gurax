@@ -256,6 +256,14 @@ void AssignConsts(Frame& frame)
 	frame.Assign("FC_NOSHOWHIDDEN", new Value_Number(wxFC_NOSHOWHIDDEN));
 	frame.Assign("FC_OPEN", new Value_Number(wxFC_OPEN));
 	frame.Assign("FC_SAVE", new Value_Number(wxFC_SAVE));
+	frame.Assign("FD_CHANGE_DIR", new Value_Number(wxFD_CHANGE_DIR));
+	frame.Assign("FD_DEFAULT_STYLE", new Value_Number(wxFD_DEFAULT_STYLE));
+	frame.Assign("FD_FILE_MUST_EXIST", new Value_Number(wxFD_FILE_MUST_EXIST));
+	frame.Assign("FD_MULTIPLE", new Value_Number(wxFD_MULTIPLE));
+	frame.Assign("FD_OPEN", new Value_Number(wxFD_OPEN));
+	frame.Assign("FD_OVERWRITE_PROMPT", new Value_Number(wxFD_OVERWRITE_PROMPT));
+	frame.Assign("FD_PREVIEW", new Value_Number(wxFD_PREVIEW));
+	frame.Assign("FD_SAVE", new Value_Number(wxFD_SAVE));
 	frame.Assign("FIXED_MINSIZE", new Value_Number(wxFIXED_MINSIZE));
 	frame.Assign("FLOOD_BORDER", new Value_Number(wxFLOOD_BORDER));
 	frame.Assign("FLOOD_SURFACE", new Value_Number(wxFLOOD_SURFACE));
