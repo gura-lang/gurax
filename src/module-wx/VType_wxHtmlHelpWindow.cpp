@@ -70,6 +70,7 @@ Gurax_ImplementConstructorEx(HtmlHelpWindow_gurax, processor_gurax, argument_gur
 			pDeclCallable->DeclareArg("pos", VTYPE_wxPoint, DeclArg::Occur::ZeroOrOnce);
 			pDeclCallable->DeclareArg("size", VTYPE_wxSize, DeclArg::Occur::ZeroOrOnce);
 			pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("helpStyle", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
 			pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
@@ -80,7 +81,7 @@ Gurax_ImplementConstructorEx(HtmlHelpWindow_gurax, processor_gurax, argument_gur
 		wxWindowID winid = args.PickNumber<wxWindowID>();
 		const wxPoint& pos = args.IsValid()? args.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 		const wxSize& size = args.IsValid()? args.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
-		long style = args.IsValid()? args.PickNumber<long>() : wxTAB_TRAVERSAL | wxBORDER_NONE;
+		int style = args.IsValid()? args.PickNumber<int>() : wxTAB_TRAVERSAL | wxBORDER_NONE;
 		int helpStyle = args.IsValid()? args.PickNumber<int>() : wxHF_DEFAULT_STYLE;
 		wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
 		return new Value_wxHtmlHelpWindow(new wxHtmlHelpWindow(parent, winid, pos, size, style, helpStyle, data));

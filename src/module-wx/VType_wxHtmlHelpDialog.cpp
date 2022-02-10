@@ -28,10 +28,194 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HtmlHelpDialog(args* as Any) {block?} {block?}
+Gurax_DeclareConstructorAlias(HtmlHelpDialog_gurax, "HtmlHelpDialog")
+{
+	Declare(VTYPE_wxHtmlHelpDialog, Flag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.HtmlHelpDialog.");
+}
+
+Gurax_ImplementConstructorEx(HtmlHelpDialog_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const Gurax::ValueList& args = args_gurax.PickList();
+	// Function body
+	// wxHtmlHelpDialog(data as HtmlHelpData_p = NULL)
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+		return new Value_wxHtmlHelpDialog(new wxHtmlHelpDialog(data));
+	} while (0);
+	Error::ClearIssuedFlag();
+	// wxHtmlHelpDialog(parent as Window_p, id as WindowID, title as const_String_r = wxEmptyString, style as int = wxHF_DEFAULT_STYLE, data as HtmlHelpData_p = NULL) as a
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+			pDeclCallable->DeclareArg("winid", VTYPE_Number);
+			pDeclCallable->DeclareArg("title", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+			pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+		wxWindowID winid = args.PickNumber<wxWindowID>();
+		const char* title = args.IsValid()? args.PickString() : "";
+		long style = args.IsValid()? args.PickNumber<long>() : wxHF_DEFAULT_STYLE;
+		wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+		return new Value_wxHtmlHelpDialog(new wxHtmlHelpDialog(parent, winid, title, style, data));
+	} while (0);
+	return Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.HtmlHelpDialog#AddToolbarButtons(toolBar as wx.ToolBar, style as Number)
+Gurax_DeclareMethodAlias(wxHtmlHelpDialog, AddToolbarButtons_gurax, "AddToolbarButtons")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("toolBar", VTYPE_wxToolBar, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpDialog, AddToolbarButtons_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxToolBar& value_toolBar = args_gurax.Pick<Value_wxToolBar>();
+	wxToolBar* toolBar = value_toolBar.GetEntityPtr();
+	int style = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->AddToolbarButtons(toolBar, style);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpDialog#Create(parent as wx.Window, id as Number, title? as String, style? as Number)
+Gurax_DeclareMethodAlias(wxHtmlHelpDialog, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpDialog, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "";
+	bool style_validFlag = args_gurax.IsValid();
+	int style = style_validFlag? args_gurax.PickNumber<int>() : wxHF_DEFAULT_STYLE;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, title, style);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.HtmlHelpDialog#GetController() {block?}
+Gurax_DeclareMethodAlias(wxHtmlHelpDialog, GetController_gurax, "GetController")
+{
+	Declare(VTYPE_wxHtmlHelpController, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpDialog, GetController_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlHelpController(
+		pEntity_gurax->GetController()));
+}
+
+// wx.HtmlHelpDialog#SetController(controller as wx.HtmlHelpController)
+Gurax_DeclareMethodAlias(wxHtmlHelpDialog, SetController_gurax, "SetController")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("controller", VTYPE_wxHtmlHelpController, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpDialog, SetController_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHtmlHelpController& value_controller = args_gurax.Pick<Value_wxHtmlHelpController>();
+	wxHtmlHelpController* controller = value_controller.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetController(controller);
+	return Gurax::Value::nil();
+}
+
+// wx.HtmlHelpDialog#SetTitleFormat(format as String)
+Gurax_DeclareMethodAlias(wxHtmlHelpDialog, SetTitleFormat_gurax, "SetTitleFormat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHtmlHelpDialog, SetTitleFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* format = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetTitleFormat(format);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +231,13 @@ void VType_wxHtmlHelpDialog::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxDialog, Flag::Mutable);
+	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(HtmlHelpDialog_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxHtmlHelpDialog, AddToolbarButtons_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpDialog, Create_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpDialog, GetController_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpDialog, SetController_gurax));
+	Assign(Gurax_CreateMethod(wxHtmlHelpDialog, SetTitleFormat_gurax));
 }
 
 //------------------------------------------------------------------------------

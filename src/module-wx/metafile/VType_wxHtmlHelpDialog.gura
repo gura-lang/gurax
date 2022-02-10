@@ -3,4 +3,50 @@
 //==============================================================================
 HtmlHelpDialog = Class(Dialog) {
 	@include['wx/html/helpdlg.h']
+	__init__(args* as any) = \
+		R'''
+		// wxHtmlHelpDialog(data as HtmlHelpData_p = NULL)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+			return new Value_wxHtmlHelpDialog(new wxHtmlHelpDialog(data));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxHtmlHelpDialog(parent as Window_p, id as WindowID, title as const_String_r = wxEmptyString, style as int = wxHF_DEFAULT_STYLE, data as HtmlHelpData_p = NULL) as a
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("parent", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("winid", VTYPE_Number);
+				pDeclCallable->DeclareArg("title", VTYPE_String, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("data", VTYPE_wxHtmlHelpData, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxWindow* parent = args.Pick<Value_wxWindow>().GetEntityPtr();
+			wxWindowID winid = args.PickNumber<wxWindowID>();
+			const char* title = args.IsValid()? args.PickString() : "";
+			long style = args.IsValid()? args.PickNumber<long>() : wxHF_DEFAULT_STYLE;
+			wxHtmlHelpData* data = args.IsValid()? args.Pick<Value_wxHtmlHelpData>().GetEntityPtr() : nullptr;
+			return new Value_wxHtmlHelpDialog(new wxHtmlHelpDialog(parent, winid, title, style, data));
+		} while (0);
+		return Value::nil();
+		'''
+	AddToolbarButtons(toolBar as ToolBar_p, style as int) as void
+	Create(parent as Window_p, id as WindowID, title as const_String_r = wxEmptyString, style as int = wxHF_DEFAULT_STYLE) as bool
+	GetController() as HtmlHelpController_p
+	SetController(controller as HtmlHelpController_p) as void
+	SetTitleFormat(format as const_String_r) as void
 }
