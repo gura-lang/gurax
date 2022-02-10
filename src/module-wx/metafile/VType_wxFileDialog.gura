@@ -12,7 +12,12 @@ FileDialog = Class(Dialog) {
 	GetFilterIndex() as int
 	GetMessage() as String
 	GetPath() as String
-	//GetPaths(paths as ArrayString_r) as void
+	GetPaths() = \
+		R'''
+		wxArrayString paths;
+		pEntity_gurax->GetPaths(paths);
+		return Util::CreateList(paths);
+		'''
 	GetWildcard() as String
 	SetDirectory(directory as const_String_r) as void
 	//SetExtraControlCreator(creator as ExtraControlCreatorFunction) as bool

@@ -3,6 +3,16 @@
 //==============================================================================
 GenericProgressDialog = Class(Dialog) {
 	@include['wx/progdlg.h']
+	__init__(title as const_String_r, message as const_String_r, maximum as int = 100, parent as Window_p = NULL, style as int = wxPD_AUTO_HIDE | wxPD_APP_MODAL) as a
+	GetValue() as int
+	GetRange() as int
+	GetMessage() as String
+	//Pulse(newmsg as const_String_r = wxEmptyString, skip as bool_p = NULL) as bool
+	Resume() as void
+	SetRange(maximum as int) as void
+	WasCancelled() as bool
+	WasSkipped() as bool
+	//Update(value as int, newmsg as const_String_r = wxEmptyString, skip as bool_p = NULL) as bool
 }
 
 @const {

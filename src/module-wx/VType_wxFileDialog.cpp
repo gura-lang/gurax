@@ -213,6 +213,27 @@ Gurax_ImplementMethodEx(wxFileDialog, GetPath_gurax, processor_gurax, argument_g
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
+// wx.FileDialog#GetPaths()
+Gurax_DeclareMethodAlias(wxFileDialog, GetPaths_gurax, "GetPaths")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxFileDialog, GetPaths_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxArrayString paths;
+	pEntity_gurax->GetPaths(paths);
+	return Util::CreateList(paths);
+}
+
 // wx.FileDialog#GetWildcard()
 Gurax_DeclareMethodAlias(wxFileDialog, GetWildcard_gurax, "GetWildcard")
 {
@@ -420,6 +441,7 @@ void VType_wxFileDialog::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxFileDialog, GetFilterIndex_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, GetMessage_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, GetPath_gurax));
+	Assign(Gurax_CreateMethod(wxFileDialog, GetPaths_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, GetWildcard_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, SetDirectory_gurax));
 	Assign(Gurax_CreateMethod(wxFileDialog, SetFilename_gurax));
