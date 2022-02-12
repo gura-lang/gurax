@@ -308,6 +308,7 @@
 #include "VType_wxRichTextCtrl.h"
 #include "VType_wxRichTextField.h"
 #include "VType_wxRichTextFormattingDialog.h"
+#include "VType_wxRichTextFormattingDialogFactory.h"
 #include "VType_wxRichTextLine.h"
 #include "VType_wxRichTextListStyleDefinition.h"
 #include "VType_wxRichTextObject.h"

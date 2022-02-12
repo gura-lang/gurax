@@ -3,4 +3,25 @@
 //==============================================================================
 RichTextFormattingDialog = Class(PropertySheetDialog) {
 	@include['wx/richtext/richtextformatdlg.h']
+	__init__(flags as long, parent as Window_p, title as const_String_r = "Formatting", id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, sz as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE)
+	ApplyStyle(ctrl as RichTextCtrl_p, range as const_RichTextRange_r, flags as int = wxRICHTEXT_SETSTYLE_WITH_UNDO|wxRICHTEXT_SETSTYLE_OPTIMIZE) as bool
+	Create(flags as long, parent as Window_p, title as const_String_r = "Formatting", id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, sz as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE) as bool
+	GetImageList() as ImageList_p
+	GetStyle(ctrl as RichTextCtrl_p, range as const_RichTextRange_r) as bool
+	GetStyleDefinition() as RichTextStyleDefinition_p
+	GetStyleSheet() as RichTextStyleSheet_p
+	SetAttributes(attr as const_TextAttr_r) as void
+	SetOptions(options as int) as void
+	GetOptions() as int
+	HasOption(option as int) as bool
+	SetImageList(imageList as ImageList_p) as void
+	SetStyle(style as const_TextAttr_r, update as bool = true) as bool
+	SetStyleDefinition(styleDef as const_RichTextStyleDefinition_r, sheet as RichTextStyleSheet_p, update as bool = true) as bool
+	UpdateDisplay() as bool
+	GetAttributes() as TextAttr
+	GetDialog(win as Window_p):static as RichTextFormattingDialog_p
+	GetDialogAttributes(win as Window_p):static as TextAttr_p
+	GetDialogStyleDefinition(win as Window_p):static as RichTextStyleDefinition_p
+	GetFormattingDialogFactory():static as RichTextFormattingDialogFactory_p
+	SetFormattingDialogFactory(factory as RichTextFormattingDialogFactory_p):static as void
 }

@@ -313,6 +313,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxRichTextCtrl);
 	frame.Assign(VTYPE_wxRichTextField);
 	frame.Assign(VTYPE_wxRichTextFormattingDialog);
+	frame.Assign(VTYPE_wxRichTextFormattingDialogFactory);
 	frame.Assign(VTYPE_wxRichTextLine);
 	frame.Assign(VTYPE_wxRichTextListStyleDefinition);
 	frame.Assign(VTYPE_wxRichTextObject);

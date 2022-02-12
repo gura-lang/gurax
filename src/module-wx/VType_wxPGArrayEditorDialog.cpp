@@ -32,6 +32,121 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.PGArrayEditorDialog#Init()
+Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, Init_gurax, "Init")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGArrayEditorDialog, Init_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Init();
+	return Gurax::Value::nil();
+}
+
+// wx.PGArrayEditorDialog#Create(parent as wx.Window, message as String, caption as String, style? as Number, pos? as wx.Point, sz? as wx.Size)
+Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("caption", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("sz", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGArrayEditorDialog, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	const char* message = args_gurax.PickString();
+	const char* caption = args_gurax.PickString();
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxAEDIALOG_STYLE;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& sz = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, message, caption, style, pos, sz);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGArrayEditorDialog#EnableCustomNewAction()
+Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, EnableCustomNewAction_gurax, "EnableCustomNewAction")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGArrayEditorDialog, EnableCustomNewAction_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->EnableCustomNewAction();
+	return Gurax::Value::nil();
+}
+
+// wx.PGArrayEditorDialog#IsModified()
+Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, IsModified_gurax, "IsModified")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGArrayEditorDialog, IsModified_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsModified();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGArrayEditorDialog#GetSelection()
+Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGArrayEditorDialog, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetSelection();
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +164,11 @@ void VType_wxPGArrayEditorDialog::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, Init_gurax));
+	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, Create_gurax));
+	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, EnableCustomNewAction_gurax));
+	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, IsModified_gurax));
+	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, GetSelection_gurax));
 }
 
 //------------------------------------------------------------------------------

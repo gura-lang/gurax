@@ -305,6 +305,7 @@ set(SRCFILES_VTYPE
 	VType_wxRichTextCtrl.cpp
 	VType_wxRichTextField.cpp
 	VType_wxRichTextFormattingDialog.cpp
+	VType_wxRichTextFormattingDialogFactory.cpp
 	VType_wxRichTextLine.cpp
 	VType_wxRichTextListStyleDefinition.cpp
 	VType_wxRichTextObject.cpp
