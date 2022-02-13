@@ -3,4 +3,37 @@
 //==============================================================================
 Wizard = Class(Dialog) {
 	@include['wx/wizard.h']
+	__init__(parent as Window_p, id as int = wxID_ANY, title as const_String_r = wxEmptyString, bitmap as const_Bitmap_r = wxNullBitmap, pos as const_Point_r = wxDefaultPosition, style as long = wxDEFAULT_DIALOG_STYLE)
+	Create(parent as Window_p, id as int = wxID_ANY, title as const_String_r = wxEmptyString, bitmap as const_Bitmap_r = wxNullBitmap, pos as const_Point_r = wxDefaultPosition, style as long = wxDEFAULT_DIALOG_STYLE) as bool
+	FitToPage(firstPage as const_WizardPage_p) as void
+	GetBitmap() as Bitmap
+	GetBitmapBackgroundColour() as Colour
+	GetBitmapPlacement() as int
+	GetCurrentPage() as WizardPage_p
+	GetMinimumBitmapWidth() as int
+	GetPageAreaSizer() as Sizer_p
+	GetPageSize() as Size
+	HasNextPage(page as WizardPage_p) as bool
+	HasPrevPage(page as WizardPage_p) as bool
+	RunWizard(firstPage as WizardPage_p) as bool
+	SetBitmap(bitmap as const_Bitmap_r) as void
+	SetBitmapBackgroundColour(colour as const_Colour_r) as void
+	SetBitmapPlacement(placement as int) as void
+	SetBorder(border as int) as void
+	SetMinimumBitmapWidth(width as int) as void
+	SetPageSize(sizePage as const_Size_r) as void
+}
+
+@const { // Extra Styles
+	WIZARD_EX_HELPBUTTON
+}
+
+@event {
+	EVT_WIZARD_PAGE_CHANGED			>> WizardEvent
+	EVT_WIZARD_PAGE_CHANGING		>> WizardEvent
+	EVT_WIZARD_BEFORE_PAGE_CHANGED	>> WizardEvent
+	EVT_WIZARD_PAGE_SHOWN			>> WizardEvent
+	EVT_WIZARD_CANCEL				>> WizardEvent
+	EVT_WIZARD_HELP					>> WizardEvent
+	EVT_WIZARD_FINISHED				>> WizardEvent
 }

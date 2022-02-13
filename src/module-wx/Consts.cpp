@@ -264,6 +264,17 @@ void AssignConsts(Frame& frame)
 	frame.Assign("FD_OVERWRITE_PROMPT", new Value_Number(wxFD_OVERWRITE_PROMPT));
 	frame.Assign("FD_PREVIEW", new Value_Number(wxFD_PREVIEW));
 	frame.Assign("FD_SAVE", new Value_Number(wxFD_SAVE));
+	frame.Assign("FILTER_ALPHA", new Value_Number(wxFILTER_ALPHA));
+	frame.Assign("FILTER_ALPHANUMERIC", new Value_Number(wxFILTER_ALPHANUMERIC));
+	frame.Assign("FILTER_ASCII", new Value_Number(wxFILTER_ASCII));
+	frame.Assign("FILTER_DIGITS", new Value_Number(wxFILTER_DIGITS));
+	frame.Assign("FILTER_EMPTY", new Value_Number(wxFILTER_EMPTY));
+	frame.Assign("FILTER_EXCLUDE_CHAR_LIST", new Value_Number(wxFILTER_EXCLUDE_CHAR_LIST));
+	frame.Assign("FILTER_EXCLUDE_LIST", new Value_Number(wxFILTER_EXCLUDE_LIST));
+	frame.Assign("FILTER_INCLUDE_CHAR_LIST", new Value_Number(wxFILTER_INCLUDE_CHAR_LIST));
+	frame.Assign("FILTER_INCLUDE_LIST", new Value_Number(wxFILTER_INCLUDE_LIST));
+	frame.Assign("FILTER_NONE", new Value_Number(wxFILTER_NONE));
+	frame.Assign("FILTER_NUMERIC", new Value_Number(wxFILTER_NUMERIC));
 	frame.Assign("FIXED_MINSIZE", new Value_Number(wxFIXED_MINSIZE));
 	frame.Assign("FLOOD_BORDER", new Value_Number(wxFLOOD_BORDER));
 	frame.Assign("FLOOD_SURFACE", new Value_Number(wxFLOOD_SURFACE));
@@ -1128,6 +1139,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("WANTS_CHARS", new Value_Number(wxWANTS_CHARS));
 	frame.Assign("WEST", new Value_Number(wxWEST));
 	frame.Assign("WINDING_RULE", new Value_Number(wxWINDING_RULE));
+	frame.Assign("WIZARD_EX_HELPBUTTON", new Value_Number(wxWIZARD_EX_HELPBUTTON));
 	frame.Assign("WS_EX_BLOCK_EVENTS", new Value_Number(wxWS_EX_BLOCK_EVENTS));
 	frame.Assign("WS_EX_CONTEXTHELP", new Value_Number(wxWS_EX_CONTEXTHELP));
 	frame.Assign("WS_EX_PROCESS_IDLE", new Value_Number(wxWS_EX_PROCESS_IDLE));

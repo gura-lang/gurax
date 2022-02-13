@@ -28,10 +28,473 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.Wizard(parent as wx.Window, id? as Number, title? as String, bitmap? as wx.Bitmap, pos? as wx.Point, style? as Number) {block?} {block?}
+Gurax_DeclareConstructorAlias(Wizard_gurax, "Wizard")
+{
+	Declare(VTYPE_wxWizard, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.Wizard.");
+}
+
+Gurax_ImplementConstructorEx(Wizard_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	int id = id_validFlag? args_gurax.PickNumber<int>() : wxID_ANY;
+	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "";
+	const wxBitmap& bitmap = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_DIALOG_STYLE;
+	// Function body
+	auto pEntity_gurax = new Value_wxWizard::EntityT(parent, id, title, bitmap, pos, style);
+	RefPtr<Value_wxWizard> pValue_gurax(new Value_wxWizard(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Wizard#Create(parent as wx.Window, id? as Number, title? as String, bitmap? as wx.Bitmap, pos? as wx.Point, style? as Number)
+Gurax_DeclareMethodAlias(wxWizard, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("title", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool id_validFlag = args_gurax.IsValid();
+	int id = id_validFlag? args_gurax.PickNumber<int>() : wxID_ANY;
+	const char* title = args_gurax.IsValid()? args_gurax.PickString() : "";
+	const wxBitmap& bitmap = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxDEFAULT_DIALOG_STYLE;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, title, bitmap, pos, style);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Wizard#FitToPage(firstPage as wx.WizardPage)
+Gurax_DeclareMethodAlias(wxWizard, FitToPage_gurax, "FitToPage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("firstPage", VTYPE_wxWizardPage, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, FitToPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWizardPage& value_firstPage = args_gurax.Pick<Value_wxWizardPage>();
+	const wxWizardPage* firstPage = value_firstPage.GetEntityPtr();
+	// Function body
+	pEntity_gurax->FitToPage(firstPage);
+	return Gurax::Value::nil();
+}
+
+// wx.Wizard#GetBitmap() {block?}
+Gurax_DeclareMethodAlias(wxWizard, GetBitmap_gurax, "GetBitmap")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, GetBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetBitmap()));
+}
+
+// wx.Wizard#GetBitmapBackgroundColour() {block?}
+Gurax_DeclareMethodAlias(wxWizard, GetBitmapBackgroundColour_gurax, "GetBitmapBackgroundColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, GetBitmapBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetBitmapBackgroundColour()));
+}
+
+// wx.Wizard#GetBitmapPlacement()
+Gurax_DeclareMethodAlias(wxWizard, GetBitmapPlacement_gurax, "GetBitmapPlacement")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, GetBitmapPlacement_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetBitmapPlacement();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Wizard#GetCurrentPage() {block?}
+Gurax_DeclareMethodAlias(wxWizard, GetCurrentPage_gurax, "GetCurrentPage")
+{
+	Declare(VTYPE_wxWizardPage, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, GetCurrentPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(
+		pEntity_gurax->GetCurrentPage()));
+}
+
+// wx.Wizard#GetMinimumBitmapWidth()
+Gurax_DeclareMethodAlias(wxWizard, GetMinimumBitmapWidth_gurax, "GetMinimumBitmapWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, GetMinimumBitmapWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetMinimumBitmapWidth();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Wizard#GetPageAreaSizer() {block?}
+Gurax_DeclareMethodAlias(wxWizard, GetPageAreaSizer_gurax, "GetPageAreaSizer")
+{
+	Declare(VTYPE_wxSizer, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, GetPageAreaSizer_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSizer(
+		pEntity_gurax->GetPageAreaSizer()));
+}
+
+// wx.Wizard#GetPageSize() {block?}
+Gurax_DeclareMethodAlias(wxWizard, GetPageSize_gurax, "GetPageSize")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, GetPageSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetPageSize()));
+}
+
+// wx.Wizard#HasNextPage(page as wx.WizardPage)
+Gurax_DeclareMethodAlias(wxWizard, HasNextPage_gurax, "HasNextPage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("page", VTYPE_wxWizardPage, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, HasNextPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWizardPage& value_page = args_gurax.Pick<Value_wxWizardPage>();
+	wxWizardPage* page = value_page.GetEntityPtr();
+	// Function body
+	bool rtn = pEntity_gurax->HasNextPage(page);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Wizard#HasPrevPage(page as wx.WizardPage)
+Gurax_DeclareMethodAlias(wxWizard, HasPrevPage_gurax, "HasPrevPage")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("page", VTYPE_wxWizardPage, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, HasPrevPage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWizardPage& value_page = args_gurax.Pick<Value_wxWizardPage>();
+	wxWizardPage* page = value_page.GetEntityPtr();
+	// Function body
+	bool rtn = pEntity_gurax->HasPrevPage(page);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Wizard#RunWizard(firstPage as wx.WizardPage)
+Gurax_DeclareMethodAlias(wxWizard, RunWizard_gurax, "RunWizard")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("firstPage", VTYPE_wxWizardPage, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, RunWizard_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWizardPage& value_firstPage = args_gurax.Pick<Value_wxWizardPage>();
+	wxWizardPage* firstPage = value_firstPage.GetEntityPtr();
+	// Function body
+	bool rtn = pEntity_gurax->RunWizard(firstPage);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Wizard#SetBitmap(bitmap as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxWizard, SetBitmap_gurax, "SetBitmap")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, SetBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	// Function body
+	pEntity_gurax->SetBitmap(bitmap);
+	return Gurax::Value::nil();
+}
+
+// wx.Wizard#SetBitmapBackgroundColour(colour as wx.Colour)
+Gurax_DeclareMethodAlias(wxWizard, SetBitmapBackgroundColour_gurax, "SetBitmapBackgroundColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, SetBitmapBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	// Function body
+	pEntity_gurax->SetBitmapBackgroundColour(colour);
+	return Gurax::Value::nil();
+}
+
+// wx.Wizard#SetBitmapPlacement(placement as Number)
+Gurax_DeclareMethodAlias(wxWizard, SetBitmapPlacement_gurax, "SetBitmapPlacement")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("placement", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, SetBitmapPlacement_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int placement = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetBitmapPlacement(placement);
+	return Gurax::Value::nil();
+}
+
+// wx.Wizard#SetBorder(border as Number)
+Gurax_DeclareMethodAlias(wxWizard, SetBorder_gurax, "SetBorder")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, SetBorder_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int border = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetBorder(border);
+	return Gurax::Value::nil();
+}
+
+// wx.Wizard#SetMinimumBitmapWidth(width as Number)
+Gurax_DeclareMethodAlias(wxWizard, SetMinimumBitmapWidth_gurax, "SetMinimumBitmapWidth")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, SetMinimumBitmapWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetMinimumBitmapWidth(width);
+	return Gurax::Value::nil();
+}
+
+// wx.Wizard#SetPageSize(sizePage as wx.Size)
+Gurax_DeclareMethodAlias(wxWizard, SetPageSize_gurax, "SetPageSize")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("sizePage", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizard, SetPageSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxSize& value_sizePage = args_gurax.Pick<Value_wxSize>();
+	const wxSize& sizePage = value_sizePage.GetEntity();
+	// Function body
+	pEntity_gurax->SetPageSize(sizePage);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +510,26 @@ void VType_wxWizard::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxDialog, Flag::Mutable);
+	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(Wizard_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxWizard, Create_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, FitToPage_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, GetBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, GetBitmapBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, GetBitmapPlacement_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, GetCurrentPage_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, GetMinimumBitmapWidth_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, GetPageAreaSizer_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, GetPageSize_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, HasNextPage_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, HasPrevPage_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, RunWizard_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, SetBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, SetBitmapBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, SetBitmapPlacement_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, SetBorder_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, SetMinimumBitmapWidth_gurax));
+	Assign(Gurax_CreateMethod(wxWizard, SetPageSize_gurax));
 }
 
 //------------------------------------------------------------------------------

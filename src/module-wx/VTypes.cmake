@@ -247,6 +247,7 @@ set(SRCFILES_VTYPE
 	VType_wxNotebook.cpp
 	VType_wxNotifyEvent.cpp
 	VType_wxNumberEntryDialog.cpp
+	VType_wxNumericPropertyValidator.cpp
 	VType_wxObject.cpp
 	VType_wxOutputStream.cpp
 	VType_wxOwnerDrawnComboBox.cpp
@@ -366,6 +367,7 @@ set(SRCFILES_VTYPE
 	VType_wxTextAttr.cpp
 	VType_wxTextCtrl.cpp
 	VType_wxTextEntryDialog.cpp
+	VType_wxTextValidator.cpp
 	VType_wxTimePickerCtrl.cpp
 	VType_wxTimer.cpp
 	VType_wxTimerEvent.cpp
@@ -392,6 +394,7 @@ set(SRCFILES_VTYPE
 	VType_wxWindow.cpp
 	VType_wxWindowDC.cpp
 	VType_wxWizard.cpp
+	VType_wxWizardEvent.cpp
 	VType_wxWizardPage.cpp
 	VType_wxWizardPageSimple.cpp
 	VType_wxWrapSizer.cpp

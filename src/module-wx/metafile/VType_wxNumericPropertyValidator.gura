@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxNumericPropertyValidator.gura
+//==============================================================================
+NumericPropertyValidator = Class(TextValidator) {
+	@include['wx/propgrid/props.h']
+}

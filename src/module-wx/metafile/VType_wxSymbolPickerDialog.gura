@@ -3,4 +3,18 @@
 //==============================================================================
 SymbolPickerDialog = Class(Dialog) {
 	@include['wx/richtext/richtextsymboldlg.h']
+	__init__(symbol as const_String_r, initialFont as const_String_r, normalTextFont as const_String_r, parent as Window_p, id as WindowID = wxID_ANY, title as const_String_r = "Symbols", pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxCLOSE_BOX)
+	Create(symbol as const_String_r, initialFont as const_String_r, normalTextFont as const_String_r, parent as Window_p, id as WindowID = wxID_ANY, caption as const_String_r = "Symbols", pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxSize(400, 300), style as long = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxCLOSE_BOX) as bool
+	GetFontName() as String
+	GetFromUnicode() as bool
+	GetNormalTextFontName() as String
+	GetSymbol() as String
+	GetSymbolChar() as int
+	HasSelection() as bool
+	SetFontName(value as const_String_r) as void
+	SetFromUnicode(value as bool) as void
+	SetNormalTextFontName(value as const_String_r) as void
+	SetSymbol(value as String) as void
+	SetUnicodeMode(unicodeMode as bool) as void
+	UseNormalFont() as bool
 }

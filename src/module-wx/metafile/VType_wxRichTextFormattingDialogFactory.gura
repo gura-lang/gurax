@@ -1,0 +1,15 @@
+//==============================================================================
+// VType_wxRichTextFormattingDialogFactory.gura
+//==============================================================================
+RichTextFormattingDialogFactory = Class():loosePointer {
+	@include['wx/richtext/richtextformatdlg.h']
+	__init__()
+	CreateButtons(dialog as RichTextFormattingDialog_p) as bool
+	//CreatePage(page as int, title as const_String_r, dialog as RichTextFormattingDialog_p) as Panel_p
+	CreatePages(pages as long, dialog as RichTextFormattingDialog_p) as bool
+	GetPageId(i as int) as int
+	GetPageIdCount() as int
+	GetPageImage(id as int) as int
+	SetSheetStyle(dialog as RichTextFormattingDialog_p) as bool
+	ShowHelp(page as int, dialog as RichTextFormattingDialog_p) as bool
+}

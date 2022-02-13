@@ -44,8 +44,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,						wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxContextMenuEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_CACHE_HINT,					wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_CLICK,			wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_RIGHT_CLICK,	wxDataViewEvent);
@@ -288,6 +288,13 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_TREE_SET_INFO,							wxTreeEvent);
 	Gurax_AssignEvent(EVT_TREE_STATE_IMAGE_CLICK,				wxTreeEvent);
 	Gurax_AssignEvent(EVT_UPDATE_UI,								wxUpdateUIEvent);
+	Gurax_AssignEvent(EVT_WIZARD_BEFORE_PAGE_CHANGED,			wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_CANCEL,							wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_FINISHED,						wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_HELP,							wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_PAGE_CHANGED,					wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_PAGE_CHANGING,					wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_PAGE_SHOWN,						wxWizardEvent);
 }
 
 Gurax_EndModuleScope(wx)

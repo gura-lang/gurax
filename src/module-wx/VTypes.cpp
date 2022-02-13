@@ -255,6 +255,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxNotebook);
 	frame.Assign(VTYPE_wxNotifyEvent);
 	frame.Assign(VTYPE_wxNumberEntryDialog);
+	frame.Assign(VTYPE_wxNumericPropertyValidator);
 	frame.Assign(VTYPE_wxObject);
 	frame.Assign(VTYPE_wxOutputStream);
 	frame.Assign(VTYPE_wxOwnerDrawnComboBox);
@@ -374,6 +375,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxTextAttr);
 	frame.Assign(VTYPE_wxTextCtrl);
 	frame.Assign(VTYPE_wxTextEntryDialog);
+	frame.Assign(VTYPE_wxTextValidator);
 	frame.Assign(VTYPE_wxTimePickerCtrl);
 	frame.Assign(VTYPE_wxTimer);
 	frame.Assign(VTYPE_wxTimerEvent);
@@ -400,6 +402,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxWindow);
 	frame.Assign(VTYPE_wxWindowDC);
 	frame.Assign(VTYPE_wxWizard);
+	frame.Assign(VTYPE_wxWizardEvent);
 	frame.Assign(VTYPE_wxWizardPage);
 	frame.Assign(VTYPE_wxWizardPageSimple);
 	frame.Assign(VTYPE_wxWrapSizer);

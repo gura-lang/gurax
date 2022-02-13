@@ -32,6 +32,89 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.SingleChoiceDialog#GetSelection()
+Gurax_DeclareMethodAlias(wxSingleChoiceDialog, GetSelection_gurax, "GetSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSingleChoiceDialog, GetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetSelection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.SingleChoiceDialog#GetStringSelection()
+Gurax_DeclareMethodAlias(wxSingleChoiceDialog, GetStringSelection_gurax, "GetStringSelection")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSingleChoiceDialog, GetStringSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetStringSelection();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.SingleChoiceDialog#SetSelection(selection as Number)
+Gurax_DeclareMethodAlias(wxSingleChoiceDialog, SetSelection_gurax, "SetSelection")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("selection", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSingleChoiceDialog, SetSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int selection = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetSelection(selection);
+	return Gurax::Value::nil();
+}
+
+// wx.SingleChoiceDialog#ShowModal()
+Gurax_DeclareMethodAlias(wxSingleChoiceDialog, ShowModal_gurax, "ShowModal")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxSingleChoiceDialog, ShowModal_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->ShowModal();
+	return new Gurax::Value_Number(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +132,10 @@ void VType_wxSingleChoiceDialog::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxSingleChoiceDialog, GetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxSingleChoiceDialog, GetStringSelection_gurax));
+	Assign(Gurax_CreateMethod(wxSingleChoiceDialog, SetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxSingleChoiceDialog, ShowModal_gurax));
 }
 
 //------------------------------------------------------------------------------
