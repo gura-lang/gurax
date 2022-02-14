@@ -4,3 +4,22 @@
 SplitterWindow = Class(Window) {
 	@include['wx/splitter.h']
 }
+
+@const { // Styles
+	SP_3D
+	SP_THIN_SASH
+	SP_3DSASH
+	SP_3DBORDER
+	SP_BORDER
+	SP_NOBORDER
+	SP_NO_XP_THEME
+	SP_PERMIT_UNSPLIT
+	SP_LIVE_UPDATE
+}
+
+@event {
+	EVT_SPLITTER_SASH_POS_CHANGING	>> SplitterEvent
+	EVT_SPLITTER_SASH_POS_CHANGED	>> SplitterEvent
+	EVT_SPLITTER_UNSPLIT			>> SplitterEvent
+	//EVT_SPLITTER_DCLICK				>> SplitterEvent
+}

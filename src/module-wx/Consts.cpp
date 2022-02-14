@@ -977,8 +977,17 @@ void AssignConsts(Frame& frame)
 	frame.Assign("SL_VALUE_LABEL", new Value_Number(wxSL_VALUE_LABEL));
 	frame.Assign("SL_VERTICAL", new Value_Number(wxSL_VERTICAL));
 	frame.Assign("SOUTH", new Value_Number(wxSOUTH));
+	frame.Assign("SP_3D", new Value_Number(wxSP_3D));
+	frame.Assign("SP_3DBORDER", new Value_Number(wxSP_3DBORDER));
+	frame.Assign("SP_3DSASH", new Value_Number(wxSP_3DSASH));
 	frame.Assign("SP_ARROW_KEYS", new Value_Number(wxSP_ARROW_KEYS));
+	frame.Assign("SP_BORDER", new Value_Number(wxSP_BORDER));
 	frame.Assign("SP_HORIZONTAL", new Value_Number(wxSP_HORIZONTAL));
+	frame.Assign("SP_LIVE_UPDATE", new Value_Number(wxSP_LIVE_UPDATE));
+	frame.Assign("SP_NOBORDER", new Value_Number(wxSP_NOBORDER));
+	frame.Assign("SP_NO_XP_THEME", new Value_Number(wxSP_NO_XP_THEME));
+	frame.Assign("SP_PERMIT_UNSPLIT", new Value_Number(wxSP_PERMIT_UNSPLIT));
+	frame.Assign("SP_THIN_SASH", new Value_Number(wxSP_THIN_SASH));
 	frame.Assign("SP_VERTICAL", new Value_Number(wxSP_VERTICAL));
 	frame.Assign("SP_WRAP", new Value_Number(wxSP_WRAP));
 	frame.Assign("SRC_INVERT", new Value_Number(wxSRC_INVERT));

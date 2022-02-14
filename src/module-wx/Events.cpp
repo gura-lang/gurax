@@ -44,8 +44,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,						wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxCommandEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_CACHE_HINT,					wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_CLICK,			wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_RIGHT_CLICK,	wxDataViewEvent);
@@ -222,6 +222,10 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_SPIN_DOWN,								wxSpinEvent);
 	Gurax_AssignEvent(EVT_SPIN_UP,								wxSpinEvent);
 	Gurax_AssignEvent(EVT_SPIN_UP,								wxSpinEvent);
+	//Gurax_AssignEvent(EVT_SPLITTER_DCLICK,						wxSplitterEvent);
+	Gurax_AssignEvent(EVT_SPLITTER_SASH_POS_CHANGED,				wxSplitterEvent);
+	Gurax_AssignEvent(EVT_SPLITTER_SASH_POS_CHANGING,			wxSplitterEvent);
+	Gurax_AssignEvent(EVT_SPLITTER_UNSPLIT,						wxSplitterEvent);
 	Gurax_AssignEvent(EVT_STC_AUTOCOMP_CANCELLED,				wxStyledTextEvent);
 	Gurax_AssignEvent(EVT_STC_AUTOCOMP_CHAR_DELETED,				wxStyledTextEvent);
 	Gurax_AssignEvent(EVT_STC_AUTOCOMP_SELECTION,				wxStyledTextEvent);

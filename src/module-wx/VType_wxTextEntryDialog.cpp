@@ -190,11 +190,11 @@ Gurax_ImplementMethodEx(wxTextEntryDialog, ShowModal_gurax, processor_gurax, arg
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.TextEntryDialog#SetTextValidator(validator as wx.TextValidator)
+// wx.TextEntryDialog#SetTextValidator(args* as Any)
 Gurax_DeclareMethodAlias(wxTextEntryDialog, SetTextValidator_gurax, "SetTextValidator")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("validator", VTYPE_wxTextValidator, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -208,11 +208,40 @@ Gurax_ImplementMethodEx(wxTextEntryDialog, SetTextValidator_gurax, processor_gur
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxTextValidator& value_validator = args_gurax.Pick<Value_wxTextValidator>();
-	const wxTextValidator& validator = value_validator.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	pEntity_gurax->SetTextValidator(validator);
-	return Gurax::Value::nil();
+	// SetTextValidator(validator as const_TextValidator_r) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("validator", VTYPE_wxTextValidator);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxTextValidator& validator = args.Pick<Value_wxTextValidator>().GetEntity();
+		pEntity_gurax->SetTextValidator(validator);
+		return Value::nil();
+	} while (0);
+	Error::ClearIssuedFlag();
+	// SetTextValidator(style as TextValidatorStyle = wxFILTER_NONE) as void
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("style", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		wxTextValidatorStyle style = args.IsValid()? args.PickNumber<wxTextValidatorStyle>() : wxFILTER_NONE;
+		pEntity_gurax->SetTextValidator(style);
+		return Value::nil();
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
