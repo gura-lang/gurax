@@ -222,7 +222,6 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_SPIN_DOWN,								wxSpinEvent);
 	Gurax_AssignEvent(EVT_SPIN_UP,								wxSpinEvent);
 	Gurax_AssignEvent(EVT_SPIN_UP,								wxSpinEvent);
-	//Gurax_AssignEvent(EVT_SPLITTER_DCLICK,						wxSplitterEvent);
 	Gurax_AssignEvent(EVT_SPLITTER_SASH_POS_CHANGED,				wxSplitterEvent);
 	Gurax_AssignEvent(EVT_SPLITTER_SASH_POS_CHANGING,			wxSplitterEvent);
 	Gurax_AssignEvent(EVT_SPLITTER_UNSPLIT,						wxSplitterEvent);

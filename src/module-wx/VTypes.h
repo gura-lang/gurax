@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxSplitterEvent.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -351,6 +350,7 @@
 #include "VType_wxSpinCtrl.h"
 #include "VType_wxSpinEvent.h"
 #include "VType_wxSplashScreen.h"
+#include "VType_wxSplitterEvent.h"
 #include "VType_wxSplitterWindow.h"
 #include "VType_wxStaticBitmap.h"
 #include "VType_wxStaticBox.h"

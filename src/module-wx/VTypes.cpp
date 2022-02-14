@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxSplitterEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -356,6 +355,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxSpinCtrl);
 	frame.Assign(VTYPE_wxSpinEvent);
 	frame.Assign(VTYPE_wxSplashScreen);
+	frame.Assign(VTYPE_wxSplitterEvent);
 	frame.Assign(VTYPE_wxSplitterWindow);
 	frame.Assign(VTYPE_wxStaticBitmap);
 	frame.Assign(VTYPE_wxStaticBox);

@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxSplitterEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -348,6 +347,7 @@ set(SRCFILES_VTYPE
 	VType_wxSpinCtrl.cpp
 	VType_wxSpinEvent.cpp
 	VType_wxSplashScreen.cpp
+	VType_wxSplitterEvent.cpp
 	VType_wxSplitterWindow.cpp
 	VType_wxStaticBitmap.cpp
 	VType_wxStaticBox.cpp
