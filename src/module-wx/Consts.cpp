@@ -977,6 +977,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("SL_VALUE_LABEL", new Value_Number(wxSL_VALUE_LABEL));
 	frame.Assign("SL_VERTICAL", new Value_Number(wxSL_VERTICAL));
 	frame.Assign("SOUTH", new Value_Number(wxSOUTH));
+	frame.Assign("SPLIT_DRAG_DRAGGING", new Value_Number(wxSPLIT_DRAG_DRAGGING));
+	frame.Assign("SPLIT_DRAG_LEFT_DOWN", new Value_Number(wxSPLIT_DRAG_LEFT_DOWN));
+	frame.Assign("SPLIT_DRAG_NONE", new Value_Number(wxSPLIT_DRAG_NONE));
+	frame.Assign("SPLIT_HORIZONTAL", new Value_Number(wxSPLIT_HORIZONTAL));
+	frame.Assign("SPLIT_VERTICAL", new Value_Number(wxSPLIT_VERTICAL));
 	frame.Assign("SP_3D", new Value_Number(wxSP_3D));
 	frame.Assign("SP_3DBORDER", new Value_Number(wxSP_3DBORDER));
 	frame.Assign("SP_3DSASH", new Value_Number(wxSP_3DSASH));
@@ -1122,6 +1127,12 @@ void AssignConsts(Frame& frame)
 	frame.Assign("TE_RIGHT", new Value_Number(wxTE_RIGHT));
 	frame.Assign("TE_WORDWRAP", new Value_Number(wxTE_WORDWRAP));
 	frame.Assign("TILE", new Value_Number(wxTILE));
+	frame.Assign("TL_3STATE", new Value_Number(wxTL_3STATE));
+	frame.Assign("TL_CHECKBOX", new Value_Number(wxTL_CHECKBOX));
+	frame.Assign("TL_DEFAULT_STYLE", new Value_Number(wxTL_DEFAULT_STYLE));
+	frame.Assign("TL_MULTIPLE", new Value_Number(wxTL_MULTIPLE));
+	frame.Assign("TL_SINGLE", new Value_Number(wxTL_SINGLE));
+	frame.Assign("TL_USER_3STATE", new Value_Number(wxTL_USER_3STATE));
 	frame.Assign("TOP", new Value_Number(wxTOP));
 	frame.Assign("TRANSPARENT_WINDOW", new Value_Number(wxTRANSPARENT_WINDOW));
 	frame.Assign("TR_DEFAULT_STYLE", new Value_Number(wxTR_DEFAULT_STYLE));

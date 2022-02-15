@@ -3,6 +3,40 @@
 //==============================================================================
 SplitterWindow = Class(Window) {
 	@include['wx/splitter.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxSP_3D, name as const_String_r = "splitterWindow")
+	Create(parent as Window_p, id as WindowID = wxID_ANY, point as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxSP_3D, name as const_String_r = "splitter") as bool
+	GetMinimumPaneSize() as int
+	GetSashGravity() as double
+	GetSashPosition() as int
+	GetSashSize() as int
+	GetDefaultSashSize() as int
+	GetSplitMode() as SplitMode
+	GetWindow1() as Window_p
+	GetWindow2() as Window_p
+	Initialize(window as Window_p) as void
+	IsSashInvisible() as bool
+	IsSplit() as bool
+	OnDoubleClickSash(x as int, y as int) as void
+	OnSashPositionChange(newSashPosition as int) as bool
+	OnUnsplit(removed as Window_p) as void
+	ReplaceWindow(winOld as Window_p, winNew as Window_p) as bool
+	SetMinimumPaneSize(paneSize as int) as void
+	SetSashGravity(gravity as double) as void
+	SetSashPosition(position as int, redraw as bool = true) as void
+	SetSashSize(size as int) as void
+	SetSplitMode(mode as int) as void
+	SetSashInvisible(invisible as bool = true) as void
+	SplitHorizontally(window1 as Window_p, window2 as Window_p, sashPosition as int = 0) as bool
+	SplitVertically(window1 as Window_p, window2 as Window_p, sashPosition as int = 0) as bool
+	Unsplit(toRemove as Window_p = NULL) as bool
+	UpdateSize() as void
+}
+
+@enum {
+	SplitMode {
+		SPLIT_HORIZONTAL
+		SPLIT_VERTICAL
+	}
 }
 
 @const { // Styles
@@ -17,9 +51,15 @@ SplitterWindow = Class(Window) {
 	SP_LIVE_UPDATE
 }
 
+@const {
+	SPLIT_DRAG_NONE
+	SPLIT_DRAG_DRAGGING
+	SPLIT_DRAG_LEFT_DOWN
+}
+
 @event {
 	EVT_SPLITTER_SASH_POS_CHANGING	>> SplitterEvent
 	EVT_SPLITTER_SASH_POS_CHANGED	>> SplitterEvent
 	EVT_SPLITTER_UNSPLIT			>> SplitterEvent
-	//EVT_SPLITTER_DCLICK				>> SplitterEvent
+	//EVT_SPLITTER_DCLICK			>> SplitterEvent
 }

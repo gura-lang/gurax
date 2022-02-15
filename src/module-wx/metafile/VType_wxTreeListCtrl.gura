@@ -4,3 +4,12 @@
 TreeListCtrl = Class(Window) {
 	@include['wx/treelist.h']
 }
+
+@const { // Styles
+	TL_SINGLE
+	TL_MULTIPLE
+	TL_CHECKBOX
+	TL_3STATE
+	TL_USER_3STATE
+	TL_DEFAULT_STYLE
+}
