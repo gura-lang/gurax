@@ -930,6 +930,7 @@ void AssignConsts(Frame& frame)
 	frame.Assign("RIBBON_BAR_SHOW_PANEL_EXT_BUTTONS", new Value_Number(wxRIBBON_BAR_SHOW_PANEL_EXT_BUTTONS));
 	frame.Assign("RIBBON_BAR_SHOW_PANEL_MINIMISE_BUTTONS", new Value_Number(wxRIBBON_BAR_SHOW_PANEL_MINIMISE_BUTTONS));
 	frame.Assign("RIBBON_BAR_SHOW_TOGGLE_BUTTON", new Value_Number(wxRIBBON_BAR_SHOW_TOGGLE_BUTTON));
+	frame.Assign("RICHTEXTSTYLELIST_HIDE_TYPE_SELECTOR", new Value_Number(wxRICHTEXTSTYLELIST_HIDE_TYPE_SELECTOR));
 	frame.Assign("RIGHT", new Value_Number(wxRIGHT));
 	frame.Assign("SASH_BOTTOM", new Value_Number(wxSASH_BOTTOM));
 	frame.Assign("SASH_LEFT", new Value_Number(wxSASH_LEFT));

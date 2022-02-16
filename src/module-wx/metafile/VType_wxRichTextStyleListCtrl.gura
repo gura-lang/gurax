@@ -3,4 +3,19 @@
 //==============================================================================
 RichTextStyleListCtrl = Class(Control) {
 	@include['wx/richtext/richtextstyles.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0)
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0) as bool
+	GetRichTextCtrl() as RichTextCtrl_p
+	GetStyleChoice() as Choice_p
+	GetStyleListBox() as RichTextStyleListBox_p
+	GetStyleSheet() as RichTextStyleSheet_p
+	//GetStyleType() as RichTextStyleListBox::wxRichTextStyleType
+	SetRichTextCtrl(ctrl as RichTextCtrl_p) as void
+	SetStyleSheet(styleSheet as RichTextStyleSheet_p) as void
+	//SetStyleType(styleType as RichTextStyleListBox::wxRichTextStyleType) as void
+	UpdateStyles() as void
+}
+
+@const {
+	RICHTEXTSTYLELIST_HIDE_TYPE_SELECTOR
 }
