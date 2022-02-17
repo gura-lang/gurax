@@ -3,4 +3,29 @@
 //==============================================================================
 RichTextStyleListBox = Class(HtmlListBox) {
 	@include['wx/richtext/richtextstyles.h']
+	@enum {
+		RichTextStyleType {
+			wxRICHTEXT_STYLE_ALL
+			wxRICHTEXT_STYLE_PARAGRAPH
+			wxRICHTEXT_STYLE_CHARACTER
+			wxRICHTEXT_STYLE_LIST
+			wxRICHTEXT_STYLE_BOX
+		}
+	}
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0)
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0) as bool
+	ApplyStyle(i as int) as void
+	ConvertTenthsMMToPixels(dc as DC_r, units as int) as int
+	CreateHTML(def as RichTextStyleDefinition_p) as String
+	GetApplyOnSelection() as bool
+	GetRichTextCtrl() as RichTextCtrl_p
+	GetStyle(i as size_t) as RichTextStyleDefinition_p
+	GetStyleSheet() as RichTextStyleSheet_p
+	//GetStyleType() as RichTextStyleListBox::wxRichTextStyleType
+	OnLeftDown(event as MouseEvent_r) as void
+	SetApplyOnSelection(applyOnSelection as bool) as void
+	SetRichTextCtrl(ctrl as RichTextCtrl_p) as void
+	SetStyleSheet(styleSheet as RichTextStyleSheet_p) as void
+	//SetStyleType(styleType as RichTextStyleListBox::wxRichTextStyleType) as void
+	UpdateStyles() as void
 }
