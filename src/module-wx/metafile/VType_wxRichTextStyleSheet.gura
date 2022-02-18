@@ -3,4 +3,30 @@
 //==============================================================================
 RichTextStyleSheet = Class {
 	@include['wx/richtext/richtextstyles.h']
+	__init__()
+	AddCharacterStyle(def as RichTextCharacterStyleDefinition_p) as bool
+	AddListStyle(def as RichTextListStyleDefinition_p) as bool
+	AddParagraphStyle(def as RichTextParagraphStyleDefinition_p) as bool
+	AddStyle(def as RichTextStyleDefinition_p) as bool
+	DeleteStyles() as void
+	FindCharacterStyle(name as const_String_r, recurse as bool = true) as RichTextCharacterStyleDefinition_p
+	FindListStyle(name as const_String_r, recurse as bool = true) as RichTextListStyleDefinition_p
+	FindParagraphStyle(name as const_String_r, recurse as bool = true) as RichTextParagraphStyleDefinition_p
+	FindStyle(name as const_String_r) as RichTextStyleDefinition_p
+	GetCharacterStyle(n as size_t) as RichTextCharacterStyleDefinition_p
+	GetCharacterStyleCount() as size_t
+	GetDescription() as String
+	GetListStyle(n as size_t) as RichTextListStyleDefinition_p
+	GetListStyleCount() as size_t
+	GetName() as String
+	GetParagraphStyle(n as size_t) as RichTextParagraphStyleDefinition_p
+	GetParagraphStyleCount() as size_t
+	RemoveCharacterStyle(def as RichTextStyleDefinition_p, deleteStyle as bool = false) as bool
+	RemoveListStyle(def as RichTextStyleDefinition_p, deleteStyle as bool = false) as bool
+	RemoveParagraphStyle(def as RichTextStyleDefinition_p, deleteStyle as bool = false) as bool
+	RemoveStyle(def as RichTextStyleDefinition_p, deleteStyle as bool = false) as bool
+	SetDescription(descr as const_String_r) as void
+	SetName(name as const_String_r) as void
+	GetProperties() as RichTextProperties
+	SetProperties(props as const_RichTextProperties_r) as void
 }

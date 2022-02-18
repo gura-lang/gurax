@@ -3,4 +3,22 @@
 //==============================================================================
 AuiMDIParentFrame = Class(Frame) {
 	@include['wx/aui/tabmdi.h']
+	__init__(parent as Window_p, winid as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_FRAME_STYLE|wxVSCROLL|wxHSCROLL, name as const_String_r = wxFrameNameStr)
+	Create(parent as Window_p, winid as WindowID, title as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_FRAME_STYLE|wxVSCROLL|wxHSCROLL, name as const_String_r = wxFrameNameStr) as bool
+	SetArtProvider(provider as AuiTabArt_p) as void
+	GetArtProvider() as AuiTabArt_p
+	GetNotebook() as AuiNotebook_p
+	GetWindowMenu() as Menu_p
+	SetWindowMenu(pMenu as Menu_p) as void
+	SetMenuBar(pMenuBar as MenuBar_p) as void
+	SetChildMenuBar(pChild as AuiMDIChildFrame_p) as void
+	GetActiveChild() as AuiMDIChildFrame_p
+	SetActiveChild(pChildFrame as AuiMDIChildFrame_p) as void
+	GetClientWindow() as AuiMDIClientWindow_p
+	OnCreateClient() as AuiMDIClientWindow_p
+	Cascade() as void
+	Tile(orient as Orientation = wxHORIZONTAL) as void
+	ArrangeIcons() as void
+	ActivateNext() as void
+	ActivatePrevious() as void
 }

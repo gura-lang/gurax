@@ -4,7 +4,7 @@
 RichTextStyleListBox = Class(HtmlListBox) {
 	@include['wx/richtext/richtextstyles.h']
 	@enum {
-		RichTextStyleType {
+		wxRichTextStyleType {
 			wxRICHTEXT_STYLE_ALL
 			wxRICHTEXT_STYLE_PARAGRAPH
 			wxRICHTEXT_STYLE_CHARACTER
@@ -21,11 +21,11 @@ RichTextStyleListBox = Class(HtmlListBox) {
 	GetRichTextCtrl() as RichTextCtrl_p
 	GetStyle(i as size_t) as RichTextStyleDefinition_p
 	GetStyleSheet() as RichTextStyleSheet_p
-	//GetStyleType() as RichTextStyleListBox::wxRichTextStyleType
+	GetStyleType() as RichTextStyleListBox.wxRichTextStyleType
 	OnLeftDown(event as MouseEvent_r) as void
 	SetApplyOnSelection(applyOnSelection as bool) as void
 	SetRichTextCtrl(ctrl as RichTextCtrl_p) as void
 	SetStyleSheet(styleSheet as RichTextStyleSheet_p) as void
-	//SetStyleType(styleType as RichTextStyleListBox::wxRichTextStyleType) as void
+	SetStyleType(styleType as RichTextStyleListBox.wxRichTextStyleType) as void
 	UpdateStyles() as void
 }

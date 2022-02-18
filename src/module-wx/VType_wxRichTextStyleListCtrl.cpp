@@ -184,6 +184,26 @@ Gurax_ImplementMethodEx(wxRichTextStyleListCtrl, GetStyleSheet_gurax, processor_
 		*pEntity_gurax->GetStyleSheet()));
 }
 
+// wx.RichTextStyleListCtrl#GetStyleType()
+Gurax_DeclareMethodAlias(wxRichTextStyleListCtrl, GetStyleType_gurax, "GetStyleType")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextStyleListCtrl, GetStyleType_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxRichTextStyleListBox::wxRichTextStyleType rtn = pEntity_gurax->GetStyleType();
+	return new Gurax::Value_Number(rtn);
+}
+
 // wx.RichTextStyleListCtrl#SetRichTextCtrl(ctrl as wx.RichTextCtrl)
 Gurax_DeclareMethodAlias(wxRichTextStyleListCtrl, SetRichTextCtrl_gurax, "SetRichTextCtrl")
 {
@@ -234,6 +254,30 @@ Gurax_ImplementMethodEx(wxRichTextStyleListCtrl, SetStyleSheet_gurax, processor_
 	return Gurax::Value::nil();
 }
 
+// wx.RichTextStyleListCtrl#SetStyleType(styleType as Number)
+Gurax_DeclareMethodAlias(wxRichTextStyleListCtrl, SetStyleType_gurax, "SetStyleType")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("styleType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxRichTextStyleListCtrl, SetStyleType_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxRichTextStyleListBox::wxRichTextStyleType styleType = args_gurax.PickNumber<wxRichTextStyleListBox::wxRichTextStyleType>();
+	// Function body
+	pEntity_gurax->SetStyleType(styleType);
+	return Gurax::Value::nil();
+}
+
 // wx.RichTextStyleListCtrl#UpdateStyles()
 Gurax_DeclareMethodAlias(wxRichTextStyleListCtrl, UpdateStyles_gurax, "UpdateStyles")
 {
@@ -275,8 +319,10 @@ void VType_wxRichTextStyleListCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxRichTextStyleListCtrl, GetStyleChoice_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextStyleListCtrl, GetStyleListBox_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextStyleListCtrl, GetStyleSheet_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextStyleListCtrl, GetStyleType_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextStyleListCtrl, SetRichTextCtrl_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextStyleListCtrl, SetStyleSheet_gurax));
+	Assign(Gurax_CreateMethod(wxRichTextStyleListCtrl, SetStyleType_gurax));
 	Assign(Gurax_CreateMethod(wxRichTextStyleListCtrl, UpdateStyles_gurax));
 }
 

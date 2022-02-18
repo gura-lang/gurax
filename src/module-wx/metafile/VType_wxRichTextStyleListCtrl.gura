@@ -9,10 +9,10 @@ RichTextStyleListCtrl = Class(Control) {
 	GetStyleChoice() as Choice_p
 	GetStyleListBox() as RichTextStyleListBox_p
 	GetStyleSheet() as RichTextStyleSheet_p
-	//GetStyleType() as RichTextStyleListBox::wxRichTextStyleType
+	GetStyleType() as RichTextStyleListBox.wxRichTextStyleType
 	SetRichTextCtrl(ctrl as RichTextCtrl_p) as void
 	SetStyleSheet(styleSheet as RichTextStyleSheet_p) as void
-	//SetStyleType(styleType as RichTextStyleListBox::wxRichTextStyleType) as void
+	SetStyleType(styleType as RichTextStyleListBox.wxRichTextStyleType) as void
 	UpdateStyles() as void
 }
 
