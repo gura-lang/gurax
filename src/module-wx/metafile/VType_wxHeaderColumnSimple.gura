@@ -1,0 +1,23 @@
+//==============================================================================
+// VType_wxHeaderColumnSimple.gura
+//==============================================================================
+HeaderColumnSimple = Class(SettableHeaderColumn) {
+	@include['wx/headercol.h']
+	__init__(title as const_String_r, width as int = wxCOL_WIDTH_DEFAULT, align as Alignment = wxALIGN_NOT, flags as int = wxCOL_DEFAULT_FLAGS)
+	//__init__(bitmap as const_Bitmap_r, width as int = wxCOL_WIDTH_DEFAULT, align as Alignment = wxALIGN_CENTER, flags as int = wxCOL_DEFAULT_FLAGS)
+	SetTitle(title as const_String_r) as void
+	GetTitle() as String
+	SetBitmap(bitmap as const_Bitmap_r) as void
+	GetBitmap() as Bitmap
+	SetWidth(width as int) as void
+	GetWidth() as int
+	SetMinWidth(minWidth as int) as void
+	GetMinWidth() as int
+	SetAlignment(align as Alignment) as void
+	GetAlignment() as Alignment
+	SetFlags(flags as int) as void
+	GetFlags() as int
+	IsSortKey() as bool
+	SetSortOrder(ascending as bool) as void
+	IsSortOrderAscending() as bool
+}

@@ -1,6 +1,6 @@
 //==============================================================================
 // VType_wxAuiTabArt.gura
 //==============================================================================
-AuiTabArt = Class():loosePointer																	 {
+AuiTabArt = Class():loosePointer {
 	@include['wx/aui/auibook.h']
 }

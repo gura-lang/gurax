@@ -3,4 +3,21 @@
 //==============================================================================
 SettableHeaderColumn = Class(HeaderColumn) {
 	@include['wx/headercol.h']
+	SetTitle(title as const_String_r) as void
+	SetBitmap(bitmap as const_Bitmap_r) as void
+	SetWidth(width as int) as void
+	SetMinWidth(minWidth as int) as void
+	SetAlignment(align as Alignment) as void
+	SetFlags(flags as int) as void
+	ChangeFlag(flag as int, set as bool) as void
+	SetFlag(flag as int) as void
+	ClearFlag(flag as int) as void
+	ToggleFlag(flag as int) as void
+	SetResizeable(resizable as bool) as void
+	SetSortable(sortable as bool) as void
+	SetReorderable(reorderable as bool) as void
+	SetHidden(hidden as bool) as void
+	UnsetAsSortKey() as void
+	SetSortOrder(ascending as bool) as void
+	ToggleSortOrder() as void
 }

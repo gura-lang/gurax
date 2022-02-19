@@ -3,4 +3,12 @@
 //==============================================================================
 HeaderCtrlSimple = Class(HeaderCtrl) {
 	@include['wx/headerctrl.h']
+	__init__(parent as Window_p, winid as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxHD_DEFAULT_STYLE, name as const_String_r = wxHeaderCtrlNameStr)
+	InsertColumn(col as const_HeaderColumnSimple_r, idx as unsigned_int) as void
+	AppendColumn(col as const_HeaderColumnSimple_r) as void
+	DeleteColumn(idx as unsigned_int) as void
+	ShowColumn(idx as unsigned_int, show as bool = true) as void
+	HideColumn(idx as unsigned_int) as void
+	ShowSortIndicator(idx as unsigned_int, sortOrder as bool = true) as void
+	RemoveSortIndicator() as void
 }

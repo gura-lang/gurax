@@ -28,10 +28,216 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.HeaderCtrlSimple(parent as wx.Window, winid? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
+Gurax_DeclareConstructorAlias(HeaderCtrlSimple_gurax, "HeaderCtrlSimple")
+{
+	Declare(VTYPE_wxHeaderCtrlSimple, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("winid", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.HeaderCtrlSimple.");
+}
+
+Gurax_ImplementConstructorEx(HeaderCtrlSimple_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	bool winid_validFlag = args_gurax.IsValid();
+	wxWindowID winid = winid_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxHD_DEFAULT_STYLE;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxHeaderCtrlNameStr;
+	// Function body
+	auto pEntity_gurax = new Value_wxHeaderCtrlSimple::EntityT(parent, winid, pos, size, style, name);
+	RefPtr<Value_wxHeaderCtrlSimple> pValue_gurax(new Value_wxHeaderCtrlSimple(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.HeaderCtrlSimple#InsertColumn(col as wx.HeaderColumnSimple, idx as Number)
+Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, InsertColumn_gurax, "InsertColumn")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("col", VTYPE_wxHeaderColumnSimple, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHeaderCtrlSimple, InsertColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHeaderColumnSimple& value_col = args_gurax.Pick<Value_wxHeaderColumnSimple>();
+	const wxHeaderColumnSimple& col = value_col.GetEntity();
+	unsigned int idx = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	pEntity_gurax->InsertColumn(col, idx);
+	return Gurax::Value::nil();
+}
+
+// wx.HeaderCtrlSimple#AppendColumn(col as wx.HeaderColumnSimple)
+Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, AppendColumn_gurax, "AppendColumn")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("col", VTYPE_wxHeaderColumnSimple, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHeaderCtrlSimple, AppendColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxHeaderColumnSimple& value_col = args_gurax.Pick<Value_wxHeaderColumnSimple>();
+	const wxHeaderColumnSimple& col = value_col.GetEntity();
+	// Function body
+	pEntity_gurax->AppendColumn(col);
+	return Gurax::Value::nil();
+}
+
+// wx.HeaderCtrlSimple#DeleteColumn(idx as Number)
+Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, DeleteColumn_gurax, "DeleteColumn")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHeaderCtrlSimple, DeleteColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int idx = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	pEntity_gurax->DeleteColumn(idx);
+	return Gurax::Value::nil();
+}
+
+// wx.HeaderCtrlSimple#ShowColumn(idx as Number, show? as Bool)
+Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, ShowColumn_gurax, "ShowColumn")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHeaderCtrlSimple, ShowColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int idx = args_gurax.PickNumber<unsigned int>();
+	bool show = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->ShowColumn(idx, show);
+	return Gurax::Value::nil();
+}
+
+// wx.HeaderCtrlSimple#HideColumn(idx as Number)
+Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, HideColumn_gurax, "HideColumn")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHeaderCtrlSimple, HideColumn_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int idx = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	pEntity_gurax->HideColumn(idx);
+	return Gurax::Value::nil();
+}
+
+// wx.HeaderCtrlSimple#ShowSortIndicator(idx as Number, sortOrder? as Bool)
+Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, ShowSortIndicator_gurax, "ShowSortIndicator")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sortOrder", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHeaderCtrlSimple, ShowSortIndicator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int idx = args_gurax.PickNumber<unsigned int>();
+	bool sortOrder = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->ShowSortIndicator(idx, sortOrder);
+	return Gurax::Value::nil();
+}
+
+// wx.HeaderCtrlSimple#RemoveSortIndicator()
+Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, RemoveSortIndicator_gurax, "RemoveSortIndicator")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHeaderCtrlSimple, RemoveSortIndicator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->RemoveSortIndicator();
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +253,15 @@ void VType_wxHeaderCtrlSimple::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxHeaderCtrl, Flag::Mutable);
+	Declare(VTYPE_wxHeaderCtrl, Flag::Mutable, Gurax_CreateConstructor(HeaderCtrlSimple_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxHeaderCtrlSimple, InsertColumn_gurax));
+	Assign(Gurax_CreateMethod(wxHeaderCtrlSimple, AppendColumn_gurax));
+	Assign(Gurax_CreateMethod(wxHeaderCtrlSimple, DeleteColumn_gurax));
+	Assign(Gurax_CreateMethod(wxHeaderCtrlSimple, ShowColumn_gurax));
+	Assign(Gurax_CreateMethod(wxHeaderCtrlSimple, HideColumn_gurax));
+	Assign(Gurax_CreateMethod(wxHeaderCtrlSimple, ShowSortIndicator_gurax));
+	Assign(Gurax_CreateMethod(wxHeaderCtrlSimple, RemoveSortIndicator_gurax));
 }
 
 //------------------------------------------------------------------------------

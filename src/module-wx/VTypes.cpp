@@ -13,6 +13,7 @@ void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
 	frame.Assign(VTYPE_wxAuiTabArt);
+	frame.Assign(VTYPE_wxHeaderColumnSimple);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -30,6 +31,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAuiMDIParentFrame);
 	frame.Assign(VTYPE_wxAuiNotebook);
 	frame.Assign(VTYPE_wxAuiNotebookEvent);
+	frame.Assign(VTYPE_wxAuiTabArt);
 	frame.Assign(VTYPE_wxAuiToolBar);
 	frame.Assign(VTYPE_wxAuiToolBarArt);
 	frame.Assign(VTYPE_wxAuiToolBarEvent);

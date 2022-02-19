@@ -5,6 +5,7 @@
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
 	VType_wxAuiTabArt.cpp
+	VType_wxHeaderColumnSimple.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -22,6 +23,7 @@ set(SRCFILES_VTYPE
 	VType_wxAuiMDIParentFrame.cpp
 	VType_wxAuiNotebook.cpp
 	VType_wxAuiNotebookEvent.cpp
+	VType_wxAuiTabArt.cpp
 	VType_wxAuiToolBar.cpp
 	VType_wxAuiToolBarArt.cpp
 	VType_wxAuiToolBarEvent.cpp
