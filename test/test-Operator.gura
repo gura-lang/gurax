@@ -7,6 +7,7 @@ TestCase('Constructor') {
 	Tester(`Operator.Unary(`!))
 	Tester(`Operator.Unary(`+))
 	Tester(`Operator.Unary(`?))
+	Tester(`Operator.Unary(`*))
 	Tester(`Operator.UnaryPost(`%))
 	Tester(`Operator.UnaryPost(`%%))
 	Tester(`Operator.UnaryPost(`*))

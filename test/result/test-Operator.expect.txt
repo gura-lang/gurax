@@ -4,6 +4,7 @@ Operator.Unary(`-) .. <Operator:Unary:Neg:-:(a as Any):map>
 Operator.Unary(`!) .. <Operator:Unary:Not:!:(a as Any):map>
 Operator.Unary(`+) .. <Operator:Unary:Pos:+:(a as Any):map>
 Operator.Unary(`?) .. <Operator:Unary:Question:?:(a as Any):map>
+Operator.Unary(`*) .. <Operator:Unary:PreMul:*:(a as Any):map>
 Operator.UnaryPost(`%) .. <Operator:UnaryPost:PostMod:%:(a as Any):map>
 Operator.UnaryPost(`%%) .. <Operator:UnaryPost:PostModMod:%%:(a as Any):map>
 Operator.UnaryPost(`*) .. <Operator:UnaryPost:PostMul:*:(a as Any):map>

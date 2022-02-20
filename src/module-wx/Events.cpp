@@ -29,12 +29,14 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_CHAR_HOOK,								wxKeyEvent);
 	Gurax_AssignEvent(EVT_CHECKBOX,								wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHECKLISTBOX,							wxCommandEvent);
+	Gurax_AssignEvent(EVT_CHECKLISTBOX,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHILD_FOCUS,							wxChildFocusEvent);
 	Gurax_AssignEvent(EVT_CHOICE,								wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGED,				wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGING,				wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_COLLAPSIBLEHEADER_CHANGED,				wxCommandEvent);
 	Gurax_AssignEvent(EVT_COLLAPSIBLEPANE_CHANGED,				wxCollapsiblePaneEvent);
+	Gurax_AssignEvent(EVT_COLOURPICKER_CHANGED,					wxColourPickerEvent);
 	Gurax_AssignEvent(EVT_COMBOBOX,								wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_BUTTON_CLICKED,				wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_ENTER,							wxCommandEvent);
@@ -67,6 +69,7 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_DATE_CHANGED,							wxDateEvent);
 	Gurax_AssignEvent(EVT_DIALUP_CONNECTED,						wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DIALUP_DISCONNECTED,					wxDialUpEvent);
+	Gurax_AssignEvent(EVT_DIRPICKER_CHANGED,						wxFileDirPickerEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES,							wxDropFilesEvent);
 	Gurax_AssignEvent(EVT_ENTER_WINDOW,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_ERASE_BACKGROUND,						wxEraseEvent);
@@ -74,6 +77,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_FILECTRL_FILTERCHANGED,				wxFileCtrlEvent);
 	Gurax_AssignEvent(EVT_FILECTRL_FOLDERCHANGED,				wxFileCtrlEvent);
 	Gurax_AssignEvent(EVT_FILECTRL_SELECTIONCHANGED,				wxFileCtrlEvent);
+	Gurax_AssignEvent(EVT_FILEPICKER_CHANGED,					wxFileDirPickerEvent);
+	Gurax_AssignEvent(EVT_FONTPICKER_CHANGED,					wxFontPickerEvent);
 	Gurax_AssignEvent(EVT_GRID_CELL_CHANGED,						wxGridEvent);
 	Gurax_AssignEvent(EVT_GRID_CELL_CHANGING,					wxGridEvent);
 	Gurax_AssignEvent(EVT_GRID_CELL_LEFT_CLICK,					wxGridEvent);

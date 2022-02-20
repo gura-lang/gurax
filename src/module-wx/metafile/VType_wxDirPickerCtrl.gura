@@ -3,6 +3,13 @@
 //==============================================================================
 DirPickerCtrl = Class(PickerBase) {
 	@include['wx/filepicker.h']
+	__init__(parent as Window_p, id as WindowID, path as const_String_r = wxEmptyString, message as const_String_r = wxDirSelectorPromptStr, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDIRP_DEFAULT_STYLE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxDirPickerCtrlNameStr)
+	Create(parent as Window_p, id as WindowID, path as const_String_r = wxEmptyString, message as const_String_r = wxDirSelectorPromptStr, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDIRP_DEFAULT_STYLE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxDirPickerCtrlNameStr) as bool
+	GetDirName() as FileName
+	GetPath() as String
+	SetDirName(dirname as const_FileName_r) as void
+	SetInitialDirectory(dir as const_String_r) as void
+	SetPath(dirname as const_String_r) as void
 }
 
 @const { // Styles
@@ -11,4 +18,8 @@ DirPickerCtrl = Class(PickerBase) {
 	DIRP_DIR_MUST_EXIST
 	DIRP_CHANGE_DIR
 	DIRP_SMALL
+}
+
+@event {
+	EVT_DIRPICKER_CHANGED >> FileDirPickerEvent
 }

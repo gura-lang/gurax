@@ -4,8 +4,10 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxAuiTabArt.cpp
-	VType_wxHeaderColumnSimple.cpp
+	VType_wxColourPickerEvent.cpp
+	VType_wxFileDirPickerEvent.cpp
+	VType_wxFontPickerEvent.cpp
+	VType_wxFileName.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -179,6 +181,7 @@ set(SRCFILES_VTYPE
 	VType_wxGridTableBase.cpp
 	VType_wxGridTableMessage.cpp
 	VType_wxHeaderColumn.cpp
+	VType_wxHeaderColumnSimple.cpp
 	VType_wxHeaderCtrl.cpp
 	VType_wxHeaderCtrlEvent.cpp
 	VType_wxHeaderCtrlSimple.cpp

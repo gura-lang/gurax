@@ -3,4 +3,19 @@
 //==============================================================================
 CheckListBox = Class(ListBox) {
 	@include['wx/checklst.h']
+	__init__(parent as Window_p, id as WindowID, pos as const_Point_r, size as const_Size_r, choices as const_ArrayString_r, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = "listBox")
+	Create(parent as Window_p, id as WindowID, pos as const_Point_r, size as const_Size_r, choices as const_ArrayString_r, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxListBoxNameStr) as bool
+	Check(item as unsigned_int, check as bool = true) as void
+	IsChecked(item as unsigned_int) as bool
+	//GetCheckedItems(checkedItems as ArrayInt_r) as unsigned_int
+	GetCheckedItems() = \
+		R'''
+		wxArrayInt checkedItems;
+		pEntity_gurax->GetCheckedItems(checkedItems);
+		return Util::CreateList(checkedItems);
+		'''
+}
+
+@event {
+	EVT_CHECKLISTBOX >> CommandEvent
 }

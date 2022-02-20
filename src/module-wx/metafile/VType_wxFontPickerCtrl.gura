@@ -3,6 +3,9 @@
 //==============================================================================
 FontPickerCtrl = Class(PickerBase) {
 	@include['wx/fontpicker.h']
+	__init__(generator as Object_p, id as int, font as const_Font_r)
+	GetFont() as Font
+	SetFont(f as const_Font_r) as void
 }
 
 @const { // Styles
@@ -10,4 +13,8 @@ FontPickerCtrl = Class(PickerBase) {
 	FNTP_USE_TEXTCTRL
 	FNTP_FONTDESC_AS_LABEL
 	FNTP_USEFONT_FOR_LABEL
+}
+
+@event {
+	EVT_FONTPICKER_CHANGED >> FontPickerEvent
 }

@@ -3,6 +3,13 @@
 //==============================================================================
 FilePickerCtrl = Class(PickerBase) {
 	@include['wx/filepicker.h']
+	__init__(parent as Window_p, id as WindowID, path as const_String_r = wxEmptyString, message as const_String_r = wxFileSelectorPromptStr, wildcard as const_String_r = wxFileSelectorDefaultWildcardStr, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxFLP_DEFAULT_STYLE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxFilePickerCtrlNameStr)
+	Create(parent as Window_p, id as WindowID, path as const_String_r = wxEmptyString, message as const_String_r = wxFileSelectorPromptStr, wildcard as const_String_r = wxFileSelectorDefaultWildcardStr, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxFLP_DEFAULT_STYLE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxFilePickerCtrlNameStr) as bool
+	GetFileName() as FileName
+	GetPath() as String
+	SetFileName(filename as const_FileName_r) as void
+	SetInitialDirectory(dir as const_String_r) as void
+	SetPath(filename as const_String_r) as void
 }
 
 @const { // Styles
@@ -14,4 +21,8 @@ FilePickerCtrl = Class(PickerBase) {
 	FLP_FILE_MUST_EXIST
 	FLP_CHANGE_DIR
 	FLP_SMALL
+}
+
+@event {
+	EVT_FILEPICKER_CHANGED >> FileDirPickerEvent
 }

@@ -12,8 +12,10 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxAuiTabArt);
-	frame.Assign(VTYPE_wxHeaderColumnSimple);
+	frame.Assign(VTYPE_wxColourPickerEvent);
+	frame.Assign(VTYPE_wxFileDirPickerEvent);
+	frame.Assign(VTYPE_wxFontPickerEvent);
+	frame.Assign(VTYPE_wxFileName);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -187,6 +189,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGridTableBase);
 	frame.Assign(VTYPE_wxGridTableMessage);
 	frame.Assign(VTYPE_wxHeaderColumn);
+	frame.Assign(VTYPE_wxHeaderColumnSimple);
 	frame.Assign(VTYPE_wxHeaderCtrl);
 	frame.Assign(VTYPE_wxHeaderCtrlEvent);
 	frame.Assign(VTYPE_wxHeaderCtrlSimple);

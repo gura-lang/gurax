@@ -62,6 +62,7 @@ enum class OpType {
 	Not,
 	Pos,
 	Question,
+	PreMul,
 	Quote,
 	// Post-unary operators
 	PostMod,
@@ -264,6 +265,7 @@ public:
 	static Operator* Not;
 	static Operator* Pos;
 	static Operator* Question;
+	static Operator* PreMul;
 	static Operator* Quote;
 	// Post-unary operators
 	static Operator* PostMod;
