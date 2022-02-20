@@ -28,34 +28,6 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FontPickerCtrl(generator as wx.Object, id as Number, font as wx.Font) {block?} {block?}
-Gurax_DeclareConstructorAlias(FontPickerCtrl_gurax, "FontPickerCtrl")
-{
-	Declare(VTYPE_wxFontPickerCtrl, Flag::None);
-	DeclareArg("generator", VTYPE_wxObject, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.FontPickerCtrl.");
-}
-
-Gurax_ImplementConstructorEx(FontPickerCtrl_gurax, processor_gurax, argument_gurax)
-{
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxObject& value_generator = args_gurax.Pick<Value_wxObject>();
-	wxObject* generator = value_generator.GetEntityPtr();
-	int id = args_gurax.PickNumber<int>();
-	Value_wxFont& value_font = args_gurax.Pick<Value_wxFont>();
-	const wxFont& font = value_font.GetEntity();
-	// Function body
-	auto pEntity_gurax = new Value_wxFontPickerCtrl::EntityT(generator, id, font);
-	RefPtr<Value_wxFontPickerCtrl> pValue_gurax(new Value_wxFontPickerCtrl(pEntity_gurax));
-	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
-	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -120,7 +92,7 @@ void VType_wxFontPickerCtrl::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(FontPickerCtrl_gurax));
+	Declare(VTYPE_wxPickerBase, Flag::Mutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxFontPickerCtrl, GetFont_gurax));
 	Assign(Gurax_CreateMethod(wxFontPickerCtrl, SetFont_gurax));

@@ -53,7 +53,7 @@ Gurax_ImplementConstructorEx(ColourPickerCtrl_gurax, processor_gurax, argument_g
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const wxColour& colour = args_gurax.IsValid()? args_gurax.Pick<Value_wxColour>().GetEntity() : ;
+	const wxColour& colour = args_gurax.IsValid()? args_gurax.Pick<Value_wxColour>().GetEntity() : *wxBLACK;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
@@ -98,7 +98,7 @@ Gurax_ImplementMethodEx(wxColourPickerCtrl, Create_gurax, processor_gurax, argum
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
 	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const wxColour& colour = args_gurax.IsValid()? args_gurax.Pick<Value_wxColour>().GetEntity() : ;
+	const wxColour& colour = args_gurax.IsValid()? args_gurax.Pick<Value_wxColour>().GetEntity() : *wxBLACK;
 	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
 	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	bool style_validFlag = args_gurax.IsValid();
@@ -156,30 +156,6 @@ Gurax_ImplementMethodEx(wxColourPickerCtrl, SetColour_gurax, processor_gurax, ar
 	return Gurax::Value::nil();
 }
 
-// wx.ColourPickerCtrl#SetColour(colname as String)
-Gurax_DeclareMethodAlias(wxColourPickerCtrl, SetColour_gurax, "SetColour")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("colname", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxColourPickerCtrl, SetColour_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* colname = args_gurax.PickString();
-	// Function body
-	pEntity_gurax->SetColour(colname);
-	return Gurax::Value::nil();
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -198,7 +174,6 @@ void VType_wxColourPickerCtrl::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxColourPickerCtrl, Create_gurax));
 	Assign(Gurax_CreateMethod(wxColourPickerCtrl, GetColour_gurax));
-	Assign(Gurax_CreateMethod(wxColourPickerCtrl, SetColour_gurax));
 	Assign(Gurax_CreateMethod(wxColourPickerCtrl, SetColour_gurax));
 }
 
