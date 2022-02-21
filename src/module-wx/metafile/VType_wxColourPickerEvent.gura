@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxColourPickerEvent.gura
 //==============================================================================
+ColourPickerEvent = Class(CommandEvent) {
+	@include['wx/clrpicker.h']
+}

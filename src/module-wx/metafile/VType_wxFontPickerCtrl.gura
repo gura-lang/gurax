@@ -3,9 +3,12 @@
 //==============================================================================
 FontPickerCtrl = Class(PickerBase) {
 	@include['wx/fontpicker.h']
-	//__init__(generator as Object_p, id as int, font as const_Font_r)
-	GetFont() as Font
-	SetFont(f as const_Font_r) as void
+	__init__(parent as Window_p, id as WindowID, font as const_Font_r = wxNullFont, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxFNTP_DEFAULT_STYLE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxFontPickerCtrlNameStr)
+	Create(parent as Window_p, id as WindowID, font as const_Font_r = wxNullFont, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxFNTP_DEFAULT_STYLE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxFontPickerCtrlNameStr) as bool
+	GetMaxPointSize() as unsigned_int
+	GetSelectedFont() as Font
+	SetMaxPointSize(max as unsigned_int) as void
+	SetSelectedFont(font as const_Font_r) as void
 }
 
 @const { // Styles

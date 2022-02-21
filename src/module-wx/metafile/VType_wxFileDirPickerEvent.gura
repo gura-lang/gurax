@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxFileDirPickerEvent.gura
 //==============================================================================
+FileDirPickerEvent = Class(CommandEvent) {
+	@include['wx/filepicker.h']
+}
