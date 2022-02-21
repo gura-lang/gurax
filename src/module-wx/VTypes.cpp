@@ -12,10 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxColourPickerEvent);
-	frame.Assign(VTYPE_wxFileDirPickerEvent);
-	frame.Assign(VTYPE_wxFontPickerEvent);
-	frame.Assign(VTYPE_wxFileName);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -77,6 +73,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxColourData);
 	frame.Assign(VTYPE_wxColourDialog);
 	frame.Assign(VTYPE_wxColourPickerCtrl);
+	frame.Assign(VTYPE_wxColourPickerEvent);
 	frame.Assign(VTYPE_wxColourProperty);
 	frame.Assign(VTYPE_wxComboBox);
 	frame.Assign(VTYPE_wxComboCtrl);
@@ -132,6 +129,8 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFileCtrl);
 	frame.Assign(VTYPE_wxFileCtrlEvent);
 	frame.Assign(VTYPE_wxFileDialog);
+	frame.Assign(VTYPE_wxFileDirPickerEvent);
+	frame.Assign(VTYPE_wxFileName);
 	frame.Assign(VTYPE_wxFilePickerCtrl);
 	frame.Assign(VTYPE_wxFileProperty);
 	frame.Assign(VTYPE_wxFileSystem);
@@ -147,6 +146,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFontInfo);
 	frame.Assign(VTYPE_wxFontMetrics);
 	frame.Assign(VTYPE_wxFontPickerCtrl);
+	frame.Assign(VTYPE_wxFontPickerEvent);
 	frame.Assign(VTYPE_wxFontProperty);
 	frame.Assign(VTYPE_wxFrame);
 	frame.Assign(VTYPE_wxGauge);

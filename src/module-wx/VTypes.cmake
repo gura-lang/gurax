@@ -4,10 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxColourPickerEvent.cpp
-	VType_wxFileDirPickerEvent.cpp
-	VType_wxFontPickerEvent.cpp
-	VType_wxFileName.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -69,6 +65,7 @@ set(SRCFILES_VTYPE
 	VType_wxColourData.cpp
 	VType_wxColourDialog.cpp
 	VType_wxColourPickerCtrl.cpp
+	VType_wxColourPickerEvent.cpp
 	VType_wxColourProperty.cpp
 	VType_wxComboBox.cpp
 	VType_wxComboCtrl.cpp
@@ -124,6 +121,8 @@ set(SRCFILES_VTYPE
 	VType_wxFileCtrl.cpp
 	VType_wxFileCtrlEvent.cpp
 	VType_wxFileDialog.cpp
+	VType_wxFileDirPickerEvent.cpp
+	VType_wxFileName.cpp
 	VType_wxFilePickerCtrl.cpp
 	VType_wxFileProperty.cpp
 	VType_wxFileSystem.cpp
@@ -139,6 +138,7 @@ set(SRCFILES_VTYPE
 	VType_wxFontInfo.cpp
 	VType_wxFontMetrics.cpp
 	VType_wxFontPickerCtrl.cpp
+	VType_wxFontPickerEvent.cpp
 	VType_wxFontProperty.cpp
 	VType_wxFrame.cpp
 	VType_wxGauge.cpp
