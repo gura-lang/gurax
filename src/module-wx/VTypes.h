@@ -7,6 +7,7 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
+#include "VType_wxAuiDockArt.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -19,6 +20,8 @@
 #include "VType_wxAppConsole.h"
 #include "VType_wxArrayStringProperty.h"
 #include "VType_wxAuiDefaultToolBarArt.h"
+#include "VType_wxAuiManager.h"
+#include "VType_wxAuiManagerEvent.h"
 #include "VType_wxAuiMDIChildFrame.h"
 #include "VType_wxAuiMDIClientWindow.h"
 #include "VType_wxAuiMDIParentFrame.h"

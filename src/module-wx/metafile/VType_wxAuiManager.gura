@@ -1,0 +1,31 @@
+//==============================================================================
+// VType_wxAuiManager.gura
+//==============================================================================
+AuiManager = Class(EvtHandler) {
+	@include['wx/aui/framemanager.h']
+	__init__(managed_wnd as Window_p = NULL, flags as unsigned_int = wxAUI_MGR_DEFAULT)
+	DetachPane(window as Window_p) as bool
+	//GetAllPanes() as AuiPaneInfoArray
+	GetArtProvider() as AuiDockArt_p
+	//GetDockSizeConstraint(widthpct as double_p, heightpct as double_p) as void
+	GetFlags() as unsigned_int
+	GetManagedWindow() as Window_p
+	HideHint() as void
+	//InsertPane(window as Window_p, insert_location as const_AuiPaneInfo_r, insert_level as int = wxAUI_INSERT_PANE) as bool
+	//LoadPaneInfo(pane_part as String, pane as AuiPaneInfo_r) as void
+	LoadPerspective(perspective as const_String_r, update as bool = true) as bool
+	//SavePaneInfo(pane as AuiPaneInfo_r) as String
+	SavePerspective() as String
+	SetArtProvider(art_provider as AuiDockArt_p) as void
+	SetDockSizeConstraint(widthpct as double, heightpct as double) as void
+	SetFlags(flags as unsigned_int) as void
+	SetManagedWindow(managed_wnd as Window_p) as void
+	ShowHint(rect as const_Rect_r) as void
+	UnInit() as void
+	Update() as void
+	//AddPane(window as Window_p, pane_info as const_AuiPaneInfo_r) as bool
+	//AddPane(window as Window_p, direction as int = wxLEFT, caption as const_String_r = wxEmptyString) as bool
+	//AddPane(window as Window_p, pane_info as const_AuiPaneInfo_r, drop_pos as const_Point_r) as bool
+	//GetPane(window as Window_p) as AuiPaneInfo
+	//GetPane(name as const_String_r) as AuiPaneInfo
+}

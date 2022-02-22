@@ -1,0 +1,19 @@
+//==============================================================================
+// VType_wxAuiManagerEvent.gura
+//==============================================================================
+AuiManagerEvent = Class(Event) {
+	@include['wx/aui/framemanager.h']
+	//__init__(type as EventType = wxEVT_NULL)
+	CanVeto() as bool
+	GetButton() as int
+	GetDC() as DC_p
+	GetVeto() as bool
+	GetManager() as AuiManager_p
+	//GetPane() as AuiPaneInfo_p
+	SetButton(button as int) as void
+	SetCanVeto(can_veto as bool) as void
+	SetDC(pdc as DC_p) as void
+	SetManager(manager as AuiManager_p) as void
+	//SetPane(pane as AuiPaneInfo_p) as void
+	Veto(veto as bool = true) as void
+}
