@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxAuiDockArt.gura
 //==============================================================================
+AuiDockArt = Class():loosePointer {
+	@include['wx/aui/framemanager.h', 'wx/aui/dockart.h']
+}
