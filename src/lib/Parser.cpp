@@ -333,7 +333,7 @@ bool Parser::ReduceTwoTokens()
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%' Expr\n"));
-				pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::Mod));
+				pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::PreMod));
 			}
 		} else if (pToken1->IsType(TokenType::ModMod)) {
 			if (pToken2->GetExpr()->IsType<Expr_Block>()) {
@@ -344,7 +344,7 @@ bool Parser::ReduceTwoTokens()
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
-				pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::ModMod));
+				pExprGen.reset(new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::PreModMod));
 			}
 		} else if (pToken1->IsType(TokenType::And)) {
 			if (pToken2->GetExpr()->IsType<Expr_Block>()) {
@@ -355,7 +355,7 @@ bool Parser::ReduceTwoTokens()
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr\n"));
-				pExprGen = new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::And);
+				pExprGen = new Expr_UnaryOp(pToken2->GetExpr()->Reference(), Operator::PreAnd);
 			}
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken2, "syntax error (%d)", __LINE__);

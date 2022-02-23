@@ -20,6 +20,9 @@ Operator* Operator::Neg				= new Operator(OpStyle::Unary,			"Neg",			"-",			OpTy
 Operator* Operator::Not				= new Operator(OpStyle::Unary,			"Not",			"!",			OpType::Not);
 Operator* Operator::Pos				= new Operator(OpStyle::Unary,			"Pos",			"+",			OpType::Pos);
 Operator* Operator::Question		= new Operator(OpStyle::Unary,			"Question",		"?",			OpType::Question);
+Operator* Operator::PreAnd			= new Operator(OpStyle::Unary,			"PreAnd",		"&",			OpType::PreAnd);
+Operator* Operator::PreMod			= new Operator(OpStyle::Unary,			"PreMod",		"%",			OpType::PreMod);
+Operator* Operator::PreModMod		= new Operator(OpStyle::Unary,			"PreModMod",	"%%",			OpType::PreModMod);
 Operator* Operator::PreMul			= new Operator(OpStyle::Unary,			"PreMul",		"*",			OpType::PreMul);
 Operator* Operator::Quote			= new Operator_Quote();
 // Post-unary operators
