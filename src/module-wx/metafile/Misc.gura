@@ -1,3 +1,16 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+FileSystemWatcherEvent = Class(Event) {
+	@include['wx/fswatcher.h']
+	//__init__(changeType as int = 0, watchid as int = wxID_ANY)
+	//__init__(changeType as int, warningType as FSWWarningType, errorMsg as const_String_r, watchid as int = wxID_ANY)
+	//__init__(changeType as int, path as const_FileName_r, newPath as const_FileName_r, watchid as int = wxID_ANY)
+	GetPath() as FileName
+	GetNewPath() as FileName
+	GetChangeType() as int
+	IsError() as bool
+	GetErrorDescription() as String
+	GetWarningType() as FSWWarningType
+	ToString() as String
+}

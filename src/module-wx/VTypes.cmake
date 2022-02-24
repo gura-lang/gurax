@@ -4,7 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxAuiDockArt.cpp
+	VType_wxFileSystemWatcherEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -17,6 +17,7 @@ set(SRCFILES_VTYPE
 	VType_wxAppConsole.cpp
 	VType_wxArrayStringProperty.cpp
 	VType_wxAuiDefaultToolBarArt.cpp
+	VType_wxAuiDockArt.cpp
 	VType_wxAuiManager.cpp
 	VType_wxAuiManagerEvent.cpp
 	VType_wxAuiMDIChildFrame.cpp

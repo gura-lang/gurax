@@ -2,9 +2,16 @@
 // VType_wxCloseEvent.gura
 //==============================================================================
 CloseEvent = Class(Event) {
+	//__init__(commandEventType as EventType = wxEVT_NULL, id as int = 0)
+	CanVeto() as bool
+	GetLoggingOff() as bool
+	SetCanVeto(canVeto as bool) as void
+	SetLoggingOff(loggingOff as bool) as void
+	Veto(veto as bool = true) as void
+	GetVeto() as bool
 }
 
 @event {
 	EVT_QUERY_END_SESSION	>> CloseEvent
-	EVT_QUERY_END_SESSION	>> CloseEvent
+	EVT_END_SESSION			>> CloseEvent 
 }

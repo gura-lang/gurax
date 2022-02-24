@@ -433,6 +433,9 @@ void AssignConsts(Frame& frame)
 	frame.Assign("FRAME_NO_TASKBAR", new Value_Number(wxFRAME_NO_TASKBAR));
 	frame.Assign("FRAME_SHAPED", new Value_Number(wxFRAME_SHAPED));
 	frame.Assign("FRAME_TOOL_WINDOW", new Value_Number(wxFRAME_TOOL_WINDOW));
+	frame.Assign("FSW_WARNING_GENERAL", new Value_Number(wxFSW_WARNING_GENERAL));
+	frame.Assign("FSW_WARNING_NONE", new Value_Number(wxFSW_WARNING_NONE));
+	frame.Assign("FSW_WARNING_OVERFLOW", new Value_Number(wxFSW_WARNING_OVERFLOW));
 	frame.Assign("FULL_REPAINT_ON_RESIZE", new Value_Number(wxFULL_REPAINT_ON_RESIZE));
 	frame.Assign("FromCurrent", new Value_Number(wxFromCurrent));
 	frame.Assign("FromEnd", new Value_Number(wxFromEnd));

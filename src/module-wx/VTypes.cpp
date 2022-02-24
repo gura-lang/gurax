@@ -12,7 +12,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxAuiDockArt);
+	frame.Assign(VTYPE_wxFileSystemWatcherEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -25,6 +25,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxAppConsole);
 	frame.Assign(VTYPE_wxArrayStringProperty);
 	frame.Assign(VTYPE_wxAuiDefaultToolBarArt);
+	frame.Assign(VTYPE_wxAuiDockArt);
 	frame.Assign(VTYPE_wxAuiManager);
 	frame.Assign(VTYPE_wxAuiManagerEvent);
 	frame.Assign(VTYPE_wxAuiMDIChildFrame);

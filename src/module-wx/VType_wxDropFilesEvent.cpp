@@ -32,6 +32,46 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.DropFilesEvent#GetNumberOfFiles()
+Gurax_DeclareMethodAlias(wxDropFilesEvent, GetNumberOfFiles_gurax, "GetNumberOfFiles")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDropFilesEvent, GetNumberOfFiles_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetNumberOfFiles();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.DropFilesEvent#GetPosition() {block?}
+Gurax_DeclareMethodAlias(wxDropFilesEvent, GetPosition_gurax, "GetPosition")
+{
+	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDropFilesEvent, GetPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
+		pEntity_gurax->GetPosition()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +89,8 @@ void VType_wxDropFilesEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxDropFilesEvent, GetNumberOfFiles_gurax));
+	Assign(Gurax_CreateMethod(wxDropFilesEvent, GetPosition_gurax));
 }
 
 //------------------------------------------------------------------------------

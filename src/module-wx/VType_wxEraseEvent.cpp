@@ -32,6 +32,26 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.EraseEvent#GetDC() {block?}
+Gurax_DeclareMethodAlias(wxEraseEvent, GetDC_gurax, "GetDC")
+{
+	Declare(VTYPE_wxDC, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxEraseEvent, GetDC_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxDC(
+		*pEntity_gurax->GetDC()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +69,7 @@ void VType_wxEraseEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxEraseEvent, GetDC_gurax));
 }
 
 //------------------------------------------------------------------------------

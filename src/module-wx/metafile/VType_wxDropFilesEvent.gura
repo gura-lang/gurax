@@ -2,6 +2,10 @@
 // VType_wxDropFilesEvent.gura
 //==============================================================================
 DropFilesEvent = Class(Event) {
+	//__init__(id as EventType = 0, noFiles as int = 0, files as String_p = NULL)
+	//GetFiles() as String_p
+	GetNumberOfFiles() as int
+	GetPosition() as Point
 }
 
 @event {
