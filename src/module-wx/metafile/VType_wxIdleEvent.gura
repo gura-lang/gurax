@@ -2,6 +2,11 @@
 // VType_wxIdleEvent.gura
 //==============================================================================
 IdleEvent = Class(Event) {
+	//__init__()
+	MoreRequested() as bool
+	RequestMore(needMore as bool = true) as void
+	GetMode():static as IdleMode
+	SetMode(mode as IdleMode):static as void
 }
 
 @event {

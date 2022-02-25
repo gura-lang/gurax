@@ -115,6 +115,7 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_HTML_CELL_HOVER,						wxHtmlLinkEvent);
 	Gurax_AssignEvent(EVT_HTML_LINK_CLICKED,						wxHtmlLinkEvent);
 	Gurax_AssignEvent(EVT_HYPERLINK,								wxHyperlinkEvent);
+	Gurax_AssignEvent(EVT_ICONIZE,								wxIconizeEvent);
 	Gurax_AssignEvent(EVT_IDLE,									wxIdleEvent);
 	Gurax_AssignEvent(EVT_INIT_DIALOG,							wxInitDialogEvent);
 	Gurax_AssignEvent(EVT_JOY_BUTTON_DOWN,						wxJoystickEvent);
@@ -152,7 +153,11 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_LIST_ITEM_RIGHT_CLICK,					wxListEvent);
 	Gurax_AssignEvent(EVT_LIST_ITEM_SELECTED,					wxListEvent);
 	Gurax_AssignEvent(EVT_LIST_KEY_DOWN,							wxListEvent);
+	Gurax_AssignEvent(EVT_MAXIMIZE,								wxMaximizeEvent);
 	Gurax_AssignEvent(EVT_MENU,									wxCommandEvent);
+	Gurax_AssignEvent(EVT_MENU_CLOSE,							wxMenuEvent);
+	Gurax_AssignEvent(EVT_MENU_HIGHLIGHT,						wxMenuEvent);
+	Gurax_AssignEvent(EVT_MENU_OPEN,								wxMenuEvent);
 	Gurax_AssignEvent(EVT_MIDDLE_DCLICK,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_MIDDLE_DOWN,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_MIDDLE_UP,								wxMouseEvent);

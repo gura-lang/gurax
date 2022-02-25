@@ -1,3 +1,11 @@
 //==============================================================================
-// Misc.gura
+// VType_wxMaximizeEvent.gura
 //==============================================================================
+MaximizeEvent = Class(Event) {
+	@include['wx/event.h']
+	//__init__(id as int = 0)
+}
+
+@event {
+	EVT_MAXIMIZE >> MaximizeEvent
+}

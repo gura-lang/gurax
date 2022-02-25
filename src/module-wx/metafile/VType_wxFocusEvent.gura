@@ -2,6 +2,9 @@
 // VType_wxFocusEvent.gura
 //==============================================================================
 FocusEvent = Class(Event) {
+	//__init__(eventType as EventType = wxEVT_NULL, id as int = 0)
+	GetWindow() as Window_p
+	SetWindow(win as Window_p) as void
 }
 
 @event {

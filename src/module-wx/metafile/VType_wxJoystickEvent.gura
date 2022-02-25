@@ -2,6 +2,19 @@
 // VType_wxJoystickEvent.gura
 //==============================================================================
 JoystickEvent = Class(Event) {
+	@include['wx/event.h']
+	//__init__(eventType as EventType = wxEVT_NULL, state as int = 0, joystick as int = wxJOYSTICK1, change as int = 0)
+	ButtonDown(button as int = wxJOY_BUTTON_ANY) as bool
+	ButtonIsDown(button as int = wxJOY_BUTTON_ANY) as bool
+	ButtonUp(button as int = wxJOY_BUTTON_ANY) as bool
+	GetButtonChange() as int
+	GetButtonState() as int
+	GetJoystick() as int
+	GetPosition() as Point
+	GetZPosition() as int
+	IsButton() as bool
+	IsMove() as bool
+	IsZMove() as bool
 }
 
 @event {

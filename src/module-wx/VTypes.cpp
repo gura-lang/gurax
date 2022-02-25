@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxFileSystemWatcherEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -138,6 +137,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFilePickerCtrl);
 	frame.Assign(VTYPE_wxFileProperty);
 	frame.Assign(VTYPE_wxFileSystem);
+	frame.Assign(VTYPE_wxFileSystemWatcherEvent);
 	frame.Assign(VTYPE_wxFindReplaceData);
 	frame.Assign(VTYPE_wxFindReplaceDialog);
 	frame.Assign(VTYPE_wxFlagsProperty);
@@ -221,6 +221,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxHyperlinkEvent);
 	frame.Assign(VTYPE_wxIcon);
 	frame.Assign(VTYPE_wxIconBundle);
+	frame.Assign(VTYPE_wxIconizeEvent);
 	frame.Assign(VTYPE_wxIdleEvent);
 	frame.Assign(VTYPE_wxImage);
 	frame.Assign(VTYPE_wxImageFileProperty);
@@ -244,6 +245,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxLog);
 	frame.Assign(VTYPE_wxMultiChoiceProperty);
 	frame.Assign(VTYPE_wxMask);
+	frame.Assign(VTYPE_wxMaximizeEvent);
 	frame.Assign(VTYPE_wxMDIChildFrame);
 	frame.Assign(VTYPE_wxMDIParentFrame);
 	frame.Assign(VTYPE_wxMediaCtrl);
@@ -251,6 +253,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxMemoryDC);
 	frame.Assign(VTYPE_wxMenu);
 	frame.Assign(VTYPE_wxMenuBar);
+	frame.Assign(VTYPE_wxMenuEvent);
 	frame.Assign(VTYPE_wxMenuItem);
 	frame.Assign(VTYPE_wxMessageDialog);
 	frame.Assign(VTYPE_wxMetafileDC);

@@ -1,0 +1,13 @@
+//==============================================================================
+// VType_wxIconizeEvent.gura
+//==============================================================================
+IconizeEvent = Class(Event) {
+	@include['wx/event.h']
+	//__init__(id as int = 0, iconized as bool = true)
+	IsIconized() as bool
+	//Iconized() as bool
+}
+
+@event {
+	EVT_ICONIZE >> IconizeEvent
+}

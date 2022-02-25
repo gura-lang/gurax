@@ -2,4 +2,6 @@
 // VType_wxInitDialogEvent.gura
 //==============================================================================
 InitDialogEvent = Class(Event) {
+	@include['wx/event.h']
+	//__init__(id as int = 0)
 }

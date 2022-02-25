@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxFileSystemWatcherEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -130,6 +129,7 @@ set(SRCFILES_VTYPE
 	VType_wxFilePickerCtrl.cpp
 	VType_wxFileProperty.cpp
 	VType_wxFileSystem.cpp
+	VType_wxFileSystemWatcherEvent.cpp
 	VType_wxFindReplaceData.cpp
 	VType_wxFindReplaceDialog.cpp
 	VType_wxFlagsProperty.cpp
@@ -213,6 +213,7 @@ set(SRCFILES_VTYPE
 	VType_wxHyperlinkEvent.cpp
 	VType_wxIcon.cpp
 	VType_wxIconBundle.cpp
+	VType_wxIconizeEvent.cpp
 	VType_wxIdleEvent.cpp
 	VType_wxImage.cpp
 	VType_wxImageFileProperty.cpp
@@ -236,6 +237,7 @@ set(SRCFILES_VTYPE
 	VType_wxLog.cpp
 	VType_wxMultiChoiceProperty.cpp
 	VType_wxMask.cpp
+	VType_wxMaximizeEvent.cpp
 	VType_wxMDIChildFrame.cpp
 	VType_wxMDIParentFrame.cpp
 	VType_wxMediaCtrl.cpp
@@ -243,6 +245,7 @@ set(SRCFILES_VTYPE
 	VType_wxMemoryDC.cpp
 	VType_wxMenu.cpp
 	VType_wxMenuBar.cpp
+	VType_wxMenuEvent.cpp
 	VType_wxMenuItem.cpp
 	VType_wxMessageDialog.cpp
 	VType_wxMetafileDC.cpp

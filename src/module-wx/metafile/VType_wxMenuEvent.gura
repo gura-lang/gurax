@@ -1,0 +1,17 @@
+//==============================================================================
+// VType_wxMenuEvent.gura
+//==============================================================================
+MenuEvent = Class(Event) {
+	@include['wx/event.h']
+	//__init__(type as EventType = wxEVT_NULL, id as int = 0, menu as Menu_p = NULL)
+	GetMenu() as Menu_p
+	GetMenuId() as int
+	IsPopup() as bool
+}
+
+@event {
+	EVT_MENU_OPEN			>> MenuEvent
+	EVT_MENU_CLOSE			>> MenuEvent
+	EVT_MENU_HIGHLIGHT		>> MenuEvent
+	//EVT_MENU_HIGHLIGHT_ALL	>> MenuEvent
+}

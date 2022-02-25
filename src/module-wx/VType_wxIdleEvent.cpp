@@ -32,6 +32,85 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.IdleEvent#MoreRequested()
+Gurax_DeclareMethodAlias(wxIdleEvent, MoreRequested_gurax, "MoreRequested")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxIdleEvent, MoreRequested_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->MoreRequested();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.IdleEvent#RequestMore(needMore? as Bool)
+Gurax_DeclareMethodAlias(wxIdleEvent, RequestMore_gurax, "RequestMore")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("needMore", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxIdleEvent, RequestMore_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool needMore = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->RequestMore(needMore);
+	return Gurax::Value::nil();
+}
+
+// wx.IdleEvent.GetMode()
+Gurax_DeclareClassMethodAlias(wxIdleEvent, GetMode_gurax, "GetMode")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxIdleEvent, GetMode_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxIdleMode rtn = wxIdleEvent::GetMode();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.IdleEvent.SetMode(mode as Number)
+Gurax_DeclareClassMethodAlias(wxIdleEvent, SetMode_gurax, "SetMode")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethodEx(wxIdleEvent, SetMode_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxIdleMode mode = args_gurax.PickNumber<wxIdleMode>();
+	// Function body
+	wxIdleEvent::SetMode(mode);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +128,10 @@ void VType_wxIdleEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxIdleEvent, MoreRequested_gurax));
+	Assign(Gurax_CreateMethod(wxIdleEvent, RequestMore_gurax));
+	Assign(Gurax_CreateMethod(wxIdleEvent, GetMode_gurax));
+	Assign(Gurax_CreateMethod(wxIdleEvent, SetMode_gurax));
 }
 
 //------------------------------------------------------------------------------
