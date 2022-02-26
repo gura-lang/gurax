@@ -2,6 +2,7 @@
 // VType_wxMouseCaptureLostEvent.gura
 //==============================================================================
 MouseCaptureLostEvent = Class(Event) {
+	//__init__(windowId as WindowID = 0)
 }
 
 @event {

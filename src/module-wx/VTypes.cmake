@@ -254,6 +254,7 @@ set(SRCFILES_VTYPE
 	VType_wxMouseCaptureChangedEvent.cpp
 	VType_wxMouseCaptureLostEvent.cpp
 	VType_wxMouseEvent.cpp
+	VType_wxMoveEvent.cpp
 	VType_wxMultiChoiceDialog.cpp
 	VType_wxNavigationKeyEvent.cpp
 	VType_wxNonOwnedWindow.cpp
@@ -267,6 +268,7 @@ set(SRCFILES_VTYPE
 	VType_wxPaintDC.cpp
 	VType_wxPaintEvent.cpp
 	VType_wxPalette.cpp
+	VType_wxPaletteChangedEvent.cpp
 	VType_wxPanel.cpp
 	VType_wxPasswordEntryDialog.cpp
 	VType_wxPen.cpp

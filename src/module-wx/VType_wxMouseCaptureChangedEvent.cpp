@@ -32,6 +32,26 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.MouseCaptureChangedEvent#GetCapturedWindow() {block?}
+Gurax_DeclareMethodAlias(wxMouseCaptureChangedEvent, GetCapturedWindow_gurax, "GetCapturedWindow")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseCaptureChangedEvent, GetCapturedWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		pEntity_gurax->GetCapturedWindow()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +69,7 @@ void VType_wxMouseCaptureChangedEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxMouseCaptureChangedEvent, GetCapturedWindow_gurax));
 }
 
 //------------------------------------------------------------------------------

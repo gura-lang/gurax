@@ -2,6 +2,8 @@
 // VType_wxMouseCaptureChangedEvent.gura
 //==============================================================================
 MouseCaptureChangedEvent = Class(Event) {
+	//__init__(windowId as WindowID = 0, gainedCapture as Window_p = NULL)
+	GetCapturedWindow() as Window_p
 }
 
 @event {

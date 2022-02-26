@@ -262,6 +262,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxMouseCaptureChangedEvent);
 	frame.Assign(VTYPE_wxMouseCaptureLostEvent);
 	frame.Assign(VTYPE_wxMouseEvent);
+	frame.Assign(VTYPE_wxMoveEvent);
 	frame.Assign(VTYPE_wxMultiChoiceDialog);
 	frame.Assign(VTYPE_wxNavigationKeyEvent);
 	frame.Assign(VTYPE_wxNonOwnedWindow);
@@ -275,6 +276,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPaintDC);
 	frame.Assign(VTYPE_wxPaintEvent);
 	frame.Assign(VTYPE_wxPalette);
+	frame.Assign(VTYPE_wxPaletteChangedEvent);
 	frame.Assign(VTYPE_wxPanel);
 	frame.Assign(VTYPE_wxPasswordEntryDialog);
 	frame.Assign(VTYPE_wxPen);

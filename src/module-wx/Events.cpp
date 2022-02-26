@@ -165,6 +165,10 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_MOUSEWHEEL,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_MOUSE_CAPTURE_CHANGED,					wxMouseCaptureChangedEvent);
 	Gurax_AssignEvent(EVT_MOUSE_CAPTURE_LOST,					wxMouseCaptureLostEvent);
+	Gurax_AssignEvent(EVT_MOVE,									wxMoveEvent);
+	Gurax_AssignEvent(EVT_MOVE_END,								wxMoveEvent);
+	Gurax_AssignEvent(EVT_MOVE_START,							wxMoveEvent);
+	Gurax_AssignEvent(EVT_MOVING,								wxMoveEvent);
 	Gurax_AssignEvent(EVT_NAVIGATION_KEY,						wxNavigationKeyEvent);
 	Gurax_AssignEvent(EVT_NOTEBOOK_PAGE_CHANGED,					wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_NOTEBOOK_PAGE_CHANGING,				wxBookCtrlEvent);

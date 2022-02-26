@@ -1,0 +1,17 @@
+//==============================================================================
+// VType_wxMoveEvent.gura
+//==============================================================================
+MoveEvent = Class(Event) {
+	//__init__(pt as const_Point_r, id as int = 0)
+	GetPosition() as Point
+	GetRect() as Rect
+	SetRect(rect as const_Rect_r) as void
+	SetPosition(pos as const_Point_r) as void
+}
+
+@event {
+	EVT_MOVE		>> MoveEvent
+	EVT_MOVE_START	>> MoveEvent
+	EVT_MOVING		>> MoveEvent
+	EVT_MOVE_END	>> MoveEvent
+}

@@ -2,6 +2,7 @@
 // VType_wxPaintEvent.gura
 //==============================================================================
 PaintEvent = Class(Event) {
+	//__init__(id as int)
 }
 
 @event {
