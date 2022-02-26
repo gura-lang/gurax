@@ -28,27 +28,6 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.PaletteChangedEvent(winid? as Number) {block?} {block?}
-Gurax_DeclareConstructorAlias(PaletteChangedEvent_gurax, "PaletteChangedEvent")
-{
-	Declare(VTYPE_wxPaletteChangedEvent, Flag::None);
-	DeclareArg("winid", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.PaletteChangedEvent.");
-}
-
-Gurax_ImplementConstructorEx(PaletteChangedEvent_gurax, processor_gurax, argument_gurax)
-{
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	bool winid_validFlag = args_gurax.IsValid();
-	wxWindowID winid = winid_validFlag? args_gurax.PickNumber<wxWindowID>() : 0;
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPaletteChangedEvent(
-		wxPaletteChangedEvent(winid)));
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -113,7 +92,7 @@ void VType_wxPaletteChangedEvent::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxEvent, Flag::Mutable, Gurax_CreateConstructor(PaletteChangedEvent_gurax));
+	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxPaletteChangedEvent, SetChangedWindow_gurax));
 	Assign(Gurax_CreateMethod(wxPaletteChangedEvent, GetChangedWindow_gurax));
