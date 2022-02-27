@@ -3,6 +3,9 @@
 //==============================================================================
 PowerEvent = Class(Event) {
 	@include['wx/power.h']
+	//__init__(evtType as EventType)
+	Veto() as void
+	IsVetoed() as bool
 }
 
 @event {

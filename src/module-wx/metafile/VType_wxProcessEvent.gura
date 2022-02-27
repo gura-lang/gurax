@@ -1,0 +1,13 @@
+//==============================================================================
+// VType_wxProcessEvent.gura
+//==============================================================================
+ProcessEvent = Class(Event) {
+	@include['wx/process.h']
+	//__init__(id as int = 0, pid as int = 0, exitcode as int = 0)
+	GetExitCode() as int
+	GetPid() as int
+}
+
+@event {
+	EVT_END_PROCESS >> ProcessEvent
+}

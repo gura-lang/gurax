@@ -1,0 +1,9 @@
+//==============================================================================
+// VType_wxQueryNewPaletteEvent.gura
+//==============================================================================
+QueryNewPaletteEvent = Class(Event) {
+	@include['wx/event.h']
+	//__init__(winid as WindowID = 0)
+	SetPaletteRealized(realized as bool) as void
+	GetPaletteRealized() as bool
+}

@@ -286,12 +286,14 @@ set(SRCFILES_VTYPE
 	VType_wxPreviewFrame.cpp
 	VType_wxPrintAbortDialog.cpp
 	VType_wxPrintData.cpp
+	VType_wxProcessEvent.cpp
 	VType_wxProgressDialog.cpp
 	VType_wxPropertyCategory.cpp
 	VType_wxPropertyGrid.cpp
 	VType_wxPropertyGridManager.cpp
 	VType_wxPropertySheetDialog.cpp
 	VType_wxQueryLayoutInfoEvent.cpp
+	VType_wxQueryNewPaletteEvent.cpp
 	VType_wxRadioBox.cpp
 	VType_wxRadioButton.cpp
 	VType_wxRearrangeCtrl.cpp

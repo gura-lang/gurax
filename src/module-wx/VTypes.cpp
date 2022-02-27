@@ -294,12 +294,14 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPreviewFrame);
 	frame.Assign(VTYPE_wxPrintAbortDialog);
 	frame.Assign(VTYPE_wxPrintData);
+	frame.Assign(VTYPE_wxProcessEvent);
 	frame.Assign(VTYPE_wxProgressDialog);
 	frame.Assign(VTYPE_wxPropertyCategory);
 	frame.Assign(VTYPE_wxPropertyGrid);
 	frame.Assign(VTYPE_wxPropertyGridManager);
 	frame.Assign(VTYPE_wxPropertySheetDialog);
 	frame.Assign(VTYPE_wxQueryLayoutInfoEvent);
+	frame.Assign(VTYPE_wxQueryNewPaletteEvent);
 	frame.Assign(VTYPE_wxRadioBox);
 	frame.Assign(VTYPE_wxRadioButton);
 	frame.Assign(VTYPE_wxRearrangeCtrl);

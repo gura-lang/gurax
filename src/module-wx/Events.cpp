@@ -71,6 +71,7 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_DIALUP_DISCONNECTED,					wxDialUpEvent);
 	Gurax_AssignEvent(EVT_DIRPICKER_CHANGED,						wxFileDirPickerEvent);
 	Gurax_AssignEvent(EVT_DROP_FILES,							wxDropFilesEvent);
+	Gurax_AssignEvent(EVT_END_PROCESS,							wxProcessEvent);
 	Gurax_AssignEvent(EVT_END_SESSION,							wxCloseEvent);
 	Gurax_AssignEvent(EVT_ENTER_WINDOW,							wxMouseEvent);
 	Gurax_AssignEvent(EVT_ERASE_BACKGROUND,						wxEraseEvent);
