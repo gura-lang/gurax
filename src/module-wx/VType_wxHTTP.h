@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxHTTP);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxHTTP");
+protected:
+	wxHTTP* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxHTTP() = delete;
-	explicit Value_wxHTTP(const wxHTTP& entity, VType& vtype = VTYPE_wxHTTP) :
-		Value_wxProtocol(entity, vtype) {}
+	explicit Value_wxHTTP(wxHTTP* pEntity, VType& vtype = VTYPE_wxHTTP) :
+		Value_wxProtocol(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxHTTP(const Value_wxHTTP& src) = delete;
 	Value_wxHTTP& operator=(const Value_wxHTTP& src) = delete;
@@ -49,10 +51,10 @@ protected:
 	// Destructor
 	~Value_wxHTTP() = default;
 public:
-	wxHTTP& GetEntity() { return reinterpret_cast<wxHTTP&>(Value_wxProtocol::GetEntity()); }
-	const wxHTTP& GetEntity() const { return reinterpret_cast<const wxHTTP&>(Value_wxProtocol::GetEntity()); }
-	wxHTTP* GetEntityPtr() { return reinterpret_cast<wxHTTP*>(Value_wxProtocol::GetEntityPtr()); }\
-	const wxHTTP* GetEntityPtr() const { return reinterpret_cast<const wxHTTP*>(Value_wxProtocol::GetEntityPtr()); }
+	wxHTTP& GetEntity() { return *_pEntity; }
+	const wxHTTP& GetEntity() const { return *_pEntity; }
+	wxHTTP* GetEntityPtr() { return _pEntity; }
+	const wxHTTP* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxHTTP& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxHTTP&>(value).GetEntity();

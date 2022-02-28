@@ -1,0 +1,14 @@
+//==============================================================================
+// VType_wxShowEvent.gura
+//==============================================================================
+ShowEvent = Class(Event) {
+	@include['wx/event.h']
+	//__init__(winid as int = 0, show as bool = false)
+	SetShow(show as bool) as void
+	IsShown() as bool
+	//GetShow() as bool
+}
+
+@event {
+	EVT_SHOW >> ShowEvent
+}

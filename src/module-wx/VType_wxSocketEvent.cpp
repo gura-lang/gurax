@@ -32,25 +32,6 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.SocketEvent#GetClientData()
-Gurax_DeclareMethodAlias(wxSocketEvent, GetClientData_gurax, "GetClientData")
-{
-	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxSocketEvent, GetClientData_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	
-}
-
 // wx.SocketEvent#GetSocket() {block?}
 Gurax_DeclareMethodAlias(wxSocketEvent, GetSocket_gurax, "GetSocket")
 {
@@ -69,7 +50,7 @@ Gurax_ImplementMethodEx(wxSocketEvent, GetSocket_gurax, processor_gurax, argumen
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSocketBase(
-		*pEntity_gurax->GetSocket()));
+		pEntity_gurax->GetSocket()));
 }
 
 //-----------------------------------------------------------------------------
@@ -88,7 +69,6 @@ void VType_wxSocketEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(wxSocketEvent, GetClientData_gurax));
 	Assign(Gurax_CreateMethod(wxSocketEvent, GetSocket_gurax));
 }
 

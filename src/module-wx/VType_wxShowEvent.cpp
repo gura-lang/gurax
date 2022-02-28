@@ -76,26 +76,6 @@ Gurax_ImplementMethodEx(wxShowEvent, IsShown_gurax, processor_gurax, argument_gu
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.ShowEvent#GetShow()
-Gurax_DeclareMethodAlias(wxShowEvent, GetShow_gurax, "GetShow")
-{
-	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxShowEvent, GetShow_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	bool rtn = pEntity_gurax->GetShow();
-	return new Gurax::Value_Bool(rtn);
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -114,7 +94,6 @@ void VType_wxShowEvent::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxShowEvent, SetShow_gurax));
 	Assign(Gurax_CreateMethod(wxShowEvent, IsShown_gurax));
-	Assign(Gurax_CreateMethod(wxShowEvent, GetShow_gurax));
 }
 
 //------------------------------------------------------------------------------

@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxFTP);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxFTP");
+protected:
+	wxFTP* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxFTP() = delete;
-	explicit Value_wxFTP(const wxFTP& entity, VType& vtype = VTYPE_wxFTP) :
-		Value_wxProtocol(entity, vtype) {}
+	explicit Value_wxFTP(wxFTP* pEntity, VType& vtype = VTYPE_wxFTP) :
+		Value_wxProtocol(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxFTP(const Value_wxFTP& src) = delete;
 	Value_wxFTP& operator=(const Value_wxFTP& src) = delete;
@@ -49,10 +51,10 @@ protected:
 	// Destructor
 	~Value_wxFTP() = default;
 public:
-	wxFTP& GetEntity() { return reinterpret_cast<wxFTP&>(Value_wxProtocol::GetEntity()); }
-	const wxFTP& GetEntity() const { return reinterpret_cast<const wxFTP&>(Value_wxProtocol::GetEntity()); }
-	wxFTP* GetEntityPtr() { return reinterpret_cast<wxFTP*>(Value_wxProtocol::GetEntityPtr()); }\
-	const wxFTP* GetEntityPtr() const { return reinterpret_cast<const wxFTP*>(Value_wxProtocol::GetEntityPtr()); }
+	wxFTP& GetEntity() { return *_pEntity; }
+	const wxFTP& GetEntity() const { return *_pEntity; }
+	wxFTP* GetEntityPtr() { return _pEntity; }
+	const wxFTP* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxFTP& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxFTP&>(value).GetEntity();

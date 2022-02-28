@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxProtocol);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxProtocol");
+protected:
+	wxProtocol* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxProtocol() = delete;
-	explicit Value_wxProtocol(const wxProtocol& entity, VType& vtype = VTYPE_wxProtocol) :
-		Value_wxSocketClient(entity, vtype) {}
+	explicit Value_wxProtocol(wxProtocol* pEntity, VType& vtype = VTYPE_wxProtocol) :
+		Value_wxSocketClient(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxProtocol(const Value_wxProtocol& src) = delete;
 	Value_wxProtocol& operator=(const Value_wxProtocol& src) = delete;
@@ -49,10 +51,10 @@ protected:
 	// Destructor
 	~Value_wxProtocol() = default;
 public:
-	wxProtocol& GetEntity() { return reinterpret_cast<wxProtocol&>(Value_wxSocketClient::GetEntity()); }
-	const wxProtocol& GetEntity() const { return reinterpret_cast<const wxProtocol&>(Value_wxSocketClient::GetEntity()); }
-	wxProtocol* GetEntityPtr() { return reinterpret_cast<wxProtocol*>(Value_wxSocketClient::GetEntityPtr()); }\
-	const wxProtocol* GetEntityPtr() const { return reinterpret_cast<const wxProtocol*>(Value_wxSocketClient::GetEntityPtr()); }
+	wxProtocol& GetEntity() { return *_pEntity; }
+	const wxProtocol& GetEntity() const { return *_pEntity; }
+	wxProtocol* GetEntityPtr() { return _pEntity; }
+	const wxProtocol* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxProtocol& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxProtocol&>(value).GetEntity();

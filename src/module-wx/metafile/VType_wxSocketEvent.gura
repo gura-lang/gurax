@@ -1,0 +1,14 @@
+//==============================================================================
+// VType_wxSocketEvent.gura
+//==============================================================================
+SocketEvent = Class(Event) {
+	@include['wx/socket.h']
+	//__init__(id as int = 0)
+	//GetClientData() as void_p
+	GetSocket() as SocketBase_p
+	//GetSocketEvent() as SocketNotify
+}
+
+@event {
+	EVT_SOCKET >> SocketEvent
+}

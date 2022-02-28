@@ -1,0 +1,7 @@
+//==============================================================================
+// VType_wxTaskBarIconEvent.gura
+//==============================================================================
+TaskBarIconEvent = Class(Event) {
+	@include['wx/taskbar.h']
+	//__init__(evtType as EventType, tbIcon as TaskBarIcon_p)
+}

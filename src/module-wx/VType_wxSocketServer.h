@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxSocketServer);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxSocketServer");
+protected:
+	wxSocketServer* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxSocketServer() = delete;
-	explicit Value_wxSocketServer(const wxSocketServer& entity, VType& vtype = VTYPE_wxSocketServer) :
-		Value_wxSocketBase(entity, vtype) {}
+	explicit Value_wxSocketServer(wxSocketServer* pEntity, VType& vtype = VTYPE_wxSocketServer) :
+		Value_wxSocketBase(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxSocketServer(const Value_wxSocketServer& src) = delete;
 	Value_wxSocketServer& operator=(const Value_wxSocketServer& src) = delete;
@@ -49,10 +51,10 @@ protected:
 	// Destructor
 	~Value_wxSocketServer() = default;
 public:
-	wxSocketServer& GetEntity() { return reinterpret_cast<wxSocketServer&>(Value_wxSocketBase::GetEntity()); }
-	const wxSocketServer& GetEntity() const { return reinterpret_cast<const wxSocketServer&>(Value_wxSocketBase::GetEntity()); }
-	wxSocketServer* GetEntityPtr() { return reinterpret_cast<wxSocketServer*>(Value_wxSocketBase::GetEntityPtr()); }\
-	const wxSocketServer* GetEntityPtr() const { return reinterpret_cast<const wxSocketServer*>(Value_wxSocketBase::GetEntityPtr()); }
+	wxSocketServer& GetEntity() { return *_pEntity; }
+	const wxSocketServer& GetEntity() const { return *_pEntity; }
+	wxSocketServer* GetEntityPtr() { return _pEntity; }
+	const wxSocketServer* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxSocketServer& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxSocketServer&>(value).GetEntity();

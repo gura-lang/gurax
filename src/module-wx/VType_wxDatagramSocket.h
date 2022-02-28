@@ -32,13 +32,15 @@ public:
 	Gurax_DeclareReferable(Value_wxDatagramSocket);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxDatagramSocket");
+protected:
+	wxDatagramSocket* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxDatagramSocket() = delete;
-	explicit Value_wxDatagramSocket(const wxDatagramSocket& entity, VType& vtype = VTYPE_wxDatagramSocket) :
-		Value_wxSocketBase(entity, vtype) {}
+	explicit Value_wxDatagramSocket(wxDatagramSocket* pEntity, VType& vtype = VTYPE_wxDatagramSocket) :
+		Value_wxSocketBase(pEntity, vtype), _pEntity(pEntity) {}
 	// Copy constructor/operator
 	Value_wxDatagramSocket(const Value_wxDatagramSocket& src) = delete;
 	Value_wxDatagramSocket& operator=(const Value_wxDatagramSocket& src) = delete;
@@ -49,10 +51,10 @@ protected:
 	// Destructor
 	~Value_wxDatagramSocket() = default;
 public:
-	wxDatagramSocket& GetEntity() { return reinterpret_cast<wxDatagramSocket&>(Value_wxSocketBase::GetEntity()); }
-	const wxDatagramSocket& GetEntity() const { return reinterpret_cast<const wxDatagramSocket&>(Value_wxSocketBase::GetEntity()); }
-	wxDatagramSocket* GetEntityPtr() { return reinterpret_cast<wxDatagramSocket*>(Value_wxSocketBase::GetEntityPtr()); }\
-	const wxDatagramSocket* GetEntityPtr() const { return reinterpret_cast<const wxDatagramSocket*>(Value_wxSocketBase::GetEntityPtr()); }
+	wxDatagramSocket& GetEntity() { return *_pEntity; }
+	const wxDatagramSocket& GetEntity() const { return *_pEntity; }
+	wxDatagramSocket* GetEntityPtr() { return _pEntity; }
+	const wxDatagramSocket* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxDatagramSocket& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxDatagramSocket&>(value).GetEntity();
