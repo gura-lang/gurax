@@ -46,8 +46,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_CLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_RIGHT_DCLICK,					wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_SET_FOCUS,						wxCommandEvent);
-	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxCommandEvent);
+	Gurax_AssignEvent(EVT_CONTEXT_MENU,							wxContextMenuEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_CACHE_HINT,					wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_CLICK,			wxDataViewEvent);
 	Gurax_AssignEvent(EVT_DATAVIEW_COLUMN_HEADER_RIGHT_CLICK,	wxDataViewEvent);
@@ -228,8 +228,10 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_SCROLL_TOP,							wxScrollEvent);
 	Gurax_AssignEvent(EVT_SET_CURSOR,							wxSetCursorEvent);
 	Gurax_AssignEvent(EVT_SET_FOCUS,								wxFocusEvent);
+	Gurax_AssignEvent(EVT_SHOW,									wxShowEvent);
 	Gurax_AssignEvent(EVT_SIZE,									wxSizeEvent);
 	Gurax_AssignEvent(EVT_SLIDER,								wxCommandEvent);
+	Gurax_AssignEvent(EVT_SOCKET,								wxSocketEvent);
 	Gurax_AssignEvent(EVT_SPIN,									wxSpinEvent);
 	Gurax_AssignEvent(EVT_SPIN,									wxSpinEvent);
 	Gurax_AssignEvent(EVT_SPINCTRL,								wxSpinEvent);

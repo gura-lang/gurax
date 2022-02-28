@@ -2,6 +2,7 @@
 // VType_wxSizeEvent.gura
 //==============================================================================
 SizeEvent = Class(Event) {
+	@include['wx/event.h']
 	GetSize() as Size
 	SetSize(size as Size) as void
 	GetRect() as Rect

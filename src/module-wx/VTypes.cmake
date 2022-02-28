@@ -82,6 +82,7 @@ set(SRCFILES_VTYPE
 	VType_wxCursor.cpp
 	VType_wxCursorProperty.cpp
 	VType_wxDataFormat.cpp
+	VType_wxDatagramSocket.cpp
 	VType_wxDataObject.cpp
 	VType_wxDataViewColumn.cpp
 	VType_wxDataViewCtrl.cpp
@@ -145,6 +146,7 @@ set(SRCFILES_VTYPE
 	VType_wxFontPickerEvent.cpp
 	VType_wxFontProperty.cpp
 	VType_wxFrame.cpp
+	VType_wxFTP.cpp
 	VType_wxGauge.cpp
 	VType_wxGBPosition.cpp
 	VType_wxGBSizerItem.cpp
@@ -208,6 +210,7 @@ set(SRCFILES_VTYPE
 	VType_wxHtmlWindow.cpp
 	VType_wxHtmlWordCell.cpp
 	VType_wxHtmlWordWithTabsCell.cpp
+	VType_wxHTTP.cpp
 	VType_wxHVScrolledWindow.cpp
 	VType_wxHyperlinkCtrl.cpp
 	VType_wxHyperlinkEvent.cpp
@@ -292,6 +295,7 @@ set(SRCFILES_VTYPE
 	VType_wxPropertyGrid.cpp
 	VType_wxPropertyGridManager.cpp
 	VType_wxPropertySheetDialog.cpp
+	VType_wxProtocol.cpp
 	VType_wxQueryLayoutInfoEvent.cpp
 	VType_wxQueryNewPaletteEvent.cpp
 	VType_wxRadioBox.cpp
@@ -351,6 +355,7 @@ set(SRCFILES_VTYPE
 	VType_wxScrollWinEvent.cpp
 	VType_wxSetCursorEvent.cpp
 	VType_wxSettableHeaderColumn.cpp
+	VType_wxShowEvent.cpp
 	VType_wxSimplebook.cpp
 	VType_wxSimpleHtmlListBox.cpp
 	VType_wxSingleChoiceDialog.cpp
@@ -360,6 +365,10 @@ set(SRCFILES_VTYPE
 	VType_wxSizerFlags.cpp
 	VType_wxSizerItem.cpp
 	VType_wxSlider.cpp
+	VType_wxSocketBase.cpp
+	VType_wxSocketClient.cpp
+	VType_wxSocketEvent.cpp
+	VType_wxSocketServer.cpp
 	VType_wxSpinButton.cpp
 	VType_wxSpinCtrl.cpp
 	VType_wxSpinEvent.cpp
@@ -382,10 +391,12 @@ set(SRCFILES_VTYPE
 	VType_wxSymbolPickerDialog.cpp
 	VType_wxSysColourChangedEvent.cpp
 	VType_wxSystemColourProperty.cpp
+	VType_wxTaskBarIconEvent.cpp
 	VType_wxTextAttr.cpp
 	VType_wxTextCtrl.cpp
 	VType_wxTextEntryDialog.cpp
 	VType_wxTextValidator.cpp
+	VType_wxThreadEvent.cpp
 	VType_wxTimePickerCtrl.cpp
 	VType_wxTimer.cpp
 	VType_wxTimerEvent.cpp

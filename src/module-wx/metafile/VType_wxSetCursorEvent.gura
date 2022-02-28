@@ -2,8 +2,8 @@
 // VType_wxSetCursorEvent.gura
 //==============================================================================
 SetCursorEvent = Class(Event) {
-	//i@nclude['wx/event.h']
-	wxSetCursorEvent(x as Coord = 0, y as Coord = 0) as a
+	@include['wx/event.h']
+	//__init__(x as Coord = 0, y as Coord = 0)
 	GetCursor() as Cursor
 	GetX() as Coord
 	GetY() as Coord

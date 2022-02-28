@@ -2,6 +2,7 @@
 // VType_wxScrollWinEvent.gura
 //==============================================================================
 ScrollWinEvent = Class(Event) {
+	@include['wx/event.h']
 	//__init__(commandType as EventType = wxEVT_NULL, pos as int = 0, orientation as int = 0)
 	GetOrientation() as int
 	GetPosition() as int

@@ -2,6 +2,7 @@
 // VType_wxSysColourChangedEvent.gura
 //==============================================================================
 SysColourChangedEvent = Class(Event) {
+	@include['wx/event.h']
 }
 
 @event {

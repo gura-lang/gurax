@@ -90,6 +90,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxCursor);
 	frame.Assign(VTYPE_wxCursorProperty);
 	frame.Assign(VTYPE_wxDataFormat);
+	frame.Assign(VTYPE_wxDatagramSocket);
 	frame.Assign(VTYPE_wxDataObject);
 	frame.Assign(VTYPE_wxDataViewColumn);
 	frame.Assign(VTYPE_wxDataViewCtrl);
@@ -153,6 +154,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxFontPickerEvent);
 	frame.Assign(VTYPE_wxFontProperty);
 	frame.Assign(VTYPE_wxFrame);
+	frame.Assign(VTYPE_wxFTP);
 	frame.Assign(VTYPE_wxGauge);
 	frame.Assign(VTYPE_wxGBPosition);
 	frame.Assign(VTYPE_wxGBSizerItem);
@@ -216,6 +218,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxHtmlWindow);
 	frame.Assign(VTYPE_wxHtmlWordCell);
 	frame.Assign(VTYPE_wxHtmlWordWithTabsCell);
+	frame.Assign(VTYPE_wxHTTP);
 	frame.Assign(VTYPE_wxHVScrolledWindow);
 	frame.Assign(VTYPE_wxHyperlinkCtrl);
 	frame.Assign(VTYPE_wxHyperlinkEvent);
@@ -300,6 +303,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPropertyGrid);
 	frame.Assign(VTYPE_wxPropertyGridManager);
 	frame.Assign(VTYPE_wxPropertySheetDialog);
+	frame.Assign(VTYPE_wxProtocol);
 	frame.Assign(VTYPE_wxQueryLayoutInfoEvent);
 	frame.Assign(VTYPE_wxQueryNewPaletteEvent);
 	frame.Assign(VTYPE_wxRadioBox);
@@ -359,6 +363,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxScrollWinEvent);
 	frame.Assign(VTYPE_wxSetCursorEvent);
 	frame.Assign(VTYPE_wxSettableHeaderColumn);
+	frame.Assign(VTYPE_wxShowEvent);
 	frame.Assign(VTYPE_wxSimplebook);
 	frame.Assign(VTYPE_wxSimpleHtmlListBox);
 	frame.Assign(VTYPE_wxSingleChoiceDialog);
@@ -368,6 +373,10 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxSizerFlags);
 	frame.Assign(VTYPE_wxSizerItem);
 	frame.Assign(VTYPE_wxSlider);
+	frame.Assign(VTYPE_wxSocketBase);
+	frame.Assign(VTYPE_wxSocketClient);
+	frame.Assign(VTYPE_wxSocketEvent);
+	frame.Assign(VTYPE_wxSocketServer);
 	frame.Assign(VTYPE_wxSpinButton);
 	frame.Assign(VTYPE_wxSpinCtrl);
 	frame.Assign(VTYPE_wxSpinEvent);
@@ -390,10 +399,12 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxSymbolPickerDialog);
 	frame.Assign(VTYPE_wxSysColourChangedEvent);
 	frame.Assign(VTYPE_wxSystemColourProperty);
+	frame.Assign(VTYPE_wxTaskBarIconEvent);
 	frame.Assign(VTYPE_wxTextAttr);
 	frame.Assign(VTYPE_wxTextCtrl);
 	frame.Assign(VTYPE_wxTextEntryDialog);
 	frame.Assign(VTYPE_wxTextValidator);
+	frame.Assign(VTYPE_wxThreadEvent);
 	frame.Assign(VTYPE_wxTimePickerCtrl);
 	frame.Assign(VTYPE_wxTimer);
 	frame.Assign(VTYPE_wxTimerEvent);
