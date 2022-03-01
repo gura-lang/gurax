@@ -28,10 +28,193 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.GridCellFloatRenderer(width? as Number, precision? as Number, format? as Number) {block?} {block?}
+Gurax_DeclareConstructorAlias(GridCellFloatRenderer_gurax, "GridCellFloatRenderer")
+{
+	Declare(VTYPE_wxGridCellFloatRenderer, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("precision", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.GridCellFloatRenderer.");
+}
+
+Gurax_ImplementConstructorEx(GridCellFloatRenderer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool width_validFlag = args_gurax.IsValid();
+	int width = width_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool precision_validFlag = args_gurax.IsValid();
+	int precision = precision_validFlag? args_gurax.PickNumber<int>() : -1;
+	bool format_validFlag = args_gurax.IsValid();
+	int format = format_validFlag? args_gurax.PickNumber<int>() : wxGRID_FLOAT_FORMAT_DEFAULT;
+	// Function body
+	wxGridCellFloatRenderer* pEntity_gurax = new wxGridCellFloatRenderer(width, precision, format);
+	RefPtr<Value_wxGridCellFloatRenderer> pValue_gurax(new Value_wxGridCellFloatRenderer(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.GridCellFloatRenderer#GetFormat()
+Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, GetFormat_gurax, "GetFormat")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellFloatRenderer, GetFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetFormat();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GridCellFloatRenderer#GetPrecision()
+Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, GetPrecision_gurax, "GetPrecision")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellFloatRenderer, GetPrecision_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetPrecision();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GridCellFloatRenderer#GetWidth()
+Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, GetWidth_gurax, "GetWidth")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellFloatRenderer, GetWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetWidth();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GridCellFloatRenderer#SetFormat(format as Number)
+Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, SetFormat_gurax, "SetFormat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellFloatRenderer, SetFormat_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int format = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetFormat(format);
+	return Gurax::Value::nil();
+}
+
+// wx.GridCellFloatRenderer#SetParameters(params as String)
+Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, SetParameters_gurax, "SetParameters")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellFloatRenderer, SetParameters_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* params = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetParameters(params);
+	return Gurax::Value::nil();
+}
+
+// wx.GridCellFloatRenderer#SetPrecision(precision as Number)
+Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, SetPrecision_gurax, "SetPrecision")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("precision", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellFloatRenderer, SetPrecision_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int precision = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetPrecision(precision);
+	return Gurax::Value::nil();
+}
+
+// wx.GridCellFloatRenderer#SetWidth(width as Number)
+Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, SetWidth_gurax, "SetWidth")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellFloatRenderer, SetWidth_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int width = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetWidth(width);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +230,15 @@ void VType_wxGridCellFloatRenderer::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGridCellStringRenderer, Flag::Mutable);
+	Declare(VTYPE_wxGridCellStringRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellFloatRenderer_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGridCellFloatRenderer, GetFormat_gurax));
+	Assign(Gurax_CreateMethod(wxGridCellFloatRenderer, GetPrecision_gurax));
+	Assign(Gurax_CreateMethod(wxGridCellFloatRenderer, GetWidth_gurax));
+	Assign(Gurax_CreateMethod(wxGridCellFloatRenderer, SetFormat_gurax));
+	Assign(Gurax_CreateMethod(wxGridCellFloatRenderer, SetParameters_gurax));
+	Assign(Gurax_CreateMethod(wxGridCellFloatRenderer, SetPrecision_gurax));
+	Assign(Gurax_CreateMethod(wxGridCellFloatRenderer, SetWidth_gurax));
 }
 
 //------------------------------------------------------------------------------

@@ -28,6 +28,23 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.GridCellBoolRenderer() {block?} {block?}
+Gurax_DeclareConstructorAlias(GridCellBoolRenderer_gurax, "GridCellBoolRenderer")
+{
+	Declare(VTYPE_wxGridCellBoolRenderer, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.GridCellBoolRenderer.");
+}
+
+Gurax_ImplementConstructorEx(GridCellBoolRenderer_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxGridCellBoolRenderer* pEntity_gurax = new wxGridCellBoolRenderer();
+	RefPtr<Value_wxGridCellBoolRenderer> pValue_gurax(new Value_wxGridCellBoolRenderer(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -47,7 +64,7 @@ void VType_wxGridCellBoolRenderer::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGridCellRenderer, Flag::Mutable);
+	Declare(VTYPE_wxGridCellRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellBoolRenderer_gurax));
 	// Assignment of method
 }
 

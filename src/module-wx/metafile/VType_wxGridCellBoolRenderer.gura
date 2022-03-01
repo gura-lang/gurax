@@ -3,4 +3,5 @@
 //==============================================================================
 GridCellBoolRenderer = Class(GridCellRenderer) {
 	@include['wx/grid.h']
+	__init__()
 }

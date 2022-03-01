@@ -173,6 +173,7 @@
 #include "VType_wxGridCellBoolRenderer.h"
 #include "VType_wxGridCellChoiceEditor.h"
 #include "VType_wxGridCellCoords.h"
+#include "VType_wxGridCellDateRenderer.h"
 #include "VType_wxGridCellDateTimeRenderer.h"
 #include "VType_wxGridCellEditor.h"
 #include "VType_wxGridCellEnumEditor.h"

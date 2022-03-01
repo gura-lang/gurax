@@ -28,6 +28,23 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.GridCellNumberRenderer() {block?} {block?}
+Gurax_DeclareConstructorAlias(GridCellNumberRenderer_gurax, "GridCellNumberRenderer")
+{
+	Declare(VTYPE_wxGridCellNumberRenderer, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.GridCellNumberRenderer.");
+}
+
+Gurax_ImplementConstructorEx(GridCellNumberRenderer_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	wxGridCellNumberRenderer* pEntity_gurax = new wxGridCellNumberRenderer();
+	RefPtr<Value_wxGridCellNumberRenderer> pValue_gurax(new Value_wxGridCellNumberRenderer(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -47,7 +64,7 @@ void VType_wxGridCellNumberRenderer::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGridCellStringRenderer, Flag::Mutable);
+	Declare(VTYPE_wxGridCellStringRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellNumberRenderer_gurax));
 	// Assignment of method
 }
 

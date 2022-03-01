@@ -178,6 +178,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGridCellBoolRenderer);
 	frame.Assign(VTYPE_wxGridCellChoiceEditor);
 	frame.Assign(VTYPE_wxGridCellCoords);
+	frame.Assign(VTYPE_wxGridCellDateRenderer);
 	frame.Assign(VTYPE_wxGridCellDateTimeRenderer);
 	frame.Assign(VTYPE_wxGridCellEditor);
 	frame.Assign(VTYPE_wxGridCellEnumEditor);

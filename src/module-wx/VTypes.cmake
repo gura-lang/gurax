@@ -170,6 +170,7 @@ set(SRCFILES_VTYPE
 	VType_wxGridCellBoolRenderer.cpp
 	VType_wxGridCellChoiceEditor.cpp
 	VType_wxGridCellCoords.cpp
+	VType_wxGridCellDateRenderer.cpp
 	VType_wxGridCellDateTimeRenderer.cpp
 	VType_wxGridCellEditor.cpp
 	VType_wxGridCellEnumEditor.cpp

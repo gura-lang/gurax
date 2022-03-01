@@ -3,4 +3,12 @@
 //==============================================================================
 GridCellFloatRenderer = Class(GridCellStringRenderer) {
 	@include['wx/grid.h']
+	__init__(width as int = -1, precision as int = -1, format as int = wxGRID_FLOAT_FORMAT_DEFAULT)
+	GetFormat() as int
+	GetPrecision() as int
+	GetWidth() as int
+	SetFormat(format as int) as void
+	SetParameters(params as const_String_r) as void
+	SetPrecision(precision as int) as void
+	SetWidth(width as int) as void
 }

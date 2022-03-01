@@ -8,7 +8,7 @@
 #include <wx/wx.h>
 #include <wx/grid.h>
 #include "Util.h"
-#include "VType_wxGridCellStringRenderer.h"
+#include "VType_wxGridCellDateRenderer.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -26,7 +26,7 @@ extern GURAX_DLLDECLARE VType_wxGridCellDateTimeRenderer VTYPE_wxGridCellDateTim
 //------------------------------------------------------------------------------
 // Value_wxGridCellDateTimeRenderer
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxGridCellDateTimeRenderer : public Value_wxGridCellStringRenderer {
+class GURAX_DLLDECLARE Value_wxGridCellDateTimeRenderer : public Value_wxGridCellDateRenderer {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxGridCellDateTimeRenderer);
@@ -40,7 +40,7 @@ public:
 	// Constructor
 	Value_wxGridCellDateTimeRenderer() = delete;
 	explicit Value_wxGridCellDateTimeRenderer(wxGridCellDateTimeRenderer* pEntity, VType& vtype = VTYPE_wxGridCellDateTimeRenderer) :
-		Value_wxGridCellStringRenderer(pEntity, vtype), _pEntity(pEntity) { pEntity->IncRef(); }
+		Value_wxGridCellDateRenderer(pEntity, vtype), _pEntity(pEntity) { pEntity->IncRef(); }
 	// Copy constructor/operator
 	Value_wxGridCellDateTimeRenderer(const Value_wxGridCellDateTimeRenderer& src) = delete;
 	Value_wxGridCellDateTimeRenderer& operator=(const Value_wxGridCellDateTimeRenderer& src) = delete;
