@@ -4,5 +4,5 @@
 GridCellDateTimeRenderer = Class(GridCellDateRenderer) {
 	@include['wx/grid.h']
 	__init__(outformat as const_String_r = wxDefaultDateTimeFormat, informat as const_String_r = wxDefaultDateTimeFormat)
+	SetParameters(params as const_String_r) as void
 }
-6

@@ -28,10 +28,54 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.GridCellEnumRenderer(choices? as String) {block?} {block?}
+Gurax_DeclareConstructorAlias(GridCellEnumRenderer_gurax, "GridCellEnumRenderer")
+{
+	Declare(VTYPE_wxGridCellEnumRenderer, Flag::None);
+	DeclareArg("choices", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.GridCellEnumRenderer.");
+}
+
+Gurax_ImplementConstructorEx(GridCellEnumRenderer_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* choices = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	wxGridCellEnumRenderer* pEntity_gurax = new wxGridCellEnumRenderer(choices);
+	RefPtr<Value_wxGridCellEnumRenderer> pValue_gurax(new Value_wxGridCellEnumRenderer(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.GridCellEnumRenderer#SetParameters(params as String)
+Gurax_DeclareMethodAlias(wxGridCellEnumRenderer, SetParameters_gurax, "SetParameters")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellEnumRenderer, SetParameters_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* params = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetParameters(params);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +91,9 @@ void VType_wxGridCellEnumRenderer::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGridCellStringRenderer, Flag::Mutable);
+	Declare(VTYPE_wxGridCellStringRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellEnumRenderer_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGridCellEnumRenderer, SetParameters_gurax));
 }
 
 //------------------------------------------------------------------------------

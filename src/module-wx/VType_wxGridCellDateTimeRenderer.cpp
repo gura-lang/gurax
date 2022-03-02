@@ -55,6 +55,29 @@ Gurax_ImplementConstructorEx(GridCellDateTimeRenderer_gurax, processor_gurax, ar
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.GridCellDateTimeRenderer#SetParameters(params as String)
+Gurax_DeclareMethodAlias(wxGridCellDateTimeRenderer, SetParameters_gurax, "SetParameters")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellDateTimeRenderer, SetParameters_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* params = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetParameters(params);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -72,6 +95,7 @@ void VType_wxGridCellDateTimeRenderer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellDateRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellDateTimeRenderer_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGridCellDateTimeRenderer, SetParameters_gurax));
 }
 
 //------------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 //==============================================================================
-// VType_wxGridCellFloatEditor.gura
+// VType_wxGridCellDateRenderer.gura
 //==============================================================================
-GridCellFloatEditor = Class(GridCellTextEditor) {
+GridCellDateRenderer = Class(GridCellStringRenderer) {
 	@include['wx/grid.h']
-	__init__(width as int = -1, precision as int = -1, format as int = wxGRID_FLOAT_FORMAT_DEFAULT)
+	__init__(outformat as const_String_r = "")
 	SetParameters(params as const_String_r) as void
 }

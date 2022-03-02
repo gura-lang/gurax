@@ -3,4 +3,5 @@
 //==============================================================================
 GridCellEnumEditor = Class(GridCellChoiceEditor) {
 	@include['wx/grid.h']
+	__init__(choices as const_String_r = wxEmptyString)
 }

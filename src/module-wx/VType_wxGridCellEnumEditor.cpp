@@ -28,6 +28,26 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.GridCellEnumEditor(choices? as String) {block?} {block?}
+Gurax_DeclareConstructorAlias(GridCellEnumEditor_gurax, "GridCellEnumEditor")
+{
+	Declare(VTYPE_wxGridCellEnumEditor, Flag::None);
+	DeclareArg("choices", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.GridCellEnumEditor.");
+}
+
+Gurax_ImplementConstructorEx(GridCellEnumEditor_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* choices = args_gurax.IsValid()? args_gurax.PickString() : "";
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGridCellEnumEditor(
+		wxGridCellEnumEditor(choices)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -47,7 +67,7 @@ void VType_wxGridCellEnumEditor::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxGridCellChoiceEditor, Flag::Mutable);
+	Declare(VTYPE_wxGridCellChoiceEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellEnumEditor_gurax));
 	// Assignment of method
 }
 

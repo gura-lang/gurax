@@ -3,4 +3,5 @@
 //==============================================================================
 GridCellAutoWrapStringEditor = Class(GridCellTextEditor) {
 	@include['wx/grid.h']
+	__init__()
 }

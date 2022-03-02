@@ -3,4 +3,6 @@
 //==============================================================================
 GridCellChoiceEditor = Class(GridCellEditor) {
 	@include['wx/grid.h']
+	__init__(choices as const_ArrayString_r, allowOthers as bool = false)
+	SetParameters(params as const_String_r) as void
 }

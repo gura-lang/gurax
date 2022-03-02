@@ -6,7 +6,6 @@
 #define GURAX_MODULE_WX_VTYPE_WXGRIDCELLTEXTEDITOR_H
 #include <gurax.h>
 #include <wx/wx.h>
-#include <wx/grid.h>
 #include "Util.h"
 #include "VType_wxGridCellEditor.h"
 

@@ -2,5 +2,7 @@
 // VType_wxGridCellTextEditor.gura
 //==============================================================================
 GridCellTextEditor = Class(GridCellEditor) {
-	@include['wx/grid.h']
+	__init__(maxChars as size_t = 0)
+	SetParameters(params as const_String_r) as void
+	SetValidator(validator as const_Validator_r) as void
 }

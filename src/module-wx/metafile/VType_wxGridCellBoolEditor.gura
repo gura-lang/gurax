@@ -3,4 +3,7 @@
 //==============================================================================
 GridCellBoolEditor = Class(GridCellEditor) {
 	@include['wx/grid.h']
+	__init__()
+	IsTrueValue(value as const_String_r):static as bool
+	UseStringValues(valueTrue as const_String_r = "1", valueFalse as const_String_r = wxEmptyString):static as void
 }
