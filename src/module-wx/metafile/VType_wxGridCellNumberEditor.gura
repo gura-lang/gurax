@@ -3,4 +3,8 @@
 //==============================================================================
 GridCellNumberEditor = Class(GridCellTextEditor) {
 	@include['wx/grid.h']
+	__init__(min as int = -1, max as int = -1)
+	SetParameters(params as const_String_r) as void
+	//HasRange() as bool
+	//GetString() as String
 }
