@@ -1,0 +1,13 @@
+//==============================================================================
+// VType_wxURL.gura
+//==============================================================================
+URL = Class(URI) {
+	@include['wx/url.h']
+	__init__(url as const_String_r = wxEmptyString)
+	GetError() as URLError
+	GetInputStream() as InputStream_p
+	//GetProtocol() as Protocol
+	IsOk() as bool
+	SetProxy(url_proxy as const_String_r) as void
+	SetURL(url as const_String_r) as URLError
+}

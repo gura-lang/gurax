@@ -417,6 +417,7 @@ set(SRCFILES_VTYPE
 	VType_wxUIntProperty.cpp
 	VType_wxUpdateUIEvent.cpp
 	VType_wxURI.cpp
+	VType_wxURL.cpp
 	VType_wxValidator.cpp
 	VType_wxVisualAttributes.cpp
 	VType_wxVListBox.cpp

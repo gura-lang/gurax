@@ -425,6 +425,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxUIntProperty);
 	frame.Assign(VTYPE_wxUpdateUIEvent);
 	frame.Assign(VTYPE_wxURI);
+	frame.Assign(VTYPE_wxURL);
 	frame.Assign(VTYPE_wxValidator);
 	frame.Assign(VTYPE_wxVisualAttributes);
 	frame.Assign(VTYPE_wxVListBox);

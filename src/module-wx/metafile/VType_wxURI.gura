@@ -3,4 +3,27 @@
 //==============================================================================
 URI = Class {
 	@include['wx/uri.h']
+	__init__(uri as const_String_r = '')
+	BuildURI() as String
+	BuildUnescapedURI() as String
+	Create(uri as const_String_r) as bool
+	GetFragment() as String
+	GetHostType() as URIHostType
+	GetPassword() as String
+	GetPath() as String
+	GetPort() as String
+	GetQuery() as String
+	GetScheme() as String
+	GetServer() as String
+	GetUser() as String
+	GetUserInfo() as String
+	HasFragment() as bool
+	HasPath() as bool
+	HasPort() as bool
+	HasQuery() as bool
+	HasScheme() as bool
+	HasServer() as bool
+	HasUserInfo() as bool
+	IsReference() as bool
+	Resolve(base as const_URI_r, flags as int = wxURI_STRICT) as void
 }

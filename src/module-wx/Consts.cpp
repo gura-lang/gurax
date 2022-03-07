@@ -1158,6 +1158,17 @@ void AssignConsts(Frame& frame)
 	frame.Assign("UPDATE_UI_PROCESS_ALL", new Value_Number(wxUPDATE_UI_PROCESS_ALL));
 	frame.Assign("UPDATE_UI_PROCESS_SPECIFIED", new Value_Number(wxUPDATE_UI_PROCESS_SPECIFIED));
 	frame.Assign("UPDATE_UI_RECURSE", new Value_Number(wxUPDATE_UI_RECURSE));
+	frame.Assign("URI_IPV4ADDRESS", new Value_Number(wxURI_IPV4ADDRESS));
+	frame.Assign("URI_IPV6ADDRESS", new Value_Number(wxURI_IPV6ADDRESS));
+	frame.Assign("URI_IPVFUTURE", new Value_Number(wxURI_IPVFUTURE));
+	frame.Assign("URI_REGNAME", new Value_Number(wxURI_REGNAME));
+	frame.Assign("URL_CONNERR", new Value_Number(wxURL_CONNERR));
+	frame.Assign("URL_NOERR", new Value_Number(wxURL_NOERR));
+	frame.Assign("URL_NOHOST", new Value_Number(wxURL_NOHOST));
+	frame.Assign("URL_NOPATH", new Value_Number(wxURL_NOPATH));
+	frame.Assign("URL_NOPROTO", new Value_Number(wxURL_NOPROTO));
+	frame.Assign("URL_PROTOERR", new Value_Number(wxURL_PROTOERR));
+	frame.Assign("URL_SNTXERR", new Value_Number(wxURL_SNTXERR));
 	frame.Assign("VERTICAL", new Value_Number(wxVERTICAL));
 	frame.Assign("VSCROLL", new Value_Number(wxVSCROLL));
 	frame.Assign("WANTS_CHARS", new Value_Number(wxWANTS_CHARS));
