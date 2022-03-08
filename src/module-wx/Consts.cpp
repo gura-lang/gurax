@@ -913,6 +913,16 @@ void AssignConsts(Frame& frame)
 	frame.Assign("PRINT_MODE_PREVIEW", new Value_Number(wxPRINT_MODE_PREVIEW));
 	frame.Assign("PRINT_MODE_PRINTER", new Value_Number(wxPRINT_MODE_PRINTER));
 	frame.Assign("PRINT_MODE_STREAM", new Value_Number(wxPRINT_MODE_STREAM));
+	frame.Assign("PROTO_ABRT", new Value_Number(wxPROTO_ABRT));
+	frame.Assign("PROTO_CONNERR", new Value_Number(wxPROTO_CONNERR));
+	frame.Assign("PROTO_INVVAL", new Value_Number(wxPROTO_INVVAL));
+	frame.Assign("PROTO_NETERR", new Value_Number(wxPROTO_NETERR));
+	frame.Assign("PROTO_NOERR", new Value_Number(wxPROTO_NOERR));
+	frame.Assign("PROTO_NOFILE", new Value_Number(wxPROTO_NOFILE));
+	frame.Assign("PROTO_NOHNDLR", new Value_Number(wxPROTO_NOHNDLR));
+	frame.Assign("PROTO_PROTERR", new Value_Number(wxPROTO_PROTERR));
+	frame.Assign("PROTO_RCNCT", new Value_Number(wxPROTO_RCNCT));
+	frame.Assign("PROTO_STREAMING", new Value_Number(wxPROTO_STREAMING));
 	frame.Assign("PartRegion", new Value_Number(wxPartRegion));
 	frame.Assign("RAISED_BORDER", new Value_Number(wxRAISED_BORDER));
 	frame.Assign("RA_SPECIFY_COLS", new Value_Number(wxRA_SPECIFY_COLS));

@@ -3,4 +3,17 @@
 //==============================================================================
 Protocol = Class(SocketClient) {
 	@include['wx/protocol/protocol.h']
+	Abort() as bool
+	GetContentType() as String
+	GetError() as ProtocolError
+	GetInputStream(path as const_String_r) as InputStream_p
+	Reconnect() as bool
+	SetPassword(user as const_String_r) as void
+	SetUser(user as const_String_r) as void
+	SetDefaultTimeout(Value as Uint32) as void
+	SetLog(log as ProtocolLog_p) as void
+	GetLog() as ProtocolLog_p
+	DetachLog() as ProtocolLog_p
+	LogRequest(str as const_String_r) as void
+	LogResponse(str as const_String_r) as void
 }

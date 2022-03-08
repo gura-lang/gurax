@@ -297,6 +297,7 @@ set(SRCFILES_VTYPE
 	VType_wxPropertyGridManager.cpp
 	VType_wxPropertySheetDialog.cpp
 	VType_wxProtocol.cpp
+	VType_wxProtocolLog.cpp
 	VType_wxQueryLayoutInfoEvent.cpp
 	VType_wxQueryNewPaletteEvent.cpp
 	VType_wxRadioBox.cpp

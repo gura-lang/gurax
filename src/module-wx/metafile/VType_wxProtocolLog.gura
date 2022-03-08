@@ -1,0 +1,9 @@
+//==============================================================================
+// VType_wxProtocolLog.gura
+//==============================================================================
+ProtocolLog = Class():loosePointer {
+	@include['wx/protocol/log.h']
+	__init__(traceMask as const_String_r)
+	LogRequest(str as const_String_r) as void
+	LogResponse(str as const_String_r) as void
+}

@@ -300,6 +300,7 @@
 #include "VType_wxPropertyGridManager.h"
 #include "VType_wxPropertySheetDialog.h"
 #include "VType_wxProtocol.h"
+#include "VType_wxProtocolLog.h"
 #include "VType_wxQueryLayoutInfoEvent.h"
 #include "VType_wxQueryNewPaletteEvent.h"
 #include "VType_wxRadioBox.h"

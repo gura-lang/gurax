@@ -305,6 +305,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPropertyGridManager);
 	frame.Assign(VTYPE_wxPropertySheetDialog);
 	frame.Assign(VTYPE_wxProtocol);
+	frame.Assign(VTYPE_wxProtocolLog);
 	frame.Assign(VTYPE_wxQueryLayoutInfoEvent);
 	frame.Assign(VTYPE_wxQueryNewPaletteEvent);
 	frame.Assign(VTYPE_wxRadioBox);
