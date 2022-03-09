@@ -110,6 +110,14 @@ Gurax_ImplementOpBinary(Eq, wxSize, wxSize)
 	return new Gurax::Value_Bool(elemResult);
 }
 
+Gurax_ImplementOpBinary(Eq, wxVideoMode, wxVideoMode)
+{
+	const auto& elemL = Value_wxVideoMode::GetEntity(valueL);
+	const auto& elemR = Value_wxVideoMode::GetEntity(valueR);
+	auto elemResult = elemL == elemR;
+	return new Gurax::Value_Bool(elemResult);
+}
+
 Gurax_ImplementOpBinary(Mul, wxPoint, Number)
 {
 	const auto& elemL = Value_wxPoint::GetEntity(valueL);
@@ -162,6 +170,14 @@ Gurax_ImplementOpBinary(Ne, wxSize, wxSize)
 {
 	const auto& elemL = Value_wxSize::GetEntity(valueL);
 	const auto& elemR = Value_wxSize::GetEntity(valueR);
+	auto elemResult = elemL != elemR;
+	return new Gurax::Value_Bool(elemResult);
+}
+
+Gurax_ImplementOpBinary(Ne, wxVideoMode, wxVideoMode)
+{
+	const auto& elemL = Value_wxVideoMode::GetEntity(valueL);
+	const auto& elemR = Value_wxVideoMode::GetEntity(valueR);
 	auto elemResult = elemL != elemR;
 	return new Gurax::Value_Bool(elemResult);
 }
@@ -240,6 +256,7 @@ void AssignOperators(Frame& frame)
 	Gurax_AssignOpBinary(Eq, wxPoint, wxPoint);
 	Gurax_AssignOpBinary(Eq, wxRect, wxRect);
 	Gurax_AssignOpBinary(Eq, wxSize, wxSize);
+	Gurax_AssignOpBinary(Eq, wxVideoMode, wxVideoMode);
 	Gurax_AssignOpBinary(Mul, wxPoint, Number);
 	Gurax_AssignOpBinary(Mul, wxRect, wxRect);
 	Gurax_AssignOpBinary(Mul, wxSize, Number);
@@ -247,6 +264,7 @@ void AssignOperators(Frame& frame)
 	Gurax_AssignOpBinary(Ne, wxPoint, wxPoint);
 	Gurax_AssignOpBinary(Ne, wxRect, wxRect);
 	Gurax_AssignOpBinary(Ne, wxSize, wxSize);
+	Gurax_AssignOpBinary(Ne, wxVideoMode, wxVideoMode);
 	Gurax_AssignOpBinary(Sub, wxDateTime, wxDateSpan);
 	Gurax_AssignOpBinary(Sub, wxDateTime, wxTimeSpan);
 	Gurax_AssignOpBinary(Sub, wxDateTime, wxDateTime);

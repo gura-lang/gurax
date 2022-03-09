@@ -420,6 +420,7 @@ set(SRCFILES_VTYPE
 	VType_wxURI.cpp
 	VType_wxURL.cpp
 	VType_wxValidator.cpp
+	VType_wxVideoMode.cpp
 	VType_wxVisualAttributes.cpp
 	VType_wxVListBox.cpp
 	VType_wxVScrolledWindow.cpp

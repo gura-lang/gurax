@@ -423,6 +423,7 @@
 #include "VType_wxURI.h"
 #include "VType_wxURL.h"
 #include "VType_wxValidator.h"
+#include "VType_wxVideoMode.h"
 #include "VType_wxVisualAttributes.h"
 #include "VType_wxVListBox.h"
 #include "VType_wxVScrolledWindow.h"

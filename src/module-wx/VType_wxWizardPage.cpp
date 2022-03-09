@@ -32,6 +32,95 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.WizardPage#Create(parent as wx.Wizard, bitmap? as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxWizardPage, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWizard, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizardPage, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWizard& value_parent = args_gurax.Pick<Value_wxWizard>();
+	wxWizard* parent = value_parent.GetEntityPtr();
+	const wxBitmap& bitmap = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, bitmap);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.WizardPage#GetBitmap() {block?}
+Gurax_DeclareMethodAlias(wxWizardPage, GetBitmap_gurax, "GetBitmap")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizardPage, GetBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetBitmap()));
+}
+
+// wx.WizardPage#GetNext() {block?}
+Gurax_DeclareMethodAlias(wxWizardPage, GetNext_gurax, "GetNext")
+{
+	Declare(VTYPE_wxWizardPage, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizardPage, GetNext_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(
+		pEntity_gurax->GetNext()));
+}
+
+// wx.WizardPage#GetPrev() {block?}
+Gurax_DeclareMethodAlias(wxWizardPage, GetPrev_gurax, "GetPrev")
+{
+	Declare(VTYPE_wxWizardPage, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxWizardPage, GetPrev_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWizardPage(
+		pEntity_gurax->GetPrev()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +138,10 @@ void VType_wxWizardPage::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxWizardPage, Create_gurax));
+	Assign(Gurax_CreateMethod(wxWizardPage, GetBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxWizardPage, GetNext_gurax));
+	Assign(Gurax_CreateMethod(wxWizardPage, GetPrev_gurax));
 }
 
 //------------------------------------------------------------------------------

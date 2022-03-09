@@ -309,11 +309,18 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_TREE_STATE_IMAGE_CLICK,				wxTreeEvent);
 	Gurax_AssignEvent(EVT_UPDATE_UI,								wxUpdateUIEvent);
 	Gurax_AssignEvent(EVT_WIZARD_BEFORE_PAGE_CHANGED,			wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_BEFORE_PAGE_CHANGED,			wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_CANCEL,							wxWizardEvent);
 	Gurax_AssignEvent(EVT_WIZARD_CANCEL,							wxWizardEvent);
 	Gurax_AssignEvent(EVT_WIZARD_FINISHED,						wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_FINISHED,						wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_HELP,							wxWizardEvent);
 	Gurax_AssignEvent(EVT_WIZARD_HELP,							wxWizardEvent);
 	Gurax_AssignEvent(EVT_WIZARD_PAGE_CHANGED,					wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_PAGE_CHANGED,					wxWizardEvent);
 	Gurax_AssignEvent(EVT_WIZARD_PAGE_CHANGING,					wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_PAGE_CHANGING,					wxWizardEvent);
+	Gurax_AssignEvent(EVT_WIZARD_PAGE_SHOWN,						wxWizardEvent);
 	Gurax_AssignEvent(EVT_WIZARD_PAGE_SHOWN,						wxWizardEvent);
 }
 

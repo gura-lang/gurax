@@ -3,4 +3,9 @@
 //==============================================================================
 WizardPage = Class(Panel) {
 	@include['wx/wizard.h']
+	//__init__(parent as Wizard_p, bitmap as const_Bitmap_r = wxNullBitmap)
+	Create(parent as Wizard_p, bitmap as const_Bitmap_r = wxNullBitmap) as bool
+	GetBitmap() as Bitmap
+	GetNext() as WizardPage_p
+	GetPrev() as WizardPage_p
 }
