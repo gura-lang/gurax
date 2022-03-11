@@ -3,4 +3,22 @@
 //==============================================================================
 EditableListBox = Class(Panel) {
 	@include['wx/editlbox.h']
+	__init__(parent as Window_p, id as WindowID, label as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxEL_DEFAULT_STYLE, name as const_String_r = wxEditableListBoxNameStr)
+	Create(parent as Window_p, id as WindowID, label as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxEL_DEFAULT_STYLE, name as const_String_r = wxEditableListBoxNameStr) as bool
+	SetStrings(strings as const_ArrayString_r) as void
+	//GetStrings(strings as ArrayString_r) as void
+	GetStrings() = \
+		R'''
+		wxArrayString strings;
+		pEntity_gurax->GetStrings(strings);
+		return Util::CreateList(strings);
+		'''
+}
+
+@const { // Styles
+	EL_ALLOW_NEW
+	EL_ALLOW_EDIT
+	EL_ALLOW_DELETE
+	EL_NO_REORDER
+	EL_DEFAULT_STYLE
 }

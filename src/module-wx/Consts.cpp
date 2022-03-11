@@ -241,6 +241,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("Drag_CopyOnly", new Value_Number(wxDrag_CopyOnly));
 	frame.Assign("Drag_DefaultMove", new Value_Number(wxDrag_DefaultMove));
 	frame.Assign("EAST", new Value_Number(wxEAST));
+	frame.Assign("EL_ALLOW_DELETE", new Value_Number(wxEL_ALLOW_DELETE));
+	frame.Assign("EL_ALLOW_EDIT", new Value_Number(wxEL_ALLOW_EDIT));
+	frame.Assign("EL_ALLOW_NEW", new Value_Number(wxEL_ALLOW_NEW));
+	frame.Assign("EL_DEFAULT_STYLE", new Value_Number(wxEL_DEFAULT_STYLE));
+	frame.Assign("EL_NO_REORDER", new Value_Number(wxEL_NO_REORDER));
 	frame.Assign("EQUIV", new Value_Number(wxEQUIV));
 	frame.Assign("EVENT_PROPAGATE_MAX", new Value_Number(wxEVENT_PROPAGATE_MAX));
 	frame.Assign("EVENT_PROPAGATE_NONE", new Value_Number(wxEVENT_PROPAGATE_NONE));

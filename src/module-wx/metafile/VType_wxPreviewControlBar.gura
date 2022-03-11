@@ -3,4 +3,9 @@
 //==============================================================================
 PreviewControlBar = Class(Panel) {
 	@include['wx/print.h']
+	__init__(preview as PrintPreview_p, buttons as long, parent as Window_p, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = "panel")
+	CreateButtons() as void
+	//GetPrintPreview() as PrintPreviewBase_p
+	GetZoomControl() as int
+	SetZoomControl(percent as int) as void
 }
