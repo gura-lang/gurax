@@ -4,4 +4,14 @@
 VarHScrollHelper = Class():mixin {
 	@include['wx/vscroll.h']
 	@mixin[VarScrollHelperBase]
+	GetColumnCount() as size_t
+	GetVisibleColumnsBegin() as size_t
+	GetVisibleColumnsEnd() as size_t
+	IsColumnVisible(column as size_t) as bool
+	RefreshColumn(column as size_t) as void
+	RefreshColumns(from as size_t, to as size_t) as void
+	ScrollColumnPages(pages as int) as bool
+	ScrollColumns(columns as int) as bool
+	ScrollToColumn(column as size_t) as bool
+	SetColumnCount(columnCount as size_t) as void
 }

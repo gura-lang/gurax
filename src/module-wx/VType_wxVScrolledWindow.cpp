@@ -32,6 +32,235 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.VScrolledWindow#GetRowCount()
+Gurax_DeclareMethodAlias(wxVScrolledWindow, GetRowCount_gurax, "GetRowCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, GetRowCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	size_t rtn = pEntity_gurax->GetRowCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.VScrolledWindow#GetVisibleRowsBegin()
+Gurax_DeclareMethodAlias(wxVScrolledWindow, GetVisibleRowsBegin_gurax, "GetVisibleRowsBegin")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, GetVisibleRowsBegin_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	size_t rtn = pEntity_gurax->GetVisibleRowsBegin();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.VScrolledWindow#GetVisibleRowsEnd()
+Gurax_DeclareMethodAlias(wxVScrolledWindow, GetVisibleRowsEnd_gurax, "GetVisibleRowsEnd")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, GetVisibleRowsEnd_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	size_t rtn = pEntity_gurax->GetVisibleRowsEnd();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.VScrolledWindow#IsRowVisible(row as Number)
+Gurax_DeclareMethodAlias(wxVScrolledWindow, IsRowVisible_gurax, "IsRowVisible")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, IsRowVisible_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t row = args_gurax.PickNumber<size_t>();
+	// Function body
+	bool rtn = pEntity_gurax->IsRowVisible(row);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.VScrolledWindow#RefreshRow(row as Number)
+Gurax_DeclareMethodAlias(wxVScrolledWindow, RefreshRow_gurax, "RefreshRow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, RefreshRow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t row = args_gurax.PickNumber<size_t>();
+	// Function body
+	pEntity_gurax->RefreshRow(row);
+	return Gurax::Value::nil();
+}
+
+// wx.VScrolledWindow#RefreshRows(from as Number, to as Number)
+Gurax_DeclareMethodAlias(wxVScrolledWindow, RefreshRows_gurax, "RefreshRows")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, RefreshRows_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t from = args_gurax.PickNumber<size_t>();
+	size_t to = args_gurax.PickNumber<size_t>();
+	// Function body
+	pEntity_gurax->RefreshRows(from, to);
+	return Gurax::Value::nil();
+}
+
+// wx.VScrolledWindow#ScrollRowPages(pages as Number)
+Gurax_DeclareMethodAlias(wxVScrolledWindow, ScrollRowPages_gurax, "ScrollRowPages")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pages", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, ScrollRowPages_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int pages = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->ScrollRowPages(pages);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.VScrolledWindow#ScrollRows(rows as Number)
+Gurax_DeclareMethodAlias(wxVScrolledWindow, ScrollRows_gurax, "ScrollRows")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("rows", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, ScrollRows_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int rows = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->ScrollRows(rows);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.VScrolledWindow#ScrollToRow(row as Number)
+Gurax_DeclareMethodAlias(wxVScrolledWindow, ScrollToRow_gurax, "ScrollToRow")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, ScrollToRow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t row = args_gurax.PickNumber<size_t>();
+	// Function body
+	bool rtn = pEntity_gurax->ScrollToRow(row);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.VScrolledWindow#SetRowCount(rowCount as Number)
+Gurax_DeclareMethodAlias(wxVScrolledWindow, SetRowCount_gurax, "SetRowCount")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rowCount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxVScrolledWindow, SetRowCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	size_t rowCount = args_gurax.PickNumber<size_t>();
+	// Function body
+	pEntity_gurax->SetRowCount(rowCount);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +278,16 @@ void VType_wxVScrolledWindow::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, GetRowCount_gurax));
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, GetVisibleRowsBegin_gurax));
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, GetVisibleRowsEnd_gurax));
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, IsRowVisible_gurax));
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, RefreshRow_gurax));
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, RefreshRows_gurax));
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, ScrollRowPages_gurax));
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, ScrollRows_gurax));
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, ScrollToRow_gurax));
+	Assign(Gurax_CreateMethod(wxVScrolledWindow, SetRowCount_gurax));
 }
 
 //------------------------------------------------------------------------------

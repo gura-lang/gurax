@@ -6,4 +6,7 @@ HVScrolledWindow = Class(Panel) {
 	@mixin[VarHVScrollHelper]
 	//__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxPanelNameStr)
 	//Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxPanelNameStr) as bool
-}
+	//OnGetRowHeight(row as size_t):virtual as Coord
+	//OnGetColumnWidth(columnas as size_t):virtual as Coord
+	//OnGetRowsHeightHint(rowMing as size_t, rowMax as size_t):virtual
+ }

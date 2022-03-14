@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxPrintPreview.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -286,11 +285,13 @@ set(SRCFILES_VTYPE
 	VType_wxPoint2DDouble.cpp
 	VType_wxPopupTransientWindow.cpp
 	VType_wxPopupWindow.cpp
+	VType_wxPosition.cpp
 	VType_wxPowerEvent.cpp
 	VType_wxPreviewControlBar.cpp
 	VType_wxPreviewFrame.cpp
 	VType_wxPrintAbortDialog.cpp
 	VType_wxPrintData.cpp
+	VType_wxPrintPreview.cpp
 	VType_wxProcessEvent.cpp
 	VType_wxProgressDialog.cpp
 	VType_wxPropertyCategory.cpp

@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxPrintPreview);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -294,11 +293,13 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPoint2DDouble);
 	frame.Assign(VTYPE_wxPopupTransientWindow);
 	frame.Assign(VTYPE_wxPopupWindow);
+	frame.Assign(VTYPE_wxPosition);
 	frame.Assign(VTYPE_wxPowerEvent);
 	frame.Assign(VTYPE_wxPreviewControlBar);
 	frame.Assign(VTYPE_wxPreviewFrame);
 	frame.Assign(VTYPE_wxPrintAbortDialog);
 	frame.Assign(VTYPE_wxPrintData);
+	frame.Assign(VTYPE_wxPrintPreview);
 	frame.Assign(VTYPE_wxProcessEvent);
 	frame.Assign(VTYPE_wxProgressDialog);
 	frame.Assign(VTYPE_wxPropertyCategory);

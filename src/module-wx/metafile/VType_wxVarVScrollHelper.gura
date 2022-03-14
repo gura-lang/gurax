@@ -4,4 +4,17 @@
 VarVScrollHelper = Class():mixin {
 	@include['wx/vscroll.h']
 	@mixin[VarScrollHelperBase]
+	GetRowCount() as size_t
+	GetVisibleRowsBegin() as size_t
+	GetVisibleRowsEnd() as size_t
+	IsRowVisible(row as size_t) as bool
+	RefreshRow(row as size_t) as void
+	RefreshRows(from as size_t, to as size_t) as void
+	ScrollRowPages(pages as int) as bool
+	ScrollRows(rows as int) as bool
+	ScrollToRow(row as size_t) as bool
+	SetRowCount(rowCount as size_t) as void
+	//OnGetRowsHeightHint(rowMin as size_t, rowMax as size_t):virtual as void
+	//EstimateTotalHeight():virtual as Coord
+	//OnGetRowHeight(row as size_t):virtual as Coord
 }

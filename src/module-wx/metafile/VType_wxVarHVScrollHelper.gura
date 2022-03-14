@@ -4,4 +4,19 @@
 VarHVScrollHelper = Class():mixin {
 	@include['wx/vscroll.h']
 	@mixin[VarHScrollHelper, VarVScrollHelper]
+	EnablePhysicalScrolling(vscrolling as bool = true, hscrolling as bool = true) as void
+	GetRowColumnCount() as Size
+	GetVisibleBegin() as Position
+	GetVisibleEnd() as Position
+	SetRowColumnCount(rowCount as size_t, columnCount as size_t) as void
+	IsVisible(row as size_t, column as size_t) as bool
+	//IsVisible(pos as const_Position_r) as bool
+	RefreshRowColumn(row as size_t, column as size_t) as void
+	//RefreshRowColumn(pos as const_Position_r) as void
+	RefreshRowsColumns(fromRow as size_t, toRow as size_t, fromColumn as size_t, toColumn as size_t) as void
+	//RefreshRowsColumns(from as const_Position_r, to as const_Position_r) as void
+	ScrollToRowColumn(row as size_t, column as size_t) as bool
+	//ScrollToRowColumn(pos as const_Position_r) as bool
+	VirtualHitTest(x as Coord, y as Coord) as Position
+	//VirtualHitTest(pos as const_Point_r) as Position
 }
