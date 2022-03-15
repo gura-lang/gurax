@@ -3,4 +3,46 @@
 //==============================================================================
 PropertyGridManager = Class(Panel) {
 	@include['wx/propgrid/manager.h']
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxPGMAN_DEFAULT_STYLE, name as const_String_r = wxPropertyGridManagerNameStr) as a
+	AddPage(label as const_String_r = wxEmptyString, bmp as const_Bitmap_r = wxPG_NULL_BITMAP, pageObj as PropertyGridPage_p = NULL) as PropertyGridPage_p
+	Clear() as void
+	ClearPage(page as int) as void
+	CommitChangesFromEditor(flags as Uint32 = 0) as bool
+	Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxPGMAN_DEFAULT_STYLE, name as const_String_r = wxPropertyGridManagerNameStr) as bool
+	EnableCategories(enable as bool) as bool
+	//EnsureVisible(id as PGPropArg) as bool
+	GetColumnCount(page as int = -1) as int
+	GetDescBoxHeight() as int
+	GetGrid() as PropertyGrid_p
+	//GetVIterator(flags as int) as PGVIterator
+	GetCurrentPage() as PropertyGridPage_p
+	GetPage(ind as unsigned_int) as PropertyGridPage_p
+	//GetPage(name as const_String_r) as PropertyGridPage_p
+	GetPageByName(name as const_String_r) as int
+	GetPageCount() as size_t
+	GetPageName(index as int) as String
+	GetPageRoot(index as int) as PGProperty_p
+	GetSelectedPage() as int
+	GetSelectedProperty() as PGProperty_p
+	GetSelection() as PGProperty_p
+	GetToolBar() as ToolBar_p
+	InsertPage(index as int, label as const_String_r, bmp as const_Bitmap_r = wxNullBitmap, pageObj as PropertyGridPage_p = NULL) as PropertyGridPage_p
+	IsAnyModified() as bool
+	IsFrozen() as bool
+	IsPageModified(index as size_t) as bool
+	//IsPropertySelected(id as PGPropArg) as bool
+	RemovePage(page as int) as bool
+	SelectPage(index as int) as void
+	//SelectPage(label as const_String_r) as void
+	//SelectPage(page as PropertyGridPage_p) as void
+	//SelectProperty(id as PGPropArg, focus as bool = false) as bool
+	SetColumnCount(colCount as int, page as int = -1) as void
+	SetColumnTitle(idx as int, title as const_String_r) as void
+	SetDescription(label as const_String_r, content as const_String_r) as void
+	SetDescBoxHeight(ht as int, refresh as bool = true) as void
+	SetSplitterLeft(subProps as bool = false, allPages as bool = true) as void
+	SetPageSplitterLeft(page as int, subProps as bool = false) as void
+	SetPageSplitterPosition(page as int, pos as int, column as int = 0) as void
+	SetSplitterPosition(pos as int, column as int = 0) as void
+	ShowHeader(show as bool = true) as void
 }
