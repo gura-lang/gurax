@@ -3,4 +3,7 @@
 //==============================================================================
 RearrangeCtrl = Class(Panel) {
 	@include['wx/rearrangectrl.h']
+	__init__(parent as Window_p, id as WindowID, pos as const_Point_r, size as const_Size_r, order as const_ArrayInt_r, items as const_ArrayString_r, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxRearrangeListNameStr)
+	Create(parent as Window_p, id as WindowID, pos as const_Point_r, size as const_Size_r, order as const_ArrayInt_r, items as const_ArrayString_r, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxRearrangeListNameStr) as bool
+	GetList() as RearrangeList_p
 }
