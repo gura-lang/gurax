@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxPropertyGridPage.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -301,6 +300,7 @@
 #include "VType_wxPropertyCategory.h"
 #include "VType_wxPropertyGrid.h"
 #include "VType_wxPropertyGridManager.h"
+#include "VType_wxPropertyGridPage.h"
 #include "VType_wxPropertySheetDialog.h"
 #include "VType_wxProtocol.h"
 #include "VType_wxProtocolLog.h"

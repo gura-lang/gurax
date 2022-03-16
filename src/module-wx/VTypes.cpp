@@ -12,7 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxPropertyGridPage);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -306,6 +305,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPropertyCategory);
 	frame.Assign(VTYPE_wxPropertyGrid);
 	frame.Assign(VTYPE_wxPropertyGridManager);
+	frame.Assign(VTYPE_wxPropertyGridPage);
 	frame.Assign(VTYPE_wxPropertySheetDialog);
 	frame.Assign(VTYPE_wxProtocol);
 	frame.Assign(VTYPE_wxProtocolLog);

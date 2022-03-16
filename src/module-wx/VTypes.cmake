@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxPropertyGridPage.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -298,6 +297,7 @@ set(SRCFILES_VTYPE
 	VType_wxPropertyCategory.cpp
 	VType_wxPropertyGrid.cpp
 	VType_wxPropertyGridManager.cpp
+	VType_wxPropertyGridPage.cpp
 	VType_wxPropertySheetDialog.cpp
 	VType_wxProtocol.cpp
 	VType_wxProtocolLog.cpp

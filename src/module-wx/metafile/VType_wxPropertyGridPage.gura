@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxPropertyGridPage.gura
 //==============================================================================
+PropertyGridPage = Class(EvtHandler) {
+	@include['wx/propgrid/manager.h']
+}
