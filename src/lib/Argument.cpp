@@ -71,6 +71,12 @@ void Argument::ResetAllValues()
 bool Argument::FeedValues(Frame& frameForVType, const ValueList& values)
 {
 	for (const Value* pValue : values) {
+		if (!_pArgSlotToFeed) {
+			if (!IsSet(DeclCallable::Flag::CutExtraArgs)) {
+				Error::Issue(ErrorType::ArgumentError, "too many arguments");
+				return false;
+			}
+		}
 		FeedValue(frameForVType, pValue->Reference());
 		if (Error::IsIssued()) return false;
 	}

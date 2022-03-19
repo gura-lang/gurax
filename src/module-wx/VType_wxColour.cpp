@@ -50,7 +50,7 @@ Gurax_ImplementConstructorEx(Colour_gurax, processor_gurax, argument_gurax)
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {
 			pDeclCallable = new DeclCallable();
-			pDeclCallable->DeclareArg("colourName", VTYPE_String);
+			pDeclCallable->DeclareArg("colourName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::NoCast);
 		}
 		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
