@@ -45,19 +45,19 @@ PanelTop = class(wx.Panel) {
 			sizerTop.Add(sizer, wx.SizerFlags().Expand())
 			sizer.AddGrowableCol(1);
 			wx.StaticText(this, wx.ID_ANY, 'Red') {|ctrl| sizer.Add(ctrl)}
-			wx.Slider(this, wx.ID_ANY, 0, 0, 255) {|ctrl|
+			wx.Slider(this, wx.ID_ANY, 128, 0, 255) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 				this.sliderCtrl_Red = ctrl
 				wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
 			}
 			wx.StaticText(this, wx.ID_ANY, 'Green') {|ctrl| sizer.Add(ctrl)}
-			wx.Slider(this, wx.ID_ANY, 0, 0, 255) {|ctrl|
+			wx.Slider(this, wx.ID_ANY, 128, 0, 255) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 				this.sliderCtrl_Green = ctrl
 				wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
 			}
 			wx.StaticText(this, wx.ID_ANY, 'Blue') {|ctrl| sizer.Add(ctrl)}
-			wx.Slider(this, wx.ID_ANY, 0, 0, 255) {|ctrl|
+			wx.Slider(this, wx.ID_ANY, 128, 0, 255) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 				this.sliderCtrl_Blue = ctrl
 				wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
@@ -75,15 +75,18 @@ PanelTop = class(wx.Panel) {
 		}
 		//[r, g, b] = wx.Colour.MakeMonoRGB(255, 255, 192, false)
 		//this.Printf('%d, %d, %d\n', r, g, b)
+		this.UpdatColour()
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
-	OnScroll(event as wx.Event) = {
-		red = this.sliderCtrl_Red.GetValue()
-		green = this.sliderCtrl_Green.GetValue()
-		blue = this.sliderCtrl_Blue.GetValue()
-		this.Printf('%s %d %d %d\n', this.panel, red, green, blue)
-		this.panel.SetBackgroundColour(wx.Colour(255, 0, 0))
+	UpdatColour() = {
+		colour = wx.Colour(
+				this.sliderCtrl_Red.GetValue(),
+				this.sliderCtrl_Green.GetValue(),
+				this.sliderCtrl_Blue.GetValue())
+		this.panel.SetBackgroundColour(colour)
+		this.panel.Refresh()
 	}
+	OnScroll(event as wx.Event) = this.UpdatColour()
 }
 
 wx.ImplementApp(MyApp())
