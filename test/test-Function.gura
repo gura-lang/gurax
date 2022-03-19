@@ -326,3 +326,10 @@ TestCase('Scope for block') {
 	}
 	g()
 }
+
+TestCase('noCast') {
+	f(a as String) = { 'OK' }
+	g(a:noCast as String) = { 'NG' }
+	Tester(`f(3))
+	Tester(`g(3))
+}

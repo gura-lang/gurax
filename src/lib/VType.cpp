@@ -148,6 +148,9 @@ Value* VType::Cast(const Value& value, const Symbol* pSymbol, DeclArg::Flags fla
 		return new Value_List(pValuesCasted.release());
 	} else if (value.IsInstanceOf(*this)) {
 		return value.Reference();
+	} else if (flags & DeclArg::Flag::NoCast) {
+		IssueError(*this, pSymbol, value);
+		return nullptr;
 	} else {
 		RefPtr<Value> pValueCasted(DoCastFrom(value, flags));
 		if (!pValueCasted) {

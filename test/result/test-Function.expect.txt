@@ -348,3 +348,6 @@ g3() .. block expression must be specified for delegation
 <Nil>
 ======== Scope for block ========
 OK
+======== noCast ========
+f(3) .. OK
+g(3) .. a can't cast from Number to String
