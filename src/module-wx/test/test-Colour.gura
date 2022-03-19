@@ -29,13 +29,39 @@ colours = @{
 }
 
 PanelTop = class(wx.Panel) {
+	panel as wx.Panel
 	textCtrl as wx.TextCtrl
+	sliderCtrl_Red as wx.Slider
+	sliderCtrl_Green as wx.Slider
+	sliderCtrl_Blue as wx.Slider
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.Panel(this, wx.ID_ANY, style = wx.BORDER_SUNKEN, size = wx.Size(-1, 30)) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
-			ctrl.SetBackgroundColour(wx.Colour(255, 0, 0))
+			this.panel = ctrl
+		}
+		wx.FlexGridSizer(2, wx.Size(8, 2)) {|sizer|
+			sizerTop.Add(sizer, wx.SizerFlags().Expand())
+			sizer.AddGrowableCol(1);
+			wx.StaticText(this, wx.ID_ANY, 'Red') {|ctrl| sizer.Add(ctrl)}
+			wx.Slider(this, wx.ID_ANY, 0, 0, 255) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+				this.sliderCtrl_Red = ctrl
+				wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
+			}
+			wx.StaticText(this, wx.ID_ANY, 'Green') {|ctrl| sizer.Add(ctrl)}
+			wx.Slider(this, wx.ID_ANY, 0, 0, 255) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+				this.sliderCtrl_Green = ctrl
+				wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
+			}
+			wx.StaticText(this, wx.ID_ANY, 'Blue') {|ctrl| sizer.Add(ctrl)}
+			wx.Slider(this, wx.ID_ANY, 0, 0, 255) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+				this.sliderCtrl_Blue = ctrl
+				wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
+			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
 			ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
@@ -51,6 +77,13 @@ PanelTop = class(wx.Panel) {
 		//this.Printf('%d, %d, %d\n', r, g, b)
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+	OnScroll(event as wx.Event) = {
+		red = this.sliderCtrl_Red.GetValue()
+		green = this.sliderCtrl_Green.GetValue()
+		blue = this.sliderCtrl_Blue.GetValue()
+		this.Printf('%s %d %d %d\n', this.panel, red, green, blue)
+		this.panel.SetBackgroundColour(wx.Colour(255, 0, 0))
+	}
 }
 
 wx.ImplementApp(MyApp())
