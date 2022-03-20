@@ -164,15 +164,15 @@ ListCtrl = Class(Control) {
 			if (!pDeclCallable) {
 				pDeclCallable = new DeclCallable();
 				pDeclCallable->DeclareArg("index", VTYPE_Number);
-				pDeclCallable->DeclareArg("info", VTYPE_wxListItem);
+				pDeclCallable->DeclareArg("label", VTYPE_String);
 			}
 			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
 			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
 			Error::Clear();
 			ArgPicker args(*pArgument);
 			long index = args.PickNumber<long>();
-			const wxListItem& info = args.Pick<Value_wxListItem>().GetEntity();
-			long rtn = pEntity_gurax->InsertItem(index, info);
+			const char* label = args.PickString();
+			long rtn = pEntity_gurax->InsertItem(index, label);
 			return new Value_Number(rtn);
 		} while (0);
 		Error::ClearIssuedFlag();

@@ -34,6 +34,9 @@ PanelTop = class(wx.Panel) {
 	sliderCtrl_Red as wx.Slider
 	sliderCtrl_Green as wx.Slider
 	sliderCtrl_Blue as wx.Slider
+	label_Red as wx.StaticText
+	label_Green as wx.StaticText
+	label_Blue as wx.StaticText
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
@@ -41,52 +44,83 @@ PanelTop = class(wx.Panel) {
 			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
 			this.panel = ctrl
 		}
-		wx.FlexGridSizer(2, wx.Size(8, 2)) {|sizer|
+		wx.FlexGridSizer(2, wx.Size(12, 2)) {|sizer|
 			sizerTop.Add(sizer, wx.SizerFlags().Expand())
 			sizer.AddGrowableCol(1);
 			wx.StaticText(this, wx.ID_ANY, 'Red') {|ctrl| sizer.Add(ctrl)}
-			wx.Slider(this, wx.ID_ANY, 128, 0, 255) {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-				this.sliderCtrl_Red = ctrl
-				wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
+			wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+				sizer.Add(hbox, wx.SizerFlags().Expand())
+				wx.Slider(this, wx.ID_ANY, 128, 0, 255) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags(1).Expand())
+					this.sliderCtrl_Red = ctrl
+					wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
+				}
+				wx.StaticText(this, wx.ID_ANY, '', size = wx.Size(60, -1)) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags().Expand())
+					this.label_Red = ctrl
+				}
 			}
 			wx.StaticText(this, wx.ID_ANY, 'Green') {|ctrl| sizer.Add(ctrl)}
-			wx.Slider(this, wx.ID_ANY, 128, 0, 255) {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-				this.sliderCtrl_Green = ctrl
-				wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
+			wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+				sizer.Add(hbox, wx.SizerFlags().Expand())
+				wx.Slider(this, wx.ID_ANY, 128, 0, 255) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags(1).Expand())
+					this.sliderCtrl_Green = ctrl
+					wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
+				}
+				wx.StaticText(this, wx.ID_ANY, '', size = wx.Size(60, -1)) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags().Expand())
+					this.label_Green = ctrl
+				}
 			}
 			wx.StaticText(this, wx.ID_ANY, 'Blue') {|ctrl| sizer.Add(ctrl)}
-			wx.Slider(this, wx.ID_ANY, 128, 0, 255) {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-				this.sliderCtrl_Blue = ctrl
-				wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
+			wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+				sizer.Add(hbox, wx.SizerFlags().Expand())
+				wx.Slider(this, wx.ID_ANY, 128, 0, 255) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags(1).Expand())
+					this.sliderCtrl_Blue = ctrl
+					wx.EVT_SCROLL(ctrl, wx.ID_ANY, this.OnScroll)
+				}
+				wx.StaticText(this, wx.ID_ANY, '', size = wx.Size(60, -1)) {|ctrl|
+					hbox.Add(ctrl, wx.SizerFlags().Expand())
+					this.label_Blue = ctrl
+				}
 			}
 		}
-		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-			ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+		wx.ListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
-			this.textCtrl = ctrl
+			ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+			ctrl.AppendColumn('NAME', wx.LIST_FORMAT_LEFT, 300)
+			ctrl.AppendColumn('CSS', wx.LIST_FORMAT_LEFT, 250)
+			ctrl.AppendColumn('HTML', wx.LIST_FORMAT_LEFT, 200)
+			colours.Each {|colour, idx|
+				ctrl.InsertItem(idx, colour.GetAsString())
+				ctrl.SetItem(idx, 1, colour.GetAsString(wx.C2S_CSS_SYNTAX))
+				ctrl.SetItem(idx, 2, colour.GetAsString(wx.C2S_HTML_SYNTAX))
+			}
+			ctrl.Bind(wx.EVT_LIST_ITEM_SELECTED, this.OnListItemSelected)
 		}
-		this.Printf('%-30s%-30s%-10s\n', 'NAME', 'CSS', 'HTML')
-		this.Printf('%s %s %s\n', '-' * (30 - 1), '-' * (30 - 1), '-' * (10 - 1))
-		colours.Each {|colour|
-			this.Printf('%-30s%-30s%-10s\n', colour.GetAsString(), colour.GetAsString(wx.C2S_CSS_SYNTAX), colour.GetAsString(wx.C2S_HTML_SYNTAX))
-		}
-		//[r, g, b] = wx.Colour.MakeMonoRGB(255, 255, 192, false)
-		//this.Printf('%d, %d, %d\n', r, g, b)
-		this.UpdatColour()
+		this.UpdateColour()
 	}
-	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
-	UpdatColour() = {
+	UpdateColour() = {
 		colour = wx.Colour(
 				this.sliderCtrl_Red.GetValue(),
 				this.sliderCtrl_Green.GetValue(),
 				this.sliderCtrl_Blue.GetValue())
+		this.label_Red.SetLabel(Format('%d', colour.Red()))
+		this.label_Green.SetLabel(Format('%d', colour.Green()))
+		this.label_Blue.SetLabel(Format('%d', colour.Blue()))
 		this.panel.SetBackgroundColour(colour)
 		this.panel.Refresh()
 	}
-	OnScroll(event as wx.Event) = this.UpdatColour()
+	OnScroll(event as wx.Event) = this.UpdateColour()
+	OnListItemSelected(event as wx.ListEvent) = {
+		colour = colours[event.GetIndex()]
+		this.sliderCtrl_Red.SetValue(colour.Red())
+		this.sliderCtrl_Green.SetValue(colour.Green())
+		this.sliderCtrl_Blue.SetValue(colour.Blue())
+		this.UpdateColour()
+	}
 }
 
 wx.ImplementApp(MyApp())
