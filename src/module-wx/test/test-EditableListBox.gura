@@ -1,6 +1,8 @@
 #!/usr/bin/env gurax
 import(wx)
 
+monthTbl = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
 MyApp = class(wx.App) {
 	OnInit() = {
 		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
@@ -16,11 +18,11 @@ MyFrame = class(wx.Frame) {
 
 PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
-		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		wx.EditableListBox(this, wx.ID_ANY, 'hogehoge', style = wx.EL_DEFAULT_STYLE) {|ctrl|
+		wx.EditableListBox(this, wx.ID_ANY, 'Sample of EditableListBox') {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
-			ctrl.SetStrings(['fdjaskfjdas', 'fjdkfajdklfja', 'fdjkfdjf'])
+			ctrl.SetStrings(monthTbl)
 		}
 	}
 }
