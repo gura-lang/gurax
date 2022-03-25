@@ -1,0 +1,42 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.CheckBox(this, wx.ID_ANY, '2 State', style = wx.CHK_2STATE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
+			wx.EVT_CHECKBOX(ctrl, this.OnCheckBox)
+		}
+		wx.CheckBox(this, wx.ID_ANY, '3 State', style = wx.CHK_3STATE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
+			ctrl.Set3StateValue(wx.CHK_UNDETERMINED)
+			wx.EVT_CHECKBOX(ctrl, this.OnCheckBox)
+		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+	OnCheckBox(event as wx.Event) = {
+		this.Printf('hello\n')
+	}
+}
+
+wx.ImplementApp(MyApp())

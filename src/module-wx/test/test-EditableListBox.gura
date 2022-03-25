@@ -21,7 +21,7 @@ PanelTop = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.EditableListBox(this, wx.ID_ANY, 'Sample of EditableListBox') {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
 			ctrl.SetStrings(monthTbl)
 		}
 	}
