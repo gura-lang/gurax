@@ -9,3 +9,8 @@ RadioButton = Class(Control) {
 	GetValue() as bool
 	SetValue(value as bool) as void
 }
+
+@const { // Styles
+	RB_GROUP
+	RB_SINGLE
+}

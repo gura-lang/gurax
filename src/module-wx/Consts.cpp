@@ -932,6 +932,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("RAISED_BORDER", new Value_Number(wxRAISED_BORDER));
 	frame.Assign("RA_SPECIFY_COLS", new Value_Number(wxRA_SPECIFY_COLS));
 	frame.Assign("RA_SPECIFY_ROWS", new Value_Number(wxRA_SPECIFY_ROWS));
+	frame.Assign("RB_GROUP", new Value_Number(wxRB_GROUP));
+	frame.Assign("RB_SINGLE", new Value_Number(wxRB_SINGLE));
 	frame.Assign("RESERVE_SPACE_EVEN_IF_HIDDEN", new Value_Number(wxRESERVE_SPACE_EVEN_IF_HIDDEN));
 	frame.Assign("RESIZE_BORDER", new Value_Number(wxRESIZE_BORDER));
 	frame.Assign("RETAINED", new Value_Number(wxRETAINED));

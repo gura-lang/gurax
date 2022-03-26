@@ -14,19 +14,48 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
+Row = struct {
+	checkBox as wx.CheckBox
+	radioButton_Unchecked as wx.RadioButton
+	radioButton_Checked as wx.RadioButton
+	radioButton_Undetermined as wx.RadioButton
+}
+
 PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
+	rows = Dim(3) {Row()}
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		wx.CheckBox(this, wx.ID_ANY, '2 State', style = wx.CHK_2STATE) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
-			wx.EVT_CHECKBOX(ctrl, this.OnCheckBox)
-		}
-		wx.CheckBox(this, wx.ID_ANY, '3 State', style = wx.CHK_3STATE) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
-			ctrl.Set3StateValue(wx.CHK_UNDETERMINED)
-			wx.EVT_CHECKBOX(ctrl, this.OnCheckBox)
+		iRow = 0
+		wx.FlexGridSizer(4, wx.Size(16, 8)) {|sizer|
+			sizerTop.Add(sizer, wx.SizerFlags().Expand().Border(wx.ALL, 12))
+			[('2 State', wx.CHK_2STATE), ('3 State', wx.CHK_3STATE), ('3 State Settable', wx.CHK_3STATE | wx.CHK_ALLOW_3RD_STATE_FOR_USER)].Each {|tuple|
+				[label, style] = tuple
+				row = this.rows[iRow]
+				iRow += 1
+				wx.CheckBox(this, wx.ID_ANY, label, style = style) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+					wx.EVT_CHECKBOX(ctrl, this.OnCheckBox, userData = row)
+					row.checkBox = ctrl
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'Unchecked', style = wx.RB_GROUP) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+					wx.EVT_RADIOBUTTON(ctrl, this.OnRadioButton_Unchecked, userData = row)
+					row.radioButton_Unchecked = ctrl
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'Checked') {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+					wx.EVT_RADIOBUTTON(ctrl, this.OnRadioButton_Checked, userData = row)
+					row.radioButton_Checked = ctrl
+				}
+				wx.RadioButton(this, wx.ID_ANY, 'Undetermined') {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+					wx.EVT_RADIOBUTTON(ctrl, this.OnRadioButton_Undetermined, userData = row)
+					row.radioButton_Undetermined = ctrl
+					ctrl.Enable((style & wx.CHK_3STATE) != 0)
+				}
+			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
@@ -35,7 +64,27 @@ PanelTop = class(wx.Panel) {
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 	OnCheckBox(event as wx.Event) = {
-		this.Printf('hello\n')
+		row = event.GetEventUserData()
+		stat = row.checkBox.Get3StateValue()
+		if (stat == wx.CHK_UNCHECKED) {
+			row.radioButton_Unchecked.SetValue(true)
+		} elsif (stat == wx.CHK_CHECKED) {
+			row.radioButton_Checked.SetValue(true)
+		} elsif (stat == wx.CHK_UNDETERMINED) {
+			row.radioButton_Undetermined.SetValue(true)
+		}
+	}
+	OnRadioButton_Unchecked(event as wx.Event) = {
+		row = event.GetEventUserData()
+		row.checkBox.Set3StateValue(wx.CHK_UNCHECKED)
+	}
+	OnRadioButton_Checked(event as wx.Event) = {
+		row = event.GetEventUserData()
+		row.checkBox.Set3StateValue(wx.CHK_CHECKED)
+	}
+	OnRadioButton_Undetermined(event as wx.Event) = {
+		row = event.GetEventUserData()
+		row.checkBox.Set3StateValue(wx.CHK_UNDETERMINED)
 	}
 }
 

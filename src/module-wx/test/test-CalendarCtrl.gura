@@ -1,0 +1,28 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
+		wx.GenericCalendarCtrl(this, wx.ID_ANY) {|ctrl|
+		//wx.Button(this, wx.ID_ANY, 'aaaa') {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+		}
+		this.SetSizer(sizerTop)
+	}
+}
+
+wx.ImplementApp(MyApp())
