@@ -21,19 +21,23 @@ Row = struct {
 	radioButton_Undetermined as wx.RadioButton
 }
 
+tbl = @{
+	('2 State', wx.CHK_2STATE)
+	('3 State', wx.CHK_3STATE)
+	('3 State && Allow 3rd State', wx.CHK_3STATE | wx.CHK_ALLOW_3RD_STATE_FOR_USER)
+	('2 State', wx.CHK_2STATE | wx.ALIGN_RIGHT)
+}
+
 PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
-	rows = Dim(3) {Row()}
+	rows = Dim(tbl.len) {Row()}
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		iRow = 0
 		wx.FlexGridSizer(4, wx.Size(16, 8)) {|sizer|
 			sizerTop.Add(sizer, wx.SizerFlags().Expand().Border(wx.ALL, 12))
-			[('2 State', wx.CHK_2STATE), ('3 State', wx.CHK_3STATE), ('3 State Settable', wx.CHK_3STATE | wx.CHK_ALLOW_3RD_STATE_FOR_USER)].Each {|tuple|
+			for (tuple in tbl, row in this.rows) {
 				[label, style] = tuple
-				row = this.rows[iRow]
-				iRow += 1
 				wx.CheckBox(this, wx.ID_ANY, label, style = style) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags().Expand())
 					wx.EVT_CHECKBOX(ctrl, this.OnCheckBox, userData = row)
@@ -65,12 +69,13 @@ PanelTop = class(wx.Panel) {
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 	OnCheckBox(event as wx.Event) = {
 		row = event.GetEventUserData()
-		stat = row.checkBox.Get3StateValue()
-		if (stat == wx.CHK_UNCHECKED) {
+		this.Printf('Value = %s, 3-State = %d\n', row.checkBox.GetValue(), row.checkBox.Get3StateValue())
+		value = row.checkBox.Get3StateValue()
+		if (value == wx.CHK_UNCHECKED) {
 			row.radioButton_Unchecked.SetValue(true)
-		} elsif (stat == wx.CHK_CHECKED) {
+		} elsif (value == wx.CHK_CHECKED) {
 			row.radioButton_Checked.SetValue(true)
-		} elsif (stat == wx.CHK_UNDETERMINED) {
+		} elsif (value == wx.CHK_UNDETERMINED) {
 			row.radioButton_Undetermined.SetValue(true)
 		}
 	}
