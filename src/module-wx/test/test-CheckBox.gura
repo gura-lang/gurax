@@ -26,6 +26,8 @@ tbl = @{
 	('3 State', wx.CHK_3STATE)
 	('3 State && Allow 3rd State', wx.CHK_3STATE | wx.CHK_ALLOW_3RD_STATE_FOR_USER)
 	('2 State', wx.CHK_2STATE | wx.ALIGN_RIGHT)
+	('3 State', wx.CHK_3STATE | wx.ALIGN_RIGHT)
+	('3 State && Allow 3rd State', wx.CHK_3STATE | wx.CHK_ALLOW_3RD_STATE_FOR_USER | wx.ALIGN_RIGHT)
 }
 
 PanelTop = class(wx.Panel) {
