@@ -1,0 +1,59 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+tbl = [
+	'January', 'February', 'March', 'April', 'May', 'June'
+	'July', 'August', 'September', 'October', 'November', 'December'
+]
+
+PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.FlexGridSizer(2, wx.Size(16, 8)) {|sizer|
+			sizerTop.Add(sizer, wx.SizerFlags().Expand().Border(wx.ALL, 12))
+			sizer.AddGrowableCol(1)
+			wx.StaticText(this, wx.ID_ANY, 'CB_SORT') {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+			}
+			wx.Choice(this, wx.ID_ANY, style = wx.CB_SORT , choices = tbl) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+				ctrl.SetSelection(0)
+				wx.EVT_CHOICE(ctrl, this.OnChoice, userData = ctrl)
+			}
+			wx.StaticText(this, wx.ID_ANY, '(No flags)') {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+			}
+			wx.Choice(this, wx.ID_ANY, choices = tbl) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+				ctrl.SetSelection(0)
+				wx.EVT_CHOICE(ctrl, this.OnChoice, userData = ctrl)
+			}
+		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+	OnChoice(event as wx.CommandEvent) = {
+		ctrl = event.GetEventUserData()
+		this.Printf('%d %s\n', ctrl.GetSelection(), ctrl.GetString(ctrl.GetSelection()))
+	}	
+}
+
+wx.ImplementApp(MyApp())

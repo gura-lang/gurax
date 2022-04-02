@@ -32,6 +32,7 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_CHECKLISTBOX,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHILD_FOCUS,							wxChildFocusEvent);
 	Gurax_AssignEvent(EVT_CHOICE,								wxCommandEvent);
+	Gurax_AssignEvent(EVT_CHOICE,								wxCommandEvent);
 	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGED,				wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_CHOICEBOOK_PAGE_CHANGING,				wxBookCtrlEvent);
 	Gurax_AssignEvent(EVT_COLLAPSIBLEHEADER_CHANGED,				wxCommandEvent);

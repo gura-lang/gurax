@@ -18,8 +18,6 @@ Choice = Class(Control) {
 	SetString(pos as unsigned_int, s as const_String_r) as void
 }
 
-/*
 @event {
 	EVT_CHOICE >> CommandEvent
 }
-*/
