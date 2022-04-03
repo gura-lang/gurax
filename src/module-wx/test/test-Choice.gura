@@ -1,6 +1,11 @@
 #!/usr/bin/env gurax
 import(wx)
 
+monthNames = [
+	'January', 'February', 'March', 'April', 'May', 'June'
+	'July', 'August', 'September', 'October', 'November', 'December'
+]
+
 MyApp = class(wx.App) {
 	OnInit() = {
 		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
@@ -14,11 +19,6 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
-tbl = [
-	'January', 'February', 'March', 'April', 'May', 'June'
-	'July', 'August', 'September', 'October', 'November', 'December'
-]
-
 PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
@@ -30,7 +30,7 @@ PanelTop = class(wx.Panel) {
 			wx.StaticText(this, wx.ID_ANY, '(No flags)') {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 			}
-			wx.Choice(this, wx.ID_ANY, choices = tbl) {|ctrl|
+			wx.Choice(this, wx.ID_ANY, choices = monthNames) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 				ctrl.SetSelection(0)
 				wx.EVT_CHOICE(ctrl, this.OnChoice, userData = ctrl)
@@ -38,7 +38,7 @@ PanelTop = class(wx.Panel) {
 			wx.StaticText(this, wx.ID_ANY, 'CB_SORT') {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 			}
-			wx.Choice(this, wx.ID_ANY, style = wx.CB_SORT , choices = tbl) {|ctrl|
+			wx.Choice(this, wx.ID_ANY, style = wx.CB_SORT , choices = monthNames) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 				ctrl.SetSelection(0)
 				wx.EVT_CHOICE(ctrl, this.OnChoice, userData = ctrl)

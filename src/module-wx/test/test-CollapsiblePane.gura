@@ -1,0 +1,39 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.CollapsiblePane(this, wx.ID_ANY, "Details:") {|collpane|
+			// add the pane with a zero proportion value to the 'sz' sizer which contains it
+			sizerTop.Add(collpane, 0, wx.GROW | wx.ALL, 5)
+			// now add a test label in the collapsible pane using a sizer to layout it:
+			wx.BoxSizer(wx.VERTICAL) {|sizerPane|
+				win = collpane.GetPane() 
+				sizerPane.Add(wx.StaticText(win, wx.ID_ANY, "test!"), 1, wx.GROW | wx.ALL, 2)
+				win.SetSizer(sizerPane)
+				sizerPane.SetSizeHints(win)
+			}
+		}
+		wx.Panel(this, wx.ID_ANY) {|panel|
+			sizerTop.Add(panel, wx.SizerFlags(1).Expand())
+			panel.SetBackgroundColour(wx.RED)
+		}
+	}
+}
+
+wx.ImplementApp(MyApp())
