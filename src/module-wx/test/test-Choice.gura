@@ -25,20 +25,20 @@ PanelTop = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.FlexGridSizer(2, wx.Size(16, 8)) {|sizer|
-			sizerTop.Add(sizer, wx.SizerFlags().Expand().Border(wx.ALL, 12))
+			sizerTop.Add(sizer, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 8))
 			sizer.AddGrowableCol(1)
-			wx.StaticText(this, wx.ID_ANY, 'CB_SORT') {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-			}
-			wx.Choice(this, wx.ID_ANY, style = wx.CB_SORT , choices = tbl) {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-				ctrl.SetSelection(0)
-				wx.EVT_CHOICE(ctrl, this.OnChoice, userData = ctrl)
-			}
 			wx.StaticText(this, wx.ID_ANY, '(No flags)') {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 			}
 			wx.Choice(this, wx.ID_ANY, choices = tbl) {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+				ctrl.SetSelection(0)
+				wx.EVT_CHOICE(ctrl, this.OnChoice, userData = ctrl)
+			}
+			wx.StaticText(this, wx.ID_ANY, 'CB_SORT') {|ctrl|
+				sizer.Add(ctrl, wx.SizerFlags().Expand())
+			}
+			wx.Choice(this, wx.ID_ANY, style = wx.CB_SORT , choices = tbl) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 				ctrl.SetSelection(0)
 				wx.EVT_CHOICE(ctrl, this.OnChoice, userData = ctrl)
@@ -52,7 +52,7 @@ PanelTop = class(wx.Panel) {
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 	OnChoice(event as wx.CommandEvent) = {
 		ctrl = event.GetEventUserData()
-		this.Printf('%d %s\n', ctrl.GetSelection(), ctrl.GetString(ctrl.GetSelection()))
+		this.Printf('index=%d %s\n', ctrl.GetSelection(), ctrl.GetString(ctrl.GetSelection()))
 	}	
 }
 
