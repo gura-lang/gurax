@@ -39,6 +39,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_COLLAPSIBLEPANE_CHANGED,				wxCollapsiblePaneEvent);
 	Gurax_AssignEvent(EVT_COLOURPICKER_CHANGED,					wxColourPickerEvent);
 	Gurax_AssignEvent(EVT_COMBOBOX,								wxCommandEvent);
+	Gurax_AssignEvent(EVT_COMBOBOX_CLOSEUP,						wxCommandEvent);
+	Gurax_AssignEvent(EVT_COMBOBOX_DROPDOWN,						wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_BUTTON_CLICKED,				wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_ENTER,							wxCommandEvent);
 	Gurax_AssignEvent(EVT_COMMAND_KILL_FOCUS,					wxCommandEvent);

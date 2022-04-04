@@ -24,32 +24,54 @@ PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
+		tupples = [
+			('(no flags)', 0)
+			('CB_DROPDOWNB', wx.CB_DROPDOWN)
+			('CB_READONLY', wx.CB_READONLY)
+		]
 		wx.FlexGridSizer(2, wx.Size(16, 8)) {|sizer|
 			sizerTop.Add(sizer, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 8))
 			sizer.AddGrowableCol(1)
-			wx.StaticText(this, wx.ID_ANY, '(No flags)') {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-			}
-			wx.ComboBox(this, wx.ID_ANY, choices = monthNames) {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-			}
-			wx.StaticText(this, wx.ID_ANY, 'CB_DROPDOWN') {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-			}
-			wx.ComboBox(this, wx.ID_ANY, choices = monthNames, style = wx.CB_DROPDOWN) {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-			}
-			wx.StaticText(this, wx.ID_ANY, 'CB_READONLY') {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
-			}
-			wx.ComboBox(this, wx.ID_ANY, choices = monthNames, style = wx.CB_READONLY) {|ctrl|
-				sizer.Add(ctrl, wx.SizerFlags().Expand())
+			tupples.Each {|tuple|
+				[label, style] = tuple
+				wx.StaticText(this, wx.ID_ANY, label) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+				}
+				wx.ComboBox(this, wx.ID_ANY, choices = monthNames, style = style) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags().Expand())
+					wx.EVT_COMBOBOX(ctrl, this.OnComboBox, userData = label)
+					wx.EVT_TEXT(ctrl, this.OnText, userData = label)
+					wx.EVT_TEXT_ENTER(ctrl, this.OnTextEnter, userData = label)
+					wx.EVT_COMBOBOX_DROPDOWN(ctrl, this.OnComboBoxDropDown, userData = label)
+					wx.EVT_COMBOBOX_CLOSEUP(ctrl, this.OnComboBoxCloseUp, userData = label)
+				}
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 			this.textCtrl = ctrl
 		}
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+	OnComboBox(event as wx.CommandEvent) = {
+		label = event.GetEventUserData()
+		this.Printf('EVT_COMBOBOX(%s)\n', label)		
+	}
+	OnText(event as wx.CommandEvent) = {
+		label = event.GetEventUserData()
+		this.Printf('EVT_TEXT(%s)\n', label)		
+	}
+	OnTextEnter(event as wx.CommandEvent) = {
+		label = event.GetEventUserData()
+		this.Printf('EVT_TEXT_ENTER(%s)\n', label)		
+	}
+	OnComboBoxDropDown(event as wx.CommandEvent) = {
+		label = event.GetEventUserData()
+		this.Printf('EVT_COMBOBOX_DROPDOWN(%s)\n', label)		
+	}
+	OnComboBoxCloseUp(event as wx.CommandEvent) = {
+		label = event.GetEventUserData()
+		this.Printf('EVT_COMBOBOX_CLOSEUP(%s)\n', label)		
 	}
 }
 

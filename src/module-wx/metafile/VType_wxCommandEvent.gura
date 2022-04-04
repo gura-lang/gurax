@@ -18,6 +18,8 @@ CommandEvent = Class(Event) {
 	EVT_CHECKBOX					>> CommandEvent
 	EVT_CHOICE						>> CommandEvent
 	EVT_COMBOBOX					>> CommandEvent
+	EVT_COMBOBOX_DROPDOWN			>> CommandEvent
+	EVT_COMBOBOX_CLOSEUP			>> CommandEvent
 	EVT_LISTBOX						>> CommandEvent
 	EVT_LISTBOX_DCLICK				>> CommandEvent
 	EVT_CHECKLISTBOX				>> CommandEvent
