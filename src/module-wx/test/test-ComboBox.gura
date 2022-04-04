@@ -25,9 +25,10 @@ PanelTop = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		tupples = [
-			('(no flags)', 0)
-			('CB_DROPDOWNB', wx.CB_DROPDOWN)
-			('CB_READONLY', wx.CB_READONLY)
+			('(no flags)',			0)
+			('CB_DROPDOWN',			wx.CB_DROPDOWN)
+			('CB_READONLY',			wx.CB_READONLY)
+			('TE_PROCESS_ENTER',	wx.TE_PROCESS_ENTER)
 		]
 		wx.FlexGridSizer(2, wx.Size(16, 8)) {|sizer|
 			sizerTop.Add(sizer, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 8))
@@ -39,6 +40,7 @@ PanelTop = class(wx.Panel) {
 				}
 				wx.ComboBox(this, wx.ID_ANY, choices = monthNames, style = style) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags().Expand())
+					ctrl.SetSelection(0)
 					wx.EVT_COMBOBOX(ctrl, this.OnComboBox, userData = label)
 					wx.EVT_TEXT(ctrl, this.OnText, userData = label)
 					wx.EVT_TEXT_ENTER(ctrl, this.OnTextEnter, userData = label)
