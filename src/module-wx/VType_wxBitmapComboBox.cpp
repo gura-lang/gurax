@@ -28,10 +28,222 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.BitmapComboBox(parent as wx.Window, id as Number, value as String, pos as wx.Point, size as wx.Size, choices[] as String, style as Number, validator? as wx.Validator, name? as String) {block?} {block?}
+Gurax_DeclareConstructorAlias(BitmapComboBox_gurax, "BitmapComboBox")
+{
+	Declare(VTYPE_wxBitmapComboBox, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("choices", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.BitmapComboBox.");
+}
+
+Gurax_ImplementConstructorEx(BitmapComboBox_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const char* value = args_gurax.PickString();
+	Value_wxPoint& value_pos = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pos = value_pos.GetEntity();
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
+	long style = args_gurax.PickNumber<long>();
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxBitmapComboBoxNameStr;
+	// Function body
+	auto pEntity_gurax = new Value_wxBitmapComboBox::EntityT(parent, id, value, pos, size, choices, style, validator, name);
+	RefPtr<Value_wxBitmapComboBox> pValue_gurax(new Value_wxBitmapComboBox(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.BitmapComboBox#Append(item as String, bitmap? as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxBitmapComboBox, Append_gurax, "Append")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBitmapComboBox, Append_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* item = args_gurax.PickString();
+	const wxBitmap& bitmap = args_gurax.IsValid()? args_gurax.Pick<Value_wxBitmap>().GetEntity() : wxNullBitmap;
+	// Function body
+	int rtn = pEntity_gurax->Append(item, bitmap);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.BitmapComboBox#Create(parent as wx.Window, id as Number, value as String, pos as wx.Point, size as wx.Size, choices[] as String, style? as Number, validator? as wx.Validator, name? as String)
+Gurax_DeclareMethodAlias(wxBitmapComboBox, Create_gurax, "Create")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("choices", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBitmapComboBox, Create_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	const char* value = args_gurax.PickString();
+	Value_wxPoint& value_pos = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pos = value_pos.GetEntity();
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : 0;
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxBitmapComboBoxNameStr;
+	// Function body
+	bool rtn = pEntity_gurax->Create(parent, id, value, pos, size, choices, style, validator, name);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.BitmapComboBox#GetBitmapSize() {block?}
+Gurax_DeclareMethodAlias(wxBitmapComboBox, GetBitmapSize_gurax, "GetBitmapSize")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBitmapComboBox, GetBitmapSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetBitmapSize()));
+}
+
+// wx.BitmapComboBox#GetItemBitmap(n as Number) {block?}
+Gurax_DeclareMethodAlias(wxBitmapComboBox, GetItemBitmap_gurax, "GetItemBitmap")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBitmapComboBox, GetItemBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		pEntity_gurax->GetItemBitmap(n)));
+}
+
+// wx.BitmapComboBox#Insert(item as String, bitmap as wx.Bitmap, pos as Number)
+Gurax_DeclareMethodAlias(wxBitmapComboBox, Insert_gurax, "Insert")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBitmapComboBox, Insert_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* item = args_gurax.PickString();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	unsigned int pos = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	int rtn = pEntity_gurax->Insert(item, bitmap, pos);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.BitmapComboBox#SetItemBitmap(n as Number, bitmap as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxBitmapComboBox, SetItemBitmap_gurax, "SetItemBitmap")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxBitmapComboBox, SetItemBitmap_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int n = args_gurax.PickNumber<unsigned int>();
+	Value_wxBitmap& value_bitmap = args_gurax.Pick<Value_wxBitmap>();
+	const wxBitmap& bitmap = value_bitmap.GetEntity();
+	// Function body
+	pEntity_gurax->SetItemBitmap(n, bitmap);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +259,14 @@ void VType_wxBitmapComboBox::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxComboBox, Flag::Mutable);
+	Declare(VTYPE_wxComboBox, Flag::Mutable, Gurax_CreateConstructor(BitmapComboBox_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxBitmapComboBox, Append_gurax));
+	Assign(Gurax_CreateMethod(wxBitmapComboBox, Create_gurax));
+	Assign(Gurax_CreateMethod(wxBitmapComboBox, GetBitmapSize_gurax));
+	Assign(Gurax_CreateMethod(wxBitmapComboBox, GetItemBitmap_gurax));
+	Assign(Gurax_CreateMethod(wxBitmapComboBox, Insert_gurax));
+	Assign(Gurax_CreateMethod(wxBitmapComboBox, SetItemBitmap_gurax));
 }
 
 //------------------------------------------------------------------------------

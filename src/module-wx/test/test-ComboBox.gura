@@ -38,7 +38,7 @@ PanelTop = class(wx.Panel) {
 				wx.StaticText(this, wx.ID_ANY, label) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags().Expand())
 				}
-				wx.ComboBox(this, wx.ID_ANY, choices = monthNames, style = style) {|ctrl|
+				wx.BitmapComboBox(this, wx.ID_ANY, choices = monthNames, style = style) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags().Expand())
 					ctrl.SetSelection(0)
 					wx.EVT_COMBOBOX(ctrl, this.OnComboBox, userData = label)
