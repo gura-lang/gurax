@@ -21,7 +21,7 @@ PanelTop = class(wx.Panel) {
 	simplebook as wx.SimpleBook
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
-		[imageList, indices] = image.InitImageList()
+		[imageList, indices] = image.InitImageList(image.mini_icons)
 		this.SetSizer(sizerTop)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 			sizerTop.Add(hbox, wx.SizerFlags(4).Expand())

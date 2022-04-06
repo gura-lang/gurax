@@ -1,0 +1,17 @@
+import(zip)
+import(re)
+
+if (sys.argv.len < 2) {
+	Println('usage: convimg.gura zipfile')
+	sys.Exit(1)
+}
+fileName = sys.argv[1]
+Println('images = %{')
+zip.Reader(fileName).EachEntry {|entry|
+	if (m = entry.stat.name.Match(r'(^[a-zA-Z0-9]+)\.png')) {
+		Printf("`%s => Image(b'''\n", m[1])
+		base64.Encode(entry, sys.cout)
+		Printf("'''base64\n")
+	}
+}
+Println('}')

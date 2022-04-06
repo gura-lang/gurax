@@ -19,7 +19,7 @@ PanelTop = class(wx.Panel) {
 	treeCtrl as wx.TreeCtrl
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
-		[imageList, indices] = image.InitImageList()
+		[imageList, indices] = image.InitImageList(image.mini_icons)
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
