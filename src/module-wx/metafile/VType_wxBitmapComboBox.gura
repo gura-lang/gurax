@@ -3,7 +3,7 @@
 //==============================================================================
 BitmapComboBox = Class(ComboBox) {
 	@include['wx/bmpcbox.h']
-	__init__(parent as Window_p, id as WindowID, value as const_String_r, pos as const_Point_r, size as const_Size_r,
+	__init__(parent as Window_p, id as WindowID = wxID_ANY, value as const_String_r = wxEmptyString, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize,
 		choices as const_ArrayString_r, style as long, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxBitmapComboBoxNameStr)
 	Append(item as const_String_r, bitmap as const_Bitmap_r = wxNullBitmap) as int
 	//Append(item as const_String_r, bitmap as const_Bitmap_r, clientData as void_p) as int

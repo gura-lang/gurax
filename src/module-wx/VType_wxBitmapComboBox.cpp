@@ -28,15 +28,15 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.BitmapComboBox(parent as wx.Window, id as Number, value as String, pos as wx.Point, size as wx.Size, choices[] as String, style as Number, validator? as wx.Validator, name? as String) {block?} {block?}
+// wx.BitmapComboBox(parent as wx.Window, id? as Number, value? as String, pos? as wx.Point, size? as wx.Size, choices[] as String, style as Number, validator? as wx.Validator, name? as String) {block?} {block?}
 Gurax_DeclareConstructorAlias(BitmapComboBox_gurax, "BitmapComboBox")
 {
 	Declare(VTYPE_wxBitmapComboBox, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("value", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("choices", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -53,12 +53,11 @@ Gurax_ImplementConstructorEx(BitmapComboBox_gurax, processor_gurax, argument_gur
 	Gurax::ArgPicker args_gurax(argument_gurax);
 	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
 	wxWindow* parent = value_parent.GetEntityPtr();
-	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
-	const char* value = args_gurax.PickString();
-	Value_wxPoint& value_pos = args_gurax.Pick<Value_wxPoint>();
-	const wxPoint& pos = value_pos.GetEntity();
-	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
-	const wxSize& size = value_size.GetEntity();
+	bool id_validFlag = args_gurax.IsValid();
+	wxWindowID id = id_validFlag? args_gurax.PickNumber<wxWindowID>() : wxID_ANY;
+	const char* value = args_gurax.IsValid()? args_gurax.PickString() : "";
+	const wxPoint& pos = args_gurax.IsValid()? args_gurax.Pick<Value_wxPoint>().GetEntity() : wxDefaultPosition;
+	const wxSize& size = args_gurax.IsValid()? args_gurax.Pick<Value_wxSize>().GetEntity() : wxDefaultSize;
 	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
 	long style = args_gurax.PickNumber<long>();
 	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;

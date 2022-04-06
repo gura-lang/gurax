@@ -2,6 +2,7 @@
 import(gif)
 import(png)
 
+// http://www.famfamfam.com/lab/icons/mini/
 images = %{	
 `action_back => Image(b'''
 R0lGODlhEAAQAMQfACROFdzy00yoLbDhnUSVKFe+OV3CPMXpuLPioitfGordWnfRTXTLXLzmqX3U
