@@ -11,7 +11,7 @@ zip.Reader(fileName).EachEntry {|entry|
 	if (m = entry.stat.name.Match(r'(^[a-zA-Z0-9]+)\.png')) {
 		Printf("`%s => Image(b'''\n", m[1])
 		base64.Encode(entry, sys.cout)
-		Printf("'''base64\n")
+		Printf("'''base64)\n")
 	}
 }
 Println('}')
