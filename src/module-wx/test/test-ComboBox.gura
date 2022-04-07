@@ -90,10 +90,10 @@ PanelTop = class(wx.Panel) {
 			tupples.Each {|tuple|
 				[label, style, bitmapFlag] = tuple
 				if (bitmapFlag) {
-					label += ' (bitmap)'
+					label += ' bitmap'
 					ctrlCB = wx.BitmapComboBox(this, wx.ID_ANY, choices = monthNames, style = style)
 					repeat(monthNames.len) {|iItem|
-						ctrlCB.SetItemBitmap(iItem, image.images[indices[iItem]])
+						ctrlCB.SetItemBitmap(iItem, image.mini_icons[indices[iItem]])
 					}
 				} else {
 					ctrlCB = wx.ComboBox(this, wx.ID_ANY, choices = monthNames, style = style)
