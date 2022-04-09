@@ -1309,7 +1309,7 @@ classInfoTbl.Each {|classInfo|
 }
 
 AppendTab(str as String, colAlign as Number) = {
-	str + '\t' * Int((colAlign - str.width + 1) / 4)
+	str + '\t' * Int((colAlign - str.width) / 4)
 }
 
 GenerateVType(classInfoTbl[] as ClassInfo) = {

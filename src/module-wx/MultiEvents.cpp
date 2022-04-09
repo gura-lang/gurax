@@ -125,6 +125,28 @@ Gurax_ImplementFunction(EVT_SCROLLWIN)
 	return Value::nil();
 }
 
+// wx.EVT_TIMER(id:Number, funct:Any)
+Gurax_DeclareFunction(EVT_TIMER)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(EVT_TIMER)
+{
+	// Arguments
+	Gurax::ArgPicker args(argument);
+	int id = args.PickNumber<int>();
+	const Value& funct = args.PickValue();
+	
+
+	return Value::nil();
+}
+
 void AssignMultiEvents(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(EVT_JOYSTICK_EVENTS));
