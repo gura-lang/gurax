@@ -348,8 +348,8 @@ void BindMultiEvents(Processor& processor, Argument& argument,
 	// Arguments
 	ArgPicker args(argument);
 	wxEvtHandler* pEvtHandler = args.Pick<Value_wxEvtHandler>().GetEntityPtr();
-	int id = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
 	Value& valueFunct = args.PickValue();
+	int id = args.IsValid()? args.PickNumber<int>() : wxID_ANY;
 	// Function body
 	for (size_t i = 0; i < n; i++) {
 		wxEventType eventType = eventTypes[i];

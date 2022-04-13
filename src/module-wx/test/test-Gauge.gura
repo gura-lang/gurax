@@ -15,10 +15,13 @@ MyFrame = class(wx.Frame) {
 
 PanelTop = class(wx.Panel) {
 	gaugesTbl[] as wx.Gauge
+	timer as wx.Timer
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		
+		this.timer = wx.Timer(this, 100)
+		this.timer.Start(100)
+		wx.EVT_TIMER(this, 100, this.OnTimer)
 		wx.Gauge(this, wx.ID_ANY, 100) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 			//this.gaugesTbl[0] = ctrl
@@ -29,6 +32,9 @@ PanelTop = class(wx.Panel) {
 			//this.gaugesTbl[0] = ctrl
 			ctrl.SetValue(30)
 		}
+	}
+	OnTimer(aaa) = {
+		Println('hello')
 	}
 }
 

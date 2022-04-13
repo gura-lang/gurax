@@ -1,0 +1,75 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 480)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	timerId = 100
+	textCtrl as wx.TextCtrl
+	sliderCtrl as wx.Slider
+	timer as wx.Timer
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.timer = wx.Timer(this, this.timerId)
+		this.SetSizer(sizerTop)
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags().Expand())
+			wx.StaticText(this, wx.ID_ANY, 'Interval') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE))
+			}
+			wx.Slider(this, wx.ID_ANY, 500, 10, 1000, style = wx.SL_LABELS) {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags(1).Expand().Border(wx.LEFT, 8))
+				this.sliderCtrl = ctrl
+				wx.EVT_SCROLL(ctrl, this.OnScroll)
+			}
+			wx.Button(this, wx.ID_ANY, 'Start') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 8))
+				wx.EVT_BUTTON(ctrl, this.OnButton_Start)
+			}
+			wx.Button(this, wx.ID_ANY, 'Stop') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 4))
+				wx.EVT_BUTTON(ctrl, this.OnButton_Stop)
+			}
+		}
+		wx.TextCtrl(this, wx.ID_ANY, '', style = wx.TE_MULTILINE) {|ctrl|
+			ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			ctrl.SetInsertionPointEnd()
+			this.textCtrl = ctrl
+		}
+		wx.EVT_TIMER(this, this.OnTimer, this.timerId)
+		//this.timer.Start(1000)
+	}
+	OnScroll(event) = {
+		if (this.timer.IsRunning()) {
+			interval = this.sliderCtrl.GetValue()
+			this.timer.Start(interval)
+		}
+	}
+	OnButton_Start(event) = {
+		this.Printf('Start Timer\n')
+		interval = this.sliderCtrl.GetValue()
+		this.timer.Start(interval)
+	}
+	OnButton_Stop(event) = {
+		this.Printf('Stop Timer\n')
+		this.timer.Stop()
+	}
+	OnTimer(event) = {
+		this.Printf('Interval: %dmsec\n', this.timer.GetInterval())
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+}
+
+wx.ImplementApp(MyApp())
