@@ -32,25 +32,6 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// wx.TimerEvent#GetInterval()
-Gurax_DeclareMethodAlias(wxTimerEvent, GetInterval_gurax, "GetInterval")
-{
-	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxTimerEvent, GetInterval_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	int rtn = pEntity_gurax->GetInterval();
-	return new Gurax::Value_Number(rtn);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -68,7 +49,6 @@ void VType_wxTimerEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(wxTimerEvent, GetInterval_gurax));
 }
 
 //------------------------------------------------------------------------------
