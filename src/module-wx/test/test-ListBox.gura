@@ -1,0 +1,71 @@
+#!/usr/bin/env gurax
+import(wx)
+
+monthNames = [
+	'January', 'February', 'March', 'April', 'May', 'June'
+	'July', 'August', 'September', 'October', 'November', 'December'
+]
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		tbl = [
+			(wx.LB_SINGLE,		'LB_SINGLE')
+			(wx.LB_MULTIPLE,	'LB_MULTIPLE')
+			(wx.LB_EXTENDED,	'LB_EXTENDED')
+		]
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags(1).Expand())
+			tbl.Each {|entry|
+				[style, label] = entry
+				wx.BoxSizer(wx.VERTICAL) {|vbox|
+					hbox.Add(vbox, wx.SizerFlags(1).Expand())
+					wx.StaticText(this, wx.ID_ANY, label) {|ctrl|
+						vbox.Add(ctrl, wx.SizerFlags().Expand())
+					}
+					wx.ListBox(this, wx.ID_ANY, style = style, choices = monthNames) {|ctrl|
+						vbox.Add(ctrl, wx.SizerFlags(1).Expand())
+						if (style == wx.LB_SINGLE) {
+							ctrl.SetSelection(0)
+						}
+						wx.EVT_LISTBOX(ctrl, this.OnListBox, userData = ctrl)
+						wx.EVT_LISTBOX_DCLICK(ctrl, this.OnListBoxDClick, userData = ctrl)
+					}
+				}
+			}
+		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
+	}
+	MakeSelectionString(selections[] as Number) = {
+		cond(selections.IsEmpty(), '(none)', Format('%d', selections).Join(','))
+	}
+	OnListBox(event as wx.CommandEvent) = {
+		ctrl = event.GetEventUserData()
+		this.Printf('EVT_LISTBOX: Selections=%s\n', this.MakeSelectionString(ctrl.GetSelections()))
+	}
+	OnListBoxDClick(event as wx.CommandEvent) = {
+		ctrl = event.GetEventUserData()
+		this.Printf('EVT_LISTBOX_DCLICK: Selections=%s\n', this.MakeSelectionString(ctrl.GetSelections()))
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+}
+
+wx.ImplementApp(MyApp())
