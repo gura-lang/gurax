@@ -16,9 +16,18 @@ MyFrame = class(wx.Frame) {
 
 PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
-		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		sizerTop.Add(wx.Button(this, wx.ID_ANY, 'Hello World'), wx.SizerFlags(1).Expand())
+		wx.BoxSizer(wx.VERTICAL) {|vbox|
+			sizerTop.Add(vbox, wx.SizerFlags(1).Expand())
+			wx.Button(this, wx.ID_ANY, 'Hello World') {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags(1).Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton)
+			}
+		}
+	}
+	OnButton(event as wx.CommandEvent) = {
+		Println('Hello!')
 	}
 }
 
