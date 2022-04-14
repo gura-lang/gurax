@@ -912,6 +912,26 @@ Gurax_ImplementMethodEx(wxTextCtrl, GetInsertionPoint_gurax, processor_gurax, ar
 	return new Gurax::Value_Number(rtn);
 }
 
+// wx.TextCtrl#GetLastPosition()
+Gurax_DeclareMethodAlias(wxTextCtrl, GetLastPosition_gurax, "GetLastPosition")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTextCtrl, GetLastPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetLastPosition();
+	return new Gurax::Value_Number(rtn);
+}
+
 // wx.TextCtrl#GetRange(from as Number, to as Number)
 Gurax_DeclareMethodAlias(wxTextCtrl, GetRange_gurax, "GetRange")
 {
@@ -1533,6 +1553,7 @@ void VType_wxTextCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxTextCtrl, Copy_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, Cut_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetInsertionPoint_gurax));
+	Assign(Gurax_CreateMethod(wxTextCtrl, GetLastPosition_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetRange_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetSelection_gurax));
 	Assign(Gurax_CreateMethod(wxTextCtrl, GetStringSelection_gurax));
