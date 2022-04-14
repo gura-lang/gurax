@@ -49,7 +49,7 @@ PanelTop = class(wx.Panel) {
 				this.gaugesTbl.Add(ctrl)
 				ctrl.SetValue(0)
 			}
-			wx.StaticText(this, wx.ID_ANY, '') {|ctrl|
+			wx.StaticText(this, wx.ID_ANY, '', style = wx.ALIGN_CENTRE_HORIZONTAL | wx.ST_NO_AUTORESIZE) {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags(1).Align(wx.CENTRE))
 				font = ctrl.GetFont()
 				font.SetPointSize(30)
