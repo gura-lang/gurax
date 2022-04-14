@@ -58,12 +58,12 @@ PanelTop = class(wx.Panel) {
 		}
 	}
 	OnButton_Start(event) = {
-		this.Printf('Start Timer\n')
+		this.Printf('wx.Timer#Start()\n')
 		interval = this.sliderCtrl.GetValue()
 		this.timer.Start(interval)
 	}
 	OnButton_Stop(event) = {
-		this.Printf('Stop Timer\n')
+		this.Printf('wx.Timer#Stop()\n')
 		this.timer.Stop()
 	}
 	OnTimer(event) = {
