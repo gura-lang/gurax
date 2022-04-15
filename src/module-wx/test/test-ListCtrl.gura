@@ -1,10 +1,11 @@
 #!/usr/bin/env gurax
 import(wx)
 import(image)
+da = import(DummyAddress)
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(900, 600)).Show()
 		true
 	}
 }
@@ -31,13 +32,22 @@ PanelTop = class(wx.Panel) {
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
-				ctrl.AppendColumn('Image')
-				ctrl.AppendColumn('Name', width = 300)
-				keys = indices.EachKey().Sort()
-				keys.Each {|key, i|
+				ctrl.AppendColumn('Image', width = 60)
+				ctrl.AppendColumn('Name', width = 180)
+				ctrl.AppendColumn('E-mail', width = 200)
+				ctrl.AppendColumn('Gender', width = 80)
+				ctrl.AppendColumn('Age', width = 80)
+				ctrl.AppendColumn('Birthday', width = 100)
+				ctrl.AppendColumn('Phone Number', width = 120)
+				for (address in da.addressTbl, key in indices.EachKey().Sort()) {|i|
 					ctrl.InsertItem(i, '', indices[key])
-					ctrl.SetItem(i, 1, key)
-					ctrl.SetItemData(i, key)
+					ctrl.SetItem(i, 1, address.name)
+					ctrl.SetItem(i, 2, address.email)
+					ctrl.SetItem(i, 3, address.gender)
+					ctrl.SetItem(i, 4, address.age)
+					ctrl.SetItem(i, 5, address.birthDay)
+					ctrl.SetItem(i, 6, address.phoneNumber)
+					ctrl.SetItemData(i, address.name)
 				}
 				wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList)
 				wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList)
@@ -67,19 +77,22 @@ PanelTop = class(wx.Panel) {
 			this.textCtrl = ctrl
 		}
 	}
-	SortAscent(item1, item2):static = {item1 <=> item2}
 	SortDescent(item1, item2):static = {item2 <=> item1}
-	OnList(event) = {
+	SortAscent(item1, item2):static = {item1 <=> item2}
+	OnList(event as wx.ListEvent) = {
 		this.PrintListEvent(event)
 	}
-	OnListColClick(event) = {
+	OnListColClick(event as wx.ListEvent) = {
 		this.PrintListEvent(event)
 		this.listCtrl.SortItems(cond(this.ascentFlag, this.SortAscent, this.SortDescent), nil)
 		this.ascentFlag = !this.ascentFlag
 	}
-	PrintListEvent(event) = {
+	PrintListEvent(event as wx.ListEvent) = {
 		eventName = event.GetEventType().name
-		this.Printf('%s(index=%d label="%s")\n', eventName, event.GetIndex(), event.GetLabel())
+		idx = event.GetIndex()
+		if (idx >= 0) {
+			this.Printf('%s(index=%d label="%s")\n', eventName, idx, this.listCtrl.GetItemText(idx, 1))
+		}
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
