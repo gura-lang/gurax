@@ -1,11 +1,9 @@
 #!/usr/bin/env gurax
 import(wx)
 import(image)
+import(DummyAddress)
 
-monthNames = [
-	'January', 'February', 'March', 'April', 'May', 'June'
-	'July', 'August', 'September', 'October', 'November', 'December'
-]
+names = DummyAddress.addressTbl.Head(20)::name
 
 indices = [
 `page
@@ -91,12 +89,12 @@ PanelTop = class(wx.Panel) {
 				[label, style, bitmapFlag] = tuple
 				if (bitmapFlag) {
 					label += ' bitmap'
-					ctrlCB = wx.BitmapComboBox(this, wx.ID_ANY, choices = monthNames, style = style)
-					repeat(monthNames.len) {|iItem|
+					ctrlCB = wx.BitmapComboBox(this, wx.ID_ANY, choices = names, style = style)
+					repeat(names.len) {|iItem|
 						ctrlCB.SetItemBitmap(iItem, image.mini_icons[indices[iItem]])
 					}
 				} else {
-					ctrlCB = wx.ComboBox(this, wx.ID_ANY, choices = monthNames, style = style)
+					ctrlCB = wx.ComboBox(this, wx.ID_ANY, choices = names, style = style)
 				}
 				wx.StaticText(this, wx.ID_ANY, label) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags().Expand())

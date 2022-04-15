@@ -1,10 +1,6 @@
 #!/usr/bin/env gurax
 import(wx)
-
-monthNames = [
-	'January', 'February', 'March', 'April', 'May', 'June'
-	'July', 'August', 'September', 'October', 'November', 'December'
-]
+import(DummyAddress)
 
 MyApp = class(wx.App) {
 	OnInit() = {
@@ -48,7 +44,7 @@ PanelTop = class(wx.Panel) {
 					wx.StaticText(this, wx.ID_ANY, item.label) {|ctrl|
 						vbox.Add(ctrl, wx.SizerFlags().Expand())
 					}
-					wx.ListBox(this, wx.ID_ANY, style = item.style, choices = monthNames) {|ctrl|
+					wx.ListBox(this, wx.ID_ANY, style = item.style, choices = DummyAddress.addressTbl::name) {|ctrl|
 						vbox.Add(ctrl, wx.SizerFlags(1).Expand())
 						item.listBox = ctrl
 						if (item.style == wx.LB_SINGLE) {
