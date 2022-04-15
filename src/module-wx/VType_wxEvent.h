@@ -32,7 +32,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxEvent");
 protected:
-	std::unique_ptr<wxEvent> _pEntity;
+	wxEvent& _entity;
 	RefPtr<Value> _pValueUserData;
 public:
 	const Value& GetValueUserData() const { return *_pValueUserData; }
@@ -41,8 +41,8 @@ public:
 public:
 	// Constructor
 	Value_wxEvent() = delete;
-	explicit Value_wxEvent(const wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxEvent) :
-		Value_Object(vtype), _pEntity(entity.Clone()), _pValueUserData(pValueUserData) {}
+	explicit Value_wxEvent(wxEvent& entity, Value* pValueUserData, VType& vtype = VTYPE_wxEvent) :
+		Value_Object(vtype), _entity(entity), _pValueUserData(pValueUserData) {}
 	// Copy constructor/operator
 	Value_wxEvent(const Value_wxEvent& src) = delete;
 	Value_wxEvent& operator=(const Value_wxEvent& src) = delete;
@@ -53,10 +53,10 @@ protected:
 	// Destructor
 	~Value_wxEvent() = default;
 public:
-	wxEvent& GetEntity() { return *_pEntity; }
-	const wxEvent& GetEntity() const { return *_pEntity; }
-	wxEvent* GetEntityPtr() { return _pEntity.get(); }
-	const wxEvent* GetEntityPtr() const { return _pEntity.get(); }
+	wxEvent& GetEntity() { return _entity; }
+	const wxEvent& GetEntity() const { return _entity; }
+	wxEvent* GetEntityPtr() { return &_entity; }
+	const wxEvent* GetEntityPtr() const { return &_entity; }
 public:
 	static wxEvent& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxEvent&>(value).GetEntity();

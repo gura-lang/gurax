@@ -261,7 +261,7 @@ protected:
 	wx${className}& _entity;
 ${elsif (className == 'Event')}
 protected:
-	std::unique_ptr<wx${className}> _pEntity;
+	wx${className}& _entity;
 	RefPtr<Value> _pValueUserData;
 public:
 	const Value& GetValueUserData() const { return *_pValueUserData; }
@@ -302,8 +302,8 @@ ${elsif (className == 'RefCounter')}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'Event')}
-	explicit Value_wx${className}(const wx${className}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
-		Value_Object(vtype), _pEntity(entity.Clone()), _pValueUserData(pValueUserData) {}
+	explicit Value_wx${className}(wx${className}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
+		Value_Object(vtype), _entity(entity), _pValueUserData(pValueUserData) {}
 ${elsif (className == 'DC')}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntityHolder(pEntity), _entity(*pEntity) {}
@@ -344,11 +344,16 @@ protected:
 	// Destructor
 	~Value_wx${className}() = default;
 public:
-${if (evtHandlerOrDerivFlag || className in ['Event'] || refCounterOrDerivFlag)}
+${if (evtHandlerOrDerivFlag || refCounterOrDerivFlag)}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
 	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
+${elsif (className in ['Event'])}
+	wx${className}& GetEntity() { return _entity; }
+	const wx${className}& GetEntity() const { return _entity; }
+	wx${className}* GetEntityPtr() { return &_entity; }
+	const wx${className}* GetEntityPtr() const { return &_entity; }
 ${elsif (classInfo.loosePointerFlag || (classInfoRoot && classInfoRoot.loosePointerFlag))}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
