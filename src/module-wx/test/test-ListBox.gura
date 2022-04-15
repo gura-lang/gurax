@@ -25,7 +25,8 @@ Item = struct {
 	listBox as wx.ListBox
 	MakeSelectionString() = {
 		selections = this.listBox.GetSelections()
-		cond(selections.IsEmpty(), '(none)', Format('%d', selections).Join(','))
+		strSelections = this.listBox.GetString(selections):map
+		cond(selections.IsEmpty(), '(none)', Format('%d:%s', selections, strSelections).Join(','))
 	}
 }
 
