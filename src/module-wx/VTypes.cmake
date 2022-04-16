@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxTimerEvent.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
@@ -238,6 +237,7 @@ set(SRCFILES_VTYPE
 	VType_wxListCtrl.cpp
 	VType_wxListEvent.cpp
 	VType_wxListItem.cpp
+	VType_wxListItemAttr.cpp
 	VType_wxListView.cpp
 	VType_wxLog.cpp
 	VType_wxMultiChoiceProperty.cpp

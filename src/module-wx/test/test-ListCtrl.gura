@@ -5,7 +5,7 @@ da = import(DummyAddress)
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(900, 600)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(900, 700)).Show()
 		true
 	}
 }
@@ -24,11 +24,11 @@ PanelTop = class(wx.Panel) {
 		this.ascentFlag = true
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
-			sizerTop.Add(hbox, wx.SizerFlags(5).Expand())
+		[imageList, indices] = image.InitImageList(image.silk_icons)
+		wx.BoxSizer(wx.VERTICAL) {|vbox|
+			sizerTop.Add(vbox, wx.SizerFlags(5).Expand())
 			wx.ListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
-				[imageList, indices] = image.InitImageList(image.silk_icons)
+				vbox.Add(ctrl, wx.SizerFlags(1).Expand())
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
@@ -70,6 +70,43 @@ PanelTop = class(wx.Panel) {
 				wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList)
 				wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList)
 				this.listCtrl = ctrl
+			}
+			wx.ListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags(1).Expand())
+				ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
+				ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
+				ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
+				ctrl.AppendColumn('Image', width = 60)
+				ctrl.AppendColumn('Name', width = 180)
+				ctrl.AppendColumn('E-mail', width = 200)
+				ctrl.AppendColumn('Gender', width = 80)
+				ctrl.AppendColumn('Age', width = 80)
+				ctrl.AppendColumn('Birthday', width = 100)
+				ctrl.AppendColumn('Phone Number', width = 120)
+
+				/*
+				wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList)
+				wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList)
+				wx.EVT_LIST_BEGIN_LABEL_EDIT(ctrl,	this.OnList)
+				wx.EVT_LIST_END_LABEL_EDIT(ctrl,	this.OnList)
+				wx.EVT_LIST_DELETE_ITEM(ctrl,		this.OnList)
+				wx.EVT_LIST_DELETE_ALL_ITEMS(ctrl,	this.OnList)
+				wx.EVT_LIST_ITEM_SELECTED(ctrl,		this.OnList)
+				wx.EVT_LIST_ITEM_DESELECTED(ctrl,	this.OnList)
+				wx.EVT_LIST_ITEM_ACTIVATED(ctrl,	this.OnList)
+				wx.EVT_LIST_ITEM_FOCUSED(ctrl,		this.OnList)
+				wx.EVT_LIST_ITEM_MIDDLE_CLICK(ctrl,	this.OnList)
+				wx.EVT_LIST_ITEM_RIGHT_CLICK(ctrl,	this.OnList)
+				wx.EVT_LIST_KEY_DOWN(ctrl,			this.OnList)
+				wx.EVT_LIST_INSERT_ITEM(ctrl,		this.OnList)
+				wx.EVT_LIST_COL_CLICK(ctrl,			this.OnListColClick)
+				wx.EVT_LIST_COL_RIGHT_CLICK(ctrl,	this.OnList)
+				wx.EVT_LIST_COL_BEGIN_DRAG(ctrl,	this.OnList)
+				wx.EVT_LIST_COL_DRAGGING(ctrl,		this.OnList)
+				wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList)
+				wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList)
+				this.listCtrl = ctrl
+				*/
 			}
 		}
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|

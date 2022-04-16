@@ -39,9 +39,9 @@ public:
 		using wxTimer::wxTimer;
 	public:
 		EntityCore core_gurax;
-		virtual void Notify() override;
-		virtual bool Start(int milliseconds, bool oneShot) override;
-		virtual void Stop() override;
+		virtual void Notify();
+		virtual bool Start(int milliseconds, bool oneShot);
+		virtual void Stop();
 	};
 public:
 	static VType& vtype;

@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxTimerEvent.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -241,6 +240,7 @@
 #include "VType_wxListCtrl.h"
 #include "VType_wxListEvent.h"
 #include "VType_wxListItem.h"
+#include "VType_wxListItemAttr.h"
 #include "VType_wxListView.h"
 #include "VType_wxLog.h"
 #include "VType_wxMultiChoiceProperty.h"

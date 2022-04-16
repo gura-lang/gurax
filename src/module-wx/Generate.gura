@@ -281,7 +281,7 @@ public:
 	public:
 		EntityCore core_gurax;
 		${funcInfoVirtualTbl.Each {|funcInfo|}}
-		virtual ${funcInfo.ComposeCDecl()} override;
+		virtual ${funcInfo.ComposeCDecl()};
 		${end}
 	};
 ${end}
