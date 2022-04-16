@@ -25,7 +25,7 @@ PanelTop = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
-			sizerTop.Add(hbox, wx.SizerFlags(3).Expand())
+			sizerTop.Add(hbox, wx.SizerFlags(5).Expand())
 			wx.ListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
 				[imageList, indices] = image.InitImageList(image.silk_icons)
@@ -72,8 +72,15 @@ PanelTop = class(wx.Panel) {
 				this.listCtrl = ctrl
 			}
 		}
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 2))
+			wx.Button(this, wx.ID_ANY, 'Selected') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton_Selected)
+			}
+		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			sizerTop.Add(ctrl, wx.SizerFlags(2).Expand())
 			this.textCtrl = ctrl
 		}
 	}
@@ -87,11 +94,22 @@ PanelTop = class(wx.Panel) {
 		this.listCtrl.SortItems(cond(this.ascentFlag, this.SortAscent, this.SortDescent), nil)
 		this.ascentFlag = !this.ascentFlag
 	}
+	OnButton_Selected(event as wx.CommandEvent) = {
+		item = -1
+		this.Printf('Selected\n')
+		repeat {
+			item = this.listCtrl.GetNextItem(item, wx.LIST_NEXT_ALL, wx.LIST_STATE_SELECTED)
+			(item < 0) && break
+			this.Printf('index=%d name="%s" email="%s"\n', item,
+					this.listCtrl.GetItemText(item, 1), this.listCtrl.GetItemText(item, 2))
+		}
+	}
 	PrintListEvent(event as wx.ListEvent) = {
 		eventName = event.GetEventType().name
-		idx = event.GetIndex()
-		if (idx >= 0) {
-			this.Printf('%s(index=%d label="%s")\n', eventName, idx, this.listCtrl.GetItemText(idx, 1))
+		item = event.GetIndex()
+		if (item >= 0) {
+			this.Printf('%s(index=%d name="%s", email="%s")\n', eventName, item,
+					this.listCtrl.GetItemText(item, 1), this.listCtrl.GetItemText(item, 2))
 		}
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))

@@ -309,6 +309,14 @@ ListCtrl = Class(Control) {
 	LC_VRULES
 }
 
+@const { // Geometry
+	LIST_NEXT_ABOVE
+	LIST_NEXT_ALL
+	LIST_NEXT_BELOW
+	LIST_NEXT_LEFT
+	LIST_NEXT_RIGHT
+}
+
 @const {
 	IMAGE_LIST_NORMAL
 	IMAGE_LIST_SMALL

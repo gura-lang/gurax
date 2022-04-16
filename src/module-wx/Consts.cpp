@@ -683,6 +683,11 @@ void AssignConsts(Frame& frame)
 	frame.Assign("LIST_MASK_STATE", new Value_Number(wxLIST_MASK_STATE));
 	frame.Assign("LIST_MASK_TEXT", new Value_Number(wxLIST_MASK_TEXT));
 	frame.Assign("LIST_MASK_WIDTH", new Value_Number(wxLIST_MASK_WIDTH));
+	frame.Assign("LIST_NEXT_ABOVE", new Value_Number(wxLIST_NEXT_ABOVE));
+	frame.Assign("LIST_NEXT_ALL", new Value_Number(wxLIST_NEXT_ALL));
+	frame.Assign("LIST_NEXT_BELOW", new Value_Number(wxLIST_NEXT_BELOW));
+	frame.Assign("LIST_NEXT_LEFT", new Value_Number(wxLIST_NEXT_LEFT));
+	frame.Assign("LIST_NEXT_RIGHT", new Value_Number(wxLIST_NEXT_RIGHT));
 	frame.Assign("LIST_STATE_CUT", new Value_Number(wxLIST_STATE_CUT));
 	frame.Assign("LIST_STATE_DONTCARE", new Value_Number(wxLIST_STATE_DONTCARE));
 	frame.Assign("LIST_STATE_DROPHILITED", new Value_Number(wxLIST_STATE_DROPHILITED));
