@@ -122,7 +122,7 @@ bool Value_wxAppConsole::EntityT::OnInit()
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxAppConsole::OnInit();
+	return public_OnInit();
 }
 
 Gurax_EndModuleScope(wx)

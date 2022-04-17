@@ -283,6 +283,13 @@ public:
 		${funcInfoVirtualTbl.Each {|funcInfo|}}
 		virtual ${funcInfo.ComposeCDecl()};
 		${end}
+		${funcInfoVirtualTbl.Each {|funcInfo|}}
+		${if (funcInfo.IsVoid())}
+		${funcInfo.ComposeCDecl('public_')} { wx${className}::${funcInfo.ComposeCaller()}; }
+		${else}
+		${funcInfo.ComposeCDecl('public_')} { return wx${className}::${funcInfo.ComposeCaller()}; }
+		${end}
+		${end}
 	};
 ${end}
 public:
@@ -551,9 +558,9 @@ ${funcInfo.ComposeCDecl('Value_wx' + className + '::EntityT::')}
 		${end}
 	} while (0);
 	${if (funcInfo.IsVoid())}
-	wx${className}::${funcInfo.ComposeCaller()};
+	${funcInfo.ComposeCaller('public_')};
 	${else}
-	return wx${className}::${funcInfo.ComposeCaller()};
+	return ${funcInfo.ComposeCaller('public_')};
 	${end}
 }
 

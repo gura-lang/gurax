@@ -939,7 +939,7 @@ void Value_wxScrolledCanvas::EntityT::OnDraw(wxDC& dc)
 		}
 		return;
 	} while (0);
-	wxScrolledCanvas::OnDraw(dc);
+	public_OnDraw(dc);
 }
 
 void Value_wxScrolledCanvas::EntityT::AdjustScrollbars()
@@ -960,7 +960,7 @@ void Value_wxScrolledCanvas::EntityT::AdjustScrollbars()
 		}
 		return;
 	} while (0);
-	wxScrolledCanvas::AdjustScrollbars();
+	public_AdjustScrollbars();
 }
 
 Gurax_EndModuleScope(wx)

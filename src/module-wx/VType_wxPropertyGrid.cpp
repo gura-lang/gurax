@@ -1722,7 +1722,7 @@ wxStatusBar* Value_wxPropertyGrid::EntityT::GetStatusBar()
 		if (!pValueRtn->IsType(VTYPE_wxStatusBar)) break;
 		return Value_wxStatusBar::GetEntityPtr(*pValueRtn);
 	} while (0);
-	return wxPropertyGrid::GetStatusBar();
+	return public_GetStatusBar();
 }
 
 Gurax_EndModuleScope(wx)

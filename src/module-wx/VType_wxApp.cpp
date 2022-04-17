@@ -307,7 +307,7 @@ bool Value_wxApp::EntityT::OnCmdLineError(wxCmdLineParser& parser)
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnCmdLineError(parser);
+	return public_OnCmdLineError(parser);
 }
 
 bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
@@ -331,7 +331,7 @@ bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnCmdLineHelp(parser);
+	return public_OnCmdLineHelp(parser);
 }
 
 bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
@@ -355,7 +355,7 @@ bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnCmdLineParsed(parser);
+	return public_OnCmdLineParsed(parser);
 }
 
 bool Value_wxApp::EntityT::OnExceptionInMainLoop()
@@ -378,7 +378,7 @@ bool Value_wxApp::EntityT::OnExceptionInMainLoop()
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnExceptionInMainLoop();
+	return public_OnExceptionInMainLoop();
 }
 
 int Value_wxApp::EntityT::OnExit()
@@ -401,7 +401,7 @@ int Value_wxApp::EntityT::OnExit()
 		if (!pValueRtn->IsType(VTYPE_Number)) break;
 		return Value_Number::GetNumber<int>(*pValueRtn);
 	} while (0);
-	return wxApp::OnExit();
+	return public_OnExit();
 }
 
 void Value_wxApp::EntityT::OnFatalException()
@@ -422,7 +422,7 @@ void Value_wxApp::EntityT::OnFatalException()
 		}
 		return;
 	} while (0);
-	wxApp::OnFatalException();
+	public_OnFatalException();
 }
 
 bool Value_wxApp::EntityT::OnInit()
@@ -445,7 +445,7 @@ bool Value_wxApp::EntityT::OnInit()
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnInit();
+	return public_OnInit();
 }
 
 void Value_wxApp::EntityT::OnUnhandledException()
@@ -466,7 +466,7 @@ void Value_wxApp::EntityT::OnUnhandledException()
 		}
 		return;
 	} while (0);
-	wxApp::OnUnhandledException();
+	public_OnUnhandledException();
 }
 
 Gurax_EndModuleScope(wx)

@@ -47,6 +47,14 @@ public:
 		virtual void OnFatalException();
 		virtual bool OnInit();
 		virtual void OnUnhandledException();
+		bool public_OnCmdLineError(wxCmdLineParser& parser) { return wxApp::OnCmdLineError(parser); }
+		bool public_OnCmdLineHelp(wxCmdLineParser& parser) { return wxApp::OnCmdLineHelp(parser); }
+		bool public_OnCmdLineParsed(wxCmdLineParser& parser) { return wxApp::OnCmdLineParsed(parser); }
+		bool public_OnExceptionInMainLoop() { return wxApp::OnExceptionInMainLoop(); }
+		int public_OnExit() { return wxApp::OnExit(); }
+		void public_OnFatalException() { wxApp::OnFatalException(); }
+		bool public_OnInit() { return wxApp::OnInit(); }
+		void public_OnUnhandledException() { wxApp::OnUnhandledException(); }
 	};
 public:
 	static VType& vtype;

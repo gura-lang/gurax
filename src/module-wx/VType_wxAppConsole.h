@@ -40,6 +40,7 @@ public:
 	public:
 		EntityCore core_gurax;
 		virtual bool OnInit();
+		bool public_OnInit() { return wxAppConsole::OnInit(); }
 	};
 public:
 	static VType& vtype;

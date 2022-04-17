@@ -5995,7 +5995,7 @@ void Value_wxGrid::EntityT::DrawRowLabel(wxDC& dc, int row)
 		}
 		return;
 	} while (0);
-	wxGrid::DrawRowLabel(dc, row);
+	public_DrawRowLabel(dc, row);
 }
 
 void Value_wxGrid::EntityT::DrawColLabel(wxDC& dc, int col)
@@ -6018,7 +6018,7 @@ void Value_wxGrid::EntityT::DrawColLabel(wxDC& dc, int col)
 		}
 		return;
 	} while (0);
-	wxGrid::DrawColLabel(dc, col);
+	public_DrawColLabel(dc, col);
 }
 
 void Value_wxGrid::EntityT::DrawCornerLabel(wxDC& dc)
@@ -6040,7 +6040,7 @@ void Value_wxGrid::EntityT::DrawCornerLabel(wxDC& dc)
 		}
 		return;
 	} while (0);
-	wxGrid::DrawCornerLabel(dc);
+	public_DrawCornerLabel(dc);
 }
 
 wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
@@ -6064,7 +6064,7 @@ wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
 		if (!pValueRtn->IsType(VTYPE_wxPen)) break;
 		return Value_wxPen::GetEntity(*pValueRtn);
 	} while (0);
-	return wxGrid::GetColGridLinePen(col);
+	return public_GetColGridLinePen(col);
 }
 
 wxPen Value_wxGrid::EntityT::GetDefaultGridLinePen()
@@ -6087,7 +6087,7 @@ wxPen Value_wxGrid::EntityT::GetDefaultGridLinePen()
 		if (!pValueRtn->IsType(VTYPE_wxPen)) break;
 		return Value_wxPen::GetEntity(*pValueRtn);
 	} while (0);
-	return wxGrid::GetDefaultGridLinePen();
+	return public_GetDefaultGridLinePen();
 }
 
 wxPen Value_wxGrid::EntityT::GetRowGridLinePen(int row)
@@ -6111,7 +6111,7 @@ wxPen Value_wxGrid::EntityT::GetRowGridLinePen(int row)
 		if (!pValueRtn->IsType(VTYPE_wxPen)) break;
 		return Value_wxPen::GetEntity(*pValueRtn);
 	} while (0);
-	return wxGrid::GetRowGridLinePen(row);
+	return public_GetRowGridLinePen(row);
 }
 
 void Value_wxGrid::EntityT::Fit()
@@ -6132,7 +6132,7 @@ void Value_wxGrid::EntityT::Fit()
 		}
 		return;
 	} while (0);
-	wxGrid::Fit();
+	public_Fit();
 }
 
 Gurax_EndModuleScope(wx)

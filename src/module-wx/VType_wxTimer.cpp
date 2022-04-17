@@ -338,7 +338,7 @@ void Value_wxTimer::EntityT::Notify()
 		}
 		return;
 	} while (0);
-	wxTimer::Notify();
+	public_Notify();
 }
 
 bool Value_wxTimer::EntityT::Start(int milliseconds, bool oneShot)
@@ -363,7 +363,7 @@ bool Value_wxTimer::EntityT::Start(int milliseconds, bool oneShot)
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxTimer::Start(milliseconds, oneShot);
+	return public_Start(milliseconds, oneShot);
 }
 
 void Value_wxTimer::EntityT::Stop()
@@ -384,7 +384,7 @@ void Value_wxTimer::EntityT::Stop()
 		}
 		return;
 	} while (0);
-	wxTimer::Stop();
+	public_Stop();
 }
 
 Gurax_EndModuleScope(wx)

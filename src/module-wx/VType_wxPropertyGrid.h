@@ -41,6 +41,7 @@ public:
 	public:
 		EntityCore core_gurax;
 		virtual wxStatusBar* GetStatusBar();
+		wxStatusBar* public_GetStatusBar() { return wxPropertyGrid::GetStatusBar(); }
 	};
 public:
 	static VType& vtype;

@@ -6185,7 +6185,7 @@ bool Value_wxWindow::EntityT::AcceptsFocus() const
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxWindow::AcceptsFocus();
+	return public_AcceptsFocus();
 }
 
 bool Value_wxWindow::EntityT::AcceptsFocusFromKeyboard() const
@@ -6208,7 +6208,7 @@ bool Value_wxWindow::EntityT::AcceptsFocusFromKeyboard() const
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxWindow::AcceptsFocusFromKeyboard();
+	return public_AcceptsFocusFromKeyboard();
 }
 
 bool Value_wxWindow::EntityT::AcceptsFocusRecursively() const
@@ -6231,7 +6231,7 @@ bool Value_wxWindow::EntityT::AcceptsFocusRecursively() const
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxWindow::AcceptsFocusRecursively();
+	return public_AcceptsFocusRecursively();
 }
 
 bool Value_wxWindow::EntityT::HasFocus() const
@@ -6254,7 +6254,7 @@ bool Value_wxWindow::EntityT::HasFocus() const
 		if (!pValueRtn->IsType(VTYPE_Bool)) break;
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxWindow::HasFocus();
+	return public_HasFocus();
 }
 
 void Value_wxWindow::EntityT::SetCanFocus(bool canFocus)
@@ -6276,7 +6276,7 @@ void Value_wxWindow::EntityT::SetCanFocus(bool canFocus)
 		}
 		return;
 	} while (0);
-	wxWindow::SetCanFocus(canFocus);
+	public_SetCanFocus(canFocus);
 }
 
 Gurax_EndModuleScope(wx)
