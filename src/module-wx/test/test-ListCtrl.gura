@@ -16,6 +16,21 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
+MyListCtrl = class(wx.ListCtrl) {
+	__init__(parent as wx.Window, id as Number, style as Number) = {|parent, id, style = (style | wx.LC_VIRTUAL)|
+		this.AppendColumn('Image', width = 60)
+		this.AppendColumn('Name', width = 180)
+		this.AppendColumn('E-mail', width = 200)
+		this.AppendColumn('Gender', width = 80)
+		this.AppendColumn('Age', width = 80)
+		this.AppendColumn('Birthday', width = 100)
+		this.AppendColumn('Phone Number', width = 120)
+	}
+	OnGetItemText(item as Number, column as Number) = {
+		'hello'
+	}
+}
+
 PanelTop = class(wx.Panel) {
 	ascentFlag as Bool
 	listCtrl as wx.ListCtrl
@@ -71,19 +86,12 @@ PanelTop = class(wx.Panel) {
 				wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList)
 				this.listCtrl = ctrl
 			}
-			wx.ListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
+			MyListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
 				vbox.Add(ctrl, wx.SizerFlags(1).Expand())
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
-				ctrl.AppendColumn('Image', width = 60)
-				ctrl.AppendColumn('Name', width = 180)
-				ctrl.AppendColumn('E-mail', width = 200)
-				ctrl.AppendColumn('Gender', width = 80)
-				ctrl.AppendColumn('Age', width = 80)
-				ctrl.AppendColumn('Birthday', width = 100)
-				ctrl.AppendColumn('Phone Number', width = 120)
-
+				ctrl.SetItemCount(10)
 				/*
 				wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList)
 				wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList)

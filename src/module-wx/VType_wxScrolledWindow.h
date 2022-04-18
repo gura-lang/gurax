@@ -39,8 +39,8 @@ public:
 		using wxScrolledWindow::wxScrolledWindow;
 	public:
 		EntityCore core_gurax;
-		virtual void OnDraw(wxDC& dc);
-		virtual void AdjustScrollbars();
+		virtual void OnDraw(wxDC& dc) override;
+		virtual void AdjustScrollbars() override;
 		void public_OnDraw(wxDC& dc) { wxScrolledWindow::OnDraw(dc); }
 		void public_AdjustScrollbars() { wxScrolledWindow::AdjustScrollbars(); }
 	};

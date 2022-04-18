@@ -2171,7 +2171,7 @@ String Value_wxListCtrl::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxListCtrl::EntityT
 //------------------------------------------------------------------------------
-wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemAttr(long item)
+wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemAttr(long item) const
 {
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemAttr");
@@ -2195,7 +2195,7 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemAttr(long item)
 	return public_OnGetItemAttr(item);
 }
 
-wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemColumnAttr(long item, long column)
+wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemColumnAttr(long item, long column) const
 {
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemColumnAttr");
@@ -2220,7 +2220,7 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemColumnAttr(long item, long c
 	return public_OnGetItemColumnAttr(item, column);
 }
 
-int Value_wxListCtrl::EntityT::OnGetItemColumnImage(long item, long column)
+int Value_wxListCtrl::EntityT::OnGetItemColumnImage(long item, long column) const
 {
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemColumnImage");
@@ -2245,8 +2245,9 @@ int Value_wxListCtrl::EntityT::OnGetItemColumnImage(long item, long column)
 	return public_OnGetItemColumnImage(item, column);
 }
 
-int Value_wxListCtrl::EntityT::OnGetItemImage(long item)
+int Value_wxListCtrl::EntityT::OnGetItemImage(long item) const
 {
+	return 0;
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemImage");
 	do {
@@ -2269,8 +2270,9 @@ int Value_wxListCtrl::EntityT::OnGetItemImage(long item)
 	return public_OnGetItemImage(item);
 }
 
-wxString Value_wxListCtrl::EntityT::OnGetItemText(long item, long column)
+wxString Value_wxListCtrl::EntityT::OnGetItemText(long item, long column) const
 {
+	return "hello";
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemText");
 	do {

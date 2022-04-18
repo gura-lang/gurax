@@ -40,16 +40,16 @@ public:
 		using wxListCtrl::wxListCtrl;
 	public:
 		EntityCore core_gurax;
-		virtual wxListItemAttr* OnGetItemAttr(long item);
-		virtual wxListItemAttr* OnGetItemColumnAttr(long item, long column);
-		virtual int OnGetItemColumnImage(long item, long column);
-		virtual int OnGetItemImage(long item);
-		virtual wxString OnGetItemText(long item, long column);
-		wxListItemAttr* public_OnGetItemAttr(long item) { return wxListCtrl::OnGetItemAttr(item); }
-		wxListItemAttr* public_OnGetItemColumnAttr(long item, long column) { return wxListCtrl::OnGetItemColumnAttr(item, column); }
-		int public_OnGetItemColumnImage(long item, long column) { return wxListCtrl::OnGetItemColumnImage(item, column); }
-		int public_OnGetItemImage(long item) { return wxListCtrl::OnGetItemImage(item); }
-		wxString public_OnGetItemText(long item, long column) { return wxListCtrl::OnGetItemText(item, column); }
+		virtual wxListItemAttr* OnGetItemAttr(long item) const override;
+		virtual wxListItemAttr* OnGetItemColumnAttr(long item, long column) const override;
+		virtual int OnGetItemColumnImage(long item, long column) const override;
+		virtual int OnGetItemImage(long item) const override;
+		virtual wxString OnGetItemText(long item, long column) const override;
+		wxListItemAttr* public_OnGetItemAttr(long item) const { return wxListCtrl::OnGetItemAttr(item); }
+		wxListItemAttr* public_OnGetItemColumnAttr(long item, long column) const { return wxListCtrl::OnGetItemColumnAttr(item, column); }
+		int public_OnGetItemColumnImage(long item, long column) const { return wxListCtrl::OnGetItemColumnImage(item, column); }
+		int public_OnGetItemImage(long item) const { return wxListCtrl::OnGetItemImage(item); }
+		wxString public_OnGetItemText(long item, long column) const { return wxListCtrl::OnGetItemText(item, column); }
 	};
 public:
 	static VType& vtype;

@@ -39,7 +39,7 @@ public:
 		using wxAppConsole::wxAppConsole;
 	public:
 		EntityCore core_gurax;
-		virtual bool OnInit();
+		virtual bool OnInit() override;
 		bool public_OnInit() { return wxAppConsole::OnInit(); }
 	};
 public:

@@ -39,11 +39,11 @@ public:
 		using wxWindow::wxWindow;
 	public:
 		EntityCore core_gurax;
-		virtual bool AcceptsFocus() const;
-		virtual bool AcceptsFocusFromKeyboard() const;
-		virtual bool AcceptsFocusRecursively() const;
-		virtual bool HasFocus() const;
-		virtual void SetCanFocus(bool canFocus);
+		virtual bool AcceptsFocus() const override;
+		virtual bool AcceptsFocusFromKeyboard() const override;
+		virtual bool AcceptsFocusRecursively() const override;
+		virtual bool HasFocus() const override;
+		virtual void SetCanFocus(bool canFocus) override;
 		bool public_AcceptsFocus() const { return wxWindow::AcceptsFocus(); }
 		bool public_AcceptsFocusFromKeyboard() const { return wxWindow::AcceptsFocusFromKeyboard(); }
 		bool public_AcceptsFocusRecursively() const { return wxWindow::AcceptsFocusRecursively(); }
