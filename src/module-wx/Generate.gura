@@ -35,6 +35,19 @@ r.DeclareType('String', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(static_cast<const char*>(rtn.c_str()));
 	''')
 
+r.DeclareType('wxString', 'wxString', 'String',
+	codePicker = R'''
+	${this.cType} ${varName} = args_gurax.PickString();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : ${defaultValue || 'wxEmptyString'};
+	'''
+	codeConvToC = 'Value_String::GetString(${src})'
+	codeFunctionBody = R'''
+	wxString rtn = ${caller};
+	return new Gurax::Value_${this.vtype}(static_cast<const char*>(rtn.c_str()));
+	''')
+
 r.DeclareType('const_String_r', 'const char*', 'String',
 	codePicker = R'''
 	${this.cType} ${varName} = args_gurax.PickString();
@@ -589,7 +602,11 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	${if (funcInfo.virtualFlag)}
+	auto pEntity_gurax = dynamic_cast<Value_wx${className}::EntityT*>(valueThis_gurax.GetEntityPtr());
+	${else}
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	${end}
 	if (!pEntity_gurax) return Value::nil();
 	${if (!funcInfo.argInfoTbl.IsEmpty())}
 	// Arguments

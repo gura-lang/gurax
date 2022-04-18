@@ -289,11 +289,11 @@ ListCtrl = Class(Control) {
 		bool rtn = pEntity_gurax->SortItems(ListCtrlSortItems::CompareFunction, reinterpret_cast<wxIntPtr>(&listCtrlSortItems));
 		return new Value_Bool(rtn);
 		'''
-	//OnGetItemAttr(item as long):virtual as ListItemAttr_p
-	//OnGetItemColumnAttr(item as long, column as long):virtual as ListItemAttr_p
-	//OnGetItemColumnImage(item as long, column as long):virtual as int
-	//OnGetItemImage(item as long):virtual as int
-	//OnGetItemText(item as long, column as long):virtual as String
+	OnGetItemAttr(item as long):virtual as ListItemAttr_p
+	OnGetItemColumnAttr(item as long, column as long):virtual as ListItemAttr_p
+	OnGetItemColumnImage(item as long, column as long):virtual as int
+	OnGetItemImage(item as long):virtual as int
+	OnGetItemText(item as long, column as long):virtual as wxString
 }
 
 @const { // Styles
