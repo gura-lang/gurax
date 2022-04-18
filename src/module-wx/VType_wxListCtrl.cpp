@@ -2247,7 +2247,6 @@ int Value_wxListCtrl::EntityT::OnGetItemColumnImage(long item, long column) cons
 
 int Value_wxListCtrl::EntityT::OnGetItemImage(long item) const
 {
-	return 0;
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemImage");
 	do {
@@ -2272,7 +2271,6 @@ int Value_wxListCtrl::EntityT::OnGetItemImage(long item) const
 
 wxString Value_wxListCtrl::EntityT::OnGetItemText(long item, long column) const
 {
-	return "hello";
 	static const Symbol* pSymbolFunc = nullptr;
 	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemText");
 	do {
