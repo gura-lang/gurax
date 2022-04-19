@@ -24,19 +24,18 @@ class EventValueFactory;
 class GURAX_DLLDECLARE EntityCore {
 private:
 	RefPtr<Processor> _pProcessor;
-	RefPtr<Value::WeakPtr> _pwValue;
+	RefPtr<Value> _pValue;
 public:
 	void operator=(const EntityCore& core) {
 		_pProcessor.reset(core._pProcessor.Reference());
-		_pwValue.reset(core._pwValue.Reference());
+		_pValue.reset(core._pValue.Reference());
 	}
 	void SetInfo(Processor* pProcessor, const Value& value) {
 		_pProcessor.reset(pProcessor);
-		_pwValue.reset(value.GetWeakPtr());
+		_pValue.reset(value.Reference());
 	}
 	bool PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const;
 	Processor& GetProcessor() const { return *_pProcessor; }
-	Value* LockValue() const { return _pwValue->Lock(); }
 };
 
 //------------------------------------------------------------------------------

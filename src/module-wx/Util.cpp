@@ -10,12 +10,10 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 bool EntityCore::PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const
 {
-	RefPtr<Value> pValueThis(LockValue());
-	if (!pValueThis) return false;
-	*ppFunc = &pValueThis->LookupMethod(pSymbolFunc);
+	*ppFunc = &_pValue->LookupMethod(pSymbolFunc);
 	if ((*ppFunc)->IsEmpty()) return false;
 	pArgument.reset(new Argument(GetProcessor(), **ppFunc));
-	pArgument->SetValueThis(pValueThis.release());
+	pArgument->SetValueThis(_pValue.Reference());
 	return true;
 }
 
