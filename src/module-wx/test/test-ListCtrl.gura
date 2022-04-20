@@ -34,11 +34,15 @@ MyListCtrl = class(wx.ListCtrl) {
 	OnGetItemColumnAttr(item as Number, column as Number) = {
 		this.listItemAttr
 	}
-	OnGetItemImage(item as Number) = {
-		0
-	}
+	//OnGetItemImage(item as Number) = {
+	//	0
+	//}
 	OnGetItemColumnImage(item as Number, column as Number) = {
-		column
+		if (column == 0) {
+			item
+		} else {
+			-1
+		}
 	}
 	OnGetItemText(item as Number, column as Number) = {
 		address = da.addressTbl[item]
@@ -49,15 +53,14 @@ MyListCtrl = class(wx.ListCtrl) {
 		} elsif (column == 3) {
 			address.gender
 		} elsif (column == 4) {
-			address.age
+			Format('%d', address.age)
 		} elsif (column == 5) {
 			address.birthDay
 		} elsif (column == 6) {
-			address, address.phoneNumber
-		} elsif (column == 7) {
-			'done'
+			address.phoneNumber
+		} else {
+			''
 		}
-		''
 	}
 }
 
@@ -122,7 +125,7 @@ PanelTop = class(wx.Panel) {
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
-				ctrl.SetItemCount(da.addressTbl.len())
+				ctrl.SetItemCount(da.addressTbl.len)
 				/*
 				wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList)
 				wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList)
