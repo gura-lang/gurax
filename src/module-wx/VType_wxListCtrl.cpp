@@ -1961,7 +1961,7 @@ Gurax_ImplementMethodEx(wxListCtrl, OnGetItemAttr_gurax, processor_gurax, argume
 	long item = args_gurax.PickNumber<long>();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(
-		*pEntity_gurax->OnGetItemAttr(item)));
+		pEntity_gurax->OnGetItemAttr(item)));
 }
 
 // wx.ListCtrl#OnGetItemColumnAttr(item as Number, column as Number) {block?}
@@ -1988,7 +1988,7 @@ Gurax_ImplementMethodEx(wxListCtrl, OnGetItemColumnAttr_gurax, processor_gurax, 
 	long column = args_gurax.PickNumber<long>();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(
-		*pEntity_gurax->OnGetItemColumnAttr(item, column)));
+		pEntity_gurax->OnGetItemColumnAttr(item, column)));
 }
 
 // wx.ListCtrl#OnGetItemColumnImage(item as Number, column as Number)

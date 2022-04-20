@@ -26,9 +26,20 @@ MyListCtrl = class(wx.ListCtrl) {
 		this.AppendColumn('Birthday', width = 100)
 		this.AppendColumn('Phone Number', width = 120)
 	}
-	OnGetItemImage(item as Number) = 0
+	OnGetItemAttr(item as Number) = {
+		wx.ListItemAttr()
+	}
+	OnGetItemColumnAttr(item as Number, column as Number) = {
+		wx.ListItemAttr()
+	}
+	OnGetItemImage(item as Number) = {
+		0
+	}
+	OnGetItemColumnImage(item as Number, column as Number) = {
+		column
+	}
 	OnGetItemText(item as Number, column as Number) = {
-		'hello'
+		Format('%d, %d', item, column)
 	}
 }
 
@@ -93,7 +104,7 @@ PanelTop = class(wx.Panel) {
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 				ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
-				ctrl.SetItemCount(10)
+				ctrl.SetItemCount(3)
 				/*
 				wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList)
 				wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList)

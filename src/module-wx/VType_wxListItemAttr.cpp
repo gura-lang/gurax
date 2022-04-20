@@ -28,6 +28,23 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.ListItemAttr() {block?} {block?}
+Gurax_DeclareConstructorAlias(ListItemAttr_gurax, "ListItemAttr")
+{
+	Declare(VTYPE_wxListItemAttr, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.ListItemAttr.");
+}
+
+Gurax_ImplementConstructorEx(ListItemAttr_gurax, processor_gurax, argument_gurax)
+{
+	// Function body
+	auto pEntity_gurax = new wxListItemAttr();
+	RefPtr<Value_wxListItemAttr> pValue_gurax(new Value_wxListItemAttr(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -47,7 +64,7 @@ void VType_wxListItemAttr::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ListItemAttr_gurax));
 	// Assignment of method
 }
 
