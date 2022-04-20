@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxListItemAttr.gura
 //==============================================================================
-ListItemAttr = Class():loosePointer {
+ListItemAttr = Class() {
 	@include['wx/listctrl.h']
 	__init__()
 }

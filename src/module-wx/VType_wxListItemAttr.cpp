@@ -41,9 +41,8 @@ Gurax_DeclareConstructorAlias(ListItemAttr_gurax, "ListItemAttr")
 Gurax_ImplementConstructorEx(ListItemAttr_gurax, processor_gurax, argument_gurax)
 {
 	// Function body
-	auto pEntity_gurax = new wxListItemAttr();
-	RefPtr<Value_wxListItemAttr> pValue_gurax(new Value_wxListItemAttr(pEntity_gurax));
-	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(
+		wxListItemAttr()));
 }
 
 //-----------------------------------------------------------------------------

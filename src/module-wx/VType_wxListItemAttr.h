@@ -32,14 +32,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxListItemAttr");
 protected:
-	wxListItemAttr* _pEntity;
+	wxListItemAttr _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxListItemAttr() = delete;
-	explicit Value_wxListItemAttr(wxListItemAttr* pEntity, VType& vtype = VTYPE_wxListItemAttr) :
-		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxListItemAttr(const wxListItemAttr& entity, VType& vtype = VTYPE_wxListItemAttr) :
+		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxListItemAttr(const Value_wxListItemAttr& src) = delete;
 	Value_wxListItemAttr& operator=(const Value_wxListItemAttr& src) = delete;
@@ -50,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxListItemAttr() = default;
 public:
-	wxListItemAttr& GetEntity() { return *_pEntity; }
-	const wxListItemAttr& GetEntity() const { return *_pEntity; }
-	wxListItemAttr* GetEntityPtr() { return _pEntity; }
-	const wxListItemAttr* GetEntityPtr() const { return _pEntity; }
+	wxListItemAttr& GetEntity() { return _entity; }
+	const wxListItemAttr& GetEntity() const { return _entity; }
+	wxListItemAttr* GetEntityPtr() { return &_entity; }
+	const wxListItemAttr* GetEntityPtr() const { return &_entity; }
 public:
 	static wxListItemAttr& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxListItemAttr&>(value).GetEntity();

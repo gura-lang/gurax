@@ -17,7 +17,9 @@ MyFrame = class(wx.Frame) {
 }
 
 MyListCtrl = class(wx.ListCtrl) {
+	listItemAttr as wx.ListItemAttr
 	__init__(parent as wx.Window, id as Number, style as Number) = {|parent, id, style = (style | wx.LC_VIRTUAL)|
+		this.listItemAttr = wx.ListItemAttr()
 		this.AppendColumn('Image', width = 60)
 		this.AppendColumn('Name', width = 180)
 		this.AppendColumn('E-mail', width = 200)
@@ -27,10 +29,10 @@ MyListCtrl = class(wx.ListCtrl) {
 		this.AppendColumn('Phone Number', width = 120)
 	}
 	OnGetItemAttr(item as Number) = {
-		wx.ListItemAttr()
+		this.listItemAttr
 	}
 	OnGetItemColumnAttr(item as Number, column as Number) = {
-		wx.ListItemAttr()
+		this.listItemAttr
 	}
 	OnGetItemImage(item as Number) = {
 		0
