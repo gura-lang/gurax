@@ -41,7 +41,23 @@ MyListCtrl = class(wx.ListCtrl) {
 		column
 	}
 	OnGetItemText(item as Number, column as Number) = {
-		Format('%d, %d', item, column)
+		address = da.addressTbl[item]
+		if (column == 1) {
+			address.name
+		} elsif (column == 2) {
+			address.email
+		} elsif (column == 3) {
+			address.gender
+		} elsif (column == 4) {
+			address.age
+		} elsif (column == 5) {
+			address.birthDay
+		} elsif (column == 6) {
+			address, address.phoneNumber
+		} elsif (column == 7) {
+			'done'
+		}
+		''
 	}
 }
 
