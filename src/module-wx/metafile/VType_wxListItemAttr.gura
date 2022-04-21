@@ -3,5 +3,14 @@
 //==============================================================================
 ListItemAttr = Class() {
 	@include['wx/listctrl.h']
-	__init__()
+	__init__(colText as const_Colour_r, colBack as const_Colour_r, font as const_Font_r)
+	GetBackgroundColour() as Colour
+	GetFont() as Font
+	GetTextColour() as Colour
+	HasBackgroundColour() as bool
+	HasFont() as bool
+	HasTextColour() as bool
+	SetBackgroundColour(colour as const_Colour_r) as void
+	SetFont(font as const_Font_r) as void
+	SetTextColour(colour as const_Colour_r) as void
 }

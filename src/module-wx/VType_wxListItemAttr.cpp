@@ -28,10 +28,13 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ListItemAttr() {block?} {block?}
+// wx.ListItemAttr(colText as wx.Colour, colBack as wx.Colour, font as wx.Font) {block?} {block?}
 Gurax_DeclareConstructorAlias(ListItemAttr_gurax, "ListItemAttr")
 {
 	Declare(VTYPE_wxListItemAttr, Flag::None);
+	DeclareArg("colText", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("colBack", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,14 +43,219 @@ Gurax_DeclareConstructorAlias(ListItemAttr_gurax, "ListItemAttr")
 
 Gurax_ImplementConstructorEx(ListItemAttr_gurax, processor_gurax, argument_gurax)
 {
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colText = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colText = value_colText.GetEntity();
+	Value_wxColour& value_colBack = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colBack = value_colBack.GetEntity();
+	Value_wxFont& value_font = args_gurax.Pick<Value_wxFont>();
+	const wxFont& font = value_font.GetEntity();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(
-		wxListItemAttr()));
+		wxListItemAttr(colText, colBack, font)));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ListItemAttr#GetBackgroundColour() {block?}
+Gurax_DeclareMethodAlias(wxListItemAttr, GetBackgroundColour_gurax, "GetBackgroundColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListItemAttr, GetBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetBackgroundColour()));
+}
+
+// wx.ListItemAttr#GetFont() {block?}
+Gurax_DeclareMethodAlias(wxListItemAttr, GetFont_gurax, "GetFont")
+{
+	Declare(VTYPE_wxFont, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListItemAttr, GetFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
+		pEntity_gurax->GetFont()));
+}
+
+// wx.ListItemAttr#GetTextColour() {block?}
+Gurax_DeclareMethodAlias(wxListItemAttr, GetTextColour_gurax, "GetTextColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListItemAttr, GetTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetTextColour()));
+}
+
+// wx.ListItemAttr#HasBackgroundColour()
+Gurax_DeclareMethodAlias(wxListItemAttr, HasBackgroundColour_gurax, "HasBackgroundColour")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListItemAttr, HasBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasBackgroundColour();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListItemAttr#HasFont()
+Gurax_DeclareMethodAlias(wxListItemAttr, HasFont_gurax, "HasFont")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListItemAttr, HasFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasFont();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListItemAttr#HasTextColour()
+Gurax_DeclareMethodAlias(wxListItemAttr, HasTextColour_gurax, "HasTextColour")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListItemAttr, HasTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasTextColour();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.ListItemAttr#SetBackgroundColour(colour as wx.Colour)
+Gurax_DeclareMethodAlias(wxListItemAttr, SetBackgroundColour_gurax, "SetBackgroundColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListItemAttr, SetBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	// Function body
+	pEntity_gurax->SetBackgroundColour(colour);
+	return Gurax::Value::nil();
+}
+
+// wx.ListItemAttr#SetFont(font as wx.Font)
+Gurax_DeclareMethodAlias(wxListItemAttr, SetFont_gurax, "SetFont")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListItemAttr, SetFont_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxFont& value_font = args_gurax.Pick<Value_wxFont>();
+	const wxFont& font = value_font.GetEntity();
+	// Function body
+	pEntity_gurax->SetFont(font);
+	return Gurax::Value::nil();
+}
+
+// wx.ListItemAttr#SetTextColour(colour as wx.Colour)
+Gurax_DeclareMethodAlias(wxListItemAttr, SetTextColour_gurax, "SetTextColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListItemAttr, SetTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	// Function body
+	pEntity_gurax->SetTextColour(colour);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -65,6 +273,15 @@ void VType_wxListItemAttr::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ListItemAttr_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxListItemAttr, GetBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxListItemAttr, GetFont_gurax));
+	Assign(Gurax_CreateMethod(wxListItemAttr, GetTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxListItemAttr, HasBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxListItemAttr, HasFont_gurax));
+	Assign(Gurax_CreateMethod(wxListItemAttr, HasTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxListItemAttr, SetBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxListItemAttr, SetFont_gurax));
+	Assign(Gurax_CreateMethod(wxListItemAttr, SetTextColour_gurax));
 }
 
 //------------------------------------------------------------------------------
