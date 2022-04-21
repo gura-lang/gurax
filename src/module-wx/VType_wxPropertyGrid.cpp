@@ -1719,7 +1719,12 @@ wxStatusBar* Value_wxPropertyGrid::EntityT::GetStatusBar()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxStatusBar)) break;
+		if (!pValueRtn->IsType(VTYPE_wxStatusBar)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxStatusBar.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxStatusBar::GetEntityPtr(*pValueRtn);
 	} while (0);
 	return public_GetStatusBar();

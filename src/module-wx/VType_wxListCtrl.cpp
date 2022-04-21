@@ -2181,7 +2181,10 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemAttr(long item) const
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -2189,7 +2192,13 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemAttr(long item) const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxListItemAttr)) break;
+		if (pValueRtn->IsNil()) return nullptr;
+		if (!pValueRtn->IsType(VTYPE_wxListItemAttr)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxListItemAttr.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxListItemAttr::GetEntityPtr(*pValueRtn);
 	} while (0);
 	return public_OnGetItemAttr(item);
@@ -2205,8 +2214,14 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemColumnAttr(long item, long c
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) break;
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -2214,7 +2229,13 @@ wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemColumnAttr(long item, long c
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxListItemAttr)) break;
+		if (pValueRtn->IsNil()) return nullptr;
+		if (!pValueRtn->IsType(VTYPE_wxListItemAttr)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxListItemAttr.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxListItemAttr::GetEntityPtr(*pValueRtn);
 	} while (0);
 	return public_OnGetItemColumnAttr(item, column);
@@ -2230,8 +2251,14 @@ int Value_wxListCtrl::EntityT::OnGetItemColumnImage(long item, long column) cons
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) break;
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -2239,7 +2266,12 @@ int Value_wxListCtrl::EntityT::OnGetItemColumnImage(long item, long column) cons
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) break;
+		if (!pValueRtn->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Number.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Number::GetNumber<int>(*pValueRtn);
 	} while (0);
 	return public_OnGetItemColumnImage(item, column);
@@ -2255,7 +2287,10 @@ int Value_wxListCtrl::EntityT::OnGetItemImage(long item) const
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -2263,7 +2298,12 @@ int Value_wxListCtrl::EntityT::OnGetItemImage(long item) const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) break;
+		if (!pValueRtn->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Number.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Number::GetNumber<int>(*pValueRtn);
 	} while (0);
 	return public_OnGetItemImage(item);
@@ -2279,8 +2319,14 @@ wxString Value_wxListCtrl::EntityT::OnGetItemText(long item, long column) const
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) break;
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -2288,7 +2334,12 @@ wxString Value_wxListCtrl::EntityT::OnGetItemText(long item, long column) const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_String)) break;
+		if (!pValueRtn->IsType(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_String.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_String::GetString(*pValueRtn);
 	} while (0);
 	return public_OnGetItemText(item, column);

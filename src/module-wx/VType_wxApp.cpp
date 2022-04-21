@@ -296,7 +296,10 @@ bool Value_wxApp::EntityT::OnCmdLineError(wxCmdLineParser& parser)
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) break;
+		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -304,7 +307,12 @@ bool Value_wxApp::EntityT::OnCmdLineError(wxCmdLineParser& parser)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
 	return public_OnCmdLineError(parser);
@@ -320,7 +328,10 @@ bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) break;
+		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -328,7 +339,12 @@ bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
 	return public_OnCmdLineHelp(parser);
@@ -344,7 +360,10 @@ bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) break;
+		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -352,7 +371,12 @@ bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
 	return public_OnCmdLineParsed(parser);
@@ -375,7 +399,12 @@ bool Value_wxApp::EntityT::OnExceptionInMainLoop()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
 	return public_OnExceptionInMainLoop();
@@ -398,7 +427,12 @@ int Value_wxApp::EntityT::OnExit()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) break;
+		if (!pValueRtn->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Number.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Number::GetNumber<int>(*pValueRtn);
 	} while (0);
 	return public_OnExit();
@@ -442,7 +476,12 @@ bool Value_wxApp::EntityT::OnInit()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
 	return public_OnInit();

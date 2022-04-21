@@ -5985,8 +5985,14 @@ void Value_wxGrid::EntityT::DrawRowLabel(wxDC& dc, int row)
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) break;
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) break;
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6008,8 +6014,14 @@ void Value_wxGrid::EntityT::DrawColLabel(wxDC& dc, int col)
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) break;
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) break;
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6031,7 +6043,10 @@ void Value_wxGrid::EntityT::DrawCornerLabel(wxDC& dc)
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) break;
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6053,7 +6068,10 @@ wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6061,7 +6079,12 @@ wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxPen)) break;
+		if (!pValueRtn->IsType(VTYPE_wxPen)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxPen.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxPen::GetEntity(*pValueRtn);
 	} while (0);
 	return public_GetColGridLinePen(col);
@@ -6084,7 +6107,12 @@ wxPen Value_wxGrid::EntityT::GetDefaultGridLinePen()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxPen)) break;
+		if (!pValueRtn->IsType(VTYPE_wxPen)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxPen.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxPen::GetEntity(*pValueRtn);
 	} while (0);
 	return public_GetDefaultGridLinePen();
@@ -6100,7 +6128,10 @@ wxPen Value_wxGrid::EntityT::GetRowGridLinePen(int row)
 		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6108,7 +6139,12 @@ wxPen Value_wxGrid::EntityT::GetRowGridLinePen(int row)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxPen)) break;
+		if (!pValueRtn->IsType(VTYPE_wxPen)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxPen.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxPen::GetEntity(*pValueRtn);
 	} while (0);
 	return public_GetRowGridLinePen(row);

@@ -58,7 +58,7 @@ Value* ListCtrlSortItems::Eval(const Value& valueItem1, const Value& valueItem2)
 	if (!args.FeedValues(valueItem1.Reference(), valueItem2.Reference(), GetValue().Reference())) return Value::nil();
 	return GetCallable().Eval(GetProcessor(), *pArg);
 }
-	x
+
 int ListCtrlSortItems::CompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 {
 	ListCtrlSortItems& listCtrlSortItems = *reinterpret_cast<ListCtrlSortItems*>(sortData);

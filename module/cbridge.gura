@@ -214,15 +214,16 @@ FuncInfo = class {
 	tmplFunctionBody as Template
 	virtualFlag as Bool
 	returnThisFlag as Bool
+	returnNilFlag as Bool
 	constFlag as Bool
 	staticFlag as Bool
 	type as Symbol
 	operator as Operator
 	__init__(r as Renderer, moduleName as String, name as String, nameOnCall:nil as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
-			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool, staticFlag as Bool, type as Symbol, operator? as Operator) = {
+			virtualFlag as Bool, returnThisFlag as Bool, returnNilFlag as Bool, constFlag as Bool, staticFlag as Bool, type as Symbol, operator? as Operator) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.nameOnCall = nameOnCall
 		this.argInfoTbl = argInfoTbl, this.typeName = typeName
-		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.constFlag = constFlag, this.staticFlag = staticFlag
+		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.returnNilFlag = returnNilFlag, this.constFlag = constFlag, this.staticFlag = staticFlag
 		this.type = type, this.operator = operator
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
@@ -258,6 +259,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	typeName = 'any'
 	virtualFlag = false
 	returnThisFlag = false
+	returnNilFlag = false
 	constFlag = false
 	staticFlag = false
 	if (expr.IsBinaryOp()) {
@@ -277,6 +279,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		if (expr.attr.IsSet(`void)) { typeName = 'void' }
 		if (expr.attr.IsSet(`virtual)) { virtualFlag = true }
 		if (expr.attr.IsSet(`returnThis)) { returnThisFlag = true }
+		if (expr.attr.IsSet(`returnNil)) { returnNilFlag = true }
 		if (expr.attr.IsSet(`const)) { constFlag = true }
 		if (expr.attr.IsSet(`static)) { staticFlag = true }
 		argInfoTbl = CreateArgInfoTbl(r, expr)
@@ -321,7 +324,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	} else {
 		ErrorDone(expr, 'Caller is expected')
 	}
-	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag, staticFlag, type, operator)
+	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, returnNilFlag, constFlag, staticFlag, type, operator)
 }
 
 tmplFunctionImplementation = tR'''

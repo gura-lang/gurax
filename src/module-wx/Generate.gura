@@ -553,7 +553,10 @@ ${funcInfo.ComposeCDecl('Value_wx' + className + '::EntityT::')}
 		${else}
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
 		${funcInfo.argInfoTbl.Each {|argInfo|}}
-		if (!args_gurax.FeedValue(${argInfo.ComposeConvToGurax()})) break;
+		if (!args_gurax.FeedValue(${argInfo.ComposeConvToGurax()})) {
+			Util::ExitMainLoop();
+			break;
+		}
 		${end}
 		${end}
 		// Evaluation
@@ -566,7 +569,15 @@ ${funcInfo.ComposeCDecl('Value_wx' + className + '::EntityT::')}
 		return;
 		${else}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_${funcInfo.GetTypeInfo().vtype})) break;
+		${if (funcInfo.returnNilFlag)}
+		if (pValueRtn->IsNil()) return nullptr;
+		${end}
+		if (!pValueRtn->IsType(VTYPE_${funcInfo.GetTypeInfo().vtype})) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_${funcInfo.GetTypeInfo().vtype}.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return ${funcInfo.GetTypeInfo().ComposeConvToC('*pValueRtn')};
 		${end}
 	} while (0);
