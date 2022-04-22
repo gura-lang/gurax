@@ -3,7 +3,32 @@
 //==============================================================================
 ListItemAttr = Class() {
 	@include['wx/listctrl.h']
-	__init__(colText as const_Colour_r, colBack as const_Colour_r, font as const_Font_r)
+	__init__(args* as any) = \
+		R'''
+		// wx.ListItemAttr()
+		if (args.empty()) {
+			return new Value_wxListItemAttr(wxListItemAttr());
+		}
+		// wx.ListItemAttr(colText as wx.Colour, colBack as wx.Colour, font as wxFont)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("colText", VTYPE_wxColour);
+				pDeclCallable->DeclareArg("colBack", VTYPE_wxColour);
+				pDeclCallable->DeclareArg("font", VTYPE_wxFont);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			const wxColour& colText = args.Pick<Value_wxColour>().GetEntity();
+			const wxColour& colBack = args.Pick<Value_wxColour>().GetEntity();
+			const wxFont& font = args.Pick<Value_wxFont>().GetEntity();
+			return new Value_wxListItemAttr(wxListItemAttr(colText, colBack, font));
+		} while (0);
+		return Value::nil();
+		'''
 	GetBackgroundColour() as Colour
 	GetFont() as Font
 	GetTextColour() as Colour

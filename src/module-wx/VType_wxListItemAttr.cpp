@@ -28,13 +28,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ListItemAttr(colText as wx.Colour, colBack as wx.Colour, font as wx.Font) {block?} {block?}
+// wx.ListItemAttr(args* as Any) {block?} {block?}
 Gurax_DeclareConstructorAlias(ListItemAttr_gurax, "ListItemAttr")
 {
 	Declare(VTYPE_wxListItemAttr, Flag::None);
-	DeclareArg("colText", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("colBack", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -45,15 +43,30 @@ Gurax_ImplementConstructorEx(ListItemAttr_gurax, processor_gurax, argument_gurax
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxColour& value_colText = args_gurax.Pick<Value_wxColour>();
-	const wxColour& colText = value_colText.GetEntity();
-	Value_wxColour& value_colBack = args_gurax.Pick<Value_wxColour>();
-	const wxColour& colBack = value_colBack.GetEntity();
-	Value_wxFont& value_font = args_gurax.Pick<Value_wxFont>();
-	const wxFont& font = value_font.GetEntity();
+	const Gurax::ValueList& args = args_gurax.PickList();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(
-		wxListItemAttr(colText, colBack, font)));
+	// wx.ListItemAttr()
+	if (args.empty()) {
+		return new Value_wxListItemAttr(wxListItemAttr());
+	}
+	do {
+		static DeclCallable* pDeclCallable = nullptr;
+		if (!pDeclCallable) {
+			pDeclCallable = new DeclCallable();
+			pDeclCallable->DeclareArg("colText", VTYPE_wxColour);
+			pDeclCallable->DeclareArg("colBack", VTYPE_wxColour);
+			pDeclCallable->DeclareArg("font", VTYPE_wxFont);
+		}
+		RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+		if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+		Error::Clear();
+		ArgPicker args(*pArgument);
+		const wxColour& colText = args.Pick<Value_wxColour>().GetEntity();
+		const wxColour& colBack = args.Pick<Value_wxColour>().GetEntity();
+		const wxFont& font = args.Pick<Value_wxFont>().GetEntity();
+		return new Value_wxListItemAttr(wxListItemAttr(colText, colBack, font));
+	} while (0);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------

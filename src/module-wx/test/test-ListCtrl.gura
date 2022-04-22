@@ -19,7 +19,8 @@ MyFrame = class(wx.Frame) {
 MyListCtrl = class(wx.ListCtrl) {
 	listItemAttr as wx.ListItemAttr
 	__init__(parent as wx.Window, id as Number, style as Number) = {|parent, id, style = (style | wx.LC_VIRTUAL)|
-		this.listItemAttr = wx.ListItemAttr(`black, `blue, wx.Font('courier'))
+		//this.listItemAttr = wx.ListItemAttr(`black, wx.Colour(192, 192, 192), wx.Font('courier'))
+		this.listItemAttr = wx.ListItemAttr();
 		this.AppendColumn('Image', width = 60)
 		this.AppendColumn('Name', width = 180)
 		this.AppendColumn('E-mail', width = 200)
