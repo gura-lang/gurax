@@ -74,6 +74,17 @@ PanelTop = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		[imageList, indices] = image.InitImageList(image.silk_icons)
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 2))
+			wx.StaticText(this, wx.ID_ANY, 'Stored') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Align(wx.ALIGN_CENTRE_VERTICAL))
+			}
+			hbox.AddStretchSpacer(1)
+			wx.Button(this, wx.ID_ANY, 'Show Selected') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand())
+				button_Selected = ctrl
+			}
+		}
 		wx.ListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(3).Expand())
 			ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
@@ -117,12 +128,17 @@ PanelTop = class(wx.Panel) {
 			wx.EVT_LIST_COL_DRAGGING(ctrl,		this.OnList,			userData = info)
 			wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList,			userData = info)
 			wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList,			userData = info)
+			wx.EVT_BUTTON(button_Selected,		this.OnButton_Selected,	userData = info)
 		}
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 			sizerTop.Add(hbox, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 2))
-			wx.Button(this, wx.ID_ANY, 'Selected') {|ctrl|
+			wx.StaticText(this, wx.ID_ANY, 'Virtual') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Align(wx.ALIGN_CENTRE_VERTICAL))
+			}
+			hbox.AddStretchSpacer(1)
+			wx.Button(this, wx.ID_ANY, 'Show Selected') {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags().Expand())
-				wx.EVT_BUTTON(ctrl, this.OnButton_Selected, userData = info)
+				button_Selected = ctrl
 			}
 		}
 		MyListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
@@ -152,13 +168,7 @@ PanelTop = class(wx.Panel) {
 			wx.EVT_LIST_COL_DRAGGING(ctrl,		this.OnList,			userData = info)
 			wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList,			userData = info)
 			wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList,			userData = info)
-		}
-		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
-			sizerTop.Add(hbox, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 2))
-			wx.Button(this, wx.ID_ANY, 'Selected') {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags().Expand())
-				wx.EVT_BUTTON(ctrl, this.OnButton_Selected, userData = info)
-			}
+			wx.EVT_BUTTON(button_Selected,		this.OnButton_Selected,	userData = info)
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(2).Expand())
