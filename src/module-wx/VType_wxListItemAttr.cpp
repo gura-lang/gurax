@@ -49,6 +49,7 @@ Gurax_ImplementConstructorEx(ListItemAttr_gurax, processor_gurax, argument_gurax
 	if (args.empty()) {
 		return new Value_wxListItemAttr(wxListItemAttr());
 	}
+	// wx.ListItemAttr(colText as wx.Colour, colBack as wx.Colour, font as wxFont)
 	do {
 		static DeclCallable* pDeclCallable = nullptr;
 		if (!pDeclCallable) {

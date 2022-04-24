@@ -15,9 +15,12 @@ Timer = Class(EvtHandler) {
 	GetOwner() as EvtHandler_p
 	IsOneShot() as bool
 	IsRunning() as bool
-	Notify():virtual as void
+	Notify() as void
+	//Notify():virtual as void
 	SetOwner(owner as EvtHandler_p, id as int = -1) as void
-	Start(milliseconds as int = -1, oneShot as bool = wxTIMER_CONTINUOUS):virtual as bool
+	Start(milliseconds as int = -1, oneShot as bool = wxTIMER_CONTINUOUS) as bool
+	//Start(milliseconds as int = -1, oneShot as bool = wxTIMER_CONTINUOUS):virtual as bool
 	StartOnce(milliseconds as int = -1) as bool
-	Stop():virtual as void
+	Stop() as void
+	//Stop():virtual as void
 }
