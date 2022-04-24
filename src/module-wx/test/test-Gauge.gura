@@ -22,7 +22,6 @@ PanelTop = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		this.timer = wx.Timer(this, this.timerId)
-		this.timer.Start(100)
 		wx.EVT_TIMER(this, this.OnTimer, this.timerId)
 		wx.BoxSizer(wx.VERTICAL) {|vbox|
 			sizerTop.Add(vbox, wx.SizerFlags().Expand())
@@ -58,6 +57,7 @@ PanelTop = class(wx.Panel) {
 			}
 		}
 		this.UpdateLabel()
+		this.timer.Start(40)
 	}
 	OnTimer(event) = {
 		this.gaugesTbl::Pulse()
