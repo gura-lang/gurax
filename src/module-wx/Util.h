@@ -34,7 +34,7 @@ public:
 		_pProcessor.reset(pProcessor);
 		_pValue.reset(value.Reference());
 	}
-	bool PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const;
+	bool PrepareOverrideMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const;
 	Processor& GetProcessor() const { return *_pProcessor; }
 };
 

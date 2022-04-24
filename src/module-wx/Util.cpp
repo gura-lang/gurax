@@ -8,11 +8,12 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // EntityCore
 //------------------------------------------------------------------------------
-bool EntityCore::PrepareMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const
+bool EntityCore::PrepareOverrideMethod(const Symbol* pSymbolFunc, Function** ppFunc, RefPtr<Argument>& pArgument) const
 {
-	*ppFunc = &_pValue->LookupMethod(pSymbolFunc);
-	if ((*ppFunc)->IsEmpty()) return false;
-	pArgument.reset(new Argument(GetProcessor(), **ppFunc));
+	Function* pFunc = &_pValue->LookupMethod(pSymbolFunc);
+	*ppFunc = pFunc;
+	if (pFunc->IsEmpty() || !pFunc->IsCustom()) return false;
+	pArgument.reset(new Argument(GetProcessor(), *pFunc));
 	pArgument->SetValueThis(_pValue.Reference());
 	return true;
 }
