@@ -14,6 +14,17 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
+TimerStandalone = class(wx.Timer) {
+	textCtrl as wx.TextCtrl
+	__init__(textCtrl as wx.TextCtrl) = {
+		this.textCtrl = textCtrl
+	}
+	Notify() = {
+		this.Printf('Interval: %dmsec\n', this.GetInterval())
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+}
+
 PanelTop = class(wx.Panel) {
 	timerId = 100
 	textCtrl as wx.TextCtrl
@@ -21,7 +32,6 @@ PanelTop = class(wx.Panel) {
 	timer as wx.Timer
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
-		this.timer = wx.Timer(this, this.timerId)
 		this.SetSizer(sizerTop)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 			sizerTop.Add(hbox, wx.SizerFlags().Expand())
@@ -48,8 +58,9 @@ PanelTop = class(wx.Panel) {
 			ctrl.SetInsertionPointEnd()
 			this.textCtrl = ctrl
 		}
+		this.timer = wx.Timer(this, this.timerId)
+		//this.timer = TimerStandalone(this.textCtrl)
 		wx.EVT_TIMER(this, this.OnTimer, this.timerId)
-		//this.timer.Start(1000)
 	}
 	OnScroll(event) = {
 		if (this.timer.IsRunning()) {
