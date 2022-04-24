@@ -39,6 +39,8 @@ public:
 		using wxTimer::wxTimer;
 	public:
 		EntityCore core_gurax;
+		virtual void Notify() override;
+		void public_Notify() { wxTimer::Notify(); }
 	};
 public:
 	static VType& vtype;

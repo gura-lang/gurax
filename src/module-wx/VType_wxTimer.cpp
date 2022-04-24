@@ -48,11 +48,10 @@ Gurax_ImplementConstructorEx(Timer_gurax, processor_gurax, argument_gurax)
 	bool id_validFlag = args_gurax.IsValid();
 	int id = id_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
-	if (owner) {
-		return new Value_wxTimer(new wxTimer(owner, id));
-	} else {
-		return new Value_wxTimer(new wxTimer());
-	}
+	auto pEntity_gurax = owner? new Value_wxTimer::EntityT(owner, id) : new Value_wxTimer::EntityT();
+	RefPtr<Value_wxTimer> pValue_gurax(new Value_wxTimer(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -172,7 +171,7 @@ Gurax_ImplementMethodEx(wxTimer, Notify_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxTimer::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	pEntity_gurax->Notify();
@@ -320,5 +319,27 @@ String Value_wxTimer::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxTimer::EntityT
 //------------------------------------------------------------------------------
+void Value_wxTimer::EntityT::Notify()
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("Notify");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		::printf("line.%d\n", __LINE__);
+		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		::printf("line.%d\n", __LINE__);
+		// Argument
+		// (none)
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		return;
+	} while (0);
+	public_Notify();
+}
 
 Gurax_EndModuleScope(wx)
