@@ -3,7 +3,9 @@
 //==============================================================================
 Window = Class(EvtHandler) {
 	__init__()
+	//--------------------------------------------------------------------------
 	// Focus functions
+	//--------------------------------------------------------------------------
 	AcceptsFocus():const:virtual as bool
 	AcceptsFocusFromKeyboard():const:virtual as bool
 	AcceptsFocusRecursively():const:virtual as bool
@@ -14,7 +16,9 @@ Window = Class(EvtHandler) {
 	SetCanFocus(canFocus as bool):virtual as void
 	SetFocus() as void
 	SetFocusFromKbd() as void
+	//--------------------------------------------------------------------------
 	// Child management functions
+	//--------------------------------------------------------------------------
 	AddChild(child as Window_p) as void
 	DestroyChildren() as bool
 	FindWindow(args* as any) as void = \
@@ -53,14 +57,18 @@ Window = Class(EvtHandler) {
 	//GetChildren() as WindowList
 	//GetChildren() as WindowList
 	RemoveChild(child as Window_p) as void
+	//--------------------------------------------------------------------------
 	// Sibling and parent management functions
+	//--------------------------------------------------------------------------
 	GetGrandParent() as Window_p
 	GetNextSibling() as Window_p
 	GetParent() as Window_p
 	GetPrevSibling() as Window_p
 	//IsDescendant(win as WindowBase_p) as bool
 	Reparent(newParent as Window_p) as bool
+	//--------------------------------------------------------------------------
 	// Scrolling and scrollbars functions
+	//--------------------------------------------------------------------------
 	AlwaysShowScrollbars(hflag as bool = true, vflag as bool = true) as void
 	GetScrollPos(orientation as int) as int
 	GetScrollRange(orientation as int) as int
@@ -77,7 +85,9 @@ Window = Class(EvtHandler) {
 	PageDown() as bool
 	SetScrollPos(orientation as int, pos as int, refresh as bool = true) as void
 	SetScrollbar(orientation as int, position as int, thumbSize as int, range as int, refresh as bool = true) as void
+	//--------------------------------------------------------------------------
 	// Sizing functions
+	//--------------------------------------------------------------------------
 	//DoGetBestClientSize() as See_also_the_protected_functions_DoGetBestSize()_and
 	BeginRepositioningChildren() as bool
 	EndRepositioningChildren() as void
@@ -341,7 +351,9 @@ Window = Class(EvtHandler) {
 		} while (0);
 		return Value::nil();
 		'''
+	//--------------------------------------------------------------------------
 	// Positioning functions
+	//--------------------------------------------------------------------------
 	Center(dir as int = wxBOTH) as void
 	CenterOnParent(dir as int = wxBOTH) as void
 	Centre(direction as int = wxBOTH) as void
@@ -404,7 +416,9 @@ Window = Class(EvtHandler) {
 		return Value::nil();
 		'''
 	SetPosition(pt as const_Point_r) as void
+	//--------------------------------------------------------------------------
 	// Coordinate conversion functions
+	//--------------------------------------------------------------------------
 	ClientToScreen(args* as any) = \
 		R'''
 		do {
@@ -541,7 +555,9 @@ Window = Class(EvtHandler) {
 		} while (0);
 		return Value::nil();
 		'''
+	//--------------------------------------------------------------------------
 	// Drawing-related functions
+	//--------------------------------------------------------------------------
 	ClearBackground() as void
 	Freeze() as void
 	Thaw() as void
@@ -592,7 +608,9 @@ Window = Class(EvtHandler) {
 	GetThemeEnabled() as bool
 	CanSetTransparent() as bool
 	SetTransparent(alpha as Byte) as bool
+	//--------------------------------------------------------------------------
 	// Event-handling functions
+	//--------------------------------------------------------------------------
 	GetEventHandler() as EvtHandler_p
 	HandleAsNavigationKey(event as const_KeyEvent_r) as bool
 	HandleWindowEvent(event as Event_r) as bool
@@ -604,7 +622,9 @@ Window = Class(EvtHandler) {
 	SetEventHandler(handler as EvtHandler_p) as void
 	SetNextHandler(handler as EvtHandler_p) as void
 	SetPreviousHandler(handler as EvtHandler_p) as void
+	//--------------------------------------------------------------------------
 	// Window styles functions
+	//--------------------------------------------------------------------------
 	GetExtraStyle() as long
 	GetWindowStyleFlag() as long
 	GetWindowStyle() as long
@@ -614,15 +634,21 @@ Window = Class(EvtHandler) {
 	SetWindowStyleFlag(style as long) as void
 	SetWindowStyle(style as long) as void
 	ToggleWindowStyle(flag as int) as bool
+	//--------------------------------------------------------------------------
 	// Tab order functions
+	//--------------------------------------------------------------------------
 	MoveAfterInTabOrder(win as Window_p) as void
 	MoveBeforeInTabOrder(win as Window_p) as void
 	Navigate(flags as int = wxNavigationKeyEvent::IsForward) as bool
 	NavigateIn(flags as int = wxNavigationKeyEvent::IsForward) as bool
+	//--------------------------------------------------------------------------
 	// Z order functions
+	//--------------------------------------------------------------------------
 	Lower() as void
 	Raise() as void
+	//--------------------------------------------------------------------------
 	// Window status functions
+	//--------------------------------------------------------------------------
 	Hide() as bool
 	HideWithEffect(effect as ShowEffect, timeout as unsigned_int = 0) as bool
 	IsEnabled() as bool
@@ -703,7 +729,9 @@ Window = Class(EvtHandler) {
 	Enable(enable as bool = true) as bool
 	Show(show as bool = true) as bool
 	ShowWithEffect(effect as ShowEffect, timeout as unsigned_int = 0) as bool
+	//--------------------------------------------------------------------------
 	// Context-sensitive help functions
+	//--------------------------------------------------------------------------
 	GetHelpText() as String
 	SetHelpText(helpText as const_String_r) as void
 	//GetHelpTextAtPoint(point as const_Point_r, origin as HelpEvent::Origin) as String
@@ -744,7 +772,9 @@ Window = Class(EvtHandler) {
 		return Value::nil();
 		'''
 	UnsetToolTip() as void
+	//--------------------------------------------------------------------------
 	// Popup/context menu functions
+	//--------------------------------------------------------------------------
 	GetPopupMenuSelectionFromUser(args* as any) = \
 		R'''
 		do {
@@ -828,7 +858,9 @@ Window = Class(EvtHandler) {
 	TransferDataFromWindow() as bool
 	TransferDataToWindow() as bool
 	Validate() as bool
+	//--------------------------------------------------------------------------
 	// wxWindow properties functions
+	//--------------------------------------------------------------------------
 	GetId() as WindowID
 	GetLabel() as String
 	GetLayoutDirection() as LayoutDirection
@@ -844,15 +876,21 @@ Window = Class(EvtHandler) {
 	GetAccessible() as Accessible_p
 	SetAcceleratorTable(accel as const_AcceleratorTable_r) as void
 	SetAccessible(accessible as Accessible_p) as void
+	//--------------------------------------------------------------------------
 	// Window deletion functions
+	//--------------------------------------------------------------------------
 	Close(force as bool = false) as bool
 	Destroy() as bool
 	IsBeingDeleted() as bool
+	//--------------------------------------------------------------------------
 	// Drag and drop functions
+	//--------------------------------------------------------------------------
 	GetDropTarget() as DropTarget_p
 	SetDropTarget(target as DropTarget_p) as void
 	DragAcceptFiles(accept as bool) as void
+	//--------------------------------------------------------------------------
 	// Constraints, sizers and window layout functions
+	//--------------------------------------------------------------------------
 	GetContainingSizer() as Sizer_p
 	GetSizer() as Sizer_p
 	SetSizer(sizer as Sizer_p, deleteOld as bool = true) as void
@@ -862,7 +900,9 @@ Window = Class(EvtHandler) {
 	Layout() as bool
 	SetAutoLayout(autoLayout as bool) as void
 	GetAutoLayout() as bool
+	//--------------------------------------------------------------------------
 	// Mouse functions
+	//--------------------------------------------------------------------------
 	CaptureMouse() as void
 	GetCaret() as Caret_p
 	GetCursor() as Cursor
@@ -871,7 +911,9 @@ Window = Class(EvtHandler) {
 	SetCaret(caret as Caret_p) as void
 	SetCursor(cursor as const_Cursor_r) as bool
 	WarpPointer(x as int, y as int) as void
+	//--------------------------------------------------------------------------
 	// Miscellaneous functions
+	//--------------------------------------------------------------------------
 	HitTest(args* as any) = \
 		R'''
 		do {

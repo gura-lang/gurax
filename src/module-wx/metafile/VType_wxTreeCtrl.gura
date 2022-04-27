@@ -55,8 +55,17 @@ TreeCtrl = Class(Control) {
 	GetRootItem() as TreeItemId
 	GetSelection() as TreeItemId
 	//GetSelections(selection as ArrayTreeItemIds_r) as size_t
+	GetSelections() = \
+		R'''
+		wxArrayTreeItemIds treeItemIds;
+		pEntity_gurax->GetSelections(treeItemIds);
+		RefPtr<ValueOwner> pValues(new ValueOwner());
+		for (const wxTreeItemId& treeItemId : treeItemIds) {
+			pValues->push_back(new Value_wxTreeItemId(treeItemId));
+		}
+		return new Value_List(VTYPE_wxTreeItemId, pValues.release());
+		'''
 	GetStateImageList() as ImageList_p
-	//HitTest(point as const_Point_r, flags as int_r) as TreeItemId
 	HitTest(point as const_Point_r) = \
 		R'''
 		int flags;
