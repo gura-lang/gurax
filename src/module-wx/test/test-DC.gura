@@ -45,7 +45,7 @@ Page_Arc_Circle_Ellipse = class(wx.Panel) {
 		idxs  = Range(10)
 		dc = wx.PaintDC(this)
 		dc.DrawArc(100, 100, 200, 200, 50, 50)
-		dc.DrawCircle(idxs * 100, 200 * 10, idxs * 10 + 10):map
+		dc.DrawCircle(idxs * 100, 100, idxs * 10 + 10):map
 		dc.DrawEllipse(300, 200, 100, 50)
 		dc = nil
 	}
