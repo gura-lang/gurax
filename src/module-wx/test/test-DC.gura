@@ -13,25 +13,54 @@ MyApp = class(wx.App) {
 
 MyFrame = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
-		PanelTop(this)
+		wx.Notebook(this, wx.ID_ANY) {|noteBook|
+			[Page_Line, Page_Arc_Circle_Ellipse, Page_Text].Each {|cls|
+				noteBook.AddPage(cls(noteBook), cls.name)
+			}
+			noteBook.SetSelection(1)
+		}
 	}
 }
 
-PanelTop = class(wx.Panel) {
+Page_Line = class(wx.Panel) {
+	name:static = 'Line'
 	__init__(parent as wx.Window) = {|parent|
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
 		dc = wx.PaintDC(this)
 		dc.DrawLine(0, 0, 100, 100)
-		dc.DrawArc(100, 100, 200, 200, 50, 50)
-		dc.DrawCircle(200, 200, 100)
-		dc.DrawEllipse(300, 200, 100, 50)
 		dc.DrawLines(@(wx.Point) {{0, 0}, {30, 100}, {50, 50}}, 300, 50)
+		dc.DrawIcon(wx.Icon(sample_xpm), [200, 240, 280], 20):map
+		dc = nil
+	}
+}
+
+Page_Arc_Circle_Ellipse = class(wx.Panel) {
+	name:static = 'Arc/Circle/Ellipse'
+	__init__(parent as wx.Window) = {|parent|
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		idxs  = Range(10)
+		dc = wx.PaintDC(this)
+		dc.DrawArc(100, 100, 200, 200, 50, 50)
+		dc.DrawCircle(idxs * 100, 200 * 10, idxs * 10 + 10):map
+		dc.DrawEllipse(300, 200, 100, 50)
+		dc = nil
+	}
+}
+
+Page_Text = class(wx.Panel) {
+	name:static = 'Text'
+	__init__(parent as wx.Window) = {|parent|
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		dc = wx.PaintDC(this)
 		dc.DrawText('Hello World', 30, 200)
 		dc.SetFont(wx.Font(30, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
 		dc.DrawText('Hello World', 30, 240)
-		dc.DrawIcon(wx.Icon(sample_xpm), [200, 240, 280], 20):map
 		dc = nil
 	}
 }
