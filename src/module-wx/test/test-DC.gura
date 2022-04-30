@@ -14,7 +14,7 @@ MyApp = class(wx.App) {
 MyFrame = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		wx.Notebook(this, wx.ID_ANY) {|noteBook|
-			[Page_Line, Page_Arc_Circle_Ellipse, Page_Text].Each {|cls|
+			[Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
 			noteBook.SetSelection(1)
@@ -36,16 +36,40 @@ Page_Line = class(wx.Panel) {
 	}
 }
 
-Page_Arc_Circle_Ellipse = class(wx.Panel) {
-	name:static = 'Arc/Circle/Ellipse'
+Page_Arc = class(wx.Panel) {
+	name:static = 'Arc'
 	__init__(parent as wx.Window) = {|parent|
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
 		idxs  = Range(10)
 		dc = wx.PaintDC(this)
-		dc.DrawArc(100, 100, 200, 200, 50, 50)
+		dc.DrawEllipse(idxs * 100, 200, 100, 50)
+		dc = nil
+	}
+}
+
+Page_Circle = class(wx.Panel) {
+	name:static = 'Circle'
+	__init__(parent as wx.Window) = {|parent|
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		idxs  = Range(10)
+		dc = wx.PaintDC(this)
 		dc.DrawCircle(idxs * 100, 100, idxs * 10 + 10):map
+		dc = nil
+	}
+}
+
+Page_Ellipse = class(wx.Panel) {
+	name:static = 'Ellipse'
+	__init__(parent as wx.Window) = {|parent|
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		idxs  = Range(10)
+		dc = wx.PaintDC(this)
 		dc.DrawEllipse(300, 200, 100, 50)
 		dc = nil
 	}

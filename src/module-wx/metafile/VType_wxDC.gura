@@ -41,17 +41,17 @@ DC = Class {
 		'''
 	SetLogicalOrigin(x as Coord, y as Coord) as void
 	// Coordinate conversion functions
-	DeviceToLogicalX(x as Coord) as Coord
-	DeviceToLogicalXRel(x as Coord) as Coord
-	DeviceToLogicalY(y as Coord) as Coord
-	DeviceToLogicalYRel(y as Coord) as Coord
-	LogicalToDeviceX(x as Coord) as Coord
-	LogicalToDeviceXRel(x as Coord) as Coord
-	LogicalToDeviceY(y as Coord) as Coord
-	LogicalToDeviceYRel(y as Coord) as Coord
+	DeviceToLogicalX(x as Coord):map as Coord
+	DeviceToLogicalXRel(x as Coord):map as Coord
+	DeviceToLogicalY(y as Coord):map as Coord
+	DeviceToLogicalYRel(y as Coord):map as Coord
+	LogicalToDeviceX(x as Coord):map as Coord
+	LogicalToDeviceXRel(x as Coord):map as Coord
+	LogicalToDeviceY(y as Coord):map as Coord
+	LogicalToDeviceYRel(y as Coord):map as Coord
 	// Drawing function
 	Clear() as void
-	DrawArc(args* as any) as void = \
+	DrawArc(args* as any):map as void = \
 		R'''
 		// DrawArc(xStart as Coord, yStart as Coord, xEnd as Coord, yEnd as Coord, xc as Coord, yc as Coord) as void
 		do {
@@ -100,7 +100,7 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawBitmap(args* as any) as void = \
+	DrawBitmap(args* as any):map as void = \
 		R'''
 		// DrawBitmap(bitmap as const_Bitmap_r, x as Coord, y as Coord, useMask as bool = false) as void
 		do {
@@ -145,7 +145,7 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawCheckMark(args* as any) as void = \
+	DrawCheckMark(args* as any):map as void = \
 		R'''
 		// DrawCheckMark(x as Coord, y as Coord, width as Coord, height as Coord) as void
 		do {
@@ -186,7 +186,7 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawCircle(args* as any) as void = \
+	DrawCircle(args* as any):map as void = \
 		R'''
 		// DrawCircle(x as Coord, y as Coord, radius as Coord) as void
 		do {
@@ -227,7 +227,7 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawEllipse(args* as any) as void = \
+	DrawEllipse(args* as any):map as void = \
 		R'''
 		// DrawEllipse(x as Coord, y as Coord, width as Coord, height as Coord) as void
 		do {
@@ -286,7 +286,7 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawEllipticArc(args* as any) as void = \
+	DrawEllipticArc(args* as any):map as void = \
 		R'''
 		// DrawEllipticArc(x as Coord, y as Coord, width as Coord, height as Coord, start as double, end as double) as void
 		do {
@@ -337,7 +337,7 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawIcon(args* as any) as void = \
+	DrawIcon(args* as any):map as void = \
 		R'''
 		// DrawIcon(icon as const_Icon_r, x as Coord, y as Coord) as void
 		do {
@@ -379,8 +379,8 @@ DC = Class {
 		return Value::nil();
 		'''
 	//DrawLabel(text as String, bitmap as const_Bitmap_r, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP,  indexAccel as int = -1, rectBounding as Rect_r = nullptr) as void
-	DrawLabel(text as String, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1) as void
-	DrawLine(args* as any) as void = \
+	DrawLabel(text as String, rect as const_Rect_r, alignment as int = wxALIGN_LEFT | wxALIGN_TOP, indexAccel as int = -1):map as void
+	DrawLine(args* as any):map as void = \
 		R'''
 		// DrawLine(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord) as void
 		do {
@@ -423,8 +423,8 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawLines(points as const_PointList_p, xoffset as Coord = 0, yoffset as Coord = 0) as void
-	DrawPoint(args* as any) as void = \
+	DrawLines(points as const_PointList_p, xoffset as Coord = 0, yoffset as Coord = 0):map as void
+	DrawPoint(args* as any):map as void = \
 		R'''
 		// DrawPoint(x as Coord, y as Coord) as void
 		do {
@@ -461,9 +461,9 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawPolygon(points as const_PointList_p, xoffset as Coord = 0, yoffset as Coord = 0, fill_style as PolygonFillMode = wxODDEVEN_RULE) as void
+	DrawPolygon(points as const_PointList_p, xoffset as Coord = 0, yoffset as Coord = 0, fill_style as PolygonFillMode = wxODDEVEN_RULE):map as void
 	//DrawPolyPolygon(int n, const int count[], const wxPoint points[], xoffset as Coord=0, yoffset as Coord=0, wxPolygonFillMode fill_style=wxODDEVEN_RULE) as void
-	DrawPolyPolygon(count[] as int, points[] as any, xoffset as Coord = 0, yoffset as Coord = 0, fill_style as PolygonFillMode = wxODDEVEN_RULE) as void = \
+	DrawPolyPolygon(count[] as int, points[] as any, xoffset as Coord = 0, yoffset as Coord = 0, fill_style as PolygonFillMode = wxODDEVEN_RULE):map as void = \
 		R'''
 		std::vector<wxPoint> points_;
 		points_.reserve(points.size());
@@ -482,7 +482,7 @@ DC = Class {
 		pEntity_gurax->DrawPolyPolygon(n, count.data(), points_.data(), xoffset, yoffset, fill_style);
 		return Value::nil();
 		'''
-	DrawRectangle(args* as any) as void = \
+	DrawRectangle(args* as any):map as void = \
 		R'''
 		// DrawRectangle(x as Coord, y as Coord, width as Coord, height as Coord) as void
 		do {
@@ -541,7 +541,7 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawRotatedText(args* as any) as void = \
+	DrawRotatedText(args* as any):map as void = \
 		R'''
 		// DrawRotatedText(text as String, x as Coord, y as Coord, angle as double) as void
 		do {
@@ -586,7 +586,7 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawRoundedRectangle(args* as any) as void = \
+	DrawRoundedRectangle(args* as any):map as void = \
 		R'''
 		// DrawRoundedRectangle(x as Coord, y as Coord, width as Coord, height as Coord, radius as double) as void
 		do {
@@ -651,9 +651,9 @@ DC = Class {
 		} while (0);
 		return Value::nil();
 		'''
-	DrawSpline(points as const_PointList_p) as void
-	DrawSplineXY(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord, x3 as Coord, y3 as Coord) as void = DrawSpline
-	DrawText(args* as any) as void = \
+	DrawSpline(points as const_PointList_p):map as void
+	DrawSplineXY(x1 as Coord, y1 as Coord, x2 as Coord, y2 as Coord, x3 as Coord, y3 as Coord):map as void = DrawSpline
+	DrawText(args* as any):map as void = \
 		R'''
 		// DrawText(text as String, x as Coord, y as Coord) as void
 		do {

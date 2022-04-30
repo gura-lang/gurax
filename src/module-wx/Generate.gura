@@ -595,11 +595,12 @@ Gurax_EndModuleScope(wx)
 '''
 
 tmplMethodImplementation = tR'''
-// ${Format('%s.%s#%s(%s)%s', funcInfo.moduleName, className, funcInfo.name,
-	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
+// ${Format('%s.%s#%s(%s)%s%s', funcInfo.moduleName, className, funcInfo.name,
+	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.mapFlag, ':map', ''),
+	cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
 Gurax_DeclareMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -637,11 +638,12 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 '''
 
 tmplClassMethodImplementation = tR'''
-// ${Format('%s.%s.%s(%s)%s', funcInfo.moduleName, className, funcInfo.name,
-	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
+// ${Format('%s.%s.%s(%s)%s%s', funcInfo.moduleName, className, funcInfo.name,
+	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.mapFlag, ':map', ''),
+	cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
 Gurax_DeclareClassMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	AddHelp(
 		Gurax_Symbol(en),
@@ -756,7 +758,7 @@ ${funcInfoTbl.Each() {|funcInfo|}}
 // ${funcInfo.ToString()}
 Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -1076,7 +1078,7 @@ tmplConstructorImplementation_Object = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -1105,7 +1107,7 @@ tmplConstructorImplementation_EvtHandler = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -1136,7 +1138,7 @@ tmplConstructorImplementation_Pointer = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -1166,7 +1168,7 @@ tmplConstructorImplementation_RefCounter = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
