@@ -31,7 +31,7 @@ Page_Line = class(wx.Panel) {
 		dc = wx.PaintDC(this)
 		dc.DrawLine(0, 0, 100, 100)
 		dc.DrawLines(@(wx.Point) {{0, 0}, {30, 100}, {50, 50}}, 300, 50)
-		dc.DrawIcon(wx.Icon(sample_xpm), [200, 240, 280], 20):map
+		dc.DrawIcon(wx.Icon(sample_xpm), [200, 240, 280], 20)
 		dc = nil
 	}
 }
@@ -42,9 +42,11 @@ Page_Arc = class(wx.Panel) {
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
-		idxs  = Range(10)
+		idxs = Range(10):list
 		dc = wx.PaintDC(this)
-		dc.DrawEllipse(idxs * 100, 200, 100, 50)
+		dc.DrawEllipse(idxs * 110, 100, 100, 50)
+		dc.DrawEllipse(idxs * 110, 180, 100, 100)
+		dc.DrawEllipse(idxs * 110, 300, 100, 150)
 		dc = nil
 	}
 }
@@ -57,7 +59,7 @@ Page_Circle = class(wx.Panel) {
 	OnPaint(event) = {
 		idxs  = Range(10)
 		dc = wx.PaintDC(this)
-		dc.DrawCircle(idxs * 100, 100, idxs * 10 + 10):map
+		dc.DrawCircle(idxs * 100, 100, idxs * 10 + 10)
 		dc = nil
 	}
 }
