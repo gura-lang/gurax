@@ -14,11 +14,65 @@ MyApp = class(wx.App) {
 MyFrame = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		wx.Notebook(this, wx.ID_ANY) {|noteBook|
-			[Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_EllipticArc, Page_Text].Each {|cls|
+			[Page_Brush, Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_EllipticArc, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
-			noteBook.SetSelection(1)
+			noteBook.SetSelection(0)
 		}
+	}
+}
+
+Page_Brush = class(wx.Panel) {
+	name:static = 'Brush'
+	pen as wx.Pen
+	__init__(parent as wx.Window) = {|parent|
+		this.pen = wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID)
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		idxs  = Range(10)
+		dc = wx.PaintDC(this)
+		brushStyleTbl = [
+			//wx.BRUSHSTYLE_INVALID 	
+			wx.BRUSHSTYLE_SOLID 	
+			wx.BRUSHSTYLE_TRANSPARENT 	
+			//wx.BRUSHSTYLE_STIPPLE_MASK_OPAQUE 	
+			//wx.BRUSHSTYLE_STIPPLE_MASK 	
+			wx.BRUSHSTYLE_STIPPLE 	
+			wx.BRUSHSTYLE_BDIAGONAL_HATCH 	
+			wx.BRUSHSTYLE_CROSSDIAG_HATCH 	
+			wx.BRUSHSTYLE_FDIAGONAL_HATCH 	
+			wx.BRUSHSTYLE_CROSS_HATCH 	
+			wx.BRUSHSTYLE_HORIZONTAL_HATCH 	
+			wx.BRUSHSTYLE_VERTICAL_HATCH 	
+			//wx.BRUSHSTYLE_FIRST_HATCH 	
+			//wx.BRUSHSTYLE_LAST_HATCH 	
+		]
+		brushTbl = [
+			wx.NullBrush
+			wx.BLACK_BRUSH
+			wx.BLUE_BRUSH
+			wx.CYAN_BRUSH
+			wx.GREEN_BRUSH
+			wx.YELLOW_BRUSH
+			wx.GREY_BRUSH
+			wx.LIGHT_GREY_BRUSH
+			wx.MEDIUM_GREY_BRUSH
+			wx.RED_BRUSH
+			wx.TRANSPARENT_BRUSH
+			wx.WHITE_BRUSH			
+		]
+		dc.SetPen(this.pen)
+		brushStyleTbl.Each {|brushStyle, i|
+			dc.SetBrush(wx.Brush('#ff8888', brushStyle))
+			dc.DrawRectangle(i * 50 + 10, 10, 40, 80)
+		}		
+		dc.SetPen(wx.BLACK_PEN)
+		brushTbl.Each {|brush, i|
+			dc.SetBrush(brush)
+			dc.DrawRectangle(i * 50 + 10, 100, 40, 80)
+		}		
+		dc = nil
 	}
 }
 
@@ -38,17 +92,19 @@ Page_Line = class(wx.Panel) {
 
 Page_Arc = class(wx.Panel) {
 	name:static = 'Arc'
+	pen as wx.Pen
 	brush as wx.Brush
 	__init__(parent as wx.Window) = {|parent|
+		this.pen = wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID)
+		this.brush = wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
-		this.brush = wx.Brush('#000000', wx.BRUSHSTYLE_VERTICAL_HATCH)
 	}
 	OnPaint(event) = {
 		idxs = Range(10):list
 		dc = wx.PaintDC(this)
 		xc = 100, yc = 100
+		dc.SetPen(this.pen)
 		dc.SetBrush(this.brush)
-		dc.SetPen(wx.GREEN_PEN)
 		dc.DrawArc(xc + 50, yc, xc - 40, yc - 50, xc, yc)
 		dc = nil
 	}
@@ -56,12 +112,18 @@ Page_Arc = class(wx.Panel) {
 
 Page_Circle = class(wx.Panel) {
 	name:static = 'Circle'
+	pen as wx.Pen
+	brush as wx.Brush
 	__init__(parent as wx.Window) = {|parent|
+		this.pen = wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID)
+		this.brush = wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
 		idxs  = Range(10)
 		dc = wx.PaintDC(this)
+		dc.SetPen(this.pen)
+		dc.SetBrush(this.brush)
 		dc.DrawCircle(idxs * 100, 100, idxs * 10 + 10)
 		dc = nil
 	}
@@ -69,11 +131,17 @@ Page_Circle = class(wx.Panel) {
 
 Page_Ellipse = class(wx.Panel) {
 	name:static = 'Ellipse'
+	pen as wx.Pen
+	brush as wx.Brush
 	__init__(parent as wx.Window) = {|parent|
+		this.pen = wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID)
+		this.brush = wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
 		dc = wx.PaintDC(this)
+		dc.SetPen(this.pen)
+		dc.SetBrush(this.brush)
 		dc.DrawEllipse(50, 50, 100, 50)
 		dc.DrawEllipse(50, 120, 100, 100)
 		dc.DrawEllipse(50, 250, 100, 150)
@@ -89,11 +157,17 @@ Page_Ellipse = class(wx.Panel) {
 
 Page_EllipticArc = class(wx.Panel) {
 	name:static = 'EllipticArc'
+	pen as wx.Pen
+	brush as wx.Brush
 	__init__(parent as wx.Window) = {|parent|
+		this.pen = wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID)
+		this.brush = wx.Brush('#ff8888', wx.BRUSHSTYLE_BDIAGONAL_HATCH)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
 		dc = wx.PaintDC(this)
+		dc.SetPen(this.pen)
+		dc.SetBrush(this.brush)
 		idxs = Range(6):list
 		dc.DrawEllipticArc(10 + idxs * 120, 10, 100, 40, 0, (idxs + 1) * 60)
 		dc.DrawEllipticArc(10 + idxs * 120, 10 + 50, 100, 80, 0, (idxs + 1) * 60)
