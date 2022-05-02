@@ -6,7 +6,7 @@ sample_xpm = xpm.XPMFile('sample.xpm').lines
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 700)).Show()
 		true
 	}
 }
@@ -14,7 +14,7 @@ MyApp = class(wx.App) {
 MyFrame = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		wx.Notebook(this, wx.ID_ANY) {|noteBook|
-			[Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_Text].Each {|cls|
+			[Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_EllipticArc, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
 			noteBook.SetSelection(1)
@@ -38,15 +38,18 @@ Page_Line = class(wx.Panel) {
 
 Page_Arc = class(wx.Panel) {
 	name:static = 'Arc'
+	brush as wx.Brush
 	__init__(parent as wx.Window) = {|parent|
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
+		this.brush = wx.Brush('#000000', wx.BRUSHSTYLE_VERTICAL_HATCH)
 	}
 	OnPaint(event) = {
 		idxs = Range(10):list
 		dc = wx.PaintDC(this)
-		dc.DrawEllipse(idxs * 110, 100, 100, 50)
-		dc.DrawEllipse(idxs * 110, 180, 100, 100)
-		dc.DrawEllipse(idxs * 110, 300, 100, 150)
+		xc = 100, yc = 100
+		dc.SetBrush(this.brush)
+		dc.SetPen(wx.GREEN_PEN)
+		dc.DrawArc(xc + 50, yc, xc - 40, yc - 50, xc, yc)
 		dc = nil
 	}
 }
@@ -70,9 +73,34 @@ Page_Ellipse = class(wx.Panel) {
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event) = {
-		idxs  = Range(10)
 		dc = wx.PaintDC(this)
-		dc.DrawEllipse(300, 200, 100, 50)
+		dc.DrawEllipse(50, 50, 100, 50)
+		dc.DrawEllipse(50, 120, 100, 100)
+		dc.DrawEllipse(50, 250, 100, 150)
+		dc.DrawEllipse(wx.Point(200, 50), wx.Size(100, 50))
+		dc.DrawEllipse(wx.Point(200, 120), wx.Size(100, 100))
+		dc.DrawEllipse(wx.Point(200, 250), wx.Size(100, 150))
+		dc.DrawEllipse(wx.Rect(350, 50, 100, 50))
+		dc.DrawEllipse(wx.Rect(350, 120, 100, 100))
+		dc.DrawEllipse(wx.Rect(350, 250, 100, 150))
+		dc = nil
+	}
+}
+
+Page_EllipticArc = class(wx.Panel) {
+	name:static = 'EllipticArc'
+	__init__(parent as wx.Window) = {|parent|
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		dc = wx.PaintDC(this)
+		idxs = Range(6):list
+		dc.DrawEllipticArc(10 + idxs * 120, 10, 100, 40, 0, (idxs + 1) * 60)
+		dc.DrawEllipticArc(10 + idxs * 120, 10 + 50, 100, 80, 0, (idxs + 1) * 60)
+		dc.DrawEllipticArc(10 + idxs * 120, 10 + 140, 100, 120, 0, (idxs + 1) * 60)
+		dc.DrawEllipticArc(wx.Point(10 + idxs * 120, 280), wx.Size(100, 40), 0, (idxs + 1) * 60)
+		dc.DrawEllipticArc(wx.Point(10 + idxs * 120, 280 + 50), wx.Size(100, 80), 0, (idxs + 1) * 60)
+		dc.DrawEllipticArc(wx.Point(10 + idxs * 120, 280 + 140), wx.Size(100, 120), 0, (idxs + 1) * 60)
 		dc = nil
 	}
 }

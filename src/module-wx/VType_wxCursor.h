@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxCursor);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxCursor");
+protected:
+	wxCursor _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxCursor() = delete;
 	explicit Value_wxCursor(const wxCursor& entity, VType& vtype = VTYPE_wxCursor) :
-		Value_wxGDIObject(entity, vtype) {}
+		Value_wxGDIObject(entity, vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxCursor(const Value_wxCursor& src) = delete;
 	Value_wxCursor& operator=(const Value_wxCursor& src) = delete;
@@ -48,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxCursor() = default;
 public:
-	wxCursor& GetEntity() { return reinterpret_cast<wxCursor&>(Value_wxGDIObject::GetEntity()); }
-	const wxCursor& GetEntity() const { return reinterpret_cast<const wxCursor&>(Value_wxGDIObject::GetEntity()); }
-	wxCursor* GetEntityPtr() { return reinterpret_cast<wxCursor*>(Value_wxGDIObject::GetEntityPtr()); }\
-	const wxCursor* GetEntityPtr() const { return reinterpret_cast<const wxCursor*>(Value_wxGDIObject::GetEntityPtr()); }
+	wxCursor& GetEntity() { return _entity; }
+	const wxCursor& GetEntity() const { return _entity; }
+	wxCursor* GetEntityPtr() { return &_entity; }
+	const wxCursor* GetEntityPtr() const { return &_entity; }
 public:
 	static wxCursor& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxCursor&>(value).GetEntity();

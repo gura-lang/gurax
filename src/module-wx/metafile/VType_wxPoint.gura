@@ -2,7 +2,7 @@
 // VType_wxPoint.gura
 //==============================================================================
 Point = Class {
-	__init__(x? as int, y? as int)
+	__init__(x? as int, y? as int):map
 	x.getter as int = \
 		R'''
 		return new Value_Number(valueThis_gurax.GetEntity().x);

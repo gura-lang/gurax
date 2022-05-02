@@ -2,7 +2,7 @@
 // VType_wxRect.gura
 //==============================================================================
 Rect = Class {
-	__init__(x as int = 0, y as int = 0, width as int = 0, height as int = 0)
+	__init__(x as int = 0, y as int = 0, width as int = 0, height as int = 0):map
 	Contains(args* as any) as void = \
 		R'''
 		// Contains(x as int, y as int) as bool

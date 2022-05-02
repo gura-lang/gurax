@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxBrush.gura
 //==============================================================================
-Brush = Class(GDIObject) {
+Brush = Class(GDIObject):holdEntity {
 	__init__(args* as any) = \
 		R'''
 		// wx.Brush(colour as const_Colour_r, style as BrushStyle = wxBRUSHSTYLE_SOLID)
