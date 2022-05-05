@@ -155,15 +155,15 @@ StatEx::StatEx(String name, struct stat& sb) :
 	Stat(OAL::CreateDateTime(sb.st_ctime),
 		OAL::CreateDateTime(sb.st_mtime),
 		OAL::CreateDateTime(sb.st_atime),
-	name, MakeFlags(sb), sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid, 99999)
+		name, MakeFlags(sb), sb.st_mode & 0777, sb.st_size, sb.st_uid, sb.st_gid)
 {
-
+}
 
 StatEx* StatEx::Create(const char* pathName)
 {
 	struct stat sb;
-	String pathName = PathName(pathName).MakeAbsName();
-	if (::stat(OAL::ToNativeString(pathName.c_str()).c_str(), &sb) < 0) return nullptr;
+	String pathName_ = PathName(pathName).MakeAbsName();
+	if (::stat(OAL::ToNativeString(pathName_.c_str()).c_str(), &sb) < 0) return nullptr;
 	return new StatEx(PathName(pathName).ExtractBottomName(), sb);
 }
 

@@ -218,7 +218,7 @@ bool Color::FromString(Color& color, const char* str, UInt8 alpha)
 		const Color* pColor = Lookup(str);
 		if (!pColor) {
 			Error::Issue(ErrorType::KeyError, "unknown color name: %s", str);
-			return nullptr;
+			return false;
 		}
 		color = Color(pColor->GetPacked(), alpha);
 		return true;

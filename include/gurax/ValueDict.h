@@ -4,6 +4,7 @@
 #ifndef GURAX_VALUEDICT_H
 #define GURAX_VALUEDICT_H
 #include "ValueOwner.h"
+#include "VType_Tuple.h"
 
 namespace Gurax {
 

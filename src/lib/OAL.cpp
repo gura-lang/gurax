@@ -874,7 +874,7 @@ const char* OAL::GetEncodingForConsole()
 			{ "ko_KR",	"euc-kr"	},	// CP949
 			{ "zh_TW",	"big5"		},	// CP950
 		};
-		for (size_t i = 0; i < ArraySizeOf(assocInfoTbl); i++) {
+		for (size_t i = 0; i < Gurax_ArraySizeOf(assocInfoTbl); i++) {
 			if (::strcasecmp(langLeft.c_str(), assocInfoTbl[i].key) == 0) {
 				return assocInfoTbl[i].value;
 			}
@@ -892,7 +892,7 @@ const char* OAL::GetEncodingForConsole()
 			{ "eucKR",	"euc-kr"	},	// CP949
 			{ "big5",	"big5"		},	// CP950
 		};
-		for (size_t i = 0; i < ArraySizeOf(assocInfoTbl); i++) {
+		for (size_t i = 0; i < Gurax_ArraySizeOf(assocInfoTbl); i++) {
 			if (::strcasecmp(langRight.c_str(), assocInfoTbl[i].key) == 0) {
 				return assocInfoTbl[i].value;
 			}
@@ -1025,9 +1025,9 @@ bool OAL::Copy(const char* pathNameSrc, const char* pathNameDst, bool failIfExis
 		if (memSrc.get() == MAP_FAILED) {
 			RefPtr<Memory> pMemory(new MemoryHeap(65536));
 			for (;;) {
-				int bytesRead = ::read(fdSrc.get(), pMemory->GetPointer<char>(), pMemory->GetBytes());
+				int bytesRead = ::read(fdSrc.get(), pMemory->GetPointerC<char>(), pMemory->GetBytes());
 				if (bytesRead == 0) break;
-				if (::write(fdDst.get(), pMemory->GetPointer<char>(), bytesRead) < bytesRead) return false;
+				if (::write(fdDst.get(), pMemory->GetPointerC<char>(), bytesRead) < bytesRead) return false;
 			}
 		} else {
 			if (::write(fdDst.get(), memSrc.get(), bytesSrc) < static_cast<int>(bytesSrc)) {
@@ -1183,7 +1183,7 @@ int OAL::ExecProgram(
 	for (;;) {
 #if 0
 		if (pStreamCIn && !pStreamCIn->GetBlocking()) {
-			char* buff = pMemory->GetPointer<char>();
+			char* buff = pMemory->GetPointerC<char>();
 			size_t bytesRead = pStreamCIn->Read(sig, buff, pMemory->GetBytes());
 			if (sig.IsSignalled()) goto done;
 			if (bytesRead == 0) {
@@ -1204,14 +1204,14 @@ int OAL::ExecProgram(
 		bool idleFlag = true;
 		if (FD_ISSET(fdsCOut[0], &fdsRead)) {
 			idleFlag = false;
-			char* buff = pMemory->GetPointer<char>();
+			char* buff = pMemory->GetPointerC<char>();
 			size_t bytesRead = ::read(fdsCOut[0], buff, pMemory->GetBytes());
 			pStreamCOut->Write(buff, bytesRead);
 			if (Error::IsIssued()) goto done;
 		}
 		if (FD_ISSET(fdsCErr[0], &fdsRead)) {
 			idleFlag = false;
-			char* buff = pMemory->GetPointer<char>();
+			char* buff = pMemory->GetPointerC<char>();
 			size_t bytesRead = ::read(fdsCErr[0], buff, pMemory->GetBytes());
 			pStreamCErr->Write(buff, bytesRead);
 			if (Error::IsIssued()) goto done;

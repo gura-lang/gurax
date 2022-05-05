@@ -235,7 +235,7 @@ bool Value_VType::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, con
 	if (!pPropSlot->IsSet(PropSlot::Flag::OfClass)) {
 		Error::Issue(ErrorType::PropertyError,
 			"property '%s' belongs to an instance", pSymbol->GetName());
-		return nullptr;
+		return false;
 	}
 	return pPropSlot->SetValue(*this, *pValue, attr);
 }

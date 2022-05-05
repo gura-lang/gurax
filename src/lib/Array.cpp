@@ -468,7 +468,7 @@ void Add_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) + static_cast<T_ElemRtn>(*pR);
+		*pRtn = static_cast<T_ElemRtn>(static_cast<T_ElemRtn>(*pL) + static_cast<T_ElemRtn>(*pR));
 	}
 }
 
@@ -480,7 +480,7 @@ void Add_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) + numRCasted;
+		*pRtn = static_cast<T_ElemRtn>(static_cast<T_ElemRtn>(*pL) + numRCasted);
 	}
 }
 
@@ -491,7 +491,7 @@ void Add_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) + numR;
+		*pRtn = static_cast<T_ElemRtn>(static_cast<T_ElemRtn>(*pL) + numR);
 	}
 }
 
@@ -502,7 +502,7 @@ void Sub_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) - static_cast<T_ElemRtn>(*pR);
+		*pRtn = static_cast<T_ElemRtn>(static_cast<T_ElemRtn>(*pL) - static_cast<T_ElemRtn>(*pR));
 	}
 }
 
@@ -514,7 +514,6 @@ void Sub_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) - numRCasted;
 	}
 }
 
@@ -526,7 +525,6 @@ void Sub_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
 	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
-		*pRtn = numLCasted - static_cast<T_ElemRtn>(*pR);
 	}
 }
 
@@ -537,7 +535,6 @@ void Sub_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) - numR;
 	}
 }
 
@@ -548,7 +545,6 @@ void Sub_ComplexArray_T(void* pvRtn, const Complex& numL, const void* pvR, size_
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
-		*pRtn = numL - static_cast<T_ElemRtn>(*pR);
 	}
 }
 
@@ -559,7 +555,6 @@ void Mul_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
 	}
 }
 
@@ -571,7 +566,6 @@ void Mul_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) * numRCasted;
 	}
 }
 
@@ -582,7 +576,6 @@ void Mul_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) * numR;
 	}
 }
 
@@ -598,7 +591,6 @@ bool Div_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 			Error::Issue(ErrorType::DividedByZero, "divided by zero");
 			return false;
 		}
-		*pRtn = static_cast<T_ElemRtn>(*pL) / elemR;
 	}
 	return true;
 }
@@ -615,7 +607,6 @@ bool Div_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
 		return false;
 	}
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) / numRCasted;
 	}
 	return true;
 }
@@ -633,7 +624,6 @@ bool Div_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
 			Error::Issue(ErrorType::DividedByZero, "divided by zero");
 			return false;
 		}
-		*pRtn = numLCasted / elemR;
 	}
 	return true;
 }
@@ -649,7 +639,6 @@ bool Div_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_
 		return false;
 	}
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
-		*pRtn = static_cast<T_ElemRtn>(*pL) / numR;
 	}
 	return true;
 }
@@ -666,7 +655,6 @@ bool Div_ComplexArray_T(void* pvRtn, const Complex& numL, const void* pvR, size_
 			Error::Issue(ErrorType::DividedByZero, "divided by zero");
 			return false;
 		}
-		*pRtn = numL / elemR;
 	}
 	return true;
 }
@@ -687,7 +675,6 @@ void Dot_ArrayArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const vo
 			for (size_t k = 0; k < l; k++, pL++, pR += n) {
 				elemRtn += static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
 			}
-			*pRtn = elemRtn;
 		}
 	}
 }
@@ -704,9 +691,9 @@ void Cross_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t n)
 	T_ElemRtn b1 = static_cast<T_ElemRtn>(pR[0]);
 	T_ElemRtn b2 = static_cast<T_ElemRtn>(pR[1]);
 	T_ElemRtn b3 = static_cast<T_ElemRtn>(pR[2]);
-	pRtn[0] = a2 * b3 - a3 * b2;
-	pRtn[1] = a3 * b1 - a1 * b3;
-	pRtn[2] = a1 * b2 - a2 * b1; 
+	pRtn[0] = static_cast<T_ElemRtn>(a2 * b3 - a3 * b2);
+	pRtn[1] = static_cast<T_ElemRtn>(a3 * b1 - a1 * b3);
+	pRtn[2] = static_cast<T_ElemRtn>(a1 * b2 - a2 * b1); 
 }
 
 void Array::Bootup()

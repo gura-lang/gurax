@@ -34,6 +34,7 @@ using mode_t = int;
 #include <pthread.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <semaphore.h>
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <sys/stat.h>

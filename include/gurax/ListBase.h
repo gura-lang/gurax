@@ -42,7 +42,7 @@ public:
 	bool empty() const { return _container.empty(); }
 	size_t capacity() const { return _container.capacity(); }
 	size_t size() const { return _container.size(); }
-	template<typename T> T sizeT() const { return static_cast<T>(_container.size()); }
+	template<typename TT> TT sizeT() const { return static_cast<TT>(_container.size()); }
 	void clear() { _container.clear(); }
 	void reserve(size_t size) { _container.reserve(size); }
 	operator const_pointer() const { return _container.data(); }

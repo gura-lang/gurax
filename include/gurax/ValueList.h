@@ -6,6 +6,7 @@
 #include "Value.h"
 #include "Array.h"
 #include "ListBase.h"
+#include "VType_Number.h"
 
 namespace Gurax {
 

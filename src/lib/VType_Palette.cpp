@@ -333,7 +333,7 @@ bool Value_Palette::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) c
 bool Value_Palette::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
 	RefPtr<Value_Color> pValueCasted(pValue->Cast<Value_Color>());
-	if (!pValueCasted) return nullptr;
+	if (!pValueCasted) return false;
 	const Color& color = pValueCasted->GetColor();
 	Palette& palette = GetPalette();
 	size_t idx = 0;
