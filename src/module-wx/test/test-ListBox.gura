@@ -1,0 +1,87 @@
+#!/usr/bin/env gurax
+import(wx)
+import(DummyAddress)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+Item = struct {
+	style as Number
+	label as String
+	listBox as wx.ListBox
+	MakeSelectionString() = {
+		selections = this.listBox.GetSelections()
+		strSelections = this.listBox.GetString(selections):map
+		cond(selections.IsEmpty(), '(none)', Format('%d:%s', selections, strSelections).Join(','))
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		itemTbl = @(Item) {
+			{ wx.LB_SINGLE,		'LB_SINGLE'		}
+			{ wx.LB_MULTIPLE,	'LB_MULTIPLE'	}
+			{ wx.LB_EXTENDED,	'LB_EXTENDED'	}
+		}
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags(1).Expand())
+			itemTbl.Each {|item|
+				wx.BoxSizer(wx.VERTICAL) {|vbox|
+					hbox.Add(vbox, wx.SizerFlags(1).Expand())
+					wx.StaticText(this, wx.ID_ANY, item.label) {|ctrl|
+						vbox.Add(ctrl, wx.SizerFlags().Expand())
+					}
+					wx.ListBox(this, wx.ID_ANY, style = item.style, choices = DummyAddress.addressTbl::name) {|ctrl|
+						vbox.Add(ctrl, wx.SizerFlags(1).Expand())
+						item.listBox = ctrl
+						if (item.style == wx.LB_SINGLE) {
+							ctrl.SetSelection(0)
+						}
+						wx.EVT_LISTBOX(ctrl, this.OnListBox, userData = item)
+						wx.EVT_LISTBOX_DCLICK(ctrl, this.OnListBoxDClick, userData = item)
+						wx.EVT_CHAR_HOOK(ctrl, this.OnCharHook, userData = item)
+					}
+				}
+			}
+		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
+
+	}
+	OnListBox(event as wx.CommandEvent) = {
+		item = event.GetEventUserData()
+		this.Printf('EVT_LISTBOX [%s] Selections=%s\n', item.label, item.MakeSelectionString())
+	}
+	OnListBoxDClick(event as wx.CommandEvent) = {
+		item = event.GetEventUserData()
+		this.Printf('EVT_LISTBOX_DCLICK [%s] Selections=%s\n', item.label, item.MakeSelectionString())
+	}
+	OnCharHook(event as wx.KeyEvent) = {
+		if (event.GetKeyCode() == wx.WXK_RETURN) {
+			item = event.GetEventUserData()
+			this.Printf('Enter [%s] Selections=%s\n', item.label, item.MakeSelectionString())
+		}
+		event.Skip()
+	}
+	Printf(format as String, args*) = {
+		this.textCtrl.SetInsertionPoint(this.textCtrl.GetLastPosition())
+		this.textCtrl.WriteText(Format(format, args*))
+	}
+}
+
+wx.ImplementApp(MyApp())

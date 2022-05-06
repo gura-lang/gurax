@@ -1,10 +1,11 @@
 #!/usr/bin/env gurax
 import(wx)
 import(image)
+da = import(DummyAddress)
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(900, 700)).Show()
 		true
 	}
 }
@@ -15,71 +16,195 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
+MyListCtrl = class(wx.ListCtrl) {
+	listItemAttr as wx.ListItemAttr
+	__init__(parent as wx.Window, id as Number, style as Number) = {|parent, id, style = (style | wx.LC_VIRTUAL)|
+		//this.listItemAttr = wx.ListItemAttr(`black, wx.Colour(192, 192, 192), wx.Font('courier'))
+		this.listItemAttr = wx.ListItemAttr();
+		this.AppendColumn('Image', width = 60)
+		this.AppendColumn('Name', width = 180)
+		this.AppendColumn('E-mail', width = 200)
+		this.AppendColumn('Gender', width = 80)
+		this.AppendColumn('Age', width = 80)
+		this.AppendColumn('Birthday', width = 100)
+		this.AppendColumn('Phone Number', width = 120)
+	}
+	OnGetItemAttr(item as Number) = {
+		this.listItemAttr
+	}
+	OnGetItemColumnAttr(item as Number, column as Number) = {
+		this.listItemAttr
+	}
+	//OnGetItemImage(item as Number) = {
+	//	0
+	//}
+	OnGetItemColumnImage(item as Number, column as Number) = {
+		cond(column == 0, item, -1)
+	}
+	OnGetItemText(item as Number, column as Number) = {
+		address = da.addressTbl[item]
+		if (column == 1) {
+			address.name
+		} elsif (column == 2) {
+			address.email
+		} elsif (column == 3) {
+			address.gender
+		} elsif (column == 4) {
+			Format('%d', address.age)
+		} elsif (column == 5) {
+			address.birthDay
+		} elsif (column == 6) {
+			address.phoneNumber
+		} else {
+			''
+		}
+	}
+}
+
+Info = struct {
+	label as String
+	listCtrl as wx.ListCtrl
+}
+
 PanelTop = class(wx.Panel) {
 	ascentFlag as Bool
-	listCtrl as wx.ListCtrl
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		this.ascentFlag = true
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
+		[imageList, indices] = image.InitImageList(image.silk_icons)
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
-			sizerTop.Add(hbox, wx.SizerFlags(3).Expand())
-			wx.ListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
-				[imageList, indices] = image.InitImageList()
-				ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
-				ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
-				ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
-				ctrl.AppendColumn('Image')
-				ctrl.AppendColumn('Name', width = 300)
-				keys = indices.EachKey().Sort()
-				keys.Each {|key, i|
-					ctrl.InsertItem(i, '', indices[key])
-					ctrl.SetItem(i, 1, key)
-					ctrl.SetItemData(i, key)
-				}
-				wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList)
-				wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList)
-				wx.EVT_LIST_BEGIN_LABEL_EDIT(ctrl,	this.OnList)
-				wx.EVT_LIST_END_LABEL_EDIT(ctrl,	this.OnList)
-				wx.EVT_LIST_DELETE_ITEM(ctrl,		this.OnList)
-				wx.EVT_LIST_DELETE_ALL_ITEMS(ctrl,	this.OnList)
-				wx.EVT_LIST_ITEM_SELECTED(ctrl,		this.OnList)
-				wx.EVT_LIST_ITEM_DESELECTED(ctrl,	this.OnList)
-				wx.EVT_LIST_ITEM_ACTIVATED(ctrl,	this.OnList)
-				wx.EVT_LIST_ITEM_FOCUSED(ctrl,		this.OnList)
-				wx.EVT_LIST_ITEM_MIDDLE_CLICK(ctrl,	this.OnList)
-				wx.EVT_LIST_ITEM_RIGHT_CLICK(ctrl,	this.OnList)
-				wx.EVT_LIST_KEY_DOWN(ctrl,			this.OnList)
-				wx.EVT_LIST_INSERT_ITEM(ctrl,		this.OnList)
-				wx.EVT_LIST_COL_CLICK(ctrl,			this.OnListColClick)
-				wx.EVT_LIST_COL_RIGHT_CLICK(ctrl,	this.OnList)
-				wx.EVT_LIST_COL_BEGIN_DRAG(ctrl,	this.OnList)
-				wx.EVT_LIST_COL_DRAGGING(ctrl,		this.OnList)
-				wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList)
-				wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList)
-				this.listCtrl = ctrl
+			sizerTop.Add(hbox, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 2))
+			wx.StaticText(this, wx.ID_ANY, 'Stored') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Align(wx.ALIGN_CENTRE_VERTICAL))
+			}
+			hbox.AddStretchSpacer(1)
+			wx.Button(this, wx.ID_ANY, 'Show Selected') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand())
+				button_Selected = ctrl
 			}
 		}
+		wx.ListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(3).Expand())
+			ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
+			ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
+			ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
+			ctrl.AppendColumn('Image', width = 60)
+			ctrl.AppendColumn('Name', width = 180)
+			ctrl.AppendColumn('E-mail', width = 200)
+			ctrl.AppendColumn('Gender', width = 80)
+			ctrl.AppendColumn('Age', width = 80)
+			ctrl.AppendColumn('Birthday', width = 100)
+			ctrl.AppendColumn('Phone Number', width = 120)
+			for (address in da.addressTbl) {|i|
+				ctrl.InsertItem(i, '', i)
+				ctrl.SetItem(i, 1, address.name)
+				ctrl.SetItem(i, 2, address.email)
+				ctrl.SetItem(i, 3, address.gender)
+				ctrl.SetItem(i, 4, address.age)
+				ctrl.SetItem(i, 5, address.birthDay)
+				ctrl.SetItem(i, 6, address.phoneNumber)
+				ctrl.SetItemData(i, address.name)
+			}
+			info = Info('Stored', ctrl)
+			wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_BEGIN_LABEL_EDIT(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_END_LABEL_EDIT(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_DELETE_ITEM(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_DELETE_ALL_ITEMS(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_SELECTED(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_DESELECTED(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_ACTIVATED(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_FOCUSED(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_MIDDLE_CLICK(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_RIGHT_CLICK(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_KEY_DOWN(ctrl,			this.OnList,			userData = info)
+			wx.EVT_LIST_INSERT_ITEM(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_COL_CLICK(ctrl,			this.OnListColClick,	userData = info)
+			wx.EVT_LIST_COL_RIGHT_CLICK(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_COL_BEGIN_DRAG(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_COL_DRAGGING(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList,			userData = info)
+			wx.EVT_BUTTON(button_Selected,		this.OnButton_Selected,	userData = info)
+		}
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 2))
+			wx.StaticText(this, wx.ID_ANY, 'Virtual') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Align(wx.ALIGN_CENTRE_VERTICAL))
+			}
+			hbox.AddStretchSpacer(1)
+			wx.Button(this, wx.ID_ANY, 'Show Selected') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand())
+				button_Selected = ctrl
+			}
+		}
+		MyListCtrl(this, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(3).Expand())
+			ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
+			ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
+			ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
+			ctrl.SetItemCount(da.addressTbl.len)
+			info = Info('Virtual', ctrl)
+			wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_BEGIN_LABEL_EDIT(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_END_LABEL_EDIT(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_DELETE_ITEM(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_DELETE_ALL_ITEMS(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_SELECTED(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_DESELECTED(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_ACTIVATED(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_FOCUSED(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_MIDDLE_CLICK(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_ITEM_RIGHT_CLICK(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_KEY_DOWN(ctrl,			this.OnList,			userData = info)
+			wx.EVT_LIST_INSERT_ITEM(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_COL_CLICK(ctrl,			this.OnListColClick,	userData = info)
+			wx.EVT_LIST_COL_RIGHT_CLICK(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_COL_BEGIN_DRAG(ctrl,	this.OnList,			userData = info)
+			wx.EVT_LIST_COL_DRAGGING(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList,			userData = info)
+			wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList,			userData = info)
+			wx.EVT_BUTTON(button_Selected,		this.OnButton_Selected,	userData = info)
+		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			sizerTop.Add(ctrl, wx.SizerFlags(2).Expand())
 			this.textCtrl = ctrl
 		}
 	}
-	SortAscent(item1, item2):static = {item1 <=> item2}
 	SortDescent(item1, item2):static = {item2 <=> item1}
-	OnList(event) = {
+	SortAscent(item1, item2):static = {item1 <=> item2}
+	OnList(event as wx.ListEvent) = {
 		this.PrintListEvent(event)
 	}
-	OnListColClick(event) = {
+	OnListColClick(event as wx.ListEvent) = {
+		info = event.GetEventUserData()
 		this.PrintListEvent(event)
-		this.listCtrl.SortItems(cond(this.ascentFlag, this.SortAscent, this.SortDescent), nil)
+		info.listCtrl.SortItems(cond(this.ascentFlag, this.SortAscent, this.SortDescent), nil)
 		this.ascentFlag = !this.ascentFlag
 	}
-	PrintListEvent(event) = {
+	OnButton_Selected(event as wx.CommandEvent) = {
+		info = event.GetEventUserData()
+		item = -1
+		this.Printf('Selected\n')
+		repeat {
+			item = info.listCtrl.GetNextItem(item, wx.LIST_NEXT_ALL, wx.LIST_STATE_SELECTED)
+			(item < 0) && break
+			this.Printf('[%s] index=%d name="%s" email="%s"\n', info.label, item,
+					info.listCtrl.GetItemText(item, 1), info.listCtrl.GetItemText(item, 2))
+		}
+	}
+	PrintListEvent(event as wx.ListEvent) = {
+		info = event.GetEventUserData()
 		eventName = event.GetEventType().name
-		this.Printf('%s(index=%d label="%s")\n', eventName, event.GetIndex(), event.GetLabel())
+		item = event.GetIndex()
+		if (item >= 0) {
+			this.Printf('[%s] %s(index=%d name="%s", email="%s")\n', info.label, eventName, item,
+					info.listCtrl.GetItemText(item, 1), info.listCtrl.GetItemText(item, 2))
+		}
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }

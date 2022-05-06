@@ -48,11 +48,10 @@ Gurax_ImplementConstructorEx(Timer_gurax, processor_gurax, argument_gurax)
 	bool id_validFlag = args_gurax.IsValid();
 	int id = id_validFlag? args_gurax.PickNumber<int>() : -1;
 	// Function body
-	if (owner) {
-		return new Value_wxTimer(new wxTimer(owner, id));
-	} else {
-		return new Value_wxTimer(new wxTimer());
-	}
+	auto pEntity_gurax = owner? new Value_wxTimer::EntityT(owner, id) : new Value_wxTimer::EntityT();
+	RefPtr<Value_wxTimer> pValue_gurax(new Value_wxTimer(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -172,7 +171,7 @@ Gurax_ImplementMethodEx(wxTimer, Notify_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxTimer::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	pEntity_gurax->Notify();
@@ -222,7 +221,7 @@ Gurax_ImplementMethodEx(wxTimer, Start_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxTimer::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -272,7 +271,7 @@ Gurax_ImplementMethodEx(wxTimer, Stop_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxTimer::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	pEntity_gurax->Stop();
@@ -327,7 +326,7 @@ void Value_wxTimer::EntityT::Notify()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -338,7 +337,7 @@ void Value_wxTimer::EntityT::Notify()
 		}
 		return;
 	} while (0);
-	wxTimer::Notify();
+	public_Notify();
 }
 
 bool Value_wxTimer::EntityT::Start(int milliseconds, bool oneShot)
@@ -348,11 +347,17 @@ bool Value_wxTimer::EntityT::Start(int milliseconds, bool oneShot)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(milliseconds))) break;
-		if (!args_gurax.FeedValue(new Gurax::Value_Bool(oneShot))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(milliseconds))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Bool(oneShot))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -360,10 +365,15 @@ bool Value_wxTimer::EntityT::Start(int milliseconds, bool oneShot)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxTimer::Start(milliseconds, oneShot);
+	return public_Start(milliseconds, oneShot);
 }
 
 void Value_wxTimer::EntityT::Stop()
@@ -373,7 +383,7 @@ void Value_wxTimer::EntityT::Stop()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -384,7 +394,7 @@ void Value_wxTimer::EntityT::Stop()
 		}
 		return;
 	} while (0);
-	wxTimer::Stop();
+	public_Stop();
 }
 
 Gurax_EndModuleScope(wx)

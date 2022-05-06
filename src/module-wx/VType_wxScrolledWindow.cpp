@@ -388,7 +388,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, OnDraw_gurax, processor_gurax, argumen
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxScrolledWindow::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -784,7 +784,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, AdjustScrollbars_gurax, processor_gura
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxScrolledWindow::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	pEntity_gurax->AdjustScrollbars();
@@ -927,10 +927,13 @@ void Value_wxScrolledWindow::EntityT::OnDraw(wxDC& dc)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) break;
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -939,7 +942,7 @@ void Value_wxScrolledWindow::EntityT::OnDraw(wxDC& dc)
 		}
 		return;
 	} while (0);
-	wxScrolledWindow::OnDraw(dc);
+	public_OnDraw(dc);
 }
 
 void Value_wxScrolledWindow::EntityT::AdjustScrollbars()
@@ -949,7 +952,7 @@ void Value_wxScrolledWindow::EntityT::AdjustScrollbars()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -960,7 +963,7 @@ void Value_wxScrolledWindow::EntityT::AdjustScrollbars()
 		}
 		return;
 	} while (0);
-	wxScrolledWindow::AdjustScrollbars();
+	public_AdjustScrollbars();
 }
 
 Gurax_EndModuleScope(wx)

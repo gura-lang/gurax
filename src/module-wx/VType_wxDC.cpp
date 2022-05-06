@@ -520,10 +520,10 @@ Gurax_ImplementMethodEx(wxDC, SetLogicalOrigin_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DeviceToLogicalX(x as Number)
+// wx.DC#DeviceToLogicalX(x as Number):map
 Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalX_gurax, "DeviceToLogicalX")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -544,10 +544,10 @@ Gurax_ImplementMethodEx(wxDC, DeviceToLogicalX_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#DeviceToLogicalXRel(x as Number)
+// wx.DC#DeviceToLogicalXRel(x as Number):map
 Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalXRel_gurax, "DeviceToLogicalXRel")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -568,10 +568,10 @@ Gurax_ImplementMethodEx(wxDC, DeviceToLogicalXRel_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#DeviceToLogicalY(y as Number)
+// wx.DC#DeviceToLogicalY(y as Number):map
 Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalY_gurax, "DeviceToLogicalY")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -592,10 +592,10 @@ Gurax_ImplementMethodEx(wxDC, DeviceToLogicalY_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#DeviceToLogicalYRel(y as Number)
+// wx.DC#DeviceToLogicalYRel(y as Number):map
 Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalYRel_gurax, "DeviceToLogicalYRel")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -616,10 +616,10 @@ Gurax_ImplementMethodEx(wxDC, DeviceToLogicalYRel_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#LogicalToDeviceX(x as Number)
+// wx.DC#LogicalToDeviceX(x as Number):map
 Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceX_gurax, "LogicalToDeviceX")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -640,10 +640,10 @@ Gurax_ImplementMethodEx(wxDC, LogicalToDeviceX_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#LogicalToDeviceXRel(x as Number)
+// wx.DC#LogicalToDeviceXRel(x as Number):map
 Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceXRel_gurax, "LogicalToDeviceXRel")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -664,10 +664,10 @@ Gurax_ImplementMethodEx(wxDC, LogicalToDeviceXRel_gurax, processor_gurax, argume
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#LogicalToDeviceY(y as Number)
+// wx.DC#LogicalToDeviceY(y as Number):map
 Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceY_gurax, "LogicalToDeviceY")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -688,10 +688,10 @@ Gurax_ImplementMethodEx(wxDC, LogicalToDeviceY_gurax, processor_gurax, argument_
 	return new Gurax::Value_Number(rtn);
 }
 
-// wx.DC#LogicalToDeviceYRel(y as Number)
+// wx.DC#LogicalToDeviceYRel(y as Number):map
 Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceYRel_gurax, "LogicalToDeviceYRel")
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -732,10 +732,10 @@ Gurax_ImplementMethodEx(wxDC, Clear_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawArc(args* as Any)
+// wx.DC#DrawArc(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawArc_gurax, "DrawArc")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -800,10 +800,10 @@ Gurax_ImplementMethodEx(wxDC, DrawArc_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.DC#DrawBitmap(args* as Any)
+// wx.DC#DrawBitmap(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawBitmap_gurax, "DrawBitmap")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -864,10 +864,10 @@ Gurax_ImplementMethodEx(wxDC, DrawBitmap_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.DC#DrawCheckMark(args* as Any)
+// wx.DC#DrawCheckMark(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawCheckMark_gurax, "DrawCheckMark")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -924,10 +924,10 @@ Gurax_ImplementMethodEx(wxDC, DrawCheckMark_gurax, processor_gurax, argument_gur
 	return Value::nil();
 }
 
-// wx.DC#DrawCircle(args* as Any)
+// wx.DC#DrawCircle(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawCircle_gurax, "DrawCircle")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -984,10 +984,10 @@ Gurax_ImplementMethodEx(wxDC, DrawCircle_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.DC#DrawEllipse(args* as Any)
+// wx.DC#DrawEllipse(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawEllipse_gurax, "DrawEllipse")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1062,10 +1062,10 @@ Gurax_ImplementMethodEx(wxDC, DrawEllipse_gurax, processor_gurax, argument_gurax
 	return Value::nil();
 }
 
-// wx.DC#DrawEllipticArc(args* as Any)
+// wx.DC#DrawEllipticArc(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawEllipticArc_gurax, "DrawEllipticArc")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1132,10 +1132,10 @@ Gurax_ImplementMethodEx(wxDC, DrawEllipticArc_gurax, processor_gurax, argument_g
 	return Value::nil();
 }
 
-// wx.DC#DrawIcon(args* as Any)
+// wx.DC#DrawIcon(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawIcon_gurax, "DrawIcon")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1192,10 +1192,10 @@ Gurax_ImplementMethodEx(wxDC, DrawIcon_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.DC#DrawLabel(text as String, rect as wx.Rect, alignment? as Number, indexAccel? as Number)
+// wx.DC#DrawLabel(text as String, rect as wx.Rect, alignment? as Number, indexAccel? as Number):map
 Gurax_DeclareMethodAlias(wxDC, DrawLabel_gurax, "DrawLabel")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alignment", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -1225,10 +1225,10 @@ Gurax_ImplementMethodEx(wxDC, DrawLabel_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawLine(args* as Any)
+// wx.DC#DrawLine(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawLine_gurax, "DrawLine")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1287,10 +1287,10 @@ Gurax_ImplementMethodEx(wxDC, DrawLine_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.DC#DrawLines(points[] as wx.Point, xoffset? as Number, yoffset? as Number)
+// wx.DC#DrawLines(points[] as wx.Point, xoffset? as Number, yoffset? as Number):map
 Gurax_DeclareMethodAlias(wxDC, DrawLines_gurax, "DrawLines")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("points", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("xoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("yoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -1317,10 +1317,10 @@ Gurax_ImplementMethodEx(wxDC, DrawLines_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawPoint(args* as Any)
+// wx.DC#DrawPoint(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawPoint_gurax, "DrawPoint")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1373,10 +1373,10 @@ Gurax_ImplementMethodEx(wxDC, DrawPoint_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
-// wx.DC#DrawPolygon(points[] as wx.Point, xoffset? as Number, yoffset? as Number, fill_style? as Number)
+// wx.DC#DrawPolygon(points[] as wx.Point, xoffset? as Number, yoffset? as Number, fill_style? as Number):map
 Gurax_DeclareMethodAlias(wxDC, DrawPolygon_gurax, "DrawPolygon")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("points", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("xoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("yoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -1406,10 +1406,10 @@ Gurax_ImplementMethodEx(wxDC, DrawPolygon_gurax, processor_gurax, argument_gurax
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawPolyPolygon(count[] as Number, points[] as Any, xoffset? as Number, yoffset? as Number, fill_style? as Number)
+// wx.DC#DrawPolyPolygon(count[] as Number, points[] as Any, xoffset? as Number, yoffset? as Number, fill_style? as Number):map
 Gurax_DeclareMethodAlias(wxDC, DrawPolyPolygon_gurax, "DrawPolyPolygon")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("points", VTYPE_Any, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("xoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -1455,10 +1455,10 @@ Gurax_ImplementMethodEx(wxDC, DrawPolyPolygon_gurax, processor_gurax, argument_g
 	return Value::nil();
 }
 
-// wx.DC#DrawRectangle(args* as Any)
+// wx.DC#DrawRectangle(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawRectangle_gurax, "DrawRectangle")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1533,10 +1533,10 @@ Gurax_ImplementMethodEx(wxDC, DrawRectangle_gurax, processor_gurax, argument_gur
 	return Value::nil();
 }
 
-// wx.DC#DrawRotatedText(args* as Any)
+// wx.DC#DrawRotatedText(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawRotatedText_gurax, "DrawRotatedText")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1597,10 +1597,10 @@ Gurax_ImplementMethodEx(wxDC, DrawRotatedText_gurax, processor_gurax, argument_g
 	return Value::nil();
 }
 
-// wx.DC#DrawRoundedRectangle(args* as Any)
+// wx.DC#DrawRoundedRectangle(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawRoundedRectangle_gurax, "DrawRoundedRectangle")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1681,10 +1681,10 @@ Gurax_ImplementMethodEx(wxDC, DrawRoundedRectangle_gurax, processor_gurax, argum
 	return Value::nil();
 }
 
-// wx.DC#DrawSpline(points[] as wx.Point)
+// wx.DC#DrawSpline(points[] as wx.Point):map
 Gurax_DeclareMethodAlias(wxDC, DrawSpline_gurax, "DrawSpline")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("points", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -1705,10 +1705,10 @@ Gurax_ImplementMethodEx(wxDC, DrawSpline_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawSplineXY(x1 as Number, y1 as Number, x2 as Number, y2 as Number, x3 as Number, y3 as Number)
+// wx.DC#DrawSplineXY(x1 as Number, y1 as Number, x2 as Number, y2 as Number, x3 as Number, y3 as Number):map
 Gurax_DeclareMethodAlias(wxDC, DrawSplineXY_gurax, "DrawSplineXY")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -1739,10 +1739,10 @@ Gurax_ImplementMethodEx(wxDC, DrawSplineXY_gurax, processor_gurax, argument_gura
 	return Gurax::Value::nil();
 }
 
-// wx.DC#DrawText(args* as Any)
+// wx.DC#DrawText(args* as Any):map
 Gurax_DeclareMethodAlias(wxDC, DrawText_gurax, "DrawText")
 {
-	Declare(VTYPE_Nil, Flag::None);
+	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),

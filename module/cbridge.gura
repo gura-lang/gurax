@@ -214,15 +214,18 @@ FuncInfo = class {
 	tmplFunctionBody as Template
 	virtualFlag as Bool
 	returnThisFlag as Bool
+	returnNilFlag as Bool
 	constFlag as Bool
 	staticFlag as Bool
+	mapFlag as Bool
 	type as Symbol
 	operator as Operator
 	__init__(r as Renderer, moduleName as String, name as String, nameOnCall:nil as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
-			virtualFlag as Bool, returnThisFlag as Bool, constFlag as Bool, staticFlag as Bool, type as Symbol, operator? as Operator) = {
+			virtualFlag as Bool, returnThisFlag as Bool, returnNilFlag as Bool, constFlag as Bool, staticFlag as Bool, mapFlag as Bool, type as Symbol, operator? as Operator) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.nameOnCall = nameOnCall
 		this.argInfoTbl = argInfoTbl, this.typeName = typeName
-		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.constFlag = constFlag, this.staticFlag = staticFlag
+		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.returnNilFlag = returnNilFlag, this.constFlag = constFlag
+		this.staticFlag = staticFlag, this.mapFlag = mapFlag
 		this.type = type, this.operator = operator
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
@@ -230,6 +233,7 @@ FuncInfo = class {
 		if (!this._typeInfo) { this._typeInfo = this.r.typeInfoMap[this.typeName] }
 		this._typeInfo
 	}
+	GetFlags() = cond(this.mapFlag, 'Flag::Map', 'Flag::None')
 	IsVoid() = (this.typeName == 'void')
 	ComposeArgs() = this.argInfoTbl:*ComposeArgRef().Join(', ')
 	ComposeArgsCDecl() = this.argInfoTbl:*ComposeArgCDecl().Join(', ')
@@ -238,8 +242,8 @@ FuncInfo = class {
 		typeInfo = this.GetTypeInfo()
 		Format('%s %s%s(%s)%s', typeInfo.cType, prefix, this.nameOnCall || this.name, this.ComposeArgsCDecl(), cond(this.constFlag, ' const', ''))
 	}
-	ToString() = Format('%s.%s(%s)%s', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '),
-		cond(this.GetTypeInfo().blockOccurFlag, ' {block?}', ''))
+	ToString() = Format('%s.%s(%s)%s%s', this.moduleName, this.name, this.argInfoTbl:*ToString().Join(', '),
+		cond(this.mapFlag, ':map', ''), cond(this.GetTypeInfo().blockOccurFlag, ' {block?}', ''))
 }
 
 CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
@@ -258,8 +262,10 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	typeName = 'any'
 	virtualFlag = false
 	returnThisFlag = false
+	returnNilFlag = false
 	constFlag = false
 	staticFlag = false
+	mapFlag = false
 	if (expr.IsBinaryOp()) {
 		if (expr.operator.symbol == `as) {
 			//!expr.right.IsIdentifier() && ErrorDone('invalid format for value type')
@@ -277,8 +283,10 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		if (expr.attr.IsSet(`void)) { typeName = 'void' }
 		if (expr.attr.IsSet(`virtual)) { virtualFlag = true }
 		if (expr.attr.IsSet(`returnThis)) { returnThisFlag = true }
+		if (expr.attr.IsSet(`returnNil)) { returnNilFlag = true }
 		if (expr.attr.IsSet(`const)) { constFlag = true }
 		if (expr.attr.IsSet(`static)) { staticFlag = true }
+		if (expr.attr.IsSet(`map)) { mapFlag = true }
 		argInfoTbl = CreateArgInfoTbl(r, expr)
 		if (typeName.IsEmpty()) { typeName = 'any' }
 		symbolName = expr.car.symbolName
@@ -321,14 +329,15 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	} else {
 		ErrorDone(expr, 'Caller is expected')
 	}
-	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, constFlag, staticFlag, type, operator)
+	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, returnNilFlag, constFlag,
+		staticFlag, mapFlag, type, operator)
 }
 
 tmplFunctionImplementation = tR'''
 // ${funcInfo.ToString()}
 Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);

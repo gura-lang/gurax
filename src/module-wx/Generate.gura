@@ -35,6 +35,19 @@ r.DeclareType('String', 'const char*', 'String',
 	return new Gurax::Value_${this.vtype}(static_cast<const char*>(rtn.c_str()));
 	''')
 
+r.DeclareType('wxString', 'wxString', 'String',
+	codePicker = R'''
+	${this.cType} ${varName} = args_gurax.PickString();
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? args_gurax.PickString() : ${defaultValue || 'wxEmptyString'};
+	'''
+	codeConvToC = 'Value_String::GetString(${src})'
+	codeFunctionBody = R'''
+	wxString rtn = ${caller};
+	return new Gurax::Value_${this.vtype}(static_cast<const char*>(rtn.c_str()));
+	''')
+
 r.DeclareType('const_String_r', 'const char*', 'String',
 	codePicker = R'''
 	${this.cType} ${varName} = args_gurax.PickString();
@@ -261,7 +274,7 @@ protected:
 	wx${className}& _entity;
 ${elsif (className == 'Event')}
 protected:
-	std::unique_ptr<wx${className}> _pEntity;
+	wx${className}& _entity;
 	RefPtr<Value> _pValueUserData;
 public:
 	const Value& GetValueUserData() const { return *_pValueUserData; }
@@ -283,6 +296,13 @@ public:
 		${funcInfoVirtualTbl.Each {|funcInfo|}}
 		virtual ${funcInfo.ComposeCDecl()} override;
 		${end}
+		${funcInfoVirtualTbl.Each {|funcInfo|}}
+		${if (funcInfo.IsVoid())}
+		${funcInfo.ComposeCDecl('public_')} { wx${className}::${funcInfo.ComposeCaller()}; }
+		${else}
+		${funcInfo.ComposeCDecl('public_')} { return wx${className}::${funcInfo.ComposeCaller()}; }
+		${end}
+		${end}
 	};
 ${end}
 public:
@@ -302,8 +322,8 @@ ${elsif (className == 'RefCounter')}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
 ${elsif (className == 'Event')}
-	explicit Value_wx${className}(const wx${className}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
-		Value_Object(vtype), _pEntity(entity.Clone()), _pValueUserData(pValueUserData) {}
+	explicit Value_wx${className}(wx${className}& entity, Value* pValueUserData, VType& vtype = VTYPE_wx${className}) :
+		Value_Object(vtype), _entity(entity), _pValueUserData(pValueUserData) {}
 ${elsif (className == 'DC')}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntityHolder(pEntity), _entity(*pEntity) {}
@@ -344,11 +364,16 @@ protected:
 	// Destructor
 	~Value_wx${className}() = default;
 public:
-${if (evtHandlerOrDerivFlag || className in ['Event'] || refCounterOrDerivFlag)}
+${if (evtHandlerOrDerivFlag || refCounterOrDerivFlag)}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
 	wx${className}* GetEntityPtr() { return _pEntity.get(); }
 	const wx${className}* GetEntityPtr() const { return _pEntity.get(); }
+${elsif (className in ['Event'])}
+	wx${className}& GetEntity() { return _entity; }
+	const wx${className}& GetEntity() const { return _entity; }
+	wx${className}* GetEntityPtr() { return &_entity; }
+	const wx${className}* GetEntityPtr() const { return &_entity; }
 ${elsif (classInfo.loosePointerFlag || (classInfoRoot && classInfoRoot.loosePointerFlag))}
 	wx${className}& GetEntity() { return *_pEntity; }
 	const wx${className}& GetEntity() const { return *_pEntity; }
@@ -521,14 +546,17 @@ ${funcInfo.ComposeCDecl('Value_wx' + className + '::EntityT::')}
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		${if (funcInfo.argInfoTbl.IsEmpty())}
 		// (none)
 		${else}
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
 		${funcInfo.argInfoTbl.Each {|argInfo|}}
-		if (!args_gurax.FeedValue(${argInfo.ComposeConvToGurax()})) break;
+		if (!args_gurax.FeedValue(${argInfo.ComposeConvToGurax()})) {
+			Util::ExitMainLoop();
+			break;
+		}
 		${end}
 		${end}
 		// Evaluation
@@ -541,14 +569,22 @@ ${funcInfo.ComposeCDecl('Value_wx' + className + '::EntityT::')}
 		return;
 		${else}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_${funcInfo.GetTypeInfo().vtype})) break;
+		${if (funcInfo.returnNilFlag)}
+		if (pValueRtn->IsNil()) return nullptr;
+		${end}
+		if (!pValueRtn->IsType(VTYPE_${funcInfo.GetTypeInfo().vtype})) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_${funcInfo.GetTypeInfo().vtype}.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return ${funcInfo.GetTypeInfo().ComposeConvToC('*pValueRtn')};
 		${end}
 	} while (0);
 	${if (funcInfo.IsVoid())}
-	wx${className}::${funcInfo.ComposeCaller()};
+	${funcInfo.ComposeCaller('public_')};
 	${else}
-	return wx${className}::${funcInfo.ComposeCaller()};
+	return ${funcInfo.ComposeCaller('public_')};
 	${end}
 }
 
@@ -559,11 +595,12 @@ Gurax_EndModuleScope(wx)
 '''
 
 tmplMethodImplementation = tR'''
-// ${Format('%s.%s#%s(%s)%s', funcInfo.moduleName, className, funcInfo.name,
-	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
+// ${Format('%s.%s#%s(%s)%s%s', funcInfo.moduleName, className, funcInfo.name,
+	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.mapFlag, ':map', ''),
+	cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
 Gurax_DeclareMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -577,7 +614,11 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	${if (funcInfo.virtualFlag)}
+	auto pEntity_gurax = dynamic_cast<Value_wx${className}::EntityT*>(valueThis_gurax.GetEntityPtr());
+	${else}
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	${end}
 	if (!pEntity_gurax) return Value::nil();
 	${if (!funcInfo.argInfoTbl.IsEmpty())}
 	// Arguments
@@ -597,11 +638,12 @@ Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax,
 '''
 
 tmplClassMethodImplementation = tR'''
-// ${Format('%s.%s.%s(%s)%s', funcInfo.moduleName, className, funcInfo.name,
-	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
+// ${Format('%s.%s.%s(%s)%s%s', funcInfo.moduleName, className, funcInfo.name,
+	funcInfo.argInfoTbl:*ToString().Join(', '), cond(funcInfo.mapFlag, ':map', ''),
+	cond(funcInfo.GetTypeInfo().blockOccurFlag, ' {block?}', ''))}
 Gurax_DeclareClassMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	AddHelp(
 		Gurax_Symbol(en),
@@ -716,7 +758,7 @@ ${funcInfoTbl.Each() {|funcInfo|}}
 // ${funcInfo.ToString()}
 Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -1036,7 +1078,7 @@ tmplConstructorImplementation_Object = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -1065,7 +1107,7 @@ tmplConstructorImplementation_EvtHandler = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -1096,7 +1138,7 @@ tmplConstructorImplementation_Pointer = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -1126,7 +1168,7 @@ tmplConstructorImplementation_RefCounter = tR'''
 // ${funcInfo.ToString()} {block?}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
-	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, Flag::None);
+	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
@@ -1309,7 +1351,7 @@ classInfoTbl.Each {|classInfo|
 }
 
 AppendTab(str as String, colAlign as Number) = {
-	str + '\t' * Int((colAlign - str.width + 1) / 4)
+	str + '\t' * Int((colAlign - str.width) / 4)
 }
 
 GenerateVType(classInfoTbl[] as ClassInfo) = {

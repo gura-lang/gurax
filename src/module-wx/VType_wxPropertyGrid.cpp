@@ -1497,7 +1497,7 @@ Gurax_ImplementMethodEx(wxPropertyGrid, GetStatusBar_gurax, processor_gurax, arg
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxPropertyGrid::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxStatusBar(
@@ -1709,7 +1709,7 @@ wxStatusBar* Value_wxPropertyGrid::EntityT::GetStatusBar()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -1719,10 +1719,15 @@ wxStatusBar* Value_wxPropertyGrid::EntityT::GetStatusBar()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxStatusBar)) break;
+		if (!pValueRtn->IsType(VTYPE_wxStatusBar)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxStatusBar.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxStatusBar::GetEntityPtr(*pValueRtn);
 	} while (0);
-	return wxPropertyGrid::GetStatusBar();
+	return public_GetStatusBar();
 }
 
 Gurax_EndModuleScope(wx)

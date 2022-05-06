@@ -28,10 +28,10 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Rect(x? as Number, y? as Number, width? as Number, height? as Number) {block?} {block?}
+// wx.Rect(x? as Number, y? as Number, width? as Number, height? as Number):map {block?} {block?}
 Gurax_DeclareConstructorAlias(Rect_gurax, "Rect")
 {
-	Declare(VTYPE_wxRect, Flag::None);
+	Declare(VTYPE_wxRect, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);

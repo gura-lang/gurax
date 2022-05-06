@@ -4,11 +4,10 @@
 Timer = Class(EvtHandler) {
 	__init__(owner? as EvtHandler_p, id as int = -1) = \
 		R'''
-		if (owner) {
-			return new Value_wxTimer(new wxTimer(owner, id));
-		} else {
-			return new Value_wxTimer(new wxTimer());
-		}
+		auto pEntity_gurax = owner? new Value_wxTimer::EntityT(owner, id) : new Value_wxTimer::EntityT();
+		RefPtr<Value_wxTimer> pValue_gurax(new Value_wxTimer(pEntity_gurax));
+		pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+		return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 		'''
 	GetId() as int
 	GetInterval() as int

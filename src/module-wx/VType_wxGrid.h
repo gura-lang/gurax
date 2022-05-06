@@ -47,6 +47,13 @@ public:
 		virtual wxPen GetDefaultGridLinePen() override;
 		virtual wxPen GetRowGridLinePen(int row) override;
 		virtual void Fit() override;
+		void public_DrawRowLabel(wxDC& dc, int row) { wxGrid::DrawRowLabel(dc, row); }
+		void public_DrawColLabel(wxDC& dc, int col) { wxGrid::DrawColLabel(dc, col); }
+		void public_DrawCornerLabel(wxDC& dc) { wxGrid::DrawCornerLabel(dc); }
+		wxPen public_GetColGridLinePen(int col) { return wxGrid::GetColGridLinePen(col); }
+		wxPen public_GetDefaultGridLinePen() { return wxGrid::GetDefaultGridLinePen(); }
+		wxPen public_GetRowGridLinePen(int row) { return wxGrid::GetRowGridLinePen(row); }
+		void public_Fit() { wxGrid::Fit(); }
 	};
 public:
 	static VType& vtype;

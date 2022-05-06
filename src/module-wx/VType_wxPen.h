@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxPen);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxPen");
+protected:
+	wxPen _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxPen() = delete;
 	explicit Value_wxPen(const wxPen& entity, VType& vtype = VTYPE_wxPen) :
-		Value_wxGDIObject(entity, vtype) {}
+		Value_wxGDIObject(entity, vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxPen(const Value_wxPen& src) = delete;
 	Value_wxPen& operator=(const Value_wxPen& src) = delete;
@@ -48,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxPen() = default;
 public:
-	wxPen& GetEntity() { return reinterpret_cast<wxPen&>(Value_wxGDIObject::GetEntity()); }
-	const wxPen& GetEntity() const { return reinterpret_cast<const wxPen&>(Value_wxGDIObject::GetEntity()); }
-	wxPen* GetEntityPtr() { return reinterpret_cast<wxPen*>(Value_wxGDIObject::GetEntityPtr()); }\
-	const wxPen* GetEntityPtr() const { return reinterpret_cast<const wxPen*>(Value_wxGDIObject::GetEntityPtr()); }
+	wxPen& GetEntity() { return _entity; }
+	const wxPen& GetEntity() const { return _entity; }
+	wxPen* GetEntityPtr() { return &_entity; }
+	const wxPen* GetEntityPtr() const { return &_entity; }
 public:
 	static wxPen& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxPen&>(value).GetEntity();

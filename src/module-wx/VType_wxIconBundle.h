@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxIconBundle);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxIconBundle");
+protected:
+	wxIconBundle _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxIconBundle() = delete;
 	explicit Value_wxIconBundle(const wxIconBundle& entity, VType& vtype = VTYPE_wxIconBundle) :
-		Value_wxGDIObject(entity, vtype) {}
+		Value_wxGDIObject(entity, vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxIconBundle(const Value_wxIconBundle& src) = delete;
 	Value_wxIconBundle& operator=(const Value_wxIconBundle& src) = delete;
@@ -48,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxIconBundle() = default;
 public:
-	wxIconBundle& GetEntity() { return reinterpret_cast<wxIconBundle&>(Value_wxGDIObject::GetEntity()); }
-	const wxIconBundle& GetEntity() const { return reinterpret_cast<const wxIconBundle&>(Value_wxGDIObject::GetEntity()); }
-	wxIconBundle* GetEntityPtr() { return reinterpret_cast<wxIconBundle*>(Value_wxGDIObject::GetEntityPtr()); }\
-	const wxIconBundle* GetEntityPtr() const { return reinterpret_cast<const wxIconBundle*>(Value_wxGDIObject::GetEntityPtr()); }
+	wxIconBundle& GetEntity() { return _entity; }
+	const wxIconBundle& GetEntity() const { return _entity; }
+	wxIconBundle* GetEntityPtr() { return &_entity; }
+	const wxIconBundle* GetEntityPtr() const { return &_entity; }
 public:
 	static wxIconBundle& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxIconBundle&>(value).GetEntity();

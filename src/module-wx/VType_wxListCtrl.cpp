@@ -1939,6 +1939,134 @@ Gurax_ImplementMethodEx(wxListCtrl, SortItems_gurax, processor_gurax, argument_g
 	return new Value_Bool(rtn);
 }
 
+// wx.ListCtrl#OnGetItemAttr(item as Number) {block?}
+Gurax_DeclareMethodAlias(wxListCtrl, OnGetItemAttr_gurax, "OnGetItemAttr")
+{
+	Declare(VTYPE_wxListItemAttr, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, OnGetItemAttr_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxListCtrl::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(
+		*pEntity_gurax->OnGetItemAttr(item)));
+}
+
+// wx.ListCtrl#OnGetItemColumnAttr(item as Number, column as Number) {block?}
+Gurax_DeclareMethodAlias(wxListCtrl, OnGetItemColumnAttr_gurax, "OnGetItemColumnAttr")
+{
+	Declare(VTYPE_wxListItemAttr, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, OnGetItemColumnAttr_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxListCtrl::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	long column = args_gurax.PickNumber<long>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxListItemAttr(
+		*pEntity_gurax->OnGetItemColumnAttr(item, column)));
+}
+
+// wx.ListCtrl#OnGetItemColumnImage(item as Number, column as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, OnGetItemColumnImage_gurax, "OnGetItemColumnImage")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, OnGetItemColumnImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxListCtrl::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	long column = args_gurax.PickNumber<long>();
+	// Function body
+	int rtn = pEntity_gurax->OnGetItemColumnImage(item, column);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#OnGetItemImage(item as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, OnGetItemImage_gurax, "OnGetItemImage")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, OnGetItemImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxListCtrl::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	// Function body
+	int rtn = pEntity_gurax->OnGetItemImage(item);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.ListCtrl#OnGetItemText(item as Number, column as Number)
+Gurax_DeclareMethodAlias(wxListCtrl, OnGetItemText_gurax, "OnGetItemText")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxListCtrl, OnGetItemText_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = dynamic_cast<Value_wxListCtrl::EntityT*>(valueThis_gurax.GetEntityPtr());
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long item = args_gurax.PickNumber<long>();
+	long column = args_gurax.PickNumber<long>();
+	// Function body
+	wxString rtn = pEntity_gurax->OnGetItemText(item, column);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -2023,6 +2151,11 @@ void VType_wxListCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxListCtrl, SetTextColour_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, SetWindowStyleFlag_gurax));
 	Assign(Gurax_CreateMethod(wxListCtrl, SortItems_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, OnGetItemAttr_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, OnGetItemColumnAttr_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, OnGetItemColumnImage_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, OnGetItemImage_gurax));
+	Assign(Gurax_CreateMethod(wxListCtrl, OnGetItemText_gurax));
 }
 
 //------------------------------------------------------------------------------
@@ -2038,5 +2171,178 @@ String Value_wxListCtrl::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Value_wxListCtrl::EntityT
 //------------------------------------------------------------------------------
+wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemAttr(long item) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemAttr");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (pValueRtn->IsNil()) return nullptr;
+		if (!pValueRtn->IsType(VTYPE_wxListItemAttr)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxListItemAttr.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_wxListItemAttr::GetEntityPtr(*pValueRtn);
+	} while (0);
+	return public_OnGetItemAttr(item);
+}
+
+wxListItemAttr* Value_wxListCtrl::EntityT::OnGetItemColumnAttr(long item, long column) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemColumnAttr");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (pValueRtn->IsNil()) return nullptr;
+		if (!pValueRtn->IsType(VTYPE_wxListItemAttr)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxListItemAttr.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_wxListItemAttr::GetEntityPtr(*pValueRtn);
+	} while (0);
+	return public_OnGetItemColumnAttr(item, column);
+}
+
+int Value_wxListCtrl::EntityT::OnGetItemColumnImage(long item, long column) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemColumnImage");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Number.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_Number::GetNumber<int>(*pValueRtn);
+	} while (0);
+	return public_OnGetItemColumnImage(item, column);
+}
+
+int Value_wxListCtrl::EntityT::OnGetItemImage(long item) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemImage");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Number.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_Number::GetNumber<int>(*pValueRtn);
+	} while (0);
+	return public_OnGetItemImage(item);
+}
+
+wxString Value_wxListCtrl::EntityT::OnGetItemText(long item, long column) const
+{
+	static const Symbol* pSymbolFunc = nullptr;
+	if (!pSymbolFunc) pSymbolFunc = Symbol::Add("OnGetItemText");
+	do {
+		Gurax::Function* pFunc_gurax;
+		RefPtr<Gurax::Argument> pArgument_gurax;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		// Argument
+		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(item))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(column))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Evaluation
+		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
+		if (Error::IsIssued()) {
+			Util::ExitMainLoop();
+			break;
+		}
+		// Return Value
+		if (!pValueRtn->IsType(VTYPE_String)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_String.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
+		return Value_String::GetString(*pValueRtn);
+	} while (0);
+	return public_OnGetItemText(item, column);
+}
 
 Gurax_EndModuleScope(wx)

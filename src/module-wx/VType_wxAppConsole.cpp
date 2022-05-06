@@ -63,7 +63,7 @@ Gurax_ImplementMethodEx(wxAppConsole, OnInit_gurax, processor_gurax, argument_gu
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxAppConsole::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	bool rtn = pEntity_gurax->OnInit();
@@ -109,7 +109,7 @@ bool Value_wxAppConsole::EntityT::OnInit()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -119,10 +119,15 @@ bool Value_wxAppConsole::EntityT::OnInit()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxAppConsole::OnInit();
+	return public_OnInit();
 }
 
 Gurax_EndModuleScope(wx)

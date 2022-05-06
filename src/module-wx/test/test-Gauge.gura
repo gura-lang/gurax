@@ -1,0 +1,71 @@
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	gaugesTbl[] as wx.Gauge = []
+	timer as wx.Timer
+	timerId = 100
+	label as wx.StaticText
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		this.timer = wx.Timer(this, this.timerId)
+		wx.EVT_TIMER(this, this.OnTimer, this.timerId)
+		wx.BoxSizer(wx.VERTICAL) {|vbox|
+			sizerTop.Add(vbox, wx.SizerFlags().Expand())
+			wx.Gauge(this, wx.ID_ANY, range = 100, size = wx.Size(-1, 30), style = wx.GA_HORIZONTAL) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				this.gaugesTbl.Add(ctrl)
+				ctrl.SetValue(0)
+			}
+			wx.Gauge(this, wx.ID_ANY, range = 100, size = wx.Size(-1, 30), style = wx.GA_HORIZONTAL | wx.GA_SMOOTH) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 2))
+				this.gaugesTbl.Add(ctrl)
+				ctrl.SetValue(0)
+			}
+		}
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags(1).Expand().Border(wx.TOP, 2))
+			wx.Gauge(this, wx.ID_ANY, range = 100, size = wx.Size(30, -1), style = wx.GA_VERTICAL) {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand())
+				this.gaugesTbl.Add(ctrl)
+				ctrl.SetValue(0)
+			}
+			wx.Gauge(this, wx.ID_ANY, range = 100, size = wx.Size(30, -1), style = wx.GA_VERTICAL | wx.GA_SMOOTH) {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 2))
+				this.gaugesTbl.Add(ctrl)
+				ctrl.SetValue(0)
+			}
+			wx.StaticText(this, wx.ID_ANY, '', style = wx.ALIGN_CENTRE_HORIZONTAL | wx.ST_NO_AUTORESIZE) {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags(1).Align(wx.CENTRE))
+				font = ctrl.GetFont()
+				font.SetPointSize(30)
+				ctrl.SetFont(font)
+				this.label = ctrl
+			}
+		}
+		this.UpdateLabel()
+		this.timer.Start(40)
+	}
+	OnTimer(event) = {
+		this.gaugesTbl::Pulse()
+		this.UpdateLabel()
+	}
+	UpdateLabel() = {
+		this.label.SetLabel(Format('Value = %d', this.gaugesTbl[0].GetValue()))
+	}
+}
+
+wx.ImplementApp(MyApp())

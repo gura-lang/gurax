@@ -1,10 +1,8 @@
 #!/usr/bin/env gurax
 import(wx)
+import(DummyAddress)
 
-monthNames = [
-	'January', 'February', 'March', 'April', 'May', 'June'
-	'July', 'August', 'September', 'October', 'November', 'December'
-]
+names = DummyAddress.addressTbl.Head(20)::name
 
 MyApp = class(wx.App) {
 	OnInit() = {
@@ -30,7 +28,7 @@ PanelTop = class(wx.Panel) {
 			wx.StaticText(this, wx.ID_ANY, '(No flags)') {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 			}
-			wx.Choice(this, wx.ID_ANY, choices = monthNames) {|ctrl|
+			wx.Choice(this, wx.ID_ANY, choices = names) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 				ctrl.SetSelection(0)
 				wx.EVT_CHOICE(ctrl, this.OnChoice, userData = ctrl)
@@ -38,7 +36,7 @@ PanelTop = class(wx.Panel) {
 			wx.StaticText(this, wx.ID_ANY, 'CB_SORT') {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 			}
-			wx.Choice(this, wx.ID_ANY, style = wx.CB_SORT , choices = monthNames) {|ctrl|
+			wx.Choice(this, wx.ID_ANY, style = wx.CB_SORT , choices = names) {|ctrl|
 				sizer.Add(ctrl, wx.SizerFlags().Expand())
 				ctrl.SetSelection(0)
 				wx.EVT_CHOICE(ctrl, this.OnChoice, userData = ctrl)

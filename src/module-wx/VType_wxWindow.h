@@ -44,6 +44,11 @@ public:
 		virtual bool AcceptsFocusRecursively() const override;
 		virtual bool HasFocus() const override;
 		virtual void SetCanFocus(bool canFocus) override;
+		bool public_AcceptsFocus() const { return wxWindow::AcceptsFocus(); }
+		bool public_AcceptsFocusFromKeyboard() const { return wxWindow::AcceptsFocusFromKeyboard(); }
+		bool public_AcceptsFocusRecursively() const { return wxWindow::AcceptsFocusRecursively(); }
+		bool public_HasFocus() const { return wxWindow::HasFocus(); }
+		void public_SetCanFocus(bool canFocus) { wxWindow::SetCanFocus(canFocus); }
 	};
 public:
 	static VType& vtype;

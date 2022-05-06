@@ -1,9 +1,60 @@
 #!/usr/bin/env gurax
 import(wx)
+import(image)
+import(DummyAddress)
 
-monthNames = [
-	'January', 'February', 'March', 'April', 'May', 'June'
-	'July', 'August', 'September', 'October', 'November', 'December'
+names = DummyAddress.addressTbl.Head(20)::name
+
+indices = [
+`page
+`page_alert
+`page_attachment
+`page_bookmark
+`page_boy
+`page_code
+`page_colors
+`page_component
+`page_cross
+`page_delete
+`page_deny
+`page_down
+`page_dynamic
+`page_edit
+`page_extension
+`page_favourites
+`page_find
+`page_flash
+`page_girl
+`page_html
+`page_java
+`page_key
+`page_left
+`page_link
+`page_lock
+`page_new
+`page_next
+`page_package
+`page_php
+`page_prev
+`page_refresh
+`page_right
+`page_script
+`page_security
+`page_settings
+`page_sound
+`page_tag_blue
+`page_tag_red
+`page_text
+`page_text_delete
+`page_tick
+`page_tree
+`page_up
+`page_url
+`page_user
+`page_user_dark
+`page_user_light
+`page_video
+`page_wizard
 ]
 
 MyApp = class(wx.App) {
@@ -25,28 +76,36 @@ PanelTop = class(wx.Panel) {
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		tupples = [
-			('(no flags)',			0)
-			('CB_DROPDOWN',			wx.CB_DROPDOWN)
-			('CB_READONLY',			wx.CB_READONLY)
-			('TE_PROCESS_ENTER',	wx.TE_PROCESS_ENTER)
+			('(no flags)',			0,						false)
+			('CB_DROPDOWN',			wx.CB_DROPDOWN,			false)
+			('CB_READONLY',			wx.CB_READONLY,			false)
+			('CB_READONLY',			wx.CB_READONLY,			true)
+			('TE_PROCESS_ENTER',	wx.TE_PROCESS_ENTER,	false)
 		]
 		wx.FlexGridSizer(2, wx.Size(16, 8)) {|sizer|
 			sizerTop.Add(sizer, wx.SizerFlags().Expand().Border(wx.TOP | wx.BOTTOM, 8))
 			sizer.AddGrowableCol(1)
 			tupples.Each {|tuple|
-				[label, style] = tuple
+				[label, style, bitmapFlag] = tuple
+				if (bitmapFlag) {
+					label += ' bitmap'
+					ctrlCB = wx.BitmapComboBox(this, wx.ID_ANY, choices = names, style = style)
+					repeat(names.len) {|iItem|
+						ctrlCB.SetItemBitmap(iItem, image.mini_icons[indices[iItem]])
+					}
+				} else {
+					ctrlCB = wx.ComboBox(this, wx.ID_ANY, choices = names, style = style)
+				}
 				wx.StaticText(this, wx.ID_ANY, label) {|ctrl|
 					sizer.Add(ctrl, wx.SizerFlags().Expand())
 				}
-				wx.ComboBox(this, wx.ID_ANY, choices = monthNames, style = style) {|ctrl|
-					sizer.Add(ctrl, wx.SizerFlags().Expand())
-					ctrl.SetSelection(0)
-					wx.EVT_COMBOBOX(ctrl, this.OnComboBox, userData = label)
-					wx.EVT_TEXT(ctrl, this.OnText, userData = label)
-					wx.EVT_TEXT_ENTER(ctrl, this.OnTextEnter, userData = label)
-					wx.EVT_COMBOBOX_DROPDOWN(ctrl, this.OnComboBoxDropDown, userData = label)
-					wx.EVT_COMBOBOX_CLOSEUP(ctrl, this.OnComboBoxCloseUp, userData = label)
-				}
+				sizer.Add(ctrlCB, wx.SizerFlags().Expand())
+				ctrlCB.SetSelection(0)
+				wx.EVT_COMBOBOX(ctrlCB, this.OnComboBox, userData = label)
+				wx.EVT_TEXT(ctrlCB, this.OnText, userData = label)
+				wx.EVT_TEXT_ENTER(ctrlCB, this.OnTextEnter, userData = label)
+				wx.EVT_COMBOBOX_DROPDOWN(ctrlCB, this.OnComboBoxDropDown, userData = label)
+				wx.EVT_COMBOBOX_CLOSEUP(ctrlCB, this.OnComboBoxCloseUp, userData = label)
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|

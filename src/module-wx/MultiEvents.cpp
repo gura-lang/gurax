@@ -5,13 +5,13 @@
 
 Gurax_BeginModuleScope(wx)
 
-// wx.EVT_JOYSTICK_EVENTS(handler.wxEvtHandler, id:Number, funct:Any)
+// wx.EVT_JOYSTICK_EVENTS(handler as wx.EvtHandler, funct as Any, id? as Number)
 Gurax_DeclareFunction(EVT_JOYSTICK_EVENTS)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -29,13 +29,13 @@ Gurax_ImplementFunction(EVT_JOYSTICK_EVENTS)
 	return Value::nil();
 }
 
-// wx.EVT_MOUSE_EVENTS(handler.wxEvtHandler, id:Number, funct:Any)
+// wx.EVT_MOUSE_EVENTS(handler as wx.EvtHandler, funct as Any, id? as Number)
 Gurax_DeclareFunction(EVT_MOUSE_EVENTS)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -68,13 +68,13 @@ Gurax_ImplementFunction(EVT_MOUSE_EVENTS)
 	return Value::nil();
 }
 
-// wx.EVT_SCROLL(handler.wxEvtHandler, id:Number, funct:Any)
+// wx.EVT_SCROLL(handler as wx.EvtHandler, funct as Any, id? as Number)
 Gurax_DeclareFunction(EVT_SCROLL)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -97,13 +97,13 @@ Gurax_ImplementFunction(EVT_SCROLL)
 	return Value::nil();
 }
 
-// wx.EVT_SCROLLWIN(handler.wxEvtHandler, id:Number, funct:Any)
+// wx.EVT_SCROLLWIN(handler as wx.EvtHandler, funct as Any, id? as Number)
 Gurax_DeclareFunction(EVT_SCROLLWIN)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");

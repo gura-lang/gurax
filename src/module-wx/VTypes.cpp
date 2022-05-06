@@ -245,6 +245,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxListCtrl);
 	frame.Assign(VTYPE_wxListEvent);
 	frame.Assign(VTYPE_wxListItem);
+	frame.Assign(VTYPE_wxListItemAttr);
 	frame.Assign(VTYPE_wxListView);
 	frame.Assign(VTYPE_wxLog);
 	frame.Assign(VTYPE_wxMultiChoiceProperty);

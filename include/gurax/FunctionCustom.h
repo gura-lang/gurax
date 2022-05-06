@@ -22,6 +22,7 @@ public:
 	void SetFrameHolder(Frame* pFrameHolder) { _pFrameHolder.reset(pFrameHolder); }
 public:
 	// Virtual functions of Function
+	virtual bool IsCustom() const override { return true; }
 	virtual const Expr& GetExprBody() const override { return *_pExprBody; }
 	virtual const PUnit* GetPUnitBody() const override { return _pPUnitBody; }
 	virtual void DoExec(Processor& processor, Argument& argument) const override;

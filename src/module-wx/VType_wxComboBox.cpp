@@ -1003,6 +1003,26 @@ Gurax_ImplementMethodEx(wxComboBox, Cut_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// wx.ComboBox#GetLastPosition()
+Gurax_DeclareMethodAlias(wxComboBox, GetLastPosition_gurax, "GetLastPosition")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxComboBox, GetLastPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	long rtn = pEntity_gurax->GetLastPosition();
+	return new Gurax::Value_Number(rtn);
+}
+
 // wx.ComboBox#GetRange(from as Number, to as Number)
 Gurax_DeclareMethodAlias(wxComboBox, GetRange_gurax, "GetRange")
 {
@@ -1515,6 +1535,7 @@ void VType_wxComboBox::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxComboBox, ChangeValue_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Copy_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, Cut_gurax));
+	Assign(Gurax_CreateMethod(wxComboBox, GetLastPosition_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetRange_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, GetValue_gurax));
 	Assign(Gurax_CreateMethod(wxComboBox, IsEditable_gurax));

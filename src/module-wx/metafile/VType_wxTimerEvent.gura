@@ -2,11 +2,10 @@
 // VType_wxTimerEvent.gura
 //==============================================================================
 TimerEvent = Class(Event) {
-	@include['wx/timer.h']
 	GetInterval() as int
-	//GetTimer() as Timer_r
+	//GetTimer() as Timer
 }
 
 @event {
-
+    EVT_TIMER >> TimerEvent
 }

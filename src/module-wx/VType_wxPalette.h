@@ -31,13 +31,15 @@ public:
 	Gurax_DeclareReferable(Value_wxPalette);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxPalette");
+protected:
+	wxPalette _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxPalette() = delete;
 	explicit Value_wxPalette(const wxPalette& entity, VType& vtype = VTYPE_wxPalette) :
-		Value_wxGDIObject(entity, vtype) {}
+		Value_wxGDIObject(entity, vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxPalette(const Value_wxPalette& src) = delete;
 	Value_wxPalette& operator=(const Value_wxPalette& src) = delete;
@@ -48,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxPalette() = default;
 public:
-	wxPalette& GetEntity() { return reinterpret_cast<wxPalette&>(Value_wxGDIObject::GetEntity()); }
-	const wxPalette& GetEntity() const { return reinterpret_cast<const wxPalette&>(Value_wxGDIObject::GetEntity()); }
-	wxPalette* GetEntityPtr() { return reinterpret_cast<wxPalette*>(Value_wxGDIObject::GetEntityPtr()); }\
-	const wxPalette* GetEntityPtr() const { return reinterpret_cast<const wxPalette*>(Value_wxGDIObject::GetEntityPtr()); }
+	wxPalette& GetEntity() { return _entity; }
+	const wxPalette& GetEntity() const { return _entity; }
+	wxPalette* GetEntityPtr() { return &_entity; }
+	const wxPalette* GetEntityPtr() const { return &_entity; }
 public:
 	static wxPalette& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxPalette&>(value).GetEntity();

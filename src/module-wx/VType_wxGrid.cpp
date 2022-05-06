@@ -136,7 +136,7 @@ Gurax_ImplementMethodEx(wxGrid, DrawRowLabel_gurax, processor_gurax, argument_gu
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxGrid::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -190,7 +190,7 @@ Gurax_ImplementMethodEx(wxGrid, DrawColLabel_gurax, processor_gurax, argument_gu
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxGrid::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -216,7 +216,7 @@ Gurax_ImplementMethodEx(wxGrid, DrawCornerLabel_gurax, processor_gurax, argument
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxGrid::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -559,7 +559,7 @@ Gurax_ImplementMethodEx(wxGrid, GetColGridLinePen_gurax, processor_gurax, argume
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxGrid::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -583,7 +583,7 @@ Gurax_ImplementMethodEx(wxGrid, GetDefaultGridLinePen_gurax, processor_gurax, ar
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxGrid::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPen(
@@ -626,7 +626,7 @@ Gurax_ImplementMethodEx(wxGrid, GetRowGridLinePen_gurax, processor_gurax, argume
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxGrid::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -5103,7 +5103,7 @@ Gurax_ImplementMethodEx(wxGrid, Fit_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxGrid::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	pEntity_gurax->Fit();
@@ -5982,11 +5982,17 @@ void Value_wxGrid::EntityT::DrawRowLabel(wxDC& dc, int row)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) break;
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) break;
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -5995,7 +6001,7 @@ void Value_wxGrid::EntityT::DrawRowLabel(wxDC& dc, int row)
 		}
 		return;
 	} while (0);
-	wxGrid::DrawRowLabel(dc, row);
+	public_DrawRowLabel(dc, row);
 }
 
 void Value_wxGrid::EntityT::DrawColLabel(wxDC& dc, int col)
@@ -6005,11 +6011,17 @@ void Value_wxGrid::EntityT::DrawColLabel(wxDC& dc, int col)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) break;
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) break;
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6018,7 +6030,7 @@ void Value_wxGrid::EntityT::DrawColLabel(wxDC& dc, int col)
 		}
 		return;
 	} while (0);
-	wxGrid::DrawColLabel(dc, col);
+	public_DrawColLabel(dc, col);
 }
 
 void Value_wxGrid::EntityT::DrawCornerLabel(wxDC& dc)
@@ -6028,10 +6040,13 @@ void Value_wxGrid::EntityT::DrawCornerLabel(wxDC& dc)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxDC(dc))) break;
+		if (!args_gurax.FeedValue(new Value_wxDC(dc))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6040,7 +6055,7 @@ void Value_wxGrid::EntityT::DrawCornerLabel(wxDC& dc)
 		}
 		return;
 	} while (0);
-	wxGrid::DrawCornerLabel(dc);
+	public_DrawCornerLabel(dc);
 }
 
 wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
@@ -6050,10 +6065,13 @@ wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(col))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6061,10 +6079,15 @@ wxPen Value_wxGrid::EntityT::GetColGridLinePen(int col)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxPen)) break;
+		if (!pValueRtn->IsType(VTYPE_wxPen)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxPen.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxPen::GetEntity(*pValueRtn);
 	} while (0);
-	return wxGrid::GetColGridLinePen(col);
+	return public_GetColGridLinePen(col);
 }
 
 wxPen Value_wxGrid::EntityT::GetDefaultGridLinePen()
@@ -6074,7 +6097,7 @@ wxPen Value_wxGrid::EntityT::GetDefaultGridLinePen()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -6084,10 +6107,15 @@ wxPen Value_wxGrid::EntityT::GetDefaultGridLinePen()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxPen)) break;
+		if (!pValueRtn->IsType(VTYPE_wxPen)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxPen.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxPen::GetEntity(*pValueRtn);
 	} while (0);
-	return wxGrid::GetDefaultGridLinePen();
+	return public_GetDefaultGridLinePen();
 }
 
 wxPen Value_wxGrid::EntityT::GetRowGridLinePen(int row)
@@ -6097,10 +6125,13 @@ wxPen Value_wxGrid::EntityT::GetRowGridLinePen(int row)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Number(row))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6108,10 +6139,15 @@ wxPen Value_wxGrid::EntityT::GetRowGridLinePen(int row)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_wxPen)) break;
+		if (!pValueRtn->IsType(VTYPE_wxPen)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_wxPen.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_wxPen::GetEntity(*pValueRtn);
 	} while (0);
-	return wxGrid::GetRowGridLinePen(row);
+	return public_GetRowGridLinePen(row);
 }
 
 void Value_wxGrid::EntityT::Fit()
@@ -6121,7 +6157,7 @@ void Value_wxGrid::EntityT::Fit()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -6132,7 +6168,7 @@ void Value_wxGrid::EntityT::Fit()
 		}
 		return;
 	} while (0);
-	wxGrid::Fit();
+	public_Fit();
 }
 
 Gurax_EndModuleScope(wx)

@@ -237,6 +237,7 @@ set(SRCFILES_VTYPE
 	VType_wxListCtrl.cpp
 	VType_wxListEvent.cpp
 	VType_wxListItem.cpp
+	VType_wxListItemAttr.cpp
 	VType_wxListView.cpp
 	VType_wxLog.cpp
 	VType_wxMultiChoiceProperty.cpp

@@ -17,7 +17,7 @@ TextEntry = Class():mixin {
 	Copy() as void
 	Cut() as void
 	GetInsertionPoint() as long
-	//GetLastPosition() as TextPos
+	GetLastPosition() as long
 	GetRange(from as long, to as long) as String
 	GetSelection() as Tuple@gurax = \
 		R'''

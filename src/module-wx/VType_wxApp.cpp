@@ -64,7 +64,7 @@ Gurax_ImplementMethodEx(wxApp, OnCmdLineError_gurax, processor_gurax, argument_g
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -89,7 +89,7 @@ Gurax_ImplementMethodEx(wxApp, OnCmdLineHelp_gurax, processor_gurax, argument_gu
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -114,7 +114,7 @@ Gurax_ImplementMethodEx(wxApp, OnCmdLineParsed_gurax, processor_gurax, argument_
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -138,7 +138,7 @@ Gurax_ImplementMethodEx(wxApp, OnExceptionInMainLoop_gurax, processor_gurax, arg
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	bool rtn = pEntity_gurax->OnExceptionInMainLoop();
@@ -158,7 +158,7 @@ Gurax_ImplementMethodEx(wxApp, OnExit_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	int rtn = pEntity_gurax->OnExit();
@@ -178,7 +178,7 @@ Gurax_ImplementMethodEx(wxApp, OnFatalException_gurax, processor_gurax, argument
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	pEntity_gurax->OnFatalException();
@@ -198,7 +198,7 @@ Gurax_ImplementMethodEx(wxApp, OnInit_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	bool rtn = pEntity_gurax->OnInit();
@@ -218,7 +218,7 @@ Gurax_ImplementMethodEx(wxApp, OnUnhandledException_gurax, processor_gurax, argu
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxApp::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	pEntity_gurax->OnUnhandledException();
@@ -293,10 +293,13 @@ bool Value_wxApp::EntityT::OnCmdLineError(wxCmdLineParser& parser)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) break;
+		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -304,10 +307,15 @@ bool Value_wxApp::EntityT::OnCmdLineError(wxCmdLineParser& parser)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnCmdLineError(parser);
+	return public_OnCmdLineError(parser);
 }
 
 bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
@@ -317,10 +325,13 @@ bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) break;
+		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -328,10 +339,15 @@ bool Value_wxApp::EntityT::OnCmdLineHelp(wxCmdLineParser& parser)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnCmdLineHelp(parser);
+	return public_OnCmdLineHelp(parser);
 }
 
 bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
@@ -341,10 +357,13 @@ bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) break;
+		if (!args_gurax.FeedValue(new Value_wxCmdLineParser(parser))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -352,10 +371,15 @@ bool Value_wxApp::EntityT::OnCmdLineParsed(wxCmdLineParser& parser)
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnCmdLineParsed(parser);
+	return public_OnCmdLineParsed(parser);
 }
 
 bool Value_wxApp::EntityT::OnExceptionInMainLoop()
@@ -365,7 +389,7 @@ bool Value_wxApp::EntityT::OnExceptionInMainLoop()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -375,10 +399,15 @@ bool Value_wxApp::EntityT::OnExceptionInMainLoop()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnExceptionInMainLoop();
+	return public_OnExceptionInMainLoop();
 }
 
 int Value_wxApp::EntityT::OnExit()
@@ -388,7 +417,7 @@ int Value_wxApp::EntityT::OnExit()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -398,10 +427,15 @@ int Value_wxApp::EntityT::OnExit()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Number)) break;
+		if (!pValueRtn->IsType(VTYPE_Number)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Number.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Number::GetNumber<int>(*pValueRtn);
 	} while (0);
-	return wxApp::OnExit();
+	return public_OnExit();
 }
 
 void Value_wxApp::EntityT::OnFatalException()
@@ -411,7 +445,7 @@ void Value_wxApp::EntityT::OnFatalException()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -422,7 +456,7 @@ void Value_wxApp::EntityT::OnFatalException()
 		}
 		return;
 	} while (0);
-	wxApp::OnFatalException();
+	public_OnFatalException();
 }
 
 bool Value_wxApp::EntityT::OnInit()
@@ -432,7 +466,7 @@ bool Value_wxApp::EntityT::OnInit()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -442,10 +476,15 @@ bool Value_wxApp::EntityT::OnInit()
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxApp::OnInit();
+	return public_OnInit();
 }
 
 void Value_wxApp::EntityT::OnUnhandledException()
@@ -455,7 +494,7 @@ void Value_wxApp::EntityT::OnUnhandledException()
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -466,7 +505,7 @@ void Value_wxApp::EntityT::OnUnhandledException()
 		}
 		return;
 	} while (0);
-	wxApp::OnUnhandledException();
+	public_OnUnhandledException();
 }
 
 Gurax_EndModuleScope(wx)

@@ -240,6 +240,7 @@
 #include "VType_wxListCtrl.h"
 #include "VType_wxListEvent.h"
 #include "VType_wxListItem.h"
+#include "VType_wxListItemAttr.h"
 #include "VType_wxListView.h"
 #include "VType_wxLog.h"
 #include "VType_wxMultiChoiceProperty.h"

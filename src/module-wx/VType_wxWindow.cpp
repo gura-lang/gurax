@@ -63,7 +63,7 @@ Gurax_ImplementMethodEx(wxWindow, AcceptsFocus_gurax, processor_gurax, argument_
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxWindow::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	bool rtn = pEntity_gurax->AcceptsFocus();
@@ -83,7 +83,7 @@ Gurax_ImplementMethodEx(wxWindow, AcceptsFocusFromKeyboard_gurax, processor_gura
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxWindow::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	bool rtn = pEntity_gurax->AcceptsFocusFromKeyboard();
@@ -103,7 +103,7 @@ Gurax_ImplementMethodEx(wxWindow, AcceptsFocusRecursively_gurax, processor_gurax
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxWindow::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	bool rtn = pEntity_gurax->AcceptsFocusRecursively();
@@ -183,7 +183,7 @@ Gurax_ImplementMethodEx(wxWindow, HasFocus_gurax, processor_gurax, argument_gura
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxWindow::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	bool rtn = pEntity_gurax->HasFocus();
@@ -204,7 +204,7 @@ Gurax_ImplementMethodEx(wxWindow, SetCanFocus_gurax, processor_gurax, argument_g
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	auto pEntity_gurax = dynamic_cast<Value_wxWindow::EntityT*>(valueThis_gurax.GetEntityPtr());
 	if (!pEntity_gurax) return Value::nil();
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
@@ -6172,7 +6172,7 @@ bool Value_wxWindow::EntityT::AcceptsFocus() const
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -6182,10 +6182,15 @@ bool Value_wxWindow::EntityT::AcceptsFocus() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxWindow::AcceptsFocus();
+	return public_AcceptsFocus();
 }
 
 bool Value_wxWindow::EntityT::AcceptsFocusFromKeyboard() const
@@ -6195,7 +6200,7 @@ bool Value_wxWindow::EntityT::AcceptsFocusFromKeyboard() const
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -6205,10 +6210,15 @@ bool Value_wxWindow::EntityT::AcceptsFocusFromKeyboard() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxWindow::AcceptsFocusFromKeyboard();
+	return public_AcceptsFocusFromKeyboard();
 }
 
 bool Value_wxWindow::EntityT::AcceptsFocusRecursively() const
@@ -6218,7 +6228,7 @@ bool Value_wxWindow::EntityT::AcceptsFocusRecursively() const
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -6228,10 +6238,15 @@ bool Value_wxWindow::EntityT::AcceptsFocusRecursively() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxWindow::AcceptsFocusRecursively();
+	return public_AcceptsFocusRecursively();
 }
 
 bool Value_wxWindow::EntityT::HasFocus() const
@@ -6241,7 +6256,7 @@ bool Value_wxWindow::EntityT::HasFocus() const
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		// (none)
 		// Evaluation
@@ -6251,10 +6266,15 @@ bool Value_wxWindow::EntityT::HasFocus() const
 			break;
 		}
 		// Return Value
-		if (!pValueRtn->IsType(VTYPE_Bool)) break;
+		if (!pValueRtn->IsType(VTYPE_Bool)) {
+			Error::Issue(ErrorType::TypeError, "the function is expected to return a value of %s",
+				VTYPE_Bool.MakeFullName().c_str());
+			Util::ExitMainLoop();
+			break;
+		}
 		return Value_Bool::GetBool(*pValueRtn);
 	} while (0);
-	return wxWindow::HasFocus();
+	return public_HasFocus();
 }
 
 void Value_wxWindow::EntityT::SetCanFocus(bool canFocus)
@@ -6264,10 +6284,13 @@ void Value_wxWindow::EntityT::SetCanFocus(bool canFocus)
 	do {
 		Gurax::Function* pFunc_gurax;
 		RefPtr<Gurax::Argument> pArgument_gurax;
-		if (!core_gurax.PrepareMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
+		if (!core_gurax.PrepareOverrideMethod(pSymbolFunc, &pFunc_gurax, pArgument_gurax)) break;
 		// Argument
 		Gurax::ArgFeeder args_gurax(*pArgument_gurax, core_gurax.GetProcessor().GetFrameCur());
-		if (!args_gurax.FeedValue(new Gurax::Value_Bool(canFocus))) break;
+		if (!args_gurax.FeedValue(new Gurax::Value_Bool(canFocus))) {
+			Util::ExitMainLoop();
+			break;
+		}
 		// Evaluation
 		RefPtr<Value> pValueRtn(pFunc_gurax->Eval(core_gurax.GetProcessor(), *pArgument_gurax));
 		if (Error::IsIssued()) {
@@ -6276,7 +6299,7 @@ void Value_wxWindow::EntityT::SetCanFocus(bool canFocus)
 		}
 		return;
 	} while (0);
-	wxWindow::SetCanFocus(canFocus);
+	public_SetCanFocus(canFocus);
 }
 
 Gurax_EndModuleScope(wx)

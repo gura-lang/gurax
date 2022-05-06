@@ -1156,6 +1156,31 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetSelection_gurax, processor_gurax, argumen
 		pEntity_gurax->GetSelection()));
 }
 
+// wx.TreeCtrl#GetSelections()
+Gurax_DeclareMethodAlias(wxTreeCtrl, GetSelections_gurax, "GetSelections")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxTreeCtrl, GetSelections_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxArrayTreeItemIds treeItemIds;
+	pEntity_gurax->GetSelections(treeItemIds);
+	RefPtr<ValueOwner> pValues(new ValueOwner());
+	for (const wxTreeItemId& treeItemId : treeItemIds) {
+		pValues->push_back(new Value_wxTreeItemId(treeItemId));
+	}
+	return new Value_List(VTYPE_wxTreeItemId, pValues.release());
+}
+
 // wx.TreeCtrl#GetStateImageList() {block?}
 Gurax_DeclareMethodAlias(wxTreeCtrl, GetStateImageList_gurax, "GetStateImageList")
 {
@@ -2065,6 +2090,7 @@ void VType_wxTreeCtrl::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetQuickBestSize_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetRootItem_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetSelection_gurax));
+	Assign(Gurax_CreateMethod(wxTreeCtrl, GetSelections_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, GetStateImageList_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, HitTest_gurax));
 	Assign(Gurax_CreateMethod(wxTreeCtrl, InsertItem_gurax));
