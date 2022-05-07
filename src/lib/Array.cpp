@@ -675,6 +675,7 @@ void Dot_ArrayArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const vo
 			for (size_t k = 0; k < l; k++, pL++, pR += n) {
 				elemRtn += static_cast<T_ElemRtn>(*pL) * static_cast<T_ElemRtn>(*pR);
 			}
+			*pRtn = elemRtn;
 		}
 	}
 }
