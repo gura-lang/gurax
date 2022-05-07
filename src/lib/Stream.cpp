@@ -407,7 +407,7 @@ Iterator_ReadLines::Iterator_ReadLines(Stream* pStream, size_t nLines, bool incl
 
 Value* Iterator_ReadLines::DoNextValue()
 {
-	if (_doneFlag || _idxCur >= static_cast<int>(_nLines)) return nullptr;
+	if (_doneFlag || static_cast<size_t>(_idxCur) >= _nLines) return nullptr;
 	String str;
 	if (!GetStream().ReadLine(str, _includeEOLFlag)) {
 		_doneFlag = true;
