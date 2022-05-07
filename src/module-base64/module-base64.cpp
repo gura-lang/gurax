@@ -43,7 +43,7 @@ Gurax_ImplementFunction(Decode)
 	ArgPicker args(argument);
 	Stream& streamSrc = args.PickStream();
 	Stream* pStreamDst = args.IsValid()? &args.PickStream() : nullptr;
-	size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : 72;
+	//size_t nCharsPerLine = args.IsValid()? args.PickNumberNonNeg<size_t>() : 72;
 	const Info& info =
 		argument.IsSet(Gurax_Symbol(base16))? Info::Base16 : 
 		argument.IsSet(Gurax_Symbol(base32))? Info::Base32 : 

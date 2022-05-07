@@ -5,32 +5,32 @@
 
 namespace Gurax {
 
-static DeclCallable* ComposeDeclCallable(const char* src)
-{
-	RefPtr<Expr_Collector> pExprRoot(Parser::ParseString(String(src).append("={}").c_str()));
-	if (!pExprRoot) return nullptr;
-	const Expr* pExpr = pExprRoot->GetExprElemFirst();
-	if (pExpr->IsType<Expr_Assign>()) {
-		const Expr_Assign* pExprEx = dynamic_cast<const Expr_Assign*>(pExpr);
-		const Expr* pExpr = &pExprEx->GetExprLeft();
-		if (pExpr->IsType<Expr_Caller>()) {
-			const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
-			return pExprEx->GetDeclCallable().Reference();
-		}
-	}
-	return nullptr;
-}
+//static DeclCallable* ComposeDeclCallable(const char* src)
+//{
+//	RefPtr<Expr_Collector> pExprRoot(Parser::ParseString(String(src).append("={}").c_str()));
+//	if (!pExprRoot) return nullptr;
+//	const Expr* pExpr = pExprRoot->GetExprElemFirst();
+//	if (pExpr->IsType<Expr_Assign>()) {
+//		const Expr_Assign* pExprEx = dynamic_cast<const Expr_Assign*>(pExpr);
+//		const Expr* pExpr = &pExprEx->GetExprLeft();
+//		if (pExpr->IsType<Expr_Caller>()) {
+//			const Expr_Caller* pExprEx = dynamic_cast<const Expr_Caller*>(pExpr);
+//			return pExprEx->GetDeclCallable().Reference();
+//		}
+//	}
+//	return nullptr;
+//}
 
-static Argument* ComposeArgument(Processor& processor, const char* src)
-{
-	return new Argument(processor, Value::nil(), ComposeDeclCallable(src), Attribute::Empty->Reference(),
-						DeclCallable::Flag::None, Value::nil(), nullptr);
-}
+//static Argument* ComposeArgument(Processor& processor, const char* src)
+//{
+//	return new Argument(processor, Value::nil(), ComposeDeclCallable(src), Attribute::Empty->Reference(),
+//						DeclCallable::Flag::None, Value::nil(), nullptr);
+//}
 
-static void PrintArgument(const Argument &argument)
-{
-	::printf("%s\n", argument.ToString().c_str());
-}
+//static void PrintArgument(const Argument &argument)
+//{
+//	::printf("%s\n", argument.ToString().c_str());
+//}
 
 Gurax_TesterEntry(Argument)
 {

@@ -12,8 +12,8 @@ Memory* Memory::Empty = nullptr;
 
 void Memory::Bootup()
 {
-	static char* buff = "";
-	Empty = new MemorySloth(0, buff);
+	//static char* buff = "";
+	Empty = new MemorySloth(0, new char[1]);
 }
 
 String Memory::MakeId() const
