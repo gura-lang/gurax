@@ -512,7 +512,7 @@ void Sub_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
 	using T_ElemRtn = T_ElemL;
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
-	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
+	//T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
 	}
 }
@@ -523,7 +523,7 @@ void Sub_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
 	using T_ElemRtn = T_ElemR;
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
-	T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
+	//T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
 	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
 	}
 }
@@ -564,7 +564,7 @@ void Mul_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
 	using T_ElemRtn = T_ElemL;
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
-	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
+	//T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
 	}
 }
@@ -1075,7 +1075,7 @@ Array* Array::GenericOp(const Array& arrayL, const Array& arrayR,
 Array* Array::GenericOp(const Array& arrayL, Double numR,
 	const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func)
 {
-	const DimSizes& dimSizesL = arrayL.GetDimSizes();
+	//const DimSizes& dimSizesL = arrayL.GetDimSizes();
 	RefPtr<Array> pArrayRtn(Create(arrayL.GetElemType(), arrayL.GetDimSizes()));
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
@@ -1087,7 +1087,7 @@ Array* Array::GenericOp(const Array& arrayL, Double numR,
 Array* Array::GenericOp(Double numL, const Array& arrayR,
 	const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func)
 {
-	const DimSizes& dimSizesR = arrayR.GetDimSizes();
+	//const DimSizes& dimSizesR = arrayR.GetDimSizes();
 	RefPtr<Array> pArrayRtn(Create(arrayR.GetElemType(), arrayR.GetDimSizes()));
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
@@ -1099,7 +1099,7 @@ Array* Array::GenericOp(Double numL, const Array& arrayR,
 Array* Array::GenericOp(const Array& arrayL, const Complex& numR,
 	const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func)
 {
-	const DimSizes& dimSizesL = arrayL.GetDimSizes();
+	//const DimSizes& dimSizesL = arrayL.GetDimSizes();
 	RefPtr<Array> pArrayRtn(Create(ElemType::Complex, arrayL.GetDimSizes()));
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
@@ -1111,7 +1111,7 @@ Array* Array::GenericOp(const Array& arrayL, const Complex& numR,
 Array* Array::GenericOp(const Complex& numL, const Array& arrayR,
 	const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func)
 {
-	const DimSizes& dimSizesR = arrayR.GetDimSizes();
+	//const DimSizes& dimSizesR = arrayR.GetDimSizes();
 	RefPtr<Array> pArrayRtn(Create(ElemType::Complex, arrayR.GetDimSizes()));
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvR = arrayR.GetPointerC<void>();
