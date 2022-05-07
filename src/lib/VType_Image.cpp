@@ -453,8 +453,8 @@ Gurax_ImplementMethod(Image, Paste)
 	int height = args.IsValid()? args.PickNumber<int>() : imageSrc.GetHeight() - ySrc;
 	// Function body
 	Image::Rect rect;
-	if (xSrc + width > imageSrc.GetWidth()) width = imageSrc.GetWidth() - xSrc;
-	if (ySrc + height > imageSrc.GetHeight()) height = imageSrc.GetHeight() - ySrc;
+	if (xSrc + width > static_cast<int>(imageSrc.GetWidth())) width = imageSrc.GetWidth() - xSrc;
+	if (ySrc + height > static_cast<int>(imageSrc.GetHeight())) height = imageSrc.GetHeight() - ySrc;
 	if (image.AdjustCoord(&rect, xDst, yDst, width, height)) {
 		if (xDst < 0) xSrc -= xDst;
 		if (yDst < 0) ySrc -= yDst;

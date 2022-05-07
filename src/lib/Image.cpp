@@ -357,7 +357,7 @@ Image* Image::RotateT(const Format& format, double angleDeg, const Color& colorB
 		int yDst = static_cast<int>(scanner.GetRowIndex()) - yCenterDst;
 		int xSrc = ((xDst * cos1024 - yDst * sin1024) >> 10) + xCenterSrc;
 		int ySrc = ((xDst * sin1024 + yDst * cos1024) >> 10) + yCenterSrc;
-		if (xSrc >= 0 && xSrc < wdSrc && ySrc >= 0 && ySrc < htSrc) {
+		if (xSrc >= 0 && xSrc < static_cast<int>(wdSrc) && ySrc >= 0 && ySrc < static_cast<int>(htSrc)) {
 			scanner.PutPixel<T_PixelDst, T_PixelSrc>(GetPointerC(xSrc, ySrc));
 		} else {
 			T_PixelDst::SetColor(scanner.GetPointerC(), colorBg);

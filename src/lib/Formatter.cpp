@@ -512,8 +512,7 @@ const char* FormatterFlags::FormatNumber_d(Int64 num, char* buff, size_t size) c
 			*p = (num % 10) + '0';
 		}
 		if (nCols < precision) {
-			int precision = std::min(precision, static_cast<int>(size) - 2);
-			int cnt = precision - nCols;
+			int cnt = std::min(precision, static_cast<int>(size) - 2) - nCols;
 			while (cnt-- > 0) {
 				p--;
 				*p = '0';
@@ -534,8 +533,7 @@ const char* FormatterFlags::FormatNumber_d(Int64 num, char* buff, size_t size) c
 			*p = (numNeg % 10) + '0';
 		}
 		if (nCols < precision) {
-			int precision = std::min(precision, static_cast<int>(size) - 2);
-			int cnt = precision - nCols;
+			int cnt = std::min(precision, static_cast<int>(size) - 2) - nCols;
 			while (cnt-- > 0) {
 				p--;
 				*p = '0';
@@ -565,8 +563,7 @@ const char* FormatterFlags::FormatNumber_u(UInt64 num, char* buff, size_t size) 
 			*p = (num % 10) + '0';
 		}
 		if (nCols < precision) {
-			int precision = std::min(precision, static_cast<int>(size) - 1);
-			int cnt = precision - nCols;
+			int cnt = std::min(precision, static_cast<int>(size) - 1) - nCols;
 			while (cnt-- > 0) {
 				p--;
 				*p = '0';
@@ -594,8 +591,7 @@ const char* FormatterFlags::FormatNumber_b(UInt64 num, char* buff, size_t size) 
 			*p = '0' + (num & 0x1);
 		}
 		if (nCols < precision) {
-			int precision = std::min(precision, static_cast<int>(size) - 1);
-			int cnt = precision - nCols;
+			int cnt = std::min(precision, static_cast<int>(size) - 1) - nCols;
 			while (cnt-- > 0) {
 				p--;
 				*p = '0';
@@ -628,8 +624,7 @@ const char* FormatterFlags::FormatNumber_o(UInt64 num, char* buff, size_t size) 
 			*p = '0' + (num & 0x7);
 		}
 		if (nCols < precision) {
-			int precision = std::min(precision, static_cast<int>(size) - 1);
-			int cnt = precision - nCols;
+			int cnt = std::min(precision, static_cast<int>(size) - 1) - nCols;
 			while (cnt-- > 0) {
 				p--;
 				*p = '0';
@@ -661,8 +656,7 @@ const char* FormatterFlags::FormatNumber_x(UInt64 num, char* buff, size_t size) 
 			*p = convTbl[num & 0xf];
 		}
 		if (nCols < precision) {
-			int precision = std::min(precision, static_cast<int>(size) - 3);
-			int cnt = precision - nCols;
+			int cnt = std::min(precision, static_cast<int>(size) - 3) - nCols;
 			while (cnt-- > 0) {
 				p--;
 				*p = '0';

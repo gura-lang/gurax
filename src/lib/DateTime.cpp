@@ -415,7 +415,7 @@ DateTime* DateTime::CreateFromString(const char* str, const char** next)
 			}
 		}
 	} else if (timeZone[0] == '+' || timeZone[0] == '-') {
-		int signNum = (timeZone[0] == '-')? -1 : +1;
+		//int signNum = (timeZone[0] == '-')? -1 : +1;
 		int hours = (timeZone[1] - '0') * 10 + (timeZone[2] - '0');
 		int mins = (timeZone[3] - '0') * 10 + (timeZone[4] - '0');
 		pDt->SetMinsOffset(hours * 60 + mins);

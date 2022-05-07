@@ -555,7 +555,7 @@ Value* Iterator_Offset::DoNextValue()
 {
 	if (_firstFlag) {
 		_firstFlag = false;
-		for (size_t i = 0; i < _offset; i++) {
+		for (Int i = 0; i < _offset; i++) {
 			RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
 			if (pValueElem) {
 				// nothing to do
