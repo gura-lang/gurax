@@ -137,10 +137,10 @@ Gurax_ImplementMethod(Image, Crop)
 	size_t width = args.PickNumberNonNeg<size_t>();
 	size_t height = args.PickNumberNonNeg<size_t>();
 	if (Error::IsIssued()) return Value::nil();
-	const Image::Format& format =
-		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB :
-		argument.IsSet(Gurax_Symbol(rgba))? Image::Format::RGBA :
-		imageSrc.GetFormat();
+	//const Image::Format& format =
+	//	argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB :
+	//	argument.IsSet(Gurax_Symbol(rgba))? Image::Format::RGBA :
+	//	imageSrc.GetFormat();
 	// Function body
 	RefPtr<Image> pImage(imageSrc.Crop(x, y, width, height));
 	if (!pImage) return Value::nil();

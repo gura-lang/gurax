@@ -617,7 +617,7 @@ bool Div_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
 	using T_ElemRtn = T_ElemR;
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
-	T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
+	//T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
 	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
 		auto elemR = static_cast<T_ElemRtn>(*pR);
 		if (elemR == 0) {
