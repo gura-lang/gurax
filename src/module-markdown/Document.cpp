@@ -2111,7 +2111,7 @@ void Document::FlushTableCol(bool eolFlag)
 		_pItemOwner->StripTextAtFront(true, false);
 		Item* pItem = new Item(Item::Type::Tag, _pItemOwner.release());
 		pItem->SetText(IsTableFirstRow()? "th" : "td");
-		Align align = (_iTableCol < _alignList.size())? _alignList[_iTableCol] : Align::Left;
+		Align align = (static_cast<size_t>(_iTableCol) < _alignList.size())? _alignList[_iTableCol] : Align::Left;
 		pItem->SetAlign(align);
 		if (align == Align::Center) {
 			pItem->SetAttrs("style=\"text-align:center\"");

@@ -60,7 +60,7 @@ void InitInlineTagNames()
 		"var",
 	};
 	// initialize constant table
-	for (int i = 0; i < Gurax_ArraySizeOf(inlineTagNames); i++) {
+	for (size_t i = 0; i < Gurax_ArraySizeOf(inlineTagNames); i++) {
 		g_inlineTagNames.GetSet().insert(inlineTagNames[i]);
 	}
 }
