@@ -14,10 +14,10 @@ MyApp = class(wx.App) {
 MyFrame = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		wx.Notebook(this, wx.ID_ANY) {|noteBook|
-			[Page_Brush, Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_EllipticArc, Page_Text].Each {|cls|
+			[Page_Brush, Page_Pen, Page_Line, Page_Arc, Page_Circle, Page_Ellipse, Page_EllipticArc, Page_Text].Each {|cls|
 				noteBook.AddPage(cls(noteBook), cls.name)
 			}
-			noteBook.SetSelection(0)
+			noteBook.SetSelection(1)
 		}
 	}
 }
@@ -32,45 +32,125 @@ Page_Brush = class(wx.Panel) {
 	OnPaint(event) = {
 		idxs  = Range(10)
 		dc = wx.PaintDC(this)
-		brushStyleTbl = [
-			//wx.BRUSHSTYLE_INVALID 	
-			wx.BRUSHSTYLE_SOLID 	
-			wx.BRUSHSTYLE_TRANSPARENT 	
-			//wx.BRUSHSTYLE_STIPPLE_MASK_OPAQUE 	
-			//wx.BRUSHSTYLE_STIPPLE_MASK 	
-			wx.BRUSHSTYLE_STIPPLE 	
-			wx.BRUSHSTYLE_BDIAGONAL_HATCH 	
-			wx.BRUSHSTYLE_CROSSDIAG_HATCH 	
-			wx.BRUSHSTYLE_FDIAGONAL_HATCH 	
-			wx.BRUSHSTYLE_CROSS_HATCH 	
-			wx.BRUSHSTYLE_HORIZONTAL_HATCH 	
-			wx.BRUSHSTYLE_VERTICAL_HATCH 	
-			//wx.BRUSHSTYLE_FIRST_HATCH 	
-			//wx.BRUSHSTYLE_LAST_HATCH 	
+		brushStyleTupleTbl = [
+			//(wx.BRUSHSTYLE_INVALID,				'INVALID')
+			(wx.BRUSHSTYLE_SOLID,					'SOLID')
+			(wx.BRUSHSTYLE_TRANSPARENT,				'TRANSPARENT')
+			//(wx.BRUSHSTYLE_STIPPLE_MASK_OPAQUE,	'STIPPLE_MASK_OPAQUE')
+			//(wx.BRUSHSTYLE_STIPPLE_MASK,			'STIPPLE_MASK')
+			(wx.BRUSHSTYLE_STIPPLE,					'STIPPLE')
+			(wx.BRUSHSTYLE_BDIAGONAL_HATCH,			'BDIAGONAL_HATCH')
+			(wx.BRUSHSTYLE_CROSSDIAG_HATCH,			'CROSSDIAG_HATCH')
+			(wx.BRUSHSTYLE_FDIAGONAL_HATCH,			'FDIAGONAL_HATCH')
+			(wx.BRUSHSTYLE_CROSS_HATCH,				'CROSS_HATCH')
+			(wx.BRUSHSTYLE_HORIZONTAL_HATCH,		'HORIZONTAL_HATCH')
+			(wx.BRUSHSTYLE_VERTICAL_HATCH,			'VERTICAL_HATCH')
+			//(wx.BRUSHSTYLE_FIRST_HATCH,			'FIRST_HATCH')
+			//(wx.BRUSHSTYLE_LAST_HATCH,			'LAST_HATCH')
 		]
-		brushTbl = [
-			wx.NullBrush
-			wx.BLACK_BRUSH
-			wx.BLUE_BRUSH
-			wx.CYAN_BRUSH
-			wx.GREEN_BRUSH
-			wx.YELLOW_BRUSH
-			wx.GREY_BRUSH
-			wx.LIGHT_GREY_BRUSH
-			wx.MEDIUM_GREY_BRUSH
-			wx.RED_BRUSH
-			wx.TRANSPARENT_BRUSH
-			wx.WHITE_BRUSH			
+		brushTupleTbl = [
+			(wx.NullBrush,							'NullBrush')
+			(wx.BLACK_BRUSH,						'BLACK_BRUSH')
+			(wx.BLUE_BRUSH,							'BLUE_BRUSH')
+			(wx.CYAN_BRUSH,							'CYAN_BRUSH')
+			(wx.GREEN_BRUSH,						'GREEN_BRUSH')
+			(wx.YELLOW_BRUSH,						'YELLOW_BRUSH')
+			(wx.GREY_BRUSH,							'GREY_BRUSH')
+			(wx.LIGHT_GREY_BRUSH,					'LIGHT_GREY_BRUSH')
+			(wx.MEDIUM_GREY_BRUSH,					'MEDIUM_GREY_BRUSH')
+			(wx.RED_BRUSH,							'RED_BRUSH')
+			(wx.TRANSPARENT_BRUSH,					'TRANSPARENT_BRUSH')
+			(wx.WHITE_BRUSH,						'WHITE_BRUSH')			
 		]
 		dc.SetPen(this.pen)
-		brushStyleTbl.Each {|brushStyle, i|
+		font = dc.GetFont()
+		font.SetPointSize(10)
+		dc.SetFont(font)
+		brushStyleTupleTbl.Each {|tuple, i|
+			[brushStyle, label] = tuple
+			y = 10 + i * 50
 			dc.SetBrush(wx.Brush('#ff8888', brushStyle))
-			dc.DrawRectangle(i * 50 + 10, 10, 40, 80)
+			dc.DrawRectangle(10, y, 120, 40)
+			dc.DrawText(label, 10 + 120 + 10, y)
 		}		
 		dc.SetPen(wx.BLACK_PEN)
-		brushTbl.Each {|brush, i|
+		brushTupleTbl.Each {|tuple, i|
+			[brush, label] = tuple
+			y = 10 + i * 50
 			dc.SetBrush(brush)
-			dc.DrawRectangle(i * 50 + 10, 100, 40, 80)
+			dc.DrawRectangle(300, y, 120, 40)
+			dc.DrawText(label, 300 + 120 + 10, y)
+		}		
+		dc = nil
+	}
+}
+
+Page_Pen = class(wx.Panel) {
+	name:static = 'Pen'
+	pen as wx.Pen
+	__init__(parent as wx.Window) = {|parent|
+		this.pen = wx.Pen('#ff8888', 1, wx.PENSTYLE_SOLID)
+		this.Bind(wx.EVT_PAINT, this.OnPaint)
+	}
+	OnPaint(event) = {
+		idxs  = Range(10)
+		dc = wx.PaintDC(this)
+		penStyleTupleTbl = [
+			//(wx.PENSTYLE_INVALID,					'INVALID') 	
+			(wx.PENSTYLE_SOLID,						'SOLID') 	
+			(wx.PENSTYLE_DOT,						'DOT') 	
+			(wx.PENSTYLE_LONG_DASH,					'LONG_DASH') 	
+			(wx.PENSTYLE_SHORT_DASH,				'SHORT_DASH') 	
+			(wx.PENSTYLE_DOT_DASH,					'DOT_DASH') 	
+			(wx.PENSTYLE_USER_DASH,					'USER_DASH') 	
+			(wx.PENSTYLE_TRANSPARENT,				'TRANSPARENT') 	
+			//(wx.PENSTYLE_STIPPLE_MASK_OPAQUE,		'STIPPLE_MASK_OPAQUE') 	
+			//(wx.PENSTYLE_STIPPLE_MASK,			'STIPPLE_MASK') 	
+			(wx.PENSTYLE_STIPPLE,					'STIPPLE') 	
+			(wx.PENSTYLE_BDIAGONAL_HATCH,			'BDIAGONAL_HATCH') 	
+			(wx.PENSTYLE_CROSSDIAG_HATCH,			'CROSSDIAG_HATCH') 	
+			(wx.PENSTYLE_FDIAGONAL_HATCH,			'FDIAGONAL_HATCH') 	
+			(wx.PENSTYLE_CROSS_HATCH,				'CROSS_HATCH') 	
+			(wx.PENSTYLE_HORIZONTAL_HATCH,			'HORIZONTAL_HATCH') 	
+			(wx.PENSTYLE_VERTICAL_HATCH,			'VERTICAL_HATCH') 	
+			//(wx.PENSTYLE_FIRST_HATCH,				'FIRST_HATCH') 	
+			//(wx.PENSTYLE_LAST_HATCH,				'LAST_HATCH') 	
+
+
+		]
+		penTupleTbl = [
+			(wx.NullPen,							'NullPen')
+			(wx.BLACK_DASHED_PEN,					'BLACK_DASHED_PEN')
+			(wx.BLACK_PEN,							'BLACK_PEN')
+			(wx.BLUE_PEN,							'BLUE_PEN')
+			(wx.CYAN_PEN,							'CYAN_PEN')
+			(wx.GREEN_PEN,							'GREEN_PEN')
+			(wx.YELLOW_PEN,							'YELLOW_PEN')
+			(wx.GREY_PEN,							'GREY_PEN')
+			(wx.LIGHT_GREY_PEN,						'LIGHT_GREY_PEN')
+			(wx.MEDIUM_GREY_PEN,					'MEDIUM_GREY_PEN')
+			(wx.RED_PEN,							'RED_PEN')
+			(wx.TRANSPARENT_PEN,					'TRANSPARENT_PEN')
+			(wx.WHITE_PEN,							'WHITE_PEN')
+		]
+		dc.SetPen(this.pen)
+		font = dc.GetFont()
+		font.SetPointSize(10)
+		dc.SetFont(font)
+		penStyleTupleTbl.Each {|tuple, i|
+			[penStyle, label] = tuple
+			y = 10 + i * 30
+			dc.SetPen(wx.Pen('#ff8888', 4, penStyle))
+			dc.DrawLine(10, y, 10 + 120, y)
+			dc.DrawText(label, 10 + 120 + 10, y - 10)
+		}		
+		dc.SetPen(wx.BLACK_PEN)
+		penTupleTbl.Each {|tuple, i|
+			[pen, label] = tuple
+			y = 10 + i * 30
+			dc.SetPen(pen)
+			dc.DrawLine(300, y, 300 + 120, y)
+			dc.DrawText(label, 300 + 120 + 10, y - 10)
 		}		
 		dc = nil
 	}
