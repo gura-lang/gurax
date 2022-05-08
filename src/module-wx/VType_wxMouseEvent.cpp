@@ -1091,6 +1091,27 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetPosition_gurax, processor_gurax, argume
 		pEntity_gurax->GetPosition()));
 }
 
+// wx.MouseEvent#GetPositionXY()
+Gurax_DeclareMethodAlias(wxMouseEvent, GetPositionXY_gurax, "GetPositionXY")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxMouseEvent, GetPositionXY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int x, y;
+	pEntity_gurax->GetPosition(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
 // wx.MouseEvent#GetModifiers()
 Gurax_DeclareMethodAlias(wxMouseEvent, GetModifiers_gurax, "GetModifiers")
 {
@@ -1437,6 +1458,7 @@ void VType_wxMouseEvent::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxMouseEvent, SetAux1Down_gurax));
 	Assign(Gurax_CreateMethod(wxMouseEvent, SetAux2Down_gurax));
 	Assign(Gurax_CreateMethod(wxMouseEvent, GetPosition_gurax));
+	Assign(Gurax_CreateMethod(wxMouseEvent, GetPositionXY_gurax));
 	Assign(Gurax_CreateMethod(wxMouseEvent, GetModifiers_gurax));
 	Assign(Gurax_CreateMethod(wxMouseEvent, HasAnyModifiers_gurax));
 	Assign(Gurax_CreateMethod(wxMouseEvent, HasModifiers_gurax));
