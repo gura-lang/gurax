@@ -35,7 +35,7 @@ MyFrame = class(wx.Frame) {
 				sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello11'), wx.SizerFlags().Expand())
 				sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello12'), wx.SizerFlags().Expand())
 			}
-			sizerCol.Add(wx.StaticText(panel, wx.ID_ANY, 'FlexGridSizer(3, wx.Size(8, 2))'), wx.SizerFlags())
+			sizerCol.Add(wx.StaticText(panel, wx.ID_ANY, 'FlexGridSizer(3, wx.Size(8, 2))'), wx.SizerFlags().Border(wx.TOP, 12))
 			wx.FlexGridSizer(3, wx.Size(8, 2)) {|sizer|
 				sizerCol.Add(sizer, wx.SizerFlags(1).Expand())
 				sizer.AddGrowableCol(1, 1)
@@ -55,7 +55,7 @@ MyFrame = class(wx.Frame) {
 			}
 		}
 		wx.BoxSizer(wx.VERTICAL) {|sizerCol|
-			sizerTop.Add(sizerCol, wx.SizerFlags(1).Expand().Border(wx.LEFT, 8))
+			sizerTop.Add(sizerCol, wx.SizerFlags(1).Expand().Border(wx.LEFT, 16))
 			sizerCol.Add(wx.StaticText(panel, wx.ID_ANY, 'FlexGridSizer(3, 4, 2, 8)'), wx.SizerFlags())
 			wx.FlexGridSizer(3, 4, 2, 8) {|sizer|
 				sizerCol.Add(sizer, wx.SizerFlags(1).Expand())
@@ -74,7 +74,7 @@ MyFrame = class(wx.Frame) {
 				sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello11'), wx.SizerFlags().Expand())
 				sizer.Add(wx.Button(panel, wx.ID_ANY, 'hello12'), wx.SizerFlags().Expand())
 			}
-			sizerCol.Add(wx.StaticText(panel, wx.ID_ANY, 'FlexGridSizer(3, 4, wx.Size(8, 2))'), wx.SizerFlags())
+			sizerCol.Add(wx.StaticText(panel, wx.ID_ANY, 'FlexGridSizer(3, 4, wx.Size(8, 2))'), wx.SizerFlags().Border(wx.TOP, 12))
 			wx.FlexGridSizer(3, 4, wx.Size(8, 2)) {|sizer|
 				sizerCol.Add(sizer, wx.SizerFlags(1).Expand())
 				sizer.AddGrowableCol(1, 1)
