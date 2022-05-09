@@ -32,6 +32,49 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.HyperlinkEvent#GetURL()
+Gurax_DeclareMethodAlias(wxHyperlinkEvent, GetURL_gurax, "GetURL")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHyperlinkEvent, GetURL_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetURL();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.HyperlinkEvent#SetURL(url as String)
+Gurax_DeclareMethodAlias(wxHyperlinkEvent, SetURL_gurax, "SetURL")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("url", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxHyperlinkEvent, SetURL_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* url = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetURL(url);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +92,8 @@ void VType_wxHyperlinkEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxHyperlinkEvent, GetURL_gurax));
+	Assign(Gurax_CreateMethod(wxHyperlinkEvent, SetURL_gurax));
 }
 
 //------------------------------------------------------------------------------

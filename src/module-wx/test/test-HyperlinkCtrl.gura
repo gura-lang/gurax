@@ -1,0 +1,56 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		url = 'https://docs.wxwidgets.org/3.0/classwx_hyperlink_ctrl.html'
+		wx.BoxSizer(wx.VERTICAL) {|vbox|
+			sizerTop.Add(vbox, wx.SizerFlags(1).Expand())
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_DEFAULT_STYLE', url, style = wx.HL_DEFAULT_STYLE) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+			}
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_LEFT', url, style = wx.HL_ALIGN_LEFT) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+			}
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_CENTRE', url, style = wx.HL_ALIGN_CENTRE) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+			}
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_RIGHT', url, style = wx.HL_ALIGN_RIGHT) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+			}
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_CENTRE | HL_CONTEXTMENU', url, style = wx.HL_ALIGN_CENTRE | wx.HL_CONTEXTMENU) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+			}
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_DEFAULT_STYLE', url, style = wx.HL_DEFAULT_STYLE) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_HYPERLINK(ctrl, this.OnHyperlink)
+			}
+		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(2).Expand())
+			this.textCtrl = ctrl
+		}
+	}
+	OnHyperlink(event as wx.HyperlinkEvent) = {
+		this.Printf('%s\n', event.GetURL())
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+}
+
+wx.ImplementApp(MyApp())
