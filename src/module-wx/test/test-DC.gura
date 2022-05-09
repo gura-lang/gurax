@@ -6,7 +6,7 @@ sample_xpm = xpm.XPMFile('sample.xpm').lines
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 700)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 800)).Show()
 		true
 	}
 }
@@ -139,10 +139,19 @@ Page_Pen = class(wx.Panel) {
 		dc.SetFont(font)
 		penStyleTupleTbl.Each {|tuple, i|
 			[penStyle, label] = tuple
-			y = 10 + i * 30
+			y = 10 + i * 50
+			dc.DrawText(label, 10 + 120 + 10, y)
+			dc.SetPen(wx.Pen('#ff8888', 0, penStyle))
+			dc.DrawLine(10, y, 10 + 120, y)
+			y += 8
+			dc.SetPen(wx.Pen('#ff8888', 1, penStyle))
+			dc.DrawLine(10, y, 10 + 120, y)
+			y += 8
+			dc.SetPen(wx.Pen('#ff8888', 2, penStyle))
+			dc.DrawLine(10, y, 10 + 120, y)
+			y += 8
 			dc.SetPen(wx.Pen('#ff8888', 4, penStyle))
 			dc.DrawLine(10, y, 10 + 120, y)
-			dc.DrawText(label, 10 + 120 + 10, y - 10)
 		}		
 		dc.SetPen(wx.BLACK_PEN)
 		penTupleTbl.Each {|tuple, i|
