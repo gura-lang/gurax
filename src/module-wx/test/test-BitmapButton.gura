@@ -18,7 +18,7 @@ MyFrame = class(wx.Frame) {
 PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
-		this.SetBackgroundColour(wx.Colour(0, 128, 0))
+		//this.SetBackgroundColour(wx.Colour(0, 128, 0))
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
 		wx.GridSizer(4) {|sizer|
