@@ -23,23 +23,42 @@ PanelTop = class(wx.Panel) {
 		wx.BoxSizer(wx.VERTICAL) {|vbox|
 			sizerTop.Add(vbox, wx.SizerFlags(1).Expand())
 			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_DEFAULT_STYLE', url, style = wx.HL_DEFAULT_STYLE) {|ctrl|
-				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 8))
 			}
 			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_LEFT', url, style = wx.HL_ALIGN_LEFT) {|ctrl|
-				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
 			}
 			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_CENTRE', url, style = wx.HL_ALIGN_CENTRE) {|ctrl|
-				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
 			}
 			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_RIGHT', url, style = wx.HL_ALIGN_RIGHT) {|ctrl|
-				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
 			}
 			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_CENTRE | HL_CONTEXTMENU', url, style = wx.HL_ALIGN_CENTRE | wx.HL_CONTEXTMENU) {|ctrl|
-				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
+			}
+			wx.StaticLine(this, wx.ID_ANY) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
 			}
 			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_DEFAULT_STYLE', url, style = wx.HL_DEFAULT_STYLE) {|ctrl|
-				vbox.Add(ctrl, wx.SizerFlags().Expand())
-				wx.EVT_HYPERLINK(ctrl, this.OnHyperlink)
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
+				wx.EVT_HYPERLINK(ctrl, this.OnHyperlink, userData = 'HL_DEFAULT_STYLE')
+			}
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_LEFT', url, style = wx.HL_ALIGN_LEFT) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
+				wx.EVT_HYPERLINK(ctrl, this.OnHyperlink, userData = 'HL_ALIGN_LEFT')
+			}
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_CENTRE', url, style = wx.HL_ALIGN_CENTRE) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
+				wx.EVT_HYPERLINK(ctrl, this.OnHyperlink, userData = 'HL_ALIGN_CENTRE')
+			}
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_RIGHT', url, style = wx.HL_ALIGN_RIGHT) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
+				wx.EVT_HYPERLINK(ctrl, this.OnHyperlink, userData = 'HL_DALIGN_CENTRE')
+			}
+			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_CENTRE | HL_CONTEXTMENU', url, style = wx.HL_ALIGN_CENTRE | wx.HL_CONTEXTMENU) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
+				wx.EVT_HYPERLINK(ctrl, this.OnHyperlink, userData = 'HL_ALIGN_DENTRE | HL_CONTEXTMENU')
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
@@ -48,7 +67,8 @@ PanelTop = class(wx.Panel) {
 		}
 	}
 	OnHyperlink(event as wx.HyperlinkEvent) = {
-		this.Printf('%s\n', event.GetURL())
+		label = event.GetEventUserData()
+		this.Printf('%s%s\n', cond(label, label + ': ', ''), event.GetURL())
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
