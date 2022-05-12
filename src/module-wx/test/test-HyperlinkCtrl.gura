@@ -63,9 +63,13 @@ PanelTop = class(wx.Panel) {
 				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
 				wx.EVT_HYPERLINK(ctrl, this.OnHyperlink, userData = 'HL_ALIGN_DENTRE | HL_CONTEXTMENU')
 			}
+			wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+				sizerTop.Add(ctrl, wx.SizerFlags(2).Expand())
+				this.textCtrl = ctrl
+			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(2).Expand())
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
 			this.textCtrl = ctrl
 		}
 	}
