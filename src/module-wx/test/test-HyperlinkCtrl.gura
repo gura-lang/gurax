@@ -68,7 +68,7 @@ PanelTop = class(wx.Panel) {
 	}
 	OnHyperlink(event as wx.HyperlinkEvent) = {
 		label = event.GetEventUserData()
-		this.Printf('%s%s\n', cond(label, label + ': ', ''), event.GetURL())
+		this.Printf('%s: %s\n', label, event.GetURL())
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
