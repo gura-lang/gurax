@@ -42,6 +42,9 @@ PanelTop = class(wx.Panel) {
 			}
 			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_DEFAULT_STYLE', url, style = wx.HL_DEFAULT_STYLE) {|ctrl|
 				vbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.TOP, 16))
+				ctrl.SetHoverColour('#ff8800')
+				ctrl.SetNormalColour('#00ff00')
+				ctrl.SetVisitedColour('#0000ff')
 				wx.EVT_HYPERLINK(ctrl, this.OnHyperlink, userData = 'HL_DEFAULT_STYLE')
 			}
 			wx.HyperlinkCtrl(this, wx.ID_ANY, 'HL_ALIGN_LEFT', url, style = wx.HL_ALIGN_LEFT) {|ctrl|
