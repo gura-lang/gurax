@@ -1,0 +1,86 @@
+#!/usr/bin/env gurax
+import(wx)
+import(DummyAddress)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(1100, 800)).Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+Info = struct {
+	label as String
+	radioBox as wx.RadioBox
+}
+
+PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		names = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th']
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.StaticText(this, wx.ID_ANY, 'RA_SPECIFY_ROWS') {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
+		}
+		wx.BoxSizer(wx.HORIZONTAL) {|vbox|
+			sizerTop.Add(vbox, wx.SizerFlags().Expand())
+			wx.RadioBox(this, wx.ID_ANY, 'majorDimension = 0', style = wx.RA_SPECIFY_ROWS, majorDimension = 0, choices = names) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_RADIOBOX(ctrl, this.OnRadioBox, userData = Info('ROWS, majorDimension = 0', ctrl))
+			}
+			wx.RadioBox(this, wx.ID_ANY, 'majorDimension = 1', style = wx.RA_SPECIFY_ROWS, majorDimension = 1, choices = names) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_RADIOBOX(ctrl, this.OnRadioBox, userData = Info('ROWS, majorDimension = 1', ctrl))
+			}
+			wx.RadioBox(this, wx.ID_ANY, 'majorDimension = 2', style = wx.RA_SPECIFY_ROWS, majorDimension = 2, choices = names) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_RADIOBOX(ctrl, this.OnRadioBox, userData = Info('ROWS, majorDimension = 2', ctrl))
+			}
+			wx.RadioBox(this, wx.ID_ANY, 'majorDimension = 3', style = wx.RA_SPECIFY_ROWS, majorDimension = 3, choices = names) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_RADIOBOX(ctrl, this.OnRadioBox, userData = Info('ROWS, majorDimension = 3', ctrl))
+			}
+		}
+		wx.StaticText(this, wx.ID_ANY, 'RA_SPECIFY_COLS') {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags().Expand())
+		}
+		wx.BoxSizer(wx.HORIZONTAL) {|vbox|
+			sizerTop.Add(vbox, wx.SizerFlags().Expand())
+			wx.RadioBox(this, wx.ID_ANY, 'majorDimension = 0', style = wx.RA_SPECIFY_COLS, majorDimension = 0, choices = names) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_RADIOBOX(ctrl, this.OnRadioBox, userData = Info('COLS, majorDimension = 0', ctrl))
+			}
+			wx.RadioBox(this, wx.ID_ANY, 'majorDimension = 1', style = wx.RA_SPECIFY_COLS, majorDimension = 1, choices = names) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_RADIOBOX(ctrl, this.OnRadioBox, userData = Info('COLS, majorDimension = 1', ctrl))
+			}
+			wx.RadioBox(this, wx.ID_ANY, 'majorDimension = 2', style = wx.RA_SPECIFY_COLS, majorDimension = 2, choices = names) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_RADIOBOX(ctrl, this.OnRadioBox, userData = Info('COLS, majorDimension = 2', ctrl))
+			}
+			wx.RadioBox(this, wx.ID_ANY, 'majorDimension = 3', style = wx.RA_SPECIFY_COLS, majorDimension = 3, choices = names) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_RADIOBOX(ctrl, this.OnRadioBox, userData = Info('COLS, majorDimension = 3', ctrl))
+			}
+		}
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
+	}
+	OnRadioBox(event as wx.CommandEvent) = {
+		info = event.GetEventUserData()
+		idx = event.GetSelection()
+		this.Printf('%s, selection=%d:%s\n', info.label, idx, info.radioBox.GetString(idx))
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+}
+
+wx.ImplementApp(MyApp())
