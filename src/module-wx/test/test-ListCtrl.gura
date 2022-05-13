@@ -170,6 +170,10 @@ PanelTop = class(wx.Panel) {
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
+					for (address in da.addressTbl) {|i|
+						ctrl.InsertItem(i, address.name, i)
+						//ctrl.SetItemData(i, address.name)
+					}
 					ctrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 					info = Info('ICON', ctrl)
 					wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList,			userData = info)
@@ -199,6 +203,39 @@ PanelTop = class(wx.Panel) {
 				noteBook.AddPage(panel, 'SMALL_ICON')
 				sizer = wx.BoxSizer(wx.VERTICAL)
 				panel.SetSizer(sizer)
+				wx.ListCtrl(panel, wx.ID_ANY, style = wx.LC_SMALL_ICON) {|ctrl|
+					sizer.Add(ctrl, wx.SizerFlags(3).Expand())
+					ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
+					ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
+					ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
+					for (address in da.addressTbl) {|i|
+						ctrl.InsertItem(i, address.name, i)
+						//ctrl.SetItemData(i, address.name)
+					}
+					ctrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+					info = Info('ICON', ctrl)
+					wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList,			userData = info)
+					wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList,			userData = info)
+					wx.EVT_LIST_BEGIN_LABEL_EDIT(ctrl,	this.OnList,			userData = info)
+					wx.EVT_LIST_END_LABEL_EDIT(ctrl,	this.OnList,			userData = info)
+					wx.EVT_LIST_DELETE_ITEM(ctrl,		this.OnList,			userData = info)
+					wx.EVT_LIST_DELETE_ALL_ITEMS(ctrl,	this.OnList,			userData = info)
+					wx.EVT_LIST_ITEM_SELECTED(ctrl,		this.OnList,			userData = info)
+					wx.EVT_LIST_ITEM_DESELECTED(ctrl,	this.OnList,			userData = info)
+					wx.EVT_LIST_ITEM_ACTIVATED(ctrl,	this.OnList,			userData = info)
+					wx.EVT_LIST_ITEM_FOCUSED(ctrl,		this.OnList,			userData = info)
+					wx.EVT_LIST_ITEM_MIDDLE_CLICK(ctrl,	this.OnList,			userData = info)
+					wx.EVT_LIST_ITEM_RIGHT_CLICK(ctrl,	this.OnList,			userData = info)
+					wx.EVT_LIST_KEY_DOWN(ctrl,			this.OnList,			userData = info)
+					wx.EVT_LIST_INSERT_ITEM(ctrl,		this.OnList,			userData = info)
+					wx.EVT_LIST_COL_CLICK(ctrl,			this.OnListColClick,	userData = info)
+					wx.EVT_LIST_COL_RIGHT_CLICK(ctrl,	this.OnList,			userData = info)
+					wx.EVT_LIST_COL_BEGIN_DRAG(ctrl,	this.OnList,			userData = info)
+					wx.EVT_LIST_COL_DRAGGING(ctrl,		this.OnList,			userData = info)
+					wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList,			userData = info)
+					wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList,			userData = info)
+					//wx.EVT_BUTTON(button_Selected,		this.OnButton_Selected,	userData = info)
+				}
 			}
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
