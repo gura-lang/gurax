@@ -1,5 +1,9 @@
 #===============================================================================
 # CMakeLists for module: re
+# debFiles = ['libonig']
+# rpmFiles = ['oniguruma']
+# debFilesDevel = ['libonig-dev']
+# rpmFilesDevel = ['oniguruma-devel']
 #===============================================================================
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_re)

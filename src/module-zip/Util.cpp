@@ -46,7 +46,7 @@ DateTime* MakeDateTimeFromDos(UInt16 dosDate, UInt16 dosTime)
 UInt32 SeekCentralDirectory(Stream& streamSrc, EndOfCentralDirectoryRecord* pRecord)
 {
 	size_t bytesZIPFile = streamSrc.GetBytes();
-	if (bytesZIPFile == -1) {
+	if (bytesZIPFile == static_cast<size_t>(-1)) {
 		Error::Issue(ErrorType::IOError, "can't seek end of file");
 		return 0;
 	}
@@ -79,7 +79,7 @@ UInt32 SeekCentralDirectory(Stream& streamSrc, EndOfCentralDirectoryRecord* pRec
 		return 0;
 	}
 	EndOfCentralDirectoryRecord record;
-	::memcpy(&record, buffAnchor, EndOfCentralDirectoryRecord::MinSize);
+	::memcpy(reinterpret_cast<void*>(&record), buffAnchor, EndOfCentralDirectoryRecord::MinSize);
 	if (pRecord) *pRecord = record;
 	return Gurax_UnpackUInt32(record.GetFields().
 							  OffsetOfStartOfCentralDirectoryWithRespectToTheStartingDiskNumber);

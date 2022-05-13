@@ -41,6 +41,6 @@ endif ()
 
 if (${CMAKE_SYSTEM_NAME} MATCHES Linux)
 add_subdirectory(module-markdown)
-#add_subdirectory(module-zip)
+add_subdirectory(module-zip)
 #add_subdirectory(module-re)
 endif ()

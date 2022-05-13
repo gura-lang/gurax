@@ -1,5 +1,9 @@
 #===============================================================================
 # CMakeLists for module: zip
+# debFiles = ['zlib1g', 'libbz2']
+# rpmFiles = ['zlib', 'bzip2']
+# debFilesDevel = ['zlib1g-dev', 'libbz2-dev']
+# rpmFilesDevel = ['zlib-devel', 'bzip2-devel']
 #===============================================================================
 cmake_minimum_required(VERSION 3.16)
 project(gurax_module_zip)
