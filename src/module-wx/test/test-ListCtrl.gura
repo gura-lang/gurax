@@ -78,10 +78,10 @@ PanelTop = class(wx.Panel) {
 			sizerTop.Add(noteBook, wx.SizerFlags(2).Expand())
 			wx.Panel(noteBook) {|panel|
 				noteBook.AddPage(panel, 'REPORT')
-				sizer = wx.BoxSizer(wx.VERTICAL)
-				panel.SetSizer(sizer)
+				vbox = wx.BoxSizer(wx.VERTICAL)
+				panel.SetSizer(vbox)
 				wx.ListCtrl(panel, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
-					sizer.Add(ctrl, wx.SizerFlags(3).Expand())
+					vbox.Add(ctrl, wx.SizerFlags(3).Expand())
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
@@ -129,10 +129,10 @@ PanelTop = class(wx.Panel) {
 			}
 			wx.Panel(noteBook) {|panel|
 				noteBook.AddPage(panel, 'REPORT (Virtual)')
-				sizer = wx.BoxSizer(wx.VERTICAL)
-				panel.SetSizer(sizer)
+				vbox = wx.BoxSizer(wx.VERTICAL)
+				panel.SetSizer(vbox)
 				MyListCtrl(panel, wx.ID_ANY, style = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) {|ctrl|
-					sizer.Add(ctrl, wx.SizerFlags(3).Expand())
+					vbox.Add(ctrl, wx.SizerFlags(3).Expand())
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
@@ -163,10 +163,17 @@ PanelTop = class(wx.Panel) {
 			}
 			wx.Panel(noteBook) {|panel|
 				noteBook.AddPage(panel, 'ICON')
-				sizer = wx.BoxSizer(wx.VERTICAL)
-				panel.SetSizer(sizer)
+				vbox = wx.BoxSizer(wx.VERTICAL)
+				panel.SetSizer(vbox)
+				wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+					vbox.Add(hbox, wx.SizerFlags().Expand())
+					wx.Slider(panel, wx.ID_ANY, 30, 0, 100) {|ctrl|
+						hbox.Add(ctrl, wx.SizerFlags().Expand())
+						slider_ColumnWidth = ctrl
+					}
+				}
 				wx.ListCtrl(panel, wx.ID_ANY, style = wx.LC_ICON) {|ctrl|
-					sizer.Add(ctrl, wx.SizerFlags(3).Expand())
+					vbox.Add(ctrl, wx.SizerFlags(3).Expand())
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
@@ -197,14 +204,16 @@ PanelTop = class(wx.Panel) {
 					wx.EVT_LIST_COL_END_DRAG(ctrl,		this.OnList,			userData = info)
 					wx.EVT_LIST_CACHE_HINT(ctrl,		this.OnList,			userData = info)
 					//wx.EVT_BUTTON(button_Selected,		this.OnButton_Selected,	userData = info)
+					ctrl.SetColumnWidth(-1, 50)
+					//wx.EVT_SCROLL_THUMBTRACK(slider_ColumnWidth, this.OnScroll_ColumnWidth, userData = ctrl)
 				}
 			}
 			wx.Panel(noteBook) {|panel|
 				noteBook.AddPage(panel, 'SMALL_ICON')
-				sizer = wx.BoxSizer(wx.VERTICAL)
-				panel.SetSizer(sizer)
+				vbox = wx.BoxSizer(wx.VERTICAL)
+				panel.SetSizer(vbox)
 				wx.ListCtrl(panel, wx.ID_ANY, style = wx.LC_SMALL_ICON) {|ctrl|
-					sizer.Add(ctrl, wx.SizerFlags(3).Expand())
+					vbox.Add(ctrl, wx.SizerFlags(3).Expand())
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_SMALL)
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_STATE)
@@ -261,16 +270,21 @@ PanelTop = class(wx.Panel) {
 		repeat {
 			item = info.listCtrl.GetNextItem(item, wx.LIST_NEXT_ALL, wx.LIST_STATE_SELECTED)
 			(item < 0) && break
-			this.Printf('[%s] index=%d name="%s" email="%s"\n', info.label, item,
+			this.Printf('[%s] index=%d, name="%s", email="%s"\n', info.label, item,
 					info.listCtrl.GetItemText(item, 1), info.listCtrl.GetItemText(item, 2))
 		}
 	}
+	//OnScroll_ColumnWidth(event as wx.ScrollEvent) = {
+	//	listCtrl = event.GetEventUserData()
+	//	listCtrl.SetColumnWidth(-1, event.GetPosition())
+	//	this.Printf('%d\n', event.GetPosition())
+	//}
 	PrintListEvent(event as wx.ListEvent) = {
 		info = event.GetEventUserData()
 		eventName = event.GetEventType().name
 		item = event.GetIndex()
 		if (item >= 0) {
-			this.Printf('[%s] %s(index=%d name="%s", email="%s")\n', info.label, eventName, item,
+			this.Printf('[%s] %s(index=%d, name="%s", email="%s")\n', info.label, eventName, item,
 					info.listCtrl.GetItemText(item, 1), info.listCtrl.GetItemText(item, 2))
 		}
 	}
