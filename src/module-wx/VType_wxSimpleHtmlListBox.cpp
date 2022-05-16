@@ -28,6 +28,46 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.SimpleHtmlListBox(parent as wx.Window, id as Number, pos as wx.Point, size as wx.Size, choices[] as String, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
+Gurax_DeclareConstructorAlias(SimpleHtmlListBox_gurax, "SimpleHtmlListBox")
+{
+	Declare(VTYPE_wxSimpleHtmlListBox, Flag::None);
+	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("choices", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.SimpleHtmlListBox.");
+}
+
+Gurax_ImplementConstructorEx(SimpleHtmlListBox_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_parent = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* parent = value_parent.GetEntityPtr();
+	wxWindowID id = args_gurax.PickNumber<wxWindowID>();
+	Value_wxPoint& value_pos = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& pos = value_pos.GetEntity();
+	Value_wxSize& value_size = args_gurax.Pick<Value_wxSize>();
+	const wxSize& size = value_size.GetEntity();
+	wxArrayString choices = Util::CreateArrayString(args_gurax.PickList());
+	bool style_validFlag = args_gurax.IsValid();
+	long style = style_validFlag? args_gurax.PickNumber<long>() : wxHLB_DEFAULT_STYLE;
+	const wxValidator& validator = args_gurax.IsValid()? args_gurax.Pick<Value_wxValidator>().GetEntity() : wxDefaultValidator;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxSimpleHtmlListBoxNameStr;
+	// Function body
+	auto pEntity_gurax = new Value_wxSimpleHtmlListBox::EntityT(parent, id, pos, size, choices, style, validator, name);
+	RefPtr<Value_wxSimpleHtmlListBox> pValue_gurax(new Value_wxSimpleHtmlListBox(pEntity_gurax));
+	pEntity_gurax->core_gurax.SetInfo(processor_gurax.Reference(), *pValue_gurax);
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -47,7 +87,7 @@ void VType_wxSimpleHtmlListBox::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxHtmlListBox, Flag::Mutable);
+	Declare(VTYPE_wxHtmlListBox, Flag::Mutable, Gurax_CreateConstructor(SimpleHtmlListBox_gurax));
 	// Assignment of method
 }
 

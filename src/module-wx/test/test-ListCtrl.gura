@@ -165,6 +165,7 @@ PanelTop = class(wx.Panel) {
 				noteBook.AddPage(panel, 'ICON')
 				vbox = wx.BoxSizer(wx.VERTICAL)
 				panel.SetSizer(vbox)
+				/*
 				wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 					vbox.Add(hbox, wx.SizerFlags().Expand())
 					wx.Slider(panel, wx.ID_ANY, 30, 0, 100) {|ctrl|
@@ -172,6 +173,7 @@ PanelTop = class(wx.Panel) {
 						slider_ColumnWidth = ctrl
 					}
 				}
+				*/
 				wx.ListCtrl(panel, wx.ID_ANY, style = wx.LC_ICON) {|ctrl|
 					vbox.Add(ctrl, wx.SizerFlags(3).Expand())
 					ctrl.SetImageList(imageList, wx.IMAGE_LIST_NORMAL)
@@ -222,6 +224,7 @@ PanelTop = class(wx.Panel) {
 						//ctrl.SetItemData(i, address.name)
 					}
 					ctrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+					//ctrl.SetColumnWidth(-1, 80)
 					info = Info('ICON', ctrl)
 					wx.EVT_LIST_BEGIN_DRAG(ctrl,		this.OnList,			userData = info)
 					wx.EVT_LIST_BEGIN_RDRAG(ctrl,		this.OnList,			userData = info)

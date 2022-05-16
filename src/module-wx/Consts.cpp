@@ -468,6 +468,8 @@ void AssignConsts(Frame& frame)
 	frame.Assign("HF_PRINT", new Value_Number(wxHF_PRINT));
 	frame.Assign("HF_SEARCH", new Value_Number(wxHF_SEARCH));
 	frame.Assign("HF_TOOLBAR", new Value_Number(wxHF_TOOLBAR));
+	frame.Assign("HLB_DEFAULT_STYLE", new Value_Number(wxHLB_DEFAULT_STYLE));
+	frame.Assign("HLB_MULTIPLE", new Value_Number(wxHLB_MULTIPLE));
 	frame.Assign("HL_ALIGN_CENTRE", new Value_Number(wxHL_ALIGN_CENTRE));
 	frame.Assign("HL_ALIGN_LEFT", new Value_Number(wxHL_ALIGN_LEFT));
 	frame.Assign("HL_ALIGN_RIGHT", new Value_Number(wxHL_ALIGN_RIGHT));
