@@ -1,3 +1,15 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+HtmlCell = Class(Object) {
+	@include ['wx/html/htmlwin.h']
+}
+
+HtmlCellEvent = Class(CommandEvent) {
+	@include ['wx/html/htmlwin.h']
+	GetCell() as HtmlCell_p
+	GetLinkClicked() as bool
+	GetPoint() as Point
+	//GetMouseEvent() as MouseEvent
+	SetLinkClicked(linkclicked as bool) as void
+}
