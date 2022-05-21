@@ -40,6 +40,8 @@ public:
 	Value_wxComboPopup() = delete;
 	explicit Value_wxComboPopup(wxComboPopup* pEntity, VType& vtype = VTYPE_wxComboPopup) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxComboPopup(const wxComboPopup& entity, VType& vtype = VTYPE_wxComboPopup) :
+		Value_Object(vtype), _pEntity(const_cast<wxComboPopup*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxComboPopup(const Value_wxComboPopup& src) = delete;
 	Value_wxComboPopup& operator=(const Value_wxComboPopup& src) = delete;

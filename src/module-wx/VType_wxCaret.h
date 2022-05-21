@@ -39,6 +39,8 @@ public:
 	Value_wxCaret() = delete;
 	explicit Value_wxCaret(wxCaret* pEntity, VType& vtype = VTYPE_wxCaret) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxCaret(const wxCaret& entity, VType& vtype = VTYPE_wxCaret) :
+		Value_Object(vtype), _pEntity(const_cast<wxCaret*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxCaret(const Value_wxCaret& src) = delete;
 	Value_wxCaret& operator=(const Value_wxCaret& src) = delete;

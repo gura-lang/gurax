@@ -40,6 +40,8 @@ public:
 	Value_wxProtocolLog() = delete;
 	explicit Value_wxProtocolLog(wxProtocolLog* pEntity, VType& vtype = VTYPE_wxProtocolLog) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxProtocolLog(const wxProtocolLog& entity, VType& vtype = VTYPE_wxProtocolLog) :
+		Value_Object(vtype), _pEntity(const_cast<wxProtocolLog*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxProtocolLog(const Value_wxProtocolLog& src) = delete;
 	Value_wxProtocolLog& operator=(const Value_wxProtocolLog& src) = delete;

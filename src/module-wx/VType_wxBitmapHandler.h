@@ -39,6 +39,8 @@ public:
 	Value_wxBitmapHandler() = delete;
 	explicit Value_wxBitmapHandler(wxBitmapHandler* pEntity, VType& vtype = VTYPE_wxBitmapHandler) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxBitmapHandler(const wxBitmapHandler& entity, VType& vtype = VTYPE_wxBitmapHandler) :
+		Value_Object(vtype), _pEntity(const_cast<wxBitmapHandler*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxBitmapHandler(const Value_wxBitmapHandler& src) = delete;
 	Value_wxBitmapHandler& operator=(const Value_wxBitmapHandler& src) = delete;

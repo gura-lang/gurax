@@ -47,8 +47,9 @@ Gurax_ImplementConstructorEx(HtmlLinkInfo_gurax, processor_gurax, argument_gurax
 	const char* href = args_gurax.PickString();
 	const char* target = args_gurax.IsValid()? args_gurax.PickString() : "";
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxHtmlLinkInfo(
-		wxHtmlLinkInfo(href, target)));
+	auto pEntity_gurax = new wxHtmlLinkInfo(href, target);
+	RefPtr<Value_wxHtmlLinkInfo> pValue_gurax(new Value_wxHtmlLinkInfo(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -129,7 +130,7 @@ void VType_wxHtmlLinkInfo::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(HtmlLinkInfo_gurax));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(HtmlLinkInfo_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxHtmlLinkInfo, GetHref_gurax));
 	Assign(Gurax_CreateMethod(wxHtmlLinkInfo, GetHtmlCell_gurax));

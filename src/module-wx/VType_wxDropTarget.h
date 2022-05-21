@@ -39,6 +39,8 @@ public:
 	Value_wxDropTarget() = delete;
 	explicit Value_wxDropTarget(wxDropTarget* pEntity, VType& vtype = VTYPE_wxDropTarget) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxDropTarget(const wxDropTarget& entity, VType& vtype = VTYPE_wxDropTarget) :
+		Value_Object(vtype), _pEntity(const_cast<wxDropTarget*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxDropTarget(const Value_wxDropTarget& src) = delete;
 	Value_wxDropTarget& operator=(const Value_wxDropTarget& src) = delete;

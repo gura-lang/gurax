@@ -39,6 +39,8 @@ public:
 	Value_wxSizer() = delete;
 	explicit Value_wxSizer(wxSizer* pEntity, VType& vtype = VTYPE_wxSizer) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxSizer(const wxSizer& entity, VType& vtype = VTYPE_wxSizer) :
+		Value_Object(vtype), _pEntity(const_cast<wxSizer*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxSizer(const Value_wxSizer& src) = delete;
 	Value_wxSizer& operator=(const Value_wxSizer& src) = delete;

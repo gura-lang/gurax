@@ -39,6 +39,8 @@ public:
 	Value_wxDataObject() = delete;
 	explicit Value_wxDataObject(wxDataObject* pEntity, VType& vtype = VTYPE_wxDataObject) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxDataObject(const wxDataObject& entity, VType& vtype = VTYPE_wxDataObject) :
+		Value_Object(vtype), _pEntity(const_cast<wxDataObject*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxDataObject(const Value_wxDataObject& src) = delete;
 	Value_wxDataObject& operator=(const Value_wxDataObject& src) = delete;

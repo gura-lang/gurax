@@ -40,6 +40,8 @@ public:
 	Value_wxHtmlHelpData() = delete;
 	explicit Value_wxHtmlHelpData(wxHtmlHelpData* pEntity, VType& vtype = VTYPE_wxHtmlHelpData) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxHtmlHelpData(const wxHtmlHelpData& entity, VType& vtype = VTYPE_wxHtmlHelpData) :
+		Value_Object(vtype), _pEntity(const_cast<wxHtmlHelpData*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxHtmlHelpData(const Value_wxHtmlHelpData& src) = delete;
 	Value_wxHtmlHelpData& operator=(const Value_wxHtmlHelpData& src) = delete;

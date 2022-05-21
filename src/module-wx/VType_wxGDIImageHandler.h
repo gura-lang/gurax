@@ -39,6 +39,8 @@ public:
 	Value_wxGDIImageHandler() = delete;
 	explicit Value_wxGDIImageHandler(wxGDIImageHandler* pEntity, VType& vtype = VTYPE_wxGDIImageHandler) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxGDIImageHandler(const wxGDIImageHandler& entity, VType& vtype = VTYPE_wxGDIImageHandler) :
+		Value_Object(vtype), _pEntity(const_cast<wxGDIImageHandler*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxGDIImageHandler(const Value_wxGDIImageHandler& src) = delete;
 	Value_wxGDIImageHandler& operator=(const Value_wxGDIImageHandler& src) = delete;

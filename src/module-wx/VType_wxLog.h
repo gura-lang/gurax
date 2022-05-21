@@ -39,6 +39,8 @@ public:
 	Value_wxLog() = delete;
 	explicit Value_wxLog(wxLog* pEntity, VType& vtype = VTYPE_wxLog) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxLog(const wxLog& entity, VType& vtype = VTYPE_wxLog) :
+		Value_Object(vtype), _pEntity(const_cast<wxLog*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxLog(const Value_wxLog& src) = delete;
 	Value_wxLog& operator=(const Value_wxLog& src) = delete;

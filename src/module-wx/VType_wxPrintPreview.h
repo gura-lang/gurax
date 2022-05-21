@@ -40,6 +40,8 @@ public:
 	Value_wxPrintPreview() = delete;
 	explicit Value_wxPrintPreview(wxPrintPreview* pEntity, VType& vtype = VTYPE_wxPrintPreview) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxPrintPreview(const wxPrintPreview& entity, VType& vtype = VTYPE_wxPrintPreview) :
+		Value_Object(vtype), _pEntity(const_cast<wxPrintPreview*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxPrintPreview(const Value_wxPrintPreview& src) = delete;
 	Value_wxPrintPreview& operator=(const Value_wxPrintPreview& src) = delete;

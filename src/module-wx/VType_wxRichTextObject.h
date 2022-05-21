@@ -40,6 +40,8 @@ public:
 	Value_wxRichTextObject() = delete;
 	explicit Value_wxRichTextObject(wxRichTextObject* pEntity, VType& vtype = VTYPE_wxRichTextObject) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxRichTextObject(const wxRichTextObject& entity, VType& vtype = VTYPE_wxRichTextObject) :
+		Value_Object(vtype), _pEntity(const_cast<wxRichTextObject*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxRichTextObject(const Value_wxRichTextObject& src) = delete;
 	Value_wxRichTextObject& operator=(const Value_wxRichTextObject& src) = delete;

@@ -40,6 +40,8 @@ public:
 	Value_wxRichTextStyleDefinition() = delete;
 	explicit Value_wxRichTextStyleDefinition(wxRichTextStyleDefinition* pEntity, VType& vtype = VTYPE_wxRichTextStyleDefinition) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxRichTextStyleDefinition(const wxRichTextStyleDefinition& entity, VType& vtype = VTYPE_wxRichTextStyleDefinition) :
+		Value_Object(vtype), _pEntity(const_cast<wxRichTextStyleDefinition*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxRichTextStyleDefinition(const Value_wxRichTextStyleDefinition& src) = delete;
 	Value_wxRichTextStyleDefinition& operator=(const Value_wxRichTextStyleDefinition& src) = delete;

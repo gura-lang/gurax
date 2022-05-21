@@ -45,15 +45,26 @@ PanelTop = class(wx.Panel) {
 	OnListBoxDClick(event as wx.CommandEvent) = {
 		this.Printf('OnListBox\n')
 	}
+	OnHtmlCellClicked(event) = {
+		this.Printf('OnHtmlCellClicked %s\n', event)
+	}
+	OnHtmlCellHover(event) = {
+		this.Printf('OnHtmlCellHover %s\n', event)
+	}
+	OnHtmlLinkClicked(event) = {
+		this.Printf('OnHtmlLinkClicked %s\n', event)
+	}
+	/*
 	OnHtmlCellClicked(event as wx.HtmlCellEvent) = {
-		this.Printf('OnHtmlCellClicked\n')
+		this.Printf('OnHtmlCellClicked %s\n', event.GetLinkInfo())
 	}
 	OnHtmlCellHover(event as wx.HtmlCellEvent) = {
 		this.Printf('OnHtmlCellHover\n')
 	}
-	OnHtmlLinkClicked(event as wx.HtmlCellEvent) = {
+	OnHtmlLinkClicked(event as wx.HtmlLinkEvent) = {
 		this.Printf('OnHtmlLinkClicked\n')
 	}
+	*/
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
 

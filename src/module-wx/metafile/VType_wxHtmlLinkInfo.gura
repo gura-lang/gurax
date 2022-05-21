@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxHtmlLinkInfo.gura
 //==============================================================================
-HtmlLinkInfo = Class(Object) {
+HtmlLinkInfo = Class():loosePointer {
 	@include['wx/html/htmlcell.h']
 	__init__(href as const_String_r, target as const_String_r = "")
 	//GetEvent() as MouseEvent_p

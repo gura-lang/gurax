@@ -40,6 +40,8 @@ public:
 	Value_wxRibbonArtProvider() = delete;
 	explicit Value_wxRibbonArtProvider(wxRibbonArtProvider* pEntity, VType& vtype = VTYPE_wxRibbonArtProvider) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxRibbonArtProvider(const wxRibbonArtProvider& entity, VType& vtype = VTYPE_wxRibbonArtProvider) :
+		Value_Object(vtype), _pEntity(const_cast<wxRibbonArtProvider*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxRibbonArtProvider(const Value_wxRibbonArtProvider& src) = delete;
 	Value_wxRibbonArtProvider& operator=(const Value_wxRibbonArtProvider& src) = delete;

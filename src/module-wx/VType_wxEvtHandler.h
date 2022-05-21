@@ -46,6 +46,8 @@ public:
 	Value_wxEvtHandler() = delete;
 	explicit Value_wxEvtHandler(wxEvtHandler* pEntity, VType& vtype = VTYPE_wxEvtHandler) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxEvtHandler(const wxEvtHandler& entity, VType& vtype = VTYPE_wxEvtHandler) :
+		Value_Object(vtype), _pEntity(const_cast<wxEvtHandler*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxEvtHandler(const Value_wxEvtHandler& src) = delete;
 	Value_wxEvtHandler& operator=(const Value_wxEvtHandler& src) = delete;

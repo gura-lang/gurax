@@ -318,6 +318,8 @@ ${if (classInfo.noCopyConstructorFlag)}
 ${elsif (className == 'EvtHandler' || classInfo.loosePointerFlag)}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wx${className}(const wx${className}& entity, VType& vtype = VTYPE_wx${className}) :
+		Value_Object(vtype), _pEntity(const_cast<wx${className}*>(&entity)) {}
 ${elsif (className == 'RefCounter')}
 	explicit Value_wx${className}(wx${className}* pEntity, VType& vtype = VTYPE_wx${className}) :
 		Value_Object(vtype), _pEntity(pEntity) {}

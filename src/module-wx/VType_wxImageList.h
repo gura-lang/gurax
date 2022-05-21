@@ -39,6 +39,8 @@ public:
 	Value_wxImageList() = delete;
 	explicit Value_wxImageList(wxImageList* pEntity, VType& vtype = VTYPE_wxImageList) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxImageList(const wxImageList& entity, VType& vtype = VTYPE_wxImageList) :
+		Value_Object(vtype), _pEntity(const_cast<wxImageList*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxImageList(const Value_wxImageList& src) = delete;
 	Value_wxImageList& operator=(const Value_wxImageList& src) = delete;

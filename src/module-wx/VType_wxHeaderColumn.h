@@ -40,6 +40,8 @@ public:
 	Value_wxHeaderColumn() = delete;
 	explicit Value_wxHeaderColumn(wxHeaderColumn* pEntity, VType& vtype = VTYPE_wxHeaderColumn) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxHeaderColumn(const wxHeaderColumn& entity, VType& vtype = VTYPE_wxHeaderColumn) :
+		Value_Object(vtype), _pEntity(const_cast<wxHeaderColumn*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxHeaderColumn(const Value_wxHeaderColumn& src) = delete;
 	Value_wxHeaderColumn& operator=(const Value_wxHeaderColumn& src) = delete;

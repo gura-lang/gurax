@@ -40,6 +40,8 @@ public:
 	Value_wxConfigBase() = delete;
 	explicit Value_wxConfigBase(wxConfigBase* pEntity, VType& vtype = VTYPE_wxConfigBase) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxConfigBase(const wxConfigBase& entity, VType& vtype = VTYPE_wxConfigBase) :
+		Value_Object(vtype), _pEntity(const_cast<wxConfigBase*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxConfigBase(const Value_wxConfigBase& src) = delete;
 	Value_wxConfigBase& operator=(const Value_wxConfigBase& src) = delete;

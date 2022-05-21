@@ -40,6 +40,8 @@ public:
 	Value_wxRichTextFormattingDialogFactory() = delete;
 	explicit Value_wxRichTextFormattingDialogFactory(wxRichTextFormattingDialogFactory* pEntity, VType& vtype = VTYPE_wxRichTextFormattingDialogFactory) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxRichTextFormattingDialogFactory(const wxRichTextFormattingDialogFactory& entity, VType& vtype = VTYPE_wxRichTextFormattingDialogFactory) :
+		Value_Object(vtype), _pEntity(const_cast<wxRichTextFormattingDialogFactory*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxRichTextFormattingDialogFactory(const Value_wxRichTextFormattingDialogFactory& src) = delete;
 	Value_wxRichTextFormattingDialogFactory& operator=(const Value_wxRichTextFormattingDialogFactory& src) = delete;

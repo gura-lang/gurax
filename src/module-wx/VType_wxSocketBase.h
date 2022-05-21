@@ -40,6 +40,8 @@ public:
 	Value_wxSocketBase() = delete;
 	explicit Value_wxSocketBase(wxSocketBase* pEntity, VType& vtype = VTYPE_wxSocketBase) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxSocketBase(const wxSocketBase& entity, VType& vtype = VTYPE_wxSocketBase) :
+		Value_Object(vtype), _pEntity(const_cast<wxSocketBase*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxSocketBase(const Value_wxSocketBase& src) = delete;
 	Value_wxSocketBase& operator=(const Value_wxSocketBase& src) = delete;

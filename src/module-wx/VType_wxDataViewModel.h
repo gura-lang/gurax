@@ -40,6 +40,8 @@ public:
 	Value_wxDataViewModel() = delete;
 	explicit Value_wxDataViewModel(wxDataViewModel* pEntity, VType& vtype = VTYPE_wxDataViewModel) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxDataViewModel(const wxDataViewModel& entity, VType& vtype = VTYPE_wxDataViewModel) :
+		Value_Object(vtype), _pEntity(const_cast<wxDataViewModel*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxDataViewModel(const Value_wxDataViewModel& src) = delete;
 	Value_wxDataViewModel& operator=(const Value_wxDataViewModel& src) = delete;

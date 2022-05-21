@@ -40,6 +40,8 @@ public:
 	Value_wxEventLoopBase() = delete;
 	explicit Value_wxEventLoopBase(wxEventLoopBase* pEntity, VType& vtype = VTYPE_wxEventLoopBase) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxEventLoopBase(const wxEventLoopBase& entity, VType& vtype = VTYPE_wxEventLoopBase) :
+		Value_Object(vtype), _pEntity(const_cast<wxEventLoopBase*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxEventLoopBase(const Value_wxEventLoopBase& src) = delete;
 	Value_wxEventLoopBase& operator=(const Value_wxEventLoopBase& src) = delete;

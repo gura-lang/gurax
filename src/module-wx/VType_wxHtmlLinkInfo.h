@@ -8,7 +8,6 @@
 #include <wx/wx.h>
 #include <wx/html/htmlcell.h>
 #include "Util.h"
-#include "VType_wxObject.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -26,19 +25,23 @@ extern GURAX_DLLDECLARE VType_wxHtmlLinkInfo VTYPE_wxHtmlLinkInfo;
 //------------------------------------------------------------------------------
 // Value_wxHtmlLinkInfo
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxHtmlLinkInfo : public Value_wxObject {
+class GURAX_DLLDECLARE Value_wxHtmlLinkInfo : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxHtmlLinkInfo);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxHtmlLinkInfo");
+protected:
+	wxHtmlLinkInfo* _pEntity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxHtmlLinkInfo() = delete;
+	explicit Value_wxHtmlLinkInfo(wxHtmlLinkInfo* pEntity, VType& vtype = VTYPE_wxHtmlLinkInfo) :
+		Value_Object(vtype), _pEntity(pEntity) {}
 	explicit Value_wxHtmlLinkInfo(const wxHtmlLinkInfo& entity, VType& vtype = VTYPE_wxHtmlLinkInfo) :
-		Value_wxObject(entity, vtype) {}
+		Value_Object(vtype), _pEntity(const_cast<wxHtmlLinkInfo*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxHtmlLinkInfo(const Value_wxHtmlLinkInfo& src) = delete;
 	Value_wxHtmlLinkInfo& operator=(const Value_wxHtmlLinkInfo& src) = delete;
@@ -49,10 +52,10 @@ protected:
 	// Destructor
 	~Value_wxHtmlLinkInfo() = default;
 public:
-	wxHtmlLinkInfo& GetEntity() { return reinterpret_cast<wxHtmlLinkInfo&>(Value_wxObject::GetEntity()); }
-	const wxHtmlLinkInfo& GetEntity() const { return reinterpret_cast<const wxHtmlLinkInfo&>(Value_wxObject::GetEntity()); }
-	wxHtmlLinkInfo* GetEntityPtr() { return reinterpret_cast<wxHtmlLinkInfo*>(Value_wxObject::GetEntityPtr()); }\
-	const wxHtmlLinkInfo* GetEntityPtr() const { return reinterpret_cast<const wxHtmlLinkInfo*>(Value_wxObject::GetEntityPtr()); }
+	wxHtmlLinkInfo& GetEntity() { return *_pEntity; }
+	const wxHtmlLinkInfo& GetEntity() const { return *_pEntity; }
+	wxHtmlLinkInfo* GetEntityPtr() { return _pEntity; }
+	const wxHtmlLinkInfo* GetEntityPtr() const { return _pEntity; }
 public:
 	static wxHtmlLinkInfo& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxHtmlLinkInfo&>(value).GetEntity();

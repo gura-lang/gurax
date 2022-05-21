@@ -39,6 +39,8 @@ public:
 	Value_wxStreamBase() = delete;
 	explicit Value_wxStreamBase(wxStreamBase* pEntity, VType& vtype = VTYPE_wxStreamBase) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxStreamBase(const wxStreamBase& entity, VType& vtype = VTYPE_wxStreamBase) :
+		Value_Object(vtype), _pEntity(const_cast<wxStreamBase*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxStreamBase(const Value_wxStreamBase& src) = delete;
 	Value_wxStreamBase& operator=(const Value_wxStreamBase& src) = delete;

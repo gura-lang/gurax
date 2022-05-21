@@ -40,6 +40,8 @@ public:
 	Value_wxHelpControllerBase() = delete;
 	explicit Value_wxHelpControllerBase(wxHelpControllerBase* pEntity, VType& vtype = VTYPE_wxHelpControllerBase) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxHelpControllerBase(const wxHelpControllerBase& entity, VType& vtype = VTYPE_wxHelpControllerBase) :
+		Value_Object(vtype), _pEntity(const_cast<wxHelpControllerBase*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxHelpControllerBase(const Value_wxHelpControllerBase& src) = delete;
 	Value_wxHelpControllerBase& operator=(const Value_wxHelpControllerBase& src) = delete;

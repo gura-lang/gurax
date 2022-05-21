@@ -40,6 +40,8 @@ public:
 	Value_wxAuiToolBarArt() = delete;
 	explicit Value_wxAuiToolBarArt(wxAuiToolBarArt* pEntity, VType& vtype = VTYPE_wxAuiToolBarArt) :
 		Value_Object(vtype), _pEntity(pEntity) {}
+	explicit Value_wxAuiToolBarArt(const wxAuiToolBarArt& entity, VType& vtype = VTYPE_wxAuiToolBarArt) :
+		Value_Object(vtype), _pEntity(const_cast<wxAuiToolBarArt*>(&entity)) {}
 	// Copy constructor/operator
 	Value_wxAuiToolBarArt(const Value_wxAuiToolBarArt& src) = delete;
 	Value_wxAuiToolBarArt& operator=(const Value_wxAuiToolBarArt& src) = delete;
