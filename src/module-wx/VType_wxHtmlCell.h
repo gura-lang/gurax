@@ -6,7 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXHTMLCELL_H
 #include <gurax.h>
 #include <wx/wx.h>
-#include <wx/html/htmlcell.h>
+#include <wx/html/htmlwin.h>
 #include "Util.h"
 #include "VType_wxObject.h"
 

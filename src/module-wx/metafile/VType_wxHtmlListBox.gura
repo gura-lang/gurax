@@ -14,7 +14,7 @@ HtmlListBox = Class(VListBox) {
 }
 
 @event {
-	EVT_HTML_CELL_CLICKED	>> HtmlLinkEvent
-	EVT_HTML_CELL_HOVER		>> HtmlLinkEvent
+	EVT_HTML_CELL_CLICKED	>> HtmlCellEvent
+	EVT_HTML_CELL_HOVER		>> HtmlCellEvent
 	EVT_HTML_LINK_CLICKED	>> HtmlLinkEvent
 }

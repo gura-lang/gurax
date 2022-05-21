@@ -7,8 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxHtmlCell.h"
-#include "VType_wxHtmlCellEvent.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorTable.h"
 #include "VType_wxAccessible.h"
@@ -201,6 +199,7 @@
 #include "VType_wxHelpEvent.h"
 #include "VType_wxHScrolledWindow.h"
 #include "VType_wxHtmlCell.h"
+#include "VType_wxHtmlCellEvent.h"
 #include "VType_wxHtmlColourCell.h"
 #include "VType_wxHtmlContainerCell.h"
 #include "VType_wxHtmlFontCell.h"

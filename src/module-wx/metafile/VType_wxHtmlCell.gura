@@ -2,5 +2,5 @@
 // VType_wxHtmlCell.gura
 //==============================================================================
 HtmlCell = Class(Object) {
-	@include['wx/html/htmlcell.h']
+	@include ['wx/html/htmlwin.h']
 }

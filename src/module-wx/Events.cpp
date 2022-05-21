@@ -115,8 +115,8 @@ void AssignEvents(Frame& frame)
 	Gurax_AssignEvent(EVT_HEADER_SEPARATOR_DCLICK,				wxHeaderCtrlEvent);
 	Gurax_AssignEvent(EVT_HELP,									wxHelpEvent);
 	Gurax_AssignEvent(EVT_HIBERNATE,							wxActivateEvent);
-	Gurax_AssignEvent(EVT_HTML_CELL_CLICKED,					wxHtmlLinkEvent);
-	Gurax_AssignEvent(EVT_HTML_CELL_HOVER,						wxHtmlLinkEvent);
+	Gurax_AssignEvent(EVT_HTML_CELL_CLICKED,					wxHtmlCellEvent);
+	Gurax_AssignEvent(EVT_HTML_CELL_HOVER,						wxHtmlCellEvent);
 	Gurax_AssignEvent(EVT_HTML_LINK_CLICKED,					wxHtmlLinkEvent);
 	Gurax_AssignEvent(EVT_HYPERLINK,							wxHyperlinkEvent);
 	Gurax_AssignEvent(EVT_ICONIZE,								wxIconizeEvent);

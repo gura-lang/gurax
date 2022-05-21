@@ -12,8 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxHtmlCell);
-	frame.Assign(VTYPE_wxHtmlCellEvent);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorTable);
 	frame.Assign(VTYPE_wxAccessible);
@@ -206,6 +204,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxHelpEvent);
 	frame.Assign(VTYPE_wxHScrolledWindow);
 	frame.Assign(VTYPE_wxHtmlCell);
+	frame.Assign(VTYPE_wxHtmlCellEvent);
 	frame.Assign(VTYPE_wxHtmlColourCell);
 	frame.Assign(VTYPE_wxHtmlContainerCell);
 	frame.Assign(VTYPE_wxHtmlFontCell);
