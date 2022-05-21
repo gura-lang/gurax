@@ -29,8 +29,8 @@ PanelTop = class(wx.Panel) {
 				vbox.Add(ctrl, wx.SizerFlags(3).Expand())
 				wx.EVT_LISTBOX(ctrl, this.OnListBox)
 				wx.EVT_LISTBOX_DCLICK(ctrl, this.OnListBoxDClick)
-				//wx.EVT_HTML_CELL_CLICKED(ctrl, this.OnHtmlCellClicked)
-				//wx.EVT_HTML_CELL_HOVER(ctrl, this.OnHtmlCellHover)
+				wx.EVT_HTML_CELL_CLICKED(ctrl, this.OnHtmlCellClicked)
+				wx.EVT_HTML_CELL_HOVER(ctrl, this.OnHtmlCellHover)
 				wx.EVT_HTML_LINK_CLICKED(ctrl, this.OnHtmlLinkClicked)
 			}
 		}
@@ -45,14 +45,17 @@ PanelTop = class(wx.Panel) {
 	OnListBoxDClick(event as wx.CommandEvent) = {
 		this.Printf('OnListBox\n')
 	}
-	OnHtmlCellClicked(event as wx.HtmlLinkEvent) = {
-		this.Printf('OnHtmlCellClicked %s\n', event.GetLinkInfo())
+	OnHtmlCellClicked(event as wx.HtmlCellEvent) = {
+		this.Printf('OnHtmlCellClicked %s\n', event)
+		event.Skip()
 	}
-	OnHtmlCellHover(event as wx.HtmlLinkEvent) = {
+	OnHtmlCellHover(event as wx.HtmlCellEvent) = {
 		this.Printf('OnHtmlCellHover %s\n', event)
+		event.Skip()
 	}
 	OnHtmlLinkClicked(event as wx.HtmlLinkEvent) = {
-		this.Printf('OnHtmlLinkClicked %s\n', event.GetLinkInfo().GetTarget())
+		this.Printf('OnHtmlLinkClicked %s\n', event.GetLinkInfo().GetHref())
+		event.Skip()
 	}
 	/*
 	OnHtmlCellClicked(event as wx.HtmlCellEvent) = {
