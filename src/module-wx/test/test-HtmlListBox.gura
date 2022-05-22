@@ -27,7 +27,8 @@ PanelTop = class(wx.Panel) {
 			sizerTop.Add(vbox, wx.SizerFlags(1).Expand())
 			wx.SimpleHtmlListBox(this, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, []) {|ctrl|
 				Range(100).Each {|iItem|
-					ctrl.Append(Format('<h%d>Item %d</h>', (iItem % 6) + 1, iItem))
+					level = (iItem % 6) + 1
+					ctrl.Append(Format('<h%d>Item %d <a href="link-href">Link</a></h%d>', level, iItem, level))
 				}
 				vbox.Add(ctrl, wx.SizerFlags(3).Expand())
 				wx.EVT_LISTBOX(ctrl, this.OnListBox)
@@ -57,20 +58,10 @@ PanelTop = class(wx.Panel) {
 		event.Skip()
 	}
 	OnHtmlLinkClicked(event as wx.HtmlLinkEvent) = {
-		this.Printf('OnHtmlLinkClicked %s\n', event.GetLinkInfo().GetHref())
+		linkInfo = event.GetLinkInfo()
+		this.Printf('OnHtmlLinkClicked target="%s", href="%s"\n', linkInfo.GetTarget(), linkInfo.GetHref())
 		event.Skip()
 	}
-	/*
-	OnHtmlCellClicked(event as wx.HtmlCellEvent) = {
-		this.Printf('OnHtmlCellClicked %s\n', event)
-	}
-	OnHtmlCellHover(event as wx.HtmlCellEvent) = {
-		this.Printf('OnHtmlCellHover\n')
-	}
-	OnHtmlLinkClicked(event as wx.HtmlLinkEvent) = {
-		this.Printf('OnHtmlLinkClicked\n')
-	}
-	*/
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
 
