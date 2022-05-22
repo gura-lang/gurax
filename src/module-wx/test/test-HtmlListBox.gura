@@ -44,10 +44,10 @@ PanelTop = class(wx.Panel) {
 		}
 	}
 	OnListBox(event as wx.CommandEvent) = {
-		this.Printf('OnListBox\n')
+		this.Printf('OnListBox index=%d\n', event.GetSelection())
 	}
 	OnListBoxDClick(event as wx.CommandEvent) = {
-		this.Printf('OnListBox\n')
+		this.Printf('OnListBoxDClick index=%d\n', event.GetSelection())
 	}
 	OnHtmlCellClicked(event as wx.HtmlCellEvent) = {
 		this.Printf('OnHtmlCellClicked %s\n', event)
@@ -59,7 +59,7 @@ PanelTop = class(wx.Panel) {
 	}
 	OnHtmlLinkClicked(event as wx.HtmlLinkEvent) = {
 		linkInfo = event.GetLinkInfo()
-		this.Printf('OnHtmlLinkClicked target="%s", href="%s"\n', linkInfo.GetTarget(), linkInfo.GetHref())
+		this.Printf('OnHtmlLinkClicked target="%s" href="%s"\n', linkInfo.GetTarget(), linkInfo.GetHref())
 		event.Skip()
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
