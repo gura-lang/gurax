@@ -33,31 +33,37 @@ PanelTop = class(wx.Panel) {
 			ctrl.SetRowLabelValue(0, 'Row1')
 			ctrl.SetRowLabelValue(1, 'Row2')
 			ctrl.SetRowLabelValue(2, 'Row3')
+			ctrl.SetCellHighlightColour(wx.BLACK)
+			ctrl.SetCellHighlightPenWidth(1)
 			//ctrl.SetColLabelTextOrientation(wx.VERTICAL)
 			repeat (nRows) {|iRow|
 				repeat (nCols) {|iCol|
 					ctrl.SetCellValue(iRow, iCol, Format('%d,%d', iCol, iRow))
 				}
 			}
-			ctrl.SetCellTextColour(3, 3, wx.GREEN)
-			ctrl.SetCellBackgroundColour(3, 3, wx.LIGHT_GREY)
+			repeat(100) {
+				iRow = Random.Int(nRows)
+				iCol = Random.Int(nCols)
+				ctrl.SetCellTextColour(iCol, iRow, wx.GREEN)
+				ctrl.SetCellBackgroundColour(iCol, iRow, wx.LIGHT_GREY)
+			}
 			//ctrl.EnableGridLines(true)
-			wx.EVT_GRID_CELL_CHANGING(ctrl, this.OnGrid)
-			wx.EVT_GRID_CELL_CHANGED(ctrl, this.OnGrid)
-			wx.EVT_GRID_CELL_LEFT_CLICK(ctrl, this.OnGrid)
-			wx.EVT_GRID_CELL_LEFT_DCLICK(ctrl, this.OnGrid)
-			wx.EVT_GRID_CELL_RIGHT_CLICK(ctrl, this.OnGrid)
-			wx.EVT_GRID_CELL_RIGHT_DCLICK(ctrl, this.OnGrid)
-			wx.EVT_GRID_EDITOR_HIDDEN(ctrl, this.OnGrid)
-			wx.EVT_GRID_EDITOR_SHOWN(ctrl, this.OnGrid)
-			wx.EVT_GRID_LABEL_LEFT_CLICK(ctrl, this.OnGrid)
-			wx.EVT_GRID_LABEL_LEFT_DCLICK(ctrl, this.OnGrid)
-			wx.EVT_GRID_LABEL_RIGHT_CLICK(ctrl, this.OnGrid)
-			wx.EVT_GRID_LABEL_RIGHT_DCLICK(ctrl, this.OnGrid)
-			wx.EVT_GRID_SELECT_CELL(ctrl, this.OnGrid)
-			wx.EVT_GRID_COL_MOVE(ctrl, this.OnGrid)
-			wx.EVT_GRID_COL_SORT(ctrl, this.OnGrid)
-			wx.EVT_GRID_TABBING(ctrl, this.OnGrid)
+			wx.EVT_GRID_CELL_CHANGING(ctrl,			this.OnGrid)
+			wx.EVT_GRID_CELL_CHANGED(ctrl,			this.OnGrid)
+			wx.EVT_GRID_CELL_LEFT_CLICK(ctrl,		this.OnGrid)
+			wx.EVT_GRID_CELL_LEFT_DCLICK(ctrl,		this.OnGrid)
+			wx.EVT_GRID_CELL_RIGHT_CLICK(ctrl,		this.OnGrid)
+			wx.EVT_GRID_CELL_RIGHT_DCLICK(ctrl,		this.OnGrid)
+			wx.EVT_GRID_EDITOR_HIDDEN(ctrl,			this.OnGrid)
+			wx.EVT_GRID_EDITOR_SHOWN(ctrl,			this.OnGrid)
+			wx.EVT_GRID_LABEL_LEFT_CLICK(ctrl,		this.OnGrid)
+			wx.EVT_GRID_LABEL_LEFT_DCLICK(ctrl,		this.OnGrid)
+			wx.EVT_GRID_LABEL_RIGHT_CLICK(ctrl,		this.OnGrid)
+			wx.EVT_GRID_LABEL_RIGHT_DCLICK(ctrl,	this.OnGrid)
+			wx.EVT_GRID_SELECT_CELL(ctrl,			this.OnGrid)
+			wx.EVT_GRID_COL_MOVE(ctrl,				this.OnGrid)
+			wx.EVT_GRID_COL_SORT(ctrl,				this.OnGrid)
+			wx.EVT_GRID_TABBING(ctrl,				this.OnGrid)
 		}
 		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
 			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
@@ -71,7 +77,7 @@ PanelTop = class(wx.Panel) {
 	PrintGridEvent(event) = {
 		eventName = event.GetEventType().name
 		pt = event.GetPosition()
-		this.Printf('%s([%d, %d], [%d, %d], Shift=%s, Control=%s, Alt=%s, Meta=%s)\n', eventName,
+		this.Printf('%s((%d,%d), (%d,%d), Shift=%s, Control=%s, Alt=%s, Meta=%s)\n', eventName,
 			event.GetRow(), event.GetCol(), pt.x, pt.y, event.ShiftDown(), event.ControlDown(), event.AltDown(), event.MetaDown())
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
