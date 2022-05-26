@@ -27,12 +27,12 @@ PanelTop = class(wx.Panel) {
 			ctrl.CreateGrid(nRows, nCols)
 			//ctrl.SetRowSize(0, 60)
 			//ctrl.SetColSize(0, 120)
-			ctrl.SetColLabelValue(0, 'Column1')
-			ctrl.SetColLabelValue(1, 'Column2')
-			ctrl.SetColLabelValue(2, 'Column3')
-			ctrl.SetRowLabelValue(0, 'Row1')
-			ctrl.SetRowLabelValue(1, 'Row2')
-			ctrl.SetRowLabelValue(2, 'Row3')
+			repeat (nRows) {|iRow|
+				ctrl.SetRowLabelValue(iRow, Format('Row%d', iRow + 1))
+			}
+			repeat (nCols) {|iCol|
+				ctrl.SetColLabelValue(iCol, Format('Column%d', iCol + 1))
+			}
 			ctrl.SetCellHighlightColour(wx.BLACK)
 			ctrl.SetCellHighlightPenWidth(1)
 			//ctrl.SetColLabelTextOrientation(wx.VERTICAL)
