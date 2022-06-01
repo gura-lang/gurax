@@ -1,4 +1,3 @@
-
 #!/usr/bin/env gurax
 import(wx)
 
@@ -29,6 +28,7 @@ PanelTop = class(wx.Panel) {
 			ctrl.SetRowSize(8, 60)
 			ctrl.SetRowSize(9, 60)
 			ctrl.SetRowSize(10, 60)
+			ctrl.SetRowSize(12, 60)
 			ctrl.SetColSize(5, 120)
 			ctrl.SetColSize(8, 120)
 			repeat (nRows) {|iRow|
@@ -53,13 +53,28 @@ PanelTop = class(wx.Panel) {
 			}
 			alignHorzTbl = [wx.ALIGN_LEFT, wx.ALIGN_CENTRE, wx.ALIGN_RIGHT]
 			alignVertTbl = [wx.ALIGN_TOP, wx.ALIGN_CENTRE, wx.ALIGN_BOTTOM]
-			repeat (3) {|i|
-				repeat (3) {|j|
-					iRow = i + 8, iCol = j + 1
-					ctrl.SetCellBackgroundColour(iRow, iCol, wx.LIGHT_GREY)
-
-					ctrl.SetCellAlignment(iRow, iCol, alignHorzTbl[j], alignVertTbl[i])
+			alignVertTbl.Each {|alignVert, i|
+				alignHorzTbl.Each {|alignHorz, j|
+					[iRow, iCol] = [i + 8, j + 1]
+					ctrl.SetCellBackgroundColour(iRow, iCol, wx.RED)
+					ctrl.SetCellAlignment(iRow, iCol, alignHorz, alignVert)
 				}
+			}
+			fontTupleTbl = [
+				(wx.FONTFAMILY_DEFAULT,		'DEFAULT')
+				(wx.FONTFAMILY_DECORATIVE,	'DECORATIVE')
+				(wx.FONTFAMILY_ROMAN,		'ROMAN')
+				(wx.FONTFAMILY_SCRIPT,		'SCRIPT')
+				(wx.FONTFAMILY_SWISS,		'SWISS')
+				(wx.FONTFAMILY_MODERN,		'MODERN')
+				(wx.FONTFAMILY_TELETYPE,	'TELETYPE')
+			]
+			fontTupleTbl.Each {|fontTuple, i|
+				[fontFamily, label] = fontTuple
+				[iRow, iCol] = [12, i + 1]
+				font = wx.Font(20, fontFamily, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+				ctrl.SetCellFont(iRow, iCol, font)
+				ctrl.SetCellValue(iRow + 1, iCol, label)
 			}
 			//ctrl.EnableGridLines(true)
 			wx.EVT_GRID_CELL_CHANGING(ctrl,			this.OnGrid)
