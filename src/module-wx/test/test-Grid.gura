@@ -1,9 +1,14 @@
 #!/usr/bin/env gurax
 import(wx)
 
+g_panelControl = nil
+
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		title = path.FileName(sys.argv[0])
+		frame = MyFrame(title, wx.Point(50, 50), wx.Size(800, 600))
+		frame.Show()
+		FrameControl(frame, title, wx.Point(300, 100), wx.Size(800, 300)).Show()
 		true
 	}
 }
@@ -14,100 +19,119 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
+FrameControl = class(wx.Frame) {
+	__init__(parent as wx.Window, title as String, pos as wx.Point, size as wx.Size) = {
+			|parent, wx.ID_ANY, title, pos, size, style = (wx.DEFAULT_FRAME_STYLE | wx.FRAME_FLOAT_ON_PARENT)|
+		g_panelControl:extern = PanelControl(this)
+	}
+}
+
 PanelTop = class(wx.Panel) {
 	grid as wx.Grid
-	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
-		wx.Grid(this, wx.ID_ANY) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
-			nRows = 40, nCols = 50
-			ctrl.CreateGrid(nRows, nCols)
-			ctrl.SetRowSize(3, 60)
-			ctrl.SetRowSize(8, 60)
-			ctrl.SetRowSize(9, 60)
-			ctrl.SetRowSize(10, 60)
-			ctrl.SetRowSize(12, 60)
-			ctrl.SetColSize(5, 120)
-			ctrl.SetColSize(8, 120)
-			repeat (nRows) {|iRow|
-				ctrl.SetRowLabelValue(iRow, Format('Row%d', iRow + 1))
-			}
-			repeat (nCols) {|iCol|
-				ctrl.SetColLabelValue(iCol, Format('Column%d', iCol + 1))
-			}
-			ctrl.SetCellHighlightColour(wx.BLACK)
-			ctrl.SetCellHighlightPenWidth(1)
-			//ctrl.SetColLabelTextOrientation(wx.VERTICAL)
-			repeat (nRows) {|iRow|
+		wx.BoxSizer(wx.VERTICAL) {|vbox|
+			sizerTop.Add(vbox, wx.SizerFlags(1).Expand())
+			wx.Grid(this, wx.ID_ANY) {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags(1).Expand())
+				nRows = 40, nCols = 50
+				ctrl.CreateGrid(nRows, nCols)
+				ctrl.SetRowSize(3, 60)
+				ctrl.SetRowSize(8, 60)
+				ctrl.SetRowSize(9, 60)
+				ctrl.SetRowSize(10, 60)
+				ctrl.SetRowSize(12, 60)
+				ctrl.SetColSize(5, 120)
+				ctrl.SetColSize(8, 120)
+				repeat (nRows) {|iRow|
+					ctrl.SetRowLabelValue(iRow, Format('Row%d', iRow + 1))
+				}
 				repeat (nCols) {|iCol|
-					ctrl.SetCellValue(iRow, iCol, Format('%d, %d', iRow + 1, iCol + 1))
+					ctrl.SetColLabelValue(iCol, Format('Column%d', iCol + 1))
 				}
-			}
-			repeat(100) {
-				iRow = Random.Int(nRows)
-				iCol = Random.Int(nCols)
-				ctrl.SetCellTextColour(iCol, iRow, wx.GREEN)
-				ctrl.SetCellBackgroundColour(iRow, iCol, wx.LIGHT_GREY)
-			}
-			alignHorzTbl = [wx.ALIGN_LEFT, wx.ALIGN_CENTRE, wx.ALIGN_RIGHT]
-			alignVertTbl = [wx.ALIGN_TOP, wx.ALIGN_CENTRE, wx.ALIGN_BOTTOM]
-			alignVertTbl.Each {|alignVert, i|
-				alignHorzTbl.Each {|alignHorz, j|
-					[iRow, iCol] = [i + 8, j + 1]
-					ctrl.SetCellBackgroundColour(iRow, iCol, wx.RED)
-					ctrl.SetCellAlignment(iRow, iCol, alignHorz, alignVert)
+				ctrl.SetCellHighlightColour(wx.BLACK)
+				ctrl.SetCellHighlightPenWidth(1)
+				//ctrl.SetColLabelTextOrientation(wx.VERTICAL)
+				repeat (nRows) {|iRow|
+					repeat (nCols) {|iCol|
+						ctrl.SetCellValue(iRow, iCol, Format('%d, %d', iRow + 1, iCol + 1))
+					}
 				}
+				repeat(100) {
+					iRow = Random.Int(nRows)
+					iCol = Random.Int(nCols)
+					ctrl.SetCellTextColour(iCol, iRow, wx.GREEN)
+					ctrl.SetCellBackgroundColour(iRow, iCol, wx.LIGHT_GREY)
+				}
+				alignHorzTbl = [wx.ALIGN_LEFT, wx.ALIGN_CENTRE, wx.ALIGN_RIGHT]
+				alignVertTbl = [wx.ALIGN_TOP, wx.ALIGN_CENTRE, wx.ALIGN_BOTTOM]
+				alignVertTbl.Each {|alignVert, i|
+					alignHorzTbl.Each {|alignHorz, j|
+						[iRow, iCol] = [i + 8, j + 1]
+						ctrl.SetCellBackgroundColour(iRow, iCol, wx.RED)
+						ctrl.SetCellAlignment(iRow, iCol, alignHorz, alignVert)
+					}
+				}
+				fontTupleTbl = [
+					(wx.FONTFAMILY_DEFAULT,		'DEFAULT')
+					(wx.FONTFAMILY_DECORATIVE,	'DECORATIVE')
+					(wx.FONTFAMILY_ROMAN,		'ROMAN')
+					(wx.FONTFAMILY_SCRIPT,		'SCRIPT')
+					(wx.FONTFAMILY_SWISS,		'SWISS')
+					(wx.FONTFAMILY_MODERN,		'MODERN')
+					(wx.FONTFAMILY_TELETYPE,	'TELETYPE')
+				]
+				fontTupleTbl.Each {|fontTuple, i|
+					[fontFamily, label] = fontTuple
+					[iRow, iCol] = [12, i + 1]
+					font = wx.Font(20, fontFamily, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+					ctrl.SetCellFont(iRow, iCol, font)
+					ctrl.SetCellValue(iRow + 1, iCol, label)
+					ctrl.SetCellAlignment(iRow, iCol, wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
+				}
+				//ctrl.EnableGridLines(true)
+				wx.EVT_GRID_CELL_CHANGING(ctrl,			this.OnGrid)
+				wx.EVT_GRID_CELL_CHANGED(ctrl,			this.OnGrid)
+				wx.EVT_GRID_CELL_LEFT_CLICK(ctrl,		this.OnGrid)
+				wx.EVT_GRID_CELL_LEFT_DCLICK(ctrl,		this.OnGrid)
+				wx.EVT_GRID_CELL_RIGHT_CLICK(ctrl,		this.OnGrid)
+				wx.EVT_GRID_CELL_RIGHT_DCLICK(ctrl,		this.OnGrid)
+				wx.EVT_GRID_EDITOR_HIDDEN(ctrl,			this.OnGrid)
+				wx.EVT_GRID_EDITOR_SHOWN(ctrl,			this.OnGrid)
+				wx.EVT_GRID_LABEL_LEFT_CLICK(ctrl,		this.OnGrid)
+				wx.EVT_GRID_LABEL_LEFT_DCLICK(ctrl,		this.OnGrid)
+				wx.EVT_GRID_LABEL_RIGHT_CLICK(ctrl,		this.OnGrid)
+				wx.EVT_GRID_LABEL_RIGHT_DCLICK(ctrl,	this.OnGrid)
+				wx.EVT_GRID_SELECT_CELL(ctrl,			this.OnGrid)
+				wx.EVT_GRID_COL_MOVE(ctrl,				this.OnGrid)
+				wx.EVT_GRID_COL_SORT(ctrl,				this.OnGrid)
+				wx.EVT_GRID_TABBING(ctrl,				this.OnGrid)
 			}
-			fontTupleTbl = [
-				(wx.FONTFAMILY_DEFAULT,		'DEFAULT')
-				(wx.FONTFAMILY_DECORATIVE,	'DECORATIVE')
-				(wx.FONTFAMILY_ROMAN,		'ROMAN')
-				(wx.FONTFAMILY_SCRIPT,		'SCRIPT')
-				(wx.FONTFAMILY_SWISS,		'SWISS')
-				(wx.FONTFAMILY_MODERN,		'MODERN')
-				(wx.FONTFAMILY_TELETYPE,	'TELETYPE')
-			]
-			fontTupleTbl.Each {|fontTuple, i|
-				[fontFamily, label] = fontTuple
-				[iRow, iCol] = [12, i + 1]
-				font = wx.Font(20, fontFamily, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
-				ctrl.SetCellFont(iRow, iCol, font)
-				ctrl.SetCellValue(iRow + 1, iCol, label)
-			}
-			//ctrl.EnableGridLines(true)
-			wx.EVT_GRID_CELL_CHANGING(ctrl,			this.OnGrid)
-			wx.EVT_GRID_CELL_CHANGED(ctrl,			this.OnGrid)
-			wx.EVT_GRID_CELL_LEFT_CLICK(ctrl,		this.OnGrid)
-			wx.EVT_GRID_CELL_LEFT_DCLICK(ctrl,		this.OnGrid)
-			wx.EVT_GRID_CELL_RIGHT_CLICK(ctrl,		this.OnGrid)
-			wx.EVT_GRID_CELL_RIGHT_DCLICK(ctrl,		this.OnGrid)
-			wx.EVT_GRID_EDITOR_HIDDEN(ctrl,			this.OnGrid)
-			wx.EVT_GRID_EDITOR_SHOWN(ctrl,			this.OnGrid)
-			wx.EVT_GRID_LABEL_LEFT_CLICK(ctrl,		this.OnGrid)
-			wx.EVT_GRID_LABEL_LEFT_DCLICK(ctrl,		this.OnGrid)
-			wx.EVT_GRID_LABEL_RIGHT_CLICK(ctrl,		this.OnGrid)
-			wx.EVT_GRID_LABEL_RIGHT_DCLICK(ctrl,	this.OnGrid)
-			wx.EVT_GRID_SELECT_CELL(ctrl,			this.OnGrid)
-			wx.EVT_GRID_COL_MOVE(ctrl,				this.OnGrid)
-			wx.EVT_GRID_COL_SORT(ctrl,				this.OnGrid)
-			wx.EVT_GRID_TABBING(ctrl,				this.OnGrid)
 		}
-		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
-			this.textCtrl = ctrl
-		}
-	}
-	OnGrid(event) = {
-		this.PrintGridEvent(event)
-		event.Skip()
 	}
 	PrintGridEvent(event) = {
 		eventName = event.GetEventType().name
 		pt = event.GetPosition()
 		this.Printf('%s((%d,%d), (%d,%d), Shift=%s, Control=%s, Alt=%s, Meta=%s)\n', eventName,
 			event.GetRow(), event.GetCol(), pt.x, pt.y, event.ShiftDown(), event.ControlDown(), event.AltDown(), event.MetaDown())
+	}
+	OnGrid(event) = {
+		this.PrintGridEvent(event)
+		event.Skip()
+	}
+	Printf(args*) = g_panelControl.Printf(args*)
+}
+
+PanelControl = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
