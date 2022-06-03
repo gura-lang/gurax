@@ -27,10 +27,22 @@ FrameControl = class(wx.Frame) {
 }
 
 PanelTop = class(wx.Panel) {
+	spinCtrl_Width as wx.SpinCtrl
 	grid as wx.Grid
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags().Expand())
+			wx.StaticText(this, wx.ID_ANY, 'Highlight Pen Width') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand().Align(wx.CENTRE))
+			}
+			wx.SpinCtrl(this, size = wx.Size(100, -1), min = 0, max = 6, initial = 1, style = wx.SP_ARROW_KEYS | wx.TE_READONLY) {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 8))
+				wx.EVT_SPINCTRL(ctrl, this.OnSpinCtrl_Width)
+				this.spinCtrl_Width = ctrl
+			}
+		}
 		wx.BoxSizer(wx.VERTICAL) {|vbox|
 			sizerTop.Add(vbox, wx.SizerFlags(1).Expand())
 			wx.Grid(this, wx.ID_ANY) {|ctrl|
@@ -107,6 +119,7 @@ PanelTop = class(wx.Panel) {
 				wx.EVT_GRID_COL_MOVE(ctrl,				this.OnGrid)
 				wx.EVT_GRID_COL_SORT(ctrl,				this.OnGrid)
 				wx.EVT_GRID_TABBING(ctrl,				this.OnGrid)
+				this.grid = ctrl
 			}
 		}
 	}
@@ -115,6 +128,9 @@ PanelTop = class(wx.Panel) {
 		pt = event.GetPosition()
 		this.Printf('%s((%d,%d), (%d,%d), Shift=%s, Control=%s, Alt=%s, Meta=%s)\n', eventName,
 			event.GetRow(), event.GetCol(), pt.x, pt.y, event.ShiftDown(), event.ControlDown(), event.AltDown(), event.MetaDown())
+	}
+	OnSpinCtrl_Width(event) = {
+		this.grid.SetCellHighlightPenWidth(this.spinCtrl_Width.GetValue())
 	}
 	OnGrid(event) = {
 		this.PrintGridEvent(event)
