@@ -1,14 +1,14 @@
 #!/usr/bin/env gurax
 import(wx)
 
-g_panelControl = nil
+g_panelLogging = nil
 
 MyApp = class(wx.App) {
 	OnInit() = {
 		title = path.FileName(sys.argv[0])
 		frame = MyFrame(title, wx.Point(50, 50), wx.Size(800, 600))
 		frame.Show()
-		FrameControl(frame, title, wx.Point(300, 100), wx.Size(800, 300)).Show()
+		FrameLogging(frame, title, wx.Point(300, 100), wx.Size(800, 300)).Show()
 		true
 	}
 }
@@ -19,10 +19,10 @@ MyFrame = class(wx.Frame) {
 	}
 }
 
-FrameControl = class(wx.Frame) {
+FrameLogging = class(wx.Frame) {
 	__init__(parent as wx.Window, title as String, pos as wx.Point, size as wx.Size) = {
 			|parent, wx.ID_ANY, title, pos, size, style = (wx.DEFAULT_FRAME_STYLE | wx.FRAME_FLOAT_ON_PARENT)|
-		g_panelControl:extern = PanelControl(this)
+		g_panelLogging:extern = PanelLogging(this)
 	}
 }
 
@@ -35,9 +35,9 @@ PanelTop = class(wx.Panel) {
 		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
 			sizerTop.Add(hbox, wx.SizerFlags().Expand())
 			wx.StaticText(this, wx.ID_ANY, 'Highlight Pen Width') {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags().Expand().Align(wx.CENTRE))
+				hbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE))
 			}
-			wx.SpinCtrl(this, size = wx.Size(100, -1), min = 0, max = 6, initial = 1, style = wx.SP_ARROW_KEYS | wx.TE_READONLY) {|ctrl|
+			wx.SpinCtrl(this, size = wx.Size(100, -1), min = 0, max = 6, initial = 1, style = wx.SP_ARROW_KEYS) {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 8))
 				wx.EVT_SPINCTRL(ctrl, this.OnSpinCtrl_Width)
 				this.spinCtrl_Width = ctrl
@@ -136,10 +136,10 @@ PanelTop = class(wx.Panel) {
 		this.PrintGridEvent(event)
 		event.Skip()
 	}
-	Printf(args*) = g_panelControl.Printf(args*)
+	Printf(args*) = g_panelLogging.Printf(args*)
 }
 
-PanelControl = class(wx.Panel) {
+PanelLogging = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
