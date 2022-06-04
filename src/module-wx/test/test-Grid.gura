@@ -3,6 +3,10 @@ import(wx)
 
 g_panelLogging = nil
 
+colorNameTbl = [
+	'black', 'red', 'blue', 'yellow',
+]
+
 MyApp = class(wx.App) {
 	OnInit() = {
 		title = path.FileName(sys.argv[0])
@@ -41,6 +45,14 @@ PanelTop = class(wx.Panel) {
 				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 8))
 				wx.EVT_SPINCTRL(ctrl, this.OnSpinCtrl_Width)
 				this.spinCtrl_Width = ctrl
+			}
+			wx.StaticText(this, wx.ID_ANY, 'Highlight Pen Color') {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE).Border(wx.LEFT, 16))
+			}
+			wx.ComboBox(this, wx.ID_ANY, size = wx.Size(100, -1), choices = colorNameTbl, style = wx.CB_READONLY) {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags().Expand().Border(wx.LEFT, 8))
+				wx.EVT_COMBOBOX(ctrl, this.OnComboBox_Color)
+				ctrl.SetSelection(0)
 			}
 		}
 		wx.BoxSizer(wx.VERTICAL) {|vbox|
@@ -131,6 +143,10 @@ PanelTop = class(wx.Panel) {
 	}
 	OnSpinCtrl_Width(event) = {
 		this.grid.SetCellHighlightPenWidth(this.spinCtrl_Width.GetValue())
+	}
+	OnComboBox_Color(event) = {
+		colorName = colorNameTbl[event.GetSelection()]
+		this.grid.SetCellHighlightColour(wx.Colour(colorName))
 	}
 	OnGrid(event) = {
 		this.PrintGridEvent(event)
