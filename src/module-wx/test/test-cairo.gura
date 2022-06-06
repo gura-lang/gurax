@@ -32,7 +32,8 @@ PanelTop = class(wx.Panel) {
 			choices = snippets.samples:*name
 			wx.ListBox(this, wx.ID_ANY, choices = choices) {|ctrl|
 				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
-					wx.EVT_LISTBOX(ctrl, this.OnListBox)
+				wx.EVT_LISTBOX(ctrl, this.OnListBox)
+				ctrl.SetSelection(0)
 			}
 			wx.BoxSizer(wx.VERTICAL) {|vbox|
 				hbox.Add(vbox, wx.SizerFlags(3).Expand())
