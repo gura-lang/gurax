@@ -949,7 +949,7 @@ String Expr_Root::ToString(const StringStyle& ss, int indentLevel) const
 	if (ss.IsMultiLine()) {
 		String indent = ss.MakeIndent(indentLevel);
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			str += indent;
+			if (pExpr != GetExprElemFirst()) str += indent;
 			str += pExpr->ToString(ss, indentLevel);
 			str += '\n';
 		}
@@ -1032,7 +1032,6 @@ String Expr_Block::ToString(const StringStyle& ss, int indentLevel) const
 		String indent = ss.MakeIndent(indentLevel);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
-		str += indent;
 		str += '{';
 		if (HasExprParam()) {
 			str += '|';
@@ -1108,7 +1107,6 @@ String Expr_Tuple::ToString(const StringStyle& ss, int indentLevel) const
 		String indent = ss.MakeIndent(indentLevel);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
-		str += indent;
 		str += "(\n";
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			str += indentDown;
@@ -1167,7 +1165,6 @@ String Expr_Lister::ToString(const StringStyle& ss, int indentLevel) const
 		String indent = ss.MakeIndent(indentLevel);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
-		str += indent;
 		str += "[\n";
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			str += indentDown;

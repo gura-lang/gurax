@@ -16,9 +16,7 @@ MyApp = class(wx.App) {
 MyFrame = class(wx.Frame) {
 	canvas as Canvas
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
-		this.canvas = Canvas(this)
-		this.canvas.EvalSample(Sample_curve_rectangle)
-		this.canvas.Refresh()
+		PanelTop(this)
 	}
 }
 
@@ -108,9 +106,40 @@ Sample_curve_rectangle = class {
 	}
 }
 
+PanelTop = class(wx.Panel) {
+	canvas as Canvas
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
+			sizerTop.Add(hbox, wx.SizerFlags(1).Expand())
+			wx.ListCtrl(this, wx.ID_ANY) {|ctrl|
+				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
+			}
+			wx.BoxSizer(wx.VERTICAL) {|vbox|
+				hbox.Add(vbox, wx.SizerFlags(3).Expand())
+				Canvas(this) {|ctrl|
+					vbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTER))
+					this.canvas = ctrl
+				}
+				wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+					vbox.Add(ctrl, wx.SizerFlags(1).Expand())
+					this.textCtrl = ctrl
+				}
+			}
+		}
+		this.EvalSample(Sample_curve_rectangle)
+	}
+	EvalSample(sample as VType) = {
+		this.canvas.EvalSample(sample)
+		this.textCtrl.SetValue(sample.Draw.expr.EachElem():*Textize().Join('\n'))
+	}
+}
+
 Canvas = class(wx.Panel) {
 	img as Image
-	__init__(parent as wx.Window) = {|parent|
+	__init__(parent as wx.Window) = {|parent, size = wx.Size(256, 256)|
 		wx.EVT_PAINT(this, this.OnPaint)
 	}
 	EvalSample(sample as VType) = {
