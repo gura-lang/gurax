@@ -118,6 +118,7 @@ public:
 	const char* GetSemicolon() const	{ return _strsSemicolon[static_cast<int>(IsCram())]; }
 	const char* GetOpening() const		{ return IsWithSquare()? "[" : IsWithParenthesis()? "(" : ""; }
 	const char* GetClosing() const		{ return IsWithSquare()? "]" : IsWithParenthesis()? ")" : ""; }
+	String MakeIndent(int indentLevel) const;
 public:
 	static void DeclareAttrOpt(Function& func);
 	static Flags ToFlags(const Argument& argument);

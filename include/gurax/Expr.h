@@ -179,7 +179,6 @@ public:
 	void ComposeOrNil(Composer& composer);
 	Iterator* EachPUnit() const;
 	int CalcIndentLevel() const;
-	String MakeIndent(const StringStyle& ss) const;
 	const TypeInfo& GetTypeInfo() const { return _typeInfo; }
 	TypeId GetTypeId() const { return _typeInfo.GetTypeId(); }
 	template<typename T> bool IsType() const { return _typeInfo.IsIdentical(T::typeInfo); }
@@ -245,8 +244,8 @@ public:
 	}
 public:
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
-	String ToString() const { return ToString(StringStyle::Empty); }
-	virtual String ToString(const StringStyle& ss) const = 0;
+	String ToString() const { return ToString(StringStyle::Empty, 0); }
+	virtual String ToString(const StringStyle& ss, int indentLevel = 0) const = 0;
 };
 
 //------------------------------------------------------------------------------
@@ -343,7 +342,7 @@ public:
 	virtual bool IsEmpty() const override { return true; }
 	virtual bool Traverse(Visitor& visitor) override { return false; }
 	virtual void Compose(Composer& composer) override {}
-	virtual String ToString(const StringStyle& ss) const override { return String::Empty; }
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override { return String::Empty; }
 };
 
 //------------------------------------------------------------------------------
@@ -532,7 +531,7 @@ public:
 	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual const Expr* InspectTarget() const override { return &GetExprTarget(); }
@@ -565,7 +564,7 @@ public:
 public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual Value* InspectValue() const override;
@@ -608,7 +607,7 @@ public:
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 public:
 	virtual size_t CalcHash() const override;
@@ -642,7 +641,7 @@ public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual StringReferable* InspectStringReferable() const override {
@@ -676,7 +675,7 @@ public:
 	// Virtual functions of Expr
 	virtual bool IsSuffixed(SuffixMgr::Mode mode) const override { return _mode == mode; }
 	virtual void Compose(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual StringReferable* InspectStringReferable() const override {
@@ -707,7 +706,7 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinLister(Composer& composer) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual Operator* InspectOperator() const { return GetOperator(); }
@@ -742,7 +741,7 @@ public:
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol);
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual Operator* InspectOperator() const { return GetOperator(); }
@@ -770,7 +769,7 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual Operator* InspectOperator() const { return GetOperator(); }
@@ -790,7 +789,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -843,7 +842,7 @@ public:
 	virtual bool DoPrepare() override;
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinLister(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual Iterator* EachParam() const override {
@@ -867,7 +866,7 @@ public:
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -884,7 +883,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -907,8 +906,8 @@ public:
 	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
-	virtual String ToString(const StringStyle& ss) const override { return ToString(ss, ""); }
-	String ToString(const StringStyle& ss, const char* strInsert) const;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override { return ToString(ss, "", indentLevel); }
+	String ToString(const StringStyle& ss, const char* strInsert, int indentLevel = 0) const;
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 
@@ -966,7 +965,7 @@ public:
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast().GetAttr(); }
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting
 	virtual const Expr* InspectBlock() const override { return HasExprOfBlock()? GetExprOfBlock() : nullptr; }

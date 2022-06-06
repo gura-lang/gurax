@@ -25,6 +25,13 @@ const char* StringStyle::_strsComma[2]		{ ", ", "," };
 const char* StringStyle::_strsColon[2]		{ ": ", ":" };
 const char* StringStyle::_strsSemicolon[2]	{ "; ", ";" };
 
+String StringStyle::MakeIndent(int indentLevel) const
+{
+	String str;
+	for (int i = 0; i < indentLevel; i++) str += _indentUnit;
+	return str;
+}
+
 void StringStyle::DeclareAttrOpt(Function& func)
 {
 	func.DeclareAttrOpt(Gurax_Symbol(bracket));

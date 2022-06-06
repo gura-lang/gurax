@@ -53,13 +53,6 @@ int Expr::CalcIndentLevel() const
 	return indentLevel;
 }
 
-String Expr::MakeIndent(const StringStyle& ss) const
-{
-	String str;
-	for (RefPtr<Expr> pExpr(Reference()); pExpr; pExpr.reset(pExpr->LockExprParent()), str += ss.GetIndentUnit()) ;
-	return str;
-}
-
 bool Expr::Prepare()
 {
 	Visitor_Prepare visitor;
@@ -437,11 +430,11 @@ const Symbol* Expr_Member::GetMemberModeAsSymbol() const
 		Symbol::Empty;
 }
 
-String Expr_Member::ToString(const StringStyle& ss) const
+String Expr_Member::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	const Expr& exprTarget = GetExprTarget();
-	str += exprTarget.ToString(ss);
+	str += exprTarget.ToString(ss, indentLevel);
 	str += MemberModeToSymbol(GetMemberMode())->GetName();
 	str += GetSymbol()->ToString();
 	str += GetAttr().ToString(ss);
@@ -469,7 +462,7 @@ void Expr_Value::ComposeWithinArgSlot(Composer& composer)
 	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
-String Expr_Value::ToString(const StringStyle& ss) const
+String Expr_Value::ToString(const StringStyle& ss, int indentLevel) const
 {
 	return HasSource()? GetSourceSTL() : GetValue().ToString();
 }
@@ -646,7 +639,7 @@ void Expr_String::ComposeWithinArgSlot(Composer& composer)
 	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
-String Expr_String::ToString(const StringStyle& ss) const
+String Expr_String::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str = GetSegmentSTL();
 	str = ss.IsDQuoteString()? str.Enquote('"') : str.EnquoteAuto();
@@ -668,7 +661,7 @@ void Expr_Suffixed::Compose(Composer& composer)
 	}
 }
 
-String Expr_Suffixed::ToString(const StringStyle& ss) const
+String Expr_Suffixed::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	if (GetMode() == SuffixMgr::Mode::Binary) str += "b";
@@ -718,7 +711,7 @@ void Expr_UnaryOp::ComposeWithinArgSlot(Composer& composer)
 	}
 }
 
-String Expr_UnaryOp::ToString(const StringStyle& ss) const
+String Expr_UnaryOp::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	switch (GetOperator()->GetStyle()) {
@@ -726,7 +719,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 		bool requireParFlag = GetExprChild().IsType<Expr_UnaryOp>() || GetExprChild().IsType<Expr_BinaryOp>();
 		str += GetOperator()->GetSymbol()->GetName();
 		if (requireParFlag) str += '(';
-		str += GetExprChild().ToString(ss);
+		str += GetExprChild().ToString(ss, indentLevel);
 		if (requireParFlag) str += ')';
 		break;
 	}
@@ -740,7 +733,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 		} else {
 			bool requireParFlag = GetExprChild().IsType<Expr_UnaryOp>() || GetExprChild().IsType<Expr_BinaryOp>();
 			if (requireParFlag) str += '(';
-			str += GetExprChild().ToString(ss);
+			str += GetExprChild().ToString(ss, indentLevel);
 			if (requireParFlag) str += ')';
 			str += GetOperator()->GetSymbol()->GetName();
 		}
@@ -749,7 +742,7 @@ String Expr_UnaryOp::ToString(const StringStyle& ss) const
 	case OpStyle::MathUnary: {
 		str += GetOperator()->GetSymbol()->GetName();
 		str += '(';
-		str += GetExprChild().ToString(ss);
+		str += GetExprChild().ToString(ss, indentLevel);
 		str += ')';
 		break;
 	}
@@ -827,7 +820,7 @@ void Expr_BinaryOp::ComposeWithinAssignmentInClass(
 	}
 }
 
-String Expr_BinaryOp::ToString(const StringStyle& ss) const
+String Expr_BinaryOp::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	switch (GetOperator()->GetStyle()) {
@@ -836,7 +829,7 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 			bool needParenFlag =
 				GetExprLeft().IsType<Expr_BinaryOp>() || GetExprLeft().IsType<Expr_UnaryOp>();
 			if (needParenFlag) str += '(';
-			str += GetExprLeft().ToString(ss);
+			str += GetExprLeft().ToString(ss, indentLevel);
 			if (needParenFlag) str += ')';
 		} while (0);
 		if (!ss.IsCram()) str += ' ';
@@ -846,7 +839,7 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 			bool needParenFlag =
 				GetExprRight().IsType<Expr_BinaryOp>() || GetExprRight().IsType<Expr_UnaryOp>();
 			if (needParenFlag) str += '(';
-			str += GetExprRight().ToString(ss);
+			str += GetExprRight().ToString(ss, indentLevel);
 			if (needParenFlag) str += ')';
 		} while (0);
 		break;
@@ -854,10 +847,10 @@ String Expr_BinaryOp::ToString(const StringStyle& ss) const
 	case OpStyle::MathBinary: {
 		str += GetOperator()->GetSymbol()->GetName();
 		str += '(';
-		str += GetExprLeft().ToString(ss);
+		str += GetExprLeft().ToString(ss, indentLevel);
 		str += ss.GetComma();
 		if (!ss.IsCram()) str += ' ';
-		str += GetExprRight().ToString(ss);
+		str += GetExprRight().ToString(ss, indentLevel);
 		str += ')';
 		break;
 	}
@@ -921,15 +914,15 @@ void Expr_Assign::ComposeWithinArgSlot(Composer& composer)
 	GetExprRight().SetPUnitEnd(composer.PeekPUnitCont());
 }
 
-String Expr_Assign::ToString(const StringStyle& ss) const
+String Expr_Assign::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
-	str += GetExprLeft().ToString(ss);
+	str += GetExprLeft().ToString(ss, indentLevel);
 	if (!ss.IsCram()) str += ' ';
 	if (GetOperator()) str += GetOperator()->GetSymbol()->GetName();
 	str += '=';
 	if (!ss.IsCram()) str += ' ';
-	str += GetExprRight().ToString(ss);
+	str += GetExprRight().ToString(ss, indentLevel);
 	return str;
 }
 
@@ -950,14 +943,14 @@ void Expr_Root::Compose(Composer& composer)
 	SetPUnitEnd(composer.PeekPUnitCont());
 }
 
-String Expr_Root::ToString(const StringStyle& ss) const
+String Expr_Root::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	if (ss.IsMultiLine()) {
-		String indent = MakeIndent(ss);
+		String indent = ss.MakeIndent(indentLevel);
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			str += indent;
-			str += pExpr->ToString(ss);
+			str += pExpr->ToString(ss, indentLevel);
 			str += '\n';
 		}
 	} else {
@@ -967,7 +960,7 @@ String Expr_Root::ToString(const StringStyle& ss) const
 				str += ';';
 				if (!ss.IsCram()) str += ' ';
 			}
-			str += pExpr->ToString(ss);
+			str += pExpr->ToString(ss, indentLevel);
 		}
 	}
 	return str;
@@ -1032,11 +1025,11 @@ Value* Expr_Block::EvalEasy(Processor& processor, RefPtr<Value> pValueArg1, RefP
 	return Eval(processor, *pArgument);
 }
 
-String Expr_Block::ToString(const StringStyle& ss) const
+String Expr_Block::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	if (ss.IsMultiLine()) {
-		String indent = MakeIndent(ss);
+		String indent = ss.MakeIndent(indentLevel);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
 		str += indent;
@@ -1049,14 +1042,14 @@ String Expr_Block::ToString(const StringStyle& ss) const
 					str += ',';
 					if (!ss.IsCram()) str += ' ';
 				}
-				str += pExpr->ToString(ss);
+				str += pExpr->ToString(ss, indentLevel);
 			}
 			str += '|';
 		}
 		str += '\n';
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			str += indentDown;
-			str += pExpr->ToString(ss);
+			str += pExpr->ToString(ss, indentLevel + 1);
 			str += '\n';
 		}
 		str += indent;
@@ -1071,7 +1064,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 					str += ',';
 					if (!ss.IsCram()) str += ' ';
 				}
-				str += pExpr->ToString(ss);
+				str += pExpr->ToString(ss, indentLevel);
 			}
 			str += '|';
 			if (!ss.IsCram() && HasExprElem()) str += ' ';
@@ -1082,7 +1075,7 @@ String Expr_Block::ToString(const StringStyle& ss) const
 				str += ',';
 				if (!ss.IsCram()) str += ' ';
 			}
-			str += pExpr->ToString(ss);
+			str += pExpr->ToString(ss, indentLevel);
 		}
 		str += '}';
 	}
@@ -1104,22 +1097,22 @@ void Expr_Tuple::Compose(Composer& composer)
 	}	
 }
 
-String Expr_Tuple::ToString(const StringStyle& ss) const
+String Expr_Tuple::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	if (GetExprLinkElem().CountSequence() == 1) {
 		str += '(';
-		str += GetExprLinkElem().GetExprFirst()->ToString(ss);
+		str += GetExprLinkElem().GetExprFirst()->ToString(ss, indentLevel);
 		str += ",)";
 	} else if (ss.IsMultiLine()) {
-		String indent = MakeIndent(ss);
+		String indent = ss.MakeIndent(indentLevel);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
 		str += indent;
 		str += "(\n";
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			str += indentDown;
-			str += pExpr->ToString(ss);
+			str += pExpr->ToString(ss, indentLevel + 1);
 			str += '\n';
 		}
 		str += indent;
@@ -1132,7 +1125,7 @@ String Expr_Tuple::ToString(const StringStyle& ss) const
 				str += ',';
 				if (!ss.IsCram()) str += ' ';
 			}
-			str += pExpr->ToString(ss);
+			str += pExpr->ToString(ss, indentLevel);
 		}
 		str += ')';
 	}
@@ -1167,18 +1160,18 @@ void Expr_Lister::ComposeWithinAssignment(
 	composer.Add_DiscardValue(*this);											// [Assigned]
 }
 
-String Expr_Lister::ToString(const StringStyle& ss) const
+String Expr_Lister::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	if (ss.IsMultiLine()) {
-		String indent = MakeIndent(ss);
+		String indent = ss.MakeIndent(indentLevel);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
 		str += indent;
 		str += "[\n";
 		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
 			str += indentDown;
-			str += pExpr->ToString(ss);
+			str += pExpr->ToString(ss, indentLevel + 1);
 			str += '\n';
 		}
 		str += indent;
@@ -1191,7 +1184,7 @@ String Expr_Lister::ToString(const StringStyle& ss) const
 				str += ',';
 				if (!ss.IsCram()) str += ' ';
 			}
-			str += pExpr->ToString(ss);
+			str += pExpr->ToString(ss, indentLevel);
 		}
 		str += ']';
 	}
@@ -1285,10 +1278,10 @@ void Expr_Indexer::ComposeWithinAssignmentInClass(
 	composer.FlushDiscard();													// [VType]
 }
 
-String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) const
+String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert, int indentLevel) const
 {
 	String str;
-	str += _pExprCar->ToString(ss);
+	str += _pExprCar->ToString(ss, indentLevel);
 	str += '[';
 	const Expr* pExprParamFirst = GetExprParamFirst();
 	for (const Expr* pExprParam = pExprParamFirst; pExprParam; pExprParam = pExprParam->GetExprNext()) {
@@ -1296,7 +1289,7 @@ String Expr_Indexer::ToString(const StringStyle& ss, const char* strInsert) cons
 			str += ',';
 			if (!ss.IsCram()) str += ' ';
 		}
-		str += pExprParam->ToString(ss);
+		str += pExprParam->ToString(ss, indentLevel);
 	}
 	str += ']';
 	str += strInsert;
@@ -1498,11 +1491,11 @@ DeclCallable* Expr_Caller::RetrieveDeclCallable() const
 	return nullptr;
 }
 
-String Expr_Caller::ToString(const StringStyle& ss) const
+String Expr_Caller::ToString(const StringStyle& ss, int indentLevel) const
 {
 	bool argListFlag = HasExprParam() || !GetAttr().IsEmpty() || !HasExprOfBlock();
 	String str;
-	str += _pExprCar->ToString(ss);
+	str += _pExprCar->ToString(ss, indentLevel);
 	if (argListFlag) {
 		if (!ss.IsCram() && _pExprCar->IsType<Expr_Identifier>() &&
 			dynamic_cast<Expr_Identifier*>(_pExprCar.get())->GetSymbol()->IsFlowControl()) {
@@ -1515,18 +1508,18 @@ String Expr_Caller::ToString(const StringStyle& ss) const
 				str += ',';
 				if (!ss.IsCram()) str += ' ';
 			}
-			str += pExpr->ToString(ss);
+			str += pExpr->ToString(ss, indentLevel);
 		}
 		str += ')';
 	}
 	str += GetAttr().ToString(ss);
 	if (HasExprOfBlock()) {
 		if (!ss.IsCram()) str += ' ';
-		str += GetExprOfBlock()->ToString(ss);
+		str += GetExprOfBlock()->ToString(ss, indentLevel);
 	}
 	if (HasExprTrailer()) {
 		if (!ss.IsCram()) str += ' ';
-		str += GetExprTrailer()->ToString(ss);
+		str += GetExprTrailer()->ToString(ss, indentLevel);
 	}
 	return str;
 }

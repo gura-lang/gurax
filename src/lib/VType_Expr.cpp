@@ -433,12 +433,14 @@ Gurax_ImplementClassMethod(Expr, Parse)
 	return argument.ReturnValue(processor, new Value_Expr(pExprRoot.release()));
 }
 
-// Expr.Textize(style? as Symbol, indent? as String)
+// Expr.Textize(indent? as String):[brief,crammed,oneLine]
 Gurax_DeclareClassMethod(Expr, Textize)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	DeclareArg("style", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("indent", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(brief));
+	DeclareAttrOpt(Gurax_Symbol(crammed));
+	DeclareAttrOpt(Gurax_Symbol(oneLine));
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -450,22 +452,12 @@ Gurax_ImplementClassMethod(Expr, Textize)
 	auto& valueThis = GetValueThis(argument);
 	// Argument
 	ArgPicker args(argument);
-	const Symbol* style = args.IsValid()? args.PickSymbol() : Gurax_Symbol(fancy);
 	const char* indentUnit = args.IsValid()? args.PickString() : "\t";
 	// Function body
-	StringStyle::Flags flags = StringStyle::Flag::None;
-	if (style->IsIdentical(Gurax_Symbol(crammed))) {
-		flags = StringStyle::Flag::MultiLine | StringStyle::Flag::Cram;
-	} else if (style->IsIdentical(Gurax_Symbol(oneLine))) {
-		flags = StringStyle::Flag::None;
-	} else if (style->IsIdentical(Gurax_Symbol(brief))) {
-		flags = StringStyle::Flag::Brief;
-	} else if (style->IsIdentical(Gurax_Symbol(fancy))) {
-		flags = StringStyle::Flag::MultiLine;
-	} else {
-		Error::Issue(ErrorType::SymbolError, "invalid symbol");
-		return Value::nil();
-	}
+	StringStyle::Flags flags = StringStyle::Flag::MultiLine;
+	if (argument.IsSet(Gurax_Symbol(brief))) flags |= StringStyle::Flag::Brief;
+	if (argument.IsSet(Gurax_Symbol(crammed))) flags |= StringStyle::Flag::Cram;
+	if (argument.IsSet(Gurax_Symbol(oneLine))) flags &= ~StringStyle::Flag::MultiLine;
 	return new Value_String(valueThis.GetExpr().ToString(StringStyle(flags, indentUnit)));
 }
 

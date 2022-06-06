@@ -126,7 +126,7 @@ public:
 	const String& GetStringSTL() const { return _str; }
 public:
 	virtual void Compose(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 };
 
 //-----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ public:
 	bool GetAppendLastEOLFlag() const { return _appendLastEOLFlag; }
 public:
 	virtual void Compose(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 };
 
 //------------------------------------------------------------------------------
@@ -184,7 +184,7 @@ public:
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
-	virtual String ToString(const StringStyle& ss) const override;
+	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 };
 
 //------------------------------------------------------------------------------

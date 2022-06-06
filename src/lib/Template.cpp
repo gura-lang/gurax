@@ -488,7 +488,7 @@ void Expr_TmplString::Compose(Composer& composer)
 	composer.Add_TmplString(GetTemplate().Reference(), GetStringSTL(), *this);
 }
 
-String Expr_TmplString::ToString(const StringStyle& ss) const
+String Expr_TmplString::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	str.Format("%sT", GetStringSTL().EnquoteAuto().c_str());
@@ -506,12 +506,12 @@ void Expr_TmplScript::Compose(Composer& composer)
 	composer.Add_TmplScript(Reference(), *this);
 }
 
-String Expr_TmplScript::ToString(const StringStyle& ss) const
+String Expr_TmplScript::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	str += "$";
 	if (ss.IsMultiLine()) {
-		String indent = MakeIndent(ss);
+		String indent = ss.MakeIndent(indentLevel);
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
 		str += indent;
@@ -560,7 +560,7 @@ void Expr_Template::Compose(Composer& composer)
 	}
 }
 
-String Expr_Template::ToString(const StringStyle& ss) const
+String Expr_Template::ToString(const StringStyle& ss, int indentLevel) const
 {
 	String str;
 	str += _embedFlag? 'e' : 't';
