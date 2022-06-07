@@ -3,17 +3,14 @@ import(cairo) {*}
 import(png)
 import(jpeg)
 
-M_PI = math.pi
-sqrt(x) = math.Sqrt(x)
-
 Sample_arc = class {
 	name:static = "arc"
 	Draw(cr as cairo_t) = {
 		xc = 128.0;
 		yc = 128.0;
 		radius = 100.0;
-		angle1 = 45.0  * (M_PI/180.0);  /* angles are specified */
-		angle2 = 180.0 * (M_PI/180.0);  /* in radians           */
+		angle1 = 45.0  * (math.pi/180.0);  /* angles are specified */
+		angle2 = 180.0 * (math.pi/180.0);  /* in radians           */
 
 		cairo_set_line_width (cr, 10.0);
 		cairo_arc (cr, xc, yc, radius, angle1, angle2);
@@ -23,7 +20,7 @@ Sample_arc = class {
 		cairo_set_source_rgba (cr, 1, 0.2, 0.2, 0.6);
 		cairo_set_line_width (cr, 6.0);
 
-		cairo_arc (cr, xc, yc, 10.0, 0, 2*M_PI);
+		cairo_arc (cr, xc, yc, 10.0, 0, 2*math.pi);
 		cairo_fill (cr);
 
 		cairo_arc (cr, xc, yc, radius, angle1, angle1);
@@ -40,8 +37,8 @@ Sample_arc_negative = class {
 		xc = 128.0;
 		yc = 128.0;
 		radius = 100.0;
-		angle1 = 45.0  * (M_PI/180.0);  /* angles are specified */
-		angle2 = 180.0 * (M_PI/180.0);  /* in radians           */
+		angle1 = 45.0  * (math.pi/180.0);  /* angles are specified */
+		angle2 = 180.0 * (math.pi/180.0);  /* in radians           */
 
 		cairo_set_line_width (cr, 10.0);
 		cairo_arc_negative (cr, xc, yc, radius, angle1, angle2);
@@ -51,7 +48,7 @@ Sample_arc_negative = class {
 		cairo_set_source_rgba (cr, 1, 0.2, 0.2, 0.6);
 		cairo_set_line_width (cr, 6.0);
 
-		cairo_arc (cr, xc, yc, 10.0, 0, 2*M_PI);
+		cairo_arc (cr, xc, yc, 10.0, 0, 2*math.pi);
 		cairo_fill (cr);
 
 		cairo_arc (cr, xc, yc, radius, angle1, angle1);
@@ -65,7 +62,7 @@ Sample_arc_negative = class {
 Sample_clip = class {
 	name:static = "clip"
 	Draw(cr as cairo_t) = {
-		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2 * M_PI);
+		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2 * math.pi);
 		cairo_clip (cr);
 
 		cairo_new_path (cr);  /* current path is not
@@ -85,7 +82,7 @@ Sample_clip = class {
 Sample_clip_image = class {
 	name:static = "clip image"
 	Draw(cr as cairo_t) = {
-		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2*M_PI);
+		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2*math.pi);
 		cairo_clip (cr);
 		cairo_new_path (cr); /* path not consumed by clip()*/
 
@@ -234,8 +231,8 @@ Sample_fill_style = class {
 		cairo_set_line_width (cr, 6);
 
 		cairo_rectangle (cr, 12, 12, 232, 70);
-		cairo_new_sub_path (cr); cairo_arc (cr, 64, 64, 40, 0, 2*M_PI);
-		cairo_new_sub_path (cr); cairo_arc_negative (cr, 192, 64, 40, 0, -2*M_PI);
+		cairo_new_sub_path (cr); cairo_arc (cr, 64, 64, 40, 0, 2*math.pi);
+		cairo_new_sub_path (cr); cairo_arc_negative (cr, 192, 64, 40, 0, -2*math.pi);
 
 		cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
 		cairo_set_source_rgb (cr, 0, 0.7, 0); cairo_fill_preserve (cr);
@@ -243,8 +240,8 @@ Sample_fill_style = class {
 
 		cairo_translate (cr, 0, 128);
 		cairo_rectangle (cr, 12, 12, 232, 70);
-		cairo_new_sub_path (cr); cairo_arc (cr, 64, 64, 40, 0, 2*M_PI);
-		cairo_new_sub_path (cr); cairo_arc_negative (cr, 192, 64, 40, 0, -2*M_PI);
+		cairo_new_sub_path (cr); cairo_arc (cr, 64, 64, 40, 0, 2*math.pi);
+		cairo_new_sub_path (cr); cairo_arc_negative (cr, 192, 64, 40, 0, -2*math.pi);
 
 		cairo_set_fill_rule (cr, CAIRO_FILL_RULE_WINDING);
 		cairo_set_source_rgb (cr, 0, 0, 0.9); cairo_fill_preserve (cr);
@@ -268,7 +265,7 @@ Sample_gradient = class {
 		cairo_pattern_add_color_stop_rgba (pat, 0, 1, 1, 1, 1);
 		cairo_pattern_add_color_stop_rgba (pat, 1, 0, 0, 0, 1);
 		cairo_set_source (cr, pat);
-		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2 * M_PI);
+		cairo_arc (cr, 128.0, 128.0, 76.8, 0, 2 * math.pi);
 		cairo_fill (cr);
 		cairo_pattern_destroy (pat);
 	}
@@ -282,7 +279,7 @@ Sample_image = class {
 		h = cairo_image_surface_get_height (image);
 
 		cairo_translate (cr, 128.0, 128.0);
-		cairo_rotate (cr, 45* M_PI/180);
+		cairo_rotate (cr, 45* math.pi/180);
 		cairo_scale  (cr, 256.0/w, 256.0/h);
 		cairo_translate (cr, -0.5*w, -0.5*h);
 
@@ -303,8 +300,8 @@ Sample_imagepattern = class {
 		cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
 
 		cairo_translate (cr, 128.0, 128.0);
-		cairo_rotate (cr, M_PI / 4);
-		cairo_scale (cr, 1 / sqrt (2), 1 / sqrt (2));
+		cairo_rotate (cr, math.pi / 4);
+		cairo_scale (cr, 1 / math.Sqrt (2), 1 / math.Sqrt (2));
 		cairo_translate (cr, -128.0, -128.0);
 
 		matrix = cairo_matrix_t()
@@ -351,7 +348,7 @@ Sample_rounded_rectangle = class {
 		corner_radius = height / 10.0;   /* and corner curvature radius */
 
 		radius = corner_radius / aspect;
-		degrees = M_PI / 180.0;
+		degrees = math.pi / 180.0;
 
 		cairo_new_sub_path (cr);
 		cairo_arc (cr, x + width - radius, y + radius, radius, -90 * degrees, 0 * degrees);
@@ -436,9 +433,9 @@ Sample_text = class {
 
 		/* draw helping lines */
 		cairo_set_source_rgba (cr, 1, 0.2, 0.2, 0.6);
-		cairo_arc (cr, 10.0, 135.0, 5.12, 0, 2*M_PI);
+		cairo_arc (cr, 10.0, 135.0, 5.12, 0, 2*math.pi);
 		cairo_close_path (cr);
-		cairo_arc (cr, 70.0, 165.0, 5.12, 0, 2*M_PI);
+		cairo_arc (cr, 70.0, 165.0, 5.12, 0, 2*math.pi);
 		cairo_fill (cr);
 	}
 }
@@ -464,7 +461,7 @@ Sample_text_align_center = class {
 		/* draw helping lines */
 		cairo_set_source_rgba (cr, 1, 0.2, 0.2, 0.6);
 		cairo_set_line_width (cr, 6.0);
-		cairo_arc (cr, x, y, 10.0, 0, 2*M_PI);
+		cairo_arc (cr, x, y, 10.0, 0, 2*math.pi);
 		cairo_fill (cr);
 		cairo_move_to (cr, 128.0, 0);
 		cairo_rel_line_to (cr, 0, 256);
@@ -496,7 +493,7 @@ Sample_text_extents = class {
 		/* draw helping lines */
 		cairo_set_source_rgba (cr, 1, 0.2, 0.2, 0.6);
 		cairo_set_line_width (cr, 6.0);
-		cairo_arc (cr, x, y, 10.0, 0, 2*M_PI);
+		cairo_arc (cr, x, y, 10.0, 0, 2*math.pi);
 		cairo_fill (cr);
 		cairo_move_to (cr, x,y);
 		cairo_rel_line_to (cr, 0, -extents.height);
@@ -527,7 +524,7 @@ Sample_text_extents2 = class {
 		/* draw helping lines */
 		cairo_set_source_rgba(cr, 1, 0.2, 0.2, 0.6);
 		cairo_set_line_width(cr, 1.0);
-		cairo_arc(cr, x, y, 10.0, 0, 2*M_PI);
+		cairo_arc(cr, x, y, 10.0, 0, 2*math.pi);
 		cairo_fill(cr);
 		cairo_move_to(cr, x, y);
 		cairo_rel_line_to(cr, extents.width, 0);
@@ -565,45 +562,3 @@ samples = [
 	Sample_text_extents
 	Sample_text_extents2
 ]
-
-main() = {
-	nCols = 5, nRows = 5
-	wdFrame = 280, htFrame = 320
-	wdCanvas = 256, htCanvas = 256
-	xOffset = (wdFrame - wdCanvas) / 2, yOffset = (htFrame - htCanvas) / 2
-	i = j = 0
-	surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, wdFrame * nCols, htFrame * nRows);
-	//surface = cairo_pdf_surface_create("hoge.pdf", wdFrame * nCols, htFrame * nRows);
-	cr = surface.create();
-	cr.select_font_face("Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
-	cr.set_font_size(30.0);
-	extents = cr.font_extents()
-	samples.Each {|sample|
-		Println(sample.name)
-		x = i * wdFrame, y = j * htFrame
-		cr.save {
-			cr.translate(x + xOffset, y + yOffset)
-			cr.save {
-				str = Format('%s', sample.name)
-				cr.move_to(0, -extents.descent);
-				cr.show_text(str);
-				cr.set_source_rgba(.9, .9, .9, 1)
-				cr.rectangle(0, 0, 256, 256)
-				cr.fill()
-			}
-			cr.rectangle(0, 0, 256, 256)
-			cr.clip()
-			sample().Draw(cr)
-		}
-		i += 1
-		if (i == nCols) {
-			i = 0, j += 1
-		}
-	}
-	cr.destroy();
-	surface.write_to_png_stream("image.png");
-	//surface.ToImage().Write('a.jpg')
-	surface.destroy();
-}
-
-(__name__ == '__main__') && main()

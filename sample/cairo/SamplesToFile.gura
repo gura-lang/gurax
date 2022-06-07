@@ -1,0 +1,45 @@
+#!/usr/bin/env gurax
+import(cairo) {*}
+import(Samples)
+
+main() = {
+	nCols = 5, nRows = 5
+	wdFrame = 280, htFrame = 320
+	wdCanvas = 256, htCanvas = 256
+	xOffset = (wdFrame - wdCanvas) / 2, yOffset = (htFrame - htCanvas) / 2
+	i = j = 0
+	surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, wdFrame * nCols, htFrame * nRows);
+	//surface = cairo_pdf_surface_create("hoge.pdf", wdFrame * nCols, htFrame * nRows);
+	cr = surface.create();
+	cr.select_font_face("Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+	cr.set_font_size(30.0);
+	extents = cr.font_extents()
+	Samples.samples.Each {|sample|
+		Println(sample.name)
+		x = i * wdFrame, y = j * htFrame
+		cr.save {
+			cr.translate(x + xOffset, y + yOffset)
+			cr.save {
+				str = Format('%s', sample.name)
+				cr.move_to(0, -extents.descent);
+				cr.show_text(str);
+				cr.set_source_rgba(.9, .9, .9, 1)
+				cr.rectangle(0, 0, 256, 256)
+				cr.fill()
+			}
+			cr.rectangle(0, 0, 256, 256)
+			cr.clip()
+			sample().Draw(cr)
+		}
+		i += 1
+		if (i == nCols) {
+			i = 0, j += 1
+		}
+	}
+	cr.destroy();
+	surface.write_to_png_stream("image.png");
+	//surface.ToImage().Write('a.jpg')
+	surface.destroy();
+}
+
+main()
