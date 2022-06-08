@@ -3,6 +3,8 @@ import(cairo) {*}
 import(png)
 import(jpeg)
 
+samples = []
+
 Sample_arc = class {
 	name:static = "arc"
 	Draw(cr as cairo_t) = {
@@ -30,6 +32,7 @@ Sample_arc = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_arc)
 
 Sample_arc_negative = class {
 	name:static = "arc negative"
@@ -58,6 +61,7 @@ Sample_arc_negative = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_arc_negative)
 
 Sample_clip = class {
 	name:static = "clip"
@@ -78,6 +82,7 @@ Sample_clip = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_clip)
 
 Sample_clip_image = class {
 	name:static = "clip image"
@@ -98,6 +103,7 @@ Sample_clip_image = class {
 		cairo_surface_destroy (image);
 	}
 }
+samples.Add(Sample_clip_image)
 
 Sample_curve_rectangle = class {
 	name:static = "curve rectangle"
@@ -156,6 +162,7 @@ Sample_curve_rectangle = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_curve_rectangle)
 
 Sample_curve_to = class {
 	name:static = "curve to"
@@ -178,6 +185,7 @@ Sample_curve_to = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_curve_to)
 
 Sample_dash = class {
 	name:static = "dash"
@@ -201,6 +209,7 @@ Sample_dash = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_dash)
 
 Sample_fill_and_stroke2 = class {
 	name:static = "fill and stroke2"
@@ -224,6 +233,7 @@ Sample_fill_and_stroke2 = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_fill_and_stroke2)
 
 Sample_fill_style = class {
 	name:static = "fill style"
@@ -248,6 +258,7 @@ Sample_fill_style = class {
 		cairo_set_source_rgb (cr, 0, 0, 0); cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_fill_style)
 
 Sample_gradient = class {
 	name:static = "gradient"
@@ -270,6 +281,7 @@ Sample_gradient = class {
 		cairo_pattern_destroy (pat);
 	}
 }
+samples.Add(Sample_gradient)
 
 Sample_image = class {
 	name:static = "image"
@@ -288,6 +300,7 @@ Sample_image = class {
 		cairo_surface_destroy (image);
 	}
 }
+samples.Add(Sample_image)
 
 Sample_imagepattern = class {
 	name:static = "imagepattern"
@@ -317,6 +330,7 @@ Sample_imagepattern = class {
 		cairo_surface_destroy (image);
 	}
 }
+samples.Add(Sample_imagepattern)
 
 Sample_multi_segment_caps = class {
 	name:static = "multi segment caps"
@@ -335,6 +349,7 @@ Sample_multi_segment_caps = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_multi_segment_caps)
 
 Sample_rounded_rectangle = class {
 	name:static = "rounded rectangle"
@@ -364,6 +379,7 @@ Sample_rounded_rectangle = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_rounded_rectangle)
 
 Sample_set_line_cap = class {
 	name:static = "set line cap"
@@ -388,6 +404,7 @@ Sample_set_line_cap = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_set_line_cap)
 
 Sample_set_line_join = class {
 	name:static = "set line join"
@@ -412,6 +429,7 @@ Sample_set_line_join = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_set_line_join)
 
 Sample_text = class {
 	name:static = "text"
@@ -439,6 +457,7 @@ Sample_text = class {
 		cairo_fill (cr);
 	}
 }
+samples.Add(Sample_text)
 
 Sample_text_align_center = class {
 	name:static = "text align center"
@@ -470,6 +489,7 @@ Sample_text_align_center = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_text_align_center)
 
 Sample_text_extents = class {
 	name:static = "text extents"
@@ -502,6 +522,7 @@ Sample_text_extents = class {
 		cairo_stroke (cr);
 	}
 }
+samples.Add(Sample_text_extents)
 
 Sample_text_extents2 = class {
 	name:static = "text extents 2"
@@ -539,29 +560,7 @@ Sample_text_extents2 = class {
 		cairo_stroke (cr);
 	}
 }
-
-samples = [
-	Sample_arc
-	Sample_arc_negative
-	Sample_clip
-	Sample_clip_image
-	Sample_curve_rectangle
-	Sample_curve_to
-	Sample_dash
-	Sample_fill_and_stroke2
-	Sample_fill_style
-	Sample_gradient
-	Sample_image
-	Sample_imagepattern
-	Sample_multi_segment_caps
-	Sample_rounded_rectangle
-	Sample_set_line_cap
-	Sample_set_line_join
-	Sample_text
-	Sample_text_align_center
-	Sample_text_extents
-	Sample_text_extents2
-]
+samples.Add(Sample_text_extents2)
 
 main() = {
 	nCols = 5, nRows = 5
