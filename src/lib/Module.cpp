@@ -138,7 +138,6 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol,
 		(type == Type::Compressed)?	ImportCompressed(processor, dottedSymbol, pathName.c_str()) :
 		nullptr);
 	if (!pModule) return nullptr;
-	pModule->Assign(Gurax_Symbol(__name__), new Value_String(dottedSymbol.ToString('.')));
 	return pModule.release();
 }
 
@@ -153,6 +152,7 @@ Module* Module::ImportScript(Processor& processor, const DottedSymbol& dottedSym
 	composer.Flush();
 	if (Error::IsIssued()) return nullptr;
 	RefPtr<Module> pModule(new Module(processor.GetFrameCur().Reference(), dottedSymbol.Reference()));
+	pModule->Assign(Gurax_Symbol(__name__), new Value_String(dottedSymbol.ToString('.')));
 	pModule->SetPathName(pathName);
 	pModule->AssignToMap();
 	processor.PushFrame(pModule->GetFrame().Reference());
@@ -191,6 +191,7 @@ Module* Module::ImportBinary(Processor& processor, const DottedSymbol& dottedSym
 	if (!ModuleValidate()) return nullptr;
 	RefPtr<Module> pModule(ModuleCreate(processor.GetFrameCur().Reference()));
 	if (!pModule) return nullptr;
+	pModule->Assign(Gurax_Symbol(__name__), new Value_String(dottedSymbol.ToString('.')));
 	pModule->SetPathName(pathName);
 	pModule->AssignToMap();
 	return pModule.release();
