@@ -28,10 +28,197 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.Animation(name as String, type? as Number) {block?} {block?}
+Gurax_DeclareConstructorAlias(Animation_gurax, "Animation")
+{
+	Declare(VTYPE_wxAnimation, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.Animation.");
+}
+
+Gurax_ImplementConstructorEx(Animation_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	bool type_validFlag = args_gurax.IsValid();
+	wxAnimationType type = type_validFlag? args_gurax.PickNumber<wxAnimationType>() : wxANIMATION_TYPE_ANY;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAnimation(
+		wxAnimation(name, type)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Animation#GetDelay(i as Number)
+Gurax_DeclareMethodAlias(wxAnimation, GetDelay_gurax, "GetDelay")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnimation, GetDelay_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int i = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	int rtn = pEntity_gurax->GetDelay(i);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Animation#GetFrame(i as Number) {block?}
+Gurax_DeclareMethodAlias(wxAnimation, GetFrame_gurax, "GetFrame")
+{
+	Declare(VTYPE_wxImage, Flag::None);
+	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnimation, GetFrame_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int i = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxImage(
+		pEntity_gurax->GetFrame(i)));
+}
+
+// wx.Animation#GetFrameCount()
+Gurax_DeclareMethodAlias(wxAnimation, GetFrameCount_gurax, "GetFrameCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnimation, GetFrameCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned int rtn = pEntity_gurax->GetFrameCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Animation#GetSize() {block?}
+Gurax_DeclareMethodAlias(wxAnimation, GetSize_gurax, "GetSize")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnimation, GetSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->GetSize()));
+}
+
+// wx.Animation#IsOk()
+Gurax_DeclareMethodAlias(wxAnimation, IsOk_gurax, "IsOk")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnimation, IsOk_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsOk();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Animation#Load(stream as wx.InputStream, type? as Number)
+Gurax_DeclareMethodAlias(wxAnimation, Load_gurax, "Load")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("stream", VTYPE_wxInputStream, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnimation, Load_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxInputStream& value_stream = args_gurax.Pick<Value_wxInputStream>();
+	wxInputStream& stream = value_stream.GetEntity();
+	bool type_validFlag = args_gurax.IsValid();
+	wxAnimationType type = type_validFlag? args_gurax.PickNumber<wxAnimationType>() : wxANIMATION_TYPE_ANY;
+	// Function body
+	bool rtn = pEntity_gurax->Load(stream, type);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Animation#LoadFile(name as String, type? as Number)
+Gurax_DeclareMethodAlias(wxAnimation, LoadFile_gurax, "LoadFile")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAnimation, LoadFile_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	bool type_validFlag = args_gurax.IsValid();
+	wxAnimationType type = type_validFlag? args_gurax.PickNumber<wxAnimationType>() : wxANIMATION_TYPE_ANY;
+	// Function body
+	bool rtn = pEntity_gurax->LoadFile(name, type);
+	return new Gurax::Value_Bool(rtn);
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +234,15 @@ void VType_wxAnimation::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable);
+	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(Animation_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxAnimation, GetDelay_gurax));
+	Assign(Gurax_CreateMethod(wxAnimation, GetFrame_gurax));
+	Assign(Gurax_CreateMethod(wxAnimation, GetFrameCount_gurax));
+	Assign(Gurax_CreateMethod(wxAnimation, GetSize_gurax));
+	Assign(Gurax_CreateMethod(wxAnimation, IsOk_gurax));
+	Assign(Gurax_CreateMethod(wxAnimation, Load_gurax));
+	Assign(Gurax_CreateMethod(wxAnimation, LoadFile_gurax));
 }
 
 //------------------------------------------------------------------------------

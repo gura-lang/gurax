@@ -200,7 +200,7 @@ Grid = Class(ScrolledCanvas) {
 	GoToCell(row as int, col as int) as void
 	//GoToCell(coords as const_GridCellCoords_r) as void
 	MoveCursorDown(expandSelection as bool) as bool
-	Move\CursorDownBlock(expandSelection as bool) as bool
+	MoveCursorDownBlock(expandSelection as bool) as bool
 	MoveCursorLeft(expandSelection as bool) as bool
 	MoveCursorLeftBlock(expandSelection as bool) as bool
 	MoveCursorRight(expandSelection as bool) as bool
