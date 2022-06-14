@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxColourData.gura
 //==============================================================================
-ColourData = Class(Object) {
+ColourData = Class {
 	@include['wx/colourdata.h']
 	__init__()
 	GetChooseFull() as bool

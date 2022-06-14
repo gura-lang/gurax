@@ -18,14 +18,28 @@ PanelTop = class(wx.Panel) {
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
+		dirName = '../../../test/test-gif'
 		wx.GridSizer(6, 8, 8) {|sizer|
 			sizerTop.Add(sizer, wx.SizerFlags(1).Expand())
-			repeat (6 * 4) {
+			['buta-ani.gif', 'chicken-anim.gif', 'nekorun-ani02.gif', 'nezumi-ani05.gif', 'roba-ani.gif', 'tanuki-ani01.gif'].Cycle(6 * 3).Each {|fileName, i|
 				wx.BoxSizer(wx.VERTICAL) {|vbox|
 					sizer.Add(vbox, wx.SizerFlags(1).Expand())
-					wx.AnimationCtrl(this, wx.ID_ANY, wx.Animation('../../../test/test-gif/chicken-anim.gif')) {|ctrl|
+					vbox.AddStretchSpacer(1)
+					anim = wx.Animation(path.Join(dirName, fileName))
+					wx.AnimationCtrl(this, wx.ID_ANY, anim) {|ctrl|
 						vbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTRE))
 						animationCtrl = ctrl
+					}
+					vbox.AddStretchSpacer(1)
+					wx.StaticText(this, wx.ID_ANY, Format('Delay = %d', anim.GetDelay(0))) {|ctrl|
+						vbox.Add(ctrl, wx.SizerFlags().Expand())
+					}
+					wx.StaticText(this, wx.ID_ANY, Format('FrameCount = %d', anim.GetFrameCount())) {|ctrl|
+						vbox.Add(ctrl, wx.SizerFlags().Expand())
+					}
+					size = anim.GetSize()
+					wx.StaticText(this, wx.ID_ANY, Format('Size = [%d, %d]', size.GetWidth(), size.GetHeight())) {|ctrl|
+						vbox.Add(ctrl, wx.SizerFlags().Expand())
 					}
 					wx.Button(this, wx.ID_ANY, 'Play') {|ctrl|
 						vbox.Add(ctrl, wx.SizerFlags().Expand())
