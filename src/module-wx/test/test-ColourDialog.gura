@@ -1,0 +1,57 @@
+#!/usr/bin/env gurax
+import(wx)
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		f = MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600))
+		f.Show()
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
+		PanelTop(this)
+	}
+}
+
+PanelTop = class(wx.Panel) {
+	textCtrl as wx.TextCtrl
+	__init__(parent as wx.Window) = {|parent|
+		sizerTop = wx.BoxSizer(wx.VERTICAL)
+		this.SetSizer(sizerTop)
+		wx.BoxSizer(wx.VERTICAL) {|vbox|
+			sizerTop.Add(vbox, wx.SizerFlags().Expand())
+			wx.Button(this, wx.ID_ANY, 'Colour Dialog') {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton_ColourDialog)
+			}
+		}
+		/*
+			wx.Button(this, wx.ID_ANY, 'Colour Dialog') {|ctrl|
+				vbox.Add(ctrl, wx.SizerFlags().Expand())
+				wx.EVT_BUTTON(ctrl, this.OnButton_ColourDialog)
+			}
+		*/
+		wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+			sizerTop.Add(ctrl, wx.SizerFlags(1).Expand())
+			this.textCtrl = ctrl
+		}
+	}
+	OnButton_ColourDialog(event as wx.CommandEvent) = {
+		dlg = wx.ColourDialog(this)
+		rtn = dlg.ShowModal()
+		this.Printf('Result = %d\n', rtn)
+		if (rtn == wx.ID_OK) {
+			colorData = dlg.GetColourData()
+			this.Printf('GetColour() .. %s\n', colorData.GetColour().GetAsString())
+			repeat (16) {|i|
+				this.Printf('GetCustomColour(%d) .. %s\n', i, colorData.GetCustomColour(i).GetAsString())
+			}
+			this.Printf('ToString() .. %s\n', colorData.GetColour().ToString())
+		}
+	}
+	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
+}
+
+wx.ImplementApp(MyApp())
