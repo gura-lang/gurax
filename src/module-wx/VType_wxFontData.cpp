@@ -358,7 +358,7 @@ void VType_wxFontData::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(FontData_gurax));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(FontData_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxFontData, EnableEffects_gurax));
 	Assign(Gurax_CreateMethod(wxFontData, GetAllowSymbols_gurax));

@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxFontData.gura
 //==============================================================================
-FontData = Class(Object) {
+FontData = Class {
 	@include['wx/fontdata.h']
 	__init__()
 	EnableEffects(enable as bool) as void
