@@ -6,8 +6,8 @@
 #define GURAX_MODULE_WX_VTYPE_WXACCELERATORTABLE_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/accel.h>
 #include "Util.h"
-#include "VType_wxObject.h"
 
 Gurax_BeginModuleScope(wx)
 
@@ -25,19 +25,21 @@ extern GURAX_DLLDECLARE VType_wxAcceleratorTable VTYPE_wxAcceleratorTable;
 //------------------------------------------------------------------------------
 // Value_wxAcceleratorTable
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_wxAcceleratorTable : public Value_wxObject {
+class GURAX_DLLDECLARE Value_wxAcceleratorTable : public Value_Object {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_wxAcceleratorTable);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_wxAcceleratorTable");
+protected:
+	wxAcceleratorTable _entity;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_wxAcceleratorTable() = delete;
 	explicit Value_wxAcceleratorTable(const wxAcceleratorTable& entity, VType& vtype = VTYPE_wxAcceleratorTable) :
-		Value_wxObject(entity, vtype) {}
+		Value_Object(vtype), _entity(entity) {}
 	// Copy constructor/operator
 	Value_wxAcceleratorTable(const Value_wxAcceleratorTable& src) = delete;
 	Value_wxAcceleratorTable& operator=(const Value_wxAcceleratorTable& src) = delete;
@@ -48,10 +50,10 @@ protected:
 	// Destructor
 	~Value_wxAcceleratorTable() = default;
 public:
-	wxAcceleratorTable& GetEntity() { return reinterpret_cast<wxAcceleratorTable&>(Value_wxObject::GetEntity()); }
-	const wxAcceleratorTable& GetEntity() const { return reinterpret_cast<const wxAcceleratorTable&>(Value_wxObject::GetEntity()); }
-	wxAcceleratorTable* GetEntityPtr() { return reinterpret_cast<wxAcceleratorTable*>(Value_wxObject::GetEntityPtr()); }\
-	const wxAcceleratorTable* GetEntityPtr() const { return reinterpret_cast<const wxAcceleratorTable*>(Value_wxObject::GetEntityPtr()); }
+	wxAcceleratorTable& GetEntity() { return _entity; }
+	const wxAcceleratorTable& GetEntity() const { return _entity; }
+	wxAcceleratorTable* GetEntityPtr() { return &_entity; }
+	const wxAcceleratorTable* GetEntityPtr() const { return &_entity; }
 public:
 	static wxAcceleratorTable& GetEntity(Value& value) {
 		return dynamic_cast<Value_wxAcceleratorTable&>(value).GetEntity();

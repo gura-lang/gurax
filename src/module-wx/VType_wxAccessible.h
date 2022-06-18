@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXACCESSIBLE_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/accel.h>
 #include "Util.h"
 #include "VType_wxObject.h"
 

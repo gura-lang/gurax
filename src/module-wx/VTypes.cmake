@@ -5,6 +5,7 @@
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
 	VType_wxAboutDialogInfo.cpp
+	VType_wxAcceleratorEntry.cpp
 	VType_wxAcceleratorTable.cpp
 	VType_wxAccessible.cpp
 	VType_wxActivateEvent.cpp

@@ -2,4 +2,108 @@
 // VType_wxAccessible.gura
 //==============================================================================
 Accessible = Class(Object) {
+	@include['wx/accel.h']
+	__init__(win? as Window_p)
+	DoDefaultAction(childId as int) as AccStatus
+	//GetChild(childId as int, child as Accessible_p_p) as AccStatus
+	//GetChildCount(childCount as int_p) as AccStatus
+	//GetDefaultAction(childId as int, actionName as String_p) as AccStatus
+	//GetDescription(childId as int, description as String_p) as AccStatus
+	//GetFocus(childId as int_p, child as Accessible_p_p) as AccStatus
+	//GetHelpText(childId as int, helpText as String_p) as AccStatus
+	//GetKeyboardShortcut(childId as int, shortcut as String_p) as AccStatus
+	GetLocation(rect as Rect_r, elementId as int) as AccStatus
+	//GetName(childId as int, name as String_p) as AccStatus
+	//GetParent(parent as Accessible_p_p) as AccStatus
+	//GetRole(childId as int, role as AccRole_p) as AccStatus
+	//GetSelections(selections as Variant_p) as AccStatus
+	//GetState(childId as int, state as long_p) as AccStatus
+	//GetValue(childId as int, strValue as String_p) as AccStatus
+	GetWindow() as Window_p
+	//HitTest(pt as const_Point_r, childId as int_p, childObject as Accessible_p_p) as AccStatus
+	//Navigate(navDir as NavDir, fromId as int, toId as int_p, toObject as Accessible_p_p) as AccStatus
+	Select(childId as int, selectFlags as AccSelectionFlags) as AccStatus
+	SetWindow(window as Window_p) as void
+}
+
+@enum {
+	AccRole {
+		ROLE_NONE 	
+		ROLE_SYSTEM_ALERT 	
+		ROLE_SYSTEM_ANIMATION 	
+		ROLE_SYSTEM_APPLICATION 	
+		ROLE_SYSTEM_BORDER 	
+		ROLE_SYSTEM_BUTTONDROPDOWN 	
+		ROLE_SYSTEM_BUTTONDROPDOWNGRID 	
+		ROLE_SYSTEM_BUTTONMENU 	
+		ROLE_SYSTEM_CARET 	
+		ROLE_SYSTEM_CELL 	
+		ROLE_SYSTEM_CHARACTER 	
+		ROLE_SYSTEM_CHART 	
+		ROLE_SYSTEM_CHECKBUTTON 	
+		ROLE_SYSTEM_CLIENT 	
+		ROLE_SYSTEM_CLOCK 	
+		ROLE_SYSTEM_COLUMN 	
+		ROLE_SYSTEM_COLUMNHEADER 	
+		ROLE_SYSTEM_COMBOBOX 	
+		ROLE_SYSTEM_CURSOR 	
+		ROLE_SYSTEM_DIAGRAM 	
+		ROLE_SYSTEM_DIAL 	
+		ROLE_SYSTEM_DIALOG 	
+		ROLE_SYSTEM_DOCUMENT 	
+		ROLE_SYSTEM_DROPLIST 	
+		ROLE_SYSTEM_EQUATION 	
+		ROLE_SYSTEM_GRAPHIC 	
+		ROLE_SYSTEM_GRIP 	
+		ROLE_SYSTEM_GROUPING 	
+		ROLE_SYSTEM_HELPBALLOON 	
+		ROLE_SYSTEM_HOTKEYFIELD 	
+		ROLE_SYSTEM_INDICATOR 	
+		ROLE_SYSTEM_LINK 	
+		ROLE_SYSTEM_LIST 	
+		ROLE_SYSTEM_LISTITEM 	
+		ROLE_SYSTEM_MENUBAR 	
+		ROLE_SYSTEM_MENUITEM 	
+		ROLE_SYSTEM_MENUPOPUP 	
+		ROLE_SYSTEM_OUTLINE 	
+		ROLE_SYSTEM_OUTLINEITEM 	
+		ROLE_SYSTEM_PAGETAB 	
+		ROLE_SYSTEM_PAGETABLIST 	
+		ROLE_SYSTEM_PANE 	
+		ROLE_SYSTEM_PROGRESSBAR 	
+		ROLE_SYSTEM_PROPERTYPAGE 	
+		ROLE_SYSTEM_PUSHBUTTON 	
+		ROLE_SYSTEM_RADIOBUTTON 	
+		ROLE_SYSTEM_ROW 	
+		ROLE_SYSTEM_ROWHEADER 	
+		ROLE_SYSTEM_SCROLLBAR 	
+		ROLE_SYSTEM_SEPARATOR 	
+		ROLE_SYSTEM_SLIDER 	
+		ROLE_SYSTEM_SOUND 	
+		ROLE_SYSTEM_SPINBUTTON 	
+		ROLE_SYSTEM_STATICTEXT 	
+		ROLE_SYSTEM_STATUSBAR 	
+		ROLE_SYSTEM_TABLE 	
+		ROLE_SYSTEM_TEXT 	
+		ROLE_SYSTEM_TITLEBAR 	
+		ROLE_SYSTEM_TOOLBAR 	
+		ROLE_SYSTEM_TOOLTIP 	
+		ROLE_SYSTEM_WHITESPACE 	
+		ROLE_SYSTEM_WINDOW 	
+	}
+	AccSelectionFlags {
+		ACC_SEL_NONE 	
+		ACC_SEL_TAKEFOCUS 	
+		ACC_SEL_TAKESELECTION 	
+		ACC_SEL_EXTENDSELECTION 	
+		ACC_SEL_ADDSELECTION 	
+		ACC_SEL_REMOVESELECTION 	
+	}
+	AccStatus {
+		ACC_FAIL
+		ACC_FALSE
+		ACC_OK
+		ACC_NOT_IMPLEMENTED
+		ACC_NOT_SUPPORTED
+	}
 }

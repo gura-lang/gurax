@@ -2,6 +2,7 @@
 // VType_wxButton.gura
 //==============================================================================
 Button = Class(AnyButton) {
+	@include['wx/button.h']
 	__init__(parent as Window_p, id as WindowID, label as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
 	GetAuthNeeded() as bool

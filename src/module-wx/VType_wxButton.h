@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXBUTTON_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/button.h>
 #include "Util.h"
 #include "VType_wxAnyButton.h"
 

@@ -28,10 +28,152 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.Accessible(win? as wx.Window) {block?} {block?}
+Gurax_DeclareConstructorAlias(Accessible_gurax, "Accessible")
+{
+	Declare(VTYPE_wxAccessible, Flag::None);
+	DeclareArg("win", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.Accessible.");
+}
+
+Gurax_ImplementConstructorEx(Accessible_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxWindow* win = args_gurax.IsValid()? args_gurax.Pick<Value_wxWindow>().GetEntityPtr() : nullptr;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxAccessible(
+		wxAccessible(win)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Accessible#DoDefaultAction(childId as Number)
+Gurax_DeclareMethodAlias(wxAccessible, DoDefaultAction_gurax, "DoDefaultAction")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("childId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAccessible, DoDefaultAction_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int childId = args_gurax.PickNumber<int>();
+	// Function body
+	wxAccStatus rtn = pEntity_gurax->DoDefaultAction(childId);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Accessible#GetLocation(rect as wx.Rect, elementId as Number)
+Gurax_DeclareMethodAlias(wxAccessible, GetLocation_gurax, "GetLocation")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("elementId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAccessible, GetLocation_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	wxRect& rect = value_rect.GetEntity();
+	int elementId = args_gurax.PickNumber<int>();
+	// Function body
+	wxAccStatus rtn = pEntity_gurax->GetLocation(rect, elementId);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Accessible#GetWindow() {block?}
+Gurax_DeclareMethodAlias(wxAccessible, GetWindow_gurax, "GetWindow")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAccessible, GetWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		pEntity_gurax->GetWindow()));
+}
+
+// wx.Accessible#Select(childId as Number, selectFlags as Number)
+Gurax_DeclareMethodAlias(wxAccessible, Select_gurax, "Select")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("childId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("selectFlags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAccessible, Select_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int childId = args_gurax.PickNumber<int>();
+	wxAccSelectionFlags selectFlags = args_gurax.PickNumber<wxAccSelectionFlags>();
+	// Function body
+	wxAccStatus rtn = pEntity_gurax->Select(childId, selectFlags);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.Accessible#SetWindow(window as wx.Window)
+Gurax_DeclareMethodAlias(wxAccessible, SetWindow_gurax, "SetWindow")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxAccessible, SetWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxWindow& value_window = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* window = value_window.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetWindow(window);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +189,13 @@ void VType_wxAccessible::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable);
+	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(Accessible_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxAccessible, DoDefaultAction_gurax));
+	Assign(Gurax_CreateMethod(wxAccessible, GetLocation_gurax));
+	Assign(Gurax_CreateMethod(wxAccessible, GetWindow_gurax));
+	Assign(Gurax_CreateMethod(wxAccessible, Select_gurax));
+	Assign(Gurax_CreateMethod(wxAccessible, SetWindow_gurax));
 }
 
 //------------------------------------------------------------------------------

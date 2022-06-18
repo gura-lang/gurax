@@ -1,0 +1,16 @@
+//==============================================================================
+// VType_wxAcceleratorEntry.gura
+//==============================================================================
+AcceleratorEntry = Class {
+	@include['wx/accel.h']
+	__init__(flags as int = 0, keyCode as int = 0, cmd as int = 0, item? as MenuItem_p)
+	GetCommand() as int
+	GetFlags() as int
+	GetKeyCode() as int
+	GetMenuItem() as MenuItem_p
+	Set(flags as int, keyCode as int, cmd as int, item? as MenuItem_p) as void
+	IsOk() as bool
+	ToString() as String
+	ToRawString() as String
+	FromString(str as const_String_r) as bool
+}
