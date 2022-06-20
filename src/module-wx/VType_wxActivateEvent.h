@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXACTIVATEEVENT_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/event.h>
 #include "Util.h"
 #include "VType_wxEvent.h"
 

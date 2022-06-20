@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXBRUSH_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/brush.h>
 #include "Util.h"
 #include "VType_wxGDIObject.h"
 

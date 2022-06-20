@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXBUSYCURSOR_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/utils.h>
 #include "Util.h"
 
 Gurax_BeginModuleScope(wx)

@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXBITMAPHANDLER_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/bitmap.h>
 #include "Util.h"
 
 Gurax_BeginModuleScope(wx)

@@ -2,6 +2,7 @@
 // VType_wxApp.gura
 //==============================================================================
 App = Class(AppConsole) {
+	@include['wx/app.h']
 	__init__()
 	OnCmdLineError(parser as CmdLineParser_r):virtual as bool
 	OnCmdLineHelp(parser as CmdLineParser_r):virtual as bool

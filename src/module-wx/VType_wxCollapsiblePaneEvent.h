@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXCOLLAPSIBLEPANEEVENT_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/collpane.h>
 #include "Util.h"
 #include "VType_wxCommandEvent.h"
 

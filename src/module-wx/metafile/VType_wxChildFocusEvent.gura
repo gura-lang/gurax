@@ -2,6 +2,7 @@
 // VType_wxChildFocusEvent.gura
 //==============================================================================
 ChildFocusEvent = Class(CommandEvent) {
+	@include['wx/event.h']
 }
 
 @event {

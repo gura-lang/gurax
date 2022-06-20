@@ -2,6 +2,7 @@
 // VType_wxAppConsole.gura
 //==============================================================================
 AppConsole = Class(EvtHandler) {
+	@include['wx/app.h']
 	__init__()
 	OnInit():virtual as bool
 }

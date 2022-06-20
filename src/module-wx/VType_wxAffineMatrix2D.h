@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXAFFINEMATRIX2D_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/affinematrix2d.h>
 #include "Util.h"
 
 Gurax_BeginModuleScope(wx)

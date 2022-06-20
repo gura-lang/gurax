@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXAPP_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/app.h>
 #include "Util.h"
 #include "VType_wxAppConsole.h"
 

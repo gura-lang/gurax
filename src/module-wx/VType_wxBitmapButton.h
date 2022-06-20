@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXBITMAPBUTTON_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/bmpbuttn.h>
 #include "Util.h"
 #include "VType_wxButton.h"
 

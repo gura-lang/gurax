@@ -2,6 +2,7 @@
 // VType_wxCollapsiblePaneEvent.gura
 //==============================================================================
 CollapsiblePaneEvent = Class(CommandEvent) {
+	@include['wx/collpane.h']
 	GetCollapsed() as bool
 	SetCollapsed(collapsed as bool) as void
 }

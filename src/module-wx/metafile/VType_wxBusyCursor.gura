@@ -2,5 +2,6 @@
 // VType_wxBusyCursor.gura
 //==============================================================================
 BusyCursor = Class {
+	@include['wx/utils.h']
 	__init__(cursor as const_Cursor_p = wxHOURGLASS_CURSOR)
 }

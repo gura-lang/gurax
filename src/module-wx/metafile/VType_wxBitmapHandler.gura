@@ -2,4 +2,5 @@
 // VType_wxBitmapHandler.gura
 //==============================================================================
 BitmapHandler = Class():loosePointer {
+	@include['wx/bitmap.h']
 }

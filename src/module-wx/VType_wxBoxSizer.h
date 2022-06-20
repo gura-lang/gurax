@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXBOXSIZER_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/sizer.h>
 #include "Util.h"
 #include "VType_wxSizer.h"
 

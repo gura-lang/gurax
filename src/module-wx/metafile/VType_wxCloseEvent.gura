@@ -2,6 +2,7 @@
 // VType_wxCloseEvent.gura
 //==============================================================================
 CloseEvent = Class(Event) {
+	@include['wx/event.h']
 	//__init__(commandEventType as EventType = wxEVT_NULL, id as int = 0)
 	CanVeto() as bool
 	GetLoggingOff() as bool

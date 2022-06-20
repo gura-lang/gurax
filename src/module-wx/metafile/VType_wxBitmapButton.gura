@@ -2,6 +2,7 @@
 // VType_wxBitmapButton.gura
 //==============================================================================
 BitmapButton = Class(Button) {
+	@include['wx/bmpbuttn.h']
 	__init__(parent as Window_p, id as WindowID, bitmap as Bitmap, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxBU_AUTODRAW, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
 	NewCloseButton(parent as Window_p, winid as WindowID):static as BitmapButton
