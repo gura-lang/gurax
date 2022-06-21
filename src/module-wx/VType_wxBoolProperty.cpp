@@ -28,6 +28,30 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.BoolProperty(label? as String, name? as String, value? as Bool) {block?} {block?}
+Gurax_DeclareConstructorAlias(BoolProperty_gurax, "BoolProperty")
+{
+	Declare(VTYPE_wxBoolProperty, Flag::None);
+	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("value", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.BoolProperty.");
+}
+
+Gurax_ImplementConstructorEx(BoolProperty_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* label = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
+	bool value = args_gurax.IsValid()? args_gurax.PickBool() : false;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBoolProperty(
+		wxBoolProperty(label, name, value)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
@@ -47,7 +71,7 @@ void VType_wxBoolProperty::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxPGProperty, Flag::Mutable);
+	Declare(VTYPE_wxPGProperty, Flag::Mutable, Gurax_CreateConstructor(BoolProperty_gurax));
 	// Assignment of method
 }
 

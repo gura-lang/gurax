@@ -28,10 +28,58 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.ColourProperty(label? as String, name? as String, value? as wx.Colour) {block?} {block?}
+Gurax_DeclareConstructorAlias(ColourProperty_gurax, "ColourProperty")
+{
+	Declare(VTYPE_wxColourProperty, Flag::None);
+	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("value", VTYPE_wxColour, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.ColourProperty.");
+}
+
+Gurax_ImplementConstructorEx(ColourProperty_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* label = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
+	const char* name = args_gurax.IsValid()? args_gurax.PickString() : wxPG_LABEL;
+	const wxColour& value = args_gurax.IsValid()? args_gurax.Pick<Value_wxColour>().GetEntity() : *wxWHITE;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColourProperty(
+		wxColourProperty(label, name, value)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ColourProperty#GetColour(index as Number) {block?}
+Gurax_DeclareMethodAlias(wxColourProperty, GetColour_gurax, "GetColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColourProperty, GetColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetColour(index)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +95,9 @@ void VType_wxColourProperty::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_wxSystemColourProperty, Flag::Mutable);
+	Declare(VTYPE_wxSystemColourProperty, Flag::Mutable, Gurax_CreateConstructor(ColourProperty_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxColourProperty, GetColour_gurax));
 }
 
 //------------------------------------------------------------------------------

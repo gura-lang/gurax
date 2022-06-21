@@ -3,4 +3,14 @@
 //==============================================================================
 BitmapHandler = Class():loosePointer {
 	@include['wx/bitmap.h']
+	__init__()
+	Create(bitmap as Bitmap_p, data as const_void_p, type as BitmapType, width as int, height as int, depth as int = 1) as bool
+	GetExtension() as String
+	GetName() as String
+	GetType() as BitmapType
+	LoadFile(bitmap as Bitmap_p, name as const_String_r, type as BitmapType, desiredWidth as int, desiredHeight as int) as bool
+	SaveFile(bitmap as const_Bitmap_p, name as const_String_r, type as BitmapType, palette as const_Palette_p = NULL) as bool
+	SetExtension(extension as const_String_r) as void
+	SetName(name as const_String_r) as void
+	SetType(type as BitmapType) as void
 }
