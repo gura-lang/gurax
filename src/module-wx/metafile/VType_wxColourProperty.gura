@@ -4,7 +4,7 @@
 ColourProperty = Class(SystemColourProperty) {
 	@include['wx/propgrid/advprops.h']
 	__init__(label as const_String_r = wxPG_LABEL, name as const_String_r = wxPG_LABEL, value as const_Colour_r = *wxWHITE)
-	//ValueToString(value as Variant_r, argFlags as int = 0) as String
+	ValueToString(value as Variant_r, argFlags as int = 0) as String
 	GetColour(index as int) as Colour
 
 }

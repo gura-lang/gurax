@@ -56,6 +56,34 @@ Gurax_ImplementConstructorEx(ColourProperty_gurax, processor_gurax, argument_gur
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ColourProperty#ValueToString(value as wx.Variant, argFlags? as Number)
+Gurax_DeclareMethodAlias(wxColourProperty, ValueToString_gurax, "ValueToString")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColourProperty, ValueToString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& value = value_value.GetEntity();
+	bool argFlags_validFlag = args_gurax.IsValid();
+	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	wxString rtn = pEntity_gurax->ValueToString(value, argFlags);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
 // wx.ColourProperty#GetColour(index as Number) {block?}
 Gurax_DeclareMethodAlias(wxColourProperty, GetColour_gurax, "GetColour")
 {
@@ -97,6 +125,7 @@ void VType_wxColourProperty::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxSystemColourProperty, Flag::Mutable, Gurax_CreateConstructor(ColourProperty_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxColourProperty, ValueToString_gurax));
 	Assign(Gurax_CreateMethod(wxColourProperty, GetColour_gurax));
 }
 

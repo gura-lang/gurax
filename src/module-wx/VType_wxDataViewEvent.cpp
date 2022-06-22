@@ -115,6 +115,27 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetPosition_gurax, processor_gurax, arg
 		pEntity_gurax->GetPosition()));
 }
 
+// wx.DataViewEvent#GetValue() {block?}
+Gurax_DeclareMethodAlias(wxDataViewEvent, GetValue_gurax, "GetValue")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDataViewEvent, GetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->GetValue()));
+}
+
 // wx.DataViewEvent#IsEditCancelled()
 Gurax_DeclareMethodAlias(wxDataViewEvent, IsEditCancelled_gurax, "IsEditCancelled")
 {
@@ -206,6 +227,31 @@ Gurax_ImplementMethodEx(wxDataViewEvent, SetModel_gurax, processor_gurax, argume
 	wxDataViewModel* model = value_model.GetEntityPtr();
 	// Function body
 	pEntity_gurax->SetModel(model);
+	return Gurax::Value::nil();
+}
+
+// wx.DataViewEvent#SetValue(value as wx.Variant)
+Gurax_DeclareMethodAlias(wxDataViewEvent, SetValue_gurax, "SetValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxDataViewEvent, SetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	const wxVariant& value = value_value.GetEntity();
+	// Function body
+	pEntity_gurax->SetValue(value);
 	return Gurax::Value::nil();
 }
 
@@ -619,10 +665,12 @@ void VType_wxDataViewEvent::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxDataViewEvent, GetDataViewColumn_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, GetModel_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, GetPosition_gurax));
+	Assign(Gurax_CreateMethod(wxDataViewEvent, GetValue_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, IsEditCancelled_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, SetColumn_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, SetDataViewColumn_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, SetModel_gurax));
+	Assign(Gurax_CreateMethod(wxDataViewEvent, SetValue_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, SetDataObject_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, GetDataFormat_gurax));
 	Assign(Gurax_CreateMethod(wxDataViewEvent, GetDataSize_gurax));

@@ -1,0 +1,19 @@
+//==============================================================================
+// VType_wxVariant.gura
+//==============================================================================
+Variant = Class {
+	__init__(value as any, name as String = '') = \
+		R'''
+		if (value.IsType(VTYPE_String)) {
+			return new Value_wxVariant(wxVariant(Value_String::GetString(value), name));
+		}
+		return Value::nil();
+		'''
+	__cast__() = \
+		R'''
+		if (value.IsType(VTYPE_String)) {
+			return new Value_wxVariant(wxVariant(Value_String::GetString(value)));
+		}
+		return nullptr;
+		'''
+}

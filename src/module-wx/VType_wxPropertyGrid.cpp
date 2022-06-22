@@ -1544,6 +1544,27 @@ Gurax_ImplementMethodEx(wxPropertyGrid, EditorsValueWasNotModified_gurax, proces
 	return Gurax::Value::nil();
 }
 
+// wx.PropertyGrid#GetUncommittedPropertyValue() {block?}
+Gurax_DeclareMethodAlias(wxPropertyGrid, GetUncommittedPropertyValue_gurax, "GetUncommittedPropertyValue")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPropertyGrid, GetUncommittedPropertyValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->GetUncommittedPropertyValue()));
+}
+
 // wx.PropertyGrid#IsEditorsValueModified()
 Gurax_DeclareMethodAlias(wxPropertyGrid, IsEditorsValueModified_gurax, "IsEditorsValueModified")
 {
@@ -1684,6 +1705,7 @@ void VType_wxPropertyGrid::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxPropertyGrid, GetStatusBar_gurax));
 	Assign(Gurax_CreateMethod(wxPropertyGrid, EditorsValueWasModified_gurax));
 	Assign(Gurax_CreateMethod(wxPropertyGrid, EditorsValueWasNotModified_gurax));
+	Assign(Gurax_CreateMethod(wxPropertyGrid, GetUncommittedPropertyValue_gurax));
 	Assign(Gurax_CreateMethod(wxPropertyGrid, IsEditorsValueModified_gurax));
 	Assign(Gurax_CreateMethod(wxPropertyGrid, WasValueChangedInEvent_gurax));
 	Assign(Gurax_CreateMethod(wxPropertyGrid, AutoGetTranslation_gurax));

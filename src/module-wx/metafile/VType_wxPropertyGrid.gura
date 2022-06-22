@@ -5,7 +5,7 @@ PropertyGrid = Class(Control) {
 	@include['wx/propgrid/propgrid.h']
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxPG_DEFAULT_STYLE, name as const_String_r = wxPropertyGridNameStr)
 	AddActionTrigger(action as int, keycode as int, modifiers as int = 0) as void
-	//AddToSelection(id as PGPropArg) as bool
+	//AddToSelection(id as &) as bool
 	BeginLabelEdit(colIndex as unsigned_int = 0) as void
 	//ChangePropertyValue(id as PGPropArg, newValue as Variant) as bool
 	CenterSplitter(enableAutoResizing as bool = false) as void
@@ -82,7 +82,7 @@ PropertyGrid = Class(Control) {
 	GetStatusBar():virtual as StatusBar_p
 	EditorsValueWasModified() as void
 	EditorsValueWasNotModified() as void
-	//GetUncommittedPropertyValue() as Variant
+	GetUncommittedPropertyValue() as Variant
 	IsEditorsValueModified() as bool
 	// ShowPropertyError(id as PGPropArg, msg as const_String_r) as void
 	WasValueChangedInEvent() as bool

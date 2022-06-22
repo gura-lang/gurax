@@ -8,12 +8,12 @@ DataViewEvent = Class(NotifyEvent) {
 	GetDataViewColumn() as DataViewColumn_p
 	GetModel() as DataViewModel_p
 	GetPosition() as Point
-	//GetValue() as Variant
+	GetValue() as Variant
 	IsEditCancelled() as bool
 	SetColumn(col as int) as void
 	SetDataViewColumn(col as DataViewColumn_p) as void
 	SetModel(model as DataViewModel_p) as void
-	//SetValue(value as const_Variant_r) as void
+	SetValue(value as const_Variant_r) as void
 	SetDataObject(obj as DataObject_p) as void
 	GetDataFormat() as DataFormat
 	GetDataSize() as size_t
