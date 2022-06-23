@@ -108,6 +108,52 @@ Gurax_ImplementMethodEx(wxPGArrayEditorDialog, EnableCustomNewAction_gurax, proc
 	return Gurax::Value::nil();
 }
 
+// wx.PGArrayEditorDialog#SetDialogValue(value as wx.Variant)
+Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, SetDialogValue_gurax, "SetDialogValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGArrayEditorDialog, SetDialogValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	const wxVariant& value = value_value.GetEntity();
+	// Function body
+	pEntity_gurax->SetDialogValue(value);
+	return Gurax::Value::nil();
+}
+
+// wx.PGArrayEditorDialog#GetDialogValue() {block?}
+Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, GetDialogValue_gurax, "GetDialogValue")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGArrayEditorDialog, GetDialogValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->GetDialogValue()));
+}
+
 // wx.PGArrayEditorDialog#IsModified()
 Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, IsModified_gurax, "IsModified")
 {
@@ -167,6 +213,8 @@ void VType_wxPGArrayEditorDialog::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, Init_gurax));
 	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, Create_gurax));
 	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, EnableCustomNewAction_gurax));
+	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, SetDialogValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, GetDialogValue_gurax));
 	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, IsModified_gurax));
 	Assign(Gurax_CreateMethod(wxPGArrayEditorDialog, GetSelection_gurax));
 }

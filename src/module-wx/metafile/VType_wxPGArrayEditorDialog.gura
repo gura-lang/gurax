@@ -7,8 +7,8 @@ PGArrayEditorDialog = Class(Dialog) {
 	Init() as void
 	Create(parent as Window_p, message as const_String_r, caption as const_String_r, style as long = wxAEDIALOG_STYLE, pos as const_Point_r = wxDefaultPosition, sz as const_Size_r = wxDefaultSize) as bool
 	EnableCustomNewAction() as void
-	//SetDialogValue(value as const_Variant_r) as void
-	//GetDialogValue() as Variant
+	SetDialogValue(value as const_Variant_r) as void
+	GetDialogValue() as Variant
 	//GetTextCtrlValidator() as Validator_p
 	IsModified() as bool
 	GetSelection() as int
