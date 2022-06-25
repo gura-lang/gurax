@@ -32,6 +32,110 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.Caret#GetWindow() {block?}
+Gurax_DeclareMethodAlias(wxCaret, GetWindow_gurax, "GetWindow")
+{
+	Declare(VTYPE_wxWindow, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCaret, GetWindow_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxWindow(
+		pEntity_gurax->GetWindow()));
+}
+
+// wx.Caret#Hide()
+Gurax_DeclareMethodAlias(wxCaret, Hide_gurax, "Hide")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCaret, Hide_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Hide();
+	return Gurax::Value::nil();
+}
+
+// wx.Caret#IsOk()
+Gurax_DeclareMethodAlias(wxCaret, IsOk_gurax, "IsOk")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCaret, IsOk_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsOk();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Caret#IsVisible()
+Gurax_DeclareMethodAlias(wxCaret, IsVisible_gurax, "IsVisible")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCaret, IsVisible_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsVisible();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.Caret#Show(show? as Bool)
+Gurax_DeclareMethodAlias(wxCaret, Show_gurax, "Show")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxCaret, Show_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool show = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->Show(show);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +153,11 @@ void VType_wxCaret::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxCaret, GetWindow_gurax));
+	Assign(Gurax_CreateMethod(wxCaret, Hide_gurax));
+	Assign(Gurax_CreateMethod(wxCaret, IsOk_gurax));
+	Assign(Gurax_CreateMethod(wxCaret, IsVisible_gurax));
+	Assign(Gurax_CreateMethod(wxCaret, Show_gurax));
 }
 
 //------------------------------------------------------------------------------

@@ -2,4 +2,10 @@
 // VType_wxCaret.gura
 //==============================================================================
 Caret = Class():loosePointer {
+	@include['wx/caret.h']
+	GetWindow() as Window_p
+	Hide() as void
+	IsOk() as bool
+	IsVisible() as bool
+	Show(show as bool = true) as void
 }

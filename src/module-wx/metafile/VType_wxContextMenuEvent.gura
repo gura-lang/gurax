@@ -2,6 +2,9 @@
 // VType_wxContextMenuEvent.gura
 //==============================================================================
 ContextMenuEvent = Class(CommandEvent) {
+	@include['wx/event.h']
+	GetPosition() as Point
+	SetPosition(point as const_Point_r) as void
 }
 
 @event {

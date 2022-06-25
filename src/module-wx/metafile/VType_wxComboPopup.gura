@@ -3,4 +3,27 @@
 //==============================================================================
 ComboPopup = Class():loosePointer {
 	@include['wx/combo.h']
+	Create(parent as Window_p) as bool
+	DestroyPopup() as void
+	Dismiss() as void
+	//FindItem(item as const_String_r, trueItem as String_p = NULL) as bool
+	FindItem(item as const_String_r) as String = \
+		R'''
+		wxString trueItem;
+		bool rtn = pEntity_gurax->FindItem(item, &trueItem);
+		return rtn? new Value_String(trueItem.ToUTF8().data()) : Value::nil();
+		'''
+	GetAdjustedSize(minWidth as int, prefHeight as int, maxHeight as int) as Size
+	GetComboCtrl() as ComboCtrl_p
+	GetControl() as Window_p
+	GetStringValue() as String
+	Init() as void
+	IsCreated() as bool
+	LazyCreate() as bool
+	OnComboDoubleClick() as void
+	OnComboKeyEvent(event as KeyEvent_r) as void
+	OnDismiss() as void
+	OnPopup() as void
+	PaintComboControl(dc as DC_r, rect as const_Rect_r) as void
+	SetStringValue(value as const_String_r) as void
 }

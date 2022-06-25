@@ -32,6 +32,51 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ContextMenuEvent#GetPosition() {block?}
+Gurax_DeclareMethodAlias(wxContextMenuEvent, GetPosition_gurax, "GetPosition")
+{
+	Declare(VTYPE_wxPoint, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxContextMenuEvent, GetPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPoint(
+		pEntity_gurax->GetPosition()));
+}
+
+// wx.ContextMenuEvent#SetPosition(point as wx.Point)
+Gurax_DeclareMethodAlias(wxContextMenuEvent, SetPosition_gurax, "SetPosition")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxContextMenuEvent, SetPosition_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint& value_point = args_gurax.Pick<Value_wxPoint>();
+	const wxPoint& point = value_point.GetEntity();
+	// Function body
+	pEntity_gurax->SetPosition(point);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +94,8 @@ void VType_wxContextMenuEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxContextMenuEvent, GetPosition_gurax));
+	Assign(Gurax_CreateMethod(wxContextMenuEvent, SetPosition_gurax));
 }
 
 //------------------------------------------------------------------------------

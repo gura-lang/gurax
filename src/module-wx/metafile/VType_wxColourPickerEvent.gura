@@ -3,4 +3,6 @@
 //==============================================================================
 ColourPickerEvent = Class(CommandEvent) {
 	@include['wx/clrpicker.h']
+	GetColour() as Colour
+	SetColour(pos as const_Colour_r) as void
 }

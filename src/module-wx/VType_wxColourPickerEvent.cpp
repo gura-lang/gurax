@@ -32,6 +32,51 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.ColourPickerEvent#GetColour() {block?}
+Gurax_DeclareMethodAlias(wxColourPickerEvent, GetColour_gurax, "GetColour")
+{
+	Declare(VTYPE_wxColour, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColourPickerEvent, GetColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxColour(
+		pEntity_gurax->GetColour()));
+}
+
+// wx.ColourPickerEvent#SetColour(pos as wx.Colour)
+Gurax_DeclareMethodAlias(wxColourPickerEvent, SetColour_gurax, "SetColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pos", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxColourPickerEvent, SetColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_pos = args_gurax.Pick<Value_wxColour>();
+	const wxColour& pos = value_pos.GetEntity();
+	// Function body
+	pEntity_gurax->SetColour(pos);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +94,8 @@ void VType_wxColourPickerEvent::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxColourPickerEvent, GetColour_gurax));
+	Assign(Gurax_CreateMethod(wxColourPickerEvent, SetColour_gurax));
 }
 
 //------------------------------------------------------------------------------

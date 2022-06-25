@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXCARET_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/caret.h>
 #include "Util.h"
 
 Gurax_BeginModuleScope(wx)
