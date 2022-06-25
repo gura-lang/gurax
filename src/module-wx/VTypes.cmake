@@ -4,7 +4,7 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxPGPaintData.cpp
+	VType_wxDataViewRenderer.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorEntry.cpp
 	VType_wxAcceleratorTable.cpp
@@ -282,6 +282,7 @@ set(SRCFILES_VTYPE
 	VType_wxPen.cpp
 	VType_wxPGArrayEditorDialog.cpp
 	VType_wxPGArrayStringEditorDialog.cpp
+	VType_wxPGPaintData.cpp
 	VType_wxPGProperty.cpp
 	VType_wxPickerBase.cpp
 	VType_wxPNGHandler.cpp

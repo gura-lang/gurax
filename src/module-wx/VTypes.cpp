@@ -12,7 +12,7 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxPGPaintData);
+	frame.Assign(VTYPE_wxDataViewRenderer);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorEntry);
 	frame.Assign(VTYPE_wxAcceleratorTable);
@@ -290,6 +290,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPen);
 	frame.Assign(VTYPE_wxPGArrayEditorDialog);
 	frame.Assign(VTYPE_wxPGArrayStringEditorDialog);
+	frame.Assign(VTYPE_wxPGPaintData);
 	frame.Assign(VTYPE_wxPGProperty);
 	frame.Assign(VTYPE_wxPickerBase);
 	frame.Assign(VTYPE_wxPNGHandler);

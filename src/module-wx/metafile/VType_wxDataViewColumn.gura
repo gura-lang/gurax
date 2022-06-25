@@ -3,4 +3,18 @@
 //==============================================================================
 DataViewColumn = Class(SettableHeaderColumn) {
 	@include['wx/dataview.h']
+	//wxDataViewColumn(title as const_String_r, renderer as DataViewRenderer_p, model_column as unsigned_int, width as int = wxDVC_DEFAULT_WIDTH, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as a
+	//wxDataViewColumn(bitmap as const_Bitmap_r, renderer as DataViewRenderer_p, model_column as unsigned_int, width as int = wxDVC_DEFAULT_WIDTH, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as a
+	__init__(title as any, renderer as DataViewRenderer_p, model_column as unsigned_int, width as int = wxDVC_DEFAULT_WIDTH, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) = \
+		R'''
+		if (title.IsType(VTYPE_String)) {
+			return new Value_wxDataViewColumn(new wxDataViewColumn(Value_String::GetString(title), renderer, model_column, width, align, flags));
+		} else if (title.IsType(VTYPE_wxBitmap)) {
+			return new Value_wxDataViewColumn(new wxDataViewColumn(Value_wxBitmap::GetEntity(title), renderer, model_column, width, align, flags));
+		}
+		return Value::nil();
+		'''
+	GetModelColumn() as unsigned_int
+	GetOwner() as DataViewCtrl_p
+	GetRenderer() as DataViewRenderer_p
 }

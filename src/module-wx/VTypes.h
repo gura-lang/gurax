@@ -7,7 +7,7 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxPGPaintData.h"
+#include "VType_wxDataViewRenderer.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorEntry.h"
 #include "VType_wxAcceleratorTable.h"
@@ -285,6 +285,7 @@
 #include "VType_wxPen.h"
 #include "VType_wxPGArrayEditorDialog.h"
 #include "VType_wxPGArrayStringEditorDialog.h"
+#include "VType_wxPGPaintData.h"
 #include "VType_wxPGProperty.h"
 #include "VType_wxPickerBase.h"
 #include "VType_wxPNGHandler.h"
