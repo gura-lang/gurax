@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxDataViewRenderer.gura
 //==============================================================================
+DataViewRenderer = Class():loosePointer {
+	@include['wx/dataview.h']
+}
