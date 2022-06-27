@@ -3,4 +3,20 @@
 //==============================================================================
 PGPaintData = Class {
 	@include['wx/propgrid/property.h']
+	//m_property.getter as PropertyGrid_p = \
+	//	R'''
+	//	return new Value_wxPropertyGrid(valueThis_gurax.GetEntity().m_property);
+	//	'''
+	m_choiceItem.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().m_choiceItem);
+		'''
+	m_drawnWidth.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().m_drawnWidth);
+		'''
+	m_drawnHeight.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().m_drawnHeight);
+		'''
 }

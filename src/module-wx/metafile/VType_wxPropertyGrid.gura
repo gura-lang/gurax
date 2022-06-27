@@ -88,7 +88,7 @@ PropertyGrid = Class(Control) {
 	WasValueChangedInEvent() as bool
 	AutoGetTranslation(enable as bool):static as void
 	//RegisterEditorClass(editor as PGEditor_p, noDefCheck as bool = false):static as PGEditor_p
-	//	DoRegisterEditorClass(editor as PGEditor_p, name as const_String_r, noDefCheck as bool = false):static as PGEditor_p
+	//DoRegisterEditorClass(editor as PGEditor_p, name as const_String_r, noDefCheck as bool = false):static as PGEditor_p
 }
 
 @event {

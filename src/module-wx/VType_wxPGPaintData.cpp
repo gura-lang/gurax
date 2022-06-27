@@ -36,6 +36,47 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+Gurax_DeclareProperty_R(wxPGPaintData, m_choiceItem)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(wxPGPaintData, m_choiceItem)
+{
+	auto& valueThis_gurax = GetValueThis(valueTarget);
+	return new Value_Number(valueThis_gurax.GetEntity().m_choiceItem);
+}
+
+Gurax_DeclareProperty_R(wxPGPaintData, m_drawnWidth)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(wxPGPaintData, m_drawnWidth)
+{
+	auto& valueThis_gurax = GetValueThis(valueTarget);
+	return new Value_Number(valueThis_gurax.GetEntity().m_drawnWidth);
+}
+
+Gurax_DeclareProperty_R(wxPGPaintData, m_drawnHeight)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(wxPGPaintData, m_drawnHeight)
+{
+	auto& valueThis_gurax = GetValueThis(valueTarget);
+	return new Value_Number(valueThis_gurax.GetEntity().m_drawnHeight);
+}
 
 //------------------------------------------------------------------------------
 // VType_wxPGPaintData
@@ -49,6 +90,10 @@ void VType_wxPGPaintData::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
+	// Assignment of property
+	Assign(Gurax_CreateProperty(wxPGPaintData, m_choiceItem));
+	Assign(Gurax_CreateProperty(wxPGPaintData, m_drawnWidth));
+	Assign(Gurax_CreateProperty(wxPGPaintData, m_drawnHeight));
 }
 
 //------------------------------------------------------------------------------

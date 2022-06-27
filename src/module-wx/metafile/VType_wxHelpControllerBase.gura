@@ -3,4 +3,22 @@
 //==============================================================================
 HelpControllerBase = Class():loosePointer {
 	@include['wx/help.h']
+	//__init__(parentWindow as Window_p = NULL) as Window_p
+	DisplayBlock(blockNo as long) as bool
+	DisplayContents() as bool
+	DisplayContextPopup(contextId as int) as bool
+	DisplaySection(section as const_String_r) as bool
+	//DisplaySection(sectionNo as int) as bool
+	DisplayTextPopup(text as const_String_r, pos as const_Point_r) as bool
+	//GetFrameParameters(size as Size_p = NULL, pos as Point_p = NULL, newFrameEachTime as bool_p = NULL) as Frame_p
+	GetParentWindow() as Window_p
+	KeywordSearch(keyWord as const_String_r, mode as HelpSearchMode = wxHELP_SEARCH_ALL) as bool
+	LoadFile(file as const_String_r = wxEmptyString) as bool
+	OnQuit() as void
+	Quit() as bool
+	SetFrameParameters(titleFormat as const_String_r, size as const_Size_r, pos as const_Point_r = wxDefaultPosition, newFrameEachTime as bool = false) as void
+	SetParentWindow(parentWindow as Window_p) as void
+	SetViewer(viewer as const_String_r, flags as long = wxHELP_NETSCAPE) as void
+	Initialize(file as const_String_r) as bool
+	//Initialize(file as const_String_r, server as int) as bool
 }

@@ -7,7 +7,6 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
-#include "VType_wxDataViewRenderer.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorEntry.h"
 #include "VType_wxAcceleratorTable.h"
@@ -98,6 +97,7 @@
 #include "VType_wxDataViewListModel.h"
 #include "VType_wxDataViewListStore.h"
 #include "VType_wxDataViewModel.h"
+#include "VType_wxDataViewRenderer.h"
 #include "VType_wxDataViewTreeCtrl.h"
 #include "VType_wxDataViewTreeStore.h"
 #include "VType_wxDataViewVirtualListModel.h"

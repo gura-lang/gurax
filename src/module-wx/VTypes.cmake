@@ -4,7 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxDataViewRenderer.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorEntry.cpp
 	VType_wxAcceleratorTable.cpp
@@ -95,6 +94,7 @@ set(SRCFILES_VTYPE
 	VType_wxDataViewListModel.cpp
 	VType_wxDataViewListStore.cpp
 	VType_wxDataViewModel.cpp
+	VType_wxDataViewRenderer.cpp
 	VType_wxDataViewTreeCtrl.cpp
 	VType_wxDataViewTreeStore.cpp
 	VType_wxDataViewVirtualListModel.cpp
