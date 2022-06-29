@@ -14,9 +14,9 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxEventType);
 	frame.Assign(VTYPE_wxPGValidationInfo);
 	frame.Assign(VTYPE_wxPGEditor);
+	frame.Assign(VTYPE_wxPGChoiceEditor);
 	frame.Assign(VTYPE_wxPGCellRenderer);
 	frame.Assign(VTYPE_wxPGEditorDialogAdapter);
-	frame.Assign(VTYPE_wxPGChoiceInfo);
 	frame.Assign(VTYPE_wxPGPropertyFlags);
 	frame.Assign(VTYPE_wxPGAttributeStorage);
 	frame.Assign(VTYPE_wxPGCell);

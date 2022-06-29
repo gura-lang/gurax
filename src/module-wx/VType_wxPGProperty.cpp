@@ -331,27 +331,6 @@ Gurax_ImplementMethodEx(wxPGProperty, ChildChanged_gurax, processor_gurax, argum
 		pEntity_gurax->ChildChanged(thisValue, childIndex, childValue)));
 }
 
-// wx.PGProperty#DoGetEditorClass() {block?}
-Gurax_DeclareMethodAlias(wxPGProperty, DoGetEditorClass_gurax, "DoGetEditorClass")
-{
-	Declare(VTYPE_wxPGEditor, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPGProperty, DoGetEditorClass_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGEditor(
-		*pEntity_gurax->DoGetEditorClass()));
-}
-
 // wx.PGProperty#DoGetValidator() {block?}
 Gurax_DeclareMethodAlias(wxPGProperty, DoGetValidator_gurax, "DoGetValidator")
 {
@@ -426,7 +405,7 @@ Gurax_ImplementMethodEx(wxPGProperty, GetCellRenderer_gurax, processor_gurax, ar
 	int column = args_gurax.PickNumber<int>();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGCellRenderer(
-		*pEntity_gurax->GetCellRenderer(column)));
+		pEntity_gurax->GetCellRenderer(column)));
 }
 
 // wx.PGProperty#GetChoiceSelection()
@@ -496,31 +475,6 @@ Gurax_ImplementMethodEx(wxPGProperty, DoSetAttribute_gurax, processor_gurax, arg
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.PGProperty#DoGetAttribute(name as String) {block?}
-Gurax_DeclareMethodAlias(wxPGProperty, DoGetAttribute_gurax, "DoGetAttribute")
-{
-	Declare(VTYPE_wxVariant, Flag::None);
-	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPGProperty, DoGetAttribute_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
-		pEntity_gurax->DoGetAttribute(name)));
-}
-
 // wx.PGProperty#GetEditorDialog() {block?}
 Gurax_DeclareMethodAlias(wxPGProperty, GetEditorDialog_gurax, "GetEditorDialog")
 {
@@ -539,7 +493,7 @@ Gurax_ImplementMethodEx(wxPGProperty, GetEditorDialog_gurax, processor_gurax, ar
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGEditorDialogAdapter(
-		*pEntity_gurax->GetEditorDialog()));
+		pEntity_gurax->GetEditorDialog()));
 }
 
 // wx.PGProperty#OnValidationFailure(pendingValue as wx.Variant)
@@ -592,31 +546,6 @@ Gurax_ImplementMethodEx(wxPGProperty, AddChoice_gurax, processor_gurax, argument
 	// Function body
 	int rtn = pEntity_gurax->AddChoice(label, value);
 	return new Gurax::Value_Number(rtn);
-}
-
-// wx.PGProperty#AddChild(prop as wx.PGProperty)
-Gurax_DeclareMethodAlias(wxPGProperty, AddChild_gurax, "AddChild")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("prop", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPGProperty, AddChild_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	Value_wxPGProperty& value_prop = args_gurax.Pick<Value_wxPGProperty>();
-	wxPGProperty* prop = value_prop.GetEntityPtr();
-	// Function body
-	pEntity_gurax->AddChild(prop);
-	return Gurax::Value::nil();
 }
 
 // wx.PGProperty#AddPrivateChild(prop as wx.PGProperty)
@@ -906,32 +835,6 @@ Gurax_ImplementMethodEx(wxPGProperty, GetAttribute_gurax, processor_gurax, argum
 		pEntity_gurax->GetAttribute(name)));
 }
 
-// wx.PGProperty#GetAttribute(name as String, defVal as String)
-Gurax_DeclareMethodAlias(wxPGProperty, GetAttribute_gurax, "GetAttribute")
-{
-	Declare(VTYPE_String, Flag::None);
-	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("defVal", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPGProperty, GetAttribute_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* name = args_gurax.PickString();
-	const char* defVal = args_gurax.PickString();
-	// Function body
-	wxString rtn = pEntity_gurax->GetAttribute(name, defVal);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
-}
-
 // wx.PGProperty#GetAttributeAsLong(name as String, defVal as Number)
 Gurax_DeclareMethodAlias(wxPGProperty, GetAttributeAsLong_gurax, "GetAttributeAsLong")
 {
@@ -1026,31 +929,6 @@ Gurax_ImplementMethodEx(wxPGProperty, GetAttributes_gurax, processor_gurax, argu
 		pEntity_gurax->GetAttributes()));
 }
 
-// wx.PGProperty#GetColumnEditor(column as Number) {block?}
-Gurax_DeclareMethodAlias(wxPGProperty, GetColumnEditor_gurax, "GetColumnEditor")
-{
-	Declare(VTYPE_wxPGEditor, Flag::None);
-	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPGProperty, GetColumnEditor_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	int column = args_gurax.PickNumber<int>();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGEditor(
-		*pEntity_gurax->GetColumnEditor(column)));
-}
-
 // wx.PGProperty#GetBaseName()
 Gurax_DeclareMethodAlias(wxPGProperty, GetBaseName_gurax, "GetBaseName")
 {
@@ -1069,31 +947,6 @@ Gurax_ImplementMethodEx(wxPGProperty, GetBaseName_gurax, processor_gurax, argume
 	// Function body
 	wxString rtn = pEntity_gurax->GetBaseName();
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
-}
-
-// wx.PGProperty#GetCell(column as Number) {block?}
-Gurax_DeclareMethodAlias(wxPGProperty, GetCell_gurax, "GetCell")
-{
-	Declare(VTYPE_wxPGCell, Flag::None);
-	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPGProperty, GetCell_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	unsigned int column = args_gurax.PickNumber<unsigned int>();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGCell(
-		pEntity_gurax->GetCell(column)));
 }
 
 // wx.PGProperty#GetCell(column as Number) {block?}
@@ -1253,27 +1106,6 @@ Gurax_ImplementMethodEx(wxPGProperty, GetDisplayedString_gurax, processor_gurax,
 	// Function body
 	wxString rtn = pEntity_gurax->GetDisplayedString();
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
-}
-
-// wx.PGProperty#GetEditorClass() {block?}
-Gurax_DeclareMethodAlias(wxPGProperty, GetEditorClass_gurax, "GetEditorClass")
-{
-	Declare(VTYPE_wxPGEditor, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPGProperty, GetEditorClass_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGEditor(
-		*pEntity_gurax->GetEditorClass()));
 }
 
 // wx.PGProperty#GetGrid() {block?}
@@ -1591,31 +1423,6 @@ Gurax_ImplementMethodEx(wxPGProperty, GetValueAsString_gurax, processor_gurax, a
 	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
 	// Function body
 	wxString rtn = pEntity_gurax->GetValueAsString(argFlags);
-	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
-}
-
-// wx.PGProperty#GetValueString(argFlags? as Number)
-Gurax_DeclareMethodAlias(wxPGProperty, GetValueString_gurax, "GetValueString")
-{
-	Declare(VTYPE_String, Flag::None);
-	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPGProperty, GetValueString_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	bool argFlags_validFlag = args_gurax.IsValid();
-	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
-	// Function body
-	wxString rtn = pEntity_gurax->GetValueString(argFlags);
 	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
 }
 
@@ -2144,30 +1951,6 @@ Gurax_ImplementMethodEx(wxPGProperty, SetEditor_gurax, processor_gurax, argument
 	const wxPGEditor* editor = value_editor.GetEntityPtr();
 	// Function body
 	pEntity_gurax->SetEditor(editor);
-	return Gurax::Value::nil();
-}
-
-// wx.PGProperty#SetEditor(editorName as String)
-Gurax_DeclareMethodAlias(wxPGProperty, SetEditor_gurax, "SetEditor")
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("editorName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxPGProperty, SetEditor_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Arguments
-	Gurax::ArgPicker args_gurax(argument_gurax);
-	const char* editorName = args_gurax.PickString();
-	// Function body
-	pEntity_gurax->SetEditor(editorName);
 	return Gurax::Value::nil();
 }
 
@@ -2713,18 +2496,15 @@ void VType_wxPGProperty::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxPGProperty, OnMeasureImage_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, OnEvent_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, ChildChanged_gurax));
-	Assign(Gurax_CreateMethod(wxPGProperty, DoGetEditorClass_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, DoGetValidator_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, OnCustomPaint_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetCellRenderer_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetChoiceSelection_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, RefreshChildren_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, DoSetAttribute_gurax));
-	Assign(Gurax_CreateMethod(wxPGProperty, DoGetAttribute_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetEditorDialog_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, OnValidationFailure_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, AddChoice_gurax));
-	Assign(Gurax_CreateMethod(wxPGProperty, AddChild_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, AddPrivateChild_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, AdaptListToValue_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, AppendChild_gurax));
@@ -2737,14 +2517,11 @@ void VType_wxPGProperty::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxPGProperty, EnableCommonValue_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GenerateComposedValue_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetAttribute_gurax));
-	Assign(Gurax_CreateMethod(wxPGProperty, GetAttribute_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetAttributeAsLong_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetAttributeAsDouble_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetAttributesAsList_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetAttributes_gurax));
-	Assign(Gurax_CreateMethod(wxPGProperty, GetColumnEditor_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetBaseName_gurax));
-	Assign(Gurax_CreateMethod(wxPGProperty, GetCell_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetCell_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetOrCreateCell_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetChildCount_gurax));
@@ -2752,7 +2529,6 @@ void VType_wxPGProperty::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxPGProperty, GetChoices_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetDefaultValue_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetDisplayedString_gurax));
-	Assign(Gurax_CreateMethod(wxPGProperty, GetEditorClass_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetGrid_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetGridIfDisplayed_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetHelpString_gurax));
@@ -2768,7 +2544,6 @@ void VType_wxPGProperty::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxPGProperty, GetValue_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetValueImage_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetValueAsString_gurax));
-	Assign(Gurax_CreateMethod(wxPGProperty, GetValueString_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetValueType_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, GetY_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, HasVisibleChildren_gurax));
@@ -2791,7 +2566,6 @@ void VType_wxPGProperty::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxPGProperty, SetAttributes_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, SetAutoUnspecified_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, SetBackgroundColour_gurax));
-	Assign(Gurax_CreateMethod(wxPGProperty, SetEditor_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, SetEditor_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, SetCell_gurax));
 	Assign(Gurax_CreateMethod(wxPGProperty, SetChoices_gurax));

@@ -5,20 +5,20 @@ PGValidationInfo = Class {
 	@include['wx/propgrid/propgrid.h']
 }
 
-PGEditor = Class {
+PGEditor = Class():loosePointer {
 	@include['wx/propgrid/editors.h']
 }
 
-PGCellRenderer = Class {
-	@include['wx/propgrid/property.h']
-}
-
-PGEditorDialogAdapter = Class {
+PGChoiceEditor = Class {
 	@include['wx/propgrid/editors.h']
 }
 
-PGChoiceInfo = Class {
+PGCellRenderer = Class():loosePointer {
 	@include['wx/propgrid/property.h']
+}
+
+PGEditorDialogAdapter = Class():loosePointer {
+	@include['wx/propgrid/editors.h']
 }
 
 PGPropertyFlags = Class {
@@ -36,4 +36,3 @@ PGCell = Class {
 PGChoices = Class {
 	@include['wx/propgrid/property.h']
 }
-

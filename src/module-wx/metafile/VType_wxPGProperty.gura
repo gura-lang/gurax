@@ -14,18 +14,18 @@ PGProperty = Class {
 	OnMeasureImage(item as int = -1) as Size
 	OnEvent(propgrid as PropertyGrid_p, wnd_primary as Window_p, event as Event_r) as bool
 	ChildChanged(thisValue as Variant_r, childIndex as int, childValue as Variant_r) as Variant
-	DoGetEditorClass() as PGEditor_p
+	//DoGetEditorClass() as PGEditor_p
 	DoGetValidator() as Validator_p
 	OnCustomPaint(dc as DC_r, rect as const_Rect_r, paintdata as PGPaintData_r) as void
 	GetCellRenderer(column as int) as PGCellRenderer_p
 	GetChoiceSelection() as int
 	RefreshChildren() as void
 	DoSetAttribute(name as const_String_r, value as Variant_r) as bool
-	DoGetAttribute(name as const_String_r) as Variant
+	//DoGetAttribute(name as const_String_r) as Variant
 	GetEditorDialog() as PGEditorDialogAdapter_p
 	OnValidationFailure(pendingValue as Variant_r) as void
 	AddChoice(label as const_String_r, value as int = wxPG_INVALID_VALUE) as int
-	AddChild(prop as PGProperty_p) as void
+	//AddChild(prop as PGProperty_p) as void
 	AddPrivateChild(prop as PGProperty_p) as void
 	AdaptListToValue(list as Variant_r, value as Variant_p) as void
 	AppendChild(childProperty as PGProperty_p) as PGProperty_p
@@ -38,15 +38,15 @@ PGProperty = Class {
 	EnableCommonValue(enable as bool = true) as void
 	GenerateComposedValue() as String
 	GetAttribute(name as const_String_r) as Variant
-	GetAttribute(name as const_String_r, defVal as const_String_r) as String
+	//GetAttribute(name as const_String_r, defVal as const_String_r) as String
 	GetAttributeAsLong(name as const_String_r, defVal as long) as long
 	GetAttributeAsDouble(name as const_String_r, defVal as double) as double
 	GetAttributesAsList() as Variant
 	GetAttributes() as PGAttributeStorage
-	GetColumnEditor(column as int) as PGEditor_p
+	//GetColumnEditor(column as int) as PGEditor_p
 	GetBaseName() as String
 	GetCell(column as unsigned_int) as PGCell
-	GetCell(column as unsigned_int) as PGCell
+	//GetCell(column as unsigned_int) as PGCell
 	GetOrCreateCell(column as unsigned_int) as PGCell
 	GetChildCount() as unsigned_int
 	GetChildrenHeight(lh as int, iMax as int = -1) as int
@@ -55,7 +55,7 @@ PGProperty = Class {
 	//GetClientObject() as ClientData_p
 	GetDefaultValue() as Variant
 	GetDisplayedString() as String
-	GetEditorClass() as PGEditor_p
+	//GetEditorClass() as PGEditor_p
 	//GetFlags() as FlagType
 	GetGrid() as PropertyGrid_p
 	GetGridIfDisplayed() as PropertyGrid_p
@@ -72,7 +72,7 @@ PGProperty = Class {
 	GetValue() as Variant
 	GetValueImage() as Bitmap_p
 	GetValueAsString(argFlags as int = 0) as String
-	GetValueString(argFlags as int = 0) as String
+	//GetValueString(argFlags as int = 0) as String
 	GetValueType() as String
 	GetY() as int
 	//HasFlag(flag as PGPropertyFlags) as FlagType
@@ -97,7 +97,7 @@ PGProperty = Class {
 	SetAutoUnspecified(enable as bool = true) as void
 	SetBackgroundColour(colour as const_Colour_r, flags as int = wxPG_RECURSE) as void
 	SetEditor(editor as const_PGEditor_p) as void
-	SetEditor(editorName as const_String_r) as void
+	//SetEditor(editorName as const_String_r) as void
 	SetCell(column as int, cell as const_PGCell_r) as void
 	SetChoices(choices as PGChoices_r) as bool
 	//SetClientData(clientData as void_p) as void
