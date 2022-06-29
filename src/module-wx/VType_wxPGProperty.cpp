@@ -32,6 +32,2659 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.PGProperty#OnSetValue()
+Gurax_DeclareMethodAlias(wxPGProperty, OnSetValue_gurax, "OnSetValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, OnSetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->OnSetValue();
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#DoGetValue() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, DoGetValue_gurax, "DoGetValue")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, DoGetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->DoGetValue()));
+}
+
+// wx.PGProperty#ValidateValue(value as wx.Variant, validationInfo as wx.PGValidationInfo)
+Gurax_DeclareMethodAlias(wxPGProperty, ValidateValue_gurax, "ValidateValue")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("validationInfo", VTYPE_wxPGValidationInfo, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, ValidateValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& value = value_value.GetEntity();
+	Value_wxPGValidationInfo& value_validationInfo = args_gurax.Pick<Value_wxPGValidationInfo>();
+	wxPGValidationInfo& validationInfo = value_validationInfo.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->ValidateValue(value, validationInfo);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#StringToValue(variant as wx.Variant, text as String, argFlags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, StringToValue_gurax, "StringToValue")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("variant", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, StringToValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_variant = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& variant = value_variant.GetEntity();
+	const char* text = args_gurax.PickString();
+	bool argFlags_validFlag = args_gurax.IsValid();
+	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	bool rtn = pEntity_gurax->StringToValue(variant, text, argFlags);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#IntToValue(variant as wx.Variant, number as Number, argFlags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, IntToValue_gurax, "IntToValue")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("variant", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("number", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IntToValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_variant = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& variant = value_variant.GetEntity();
+	int number = args_gurax.PickNumber<int>();
+	bool argFlags_validFlag = args_gurax.IsValid();
+	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	bool rtn = pEntity_gurax->IntToValue(variant, number, argFlags);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#ValueToString(value as wx.Variant, argFlags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, ValueToString_gurax, "ValueToString")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, ValueToString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& value = value_value.GetEntity();
+	bool argFlags_validFlag = args_gurax.IsValid();
+	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	wxString rtn = pEntity_gurax->ValueToString(value, argFlags);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#SetValueFromString(text as String, flags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, SetValueFromString_gurax, "SetValueFromString")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetValueFromString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* text = args_gurax.PickString();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	bool rtn = pEntity_gurax->SetValueFromString(text, flags);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#SetValueFromInt(value as Number, flags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, SetValueFromInt_gurax, "SetValueFromInt")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetValueFromInt_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	long value = args_gurax.PickNumber<long>();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	bool rtn = pEntity_gurax->SetValueFromInt(value, flags);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#OnMeasureImage(item? as Number) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, OnMeasureImage_gurax, "OnMeasureImage")
+{
+	Declare(VTYPE_wxSize, Flag::None);
+	DeclareArg("item", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, OnMeasureImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool item_validFlag = args_gurax.IsValid();
+	int item = item_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxSize(
+		pEntity_gurax->OnMeasureImage(item)));
+}
+
+// wx.PGProperty#OnEvent(propgrid as wx.PropertyGrid, wnd_primary as wx.Window, event as wx.Event)
+Gurax_DeclareMethodAlias(wxPGProperty, OnEvent_gurax, "OnEvent")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("propgrid", VTYPE_wxPropertyGrid, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("wnd_primary", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("event", VTYPE_wxEvent, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, OnEvent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPropertyGrid& value_propgrid = args_gurax.Pick<Value_wxPropertyGrid>();
+	wxPropertyGrid* propgrid = value_propgrid.GetEntityPtr();
+	Value_wxWindow& value_wnd_primary = args_gurax.Pick<Value_wxWindow>();
+	wxWindow* wnd_primary = value_wnd_primary.GetEntityPtr();
+	Value_wxEvent& value_event = args_gurax.Pick<Value_wxEvent>();
+	wxEvent& event = value_event.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->OnEvent(propgrid, wnd_primary, event);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#ChildChanged(thisValue as wx.Variant, childIndex as Number, childValue as wx.Variant) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, ChildChanged_gurax, "ChildChanged")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareArg("thisValue", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("childIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("childValue", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, ChildChanged_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_thisValue = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& thisValue = value_thisValue.GetEntity();
+	int childIndex = args_gurax.PickNumber<int>();
+	Value_wxVariant& value_childValue = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& childValue = value_childValue.GetEntity();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->ChildChanged(thisValue, childIndex, childValue)));
+}
+
+// wx.PGProperty#DoGetEditorClass() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, DoGetEditorClass_gurax, "DoGetEditorClass")
+{
+	Declare(VTYPE_wxPGEditor, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, DoGetEditorClass_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGEditor(
+		*pEntity_gurax->DoGetEditorClass()));
+}
+
+// wx.PGProperty#DoGetValidator() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, DoGetValidator_gurax, "DoGetValidator")
+{
+	Declare(VTYPE_wxValidator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, DoGetValidator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxValidator(
+		pEntity_gurax->DoGetValidator()));
+}
+
+// wx.PGProperty#OnCustomPaint(dc as wx.DC, rect as wx.Rect, paintdata as wx.PGPaintData)
+Gurax_DeclareMethodAlias(wxPGProperty, OnCustomPaint_gurax, "OnCustomPaint")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("paintdata", VTYPE_wxPGPaintData, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, OnCustomPaint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxDC& value_dc = args_gurax.Pick<Value_wxDC>();
+	wxDC& dc = value_dc.GetEntity();
+	Value_wxRect& value_rect = args_gurax.Pick<Value_wxRect>();
+	const wxRect& rect = value_rect.GetEntity();
+	Value_wxPGPaintData& value_paintdata = args_gurax.Pick<Value_wxPGPaintData>();
+	wxPGPaintData& paintdata = value_paintdata.GetEntity();
+	// Function body
+	pEntity_gurax->OnCustomPaint(dc, rect, paintdata);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#GetCellRenderer(column as Number) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetCellRenderer_gurax, "GetCellRenderer")
+{
+	Declare(VTYPE_wxPGCellRenderer, Flag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetCellRenderer_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int column = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGCellRenderer(
+		*pEntity_gurax->GetCellRenderer(column)));
+}
+
+// wx.PGProperty#GetChoiceSelection()
+Gurax_DeclareMethodAlias(wxPGProperty, GetChoiceSelection_gurax, "GetChoiceSelection")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetChoiceSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetChoiceSelection();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#RefreshChildren()
+Gurax_DeclareMethodAlias(wxPGProperty, RefreshChildren_gurax, "RefreshChildren")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, RefreshChildren_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->RefreshChildren();
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#DoSetAttribute(name as String, value as wx.Variant)
+Gurax_DeclareMethodAlias(wxPGProperty, DoSetAttribute_gurax, "DoSetAttribute")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, DoSetAttribute_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& value = value_value.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->DoSetAttribute(name, value);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#DoGetAttribute(name as String) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, DoGetAttribute_gurax, "DoGetAttribute")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, DoGetAttribute_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->DoGetAttribute(name)));
+}
+
+// wx.PGProperty#GetEditorDialog() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetEditorDialog_gurax, "GetEditorDialog")
+{
+	Declare(VTYPE_wxPGEditorDialogAdapter, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetEditorDialog_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGEditorDialogAdapter(
+		*pEntity_gurax->GetEditorDialog()));
+}
+
+// wx.PGProperty#OnValidationFailure(pendingValue as wx.Variant)
+Gurax_DeclareMethodAlias(wxPGProperty, OnValidationFailure_gurax, "OnValidationFailure")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("pendingValue", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, OnValidationFailure_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_pendingValue = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& pendingValue = value_pendingValue.GetEntity();
+	// Function body
+	pEntity_gurax->OnValidationFailure(pendingValue);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#AddChoice(label as String, value? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, AddChoice_gurax, "AddChoice")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, AddChoice_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* label = args_gurax.PickString();
+	bool value_validFlag = args_gurax.IsValid();
+	int value = value_validFlag? args_gurax.PickNumber<int>() : wxPG_INVALID_VALUE;
+	// Function body
+	int rtn = pEntity_gurax->AddChoice(label, value);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#AddChild(prop as wx.PGProperty)
+Gurax_DeclareMethodAlias(wxPGProperty, AddChild_gurax, "AddChild")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("prop", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, AddChild_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGProperty& value_prop = args_gurax.Pick<Value_wxPGProperty>();
+	wxPGProperty* prop = value_prop.GetEntityPtr();
+	// Function body
+	pEntity_gurax->AddChild(prop);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#AddPrivateChild(prop as wx.PGProperty)
+Gurax_DeclareMethodAlias(wxPGProperty, AddPrivateChild_gurax, "AddPrivateChild")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("prop", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, AddPrivateChild_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGProperty& value_prop = args_gurax.Pick<Value_wxPGProperty>();
+	wxPGProperty* prop = value_prop.GetEntityPtr();
+	// Function body
+	pEntity_gurax->AddPrivateChild(prop);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#AdaptListToValue(list as wx.Variant, value as wx.Variant)
+Gurax_DeclareMethodAlias(wxPGProperty, AdaptListToValue_gurax, "AdaptListToValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("list", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, AdaptListToValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_list = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& list = value_list.GetEntity();
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	wxVariant* value = value_value.GetEntityPtr();
+	// Function body
+	pEntity_gurax->AdaptListToValue(list, value);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#AppendChild(childProperty as wx.PGProperty) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, AppendChild_gurax, "AppendChild")
+{
+	Declare(VTYPE_wxPGProperty, Flag::None);
+	DeclareArg("childProperty", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, AppendChild_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGProperty& value_childProperty = args_gurax.Pick<Value_wxPGProperty>();
+	wxPGProperty* childProperty = value_childProperty.GetEntityPtr();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
+		*pEntity_gurax->AppendChild(childProperty)));
+}
+
+// wx.PGProperty#AreAllChildrenSpecified(pendingList? as wx.Variant)
+Gurax_DeclareMethodAlias(wxPGProperty, AreAllChildrenSpecified_gurax, "AreAllChildrenSpecified")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pendingList", VTYPE_wxVariant, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, AreAllChildrenSpecified_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	wxVariant* pendingList = args_gurax.IsValid()? args_gurax.Pick<Value_wxVariant>().GetEntityPtr() : nullptr;
+	// Function body
+	bool rtn = pEntity_gurax->AreAllChildrenSpecified(pendingList);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#AreChildrenComponents()
+Gurax_DeclareMethodAlias(wxPGProperty, AreChildrenComponents_gurax, "AreChildrenComponents")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, AreChildrenComponents_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->AreChildrenComponents();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#ChangeFlag(flag as wx.PGPropertyFlags, set as Bool)
+Gurax_DeclareMethodAlias(wxPGProperty, ChangeFlag_gurax, "ChangeFlag")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flag", VTYPE_wxPGPropertyFlags, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("set", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, ChangeFlag_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGPropertyFlags& value_flag = args_gurax.Pick<Value_wxPGPropertyFlags>();
+	const wxPGPropertyFlags& flag = value_flag.GetEntity();
+	bool set = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->ChangeFlag(flag, set);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#DeleteChildren()
+Gurax_DeclareMethodAlias(wxPGProperty, DeleteChildren_gurax, "DeleteChildren")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, DeleteChildren_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->DeleteChildren();
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#DeleteChoice(index as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, DeleteChoice_gurax, "DeleteChoice")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, DeleteChoice_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->DeleteChoice(index);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#Enable(enable? as Bool)
+Gurax_DeclareMethodAlias(wxPGProperty, Enable_gurax, "Enable")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, Enable_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool enable = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->Enable(enable);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#EnableCommonValue(enable? as Bool)
+Gurax_DeclareMethodAlias(wxPGProperty, EnableCommonValue_gurax, "EnableCommonValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, EnableCommonValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool enable = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->EnableCommonValue(enable);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#GenerateComposedValue()
+Gurax_DeclareMethodAlias(wxPGProperty, GenerateComposedValue_gurax, "GenerateComposedValue")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GenerateComposedValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GenerateComposedValue();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetAttribute(name as String) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetAttribute_gurax, "GetAttribute")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetAttribute_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->GetAttribute(name)));
+}
+
+// wx.PGProperty#GetAttribute(name as String, defVal as String)
+Gurax_DeclareMethodAlias(wxPGProperty, GetAttribute_gurax, "GetAttribute")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("defVal", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetAttribute_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	const char* defVal = args_gurax.PickString();
+	// Function body
+	wxString rtn = pEntity_gurax->GetAttribute(name, defVal);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetAttributeAsLong(name as String, defVal as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, GetAttributeAsLong_gurax, "GetAttributeAsLong")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("defVal", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetAttributeAsLong_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	long defVal = args_gurax.PickNumber<long>();
+	// Function body
+	long rtn = pEntity_gurax->GetAttributeAsLong(name, defVal);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#GetAttributeAsDouble(name as String, defVal as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, GetAttributeAsDouble_gurax, "GetAttributeAsDouble")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("defVal", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetAttributeAsDouble_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	double defVal = args_gurax.PickNumber<double>();
+	// Function body
+	double rtn = pEntity_gurax->GetAttributeAsDouble(name, defVal);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#GetAttributesAsList() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetAttributesAsList_gurax, "GetAttributesAsList")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetAttributesAsList_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->GetAttributesAsList()));
+}
+
+// wx.PGProperty#GetAttributes() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetAttributes_gurax, "GetAttributes")
+{
+	Declare(VTYPE_wxPGAttributeStorage, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetAttributes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGAttributeStorage(
+		pEntity_gurax->GetAttributes()));
+}
+
+// wx.PGProperty#GetColumnEditor(column as Number) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetColumnEditor_gurax, "GetColumnEditor")
+{
+	Declare(VTYPE_wxPGEditor, Flag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetColumnEditor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int column = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGEditor(
+		*pEntity_gurax->GetColumnEditor(column)));
+}
+
+// wx.PGProperty#GetBaseName()
+Gurax_DeclareMethodAlias(wxPGProperty, GetBaseName_gurax, "GetBaseName")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetBaseName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetBaseName();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetCell(column as Number) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetCell_gurax, "GetCell")
+{
+	Declare(VTYPE_wxPGCell, Flag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetCell_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int column = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGCell(
+		pEntity_gurax->GetCell(column)));
+}
+
+// wx.PGProperty#GetCell(column as Number) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetCell_gurax, "GetCell")
+{
+	Declare(VTYPE_wxPGCell, Flag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetCell_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int column = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGCell(
+		pEntity_gurax->GetCell(column)));
+}
+
+// wx.PGProperty#GetOrCreateCell(column as Number) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetOrCreateCell_gurax, "GetOrCreateCell")
+{
+	Declare(VTYPE_wxPGCell, Flag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetOrCreateCell_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int column = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGCell(
+		pEntity_gurax->GetOrCreateCell(column)));
+}
+
+// wx.PGProperty#GetChildCount()
+Gurax_DeclareMethodAlias(wxPGProperty, GetChildCount_gurax, "GetChildCount")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetChildCount_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned int rtn = pEntity_gurax->GetChildCount();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#GetChildrenHeight(lh as Number, iMax? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, GetChildrenHeight_gurax, "GetChildrenHeight")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("lh", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetChildrenHeight_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int lh = args_gurax.PickNumber<int>();
+	bool iMax_validFlag = args_gurax.IsValid();
+	int iMax = iMax_validFlag? args_gurax.PickNumber<int>() : -1;
+	// Function body
+	int rtn = pEntity_gurax->GetChildrenHeight(lh, iMax);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#GetChoices() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetChoices_gurax, "GetChoices")
+{
+	Declare(VTYPE_wxPGChoices, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetChoices_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGChoices(
+		pEntity_gurax->GetChoices()));
+}
+
+// wx.PGProperty#GetDefaultValue() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetDefaultValue_gurax, "GetDefaultValue")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetDefaultValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->GetDefaultValue()));
+}
+
+// wx.PGProperty#GetDisplayedString()
+Gurax_DeclareMethodAlias(wxPGProperty, GetDisplayedString_gurax, "GetDisplayedString")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetDisplayedString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetDisplayedString();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetEditorClass() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetEditorClass_gurax, "GetEditorClass")
+{
+	Declare(VTYPE_wxPGEditor, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetEditorClass_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGEditor(
+		*pEntity_gurax->GetEditorClass()));
+}
+
+// wx.PGProperty#GetGrid() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetGrid_gurax, "GetGrid")
+{
+	Declare(VTYPE_wxPropertyGrid, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetGrid_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGrid(
+		pEntity_gurax->GetGrid()));
+}
+
+// wx.PGProperty#GetGridIfDisplayed() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetGridIfDisplayed_gurax, "GetGridIfDisplayed")
+{
+	Declare(VTYPE_wxPropertyGrid, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetGridIfDisplayed_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPropertyGrid(
+		pEntity_gurax->GetGridIfDisplayed()));
+}
+
+// wx.PGProperty#GetHelpString()
+Gurax_DeclareMethodAlias(wxPGProperty, GetHelpString_gurax, "GetHelpString")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetHelpString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetHelpString();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetIndexInParent()
+Gurax_DeclareMethodAlias(wxPGProperty, GetIndexInParent_gurax, "GetIndexInParent")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetIndexInParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	unsigned int rtn = pEntity_gurax->GetIndexInParent();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#GetLabel()
+Gurax_DeclareMethodAlias(wxPGProperty, GetLabel_gurax, "GetLabel")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetLabel();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetLastVisibleSubItem() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetLastVisibleSubItem_gurax, "GetLastVisibleSubItem")
+{
+	Declare(VTYPE_wxPGProperty, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetLastVisibleSubItem_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
+		*pEntity_gurax->GetLastVisibleSubItem()));
+}
+
+// wx.PGProperty#GetMainParent() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetMainParent_gurax, "GetMainParent")
+{
+	Declare(VTYPE_wxPGProperty, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetMainParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
+		*pEntity_gurax->GetMainParent()));
+}
+
+// wx.PGProperty#GetMaxLength()
+Gurax_DeclareMethodAlias(wxPGProperty, GetMaxLength_gurax, "GetMaxLength")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetMaxLength_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetMaxLength();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#GetName()
+Gurax_DeclareMethodAlias(wxPGProperty, GetName_gurax, "GetName")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetName();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetParent() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetParent_gurax, "GetParent")
+{
+	Declare(VTYPE_wxPGProperty, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
+		*pEntity_gurax->GetParent()));
+}
+
+// wx.PGProperty#GetPropertyByName(name as String) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetPropertyByName_gurax, "GetPropertyByName")
+{
+	Declare(VTYPE_wxPGProperty, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetPropertyByName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
+		*pEntity_gurax->GetPropertyByName(name)));
+}
+
+// wx.PGProperty#GetValidator() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetValidator_gurax, "GetValidator")
+{
+	Declare(VTYPE_wxValidator, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetValidator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxValidator(
+		pEntity_gurax->GetValidator()));
+}
+
+// wx.PGProperty#GetValue() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetValue_gurax, "GetValue")
+{
+	Declare(VTYPE_wxVariant, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxVariant(
+		pEntity_gurax->GetValue()));
+}
+
+// wx.PGProperty#GetValueImage() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, GetValueImage_gurax, "GetValueImage")
+{
+	Declare(VTYPE_wxBitmap, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetValueImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxBitmap(
+		*pEntity_gurax->GetValueImage()));
+}
+
+// wx.PGProperty#GetValueAsString(argFlags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, GetValueAsString_gurax, "GetValueAsString")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetValueAsString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool argFlags_validFlag = args_gurax.IsValid();
+	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	wxString rtn = pEntity_gurax->GetValueAsString(argFlags);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetValueString(argFlags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, GetValueString_gurax, "GetValueString")
+{
+	Declare(VTYPE_String, Flag::None);
+	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetValueString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool argFlags_validFlag = args_gurax.IsValid();
+	int argFlags = argFlags_validFlag? args_gurax.PickNumber<int>() : 0;
+	// Function body
+	wxString rtn = pEntity_gurax->GetValueString(argFlags);
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetValueType()
+Gurax_DeclareMethodAlias(wxPGProperty, GetValueType_gurax, "GetValueType")
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetValueType_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxString rtn = pEntity_gurax->GetValueType();
+	return new Gurax::Value_String(static_cast<const char*>(rtn.c_str()));
+}
+
+// wx.PGProperty#GetY()
+Gurax_DeclareMethodAlias(wxPGProperty, GetY_gurax, "GetY")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, GetY_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetY();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#HasVisibleChildren()
+Gurax_DeclareMethodAlias(wxPGProperty, HasVisibleChildren_gurax, "HasVisibleChildren")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, HasVisibleChildren_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->HasVisibleChildren();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#Hide(hide as Bool, flags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, Hide_gurax, "Hide")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("hide", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, Hide_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool hide = args_gurax.PickBool();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxPG_RECURSE;
+	// Function body
+	bool rtn = pEntity_gurax->Hide(hide, flags);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#Index(p as wx.PGProperty)
+Gurax_DeclareMethodAlias(wxPGProperty, Index_gurax, "Index")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("p", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, Index_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGProperty& value_p = args_gurax.Pick<Value_wxPGProperty>();
+	const wxPGProperty* p = value_p.GetEntityPtr();
+	// Function body
+	int rtn = pEntity_gurax->Index(p);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#InsertChild(index as Number, childProperty as wx.PGProperty) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, InsertChild_gurax, "InsertChild")
+{
+	Declare(VTYPE_wxPGProperty, Flag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("childProperty", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, InsertChild_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int index = args_gurax.PickNumber<int>();
+	Value_wxPGProperty& value_childProperty = args_gurax.Pick<Value_wxPGProperty>();
+	wxPGProperty* childProperty = value_childProperty.GetEntityPtr();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
+		*pEntity_gurax->InsertChild(index, childProperty)));
+}
+
+// wx.PGProperty#InsertChoice(label as String, index as Number, value? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, InsertChoice_gurax, "InsertChoice")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, InsertChoice_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* label = args_gurax.PickString();
+	int index = args_gurax.PickNumber<int>();
+	bool value_validFlag = args_gurax.IsValid();
+	int value = value_validFlag? args_gurax.PickNumber<int>() : wxPG_INVALID_VALUE;
+	// Function body
+	int rtn = pEntity_gurax->InsertChoice(label, index, value);
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.PGProperty#IsCategory()
+Gurax_DeclareMethodAlias(wxPGProperty, IsCategory_gurax, "IsCategory")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IsCategory_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsCategory();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#IsEnabled()
+Gurax_DeclareMethodAlias(wxPGProperty, IsEnabled_gurax, "IsEnabled")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IsEnabled_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsEnabled();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#IsExpanded()
+Gurax_DeclareMethodAlias(wxPGProperty, IsExpanded_gurax, "IsExpanded")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IsExpanded_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsExpanded();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#IsRoot()
+Gurax_DeclareMethodAlias(wxPGProperty, IsRoot_gurax, "IsRoot")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IsRoot_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsRoot();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#IsSubProperty()
+Gurax_DeclareMethodAlias(wxPGProperty, IsSubProperty_gurax, "IsSubProperty")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IsSubProperty_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsSubProperty();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#IsSomeParent(candidateParent as wx.PGProperty)
+Gurax_DeclareMethodAlias(wxPGProperty, IsSomeParent_gurax, "IsSomeParent")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("candidateParent", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IsSomeParent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGProperty& value_candidateParent = args_gurax.Pick<Value_wxPGProperty>();
+	wxPGProperty* candidateParent = value_candidateParent.GetEntityPtr();
+	// Function body
+	bool rtn = pEntity_gurax->IsSomeParent(candidateParent);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#IsTextEditable()
+Gurax_DeclareMethodAlias(wxPGProperty, IsTextEditable_gurax, "IsTextEditable")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IsTextEditable_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsTextEditable();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#IsValueUnspecified()
+Gurax_DeclareMethodAlias(wxPGProperty, IsValueUnspecified_gurax, "IsValueUnspecified")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IsValueUnspecified_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsValueUnspecified();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#IsVisible()
+Gurax_DeclareMethodAlias(wxPGProperty, IsVisible_gurax, "IsVisible")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, IsVisible_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsVisible();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#Item(i as Number) {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, Item_gurax, "Item")
+{
+	Declare(VTYPE_wxPGProperty, Flag::None);
+	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, Item_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	unsigned int i = args_gurax.PickNumber<unsigned int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
+		*pEntity_gurax->Item(i)));
+}
+
+// wx.PGProperty#RefreshEditor()
+Gurax_DeclareMethodAlias(wxPGProperty, RefreshEditor_gurax, "RefreshEditor")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, RefreshEditor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->RefreshEditor();
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetAttribute(name as String, value as wx.Variant)
+Gurax_DeclareMethodAlias(wxPGProperty, SetAttribute_gurax, "SetAttribute")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetAttribute_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* name = args_gurax.PickString();
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	const wxVariant& value = value_value.GetEntity();
+	// Function body
+	pEntity_gurax->SetAttribute(name, value);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetAttributes(attributes as wx.PGAttributeStorage)
+Gurax_DeclareMethodAlias(wxPGProperty, SetAttributes_gurax, "SetAttributes")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("attributes", VTYPE_wxPGAttributeStorage, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetAttributes_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGAttributeStorage& value_attributes = args_gurax.Pick<Value_wxPGAttributeStorage>();
+	const wxPGAttributeStorage& attributes = value_attributes.GetEntity();
+	// Function body
+	pEntity_gurax->SetAttributes(attributes);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetAutoUnspecified(enable? as Bool)
+Gurax_DeclareMethodAlias(wxPGProperty, SetAutoUnspecified_gurax, "SetAutoUnspecified")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetAutoUnspecified_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool enable = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetAutoUnspecified(enable);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetBackgroundColour(colour as wx.Colour, flags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, SetBackgroundColour_gurax, "SetBackgroundColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetBackgroundColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxPG_RECURSE;
+	// Function body
+	pEntity_gurax->SetBackgroundColour(colour, flags);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetEditor(editor as wx.PGEditor)
+Gurax_DeclareMethodAlias(wxPGProperty, SetEditor_gurax, "SetEditor")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("editor", VTYPE_wxPGEditor, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetEditor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGEditor& value_editor = args_gurax.Pick<Value_wxPGEditor>();
+	const wxPGEditor* editor = value_editor.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetEditor(editor);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetEditor(editorName as String)
+Gurax_DeclareMethodAlias(wxPGProperty, SetEditor_gurax, "SetEditor")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("editorName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetEditor_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* editorName = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetEditor(editorName);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetCell(column as Number, cell as wx.PGCell)
+Gurax_DeclareMethodAlias(wxPGProperty, SetCell_gurax, "SetCell")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("cell", VTYPE_wxPGCell, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetCell_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int column = args_gurax.PickNumber<int>();
+	Value_wxPGCell& value_cell = args_gurax.Pick<Value_wxPGCell>();
+	const wxPGCell& cell = value_cell.GetEntity();
+	// Function body
+	pEntity_gurax->SetCell(column, cell);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetChoices(choices as wx.PGChoices)
+Gurax_DeclareMethodAlias(wxPGProperty, SetChoices_gurax, "SetChoices")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("choices", VTYPE_wxPGChoices, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetChoices_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGChoices& value_choices = args_gurax.Pick<Value_wxPGChoices>();
+	wxPGChoices& choices = value_choices.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetChoices(choices);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#SetChoiceSelection(newValue as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, SetChoiceSelection_gurax, "SetChoiceSelection")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("newValue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetChoiceSelection_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int newValue = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetChoiceSelection(newValue);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetDefaultValue(value as wx.Variant)
+Gurax_DeclareMethodAlias(wxPGProperty, SetDefaultValue_gurax, "SetDefaultValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetDefaultValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	wxVariant& value = value_value.GetEntity();
+	// Function body
+	pEntity_gurax->SetDefaultValue(value);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetFlagRecursively(flag as wx.PGPropertyFlags, set as Bool)
+Gurax_DeclareMethodAlias(wxPGProperty, SetFlagRecursively_gurax, "SetFlagRecursively")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flag", VTYPE_wxPGPropertyFlags, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("set", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetFlagRecursively_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPGPropertyFlags& value_flag = args_gurax.Pick<Value_wxPGPropertyFlags>();
+	const wxPGPropertyFlags& flag = value_flag.GetEntity();
+	bool set = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetFlagRecursively(flag, set);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetHelpString(helpString as String)
+Gurax_DeclareMethodAlias(wxPGProperty, SetHelpString_gurax, "SetHelpString")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("helpString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetHelpString_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* helpString = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetHelpString(helpString);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetLabel(label as String)
+Gurax_DeclareMethodAlias(wxPGProperty, SetLabel_gurax, "SetLabel")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetLabel_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* label = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetLabel(label);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetMaxLength(maxLen as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, SetMaxLength_gurax, "SetMaxLength")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("maxLen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetMaxLength_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int maxLen = args_gurax.PickNumber<int>();
+	// Function body
+	bool rtn = pEntity_gurax->SetMaxLength(maxLen);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#SetModifiedStatus(modified as Bool)
+Gurax_DeclareMethodAlias(wxPGProperty, SetModifiedStatus_gurax, "SetModifiedStatus")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("modified", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetModifiedStatus_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool modified = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->SetModifiedStatus(modified);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetName(newName as String)
+Gurax_DeclareMethodAlias(wxPGProperty, SetName_gurax, "SetName")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("newName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetName_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	const char* newName = args_gurax.PickString();
+	// Function body
+	pEntity_gurax->SetName(newName);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetParentalType(flag as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, SetParentalType_gurax, "SetParentalType")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetParentalType_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int flag = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetParentalType(flag);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetTextColour(colour as wx.Colour, flags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, SetTextColour_gurax, "SetTextColour")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetTextColour_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxColour& value_colour = args_gurax.Pick<Value_wxColour>();
+	const wxColour& colour = value_colour.GetEntity();
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxPG_RECURSE;
+	// Function body
+	pEntity_gurax->SetTextColour(colour, flags);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetValidator(validator as wx.Validator)
+Gurax_DeclareMethodAlias(wxPGProperty, SetValidator_gurax, "SetValidator")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetValidator_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxValidator& value_validator = args_gurax.Pick<Value_wxValidator>();
+	const wxValidator& validator = value_validator.GetEntity();
+	// Function body
+	pEntity_gurax->SetValidator(validator);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetValue(value as wx.Variant, pList? as wx.Variant, flags? as Number)
+Gurax_DeclareMethodAlias(wxPGProperty, SetValue_gurax, "SetValue")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pList", VTYPE_wxVariant, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetValue_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	const wxVariant& value = value_value.GetEntity();
+	wxVariant* pList = args_gurax.IsValid()? args_gurax.Pick<Value_wxVariant>().GetEntityPtr() : nullptr;
+	bool flags_validFlag = args_gurax.IsValid();
+	int flags = flags_validFlag? args_gurax.PickNumber<int>() : wxPG_SETVAL_REFRESH_EDITOR;
+	// Function body
+	pEntity_gurax->SetValue(value, pList, flags);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetValueImage(bmp as wx.Bitmap)
+Gurax_DeclareMethodAlias(wxPGProperty, SetValueImage_gurax, "SetValueImage")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetValueImage_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxBitmap& value_bmp = args_gurax.Pick<Value_wxBitmap>();
+	wxBitmap& bmp = value_bmp.GetEntity();
+	// Function body
+	pEntity_gurax->SetValueImage(bmp);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetValueInEvent(value as wx.Variant)
+Gurax_DeclareMethodAlias(wxPGProperty, SetValueInEvent_gurax, "SetValueInEvent")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetValueInEvent_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	const wxVariant& value = value_value.GetEntity();
+	// Function body
+	pEntity_gurax->SetValueInEvent(value);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetValueToUnspecified()
+Gurax_DeclareMethodAlias(wxPGProperty, SetValueToUnspecified_gurax, "SetValueToUnspecified")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetValueToUnspecified_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->SetValueToUnspecified();
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#SetWasModified(set? as Bool)
+Gurax_DeclareMethodAlias(wxPGProperty, SetWasModified_gurax, "SetWasModified")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("set", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetWasModified_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool set = args_gurax.IsValid()? args_gurax.PickBool() : true;
+	// Function body
+	pEntity_gurax->SetWasModified(set);
+	return Gurax::Value::nil();
+}
+
+// wx.PGProperty#UpdateParentValues() {block?}
+Gurax_DeclareMethodAlias(wxPGProperty, UpdateParentValues_gurax, "UpdateParentValues")
+{
+	Declare(VTYPE_wxPGProperty, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, UpdateParentValues_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxPGProperty(
+		*pEntity_gurax->UpdateParentValues()));
+}
+
+// wx.PGProperty#UsesAutoUnspecified()
+Gurax_DeclareMethodAlias(wxPGProperty, UsesAutoUnspecified_gurax, "UsesAutoUnspecified")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, UsesAutoUnspecified_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->UsesAutoUnspecified();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.PGProperty#SetValuePlain(value as wx.Variant)
+Gurax_DeclareMethodAlias(wxPGProperty, SetValuePlain_gurax, "SetValuePlain")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxPGProperty, SetValuePlain_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxVariant& value_value = args_gurax.Pick<Value_wxVariant>();
+	const wxVariant& value = value_value.GetEntity();
+	// Function body
+	pEntity_gurax->SetValuePlain(value);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +2702,118 @@ void VType_wxPGProperty::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxPGProperty, OnSetValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, DoGetValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, ValidateValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, StringToValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IntToValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, ValueToString_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetValueFromString_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetValueFromInt_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, OnMeasureImage_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, OnEvent_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, ChildChanged_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, DoGetEditorClass_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, DoGetValidator_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, OnCustomPaint_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetCellRenderer_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetChoiceSelection_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, RefreshChildren_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, DoSetAttribute_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, DoGetAttribute_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetEditorDialog_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, OnValidationFailure_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, AddChoice_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, AddChild_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, AddPrivateChild_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, AdaptListToValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, AppendChild_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, AreAllChildrenSpecified_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, AreChildrenComponents_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, ChangeFlag_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, DeleteChildren_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, DeleteChoice_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, Enable_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, EnableCommonValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GenerateComposedValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetAttribute_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetAttribute_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetAttributeAsLong_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetAttributeAsDouble_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetAttributesAsList_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetAttributes_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetColumnEditor_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetBaseName_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetCell_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetCell_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetOrCreateCell_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetChildCount_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetChildrenHeight_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetChoices_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetDefaultValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetDisplayedString_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetEditorClass_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetGrid_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetGridIfDisplayed_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetHelpString_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetIndexInParent_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetLabel_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetLastVisibleSubItem_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetMainParent_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetMaxLength_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetName_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetParent_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetPropertyByName_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetValidator_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetValueImage_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetValueAsString_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetValueString_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetValueType_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, GetY_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, HasVisibleChildren_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, Hide_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, Index_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, InsertChild_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, InsertChoice_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IsCategory_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IsEnabled_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IsExpanded_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IsRoot_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IsSubProperty_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IsSomeParent_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IsTextEditable_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IsValueUnspecified_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, IsVisible_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, Item_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, RefreshEditor_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetAttribute_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetAttributes_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetAutoUnspecified_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetBackgroundColour_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetEditor_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetEditor_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetCell_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetChoices_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetChoiceSelection_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetDefaultValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetFlagRecursively_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetHelpString_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetLabel_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetMaxLength_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetModifiedStatus_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetName_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetParentalType_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetTextColour_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetValidator_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetValue_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetValueImage_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetValueInEvent_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetValueToUnspecified_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetWasModified_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, UpdateParentValues_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, UsesAutoUnspecified_gurax));
+	Assign(Gurax_CreateMethod(wxPGProperty, SetValuePlain_gurax));
 }
 
 //------------------------------------------------------------------------------

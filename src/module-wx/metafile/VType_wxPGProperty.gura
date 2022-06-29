@@ -3,4 +3,122 @@
 //==============================================================================
 PGProperty = Class {
 	@include['wx/propgrid/property.h']
+	OnSetValue() as void
+	DoGetValue() as Variant
+	ValidateValue(value as Variant_r, validationInfo as PGValidationInfo_r) as bool
+	StringToValue(variant as Variant_r, text as const_String_r, argFlags as int = 0) as bool
+	IntToValue(variant as Variant_r, number as int, argFlags as int = 0) as bool
+	ValueToString(value as Variant_r, argFlags as int = 0) as String
+	SetValueFromString(text as const_String_r, flags as int = 0) as bool
+	SetValueFromInt(value as long, flags as int = 0) as bool
+	OnMeasureImage(item as int = -1) as Size
+	OnEvent(propgrid as PropertyGrid_p, wnd_primary as Window_p, event as Event_r) as bool
+	ChildChanged(thisValue as Variant_r, childIndex as int, childValue as Variant_r) as Variant
+	DoGetEditorClass() as PGEditor_p
+	DoGetValidator() as Validator_p
+	OnCustomPaint(dc as DC_r, rect as const_Rect_r, paintdata as PGPaintData_r) as void
+	GetCellRenderer(column as int) as PGCellRenderer_p
+	GetChoiceSelection() as int
+	RefreshChildren() as void
+	DoSetAttribute(name as const_String_r, value as Variant_r) as bool
+	DoGetAttribute(name as const_String_r) as Variant
+	GetEditorDialog() as PGEditorDialogAdapter_p
+	OnValidationFailure(pendingValue as Variant_r) as void
+	AddChoice(label as const_String_r, value as int = wxPG_INVALID_VALUE) as int
+	AddChild(prop as PGProperty_p) as void
+	AddPrivateChild(prop as PGProperty_p) as void
+	AdaptListToValue(list as Variant_r, value as Variant_p) as void
+	AppendChild(childProperty as PGProperty_p) as PGProperty_p
+	AreAllChildrenSpecified(pendingList as Variant_p = NULL) as bool
+	AreChildrenComponents() as bool
+	ChangeFlag(flag as PGPropertyFlags, set as bool) as void
+	DeleteChildren() as void
+	DeleteChoice(index as int) as void
+	Enable(enable as bool = true) as void
+	EnableCommonValue(enable as bool = true) as void
+	GenerateComposedValue() as String
+	GetAttribute(name as const_String_r) as Variant
+	GetAttribute(name as const_String_r, defVal as const_String_r) as String
+	GetAttributeAsLong(name as const_String_r, defVal as long) as long
+	GetAttributeAsDouble(name as const_String_r, defVal as double) as double
+	GetAttributesAsList() as Variant
+	GetAttributes() as PGAttributeStorage
+	GetColumnEditor(column as int) as PGEditor_p
+	GetBaseName() as String
+	GetCell(column as unsigned_int) as PGCell
+	GetCell(column as unsigned_int) as PGCell
+	GetOrCreateCell(column as unsigned_int) as PGCell
+	GetChildCount() as unsigned_int
+	GetChildrenHeight(lh as int, iMax as int = -1) as int
+	GetChoices() as PGChoices
+	//GetClientData() as void_p
+	//GetClientObject() as ClientData_p
+	GetDefaultValue() as Variant
+	GetDisplayedString() as String
+	GetEditorClass() as PGEditor_p
+	//GetFlags() as FlagType
+	GetGrid() as PropertyGrid_p
+	GetGridIfDisplayed() as PropertyGrid_p
+	GetHelpString() as String
+	GetIndexInParent() as unsigned_int
+	GetLabel() as String
+	GetLastVisibleSubItem() as PGProperty_p
+	GetMainParent() as PGProperty_p
+	GetMaxLength() as int
+	GetName() as String
+	GetParent() as PGProperty_p
+	GetPropertyByName(name as const_String_r) as PGProperty_p
+	GetValidator() as Validator_p
+	GetValue() as Variant
+	GetValueImage() as Bitmap_p
+	GetValueAsString(argFlags as int = 0) as String
+	GetValueString(argFlags as int = 0) as String
+	GetValueType() as String
+	GetY() as int
+	//HasFlag(flag as PGPropertyFlags) as FlagType
+	HasVisibleChildren() as bool
+	Hide(hide as bool, flags as int = wxPG_RECURSE) as bool
+	Index(p as const_PGProperty_p) as int
+	InsertChild(index as int, childProperty as PGProperty_p) as PGProperty_p
+	InsertChoice(label as const_String_r, index as int, value as int = wxPG_INVALID_VALUE) as int
+	IsCategory() as bool
+	IsEnabled() as bool
+	IsExpanded() as bool
+	IsRoot() as bool
+	IsSubProperty() as bool
+	IsSomeParent(candidateParent as PGProperty_p) as bool
+	IsTextEditable() as bool
+	IsValueUnspecified() as bool
+	IsVisible() as bool
+	Item(i as unsigned_int) as PGProperty_p
+	RefreshEditor() as void
+	SetAttribute(name as const_String_r, value as Variant) as void
+	SetAttributes(attributes as const_PGAttributeStorage_r) as void
+	SetAutoUnspecified(enable as bool = true) as void
+	SetBackgroundColour(colour as const_Colour_r, flags as int = wxPG_RECURSE) as void
+	SetEditor(editor as const_PGEditor_p) as void
+	SetEditor(editorName as const_String_r) as void
+	SetCell(column as int, cell as const_PGCell_r) as void
+	SetChoices(choices as PGChoices_r) as bool
+	//SetClientData(clientData as void_p) as void
+	//SetClientObject(clientObject as ClientData_p) as void
+	SetChoiceSelection(newValue as int) as void
+	SetDefaultValue(value as Variant_r) as void
+	SetFlagRecursively(flag as PGPropertyFlags, set as bool) as void
+	SetHelpString(helpString as const_String_r) as void
+	SetLabel(label as const_String_r) as void
+	SetMaxLength(maxLen as int) as bool
+	SetModifiedStatus(modified as bool) as void
+	SetName(newName as const_String_r) as void
+	SetParentalType(flag as int) as void
+	SetTextColour(colour as const_Colour_r, flags as int = wxPG_RECURSE) as void
+	SetValidator(validator as const_Validator_r) as void
+	SetValue(value as Variant, pList as Variant_p = NULL, flags as int = wxPG_SETVAL_REFRESH_EDITOR) as void
+	SetValueImage(bmp as Bitmap_r) as void
+	SetValueInEvent(value as Variant) as void
+	SetValueToUnspecified() as void
+	SetWasModified(set as bool = true) as void
+	UpdateParentValues() as PGProperty_p
+	UsesAutoUnspecified() as bool
+	SetValuePlain(value as Variant) as void
 }

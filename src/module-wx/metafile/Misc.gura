@@ -1,3 +1,39 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+PGValidationInfo = Class {
+	@include['wx/propgrid/propgrid.h']
+}
+
+PGEditor = Class {
+	@include['wx/propgrid/editors.h']
+}
+
+PGCellRenderer = Class {
+	@include['wx/propgrid/property.h']
+}
+
+PGEditorDialogAdapter = Class {
+	@include['wx/propgrid/editors.h']
+}
+
+PGChoiceInfo = Class {
+	@include['wx/propgrid/property.h']
+}
+
+PGPropertyFlags = Class {
+	@include['wx/propgrid/property.h']
+}
+
+PGAttributeStorage = Class {
+	@include['wx/propgrid/property.h']
+}
+
+PGCell = Class {
+	@include['wx/propgrid/property.h']
+}
+
+PGChoices = Class {
+	@include['wx/propgrid/property.h']
+}
+

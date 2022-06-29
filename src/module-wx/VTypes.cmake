@@ -4,6 +4,15 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxPGValidationInfo.cpp
+	VType_wxPGEditor.cpp
+	VType_wxPGCellRenderer.cpp
+	VType_wxPGEditorDialogAdapter.cpp
+	VType_wxPGChoiceInfo.cpp
+	VType_wxPGPropertyFlags.cpp
+	VType_wxPGAttributeStorage.cpp
+	VType_wxPGCell.cpp
+	VType_wxPGChoices.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorEntry.cpp
 	VType_wxAcceleratorTable.cpp
