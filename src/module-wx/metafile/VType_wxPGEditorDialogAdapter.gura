@@ -1,0 +1,6 @@
+//==============================================================================
+// VType_wxPGEditorDialogAdapter.gura
+//==============================================================================
+PGEditorDialogAdapter = Class():loosePointer {
+	@include['wx/propgrid/editors.h']
+}
