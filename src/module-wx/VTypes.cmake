@@ -291,8 +291,17 @@ set(SRCFILES_VTYPE
 	VType_wxPen.cpp
 	VType_wxPGArrayEditorDialog.cpp
 	VType_wxPGArrayStringEditorDialog.cpp
+	VType_wxPGAttributeStorage.cpp
+	VType_wxPGCell.cpp
+	VType_wxPGCellRenderer.cpp
+	VType_wxPGChoiceEditor.cpp
+	VType_wxPGChoices.cpp
+	VType_wxPGEditor.cpp
+	VType_wxPGEditorDialogAdapter.cpp
 	VType_wxPGPaintData.cpp
 	VType_wxPGProperty.cpp
+	VType_wxPGPropertyFlags.cpp
+	VType_wxPGValidationInfo.cpp
 	VType_wxPickerBase.cpp
 	VType_wxPNGHandler.cpp
 	VType_wxPoint.cpp

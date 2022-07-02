@@ -2,4 +2,28 @@
 // VType_wxDateSpan.gura
 //==============================================================================
 DateSpan = Class {
+	__init__(years as int = 0, months as int = 0, weeks as int = 0, days as int = 0)
+	Add(other as const_DateSpan_r) as DateSpan
+	GetDays() as int
+	GetMonths() as int
+	GetTotalMonths() as int
+	GetTotalDays() as int
+	GetWeeks() as int
+	GetYears() as int
+	Multiply(factor as int) as DateSpan
+	Neg() as DateSpan
+	Negate() as DateSpan
+	SetDays(n as int) as DateSpan
+	SetMonths(n as int) as DateSpan
+	SetWeeks(n as int) as DateSpan
+	SetYears(n as int) as DateSpan
+	Subtract(other as const_DateSpan_r) as DateSpan
+	Day():static as DateSpan
+	Days(days as int):static as DateSpan
+	Month():static as DateSpan
+	Months(mon as int):static as DateSpan
+	Week():static as DateSpan
+	Weeks(weeks as int):static as DateSpan
+	Year():static as DateSpan
+	Years(years as int):static as DateSpan
 }
