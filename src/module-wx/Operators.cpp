@@ -14,6 +14,14 @@ Gurax_ImplementOpUnary(Neg, wxPoint)
 	return new Value_wxPoint(elemResult);
 }
 
+Gurax_ImplementOpBinary(Add, wxDateSpan, wxDateSpan)
+{
+	const auto& elemL = Value_wxDateSpan::GetEntity(valueL);
+	const auto& elemR = Value_wxDateSpan::GetEntity(valueR);
+	auto elemResult = elemL + elemR;
+	return new Value_wxDateSpan(elemResult);
+}
+
 Gurax_ImplementOpBinary(Add, wxDateTime, wxDateSpan)
 {
 	const auto& elemL = Value_wxDateTime::GetEntity(valueL);
@@ -86,6 +94,14 @@ Gurax_ImplementOpBinary(Div, wxSize, Number)
 	return new Value_wxSize(elemResult);
 }
 
+Gurax_ImplementOpBinary(Eq, wxDateSpan, wxDateSpan)
+{
+	const auto& elemL = Value_wxDateSpan::GetEntity(valueL);
+	const auto& elemR = Value_wxDateSpan::GetEntity(valueR);
+	auto elemResult = elemL == elemR;
+	return new Gurax::Value_Bool(elemResult);
+}
+
 Gurax_ImplementOpBinary(Eq, wxPoint, wxPoint)
 {
 	const auto& elemL = Value_wxPoint::GetEntity(valueL);
@@ -116,6 +132,14 @@ Gurax_ImplementOpBinary(Eq, wxVideoMode, wxVideoMode)
 	const auto& elemR = Value_wxVideoMode::GetEntity(valueR);
 	auto elemResult = elemL == elemR;
 	return new Gurax::Value_Bool(elemResult);
+}
+
+Gurax_ImplementOpBinary(Mul, wxDateSpan, Number)
+{
+	const auto& elemL = Value_wxDateSpan::GetEntity(valueL);
+	const auto& elemR = Value_Number::GetNumber<int>(valueR);
+	auto elemResult = elemL * elemR;
+	return new Value_wxDateSpan(elemResult);
 }
 
 Gurax_ImplementOpBinary(Mul, wxPoint, Number)
@@ -150,6 +174,14 @@ Gurax_ImplementOpBinary(Mul, Number, wxSize)
 	return new Value_wxSize(elemResult);
 }
 
+Gurax_ImplementOpBinary(Ne, wxDateSpan, wxDateSpan)
+{
+	const auto& elemL = Value_wxDateSpan::GetEntity(valueL);
+	const auto& elemR = Value_wxDateSpan::GetEntity(valueR);
+	auto elemResult = elemL != elemR;
+	return new Gurax::Value_Bool(elemResult);
+}
+
 Gurax_ImplementOpBinary(Ne, wxPoint, wxPoint)
 {
 	const auto& elemL = Value_wxPoint::GetEntity(valueL);
@@ -180,6 +212,14 @@ Gurax_ImplementOpBinary(Ne, wxVideoMode, wxVideoMode)
 	const auto& elemR = Value_wxVideoMode::GetEntity(valueR);
 	auto elemResult = elemL != elemR;
 	return new Gurax::Value_Bool(elemResult);
+}
+
+Gurax_ImplementOpBinary(Sub, wxDateSpan, wxDateSpan)
+{
+	const auto& elemL = Value_wxDateSpan::GetEntity(valueL);
+	const auto& elemR = Value_wxDateSpan::GetEntity(valueR);
+	auto elemResult = elemL - elemR;
+	return new Value_wxDateSpan(elemResult);
 }
 
 Gurax_ImplementOpBinary(Sub, wxDateTime, wxDateSpan)
@@ -244,6 +284,7 @@ Gurax_ImplementOpBinary(Sub, wxSize, wxSize)
 void AssignOperators(Frame& frame)
 {
 	Gurax_AssignOpUnary(Neg, wxPoint);
+	Gurax_AssignOpBinary(Add, wxDateSpan, wxDateSpan);
 	Gurax_AssignOpBinary(Add, wxDateTime, wxDateSpan);
 	Gurax_AssignOpBinary(Add, wxDateTime, wxTimeSpan);
 	Gurax_AssignOpBinary(Add, wxPoint, wxPoint);
@@ -253,18 +294,22 @@ void AssignOperators(Frame& frame)
 	Gurax_AssignOpBinary(Add, wxSize, wxSize);
 	Gurax_AssignOpBinary(Div, wxPoint, Number);
 	Gurax_AssignOpBinary(Div, wxSize, Number);
+	Gurax_AssignOpBinary(Eq, wxDateSpan, wxDateSpan);
 	Gurax_AssignOpBinary(Eq, wxPoint, wxPoint);
 	Gurax_AssignOpBinary(Eq, wxRect, wxRect);
 	Gurax_AssignOpBinary(Eq, wxSize, wxSize);
 	Gurax_AssignOpBinary(Eq, wxVideoMode, wxVideoMode);
+	Gurax_AssignOpBinary(Mul, wxDateSpan, Number);
 	Gurax_AssignOpBinary(Mul, wxPoint, Number);
 	Gurax_AssignOpBinary(Mul, wxRect, wxRect);
 	Gurax_AssignOpBinary(Mul, wxSize, Number);
 	Gurax_AssignOpBinary(Mul, Number, wxSize);
+	Gurax_AssignOpBinary(Ne, wxDateSpan, wxDateSpan);
 	Gurax_AssignOpBinary(Ne, wxPoint, wxPoint);
 	Gurax_AssignOpBinary(Ne, wxRect, wxRect);
 	Gurax_AssignOpBinary(Ne, wxSize, wxSize);
 	Gurax_AssignOpBinary(Ne, wxVideoMode, wxVideoMode);
+	Gurax_AssignOpBinary(Sub, wxDateSpan, wxDateSpan);
 	Gurax_AssignOpBinary(Sub, wxDateTime, wxDateSpan);
 	Gurax_AssignOpBinary(Sub, wxDateTime, wxTimeSpan);
 	Gurax_AssignOpBinary(Sub, wxDateTime, wxDateTime);

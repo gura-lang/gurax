@@ -27,3 +27,10 @@ DateSpan = Class {
 	Year():static as DateSpan
 	Years(years as int):static as DateSpan
 }
+
+//(-const_DateSpan_r) as DateSpan
+(const_DateSpan_r + const_DateSpan_r) as DateSpan
+(const_DateSpan_r - const_DateSpan_r) as DateSpan
+(const_DateSpan_r * int) as DateSpan
+(const_DateSpan_r != const_DateSpan_r) as bool
+(const_DateSpan_r == const_DateSpan_r) as bool
