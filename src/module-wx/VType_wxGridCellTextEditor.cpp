@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellTextEditor(maxChars? as Number) {block?} {block?}
+// wx.GridCellTextEditor(maxChars? as Number) {block?}
 Gurax_DeclareConstructorAlias(GridCellTextEditor_gurax, "GridCellTextEditor")
 {
 	Declare(VTYPE_wxGridCellTextEditor, Flag::None);

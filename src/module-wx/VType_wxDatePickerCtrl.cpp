@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.DatePickerCtrl(parent as wx.Window, id as Number, dt? as wx.DateTime, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
+// wx.DatePickerCtrl(parent as wx.Window, id as Number, dt? as wx.DateTime, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructorAlias(DatePickerCtrl_gurax, "DatePickerCtrl")
 {
 	Declare(VTYPE_wxDatePickerCtrl, Flag::None);

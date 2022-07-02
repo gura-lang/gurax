@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.HtmlLinkInfo(href as String, target? as String) {block?} {block?}
+// wx.HtmlLinkInfo(href as String, target? as String) {block?}
 Gurax_DeclareConstructorAlias(HtmlLinkInfo_gurax, "HtmlLinkInfo")
 {
 	Declare(VTYPE_wxHtmlLinkInfo, Flag::None);

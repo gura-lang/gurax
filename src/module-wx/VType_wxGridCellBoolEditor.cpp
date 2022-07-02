@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellBoolEditor() {block?} {block?}
+// wx.GridCellBoolEditor() {block?}
 Gurax_DeclareConstructorAlias(GridCellBoolEditor_gurax, "GridCellBoolEditor")
 {
 	Declare(VTYPE_wxGridCellBoolEditor, Flag::None);

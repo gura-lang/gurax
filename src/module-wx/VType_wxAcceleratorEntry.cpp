@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.AcceleratorEntry(flags? as Number, keyCode? as Number, cmd? as Number, item? as wx.MenuItem) {block?} {block?}
+// wx.AcceleratorEntry(flags? as Number, keyCode? as Number, cmd? as Number, item? as wx.MenuItem) {block?}
 Gurax_DeclareConstructorAlias(AcceleratorEntry_gurax, "AcceleratorEntry")
 {
 	Declare(VTYPE_wxAcceleratorEntry, Flag::None);

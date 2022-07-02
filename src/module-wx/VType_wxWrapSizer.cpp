@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.WrapSizer(orient as Number, flag? as Number) {block?} {block?}
+// wx.WrapSizer(orient as Number, flag? as Number) {block?}
 Gurax_DeclareConstructorAlias(WrapSizer_gurax, "WrapSizer")
 {
 	Declare(VTYPE_wxWrapSizer, Flag::None);

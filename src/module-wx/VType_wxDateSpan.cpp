@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.DateSpan(years? as Number, months? as Number, weeks? as Number, days? as Number) {block?} {block?}
+// wx.DateSpan(years? as Number, months? as Number, weeks? as Number, days? as Number) {block?}
 Gurax_DeclareConstructorAlias(DateSpan_gurax, "DateSpan")
 {
 	Declare(VTYPE_wxDateSpan, Flag::None);

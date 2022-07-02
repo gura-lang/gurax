@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.PrintAbortDialog(parent as wx.Window, documentTitle as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
+// wx.PrintAbortDialog(parent as wx.Window, documentTitle as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(PrintAbortDialog_gurax, "PrintAbortDialog")
 {
 	Declare(VTYPE_wxPrintAbortDialog, Flag::None);

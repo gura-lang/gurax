@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.StaticBoxSizer(args* as Any) {block?} {block?}
+// wx.StaticBoxSizer(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(StaticBoxSizer_gurax, "StaticBoxSizer")
 {
 	Declare(VTYPE_wxStaticBoxSizer, Flag::None);

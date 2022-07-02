@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Region(args* as Any) {block?} {block?}
+// wx.Region(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(Region_gurax, "Region")
 {
 	Declare(VTYPE_wxRegion, Flag::None);

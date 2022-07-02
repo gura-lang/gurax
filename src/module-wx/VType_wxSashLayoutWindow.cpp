@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.SashLayoutWindow(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
+// wx.SashLayoutWindow(parent as wx.Window, id as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(SashLayoutWindow_gurax, "SashLayoutWindow")
 {
 	Declare(VTYPE_wxSashLayoutWindow, Flag::None);

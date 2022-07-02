@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Clipboard() {block?} {block?}
+// wx.Clipboard() {block?}
 Gurax_DeclareConstructorAlias(Clipboard_gurax, "Clipboard")
 {
 	Declare(VTYPE_wxClipboard, Flag::None);

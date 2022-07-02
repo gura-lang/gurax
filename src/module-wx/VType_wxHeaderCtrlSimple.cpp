@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.HeaderCtrlSimple(parent as wx.Window, winid? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
+// wx.HeaderCtrlSimple(parent as wx.Window, winid? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(HeaderCtrlSimple_gurax, "HeaderCtrlSimple")
 {
 	Declare(VTYPE_wxHeaderCtrlSimple, Flag::None);

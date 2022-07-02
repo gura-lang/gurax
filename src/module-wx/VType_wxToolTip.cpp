@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ToolTip(tip as String) {block?} {block?}
+// wx.ToolTip(tip as String) {block?}
 Gurax_DeclareConstructorAlias(ToolTip_gurax, "ToolTip")
 {
 	Declare(VTYPE_wxToolTip, Flag::None);

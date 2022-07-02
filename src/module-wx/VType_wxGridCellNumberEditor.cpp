@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellNumberEditor(min? as Number, max? as Number) {block?} {block?}
+// wx.GridCellNumberEditor(min? as Number, max? as Number) {block?}
 Gurax_DeclareConstructorAlias(GridCellNumberEditor_gurax, "GridCellNumberEditor")
 {
 	Declare(VTYPE_wxGridCellNumberEditor, Flag::None);

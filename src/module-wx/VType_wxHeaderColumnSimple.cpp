@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.HeaderColumnSimple(title as String, width? as Number, align? as Number, flags? as Number) {block?} {block?}
+// wx.HeaderColumnSimple(title as String, width? as Number, align? as Number, flags? as Number) {block?}
 Gurax_DeclareConstructorAlias(HeaderColumnSimple_gurax, "HeaderColumnSimple")
 {
 	Declare(VTYPE_wxHeaderColumnSimple, Flag::None);

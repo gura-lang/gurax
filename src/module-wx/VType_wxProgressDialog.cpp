@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ProgressDialog(title as String, message as String, maximum? as Number, parent? as wx.Window, style? as Number) {block?} {block?}
+// wx.ProgressDialog(title as String, message as String, maximum? as Number, parent? as wx.Window, style? as Number) {block?}
 Gurax_DeclareConstructorAlias(ProgressDialog_gurax, "ProgressDialog")
 {
 	Declare(VTYPE_wxProgressDialog, Flag::None);

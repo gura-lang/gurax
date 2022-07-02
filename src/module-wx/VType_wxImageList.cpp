@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ImageList(width as Number, height as Number, mask? as Bool, initialCount? as Number) {block?} {block?}
+// wx.ImageList(width as Number, height as Number, mask? as Bool, initialCount? as Number) {block?}
 Gurax_DeclareConstructorAlias(ImageList_gurax, "ImageList")
 {
 	Declare(VTYPE_wxImageList, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GenericDirCtrl(parent as wx.Window, id? as Number, dir? as String, pos? as wx.Point, size? as wx.Size, style? as Number, filter? as String, defaultFilter? as Number, name? as String) {block?} {block?}
+// wx.GenericDirCtrl(parent as wx.Window, id? as Number, dir? as String, pos? as wx.Point, size? as wx.Size, style? as Number, filter? as String, defaultFilter? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(GenericDirCtrl_gurax, "GenericDirCtrl")
 {
 	Declare(VTYPE_wxGenericDirCtrl, Flag::None);

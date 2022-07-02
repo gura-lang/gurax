@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.DataViewColumn(title as Any, renderer as wx.DataViewRenderer, model_column as Number, width? as Number, align? as Number, flags? as Number) {block?} {block?}
+// wx.DataViewColumn(title as Any, renderer as wx.DataViewRenderer, model_column as Number, width? as Number, align? as Number, flags? as Number) {block?}
 Gurax_DeclareConstructorAlias(DataViewColumn_gurax, "DataViewColumn")
 {
 	Declare(VTYPE_wxDataViewColumn, Flag::None);

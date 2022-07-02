@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ListItem() {block?} {block?}
+// wx.ListItem() {block?}
 Gurax_DeclareConstructorAlias(ListItem_gurax, "ListItem")
 {
 	Declare(VTYPE_wxListItem, Flag::None);

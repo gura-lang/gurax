@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ColourPickerCtrl(parent as wx.Window, id as Number, colour? as wx.Colour, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
+// wx.ColourPickerCtrl(parent as wx.Window, id as Number, colour? as wx.Colour, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructorAlias(ColourPickerCtrl_gurax, "ColourPickerCtrl")
 {
 	Declare(VTYPE_wxColourPickerCtrl, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Icon(args* as Any) {block?} {block?}
+// wx.Icon(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(Icon_gurax, "Icon")
 {
 	Declare(VTYPE_wxIcon, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellFloatEditor(width? as Number, precision? as Number, format? as Number) {block?} {block?}
+// wx.GridCellFloatEditor(width? as Number, precision? as Number, format? as Number) {block?}
 Gurax_DeclareConstructorAlias(GridCellFloatEditor_gurax, "GridCellFloatEditor")
 {
 	Declare(VTYPE_wxGridCellFloatEditor, Flag::None);

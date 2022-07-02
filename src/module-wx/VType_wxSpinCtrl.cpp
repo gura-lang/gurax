@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.SpinCtrl(parent as wx.Window, id? as Number, value? as String, pos? as wx.Point, size? as wx.Size, style? as Number, min? as Number, max? as Number, initial? as Number, name? as String) {block?} {block?}
+// wx.SpinCtrl(parent as wx.Window, id? as Number, value? as String, pos? as wx.Point, size? as wx.Size, style? as Number, min? as Number, max? as Number, initial? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(SpinCtrl_gurax, "SpinCtrl")
 {
 	Declare(VTYPE_wxSpinCtrl, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GLCanvas(parent as wx.Window, id? as Number, attribList[]? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String, palette? as wx.Palette) {block?} {block?}
+// wx.GLCanvas(parent as wx.Window, id? as Number, attribList[]? as Number, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String, palette? as wx.Palette) {block?}
 Gurax_DeclareConstructorAlias(GLCanvas_gurax, "GLCanvas")
 {
 	Declare(VTYPE_wxGLCanvas, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MultiChoiceDialog(parent as wx.Window, message as String, caption as String, choices[] as String, style? as Number, pos? as wx.Point) {block?} {block?}
+// wx.MultiChoiceDialog(parent as wx.Window, message as String, caption as String, choices[] as String, style? as Number, pos? as wx.Point) {block?}
 Gurax_DeclareConstructorAlias(MultiChoiceDialog_gurax, "MultiChoiceDialog")
 {
 	Declare(VTYPE_wxMultiChoiceDialog, Flag::None);

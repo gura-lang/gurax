@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.PreviewControlBar(preview as wx.PrintPreview, buttons as Number, parent as wx.Window, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
+// wx.PreviewControlBar(preview as wx.PrintPreview, buttons as Number, parent as wx.Window, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(PreviewControlBar_gurax, "PreviewControlBar")
 {
 	Declare(VTYPE_wxPreviewControlBar, Flag::None);

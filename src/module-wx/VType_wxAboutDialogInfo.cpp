@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.AboutDialogInfo() {block?} {block?}
+// wx.AboutDialogInfo() {block?}
 Gurax_DeclareConstructorAlias(AboutDialogInfo_gurax, "AboutDialogInfo")
 {
 	Declare(VTYPE_wxAboutDialogInfo, Flag::None);

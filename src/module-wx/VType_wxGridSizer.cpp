@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridSizer(args* as Any) {block?} {block?}
+// wx.GridSizer(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(GridSizer_gurax, "GridSizer")
 {
 	Declare(VTYPE_wxGridSizer, Flag::None);

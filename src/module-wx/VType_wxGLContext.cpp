@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GLContext(win as wx.GLCanvas, other? as wx.GLContext) {block?} {block?}
+// wx.GLContext(win as wx.GLCanvas, other? as wx.GLContext) {block?}
 Gurax_DeclareConstructorAlias(GLContext_gurax, "GLContext")
 {
 	Declare(VTYPE_wxGLContext, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.BoxSizer(orient as Number) {block?} {block?}
+// wx.BoxSizer(orient as Number) {block?}
 Gurax_DeclareConstructorAlias(BoxSizer_gurax, "BoxSizer")
 {
 	Declare(VTYPE_wxBoxSizer, Flag::None);

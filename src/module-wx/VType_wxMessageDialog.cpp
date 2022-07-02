@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MessageDialog(parent as wx.Window, message as String, caption? as String, style? as Number, pos? as wx.Point) {block?} {block?}
+// wx.MessageDialog(parent as wx.Window, message as String, caption? as String, style? as Number, pos? as wx.Point) {block?}
 Gurax_DeclareConstructorAlias(MessageDialog_gurax, "MessageDialog")
 {
 	Declare(VTYPE_wxMessageDialog, Flag::None);

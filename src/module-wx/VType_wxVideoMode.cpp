@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.VideoMode(width? as Number, height? as Number, depth? as Number, freq? as Number) {block?} {block?}
+// wx.VideoMode(width? as Number, height? as Number, depth? as Number, freq? as Number) {block?}
 Gurax_DeclareConstructorAlias(VideoMode_gurax, "VideoMode")
 {
 	Declare(VTYPE_wxVideoMode, Flag::None);

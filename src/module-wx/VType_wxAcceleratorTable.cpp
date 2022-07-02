@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.AcceleratorTable(args* as Any) {block?} {block?}
+// wx.AcceleratorTable(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(AcceleratorTable_gurax, "AcceleratorTable")
 {
 	Declare(VTYPE_wxAcceleratorTable, Flag::None);

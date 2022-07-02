@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.BannerWindow(args* as Any) {block?} {block?}
+// wx.BannerWindow(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(BannerWindow_gurax, "BannerWindow")
 {
 	Declare(VTYPE_wxBannerWindow, Flag::None);

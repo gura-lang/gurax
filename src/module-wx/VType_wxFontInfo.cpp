@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FontInfo(arg? as Any) {block?} {block?}
+// wx.FontInfo(arg? as Any) {block?}
 Gurax_DeclareConstructorAlias(FontInfo_gurax, "FontInfo")
 {
 	Declare(VTYPE_wxFontInfo, Flag::None);

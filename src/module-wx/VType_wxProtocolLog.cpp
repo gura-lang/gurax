@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ProtocolLog(traceMask as String) {block?} {block?}
+// wx.ProtocolLog(traceMask as String) {block?}
 Gurax_DeclareConstructorAlias(ProtocolLog_gurax, "ProtocolLog")
 {
 	Declare(VTYPE_wxProtocolLog, Flag::None);

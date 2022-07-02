@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.StaticBitmap(parent as wx.Window, id as Number, label as wx.Bitmap, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
+// wx.StaticBitmap(parent as wx.Window, id as Number, label as wx.Bitmap, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(StaticBitmap_gurax, "StaticBitmap")
 {
 	Declare(VTYPE_wxStaticBitmap, Flag::None);

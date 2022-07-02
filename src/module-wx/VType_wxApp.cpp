@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.App() {block?} {block?}
+// wx.App() {block?}
 Gurax_DeclareConstructorAlias(App_gurax, "App")
 {
 	Declare(VTYPE_wxApp, Flag::None);

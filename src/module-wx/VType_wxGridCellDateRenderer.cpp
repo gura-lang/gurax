@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellDateRenderer(outformat? as String) {block?} {block?}
+// wx.GridCellDateRenderer(outformat? as String) {block?}
 Gurax_DeclareConstructorAlias(GridCellDateRenderer_gurax, "GridCellDateRenderer")
 {
 	Declare(VTYPE_wxGridCellDateRenderer, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.StaticText(parent as wx.Window, id as Number, label as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
+// wx.StaticText(parent as wx.Window, id as Number, label as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(StaticText_gurax, "StaticText")
 {
 	Declare(VTYPE_wxStaticText, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FileCtrl(parent as wx.Window, id as Number, defaultDirectory? as String, defaultFilename? as String, wildCard? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?} {block?}
+// wx.FileCtrl(parent as wx.Window, id as Number, defaultDirectory? as String, defaultFilename? as String, wildCard? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?}
 Gurax_DeclareConstructorAlias(FileCtrl_gurax, "FileCtrl")
 {
 	Declare(VTYPE_wxFileCtrl, Flag::None);

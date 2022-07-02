@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ColourData() {block?} {block?}
+// wx.ColourData() {block?}
 Gurax_DeclareConstructorAlias(ColourData_gurax, "ColourData")
 {
 	Declare(VTYPE_wxColourData, Flag::None);

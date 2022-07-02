@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.DateTime() {block?} {block?}
+// wx.DateTime() {block?}
 Gurax_DeclareConstructorAlias(DateTime_gurax, "DateTime")
 {
 	Declare(VTYPE_wxDateTime, Flag::None);

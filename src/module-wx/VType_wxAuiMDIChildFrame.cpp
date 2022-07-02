@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.AuiMDIChildFrame(parent as wx.AuiMDIParentFrame, winid as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
+// wx.AuiMDIChildFrame(parent as wx.AuiMDIParentFrame, winid as Number, title as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(AuiMDIChildFrame_gurax, "AuiMDIChildFrame")
 {
 	Declare(VTYPE_wxAuiMDIChildFrame, Flag::None);

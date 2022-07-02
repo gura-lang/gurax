@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.SymbolPickerDialog(symbol as String, initialFont as String, normalTextFont as String, parent as wx.Window, id? as Number, title? as String, pos? as wx.Point, size? as wx.Size, style? as Number) {block?} {block?}
+// wx.SymbolPickerDialog(symbol as String, initialFont as String, normalTextFont as String, parent as wx.Window, id? as Number, title? as String, pos? as wx.Point, size? as wx.Size, style? as Number) {block?}
 Gurax_DeclareConstructorAlias(SymbolPickerDialog_gurax, "SymbolPickerDialog")
 {
 	Declare(VTYPE_wxSymbolPickerDialog, Flag::None);

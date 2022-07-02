@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ClientDC(window as wx.Window) {block?} {block?}
+// wx.ClientDC(window as wx.Window) {block?}
 Gurax_DeclareConstructorAlias(ClientDC_gurax, "ClientDC")
 {
 	Declare(VTYPE_wxClientDC, Flag::None);

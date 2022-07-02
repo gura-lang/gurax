@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.InfoBar(parent as wx.Window, winid? as Number) {block?} {block?}
+// wx.InfoBar(parent as wx.Window, winid? as Number) {block?}
 Gurax_DeclareConstructorAlias(InfoBar_gurax, "InfoBar")
 {
 	Declare(VTYPE_wxInfoBar, Flag::None);

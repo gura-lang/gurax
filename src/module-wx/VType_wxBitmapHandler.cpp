@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.BitmapHandler() {block?} {block?}
+// wx.BitmapHandler() {block?}
 Gurax_DeclareConstructorAlias(BitmapHandler_gurax, "BitmapHandler")
 {
 	Declare(VTYPE_wxBitmapHandler, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellFloatRenderer(width? as Number, precision? as Number, format? as Number) {block?} {block?}
+// wx.GridCellFloatRenderer(width? as Number, precision? as Number, format? as Number) {block?}
 Gurax_DeclareConstructorAlias(GridCellFloatRenderer_gurax, "GridCellFloatRenderer")
 {
 	Declare(VTYPE_wxGridCellFloatRenderer, Flag::None);

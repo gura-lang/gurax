@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.RichTextFormattingDialog(flags as Number, parent as wx.Window, title? as String, id? as Number, pos? as wx.Point, sz? as wx.Size, style? as Number) {block?} {block?}
+// wx.RichTextFormattingDialog(flags as Number, parent as wx.Window, title? as String, id? as Number, pos? as wx.Point, sz? as wx.Size, style? as Number) {block?}
 Gurax_DeclareConstructorAlias(RichTextFormattingDialog_gurax, "RichTextFormattingDialog")
 {
 	Declare(VTYPE_wxRichTextFormattingDialog, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FileDialog(parent as wx.Window, message? as String, defaultDir? as String, defaultFile? as String, wildcard? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?} {block?}
+// wx.FileDialog(parent as wx.Window, message? as String, defaultDir? as String, defaultFile? as String, wildcard? as String, style? as Number, pos? as wx.Point, size? as wx.Size, name? as String) {block?}
 Gurax_DeclareConstructorAlias(FileDialog_gurax, "FileDialog")
 {
 	Declare(VTYPE_wxFileDialog, Flag::None);

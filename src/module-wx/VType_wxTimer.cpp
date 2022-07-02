@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Timer(owner? as wx.EvtHandler, id? as Number) {block?} {block?}
+// wx.Timer(owner? as wx.EvtHandler, id? as Number) {block?}
 Gurax_DeclareConstructorAlias(Timer_gurax, "Timer")
 {
 	Declare(VTYPE_wxTimer, Flag::None);

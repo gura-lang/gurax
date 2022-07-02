@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Animation(name as String, type? as Number) {block?} {block?}
+// wx.Animation(name as String, type? as Number) {block?}
 Gurax_DeclareConstructorAlias(Animation_gurax, "Animation")
 {
 	Declare(VTYPE_wxAnimation, Flag::None);

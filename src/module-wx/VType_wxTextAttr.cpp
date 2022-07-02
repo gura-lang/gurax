@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.TextAttr(args* as Any) {block?} {block?}
+// wx.TextAttr(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(TextAttr_gurax, "TextAttr")
 {
 	Declare(VTYPE_wxTextAttr, Flag::None);

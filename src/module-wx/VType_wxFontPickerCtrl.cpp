@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FontPickerCtrl(parent as wx.Window, id as Number, font? as wx.Font, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
+// wx.FontPickerCtrl(parent as wx.Window, id as Number, font? as wx.Font, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructorAlias(FontPickerCtrl_gurax, "FontPickerCtrl")
 {
 	Declare(VTYPE_wxFontPickerCtrl, Flag::None);

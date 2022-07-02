@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.PNGHandler() {block?} {block?}
+// wx.PNGHandler() {block?}
 Gurax_DeclareConstructorAlias(PNGHandler_gurax, "PNGHandler")
 {
 	Declare(VTYPE_wxPNGHandler, Flag::None);

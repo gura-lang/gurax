@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.AuiManager(managed_wnd? as wx.Window, flags? as Number) {block?} {block?}
+// wx.AuiManager(managed_wnd? as wx.Window, flags? as Number) {block?}
 Gurax_DeclareConstructorAlias(AuiManager_gurax, "AuiManager")
 {
 	Declare(VTYPE_wxAuiManager, Flag::None);

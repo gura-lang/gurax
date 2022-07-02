@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.RichTextStyleSheet() {block?} {block?}
+// wx.RichTextStyleSheet() {block?}
 Gurax_DeclareConstructorAlias(RichTextStyleSheet_gurax, "RichTextStyleSheet")
 {
 	Declare(VTYPE_wxRichTextStyleSheet, Flag::None);

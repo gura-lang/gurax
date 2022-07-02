@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.CursorProperty(label? as String, name? as String, value? as Number) {block?} {block?}
+// wx.CursorProperty(label? as String, name? as String, value? as Number) {block?}
 Gurax_DeclareConstructorAlias(CursorProperty_gurax, "CursorProperty")
 {
 	Declare(VTYPE_wxCursorProperty, Flag::None);

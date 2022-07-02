@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.CalendarDateAttr(args* as Any) {block?} {block?}
+// wx.CalendarDateAttr(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(CalendarDateAttr_gurax, "CalendarDateAttr")
 {
 	Declare(VTYPE_wxCalendarDateAttr, Flag::None);

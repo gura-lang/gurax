@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.AppConsole() {block?} {block?}
+// wx.AppConsole() {block?}
 Gurax_DeclareConstructorAlias(AppConsole_gurax, "AppConsole")
 {
 	Declare(VTYPE_wxAppConsole, Flag::None);

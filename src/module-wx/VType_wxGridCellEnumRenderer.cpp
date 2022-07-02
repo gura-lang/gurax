@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellEnumRenderer(choices? as String) {block?} {block?}
+// wx.GridCellEnumRenderer(choices? as String) {block?}
 Gurax_DeclareConstructorAlias(GridCellEnumRenderer_gurax, "GridCellEnumRenderer")
 {
 	Declare(VTYPE_wxGridCellEnumRenderer, Flag::None);

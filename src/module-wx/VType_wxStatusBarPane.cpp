@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.StatusBarPane(style? as Number, width? as Number) {block?} {block?}
+// wx.StatusBarPane(style? as Number, width? as Number) {block?}
 Gurax_DeclareConstructorAlias(StatusBarPane_gurax, "StatusBarPane")
 {
 	Declare(VTYPE_wxStatusBarPane, Flag::None);

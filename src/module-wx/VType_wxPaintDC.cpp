@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.PaintDC(window as wx.Window) {block?} {block?}
+// wx.PaintDC(window as wx.Window) {block?}
 Gurax_DeclareConstructorAlias(PaintDC_gurax, "PaintDC")
 {
 	Declare(VTYPE_wxPaintDC, Flag::None);

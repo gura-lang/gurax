@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ComboBox(parent as wx.Window, id as Number, value? as String, pos? as wx.Point, size? as wx.Size, choices[]? as String, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
+// wx.ComboBox(parent as wx.Window, id as Number, value? as String, pos? as wx.Point, size? as wx.Size, choices[]? as String, style? as Number, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructorAlias(ComboBox_gurax, "ComboBox")
 {
 	Declare(VTYPE_wxComboBox, Flag::None);

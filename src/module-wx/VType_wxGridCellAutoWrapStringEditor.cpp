@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellAutoWrapStringEditor() {block?} {block?}
+// wx.GridCellAutoWrapStringEditor() {block?}
 Gurax_DeclareConstructorAlias(GridCellAutoWrapStringEditor_gurax, "GridCellAutoWrapStringEditor")
 {
 	Declare(VTYPE_wxGridCellAutoWrapStringEditor, Flag::None);

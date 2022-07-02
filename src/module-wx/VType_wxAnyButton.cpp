@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.AnyButton() {block?} {block?}
+// wx.AnyButton() {block?}
 Gurax_DeclareConstructorAlias(AnyButton_gurax, "AnyButton")
 {
 	Declare(VTYPE_wxAnyButton, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ColourDialog(parent as wx.Window, data? as wx.ColourData) {block?} {block?}
+// wx.ColourDialog(parent as wx.Window, data? as wx.ColourData) {block?}
 Gurax_DeclareConstructorAlias(ColourDialog_gurax, "ColourDialog")
 {
 	Declare(VTYPE_wxColourDialog, Flag::None);

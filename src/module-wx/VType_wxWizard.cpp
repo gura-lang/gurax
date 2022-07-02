@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Wizard(parent as wx.Window, id? as Number, title? as String, bitmap? as wx.Bitmap, pos? as wx.Point, style? as Number) {block?} {block?}
+// wx.Wizard(parent as wx.Window, id? as Number, title? as String, bitmap? as wx.Bitmap, pos? as wx.Point, style? as Number) {block?}
 Gurax_DeclareConstructorAlias(Wizard_gurax, "Wizard")
 {
 	Declare(VTYPE_wxWizard, Flag::None);

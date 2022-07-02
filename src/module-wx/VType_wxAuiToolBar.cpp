@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.AuiToolBar(parent as wx.Window, id? as Number, position? as wx.Point, size? as wx.Size, style? as Number) {block?} {block?}
+// wx.AuiToolBar(parent as wx.Window, id? as Number, position? as wx.Point, size? as wx.Size, style? as Number) {block?}
 Gurax_DeclareConstructorAlias(AuiToolBar_gurax, "AuiToolBar")
 {
 	Declare(VTYPE_wxAuiToolBar, Flag::None);

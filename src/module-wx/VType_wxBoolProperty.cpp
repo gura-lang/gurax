@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.BoolProperty(label? as String, name? as String, value? as Bool) {block?} {block?}
+// wx.BoolProperty(label? as String, name? as String, value? as Bool) {block?}
 Gurax_DeclareConstructorAlias(BoolProperty_gurax, "BoolProperty")
 {
 	Declare(VTYPE_wxBoolProperty, Flag::None);

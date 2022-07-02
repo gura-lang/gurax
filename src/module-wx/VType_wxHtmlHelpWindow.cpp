@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.HtmlHelpWindow(args* as Any) {block?} {block?}
+// wx.HtmlHelpWindow(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(HtmlHelpWindow_gurax, "HtmlHelpWindow")
 {
 	Declare(VTYPE_wxHtmlHelpWindow, Flag::None);

@@ -1077,7 +1077,7 @@ classInfoTbl.Each {|classInfo|
 }
 
 tmplConstructorImplementation_Object = tR'''
-// ${funcInfo.ToString()} {block?}
+// ${funcInfo.ToString()}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
@@ -1106,7 +1106,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 '''
 
 tmplConstructorImplementation_EvtHandler = tR'''
-// ${funcInfo.ToString()} {block?}
+// ${funcInfo.ToString()}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
@@ -1137,7 +1137,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 '''
 
 tmplConstructorImplementation_Pointer = tR'''
-// ${funcInfo.ToString()} {block?}
+// ${funcInfo.ToString()}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
@@ -1167,7 +1167,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 '''
 
 tmplConstructorImplementation_RefCounter = tR'''
-// ${funcInfo.ToString()} {block?}
+// ${funcInfo.ToString()}
 Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});

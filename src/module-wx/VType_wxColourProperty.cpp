@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.ColourProperty(label? as String, name? as String, value? as wx.Colour) {block?} {block?}
+// wx.ColourProperty(label? as String, name? as String, value? as wx.Colour) {block?}
 Gurax_DeclareConstructorAlias(ColourProperty_gurax, "ColourProperty")
 {
 	Declare(VTYPE_wxColourProperty, Flag::None);

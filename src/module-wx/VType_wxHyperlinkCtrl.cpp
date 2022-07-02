@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.HyperlinkCtrl(parent as wx.Window, id as Number, label as String, url as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?} {block?}
+// wx.HyperlinkCtrl(parent as wx.Window, id as Number, label as String, url as String, pos? as wx.Point, size? as wx.Size, style? as Number, name? as String) {block?}
 Gurax_DeclareConstructorAlias(HyperlinkCtrl_gurax, "HyperlinkCtrl")
 {
 	Declare(VTYPE_wxHyperlinkCtrl, Flag::None);

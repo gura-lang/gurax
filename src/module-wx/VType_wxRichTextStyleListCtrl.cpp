@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.RichTextStyleListCtrl(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number) {block?} {block?}
+// wx.RichTextStyleListCtrl(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number) {block?}
 Gurax_DeclareConstructorAlias(RichTextStyleListCtrl_gurax, "RichTextStyleListCtrl")
 {
 	Declare(VTYPE_wxRichTextStyleListCtrl, Flag::None);

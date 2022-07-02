@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.RibbonBar(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number) {block?} {block?}
+// wx.RibbonBar(parent as wx.Window, id? as Number, pos? as wx.Point, size? as wx.Size, style? as Number) {block?}
 Gurax_DeclareConstructorAlias(RibbonBar_gurax, "RibbonBar")
 {
 	Declare(VTYPE_wxRibbonBar, Flag::None);

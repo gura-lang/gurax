@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Brush(args* as Any) {block?} {block?}
+// wx.Brush(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(Brush_gurax, "Brush")
 {
 	Declare(VTYPE_wxBrush, Flag::None);

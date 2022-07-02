@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.DirPickerCtrl(parent as wx.Window, id as Number, path? as String, message? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
+// wx.DirPickerCtrl(parent as wx.Window, id as Number, path? as String, message? as String, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructorAlias(DirPickerCtrl_gurax, "DirPickerCtrl")
 {
 	Declare(VTYPE_wxDirPickerCtrl, Flag::None);

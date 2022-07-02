@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.URI(uri? as String) {block?} {block?}
+// wx.URI(uri? as String) {block?}
 Gurax_DeclareConstructorAlias(URI_gurax, "URI")
 {
 	Declare(VTYPE_wxURI, Flag::None);

@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.MediaCtrl(parent as wx.Window, id as Number, fileName? as String, pos? as wx.Point, size? as wx.Size, style? as Number, szBackend? as String, validator? as wx.Validator, name? as String) {block?} {block?}
+// wx.MediaCtrl(parent as wx.Window, id as Number, fileName? as String, pos? as wx.Point, size? as wx.Size, style? as Number, szBackend? as String, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructorAlias(MediaCtrl_gurax, "MediaCtrl")
 {
 	Declare(VTYPE_wxMediaCtrl, Flag::None);

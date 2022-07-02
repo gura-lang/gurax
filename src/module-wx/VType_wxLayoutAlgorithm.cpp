@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.LayoutAlgorithm() {block?} {block?}
+// wx.LayoutAlgorithm() {block?}
 Gurax_DeclareConstructorAlias(LayoutAlgorithm_gurax, "LayoutAlgorithm")
 {
 	Declare(VTYPE_wxLayoutAlgorithm, Flag::None);

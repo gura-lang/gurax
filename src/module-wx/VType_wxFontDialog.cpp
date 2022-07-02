@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.FontDialog(parent as wx.Window, data? as wx.FontData) {block?} {block?}
+// wx.FontDialog(parent as wx.Window, data? as wx.FontData) {block?}
 Gurax_DeclareConstructorAlias(FontDialog_gurax, "FontDialog")
 {
 	Declare(VTYPE_wxFontDialog, Flag::None);

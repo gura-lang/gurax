@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.PasswordEntryDialog(parent as wx.Window, message as String, caption? as String, defaultValue? as String, style? as Number, pos? as wx.Point) {block?} {block?}
+// wx.PasswordEntryDialog(parent as wx.Window, message as String, caption? as String, defaultValue? as String, style? as Number, pos? as wx.Point) {block?}
 Gurax_DeclareConstructorAlias(PasswordEntryDialog_gurax, "PasswordEntryDialog")
 {
 	Declare(VTYPE_wxPasswordEntryDialog, Flag::None);

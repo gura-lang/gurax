@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Menu() {block?} {block?}
+// wx.Menu() {block?}
 Gurax_DeclareConstructorAlias(Menu_gurax, "Menu")
 {
 	Declare(VTYPE_wxMenu, Flag::None);

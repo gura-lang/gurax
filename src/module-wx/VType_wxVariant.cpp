@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Variant(value as Any, name? as String) {block?} {block?}
+// wx.Variant(value as Any, name? as String) {block?}
 Gurax_DeclareConstructorAlias(Variant_gurax, "Variant")
 {
 	Declare(VTYPE_wxVariant, Flag::None);

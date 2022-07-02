@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.BitmapButton(parent as wx.Window, id as Number, bitmap as wx.Bitmap, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?} {block?}
+// wx.BitmapButton(parent as wx.Window, id as Number, bitmap as wx.Bitmap, pos? as wx.Point, size? as wx.Size, style? as Number, validator? as wx.Validator, name? as String) {block?}
 Gurax_DeclareConstructorAlias(BitmapButton_gurax, "BitmapButton")
 {
 	Declare(VTYPE_wxBitmapButton, Flag::None);

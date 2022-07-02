@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Accessible(win? as wx.Window) {block?} {block?}
+// wx.Accessible(win? as wx.Window) {block?}
 Gurax_DeclareConstructorAlias(Accessible_gurax, "Accessible")
 {
 	Declare(VTYPE_wxAccessible, Flag::None);

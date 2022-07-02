@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Pen(args* as Any) {block?} {block?}
+// wx.Pen(args* as Any) {block?}
 Gurax_DeclareConstructorAlias(Pen_gurax, "Pen")
 {
 	Declare(VTYPE_wxPen, Flag::None);

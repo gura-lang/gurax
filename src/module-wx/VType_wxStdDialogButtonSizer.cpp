@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.StdDialogButtonSizer() {block?} {block?}
+// wx.StdDialogButtonSizer() {block?}
 Gurax_DeclareConstructorAlias(StdDialogButtonSizer_gurax, "StdDialogButtonSizer")
 {
 	Declare(VTYPE_wxStdDialogButtonSizer, Flag::None);

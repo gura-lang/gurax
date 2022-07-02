@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.Validator() {block?} {block?}
+// wx.Validator() {block?}
 Gurax_DeclareConstructorAlias(Validator_gurax, "Validator")
 {
 	Declare(VTYPE_wxValidator, Flag::None);

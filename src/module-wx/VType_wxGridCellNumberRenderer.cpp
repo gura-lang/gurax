@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellNumberRenderer() {block?} {block?}
+// wx.GridCellNumberRenderer() {block?}
 Gurax_DeclareConstructorAlias(GridCellNumberRenderer_gurax, "GridCellNumberRenderer")
 {
 	Declare(VTYPE_wxGridCellNumberRenderer, Flag::None);

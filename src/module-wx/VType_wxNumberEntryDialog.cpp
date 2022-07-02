@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.NumberEntryDialog(parent as wx.Window, message as String, prompt as String, caption as String, value as Number, min as Number, max as Number, pos? as wx.Point) {block?} {block?}
+// wx.NumberEntryDialog(parent as wx.Window, message as String, prompt as String, caption as String, value as Number, min as Number, max as Number, pos? as wx.Point) {block?}
 Gurax_DeclareConstructorAlias(NumberEntryDialog_gurax, "NumberEntryDialog")
 {
 	Declare(VTYPE_wxNumberEntryDialog, Flag::None);

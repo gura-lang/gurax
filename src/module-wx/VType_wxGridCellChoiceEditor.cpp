@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GridCellChoiceEditor(choices[] as String, allowOthers? as Bool) {block?} {block?}
+// wx.GridCellChoiceEditor(choices[] as String, allowOthers? as Bool) {block?}
 Gurax_DeclareConstructorAlias(GridCellChoiceEditor_gurax, "GridCellChoiceEditor")
 {
 	Declare(VTYPE_wxGridCellChoiceEditor, Flag::None);
