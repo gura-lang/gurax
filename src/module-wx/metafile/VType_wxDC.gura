@@ -2,6 +2,7 @@
 // VType_wxDC.gura
 //==============================================================================
 DC = Class {
+	@include['wx/dc.h']
 	CopyAttributes(dc as const_DC_r) as void
 	GetDepth() as int
 	GetDeviceOrigin() as Point

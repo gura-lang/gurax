@@ -2,6 +2,7 @@
 // VType_wxDateSpan.gura
 //==============================================================================
 DateSpan = Class {
+	@include['wx/datetime.h']
 	__init__(years as int = 0, months as int = 0, weeks as int = 0, days as int = 0)
 	Add(other as const_DateSpan_r) as DateSpan
 	GetDays() as int

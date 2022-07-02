@@ -3,4 +3,8 @@
 //==============================================================================
 DirFilterListCtrl = Class(Choice) {
 	@include['wx/dirctrl.h']
+	__init__(parent as GenericDirCtrl_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0)
+	Create(parent as GenericDirCtrl_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0) as bool
+	Init() as void
+	FillFilterList(filter as const_String_r, defaultFilter as int) as void
 }

@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXDIALOG_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/dialog.h>
 #include "Util.h"
 #include "VType_wxTopLevelWindow.h"
 
