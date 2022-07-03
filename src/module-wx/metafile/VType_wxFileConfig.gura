@@ -3,4 +3,28 @@
 //==============================================================================
 FileConfig = Class(ConfigBase) {
 	@include['wx/fileconf.h']
+	//__init__(appName as const_String_r = wxEmptyString, vendorName as const_String_r = wxEmptyString, localFilename as const_String_r = wxEmptyString, globalFilename as const_String_r = wxEmptyString, style as long = wxCONFIG_USE_LOCAL_FILE|wxCONFIG_USE_GLOBAL_FILE, conv as const_MBConv_r = wxConvAuto())
+	//__init__(is as InputStream_r, conv as const_MBConv_r = wxConvAuto())
+	//Save(os as OutputStream_r, conv as const_MBConv_r = wxConvAuto()) as bool
+	SetUmask(mode as int) as void
+	SetPath(strPath as const_String_r) as void
+	GetPath() as String
+	//GetFirstGroup(str as String_r, lIndex as long_r) as bool
+	//GetNextGroup(str as String_r, lIndex as long_r) as bool
+	//GetFirstEntry(str as String_r, lIndex as long_r) as bool
+	//GetNextEntry(str as String_r, lIndex as long_r) as bool
+	GetNumberOfEntries(bRecursive as bool = false) as size_t
+	GetNumberOfGroups(bRecursive as bool = false) as size_t
+	HasGroup(strName as const_String_r) as bool
+	HasEntry(strName as const_String_r) as bool
+	Flush(bCurrentOnly as bool = false) as bool
+	RenameEntry(oldName as const_String_r, newName as const_String_r) as bool
+	RenameGroup(oldName as const_String_r, newName as const_String_r) as bool
+	DeleteEntry(key as const_String_r, bGroupIfEmptyAlso as bool = true) as bool
+	DeleteGroup(szKey as const_String_r) as bool
+	DeleteAll() as bool
+	GetGlobalFile(basename as const_String_r):static as FileName
+	GetLocalFile(basename as const_String_r, style as int = 0):static as FileName
+	GetGlobalFileName(szFile as const_String_r):static as String
+	GetLocalFileName(szFile as const_String_r, style as int = 0):static as String
 }

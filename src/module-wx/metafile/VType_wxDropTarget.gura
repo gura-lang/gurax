@@ -2,6 +2,7 @@
 // VType_wxDropTarget.gura
 //==============================================================================
 DropTarget = Class():loosePointer {
+	@include['wx/dnd.h']
 	GetData() as bool
 	OnData(x as Coord, y as Coord, defResult as DragResult) as DragResult
 	OnDragOver(x as Coord, y as Coord, defResult as DragResult) as DragResult

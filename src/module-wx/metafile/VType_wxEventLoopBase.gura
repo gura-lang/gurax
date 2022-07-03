@@ -3,4 +3,23 @@
 //==============================================================================
 EventLoopBase = Class():loosePointer {
 	@include['wx/evtloop.h']
+	IsMain() as bool
+	Run() as int
+	IsRunning() as bool
+	IsOk() as bool
+	Exit(rc as int = 0) as void
+	ScheduleExit(rc as int = 0) as void
+	Pending() as bool
+	Dispatch() as bool
+	DispatchTimeout(timeout as unsigned_long) as int
+	WakeUp() as void
+	WakeUpIdle() as void
+	ProcessIdle() as bool
+	IsYielding() as bool
+	Yield(onlyIfNeeded as bool = false) as bool
+	YieldFor(eventsToProcess as long) as bool
+	IsEventAllowedInsideYield(cat as EventCategory) as bool
+	GetActive():static as EventLoopBase_p
+	SetActive(loop as EventLoopBase_p):static as void
+	//OnExit() as void
 }

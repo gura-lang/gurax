@@ -2,6 +2,7 @@
 // VType_wxEraseEvent.gura
 //==============================================================================
 EraseEvent = Class(Event) {
+	@include['wx/event.h']
 	//__init__(id as int = 0, dc as DC_p = NULL)
 	GetDC() as DC_p
 }

@@ -2,6 +2,7 @@
 // VType_wxEvent.gura
 //==============================================================================
 Event = Class {
+	@include['wx/event.h']
 	GetEventType() as EventType = \
 		R'''
 		return Util::LookupEventType(pEntity_gurax->GetEventType()).Reference();
