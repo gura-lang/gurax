@@ -3,4 +3,12 @@
 //==============================================================================
 FileCtrlEvent = Class(CommandEvent) {
 	@include['wx/filectrl.h']
+	//wxFileCtrlEvent(type as EventType, evtObject as Object_p, id as int) as a
+	GetDirectory() as String
+	GetFile() as String
+	GetFiles() as ArrayString
+	GetFilterIndex() as int
+	SetFiles(files as const_ArrayString_r) as void
+	SetDirectory(directory as const_String_r) as void
+	SetFilterIndex(index as int) as void
 }
