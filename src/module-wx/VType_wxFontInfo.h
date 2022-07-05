@@ -6,6 +6,7 @@
 #define GURAX_MODULE_WX_VTYPE_WXFONTINFO_H
 #include <gurax.h>
 #include <wx/wx.h>
+#include <wx/font.h>
 #include "Util.h"
 
 Gurax_BeginModuleScope(wx)

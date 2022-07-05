@@ -2,6 +2,7 @@
 // VType_wxFontInfo.gura
 //==============================================================================
 FontInfo = Class {
+	@include['wx/font.h']
 	__init__(arg? as any) = \
 		R'''
 		if (arg.IsInvalid()) {

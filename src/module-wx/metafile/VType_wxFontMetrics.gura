@@ -2,4 +2,60 @@
 // VType_wxFontMetrics.gura
 //==============================================================================
 FontMetrics = Class {
+	@include['wx/dc.h']
+	__init__()
+	height.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().height);
+		'''
+	height.setter as int = \
+		R'''
+		int height = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().height = height;
+		'''
+	ascent.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().ascent);
+		'''
+	ascent.setter as int = \
+		R'''
+		int ascent = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().ascent = ascent;
+		'''
+	descent.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().descent);
+		'''
+	descent.setter as int = \
+		R'''
+		int descent = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().descent = descent;
+		'''
+	internalLeading.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().internalLeading);
+		'''
+	internalLeading.setter as int = \
+		R'''
+		int internalLeading = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().internalLeading = internalLeading;
+		'''
+	externalLeading.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().externalLeading);
+		'''
+	externalLeading.setter as int = \
+		R'''
+		int externalLeading = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().externalLeading = externalLeading;
+		'''
+	averageWidth.getter as int = \
+		R'''
+		return new Value_Number(valueThis_gurax.GetEntity().averageWidth);
+		'''
+	averageWidth.setter as int = \
+		R'''
+		int averageWidth = Value_Number::GetNumber<int>(value_gurax);
+		valueThis_gurax.GetEntity().averageWidth = averageWidth;
+		'''
 }
