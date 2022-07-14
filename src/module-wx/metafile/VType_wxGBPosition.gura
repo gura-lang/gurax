@@ -3,4 +3,12 @@
 //==============================================================================
 GBPosition = Class {
 	@include['wx/gbsizer.h']
+	__init__(row as int = 0, col as int = 0)
+	GetCol() as int
+	GetRow() as int
+	SetCol(col as int) as void
+	SetRow(row as int) as void
 }
+
+(const_GBPosition_r == const_GBPosition_r) as bool
+(const_GBPosition_r != const_GBPosition_r) as bool

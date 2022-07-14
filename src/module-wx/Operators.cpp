@@ -102,6 +102,14 @@ Gurax_ImplementOpBinary(Eq, wxDateSpan, wxDateSpan)
 	return new Gurax::Value_Bool(elemResult);
 }
 
+Gurax_ImplementOpBinary(Eq, wxGBPosition, wxGBPosition)
+{
+	const auto& elemL = Value_wxGBPosition::GetEntity(valueL);
+	const auto& elemR = Value_wxGBPosition::GetEntity(valueR);
+	auto elemResult = elemL == elemR;
+	return new Gurax::Value_Bool(elemResult);
+}
+
 Gurax_ImplementOpBinary(Eq, wxPoint, wxPoint)
 {
 	const auto& elemL = Value_wxPoint::GetEntity(valueL);
@@ -178,6 +186,14 @@ Gurax_ImplementOpBinary(Ne, wxDateSpan, wxDateSpan)
 {
 	const auto& elemL = Value_wxDateSpan::GetEntity(valueL);
 	const auto& elemR = Value_wxDateSpan::GetEntity(valueR);
+	auto elemResult = elemL != elemR;
+	return new Gurax::Value_Bool(elemResult);
+}
+
+Gurax_ImplementOpBinary(Ne, wxGBPosition, wxGBPosition)
+{
+	const auto& elemL = Value_wxGBPosition::GetEntity(valueL);
+	const auto& elemR = Value_wxGBPosition::GetEntity(valueR);
 	auto elemResult = elemL != elemR;
 	return new Gurax::Value_Bool(elemResult);
 }
@@ -295,6 +311,7 @@ void AssignOperators(Frame& frame)
 	Gurax_AssignOpBinary(Div, wxPoint, Number);
 	Gurax_AssignOpBinary(Div, wxSize, Number);
 	Gurax_AssignOpBinary(Eq, wxDateSpan, wxDateSpan);
+	Gurax_AssignOpBinary(Eq, wxGBPosition, wxGBPosition);
 	Gurax_AssignOpBinary(Eq, wxPoint, wxPoint);
 	Gurax_AssignOpBinary(Eq, wxRect, wxRect);
 	Gurax_AssignOpBinary(Eq, wxSize, wxSize);
@@ -305,6 +322,7 @@ void AssignOperators(Frame& frame)
 	Gurax_AssignOpBinary(Mul, wxSize, Number);
 	Gurax_AssignOpBinary(Mul, Number, wxSize);
 	Gurax_AssignOpBinary(Ne, wxDateSpan, wxDateSpan);
+	Gurax_AssignOpBinary(Ne, wxGBPosition, wxGBPosition);
 	Gurax_AssignOpBinary(Ne, wxPoint, wxPoint);
 	Gurax_AssignOpBinary(Ne, wxRect, wxRect);
 	Gurax_AssignOpBinary(Ne, wxSize, wxSize);
