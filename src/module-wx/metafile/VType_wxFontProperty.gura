@@ -3,4 +3,10 @@
 //==============================================================================
 FontProperty = Class(PGProperty) {
 	@include['wx/propgrid/advprops.h']
+	__init__(label as const_String_r = wxPG_LABEL, name as const_String_r = wxPG_LABEL, value as const_Font_r = wxFont())
+	OnSetValue() as void
+	ValueToString(value as Variant_r, argFlags as int = 0) as String
+	OnEvent(propgrid as PropertyGrid_p, primary as Window_p, event as Event_r) as bool
+	ChildChanged(thisValue as Variant_r, childIndex as int, childValue as Variant_r) as Variant
+	RefreshChildren() as void
 }

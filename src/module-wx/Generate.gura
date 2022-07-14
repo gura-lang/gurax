@@ -1096,7 +1096,7 @@ Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_g
 	${funcInfo.argInfoTbl::ComposeImplementation()}
 	${end}
 	// Function body
-	${if (funcInfo.tmplFunctionBody)}
+	${if (	funcInfo.tmplFunctionBody)}
 	${funcInfo.tmplFunctionBody.Eval()}
 	${else}
 	return argument_gurax.ReturnValue(processor_gurax, new Value_${funcInfo.GetTypeInfo().vtype}(
