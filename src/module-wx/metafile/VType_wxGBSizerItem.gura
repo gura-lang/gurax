@@ -6,7 +6,12 @@ GBSizerItem = Class(SizerItem) {
 	//wxGBSizerItem(width as int, height as int, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL)
 	//wxGBSizerItem(window as Window_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as a
 	//wxGBSizerItem(sizer as Sizer_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as a
-	//GetEndPos(row as int_r, col as int_r) as void
+	GetEndPos() = \
+		R'''
+		int row, col;
+		pEntity_gurax->GetEndPos(row, col);
+		return Value_Tuple::Create(new Value_Number(row), new Value_Number(col));
+		'''
 	//Intersects(other as const_GBSizerItem_r) as bool
 	Intersects(pos as const_GBPosition_r, span as const_GBSpan_r) as bool
 	SetPos(pos as const_GBPosition_r) as bool
@@ -14,6 +19,11 @@ GBSizerItem = Class(SizerItem) {
 	//GetGBSizer() as GridBagSizer_p
 	SetGBSizer(sizer as GridBagSizer_p) as void
 	GetPos() as GBPosition
-	//GetPos(row as int_r, col as int_r) as void
+	//GetPos() = \
+	//	R'''
+	//	int row, col;
+	//	pEntity_gurax->GetPos(row, col);
+	//	return Value_Tuple::Create(new Value_Number(row), new Value_Number(col));
+	//	'''
 	//GetSpan() as GBSpan
 }

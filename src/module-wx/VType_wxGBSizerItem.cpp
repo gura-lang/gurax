@@ -32,6 +32,27 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.GBSizerItem#GetEndPos()
+Gurax_DeclareMethodAlias(wxGBSizerItem, GetEndPos_gurax, "GetEndPos")
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSizerItem, GetEndPos_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int row, col;
+	pEntity_gurax->GetEndPos(row, col);
+	return Value_Tuple::Create(new Value_Number(row), new Value_Number(col));
+}
+
 // wx.GBSizerItem#Intersects(pos as wx.GBPosition, span as wx.GBSpan)
 Gurax_DeclareMethodAlias(wxGBSizerItem, Intersects_gurax, "Intersects")
 {
@@ -172,6 +193,7 @@ void VType_wxGBSizerItem::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxSizerItem, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGBSizerItem, GetEndPos_gurax));
 	Assign(Gurax_CreateMethod(wxGBSizerItem, Intersects_gurax));
 	Assign(Gurax_CreateMethod(wxGBSizerItem, SetPos_gurax));
 	Assign(Gurax_CreateMethod(wxGBSizerItem, SetSpan_gurax));
