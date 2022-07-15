@@ -3,4 +3,17 @@
 //==============================================================================
 GBSizerItem = Class(SizerItem) {
 	@include['wx/gbsizer.h']
+	//wxGBSizerItem(width as int, height as int, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL)
+	//wxGBSizerItem(window as Window_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as a
+	//wxGBSizerItem(sizer as Sizer_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as a
+	//GetEndPos(row as int_r, col as int_r) as void
+	//Intersects(other as const_GBSizerItem_r) as bool
+	Intersects(pos as const_GBPosition_r, span as const_GBSpan_r) as bool
+	SetPos(pos as const_GBPosition_r) as bool
+	SetSpan(span as const_GBSpan_r) as bool
+	//GetGBSizer() as GridBagSizer_p
+	SetGBSizer(sizer as GridBagSizer_p) as void
+	GetPos() as GBPosition
+	//GetPos(row as int_r, col as int_r) as void
+	//GetSpan() as GBSpan
 }

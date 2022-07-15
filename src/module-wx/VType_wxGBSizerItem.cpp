@@ -32,6 +32,129 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.GBSizerItem#Intersects(pos as wx.GBPosition, span as wx.GBSpan)
+Gurax_DeclareMethodAlias(wxGBSizerItem, Intersects_gurax, "Intersects")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pos", VTYPE_wxGBPosition, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("span", VTYPE_wxGBSpan, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSizerItem, Intersects_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxGBPosition& value_pos = args_gurax.Pick<Value_wxGBPosition>();
+	const wxGBPosition& pos = value_pos.GetEntity();
+	Value_wxGBSpan& value_span = args_gurax.Pick<Value_wxGBSpan>();
+	const wxGBSpan& span = value_span.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->Intersects(pos, span);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GBSizerItem#SetPos(pos as wx.GBPosition)
+Gurax_DeclareMethodAlias(wxGBSizerItem, SetPos_gurax, "SetPos")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("pos", VTYPE_wxGBPosition, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSizerItem, SetPos_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxGBPosition& value_pos = args_gurax.Pick<Value_wxGBPosition>();
+	const wxGBPosition& pos = value_pos.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetPos(pos);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GBSizerItem#SetSpan(span as wx.GBSpan)
+Gurax_DeclareMethodAlias(wxGBSizerItem, SetSpan_gurax, "SetSpan")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("span", VTYPE_wxGBSpan, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSizerItem, SetSpan_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxGBSpan& value_span = args_gurax.Pick<Value_wxGBSpan>();
+	const wxGBSpan& span = value_span.GetEntity();
+	// Function body
+	bool rtn = pEntity_gurax->SetSpan(span);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GBSizerItem#SetGBSizer(sizer as wx.GridBagSizer)
+Gurax_DeclareMethodAlias(wxGBSizerItem, SetGBSizer_gurax, "SetGBSizer")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("sizer", VTYPE_wxGridBagSizer, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSizerItem, SetGBSizer_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxGridBagSizer& value_sizer = args_gurax.Pick<Value_wxGridBagSizer>();
+	wxGridBagSizer* sizer = value_sizer.GetEntityPtr();
+	// Function body
+	pEntity_gurax->SetGBSizer(sizer);
+	return Gurax::Value::nil();
+}
+
+// wx.GBSizerItem#GetPos() {block?}
+Gurax_DeclareMethodAlias(wxGBSizerItem, GetPos_gurax, "GetPos")
+{
+	Declare(VTYPE_wxGBPosition, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSizerItem, GetPos_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBPosition(
+		pEntity_gurax->GetPos()));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +172,11 @@ void VType_wxGBSizerItem::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxSizerItem, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGBSizerItem, Intersects_gurax));
+	Assign(Gurax_CreateMethod(wxGBSizerItem, SetPos_gurax));
+	Assign(Gurax_CreateMethod(wxGBSizerItem, SetSpan_gurax));
+	Assign(Gurax_CreateMethod(wxGBSizerItem, SetGBSizer_gurax));
+	Assign(Gurax_CreateMethod(wxGBSizerItem, GetPos_gurax));
 }
 
 //------------------------------------------------------------------------------
