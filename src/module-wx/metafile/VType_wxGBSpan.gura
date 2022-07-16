@@ -3,4 +3,9 @@
 //==============================================================================
 GBSpan = Class {
 	@include['wx/gbsizer.h']
+	__init__(rowspan as int = 1, colspan as int = 1)
+	GetColspan() as int
+	GetRowspan() as int
+	SetColspan(colspan as int) as void
+	SetRowspan(rowspan as int) as void
 }

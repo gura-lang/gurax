@@ -28,10 +28,119 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
+// wx.GBSpan(rowspan as Number, colspan as Number) {block?}
+Gurax_DeclareConstructorAlias(GBSpan_gurax, "GBSpan")
+{
+	Declare(VTYPE_wxGBSpan, Flag::None);
+	DeclareArg("rowspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("colspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates an instance of wx.GBSpan.");
+}
+
+Gurax_ImplementConstructorEx(GBSpan_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int rowspan = args_gurax.PickNumber<int>();
+	int colspan = args_gurax.PickNumber<int>();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSpan(
+		wxGBSpan(rowspan, colspan)));
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.GBSpan#GetColspan()
+Gurax_DeclareMethodAlias(wxGBSpan, GetColspan_gurax, "GetColspan")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSpan, GetColspan_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetColspan();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GBSpan#GetRowspan()
+Gurax_DeclareMethodAlias(wxGBSpan, GetRowspan_gurax, "GetRowspan")
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSpan, GetRowspan_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int rtn = pEntity_gurax->GetRowspan();
+	return new Gurax::Value_Number(rtn);
+}
+
+// wx.GBSpan#SetColspan(colspan as Number)
+Gurax_DeclareMethodAlias(wxGBSpan, SetColspan_gurax, "SetColspan")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("colspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSpan, SetColspan_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int colspan = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetColspan(colspan);
+	return Gurax::Value::nil();
+}
+
+// wx.GBSpan#SetRowspan(rowspan as Number)
+Gurax_DeclareMethodAlias(wxGBSpan, SetRowspan_gurax, "SetRowspan")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("rowspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGBSpan, SetRowspan_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	int rowspan = args_gurax.PickNumber<int>();
+	// Function body
+	pEntity_gurax->SetRowspan(rowspan);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -47,8 +156,12 @@ void VType_wxGBSpan::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Mutable);
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(GBSpan_gurax));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGBSpan, GetColspan_gurax));
+	Assign(Gurax_CreateMethod(wxGBSpan, GetRowspan_gurax));
+	Assign(Gurax_CreateMethod(wxGBSpan, SetColspan_gurax));
+	Assign(Gurax_CreateMethod(wxGBSpan, SetRowspan_gurax));
 }
 
 //------------------------------------------------------------------------------
