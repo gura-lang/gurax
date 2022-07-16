@@ -3,9 +3,86 @@
 //==============================================================================
 GBSizerItem = Class(SizerItem) {
 	@include['wx/gbsizer.h']
-	//wxGBSizerItem(width as int, height as int, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL)
-	//wxGBSizerItem(window as Window_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as a
-	//wxGBSizerItem(sizer as Sizer_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData as Object_p = NULL) as a
+	__init__(args* as any) = \
+		R'''
+		// wxGBSizerItem(width as int, height as int, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData? as any)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("width", VTYPE_Number);
+				pDeclCallable->DeclareArg("height", VTYPE_Number);
+				pDeclCallable->DeclareArg("pos", VTYPE_wxGBPosition);
+				pDeclCallable->DeclareArg("span", VTYPE_wxGBSpan, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("flag", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("border", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("userData", VTYPE_Any, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			int width = args.PickNumber<int>();
+			int height = args.PickNumber<int>();
+			const wxGBPosition& pos = args.Pick<Value_wxGBPosition>().GetEntity();
+			const wxGBSpan& span = args.IsValid()? args.Pick<Value_wxGBSpan>().GetEntity() : wxDefaultSpan;
+			int flag = args.IsValid()? args.PickNumber<int>() : 0;
+			int border = args.IsValid()? args.PickNumber<int>() : 0;
+			RefPtr<Value> pValueUserData(args.IsValid()? args.PickValue().Reference() : Value::nil()); 
+			return new Value_wxGBSizerItem(wxGBSizerItem(width, height, pos, span, flag, border, nullptr));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxGBSizerItem(window as Window_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData? as Object_p)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("window", VTYPE_wxWindow);
+				pDeclCallable->DeclareArg("pos", VTYPE_wxGBPosition);
+				pDeclCallable->DeclareArg("span", VTYPE_wxGBSpan, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("flag", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("border", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("userData", VTYPE_Any, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxWindow* window = args.Pick<Value_wxWindow>().GetEntityPtr();
+			const wxGBPosition& pos = args.Pick<Value_wxGBPosition>().GetEntity();
+			const wxGBSpan& span = args.IsValid()? args.Pick<Value_wxGBSpan>().GetEntity() : wxDefaultSpan;
+			int flag = args.IsValid()? args.PickNumber<int>() : 0;
+			int border = args.IsValid()? args.PickNumber<int>() : 0;
+			RefPtr<Value> pValueUserData(args.IsValid()? args.PickValue().Reference() : Value::nil()); 
+			return new Value_wxGBSizerItem(wxGBSizerItem(window, pos, span, flag, border, nullptr));
+		} while (0);
+		Error::ClearIssuedFlag();
+		// wxGBSizerItem(sizer as Sizer_p, pos as const_GBPosition_r, span as const_GBSpan_r = wxDefaultSpan, flag as int = 0, border as int = 0, userData? as Object_p)
+		do {
+			static DeclCallable* pDeclCallable = nullptr;
+			if (!pDeclCallable) {
+				pDeclCallable = new DeclCallable();
+				pDeclCallable->DeclareArg("sizer", VTYPE_wxSizer);
+				pDeclCallable->DeclareArg("pos", VTYPE_wxGBPosition);
+				pDeclCallable->DeclareArg("span", VTYPE_wxGBSpan, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("flag", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("border", VTYPE_Number, DeclArg::Occur::ZeroOrOnce);
+				pDeclCallable->DeclareArg("userData", VTYPE_Any, DeclArg::Occur::ZeroOrOnce);
+			}
+			RefPtr<Argument> pArgument(new Argument(processor_gurax, pDeclCallable->Reference()));
+			if (!pArgument->FeedValuesAndComplete(processor_gurax, args)) break;
+			Error::Clear();
+			ArgPicker args(*pArgument);
+			wxSizer* sizer = args.Pick<Value_wxSizer>().GetEntityPtr();
+			const wxGBPosition& pos = args.Pick<Value_wxGBPosition>().GetEntity();
+			const wxGBSpan& span = args.IsValid()? args.Pick<Value_wxGBSpan>().GetEntity() : wxDefaultSpan;
+			int flag = args.IsValid()? args.PickNumber<int>() : 0;
+			int border = args.IsValid()? args.PickNumber<int>() : 0;
+			RefPtr<Value> pValueUserData(args.IsValid()? args.PickValue().Reference() : Value::nil()); 
+			return new Value_wxGBSizerItem(wxGBSizerItem(sizer, pos, span, flag, border, nullptr));
+		} while (0);
+		return Value::nil();
+		'''
 	GetEndPos() = \
 		R'''
 		int row, col;
@@ -19,11 +96,11 @@ GBSizerItem = Class(SizerItem) {
 	//GetGBSizer() as GridBagSizer_p
 	SetGBSizer(sizer as GridBagSizer_p) as void
 	GetPos() as GBPosition
-	//GetPos() = \
-	//	R'''
-	//	int row, col;
-	//	pEntity_gurax->GetPos(row, col);
-	//	return Value_Tuple::Create(new Value_Number(row), new Value_Number(col));
-	//	'''
+	GetPosTuple() as Tuple@gurax = \
+		R'''
+		int row, col;
+		pEntity_gurax->GetPos(row, col);
+		return Value_Tuple::Create(new Value_Number(row), new Value_Number(col));
+		'''
 	//GetSpan() as GBSpan
 }
