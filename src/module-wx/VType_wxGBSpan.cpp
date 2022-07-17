@@ -28,12 +28,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// wx.GBSpan(rowspan as Number, colspan as Number) {block?}
+// wx.GBSpan(rowspan? as Number, colspan? as Number) {block?}
 Gurax_DeclareConstructorAlias(GBSpan_gurax, "GBSpan")
 {
 	Declare(VTYPE_wxGBSpan, Flag::None);
-	DeclareArg("rowspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("colspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("rowspan", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("colspan", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -44,8 +44,10 @@ Gurax_ImplementConstructorEx(GBSpan_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	int rowspan = args_gurax.PickNumber<int>();
-	int colspan = args_gurax.PickNumber<int>();
+	bool rowspan_validFlag = args_gurax.IsValid();
+	int rowspan = rowspan_validFlag? args_gurax.PickNumber<int>() : 1;
+	bool colspan_validFlag = args_gurax.IsValid();
+	int colspan = colspan_validFlag? args_gurax.PickNumber<int>() : 1;
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGBSpan(
 		wxGBSpan(rowspan, colspan)));

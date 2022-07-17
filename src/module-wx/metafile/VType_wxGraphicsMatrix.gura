@@ -3,4 +3,34 @@
 //==============================================================================
 GraphicsMatrix = Class(GraphicsObject) {
 	@include['wx/graphics.h']
+	Concat(t as const_GraphicsMatrix_p) as void
+	//Concat(t as const_GraphicsMatrix_r) as void
+	//Get(a as Double_p = NULL, b as Double_p = NULL, c as Double_p = NULL, d as Double_p = NULL, tx as Double_p = NULL, ty as Double_p = NULL) as void
+	Get() as Tuple@gurax = \
+		R'''
+		wxDouble a, b, c, d, tx, ty;
+		pEntity_gurax->Get(&a, &b, &c, &d, &tx, &ty);
+		return Value_Tuple::Create(new Value_Number(a), new Value_Number(b), new Value_Number(c), new Value_Number(d), new Value_Number(tx), new Value_Number(ty));
+		'''
+	GetNativeMatrix() as void_p
+	Invert() as void
+	IsEqual(t as const_GraphicsMatrix_p) as bool
+	//IsEqual(t as const_GraphicsMatrix_r) as bool
+	IsIdentity() as bool
+	Rotate(angle as Double) as void
+	Scale(xScale as Double, yScale as Double) as void
+	Set(a as Double = 1.0, b as Double = 0.0, c as Double = 0.0, d as Double = 1.0, tx as Double = 0.0, ty as Double = 0.0) as void
+	//TransformDistance(dx as Double_p, dy as Double_p) as void
+	TransformDistance(dx as Double, dy as Double) as Tuple@gurax = \
+		R'''
+		pEntity_gurax->TransformDistance(&dx, &dy);
+		return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+		'''
+	//TransformPoint(x as Double_p, y as Double_p) as void
+	TransformPoint(x as Double, y as Double) as Tuple@gurax = \
+		R'''
+		pEntity_gurax->TransformPoint(&x, &y);
+		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+		'''
+	Translate(dx as Double, dy as Double) as void
 }

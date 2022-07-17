@@ -32,6 +32,303 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// wx.GraphicsMatrix#Concat(t as wx.GraphicsMatrix)
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, Concat_gurax, "Concat")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("t", VTYPE_wxGraphicsMatrix, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, Concat_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxGraphicsMatrix& value_t = args_gurax.Pick<Value_wxGraphicsMatrix>();
+	const wxGraphicsMatrix* t = value_t.GetEntityPtr();
+	// Function body
+	pEntity_gurax->Concat(t);
+	return Gurax::Value::nil();
+}
+
+// wx.GraphicsMatrix#Get()
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, Get_gurax, "Get")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, Get_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxDouble a, b, c, d, tx, ty;
+	pEntity_gurax->Get(&a, &b, &c, &d, &tx, &ty);
+	return Value_Tuple::Create(new Value_Number(a), new Value_Number(b), new Value_Number(c), new Value_Number(d), new Value_Number(tx), new Value_Number(ty));
+}
+
+// wx.GraphicsMatrix#GetNativeMatrix()
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, GetNativeMatrix_gurax, "GetNativeMatrix")
+{
+	Declare(VTYPE_Pointer, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, GetNativeMatrix_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	
+}
+
+// wx.GraphicsMatrix#Invert()
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, Invert_gurax, "Invert")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, Invert_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	pEntity_gurax->Invert();
+	return Gurax::Value::nil();
+}
+
+// wx.GraphicsMatrix#IsEqual(t as wx.GraphicsMatrix)
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, IsEqual_gurax, "IsEqual")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("t", VTYPE_wxGraphicsMatrix, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, IsEqual_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxGraphicsMatrix& value_t = args_gurax.Pick<Value_wxGraphicsMatrix>();
+	const wxGraphicsMatrix* t = value_t.GetEntityPtr();
+	// Function body
+	bool rtn = pEntity_gurax->IsEqual(t);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GraphicsMatrix#IsIdentity()
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, IsIdentity_gurax, "IsIdentity")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, IsIdentity_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	bool rtn = pEntity_gurax->IsIdentity();
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GraphicsMatrix#Rotate(angle as Number)
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, Rotate_gurax, "Rotate")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, Rotate_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Double angle = args_gurax.PickNumber<Double>();
+	// Function body
+	pEntity_gurax->Rotate(angle);
+	return Gurax::Value::nil();
+}
+
+// wx.GraphicsMatrix#Scale(xScale as Number, yScale as Number)
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, Scale_gurax, "Scale")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("xScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("yScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, Scale_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Double xScale = args_gurax.PickNumber<Double>();
+	Double yScale = args_gurax.PickNumber<Double>();
+	// Function body
+	pEntity_gurax->Scale(xScale, yScale);
+	return Gurax::Value::nil();
+}
+
+// wx.GraphicsMatrix#Set(a? as Number, b? as Number, c? as Number, d? as Number, tx? as Number, ty? as Number)
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, Set_gurax, "Set")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("a", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("b", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("c", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("d", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("tx", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("ty", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, Set_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	bool a_validFlag = args_gurax.IsValid();
+	Double a = a_validFlag? args_gurax.PickNumber<Double>() : 1.0;
+	bool b_validFlag = args_gurax.IsValid();
+	Double b = b_validFlag? args_gurax.PickNumber<Double>() : 0.0;
+	bool c_validFlag = args_gurax.IsValid();
+	Double c = c_validFlag? args_gurax.PickNumber<Double>() : 0.0;
+	bool d_validFlag = args_gurax.IsValid();
+	Double d = d_validFlag? args_gurax.PickNumber<Double>() : 1.0;
+	bool tx_validFlag = args_gurax.IsValid();
+	Double tx = tx_validFlag? args_gurax.PickNumber<Double>() : 0.0;
+	bool ty_validFlag = args_gurax.IsValid();
+	Double ty = ty_validFlag? args_gurax.PickNumber<Double>() : 0.0;
+	// Function body
+	pEntity_gurax->Set(a, b, c, d, tx, ty);
+	return Gurax::Value::nil();
+}
+
+// wx.GraphicsMatrix#TransformDistance(dx as Number, dy as Number)
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, TransformDistance_gurax, "TransformDistance")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, TransformDistance_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Double dx = args_gurax.PickNumber<Double>();
+	Double dy = args_gurax.PickNumber<Double>();
+	// Function body
+	pEntity_gurax->TransformDistance(&dx, &dy);
+	return Value_Tuple::Create(new Value_Number(dx), new Value_Number(dy));
+}
+
+// wx.GraphicsMatrix#TransformPoint(x as Number, y as Number)
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, TransformPoint_gurax, "TransformPoint")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, TransformPoint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Double x = args_gurax.PickNumber<Double>();
+	Double y = args_gurax.PickNumber<Double>();
+	// Function body
+	pEntity_gurax->TransformPoint(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// wx.GraphicsMatrix#Translate(dx as Number, dy as Number)
+Gurax_DeclareMethodAlias(wxGraphicsMatrix, Translate_gurax, "Translate")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsMatrix, Translate_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Double dx = args_gurax.PickNumber<Double>();
+	Double dy = args_gurax.PickNumber<Double>();
+	// Function body
+	pEntity_gurax->Translate(dx, dy);
+	return Gurax::Value::nil();
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -49,6 +346,18 @@ void VType_wxGraphicsMatrix::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_wxGraphicsObject, Flag::Mutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Concat_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Get_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, GetNativeMatrix_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Invert_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, IsEqual_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, IsIdentity_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Rotate_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Scale_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Set_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, TransformDistance_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, TransformPoint_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Translate_gurax));
 }
 
 //------------------------------------------------------------------------------

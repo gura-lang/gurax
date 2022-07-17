@@ -4,15 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxPGValidationInfo.cpp
-	VType_wxPGEditor.cpp
-	VType_wxPGChoiceEditor.cpp
-	VType_wxPGCellRenderer.cpp
-	VType_wxPGEditorDialogAdapter.cpp
-	VType_wxPGPropertyFlags.cpp
-	VType_wxPGAttributeStorage.cpp
-	VType_wxPGCell.cpp
-	VType_wxPGChoices.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorEntry.cpp
 	VType_wxAcceleratorTable.cpp
@@ -172,6 +163,7 @@ set(SRCFILES_VTYPE
 	VType_wxGraphicsMatrix.cpp
 	VType_wxGraphicsObject.cpp
 	VType_wxGraphicsPath.cpp
+	VType_wxGraphicsRenderer.cpp
 	VType_wxGrid.cpp
 	VType_wxGridBagSizer.cpp
 	VType_wxGridCellAttr.cpp

@@ -12,15 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxPGValidationInfo);
-	frame.Assign(VTYPE_wxPGEditor);
-	frame.Assign(VTYPE_wxPGChoiceEditor);
-	frame.Assign(VTYPE_wxPGCellRenderer);
-	frame.Assign(VTYPE_wxPGEditorDialogAdapter);
-	frame.Assign(VTYPE_wxPGPropertyFlags);
-	frame.Assign(VTYPE_wxPGAttributeStorage);
-	frame.Assign(VTYPE_wxPGCell);
-	frame.Assign(VTYPE_wxPGChoices);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorEntry);
 	frame.Assign(VTYPE_wxAcceleratorTable);
@@ -180,6 +171,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGraphicsMatrix);
 	frame.Assign(VTYPE_wxGraphicsObject);
 	frame.Assign(VTYPE_wxGraphicsPath);
+	frame.Assign(VTYPE_wxGraphicsRenderer);
 	frame.Assign(VTYPE_wxGrid);
 	frame.Assign(VTYPE_wxGridBagSizer);
 	frame.Assign(VTYPE_wxGridCellAttr);

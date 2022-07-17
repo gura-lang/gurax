@@ -1,8 +1,6 @@
 //==============================================================================
-// VType_wxGraphicsObject.gura
+// VType_wxGraphicsRenderer.gura
 //==============================================================================
-GraphicsObject = Class(Object) {
+GraphicsRenderer = Class():loosePointer {
 	@include['wx/graphics.h']
-	GetRenderer() as GraphicsRenderer_p
-	IsNull() as bool
 }
