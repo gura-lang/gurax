@@ -4,6 +4,14 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
+	VType_wxGraphicsContext.cpp
+	VType_wxGraphicsBitmap.cpp
+	VType_wxGraphicsBrush.cpp
+	VType_wxGraphicsFont.cpp
+	VType_wxGraphicsMatrix.cpp
+	VType_wxGraphicsPath.cpp
+	VType_wxGraphicsGradientStops.cpp
+	VType_wxPrinterDC.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorEntry.cpp
 	VType_wxAcceleratorTable.cpp

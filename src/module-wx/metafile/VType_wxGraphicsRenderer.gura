@@ -3,4 +3,28 @@
 //==============================================================================
 GraphicsRenderer = Class():loosePointer {
 	@include['wx/graphics.h']
+	//CreateBitmap(bitmap as const_Bitmap_r) as GraphicsBitmap
+	CreateBitmapFromImage(image as const_Image_r) as GraphicsBitmap
+		CreateImageFromBitmap(bmp as const_GraphicsBitmap_r) as Image
+	CreateBitmapFromNativeBitmap(bitmap as void_p) as GraphicsBitmap
+	CreateContext(window as Window_p) as GraphicsContext_p
+	//CreateContext(windowDC as const_WindowDC_r) as GraphicsContext_p
+	//CreateContext(memoryDC as const_MemoryDC_r) as GraphicsContext_p
+	//CreateContext(printerDC as const_PrinterDC_r) as GraphicsContext_p
+	//CreateContext(metaFileDC as const_EnhMetaFileDC_r) as GraphicsContext_p
+	CreateContextFromImage(image as Image_r) as GraphicsContext_p
+	CreateBrush(brush as const_Brush_r) as GraphicsBrush
+	CreateContextFromNativeContext(context as void_p) as GraphicsContext_p
+	CreateContextFromNativeWindow(window as void_p) as GraphicsContext_p
+	CreateMeasuringContext() as GraphicsContext_p
+	CreateFont(font as const_Font_r, col as const_Colour_r = *wxBLACK) as GraphicsFont
+	//CreateFont(sizeInPixels as double, facename as const_String_r, flags as int = wxFONTFLAG_DEFAULT, col as const_Colour_r = *wxBLACK) as GraphicsFont
+	CreateLinearGradientBrush(x1 as Double, y1 as Double, x2 as Double, y2 as Double, stops as const_GraphicsGradientStops_r) as GraphicsBrush
+	CreateMatrix(a as Double = 1.0, b as Double = 0.0, c as Double = 0.0, d as Double = 1.0, tx as Double = 0.0, ty as Double = 0.0) as GraphicsMatrix
+	CreatePath() as GraphicsPath
+	//CreatePen(pen as const_Pen_r) as GraphicsPen
+	CreateRadialGradientBrush(xo as Double, yo as Double, xc as Double, yc as Double, radius as Double, stops as const_GraphicsGradientStops_r) as GraphicsBrush
+	CreateSubBitmap(bitmap as const_GraphicsBitmap_r, x as Double, y as Double, w as Double, h as Double) as GraphicsBitmap
+	GetDefaultRenderer():static as GraphicsRenderer_p
+	GetCairoRenderer():static as GraphicsRenderer_p
 }

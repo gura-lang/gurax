@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxGraphicsMatrix.gura
+// VType_wxGraphicsFont.gura
 //==============================================================================
-GraphicsMatrix = Class(GraphicsObject) {
+GraphicsFont = Class(GraphicsObject) {
 	@include['wx/graphics.h']
 }

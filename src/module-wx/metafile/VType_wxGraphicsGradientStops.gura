@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxGraphicsMatrix.gura
+// VType_wxGraphicsGradientStops.gura
 //==============================================================================
-GraphicsMatrix = Class(GraphicsObject) {
+GraphicsGradientStops = Class {
 	@include['wx/graphics.h']
 }

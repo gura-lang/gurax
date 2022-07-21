@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxGraphicsMatrix.gura
+// VType_wxGraphicsBitmap.gura
 //==============================================================================
-GraphicsMatrix = Class(GraphicsObject) {
+GraphicsBitmap = Class(GraphicsObject) {
 	@include['wx/graphics.h']
 }

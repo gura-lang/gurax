@@ -12,6 +12,14 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
+	frame.Assign(VTYPE_wxGraphicsContext);
+	frame.Assign(VTYPE_wxGraphicsBitmap);
+	frame.Assign(VTYPE_wxGraphicsBrush);
+	frame.Assign(VTYPE_wxGraphicsFont);
+	frame.Assign(VTYPE_wxGraphicsMatrix);
+	frame.Assign(VTYPE_wxGraphicsPath);
+	frame.Assign(VTYPE_wxGraphicsGradientStops);
+	frame.Assign(VTYPE_wxPrinterDC);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorEntry);
 	frame.Assign(VTYPE_wxAcceleratorTable);

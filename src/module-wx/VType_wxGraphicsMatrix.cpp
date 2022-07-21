@@ -78,25 +78,6 @@ Gurax_ImplementMethodEx(wxGraphicsMatrix, Get_gurax, processor_gurax, argument_g
 	return Value_Tuple::Create(new Value_Number(a), new Value_Number(b), new Value_Number(c), new Value_Number(d), new Value_Number(tx), new Value_Number(ty));
 }
 
-// wx.GraphicsMatrix#GetNativeMatrix()
-Gurax_DeclareMethodAlias(wxGraphicsMatrix, GetNativeMatrix_gurax, "GetNativeMatrix")
-{
-	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethodEx(wxGraphicsMatrix, GetNativeMatrix_gurax, processor_gurax, argument_gurax)
-{
-	// Target
-	auto& valueThis_gurax = GetValueThis(argument_gurax);
-	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
-	if (!pEntity_gurax) return Value::nil();
-	// Function body
-	
-}
-
 // wx.GraphicsMatrix#Invert()
 Gurax_DeclareMethodAlias(wxGraphicsMatrix, Invert_gurax, "Invert")
 {
@@ -348,7 +329,6 @@ void VType_wxGraphicsMatrix::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Concat_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Get_gurax));
-	Assign(Gurax_CreateMethod(wxGraphicsMatrix, GetNativeMatrix_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsMatrix, Invert_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsMatrix, IsEqual_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsMatrix, IsIdentity_gurax));

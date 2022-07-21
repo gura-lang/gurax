@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxGraphicsMatrix.gura
+// VType_wxGraphicsContext.gura
 //==============================================================================
-GraphicsMatrix = Class(GraphicsObject) {
+GraphicsContext = Class(GraphicsObject) {
 	@include['wx/graphics.h']
 }

@@ -1,6 +1,6 @@
 //==============================================================================
-// VType_wxGraphicsMatrix.gura
+// VType_wxPrinterDC.gura
 //==============================================================================
-GraphicsMatrix = Class(GraphicsObject) {
-	@include['wx/graphics.h']
+PrinterDC = Class(DC) {
+	@include['wx/dcprint.h']
 }

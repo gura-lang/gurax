@@ -3,29 +3,4 @@
 //==============================================================================
 GraphicsPath = Class(GraphicsObject) {
 	@include['wx/graphics.h']
-	AddArcToPoint(x1 as Double, y1 as Double, x2 as Double, y2 as Double, r as Double) as void
-	AddCircle(x as Double, y as Double, r as Double) as void
-	AddCurveToPoint(cx1 as Double, cy1 as Double, cx2 as Double, cy2 as Double, x as Double, y as Double) as void
-	//AddCurveToPoint(c1 as const_Point2DDouble_r, c2 as const_Point2DDouble_r, e as const_Point2DDouble_r) as void
-	AddEllipse(x as Double, y as Double, w as Double, h as Double) as void
-	AddLineToPoint(x as Double, y as Double) as void
-	//AddLineToPoint(p as const_Point2DDouble_r) as void
-	AddPath(path as const_GraphicsPath_r) as void
-	AddQuadCurveToPoint(cx as Double, cy as Double, x as Double, y as Double) as void
-	AddRectangle(x as Double, y as Double, w as Double, h as Double) as void
-	AddRoundedRectangle(x as Double, y as Double, w as Double, h as Double, radius as Double) as void
-	CloseSubpath() as void
-	Contains(c as const_Point2DDouble_r, fillStyle as PolygonFillMode = wxODDEVEN_RULE) as bool
-	//Contains(x as Double, y as Double, fillStyle as PolygonFillMode = wxODDEVEN_RULE) as bool
-	GetBox() as Rect2DDouble
-	//GetBox(x as Double_p, y as Double_p, w as Double_p, h as Double_p) as void
-	//GetCurrentPoint(x as Double_p, y as Double_p) as void
-	GetCurrentPoint() as Point2DDouble
-	//GetNativePath() as void_p
-	MoveToPoint(x as Double, y as Double) as void
-	//MoveToPoint(p as const_Point2DDouble_r) as void
-	Transform(matrix as const_GraphicsMatrix_r) as void
-	UnGetNativePath(p as void_p) as void
-	AddArc(x as Double, y as Double, r as Double, startAngle as Double, endAngle as Double, clockwise as bool) as void
-	//AddArc(c as const_Point2DDouble_r, r as Double, startAngle as Double, endAngle as Double, clockwise as bool) as void
 }

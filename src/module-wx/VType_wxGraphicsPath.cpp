@@ -126,6 +126,37 @@ Gurax_ImplementMethodEx(wxGraphicsPath, AddCurveToPoint_gurax, processor_gurax, 
 	return Gurax::Value::nil();
 }
 
+// wx.GraphicsPath#AddCurveToPoint2D(c1 as wx.Point2DDouble, c2 as wx.Point2DDouble, e as wx.Point2DDouble)
+Gurax_DeclareMethodAlias(wxGraphicsPath, AddCurveToPoint2D_gurax, "AddCurveToPoint2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("c1", VTYPE_wxPoint2DDouble, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("c2", VTYPE_wxPoint2DDouble, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("e", VTYPE_wxPoint2DDouble, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsPath, AddCurveToPoint2D_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint2DDouble& value_c1 = args_gurax.Pick<Value_wxPoint2DDouble>();
+	const wxPoint2DDouble& c1 = value_c1.GetEntity();
+	Value_wxPoint2DDouble& value_c2 = args_gurax.Pick<Value_wxPoint2DDouble>();
+	const wxPoint2DDouble& c2 = value_c2.GetEntity();
+	Value_wxPoint2DDouble& value_e = args_gurax.Pick<Value_wxPoint2DDouble>();
+	const wxPoint2DDouble& e = value_e.GetEntity();
+	// Function body
+	pEntity_gurax->AddCurveToPoint(c1, c2, e);
+	return Gurax::Value::nil();
+}
+
 // wx.GraphicsPath#AddEllipse(x as Number, y as Number, w as Number, h as Number)
 Gurax_DeclareMethodAlias(wxGraphicsPath, AddEllipse_gurax, "AddEllipse")
 {
@@ -179,6 +210,31 @@ Gurax_ImplementMethodEx(wxGraphicsPath, AddLineToPoint_gurax, processor_gurax, a
 	Double y = args_gurax.PickNumber<Double>();
 	// Function body
 	pEntity_gurax->AddLineToPoint(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.GraphicsPath#AddLineToPoint2D(p as wx.Point2DDouble)
+Gurax_DeclareMethodAlias(wxGraphicsPath, AddLineToPoint2D_gurax, "AddLineToPoint2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("p", VTYPE_wxPoint2DDouble, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsPath, AddLineToPoint2D_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint2DDouble& value_p = args_gurax.Pick<Value_wxPoint2DDouble>();
+	const wxPoint2DDouble& p = value_p.GetEntity();
+	// Function body
+	pEntity_gurax->AddLineToPoint(p);
 	return Gurax::Value::nil();
 }
 
@@ -319,8 +375,37 @@ Gurax_ImplementMethodEx(wxGraphicsPath, CloseSubpath_gurax, processor_gurax, arg
 	return Gurax::Value::nil();
 }
 
-// wx.GraphicsPath#Contains(c as wx.Point2DDouble, fillStyle? as Number)
+// wx.GraphicsPath#Contains(x as Number, y as Number, fillStyle? as Number)
 Gurax_DeclareMethodAlias(wxGraphicsPath, Contains_gurax, "Contains")
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fillStyle", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsPath, Contains_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Double x = args_gurax.PickNumber<Double>();
+	Double y = args_gurax.PickNumber<Double>();
+	bool fillStyle_validFlag = args_gurax.IsValid();
+	wxPolygonFillMode fillStyle = fillStyle_validFlag? args_gurax.PickNumber<wxPolygonFillMode>() : wxODDEVEN_RULE;
+	// Function body
+	bool rtn = pEntity_gurax->Contains(x, y, fillStyle);
+	return new Gurax::Value_Bool(rtn);
+}
+
+// wx.GraphicsPath#ContainsPoint2D(c as wx.Point2DDouble, fillStyle? as Number)
+Gurax_DeclareMethodAlias(wxGraphicsPath, ContainsPoint2D_gurax, "ContainsPoint2D")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("c", VTYPE_wxPoint2DDouble, ArgOccur::Once, ArgFlag::None);
@@ -330,7 +415,7 @@ Gurax_DeclareMethodAlias(wxGraphicsPath, Contains_gurax, "Contains")
 		"");
 }
 
-Gurax_ImplementMethodEx(wxGraphicsPath, Contains_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxGraphicsPath, ContainsPoint2D_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -347,11 +432,31 @@ Gurax_ImplementMethodEx(wxGraphicsPath, Contains_gurax, processor_gurax, argumen
 	return new Gurax::Value_Bool(rtn);
 }
 
-// wx.GraphicsPath#GetBox() {block?}
-Gurax_DeclareMethodAlias(wxGraphicsPath, GetBox_gurax, "GetBox")
+// wx.GraphicsPath#GetBoxRect2D() {block?}
+Gurax_DeclareMethodAlias(wxGraphicsPath, GetBoxRect2D_gurax, "GetBoxRect2D")
 {
 	Declare(VTYPE_wxRect2DDouble, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsPath, GetBoxRect2D_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect2DDouble(
+		pEntity_gurax->GetBox()));
+}
+
+// wx.GraphicsPath#GetBox()
+Gurax_DeclareMethodAlias(wxGraphicsPath, GetBox_gurax, "GetBox")
+{
+	Declare(VTYPE_Tuple, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -364,12 +469,34 @@ Gurax_ImplementMethodEx(wxGraphicsPath, GetBox_gurax, processor_gurax, argument_
 	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
 	if (!pEntity_gurax) return Value::nil();
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxRect2DDouble(
-		pEntity_gurax->GetBox()));
+	wxDouble x, y, w, h;
+	pEntity_gurax->GetBox(&x, &y, &w, &h);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y), new Value_Number(w), new Value_Number(h));
 }
 
-// wx.GraphicsPath#GetCurrentPoint() {block?}
+// wx.GraphicsPath#GetCurrentPoint()
 Gurax_DeclareMethodAlias(wxGraphicsPath, GetCurrentPoint_gurax, "GetCurrentPoint")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsPath, GetCurrentPoint_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	wxDouble x, y;
+	pEntity_gurax->GetCurrentPoint(&x, &y);
+	return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
+}
+
+// wx.GraphicsPath#GetCurrentPoint2D() {block?}
+Gurax_DeclareMethodAlias(wxGraphicsPath, GetCurrentPoint2D_gurax, "GetCurrentPoint2D")
 {
 	Declare(VTYPE_wxPoint2DDouble, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
@@ -378,7 +505,7 @@ Gurax_DeclareMethodAlias(wxGraphicsPath, GetCurrentPoint_gurax, "GetCurrentPoint
 		"");
 }
 
-Gurax_ImplementMethodEx(wxGraphicsPath, GetCurrentPoint_gurax, processor_gurax, argument_gurax)
+Gurax_ImplementMethodEx(wxGraphicsPath, GetCurrentPoint2D_gurax, processor_gurax, argument_gurax)
 {
 	// Target
 	auto& valueThis_gurax = GetValueThis(argument_gurax);
@@ -412,6 +539,31 @@ Gurax_ImplementMethodEx(wxGraphicsPath, MoveToPoint_gurax, processor_gurax, argu
 	Double y = args_gurax.PickNumber<Double>();
 	// Function body
 	pEntity_gurax->MoveToPoint(x, y);
+	return Gurax::Value::nil();
+}
+
+// wx.GraphicsPath#MoveToPoint2D(p as wx.Point2DDouble)
+Gurax_DeclareMethodAlias(wxGraphicsPath, MoveToPoint2D_gurax, "MoveToPoint2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("p", VTYPE_wxPoint2DDouble, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsPath, MoveToPoint2D_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint2DDouble& value_p = args_gurax.Pick<Value_wxPoint2DDouble>();
+	const wxPoint2DDouble& p = value_p.GetEntity();
+	// Function body
+	pEntity_gurax->MoveToPoint(p);
 	return Gurax::Value::nil();
 }
 
@@ -502,6 +654,39 @@ Gurax_ImplementMethodEx(wxGraphicsPath, AddArc_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
+// wx.GraphicsPath#AddArcPoint2D(c as wx.Point2DDouble, r as Number, startAngle as Number, endAngle as Number, clockwise as Bool)
+Gurax_DeclareMethodAlias(wxGraphicsPath, AddArcPoint2D_gurax, "AddArcPoint2D")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("c", VTYPE_wxPoint2DDouble, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("startAngle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("endAngle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("clockwise", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGraphicsPath, AddArcPoint2D_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	Value_wxPoint2DDouble& value_c = args_gurax.Pick<Value_wxPoint2DDouble>();
+	const wxPoint2DDouble& c = value_c.GetEntity();
+	Double r = args_gurax.PickNumber<Double>();
+	Double startAngle = args_gurax.PickNumber<Double>();
+	Double endAngle = args_gurax.PickNumber<Double>();
+	bool clockwise = args_gurax.PickBool();
+	// Function body
+	pEntity_gurax->AddArc(c, r, startAngle, endAngle, clockwise);
+	return Gurax::Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -521,20 +706,27 @@ void VType_wxGraphicsPath::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddArcToPoint_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddCircle_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddCurveToPoint_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsPath, AddCurveToPoint2D_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddEllipse_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddLineToPoint_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsPath, AddLineToPoint2D_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddPath_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddQuadCurveToPoint_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddRectangle_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddRoundedRectangle_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, CloseSubpath_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, Contains_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsPath, ContainsPoint2D_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsPath, GetBoxRect2D_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, GetBox_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, GetCurrentPoint_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsPath, GetCurrentPoint2D_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, MoveToPoint_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsPath, MoveToPoint2D_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, Transform_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, UnGetNativePath_gurax));
 	Assign(Gurax_CreateMethod(wxGraphicsPath, AddArc_gurax));
+	Assign(Gurax_CreateMethod(wxGraphicsPath, AddArcPoint2D_gurax));
 }
 
 //------------------------------------------------------------------------------
