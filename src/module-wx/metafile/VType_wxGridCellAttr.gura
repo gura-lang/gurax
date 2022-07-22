@@ -3,4 +3,41 @@
 //==============================================================================
 GridCellAttr = Class(ClientDataContainer) {
 	@include['wx/grid.h']
+	//__init__(colText as const_Colour_r, colBack as const_Colour_r, font as const_Font_r, hAlign as int, vAlign as int)
+	/*
+	Clone() as GridCellAttr_p
+	DecRef() as void
+	//GetAlignment(hAlign as int_p, vAlign as int_p) as void
+	GetBackgroundColour() as Colour
+	GetEditor(grid as const_Grid_p, row as int, col as int) as GridCellEditor_p
+	GetFont() as Font
+	//GetNonDefaultAlignment(hAlign as int_p, vAlign as int_p) as void
+	GetRenderer(grid as const_Grid_p, row as int, col as int) as GridCellRenderer_p
+	GetTextColour() as Colour
+	HasAlignment() as bool
+	HasBackgroundColour() as bool
+	HasEditor() as bool
+	HasFont() as bool
+	HasRenderer() as bool
+	HasTextColour() as bool
+	IncRef() as void
+	IsReadOnly() as bool
+	SetAlignment(hAlign as int, vAlign as int) as void
+	SetBackgroundColour(colBack as const_Colour_r) as void
+	SetDefAttr(defAttr as GridCellAttr_p) as void
+	SetEditor(editor as GridCellEditor_p) as void
+	SetFont(font as const_Font_r) as void
+	SetReadOnly(isReadOnly as bool = true) as void
+	SetRenderer(renderer as GridCellRenderer_p) as void
+	SetTextColour(colText as const_Colour_r) as void
+	MergeWith(mergefrom as GridCellAttr_p) as void
+	SetSize(num_rows as int, num_cols as int) as void
+	SetOverflow(allow as bool = true) as void
+	//SetKind(kind as AttrKind) as void
+	HasReadWriteMode() as bool
+	HasOverflowMode() as bool
+	HasSize() as bool
+	//1GetSize(num_rows as int_p, num_cols as int_p) as void
+	GetOverflow() as bool
+	//GetKind() as AttrKind */
 }

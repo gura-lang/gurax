@@ -12,14 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxGraphicsContext);
-	frame.Assign(VTYPE_wxGraphicsBitmap);
-	frame.Assign(VTYPE_wxGraphicsBrush);
-	frame.Assign(VTYPE_wxGraphicsFont);
-	frame.Assign(VTYPE_wxGraphicsMatrix);
-	frame.Assign(VTYPE_wxGraphicsPath);
-	frame.Assign(VTYPE_wxGraphicsGradientStops);
-	frame.Assign(VTYPE_wxPrinterDC);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorEntry);
 	frame.Assign(VTYPE_wxAcceleratorTable);
@@ -176,6 +168,11 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGenericProgressDialog);
 	frame.Assign(VTYPE_wxGLCanvas);
 	frame.Assign(VTYPE_wxGLContext);
+	frame.Assign(VTYPE_wxGraphicsBitmap);
+	frame.Assign(VTYPE_wxGraphicsBrush);
+	frame.Assign(VTYPE_wxGraphicsContext);
+	frame.Assign(VTYPE_wxGraphicsFont);
+	frame.Assign(VTYPE_wxGraphicsGradientStops);
 	frame.Assign(VTYPE_wxGraphicsMatrix);
 	frame.Assign(VTYPE_wxGraphicsObject);
 	frame.Assign(VTYPE_wxGraphicsPath);
@@ -322,6 +319,7 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxPreviewFrame);
 	frame.Assign(VTYPE_wxPrintAbortDialog);
 	frame.Assign(VTYPE_wxPrintData);
+	frame.Assign(VTYPE_wxPrinterDC);
 	frame.Assign(VTYPE_wxPrintPreview);
 	frame.Assign(VTYPE_wxProcessEvent);
 	frame.Assign(VTYPE_wxProgressDialog);

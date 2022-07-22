@@ -4,14 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxGraphicsContext.cpp
-	VType_wxGraphicsBitmap.cpp
-	VType_wxGraphicsBrush.cpp
-	VType_wxGraphicsFont.cpp
-	VType_wxGraphicsMatrix.cpp
-	VType_wxGraphicsPath.cpp
-	VType_wxGraphicsGradientStops.cpp
-	VType_wxPrinterDC.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorEntry.cpp
 	VType_wxAcceleratorTable.cpp
@@ -168,6 +160,11 @@ set(SRCFILES_VTYPE
 	VType_wxGenericProgressDialog.cpp
 	VType_wxGLCanvas.cpp
 	VType_wxGLContext.cpp
+	VType_wxGraphicsBitmap.cpp
+	VType_wxGraphicsBrush.cpp
+	VType_wxGraphicsContext.cpp
+	VType_wxGraphicsFont.cpp
+	VType_wxGraphicsGradientStops.cpp
 	VType_wxGraphicsMatrix.cpp
 	VType_wxGraphicsObject.cpp
 	VType_wxGraphicsPath.cpp
@@ -314,6 +311,7 @@ set(SRCFILES_VTYPE
 	VType_wxPreviewFrame.cpp
 	VType_wxPrintAbortDialog.cpp
 	VType_wxPrintData.cpp
+	VType_wxPrinterDC.cpp
 	VType_wxPrintPreview.cpp
 	VType_wxProcessEvent.cpp
 	VType_wxProgressDialog.cpp
