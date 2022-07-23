@@ -4,7 +4,6 @@
 GridCellAttr = Class(ClientDataContainer) {
 	@include['wx/grid.h']
 	//__init__(colText as const_Colour_r, colBack as const_Colour_r, font as const_Font_r, hAlign as int, vAlign as int)
-	/*
 	Clone() as GridCellAttr_p
 	DecRef() as void
 	//GetAlignment(hAlign as int_p, vAlign as int_p) as void
@@ -39,5 +38,5 @@ GridCellAttr = Class(ClientDataContainer) {
 	HasSize() as bool
 	//1GetSize(num_rows as int_p, num_cols as int_p) as void
 	GetOverflow() as bool
-	//GetKind() as AttrKind */
+	//GetKind() as AttrKind
 }
