@@ -1,97 +1,23 @@
-a 	wxGridCellAttr (const wxColour &colText, const wxColour &colBack, const wxFont &font, int hAlign, int vAlign)
- 	Constructor specifying some of the often used attributes. More...
+a 	wxGridCellAttrProvider ()
+ 	Trivial default constructor. More...
  
-wxGridCellAttr * 	Clone () const
- 	Creates a new copy of this object. More...
+virtual wxGridCellAttr * 	GetAttr (int row, int col, wxGridCellAttr::wxAttrKind kind) const
+ 	Get the attribute to use for the specified cell. More...
+
+virtual void 	SetAttr (wxGridCellAttr *attr, int row, int col)
+ 	Set attribute for the specified cell. More...
  
-void 	DecRef ()
- 	This class is reference counted: it is created with ref count of 1, so calling DecRef() once will delete it. More...
+virtual void 	SetRowAttr (wxGridCellAttr *attr, int row)
+ 	Set attribute for the specified row. More...
  
-void 	GetAlignment (int *hAlign, int *vAlign) const
- 	Get the alignment to use for the cell with the given attribute. More...
+virtual void 	SetColAttr (wxGridCellAttr *attr, int col)
+ 	Set attribute for the specified column. More...
  
-const wxColour & 	GetBackgroundColour () const
- 	Returns the background colour. More...
+virtual const wxGridColumnHeaderRenderer & 	GetColumnHeaderRenderer (int col)
+ 	Return the renderer used for drawing column headers. More...
  
-wxGridCellEditor * 	GetEditor (const wxGrid *grid, int row, int col) const
- 	Returns the cell editor. More...
+virtual const wxGridRowHeaderRenderer & 	GetRowHeaderRenderer (int row)
+ 	Return the renderer used for drawing row headers. More...
  
-const wxFont & 	GetFont () const
- 	Returns the font. More...
- 
-void 	GetNonDefaultAlignment (int *hAlign, int *vAlign) const
- 	Get the alignment defined by this attribute. More...
- 
-wxGridCellRenderer * 	GetRenderer (const wxGrid *grid, int row, int col) const
- 	Returns the cell renderer. More...
- 
-const wxColour & 	GetTextColour () const
- 	Returns the text colour. More...
- 
-bool 	HasAlignment () const
- 	Returns true if this attribute has a valid alignment set. More...
- 
-bool 	HasBackgroundColour () const
- 	Returns true if this attribute has a valid background colour set. More...
- 
-bool 	HasEditor () const
- 	Returns true if this attribute has a valid cell editor set. More...
- 
-bool 	HasFont () const
- 	Returns true if this attribute has a valid font set. More...
- 
-bool 	HasRenderer () const
- 	Returns true if this attribute has a valid cell renderer set. More...
- 
-bool 	HasTextColour () const
- 	Returns true if this attribute has a valid text colour set. More...
- 
-void 	IncRef ()
- 	This class is reference counted: it is created with ref count of 1, so calling DecRef() once will delete it. More...
- 
-bool 	IsReadOnly () const
- 	Returns true if this cell is set as read-only. More...
- 
-void 	SetAlignment (int hAlign, int vAlign)
- 	Sets the alignment. More...
- 
-void 	SetBackgroundColour (const wxColour &colBack)
- 	Sets the background colour. More...
- 
-void 	SetDefAttr (wxGridCellAttr *defAttr)
- 
-void 	SetEditor (wxGridCellEditor *editor)
- 	Sets the editor to be used with the cells with this attribute. More...
- 
-void 	SetFont (const wxFont &font)
- 	Sets the font. More...
- 
-void 	SetReadOnly (bool isReadOnly=true)
- 	Sets the cell as read-only. More...
- 
-void 	SetRenderer (wxGridCellRenderer *renderer)
- 	Sets the renderer to be used for cells with this attribute. More...
- 
-void 	SetTextColour (const wxColour &colText)
- 	Sets the text colour. More...
- 
-void 	MergeWith (wxGridCellAttr *mergefrom)
- 
-void 	SetSize (int num_rows, int num_cols)
- 
-void 	SetOverflow (bool allow=true)
- 
-void 	SetKind (wxAttrKind kind)
- 
-bool 	HasReadWriteMode () const
- 
-bool 	HasOverflowMode () const
- 
-bool 	HasSize () const
- 
-void 	GetSize (int *num_rows, int *num_cols) const
- 
-bool 	GetOverflow () const
- 
-wxAttrKind 	GetKind ()
- 
+virtual const wxGridCornerHeaderRenderer & 	GetCornerRenderer ()
+ 	Return the renderer used for drawing the corner window. More...

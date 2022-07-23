@@ -3,4 +3,12 @@
 //==============================================================================
 GridCellAttrProvider = Class(ClientDataContainer) {
 	@include['wx/grid.h']
+	__init__()
+	//GetAttr(row as int, col as int, kind as GridCellAttr::wxAttrKind) as GridCellAttr_p
+	SetAttr(attr as GridCellAttr_p, row as int, col as int) as void
+	SetRowAttr(attr as GridCellAttr_p, row as int) as void
+	SetColAttr(attr as GridCellAttr_p, col as int) as void
+	//GetColumnHeaderRenderer(col as int) as GridColumnHeaderRenderer
+	//GetRowHeaderRenderer(row as int) as GridRowHeaderRenderer
+	GetCornerRenderer() as GridCornerHeaderRenderer
 }

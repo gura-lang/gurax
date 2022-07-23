@@ -7,6 +7,13 @@
 #include <gurax.h>
 #include "VType_wxApp.h"
 #include "VType_wxEventType.h"
+#include "VType_wxGridCornerHeaderRenderer.h"
+#include "VType_wxGridCornerHeaderRendererDefault.h"
+#include "VType_wxGridHeaderLabelsRenderer.h"
+#include "VType_wxGridColumnHeaderRenderer.h"
+#include "VType_wxGridRowHeaderRenderer.h"
+#include "VType_wxGridColumnHeaderRendererDefault.h"
+#include "VType_wxGridRowHeaderRendererDefault.h"
 #include "VType_wxAboutDialogInfo.h"
 #include "VType_wxAcceleratorEntry.h"
 #include "VType_wxAcceleratorTable.h"

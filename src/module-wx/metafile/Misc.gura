@@ -1,3 +1,30 @@
 //==============================================================================
 // Misc.gura
 //==============================================================================
+GridCornerHeaderRenderer = Class():loosePointer {
+	@include['wx/grid.h']
+}
+
+GridCornerHeaderRendererDefault = Class(GridCornerHeaderRenderer) {
+	@include['wx/grid.h']
+}
+
+GridHeaderLabelsRenderer = Class():loosePointer {
+	@include['wx/grid.h']
+}
+
+GridColumnHeaderRenderer = Class(GridHeaderLabelsRenderer) {
+	@include['wx/grid.h']
+}
+
+GridRowHeaderRenderer = Class(GridHeaderLabelsRenderer) {
+	@include['wx/grid.h']
+}
+
+GridColumnHeaderRendererDefault = Class(GridColumnHeaderRenderer) {
+	@include['wx/grid.h']
+}
+
+GridRowHeaderRendererDefault = Class(GridRowHeaderRenderer) {
+	@include['wx/grid.h']
+}
