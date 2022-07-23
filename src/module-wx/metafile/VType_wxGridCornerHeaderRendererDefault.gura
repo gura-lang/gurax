@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridCornerHeaderRendererDefault.gura
 //==============================================================================
+GridCornerHeaderRendererDefault = Class(GridCornerHeaderRenderer) {
+	@include['wx/grid.h']
+}

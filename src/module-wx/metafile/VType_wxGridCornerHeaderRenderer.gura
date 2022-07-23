@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridCornerHeaderRenderer.gura
 //==============================================================================
+GridCornerHeaderRenderer = Class():loosePointer {
+	@include['wx/grid.h']
+}

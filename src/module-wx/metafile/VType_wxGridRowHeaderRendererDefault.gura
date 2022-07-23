@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridRowHeaderRendererDefault.gura
 //==============================================================================
+GridRowHeaderRendererDefault = Class(GridRowHeaderRenderer) {
+	@include['wx/grid.h']
+}

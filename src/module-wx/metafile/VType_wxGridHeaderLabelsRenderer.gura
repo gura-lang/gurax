@@ -1,3 +1,6 @@
 //==============================================================================
-// Misc.gura
+// VType_wxGridHeaderLabelsRenderer.gura
 //==============================================================================
+GridHeaderLabelsRenderer = Class():loosePointer {
+	@include['wx/grid.h']
+}
