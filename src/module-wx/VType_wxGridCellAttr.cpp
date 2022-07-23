@@ -73,6 +73,27 @@ Gurax_ImplementMethodEx(wxGridCellAttr, DecRef_gurax, processor_gurax, argument_
 	return Gurax::Value::nil();
 }
 
+// wx.GridCellAttr#GetAlignment()
+Gurax_DeclareMethodAlias(wxGridCellAttr, GetAlignment_gurax, "GetAlignment")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellAttr, GetAlignment_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int hAlign, vAlign;
+	pEntity_gurax->GetAlignment(&hAlign, &vAlign);
+	return Value_Tuple::Create(new Value_Number(hAlign), new Value_Number(vAlign));
+}
+
 // wx.GridCellAttr#GetBackgroundColour() {block?}
 Gurax_DeclareMethodAlias(wxGridCellAttr, GetBackgroundColour_gurax, "GetBackgroundColour")
 {
@@ -143,6 +164,27 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetFont_gurax, processor_gurax, argument
 	// Function body
 	return argument_gurax.ReturnValue(processor_gurax, new Value_wxFont(
 		pEntity_gurax->GetFont()));
+}
+
+// wx.GridCellAttr#GetNonDefaultAlignment()
+Gurax_DeclareMethodAlias(wxGridCellAttr, GetNonDefaultAlignment_gurax, "GetNonDefaultAlignment")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellAttr, GetNonDefaultAlignment_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int hAlign, vAlign;
+	pEntity_gurax->GetNonDefaultAlignment(&hAlign, &vAlign);
+	return Value_Tuple::Create(new Value_Number(hAlign), new Value_Number(vAlign));
 }
 
 // wx.GridCellAttr#GetRenderer(grid as wx.Grid, row as Number, col as Number) {block?}
@@ -691,6 +733,27 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasSize_gurax, processor_gurax, argument
 	return new Gurax::Value_Bool(rtn);
 }
 
+// wx.GridCellAttr#GetSize()
+Gurax_DeclareMethodAlias(wxGridCellAttr, GetSize_gurax, "GetSize")
+{
+	Declare(VTYPE_Tuple, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethodEx(wxGridCellAttr, GetSize_gurax, processor_gurax, argument_gurax)
+{
+	// Target
+	auto& valueThis_gurax = GetValueThis(argument_gurax);
+	auto pEntity_gurax = valueThis_gurax.GetEntityPtr();
+	if (!pEntity_gurax) return Value::nil();
+	// Function body
+	int num_rows, num_cols;
+	pEntity_gurax->GetNonDefaultAlignment(&num_rows, &num_cols);
+	return Value_Tuple::Create(new Value_Number(num_rows), new Value_Number(num_cols));
+}
+
 // wx.GridCellAttr#GetOverflow()
 Gurax_DeclareMethodAlias(wxGridCellAttr, GetOverflow_gurax, "GetOverflow")
 {
@@ -729,9 +792,11 @@ void VType_wxGridCellAttr::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxGridCellAttr, Clone_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, DecRef_gurax));
+	Assign(Gurax_CreateMethod(wxGridCellAttr, GetAlignment_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, GetBackgroundColour_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, GetEditor_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, GetFont_gurax));
+	Assign(Gurax_CreateMethod(wxGridCellAttr, GetNonDefaultAlignment_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, GetRenderer_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, GetTextColour_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, HasAlignment_gurax));
@@ -756,6 +821,7 @@ void VType_wxGridCellAttr::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(wxGridCellAttr, HasReadWriteMode_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, HasOverflowMode_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, HasSize_gurax));
+	Assign(Gurax_CreateMethod(wxGridCellAttr, GetSize_gurax));
 	Assign(Gurax_CreateMethod(wxGridCellAttr, GetOverflow_gurax));
 }
 
