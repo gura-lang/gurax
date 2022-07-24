@@ -1,0 +1,11 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-uuid.gura
+//==============================================================================
+import(util.tester) {*}
+import(uuid)
+
+TestCase('Basic test') {
+	Println(uuid.Generate())
+	Println(uuid.Generate():upper)
+}
