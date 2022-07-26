@@ -5,6 +5,7 @@
 #define GURAX_MODULE_MTP_H
 #include <gurax.h>
 #include "Util.h"
+#include "PathExtension.h"
 
 #include <PortableDeviceApi.h>	// Windows Portable Device API interfaces
 #include <PortableDevice.h>		// Windows Portable Device definitions

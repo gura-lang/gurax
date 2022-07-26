@@ -36,6 +36,7 @@ target_compile_definitions(mtp.gurd PRIVATE GURAX_MODULE_SEPARATED
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(mtp.gurd PRIVATE
 	module-mtp.cpp
+	PathExtension.cpp
 	Util.cpp)
 #-------------------------------------------------------------------------------
 # Link
