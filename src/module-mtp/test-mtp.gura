@@ -6,5 +6,6 @@ import(util.tester) {*}
 import(mtp)
 
 TestCase('Basic test') {
-	mtp.Test()
+	devices = mtp.DetectDevices()
+	Println(devices)
 }
