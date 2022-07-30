@@ -37,7 +37,9 @@ target_compile_definitions(mtp.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(mtp.gurd PRIVATE
 	module-mtp.cpp
 	PathExtension.cpp
-	Util.cpp)
+	Util.cpp
+	Device.cpp
+	VType_Device.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

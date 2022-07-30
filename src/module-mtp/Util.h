@@ -6,6 +6,13 @@
 #include <gurax.h>
 
 Gurax_BeginModuleScope(mtp)
+
+using StringW = std::basic_string<WCHAR>;
+
+StringW STRToStringW(LPCSTR str);
+String WSTRToString(LPCWSTR wstr);
+String HRESULTToString(HRESULT hr);
+
 Gurax_EndModuleScope(mtp)
 
 #endif
