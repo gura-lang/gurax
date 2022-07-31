@@ -63,14 +63,50 @@ class DeviceList : public ListBase<Device*> {
 //------------------------------------------------------------------------------
 // DeviceOwner
 //------------------------------------------------------------------------------
-class DeviceOwner : public DeviceList {
+class DeviceOwner : public DeviceList, Referable {
 public:
+	// Referable declaration
+	Gurax_DeclareReferable(DeviceOwner);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("mtp.DeviceOwner");
+private:
 	~DeviceOwner() { Clear(); }
+public:
 	void Clear() {
 		for (auto pDevice : *this) Device::Delete(pDevice);
 		clear();
 	}
 	bool Enumerate();
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Device
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Device : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Device");
+private:
+	RefPtr<DeviceOwner> _pDeviceOwner;
+	size_t _idx;
+	size_t _idxBegin;
+	size_t _idxEnd;
+public:
+	Iterator_Device(DeviceOwner* pDeviceOwner) :
+		_pDeviceOwner(pDeviceOwner), _idx(0), _idxBegin(0), _idxEnd(pDeviceOwner->size()) {}
+	Iterator_Device(DeviceOwner* pDeviceOwner, size_t idxBegin) :
+		_pDeviceOwner(pDeviceOwner), _idx(idxBegin), _idxBegin(idxBegin), _idxEnd(pDeviceOwner->size()) {}
+	Iterator_Device(DeviceOwner* pDeviceOwner, size_t idxBegin, size_t idxEnd) :
+		_pDeviceOwner(pDeviceOwner), _idx(idxBegin), _idxBegin(idxBegin), _idxEnd(idxEnd) {}
+public:
+	DeviceOwner& GetDeviceOwner() { return *_pDeviceOwner; }
+	const DeviceOwner& GetDeviceOwner() const { return *_pDeviceOwner; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetDeviceOwner().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
 };
 
 Gurax_EndModuleScope(mtp)

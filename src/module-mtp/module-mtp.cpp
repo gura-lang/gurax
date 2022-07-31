@@ -22,16 +22,12 @@ Gurax_ImplementFunction(DetectDevices)
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	DeviceOwner deviceOwner;
-	if (!deviceOwner.Enumerate()) {
+	RefPtr<DeviceOwner> pDeviceOwner(new DeviceOwner());
+	if (!pDeviceOwner->Enumerate()) {
 		Error::Issue(ErrorType::GuestError, "failed to open portable device");
 		return Value::nil();
 	}
-	RefPtr<ValueOwner> pValues(new ValueOwner());
-	for (Device* pDevice : deviceOwner) {
-		pValues->push_back(new Value_Device(pDevice->Reference()));
-	}
-	return new Value_List(pValues.release(), VTYPE_Device);
+	return new Value_Iterator(new Iterator_Device(pDeviceOwner.release()));
 }
 
 //------------------------------------------------------------------------------

@@ -79,4 +79,21 @@ bool DeviceOwner::Enumerate()
 	return true;
 }
 
+//------------------------------------------------------------------------------
+// Iterator_Device
+//------------------------------------------------------------------------------
+Value* Iterator_Device::DoNextValue()
+{
+	const DeviceOwner& deviceOwner = GetDeviceOwner();
+	if (_idx >= _idxEnd) return nullptr;
+	return new Value_Device(deviceOwner[_idx++]->Reference());
+}
+
+String Iterator_Device::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Format("Device:begin=%zu:end=%zu", _idxBegin, _idxEnd);
+	return str;
+}
+
 Gurax_EndModuleScope(mtp)
