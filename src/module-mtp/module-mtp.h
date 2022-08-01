@@ -7,7 +7,9 @@
 #include "Util.h"
 #include "PathExtension.h"
 #include "Device.h"
+#include "Storage.h"
 #include "VType_Device.h"
+#include "VType_Storage.h"
 
 Gurax_BeginModuleHeader(mtp)
 Gurax_EndModuleHeader(mtp)

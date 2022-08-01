@@ -39,7 +39,9 @@ target_sources(mtp.gurd PRIVATE
 	PathExtension.cpp
 	Util.cpp
 	Device.cpp
-	VType_Device.cpp)
+	Storage.cpp
+	VType_Device.cpp
+	VType_Storage.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
