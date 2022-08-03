@@ -35,6 +35,61 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+//------------------------------------------------------------------------------
+// StorageList
+//------------------------------------------------------------------------------
+class StorageList : public ListBase<Storage*> {
+};
+
+//------------------------------------------------------------------------------
+// StorageOwner
+//------------------------------------------------------------------------------
+class StorageOwner : public StorageList, Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(StorageOwner);
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("mtp.StorageOwner");
+private:
+	~StorageOwner() { Clear(); }
+public:
+	void Clear() {
+		for (auto pStorage : *this) Storage::Delete(pStorage);
+		clear();
+	}
+	bool Enumerate();
+};
+
+//------------------------------------------------------------------------------
+// Iterator_Storage
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Storage : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Storage");
+private:
+	RefPtr<StorageOwner> _pStorageOwner;
+	size_t _idx;
+	size_t _idxBegin;
+	size_t _idxEnd;
+public:
+	Iterator_Storage(StorageOwner* pStorageOwner) :
+		_pStorageOwner(pStorageOwner), _idx(0), _idxBegin(0), _idxEnd(pStorageOwner->size()) {}
+	Iterator_Storage(StorageOwner* pStorageOwner, size_t idxBegin) :
+		_pStorageOwner(pStorageOwner), _idx(idxBegin), _idxBegin(idxBegin), _idxEnd(pStorageOwner->size()) {}
+	Iterator_Storage(StorageOwner* pStorageOwner, size_t idxBegin, size_t idxEnd) :
+		_pStorageOwner(pStorageOwner), _idx(idxBegin), _idxBegin(idxBegin), _idxEnd(idxEnd) {}
+public:
+	StorageOwner& GetStorageOwner() { return *_pStorageOwner; }
+	const StorageOwner& GetStorageOwner() const { return *_pStorageOwner; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetStorageOwner().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 Gurax_EndModuleScope(mtp)
 
 #endif

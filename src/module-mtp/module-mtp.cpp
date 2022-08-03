@@ -8,16 +8,16 @@ Gurax_BeginModule(mtp)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// mtp.DetectDevices()
-Gurax_DeclareFunction(DetectDevices)
+// mtp.EnumDevice()
+Gurax_DeclareFunction(EnumDevice)
 {
 	Declare(VTYPE_List, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Detects MTP devices and returns a list of `mtp.device` instances.\n");
+		"Enumerates MTP devices and returns a list of `mtp.device` instances.\n");
 }
 
-Gurax_ImplementFunction(DetectDevices)
+Gurax_ImplementFunction(EnumDevice)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -43,7 +43,7 @@ Gurax_ModulePrepare()
 	// Initialize COM
 	if (FAILED(::CoInitializeEx(nullptr, COINIT_MULTITHREADED))) return false;
 	// Assignment of function
-	Assign(Gurax_CreateFunction(DetectDevices));
+	Assign(Gurax_CreateFunction(EnumDevice));
 	return true;
 }
 

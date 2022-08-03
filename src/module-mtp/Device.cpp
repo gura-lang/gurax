@@ -49,6 +49,11 @@ bool Device::Open(IPortableDeviceManager* pPortableDeviceManager)
 	return true;
 }
 
+StorageOwner* Device::EnumStorage()
+{
+	return nullptr;
+}
+
 String Device::ToString(const StringStyle& ss) const
 {
 	return String().Format("mtp.Device");
