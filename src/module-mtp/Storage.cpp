@@ -8,6 +8,13 @@ Gurax_BeginModuleScope(mtp)
 //------------------------------------------------------------------------------
 // Storage
 //------------------------------------------------------------------------------
+Storage::Storage(Device* pDevice, LPCWSTR objectID) :
+	_pDevice(pDevice), _objectID(objectID),
+	_pStorageType(Symbol::Empty), _pFilesystemType(Symbol::Empty), _pAccessCapability(Symbol::Empty),
+	_maxCapacity(0), _freeSpaceInBytes(0), _freeSpaceInObjects(0)
+{
+}
+
 String Storage::ToString(const StringStyle& ss) const
 {
 	return String().Format("mtp.Storage");

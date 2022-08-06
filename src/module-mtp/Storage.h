@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MTP_STORAGE_H
 #define GURAX_MODULE_MTP_STORAGE_H
 #include <gurax.h>
+#include "Device.h"
 
 Gurax_BeginModuleScope(mtp)
 
@@ -16,9 +17,20 @@ public:
 	Gurax_DeclareReferable(Storage);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("mtp.Storage");
+private:
+	RefPtr<Device> _pDevice;
+	StringW _objectID;
+	const Symbol* _pStorageType;		// Storage type
+	const Symbol* _pFilesystemType;		// Filesystem type
+	const Symbol* _pAccessCapability;	// Access capability
+	UInt64 _maxCapacity;				// Maximum capability
+	UInt64 _freeSpaceInBytes;			// Free space in bytes
+	UInt64 _freeSpaceInObjects;			// Free space in objects
+	String _storageDescription;			// A brief description of this storage 
+	String _volumeIdentifier;			// A volume identifier
 public:
 	// Constructor
-	Storage() {}
+	Storage(Device* pDevice, LPCWSTR objectID);
 	// Copy constructor/operator
 	Storage(const Storage& src) = delete;
 	Storage& operator=(const Storage& src) = delete;

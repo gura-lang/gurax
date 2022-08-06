@@ -10,11 +10,11 @@
 #include <propvarutil.h>		// InitPropVariantFromString
 #include <atlbase.h>			// CComPtr
 #include "Util.h"
-#include "Storage.h"
 
 Gurax_BeginModuleScope(mtp)
 
 class DeviceOwner;
+class StorageOwner;
 
 //------------------------------------------------------------------------------
 // Device

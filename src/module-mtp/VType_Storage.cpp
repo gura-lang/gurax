@@ -24,28 +24,6 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// mtp.Storage() {block?}
-Gurax_DeclareConstructor(Storage)
-{
-	Declare(VTYPE_Storage, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `mtp.Storage` instance.");
-}
-
-Gurax_ImplementConstructor(Storage)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<Storage> pStorage(new Storage());
-	return argument.ReturnValue(processor, new Value_Storage(pStorage.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_Storage::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Storage));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Storage, MethodSkeleton));
 	// Assignment of property
