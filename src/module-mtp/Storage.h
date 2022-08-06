@@ -40,6 +40,24 @@ public:
 protected:
 	~Storage() = default;
 public:
+	LPCWSTR GetObjectID() const { return _objectID.c_str(); }
+	const Symbol *GetStorageType() const { return _pStorageType; }
+	const Symbol *GetFilesystemType() const { return _pFilesystemType; }
+	const Symbol *GetAccessCapability() const { return _pAccessCapability; }
+	UInt64 GetMaxCapacity() const { return _maxCapacity; }
+	UInt64 GetFreeSpaceInBytes() const { return _freeSpaceInBytes; }
+	UInt64 GetFreeSpaceInObjects() const { return _freeSpaceInObjects; }
+	const char *GetStorageDescription() const { return _storageDescription.c_str(); }
+	const char *GetVolumeIdentifier() const { return _volumeIdentifier.c_str(); }
+	void SetStorageType(const Symbol *pStorageType) { _pStorageType = pStorageType; }
+	void SetFilesystemType(const Symbol *pFilesystemType) { _pFilesystemType = pFilesystemType; }
+	void SetAccessCapability(const Symbol *pAccessCapability) { _pAccessCapability = pAccessCapability; }
+	void SetMaxCapacity(UInt64 maxCapacity) { _maxCapacity = maxCapacity; }
+	void SetFreeSpaceInBytes(UInt64 freeSpaceInBytes) { _freeSpaceInBytes = freeSpaceInBytes; }
+	void SetFreeSpaceInObjects(UInt64 freeSpaceInObjects) { _freeSpaceInObjects = freeSpaceInObjects; }
+	void SetStorageDescription(const char *storageDescription) { _storageDescription = storageDescription; }
+	void SetVolumeIdentifier(const char *volumeIdentifier) { _volumeIdentifier = volumeIdentifier; }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Storage& other) const { return this == &other; }
 	bool IsEqualTo(const Storage& other) const { return IsIdentical(other); }
@@ -62,6 +80,8 @@ public:
 	Gurax_DeclareReferable(StorageOwner);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("mtp.StorageOwner");
+public:
+	StorageOwner() {}
 private:
 	~StorageOwner() { Clear(); }
 public:

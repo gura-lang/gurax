@@ -89,28 +89,27 @@ StorageOwner* Device::EnumStorage()
 	LPWSTR objectIDs[32];
 	HRESULT hr;
 	RefPtr<StorageOwner> pStorageOwner(new StorageOwner());
-#if 0
 	do {
 		DWORD nObjectIDs = 0;
 		hr = pEnumPortableDeviceObjectIDs->Next(Gurax_ArraySizeOf(objectIDs), objectIDs, &nObjectIDs);
 		if (FAILED(hr)) return nullptr;
 		for (DWORD i = 0; i < nObjectIDs; i++) {
-			RefPtr<Storage> pStorage(new Storage(pDevice->Reference(), objectIDs[i]));
+			RefPtr<Storage> pStorage(new Storage(Reference(), objectIDs[i]));
 			::CoTaskMemFree(objectIDs[i]);
 			LPCWSTR objectID = pStorage->GetObjectID();
 			CComPtr<IPortableDeviceValues> pPortableDeviceValues;
-			if (FAILED(pPortableDeviceProperties->GetValues(
-				objectID, pPortableDeviceKeyCollection.Get(), &pPortableDeviceValues))) return nullptr;
+			//if (FAILED(_pPortableDeviceProperties->GetValues(
+			//	objectID, pPortableDeviceKeyCollection.Get(), &pPortableDeviceValues))) return nullptr;
 			do { // WPD_STORAGE_TYPE: VT_UI4
 				ULONG value = 0;
 				if (FAILED(pPortableDeviceValues->GetUnsignedIntegerValue(
 									WPD_STORAGE_TYPE, &value))) return nullptr;
 				pStorage->SetStorageType(
-					(value == WPD_STORAGE_TYPE_FIXED_ROM)? Gura_UserSymbol(FixedROM) :
-					(value == WPD_STORAGE_TYPE_REMOVABLE_ROM)? Gura_UserSymbol(RemovableROM) :
-					(value == WPD_STORAGE_TYPE_FIXED_RAM)? Gura_UserSymbol(FixedRAM) :
-					(value ==  WPD_STORAGE_TYPE_REMOVABLE_RAM)? Gura_UserSymbol(RemovableRAM) :
-					Gura_UserSymbol(Undefined));
+					(value == WPD_STORAGE_TYPE_FIXED_ROM)? Gurax_Symbol(FixedROM) :
+					(value == WPD_STORAGE_TYPE_REMOVABLE_ROM)? Gurax_Symbol(RemovableROM) :
+					(value == WPD_STORAGE_TYPE_FIXED_RAM)? Gurax_Symbol(FixedRAM) :
+					(value ==  WPD_STORAGE_TYPE_REMOVABLE_RAM)? Gurax_Symbol(RemovableRAM) :
+					Gurax_Symbol(Undefined));
 			} while (0);
 			do { // WPD_STORAGE_FILE_SYSTEM_TYPE: VT_LPWSTR
 				LPWSTR value = nullptr;
@@ -171,15 +170,14 @@ StorageOwner* Device::EnumStorage()
 				if (FAILED(pPortableDeviceValues->GetUnsignedIntegerValue(
 									WPD_STORAGE_ACCESS_CAPABILITY, &value))) return nullptr;
 				pStorage->SetAccessCapability(
-					(value == WPD_STORAGE_ACCESS_CAPABILITY_READWRITE)? Gura_UserSymbol(ReadWrite) :
-					(value == WPD_STORAGE_ACCESS_CAPABILITY_READ_ONLY_WITHOUT_OBJECT_DELETION)? Gura_UserSymbol(ReadOnly) :
-					(value == WPD_STORAGE_ACCESS_CAPABILITY_READ_ONLY_WITH_OBJECT_DELETION)? Gura_UserSymbol(ReadOnlyWithObjectDeletion) :
-					Gura_UserSymbol(Undefined));
+					(value == WPD_STORAGE_ACCESS_CAPABILITY_READWRITE)? Gurax_Symbol(ReadWrite) :
+					(value == WPD_STORAGE_ACCESS_CAPABILITY_READ_ONLY_WITHOUT_OBJECT_DELETION)? Gurax_Symbol(ReadOnly) :
+					(value == WPD_STORAGE_ACCESS_CAPABILITY_READ_ONLY_WITH_OBJECT_DELETION)? Gurax_Symbol(ReadOnlyWithObjectDeletion) :
+					Gurax_Symbol(Undefined));
 			} while (0);
 			pStorageOwner->push_back(pStorage.release());
 		}
 	} while (hr == S_OK);
-#endif
 	return pStorageOwner.release();
 }
 

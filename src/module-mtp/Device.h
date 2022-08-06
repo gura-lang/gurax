@@ -6,6 +6,7 @@
 #include <gurax.h>
 #include <PortableDeviceApi.h>	// Windows Portable Device API interfaces
 #include <PortableDevice.h>		// Windows Portable Device definitions
+#include <PortableDeviceAPI.h>
 #include <ATLComTime.h>			// COleDateTime
 #include <propvarutil.h>		// InitPropVariantFromString
 #include <atlbase.h>			// CComPtr

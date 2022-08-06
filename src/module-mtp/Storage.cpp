@@ -27,25 +27,6 @@ String Storage::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // StorageOwner
 //------------------------------------------------------------------------------
-bool StorageOwner::Enumerate()
-{
-#if 0
-	CComPtr<IPortableStorageManager> pPortableStorageManager;
-	if (FAILED(::CoCreateInstance(CLSID_PortableStorageManager, nullptr,
-			CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableStorageManager)))) return false;
-	DWORD nStorageIDs = 0;
-	if (FAILED(pPortableStorageManager->GetStorages(nullptr, &nStorageIDs))) return false;
-	std::unique_ptr<LPWSTR[]> StorageIDs(new LPWSTR[nStorageIDs]);
-	if (FAILED(pPortableStorageManager->GetStorages(StorageIDs.get(), &nStorageIDs))) return false;
-	for (DWORD i = 0; i < nStorageIDs; i++) {
-		RefPtr<Storage> pStorage(new Storage(StorageIDs[i]));
-		::CoTaskMemFree(StorageIDs[i]);
-		if (!pStorage->Open(pPortableStorageManager.p)) return false;
-		push_back(pStorage.release());
-	}
-#endif
-	return true;
-}
 
 //------------------------------------------------------------------------------
 // Iterator_Storage
