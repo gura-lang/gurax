@@ -70,8 +70,6 @@ DeviceOwner* Device::EnumDevice()
 
 StorageOwner* Device::EnumStorage()
 {
-	RefPtr<StorageOwner> pStorageOwner(new StorageOwner());
-
 	CComPtr<IEnumPortableDeviceObjectIDs> pEnumPortableDeviceObjectIDs;
 	CComPtr<IPortableDeviceKeyCollection> pPortableDeviceKeyCollection;
 	if (FAILED(_pPortableDeviceContent->EnumObjects(
@@ -90,6 +88,7 @@ StorageOwner* Device::EnumStorage()
 	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_ACCESS_CAPABILITY))) return nullptr;
 	LPWSTR objectIDs[32];
 	HRESULT hr;
+	RefPtr<StorageOwner> pStorageOwner(new StorageOwner());
 #if 0
 	do {
 		DWORD nObjectIDs = 0;
