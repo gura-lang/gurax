@@ -15,10 +15,10 @@ bool Device::Open(IPortableDeviceManager* pPortableDeviceManager)
 		return Value::nil();
 	}
 	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr,
-			CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceValues)))) return false;
-	if (FAILED(pPortableDeviceValues->SetStringValue(WPD_CLIENT_NAME, L"Gurax mtp Module"))) return false;
-	if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_MAJOR_VERSION, GURAX_VERSION_MAJOR))) return false;
-	if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_MINOR_VERSION, GURAX_VERSION_MINOR))) return false;
+			CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceValues)))) return nullptr;
+	if (FAILED(pPortableDeviceValues->SetStringValue(WPD_CLIENT_NAME, L"Gurax mtp Module"))) return nullptr;
+	if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_MAJOR_VERSION, GURAX_VERSION_MAJOR))) return nullptr;
+	if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_MINOR_VERSION, GURAX_VERSION_MINOR))) return nullptr;
 	if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_REVISION, GURAX_VERSION_PATCH))) return false;
 	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceFTM, nullptr,
 			CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&_pPortableDevice)))) return false;
@@ -70,7 +70,118 @@ DeviceOwner* Device::EnumDevice()
 
 StorageOwner* Device::EnumStorage()
 {
-	return nullptr;
+	RefPtr<StorageOwner> pStorageOwner(new StorageOwner());
+
+	CComPtr<IEnumPortableDeviceObjectIDs> pEnumPortableDeviceObjectIDs;
+	CComPtr<IPortableDeviceKeyCollection> pPortableDeviceKeyCollection;
+	if (FAILED(_pPortableDeviceContent->EnumObjects(
+			0, WPD_DEVICE_OBJECT_ID, nullptr, &pEnumPortableDeviceObjectIDs))) return nullptr;
+	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceKeyCollection,
+			nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceKeyCollection)))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_TYPE))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_FILE_SYSTEM_TYPE))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_CAPACITY))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_FREE_SPACE_IN_BYTES))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_FREE_SPACE_IN_OBJECTS))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_DESCRIPTION))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_SERIAL_NUMBER))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_MAX_OBJECT_SIZE))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_CAPACITY_IN_OBJECTS))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_STORAGE_ACCESS_CAPABILITY))) return nullptr;
+	LPWSTR objectIDs[32];
+	HRESULT hr;
+#if 0
+	do {
+		DWORD nObjectIDs = 0;
+		hr = pEnumPortableDeviceObjectIDs->Next(Gurax_ArraySizeOf(objectIDs), objectIDs, &nObjectIDs);
+		if (FAILED(hr)) return nullptr;
+		for (DWORD i = 0; i < nObjectIDs; i++) {
+			RefPtr<Storage> pStorage(new Storage(pDevice->Reference(), objectIDs[i]));
+			::CoTaskMemFree(objectIDs[i]);
+			LPCWSTR objectID = pStorage->GetObjectID();
+			CComPtr<IPortableDeviceValues> pPortableDeviceValues;
+			if (FAILED(pPortableDeviceProperties->GetValues(
+				objectID, pPortableDeviceKeyCollection.Get(), &pPortableDeviceValues))) return nullptr;
+			do { // WPD_STORAGE_TYPE: VT_UI4
+				ULONG value = 0;
+				if (FAILED(pPortableDeviceValues->GetUnsignedIntegerValue(
+									WPD_STORAGE_TYPE, &value))) return nullptr;
+				pStorage->SetStorageType(
+					(value == WPD_STORAGE_TYPE_FIXED_ROM)? Gura_UserSymbol(FixedROM) :
+					(value == WPD_STORAGE_TYPE_REMOVABLE_ROM)? Gura_UserSymbol(RemovableROM) :
+					(value == WPD_STORAGE_TYPE_FIXED_RAM)? Gura_UserSymbol(FixedRAM) :
+					(value ==  WPD_STORAGE_TYPE_REMOVABLE_RAM)? Gura_UserSymbol(RemovableRAM) :
+					Gura_UserSymbol(Undefined));
+			} while (0);
+			do { // WPD_STORAGE_FILE_SYSTEM_TYPE: VT_LPWSTR
+				LPWSTR value = nullptr;
+				if (FAILED(pPortableDeviceValues->GetStringValue(
+									WPD_STORAGE_FILE_SYSTEM_TYPE, &value))) return nullptr;
+				::CoTaskMemFree(value);
+			} while (0);
+			do { // WPD_STORAGE_CAPACITY: VT_UI8
+				ULONGLONG value = 0;
+				if (FAILED(pPortableDeviceValues->GetUnsignedLargeIntegerValue(
+									WPD_STORAGE_CAPACITY, &value))) return nullptr;
+				pStorage->SetMaxCapacity(value);
+			} while (0);
+			do { // WPD_STORAGE_FREE_SPACE_IN_BYTES: VT_UI8
+				ULONGLONG value = 0;
+				if (FAILED(pPortableDeviceValues->GetUnsignedLargeIntegerValue(
+									WPD_STORAGE_FREE_SPACE_IN_BYTES, &value))) return nullptr;
+				pStorage->SetFreeSpaceInBytes(value);
+			} while (0);
+			do { // WPD_STORAGE_FREE_SPACE_IN_OBJECTS: VT_UI8
+				ULONGLONG value = 0;
+				if (FAILED(pPortableDeviceValues->GetUnsignedLargeIntegerValue(
+									WPD_STORAGE_FREE_SPACE_IN_OBJECTS, &value))) return nullptr;
+				pStorage->SetFreeSpaceInObjects(value);
+			} while (0);
+			do { // WPD_STORAGE_DESCRIPTION: VT_LPWSTR
+				LPWSTR value = nullptr;
+				if (FAILED(pPortableDeviceValues->GetStringValue(
+									WPD_STORAGE_DESCRIPTION, &value))) return nullptr;
+				pStorage->SetStorageDescription(WSTRToString(value).c_str());
+				::CoTaskMemFree(value);
+			} while (0);
+			do { // WPD_STORAGE_SERIAL_NUMBER: VT_LPWSTR
+				LPWSTR value = nullptr;
+				if (FAILED(pPortableDeviceValues->GetStringValue(
+									WPD_STORAGE_SERIAL_NUMBER, &value))) return nullptr;
+				pStorage->SetVolumeIdentifier(WSTRToString(value).c_str());
+				::CoTaskMemFree(value);
+			} while (0);
+#if 0
+			do { // WPD_STORAGE_MAX_OBJECT_SIZE: VT_UI8
+				ULONGLONG value = 0;
+				if (FAILED(pPortableDeviceValues->GetUnsignedLargeIntegerValue(
+									WPD_STORAGE_MAX_OBJECT_SIZE, &value))) return nullptr;
+				::printf("max object size: %lld\n", value);
+			} while (0);
+#endif
+#if 0
+			do { // WPD_STORAGE_CAPACITY_IN_OBJECTS: VT_UI8
+				ULONGLONG value = 0;
+				if (FAILED(pPortableDeviceValues->GetUnsignedLargeIntegerValue(
+									WPD_STORAGE_CAPACITY_IN_OBJECTS, &value))) return nullptr;
+				::printf("capacity in obj: %lld\n", value);
+			} while (0);
+#endif
+			do { // WPD_STORAGE_ACCESS_CAPABILITY: VT_UI4
+				ULONG value = 0;
+				if (FAILED(pPortableDeviceValues->GetUnsignedIntegerValue(
+									WPD_STORAGE_ACCESS_CAPABILITY, &value))) return nullptr;
+				pStorage->SetAccessCapability(
+					(value == WPD_STORAGE_ACCESS_CAPABILITY_READWRITE)? Gura_UserSymbol(ReadWrite) :
+					(value == WPD_STORAGE_ACCESS_CAPABILITY_READ_ONLY_WITHOUT_OBJECT_DELETION)? Gura_UserSymbol(ReadOnly) :
+					(value == WPD_STORAGE_ACCESS_CAPABILITY_READ_ONLY_WITH_OBJECT_DELETION)? Gura_UserSymbol(ReadOnlyWithObjectDeletion) :
+					Gura_UserSymbol(Undefined));
+			} while (0);
+			pStorageOwner->push_back(pStorage.release());
+		}
+	} while (hr == S_OK);
+#endif
+	return pStorageOwner.release();
 }
 
 String Device::ToString(const StringStyle& ss) const
