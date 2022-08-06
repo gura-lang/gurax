@@ -22,8 +22,8 @@ Gurax_ImplementFunction(EnumDevice)
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-	RefPtr<DeviceOwner> pDeviceOwner(new DeviceOwner());
-	if (!pDeviceOwner->Enumerate()) {
+	RefPtr<DeviceOwner> pDeviceOwner(Device::EnumDevice());
+	if (!pDeviceOwner) {
 		Error::Issue(ErrorType::GuestError, "failed to open portable device");
 		return Value::nil();
 	}

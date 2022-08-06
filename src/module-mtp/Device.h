@@ -14,6 +14,8 @@
 
 Gurax_BeginModuleScope(mtp)
 
+class DeviceOwner;
+
 //------------------------------------------------------------------------------
 // Device
 //------------------------------------------------------------------------------
@@ -47,6 +49,7 @@ public:
 	const char* GetFriendlyName() const { return _friendlyName.c_str(); }
 	const char* GetManufacturer() const { return _manufacturer.c_str(); }
 	const char* GetDescription() const { return _description.c_str(); }
+	static DeviceOwner* EnumDevice();
 	StorageOwner* EnumStorage();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
@@ -78,7 +81,6 @@ public:
 		for (auto pDevice : *this) Device::Delete(pDevice);
 		clear();
 	}
-	bool Enumerate();
 };
 
 //------------------------------------------------------------------------------

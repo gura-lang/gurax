@@ -49,6 +49,25 @@ bool Device::Open(IPortableDeviceManager* pPortableDeviceManager)
 	return true;
 }
 
+DeviceOwner* Device::EnumDevice()
+{
+	RefPtr<DeviceOwner> pDeviceOwner(new DeviceOwner());
+	CComPtr<IPortableDeviceManager> pPortableDeviceManager;
+	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceManager, nullptr,
+			CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceManager)))) return nullptr;
+	DWORD nDeviceIDs = 0;
+	if (FAILED(pPortableDeviceManager->GetDevices(nullptr, &nDeviceIDs))) return nullptr;
+	std::unique_ptr<LPWSTR[]> deviceIDs(new LPWSTR[nDeviceIDs]);
+	if (FAILED(pPortableDeviceManager->GetDevices(deviceIDs.get(), &nDeviceIDs))) return nullptr;
+	for (DWORD i = 0; i < nDeviceIDs; i++) {
+		RefPtr<Device> pDevice(new Device(deviceIDs[i]));
+		::CoTaskMemFree(deviceIDs[i]);
+		if (!pDevice->Open(pPortableDeviceManager.p)) return nullptr;
+		pDeviceOwner->push_back(pDevice.release());
+	}
+	return pDeviceOwner.release();
+}
+
 StorageOwner* Device::EnumStorage()
 {
 	return nullptr;
@@ -66,23 +85,6 @@ String Device::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // DeviceOwner
 //------------------------------------------------------------------------------
-bool DeviceOwner::Enumerate()
-{
-	CComPtr<IPortableDeviceManager> pPortableDeviceManager;
-	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceManager, nullptr,
-			CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceManager)))) return false;
-	DWORD nDeviceIDs = 0;
-	if (FAILED(pPortableDeviceManager->GetDevices(nullptr, &nDeviceIDs))) return false;
-	std::unique_ptr<LPWSTR[]> deviceIDs(new LPWSTR[nDeviceIDs]);
-	if (FAILED(pPortableDeviceManager->GetDevices(deviceIDs.get(), &nDeviceIDs))) return false;
-	for (DWORD i = 0; i < nDeviceIDs; i++) {
-		RefPtr<Device> pDevice(new Device(deviceIDs[i]));
-		::CoTaskMemFree(deviceIDs[i]);
-		if (!pDevice->Open(pPortableDeviceManager.p)) return false;
-		push_back(pDevice.release());
-	}
-	return true;
-}
 
 //------------------------------------------------------------------------------
 // Iterator_Device
