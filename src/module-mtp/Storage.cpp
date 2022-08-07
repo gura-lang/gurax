@@ -15,6 +15,32 @@ Storage::Storage(Device* pDevice, LPCWSTR objectID) :
 {
 }
 
+bool Storage::RecvFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const
+{
+	return false;
+}
+
+bool Storage::SendFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const
+{
+	return false;
+}
+
+bool Storage::DeleteFile(const char* pathName) const
+{
+	return false;
+}
+
+bool Storage::MoveFile(const char* pathNameOld, const char* pathNameNew, bool overwriteFlag) const
+{
+	return false;
+}
+
+bool Storage::CopyFile(const char* pathNameSrc, const char* pathNameDst, bool overwriteFlag) const
+{
+	return false;
+}
+
+
 String Storage::ToString(const StringStyle& ss) const
 {
 	return String().Format("mtp.Storage");

@@ -58,6 +58,12 @@ public:
 	void SetStorageDescription(const char* storageDescription) { _storageDescription = storageDescription; }
 	void SetVolumeIdentifier(const char* volumeIdentifier) { _volumeIdentifier = volumeIdentifier; }
 public:
+	bool RecvFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const;
+	bool SendFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const;
+	bool DeleteFile(const char* pathName) const;
+	bool MoveFile(const char* pathNameOld, const char* pathNameNew, bool overwriteFlag) const;
+	bool CopyFile(const char* pathNameSrc, const char* pathNameDst, bool overwriteFlag) const;
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Storage& other) const { return this == &other; }
 	bool IsEqualTo(const Storage& other) const { return IsIdentical(other); }
