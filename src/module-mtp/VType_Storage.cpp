@@ -27,27 +27,92 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// mtp.Storage#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Storage, MethodSkeleton)
+// mtp.Storage#OpenDir(pathName as String)
+Gurax_DeclareMethod(Storage, OpenDir)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Storage, MethodSkeleton)
+Gurax_ImplementMethod(Storage, OpenDir)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const char* pathName = args.PickString();
 	// Function body
-	return new Value_Number(num1 + num2);
+	return Value::nil();
+}
+
+// mtp.Storage#RecvFile(pathName as String, stream:w as Stream)
+Gurax_DeclareMethod(Storage, RecvFile)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Storage, RecvFile)
+{
+	// Target
+	//auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathName = args.PickString();
+	Stream& stream = args.PickStream();
+	// Function body
+	return Value::nil();
+}
+
+// mtp.Storage#Remove(pathName as String)
+Gurax_DeclareMethod(Storage, Remove)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Storage, Remove)
+{
+	// Target
+	//auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathName = args.PickString();
+	// Function body
+	return Value::nil();
+}
+
+// mtp.Storage#SendFile(pathName as String, stream:r as Stream)
+Gurax_DeclareMethod(Storage, SendFile)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Storage, SendFile)
+{
+	// Target
+	//auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* pathName = args.PickString();
+	Stream& stream = args.PickStream();
+	// Function body
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -200,7 +265,10 @@ void VType_Storage::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Storage, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Storage, OpenDir));
+	Assign(Gurax_CreateMethod(Storage, RecvFile));
+	Assign(Gurax_CreateMethod(Storage, Remove));
+	Assign(Gurax_CreateMethod(Storage, SendFile));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Storage, storageType));
 	Assign(Gurax_CreateProperty(Storage, filesystemType));
