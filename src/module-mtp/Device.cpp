@@ -207,7 +207,7 @@ Value* Iterator_Device::DoNextValue()
 String Iterator_Device::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Format("Device:begin=%zu:end=%zu", _idxBegin, _idxEnd);
+	str.Format("mtp.Device:begin=%zu:end=%zu:current=%zu", _idxBegin, _idxEnd, _idx);
 	return str;
 }
 

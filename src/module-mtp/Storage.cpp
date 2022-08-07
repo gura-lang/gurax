@@ -41,7 +41,7 @@ Value* Iterator_Storage::DoNextValue()
 String Iterator_Storage::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Format("Storage:begin=%zu:end=%zu", _idxBegin, _idxEnd);
+	str.Format("mtp.Storage:begin=%zu:end=%zu:current=%zu", _idxBegin, _idxEnd, _idx);
 	return str;
 }
 
