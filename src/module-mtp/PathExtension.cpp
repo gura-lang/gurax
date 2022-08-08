@@ -125,7 +125,7 @@ void StatExOwner::Clear()
 	clear();
 }
 
-bool StatExOwner::ReadDirectory(Stream& streamSrc)
+bool StatExOwner::ReadDirectory(Device& device)
 {
 #if 0
 	for (;;) {
@@ -142,24 +142,21 @@ bool StatExOwner::ReadDirectory(Stream& streamSrc)
 //-----------------------------------------------------------------------------
 // DirectoryEx
 //-----------------------------------------------------------------------------
-Directory* DirectoryEx::CreateTop(Stream& streamSrc)
+Directory* DirectoryEx::CreateTop(Device* pDevice)
 {
-	RefPtr<DirectoryEx> pDirectoryEx(
-		new DirectoryEx(new CoreEx(Type::Boundary, streamSrc.Reference(), nullptr)));
+	RefPtr<DirectoryEx> pDirectoryEx(new DirectoryEx(new CoreEx(Type::Boundary, pDevice)));
 	return pDirectoryEx->ReadDirectory()? pDirectoryEx.release() : nullptr;
 }
 
 bool DirectoryEx::ReadDirectory()
 {
-#if 0
 	StatExOwner statExOwner;
-	if (!statExOwner.ReadDirectory(GetStreamSrc())) return false;
+	if (!statExOwner.ReadDirectory(GetCoreEx().GetDevice())) return false;
 	for (StatEx* pStatEx : statExOwner) {
-		const char* pathName = pStatEx->GetHeader().GetName();
+		//const char* pathName = pStatEx->GetHeader().GetName();
 		Type type = pStatEx->IsDir()? Type::Folder : Type::Item;
-		GetCoreEx().AddChildInTree(pathName, new CoreEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
+		//GetCoreEx().AddChildInTree(pathName, new CoreEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
 	}
-#endif
 	return true;
 }
 
@@ -196,6 +193,25 @@ Value_Stat* DirectoryEx::DoCreateStatValue()
 	//StatEx* pStatEx = GetCoreEx().GetStatEx();
 	//return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
 	return nullptr;
+}
+
+//-----------------------------------------------------------------------------
+// DirectoryEx::CoreEx
+//-----------------------------------------------------------------------------
+bool DirectoryEx::CoreEx::Initialize()
+{
+	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceKeyCollection,
+			nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&_pPortableDeviceKeyCollection)))) return false;
+	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_ORIGINAL_FILE_NAME))) return false;
+	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_CONTENT_TYPE))) return false;
+	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_SIZE))) return false;
+	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_DATE_MODIFIED))) return false;
+	return true;
+}
+
+Directory* DirectoryEx::CoreEx::GenerateDirectory()
+{
+	return new DirectoryEx(Reference());
 }
 
 //-----------------------------------------------------------------------------

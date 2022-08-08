@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_MTP_PATHEXTENSION_H
 #define GURAX_MODULE_MTP_PATHEXTENSION_H
 #include <gurax.h>
+#include "Device.h"
 
 Gurax_BeginModuleScope(mtp)
 
@@ -50,7 +51,7 @@ class GURAX_DLLDECLARE StatExOwner : public StatExList {
 public:
 	~StatExOwner() { Clear(); }
 	void Clear();
-	bool ReadDirectory(Stream& streamSrc);
+	bool ReadDirectory(Device& device);
 };
 
 //-----------------------------------------------------------------------------
@@ -62,25 +63,23 @@ public:
 	public:
 		Gurax_DeclareReferable(CoreEx);
 	private:
-		RefPtr<Stream> _pStreamSrc;
-		RefPtr<StatEx> _pStatEx;	// may be nullptr
+		RefPtr<Device> _pDevice;
+		CComPtr<IPortableDeviceKeyCollection> _pPortableDeviceKeyCollection;
 	public:
-		CoreEx(Type type, Stream* pStreamSrc, StatEx* pStatEx) : 
-			Core(type, '/', true, new CoreOwner()), _pStreamSrc(pStreamSrc), _pStatEx(pStatEx) {}
-		Stream& GetStreamSrc() { return *_pStreamSrc; }
-		StatEx* GetStatEx() { return _pStatEx.get(); }
+		CoreEx(Type type, Device* pDevice) : 
+			Core(type, '/', true, new CoreOwner()), _pDevice(pDevice) {}
+		Device& GetDevice() { return *_pDevice; }
 	public:
-		virtual Directory* GenerateDirectory() override { return new DirectoryEx(Reference()); }
+		bool Initialize();
+		virtual Directory* GenerateDirectory() override;
 	};
 private:
 	size_t _idxChild;
 public:
 	DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx), _idxChild(0) {}
 public:
-	static Directory* CreateTop(Stream& streamSrc);
+	static Directory* CreateTop(Device* pDevice);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
-	Stream& GetStreamSrc() { return GetCoreEx().GetStreamSrc(); }
-	StatEx* GetStatEx() { return GetCoreEx().GetStatEx(); }
 	bool ReadDirectory();
 protected:
 	virtual void DoRewindChild() override;
