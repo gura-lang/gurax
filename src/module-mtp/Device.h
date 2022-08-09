@@ -33,6 +33,7 @@ private:
 	CComPtr<IPortableDevice> _pPortableDevice;
 	CComPtr<IPortableDeviceContent> _pPortableDeviceContent;
 	CComPtr<IPortableDeviceProperties> _pPortableDeviceProperties;
+	CComPtr<IPortableDeviceKeyCollection> _pPortableDeviceKeyCollection;
 public:
 	// Constructor
 	Device(LPWSTR deviceID) : _deviceID(deviceID) {}
@@ -55,6 +56,7 @@ public:
 	IPortableDevice* GetPortableDevice() { return _pPortableDevice.p; }
 	IPortableDeviceContent* GetPortableDeviceContent() { return _pPortableDeviceContent.p; }
 	IPortableDeviceProperties* GetPortableDeviceProperties() { return _pPortableDeviceProperties.p; }
+	IPortableDeviceKeyCollection* GetPortableDeviceKeyCollection() { return _pPortableDeviceKeyCollection.p; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Device& other) const { return this == &other; }
