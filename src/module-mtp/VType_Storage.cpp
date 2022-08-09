@@ -40,12 +40,14 @@ Gurax_DeclareMethod(Storage, OpenDir)
 Gurax_ImplementMethod(Storage, OpenDir)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	// Function body
-	return Value::nil();
+	RefPtr<Directory> pDirectory(valueThis.GetStorage().OpenDir(pathName));
+	if (!pDirectory) return Value::nil();
+	return new Value_Directory(pDirectory.release());
 }
 
 // mtp.Storage#RecvFile(pathName as String, stream:w as Stream)

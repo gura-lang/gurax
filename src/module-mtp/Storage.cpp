@@ -15,6 +15,81 @@ Storage::Storage(Device* pDevice, LPCWSTR objectID) :
 {
 }
 
+Directory* Storage::OpenDir(const char* pathName)
+{
+	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	IPortableDeviceProperties* pPortableDeviceProperties = _pDevice->GetPortableDeviceProperties();
+	const char *p = pathName;
+	if (IsFileSeparator(*p)) p++;
+	CComPtr<IPortableDeviceKeyCollection> pPortableDeviceKeyCollection;
+	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceKeyCollection,
+			nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceKeyCollection)))) return nullptr;
+	if (FAILED(pPortableDeviceKeyCollection->Add(WPD_OBJECT_ORIGINAL_FILE_NAME))) return nullptr;
+	RefPtr<DirectoryEx> pDirectory;
+	//RefPtr<DirectoryEx> pDirectory(new DirectoryEx(
+	//	nullptr, "/", Directory::TYPE_Container, Reference(), objectID,
+	//	new StatEx("", "/", 0, DateTime(), true));
+	while (*p != '\0') {
+		//if (!pDirectory->IsContainer()) {
+		//	Error::Issue(ErrorType::PathError, "can't browse inside an item");
+		//	return nullptr;
+		//}
+		String field;
+		for ( ; ; p++) {
+			if (*p == '\0') {
+				break;
+			} else if (IsFileSeparator(*p)) {
+				p++;
+				break;
+			}
+			field += *p;
+		}
+		if (field.empty()) {
+			Error::Issue(ErrorType::PathError, "wrong format of path name");
+			return nullptr;
+		}
+		//::printf("[%s]\n", field.c_str());
+		CComPtr<IEnumPortableDeviceObjectIDs> pEnumPortableDeviceObjectIDs;
+		//if (FAILED(pPortableDeviceContent->EnumObjects(
+		//	0, pDirectory->GetObjectID(), nullptr, &pEnumPortableDeviceObjectIDs))) return nullptr;
+		HRESULT hr;
+		LPWSTR objectIDs[32];
+		StringW objectIDFound;
+		String fileName;
+		do {
+			DWORD nObjectIDs = 0;
+			hr = pEnumPortableDeviceObjectIDs->Next(Gurax_ArraySizeOf(objectIDs), objectIDs, &nObjectIDs);
+			if (FAILED(hr)) return nullptr;
+			for (DWORD i = 0; i < nObjectIDs; i++) {
+				LPCWSTR objectID = objectIDs[i];
+				CComPtr<IPortableDeviceValues> pPortableDeviceValues;
+				if (FAILED(pPortableDeviceProperties->GetValues(
+					objectID, pPortableDeviceKeyCollection.p, &pPortableDeviceValues))) break;
+				// WPD_OBJECT_ORIGINAL_FILE_NAME: VT_LPWSTR
+				LPWSTR value = nullptr;
+				if (FAILED(pPortableDeviceValues->GetStringValue(
+									WPD_OBJECT_ORIGINAL_FILE_NAME, &value))) break;
+				fileName = WSTRToString(value);
+				//::printf("%s\n", fileName.c_str());
+				::CoTaskMemFree(value);
+				if (field == fileName) {
+					objectIDFound = objectID;
+					break;
+				}
+			}
+			for (DWORD i = 0; i < nObjectIDs; i++) {
+				::CoTaskMemFree(objectIDs[i]);
+			}
+			if (Error::IsIssued()) return nullptr;
+		} while (hr == S_OK && objectIDFound.empty());
+		if (objectIDFound.empty()) break;
+		//*pPathNamePartial = p;
+		//pDirectory = GetDirectoryFactory()->Create(sig, pDirectory, objectIDFound.c_str());
+		if (!pDirectory) return nullptr;
+	}
+	return pDirectory.release();
+}
+
 bool Storage::RecvFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const
 {
 	return false;

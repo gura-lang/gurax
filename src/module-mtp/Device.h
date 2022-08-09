@@ -52,6 +52,10 @@ public:
 	static DeviceOwner* EnumDevice();
 	StorageOwner* EnumStorage();
 public:
+	IPortableDevice* GetPortableDevice() { return _pPortableDevice.p; }
+	IPortableDeviceContent* GetPortableDeviceContent() { return _pPortableDeviceContent.p; }
+	IPortableDeviceProperties* GetPortableDeviceProperties() { return _pPortableDeviceProperties.p; }
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Device& other) const { return this == &other; }
 	bool IsEqualTo(const Device& other) const { return IsIdentical(other); }

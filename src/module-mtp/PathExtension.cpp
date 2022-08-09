@@ -6,58 +6,6 @@
 Gurax_BeginModuleScope(mtp)
 
 //------------------------------------------------------------------------------
-// PathMgrEx
-//------------------------------------------------------------------------------
-bool PathMgrEx::IsResponsible(Directory* pDirectoryParent, const char* pathName)
-{
-/*
-	if (!pDirectoryParent) return false;
-	const char* name = pDirectoryParent->GetName();
-	return
-		String::EndsWith<CharICase>(name, ".tar") ||
-		String::EndsWith<CharICase>(name, ".tar.gz") ||
-		String::EndsWith<CharICase>(name, ".tgz") ||
-		String::EndsWith<CharICase>(name, ".tar.bz2") ||
-		String::EndsWith<CharICase>(name, ".tb2") ||
-		String::EndsWith<CharICase>(name, ".tbz2");
-*/
-	return false;
-}
-
-Directory* PathMgrEx::DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe)
-{
-/*
-	const char* pathName = *pPathName;
-	if (!pDirectoryParent) return nullptr;
-	RefPtr<Stream> pStream(pDirectoryParent->OpenStream(Stream::OpenFlag::Read));
-	if (!pStream) return nullptr;
-	pStream.reset(CreateUncompressingStream(*pStream));
-	pStream.reset(pStream->CreateBwdSeekable());
-	if (!pStream) return nullptr;
-	RefPtr<Directory> pDirectory(DirectoryEx::CreateTop(*pStream));
-	if (!pDirectory) return nullptr;
-	pDirectory->SetDirectoryParent(Directory::Reference(pDirectoryParent));
-	Directory* pDirectoryFound = (**pPathName == '\0')? pDirectory.get() : pDirectory->SearchInTree(pPathName);
-	if (!pDirectoryFound) {
-		Error::Issue(ErrorType::PathError, "specified path is not found: %s", pathName);
-		return nullptr;
-	}
-	return pDirectoryFound->Reference();
-*/
-	return nullptr;
-}
-
-PathMgr::Existence PathMgrEx::DoCheckExistence(Directory* pDirectoryParent, const char** pPathName)
-{
-/*
-	RefPtr<Directory> pDirectory(DoOpenDirectory(pDirectoryParent, pPathName, Directory::Type::None));
-	Error::Clear();
-	return pDirectory? Existence::Exist : Existence::None;
-*/
-	return Existence::None;
-}
-
-//------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
 /*

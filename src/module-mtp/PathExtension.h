@@ -9,17 +9,6 @@
 Gurax_BeginModuleScope(mtp)
 
 //------------------------------------------------------------------------------
-// PathMgrEx
-//------------------------------------------------------------------------------
-class PathMgrEx : public PathMgr {
-public:
-	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) override;
-protected:
-	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) override;
-	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char** pPathName) override;
-};
-
-//------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE StatEx : public Stat {
