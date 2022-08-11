@@ -4,11 +4,12 @@
 #ifndef GURAX_MODULE_MTP_DEVICE_H
 #define GURAX_MODULE_MTP_DEVICE_H
 #include <gurax.h>
-#include <PortableDeviceApi.h>	// Windows Portable Device API interfaces
-#include <PortableDevice.h>		// Windows Portable Device definitions
-#include <ATLComTime.h>			// COleDateTime
-#include <propvarutil.h>		// InitPropVariantFromString
-#include <atlbase.h>			// CComPtr
+#include <PortableDevice.h>			// Windows Portable Device definitions
+#include <PortableDeviceApi.h>		// Windows Portable Device API interfaces
+#include <PortableDeviceTypes.h>	// Windows Portable Device Key Collection
+#include <ATLComTime.h>				// COleDateTime
+#include <propvarutil.h>			// InitPropVariantFromString
+#include <atlbase.h>				// CComPtr
 #include "Util.h"
 
 Gurax_BeginModuleScope(mtp)

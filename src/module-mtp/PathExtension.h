@@ -52,20 +52,26 @@ public:
 	public:
 		Gurax_DeclareReferable(CoreEx);
 	private:
+		String _fileName;
+		StringW _objectID;
 		RefPtr<Device> _pDevice;
 		CComPtr<IPortableDeviceKeyCollection> _pPortableDeviceKeyCollection;
 	public:
-		CoreEx(Type type, Device* pDevice) : 
-			Core(type, '/', true, new CoreOwner()), _pDevice(pDevice) {}
+		CoreEx(Type type, String fileName, StringW objectID, Device* pDevice) : 
+			Core(type, '/', true, new CoreOwner()), _fileName(fileName), _objectID(objectID), _pDevice(pDevice) {}
 		Device& GetDevice() { return *_pDevice; }
 	public:
 		bool Initialize();
 		virtual Directory* GenerateDirectory() override;
 	};
 private:
-	size_t _idxChild;
+	RefPtr<DirectoryEx> _pDirectoryParent;
 public:
-	DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx), _idxChild(0) {}
+	//DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx) {}
+	DirectoryEx(DirectoryEx* pDirectoryParent, String fileName, Directory::Type type,
+		Device* pDevice, StringW objectID) :
+		Directory(new CoreEx(type, fileName, objectID, pDevice)),
+		_pDirectoryParent(pDirectoryParent) {}
 public:
 	static Directory* CreateTop(Device* pDevice);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }

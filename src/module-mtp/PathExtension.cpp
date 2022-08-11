@@ -92,8 +92,9 @@ bool StatExOwner::ReadDirectory(Device& device)
 //-----------------------------------------------------------------------------
 Directory* DirectoryEx::CreateTop(Device* pDevice)
 {
-	RefPtr<DirectoryEx> pDirectoryEx(new DirectoryEx(new CoreEx(Type::Boundary, pDevice)));
-	return pDirectoryEx->ReadDirectory()? pDirectoryEx.release() : nullptr;
+	//RefPtr<DirectoryEx> pDirectoryEx(new DirectoryEx(new CoreEx(Type::Boundary, pDevice)));
+	//return pDirectoryEx->ReadDirectory()? pDirectoryEx.release() : nullptr;
+	return nullptr;
 }
 
 bool DirectoryEx::ReadDirectory()
@@ -110,7 +111,7 @@ bool DirectoryEx::ReadDirectory()
 
 void DirectoryEx::DoRewindChild()
 {
-	_idxChild = 0;
+	//_idxChild = 0;
 }
 
 Directory* DirectoryEx::DoNextChild()
@@ -159,7 +160,8 @@ bool DirectoryEx::CoreEx::Initialize()
 
 Directory* DirectoryEx::CoreEx::GenerateDirectory()
 {
-	return new DirectoryEx(Reference());
+	//return new DirectoryEx(Reference());
+	return nullptr;
 }
 
 //-----------------------------------------------------------------------------
