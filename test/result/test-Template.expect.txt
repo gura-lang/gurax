@@ -430,7 +430,10 @@ t'${-}'.Eval() ..
 t'${3}'.Eval() .. 3
 t'${"hello"}'.Eval() .. hello
 t'${["first", "second", "third"]}'.Eval() .. firstsecondthird
-expected error occurs: template script must return nil, string or number
+expected error occurs: template script must return nil, String, Symbol or number
+Number .. 12345678
+String .. ABCDEF
+Symbol .. ABCDEF
 ======== Loop and branch sequence ========
 10
 10

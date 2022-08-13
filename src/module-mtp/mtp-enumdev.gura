@@ -1,7 +1,19 @@
 #!/usr/bin/env gurax
 import(mtp)
 
-mtp.EnumDevice() {|device, i|
-	Printf('friendlyName:%s, manufacturer:%s, description:%s\n',
-		device.friendlyName, device.manufacturer, device.description)
+devices = mtp.EnumDevice():list
+devices.Each {|device|
+	Print(
+		eR'''
+		friendlyName:${device.friendlyName}
+		manufacturer:${device.manufacturer}
+		description:${device.description}
+		''')
+}
+storages = devices[0].EnumStorage():list
+storages.Each {|storage|
+	Print(
+		eR'''
+		storageType:${storage.storageType}
+		''')
 }

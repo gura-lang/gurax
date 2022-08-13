@@ -318,6 +318,11 @@ TestCase('nil, number, string, and list') {
 	} catch {|e|
 		Println('expected error occurs: ', e.text)
 	}
+	tR'''
+	Number .. ${12345678}
+	String .. ${'ABCDEF'}
+	Symbol .. ${`ABCDEF}
+	'''.Render(sys.cout)
 }
 //-----------------------------------------------------------------------------
 TestCase('Loop and branch sequence') {

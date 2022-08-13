@@ -652,8 +652,12 @@ void PUnit_TmplScript<discardValueFlag>::Exec(Processor& processor) const
 					processor.ErrorDone();
 					return;
 				}
+			} else if (pValue->IsType(VTYPE_Symbol)) {
+				strLast = dynamic_cast<Value_Symbol&>(*pValue).GetSymbol()->GetName();
+			} else if (pValue->IsType(VTYPE_Expr)) {
+				strLast = dynamic_cast<Value_Expr&>(*pValue).GetExpr().ToString();
 			} else {
-				Error::Issue(ErrorType::TypeError, "template script must return nil, string or number");
+				Error::Issue(ErrorType::TypeError, "template script must return nil, String, Symbol or Number");
 				processor.ErrorDone();
 				return;
 			}
@@ -662,8 +666,14 @@ void PUnit_TmplScript<discardValueFlag>::Exec(Processor& processor) const
 	} else if (pValue->IsType(VTYPE_Number)) {
 		GetTemplate().Print(GetStringIndent());
 		PrintScriptResult(pValue->ToString().c_str());
+	} else if (pValue->IsType(VTYPE_Symbol)) {
+		GetTemplate().Print(GetStringIndent());
+		PrintScriptResult(dynamic_cast<Value_Symbol&>(*pValue).GetSymbol()->GetName());
+	} else if (pValue->IsType(VTYPE_Expr)) {
+		GetTemplate().Print(GetStringIndent());
+		PrintScriptResult(dynamic_cast<Value_Expr&>(*pValue).GetExpr().ToString().c_str());
 	} else {
-		Error::Issue(ErrorType::TypeError, "template script must return nil, string or number");
+		Error::Issue(ErrorType::TypeError, "template script must return nil, String, Symbol or number");
 		processor.ErrorDone();
 		return;
 	}
