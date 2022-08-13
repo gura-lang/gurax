@@ -2,18 +2,26 @@
 import(mtp)
 
 devices = mtp.EnumDevice():list
-devices.Each {|device|
+devices.Each {|device, iDevice|
 	Print(
 		eR'''
-		friendlyName:${device.friendlyName}
-		manufacturer:${device.manufacturer}
-		description:${device.description}
+		Device #${iDevice + 1}
+		  friendlyName: ${device.friendlyName}
+		  manufacturer: ${device.manufacturer}
+		  description:  ${device.description}
 		''')
-}
-storages = devices[0].EnumStorage():list
-storages.Each {|storage|
-	Print(
-		eR'''
-		storageType:${storage.storageType}
-		''')
+	device.EnumStorage {|storage, iStorage|
+		Print(
+			eR'''
+			  Storage #${iStorage + 1}
+			    storageType:        ${storage.storageType}
+			    filesystemType:     ${storage.filesystemType}
+			    accessCapability:   ${storage.accessCapability}
+			    maxCapacity:        ${storage.maxCapacity}
+			    freeSpaceInBytes:   ${storage.freeSpaceInBytes}
+			    freeSpaceInObjects: ${storage.freeSpaceInObjects}
+			    storageDescription: ${storage.storageDescription}
+			    volumeIdentifier:   ${storage.volumeIdentifier}
+			''')
+	}
 }

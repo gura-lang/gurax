@@ -27,10 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// mtp.Device#EnumStorage()
+// mtp.Device#EnumStorage() {block?}
 Gurax_DeclareMethod(Device, EnumStorage)
 {
 	Declare(VTYPE_Number, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -43,7 +44,7 @@ Gurax_ImplementMethod(Device, EnumStorage)
 	// Function body
 	RefPtr<StorageOwner> pStorageOwner(valueThis.GetDevice().EnumStorage());
 	if (!pStorageOwner) return Value::nil();
-	return new Value_Iterator(new Iterator_Storage(pStorageOwner.release()));
+	return argument.ReturnIterator(processor, new Iterator_Storage(pStorageOwner.release()));
 }
 
 //-----------------------------------------------------------------------------
