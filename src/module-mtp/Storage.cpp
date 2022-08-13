@@ -22,15 +22,12 @@ Directory* Storage::OpenDir(const char* pathName)
 	IPortableDeviceKeyCollection* pPortableDeviceKeyCollection = _pDevice->GetPortableDeviceKeyCollection();
 	const char* p = pathName;
 	if (IsFileSeparator(*p)) p++;
-	RefPtr<DirectoryEx> pDirectory;
-	//RefPtr<DirectoryEx> pDirectory(new DirectoryEx(
-	//	nullptr, "/", Directory::TYPE_Container, Reference(), objectID,
-	//	new StatEx("", "/", 0, DateTime(), true));
+	RefPtr<DirectoryEx> pDirectory(new DirectoryEx(nullptr, "/", Directory::Type::Folder, _pDevice->Reference(), GetObjectID()));
 	while (*p != '\0') {
-		//if (!pDirectory->IsContainer()) {
-		//	Error::Issue(ErrorType::PathError, "can't browse inside an item");
-		//	return nullptr;
-		//}
+		if (!pDirectory->IsFolder()) {
+			Error::Issue(ErrorType::PathError, "can't browse inside an item");
+			return nullptr;
+		}
 		String field;
 		for ( ; ; p++) {
 			if (*p == '\0') {

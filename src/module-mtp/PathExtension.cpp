@@ -90,13 +90,6 @@ bool StatExOwner::ReadDirectory(Device& device)
 //-----------------------------------------------------------------------------
 // DirectoryEx
 //-----------------------------------------------------------------------------
-Directory* DirectoryEx::CreateTop(Device* pDevice)
-{
-	//RefPtr<DirectoryEx> pDirectoryEx(new DirectoryEx(new CoreEx(Type::Boundary, pDevice)));
-	//return pDirectoryEx->ReadDirectory()? pDirectoryEx.release() : nullptr;
-	return nullptr;
-}
-
 bool DirectoryEx::ReadDirectory()
 {
 	StatExOwner statExOwner;
@@ -149,12 +142,6 @@ Value_Stat* DirectoryEx::DoCreateStatValue()
 //-----------------------------------------------------------------------------
 bool DirectoryEx::CoreEx::Initialize()
 {
-	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceKeyCollection,
-			nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&_pPortableDeviceKeyCollection)))) return false;
-	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_ORIGINAL_FILE_NAME))) return false;
-	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_CONTENT_TYPE))) return false;
-	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_SIZE))) return false;
-	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_DATE_MODIFIED))) return false;
 	return true;
 }
 

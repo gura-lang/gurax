@@ -55,7 +55,6 @@ public:
 		String _fileName;
 		StringW _objectID;
 		RefPtr<Device> _pDevice;
-		CComPtr<IPortableDeviceKeyCollection> _pPortableDeviceKeyCollection;
 	public:
 		CoreEx(Type type, String fileName, StringW objectID, Device* pDevice) : 
 			Core(type, '/', true, new CoreOwner()), _fileName(fileName), _objectID(objectID), _pDevice(pDevice) {}
@@ -73,7 +72,6 @@ public:
 		Directory(new CoreEx(type, fileName, objectID, pDevice)),
 		_pDirectoryParent(pDirectoryParent) {}
 public:
-	static Directory* CreateTop(Device* pDevice);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
 	bool ReadDirectory();
 protected:
