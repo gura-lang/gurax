@@ -1,0 +1,6 @@
+#!/usr/bin/env gurax
+import(mtp)
+
+mtp.EnumDevice() {|device, i|
+	Println(device.friendlyName)
+}

@@ -179,7 +179,7 @@ StorageOwner* Device::EnumStorage()
 
 String Device::ToString(const StringStyle& ss) const
 {
-	return String().Format("mtp.Device");
+	return String().Format("mtp.Device:%s", GetFriendlyName());
 }
 
 //------------------------------------------------------------------------------
