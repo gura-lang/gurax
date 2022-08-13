@@ -8,10 +8,11 @@ Gurax_BeginModule(mtp)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// mtp.EnumDevice()
+// mtp.EnumDevice() {block?}
 Gurax_DeclareFunction(EnumDevice)
 {
 	Declare(VTYPE_List, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Enumerates MTP devices and returns a list of `mtp.device` instances.\n");
@@ -27,7 +28,7 @@ Gurax_ImplementFunction(EnumDevice)
 		Error::Issue(ErrorType::GuestError, "failed to open portable device");
 		return Value::nil();
 	}
-	return new Value_Iterator(new Iterator_Device(pDeviceOwner.release()));
+	return argument.ReturnIterator(processor, new Iterator_Device(pDeviceOwner.release()));
 }
 
 //------------------------------------------------------------------------------
