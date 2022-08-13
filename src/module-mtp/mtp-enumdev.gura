@@ -2,5 +2,6 @@
 import(mtp)
 
 mtp.EnumDevice() {|device, i|
-	Println(device.friendlyName)
+	Printf('friendlyName:%s, manufacturer:%s, description:%s\n',
+		device.friendlyName, device.manufacturer, device.description)
 }
