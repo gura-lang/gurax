@@ -59,26 +59,37 @@ public:
 		CoreEx(Type type, String fileName, StringW objectID, Device* pDevice) : 
 			Core(type, '/', true, new CoreOwner()), _fileName(fileName), _objectID(objectID), _pDevice(pDevice) {}
 		Device& GetDevice() { return *_pDevice; }
+		LPCWSTR GetObjectID() const { return _objectID.c_str(); }
 	public:
 		bool Initialize();
 		virtual Directory* GenerateDirectory() override;
 	};
 private:
 	RefPtr<DirectoryEx> _pDirectoryParent;
+	CComPtr<IEnumPortableDeviceObjectIDs> _pEnumPortableDeviceObjectIDs;
+	struct {
+		LPWSTR objectIDs[32];
+		DWORD nObjectIDs;
+		DWORD iObjectID;
+		bool lastFlag;
+	} _browse;
 public:
 	//DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx) {}
 	DirectoryEx(DirectoryEx* pDirectoryParent, String fileName, Directory::Type type,
-		Device* pDevice, StringW objectID) :
-		Directory(new CoreEx(type, fileName, objectID, pDevice)),
-		_pDirectoryParent(pDirectoryParent) {}
+		Device* pDevice, StringW objectID);
+	~DirectoryEx();
 public:
+	static DirectoryEx* Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
+	Device& GetDevice() { return GetCoreEx().GetDevice(); }
 	bool ReadDirectory();
 protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;
 	virtual Stream* DoOpenStream(Stream::OpenFlags openFlags) override;
 	virtual Value_Stat* DoCreateStatValue() override;
+protected:
+	void DestroyBrowse();
 };
 
 //-----------------------------------------------------------------------------

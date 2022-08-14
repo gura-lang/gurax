@@ -23,5 +23,6 @@ devices.Each {|device, iDevice|
 			    storageDescription: ${storage.storageDescription}
 			    volumeIdentifier:   ${storage.volumeIdentifier}
 			''')
+			Println(path.Dir(storage.OpenDir('/')))
 	}
 }

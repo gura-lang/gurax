@@ -90,8 +90,69 @@ bool StatExOwner::ReadDirectory(Device& device)
 //-----------------------------------------------------------------------------
 // DirectoryEx
 //-----------------------------------------------------------------------------
+DirectoryEx::DirectoryEx(DirectoryEx* pDirectoryParent, String fileName, Directory::Type type, Device* pDevice, StringW objectID) :
+	Directory(new CoreEx(type, fileName, objectID, pDevice)),
+	_pDirectoryParent(pDirectoryParent)
+{
+	_browse.nObjectIDs = 0;
+	_browse.iObjectID = 0;
+	_browse.lastFlag = false;
+}
+
+DirectoryEx::~DirectoryEx()
+{
+	DestroyBrowse();
+}
+
+DirectoryEx* DirectoryEx::Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID)
+{
+	IPortableDeviceProperties* pPortableDeviceProperties = pDirectoryParent->GetDevice().GetPortableDeviceProperties();
+	IPortableDeviceKeyCollection* pPortableDeviceKeyCollection = pDirectoryParent->GetDevice().GetPortableDeviceKeyCollection();
+	CComPtr<IPortableDeviceValues> pPortableDeviceValues;
+	if (FAILED(pPortableDeviceProperties->GetValues(
+		objectID, pPortableDeviceKeyCollection, &pPortableDeviceValues))) return nullptr;
+	String fileName;
+	do { // WPD_OBJECT_ORIGINAL_FILE_NAME: VT_LPWSTR
+		LPWSTR value = nullptr;
+		if (FAILED(pPortableDeviceValues->
+				GetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME, &value))) return nullptr;
+		fileName = WSTRToString(value);
+		::CoTaskMemFree(value);
+	} while (0);
+	bool folderFlag = false;
+	const Symbol *pFileType = Symbol::Empty;
+	do { // WPD_OBJECT_CONTENT_TYPE: VT_CLSID
+		GUID value;
+		if (FAILED(pPortableDeviceValues->
+				GetGuidValue(WPD_OBJECT_CONTENT_TYPE, &value))) return nullptr;
+		folderFlag = IsEqualGUID(value, WPD_CONTENT_TYPE_FOLDER);
+	} while (0);
+	size_t fileSize = 0;
+	do { // WPD_OBJECT_SIZE: VT_UI8
+		ULONGLONG value = 0;
+		if (FAILED(pPortableDeviceValues->
+				GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE, &value))) return false;
+		fileSize = static_cast<size_t>(value);
+	} while (0);
+	//DateTime dtModification;
+	do { // WPD_OBJECT_DATE_MODIFIED: VT_DATE
+		PROPVARIANT value;
+		if (FAILED(pPortableDeviceValues->
+				GetValue(WPD_OBJECT_DATE_MODIFIED, &value))) return false;
+		COleDateTime oleDateTime(value.date);
+		SYSTEMTIME st;
+		oleDateTime.GetAsSystemTime(st);
+		//dtModification = OAL::ToDateTime(st, 0);
+	} while (0);
+	return new DirectoryEx(
+		pDirectoryParent, fileName.c_str(),
+		folderFlag? Directory::Type::Folder : Directory::Type::Item,
+		pDirectoryParent->GetDevice().Reference(), objectID);
+}
+
 bool DirectoryEx::ReadDirectory()
 {
+	::printf("ReadDirectory()\n");
 	StatExOwner statExOwner;
 	if (!statExOwner.ReadDirectory(GetCoreEx().GetDevice())) return false;
 	for (StatEx* pStatEx : statExOwner) {
@@ -104,24 +165,34 @@ bool DirectoryEx::ReadDirectory()
 
 void DirectoryEx::DoRewindChild()
 {
+	::printf("DoRewindChild()\n");
 	//_idxChild = 0;
 }
 
 Directory* DirectoryEx::DoNextChild()
 {
-#if 0
-	CoreOwner& coreOwner = GetCoreEx().GetCoreOwner();
-	if (_idxChild >= coreOwner.size()) return nullptr;
-	RefPtr<Directory> pDirectory(coreOwner[_idxChild]->GenerateDirectory());
-	_idxChild++;
-	pDirectory->SetDirectoryParent(Reference());
-	return pDirectory.release();
-#endif
+	::printf("DoNextChild()\n");
+	IPortableDeviceContent* pPortableDeviceContent = GetCoreEx().GetDevice().GetPortableDeviceContent();
+	if (_browse.iObjectID >= _browse.nObjectIDs) {
+		DestroyBrowse();
+		if (_browse.lastFlag) return nullptr;
+		if (!_pEnumPortableDeviceObjectIDs) {
+			if (FAILED(pPortableDeviceContent->EnumObjects(
+				0, GetCoreEx().GetObjectID(), nullptr, &_pEnumPortableDeviceObjectIDs))) return nullptr;
+		}
+		HRESULT hr = _pEnumPortableDeviceObjectIDs->Next(
+				Gurax_ArraySizeOf(_browse.objectIDs), _browse.objectIDs, &_browse.nObjectIDs);
+		if (hr != S_OK) _browse.lastFlag = true;
+		if (_browse.nObjectIDs == 0) return nullptr;
+	}
+	LPWSTR objectID = _browse.objectIDs[_browse.iObjectID++];
+	//return _pDevice->GetDirectoryFactory()->Create(env, Reference(), objectID);
 	return nullptr;
 }
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 {
+	::printf("DoOpenStream()\n");
 #if 0
 	if (openFlags & (Stream::OpenFlag::Write | Stream::OpenFlag::Append)) return nullptr;
 	StatEx* pStatEx = GetCoreEx().GetStatEx();
@@ -132,9 +203,19 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value_Stat* DirectoryEx::DoCreateStatValue()
 {
+	::printf("DoCreateStatValue()\n");
 	//StatEx* pStatEx = GetCoreEx().GetStatEx();
 	//return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
 	return nullptr;
+}
+
+void DirectoryEx::DestroyBrowse()
+{
+	for (DWORD i = 0; i < _browse.nObjectIDs; i++) {
+		::CoTaskMemFree(_browse.objectIDs[i]);
+	}
+	_browse.nObjectIDs = 0;
+	_browse.iObjectID = 0;
 }
 
 //-----------------------------------------------------------------------------

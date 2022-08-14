@@ -20,9 +20,9 @@ Directory* Storage::OpenDir(const char* pathName)
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	IPortableDeviceProperties* pPortableDeviceProperties = _pDevice->GetPortableDeviceProperties();
 	IPortableDeviceKeyCollection* pPortableDeviceKeyCollection = _pDevice->GetPortableDeviceKeyCollection();
+	RefPtr<DirectoryEx> pDirectory(new DirectoryEx(nullptr, "/", Directory::Type::Folder, _pDevice->Reference(), GetObjectID()));
 	const char* p = pathName;
 	if (IsFileSeparator(*p)) p++;
-	RefPtr<DirectoryEx> pDirectory(new DirectoryEx(nullptr, "/", Directory::Type::Folder, _pDevice->Reference(), GetObjectID()));
 	while (*p != '\0') {
 		if (!pDirectory->IsFolder()) {
 			Error::Issue(ErrorType::PathError, "can't browse inside an item");
@@ -75,46 +75,7 @@ Directory* Storage::OpenDir(const char* pathName)
 			if (Error::IsIssued()) return nullptr;
 		} while (hr == S_OK && objectIDFound.empty());
 		if (objectIDFound.empty()) break;
-		CComPtr<IPortableDeviceValues> pPortableDeviceValues;
-		if (FAILED(pPortableDeviceProperties->GetValues(
-			objectIDFound.c_str(), pPortableDeviceKeyCollection, &pPortableDeviceValues))) return nullptr;
-		String fileName;
-		do { // WPD_OBJECT_ORIGINAL_FILE_NAME: VT_LPWSTR
-			LPWSTR value = nullptr;
-			if (FAILED(pPortableDeviceValues->
-					GetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME, &value))) return nullptr;
-			fileName = WSTRToString(value);
-			::CoTaskMemFree(value);
-		} while (0);
-		bool folderFlag = false;
-		const Symbol *pFileType = Symbol::Empty;
-		do { // WPD_OBJECT_CONTENT_TYPE: VT_CLSID
-			GUID value;
-			if (FAILED(pPortableDeviceValues->
-					GetGuidValue(WPD_OBJECT_CONTENT_TYPE, &value))) return nullptr;
-			folderFlag = IsEqualGUID(value, WPD_CONTENT_TYPE_FOLDER);
-		} while (0);
-		size_t fileSize = 0;
-		do { // WPD_OBJECT_SIZE: VT_UI8
-			ULONGLONG value = 0;
-			if (FAILED(pPortableDeviceValues->
-					GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE, &value))) return false;
-			fileSize = static_cast<size_t>(value);
-		} while (0);
-		//DateTime dtModification;
-		do { // WPD_OBJECT_DATE_MODIFIED: VT_DATE
-			PROPVARIANT value;
-			if (FAILED(pPortableDeviceValues->
-					GetValue(WPD_OBJECT_DATE_MODIFIED, &value))) return false;
-			COleDateTime oleDateTime(value.date);
-			SYSTEMTIME st;
-			oleDateTime.GetAsSystemTime(st);
-			//dtModification = OAL::ToDateTime(st, 0);
-		} while (0);
-		pDirectory.reset(new DirectoryEx(
-			pDirectory.release(), fileName.c_str(),
-			folderFlag? Directory::Type::Folder : Directory::Type::Item,
-			_pDevice->Reference(), objectIDFound));
+
 	}
 	return pDirectory.release();
 }
