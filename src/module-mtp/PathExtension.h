@@ -15,32 +15,10 @@ class GURAX_DLLDECLARE StatEx : public Stat {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(StatEx);
-private:
-	//std::unique_ptr<Header> _pHeader;
 public:
-	StatEx();
-public:
-	//Header& GetHeader() { return *_pHeader; }
-	//const Header& GetHeader() const { return *_pHeader; }
-	//bool IsDir() const { return GetHeader().GetTypeFlag() == Header::DIRTYPE; }
+	StatEx(String fileName, size_t fileSize, DateTime* dtModification, bool folderFlag);
 public:
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
-};
-
-//-----------------------------------------------------------------------------
-// StatExList
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE StatExList : public ListBase<StatEx*> {
-};
-
-//-----------------------------------------------------------------------------
-// StatExOwner
-//-----------------------------------------------------------------------------
-class GURAX_DLLDECLARE StatExOwner : public StatExList {
-public:
-	~StatExOwner() { Clear(); }
-	void Clear();
-	bool ReadDirectory(Device& device);
 };
 
 //-----------------------------------------------------------------------------
@@ -52,18 +30,20 @@ public:
 	public:
 		Gurax_DeclareReferable(CoreEx);
 	private:
-		String _fileName;
-		StringW _objectID;
 		RefPtr<Device> _pDevice;
+		StringW _objectID;
+		RefPtr<StatEx> _pStat;
 	public:
-		CoreEx(Type type, String fileName, StringW objectID, Device* pDevice) : 
-			Core(type, '/', true, new CoreOwner()), _fileName(fileName), _objectID(objectID), _pDevice(pDevice) {}
+		CoreEx(Device* pDevice, Type type, StringW objectID, StatEx* pStat) : 
+			Core(type, '/', true, new CoreOwner()), _pDevice(pDevice), _objectID(objectID), _pStat(pStat) {}
 		Device& GetDevice() { return *_pDevice; }
 		LPCWSTR GetObjectID() const { return _objectID.c_str(); }
 	public:
 		bool Initialize();
 		virtual Directory* GenerateDirectory() override;
 	};
+public:
+	Gurax_DeclareReferable(DirectoryEx);
 private:
 	RefPtr<DirectoryEx> _pDirectoryParent;
 	CComPtr<IEnumPortableDeviceObjectIDs> _pEnumPortableDeviceObjectIDs;
@@ -74,15 +54,12 @@ private:
 		bool lastFlag;
 	} _browse;
 public:
-	//DirectoryEx(CoreEx* pCoreEx) : Directory(pCoreEx) {}
-	DirectoryEx(DirectoryEx* pDirectoryParent, String fileName, Directory::Type type,
-		Device* pDevice, StringW objectID);
+	DirectoryEx(CoreEx* pCore, DirectoryEx* pDirectoryParent);
 	~DirectoryEx();
 public:
 	static DirectoryEx* Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID);
 	CoreEx& GetCoreEx() { return dynamic_cast<CoreEx&>(*_pCore); }
 	Device& GetDevice() { return GetCoreEx().GetDevice(); }
-	bool ReadDirectory();
 protected:
 	virtual void DoRewindChild() override;
 	virtual Directory* DoNextChild() override;

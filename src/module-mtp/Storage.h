@@ -40,6 +40,7 @@ public:
 protected:
 	~Storage() = default;
 public:
+	Device& GetDevice() { return *_pDevice; }
 	LPCWSTR GetObjectID() const { return _objectID.c_str(); }
 	const Symbol* GetStorageType() const { return _pStorageType; }
 	const Symbol* GetFilesystemType() const { return _pFilesystemType; }

@@ -17,41 +17,10 @@ StatEx::StatEx(Header* pHeader) :
 {
 }
 */
-StatEx::StatEx() : Stat(nullptr, "", Flag::Reg, 0, 0, 0, 0)
+StatEx::StatEx(String fileName, size_t fileSize, DateTime* dtModification, bool folderFlag) :	
+	Stat(nullptr, "", Flag::Reg, 0, 0, 0, 0)
 {
 }
-
-#if 0
-StatEx* StatEx::ReadDirectory(Stream& streamSrc)
-{
-#if 0
-	std::unique_ptr<Header> pHeader(new Header());
-	char buffBlock[Header::BLOCKSIZE];
-	int nTerminator = 0;
-	for (;;) {
-		size_t bytesRead = streamSrc.Read(buffBlock, Header::BLOCKSIZE);
-		if (Error::IsIssued()) return nullptr;
-		if (bytesRead < Header::BLOCKSIZE) return nullptr;
-		bool zeroBlockFlag = true;
-		UInt32* p = reinterpret_cast<UInt32 *>(buffBlock);
-		for (int i = 0; i < Header::BLOCKSIZE / sizeof(UInt32); i++, p++) {
-			if (*p != 0x00000000) {
-				zeroBlockFlag = false;
-				break;
-			}
-		}
-		if (!zeroBlockFlag) break;
-		nTerminator++;
-		if (nTerminator == 2) return nullptr;
-	}
-	star_header& hdrRaw = *reinterpret_cast<star_header *>(buffBlock);
-	if (!pHeader->SetRawHeader(hdrRaw)) return nullptr;
-	pHeader->SetOffset(streamSrc.GetOffset());
-	return new StatEx(pHeader.release());
-#endif
-	return nullptr;
-}
-#endif
 
 String StatEx::ToString(const StringStyle& ss) const
 {
@@ -60,39 +29,11 @@ String StatEx::ToString(const StringStyle& ss) const
 	return str;
 }
 
-//------------------------------------------------------------------------------
-// StatExList
-//------------------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-// StatExOwner
-//------------------------------------------------------------------------------
-void StatExOwner::Clear()
-{
-	for (StatEx* pStatEx : *this) StatEx::Delete(pStatEx);
-	clear();
-}
-
-bool StatExOwner::ReadDirectory(Device& device)
-{
-#if 0
-	for (;;) {
-		RefPtr<StatEx> pStatEx(StatEx::ReadDirectory(streamSrc));
-		if (!pStatEx) break;
-		streamSrc.Seek(pStatEx->GetHeader().CalcBlocks() * Header::BLOCKSIZE, Stream::SeekMode::Cur);
-		push_back(pStatEx.release());
-	}
-	return !Error::IsIssued();
-#endif
-	return false;
-}
-
 //-----------------------------------------------------------------------------
 // DirectoryEx
 //-----------------------------------------------------------------------------
-DirectoryEx::DirectoryEx(DirectoryEx* pDirectoryParent, String fileName, Directory::Type type, Device* pDevice, StringW objectID) :
-	Directory(new CoreEx(type, fileName, objectID, pDevice)),
-	_pDirectoryParent(pDirectoryParent)
+DirectoryEx::DirectoryEx(CoreEx* pCore, DirectoryEx* pDirectoryParent) :
+	Directory(pCore), _pDirectoryParent(pDirectoryParent)
 {
 	_browse.nObjectIDs = 0;
 	_browse.iObjectID = 0;
@@ -134,7 +75,17 @@ DirectoryEx* DirectoryEx::Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID
 				GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE, &value))) return false;
 		fileSize = static_cast<size_t>(value);
 	} while (0);
-	//DateTime dtModification;
+	RefPtr<DateTime> pDateTimeC;
+	do { // WPD_OBJECT_DATE_MODIFIED: VT_DATE
+		PROPVARIANT value;
+		if (FAILED(pPortableDeviceValues->
+				GetValue(WPD_OBJECT_DATE_CREATED, &value))) return false;
+		COleDateTime oleDateTime(value.date);
+		SYSTEMTIME st;
+		oleDateTime.GetAsSystemTime(st);
+		pDateTimeC.reset(OAL::CreateDateTime(st, OAL::GetSecsOffsetTZ()));
+	} while (0);
+	RefPtr<DateTime> pDateTimeM;
 	do { // WPD_OBJECT_DATE_MODIFIED: VT_DATE
 		PROPVARIANT value;
 		if (FAILED(pPortableDeviceValues->
@@ -142,25 +93,11 @@ DirectoryEx* DirectoryEx::Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID
 		COleDateTime oleDateTime(value.date);
 		SYSTEMTIME st;
 		oleDateTime.GetAsSystemTime(st);
-		//dtModification = OAL::ToDateTime(st, 0);
+		pDateTimeM.reset(OAL::CreateDateTime(st, OAL::GetSecsOffsetTZ()));
 	} while (0);
-	return new DirectoryEx(
-		pDirectoryParent, fileName.c_str(),
-		folderFlag? Directory::Type::Folder : Directory::Type::Item,
-		pDirectoryParent->GetDevice().Reference(), objectID);
-}
-
-bool DirectoryEx::ReadDirectory()
-{
-	::printf("ReadDirectory()\n");
-	StatExOwner statExOwner;
-	if (!statExOwner.ReadDirectory(GetCoreEx().GetDevice())) return false;
-	for (StatEx* pStatEx : statExOwner) {
-		//const char* pathName = pStatEx->GetHeader().GetName();
-		Type type = pStatEx->IsDir()? Type::Folder : Type::Item;
-		//GetCoreEx().AddChildInTree(pathName, new CoreEx(type, GetStreamSrc().Reference(), pStatEx->Reference()));
-	}
-	return true;
+	RefPtr<DateTime> pDateTimeA(pDateTimeM.Reference());
+	RefPtr<CoreEx> pCore;
+	return new DirectoryEx(pCore.release(), pDirectoryParent);
 }
 
 void DirectoryEx::DoRewindChild()
@@ -186,8 +123,7 @@ Directory* DirectoryEx::DoNextChild()
 		if (_browse.nObjectIDs == 0) return nullptr;
 	}
 	LPWSTR objectID = _browse.objectIDs[_browse.iObjectID++];
-	//return _pDevice->GetDirectoryFactory()->Create(env, Reference(), objectID);
-	return nullptr;
+	return DirectoryEx::Create(Reference(), objectID);
 }
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)

@@ -666,6 +666,7 @@ int OAL::GetSecsOffsetTZ()
 	if (::GetTimeZoneInformation(&tzInfo) == TIME_ZONE_ID_INVALID) return 0;
 	return -tzInfo.Bias * 60;
 }
+
 bool OAL::FollowLink(String& pathName)
 {
 	// nothing to do

@@ -20,7 +20,8 @@ Directory* Storage::OpenDir(const char* pathName)
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	IPortableDeviceProperties* pPortableDeviceProperties = _pDevice->GetPortableDeviceProperties();
 	IPortableDeviceKeyCollection* pPortableDeviceKeyCollection = _pDevice->GetPortableDeviceKeyCollection();
-	RefPtr<DirectoryEx> pDirectory(new DirectoryEx(nullptr, "/", Directory::Type::Folder, _pDevice->Reference(), GetObjectID()));
+	RefPtr<DirectoryEx::CoreEx> pCore(new DirectoryEx::CoreEx(GetDevice().Reference(), Directory::Type::Folder, GetObjectID(), nullptr));
+	RefPtr<DirectoryEx> pDirectory(new DirectoryEx(pCore.release(), nullptr));
 	const char* p = pathName;
 	if (IsFileSeparator(*p)) p++;
 	while (*p != '\0') {
@@ -75,7 +76,7 @@ Directory* Storage::OpenDir(const char* pathName)
 			if (Error::IsIssued()) return nullptr;
 		} while (hr == S_OK && objectIDFound.empty());
 		if (objectIDFound.empty()) break;
-
+		pDirectory.reset(DirectoryEx::Create(pDirectory.release(), objectIDFound.c_str()));
 	}
 	return pDirectory.release();
 }

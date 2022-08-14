@@ -48,6 +48,7 @@ protected:
 	~Device() = default;
 public:
 	bool Open(IPortableDeviceManager* pPortableDeviceManager);
+	LPCWSTR GetDeviceID() const { return _deviceID.c_str(); }
 	const char* GetFriendlyName() const { return _friendlyName.c_str(); }
 	const char* GetManufacturer() const { return _manufacturer.c_str(); }
 	const char* GetDescription() const { return _description.c_str(); }

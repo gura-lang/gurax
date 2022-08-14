@@ -10,40 +10,42 @@ Gurax_BeginModuleScope(mtp)
 //------------------------------------------------------------------------------
 bool Device::Open(IPortableDeviceManager* pPortableDeviceManager)
 {
-	CComPtr<IPortableDeviceValues> pPortableDeviceValues;
 	if (FAILED(::CoInitializeEx(nullptr, COINIT_MULTITHREADED))) {
 		return Value::nil();
 	}
-	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr,
-			CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceValues)))) return nullptr;
-	if (FAILED(pPortableDeviceValues->SetStringValue(WPD_CLIENT_NAME, L"Gurax mtp Module"))) return nullptr;
-	if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_MAJOR_VERSION, GURAX_VERSION_MAJOR))) return nullptr;
-	if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_MINOR_VERSION, GURAX_VERSION_MINOR))) return nullptr;
-	if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_REVISION, GURAX_VERSION_PATCH))) return false;
 	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceFTM, nullptr,
 			CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&_pPortableDevice)))) return false;
-	if (FAILED(_pPortableDevice->Open(_deviceID.c_str(), pPortableDeviceValues.p))) return false;
+	do {
+		CComPtr<IPortableDeviceValues> pPortableDeviceValues;
+		if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr,
+				CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceValues)))) return nullptr;
+		if (FAILED(pPortableDeviceValues->SetStringValue(WPD_CLIENT_NAME, L"Gurax mtp Module"))) return nullptr;
+		if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_MAJOR_VERSION, GURAX_VERSION_MAJOR))) return nullptr;
+		if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_MINOR_VERSION, GURAX_VERSION_MINOR))) return nullptr;
+		if (FAILED(pPortableDeviceValues->SetUnsignedIntegerValue(WPD_CLIENT_REVISION, GURAX_VERSION_PATCH))) return false;
+		if (FAILED(_pPortableDevice->Open(GetDeviceID(), pPortableDeviceValues.p))) return false;
+	} while (0);
 	if (FAILED(_pPortableDevice->Content(&_pPortableDeviceContent))) return false;
 	if (FAILED(_pPortableDeviceContent->Properties(&_pPortableDeviceProperties))) return false;
 	do {
 		DWORD len = 0;
-		if (FAILED(pPortableDeviceManager->GetDeviceFriendlyName(_deviceID.c_str(), nullptr, &len))) return false;
+		if (FAILED(pPortableDeviceManager->GetDeviceFriendlyName(GetDeviceID(), nullptr, &len))) return false;
 		std::unique_ptr<WCHAR[]> wstr(new WCHAR[len]);	// len contains terminal null.
-		if (FAILED(pPortableDeviceManager->GetDeviceFriendlyName(_deviceID.c_str(), wstr.get(), &len))) return false;
+		if (FAILED(pPortableDeviceManager->GetDeviceFriendlyName(GetDeviceID(), wstr.get(), &len))) return false;
 		_friendlyName = WSTRToString(wstr.get());
 	} while (0);
 	do {
 		DWORD len = 0;
-		if (FAILED(pPortableDeviceManager->GetDeviceManufacturer(_deviceID.c_str(), nullptr, &len))) return false;
+		if (FAILED(pPortableDeviceManager->GetDeviceManufacturer(GetDeviceID(), nullptr, &len))) return false;
 		std::unique_ptr<WCHAR[]> wstr(new WCHAR[len]);	// len contains terminal null.
-		if (FAILED(pPortableDeviceManager->GetDeviceManufacturer(_deviceID.c_str(), wstr.get(), &len))) return false;
+		if (FAILED(pPortableDeviceManager->GetDeviceManufacturer(GetDeviceID(), wstr.get(), &len))) return false;
 		_manufacturer = WSTRToString(wstr.get());
 	} while (0);
 	do {
 		DWORD len = 0;
-		if (FAILED(pPortableDeviceManager->GetDeviceDescription(_deviceID.c_str(), nullptr, &len))) return false;
+		if (FAILED(pPortableDeviceManager->GetDeviceDescription(GetDeviceID(), nullptr, &len))) return false;
 		std::unique_ptr<WCHAR[]> wstr(new WCHAR[len]);	// len contains terminal null.
-		if (FAILED(pPortableDeviceManager->GetDeviceDescription(_deviceID.c_str(), wstr.get(), &len))) return false;
+		if (FAILED(pPortableDeviceManager->GetDeviceDescription(GetDeviceID(), wstr.get(), &len))) return false;
 		_description = WSTRToString(wstr.get());
 	} while (0);
 	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceKeyCollection,
