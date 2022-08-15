@@ -10,6 +10,7 @@
 #include "Storage.h"
 #include "Symbol.h"
 #include "VType_Device.h"
+#include "VType_StatEx.h"
 #include "VType_Storage.h"
 
 Gurax_BeginModuleHeader(mtp)

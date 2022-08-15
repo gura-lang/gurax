@@ -96,7 +96,8 @@ DirectoryEx* DirectoryEx::Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID
 
 void DirectoryEx::DoRewindChild()
 {
-	::printf("DoRewindChild()\n");
+	DestroyBrowse();
+	_browse.lastFlag = false;
 }
 
 Directory* DirectoryEx::DoNextChild()

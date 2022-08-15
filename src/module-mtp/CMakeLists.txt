@@ -42,6 +42,7 @@ target_sources(mtp.gurd PRIVATE
 	Storage.cpp
 	Symbol.cpp
 	VType_Device.cpp
+	VType_StatEx.cpp
 	VType_Storage.cpp)
 #-------------------------------------------------------------------------------
 # Link
