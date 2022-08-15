@@ -8,17 +8,9 @@ Gurax_BeginModuleScope(mtp)
 //------------------------------------------------------------------------------
 // StatEx
 //------------------------------------------------------------------------------
-/*
-StatEx::StatEx(Header* pHeader) :
-	Stat(pHeader->GetMTime().Reference(), PathName(pHeader->GetName()).ExtractBottomName(),
-		 pHeader->IsFolder()? Flag::Dir : Flag::Reg,
-		 pHeader->GetMode(), pHeader->GetSize(), pHeader->GetUid(), pHeader->GetGid()),
-	_pHeader(pHeader)
-{
-}
-*/
-StatEx::StatEx(String fileName, size_t fileSize, DateTime* dtModification, bool folderFlag) :	
-	Stat(nullptr, "", Flag::Reg, 0, 0, 0, 0)
+StatEx::StatEx(DateTime* pDateTimeC, DateTime* pDateTimeM, DateTime* pDateTimeA,
+		String fileName, UInt32 flags, size_t fileSize) :
+	Stat(pDateTimeM, pDateTimeC, pDateTimeA, fileName, flags, 0777, fileSize, 0, 0)
 {
 }
 
@@ -32,9 +24,9 @@ String StatEx::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 // DirectoryEx
 //-----------------------------------------------------------------------------
-DirectoryEx::DirectoryEx(CoreEx* pCore, DirectoryEx* pDirectoryParent) :
-	Directory(pCore), _pDirectoryParent(pDirectoryParent)
+DirectoryEx::DirectoryEx(CoreEx* pCore, DirectoryEx* pDirectoryParent) : Directory(pCore)
 {
+	SetDirectoryParent(pDirectoryParent);
 	_browse.nObjectIDs = 0;
 	_browse.iObjectID = 0;
 	_browse.lastFlag = false;
@@ -47,12 +39,33 @@ DirectoryEx::~DirectoryEx()
 
 DirectoryEx* DirectoryEx::Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID)
 {
-	IPortableDeviceProperties* pPortableDeviceProperties = pDirectoryParent->GetDevice().GetPortableDeviceProperties();
-	IPortableDeviceKeyCollection* pPortableDeviceKeyCollection = pDirectoryParent->GetDevice().GetPortableDeviceKeyCollection();
+	Device& device = pDirectoryParent->GetDevice();
+	IPortableDeviceProperties* pPortableDeviceProperties = device.GetPortableDeviceProperties();
+	IPortableDeviceKeyCollection* pPortableDeviceKeyCollection = device.GetPortableDeviceKeyCollection();
 	CComPtr<IPortableDeviceValues> pPortableDeviceValues;
 	if (FAILED(pPortableDeviceProperties->GetValues(
 		objectID, pPortableDeviceKeyCollection, &pPortableDeviceValues))) return nullptr;
 	String fileName;
+	RefPtr<DateTime> pDateTimeC;
+	do { // WPD_OBJECT_DATE_CREATED: VT_DATE
+		PROPVARIANT value;
+		if (FAILED(pPortableDeviceValues->
+				GetValue(WPD_OBJECT_DATE_CREATED, &value))) return nullptr;
+		COleDateTime oleDateTime(value.date);
+		SYSTEMTIME st;
+		oleDateTime.GetAsSystemTime(st);
+		pDateTimeC.reset(OAL::CreateDateTime(st, OAL::GetSecsOffsetTZ()));
+	} while (0);
+	RefPtr<DateTime> pDateTimeM;
+	do { // WPD_OBJECT_DATE_MODIFIED: VT_DATE
+		PROPVARIANT value;
+		if (FAILED(pPortableDeviceValues->
+				GetValue(WPD_OBJECT_DATE_MODIFIED, &value))) return nullptr;
+		COleDateTime oleDateTime(value.date);
+		SYSTEMTIME st;
+		oleDateTime.GetAsSystemTime(st);
+		pDateTimeM.reset(OAL::CreateDateTime(st, OAL::GetSecsOffsetTZ()));
+	} while (0);
 	do { // WPD_OBJECT_ORIGINAL_FILE_NAME: VT_LPWSTR
 		LPWSTR value = nullptr;
 		if (FAILED(pPortableDeviceValues->
@@ -61,7 +74,6 @@ DirectoryEx* DirectoryEx::Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID
 		::CoTaskMemFree(value);
 	} while (0);
 	bool folderFlag = false;
-	const Symbol *pFileType = Symbol::Empty;
 	do { // WPD_OBJECT_CONTENT_TYPE: VT_CLSID
 		GUID value;
 		if (FAILED(pPortableDeviceValues->
@@ -72,43 +84,24 @@ DirectoryEx* DirectoryEx::Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID
 	do { // WPD_OBJECT_SIZE: VT_UI8
 		ULONGLONG value = 0;
 		if (FAILED(pPortableDeviceValues->
-				GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE, &value))) return false;
+				GetUnsignedLargeIntegerValue(WPD_OBJECT_SIZE, &value))) return nullptr;
 		fileSize = static_cast<size_t>(value);
 	} while (0);
-	RefPtr<DateTime> pDateTimeC;
-	do { // WPD_OBJECT_DATE_MODIFIED: VT_DATE
-		PROPVARIANT value;
-		if (FAILED(pPortableDeviceValues->
-				GetValue(WPD_OBJECT_DATE_CREATED, &value))) return false;
-		COleDateTime oleDateTime(value.date);
-		SYSTEMTIME st;
-		oleDateTime.GetAsSystemTime(st);
-		pDateTimeC.reset(OAL::CreateDateTime(st, OAL::GetSecsOffsetTZ()));
-	} while (0);
-	RefPtr<DateTime> pDateTimeM;
-	do { // WPD_OBJECT_DATE_MODIFIED: VT_DATE
-		PROPVARIANT value;
-		if (FAILED(pPortableDeviceValues->
-				GetValue(WPD_OBJECT_DATE_MODIFIED, &value))) return false;
-		COleDateTime oleDateTime(value.date);
-		SYSTEMTIME st;
-		oleDateTime.GetAsSystemTime(st);
-		pDateTimeM.reset(OAL::CreateDateTime(st, OAL::GetSecsOffsetTZ()));
-	} while (0);
 	RefPtr<DateTime> pDateTimeA(pDateTimeM.Reference());
-	RefPtr<CoreEx> pCore;
+	RefPtr<StatEx> pStat(new StatEx(pDateTimeC.release(), pDateTimeM.release(), pDateTimeA.release(),
+		fileName, folderFlag? Stat::Flag::Dir : Stat::Flag::Reg, fileSize));
+	RefPtr<CoreEx> pCore(new CoreEx(device.Reference(), folderFlag? Directory::Type::Folder : Directory::Type::Item, objectID, pStat.release()));
 	return new DirectoryEx(pCore.release(), pDirectoryParent);
 }
 
 void DirectoryEx::DoRewindChild()
 {
 	::printf("DoRewindChild()\n");
-	//_idxChild = 0;
 }
 
 Directory* DirectoryEx::DoNextChild()
 {
-	::printf("DoNextChild()\n");
+	//::printf("DoNextChild(%s, %p)\n", GetName(), this);
 	IPortableDeviceContent* pPortableDeviceContent = GetCoreEx().GetDevice().GetPortableDeviceContent();
 	if (_browse.iObjectID >= _browse.nObjectIDs) {
 		DestroyBrowse();
@@ -120,10 +113,15 @@ Directory* DirectoryEx::DoNextChild()
 		HRESULT hr = _pEnumPortableDeviceObjectIDs->Next(
 				Gurax_ArraySizeOf(_browse.objectIDs), _browse.objectIDs, &_browse.nObjectIDs);
 		if (hr != S_OK) _browse.lastFlag = true;
-		if (_browse.nObjectIDs == 0) return nullptr;
+		//::printf("nObjectIDs=%d\n", _browse.nObjectIDs);
+		if (_browse.nObjectIDs == 0) {
+			_browse.lastFlag = true;
+			return nullptr;
+		}
 	}
 	LPWSTR objectID = _browse.objectIDs[_browse.iObjectID++];
-	return DirectoryEx::Create(Reference(), objectID);
+	RefPtr<Directory> pDirectory(DirectoryEx::Create(Reference(), objectID));
+	return pDirectory.release();
 }
 
 Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
@@ -139,9 +137,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value_Stat* DirectoryEx::DoCreateStatValue()
 {
-	::printf("DoCreateStatValue()\n");
-	//StatEx* pStatEx = GetCoreEx().GetStatEx();
-	//return pStatEx? new Value_StatEx(pStatEx->Reference()) : nullptr;
+	//return new Value_StatEx(GetCoreEx().GetStat().Reference());
 	return nullptr;
 }
 

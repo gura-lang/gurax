@@ -50,10 +50,11 @@ bool Device::Open(IPortableDeviceManager* pPortableDeviceManager)
 	} while (0);
 	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceKeyCollection,
 			nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&_pPortableDeviceKeyCollection)))) return false;
+	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_DATE_CREATED))) return false;
+	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_DATE_MODIFIED))) return false;
 	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_ORIGINAL_FILE_NAME))) return false;
 	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_CONTENT_TYPE))) return false;
 	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_SIZE))) return false;
-	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_DATE_MODIFIED))) return false;
 	return true;
 }
 

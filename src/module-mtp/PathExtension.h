@@ -16,7 +16,8 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(StatEx);
 public:
-	StatEx(String fileName, size_t fileSize, DateTime* dtModification, bool folderFlag);
+	StatEx(DateTime* pDateTimeC, DateTime* pDateTimeM, DateTime* pDateTimeA,
+		String fileName, UInt32 flags, size_t fileSize);
 public:
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
@@ -35,9 +36,10 @@ public:
 		RefPtr<StatEx> _pStat;
 	public:
 		CoreEx(Device* pDevice, Type type, StringW objectID, StatEx* pStat) : 
-			Core(type, '/', true, new CoreOwner()), _pDevice(pDevice), _objectID(objectID), _pStat(pStat) {}
+			Core(type, pStat->GetName(), '/', true, new CoreOwner()), _pDevice(pDevice), _objectID(objectID), _pStat(pStat) {}
 		Device& GetDevice() { return *_pDevice; }
 		LPCWSTR GetObjectID() const { return _objectID.c_str(); }
+		StatEx& GetStat() const { return *_pStat; }
 	public:
 		bool Initialize();
 		virtual Directory* GenerateDirectory() override;
@@ -45,7 +47,6 @@ public:
 public:
 	Gurax_DeclareReferable(DirectoryEx);
 private:
-	RefPtr<DirectoryEx> _pDirectoryParent;
 	CComPtr<IEnumPortableDeviceObjectIDs> _pEnumPortableDeviceObjectIDs;
 	struct {
 		LPWSTR objectIDs[32];

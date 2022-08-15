@@ -20,7 +20,8 @@ Directory* Storage::OpenDir(const char* pathName)
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	IPortableDeviceProperties* pPortableDeviceProperties = _pDevice->GetPortableDeviceProperties();
 	IPortableDeviceKeyCollection* pPortableDeviceKeyCollection = _pDevice->GetPortableDeviceKeyCollection();
-	RefPtr<DirectoryEx::CoreEx> pCore(new DirectoryEx::CoreEx(GetDevice().Reference(), Directory::Type::Folder, GetObjectID(), nullptr));
+	RefPtr<StatEx> pStat(new StatEx(new DateTime(), new DateTime(), new DateTime(), "", Stat::Flag::Dir, 0));
+	RefPtr<DirectoryEx::CoreEx> pCore(new DirectoryEx::CoreEx(GetDevice().Reference(), Directory::Type::Folder, GetObjectID(), pStat.release()));
 	RefPtr<DirectoryEx> pDirectory(new DirectoryEx(pCore.release(), nullptr));
 	const char* p = pathName;
 	if (IsFileSeparator(*p)) p++;
