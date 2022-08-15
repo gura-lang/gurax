@@ -73,6 +73,15 @@ DirectoryEx* DirectoryEx::Create(DirectoryEx* pDirectoryParent, LPCWSTR objectID
 		fileName = WSTRToString(value);
 		::CoTaskMemFree(value);
 	} while (0);
+#if 0
+	do { // WPD_OBJECT_LANGUAGE_LOCALE: VT_LPWSTR
+		LPWSTR value = nullptr;
+		if (FAILED(pPortableDeviceValues->
+				GetStringValue(WPD_OBJECT_LANGUAGE_LOCALE, &value))) return nullptr;
+		String langLocale = WSTRToString(value);
+		::CoTaskMemFree(value);
+	} while (0);
+#endif
 	bool folderFlag = false;
 	do { // WPD_OBJECT_CONTENT_TYPE: VT_CLSID
 		GUID value;

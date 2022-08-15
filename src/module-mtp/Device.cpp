@@ -53,6 +53,7 @@ bool Device::Open(IPortableDeviceManager* pPortableDeviceManager)
 	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_DATE_CREATED))) return false;
 	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_DATE_MODIFIED))) return false;
 	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_ORIGINAL_FILE_NAME))) return false;
+	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_LANGUAGE_LOCALE))) return false;
 	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_CONTENT_TYPE))) return false;
 	if (FAILED(_pPortableDeviceKeyCollection->Add(WPD_OBJECT_SIZE))) return false;
 	return true;
