@@ -138,8 +138,7 @@ Stream* DirectoryEx::DoOpenStream(Stream::OpenFlags openFlags)
 
 Value_Stat* DirectoryEx::DoCreateStatValue()
 {
-	//return new Value_StatEx(GetCoreEx().GetStat().Reference());
-	return nullptr;
+	return new Value_StatEx(GetCoreEx().GetStat().Reference());
 }
 
 void DirectoryEx::DestroyBrowse()

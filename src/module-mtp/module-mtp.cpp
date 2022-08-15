@@ -45,6 +45,7 @@ Gurax_ModulePrepare()
 	if (FAILED(::CoInitializeEx(nullptr, COINIT_MULTITHREADED))) return false;
 	// Assignment of VType
 	Assign(VTYPE_Device);
+	Assign(VTYPE_StatEx);
 	Assign(VTYPE_Storage);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(EnumDevice));
