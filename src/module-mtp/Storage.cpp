@@ -84,16 +84,122 @@ Directory* Storage::OpenDir(const char* pathName)
 
 bool Storage::RecvFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const
 {
-	return false;
+#if 0
+	AutoPtr<Directory_MTP> pDirectory(GenerateDirectory(sig, pathName));
+	if (pDirectory.IsNull()) return false;
+	if (pDirectory->GetStat()->IsFolder()) {
+		sig.SetError(ERR_FileError, "can't transfer a folder");
+		return false;
+	}
+	IPortableDeviceContent *pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	ComPtr<IPortableDeviceResources> pPortableDeviceResources;
+ 	if (CatchErr(sig, pPortableDeviceContent->Transfer(&pPortableDeviceResources))) return false;
+	ComPtr<IStream> pStreamOnDevice;
+	DWORD bytesBuff;
+	if (CatchErr(sig, pPortableDeviceResources->GetStream(pDirectory->GetObjectID(),
+			WPD_RESOURCE_DEFAULT, STGM_READ, &bytesBuff, &pStreamOnDevice))) return false;
+	AutoPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
+	char *buff = pMemory->GetPointer();
+	size_t bytesTotal = pDirectory->GetStat()->GetFileSize();
+	size_t bytesSent = 0;
+	for (;;) {
+		DWORD bytesRead;
+		if (CatchErr(sig, pStreamOnDevice->Read(buff, bytesBuff, &bytesRead))) return false;
+		if (bytesRead == 0) break;
+		pStream->Write(sig, buff, bytesRead);
+		if (sig.IsSignalled()) return false;
+		bytesSent += bytesRead;
+		if (pFuncBlock != nullptr) {
+			Environment &env = pFuncBlock->GetEnvScope();
+			AutoPtr<Argument> pArg(new Argument(pFuncBlock));
+			pArg->StoreValue(env, Value(bytesSent), Value(bytesTotal));
+			pFuncBlock->Eval(env, *pArg);
+			if (sig.IsSignalled()) return false;
+		}
+	}
+#endif
+	return true;
 }
 
 bool Storage::SendFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const
 {
-	return false;
+#if 0
+	String dirName, fileName, baseName;
+	PathMgr::SplitFileName(pathName, &dirName, &fileName);
+	PathMgr::SplitExtName(fileName.c_str(), &baseName, nullptr);
+	AutoPtr<Directory_MTP> pDirectoryParent(GenerateDirectory(sig, dirName.c_str()));
+	if (pDirectoryParent.IsNull()) return false;
+	IPortableDeviceContent *pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	ComPtr<IPortableDeviceValues> pPortableDeviceValues;
+	if (CatchErr(sig, ::CoCreateInstance(CLSID_PortableDeviceValues, nullptr, CLSCTX_INPROC_SERVER,
+					IID_PPV_ARGS(&pPortableDeviceValues)))) return false;
+	if (CatchErr(sig, pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_PARENT_ID, pDirectoryParent->GetObjectID()))) return false;
+	if (CatchErr(sig, pPortableDeviceValues->SetUnsignedLargeIntegerValue(
+		WPD_OBJECT_SIZE, pStream->GetSize()))) return false;
+	if (CatchErr(sig, pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_ORIGINAL_FILE_NAME, STRToStringW(fileName.c_str()).c_str()))) return false;
+	if (CatchErr(sig, pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_NAME, STRToStringW(baseName.c_str()).c_str()))) return false;
+#if 0
+	if (CatchErr(sig, pPortableDeviceValues->SetGuidValue(
+		WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_IMAGE))) return false;
+	if (CatchErr(sig, pPortableDeviceValues->SetGuidValue(
+		WPD_OBJECT_FORMAT, WPD_OBJECT_FORMAT_EXIF))) return false;
+#endif
+	ComPtr<IStream> pStreamTmp;
+	DWORD bytesBuff;
+	if (CatchErr(sig, pPortableDeviceContent->CreateObjectWithPropertiesAndData(
+		pPortableDeviceValues.Get(), &pStreamTmp, &bytesBuff, nullptr))) return false;
+	ComPtr<IPortableDeviceDataStream> pPortableDeviceDataStream;
+	if (CatchErr(sig, pStreamTmp.As(&pPortableDeviceDataStream))) return false;
+	AutoPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
+	char *buff = pMemory->GetPointer();
+	size_t bytesTotal = static_cast<DWORD>(pStream->GetSize());
+	size_t bytesSent = 0;
+	for (;;) {
+		DWORD bytesRead = static_cast<DWORD>(pStream->Read(sig, buff, bytesBuff));
+		if (sig.IsSignalled()) return false;
+		if (bytesRead == 0) break;
+		DWORD bytesWritten;
+		if (CatchErr(sig, pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten))) return false;
+		bytesSent += bytesRead;
+		if (pFuncBlock != nullptr) {
+			Environment &env = pFuncBlock->GetEnvScope();
+			AutoPtr<Argument> pArg(new Argument(pFuncBlock));
+			pArg->StoreValue(env, Value(bytesSent), Value(bytesTotal));
+			pFuncBlock->Eval(env, *pArg);
+			if (sig.IsSignalled()) return false;
+		}
+	}
+	if (CatchErr(sig, pPortableDeviceDataStream->Commit(STGC_DEFAULT))) return false;
+#endif
+	return true;
 }
 
 bool Storage::DeleteFile(const char* pathName) const
 {
+#if 0
+	IPortableDeviceContent *pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	AutoPtr<Directory_MTP> pDirectory(GenerateDirectory(sig, pathName));
+	if (pDirectory.IsNull()) return false;
+	if (pDirectory->GetStat()->IsFolder()) {
+		sig.SetError(ERR_FileError, "can't delete a folder");
+		return false;
+	}
+	ComPtr<IPortableDevicePropVariantCollection> pPortableDevicePropVariantCollection;
+	if (CatchErr(sig, ::CoCreateInstance(CLSID_PortableDevicePropVariantCollection,
+		nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDevicePropVariantCollection)))) return false;
+	PROPVARIANT propVar;
+	if (CatchErr(sig, ::InitPropVariantFromString(pDirectory->GetObjectID(), &propVar))) return false;
+	if (CatchErr(sig, pPortableDevicePropVariantCollection->Add(&propVar))) goto error_done;
+	if (CatchErr(sig, pPortableDeviceContent->Delete(PORTABLE_DEVICE_DELETE_NO_RECURSION,
+		pPortableDevicePropVariantCollection.Get(), nullptr))) goto error_done;
+	PropVariantClear(&propVar);
+	return true;
+error_done:
+	PropVariantClear(&propVar);
+#endif
 	return false;
 }
 
