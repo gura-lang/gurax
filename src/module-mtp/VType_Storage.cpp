@@ -50,12 +50,13 @@ Gurax_ImplementMethod(Storage, OpenDir)
 	return new Value_Directory(pDirectory.release());
 }
 
-// mtp.Storage#RecvFile(pathName as String, stream:w as Stream)
+// mtp.Storage#RecvFile(pathName as String, stream:w as Stream) {block?}
 Gurax_DeclareMethod(Storage, RecvFile)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -64,19 +65,21 @@ Gurax_DeclareMethod(Storage, RecvFile)
 Gurax_ImplementMethod(Storage, RecvFile)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	Stream& stream = args.PickStream();
 	// Function body
+	RefPtr<Function> pFuncBlock(argument.CreateBlockFunction(processor.GetFrameCur(), Gurax_Symbol(block), false));
+	valueThis.GetStorage().RecvFile(pathName, stream, pFuncBlock.get());
 	return Value::nil();
 }
 
 // mtp.Storage#Remove(pathName as String)
 Gurax_DeclareMethod(Storage, Remove)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -94,12 +97,13 @@ Gurax_ImplementMethod(Storage, Remove)
 	return Value::nil();
 }
 
-// mtp.Storage#SendFile(pathName as String, stream:r as Stream)
+// mtp.Storage#SendFile(pathName as String, stream:r as Stream) {block?}
 Gurax_DeclareMethod(Storage, SendFile)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -108,12 +112,14 @@ Gurax_DeclareMethod(Storage, SendFile)
 Gurax_ImplementMethod(Storage, SendFile)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	Stream& stream = args.PickStream();
 	// Function body
+	RefPtr<Function> pFuncBlock(argument.CreateBlockFunction(processor.GetFrameCur(), Gurax_Symbol(block), false));
+	valueThis.GetStorage().SendFile(pathName, stream, pFuncBlock.get());
 	return Value::nil();
 }
 
