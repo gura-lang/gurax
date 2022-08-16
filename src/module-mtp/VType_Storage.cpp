@@ -3,6 +3,8 @@
 //==============================================================================
 #include "stdafx.h"
 
+#undef DeletFile
+
 Gurax_BeginModuleScope(mtp)
 
 //------------------------------------------------------------------------------
@@ -76,8 +78,8 @@ Gurax_ImplementMethod(Storage, RecvFile)
 	return Value::nil();
 }
 
-// mtp.Storage#Remove(pathName as String)
-Gurax_DeclareMethod(Storage, Remove)
+// mtp.Storage#DeleteFile(pathName as String)
+Gurax_DeclareMethodAlias(Storage, DeleteFile_, "DeleteFile")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -86,14 +88,15 @@ Gurax_DeclareMethod(Storage, Remove)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Storage, Remove)
+Gurax_ImplementMethod(Storage, DeleteFile_)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	// Function body
+	valueThis.GetStorage().DeleteFile(pathName);
 	return Value::nil();
 }
 
@@ -275,7 +278,7 @@ void VType_Storage::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Storage, OpenDir));
 	Assign(Gurax_CreateMethod(Storage, RecvFile));
-	Assign(Gurax_CreateMethod(Storage, Remove));
+	Assign(Gurax_CreateMethod(Storage, DeleteFile_));
 	Assign(Gurax_CreateMethod(Storage, SendFile));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Storage, storageType));
