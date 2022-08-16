@@ -23,6 +23,14 @@ devices.Each {|device, iDevice|
 			    storageDescription: ${storage.storageDescription}
 			    volumeIdentifier:   ${storage.volumeIdentifier}
 			''')
-			Println(path.Walk(storage.OpenDir('/')))
+			//Println(path.Walk(storage.OpenDir('/')))
+			path.Walk(storage.OpenDir('/'), 2):stat {|stat|
+				dt = stat.ctime
+				if (stat.isdir) {
+					Printf('%02d/%02d/%02d %02d:%02d %10s %s\n', dt.year, dt.month, dt.day, dt.hour, dt.min, '', stat.name)
+				} else {
+					Printf('%02d/%02d/%02d %02d:%02d %10d %s\n', dt.year, dt.month, dt.day, dt.hour, dt.min, stat.size, stat.name)
+				}
+			}
 	}
 }
