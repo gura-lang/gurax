@@ -117,57 +117,52 @@ bool Storage::RecvFile(Processor& processor, const char* pathName, Stream& strea
 
 bool Storage::SendFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
-#if 0
 	String dirName, fileName, baseName;
-	PathMgr::SplitFileName(pathName, &dirName, &fileName);
-	PathMgr::SplitExtName(fileName.c_str(), &baseName, nullptr);
-	AutoPtr<Directory_MTP> pDirectoryParent(GenerateDirectory(sig, dirName.c_str()));
-	if (pDirectoryParent.IsNull()) return false;
+	PathName(pathName).SplitFileName(&dirName, &fileName);
+	PathName(fileName).SplitExtName(&baseName, nullptr);
+	RefPtr<DirectoryEx> pDirectoryParent(OpenDir(dirName.c_str()));
+	if (!pDirectoryParent) return false;
 	IPortableDeviceContent *pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
-	ComPtr<IPortableDeviceValues> pPortableDeviceValues;
-	if (CatchErr(sig, ::CoCreateInstance(CLSID_PortableDeviceValues, nullptr, CLSCTX_INPROC_SERVER,
+	CComPtr<IPortableDeviceValues> pPortableDeviceValues;
+	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr, CLSCTX_INPROC_SERVER,
 					IID_PPV_ARGS(&pPortableDeviceValues)))) return false;
-	if (CatchErr(sig, pPortableDeviceValues->SetStringValue(
-		WPD_OBJECT_PARENT_ID, pDirectoryParent->GetObjectID()))) return false;
-	if (CatchErr(sig, pPortableDeviceValues->SetUnsignedLargeIntegerValue(
-		WPD_OBJECT_SIZE, pStream->GetSize()))) return false;
-	if (CatchErr(sig, pPortableDeviceValues->SetStringValue(
+	if (FAILED(pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_PARENT_ID, pDirectoryParent->GetCoreEx().GetObjectID()))) return false;
+	if (FAILED(pPortableDeviceValues->SetUnsignedLargeIntegerValue(
+		WPD_OBJECT_SIZE, stream.GetBytes()))) return false;
+	if (FAILED(pPortableDeviceValues->SetStringValue(
 		WPD_OBJECT_ORIGINAL_FILE_NAME, STRToStringW(fileName.c_str()).c_str()))) return false;
-	if (CatchErr(sig, pPortableDeviceValues->SetStringValue(
+	if (FAILED(pPortableDeviceValues->SetStringValue(
 		WPD_OBJECT_NAME, STRToStringW(baseName.c_str()).c_str()))) return false;
 #if 0
-	if (CatchErr(sig, pPortableDeviceValues->SetGuidValue(
+	if (FAILED(pPortableDeviceValues->SetGuidValue(
 		WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_IMAGE))) return false;
-	if (CatchErr(sig, pPortableDeviceValues->SetGuidValue(
+	if (FAILED(pPortableDeviceValues->SetGuidValue(
 		WPD_OBJECT_FORMAT, WPD_OBJECT_FORMAT_EXIF))) return false;
 #endif
-	ComPtr<IStream> pStreamTmp;
+	CComPtr<IStream> pStreamTmp;
 	DWORD bytesBuff;
-	if (CatchErr(sig, pPortableDeviceContent->CreateObjectWithPropertiesAndData(
-		pPortableDeviceValues.Get(), &pStreamTmp, &bytesBuff, nullptr))) return false;
-	ComPtr<IPortableDeviceDataStream> pPortableDeviceDataStream;
-	if (CatchErr(sig, pStreamTmp.As(&pPortableDeviceDataStream))) return false;
-	AutoPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
-	char *buff = pMemory->GetPointer();
-	size_t bytesTotal = static_cast<DWORD>(pStream->GetSize());
+	if (FAILED(pPortableDeviceContent->CreateObjectWithPropertiesAndData(
+		pPortableDeviceValues.p, &pStreamTmp, &bytesBuff, nullptr))) return false;
+	CComPtr<IPortableDeviceDataStream> pPortableDeviceDataStream;
+	//if (FAILED(pStreamTmp.As(&pPortableDeviceDataStream))) return false;
+	RefPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
+	char* buff = pMemory->GetPointerC<char>();
+	size_t bytesTotal = static_cast<DWORD>(stream.GetBytes());
 	size_t bytesSent = 0;
 	for (;;) {
-		DWORD bytesRead = static_cast<DWORD>(pStream->Read(sig, buff, bytesBuff));
-		if (sig.IsSignalled()) return false;
+		DWORD bytesRead = static_cast<DWORD>(stream.Read(buff, bytesBuff));
+		if (Error::IsIssued()) return false;
 		if (bytesRead == 0) break;
 		DWORD bytesWritten;
-		if (CatchErr(sig, pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten))) return false;
+		if (FAILED(pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten))) return false;
 		bytesSent += bytesRead;
-		if (pFuncBlock != nullptr) {
-			Environment &env = pFuncBlock->GetEnvScope();
-			AutoPtr<Argument> pArg(new Argument(pFuncBlock));
-			pArg->StoreValue(env, Value(bytesSent), Value(bytesTotal));
-			pFuncBlock->Eval(env, *pArg);
-			if (sig.IsSignalled()) return false;
+		if (pFuncBlock) {
+			Value::Delete(pFuncBlock->EvalEasy(processor, new Value_Number(bytesSent), new Value_Number(bytesTotal)));
+			if (Error::IsIssued()) return false;
 		}
 	}
-	if (CatchErr(sig, pPortableDeviceDataStream->Commit(STGC_DEFAULT))) return false;
-#endif
+	if (FAILED(pPortableDeviceDataStream->Commit(STGC_DEFAULT))) return false;
 	return true;
 }
 
@@ -182,12 +177,12 @@ bool Storage::DeleteFile(const char* pathName)
 		return false;
 	}
 	ComPtr<IPortableDevicePropVariantCollection> pPortableDevicePropVariantCollection;
-	if (CatchErr(sig, ::CoCreateInstance(CLSID_PortableDevicePropVariantCollection,
+	if (FAILED(::CoCreateInstance(CLSID_PortableDevicePropVariantCollection,
 		nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDevicePropVariantCollection)))) return false;
 	PROPVARIANT propVar;
-	if (CatchErr(sig, ::InitPropVariantFromString(pDirectory->GetObjectID(), &propVar))) return false;
-	if (CatchErr(sig, pPortableDevicePropVariantCollection->Add(&propVar))) goto error_done;
-	if (CatchErr(sig, pPortableDeviceContent->Delete(PORTABLE_DEVICE_DELETE_NO_RECURSION,
+	if (FAILED(::InitPropVariantFromString(pDirectory->GetObjectID(), &propVar))) return false;
+	if (FAILED(pPortableDevicePropVariantCollection->Add(&propVar))) goto error_done;
+	if (FAILED(pPortableDeviceContent->Delete(PORTABLE_DEVICE_DELETE_NO_RECURSION,
 		pPortableDevicePropVariantCollection.Get(), nullptr))) goto error_done;
 	PropVariantClear(&propVar);
 	return true;
