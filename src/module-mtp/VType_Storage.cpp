@@ -74,7 +74,7 @@ Gurax_ImplementMethod(Storage, RecvFile)
 	Stream& stream = args.PickStream();
 	// Function body
 	RefPtr<Function> pFuncBlock(argument.CreateBlockFunction(processor.GetFrameCur(), Gurax_Symbol(block), false));
-	valueThis.GetStorage().RecvFile(pathName, stream, pFuncBlock.get());
+	valueThis.GetStorage().RecvFile(processor, pathName, stream, pFuncBlock.get());
 	return Value::nil();
 }
 
@@ -122,7 +122,7 @@ Gurax_ImplementMethod(Storage, SendFile)
 	Stream& stream = args.PickStream();
 	// Function body
 	RefPtr<Function> pFuncBlock(argument.CreateBlockFunction(processor.GetFrameCur(), Gurax_Symbol(block), false));
-	valueThis.GetStorage().SendFile(pathName, stream, pFuncBlock.get());
+	valueThis.GetStorage().SendFile(processor, pathName, stream, pFuncBlock.get());
 	return Value::nil();
 }
 

@@ -59,12 +59,12 @@ public:
 	void SetStorageDescription(const char* storageDescription) { _storageDescription = storageDescription; }
 	void SetVolumeIdentifier(const char* volumeIdentifier) { _volumeIdentifier = volumeIdentifier; }
 public:
-	Directory* OpenDir(const char* pathName);
-	bool RecvFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const;
-	bool SendFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const;
-	bool DeleteFile(const char* pathName) const;
-	bool MoveFile(const char* pathNameOld, const char* pathNameNew, bool overwriteFlag) const;
-	bool CopyFile(const char* pathNameSrc, const char* pathNameDst, bool overwriteFlag) const;
+	DirectoryEx* OpenDir(const char* pathName);
+	bool RecvFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock);
+	bool SendFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock);
+	bool DeleteFile(const char* pathName);
+	bool MoveFile(const char* pathNameOld, const char* pathNameNew, bool overwriteFlag);
+	bool CopyFile(const char* pathNameSrc, const char* pathNameDst, bool overwriteFlag);
 public:
 	static bool IsFileSeparator(char ch) { return ch == '/'; }
 public:

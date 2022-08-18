@@ -15,7 +15,7 @@ Storage::Storage(Device* pDevice, LPCWSTR objectID) :
 {
 }
 
-Directory* Storage::OpenDir(const char* pathName)
+DirectoryEx* Storage::OpenDir(const char* pathName)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	IPortableDeviceProperties* pPortableDeviceProperties = _pDevice->GetPortableDeviceProperties();
@@ -82,46 +82,40 @@ Directory* Storage::OpenDir(const char* pathName)
 	return pDirectory.release();
 }
 
-bool Storage::RecvFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const
+bool Storage::RecvFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
-#if 0
-	AutoPtr<Directory_MTP> pDirectory(GenerateDirectory(sig, pathName));
-	if (pDirectory.IsNull()) return false;
-	if (pDirectory->GetStat()->IsFolder()) {
-		sig.SetError(ERR_FileError, "can't transfer a folder");
+	RefPtr<DirectoryEx> pDirectory(OpenDir(pathName));
+	if (!pDirectory) return false;
+	if (pDirectory->GetCoreEx().GetStat().IsDir()) {
+		Error::Issue(ErrorType::PathError, "can't transfer a folder");
 		return false;
 	}
-	IPortableDeviceContent *pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
-	ComPtr<IPortableDeviceResources> pPortableDeviceResources;
- 	if (CatchErr(sig, pPortableDeviceContent->Transfer(&pPortableDeviceResources))) return false;
-	ComPtr<IStream> pStreamOnDevice;
+	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	CComPtr<IPortableDeviceResources> pPortableDeviceResources;
+ 	if (FAILED(pPortableDeviceContent->Transfer(&pPortableDeviceResources))) return false;
+	CComPtr<IStream> pStreamOnDevice;
 	DWORD bytesBuff;
-	if (CatchErr(sig, pPortableDeviceResources->GetStream(pDirectory->GetObjectID(),
+	if (FAILED(pPortableDeviceResources->GetStream(pDirectory->GetCoreEx().GetObjectID(),
 			WPD_RESOURCE_DEFAULT, STGM_READ, &bytesBuff, &pStreamOnDevice))) return false;
-	AutoPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
-	char *buff = pMemory->GetPointer();
-	size_t bytesTotal = pDirectory->GetStat()->GetFileSize();
+	RefPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
+	char* buff = pMemory->GetPointerC<char>();
+	size_t bytesTotal = pDirectory->GetCoreEx().GetStat().GetBytes();
 	size_t bytesSent = 0;
 	for (;;) {
 		DWORD bytesRead;
-		if (CatchErr(sig, pStreamOnDevice->Read(buff, bytesBuff, &bytesRead))) return false;
+		if (FAILED(pStreamOnDevice->Read(buff, bytesBuff, &bytesRead))) return false;
 		if (bytesRead == 0) break;
-		pStream->Write(sig, buff, bytesRead);
-		if (sig.IsSignalled()) return false;
+		if (!stream.Write(buff, bytesRead)) return false;
 		bytesSent += bytesRead;
-		if (pFuncBlock != nullptr) {
-			Environment &env = pFuncBlock->GetEnvScope();
-			AutoPtr<Argument> pArg(new Argument(pFuncBlock));
-			pArg->StoreValue(env, Value(bytesSent), Value(bytesTotal));
-			pFuncBlock->Eval(env, *pArg);
-			if (sig.IsSignalled()) return false;
+		if (pFuncBlock) {
+			Value::Delete(pFuncBlock->EvalEasy(processor, new Value_Number(bytesSent), new Value_Number(bytesTotal)));
+			if (Error::IsIssued()) return false;
 		}
 	}
-#endif
 	return true;
 }
 
-bool Storage::SendFile(const char* pathName, Stream& stream, const Function* pFuncBlock) const
+bool Storage::SendFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
 #if 0
 	String dirName, fileName, baseName;
@@ -177,7 +171,7 @@ bool Storage::SendFile(const char* pathName, Stream& stream, const Function* pFu
 	return true;
 }
 
-bool Storage::DeleteFile(const char* pathName) const
+bool Storage::DeleteFile(const char* pathName)
 {
 #if 0
 	IPortableDeviceContent *pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
@@ -203,12 +197,12 @@ error_done:
 	return false;
 }
 
-bool Storage::MoveFile(const char* pathNameOld, const char* pathNameNew, bool overwriteFlag) const
+bool Storage::MoveFile(const char* pathNameOld, const char* pathNameNew, bool overwriteFlag)
 {
 	return false;
 }
 
-bool Storage::CopyFile(const char* pathNameSrc, const char* pathNameDst, bool overwriteFlag) const
+bool Storage::CopyFile(const char* pathNameSrc, const char* pathNameDst, bool overwriteFlag)
 {
 	return false;
 }
