@@ -8,6 +8,7 @@ options:
   ${p.FormatHelp() + '\n'}
 '''
 argopt.Parser {|p|
+	p.OptBool('all',		'a', 'print all files')
 	p.OptBool('recursive',	'r', 'recursively search sub directories')
 	p.OptInt('level',		'l', 'specify depth-level for recursive search', 'NUM')
 	p.OptBool('help',		'h', 'print this help')
@@ -17,6 +18,7 @@ argopt.Parser {|p|
 		tmplHelp.Render(sys.cerr)
 		sys.Exit(1)
 	}
+	allFlag = opt['all']
 	recursiveFlag = opt['recursive']
 	recursiveLevel = opt.Get('level')
 	dirName = cond(argv.IsEmpty(), '', argv[0])
@@ -30,6 +32,7 @@ storage = storages[0]
 dir = storage.OpenDir(dirName)
 statIter = cond(recursiveFlag, path.Walk(dir, recursiveLevel):stat, path.Dir(dir):stat)
 statIter.Each {|stat|
+	(!allFlag && stat.name.StartsWith('.')) && continue
 	dt = stat.ctime
 	monthName = monthNames[dt.month]
 	if (stat.isdir) {

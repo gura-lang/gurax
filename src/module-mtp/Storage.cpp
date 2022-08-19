@@ -44,9 +44,9 @@ DirectoryEx* Storage::OpenDir(const char* pathName)
 			Error::Issue(ErrorType::PathError, "wrong format of path name");
 			return nullptr;
 		}
-		//::printf("[%s]\n", field.c_str());
+		::printf("[%s]\n", field.c_str());
 		CComPtr<IEnumPortableDeviceObjectIDs> pEnumPortableDeviceObjectIDs;
-		if (FAILED(pPortableDeviceContent->EnumObjects(0, GetObjectID(), nullptr, &pEnumPortableDeviceObjectIDs))) return nullptr;
+		if (FAILED(pPortableDeviceContent->EnumObjects(0, pDirectory->GetCoreEx().GetObjectID(), nullptr, &pEnumPortableDeviceObjectIDs))) return nullptr;
 		HRESULT hr;
 		LPWSTR objectIDs[32];
 		StringW objectIDFound;
