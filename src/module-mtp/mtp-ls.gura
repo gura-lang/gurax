@@ -1,0 +1,40 @@
+#!/usr/bin/env gurax
+import(mtp)
+import(argopt)
+
+tmplHelp = tR'''
+usage: mtp-ls.gura [options] [dirname]
+options:
+  ${p.FormatHelp() + '\n'}
+'''
+argopt.Parser {|p|
+	p.OptBool('recursive',	'r', 'recursively search sub directories')
+	p.OptInt('level',		'l', 'specify depth-level for recursive search', 'NUM')
+	p.OptBool('help',		'h', 'print this help')
+	opt = nil
+	try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
+	if (opt['help']) {
+		tmplHelp.Render(sys.cerr)
+		sys.Exit(1)
+	}
+	recursiveFlag = opt['recursive']
+	recursiveLevel = opt.Get('level')
+	dirName = cond(argv.IsEmpty(), '', argv[0])
+}
+monthNames = [
+	'', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+]
+devices = mtp.EnumDevice():list
+storages = devices[0].EnumStorage():list
+storage = storages[0]
+dir = storage.OpenDir(dirName)
+statIter = cond(recursiveFlag, path.Walk(dir, recursiveLevel):stat, path.Dir(dir):stat)
+statIter.Each {|stat|
+	dt = stat.ctime
+	monthName = monthNames[dt.month]
+	if (stat.isdir) {
+		Printf('%s %02d %04d %02d:%02d %10s %s\n', monthName, dt.day, dt.year, dt.hour, dt.min, '', stat.name)
+	} else {
+		Printf('%s %02d %04d %02d:%02d %10d %s\n', monthName, dt.day, dt.year, dt.hour, dt.min, stat.size, stat.name)
+	}
+}

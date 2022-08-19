@@ -84,13 +84,13 @@ DirectoryEx* Storage::OpenDir(const char* pathName)
 
 bool Storage::RecvFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
+	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	RefPtr<DirectoryEx> pDirectory(OpenDir(pathName));
 	if (!pDirectory) return false;
 	if (pDirectory->GetCoreEx().GetStat().IsDir()) {
 		Error::Issue(ErrorType::PathError, "can't transfer a folder");
 		return false;
 	}
-	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	CComPtr<IPortableDeviceResources> pPortableDeviceResources;
  	if (FAILED(pPortableDeviceContent->Transfer(&pPortableDeviceResources))) return false;
 	CComPtr<IStream> pStreamOnDevice;
@@ -117,12 +117,12 @@ bool Storage::RecvFile(Processor& processor, const char* pathName, Stream& strea
 
 bool Storage::SendFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
+	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	String dirName, fileName, baseName;
 	PathName(pathName).SplitFileName(&dirName, &fileName);
 	PathName(fileName).SplitExtName(&baseName, nullptr);
 	RefPtr<DirectoryEx> pDirectoryParent(OpenDir(dirName.c_str()));
 	if (!pDirectoryParent) return false;
-	IPortableDeviceContent *pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	CComPtr<IPortableDeviceValues> pPortableDeviceValues;
 	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr, CLSCTX_INPROC_SERVER,
 					IID_PPV_ARGS(&pPortableDeviceValues)))) return false;
@@ -135,17 +135,15 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 	if (FAILED(pPortableDeviceValues->SetStringValue(
 		WPD_OBJECT_NAME, STRToStringW(baseName.c_str()).c_str()))) return false;
 #if 0
-	if (FAILED(pPortableDeviceValues->SetGuidValue(
-		WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_IMAGE))) return false;
-	if (FAILED(pPortableDeviceValues->SetGuidValue(
-		WPD_OBJECT_FORMAT, WPD_OBJECT_FORMAT_EXIF))) return false;
+	if (FAILED(pPortableDeviceValues->SetGuidValue(WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_IMAGE))) return false;
+	if (FAILED(pPortableDeviceValues->SetGuidValue(WPD_OBJECT_FORMAT, WPD_OBJECT_FORMAT_EXIF))) return false;
 #endif
 	CComPtr<IStream> pStreamTmp;
 	DWORD bytesBuff;
 	if (FAILED(pPortableDeviceContent->CreateObjectWithPropertiesAndData(
 		pPortableDeviceValues.p, &pStreamTmp, &bytesBuff, nullptr))) return false;
 	CComPtr<IPortableDeviceDataStream> pPortableDeviceDataStream;
-	//if (FAILED(pStreamTmp.As(&pPortableDeviceDataStream))) return false;
+	if (FAILED(pStreamTmp.QueryInterface(&pPortableDeviceDataStream))) return false;
 	RefPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
 	char* buff = pMemory->GetPointerC<char>();
 	size_t bytesTotal = static_cast<DWORD>(stream.GetBytes());
@@ -168,27 +166,25 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 
 bool Storage::DeleteFile(const char* pathName)
 {
-#if 0
-	IPortableDeviceContent *pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
-	AutoPtr<Directory_MTP> pDirectory(GenerateDirectory(sig, pathName));
-	if (pDirectory.IsNull()) return false;
-	if (pDirectory->GetStat()->IsFolder()) {
-		sig.SetError(ERR_FileError, "can't delete a folder");
+	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	RefPtr<DirectoryEx> pDirectory(OpenDir(pathName));
+	if (!pDirectory) return false;
+	if (pDirectory->GetCoreEx().GetStat().IsDir()) {
+		Error::Issue(ErrorType::PathError, "can't delete a folder");
 		return false;
 	}
-	ComPtr<IPortableDevicePropVariantCollection> pPortableDevicePropVariantCollection;
+	CComPtr<IPortableDevicePropVariantCollection> pPortableDevicePropVariantCollection;
 	if (FAILED(::CoCreateInstance(CLSID_PortableDevicePropVariantCollection,
 		nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDevicePropVariantCollection)))) return false;
 	PROPVARIANT propVar;
-	if (FAILED(::InitPropVariantFromString(pDirectory->GetObjectID(), &propVar))) return false;
+	if (FAILED(::InitPropVariantFromString(pDirectory->GetCoreEx().GetObjectID(), &propVar))) return false;
 	if (FAILED(pPortableDevicePropVariantCollection->Add(&propVar))) goto error_done;
 	if (FAILED(pPortableDeviceContent->Delete(PORTABLE_DEVICE_DELETE_NO_RECURSION,
-		pPortableDevicePropVariantCollection.Get(), nullptr))) goto error_done;
+		pPortableDevicePropVariantCollection.p, nullptr))) goto error_done;
 	PropVariantClear(&propVar);
 	return true;
 error_done:
 	PropVariantClear(&propVar);
-#endif
 	return false;
 }
 
@@ -202,10 +198,9 @@ bool Storage::CopyFile(const char* pathNameSrc, const char* pathNameDst, bool ov
 	return false;
 }
 
-
 String Storage::ToString(const StringStyle& ss) const
 {
-	return String().Format("mtp.Storage");
+	return String().Format("mtp.Storage:%s", GetVolumeIdentifier());
 }
 
 //------------------------------------------------------------------------------
