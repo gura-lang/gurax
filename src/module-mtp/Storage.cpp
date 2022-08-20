@@ -76,7 +76,7 @@ DirectoryEx* Storage::OpenDir(const char* pathName)
 			}
 			if (Error::IsIssued()) return nullptr;
 		} while (hr == S_OK && objectIDFound.empty());
-		if (objectIDFound.empty()) break;
+		if (objectIDFound.empty()) return nullptr;
 		pDirectory.reset(DirectoryEx::Create(pDirectory.release(), objectIDFound.c_str()));
 	}
 	return pDirectory.release();
@@ -200,7 +200,7 @@ bool Storage::CopyFile(const char* pathNameSrc, const char* pathNameDst, bool ov
 
 String Storage::ToString(const StringStyle& ss) const
 {
-	return String().Format("mtp.Storage:%s", GetVolumeIdentifier());
+	return String().Format("mtp.Storage:%s:%zubytes", GetStorageDescription(), GetMaxCapacity());
 }
 
 //------------------------------------------------------------------------------

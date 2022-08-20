@@ -48,7 +48,10 @@ Gurax_ImplementMethod(Storage, OpenDir)
 	const char* pathName = args.PickString();
 	// Function body
 	RefPtr<Directory> pDirectory(valueThis.GetStorage().OpenDir(pathName));
-	if (!pDirectory) return Value::nil();
+	if (!pDirectory) {
+		Error::Issue(ErrorType::PathError, "can't open directory %s", pathName);
+		return Value::nil();
+	}
 	return new Value_Directory(pDirectory.release());
 }
 
