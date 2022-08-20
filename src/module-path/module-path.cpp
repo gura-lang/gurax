@@ -8,7 +8,7 @@ Gurax_BeginModule(path)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// path.AbsName(pathName:String):map:[uri]
+// path.AbsName(pathName as String):map:[uri]
 Gurax_DeclareFunction(AbsName)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -29,7 +29,7 @@ Gurax_ImplementFunction(AbsName)
 	return new Value_String(pathName.MakeAbsName());
 }
 
-// path.BaseName(pathName:String):map
+// path.BaseName(pathName as String):map
 Gurax_DeclareFunction(BaseName)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -54,7 +54,7 @@ Gurax_ImplementFunction(BaseName)
 	return new Value_String(pathName.ExtractBaseName());
 }
 
-// path.BottomName(pathName:String):map
+// path.BottomName(pathName as String):map
 Gurax_DeclareFunction(BottomName)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -80,7 +80,7 @@ Gurax_ImplementFunction(BottomName)
 	return new Value_String(pathName.ExtractBottomName());
 }
 
-// path.Dir(directory?:Directory, pattern*:String):map:flat:[stat,file,dir,case,icase] {block?}
+// path.Dir(directory? as Directory, pattern* as String):map:flat:[stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Dir)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
@@ -126,7 +126,7 @@ Gurax_ImplementFunction(Dir)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// path.DirName(pathName:String):map
+// path.DirName(pathName as String):map
 Gurax_DeclareFunction(DirName)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -152,7 +152,7 @@ Gurax_ImplementFunction(DirName)
 	return new Value_String(pathName.ExtractDirName());
 }
 
-// path.Exists(pathName:String):map
+// path.Exists(pathName as String):map
 Gurax_DeclareFunction(Exists)
 {
 	Declare(VTYPE_Bool, Flag::Map);
@@ -172,7 +172,7 @@ Gurax_ImplementFunction(Exists)
 	return new Value_Bool(existence != PathMgr::Existence::None);
 }
 
-// path.ExtName(pathName:String):map
+// path.ExtName(pathName as String):map
 Gurax_DeclareFunction(ExtName)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -198,7 +198,7 @@ Gurax_ImplementFunction(ExtName)
 	return new Value_String(pathName.ExtractExtName());
 }
 
-// path.FileName(pathName:String):map
+// path.FileName(pathName as String):map
 Gurax_DeclareFunction(FileName)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -224,7 +224,7 @@ Gurax_ImplementFunction(FileName)
 	return new Value_String(pathName.ExtractFileName());
 }
 
-// path.Glob(pattern:string):map:flat:[stat,file,dir,case,icase] {block?}
+// path.Glob(pattern as string):map:flat:[stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Glob)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
@@ -264,7 +264,7 @@ Gurax_ImplementFunction(Glob)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// path.HeadName(pathName:String):map
+// path.HeadName(pathName as String):map
 Gurax_DeclareFunction(HeadName)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -290,7 +290,7 @@ Gurax_ImplementFunction(HeadName)
 	return new Value_String(pathName.ExtractHeadName());
 }
 
-// path.Join(paths+:String):map:[uri]
+// path.Join(paths+ as String):map:[uri]
 Gurax_DeclareFunction(Join)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -315,7 +315,7 @@ Gurax_ImplementFunction(Join)
 	return new Value_String(str);
 }
 
-// path.Match(pathName1:String, pathName2:String):map:[case,icase]
+// path.Match(pathName1 as String, pathName2 as String):map:[case,icase]
 Gurax_DeclareFunction(Match)
 {
 	Declare(VTYPE_Any, Flag::Map);
@@ -343,7 +343,7 @@ Gurax_ImplementFunction(Match)
 	return new Value_Bool(pathName1.DoesMatch(pathName2));
 }
 
-// path.MatchPattern(pattern:String, pathName:String):map:[case,icase]
+// path.MatchPattern(pattern as String, pathName as String):map:[case,icase]
 Gurax_DeclareFunction(MatchPattern)
 {
 	Declare(VTYPE_Any, Flag::Map);
@@ -371,7 +371,7 @@ Gurax_ImplementFunction(MatchPattern)
 	return new Value_Bool(pathName.DoesMatchPattern(pattern));
 }
 
-// path.Regulate(pathName:String):map:[uri]
+// path.Regulate(pathName as String):map:[uri]
 Gurax_DeclareFunction(Regulate)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -392,7 +392,7 @@ Gurax_ImplementFunction(Regulate)
 	return new Value_String(pathName.Regulate());
 }
 
-// path.Split(pathName:String):map
+// path.Split(pathName as String):map
 Gurax_DeclareFunction(Split)
 {
 	Declare(VTYPE_List, Flag::Map);
@@ -423,7 +423,7 @@ Gurax_ImplementFunction(Split)
 	return Value_Tuple::Create(new Value_String(dirName), new Value_String(fileName));
 }
 
-// path.SplitBottom(pathName:String):map
+// path.SplitBottom(pathName as String):map
 Gurax_DeclareFunction(SplitBottom)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -453,7 +453,7 @@ Gurax_ImplementFunction(SplitBottom)
 	return Value_Tuple::Create(new Value_String(headName), new Value_String(bottomName));
 }
 
-// path.SplitExt(pathName:String):map
+// path.SplitExt(pathName as String):map
 Gurax_DeclareFunction(SplitExt)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -484,7 +484,7 @@ Gurax_ImplementFunction(SplitExt)
 	return Value_Tuple::Create(new Value_String(baseName), new Value_String(extName));
 }
 
-// path.Stat(directory:Directory):map {block?}
+// path.Stat(directory as Directory):map {block?}
 Gurax_DeclareFunction(Stat)
 {
 	Declare(VTYPE_Any, Flag::Map);
@@ -506,7 +506,7 @@ Gurax_ImplementFunction(Stat)
 	return argument.ReturnValue(processor, pValue.release());
 }
 
-// path.Walk(directory?:Directory, depthMax?:Number, pattern*:String):map:flat:[stat,file,dir,case,icase] {block?}
+// path.Walk(directory? as Directory, depthMax? as Number, pattern* as String):map:flat:[stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Walk)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);

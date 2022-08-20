@@ -8,6 +8,46 @@ Gurax_BeginModule(mtp)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
+// mtp.Glob(pattern:string):map:flat:[stat,file,dir,case,icase] {block?}
+Gurax_DeclareFunction(Glob)
+{
+	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
+	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(stat));
+	DeclareAttrOpt(Gurax_Symbol(file));
+	DeclareAttrOpt(Gurax_Symbol(dir));
+	DeclareAttrOpt(Gurax_Symbol(case_));
+	DeclareAttrOpt(Gurax_Symbol(icase));
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates an iterator for item names that match with a pattern supporting\n"
+		"UNIX shell-style wild cards. In default, case of characters is distinguished.\n"
+		"\n"
+		"Though the default sensitiveness of character cases during pattern matching depends on the current platform,\n"
+		"it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.\n");
+}
+
+Gurax_ImplementFunction(Glob)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const char* pattern = args.PickString();
+	if (Error::IsIssued()) return Value::nil();
+	bool addSepFlag = true;
+	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
+	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
+	bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
+	bool caseFlag = PathName::CaseFlagPlatform;
+	if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
+	if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
+	// Function body
+	RefPtr<Iterator_DirectoryGlob> pIterator(
+		new Iterator_DirectoryGlob(addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
+	if (!pIterator->Init(pattern)) return Value::nil();
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // mtp.EnumDevice() {block?}
 Gurax_DeclareFunction(EnumDevice)
 {
