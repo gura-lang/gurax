@@ -29,11 +29,12 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// mtp.Storage#OpenDir(pathName as String)
+// mtp.Storage#OpenDir(pathName as String) {block?}
 Gurax_DeclareMethod(Storage, OpenDir)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -52,7 +53,7 @@ Gurax_ImplementMethod(Storage, OpenDir)
 		Error::Issue(ErrorType::PathError, "can't open directory %s", pathName);
 		return Value::nil();
 	}
-	return new Value_Directory(pDirectory.release());
+	return argument.ReturnValue(processor, new Value_Directory(pDirectory.release()));
 }
 
 // mtp.Storage#RecvFile(pathName as String, stream:w as Stream) {block?}
