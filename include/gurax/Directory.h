@@ -250,6 +250,8 @@ public:
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
+	// Virtual functions of Iterator_DirectoryGlob
+	virtual Directory* OpenDirectory(const char* pathName);
 };
 
 }

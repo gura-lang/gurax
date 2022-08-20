@@ -341,7 +341,7 @@ bool Iterator_DirectoryGlob::Init(const char* pattern)
 			}
 		}
 	}
-	_pDirectoryCur.reset(PathMgr::OpenDirectory(pathName.c_str()));
+	_pDirectoryCur.reset(OpenDirectory(pathName.c_str()));
 	return !!_pDirectoryCur;
 }
 
@@ -396,6 +396,11 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 		}
 	}
 	return pValueRtn.release();
+}
+
+Directory* Iterator_DirectoryGlob::OpenDirectory(const char* pathName)
+{
+	return PathMgr::OpenDirectory(pathName);
 }
 
 String Iterator_DirectoryGlob::ToString(const StringStyle& ss) const
