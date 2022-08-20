@@ -244,4 +244,12 @@ String Iterator_Storage::ToString(const StringStyle& ss) const
 	return str;
 }
 
+//-----------------------------------------------------------------------------
+// Iterator_DirectoryGlobEx
+//-----------------------------------------------------------------------------
+Directory* Iterator_DirectoryGlobEx::OpenDirectory(const char* pathName)
+{
+	return nullptr;
+}
+
 Gurax_EndModuleScope(mtp)
