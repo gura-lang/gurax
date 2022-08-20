@@ -9,26 +9,41 @@ options:
 '''
 argopt.Parser {|p|
 	p.OptBool('all',		'a', 'print all files')
-	p.OptBool('recursive',	'r', 'recursively search sub directories')
+	p.OptInt('device',		'd', 'select device by index starting from zero')
 	p.OptInt('level',		'l', 'specify depth-level for recursive search', 'NUM')
+	p.OptBool('recursive',	'r', 'recursively search sub directories')
+	p.OptInt('storage',		's', 'select storage by index starting from zero')
 	p.OptBool('help',		'h', 'print this help')
 	opt = nil
-	try {[argv, opt] = p.Parse(sys.argv)} catch {|e| sys.cerr.Println(e.text)}
+	try {[argv, opt] = p.Parse(sys.argv)} catch {|e|
+		sys.cerr.Println(e.text)
+		sys.Exit(1)
+	}
 	if (opt['help']) {
 		tmplHelp.Render(sys.cerr)
-		sys.Exit(1)
+		sys.Exit(0)
 	}
 	allFlag = opt['all']
 	recursiveFlag = opt['recursive']
 	recursiveLevel = opt.Get('level')
 	dirName = cond(argv.IsEmpty(), '', argv[0])
+	iDevice = opt.Get('device') || 0
+	iStorage = opt.Get('storage') || 0
 }
 monthNames = [
 	'', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ]
 devices = mtp.EnumDevice():list
-storages = devices[0].EnumStorage():list
-storage = storages[0]
+if (iDevice < 0 || iDevice >= devices.len) {
+	sys.cerr.Println('specified device does not exist')
+	sys.Exit(1)
+}
+storages = devices[iDevice].EnumStorage():list
+if (iStorage < 0 || iStorage >= storages.len) {
+	sys.cerr.Println('specified storage does not exist')
+	sys.Exit(1)
+}
+storage = storages[iStorage]
 dir = storage.OpenDir(dirName)
 stats = cond(recursiveFlag, path.Walk(dir, recursiveLevel):stat:list, path.Dir(dir):stat:list)
 if (!allFlag) {
