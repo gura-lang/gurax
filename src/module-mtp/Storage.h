@@ -40,6 +40,8 @@ public:
 protected:
 	~Storage() = default;
 public:
+	static Storage* OpenStorage(size_t iDevice, size_t iStorage);
+public:
 	Device& GetDevice() { return *_pDevice; }
 	LPCWSTR GetObjectID() const { return _objectID.c_str(); }
 	const Symbol* GetStorageType() const { return _pStorageType; }

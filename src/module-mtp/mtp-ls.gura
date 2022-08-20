@@ -33,18 +33,7 @@ argopt.Parser {|p|
 monthNames = [
 	'', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ]
-devices = mtp.EnumDevice():list
-if (iDevice < 0 || iDevice >= devices.len) {
-	sys.cerr.Println('specified device does not exist')
-	sys.Exit(1)
-}
-storages = devices[iDevice].EnumStorage():list
-if (iStorage < 0 || iStorage >= storages.len) {
-	sys.cerr.Println('specified storage does not exist')
-	sys.Exit(1)
-}
-storage = storages[iStorage]
-dir = storage.OpenDir(dirName)
+dir = mtp.OpenStorage(iDevice, iStorage).OpenDir(dirName)
 stats = cond(recursiveFlag, path.Walk(dir, recursiveLevel):stat:list, path.Dir(dir):stat:list)
 if (!allFlag) {
 	stats = stats.Filter(!stats:*name:*StartsWith('.')):list

@@ -15,6 +15,22 @@ Storage::Storage(Device* pDevice, LPCWSTR objectID) :
 {
 }
 
+Storage* Storage::OpenStorage(size_t iDevice, size_t iStorage)
+{
+	RefPtr<Device> pDevice(Device::OpenDevice(iDevice));
+	if (!pDevice) return nullptr;
+	RefPtr<StorageOwner> pStorageOwner(pDevice->EnumStorage());
+	if (!pStorageOwner) {
+		Error::Issue(ErrorType::GuestError, "failed to open portable device's storage");
+		return nullptr;
+	}
+	if (iStorage >= pStorageOwner->size()) {
+		Error::Issue(ErrorType::IndexError, "storage index is out of range");
+		return nullptr;
+	}
+	return pStorageOwner->at(iStorage)->Reference();
+}
+
 DirectoryEx* Storage::OpenDir(const char* pathName)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();

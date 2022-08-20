@@ -8,6 +8,20 @@ Gurax_BeginModuleScope(mtp)
 //------------------------------------------------------------------------------
 // Device
 //------------------------------------------------------------------------------
+Device* Device::OpenDevice(size_t iDevice)
+{
+	RefPtr<DeviceOwner> pDeviceOwner(Device::EnumDevice());
+	if (!pDeviceOwner) {
+		Error::Issue(ErrorType::GuestError, "failed to open portable device");
+		return nullptr;
+	}
+	if (iDevice >= pDeviceOwner->size()) {
+		Error::Issue(ErrorType::IndexError, "device index is out of range");
+		return nullptr;
+	}
+	return pDeviceOwner->at(iDevice)->Reference();
+}
+
 bool Device::Open(IPortableDeviceManager* pPortableDeviceManager)
 {
 	if (FAILED(::CoInitializeEx(nullptr, COINIT_MULTITHREADED))) {
