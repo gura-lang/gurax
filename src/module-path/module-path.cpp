@@ -211,7 +211,7 @@ Gurax_ImplementFunction(FileName)
 	return new Value_String(pathName.ExtractFileName());
 }
 
-// path.Glob(pattern as string):map:flat:[stat,file,dir,case,icase] {block?}
+// path.Glob(pattern as string):map:flat:[addSep,elimSep,stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Glob)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);

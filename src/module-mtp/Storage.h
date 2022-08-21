@@ -141,8 +141,7 @@ class Iterator_DirectoryGlobEx : public Iterator_DirectoryGlob {
 protected:
 	RefPtr<Storage> _pStorage;
 public:
-	Iterator_DirectoryGlobEx(Storage* pStorage, bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag) :
-		Iterator_DirectoryGlob(addSepFlag, statFlag, caseFlag, fileFlag, dirFlag), _pStorage(pStorage) {}
+	Iterator_DirectoryGlobEx(Storage* pStorage) : _pStorage(pStorage) {}
 	virtual Directory* OpenDirectory(const char* pathName) override;
 };
 

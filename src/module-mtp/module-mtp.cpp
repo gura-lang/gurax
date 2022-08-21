@@ -8,7 +8,7 @@ Gurax_BeginModule(mtp)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// mtp.Glob(pattern as String, iDevice? as Number, iStorage? as Number):map:flat:[stat,file,dir,case,icase] {block?}
+// mtp.Glob(pattern as String, iDevice? as Number, iStorage? as Number):map:flat:[addSep,elimSep,stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Glob)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
@@ -16,11 +16,7 @@ Gurax_DeclareFunction(Glob)
 	DeclareArg("iDevice", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("iStorage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	DeclareAttrOpt(Gurax_Symbol(stat));
-	DeclareAttrOpt(Gurax_Symbol(file));
-	DeclareAttrOpt(Gurax_Symbol(dir));
-	DeclareAttrOpt(Gurax_Symbol(case_));
-	DeclareAttrOpt(Gurax_Symbol(icase));
+	Directory::WalkFlag::DeclareAttrOpt(*this);
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator for item names that match with a pattern supporting\n"
@@ -35,22 +31,15 @@ Gurax_ImplementFunction(Glob)
 	// Arguments
 	ArgPicker args(argument);
 	const char* pattern = args.PickString();
-	size_t iDevice = args.PickNumberNonNeg<size_t>();
-	size_t iStorage = args.PickNumberNonNeg<size_t>();
+	size_t iDevice = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	size_t iStorage = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
-	bool addSepFlag = true;
-	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
-	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
-	bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
-	bool caseFlag = PathName::CaseFlagPlatform;
-	if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
-	if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
 	// Function body
 	RefPtr<Storage> pStorage(Storage::OpenStorage(iDevice, iStorage));
 	if (!pStorage) return Value::nil();
-	RefPtr<Iterator_DirectoryGlob> pIterator(
-		new Iterator_DirectoryGlobEx(pStorage.release(), addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
+	RefPtr<Iterator_DirectoryGlob> pIterator(new Iterator_DirectoryGlobEx(pStorage.release()));
 	if (!pIterator->Init(pattern)) return Value::nil();
+	pIterator->SetWalkFlags(Directory::WalkFlag::CheckArgument(argument, true, pIterator->GetDirectoryCur().GetCaseFlag()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
