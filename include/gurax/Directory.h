@@ -26,6 +26,23 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Directory);
 public:
+	using WalkFlags = UInt32;
+	struct GURAX_DLLDECLARE WalkFlag {
+		static const WalkFlags AddSep	= (1 << 0);
+		static const WalkFlags Stat		= (1 << 1);
+		static const WalkFlags Case		= (1 << 2);
+		static const WalkFlags File		= (1 << 3);
+		static const WalkFlags Dir		= (1 << 4);
+		static bool IsAddSep(WalkFlags walkFlags) { return (walkFlags & AddSep)? true : false; }
+		static bool IsStat(WalkFlags walkFlags) { return (walkFlags & Stat)? true : false; }
+		static bool IsCase(WalkFlags walkFlags) { return (walkFlags & Case)? true : false; }
+		static bool IsFile(WalkFlags walkFlags) { return (walkFlags & File)? true : false; }
+		static bool IsDir(WalkFlags walkFlags) { return (walkFlags & Dir)? true : false; }
+		static String ToString(WalkFlags walkFlags);
+		static void DeclareAttrOpt(Function& func);
+		static WalkFlags CheckArgument(const Argument& argument, bool addSepFlagDefault, bool caseFlagDefault);
+	};
+public:
 	enum class Type { None, Item, Folder, Boundary, };
 	class SymbolAssoc_Type : public SymbolAssoc<Type, Type::None> {
 	public:

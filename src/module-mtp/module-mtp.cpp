@@ -8,11 +8,13 @@ Gurax_BeginModule(mtp)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// mtp.Glob(pattern:string):map:flat:[stat,file,dir,case,icase] {block?}
+// mtp.Glob(pattern as String, iDevice? as Number, iStorage? as Number):map:flat:[stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Glob)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iDevice", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("iStorage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(stat));
 	DeclareAttrOpt(Gurax_Symbol(file));
@@ -33,6 +35,8 @@ Gurax_ImplementFunction(Glob)
 	// Arguments
 	ArgPicker args(argument);
 	const char* pattern = args.PickString();
+	size_t iDevice = args.PickNumberNonNeg<size_t>();
+	size_t iStorage = args.PickNumberNonNeg<size_t>();
 	if (Error::IsIssued()) return Value::nil();
 	bool addSepFlag = true;
 	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
@@ -42,8 +46,10 @@ Gurax_ImplementFunction(Glob)
 	if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
 	if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
 	// Function body
+	RefPtr<Storage> pStorage(Storage::OpenStorage(iDevice, iStorage));
+	if (!pStorage) return Value::nil();
 	RefPtr<Iterator_DirectoryGlob> pIterator(
-		new Iterator_DirectoryGlob(addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
+		new Iterator_DirectoryGlobEx(pStorage.release(), addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
 	if (!pIterator->Init(pattern)) return Value::nil();
 	return argument.ReturnIterator(processor, pIterator.release());
 }
@@ -137,6 +143,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Storage);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(EnumDevice));
+	Assign(Gurax_CreateFunction(Glob));
 	Assign(Gurax_CreateFunction(OpenDevice));
 	Assign(Gurax_CreateFunction(OpenStorage));
 	return true;

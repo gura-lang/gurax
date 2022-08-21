@@ -102,6 +102,46 @@ String Directory::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
+// Directory::WalkFlag
+//------------------------------------------------------------------------------
+String Directory::WalkFlag::ToString(WalkFlags walkFlags)
+{
+	String str;
+	if (IsAddSep(walkFlags)) str += ":addSep";
+	if (IsStat(walkFlags)) str += ":stat";
+	if (IsFile(walkFlags)) str += ":file";
+	if (IsDir(walkFlags)) str += ":dir";
+	if (IsCase(walkFlags)) str += ":case";
+	return str;
+}
+
+void Directory::WalkFlag::DeclareAttrOpt(Function& func)
+{
+	func.DeclareAttrOpt(Gurax_Symbol(addSep));
+	func.DeclareAttrOpt(Gurax_Symbol(elimSep));
+	func.DeclareAttrOpt(Gurax_Symbol(stat));
+	func.DeclareAttrOpt(Gurax_Symbol(file));
+	func.DeclareAttrOpt(Gurax_Symbol(dir));
+	func.DeclareAttrOpt(Gurax_Symbol(case_));
+	func.DeclareAttrOpt(Gurax_Symbol(icase));
+}
+
+Directory::WalkFlags Directory::WalkFlag::CheckArgument(const Argument& argument, bool addSepFlagDefault, bool caseFlagDefault)
+{
+	WalkFlags walkFlags = 0;
+	if (addSepFlagDefault) walkFlags |= AddSep;
+	if (caseFlagDefault) walkFlags |= Case;
+	if (argument.IsSet(Gurax_Symbol(addSep))) walkFlags |= AddSep;
+	if (argument.IsSet(Gurax_Symbol(elimSep))) walkFlags &= ~AddSep;
+	if (argument.IsSet(Gurax_Symbol(stat))) walkFlags |= Stat;
+	if (argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir))) walkFlags |= File;
+	if (argument.IsSet(!Gurax_Symbol(file)) || argument.IsSet(Gurax_Symbol(dir))) walkFlags |= Dir;
+	if (argument.IsSet(Gurax_Symbol(case_))) walkFlags |= Case;
+	if (argument.IsSet(Gurax_Symbol(icase))) walkFlags &= ~Case;
+	return walkFlags;
+}
+
+//------------------------------------------------------------------------------
 // Directory::CoreList
 //------------------------------------------------------------------------------
 Directory::Core* Directory::CoreList::FindByName(const char* name) const
