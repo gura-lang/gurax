@@ -334,20 +334,13 @@ String Iterator_DirectoryWalk::ToString(const StringStyle& ss) const
 	String str;
 	str = "DirectoryWalk";
 	str += Directory::WalkFlag::ToString(_walkFlags);
-	//if (_statFlag) str += ":stat";
-	//if (_caseFlag) str += ":case";
-	//if (_fileFlag) str += ":file";
-	//if (_dirFlag) str += ":dir";
 	return str;
 }
 
 //-----------------------------------------------------------------------------
 // Iterator_DirectoryGlob
 //-----------------------------------------------------------------------------
-Iterator_DirectoryGlob::Iterator_DirectoryGlob(
-	bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag) :
-	_addSepFlag(addSepFlag), _statFlag(statFlag), _caseFlag(caseFlag),
-	_fileFlag(fileFlag), _dirFlag(dirFlag), _depth(0)
+Iterator_DirectoryGlob::Iterator_DirectoryGlob() : _walkFlags(0), _depth(0)
 {
 }
 
@@ -393,12 +386,12 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 	RefPtr<Value> pValueRtn;
 	if (_patternSegs.empty()) {
 		RefPtr<Directory> pDirectoryChild(_pDirectoryCur.release());
-		if ((pDirectoryChild->IsLikeFolder() && _dirFlag) ||
-		   (!pDirectoryChild->IsLikeFolder() && _fileFlag)) {
-			if (_statFlag) {
+		if ((pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsDir(_walkFlags)) ||
+		   (!pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsFile(_walkFlags))) {
+			if (Directory::WalkFlag::IsStat(_walkFlags)) {
 				pValueRtn.reset(pDirectoryChild->CreateStatValue());
 			} else {
-				pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(_addSepFlag)));
+				pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(Directory::WalkFlag::IsAddSep(_walkFlags))));
 			}
 			return pValueRtn.release();
 		} else {
@@ -420,18 +413,18 @@ Value* Iterator_DirectoryGlob::DoNextValue()
 			_depthDeque.d.pop_front();
 		}
 		if (!pDirectoryChild) return nullptr;
-		if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(_patternSegs[_depth].c_str())) {
+		if (PathName(pDirectoryChild->GetName()).SetCaseFlag(Directory::WalkFlag::IsCase(_walkFlags)).DoesMatchPattern(_patternSegs[_depth].c_str())) {
 			if (_depth + 1 < _patternSegs.size()) {
 				if (pDirectoryChild->IsLikeFolder()) {
 					_directoryDeque.push_back(pDirectoryChild->Reference());
 					_depthDeque.d.push_back(static_cast<UInt>(_depth + 1));
 				}
-			} else if ((pDirectoryChild->IsLikeFolder() && _dirFlag) ||
-					   (!pDirectoryChild->IsLikeFolder() && _fileFlag)) {
-				if (_statFlag) {
+			} else if ((pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsDir(_walkFlags)) ||
+					   (!pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsFile(_walkFlags))) {
+				if (Directory::WalkFlag::IsStat(_walkFlags)) {
 					pValueRtn.reset(pDirectoryChild->CreateStatValue());
 				} else {
-					pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(_addSepFlag)));
+					pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(Directory::WalkFlag::IsAddSep(_walkFlags))));
 				}
 				break;
 			}
@@ -449,10 +442,7 @@ String Iterator_DirectoryGlob::ToString(const StringStyle& ss) const
 {
 	String str;
 	str = "DirectoryGlob";
-	if (_statFlag) str += ":stat";
-	if (_caseFlag) str += ":case";
-	if (_fileFlag) str += ":file";
-	if (_dirFlag) str += ":dir";
+	str += Directory::WalkFlag::ToString(_walkFlags);
 	return str;
 }
 

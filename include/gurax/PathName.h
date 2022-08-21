@@ -57,6 +57,7 @@ public:
 	void SplitFileName(String* pDirName, String* pFileName) const;
 	void SplitBottomName(String* pHeadName, String* pBottomName) const;
 	void SplitExtName(String* pBaseName, String* pExtName) const;
+	void SplitGlob(String* pPathName, String* pPattern) const;
 	String ExtractDirName() const {
 		String dirName;
 		SplitFileName(&dirName, nullptr);

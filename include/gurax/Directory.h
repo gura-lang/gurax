@@ -250,18 +250,15 @@ private:
 	DirectoryDequeOwner _directoryDeque;
 	RefPtr<Directory> _pDirectoryCur;
 	StringList _patternSegs;
-	bool _addSepFlag;
-	bool _statFlag;
-	bool _caseFlag;
-	bool _fileFlag;
-	bool _dirFlag;
+	Directory::WalkFlags _walkFlags;
 	size_t _depth;
 	NumDeque<size_t> _depthDeque;
 public:
-	Iterator_DirectoryGlob(bool addSepFlag, bool statFlag,
-						   bool caseFlag, bool fileFlag, bool dirFlag);
+	Iterator_DirectoryGlob();
 public:
 	bool Init(const char* pattern);
+	Directory& GetDirectoryCur() { return *_pDirectoryCur; }
+	void SetWalkFlags(Directory::WalkFlags walkFlags) { _walkFlags = walkFlags; }
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
 	virtual size_t GetLength() const override { return -1; }
