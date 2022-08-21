@@ -1,0 +1,29 @@
+#!/usr/bin/env gurax
+import(mtp)
+import(argopt)
+
+tmplHelp = tR'''
+usage: mtp-recv.gura [options] file..
+options:
+  ${p.FormatHelp() + '\n'}
+'''
+argopt.Parser {|p|
+	p.OptInt('device',		'd', 'select device by index starting from zero')
+	p.OptInt('storage',		's', 'select storage by index starting from zero')
+	p.OptBool('help',		'h', 'print this help')
+	opt = nil
+	try {[argv, opt] = p.Parse(sys.argv)} catch {|e|
+		sys.cerr.Println(e.text)
+		sys.Exit(1)
+	}
+	if (opt['help']) {
+		tmplHelp.Render(sys.cerr)
+		sys.Exit(0)
+	}
+	iDevice = opt.Get('device') || 0
+	iStorage = opt.Get('storage') || 0
+}
+storage = mtp.Storage(iDevice, iStorage)
+argv.Each {|pathName|
+	storage.RecvFile(pathName, path.FileName(pathName))
+}
