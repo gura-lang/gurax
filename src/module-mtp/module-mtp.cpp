@@ -8,13 +8,51 @@ Gurax_BeginModule(mtp)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// mtp.Glob(pattern as String, iDevice? as Number, iStorage? as Number):map:flat:[addSep,elimSep,stat,file,dir,case,icase] {block?}
+// mtp.Dir(iDevice as Number, iStorage as Number, dirName? as String, pattern* as String):map:flat:[addSep,elimSep,stat,file,dir,case,icase] {block?}
+Gurax_DeclareFunction(Dir)
+{
+	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
+	DeclareArg("iDevice", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iStorage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dirName", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	Directory::WalkFlag::DeclareAttrOpt(*this);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates an iterator that lists item names in the specified directory.\n"
+		"If pathname is omitted, the current directory shall be listed.\n"
+		"\n"
+		"Though the default sensitiveness of character cases during pattern matching depends on the target directory,\n"
+		"it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.\n");
+}
+
+Gurax_ImplementFunction(Dir)
+{
+	// Arguments
+	ArgPicker args(argument);
+	size_t iDevice = args.PickNumberNonNeg<size_t>();
+	size_t iStorage = args.PickNumberNonNeg<size_t>();
+	const char* dirName = args.IsValid()? args.PickString() : "";
+	int depthMax = 0;
+	StringList patterns = args.PickStringList();
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Storage> pStorage(Storage::OpenStorage(iDevice, iStorage));
+	if (!pStorage) return Value::nil();
+	RefPtr<Directory> pDirectory(pStorage->OpenDirectory(dirName));
+	Directory::WalkFlags walkFlags = Directory::WalkFlag::CheckArgument(argument, true, pDirectory->GetCaseFlag());
+	RefPtr<Iterator> pIterator(new Iterator_DirectoryWalk(pDirectory.release(), depthMax, patterns, walkFlags));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// mtp.Glob(iDevice as Number, iStorage as Number, pattern as String):map:flat:[addSep,elimSep,stat,file,dir,case,icase] {block?}
 Gurax_DeclareFunction(Glob)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
+	DeclareArg("iDevice", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iStorage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("iDevice", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareArg("iStorage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
 	AddHelp(
@@ -30,9 +68,9 @@ Gurax_ImplementFunction(Glob)
 {
 	// Arguments
 	ArgPicker args(argument);
+	size_t iDevice = args.PickNumberNonNeg<size_t>();
+	size_t iStorage = args.PickNumberNonNeg<size_t>();
 	const char* pattern = args.PickString();
-	size_t iDevice = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
-	size_t iStorage = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Storage> pStorage(Storage::OpenStorage(iDevice, iStorage));
@@ -66,52 +104,43 @@ Gurax_ImplementFunction(EnumDevice)
 	return argument.ReturnIterator(processor, new Iterator_Device(pDeviceOwner.release()));
 }
 
-// mtp.OpenDevice(iDevice? as Number) {block?}
-Gurax_DeclareFunction(OpenDevice)
+// mtp.Walk(iDevice as Number, iStorage as Number, dirName? as String, depthMax? as Number, pattern* as String):map:flat:[addSep,elimSep,stat,file,dir,case,icase] {block?}
+Gurax_DeclareFunction(Walk)
 {
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("iDevice", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
+	DeclareArg("iDevice", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("iStorage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dirName", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("depthMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	Directory::WalkFlag::DeclareAttrOpt(*this);
 	AddHelp(
-		Gurax_Symbol(en),
-		"Create an `mtp.Device` instance.\n");
+		Gurax_Symbol(en), 
+		"Creates an iterator that recursively lists item names under the specified directory.\n"
+		"If `directory` is omitted, search starts at the current directory.\n"
+		"\n"
+		"Though the default sensitiveness of character cases during pattern matching depends on the target directory,\n"
+		"it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.\n");
 }
 
-Gurax_ImplementFunction(OpenDevice)
+Gurax_ImplementFunction(Walk)
 {
 	// Arguments
 	ArgPicker args(argument);
-	size_t iDevice = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
-	if (Error::IsIssued()) return Value::nil();
-	// Function body
-	RefPtr<Device> pDevice(Device::OpenDevice(iDevice));
-	if (!pDevice) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Device(pDevice.release()));
-}
-
-// mtp.OpenStorage(iDevice? as Number, iStorage? as Number) {block?}
-Gurax_DeclareFunction(OpenStorage)
-{
-	Declare(VTYPE_List, Flag::None);
-	DeclareArg("iDevice", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
-	DeclareArg("iStorage", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Create an `mtp.Storage` instance.\n");
-}
-
-Gurax_ImplementFunction(OpenStorage)
-{
-	// Arguments
-	ArgPicker args(argument);
-	size_t iDevice = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
-	size_t iStorage = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	size_t iDevice = args.PickNumberNonNeg<size_t>();
+	size_t iStorage = args.PickNumberNonNeg<size_t>();
+	const char* dirName = args.IsValid()? args.PickString() : "";
+	int depthMax = args.IsValid()? args.PickNumberNonNeg<int>() : -1;
+	StringList patterns = args.PickStringList();
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Storage> pStorage(Storage::OpenStorage(iDevice, iStorage));
 	if (!pStorage) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Storage(pStorage.release()));
+	RefPtr<Directory> pDirectory(pStorage->OpenDirectory(dirName));
+	Directory::WalkFlags walkFlags = Directory::WalkFlag::CheckArgument(argument, true, pDirectory->GetCaseFlag());
+	RefPtr<Iterator> pIterator(new Iterator_DirectoryWalk(pDirectory.release(), depthMax, patterns, walkFlags));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //------------------------------------------------------------------------------
@@ -131,10 +160,10 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_StatEx);
 	Assign(VTYPE_Storage);
 	// Assignment of function
+	Assign(Gurax_CreateFunction(Dir));
 	Assign(Gurax_CreateFunction(EnumDevice));
 	Assign(Gurax_CreateFunction(Glob));
-	Assign(Gurax_CreateFunction(OpenDevice));
-	Assign(Gurax_CreateFunction(OpenStorage));
+	Assign(Gurax_CreateFunction(Walk));
 	return true;
 }
 

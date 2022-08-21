@@ -31,7 +31,7 @@ Storage* Storage::OpenStorage(size_t iDevice, size_t iStorage)
 	return pStorageOwner->at(iStorage)->Reference();
 }
 
-DirectoryEx* Storage::OpenDir(const char* pathName)
+DirectoryEx* Storage::OpenDirectory(const char* pathName)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	IPortableDeviceProperties* pPortableDeviceProperties = _pDevice->GetPortableDeviceProperties();
@@ -101,7 +101,7 @@ DirectoryEx* Storage::OpenDir(const char* pathName)
 bool Storage::RecvFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
-	RefPtr<DirectoryEx> pDirectory(OpenDir(pathName));
+	RefPtr<DirectoryEx> pDirectory(OpenDirectory(pathName));
 	if (!pDirectory) return false;
 	if (pDirectory->GetCoreEx().GetStat().IsDir()) {
 		Error::Issue(ErrorType::PathError, "can't transfer a folder");
@@ -137,7 +137,7 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 	String dirName, fileName, baseName;
 	PathName(pathName).SplitFileName(&dirName, &fileName);
 	PathName(fileName).SplitExtName(&baseName, nullptr);
-	RefPtr<DirectoryEx> pDirectoryParent(OpenDir(dirName.c_str()));
+	RefPtr<DirectoryEx> pDirectoryParent(OpenDirectory(dirName.c_str()));
 	if (!pDirectoryParent) return false;
 	CComPtr<IPortableDeviceValues> pPortableDeviceValues;
 	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr, CLSCTX_INPROC_SERVER,
@@ -183,7 +183,7 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 bool Storage::DeleteFile(const char* pathName)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
-	RefPtr<DirectoryEx> pDirectory(OpenDir(pathName));
+	RefPtr<DirectoryEx> pDirectory(OpenDirectory(pathName));
 	if (!pDirectory) return false;
 	if (pDirectory->GetCoreEx().GetStat().IsDir()) {
 		Error::Issue(ErrorType::PathError, "can't delete a folder");
@@ -249,7 +249,7 @@ String Iterator_Storage::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 Directory* Iterator_DirectoryGlobEx::OpenDirectory(const char* pathName)
 {
-	return _pStorage->OpenDir(pathName);
+	return _pStorage->OpenDirectory(pathName);
 }
 
 Gurax_EndModuleScope(mtp)

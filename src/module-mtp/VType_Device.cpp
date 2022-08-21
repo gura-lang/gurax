@@ -24,6 +24,32 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+//------------------------------------------------------------------------------
+// Implementation of constructor
+//------------------------------------------------------------------------------
+// mtp.Device(iDevice? as Number) {block?}
+Gurax_DeclareConstructor(Device)
+{
+	Declare(VTYPE_Device, Flag::None);
+	DeclareArg("iDevice", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Create an `mtp.Device` instance.\n");
+}
+
+Gurax_ImplementConstructor(Device)
+{
+	// Arguments
+	ArgPicker args(argument);
+	size_t iDevice = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Device> pDevice(Device::OpenDevice(iDevice));
+	if (!pDevice) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Device(pDevice.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -105,7 +131,7 @@ void VType_Device::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Device));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Device, EnumStorage));
 	// Assignment of property

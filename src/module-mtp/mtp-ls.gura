@@ -25,7 +25,7 @@ argopt.Parser {|p|
 	}
 	allFlag = opt['all']
 	recursiveFlag = opt['recursive']
-	recursiveLevel = opt.Get('level')
+	recursiveLevel = cond(recursiveFlag, opt.Get('level'), 0)
 	dirName = cond(argv.IsEmpty(), '', argv[0])
 	iDevice = opt.Get('device') || 0
 	iStorage = opt.Get('storage') || 0
@@ -33,8 +33,7 @@ argopt.Parser {|p|
 monthNames = [
 	'', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ]
-dir = mtp.OpenStorage(iDevice, iStorage).OpenDir(dirName)
-stats = cond(recursiveFlag, path.Walk(dir, recursiveLevel):stat:list, path.Dir(dir):stat:list)
+stats = mtp.Walk(iDevice, iStorage, dirName, recursiveLevel):stat:list
 if (!allFlag) {
 	stats = stats.Filter(!stats:*name:*StartsWith('.')):list
 }

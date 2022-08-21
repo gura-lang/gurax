@@ -61,7 +61,7 @@ public:
 	void SetStorageDescription(const char* storageDescription) { _storageDescription = storageDescription; }
 	void SetVolumeIdentifier(const char* volumeIdentifier) { _volumeIdentifier = volumeIdentifier; }
 public:
-	DirectoryEx* OpenDir(const char* pathName);
+	DirectoryEx* OpenDirectory(const char* pathName);
 	bool RecvFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock);
 	bool SendFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock);
 	bool DeleteFile(const char* pathName);

@@ -26,11 +26,36 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
+// mtp.Storage(iDevice? as Number, iStorage? as Number) {block?}
+Gurax_DeclareConstructor(Storage)
+{
+	Declare(VTYPE_Device, Flag::None);
+	DeclareArg("iDevice", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	DeclareArg("iStorage", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Create an `mtp.Storage` instance.\n");
+}
+
+Gurax_ImplementConstructor(Storage)
+{
+	// Arguments
+	ArgPicker args(argument);
+	size_t iDevice = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	size_t iStorage = args.IsValid()? args.PickNumberNonNeg<size_t>() : 0;
+	if (Error::IsIssued()) return Value::nil();
+	// Function body
+	RefPtr<Storage> pStorage(Storage::OpenStorage(iDevice, iStorage));
+	if (!pStorage) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Storage(pStorage.release()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// mtp.Storage#OpenDir(pathName as String) {block?}
-Gurax_DeclareMethod(Storage, OpenDir)
+// mtp.Storage#OpenDirectory(pathName as String) {block?}
+Gurax_DeclareMethod(Storage, OpenDirectory)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
@@ -40,7 +65,7 @@ Gurax_DeclareMethod(Storage, OpenDir)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Storage, OpenDir)
+Gurax_ImplementMethod(Storage, OpenDirectory)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -48,7 +73,7 @@ Gurax_ImplementMethod(Storage, OpenDir)
 	ArgPicker args(argument);
 	const char* pathName = args.PickString();
 	// Function body
-	RefPtr<Directory> pDirectory(valueThis.GetStorage().OpenDir(pathName));
+	RefPtr<Directory> pDirectory(valueThis.GetStorage().OpenDirectory(pathName));
 	if (!pDirectory) {
 		Error::Issue(ErrorType::PathError, "can't open directory %s", pathName);
 		return Value::nil();
@@ -278,9 +303,9 @@ void VType_Storage::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable);
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Storage));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Storage, OpenDir));
+	Assign(Gurax_CreateMethod(Storage, OpenDirectory));
 	Assign(Gurax_CreateMethod(Storage, RecvFile));
 	Assign(Gurax_CreateMethod(Storage, DeleteFile_));
 	Assign(Gurax_CreateMethod(Storage, SendFile));
