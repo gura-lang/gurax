@@ -225,15 +225,15 @@ private:
 	RefPtr<Directory> _pDirectoryCur;
 	int _depthMax;
 	StringList _patterns;
-	bool _addSepFlag;
-	bool _statFlag;
-	bool _caseFlag;
-	bool _fileFlag;
-	bool _dirFlag;
+	Directory::WalkFlags _walkFlags;
+	//bool _addSepFlag;
+	//bool _statFlag;
+	//bool _caseFlag;
+	//bool _fileFlag;
+	//bool _dirFlag;
 public:
-	Iterator_DirectoryWalk(
-		Directory* pDirectory, int depthMax, const StringList& patterns,
-		bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag);
+	Iterator_DirectoryWalk(Directory* pDirectory, int depthMax, const StringList& patterns, Directory::WalkFlags walkFlags);
+	//	bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }

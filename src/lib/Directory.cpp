@@ -135,7 +135,7 @@ Directory::WalkFlags Directory::WalkFlag::CheckArgument(const Argument& argument
 	if (argument.IsSet(Gurax_Symbol(elimSep))) walkFlags &= ~AddSep;
 	if (argument.IsSet(Gurax_Symbol(stat))) walkFlags |= Stat;
 	if (argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir))) walkFlags |= File;
-	if (argument.IsSet(!Gurax_Symbol(file)) || argument.IsSet(Gurax_Symbol(dir))) walkFlags |= Dir;
+	if (!argument.IsSet(Gurax_Symbol(file)) || argument.IsSet(Gurax_Symbol(dir))) walkFlags |= Dir;
 	if (argument.IsSet(Gurax_Symbol(case_))) walkFlags |= Case;
 	if (argument.IsSet(Gurax_Symbol(icase))) walkFlags &= ~Case;
 	return walkFlags;
@@ -277,11 +277,11 @@ void DirectoryDequeOwner::Clear()
 // Iterator_DirectoryWalk
 //-----------------------------------------------------------------------------
 Iterator_DirectoryWalk::Iterator_DirectoryWalk(
-	Directory* pDirectory, int depthMax, const StringList& patterns,
-	bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag) :
-	_pDirectoryCur(pDirectory), _depthMax(depthMax), _patterns(patterns),
-	_addSepFlag(addSepFlag), _statFlag(statFlag), _caseFlag(caseFlag),
-	_fileFlag(fileFlag), _dirFlag(dirFlag)
+	Directory* pDirectory, int depthMax, const StringList& patterns, Directory::WalkFlags walkFlags) :
+//	bool addSepFlag, bool statFlag, bool caseFlag, bool fileFlag, bool dirFlag) :
+	_pDirectoryCur(pDirectory), _depthMax(depthMax), _patterns(patterns), _walkFlags(walkFlags)
+//	_addSepFlag(addSepFlag), _statFlag(statFlag), _caseFlag(caseFlag),
+//	_fileFlag(fileFlag), _dirFlag(dirFlag)
 {
 	_depthMax = (depthMax < 0)? -1 : pDirectory->CountDepth() + depthMax + 1;
 	_pDirectoryCur->RewindChild();
@@ -307,19 +307,20 @@ Value* Iterator_DirectoryWalk::DoNextValue()
 			(_depthMax < 0 || pDirectoryChild->CountDepth() < _depthMax)) {
 			_directoryDeque.push_back(pDirectoryChild->Reference());
 		}
-		if ((pDirectoryChild->IsLikeFolder() && _dirFlag) || (!pDirectoryChild->IsLikeFolder() && _fileFlag)) {
+		if ((pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsDir(_walkFlags)) ||
+			(!pDirectoryChild->IsLikeFolder() && Directory::WalkFlag::IsFile(_walkFlags))) {
 			bool matchFlag = false;
 			for (const String& pattern : _patterns) {
-				if (PathName(pDirectoryChild->GetName()).SetCaseFlag(_caseFlag).DoesMatchPattern(pattern.c_str())) {
+				if (PathName(pDirectoryChild->GetName()).SetCaseFlag(Directory::WalkFlag::IsCase(_walkFlags)).DoesMatchPattern(pattern.c_str())) {
 					matchFlag = true;
 					break;
 				}
 			}
 			if (_patterns.empty() || matchFlag) {
-				if (_statFlag) {
+				if (Directory::WalkFlag::IsStat(_walkFlags)) {
 					pValueRtn.reset(pDirectoryChild->CreateStatValue());
 				} else {
-					pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(_addSepFlag)));
+					pValueRtn.reset(new Value_String(pDirectoryChild->MakeFullPathName(Directory::WalkFlag::IsAddSep(_walkFlags))));
 				}
 				break;
 			}
@@ -332,10 +333,11 @@ String Iterator_DirectoryWalk::ToString(const StringStyle& ss) const
 {
 	String str;
 	str = "DirectoryWalk";
-	if (_statFlag) str += ":stat";
-	if (_caseFlag) str += ":case";
-	if (_fileFlag) str += ":file";
-	if (_dirFlag) str += ":dir";
+	str += Directory::WalkFlag::ToString(_walkFlags);
+	//if (_statFlag) str += ":stat";
+	//if (_caseFlag) str += ":case";
+	//if (_fileFlag) str += ":file";
+	//if (_dirFlag) str += ":dir";
 	return str;
 }
 

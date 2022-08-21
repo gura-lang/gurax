@@ -87,11 +87,12 @@ Gurax_DeclareFunction(Dir)
 	DeclareArg("directory", VTYPE_Directory, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	DeclareAttrOpt(Gurax_Symbol(stat));
-	DeclareAttrOpt(Gurax_Symbol(file));
-	DeclareAttrOpt(Gurax_Symbol(dir));
-	DeclareAttrOpt(Gurax_Symbol(case_));
-	DeclareAttrOpt(Gurax_Symbol(icase));
+	Directory::WalkFlag::DeclareAttrOpt(*this);
+	//DeclareAttrOpt(Gurax_Symbol(stat));
+	//DeclareAttrOpt(Gurax_Symbol(file));
+	//DeclareAttrOpt(Gurax_Symbol(dir));
+	//DeclareAttrOpt(Gurax_Symbol(case_));
+	//DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator that lists item names in the specified directory.\n"
@@ -111,18 +112,17 @@ Gurax_ImplementFunction(Dir)
 	int depthMax = 0;
 	StringList patterns = args.PickStringList();
 	if (Error::IsIssued()) return Value::nil();
-	bool addSepFlag = true;
-	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
-	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
-	bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
-	bool caseFlag = pDirectory->GetCaseFlag();
-	if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
-	if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
+	//bool addSepFlag = true;
+	//bool statFlag = argument.IsSet(Gurax_Symbol(stat));
+	//bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
+	//bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
+	//bool caseFlag = pDirectory->GetCaseFlag();
+	//if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
+	//if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
+	Directory::WalkFlags walkFlags = Directory::WalkFlag::CheckArgument(argument, true, pDirectory->GetCaseFlag());
 	// Function body
-	RefPtr<Iterator> pIterator(
-		new Iterator_DirectoryWalk(
-			pDirectory.release(), depthMax, patterns,
-			addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
+	RefPtr<Iterator> pIterator(new Iterator_DirectoryWalk(pDirectory.release(), depthMax, patterns, walkFlags));
+	//		addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -514,11 +514,12 @@ Gurax_DeclareFunction(Walk)
 	DeclareArg("depthMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	DeclareAttrOpt(Gurax_Symbol(stat));
-	DeclareAttrOpt(Gurax_Symbol(file));
-	DeclareAttrOpt(Gurax_Symbol(dir));
-	DeclareAttrOpt(Gurax_Symbol(case_));
-	DeclareAttrOpt(Gurax_Symbol(icase));
+	Directory::WalkFlag::DeclareAttrOpt(*this);
+	//DeclareAttrOpt(Gurax_Symbol(stat));
+	//DeclareAttrOpt(Gurax_Symbol(file));
+	//DeclareAttrOpt(Gurax_Symbol(dir));
+	//DeclareAttrOpt(Gurax_Symbol(case_));
+	//DeclareAttrOpt(Gurax_Symbol(icase));
 	AddHelp(
 		Gurax_Symbol(en), 
 		"Creates an iterator that recursively lists item names under the specified directory.\n"
@@ -538,18 +539,17 @@ Gurax_ImplementFunction(Walk)
 	int depthMax = args.IsValid()? args.PickNumberNonNeg<int>() : -1;
 	StringList patterns = args.PickStringList();
 	if (Error::IsIssued()) return Value::nil();
-	bool addSepFlag = true;
-	bool statFlag = argument.IsSet(Gurax_Symbol(stat));
-	bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
-	bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
-	bool caseFlag = pDirectory->GetCaseFlag();
-	if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
-	if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
+	//bool addSepFlag = true;
+	//bool statFlag = argument.IsSet(Gurax_Symbol(stat));
+	//bool fileFlag = argument.IsSet(Gurax_Symbol(file)) || !argument.IsSet(Gurax_Symbol(dir));
+	//bool dirFlag = argument.IsSet(Gurax_Symbol(dir)) || !argument.IsSet(Gurax_Symbol(file));
+	//bool caseFlag = pDirectory->GetCaseFlag();
+	//if (argument.IsSet(Gurax_Symbol(case_))) caseFlag = true;
+	//if (argument.IsSet(Gurax_Symbol(icase))) caseFlag = false;
+	Directory::WalkFlags walkFlags = Directory::WalkFlag::CheckArgument(argument, true, pDirectory->GetCaseFlag());
 	// Function body
-	RefPtr<Iterator> pIterator(
-		new Iterator_DirectoryWalk(
-			pDirectory.release(), depthMax, patterns,
-			addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
+	RefPtr<Iterator> pIterator(new Iterator_DirectoryWalk(pDirectory.release(), depthMax, patterns, walkFlags));
+	//		addSepFlag, statFlag, caseFlag, fileFlag, dirFlag));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
