@@ -3,7 +3,7 @@ import(mtp)
 import(argopt)
 
 tmplHelp = tR'''
-usage: mtp-send.gura [options] file dstdir
+usage: mtp-rm.gura [options] file...
 options:
   ${p.FormatHelp() + '\n'}
 '''
