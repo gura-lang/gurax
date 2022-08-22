@@ -101,25 +101,32 @@ DirectoryEx* Storage::OpenDirectory(const char* pathName)
 bool Storage::RecvFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	RefPtr<Memory> pMemory;
 	RefPtr<DirectoryEx> pDirectory(OpenDirectory(pathName));
-	if (!pDirectory) return false;
+	if (!pDirectory) {
+		Error::Issue(ErrorType::PathError, "path is not found: %s", pathName);
+		return false;
+	}
 	if (pDirectory->GetCoreEx().GetStat().IsDir()) {
 		Error::Issue(ErrorType::PathError, "can't transfer a folder");
 		return false;
 	}
 	CComPtr<IPortableDeviceResources> pPortableDeviceResources;
- 	if (FAILED(pPortableDeviceContent->Transfer(&pPortableDeviceResources))) return false;
 	CComPtr<IStream> pStreamOnDevice;
+ 	if (FAILED(pPortableDeviceContent->Transfer(&pPortableDeviceResources))) goto error_com;
 	DWORD bytesBuff;
 	if (FAILED(pPortableDeviceResources->GetStream(pDirectory->GetCoreEx().GetObjectID(),
-			WPD_RESOURCE_DEFAULT, STGM_READ, &bytesBuff, &pStreamOnDevice))) return false;
-	RefPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
+			WPD_RESOURCE_DEFAULT, STGM_READ, &bytesBuff, &pStreamOnDevice))) goto error_com;
+	pMemory.reset(new MemoryHeap(bytesBuff));
 	char* buff = pMemory->GetPointerC<char>();
 	size_t bytesTotal = pDirectory->GetCoreEx().GetStat().GetBytes();
 	size_t bytesSent = 0;
 	for (;;) {
 		DWORD bytesRead;
-		if (FAILED(pStreamOnDevice->Read(buff, bytesBuff, &bytesRead))) return false;
+		if (FAILED(pStreamOnDevice->Read(buff, bytesBuff, &bytesRead))) {
+			Error::Issue(ErrorType::GuestError, "error while sending data");
+			return false;
+		}
 		if (bytesRead == 0) break;
 		if (!stream.Write(buff, bytesRead)) return false;
 		bytesSent += bytesRead;
@@ -129,38 +136,45 @@ bool Storage::RecvFile(Processor& processor, const char* pathName, Stream& strea
 		}
 	}
 	return true;
+error_com:
+	Error::Issue(ErrorType::GuestError, "internal COM error");
+	return false;
 }
 
 bool Storage::SendFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	RefPtr<Memory> pMemory;
 	String dirName, fileName, baseName;
 	PathName(pathName).SplitFileName(&dirName, &fileName);
 	PathName(fileName).SplitExtName(&baseName, nullptr);
 	RefPtr<DirectoryEx> pDirectoryParent(OpenDirectory(dirName.c_str()));
-	if (!pDirectoryParent) return false;
+	if (!pDirectoryParent) {
+		Error::Issue(ErrorType::PathError, "path is not found: %s", dirName.c_str());
+		return false;
+	}
 	CComPtr<IPortableDeviceValues> pPortableDeviceValues;
-	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr, CLSCTX_INPROC_SERVER,
-					IID_PPV_ARGS(&pPortableDeviceValues)))) return false;
-	if (FAILED(pPortableDeviceValues->SetStringValue(
-		WPD_OBJECT_PARENT_ID, pDirectoryParent->GetCoreEx().GetObjectID()))) return false;
-	if (FAILED(pPortableDeviceValues->SetUnsignedLargeIntegerValue(
-		WPD_OBJECT_SIZE, stream.GetBytes()))) return false;
-	if (FAILED(pPortableDeviceValues->SetStringValue(
-		WPD_OBJECT_ORIGINAL_FILE_NAME, STRToStringW(fileName.c_str()).c_str()))) return false;
-	if (FAILED(pPortableDeviceValues->SetStringValue(
-		WPD_OBJECT_NAME, STRToStringW(baseName.c_str()).c_str()))) return false;
-#if 0
-	if (FAILED(pPortableDeviceValues->SetGuidValue(WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_IMAGE))) return false;
-	if (FAILED(pPortableDeviceValues->SetGuidValue(WPD_OBJECT_FORMAT, WPD_OBJECT_FORMAT_EXIF))) return false;
-#endif
 	CComPtr<IStream> pStreamTmp;
+	CComPtr<IPortableDeviceDataStream> pPortableDeviceDataStream;
+	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr, CLSCTX_INPROC_SERVER,
+					IID_PPV_ARGS(&pPortableDeviceValues)))) goto error_com;
+	if (FAILED(pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_PARENT_ID, pDirectoryParent->GetCoreEx().GetObjectID()))) goto error_com;
+	if (FAILED(pPortableDeviceValues->SetUnsignedLargeIntegerValue(
+		WPD_OBJECT_SIZE, stream.GetBytes()))) goto error_com;
+	if (FAILED(pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_ORIGINAL_FILE_NAME, STRToStringW(fileName.c_str()).c_str()))) goto error_com;
+	if (FAILED(pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_NAME, STRToStringW(baseName.c_str()).c_str()))) goto error_com;
+#if 0
+	if (FAILED(pPortableDeviceValues->SetGuidValue(WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_IMAGE))) goto error_com;
+	if (FAILED(pPortableDeviceValues->SetGuidValue(WPD_OBJECT_FORMAT, WPD_OBJECT_FORMAT_EXIF))) goto error_com;
+#endif
 	DWORD bytesBuff;
 	if (FAILED(pPortableDeviceContent->CreateObjectWithPropertiesAndData(
-		pPortableDeviceValues.p, &pStreamTmp, &bytesBuff, nullptr))) return false;
-	CComPtr<IPortableDeviceDataStream> pPortableDeviceDataStream;
-	if (FAILED(pStreamTmp.QueryInterface(&pPortableDeviceDataStream))) return false;
-	RefPtr<Memory> pMemory(new MemoryHeap(bytesBuff));
+		pPortableDeviceValues.p, &pStreamTmp, &bytesBuff, nullptr))) goto error_com;
+	if (FAILED(pStreamTmp.QueryInterface(&pPortableDeviceDataStream))) goto error_com;
+	pMemory.reset(new MemoryHeap(bytesBuff));
 	char* buff = pMemory->GetPointerC<char>();
 	size_t bytesTotal = static_cast<DWORD>(stream.GetBytes());
 	size_t bytesSent = 0;
@@ -169,7 +183,10 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 		if (Error::IsIssued()) return false;
 		if (bytesRead == 0) break;
 		DWORD bytesWritten;
-		if (FAILED(pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten))) return false;
+		if (FAILED(pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten))) {
+			Error::Issue(ErrorType::GuestError, "error while sending data");
+			return false;
+		}
 		bytesSent += bytesRead;
 		if (pFuncBlock) {
 			Value::Delete(pFuncBlock->EvalEasy(processor, new Value_Number(bytesSent), new Value_Number(bytesTotal)));
@@ -178,6 +195,9 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 	}
 	if (FAILED(pPortableDeviceDataStream->Commit(STGC_DEFAULT))) return false;
 	return true;
+error_com:
+	Error::Issue(ErrorType::GuestError, "internal COM error");
+	return false;
 }
 
 bool Storage::DeleteFile(const char* pathName)
