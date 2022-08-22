@@ -156,8 +156,8 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 	CComPtr<IPortableDeviceValues> pPortableDeviceValues;
 	CComPtr<IStream> pStreamTmp;
 	CComPtr<IPortableDeviceDataStream> pPortableDeviceDataStream;
-	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr, CLSCTX_INPROC_SERVER,
-					IID_PPV_ARGS(&pPortableDeviceValues)))) goto error_com;
+	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr,
+		CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceValues)))) goto error_com;
 	if (FAILED(pPortableDeviceValues->SetStringValue(
 		WPD_OBJECT_PARENT_ID, pDirectoryParent->GetCoreEx().GetObjectID()))) goto error_com;
 	if (FAILED(pPortableDeviceValues->SetUnsignedLargeIntegerValue(
@@ -183,10 +183,12 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 		if (Error::IsIssued()) return false;
 		if (bytesRead == 0) break;
 		DWORD bytesWritten;
-		if (FAILED(pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten))) {
-			Error::Issue(ErrorType::GuestError, "error while sending data");
-			return false;
-		}
+		HRESULT hr = pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten);
+		//::printf("%d %x\n", bytesRead, hr);
+		//if (FAILED(hr)) {
+		//	Error::Issue(ErrorType::GuestError, "error while sending data");
+		//	return false;
+		//}
 		bytesSent += bytesRead;
 		if (pFuncBlock) {
 			Value::Delete(pFuncBlock->EvalEasy(processor, new Value_Number(bytesSent), new Value_Number(bytesTotal)));
@@ -211,14 +213,17 @@ bool Storage::DeleteFile(const char* pathName)
 	}
 	CComPtr<IPortableDevicePropVariantCollection> pPortableDevicePropVariantCollection;
 	if (FAILED(::CoCreateInstance(CLSID_PortableDevicePropVariantCollection,
-		nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDevicePropVariantCollection)))) return false;
+		nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDevicePropVariantCollection)))) goto error_com;
 	PROPVARIANT propVar;
-	if (FAILED(::InitPropVariantFromString(pDirectory->GetCoreEx().GetObjectID(), &propVar))) return false;
+	if (FAILED(::InitPropVariantFromString(pDirectory->GetCoreEx().GetObjectID(), &propVar))) goto error_com;
 	if (FAILED(pPortableDevicePropVariantCollection->Add(&propVar))) goto error_done;
 	if (FAILED(pPortableDeviceContent->Delete(PORTABLE_DEVICE_DELETE_NO_RECURSION,
 		pPortableDevicePropVariantCollection.p, nullptr))) goto error_done;
 	PropVariantClear(&propVar);
 	return true;
+error_com:
+	Error::Issue(ErrorType::GuestError, "internal COM error");
+	return false;
 error_done:
 	PropVariantClear(&propVar);
 	return false;

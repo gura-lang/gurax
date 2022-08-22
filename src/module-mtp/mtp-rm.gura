@@ -16,15 +16,14 @@ argopt.Parser {|p|
 		sys.cerr.Println(e.text)
 		sys.Exit(1)
 	}
-	if (opt['help'] || argv.len != 2) {
+	if (opt['help']) {
 		tmplHelp.Render(sys.cerr)
 		sys.Exit(0)
 	}
 	iDevice = opt.Get('device') || 0
 	iStorage = opt.Get('storage') || 0
-	pathNameSrc = argv[0]
-	dirNameDst = argv[1]
-	pathNameDst = path.Join(dirNameDst, path.FileName(pathNameSrc)):uri
 }
 storage = mtp.Storage(iDevice, iStorage)
-storage.SendFile(pathNameDst, pathNameSrc)
+argv.Each {|pathName|
+	storage.DeleteFile(pathName)
+}
