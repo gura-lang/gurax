@@ -224,8 +224,8 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 		if (bytesRead == 0) break;
 		DWORD bytesWritten;
 		if (FAILED(hr = pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten))) {
-		//	IssueErrorFromHRESULT(hr);
-		//	return false;
+			//IssueErrorFromHRESULT(hr);
+			//return false;
 		}
 		bytesSent += bytesRead;
 		if (pFuncBlock) {
@@ -240,13 +240,13 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 bool Storage::DeleteFile(const char* pathName)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	HRESULT hr;
 	RefPtr<DirectoryEx> pDirectory(OpenDirectory(pathName, true));
 	if (!pDirectory) return false;
 	if (pDirectory->GetCoreEx().GetStat().IsDir()) {
 		Error::Issue(ErrorType::PathError, "can't delete a folder");
 		return false;
 	}
-	HRESULT hr;
 	CComPtr<IPortableDevicePropVariantCollection> pPortableDevicePropVariantCollection;
 	if (FAILED(hr = ::CoCreateInstance(CLSID_PortableDevicePropVariantCollection,
 		nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDevicePropVariantCollection)))) {
