@@ -39,4 +39,9 @@ String HRESULTToString(HRESULT hr)
 	return rtn;
 }
 
+void IssueErrorFromHRESULT(HRESULT hr)
+{
+	Error::Issue(ErrorType::GuestError, "%s", HRESULTToString(hr).c_str());
+}
+
 Gurax_EndModuleScope(mtp)

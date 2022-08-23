@@ -31,8 +31,9 @@ Storage* Storage::OpenStorage(size_t iDevice, size_t iStorage)
 	return pStorageOwner->at(iStorage)->Reference();
 }
 
-DirectoryEx* Storage::OpenDirectory(const char* pathName)
+DirectoryEx* Storage::OpenDirectory(const char* pathName, bool errorIfNotFoundFlag)
 {
+	HRESULT hr;
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
 	IPortableDeviceProperties* pPortableDeviceProperties = _pDevice->GetPortableDeviceProperties();
 	IPortableDeviceKeyCollection* pPortableDeviceKeyCollection = _pDevice->GetPortableDeviceKeyCollection();
@@ -62,23 +63,31 @@ DirectoryEx* Storage::OpenDirectory(const char* pathName)
 		}
 		//::printf("[%s]\n", field.c_str());
 		CComPtr<IEnumPortableDeviceObjectIDs> pEnumPortableDeviceObjectIDs;
-		if (FAILED(pPortableDeviceContent->EnumObjects(0, pDirectory->GetCoreEx().GetObjectID(), nullptr, &pEnumPortableDeviceObjectIDs))) return nullptr;
-		HRESULT hr;
+		if (FAILED(hr = pPortableDeviceContent->EnumObjects(0, pDirectory->GetCoreEx().GetObjectID(), nullptr, &pEnumPortableDeviceObjectIDs))) {
+			IssueErrorFromHRESULT(hr);
+			return nullptr;
+		}
 		LPWSTR objectIDs[32];
 		StringW objectIDFound;
 		do {
 			DWORD nObjectIDs = 0;
-			hr = pEnumPortableDeviceObjectIDs->Next(Gurax_ArraySizeOf(objectIDs), objectIDs, &nObjectIDs);
-			if (FAILED(hr)) return nullptr;
+			if (FAILED(hr = pEnumPortableDeviceObjectIDs->Next(Gurax_ArraySizeOf(objectIDs), objectIDs, &nObjectIDs))) {
+				IssueErrorFromHRESULT(hr);
+				return nullptr;
+			}
 			for (DWORD i = 0; i < nObjectIDs; i++) {
 				LPCWSTR objectID = objectIDs[i];
 				CComPtr<IPortableDeviceValues> pPortableDeviceValues;
-				if (FAILED(pPortableDeviceProperties->GetValues(
-					objectID, pPortableDeviceKeyCollection, &pPortableDeviceValues))) break;
+				if (FAILED(hr = pPortableDeviceProperties->GetValues(objectID, pPortableDeviceKeyCollection, &pPortableDeviceValues))) {
+					IssueErrorFromHRESULT(hr);
+					return nullptr;
+				}
 				// WPD_OBJECT_ORIGINAL_FILE_NAME: VT_LPWSTR
 				LPWSTR value = nullptr;
-				if (FAILED(pPortableDeviceValues->GetStringValue(
-									WPD_OBJECT_ORIGINAL_FILE_NAME, &value))) break;
+				if (FAILED(hr = pPortableDeviceValues->GetStringValue(WPD_OBJECT_ORIGINAL_FILE_NAME, &value))) {
+					IssueErrorFromHRESULT(hr);
+					return nullptr;
+				}
 				String fileName = WSTRToString(value);
 				//::printf("%s\n", fileName.c_str());
 				::CoTaskMemFree(value);
@@ -92,7 +101,12 @@ DirectoryEx* Storage::OpenDirectory(const char* pathName)
 			}
 			if (Error::IsIssued()) return nullptr;
 		} while (hr == S_OK && objectIDFound.empty());
-		if (objectIDFound.empty()) return nullptr;
+		if (objectIDFound.empty()) {
+			if (errorIfNotFoundFlag) {
+				Error::Issue(ErrorType::PathError, "path is not found: %s", pathName);
+			}
+			return nullptr;
+		}
 		pDirectory.reset(DirectoryEx::Create(pDirectory.release(), objectIDFound.c_str()));
 	}
 	return pDirectory.release();
@@ -101,29 +115,33 @@ DirectoryEx* Storage::OpenDirectory(const char* pathName)
 bool Storage::RecvFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	HRESULT hr;
 	RefPtr<Memory> pMemory;
-	RefPtr<DirectoryEx> pDirectory(OpenDirectory(pathName));
-	if (!pDirectory) {
-		Error::Issue(ErrorType::PathError, "path is not found: %s", pathName);
-		return false;
-	}
+	RefPtr<DirectoryEx> pDirectory(OpenDirectory(pathName, true));
+	if (!pDirectory) return false;
 	if (pDirectory->GetCoreEx().GetStat().IsDir()) {
 		Error::Issue(ErrorType::PathError, "can't transfer a folder");
 		return false;
 	}
 	CComPtr<IPortableDeviceResources> pPortableDeviceResources;
 	CComPtr<IStream> pStreamOnDevice;
- 	if (FAILED(pPortableDeviceContent->Transfer(&pPortableDeviceResources))) goto error_com;
+ 	if (FAILED(hr = pPortableDeviceContent->Transfer(&pPortableDeviceResources))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
 	DWORD bytesBuff;
-	if (FAILED(pPortableDeviceResources->GetStream(pDirectory->GetCoreEx().GetObjectID(),
-			WPD_RESOURCE_DEFAULT, STGM_READ, &bytesBuff, &pStreamOnDevice))) goto error_com;
+	if (FAILED(hr = pPortableDeviceResources->GetStream(pDirectory->GetCoreEx().GetObjectID(),
+			WPD_RESOURCE_DEFAULT, STGM_READ, &bytesBuff, &pStreamOnDevice))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
 	pMemory.reset(new MemoryHeap(bytesBuff));
 	char* buff = pMemory->GetPointerC<char>();
 	size_t bytesTotal = pDirectory->GetCoreEx().GetStat().GetBytes();
 	size_t bytesSent = 0;
 	for (;;) {
 		DWORD bytesRead;
-		if (FAILED(pStreamOnDevice->Read(buff, bytesBuff, &bytesRead))) {
+		if (FAILED(hr = pStreamOnDevice->Read(buff, bytesBuff, &bytesRead))) {
 			Error::Issue(ErrorType::GuestError, "error while sending data");
 			return false;
 		}
@@ -136,44 +154,66 @@ bool Storage::RecvFile(Processor& processor, const char* pathName, Stream& strea
 		}
 	}
 	return true;
-error_com:
-	Error::Issue(ErrorType::GuestError, "internal COM error");
-	return false;
 }
 
 bool Storage::SendFile(Processor& processor, const char* pathName, Stream& stream, const Function* pFuncBlock)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
+	HRESULT hr;
 	RefPtr<Memory> pMemory;
 	String dirName, fileName, baseName;
 	PathName(pathName).SplitFileName(&dirName, &fileName);
 	PathName(fileName).SplitExtName(&baseName, nullptr);
-	RefPtr<DirectoryEx> pDirectoryParent(OpenDirectory(dirName.c_str()));
-	if (!pDirectoryParent) {
-		Error::Issue(ErrorType::PathError, "path is not found: %s", dirName.c_str());
-		return false;
-	}
+	RefPtr<DirectoryEx> pDirectoryParent(OpenDirectory(dirName.c_str(), true));
+	if (!pDirectoryParent) return false;
 	CComPtr<IPortableDeviceValues> pPortableDeviceValues;
 	CComPtr<IStream> pStreamTmp;
 	CComPtr<IPortableDeviceDataStream> pPortableDeviceDataStream;
-	if (FAILED(::CoCreateInstance(CLSID_PortableDeviceValues, nullptr,
-		CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceValues)))) goto error_com;
-	if (FAILED(pPortableDeviceValues->SetStringValue(
-		WPD_OBJECT_PARENT_ID, pDirectoryParent->GetCoreEx().GetObjectID()))) goto error_com;
-	if (FAILED(pPortableDeviceValues->SetUnsignedLargeIntegerValue(
-		WPD_OBJECT_SIZE, stream.GetBytes()))) goto error_com;
-	if (FAILED(pPortableDeviceValues->SetStringValue(
-		WPD_OBJECT_ORIGINAL_FILE_NAME, STRToStringW(fileName.c_str()).c_str()))) goto error_com;
-	if (FAILED(pPortableDeviceValues->SetStringValue(
-		WPD_OBJECT_NAME, STRToStringW(baseName.c_str()).c_str()))) goto error_com;
+	if (FAILED(hr = ::CoCreateInstance(CLSID_PortableDeviceValues, nullptr,
+		CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDeviceValues)))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
+	if (FAILED(hr = pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_PARENT_ID, pDirectoryParent->GetCoreEx().GetObjectID()))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
+	if (FAILED(hr = pPortableDeviceValues->SetUnsignedLargeIntegerValue(
+		WPD_OBJECT_SIZE, stream.GetBytes()))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
+	if (FAILED(hr = pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_ORIGINAL_FILE_NAME, STRToStringW(fileName.c_str()).c_str()))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
+	if (FAILED(hr = pPortableDeviceValues->SetStringValue(
+		WPD_OBJECT_NAME, STRToStringW(baseName.c_str()).c_str()))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
 #if 0
-	if (FAILED(pPortableDeviceValues->SetGuidValue(WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_IMAGE))) goto error_com;
-	if (FAILED(pPortableDeviceValues->SetGuidValue(WPD_OBJECT_FORMAT, WPD_OBJECT_FORMAT_EXIF))) goto error_com;
+	if (FAILED(hr = pPortableDeviceValues->SetGuidValue(WPD_OBJECT_CONTENT_TYPE, WPD_CONTENT_TYPE_IMAGE))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
+	if (FAILED(hr = pPortableDeviceValues->SetGuidValue(WPD_OBJECT_FORMAT, WPD_OBJECT_FORMAT_EXIF))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
 #endif
 	DWORD bytesBuff;
-	if (FAILED(pPortableDeviceContent->CreateObjectWithPropertiesAndData(
-		pPortableDeviceValues.p, &pStreamTmp, &bytesBuff, nullptr))) goto error_com;
-	if (FAILED(pStreamTmp.QueryInterface(&pPortableDeviceDataStream))) goto error_com;
+	if (FAILED(hr = pPortableDeviceContent->CreateObjectWithPropertiesAndData(
+		pPortableDeviceValues.p, &pStreamTmp, &bytesBuff, nullptr))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
+	if (FAILED(hr = pStreamTmp.QueryInterface(&pPortableDeviceDataStream))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
 	pMemory.reset(new MemoryHeap(bytesBuff));
 	char* buff = pMemory->GetPointerC<char>();
 	size_t bytesTotal = static_cast<DWORD>(stream.GetBytes());
@@ -183,50 +223,54 @@ bool Storage::SendFile(Processor& processor, const char* pathName, Stream& strea
 		if (Error::IsIssued()) return false;
 		if (bytesRead == 0) break;
 		DWORD bytesWritten;
-		HRESULT hr = pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten);
-		//::printf("%d %x\n", bytesRead, hr);
-		//if (FAILED(hr)) {
-		//	Error::Issue(ErrorType::GuestError, "error while sending data");
+		if (FAILED(hr = pPortableDeviceDataStream->Write(buff, bytesRead, &bytesWritten))) {
+		//	IssueErrorFromHRESULT(hr);
 		//	return false;
-		//}
+		}
 		bytesSent += bytesRead;
 		if (pFuncBlock) {
 			Value::Delete(pFuncBlock->EvalEasy(processor, new Value_Number(bytesSent), new Value_Number(bytesTotal)));
 			if (Error::IsIssued()) return false;
 		}
 	}
-	if (FAILED(pPortableDeviceDataStream->Commit(STGC_DEFAULT))) return false;
+	if (FAILED(hr = pPortableDeviceDataStream->Commit(STGC_DEFAULT))) return false;
 	return true;
-error_com:
-	Error::Issue(ErrorType::GuestError, "internal COM error");
-	return false;
 }
 
 bool Storage::DeleteFile(const char* pathName)
 {
 	IPortableDeviceContent* pPortableDeviceContent = _pDevice->GetPortableDeviceContent();
-	RefPtr<DirectoryEx> pDirectory(OpenDirectory(pathName));
+	RefPtr<DirectoryEx> pDirectory(OpenDirectory(pathName, true));
 	if (!pDirectory) return false;
 	if (pDirectory->GetCoreEx().GetStat().IsDir()) {
 		Error::Issue(ErrorType::PathError, "can't delete a folder");
 		return false;
 	}
+	HRESULT hr;
 	CComPtr<IPortableDevicePropVariantCollection> pPortableDevicePropVariantCollection;
-	if (FAILED(::CoCreateInstance(CLSID_PortableDevicePropVariantCollection,
-		nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDevicePropVariantCollection)))) goto error_com;
+	if (FAILED(hr = ::CoCreateInstance(CLSID_PortableDevicePropVariantCollection,
+		nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pPortableDevicePropVariantCollection)))) {
+			IssueErrorFromHRESULT(hr);
+			return false;
+		}
 	PROPVARIANT propVar;
-	if (FAILED(::InitPropVariantFromString(pDirectory->GetCoreEx().GetObjectID(), &propVar))) goto error_com;
-	if (FAILED(pPortableDevicePropVariantCollection->Add(&propVar))) goto error_done;
-	if (FAILED(pPortableDeviceContent->Delete(PORTABLE_DEVICE_DELETE_NO_RECURSION,
-		pPortableDevicePropVariantCollection.p, nullptr))) goto error_done;
+	if (FAILED(hr = ::InitPropVariantFromString(pDirectory->GetCoreEx().GetObjectID(), &propVar))) {
+		IssueErrorFromHRESULT(hr);
+		return false;
+	}
+	if (FAILED(hr = pPortableDevicePropVariantCollection->Add(&propVar))) {
+		IssueErrorFromHRESULT(hr);
+		PropVariantClear(&propVar);
+		return false;
+	}
+	if (FAILED(hr = pPortableDeviceContent->Delete(PORTABLE_DEVICE_DELETE_NO_RECURSION,
+				pPortableDevicePropVariantCollection.p, nullptr))) {
+		IssueErrorFromHRESULT(hr);
+		PropVariantClear(&propVar);
+		return false;
+	}
 	PropVariantClear(&propVar);
 	return true;
-error_com:
-	Error::Issue(ErrorType::GuestError, "internal COM error");
-	return false;
-error_done:
-	PropVariantClear(&propVar);
-	return false;
 }
 
 bool Storage::MoveFile(const char* pathNameOld, const char* pathNameNew, bool overwriteFlag)
@@ -274,7 +318,7 @@ String Iterator_Storage::ToString(const StringStyle& ss) const
 //-----------------------------------------------------------------------------
 Directory* Iterator_DirectoryGlobEx::OpenDirectory(const char* pathName)
 {
-	return _pStorage->OpenDirectory(pathName);
+	return _pStorage->OpenDirectory(pathName, true);
 }
 
 Gurax_EndModuleScope(mtp)

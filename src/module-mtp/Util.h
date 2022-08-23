@@ -11,6 +11,7 @@ using StringW = std::basic_string<WCHAR>;
 
 StringW STRToStringW(LPCSTR str);
 String WSTRToString(LPCWSTR wstr);
+void IssueErrorFromHRESULT(HRESULT hr);
 String HRESULTToString(HRESULT hr);
 
 Gurax_EndModuleScope(mtp)

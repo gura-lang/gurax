@@ -40,7 +40,8 @@ Gurax_ImplementFunction(Dir)
 	// Function body
 	RefPtr<Storage> pStorage(Storage::OpenStorage(iDevice, iStorage));
 	if (!pStorage) return Value::nil();
-	RefPtr<Directory> pDirectory(pStorage->OpenDirectory(dirName));
+	RefPtr<Directory> pDirectory(pStorage->OpenDirectory(dirName, true));
+	if (!pDirectory) return Value::nil();
 	Directory::WalkFlags walkFlags = Directory::WalkFlag::CheckArgument(argument, true, pDirectory->GetCaseFlag());
 	RefPtr<Iterator> pIterator(new Iterator_DirectoryWalk(pDirectory.release(), depthMax, patterns, walkFlags));
 	return argument.ReturnIterator(processor, pIterator.release());
@@ -137,7 +138,8 @@ Gurax_ImplementFunction(Walk)
 	// Function body
 	RefPtr<Storage> pStorage(Storage::OpenStorage(iDevice, iStorage));
 	if (!pStorage) return Value::nil();
-	RefPtr<Directory> pDirectory(pStorage->OpenDirectory(dirName));
+	RefPtr<Directory> pDirectory(pStorage->OpenDirectory(dirName, true));
+	if (!pDirectory) return Value::nil();
 	Directory::WalkFlags walkFlags = Directory::WalkFlag::CheckArgument(argument, true, pDirectory->GetCaseFlag());
 	RefPtr<Iterator> pIterator(new Iterator_DirectoryWalk(pDirectory.release(), depthMax, patterns, walkFlags));
 	return argument.ReturnIterator(processor, pIterator.release());
