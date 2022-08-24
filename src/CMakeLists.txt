@@ -27,6 +27,7 @@ add_subdirectory(module-hash)
 add_subdirectory(module-jpeg)
 add_subdirectory(module-markdown)
 #add_subdirectory(module-math)				# built-in module
+add_subdirectory(module-mtp)
 add_subdirectory(module-opengl)
 #add_subdirectory(module-os)				# built-in module
 #add_subdirectory(module-path)				# built-in module
