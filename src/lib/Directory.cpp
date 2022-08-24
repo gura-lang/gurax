@@ -344,7 +344,7 @@ Iterator_DirectoryGlob::Iterator_DirectoryGlob() : _walkFlags(0), _depth(0)
 {
 }
 
-bool Iterator_DirectoryGlob::Init(const char* pattern)
+bool Iterator_DirectoryGlob::Initialize(const char* pattern)
 {
 	String pathName, field;
 	const char* patternTop = pattern;

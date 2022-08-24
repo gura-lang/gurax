@@ -235,7 +235,7 @@ Gurax_ImplementFunction(Glob)
 	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Iterator_DirectoryGlob> pIterator(new Iterator_DirectoryGlob());
-	if (!pIterator->Init(pattern)) return Value::nil();
+	if (!pIterator->Initialize(pattern)) return Value::nil();
 	pIterator->SetWalkFlags(Directory::WalkFlag::CheckArgument(argument, true, pIterator->GetDirectoryCur().GetCaseFlag()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }

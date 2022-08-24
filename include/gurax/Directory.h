@@ -256,7 +256,7 @@ private:
 public:
 	Iterator_DirectoryGlob();
 public:
-	bool Init(const char* pattern);
+	bool Initialize(const char* pattern);
 	Directory& GetDirectoryCur() { return *_pDirectoryCur; }
 	void SetWalkFlags(Directory::WalkFlags walkFlags) { _walkFlags = walkFlags; }
 	// Virtual functions of Iterator

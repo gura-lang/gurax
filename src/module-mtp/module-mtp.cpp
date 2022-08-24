@@ -77,7 +77,7 @@ Gurax_ImplementFunction(Glob)
 	RefPtr<Storage> pStorage(Storage::OpenStorage(iDevice, iStorage));
 	if (!pStorage) return Value::nil();
 	RefPtr<Iterator_DirectoryGlob> pIterator(new Iterator_DirectoryGlobEx(pStorage.release()));
-	if (!pIterator->Init(pattern)) return Value::nil();
+	if (!pIterator->Initialize(pattern)) return Value::nil();
 	pIterator->SetWalkFlags(Directory::WalkFlag::CheckArgument(argument, true, pIterator->GetDirectoryCur().GetCaseFlag()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
