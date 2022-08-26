@@ -75,6 +75,12 @@ bool Content::Write(Stream& stream) const
 	return _pBuffImage? stream.Write(_pBuffImage->GetBinary()) : true;
 }
 	
+void Content::AddSegment(Segment* pSegment)
+{
+	GetSegmentOwner().push_back(pSegment);
+	_segmentMap[pSegment->GetMarkerSymbol()] = pSegment->Reference();
+}
+
 Exif* Content::FindExif()
 {
 	for (auto pSegment: GetSegmentOwner()) {

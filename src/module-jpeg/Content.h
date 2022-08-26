@@ -38,12 +38,14 @@ public:
 	JFIF* FindJFIF();
 	SegmentOwner& GetSegmentOwner() { return *_pSegmentOwner; }
 	const SegmentOwner& GetSegmentOwner() const { return *_pSegmentOwner; }
-	const Binary* GetBuffImage() const { return _pBuffImage? &_pBuffImage->GetBinary() : nullptr; }
 	const SegmentMap& GetSegmentMap() const { return _segmentMap; }
+	const BinaryReferable* GetBuffImage() const { return _pBuffImage.get(); }
+	void SetBuffImage(BinaryReferable* pBuffImage) { _pBuffImage.reset(pBuffImage); }
 public:
 	void PrepareSegmentMap();
 	bool Read(Stream& stream);
 	bool Write(Stream& stream) const;
+	void AddSegment(Segment* pSegment);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Content& other) const { return this == &other; }

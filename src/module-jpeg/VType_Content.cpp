@@ -27,11 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// jpeg.Content(stream:Stream) {block?}
+// jpeg.Content(stream?:Stream) {block?}
 Gurax_DeclareConstructor(Content)
 {
 	Declare(VTYPE_Content, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -42,16 +42,38 @@ Gurax_ImplementConstructor(Content)
 {
 	// Arguments
 	ArgPicker args(argument);
-	Stream& stream = args.PickStream();
+	Stream* pStream = args.IsValid()? &args.PickStream() : nullptr;
 	// Function body
 	RefPtr<Content> pContent(new Content());
-	if (!pContent->Read(stream)) return Value::nil();
+	if (pStream) if (!pContent->Read(*pStream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Content(pContent.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// jpeg.Content#AddSegment(segment as Segment):void:map
+Gurax_DeclareMethod(Content, AddSegment)
+{
+	Declare(VTYPE_Nil, Flag::Map);
+	DeclareArg("segment", VTYPE_Segment, DeclArg::Occur::Once, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Adds `Segment` instance to the content.");
+}
+
+Gurax_ImplementMethod(Content, AddSegment)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Segment& segment = args.Pick<Value_Segment>().GetSegment();
+	// Function body
+	valueThis.GetContent().AddSegment(segment.Reference());
+	return Value::nil();
+}
+
 // jpeg.Content#EachSegment() {block?}
 Gurax_DeclareMethod(Content, EachSegment)
 {
@@ -70,6 +92,46 @@ Gurax_ImplementMethod(Content, EachSegment)
 	RefPtr<Iterator> pIterator(new VType_Segment::Iterator_Each(
 						valueThis.GetContent().GetSegmentOwner().Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// jpeg.Content#GetBuffImage() {block?}
+Gurax_DeclareMethod(Content, GetBuffImage)
+{
+	Declare(VTYPE_Binary, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns an image data as a Binary.");
+}
+
+Gurax_ImplementMethod(Content, GetBuffImage)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	const BinaryReferable* pBuffImage = valueThis.GetContent().GetBuffImage();
+	return argument.ReturnValue(processor, pBuffImage? Value::nil() : new Value_Binary(pBuffImage->Reference()));
+}
+
+// jpeg.Content#SetBuffImage(buffImage as Binary)
+Gurax_DeclareMethod(Content, SetBuffImage)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Sets an image data.");
+}
+
+Gurax_ImplementMethod(Content, SetBuffImage)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const BinaryReferable& buffImage = args.Pick<Value_Binary>().GetBinaryReferable();
+	// Function body
+	valueThis.GetContent().SetBuffImage(buffImage.Reference());
+	return Value::nil();
 }
 
 // jpeg.Content#Write(stream:Stream:w):reduce
@@ -97,10 +159,38 @@ Gurax_ImplementMethod(Content, Write)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// jpeg.Content#buffImage
+Gurax_DeclareProperty_RW(Content, buffImage)
+{
+	Declare(VTYPE_Binary, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Represents an image buffer in the content.");
+}
+
+Gurax_ImplementPropertyGetter(Content, buffImage)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const BinaryReferable* pBuffImage = valueThis.GetContent().GetBuffImage();
+	if (!pBuffImage) return Value::nil();
+	return new Value_Binary(pBuffImage->Reference());
+}
+
+Gurax_ImplementPropertySetter(Content, buffImage)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	if (value.IsInvalid()) {
+		valueThis.GetContent().SetBuffImage(nullptr);
+		return;
+	}
+	const BinaryReferable& buffImage = Value_Binary::GetBinaryReferable(value);
+	valueThis.GetContent().SetBuffImage(buffImage.Reference());	
+}
+
 // jpeg.Content#exif
 Gurax_DeclareProperty_R(Content, exif)
 {
-	Declare(VTYPE_Exif, Flag::None);
+	Declare(VTYPE_Exif, Flag::Nil);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Returns `jpeg.Exif` instance if exists, and `nil` otherwise.");
@@ -143,9 +233,12 @@ void VType_Content::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Content));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Content, AddSegment));
 	Assign(Gurax_CreateMethod(Content, EachSegment));
+	Assign(Gurax_CreateMethod(Content, GetBuffImage));
 	Assign(Gurax_CreateMethod(Content, Write));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Content, buffImage));
 	Assign(Gurax_CreateProperty(Content, exif));
 	Assign(Gurax_CreateProperty(Content, jfif));
 }
