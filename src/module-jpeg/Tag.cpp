@@ -796,7 +796,7 @@ bool Tag_SRATIONAL::SerializePointed(Binary& buff, bool beFlag)
 bool Tag_IFD::AssignValue(RefPtr<Value> pValue)
 {
 	if (!pValue->IsList()) return false;
-	RefPtr<IFD> pIFD(IFD::CreateFromList(Value_List::GetValueOwner(*pValue), _pSymbol));
+	RefPtr<IFD> pIFD(IFD::CreateFromList(_pSymbol, Value_List::GetValueOwner(*pValue)));
 	if (!pIFD) return false;
 	SetValue(new Value_IFD(pIFD.release()));
 	return true;

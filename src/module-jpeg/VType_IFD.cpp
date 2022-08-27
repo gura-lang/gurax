@@ -44,7 +44,7 @@ Gurax_ImplementConstructor(IFD)
 	ArgPicker args(argument);
 	const ValueList& valueList = args.PickList();
 	// Function body
-	RefPtr<IFD> pIFD(IFD::CreateFromList(valueList, Symbol::Empty));
+	RefPtr<IFD> pIFD(IFD::CreateFromList(Symbol::Empty, valueList));
 	if (!pIFD) return Value::nil();
 	return argument.ReturnValue(processor, new Value_IFD(pIFD.release()));
 }
@@ -52,6 +52,28 @@ Gurax_ImplementConstructor(IFD)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// jpeg.IFD#AddTag(tag as Tag):void:map
+Gurax_DeclareMethod(IFD, AddTag)
+{
+	Declare(VTYPE_Nil, Flag::Map);
+	DeclareArg("tag", VTYPE_Tag, DeclArg::Occur::Once, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Adds `Tag` instance to the IFD.");
+}
+
+Gurax_ImplementMethod(IFD, AddTag)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Tag& tag = args.Pick<Value_Tag>().GetTag();
+	// Function body
+	valueThis.GetIFD().AddTag(tag.Reference());
+	return Value::nil();
+}
+
 // jpeg.IFD#EachTag() {block?}
 Gurax_DeclareMethod(IFD, EachTag)
 {
@@ -102,6 +124,7 @@ void VType_IFD::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(IFD));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(IFD, AddTag));
 	Assign(Gurax_CreateMethod(IFD, EachTag));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(IFD, symbol));
@@ -111,7 +134,7 @@ Value* VType_IFD::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsList()) {
 		const ValueList& valueList = Value_List::GetValueOwner(value);
-		RefPtr<IFD> pIFD(IFD::CreateFromList(valueList, Symbol::Empty));
+		RefPtr<IFD> pIFD(IFD::CreateFromList(Symbol::Empty, valueList));
 		if (!pIFD) return nullptr;
 		return new Value_IFD(pIFD.release());
 	}

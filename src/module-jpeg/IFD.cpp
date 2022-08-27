@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(jpeg)
 //------------------------------------------------------------------------------
 // IFD
 //------------------------------------------------------------------------------
-IFD* IFD::CreateFromList(const ValueList& valueList, const Symbol* pSymbolOfIFD)
+IFD* IFD::CreateFromList(const Symbol* pSymbolOfIFD, const ValueList& valueList)
 {
 	RefPtr<TagOwner> pTagOwner(new TagOwner());
 	for (const Value* pValueElem : valueList) {
@@ -34,12 +34,12 @@ IFD* IFD::CreateFromList(const ValueList& valueList, const Symbol* pSymbolOfIFD)
 		//	return false;
 		//}
 		//RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
-		RefPtr<Tag> pTag(Tag::Create(nullptr, pSymbol));
+		RefPtr<Tag> pTag(Tag::Create(Symbol::Empty, pSymbol));
 		if (!pTag) return false;
 		if (!pTag->AssignValue(valueToAssign.Reference())) return false;
 		pTagOwner->push_back(pTag.release());
 	}
-	return new IFD(pTagOwner.release(), pSymbolOfIFD);
+	return new IFD(pSymbolOfIFD, pTagOwner.release());
 }
 
 bool IFD::Serialize(Binary& buff, bool beFlag)

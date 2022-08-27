@@ -16,14 +16,14 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(IFD);
 protected:
-	RefPtr<TagOwner> _pTagOwner;
 	const Symbol* _pSymbolOfIFD;
+	RefPtr<TagOwner> _pTagOwner;
 	TagMap _tagMap;
 	size_t _posNextIFDOffset;
 public:
 	// Constructor
-	IFD(TagOwner* pTagOwner, const Symbol* pSymbolOfIFD) :
-		_pTagOwner(pTagOwner), _pSymbolOfIFD(pSymbolOfIFD), _posNextIFDOffset(0) {
+	IFD(const Symbol* pSymbolOfIFD, TagOwner* pTagOwner) :
+		_pSymbolOfIFD(pSymbolOfIFD), _pTagOwner(pTagOwner), _posNextIFDOffset(0) {
 		PrepareTagMap();
 	}
 	// Copy constructor/operator
@@ -35,7 +35,7 @@ public:
 protected:
 	~IFD() = default;
 public:
-	static IFD* CreateFromList(const ValueList& valueList, const Symbol* pSymbolOfIFD);
+	static IFD* CreateFromList(const Symbol* pSymbolOfIFD, const ValueList& valueList);
 	void SetSymbolOfIFD(const Symbol* pSymbol) {
 		if (_pSymbolOfIFD->IsEmpty()) _pSymbolOfIFD = pSymbol;
 	}
@@ -53,7 +53,7 @@ public:
 	const Value* LookupTagValue(const Symbol* pSymbol);
 	bool AssignTagValue(const Symbol* pSymbol, RefPtr<Value> pValue);
 public:
-	template<typename TypeDef> static inline IFD* Deserialize(const UInt8* buff,
+	template<typename TypeDef> static IFD* Deserialize(const UInt8* buff,
 			size_t bytesBuff, size_t offset, const Symbol* pSymbolOfIFD,
 			size_t* pOffsetNext = nullptr);
 public:
@@ -103,7 +103,7 @@ template<typename TypeDef> IFD* IFD::Deserialize(const UInt8* buff, size_t bytes
 		const LONG_T* pLONG = reinterpret_cast<const LONG_T*>(buff + offset);
 		*pOffsetNext = Gurax_UnpackUInt32(pLONG->num);
 	}
-	return new IFD(pTagOwner.release(), pSymbolOfIFD);
+	return new IFD(pSymbolOfIFD, pTagOwner.release());
 }
 
 //------------------------------------------------------------------------------
