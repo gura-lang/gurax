@@ -19,9 +19,10 @@ Tag* Tag::Create(const Symbol* pSymbolOfIFD, const Symbol* pSymbol)
 	const TagInfo* pTagInfo = TagInfo::LookupBySymbol(pSymbolOfIFD, pSymbol);
 	if (!pTagInfo) {
 		Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
-		return false;
+		return nullptr;
 	}
-	return Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name));
+	//return Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name));
+	return Tag::Create(pTagInfo->tagId, pTagInfo->typeId, pSymbol);
 }
 
 Tag* Tag::Create(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol)
@@ -76,7 +77,7 @@ String Tag::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 bool Tag_BYTE::AssignValue(RefPtr<Value> pValue)
 {
-	if (!pValue->IsType(VTYPE_Binary)) {\
+	if (!pValue->IsType(VTYPE_Binary)) {
 		Error::Issue(ErrorType::TypeError, "Binary value is expected for %s",
 			GetSymbol()->GetName());
 		return false;

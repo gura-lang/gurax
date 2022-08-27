@@ -176,38 +176,22 @@ static TagInfoMapBySymbol g_tagInfoMapBySymbol_Interoperability;
 
 void TagInfo::Initialize()
 {
-	g_tagInfoMapByTagId.Register(
-		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
-	g_tagInfoMapByTagId.Register(
-		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
-	g_tagInfoMapByTagId.Register(
-		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
-	g_tagInfoMapByTagId.Register(
-		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
-	g_tagInfoMapByTagId_TIFF.Register(
-		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
-	g_tagInfoMapByTagId_Exif.Register(
-		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
-	g_tagInfoMapByTagId_GPSInfo.Register(
-		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
-	g_tagInfoMapByTagId_Interoperability.Register(
-		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
-	g_tagInfoMapBySymbol.Register(
-		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
-	g_tagInfoMapBySymbol.Register(
-		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
-	g_tagInfoMapBySymbol.Register(
-		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
-	g_tagInfoMapBySymbol.Register(
-		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
-	g_tagInfoMapBySymbol_TIFF.Register(
-		g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
-	g_tagInfoMapBySymbol_Exif.Register(
-		g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
-	g_tagInfoMapBySymbol_GPSInfo.Register(
-		g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
-	g_tagInfoMapBySymbol_Interoperability.Register(
-		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
+	g_tagInfoMapByTagId.Register(g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
+	g_tagInfoMapByTagId.Register(g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
+	g_tagInfoMapByTagId.Register(g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
+	g_tagInfoMapByTagId.Register(g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
+	g_tagInfoMapByTagId_TIFF.Register(g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
+	g_tagInfoMapByTagId_Exif.Register(g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
+	g_tagInfoMapByTagId_GPSInfo.Register(g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
+	g_tagInfoMapByTagId_Interoperability.Register(g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
+	g_tagInfoMapBySymbol.Register(g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
+	g_tagInfoMapBySymbol.Register(g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
+	g_tagInfoMapBySymbol.Register(g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
+	g_tagInfoMapBySymbol.Register(g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
+	g_tagInfoMapBySymbol_TIFF.Register(g_tagInfoTbl_TIFF, Gurax_ArraySizeOf(g_tagInfoTbl_TIFF));
+	g_tagInfoMapBySymbol_Exif.Register(g_tagInfoTbl_Exif, Gurax_ArraySizeOf(g_tagInfoTbl_Exif));
+	g_tagInfoMapBySymbol_GPSInfo.Register(g_tagInfoTbl_GPSInfo, Gurax_ArraySizeOf(g_tagInfoTbl_GPSInfo));
+	g_tagInfoMapBySymbol_Interoperability.Register(g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
 }
 
 //const TagInfo* TagInfo::LookupByTagId(UInt16 tagId)
