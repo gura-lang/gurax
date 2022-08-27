@@ -14,13 +14,13 @@ TestCase('Property') {
 }
 
 TestCase('jpeg.Content#segments') {
-	jpeg.Content('test.jpg').segments.Each {|segment|
+	jpeg.Content('test.jpg').EachSegment {|segment|
 		Println(segment)
 	}
 }
 
 PrintIFD(ifd as jpeg.IFD, indentLevel as Number) = {
-	ifd.tags.Each {|tag|
+	ifd.EachTag {|tag|
 		if (tag.offset == tag.offsetToValue) {
 			Printf('%*s%04x:%s [%s]: %s\n',
 				indentLevel * 2, '', tag.offset, tag.name, tag.type.name, tag.value)
