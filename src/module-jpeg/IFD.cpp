@@ -12,29 +12,36 @@ IFD* IFD::CreateFromList(const Symbol* pSymbolOfIFD, const ValueList& valueList)
 {
 	RefPtr<TagOwner> pTagOwner(new TagOwner());
 	for (const Value* pValueElem : valueList) {
-		if (!pValueElem->IsList()) return false;
-		const ValueOwner& valueOwner = Value_List::GetValueOwner(*pValueElem);
-		if (valueOwner.size() != 2) {
+		const ValueOwner* pValueOwner;
+		if (pValueElem->IsList()) {
+			pValueOwner = &Value_List::GetValueOwner(*pValueElem);
+		} else if (pValueElem->IsTuple()) {
+			pValueOwner = &Value_Tuple::GetValueOwner(*pValueElem);
+		} else {
+			Error::Issue(ErrorType::FormatError, "each element must be a List or Tuple");
+			return false;
+		}
+		if (pValueOwner->size() != 2) {
 			Error::Issue(ErrorType::FormatError, "each element of IFD value must be a key-value pair");
 			return false;
 		}
-		if (!valueOwner.front()->IsType(VTYPE_Expr)) {
+		if (!pValueOwner->front()->IsType(VTYPE_Expr)) {
 			Error::Issue(ErrorType::FormatError, "each element of IFD value must has a symbol as its first value");
 			return false;
 		}
-		const Symbol* pSymbol = Value_Expr::GetExpr(*valueOwner.front()).GetPureSymbol();
+		const Symbol* pSymbol = Value_Expr::GetExpr(*pValueOwner->front()).GetPureSymbol();
 		if (!pSymbol) {
 			Error::Issue(ErrorType::FormatError, "each element of IFD value must has a symbol as its first value");
 			return false;
 		}
-		Value& valueToAssign = *valueOwner.back();
+		Value& valueToAssign = *pValueOwner->back();
 		//const TagInfo* pTagInfo = TagInfo::LookupBySymbol(nullptr, pSymbol);
 		//if (!pTagInfo) {
 		//	Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
 		//	return false;
 		//}
 		//RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
-		RefPtr<Tag> pTag(Tag::Create(Symbol::Empty, pSymbol));
+		RefPtr<Tag> pTag(Tag::Create(pSymbolOfIFD, pSymbol));
 		if (!pTag) return false;
 		if (!pTag->AssignValue(valueToAssign.Reference())) return false;
 		pTagOwner->push_back(pTag.release());
