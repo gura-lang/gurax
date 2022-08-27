@@ -210,45 +210,37 @@ void TagInfo::Initialize()
 		g_tagInfoTbl_Interoperability, Gurax_ArraySizeOf(g_tagInfoTbl_Interoperability));
 }
 
-const TagInfo* TagInfo::LookupByTagId(UInt16 tagId)
-{
-	return g_tagInfoMapByTagId.Lookup(tagId);
-}
+//const TagInfo* TagInfo::LookupByTagId(UInt16 tagId)
+//{
+//	return g_tagInfoMapByTagId.Lookup(tagId);
+//}
 
 const TagInfo* TagInfo::LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId)
 {
 	return
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd0))?
-			g_tagInfoMapByTagId_TIFF.Lookup(tagId) :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd1))?
-			g_tagInfoMapByTagId_TIFF.Lookup(tagId) :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))?
-			g_tagInfoMapByTagId_Exif.Lookup(tagId) :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Interoperability))?
-			g_tagInfoMapByTagId_Interoperability.Lookup(tagId) :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(GPSInfo))?
-			g_tagInfoMapByTagId_GPSInfo.Lookup(tagId) :
+		!pSymbolOfIFD? g_tagInfoMapByTagId.Lookup(tagId) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd0))? g_tagInfoMapByTagId_TIFF.Lookup(tagId) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd1))? g_tagInfoMapByTagId_TIFF.Lookup(tagId) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))? g_tagInfoMapByTagId_Exif.Lookup(tagId) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Interoperability))? g_tagInfoMapByTagId_Interoperability.Lookup(tagId) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(GPSInfo))? g_tagInfoMapByTagId_GPSInfo.Lookup(tagId) :
 		nullptr;
 }
 
-const TagInfo* TagInfo::LookupBySymbol(const Symbol* pSymbol)
-{
-	return g_tagInfoMapBySymbol.Lookup(pSymbol);
-}
+//const TagInfo* TagInfo::LookupBySymbol(const Symbol* pSymbol)
+//{
+//	return g_tagInfoMapBySymbol.Lookup(pSymbol);
+//}
 
 const TagInfo* TagInfo::LookupBySymbol(const Symbol* pSymbolOfIFD, const Symbol* pSymbol)
 {
 	return
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd0))?
-			g_tagInfoMapBySymbol_TIFF.Lookup(pSymbol) :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd1))?
-			g_tagInfoMapBySymbol_TIFF.Lookup(pSymbol) :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))?
-			g_tagInfoMapBySymbol_Exif.Lookup(pSymbol) :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Interoperability))?
-			g_tagInfoMapBySymbol_Interoperability.Lookup(pSymbol) :
-		pSymbolOfIFD->IsIdentical(Gurax_Symbol(GPSInfo))?
-			g_tagInfoMapBySymbol_GPSInfo.Lookup(pSymbol) :
+		!pSymbolOfIFD? g_tagInfoMapBySymbol.Lookup(pSymbol) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd0))? g_tagInfoMapBySymbol_TIFF.Lookup(pSymbol) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(ifd1))? g_tagInfoMapBySymbol_TIFF.Lookup(pSymbol) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Exif))? g_tagInfoMapBySymbol_Exif.Lookup(pSymbol) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(Interoperability))? g_tagInfoMapBySymbol_Interoperability.Lookup(pSymbol) :
+		pSymbolOfIFD->IsIdentical(Gurax_Symbol(GPSInfo))? g_tagInfoMapBySymbol_GPSInfo.Lookup(pSymbol) :
 		nullptr;
 }
 

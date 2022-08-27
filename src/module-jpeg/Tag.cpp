@@ -14,6 +14,16 @@ Tag::Tag(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol) :
 {
 }
 
+Tag* Tag::Create(const Symbol* pSymbolOfIFD, const Symbol* pSymbol)
+{
+	const TagInfo* pTagInfo = TagInfo::LookupBySymbol(pSymbolOfIFD, pSymbol);
+	if (!pTagInfo) {
+		Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
+		return false;
+	}
+	return Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name));
+}
+
 Tag* Tag::Create(UInt16 tagId, UInt16 typeId, const Symbol* pSymbol)
 {
 #if 0

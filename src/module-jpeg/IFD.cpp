@@ -28,12 +28,14 @@ IFD* IFD::CreateFromList(const ValueList& valueList, const Symbol* pSymbolOfIFD)
 			return false;
 		}
 		Value& valueToAssign = *valueOwner.back();
-		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(pSymbol);
-		if (!pTagInfo) {
-			Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
-			return false;
-		}
-		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
+		//const TagInfo* pTagInfo = TagInfo::LookupBySymbol(nullptr, pSymbol);
+		//if (!pTagInfo) {
+		//	Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
+		//	return false;
+		//}
+		//RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
+		RefPtr<Tag> pTag(Tag::Create(nullptr, pSymbol));
+		if (!pTag) return false;
 		if (!pTag->AssignValue(valueToAssign.Reference())) return false;
 		pTagOwner->push_back(pTag.release());
 	}
@@ -96,12 +98,13 @@ bool IFD::AssignTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
 	Tag* pTag = GetTagMap().Lookup(pSymbol);
 	if (!pTag) {
 		if (pValue->IsNil()) return true;
-		const TagInfo* pTagInfo = TagInfo::LookupBySymbol(_pSymbolOfIFD, pSymbol);
-		if (!pTagInfo) {
-			Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
-			return false;
-		}
-		RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
+		//const TagInfo* pTagInfo = TagInfo::LookupBySymbol(_pSymbolOfIFD, pSymbol);
+		//if (!pTagInfo) {
+		//	Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
+		//	return false;
+		//}
+		//RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
+		RefPtr<Tag> pTag(Tag::Create(_pSymbolOfIFD, pSymbol));
 		if (!pTag) return false;
 		pTag->SetOrderHintAsAdded();
 		if (!pTag->AssignValue(pValue.release())) return false;

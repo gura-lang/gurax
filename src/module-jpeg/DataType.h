@@ -438,9 +438,9 @@ public:
 	static const TagInfo Empty;
 public:
 	static void Initialize();
-	static const TagInfo* LookupByTagId(UInt16 tagId);
+	//static const TagInfo* LookupByTagId(UInt16 tagId);
 	static const TagInfo* LookupByTagId(const Symbol* pSymbolOfIFD, UInt16 tagId);
-	static const TagInfo* LookupBySymbol(const Symbol* pSymbol);
+	//static const TagInfo* LookupBySymbol(const Symbol* pSymbol);
 	static const TagInfo* LookupBySymbol(const Symbol* pSymbolOfIFD, const Symbol* pSymbol);
 };
 
