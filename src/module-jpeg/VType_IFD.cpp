@@ -27,11 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// jpeg.IFD(init[]) {block?}
+// jpeg.IFD(init?[]) {block?}
 Gurax_DeclareConstructor(IFD)
 {
 	Declare(VTYPE_IFD, Flag::None);
-	DeclareArg("init", VTYPE_Any, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("init", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
