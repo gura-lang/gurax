@@ -9,9 +9,14 @@ contentSrc.EachSegment {|segment|
 		exifSrc = segment
 		exifDst = jpeg.Exif()
 		if (exifSrc.ifd0) {
-			ifdDst = jpeg.IFD()
+			ifdDst = jpeg.IFD(exifSrc.ifd0.symbol)
 			exifSrc.ifd0.EachTag {|tag|
 				Println(tag)
+				if (tag.symbol == `Orientation) {
+					Println(tag.value)
+					tag.value = 0
+					Println(tag.value)
+				}
 				ifdDst.AddTag(tag)
 			}
 			exifDst.ifd0 = ifdDst

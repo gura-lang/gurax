@@ -27,10 +27,13 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// jpeg.Tag() {block?}
+// jpeg.Tag(symbolOfIFD as Symbol, symbol as Symbol, value as any) {block?}
 Gurax_DeclareConstructor(Tag)
 {
 	Declare(VTYPE_Tag, Flag::None);
+	DeclareArg("symbolOfIFD", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,11 +43,15 @@ Gurax_DeclareConstructor(Tag)
 Gurax_ImplementConstructor(Tag)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	const Symbol* pSymbolOfIFD = args.PickSymbol();
+	const Symbol* pSymbol = args.PickSymbol();
+	const Value& value = args.PickValue();
 	// Function body
-	//RefPtr<Tag> pTag(new Tag());
-	//return argument.ReturnValue(processor, new Value_Tag(pTag.release()));
-	return Value::nil();
+	RefPtr<Tag> pTag(Tag::Create(pSymbolOfIFD, pSymbol));
+	if (!pTag) return Value::nil();
+	if (!pTag->AssignValue(value.Reference())) return false;
+	return argument.ReturnValue(processor, new Value_Tag(pTag.release()));
 }
 
 //-----------------------------------------------------------------------------
@@ -167,7 +174,7 @@ Gurax_ImplementPropertyGetter(Tag, typeId)
 }
 
 // jpeg.Tag#value
-Gurax_DeclareProperty_R(Tag, value)
+Gurax_DeclareProperty_RW(Tag, value)
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(
@@ -179,6 +186,12 @@ Gurax_ImplementPropertyGetter(Tag, value)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return valueThis.GetTag().GetValue().Reference();
+}
+
+Gurax_ImplementPropertySetter(Tag, value)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetTag().AssignValue(value.Reference());
 }
 
 //------------------------------------------------------------------------------

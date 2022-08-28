@@ -27,11 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// jpeg.IFD(init?[]) {block?}
+// jpeg.IFD(symbol as Symbol) {block?}
 Gurax_DeclareConstructor(IFD)
 {
 	Declare(VTYPE_IFD, Flag::None);
-	DeclareArg("init", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
+	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -42,10 +42,9 @@ Gurax_ImplementConstructor(IFD)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const ValueList& valueList = args.PickList();
+	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
-	RefPtr<IFD> pIFD(IFD::CreateFromList(Symbol::Empty, valueList));
-	if (!pIFD) return Value::nil();
+	RefPtr<IFD> pIFD(new IFD(pSymbol, new TagOwner()));
 	return argument.ReturnValue(processor, new Value_IFD(pIFD.release()));
 }
 
