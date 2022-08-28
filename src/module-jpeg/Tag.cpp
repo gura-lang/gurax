@@ -933,6 +933,13 @@ bool Tag_JPEGInterchangeFormat::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // TagList
 //------------------------------------------------------------------------------
+Tag* TagList::FindBySymbol(const Symbol* pSymbol)
+{
+	for (iterator ppTag = begin(); ppTag != end(); ppTag++) {
+		if ((*ppTag)->GetSymbol()->IsIdentical(pSymbol)) return *ppTag;
+	}
+	return nullptr;
+}
 
 //------------------------------------------------------------------------------
 // TagOwner
@@ -943,15 +950,16 @@ void TagOwner::Clear()
 	clear();
 }
 
-void TagOwner::Erase(const Symbol* pSymbol)
+bool TagOwner::DeleteBySymbol(const Symbol* pSymbol)
 {
-	for (auto ppTag = begin(); ppTag != end(); ppTag++) {
+	for (iterator ppTag = begin(); ppTag != end(); ppTag++) {
 		if ((*ppTag)->GetSymbol()->IsIdentical(pSymbol)) {
 			Tag::Delete(*ppTag);
 			erase(ppTag);
-			break;
+			return true;
 		}
 	}
+	return false;
 }
 
 //------------------------------------------------------------------------------

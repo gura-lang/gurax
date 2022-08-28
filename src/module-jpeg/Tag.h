@@ -301,6 +301,7 @@ protected:
 class GURAX_DLLDECLARE TagList : public ListBase<Tag*> {
 public:
 	void SortByOrderHint() { std::stable_sort(begin(), end(), Tag::OrderHintCompare()); }
+	Tag* FindBySymbol(const Symbol* pSymbol);
 };
 
 //------------------------------------------------------------------------------
@@ -314,7 +315,7 @@ protected:
 	~TagOwner() { Clear(); }
 public:
 	void Clear();
-	void Erase(const Symbol* pSymbol);
+	bool DeleteBySymbol(const Symbol* pSymbol);
 };
 
 //------------------------------------------------------------------------------

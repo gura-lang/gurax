@@ -89,8 +89,13 @@ void IFD::AddTag(Tag* pTag)
 
 void IFD::DeleteTag(const Symbol* pSymbol)
 {
-	GetTagOwner().Erase(pSymbol);
+	GetTagOwner().DeleteBySymbol(pSymbol);
 	GetTagMap().Erase(pSymbol);
+}
+
+Tag* IFD::FindTag(const Symbol* pSymbol)
+{
+	return GetTagOwner().FindBySymbol(pSymbol);
 }
 
 const Value* IFD::LookupTagValue(const Symbol* pSymbol)

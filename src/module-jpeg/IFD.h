@@ -50,6 +50,7 @@ public:
 	bool Serialize(Binary& buff, bool beFlag);
 	void AddTag(Tag* pTag);
 	void DeleteTag(const Symbol* pSymbol);
+	Tag* FindTag(const Symbol* pSymbol);
 	const Value* LookupTagValue(const Symbol* pSymbol);
 	bool AssignTagValue(const Symbol* pSymbol, RefPtr<Value> pValue);
 public:
