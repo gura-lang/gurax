@@ -11,18 +11,16 @@ contentSrc.EachSegment {|segment|
 		if (exifSrc.ifd0) {
 			ifdDst = jpeg.IFD(exifSrc.ifd0.symbol)
 			exifSrc.ifd0.EachTag {|tag|
-				Println(tag)
-				if (tag.symbol == `Orientation) {
-					Println(tag.value)
-					tag.value = 0
-					Println(tag.value)
-				}
 				ifdDst.AddTag(tag)
 			}
 			exifDst.ifd0 = ifdDst
 		}
 		if (exifSrc.ifd1) {
-			exifDst.ifd1 = exifSrc.ifd1
+			ifdDst = jpeg.IFD(exifSrc.ifd1.symbol)
+			exifSrc.ifd1.EachTag {|tag|
+				ifdDst.AddTag(tag)
+			}
+			exifDst.ifd1 = ifdDst
 		}
 		contentDst.AddSegment(exifDst)
 	} elsif (segment.IsJFIF()) {

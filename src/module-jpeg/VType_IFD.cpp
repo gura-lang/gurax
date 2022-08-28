@@ -115,11 +115,12 @@ Gurax_ImplementMethod(IFD, EachTag)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// jpeg.IFD#FindTag(symbol as Symbol):map
+// jpeg.IFD#FindTag(symbol as Symbol):map:[raise]
 Gurax_DeclareMethod(IFD, FindTag)
 {
 	Declare(VTYPE_Tag, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Finds `Tag` instance in the IFD.");
@@ -134,7 +135,12 @@ Gurax_ImplementMethod(IFD, FindTag)
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
 	Tag* pTag = valueThis.GetIFD().FindTag(pSymbol);
-	if (!pTag) return Value::nil(); 
+	if (!pTag) {
+		if (argument.IsSet(Gurax_Symbol(raise))) {
+			Error::Issue(ErrorType::KeyError, "specified symbol is not found");
+		}
+		return Value::nil();
+	}
 	return new Value_Tag(pTag->Reference());
 }
 
