@@ -73,6 +73,28 @@ Gurax_ImplementMethod(IFD, AddTag)
 	return Value::nil();
 }
 
+// jpeg.IFD#DeleteTag(symbol as Symbol):void:map
+Gurax_DeclareMethod(IFD, DeleteTag)
+{
+	Declare(VTYPE_Nil, Flag::Map);
+	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Deletes `Tag` instance in the IFD.");
+}
+
+Gurax_ImplementMethod(IFD, DeleteTag)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	valueThis.GetIFD().DeleteTag(pSymbol);
+	return Value::nil();
+}
+
 // jpeg.IFD#EachTag() {block?}
 Gurax_DeclareMethod(IFD, EachTag)
 {
@@ -91,6 +113,29 @@ Gurax_ImplementMethod(IFD, EachTag)
 	const IFD& ifd = valueThis.GetIFD();
 	RefPtr<Iterator> pIterator(new VType_Tag::Iterator_Each(ifd.GetTagOwner().Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// jpeg.IFD#FindTag(symbol as Symbol):map
+Gurax_DeclareMethod(IFD, FindTag)
+{
+	Declare(VTYPE_Tag, Flag::Map);
+	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Finds `Tag` instance in the IFD.");
+}
+
+Gurax_ImplementMethod(IFD, FindTag)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	Tag* pTag = valueThis.GetIFD().FindTag(pSymbol);
+	if (!pTag) return Value::nil(); 
+	return new Value_Tag(pTag->Reference());
 }
 
 //-----------------------------------------------------------------------------
@@ -124,7 +169,9 @@ void VType_IFD::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(IFD));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(IFD, AddTag));
+	Assign(Gurax_CreateMethod(IFD, DeleteTag));
 	Assign(Gurax_CreateMethod(IFD, EachTag));
+	Assign(Gurax_CreateMethod(IFD, FindTag));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(IFD, symbol));
 }
