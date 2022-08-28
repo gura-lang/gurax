@@ -25,6 +25,43 @@ static const char* g_docHelp_en = u8R"**(
 )**";
 
 //-----------------------------------------------------------------------------
+// Implementation of method
+//-----------------------------------------------------------------------------
+// jpeg.Segment#IsExif()
+Gurax_DeclareMethod(Segment, IsExif)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the segment is an Exif.");
+}
+
+Gurax_ImplementMethod(Segment, IsExif)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetSegment().IsExif());
+}
+
+// jpeg.Segment#IsJFIF()
+Gurax_DeclareMethod(Segment, IsJFIF)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Returns `true` if the segment is an JFIF.");
+}
+
+Gurax_ImplementMethod(Segment, IsJFIF)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetSegment().IsJFIF());
+}
+
+//-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
 // jpeg.Segment#marker
@@ -101,6 +138,9 @@ void VType_Segment::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Segment, IsExif));
+	Assign(Gurax_CreateMethod(Segment, IsJFIF));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Segment, marker));
 	Assign(Gurax_CreateProperty(Segment, markerName));

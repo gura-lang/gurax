@@ -6,9 +6,8 @@ import(jpeg):binary {*}
 
 IFD.Print(indentLevel as Number = 0) = {
 	this.EachTag {|tag|
-		Printf('%*s%s(%04x) [%s]: %s\n',
-			indentLevel * 2, '', tag.name, tag.tagId,
-			tag.type.symbolName, tag.value)
+		Printf('%*s%s(0x%04x) [%s]: %s\n',
+			indentLevel * 2, '', tag.name, tag.tagId, tag.type.symbolName, tag.value)
 		if (tag.type == `IFD) {
 			tag.value.Print(indentLevel + 1)
 		}

@@ -1,0 +1,30 @@
+#!/usr/bin/env gurax
+import(jpeg)
+
+contentSrc = jpeg.Content('test.jpg')
+contentDst = jpeg.Content()
+contentSrc.EachSegment {|segment|
+	Println(segment.markerSymbol)
+	if (segment.IsExif()) {
+		exifSrc = segment
+		exifDst = jpeg.Exif()
+		if (exifSrc.ifd0) {
+			ifdDst = jpeg.IFD()
+			exifSrc.ifd0.EachTag {|tag|
+				Println(tag)
+				ifdDst.AddTag(tag)
+			}
+			exifDst.ifd0 = ifdDst
+		}
+		if (exifSrc.ifd1) {
+			exifDst.ifd1 = exifSrc.ifd1
+		}
+		contentDst.AddSegment(exifDst)
+	} elsif (segment.IsJFIF()) {
+		contentDst.AddSegment(segment)
+	} else {
+		contentDst.AddSegment(segment)
+	}
+}
+contentDst.buffImage = contentSrc.buffImage
+contentDst.Write('test.edit.jpg')
