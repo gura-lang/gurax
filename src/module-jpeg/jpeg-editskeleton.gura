@@ -1,7 +1,23 @@
 #!/usr/bin/env gurax
 import(jpeg)
+import(argopt)
 
-contentSrc = jpeg.Content('test.jpg')
+tmplHelp = tR'''
+usage: jpeg-editskeleton.gura file
+'''
+
+argopt.Parser {|p|
+	[argv, opt] = p.Parse(sys.argv)
+	if (argv.len < 1) {
+		tmplHelp.Render(sys.cerr)
+		sys.Exit(1)
+	}
+	fileNameSrc = argv[0]
+	fields = path.SplitExt(fileNameSrc)
+	fileNameDst = fields[0] + '.edit' + fields[1]
+}
+
+contentSrc = jpeg.Content(fileNameSrc)
 contentDst = jpeg.Content()
 contentSrc.EachSegment {|segment|
 	Println(segment.markerSymbol)
@@ -30,4 +46,5 @@ contentSrc.EachSegment {|segment|
 	}
 }
 contentDst.buffImage = contentSrc.buffImage
-contentDst.Write('test.edit.jpg')
+contentDst.Write(fileNameDst)
+Printf('%s was created\n', fileNameDst)
