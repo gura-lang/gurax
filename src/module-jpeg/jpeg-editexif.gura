@@ -1,0 +1,26 @@
+#!/usr/bin/env gurax
+import(jpeg)
+import(argopt)
+
+tmplHelp = tR'''
+usage: jpeg-editexif.gura file
+'''
+
+argopt.Parser {|p|
+	[argv, opt] = p.Parse(sys.argv)
+	if (argv.len < 1) {
+		tmplHelp.Render(sys.cerr)
+		sys.Exit(1)
+	}
+	fileNameSrc = argv[0]
+	fields = path.SplitExt(fileNameSrc)
+	fileNameDst = fields[0] + '.edit' + fields[1]
+}
+content = jpeg.Content(fileNameSrc)
+if (content.exif && content.exif.ifd0) {
+	ifd = content.exif.ifd0
+	ifd.FindTag(`Make).value = 'hogehoge'
+	ifd.DeleteTag(`Model)
+}
+content.Write(fileNameDst)
+Printf('%s was created\n', fileNameDst)
