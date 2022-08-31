@@ -1,9 +1,10 @@
 #!/usr/bin/env gurax
+import(re)
 import(jpeg)
 import(argopt)
 
 tmplHelp = tR'''
-usage: jpeg-editexif.gura file
+usage: jpeg-editexif.gura file cmd..
 '''
 
 argopt.Parser {|p|
@@ -17,10 +18,33 @@ argopt.Parser {|p|
 	fileNameDst = fields[0] + '.edit' + fields[1]
 }
 content = jpeg.Content(fileNameSrc)
-if (content.exif && content.exif.ifd0) {
-	ifd = content.exif.ifd0
-	ifd.FindTag(`Make).value = 'hogehoge'
-	ifd.DeleteTag(`Model)
+if (argv.len == 1) {
+	Println('==== IFD0 ====')
+	content.exif.ifd0.Print()
+	Println('==== IFD1 ====')
+	content.exif.ifd1.Print()
+} else {
+	argv.Offset(1) {|arg|
+		if (!(m = arg.Match(r'(\w+)=(.*)'))) {
+			sys.cerr.Println('invalid format of command')
+			sys.Exit(1)
+		}
+		tagSymbol = m[1].ToSymbol()
+		tagValue = m[2]
+		ifd = content.exif.ifd0
+		if (tagValue.IsEmpty()) {
+			ifd.DeleteTag(tagSymbol)
+		} else {
+			tag = ifd.FindTag(tagSymbol)
+			tag.value = tagValue
+		}
+		//Printf('%s = %s\n', tagSymbol, tagValue)
+	}
+	//if (content.exif && content.exif.ifd0) {
+	//	ifd = content.exif.ifd0
+	//	ifd.FindTag(`Make).value = 'hogehoge'
+	//	ifd.DeleteTag(`Model)
+	//}
+	content.Write(fileNameDst)
+	Printf('%s was created\n', fileNameDst)
 }
-content.Write(fileNameDst)
-Printf('%s was created\n', fileNameDst)
