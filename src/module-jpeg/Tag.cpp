@@ -76,6 +76,11 @@ String Tag::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Tag_BYTE
 //------------------------------------------------------------------------------
+VType& Tag_BYTE::GetVTypeAcceptable()
+{
+	return VTYPE_Binary;
+}
+
 bool Tag_BYTE::AssignValue(RefPtr<Value> pValue)
 {
 	if (!pValue->IsType(VTYPE_Binary)) {
@@ -149,6 +154,11 @@ bool Tag_BYTE::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_ASCII
 //------------------------------------------------------------------------------
+VType& Tag_ASCII::GetVTypeAcceptable()
+{
+	return VTYPE_String;
+}
+
 bool Tag_ASCII::AssignValue(RefPtr<Value> pValue)
 {
 	if (!pValue->IsType(VTYPE_String)) {
@@ -224,6 +234,11 @@ bool Tag_ASCII::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_SHORT
 //------------------------------------------------------------------------------
+VType& Tag_SHORT::GetVTypeAcceptable()
+{
+	return VTYPE_Number;
+}
+
 bool Tag_SHORT::AssignValue(RefPtr<Value> pValue)
 {
 	if (!CheckRangedNumber(*pValue, 0x0000, 0xffff)) {
@@ -330,6 +345,11 @@ bool Tag_SHORT::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_LONG
 //------------------------------------------------------------------------------
+VType& Tag_LONG::GetVTypeAcceptable()
+{
+	return VTYPE_Number;
+}
+
 bool Tag_LONG::AssignValue(RefPtr<Value> pValue)
 {
 	if (!CheckRangedNumber(*pValue, 0x00000000, 0xffffffff)) {
@@ -427,6 +447,11 @@ bool Tag_LONG::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_RATIONAL
 //------------------------------------------------------------------------------
+VType& Tag_RATIONAL::GetVTypeAcceptable()
+{
+	return VTYPE_Rational;
+}
+
 bool Tag_RATIONAL::AssignValue(RefPtr<Value> pValue)
 {
 	if (!(pValue->IsType(VTYPE_Rational) ||
@@ -526,6 +551,11 @@ bool Tag_RATIONAL::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_UNDEFINED
 //------------------------------------------------------------------------------
+VType& Tag_UNDEFINED::GetVTypeAcceptable()
+{
+	return VTYPE_Binary;
+}
+
 bool Tag_UNDEFINED::AssignValue(RefPtr<Value> pValue)
 {
 	if (!pValue->IsType(VTYPE_Binary)) {
@@ -599,6 +629,11 @@ bool Tag_UNDEFINED::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_SLONG
 //------------------------------------------------------------------------------
+VType& Tag_SLONG::GetVTypeAcceptable()
+{
+	return VTYPE_Number;
+}
+
 bool Tag_SLONG::AssignValue(RefPtr<Value> pValue)
 {
 	if (!CheckRangedNumber(*pValue, -0x80000000, 0x7fffffff)) {
@@ -695,6 +730,11 @@ bool Tag_SLONG::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_SRATIONAL
 //------------------------------------------------------------------------------
+VType& Tag_SRATIONAL::GetVTypeAcceptable()
+{
+	return VTYPE_Rational;
+}
+
 bool Tag_SRATIONAL::AssignValue(RefPtr<Value> pValue)
 {
 	if (!(pValue->IsType(VTYPE_Rational) ||
@@ -795,6 +835,11 @@ bool Tag_SRATIONAL::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_IFD
 //------------------------------------------------------------------------------
+VType& Tag_IFD::GetVTypeAcceptable()
+{
+	return VTYPE_List;
+}
+
 bool Tag_IFD::AssignValue(RefPtr<Value> pValue)
 {
 	if (!pValue->IsList()) return false;
@@ -853,6 +898,11 @@ bool Tag_IFD::SerializePointed(Binary& buff, bool beFlag)
 //------------------------------------------------------------------------------
 // Tag_JPEGInterchangeFormat
 //------------------------------------------------------------------------------
+VType& Tag_JPEGInterchangeFormat::GetVTypeAcceptable()
+{
+	return VTYPE_Nil;
+}
+
 bool Tag_JPEGInterchangeFormat::AssignValue(RefPtr<Value> pValue)
 {
 	return false;
