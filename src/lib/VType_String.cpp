@@ -52,7 +52,7 @@ Gurax_ImplementConstructor(String)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// String#Align(width:Number, align:Symbol, padding?:String):String:map
+// String#Align(width:Number, align:Symbol, padding?:String):map as String
 Gurax_DeclareMethod(String, Align)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -100,7 +100,7 @@ Gurax_ImplementMethod(String, Align)
 	return new Value_String(strRtn);
 }
 
-// String#Capitalize():String {block?}
+// String#Capitalize() as String {block?}
 Gurax_DeclareMethod(String, Capitalize)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -122,7 +122,7 @@ Gurax_ImplementMethod(String, Capitalize)
 	return new Value_String(str.Capitalize());
 }
 
-// String#Center(width:Number, padding?:String):String:map
+// String#Center(width:Number, padding?:String):map as String
 Gurax_DeclareMethod(String, Center)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -156,7 +156,7 @@ Gurax_ImplementMethod(String, Center)
 	return new Value_String(str.Center(width, padding));
 }
 
-// String#Chop():String:[eol]
+// String#Chop():[eol] as String
 Gurax_DeclareMethod(String, Chop)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -181,7 +181,7 @@ Gurax_ImplementMethod(String, Chop)
 	return new Value_String(str.Chop(eolOnlyFlag));
 }
 
-// String#DecodeURI():String
+// String#DecodeURI() as String
 Gurax_DeclareMethod(String, DecodeURI)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -199,7 +199,7 @@ Gurax_ImplementMethod(String, DecodeURI)
 	return new Value_String(str.DecodeURI());
 }
 
-// String#Each():Iterator:[utf8,utf32] {block?}
+// String#Each():[utf8,utf32] as Iterator {block?}
 Gurax_DeclareMethod(String, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -226,7 +226,7 @@ Gurax_ImplementMethod(String, Each)
 }
 
 
-// String#EachLine():Iterator:[chop] {block?}
+// String#EachLine():[chop] as Iterator {block?}
 // conrresponding to stream#ReadLines()
 Gurax_DeclareMethod(String, EachLine)
 {
@@ -277,7 +277,7 @@ Gurax_ImplementMethod(String, Encode)
 	return new Value_Binary(dst);
 }
 
-// String#EncodeURI():String
+// String#EncodeURI() as String
 Gurax_DeclareMethod(String, EncodeURI)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -340,7 +340,7 @@ Gurax_ImplementMethod(String, EndsWith)
 		rtn? new Value_String(rtn) : Value::nil();
 }
 
-// String#Enquote():String:[auto,q,qq] {block?}
+// String#Enquote():[auto,q,qq] as String {block?}
 Gurax_DeclareMethod(String, Enquote)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -372,7 +372,7 @@ Gurax_ImplementMethod(String, Enquote)
 	return new Value_String(str.Enquote(chQuote));
 }
 
-// String#EscapeHTML():String:[quote]
+// String#EscapeHTML():[quote] as String
 Gurax_DeclareMethod(String, EscapeHTML)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -429,7 +429,7 @@ Gurax_ImplementMethod(String, Find)
 	return (pFound == str.end())? Value::nil() : new Value_Number(str.CalcPos(pFound));
 }
 
-// String#Fold(len:Number, step?:Number):String:[neat] {block?}
+// String#Fold(len:Number, step?:Number):[neat] as Iterator {block?}
 Gurax_DeclareMethod(String, Fold)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -461,7 +461,7 @@ Gurax_ImplementMethod(String, Fold)
 		processor, new VType_String::Iterator_Fold(str.Reference(), lenPerFold, lenStep, neatFlag));
 }
 
-// String#Foldw(width:Number, padding?:String):String {block?}
+// String#Foldw(width:Number, padding?:String) as Iterator {block?}
 Gurax_DeclareMethod(String, Foldw)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -490,7 +490,7 @@ Gurax_ImplementMethod(String, Foldw)
 		processor, new VType_String::Iterator_Foldw(str.Reference(), widthPerFold, padding? *padding : '\0'));
 }
 
-// String#IsAlnum()
+// String#IsAlnum() as Bool
 Gurax_DeclareMethod(String, IsAlnum)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -506,7 +506,7 @@ Gurax_ImplementMethod(String, IsAlnum)
 	return new Value_Bool(str.IsAlnum());
 }
 
-// String#IsAlpha()
+// String#IsAlpha() as Bool
 Gurax_DeclareMethod(String, IsAlpha)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -522,7 +522,7 @@ Gurax_ImplementMethod(String, IsAlpha)
 	return new Value_Bool(str.IsAlpha());
 }
 
-// String#IsDigit()
+// String#IsDigit() as Bool
 Gurax_DeclareMethod(String, IsDigit)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -538,7 +538,7 @@ Gurax_ImplementMethod(String, IsDigit)
 	return new Value_Bool(str.IsDigit());
 }
 
-// String#IsEmpty()
+// String#IsEmpty() as Bool
 Gurax_DeclareMethod(String, IsEmpty)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -570,7 +570,7 @@ Gurax_ImplementMethod(String, IsSpace)
 	return new Value_Bool(str.IsSpace());
 }
 
-// String#Left(len?:Number):String:map
+// String#Left(len?:Number):map as String
 Gurax_DeclareMethod(String, Left)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -595,7 +595,7 @@ Gurax_ImplementMethod(String, Left)
 	return new Value_String(str.Left(len));
 }
 
-// String#LJust(width:Number, padding?:String):String:map
+// String#LJust(width:Number, padding?:String):map as String
 Gurax_DeclareMethod(String, LJust)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -629,7 +629,7 @@ Gurax_ImplementMethod(String, LJust)
 	return new Value_String(str.LJust(width, padding));
 }
 
-// String#Lower()
+// String#Lower() as String
 Gurax_DeclareMethod(String, Lower)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -647,7 +647,7 @@ Gurax_ImplementMethod(String, Lower)
 	return new Value_String(str.Lower());
 }
 
-// String#Mid(pos:Number, len?:Number):String:map {block?}
+// String#Mid(pos:Number, len?:Number):map as String {block?}
 Gurax_DeclareMethod(String, Mid)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -707,7 +707,7 @@ Gurax_ImplementMethod(String, Render)
 	return Value::nil();
 }
 
-// String#Replace(match:String, sub:String, count?:number):String:map:[icase] {block?}
+// String#Replace(match:String, sub:String, count?:number):map:[icase] as String {block?}
 Gurax_DeclareMethod(String, Replace)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -751,7 +751,7 @@ Gurax_ImplementMethod(String, Replace)
 	return new Value_String(strRtn);
 }
 
-// String#ReplaceM(map[]:String, count?:number):String:map:[icase] {block?}
+// String#ReplaceM(map[]:String, count?:number):map:[icase] as String {block?}
 Gurax_DeclareMethod(String, ReplaceM)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -796,7 +796,7 @@ Gurax_ImplementMethod(String, ReplaceM)
 	return new Value_String(strRtn);
 }
 
-// String#Right(len?:Number):String:map {block?}
+// String#Right(len?:Number):map as String {block?}
 Gurax_DeclareMethod(String, Right)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -822,7 +822,7 @@ Gurax_ImplementMethod(String, Right)
 	return new Value_String(str.Right(len));
 }
 
-// String#RJust(width:Number, padding?:String):String:map
+// String#RJust(width:Number, padding?:String):map as String
 Gurax_DeclareMethod(String, RJust)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -856,7 +856,7 @@ Gurax_ImplementMethod(String, RJust)
 	return new Value_String(str.RJust(width, padding));
 }
 
-// String#Split(sep?:String, count?:Number):String:[icase] {block?}
+// String#Split(sep?:String, count?:Number):[icase] as String {block?}
 Gurax_DeclareMethod(String, Split)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -931,7 +931,7 @@ Gurax_ImplementMethod(String, StartsWith)
 		rtn? new Value_String(rtn) : Value::nil();
 }
 
-// String#Strip():String {block?}
+// String#Strip() as String {block?}
 Gurax_DeclareMethod(String, Strip)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -950,7 +950,7 @@ Gurax_ImplementMethod(String, Strip)
 	return new Value_String(str.Strip(true, true));
 }
 
-// String#StripLeft():String {block?}
+// String#StripLeft() as String {block?}
 Gurax_DeclareMethod(String, StripLeft)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -969,7 +969,7 @@ Gurax_ImplementMethod(String, StripLeft)
 	return new Value_String(str.Strip(true, false));
 }
 
-// String#StripRight():String {block?}
+// String#StripRight() as String {block?}
 Gurax_DeclareMethod(String, StripRight)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -988,7 +988,7 @@ Gurax_ImplementMethod(String, StripRight)
 	return new Value_String(str.Strip(false, true));
 }
 
-// String#Template():Template:[noIndent,lastEol] {block?}
+// String#Template():[noIndent,lastEol] as Template {block?}
 Gurax_DeclareMethod(String, Template)
 {
 	//Declare(VTYPE_Template, Flag::None);
@@ -1016,7 +1016,7 @@ Gurax_ImplementMethod(String, Template)
 	return argument.ReturnValue(processor, new Value_Template(pTmpl.release()));
 }
 
-// String#ToBinary():Binary {block?}
+// String#ToBinary() as Binary {block?}
 Gurax_DeclareMethod(String, ToBinary)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -1035,7 +1035,32 @@ Gurax_ImplementMethod(String, ToBinary)
 	return new Value_Binary(Binary(str.data(), str.size()));
 }
 
-// String#ToReader():Stream {block?}
+// String#ToNumber() as Number {block?}
+Gurax_DeclareMethod(String, ToNumber)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareBlock(BlkOccur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Converts the string into `Number` instance.");
+}
+
+Gurax_ImplementMethod(String, ToNumber)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	const String& str = valueThis.GetStringSTL();
+	Bool successFlag;
+	Double num = str.ToDouble(&successFlag);
+	if (!successFlag) {
+		Error::Issue(ErrorType::FormatError, "invalid format of a number");
+		return Value::nil();
+	}
+	return new Value_Number(num);
+}
+
+// String#ToReader() as Stream {block?}
 Gurax_DeclareMethod(String, ToReader)
 {
 	Declare(VTYPE_Stream, Flag::None);
@@ -1059,7 +1084,7 @@ Gurax_ImplementMethod(String, ToReader)
 	return Value::nil();
 }
 
-// String#ToSymbol():Symbol {block?}
+// String#ToSymbol() as Symbol {block?}
 Gurax_DeclareMethod(String, ToSymbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
@@ -1111,7 +1136,7 @@ Gurax_ImplementClassMethod(String, Translator)
 	return Value::nil();
 }
 
-// String#UnescapeHTML():String
+// String#UnescapeHTML() as String
 Gurax_DeclareMethod(String, UnescapeHTML)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -1129,7 +1154,7 @@ Gurax_ImplementMethod(String, UnescapeHTML)
 	return new Value_String(str.UnescapeHTML());
 }
 
-// String#Upper():String
+// String#Upper() as String
 Gurax_DeclareMethod(String, Upper)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -1147,7 +1172,7 @@ Gurax_ImplementMethod(String, Upper)
 	return new Value_String(str.Upper());
 }
 
-// String#ZenToHan():String {block?}
+// String#ZenToHan() as String {block?}
 Gurax_DeclareMethod(String, ZenToHan)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -1410,6 +1435,7 @@ void VType_String::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(String, StripRight));
 	Assign(Gurax_CreateMethod(String, Template));
 	Assign(Gurax_CreateMethod(String, ToBinary));
+	Assign(Gurax_CreateMethod(String, ToNumber));
 	Assign(Gurax_CreateMethod(String, ToReader));
 	Assign(Gurax_CreateMethod(String, ToSymbol));
 	Assign(Gurax_CreateMethod(String, Translator));

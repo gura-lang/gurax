@@ -129,6 +129,22 @@ Gurax_ImplementOpBinary(As, Any, VType)
 	return pValueResult.release();
 }
 
+// VType == VType
+Gurax_ImplementOpBinary(Eq, VType, VType)
+{
+	const VType& vtypeL = Value_VType::GetVTypeThis(valueL);
+	const VType& vtypeR = Value_VType::GetVTypeThis(valueR);
+	return new Value_Bool(vtypeL.IsIdentical(vtypeR));
+}
+
+// VType != VType
+Gurax_ImplementOpBinary(Ne, VType, VType)
+{
+	const VType& vtypeL = Value_VType::GetVTypeThis(valueL);
+	const VType& vtypeR = Value_VType::GetVTypeThis(valueR);
+	return new Value_Bool(!vtypeL.IsIdentical(vtypeR));
+}
+
 //------------------------------------------------------------------------------
 // VType_VType
 //------------------------------------------------------------------------------
@@ -147,6 +163,8 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(VType, __fullName__));
 	// Assignment of operator
 	Gurax_AssignOpBinary(As, Any, VType);
+	Gurax_AssignOpBinary(Eq, VType, VType);
+	Gurax_AssignOpBinary(Ne, VType, VType);
 }
 
 //------------------------------------------------------------------------------

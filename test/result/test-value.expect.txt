@@ -1,0 +1,5 @@
+======== Comparison of VTypes ========
+String == String .. true
+String != String .. false
+String == Number .. false
+String != Number .. true

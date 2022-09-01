@@ -36,7 +36,11 @@ if (argv.len == 1) {
 			ifd.DeleteTag(tagSymbol)
 		} else {
 			tag = ifd.CreateTag(tagSymbol)
-			tag.value = tagValue as tag.vtypeAcceptable
+			if (tag.vtypeAcceptable == Number) {
+				tag.value = tagValue.ToNumber()
+			} else {
+				tag.value = tagValue
+			}
 		}
 		//Printf('%s = %s\n', tagSymbol, tagValue)
 	}
