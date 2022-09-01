@@ -36,7 +36,6 @@ if (argv.len == 1) {
 			ifd.DeleteTag(tagSymbol)
 		} else {
 			tag = ifd.CreateTag(tagSymbol)
-			Println(tag.vtypeAcceptable)
 			tag.value = tagValue as tag.vtypeAcceptable
 		}
 		//Printf('%s = %s\n', tagSymbol, tagValue)
