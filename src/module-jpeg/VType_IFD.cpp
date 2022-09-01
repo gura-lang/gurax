@@ -73,6 +73,30 @@ Gurax_ImplementMethod(IFD, AddTag)
 	return Value::nil();
 }
 
+// jpeg.IFD#CreateTag(symbol as Symbol):map {block?}
+Gurax_DeclareMethod(IFD, CreateTag)
+{
+	Declare(VTYPE_Tag, Flag::Map);
+	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Creates a `Tag` instance in the IFD.");
+}
+
+Gurax_ImplementMethod(IFD, CreateTag)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pSymbol = args.PickSymbol();
+	// Function body
+	RefPtr<Tag> pTag(valueThis.GetIFD().CreateTag(pSymbol));
+	if (!pTag) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Tag(pTag.release()));
+}
+
 // jpeg.IFD#DeleteTag(symbol as Symbol):void:map
 Gurax_DeclareMethod(IFD, DeleteTag)
 {
@@ -134,7 +158,7 @@ Gurax_ImplementMethod(IFD, FindTag)
 	ArgPicker args(argument);
 	const Symbol* pSymbol = args.PickSymbol();
 	// Function body
-	Tag* pTag = valueThis.GetIFD().FindTag(pSymbol);
+	Tag* pTag = valueThis.GetIFD().GetTagMap().Lookup(pSymbol);
 	if (!pTag) {
 		if (argument.IsSet(Gurax_Symbol(raise))) {
 			Error::Issue(ErrorType::KeyError, "specified symbol is not found");
@@ -175,6 +199,7 @@ void VType_IFD::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(IFD));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(IFD, AddTag));
+	Assign(Gurax_CreateMethod(IFD, CreateTag));
 	Assign(Gurax_CreateMethod(IFD, DeleteTag));
 	Assign(Gurax_CreateMethod(IFD, EachTag));
 	Assign(Gurax_CreateMethod(IFD, FindTag));
@@ -200,8 +225,8 @@ VType& Value_IFD::vtype = VTYPE_IFD;
 
 Value* Value_IFD::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	const Value* pValue = GetIFD().LookupTagValue(pSymbol);
-	return pValue? pValue->Reference() : Value_Object::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
+	Tag* pTag = GetIFD().GetTagMap().Lookup(pSymbol);
+	return pTag? pTag->GetValue().Reference() : Value_Object::DoGetProperty(pSymbol, attr, notFoundErrorFlag);
 }
 
 bool Value_IFD::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)

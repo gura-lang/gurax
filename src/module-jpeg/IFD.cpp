@@ -87,21 +87,22 @@ void IFD::AddTag(Tag* pTag)
 	GetTagMap().Add(pTag->GetSymbol(), pTag);
 }
 
+Tag* IFD::CreateTag(const Symbol* pSymbol)
+{
+	Tag* pTag = GetTagMap().Lookup(pSymbol);
+	if (!pTag) {
+		pTag = Tag::Create(_pSymbolOfIFD, pSymbol);
+		if (!pTag) return nullptr;
+		pTag->SetOrderHintAsAdded();
+		AddTag(pTag);
+	}
+	return pTag->Reference();
+}
+
 void IFD::DeleteTag(const Symbol* pSymbol)
 {
 	GetTagOwner().DeleteBySymbol(pSymbol);
 	GetTagMap().Erase(pSymbol);
-}
-
-Tag* IFD::FindTag(const Symbol* pSymbol)
-{
-	return GetTagOwner().FindBySymbol(pSymbol);
-}
-
-const Value* IFD::LookupTagValue(const Symbol* pSymbol)
-{
-	Tag* pTag = GetTagMap().Lookup(pSymbol);
-	return pTag? pTag->GetValue().Reference() : nullptr;
 }
 
 bool IFD::AssignTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
@@ -110,12 +111,6 @@ bool IFD::AssignTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
 	Tag* pTag = GetTagMap().Lookup(pSymbol);
 	if (!pTag) {
 		if (pValue->IsNil()) return true;
-		//const TagInfo* pTagInfo = TagInfo::LookupBySymbol(_pSymbolOfIFD, pSymbol);
-		//if (!pTagInfo) {
-		//	Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
-		//	return false;
-		//}
-		//RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
 		RefPtr<Tag> pTag(Tag::Create(_pSymbolOfIFD, pSymbol));
 		if (!pTag) return false;
 		pTag->SetOrderHintAsAdded();
@@ -123,8 +118,8 @@ bool IFD::AssignTagValue(const Symbol* pSymbol, RefPtr<Value> pValue)
 		AddTag(pTag.release());
 	} else if (pValue->IsNil()) {
 		DeleteTag(pSymbol);
-	} else {
-		if (!pTag->AssignValue(pValue.release())) return false;
+	} else if (!pTag->AssignValue(pValue.release())) {
+		return false;
 	}
 	return true;
 }

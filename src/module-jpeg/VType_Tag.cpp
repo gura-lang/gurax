@@ -206,7 +206,9 @@ Gurax_DeclareProperty_R(Tag, vtypeAcceptable)
 Gurax_ImplementPropertyGetter(Tag, vtypeAcceptable)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_VType(valueThis.GetTag().GetVTypeAcceptable());
+	VType& vtype = valueThis.GetTag().GetVTypeAcceptable();
+	::printf("%s\n", vtype.ToString().c_str());
+	return new Value_VType(vtype);
 }
 
 //------------------------------------------------------------------------------

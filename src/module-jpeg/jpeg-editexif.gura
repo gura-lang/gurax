@@ -35,8 +35,9 @@ if (argv.len == 1) {
 		if (tagValue.IsEmpty()) {
 			ifd.DeleteTag(tagSymbol)
 		} else {
-			tag = ifd.FindTag(tagSymbol)
-			tag.value = tagValue
+			tag = ifd.CreateTag(tagSymbol)
+			Println(tag.vtypeAcceptable)
+			tag.value = tagValue as tag.vtypeAcceptable
 		}
 		//Printf('%s = %s\n', tagSymbol, tagValue)
 	}

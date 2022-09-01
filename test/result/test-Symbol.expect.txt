@@ -3,10 +3,10 @@ Symbol
   #symbolName       String       R
   #uniqId           Number       R
 ======== Operator == ========
-<CallableMember:VType:Expr(stream:r as Stream):map{block?}>
+<VType:Expr(stream:r as Stream):map{block?}>
 (`a) == (`a) .. true
 x == (`a) .. true
 ======== Operator != ========
-<CallableMember:VType:Expr(stream:r as Stream):map{block?}>
+<VType:Expr(stream:r as Stream):map{block?}>
 (`a) != (`a) .. false
 x != (`a) .. false

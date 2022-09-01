@@ -2,17 +2,6 @@
 import(jpeg)
 import(argopt)
 
-PrintIFD(ifd as jpeg.IFD, indentLevel as Number = 0) = {
-	ifd.EachTag {|tag|
-		Printf('%*s%s(%04x) [%s]: %s\n',
-			indentLevel * 2, '', tag.name, tag.tagId,
-			tag.type.name, tag.value)
-		if (tag.type == `IFD) {
-			PrintIFD(tag.value, indentLevel + 1)
-		}
-	}
-}
-
 argopt.Parser {|p|
 	errorFlag = false
 	try { [argv, opt] = p.Parse(sys.argv) } catch { errorFlag = true }
@@ -24,6 +13,6 @@ argopt.Parser {|p|
 fileName = argv[0]
 c = jpeg.Content(fileName)
 Println('==== IFD0 ====')
-PrintIFD(c.exif.ifd0)
+c.exif.ifd0.Print()
 Println('==== IFD1 ====')
-PrintIFD(c.exif.ifd1)
+c.exif.ifd1.Print()
