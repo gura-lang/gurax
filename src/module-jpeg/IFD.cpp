@@ -35,12 +35,6 @@ IFD* IFD::CreateFromList(const Symbol* pSymbolOfIFD, const ValueList& valueList)
 			return false;
 		}
 		Value& valueToAssign = *pValueOwner->back();
-		//const TagInfo* pTagInfo = TagInfo::LookupBySymbol(nullptr, pSymbol);
-		//if (!pTagInfo) {
-		//	Error::Issue(ErrorType::SymbolError, "invalid symbol: %s", pSymbol->GetName());
-		//	return false;
-		//}
-		//RefPtr<Tag> pTag(Tag::Create(pTagInfo->tagId, pTagInfo->typeId, Symbol::Add(pTagInfo->name)));
 		RefPtr<Tag> pTag(Tag::Create(pSymbolOfIFD, pSymbol));
 		if (!pTag) return false;
 		if (!pTag->AssignValue(valueToAssign.Reference())) return false;

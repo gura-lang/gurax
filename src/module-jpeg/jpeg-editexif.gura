@@ -54,13 +54,7 @@ if (argv.len == 1) {
 				tag.value = tagValue
 			}
 		}
-		//Printf('%s = %s\n', tagSymbol, tagValue)
 	}
-	//if (content.exif && content.exif.ifd0) {
-	//	ifd = content.exif.ifd0
-	//	ifd.FindTag(`Make).value = 'hogehoge'
-	//	ifd.DeleteTag(`Model)
-	//}
 	content.Write(fileNameDst)
 	Printf('%s was created\n', fileNameDst)
 }

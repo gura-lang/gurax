@@ -23,7 +23,7 @@ protected:
 public:
 	// Constructor
 	IFD(const Symbol* pSymbolOfIFD, TagOwner* pTagOwner) :
-		_pSymbolOfIFD(pSymbolOfIFD), _pTagOwner(pTagOwner), _posNextIFDOffset(0) {
+				_pSymbolOfIFD(pSymbolOfIFD), _pTagOwner(pTagOwner), _posNextIFDOffset(0) {
 		PrepareTagMap();
 	}
 	// Copy constructor/operator
