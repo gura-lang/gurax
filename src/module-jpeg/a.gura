@@ -1,4 +1,0 @@
-[1..10].Each {|num|
-	((num % 3) == 0) && continue
-	Println(num)
-}
