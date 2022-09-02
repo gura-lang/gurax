@@ -25,19 +25,31 @@ if (argv.len == 1) {
 	content.exif.ifd1.Print()
 } else {
 	argv.Offset(1) {|arg|
-		if (!(m = arg.Match(r'(\w+)=(.*)'))) {
+		if (!(m = arg.Match(r'^([\w\.]+)=(.*)'))) {
 			sys.cerr.Println('invalid format of command')
 			sys.Exit(1)
 		}
-		tagSymbol = m[1].ToSymbol()
+		tagName = m[1]
 		tagValue = m[2]
 		ifd = content.exif.ifd0
+		while (m = tagName.Match(r'^([^\.]+)\.(.+)')) {
+			ifd = ifd.FindTag(m[1].ToSymbol()).value
+			tagName = m[2]
+		}
+		tagSymbol = tagName.ToSymbol()
 		if (tagValue.IsEmpty()) {
 			ifd.DeleteTag(tagSymbol)
 		} else {
 			tag = ifd.CreateTag(tagSymbol)
 			if (tag.vtypeAcceptable == Number) {
 				tag.value = tagValue.ToNumber()
+			} elsif (tag.vtypeAcceptable == Rational) {
+				fields = tagValue.Split('/'):list
+				if (fields.len == 1) {
+					tag.value = Rational(fields[0].ToNumber())
+				} elsif (fields.len == 2) {
+					tag.value = Rational(fields[0].ToNumber(), fields[1].ToNumber())
+				}
 			} else {
 				tag.value = tagValue
 			}
