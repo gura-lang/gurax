@@ -76,7 +76,7 @@ public:
 	// Virtual functions for runtime process
 	virtual HelpHolder* GetHelpHolder() const override { return &_pFunction->GetHelpHolder(); }
 	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const override;
-	virtual bool CanBeCallableMember() const override { return true; }
+	virtual bool CanBeCallableMember() const override { return _pFunction->IsTypeMethod(); }
 	virtual const DeclCallable* GetDeclCallable() override;
 	virtual Frame* GetFrameForVType(Processor& processor) override;
 	virtual void DoCall(Processor& processor, Argument& argument) override;

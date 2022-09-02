@@ -577,3 +577,15 @@ TestCase('Default Constructor (2)') {
 	c.f3()
 	C(1, 2, 3) {|c| c.f1(), c.f2(), c.f3()}
 }
+
+TestCase('CallableMember') {
+	A = class {
+		f1() = {}
+		f2() = {}
+		f3 = Println
+	}
+	a = A()
+	Tester(`a.f1)
+	Tester(`a.f2)
+	Tester(`a.f3)
+}
