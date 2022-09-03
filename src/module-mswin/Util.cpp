@@ -35,28 +35,27 @@ String BSTRToString(const OLECHAR* bstr)
 	return String(psz);
 }
 
-#if 0
 bool ValueToVariant(VARIANT& var, const Value& value)
 {
 	//::printf("ValueToVariant(%s %s)\n", value.GetTypeName(), value.ToString().c_str());
 	::VariantInit(&var);
-	if (value.Is_number()) {
-		Number num = value.GetNumber();
-		if (static_cast<Number>(static_cast<long>(num)) == num) {
+	if (value.IsType(VTYPE_Number)) {
+		Double num = Value_Number::GetNumber<Double>(value);
+		if (static_cast<Double>(static_cast<long>(num)) == num) {
 			var.vt = VT_I4;
-			var.lVal = static_cast<long>(value.GetNumber());
+			var.lVal = static_cast<long>(num);
 		} else {
 			var.vt = VT_R8;
-			var.dblVal = value.GetNumber();
+			var.dblVal = num;
 		}
-	} else if (value.Is_string()) {
+	} else if (value.IsType(VTYPE_String)) {
 		var.vt = VT_BSTR;
-		var.bstrVal = StringToBSTR(value.GetString());
-	} else if (value.Is_boolean()) {
+		var.bstrVal = StringToBSTR(Value_String::GetString(value));
+	} else if (value.IsType(VTYPE_Bool)) {
 		var.vt = VT_BOOL;
-		var.boolVal = value.GetBoolean()? VARIANT_TRUE : VARIANT_FALSE;
-	} else if (value.Is_list()) {
-		const ValueList& valList = value.GetList();
+		var.boolVal = value.GetBool()? VARIANT_TRUE : VARIANT_FALSE;
+	} else if (value.IsList()) {
+		const ValueList& valList = Value_List::GetValueOwner(value);
 		SAFEARRAYBOUND safeArrayBound;
 		safeArrayBound.lLbound = 0;
 		safeArrayBound.cElements = static_cast<ULONG>(valList.size());
@@ -65,31 +64,37 @@ bool ValueToVariant(VARIANT& var, const Value& value)
 		var.vt = VT_VARIANT | VT_ARRAY;
 		var.parray = pSafeArray;
 		//::SafeArrayLock(pSafeArray);
+		long index = 0;
 		for (const Value* pValue : valList) {
 			VARIANT varElem;
-			if (!ValueToVariant(sig, varElem, *pValue)) return false;
-			long index = static_cast<long>(pValue - valList.begin());
+			if (!ValueToVariant(varElem, *pValue)) return false;
 			::SafeArrayPutElement(pSafeArray, &index, &varElem);
+			index++;
 		}
 		//::SafeArrayUnlock(pSafeArray);
-	} else if (value.IsType(VTYPE_ole)) {
-		IDispatch *pDispatch = Object_ole::GetObject(value)->GetDispatch();
+	} else if (value.IsType(VTYPE_OLE)) {
+#if 0
+		IDispatch* pDispatch = Value_OLE::GetOLE(value).GetDispatch();
 		pDispatch->AddRef();
 		var.vt = VT_DISPATCH;
 		var.pdispVal = pDispatch;
-	} else if (value.Is_datetime()) {
-		const DateTime &dateTime = Object_datetime::GetObject(value)->GetDateTime();
+#endif
+	} else if (value.IsType(VTYPE_DateTime)) {
+		const DateTime& dateTime = Value_DateTime::GetDateTime(value);
+#if 0
 		COleDateTime oledt(dateTime.GetYear(), dateTime.GetMonth(), dateTime.GetDay(),
 				dateTime.GetHour(), dateTime.GetMin(), dateTime.GetSec());
 		var.vt = VT_DATE;
 		var.date = oledt.m_dt;
+#endif
 	} else {
-		sig.SetError(ERR_ValueError, "cannot convert to ole variant");
+		Error::Issue(ErrorType::TypeError, "cannot convert to ole variant");
 		return false;
 	}
 	return true;
 }
 
+#if 0
 bool VariantToValue(Value& value, const VARIANT& var)
 {
 	VARTYPE type = var.vt & VT_TYPEMASK;
@@ -137,42 +142,44 @@ bool VariantToValue(Value& value, const VARIANT& var)
 	}
 	return true;
 }
+#endif
 
-Value RegDataToValue(DWORD dwType, LPCBYTE lpData, DWORD cbData)
+Value* RegDataToValue(DWORD dwType, LPCBYTE lpData, DWORD cbData)
 {
-	Value result;
+	RefPtr<Value> pValueRtn;
 	if (dwType == REG_BINARY) {
-		result = Value(new Object_binary(env, reinterpret_cast<const char *>(lpData), cbData, true));
+		pValueRtn.reset(new Value_Binary(Binary(reinterpret_cast<const char *>(lpData), cbData)));
 	} else if (dwType == REG_DWORD || dwType == REG_DWORD_LITTLE_ENDIAN) {
-		result = Value(*reinterpret_cast<const DWORD *>(lpData));
+		pValueRtn.reset(new Value_Number(*reinterpret_cast<const DWORD *>(lpData)));
 	} else if (dwType == REG_DWORD_BIG_ENDIAN) {
-		sig.SetError(ERR_ValueError, "cantnot convert from registry value REG_DWORD_BIG_ENDIAN");
+		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_DWORD_BIG_ENDIAN");
 	} else if (dwType == REG_EXPAND_SZ) {
-		sig.SetError(ERR_ValueError, "cantnot convert from registry value REG_EXPAND_SZ");
+		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_EXPAND_SZ");
 	} else if (dwType == REG_LINK) {
-		sig.SetError(ERR_ValueError, "cantnot convert from registry value REG_LINK");
+		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_LINK");
 	} else if (dwType == REG_MULTI_SZ) {
-		Object_list *pObjList = result.InitAsList(env);
+		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		size_t bytesSum = 0;
 		while (bytesSum + 1 < static_cast<size_t>(cbData)) {
-			Value value(OAL::FromNativeString(reinterpret_cast<const char *>(lpData)));
-			pObjList->Add(value);
+			pValueOwner->push_back(new Value_String(OAL::FromNativeString(reinterpret_cast<const char *>(lpData))));
 			size_t bytes = ::strlen(reinterpret_cast<const char *>(lpData)) + 1;
 			lpData += bytes;
 			bytesSum += bytes;
 		}
+		pValueRtn.reset(new Value_Tuple(pValueOwner.release()));
 	} else if (dwType == REG_NONE) {
 		// nothing to do
 	} else if (dwType == REG_QWORD || dwType == REG_QWORD_LITTLE_ENDIAN) {
-		sig.SetError(ERR_ValueError, "cantnot convert from registry value REG_QWORD");
+		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_QWORD");
 	} else if (dwType == REG_RESOURCE_LIST) {
-		sig.SetError(ERR_ValueError, "cantnot convert from registry value REG_RESOURCE_LIST");
+		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_RESOURCE_LIST");
 	} else if (dwType == REG_SZ) {
-		result = Value(OAL::FromNativeString(reinterpret_cast<const char *>(lpData)));
+		pValueRtn.reset(new Value_String(OAL::FromNativeString(reinterpret_cast<const char *>(lpData))));
 	}
-	return result;
+	return pValueRtn.release();
 }
 
+#if 0
 bool ValueToRegData(const Value &value, DWORD* pdwType, LPBYTE* lppData, DWORD* pcbData)
 {
 	if (value.Is_number()) {

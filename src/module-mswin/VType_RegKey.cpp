@@ -309,4 +309,75 @@ String Value_RegKey::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetRegKey().ToString(ss));
 }
 
+//------------------------------------------------------------------------------
+// Iterator_RegEnumKey
+//------------------------------------------------------------------------------
+Value* Iterator_RegEnumKey::DoNextValue()
+{
+	char name[256];
+	FILETIME ftLastWriteTime;
+	HKEY hKey = _pRegKey->GetHKEY();
+	DWORD pcName = Gurax_ArraySizeOf(name);
+	DWORD dwErrCode = ::RegEnumKeyEx(hKey, _dwIndex, name, &pcName, nullptr, nullptr, nullptr, &ftLastWriteTime);
+	if (dwErrCode != ERROR_SUCCESS) {
+		if (dwErrCode != ERROR_NO_MORE_ITEMS) SetError(dwErrCode);
+		return nullptr;
+	}
+	RefPtr<Value> pValueRtn;
+	if (_samDesired == 0) {
+		pValueRtn.reset(new Value_String(OAL::FromNativeString(name)));
+	} else {
+		HKEY hKeyRtn;
+		DWORD dwErrCode = ::RegOpenKeyEx(hKey, name, 0, _samDesired, &hKeyRtn);
+		if (dwErrCode != ERROR_SUCCESS) {
+			SetError(dwErrCode);
+			return false;
+		}
+		pValueRtn.reset(new Value_RegKey(new RegKey(hKeyRtn)));
+	}
+	_dwIndex++;
+	return pValueRtn.release();
+}
+
+String Iterator_RegEnumKey::ToString(const StringStyle& ss) const
+{
+	return String().Format("mswin.RegEnumKey");
+}
+
+//-----------------------------------------------------------------------------
+// Iterator_RegEnumValue
+//-----------------------------------------------------------------------------
+Value* Iterator_RegEnumValue::DoNextValue()
+{
+	char valueName[256];
+	DWORD cValueName = Gurax_ArraySizeOf(valueName);
+	HKEY hKey = _pRegKey->GetHKEY();
+	DWORD dwType;
+	DWORD cbData;
+	DWORD dwErrCode = ::RegEnumValue(hKey, _dwIndex, valueName, &cValueName, nullptr, &dwType, nullptr, &cbData);
+	if (dwErrCode != ERROR_SUCCESS) {
+		if (dwErrCode != ERROR_NO_MORE_ITEMS) SetError(dwErrCode);
+		return nullptr;
+	}
+	cValueName = Gurax_ArraySizeOf(valueName);
+	LPBYTE lpData = reinterpret_cast<LPBYTE>(::LocalAlloc(LMEM_FIXED, cbData));
+	dwErrCode = ::RegEnumValue(hKey, _dwIndex, valueName, &cValueName, nullptr, &dwType, lpData, &cbData);
+	if (dwErrCode != ERROR_SUCCESS) {
+		::LocalFree(lpData);
+		if (dwErrCode != ERROR_NO_MORE_ITEMS) SetError(dwErrCode);
+		return nullptr;
+	}
+	RefPtr<Value> pValueRtn(Value_Tuple::Create(
+		new Value_String(OAL::FromNativeString(valueName)), RegDataToValue(dwType, lpData, cbData)));
+	::LocalFree(lpData);
+	if (Error::IsIssued()) return nullptr;
+	_dwIndex++;
+	return pValueRtn.release();
+}
+
+String Iterator_RegEnumValue::ToString(const StringStyle& ss) const
+{
+	return String().Format("mswin.RegEnumValue");
+}
+
 Gurax_EndModuleScope(mswin)

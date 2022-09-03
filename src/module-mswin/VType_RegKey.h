@@ -77,6 +77,39 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_RegEnumKey
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_RegEnumKey : public Iterator {
+private:
+	RefPtr<RegKey> _pRegKey;
+	REGSAM _samDesired;
+	DWORD _dwIndex;
+public:
+	Iterator_RegEnumKey(RegKey* pRegKey, REGSAM samDesired) : _pRegKey(pRegKey), _samDesired(samDesired), _dwIndex(0) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//-----------------------------------------------------------------------------
+// Iterator_RegEnumValue
+//-----------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_RegEnumValue : public Iterator {
+private:
+	RefPtr<RegKey> _pRegKey;
+	DWORD _dwIndex;
+public:
+	Iterator_RegEnumValue(RegKey* pRegKey) : _pRegKey(pRegKey), _dwIndex(0) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 Gurax_EndModuleScope(mswin)
 
 #endif
