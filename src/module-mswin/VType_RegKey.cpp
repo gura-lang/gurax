@@ -142,11 +142,12 @@ Gurax_ImplementMethod(RegKey, DeleteKey)
 	return Value::nil();
 }
 
-// mswin.RegKey#EnumKey(samDesired? as Number)
+// mswin.RegKey#EnumKey(samDesired? as Number) {block?}
 Gurax_DeclareMethod(RegKey, EnumKey)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("samDesired", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -160,8 +161,8 @@ Gurax_ImplementMethod(RegKey, EnumKey)
 	ArgPicker args(argument);
 	REGSAM samDesired = args.IsValid()? args.PickNumber<REGSAM>() : KEY_ALL_ACCESS;
 	// Function body
-	
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_RegEnumKey(valueThis.GetRegKey().Reference(), samDesired));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // mswin.RegKey#SetValue(num1 as Number, num2 as Number)
@@ -233,12 +234,11 @@ Gurax_ImplementMethod(RegKey, QueryValue)
 	return new Value_Number(num1 + num2);
 }
 
-// mswin.RegKey#EnumValue(num1 as Number, num2 as Number)
+// mswin.RegKey#EnumValue() {block?}
 Gurax_DeclareMethod(RegKey, EnumValue)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -247,13 +247,12 @@ Gurax_DeclareMethod(RegKey, EnumValue)
 Gurax_ImplementMethod(RegKey, EnumValue)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	//ArgPicker args(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	RefPtr<Iterator> pIterator(new Iterator_RegEnumValue(valueThis.GetRegKey().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //-----------------------------------------------------------------------------
