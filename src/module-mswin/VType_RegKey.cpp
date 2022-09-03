@@ -165,12 +165,12 @@ Gurax_ImplementMethod(RegKey, EnumKey)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// mswin.RegKey#SetValue(num1 as Number, num2 as Number)
+// mswin.RegKey#SetValue(valueName as String, data:noMap)
 Gurax_DeclareMethod(RegKey, SetValue)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("valueName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::NoMap);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -179,13 +179,24 @@ Gurax_DeclareMethod(RegKey, SetValue)
 Gurax_ImplementMethod(RegKey, SetValue)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const char* lpValueName = args.PickString();
+	const Value& valueData = args.PickValue();
 	// Function body
-	return new Value_Number(num1 + num2);
+	HKEY hKey = valueThis.GetRegKey().GetHKEY();
+	DWORD dwType = 0;
+	BYTE *lpData = nullptr;
+	DWORD cbData = 0;
+	//if (!ValueToRegData(arg.GetValue(1), &dwType, &lpData, &cbData)) return Value::nil();
+	DWORD dwErrCode = ::RegSetValueEx(hKey,
+			OAL::ToNativeString(lpValueName).c_str(), 0, dwType, lpData, cbData);
+	::LocalFree(lpData);
+	if (dwErrCode != ERROR_SUCCESS) {
+		SetError(dwErrCode);
+	}
+	return Value::nil();
 }
 
 // mswin.RegKey#DeleteValue(num1 as Number, num2 as Number)
@@ -211,12 +222,11 @@ Gurax_ImplementMethod(RegKey, DeleteValue)
 	return new Value_Number(num1 + num2);
 }
 
-// mswin.RegKey#QueryValue(num1 as Number, num2 as Number)
+// mswin.RegKey#QueryValue(valueName? as String)
 Gurax_DeclareMethod(RegKey, QueryValue)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("valueName", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -225,13 +235,33 @@ Gurax_DeclareMethod(RegKey, QueryValue)
 Gurax_ImplementMethod(RegKey, QueryValue)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const char* lpValueName = args.IsValid()? args.PickString() : nullptr;
 	// Function body
-	return new Value_Number(num1 + num2);
+	HKEY hKey = valueThis.GetRegKey().GetHKEY();
+	DWORD dwType;
+	DWORD cbData;
+	DWORD dwErrCode = ::RegQueryValueEx(hKey,
+		(lpValueName == nullptr)? nullptr : OAL::ToNativeString(lpValueName).c_str(),
+		nullptr, &dwType, nullptr, &cbData);
+	if (dwErrCode != ERROR_SUCCESS) {
+		SetError(dwErrCode);
+		return Value::nil();
+	}
+	LPBYTE lpData = reinterpret_cast<LPBYTE>(::LocalAlloc(LMEM_FIXED, cbData));
+	dwErrCode = ::RegQueryValueEx(hKey,
+		(lpValueName == nullptr)? nullptr : OAL::ToNativeString(lpValueName).c_str(),
+		nullptr, &dwType, lpData, &cbData);
+	if (dwErrCode != ERROR_SUCCESS) {
+		::LocalFree(lpData);
+		SetError(dwErrCode);
+		return Value::nil();
+	}
+	RefPtr<Value> pValueRtn(RegDataToValue(dwType, lpData, cbData));
+	::LocalFree(lpData);
+	return pValueRtn.release();
 }
 
 // mswin.RegKey#EnumValue() {block?}
