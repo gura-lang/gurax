@@ -5,7 +5,7 @@
 
 Gurax_BeginModuleScope(mswin)
 
-void SetError(DWORD dwErrCode)
+void SetErrorFromErrCode(DWORD dwErrCode)
 {
 	LPVOID lpMsgBuf;
 	::FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM |
@@ -94,55 +94,59 @@ bool ValueToVariant(VARIANT& var, const Value& value)
 	return true;
 }
 
-#if 0
-bool VariantToValue(Value& value, const VARIANT& var)
+Value* VariantToValue(const VARIANT& var)
 {
+	RefPtr<Value> pValue;
 	VARTYPE type = var.vt & VT_TYPEMASK;
 	if (var.vt & VT_ARRAY) {
 		var.byref;
 	} else if (type == VT_UI1) {
-		value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.pbVal : var.bVal));
+		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.pbVal : var.bVal));
 	} else if (type == VT_I2) {
-		value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.piVal : var.iVal));
+		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.piVal : var.iVal));
 	} else if (type == VT_I4) {
-		value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.plVal : var.lVal));
+		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.plVal : var.lVal));
 	} else if (type == VT_R4) {
-		value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.pfltVal : var.fltVal));
+		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.pfltVal : var.fltVal));
 	} else if (type == VT_R8) {
-		value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.pdblVal :var.dblVal));
+		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.pdblVal :var.dblVal));
 	} else if (type == VT_BOOL) {
-		bool result = !((static_cast<Number>((var.vt & VT_BYREF)?
-											*var.pboolVal : var.boolVal)) == 0);
-		value = Value(result);
+		bool result = !((static_cast<int>((var.vt & VT_BYREF)? *var.pboolVal : var.boolVal)) == 0);
+		pValue.reset(new Value_Bool(result));
 	} else if (type == VT_ERROR) {
-		sig.SetError(ERR_ValueError, "cantnot convert from ole variant ERROR");
+		Error::Issue(ErrorType::ValueError, "cantnot convert from ole variant ERROR");
 		//value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.pscode : var.code));
+		return nullptr;
 	} else if (type == VT_CY) {
-		sig.SetError(ERR_ValueError, "cantnot convert from ole variant CY");
+		Error::Issue(ErrorType::ValueError, "cantnot convert from ole variant CY");
 		//value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.pcyVal : var.cyVal));
+		return nullptr;
 	} else if (type == VT_DATE) {
-		COleDateTime oledt((var.vt & VT_BYREF)? *var.pdate : var.date);
-		DateTime dateTime(oledt.GetYear(), oledt.GetMonth(), oledt.GetDay(),
-				oledt.GetHour() * 3600 + oledt.GetMinute() * 60 + oledt.GetSecond(),
-				0, OAL::GetSecsOffsetTZ());
-		value = Value(new Object_datetime(env, dateTime));
+		//COleDateTime oledt((var.vt & VT_BYREF)? *var.pdate : var.date);
+		//RefPtr<DateTime> pDateTime(new DateTime(oledt.GetYear(), oledt.GetMonth(), oledt.GetDay(),
+		//		oledt.GetHour() * 3600 + oledt.GetMinute() * 60 + oledt.GetSecond(),
+		//		0, OAL::GetSecsOffsetTZ()));
+		//pValue.reset(new Value_DateTime(pDateTime.release()));
+		return nullptr;
 	} else if (type == VT_BSTR) {
-		value = Value(BSTRToString(var.bstrVal));
+		pValue.reset(new Value_String(BSTRToString(var.bstrVal)));
 	} else if (type == VT_UNKNOWN) {
-		sig.SetError(ERR_ValueError, "cantnot convert from ole variant UNKNOWN");
+		Error::Issue(ErrorType::ValueError, "cantnot convert from ole variant UNKNOWN");
 		//value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.ppunkVal : var.punkVal));
+		return nullptr;
 	} else if (type == VT_DISPATCH) {
-		IDispatch *pDispatch = (var.vt & VT_BYREF)? *var.ppdispVal : var.pdispVal;
+		IDispatch* pDispatch = (var.vt & VT_BYREF)? *var.ppdispVal : var.pdispVal;
 		pDispatch->AddRef(); // prevent deletion by VariantClear()
-		Object_ole *pObj = new Object_ole(env, pDispatch);
-		value = Value(pObj);
+		//Object_ole *pObj = new Object_ole(env, pDispatch);
+		//value = Value(pObj);
+		return nullptr;
 	} else if (type == VT_VARIANT) {
-		sig.SetError(ERR_ValueError, "cantnot convert from ole variant VARIANT");
+		Error::Issue(ErrorType::ValueError, "cantnot convert from ole variant VARIANT");
 		//value = Value(static_cast<Number>(*var.pvarVal));
+		return nullptr;
 	}
-	return true;
+	return pValue.release();
 }
-#endif
 
 Value* RegDataToValue(DWORD dwType, LPCBYTE lpData, DWORD cbData)
 {
@@ -179,27 +183,27 @@ Value* RegDataToValue(DWORD dwType, LPCBYTE lpData, DWORD cbData)
 	return pValueRtn.release();
 }
 
-#if 0
-bool ValueToRegData(const Value &value, DWORD* pdwType, LPBYTE* lppData, DWORD* pcbData)
+bool ValueToRegData(const Value& value, DWORD* pdwType, LPBYTE* lppData, DWORD* pcbData)
 {
-	if (value.Is_number()) {
+	if (value.IsType(VTYPE_Number)) {
 		*pdwType = REG_DWORD;
 		*pcbData = sizeof(DWORD);
 		*lppData = reinterpret_cast<LPBYTE>(::LocalAlloc(LMEM_FIXED, *pcbData));
-		*reinterpret_cast<DWORD *>(*lppData) = value.GetULong();
-		return true;
-	} else if (value.Is_binary()) {
-		const Binary &buff = value.GetBinary();
+		*reinterpret_cast<DWORD*>(*lppData) = Value_Number::GetNumber<DWORD>(value);
+	} else if (value.IsType(VTYPE_Binary)) {
+		const Binary& buff = Value_Binary::GetBinary(value);
 		*pdwType = REG_BINARY;
 		*pcbData = static_cast<DWORD>(buff.size());
 		*lppData = reinterpret_cast<LPBYTE>(::LocalAlloc(LMEM_FIXED, *pcbData));
 		::memcpy(*lppData, buff.data(), *pcbData);
-		return true;
-	} else if (value.Is_list()) {
+	} else if (value.IsList()) {
 		size_t bytesSum = 0;
-		foreach_const (ValueList, pValue, value.GetList()) {
-			if (!pValue->Is_string()) goto error_done;
-			String str = OAL::ToNativeString(pValue->GetString());
+		for (const Value* pValueEach : Value_List::GetValueOwner(value)) {
+			if (!pValueEach->IsType(VTYPE_String)) {
+				Error::Issue(ErrorType::ValueError, "invalid data type for registry");
+				return false;
+			}
+			String str = OAL::ToNativeString(Value_String::GetString(*pValueEach));
 			size_t bytes = str.size() + 1;
 			bytesSum += bytes;
 		}
@@ -208,27 +212,25 @@ bool ValueToRegData(const Value &value, DWORD* pdwType, LPBYTE* lppData, DWORD* 
 		*pcbData = static_cast<DWORD>(bytesSum);
 		*lppData = reinterpret_cast<LPBYTE>(::LocalAlloc(LMEM_FIXED, *pcbData));
 		BYTE *p = *lppData;
-		for (const Value* pValue : value.GetList()) {
-			if (!pValue->Is_string()) goto error_done;
-			String str = OAL::ToNativeString(pValue->GetString());
+		for (const Value* pValueEach : Value_List::GetValueOwner(value)) {
+			if (!pValueEach->IsType(VTYPE_String)) {
+				Error::Issue(ErrorType::ValueError, "invalid data type for registry");
+				return false;
+			}
+			String str = OAL::ToNativeString(Value_String::GetString(*pValueEach));
 			size_t bytes = str.size() + 1;
 			::memcpy(p, str.c_str(), bytes);
 			p += bytes;
 		}
 		*p = '\0';
-		return true;
-	} else if (value.Is_string()) {
-		String str = OAL::ToNativeString(value.GetString());
+	} else if (value.IsType(VTYPE_String)) {
+		String str = OAL::ToNativeString(Value_String::GetString(value));
 		*pdwType = REG_SZ;
 		*pcbData = static_cast<DWORD>(str.size() + 1);
 		*lppData = reinterpret_cast<LPBYTE>(::LocalAlloc(LMEM_FIXED, *pcbData));
 		::memcpy(*lppData, str.c_str(), *pcbData);
-		return true;
 	}
-error_done:
-	sig.SetError(ERR_ValueError, "invalid data type for registry");
-	return false;
+	return true;
 }
-#endif
 
 Gurax_EndModuleScope(mswin)

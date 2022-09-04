@@ -24,30 +24,6 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-#if 0
-// mswin.RegKey() {block?}
-Gurax_DeclareConstructor(RegKey)
-{
-	Declare(VTYPE_RegKey, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `mswin.RegKey` instance.");
-}
-
-Gurax_ImplementConstructor(RegKey)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<RegKey> pRegKey(new RegKey());
-	return argument.ReturnValue(processor, new Value_RegKey(pRegKey.release()));
-}
-#endif
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -79,7 +55,7 @@ Gurax_ImplementMethod(RegKey, CreateKey)
 	DWORD dwErrCode = ::RegCreateKeyEx(hKey, OAL::ToNativeString(subKey).c_str(),
 			0, nullptr, dwOptions, samDesired, nullptr, &hKeyResult, &dwDisposition);
 	if (dwErrCode != ERROR_SUCCESS) {
-		//SetError(sig, dwErrCode);
+		SetErrorFromErrCode(dwErrCode);
 		return Value::nil();
 	}
 	return new Value_RegKey(new RegKey(hKeyResult));
@@ -109,7 +85,7 @@ Gurax_ImplementMethod(RegKey, OpenKey)
 	HKEY hKeyResult;
 	DWORD dwErrCode = ::RegOpenKeyEx(hKey, OAL::ToNativeString(subKey).c_str(), 0, samDesired, &hKeyResult);
 	if (dwErrCode != ERROR_SUCCESS) {
-		//SetError(sig, dwErrCode);
+		SetErrorFromErrCode(dwErrCode);
 		return Value::nil();
 	}
 	return new Value_RegKey(new RegKey(hKeyResult));
@@ -136,7 +112,7 @@ Gurax_ImplementMethod(RegKey, DeleteKey)
 	HKEY hKey = valueThis.GetRegKey().GetHKEY();
 	DWORD dwErrCode = ::RegDeleteKey(hKey, OAL::ToNativeString(subKey).c_str());
 	if (dwErrCode != ERROR_SUCCESS) {
-		//SetError(sig, dwErrCode);
+		SetErrorFromErrCode(dwErrCode);
 		return Value::nil();
 	}
 	return Value::nil();
@@ -194,7 +170,7 @@ Gurax_ImplementMethod(RegKey, SetValue)
 			OAL::ToNativeString(lpValueName).c_str(), 0, dwType, lpData, cbData);
 	::LocalFree(lpData);
 	if (dwErrCode != ERROR_SUCCESS) {
-		SetError(dwErrCode);
+		SetErrorFromErrCode(dwErrCode);
 	}
 	return Value::nil();
 }
@@ -247,7 +223,7 @@ Gurax_ImplementMethod(RegKey, QueryValue)
 		(lpValueName == nullptr)? nullptr : OAL::ToNativeString(lpValueName).c_str(),
 		nullptr, &dwType, nullptr, &cbData);
 	if (dwErrCode != ERROR_SUCCESS) {
-		SetError(dwErrCode);
+		SetErrorFromErrCode(dwErrCode);
 		return Value::nil();
 	}
 	LPBYTE lpData = reinterpret_cast<LPBYTE>(::LocalAlloc(LMEM_FIXED, cbData));
@@ -256,7 +232,7 @@ Gurax_ImplementMethod(RegKey, QueryValue)
 		nullptr, &dwType, lpData, &cbData);
 	if (dwErrCode != ERROR_SUCCESS) {
 		::LocalFree(lpData);
-		SetError(dwErrCode);
+		SetErrorFromErrCode(dwErrCode);
 		return Value::nil();
 	}
 	RefPtr<Value> pValueRtn(RegDataToValue(dwType, lpData, cbData));
@@ -349,7 +325,7 @@ Value* Iterator_RegEnumKey::DoNextValue()
 	DWORD pcName = Gurax_ArraySizeOf(name);
 	DWORD dwErrCode = ::RegEnumKeyEx(hKey, _dwIndex, name, &pcName, nullptr, nullptr, nullptr, &ftLastWriteTime);
 	if (dwErrCode != ERROR_SUCCESS) {
-		if (dwErrCode != ERROR_NO_MORE_ITEMS) SetError(dwErrCode);
+		if (dwErrCode != ERROR_NO_MORE_ITEMS) SetErrorFromErrCode(dwErrCode);
 		return nullptr;
 	}
 	RefPtr<Value> pValueRtn;
@@ -359,7 +335,7 @@ Value* Iterator_RegEnumKey::DoNextValue()
 		HKEY hKeyRtn;
 		DWORD dwErrCode = ::RegOpenKeyEx(hKey, name, 0, _samDesired, &hKeyRtn);
 		if (dwErrCode != ERROR_SUCCESS) {
-			SetError(dwErrCode);
+			SetErrorFromErrCode(dwErrCode);
 			return false;
 		}
 		pValueRtn.reset(new Value_RegKey(new RegKey(hKeyRtn)));
@@ -385,7 +361,7 @@ Value* Iterator_RegEnumValue::DoNextValue()
 	DWORD cbData;
 	DWORD dwErrCode = ::RegEnumValue(hKey, _dwIndex, valueName, &cValueName, nullptr, &dwType, nullptr, &cbData);
 	if (dwErrCode != ERROR_SUCCESS) {
-		if (dwErrCode != ERROR_NO_MORE_ITEMS) SetError(dwErrCode);
+		if (dwErrCode != ERROR_NO_MORE_ITEMS) SetErrorFromErrCode(dwErrCode);
 		return nullptr;
 	}
 	cValueName = Gurax_ArraySizeOf(valueName);
@@ -393,7 +369,7 @@ Value* Iterator_RegEnumValue::DoNextValue()
 	dwErrCode = ::RegEnumValue(hKey, _dwIndex, valueName, &cValueName, nullptr, &dwType, lpData, &cbData);
 	if (dwErrCode != ERROR_SUCCESS) {
 		::LocalFree(lpData);
-		if (dwErrCode != ERROR_NO_MORE_ITEMS) SetError(dwErrCode);
+		if (dwErrCode != ERROR_NO_MORE_ITEMS) SetErrorFromErrCode(dwErrCode);
 		return nullptr;
 	}
 	RefPtr<Value> pValueRtn(Value_Tuple::Create(
