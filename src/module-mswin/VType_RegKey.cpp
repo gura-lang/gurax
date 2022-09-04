@@ -78,12 +78,12 @@ Gurax_ImplementMethod(RegKey, OpenKey)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const char* subKey = args.PickString();
+	const char* lpSubKey = args.PickString();
 	REGSAM samDesired = args.IsValid()? args.PickNumber<REGSAM>() : KEY_ALL_ACCESS;
 	// Function body
 	HKEY hKey = valueThis.GetRegKey().GetHKEY();
 	HKEY hKeyResult;
-	DWORD dwErrCode = ::RegOpenKeyEx(hKey, OAL::ToNativeString(subKey).c_str(), 0, samDesired, &hKeyResult);
+	DWORD dwErrCode = ::RegOpenKeyEx(hKey, OAL::ToNativeString(lpSubKey).c_str(), 0, samDesired, &hKeyResult);
 	if (dwErrCode != ERROR_SUCCESS) {
 		SetErrorFromErrCode(dwErrCode);
 		return Value::nil();
@@ -107,10 +107,10 @@ Gurax_ImplementMethod(RegKey, DeleteKey)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const char* subKey = args.PickString();
+	const char* lpSubKey = args.PickString();
 	// Function body
 	HKEY hKey = valueThis.GetRegKey().GetHKEY();
-	DWORD dwErrCode = ::RegDeleteKey(hKey, OAL::ToNativeString(subKey).c_str());
+	DWORD dwErrCode = ::RegDeleteKey(hKey, OAL::ToNativeString(lpSubKey).c_str());
 	if (dwErrCode != ERROR_SUCCESS) {
 		SetErrorFromErrCode(dwErrCode);
 		return Value::nil();
@@ -165,7 +165,7 @@ Gurax_ImplementMethod(RegKey, SetValue)
 	DWORD dwType = 0;
 	BYTE *lpData = nullptr;
 	DWORD cbData = 0;
-	//if (!ValueToRegData(arg.GetValue(1), &dwType, &lpData, &cbData)) return Value::nil();
+	if (!ValueToRegData(valueData, &dwType, &lpData, &cbData)) return Value::nil();
 	DWORD dwErrCode = ::RegSetValueEx(hKey,
 			OAL::ToNativeString(lpValueName).c_str(), 0, dwType, lpData, cbData);
 	::LocalFree(lpData);
@@ -175,12 +175,11 @@ Gurax_ImplementMethod(RegKey, SetValue)
 	return Value::nil();
 }
 
-// mswin.RegKey#DeleteValue(num1 as Number, num2 as Number)
+// mswin.RegKey#DeleteValue(subKey as String)
 Gurax_DeclareMethod(RegKey, DeleteValue)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("subKey", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -189,13 +188,15 @@ Gurax_DeclareMethod(RegKey, DeleteValue)
 Gurax_ImplementMethod(RegKey, DeleteValue)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const char* lpSubKey = args.PickString();
 	// Function body
-	return new Value_Number(num1 + num2);
+	HKEY hKey = valueThis.GetRegKey().GetHKEY();
+	DWORD dwErrCode = ::RegDeleteKey(hKey, OAL::ToNativeString(lpSubKey).c_str());
+	if (dwErrCode != ERROR_SUCCESS) SetErrorFromErrCode(dwErrCode);
+	return Value::nil();
 }
 
 // mswin.RegKey#QueryValue(valueName? as String)
@@ -254,8 +255,6 @@ Gurax_ImplementMethod(RegKey, EnumValue)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	//ArgPicker args(argument);
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_RegEnumValue(valueThis.GetRegKey().Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
@@ -289,7 +288,6 @@ void VType_RegKey::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	//Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(RegKey));
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(RegKey, CreateKey));
