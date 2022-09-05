@@ -62,6 +62,7 @@ public:
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
+	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
 	virtual size_t DoCalcHash() const override {
 		return GetOLE().CalcHash();
 	}

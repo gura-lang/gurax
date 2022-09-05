@@ -90,6 +90,11 @@ void VType_OLE::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_OLE::vtype = VTYPE_OLE;
 
+Value* Value_OLE::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
+{
+	return nullptr;
+}
+
 String Value_OLE::ToString(const StringStyle& ss) const
 {
 	return ToStringGeneric(ss, GetOLE().ToString(ss));

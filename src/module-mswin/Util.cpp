@@ -15,6 +15,26 @@ void SetErrorFromErrCode(DWORD dwErrCode)
 	::LocalFree(lpMsgBuf);
 }
 
+void SetErrorFromHRESULT(HRESULT hr)
+{
+	LPWSTR errMsg = nullptr;
+	::FormatMessageW(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		nullptr, hr, LOCALE_SYSTEM_DEFAULT, reinterpret_cast<LPWSTR>(&errMsg), 0, nullptr);
+	if (errMsg == nullptr) {
+		Error::Issue(ErrorType::GuestError, "COM error [%08x]", hr);
+	} else {
+		int len = static_cast<int>(::wcslen(errMsg));
+		if (len > 0 && errMsg[len - 1] == '\n') len--;
+		int bytes = ::WideCharToMultiByte(CP_UTF8, 0, errMsg, len, nullptr, 0, nullptr, nullptr);
+		char *pszErrMsg = new char [bytes];
+		::WideCharToMultiByte(CP_UTF8, 0, errMsg, len, pszErrMsg, bytes, nullptr, nullptr);
+		pszErrMsg[bytes] = '\0';
+		Error::Issue(ErrorType::GuestError, "COM error [%08x] %s", hr, pszErrMsg);
+		::LocalFree(errMsg);
+	}
+}
+
 OLECHAR* StringToBSTR(const char* psz)
 {
 	// cnt includes null-terminater

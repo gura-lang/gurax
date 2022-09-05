@@ -8,6 +8,7 @@
 Gurax_BeginModuleScope(mswin)
 
 void SetErrorFromErrCode(DWORD dwErrCode);
+void SetErrorFromHRESULT(HRESULT hr);
 OLECHAR* StringToBSTR(const char* psz);
 String BSTRToString(const OLECHAR* bstr);
 Value* VariantToValue(const VARIANT& var);
