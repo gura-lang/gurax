@@ -58,7 +58,7 @@ Gurax_ImplementMethod(RegKey, CreateKey)
 		SetErrorFromErrCode(dwErrCode);
 		return Value::nil();
 	}
-	return new Value_RegKey(new RegKey(hKeyResult));
+	return new Value_RegKey(new RegKey(hKeyResult, subKey));
 }
 
 // mswin.RegKey#OpenKey(subKey as String, options? as Number, samDesired? as Number)
@@ -88,7 +88,7 @@ Gurax_ImplementMethod(RegKey, OpenKey)
 		SetErrorFromErrCode(dwErrCode);
 		return Value::nil();
 	}
-	return new Value_RegKey(new RegKey(hKeyResult));
+	return new Value_RegKey(new RegKey(hKeyResult, lpSubKey));
 }
 
 // mswin.RegKey#DeleteKey(subKey as String)
@@ -141,6 +141,40 @@ Gurax_ImplementMethod(RegKey, EnumKey)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
+// mswin.RegKey#SetKeyValue(subKey as String, valueName as String, data:noMap)
+Gurax_DeclareMethod(RegKey, SetKeyValue)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("subKey", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("valueName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::NoMap);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(RegKey, SetKeyValue)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* lpSubKey = args.PickString();
+	const char* lpValueName = args.PickString();
+	const Value& valueData = args.PickValue();
+	// Function body
+	HKEY hKey = valueThis.GetRegKey().GetHKEY();
+	DWORD dwType = 0;
+	BYTE *lpData = nullptr;
+	DWORD cbData = 0;
+	if (!ValueToRegData(valueData, &dwType, &lpData, &cbData)) return Value::nil();
+	DWORD dwErrCode = ::RegSetKeyValue(hKey, OAL::ToNativeString(lpSubKey).c_str(),
+			OAL::ToNativeString(lpValueName).c_str(), dwType, lpData, cbData);
+	::LocalFree(lpData);
+	if (dwErrCode != ERROR_SUCCESS) SetErrorFromErrCode(dwErrCode);
+	return Value::nil();
+}
+
 // mswin.RegKey#SetValue(valueName as String, data:noMap)
 Gurax_DeclareMethod(RegKey, SetValue)
 {
@@ -169,9 +203,7 @@ Gurax_ImplementMethod(RegKey, SetValue)
 	DWORD dwErrCode = ::RegSetValueEx(hKey,
 			OAL::ToNativeString(lpValueName).c_str(), 0, dwType, lpData, cbData);
 	::LocalFree(lpData);
-	if (dwErrCode != ERROR_SUCCESS) {
-		SetErrorFromErrCode(dwErrCode);
-	}
+	if (dwErrCode != ERROR_SUCCESS) SetErrorFromErrCode(dwErrCode);
 	return Value::nil();
 }
 
@@ -263,19 +295,19 @@ Gurax_ImplementMethod(RegKey, EnumValue)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// mswin.RegKey#propSkeleton
-Gurax_DeclareProperty_R(RegKey, propSkeleton)
+// mswin.RegKey#name
+Gurax_DeclareProperty_R(RegKey, name)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(RegKey, propSkeleton)
+Gurax_ImplementPropertyGetter(RegKey, name)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetRegKey().GetName());
 }
 
 //------------------------------------------------------------------------------
@@ -294,12 +326,13 @@ void VType_RegKey::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(RegKey, OpenKey));
 	Assign(Gurax_CreateMethod(RegKey, DeleteKey));
 	Assign(Gurax_CreateMethod(RegKey, EnumKey));
+	Assign(Gurax_CreateMethod(RegKey, SetKeyValue));
 	Assign(Gurax_CreateMethod(RegKey, SetValue));
 	Assign(Gurax_CreateMethod(RegKey, DeleteValue));
 	Assign(Gurax_CreateMethod(RegKey, QueryValue));
 	Assign(Gurax_CreateMethod(RegKey, EnumValue));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(RegKey, propSkeleton));
+	Assign(Gurax_CreateProperty(RegKey, name));
 }
 
 //------------------------------------------------------------------------------
@@ -336,7 +369,7 @@ Value* Iterator_RegEnumKey::DoNextValue()
 			SetErrorFromErrCode(dwErrCode);
 			return false;
 		}
-		pValueRtn.reset(new Value_RegKey(new RegKey(hKeyRtn)));
+		pValueRtn.reset(new Value_RegKey(new RegKey(hKeyRtn, name)));
 	}
 	_dwIndex++;
 	return pValueRtn.release();

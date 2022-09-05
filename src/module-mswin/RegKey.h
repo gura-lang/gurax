@@ -18,10 +18,11 @@ public:
 	Gurax_MemoryPoolAllocator("mswin.RegKey");
 private:
 	HKEY _hKey;
+	String _name;
 	bool _ownerFlag;
 public:
 	// Constructor
-	RegKey(HKEY hKey, bool ownerFlag = true);
+	RegKey(HKEY hKey, String name, bool ownerFlag = true);
 	// Copy constructor/operator
 	RegKey(const RegKey& src) = delete;
 	RegKey& operator=(const RegKey& src) = delete;
@@ -32,6 +33,7 @@ protected:
 	~RegKey();
 public:
 	HKEY GetHKEY() { return _hKey; }
+	const char* GetName() const { return _name.c_str(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const RegKey& other) const { return this == &other; }

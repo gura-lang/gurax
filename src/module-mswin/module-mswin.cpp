@@ -45,13 +45,13 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	// Assignment of value
-	Assign("HKEY_CLASSES_ROOT",			new Value_RegKey(new RegKey(HKEY_CLASSES_ROOT, false)));
-	Assign("HKEY_CURRENT_CONFIG",		new Value_RegKey(new RegKey(HKEY_CURRENT_CONFIG, false)));
-	Assign("HKEY_CURRENT_USER",			new Value_RegKey(new RegKey(HKEY_CURRENT_USER, false)));
-	Assign("HKEY_LOCAL_MACHINE",		new Value_RegKey(new RegKey(HKEY_LOCAL_MACHINE, false)));
-	Assign("HKEY_USERS",				new Value_RegKey(new RegKey(HKEY_USERS, false)));
-	Assign("HKEY_PERFORMANCE_DATA",		new Value_RegKey(new RegKey(HKEY_PERFORMANCE_DATA, false)));
-	Assign("HKEY_DYN_DATA",				new Value_RegKey(new RegKey(HKEY_DYN_DATA, false)));
+	Assign("HKEY_CLASSES_ROOT",			new Value_RegKey(new RegKey(HKEY_CLASSES_ROOT, "HKEY_CLASSES_ROOT", false)));
+	Assign("HKEY_CURRENT_CONFIG",		new Value_RegKey(new RegKey(HKEY_CURRENT_CONFIG, "HKEY_CURRENT_CONFIG", false)));
+	Assign("HKEY_CURRENT_USER",			new Value_RegKey(new RegKey(HKEY_CURRENT_USER, "HKEY_CURRENT_USER", false)));
+	Assign("HKEY_LOCAL_MACHINE",		new Value_RegKey(new RegKey(HKEY_LOCAL_MACHINE, "HKEY_LOCAL_MACHINE", false)));
+	Assign("HKEY_USERS",				new Value_RegKey(new RegKey(HKEY_USERS, "HKEY_USERS", false)));
+	Assign("HKEY_PERFORMANCE_DATA",		new Value_RegKey(new RegKey(HKEY_PERFORMANCE_DATA, "HKEY_PERFORMANCE_DATA", false)));
+	Assign("HKEY_DYN_DATA",				new Value_RegKey(new RegKey(HKEY_DYN_DATA, "HKEY_DYN_DATA", false)));
 	Assign("REG_OPTION_NON_VOLATILE",	new Value_Number(REG_OPTION_NON_VOLATILE));
 	Assign("REG_OPTION_VOLATILE",		new Value_Number(REG_OPTION_VOLATILE));
 	Assign("REG_OPTION_BACKUP_RESTORE",	new Value_Number(REG_OPTION_BACKUP_RESTORE));

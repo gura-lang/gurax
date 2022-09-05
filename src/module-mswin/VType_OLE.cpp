@@ -24,28 +24,6 @@ static const char* g_docHelp_en = u8R"**(
 # Method
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of constructor
-//------------------------------------------------------------------------------
-// mswin.OLE() {block?}
-Gurax_DeclareConstructor(OLE)
-{
-	Declare(VTYPE_OLE, Flag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `mswin.OLE` instance.");
-}
-
-Gurax_ImplementConstructor(OLE)
-{
-	// Arguments
-	//ArgPicker args(argument);
-	// Function body
-	RefPtr<OLE> pOLE(new OLE());
-	return argument.ReturnValue(processor, new Value_OLE(pOLE.release()));
-}
-
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
@@ -100,7 +78,7 @@ void VType_OLE::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(OLE));
+	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(OLE, MethodSkeleton));
 	// Assignment of property
@@ -117,4 +95,4 @@ String Value_OLE::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetOLE().ToString(ss));
 }
 
-Gurax_EndModuleScope(mswin)
+	Gurax_EndModuleScope(mswin)
