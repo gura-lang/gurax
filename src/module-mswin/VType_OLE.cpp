@@ -92,7 +92,58 @@ VType& Value_OLE::vtype = VTYPE_OLE;
 
 Value* Value_OLE::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
-	return nullptr;
+	DISPID dispid;
+	do {
+		HRESULT hr = _pOLE->GetDispID(pSymbol->GetName(), dispid);
+		if (FAILED(hr)) {
+			SetErrorFromHRESULT(hr);
+			return Value::nil();
+		}
+	} while (0);
+	VARIANT var;
+	do {
+		DISPPARAMS dispParams = { nullptr, nullptr, 0, 0 };
+		HRESULT hr = _pOLE->GetDispatch()->Invoke(dispid, IID_NULL, LOCALE_USER_DEFAULT,
+						DISPATCH_PROPERTYGET, &dispParams, &var, nullptr, nullptr);
+		// notFoundErrorFlag
+		if (FAILED(hr)) {
+			SetErrorFromHRESULT(hr);
+			return Value::nil();
+		}
+	} while (0);
+	RefPtr<Value> pValue(VariantToValue(var));
+	::VariantClear(&var);
+	return pValue.release();
+}
+
+bool Value_OLE::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr)
+{
+	DISPID dispid;
+	do {
+		HRESULT hr = _pOLE->GetDispID(pSymbol->GetName(), dispid);
+		if (FAILED(hr)) {
+			SetErrorFromHRESULT(hr);
+			return Value::nil();
+		}
+	} while (0);
+	do {
+		VARIANTARG varArgs[1];
+		DISPID dispidNamedArgs[1] = { DISPID_PROPERTYPUT };
+		if (!ValueToVariant(varArgs[0], *pValue)) return Value::nil();
+		DISPPARAMS dispParams;
+		dispParams.rgvarg = varArgs;
+		dispParams.rgdispidNamedArgs = dispidNamedArgs;
+		dispParams.cArgs = 1;
+		dispParams.cNamedArgs = 1;
+		HRESULT hr = _pOLE->GetDispatch()->Invoke(dispid, IID_NULL, LOCALE_USER_DEFAULT,
+							DISPATCH_PROPERTYPUT, &dispParams, nullptr, nullptr, nullptr);
+		::VariantClear(&varArgs[0]);
+		if (FAILED(hr)) {
+			Error::Issue(ErrorType::GuestError, "can't change OLE property %s", pSymbol->GetName());
+			return Value::nil();
+		}
+	} while (0);
+	return true;
 }
 
 String Value_OLE::ToString(const StringStyle& ss) const
