@@ -55,7 +55,7 @@ String BSTRToString(const OLECHAR* bstr)
 	return String(psz);
 }
 
-bool ValueToVariant(VARIANT& var, const Value& value)
+bool ValueToVariant(VARIANT& var, Value& value)
 {
 	//::printf("ValueToVariant(%s %s)\n", value.GetTypeName(), value.ToString().c_str());
 	::VariantInit(&var);
@@ -85,7 +85,7 @@ bool ValueToVariant(VARIANT& var, const Value& value)
 		var.parray = pSafeArray;
 		//::SafeArrayLock(pSafeArray);
 		long index = 0;
-		for (const Value* pValue : valList) {
+		for (Value* pValue : valList) {
 			VARIANT varElem;
 			if (!ValueToVariant(varElem, *pValue)) return false;
 			::SafeArrayPutElement(pSafeArray, &index, &varElem);
@@ -93,20 +93,16 @@ bool ValueToVariant(VARIANT& var, const Value& value)
 		}
 		//::SafeArrayUnlock(pSafeArray);
 	} else if (value.IsType(VTYPE_OLE)) {
-#if 0
 		IDispatch* pDispatch = Value_OLE::GetOLE(value).GetDispatch();
 		pDispatch->AddRef();
 		var.vt = VT_DISPATCH;
 		var.pdispVal = pDispatch;
-#endif
 	} else if (value.IsType(VTYPE_DateTime)) {
 		const DateTime& dateTime = Value_DateTime::GetDateTime(value);
-#if 0
 		COleDateTime oledt(dateTime.GetYear(), dateTime.GetMonth(), dateTime.GetDay(),
 				dateTime.GetHour(), dateTime.GetMin(), dateTime.GetSec());
 		var.vt = VT_DATE;
 		var.date = oledt.m_dt;
-#endif
 	} else {
 		Error::Issue(ErrorType::TypeError, "cannot convert to ole variant");
 		return false;
@@ -116,72 +112,73 @@ bool ValueToVariant(VARIANT& var, const Value& value)
 
 Value* VariantToValue(const VARIANT& var)
 {
-	RefPtr<Value> pValue;
-	VARTYPE type = var.vt & VT_TYPEMASK;
-	if (var.vt & VT_ARRAY) {
-		var.byref;
-	} else if (type == VT_UI1) {
-		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.pbVal : var.bVal));
-	} else if (type == VT_I2) {
-		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.piVal : var.iVal));
-	} else if (type == VT_I4) {
-		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.plVal : var.lVal));
-	} else if (type == VT_R4) {
-		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.pfltVal : var.fltVal));
-	} else if (type == VT_R8) {
-		pValue.reset(new Value_Number((var.vt & VT_BYREF)? *var.pdblVal :var.dblVal));
-	} else if (type == VT_BOOL) {
-		bool result = !((static_cast<int>((var.vt & VT_BYREF)? *var.pboolVal : var.boolVal)) == 0);
-		pValue.reset(new Value_Bool(result));
-	} else if (type == VT_ERROR) {
+	switch (var.vt & VT_TYPEMASK) {
+	case VT_UI1:
+		return new Value_Number((var.vt & VT_BYREF)? *var.pbVal : var.bVal);
+	case VT_I2:
+		return new Value_Number((var.vt & VT_BYREF)? *var.piVal : var.iVal);
+	case VT_I4:
+		return new Value_Number((var.vt & VT_BYREF)? *var.plVal : var.lVal);
+	case VT_R4:
+		return new Value_Number((var.vt & VT_BYREF)? *var.pfltVal : var.fltVal);
+	case VT_R8:
+		return new Value_Number((var.vt & VT_BYREF)? *var.pdblVal :var.dblVal);
+	case VT_BOOL:
+		return new Value_Bool((static_cast<int>((var.vt & VT_BYREF)? *var.pboolVal : var.boolVal)) != 0);
+	case VT_ERROR:
 		Error::Issue(ErrorType::ValueError, "cantnot convert from ole variant ERROR");
 		//value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.pscode : var.code));
-		return nullptr;
-	} else if (type == VT_CY) {
+		break;
+	case VT_CY:
 		Error::Issue(ErrorType::ValueError, "cantnot convert from ole variant CY");
 		//value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.pcyVal : var.cyVal));
-		return nullptr;
-	} else if (type == VT_DATE) {
-		//COleDateTime oledt((var.vt & VT_BYREF)? *var.pdate : var.date);
-		//RefPtr<DateTime> pDateTime(new DateTime(oledt.GetYear(), oledt.GetMonth(), oledt.GetDay(),
-		//		oledt.GetHour() * 3600 + oledt.GetMinute() * 60 + oledt.GetSecond(),
-		//		0, OAL::GetSecsOffsetTZ()));
-		//pValue.reset(new Value_DateTime(pDateTime.release()));
-		return nullptr;
-	} else if (type == VT_BSTR) {
-		pValue.reset(new Value_String(BSTRToString(var.bstrVal)));
-	} else if (type == VT_UNKNOWN) {
+		break;
+	case VT_DATE: {
+		COleDateTime oledt((var.vt & VT_BYREF)? *var.pdate : var.date);
+		RefPtr<DateTime> pDateTime(new DateTime(oledt.GetYear(), oledt.GetMonth(), oledt.GetDay(),
+				oledt.GetHour() * 3600 + oledt.GetMinute() * 60 + oledt.GetSecond(),
+				0, OAL::GetSecsOffsetTZ()));
+		return new Value_DateTime(pDateTime.release());
+	}
+	case VT_BSTR:
+		return new Value_String(BSTRToString(var.bstrVal));
+	case VT_UNKNOWN:
 		Error::Issue(ErrorType::ValueError, "cantnot convert from ole variant UNKNOWN");
 		//value = Value(static_cast<Number>((var.vt & VT_BYREF)? *var.ppunkVal : var.punkVal));
-		return nullptr;
-	} else if (type == VT_DISPATCH) {
+		break;
+	case VT_DISPATCH: {
 		IDispatch* pDispatch = (var.vt & VT_BYREF)? *var.ppdispVal : var.pdispVal;
 		pDispatch->AddRef(); // prevent deletion by VariantClear()
-		//Object_ole *pObj = new Object_ole(env, pDispatch);
-		//value = Value(pObj);
-		return nullptr;
-	} else if (type == VT_VARIANT) {
+		return new Value_OLE(new OLE(pDispatch));
+	}
+	case VT_VARIANT:
 		Error::Issue(ErrorType::ValueError, "cantnot convert from ole variant VARIANT");
 		//value = Value(static_cast<Number>(*var.pvarVal));
-		return nullptr;
+		break;
+	default:
+		Error::Issue(ErrorType::ValueError, "unknown OLE type");
+		break;
 	}
-	return pValue.release();
+	return nullptr;
 }
 
 Value* RegDataToValue(DWORD dwType, LPCBYTE lpData, DWORD cbData)
 {
-	RefPtr<Value> pValueRtn;
-	if (dwType == REG_BINARY) {
-		pValueRtn.reset(new Value_Binary(Binary(reinterpret_cast<const char *>(lpData), cbData)));
-	} else if (dwType == REG_DWORD || dwType == REG_DWORD_LITTLE_ENDIAN) {
-		pValueRtn.reset(new Value_Number(*reinterpret_cast<const DWORD *>(lpData)));
-	} else if (dwType == REG_DWORD_BIG_ENDIAN) {
+	switch (dwType) {
+	case REG_BINARY:
+		return new Value_Binary(Binary(reinterpret_cast<const char *>(lpData), cbData));
+	case REG_DWORD_LITTLE_ENDIAN:
+		return new Value_Number(*reinterpret_cast<const DWORD *>(lpData));
+	case REG_DWORD_BIG_ENDIAN:
 		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_DWORD_BIG_ENDIAN");
-	} else if (dwType == REG_EXPAND_SZ) {
+		break;
+	case REG_EXPAND_SZ:
 		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_EXPAND_SZ");
-	} else if (dwType == REG_LINK) {
+		break;
+	case REG_LINK:
 		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_LINK");
-	} else if (dwType == REG_MULTI_SZ) {
+		break;
+	case REG_MULTI_SZ: {
 		RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 		size_t bytesSum = 0;
 		while (bytesSum + 1 < static_cast<size_t>(cbData)) {
@@ -190,17 +187,24 @@ Value* RegDataToValue(DWORD dwType, LPCBYTE lpData, DWORD cbData)
 			lpData += bytes;
 			bytesSum += bytes;
 		}
-		pValueRtn.reset(new Value_Tuple(pValueOwner.release()));
-	} else if (dwType == REG_NONE) {
-		// nothing to do
-	} else if (dwType == REG_QWORD || dwType == REG_QWORD_LITTLE_ENDIAN) {
-		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_QWORD");
-	} else if (dwType == REG_RESOURCE_LIST) {
-		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_RESOURCE_LIST");
-	} else if (dwType == REG_SZ) {
-		pValueRtn.reset(new Value_String(OAL::FromNativeString(reinterpret_cast<const char *>(lpData))));
+		return new Value_Tuple(pValueOwner.release());
 	}
-	return pValueRtn.release();
+	case REG_NONE:
+		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_NONE");
+		break;
+	case REG_QWORD_LITTLE_ENDIAN:
+		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_QWORD");
+		break;
+	case REG_RESOURCE_LIST:
+		Error::Issue(ErrorType::ValueError, "cantnot convert from registry value REG_RESOURCE_LIST");
+		break;
+	case REG_SZ:
+		return new Value_String(OAL::FromNativeString(reinterpret_cast<const char *>(lpData)));
+	default:
+		Error::Issue(ErrorType::ValueError, "unknown registry value");
+		break;
+	}
+	return nullptr;
 }
 
 bool ValueToRegData(const Value& value, DWORD* pdwType, LPBYTE* lppData, DWORD* pcbData)

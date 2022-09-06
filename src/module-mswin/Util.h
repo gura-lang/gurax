@@ -12,6 +12,7 @@ void SetErrorFromHRESULT(HRESULT hr);
 OLECHAR* StringToBSTR(const char* psz);
 String BSTRToString(const OLECHAR* bstr);
 Value* VariantToValue(const VARIANT& var);
+bool ValueToVariant(VARIANT& var, Value& value);
 Value* RegDataToValue(DWORD dwType, LPCBYTE lpData, DWORD cbData);
 bool ValueToRegData(const Value& value, DWORD* pdwType, LPBYTE* lppData, DWORD* pcbData);
 

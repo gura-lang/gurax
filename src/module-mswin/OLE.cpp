@@ -51,7 +51,7 @@ bool OLE::Connect(const char* progID)
 	return true;
 }
 
-bool OLE::ImportConstant()
+bool OLE::ImportConstant(Frame& frame)
 {
 	HRESULT hr;
 	//hr = _pDispatch->GetTypeInfoCount(&cnt); // 0 or 1
@@ -118,9 +118,9 @@ bool OLE::ImportConstant()
 				::SysFreeString(nameOle);
 			} while (0);
 			if (pSymbol) {
-				//Value value;
-				//if (!VariantToValue(*this, sig, value, *pVarDesc->lpvarValue)) return false;
-				//env.AssignValue(pSymbol, value, EXTRA_Public);
+				RefPtr<Value> pValue(VariantToValue(*pVarDesc->lpvarValue));
+				if (!pValue) return false;
+				frame.Assign(pSymbol, pValue.release());
 			}
 			pTypeInfo->ReleaseVarDesc(pVarDesc);
 		}

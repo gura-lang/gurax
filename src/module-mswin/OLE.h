@@ -35,7 +35,7 @@ public:
 	IDispatch* GetDispatch() { return _pDispatch; }
 	bool Create(const char* progID);
 	bool Connect(const char* progID);
-	bool ImportConstant();
+	bool ImportConstant(Frame& frame);
 	HRESULT GetDispID(const char* name, DISPID& dispid);
 	HRESULT GetDispIDOfNamedArg(const char* nameMethod, const char* nameArg, DISPID& dispid);
 public:
