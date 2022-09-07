@@ -90,6 +90,30 @@ void VType_OLE::DoPrepare(Frame& frameOuter)
 //------------------------------------------------------------------------------
 VType& Value_OLE::vtype = VTYPE_OLE;
 
+const DeclCallable* Value_OLE::GetDeclCallableWithError()
+{
+	return nullptr;
+}
+
+const DeclCallable* Value_OLE::GetDeclCallable()
+{
+	return nullptr;
+}
+
+Frame* Value_OLE::GetFrameForVType(Processor& processor)
+{
+	return nullptr;
+}
+
+void Value_OLE::DoCall(Processor& processor, Argument& argument)
+{
+}
+
+Value* Value_OLE::DoEval(Processor& processor, Argument& argument) const
+{
+	return Value::nil();
+}
+
 Value* Value_OLE::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	HRESULT hr;
