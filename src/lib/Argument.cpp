@@ -60,6 +60,13 @@ bool Argument::CheckArgSlotToFeed() const
 	return true;
 };
 
+size_t Argument::CountArgSlot() const
+{
+	size_t cnt = 0;
+	for (const ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) cnt++;
+	return cnt;
+}
+
 void Argument::ResetAllValues()
 {
 	for (ArgSlot* pArgSlot = GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext()) {

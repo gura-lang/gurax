@@ -69,5 +69,6 @@ install(PROGRAMS
 	script/jpeg.gura
 	DESTINATION module/site)
 install(PROGRAMS
-	script/print-exif.gura
+	script/jpeg-editexif.gura
+	script/jpeg-printexif.gura
 	DESTINATION script)

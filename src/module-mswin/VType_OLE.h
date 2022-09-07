@@ -64,8 +64,7 @@ public:
 	virtual Value* Clone() const override { return Reference(); }
 	virtual const DeclCallable* GetDeclCallableWithError();
 	virtual const DeclCallable* GetDeclCallable();
-	virtual Frame* GetFrameForVType(Processor& processor);
-	virtual void DoCall(Processor& processor, Argument& argument);
+	//virtual void DoCall(Processor& processor, Argument& argument);
 	virtual Value* DoEval(Processor& processor, Argument& argument) const;
 	virtual Value* DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag);
 	virtual bool DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Attribute& attr);

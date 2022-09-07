@@ -100,17 +100,14 @@ const DeclCallable* Value_OLE::GetDeclCallable()
 	return nullptr;
 }
 
-Frame* Value_OLE::GetFrameForVType(Processor& processor)
-{
-	return nullptr;
-}
-
-void Value_OLE::DoCall(Processor& processor, Argument& argument)
-{
-}
+//void Value_OLE::DoCall(Processor& processor, Argument& argument)
+//{
+//}
 
 Value* Value_OLE::DoEval(Processor& processor, Argument& argument) const
 {
+	VARIANTARG *varArgs = new VARIANTARG[argument.];
+
 	return Value::nil();
 }
 

@@ -90,6 +90,7 @@ public:
 	void SetMapMode(MapMode mapMode) { _mapMode = mapMode; }
 	bool CheckArgSlotToFeed() const;
 public:
+	size_t CountArgSlot() const;
 	void ResetAllValues();
 	void FeedValue(Frame& frameForVType, RefPtr<Value> pValue) {
 		if (!_pArgSlotToFeed) return;
