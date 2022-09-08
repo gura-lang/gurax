@@ -36,7 +36,11 @@ target_compile_definitions(csv.gurd PRIVATE GURAX_MODULE_SEPARATED
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(csv.gurd PRIVATE
 	module-csv.cpp
-	Util.cpp)
+	Util.cpp
+	Reader.cpp
+	Writer.cpp
+	VType_Reader.cpp
+	VType_Writer.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
