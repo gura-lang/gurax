@@ -97,6 +97,24 @@ const DeclCallable* Value_OLE::GetDeclCallableWithError()
 
 const DeclCallable* Value_OLE::GetDeclCallable()
 {
+	HRESULT hr;
+	UINT ctinfo;
+	if (FAILED(hr = GetOLE().GetDispatch()->GetTypeInfoCount(&ctinfo))) {
+		SetErrorFromHRESULT(hr);
+		return nullptr;
+	}
+	if (ctinfo == 0) return nullptr;
+	ITypeInfo* pTInfo;
+	if (FAILED(hr = GetOLE().GetDispatch()->GetTypeInfo(0, LOCALE_USER_DEFAULT, &pTInfo))) {
+		SetErrorFromHRESULT(hr);
+		return nullptr;
+	}
+	FUNCDESC* pFuncDesc;
+	if (FAILED(hr = pTInfo->GetFuncDesc(0, &pFuncDesc))) {
+		SetErrorFromHRESULT(hr);
+		return nullptr;
+	}
+	pFuncDesc->lprgelemdescParam->paramdesc.pparamdescex;
 	return nullptr;
 }
 
@@ -106,8 +124,41 @@ const DeclCallable* Value_OLE::GetDeclCallable()
 
 Value* Value_OLE::DoEval(Processor& processor, Argument& argument) const
 {
-	VARIANTARG *varArgs = new VARIANTARG[argument.];
-
+#if 0
+	size_t cArgs = argument.CountArgSlot();
+	VARIANTARG *varArgs = nullptr;
+	if (cArgs > 0) {
+		varArgs = new VARIANTARG[cArgs];
+		size_t iArg = 0;
+		for (ArgSlot* pArgSlot = argument.GetArgSlotFirst(); pArgSlot; pArgSlot = pArgSlot->GetNext(), iArg++) {
+			if (!ValueToVariant(varArgs[iArg], pArgSlot->GetValue())) return Value::nil();
+		}
+	}
+	DISPPARAMS dispParams;
+	dispParams.rgvarg = varArgs;
+	dispParams.cArgs = static_cast<UINT>(cArgs);
+	dispParams.rgdispidNamedArgs = dispidNamedArgs;
+	dispParams.cNamedArgs = static_cast<UINT>(argNames.size());
+	VARIANT varResult;
+	hr = _pObj->GetDispatch()->Invoke(_dispid, IID_NULL, LOCALE_USER_DEFAULT,
+					DISPATCH_METHOD | DISPATCH_PROPERTYGET,
+					&dispParams, &varResult, nullptr, nullptr);
+	if (varArgs != nullptr) {
+		for (size_t iArg = 0; iArg < cArgs; iArg++) {
+			::VariantClear(&varArgs[iArg]);
+		}
+	}
+	delete[] varArgs;
+	delete[] dispidNamedArgs;
+	if (FAILED(hr)) {
+		::VariantClear(&varResult);
+		Object_ole::SetError(sig, hr);
+		return Value::Nil;
+	}
+	VariantToValue(env, sig, result, varResult);
+	::VariantClear(&varResult);
+	return result;
+#endif
 	return Value::nil();
 }
 
