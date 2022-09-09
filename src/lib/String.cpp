@@ -386,6 +386,12 @@ String& String::Format(const char* format, ...)
 	return FormatV(format, ap);
 }
 
+String& String::FormatValue(const char* format, const Value& value)
+{
+	Formatter_String(*this).Format(format, value);
+	return *this;
+}
+
 String& String::FormatValueList(const char* format, const ValueList& valueList)
 {
 	Formatter_String(*this).Format(format, valueList);

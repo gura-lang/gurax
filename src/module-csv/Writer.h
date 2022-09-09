@@ -17,7 +17,10 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("csv.Writer");
 private:
+	String _str;
 	RefPtr<Stream> _pStream;
+private:
+	static String _format;
 public:
 	// Constructor
 	Writer(Stream* pStream) : _pStream(pStream) {}
@@ -30,7 +33,7 @@ public:
 protected:
 	~Writer() = default;
 public:
-	bool PutValue(const Value& value);
+	bool PutValue(String& str, const Value& value);
 	bool PutValues(const ValueList& valList);
 	Stream& GetStream() { return *_pStream; }
 public:

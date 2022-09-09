@@ -12,6 +12,11 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // Formatter
 //------------------------------------------------------------------------------
+bool Formatter::Format(const char* format, const Value& value)
+{
+	return Format(format, Source_Value(value));
+}
+
 bool Formatter::Format(const char* format, const ValueList& valueList)
 {
 	return Format(format, Source_ValueList(valueList));
@@ -392,6 +397,10 @@ char* Formatter::CopyDigits(char* dstp, char* dstpEnd, const char* srcp, int cnt
 	*dstp = '\0';
 	return dstp;
 }
+
+//------------------------------------------------------------------------------
+// Formatter::Source_Value
+//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // Formatter::Source_ValueList

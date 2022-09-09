@@ -61,6 +61,21 @@ public:
 		virtual Value* FetchString() = 0;
 		virtual bool Finish() { return true; }
 	};
+	class GURAX_DLLDECLARE Source_Value : public Source {
+	private:
+		const Value* _pValue;
+	public:
+		Source_Value(const Value& value) : _pValue(&value) {}
+	public:
+		virtual bool IsEnd() override { return !_pValue; }
+		virtual Value* FetchInt() override { return _pValue->Reference(); _pValue = nullptr; }
+		virtual Value* FetchUInt() override { return _pValue->Reference(); _pValue = nullptr; }
+		virtual Value* FetchInt64() override { return _pValue->Reference(); _pValue = nullptr; }
+		virtual Value* FetchUInt64() override { return _pValue->Reference(); _pValue = nullptr; }
+		virtual Value* FetchSizeT() override { return _pValue->Reference(); _pValue = nullptr; }
+		virtual Value* FetchDouble() override { return _pValue->Reference(); _pValue = nullptr; }
+		virtual Value* FetchString() override { return _pValue->Reference(); _pValue = nullptr; }
+	};
 	class GURAX_DLLDECLARE Source_ValueList : public Source {
 	private:
 		const ValueList& _valueList;
@@ -115,6 +130,7 @@ private:
 	const char* _lineSep;
 public:
 	Formatter(bool nilVisibleFlag = true) : _nilVisibleFlag(nilVisibleFlag), _lineSep("\n") {}
+	bool Format(const char* format, const Value& value);
 	bool Format(const char* format, const ValueList& valueList);
 	bool FormatV(const char* format, va_list ap);
 	bool VerifyFormatV(const char* format, va_list ap);

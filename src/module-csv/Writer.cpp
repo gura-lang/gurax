@@ -8,19 +8,24 @@ Gurax_BeginModuleScope(csv)
 //------------------------------------------------------------------------------
 // Writer
 //------------------------------------------------------------------------------
-bool Writer::PutValue(const Value& value)
+String Writer::_format = "%g";
+
+Writer::Writer(Stream* pStream) : _pStream(pStream)
 {
-#if 0
-	String str;
+	_str.reserve(2048);
+}
+
+bool Writer::PutValue(String& str, const Value& value)
+{
 	if (value.IsInvalid()) {
 		return true;
-	} else if (value.IsType<VTYPE_Number>()) {
-		str = Formatter::FormatValueList(_format.c_str(), ValueList(value));
-	} else if (value.IsType<VTYPE_Complex>()) {
-		str = Formatter::FormatValueList(_format.c_str(), ValueList(value));
-	} else if (value.IsType<VTYPE_String>()) {
+	} else if (value.IsType(VTYPE_Number)) {
+		str.FormatValue(_format.c_str(), value);
+	} else if (value.IsType(VTYPE_Complex)) {
+		str.FormatValue(_format.c_str(), value);
+	} else if (value.IsType(VTYPE_String)) {
 		str += '"';
-		for (const char *p = value.GetString(); *p != '\0'; p++) {
+		for (const char* p = Value_String::GetString(value); *p != '\0'; p++) {
 			char ch = *p;
 			str += ch;
 			if (ch == '"') str += ch;
@@ -31,20 +36,20 @@ bool Writer::PutValue(const Value& value)
 		return false;
 	}
 	_pStream->Print(str.c_str());
-#endif
 	return true;
 }
 
 bool Writer::PutValues(const ValueList& valList)
 {
+	_str.clear();
 	bool firstFlag = true;
-	for (Value* pValue : valList) {
-		if (firstFlag) {
-			_pStream->PutChar(',');
-			if (Error::IsIssued()) return false;
-			firstFlag = false;
-		}
-		if (!PutValue(*pValue)) return false;
+	ValueList::const_iterator ppValue = valList.begin();
+	if (ppValue == valList.end()) return true;
+	if (!PutValue(**ppValue)) return false;
+	for ( ; ppValue != valList.end(); ppValue++) {
+		_pStream->PutChar(',');
+		if (Error::IsIssued()) return false;
+		if (!PutValue(**ppValue)) return false;
 	}
 	_pStream->PutChar('\n');
 	return !Error::IsIssued();

@@ -9,6 +9,7 @@
 namespace Gurax {
 
 class StringList;
+class Value;
 class ValueList;
 
 //------------------------------------------------------------------------------
@@ -165,6 +166,7 @@ public:
 public:
 	String& FormatV(const char* format, va_list ap);
 	String& Format(const char* format, ...);
+	String& FormatValue(const char* format, const Value& value);
 	String& FormatValueList(const char* format, const ValueList& valueList);
 public:
 	static char DetermineQuote(const char* str);
