@@ -19,8 +19,8 @@ public:
 private:
 	String _str;
 	RefPtr<Stream> _pStream;
-private:
-	static String _format;
+public:
+	static String format;
 public:
 	// Constructor
 	Writer(Stream* pStream);

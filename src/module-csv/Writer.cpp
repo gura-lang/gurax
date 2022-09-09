@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(csv)
 //------------------------------------------------------------------------------
 // Writer
 //------------------------------------------------------------------------------
-String Writer::_format = "%g";
+String Writer::format = "%g";
 
 Writer::Writer(Stream* pStream) : _pStream(pStream)
 {
@@ -20,9 +20,9 @@ bool Writer::PutValue(String& str, const Value& value)
 	if (value.IsInvalid()) {
 		return true;
 	} else if (value.IsType(VTYPE_Number)) {
-		str.FormatValue(_format.c_str(), value);
+		str.FormatValue(format.c_str(), value);
 	} else if (value.IsType(VTYPE_Complex)) {
-		str.FormatValue(_format.c_str(), value);
+		str.FormatValue(format.c_str(), value);
 	} else if (value.IsType(VTYPE_String)) {
 		str += '"';
 		for (const char* p = Value_String::GetString(value); *p != '\0'; p++) {

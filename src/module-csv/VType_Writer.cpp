@@ -77,19 +77,25 @@ Gurax_ImplementMethod(Writer, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// csv.Writer#propSkeleton
-Gurax_DeclareProperty_R(Writer, propSkeleton)
+// csv.Writer.format
+Gurax_DeclareClassProperty_RW(Writer, format)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Writer, propSkeleton)
+Gurax_ImplementClassPropertyGetter(Writer, format)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	return new Value_String(Writer::format);
+}
+
+Gurax_ImplementClassPropertySetter(Writer, format)
+{
+	const char* formatToSet = Value_String::GetString(value);
+	if (!Formatter().VerifyFormat(formatToSet, Formatter::VaType::Float, Formatter::VaType::None)) return;
+	Writer::format = formatToSet;
 }
 
 //------------------------------------------------------------------------------
@@ -106,7 +112,7 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Writer, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Writer, propSkeleton));
+	Assign(Gurax_CreateClassProperty(Writer, format));
 }
 
 //------------------------------------------------------------------------------
