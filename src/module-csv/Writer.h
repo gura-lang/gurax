@@ -23,7 +23,7 @@ private:
 	static String _format;
 public:
 	// Constructor
-	Writer(Stream* pStream) : _pStream(pStream) {}
+	Writer(Stream* pStream);
 	// Copy constructor/operator
 	Writer(const Writer& src) = delete;
 	Writer& operator=(const Writer& src) = delete;

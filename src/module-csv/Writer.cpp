@@ -45,13 +45,13 @@ bool Writer::PutValues(const ValueList& valList)
 	bool firstFlag = true;
 	ValueList::const_iterator ppValue = valList.begin();
 	if (ppValue == valList.end()) return true;
-	if (!PutValue(**ppValue)) return false;
+	if (!PutValue(_str, **ppValue)) return false;
 	for ( ; ppValue != valList.end(); ppValue++) {
-		_pStream->PutChar(',');
-		if (Error::IsIssued()) return false;
-		if (!PutValue(**ppValue)) return false;
+		_str += ',';
+		if (!PutValue(_str, **ppValue)) return false;
 	}
-	_pStream->PutChar('\n');
+	_str += '\n';
+	_pStream->Print(_str);
 	return !Error::IsIssued();
 }
 
