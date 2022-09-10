@@ -27,11 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// csv.Writer(stream as Stream) {block?}
+// csv.Writer(stream:w as Stream) {block?}
 Gurax_DeclareConstructor(Writer)
 {
 	Declare(VTYPE_Writer, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::StreamW);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -51,51 +51,52 @@ Gurax_ImplementConstructor(Writer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// csv.Writer#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Writer, MethodSkeleton)
+// csv.Writer#WriteLine(fields+)
+Gurax_DeclareMethod(Writer, WriteLine)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("fields", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Writer, MethodSkeleton)
+Gurax_ImplementMethod(Writer, WriteLine)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	const ValueList& valList = args.PickList();
 	// Function body
-	return new Value_Number(num1 + num2);
+	valueThis.GetWriter().PutValues(valList, true);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// csv.Writer.format
-Gurax_DeclareClassProperty_RW(Writer, format)
+// csv.Writer#formatForNumber
+Gurax_DeclareProperty_RW(Writer, formatForNumber)
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Format string for converting a Number.");
 }
 
-Gurax_ImplementClassPropertyGetter(Writer, format)
+Gurax_ImplementPropertyGetter(Writer, formatForNumber)
 {
-	return new Value_String(Writer::format);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetWriter().GetFormatForNumber());
 }
 
-Gurax_ImplementClassPropertySetter(Writer, format)
+Gurax_ImplementPropertySetter(Writer, formatForNumber)
 {
+	auto& valueThis = GetValueThis(valueTarget);
 	const char* formatToSet = Value_String::GetString(value);
 	if (!Formatter().VerifyFormat(formatToSet, Formatter::VaType::Float, Formatter::VaType::None)) return;
-	Writer::format = formatToSet;
+	valueThis.GetWriter().SetFormatForNumber(formatToSet);
 }
 
 //------------------------------------------------------------------------------
@@ -110,9 +111,9 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Writer));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Writer, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Writer, WriteLine));
 	// Assignment of property
-	Assign(Gurax_CreateClassProperty(Writer, format));
+	Assign(Gurax_CreateProperty(Writer, formatForNumber));
 }
 
 //------------------------------------------------------------------------------

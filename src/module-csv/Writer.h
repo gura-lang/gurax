@@ -19,8 +19,7 @@ public:
 private:
 	String _str;
 	RefPtr<Stream> _pStream;
-public:
-	static String format;
+	String _formatForNumber;
 public:
 	// Constructor
 	Writer(Stream* pStream);
@@ -34,8 +33,10 @@ protected:
 	~Writer() = default;
 public:
 	bool PutValue(String& str, const Value& value);
-	bool PutValues(const ValueList& valList);
+	bool PutValues(const ValueList& valList, bool appendEOLFlag);
 	Stream& GetStream() { return *_pStream; }
+	void SetFormatForNumber(String formatForNumber) { _formatForNumber = formatForNumber; }
+	const char* GetFormatForNumber() const { return _formatForNumber.c_str(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Writer& other) const { return this == &other; }

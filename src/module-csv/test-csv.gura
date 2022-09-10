@@ -5,6 +5,28 @@
 import(util.tester) {*}
 import(csv)
 
+testText = R'''
+aaaaa,  "aaa"
+  "bb", ""aaa,
+  "aaaa" "aaa",1,2,3
+  "aaaa"  ,1,2,3
+"1234" aaa,1,2,3
+"1234" "5678"
+"1234" "5678,1,2
+,,
+"Hello ""world"", aaa",1,2
+"multiline
+test
+third line here",1,2
+"multiline again
+test
+third line here",1,2
+,,,,,,,,
+'''
+
 TestCase('Basic test') {
-	Println(csv.Test('hello', 4))
+	csv.Reader(testText.ToReader()).ReadLines {|row|
+		Println('----')
+		Println(('[' + row + ']').Join(','))
+	}
 }

@@ -8,9 +8,7 @@ Gurax_BeginModuleScope(csv)
 //------------------------------------------------------------------------------
 // Writer
 //------------------------------------------------------------------------------
-String Writer::format = "%g";
-
-Writer::Writer(Stream* pStream) : _pStream(pStream)
+Writer::Writer(Stream* pStream) : _pStream(pStream), _formatForNumber("%g")
 {
 	_str.reserve(2048);
 }
@@ -20,9 +18,9 @@ bool Writer::PutValue(String& str, const Value& value)
 	if (value.IsInvalid()) {
 		return true;
 	} else if (value.IsType(VTYPE_Number)) {
-		str.FormatValue(format.c_str(), value);
+		str.FormatValue(GetFormatForNumber(), value);
 	} else if (value.IsType(VTYPE_Complex)) {
-		str.FormatValue(format.c_str(), value);
+		str.FormatValue(GetFormatForNumber(), value);
 	} else if (value.IsType(VTYPE_String)) {
 		str += '"';
 		for (const char* p = Value_String::GetString(value); *p != '\0'; p++) {
@@ -39,7 +37,7 @@ bool Writer::PutValue(String& str, const Value& value)
 	return true;
 }
 
-bool Writer::PutValues(const ValueList& valList)
+bool Writer::PutValues(const ValueList& valList, bool appendEOLFlag)
 {
 	_str.clear();
 	bool firstFlag = true;
@@ -50,7 +48,7 @@ bool Writer::PutValues(const ValueList& valList)
 		_str += ',';
 		if (!PutValue(_str, **ppValue)) return false;
 	}
-	_str += '\n';
+	if (appendEOLFlag) _str += '\n';
 	_pStream->Print(_str);
 	return !Error::IsIssued();
 }

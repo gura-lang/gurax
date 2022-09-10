@@ -27,11 +27,11 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// csv.Reader(stream as Stream) {block?}
+// csv.Reader(stream:r as Stream) {block?}
 Gurax_DeclareConstructor(Reader)
 {
 	Declare(VTYPE_Reader, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -51,45 +51,43 @@ Gurax_ImplementConstructor(Reader)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// csv.Reader#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Reader, MethodSkeleton)
+// csv.Reader#ReadLine() {block?}
+Gurax_DeclareMethod(Reader, ReadLine)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_List, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Reader, MethodSkeleton)
+Gurax_ImplementMethod(Reader, ReadLine)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (!valueThis.GetReader().ReadLine(*pValueOwner)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_List(VTYPE_String, pValueOwner.release()));
 }
 
-//-----------------------------------------------------------------------------
-// Implementation of property
-//-----------------------------------------------------------------------------
-// csv.Reader#propSkeleton
-Gurax_DeclareProperty_R(Reader, propSkeleton)
+// csv.Reader#ReadLines() {block?}
+Gurax_DeclareMethod(Reader, ReadLines)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Skeleton.\n");
 }
 
-Gurax_ImplementPropertyGetter(Reader, propSkeleton)
+Gurax_ImplementMethod(Reader, ReadLines)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_ReadLine(valueThis.GetReader().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //------------------------------------------------------------------------------
@@ -104,9 +102,8 @@ void VType_Reader::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Reader));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Reader, MethodSkeleton));
-	// Assignment of property
-	Assign(Gurax_CreateProperty(Reader, propSkeleton));
+	Assign(Gurax_CreateMethod(Reader, ReadLine));
+	Assign(Gurax_CreateMethod(Reader, ReadLines));
 }
 
 //------------------------------------------------------------------------------

@@ -43,6 +43,24 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_ReadLine
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_ReadLine : public Iterator {
+private:
+	RefPtr<Reader> _pReader;
+public:
+	Iterator_ReadLine(Reader* pReader) : _pReader(pReader) {}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override {
+		return Flag::Finite | Flag::LenUndetermined;
+	}
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 Gurax_EndModuleScope(csv)
 
 #endif
