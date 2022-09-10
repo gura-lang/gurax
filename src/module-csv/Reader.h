@@ -23,7 +23,7 @@ private:
 	String _field;
 public:
 	// Constructor
-	Reader(Stream* pStream) : _pStream(pStream) {}
+	Reader(Stream* pStream);
 	// Copy constructor/operator
 	Reader(const Reader& src) = delete;
 	Reader& operator=(const Reader& src) = delete;

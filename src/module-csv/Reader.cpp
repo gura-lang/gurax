@@ -21,8 +21,8 @@ bool Reader::ReadLine(ValueOwner& valueOwner)
 	bool eatNextChar = true;
 	for (;;) {
 		if (eatNextChar) {
-			while ((ch = NextChar(sig)) == '\r') ;
-			if (sig.IsSignalled()) return false;
+			while ((ch = GetStream().GetChar()) == '\r') ;
+			if (Error::IsIssued()) return false;
 		}
 		eatNextChar = true;
 		if (stat == Stat::LineTop) {
@@ -33,11 +33,11 @@ bool Reader::ReadLine(ValueOwner& valueOwner)
 			eatNextChar = false;
 			stat = Stat::FieldTop;
 		} else if (stat == Stat::FieldTop) {
-			field.clear();
+			_field.clear();
 			if (ch == '"') {
 				stat = Stat::Quoted;
 			} else if (ch == '\n' || ch == '\0') {
-				valList.push_back(Value(field));
+				valueOwner.push_back(new Value_String(_field));
 				break;
 			} else {
 				eatNextChar = false;
@@ -45,29 +45,29 @@ bool Reader::ReadLine(ValueOwner& valueOwner)
 			}
 		} else if (stat == Stat::Field) {
 			if (ch == ',') {
-				valList.push_back(Value(field));
+				valueOwner.push_back(new Value_String(_field));
 				stat = Stat::FieldTop;
 			} else if (ch == '\n' || ch == '\0') {
-				valList.push_back(Value(field));
+				valueOwner.push_back(new Value_String(_field));
 				break;
 			} else {
-				field.push_back(ch);
+				_field.push_back(ch);
 			}
 		} else if (stat == Stat::Quoted) {
 			if (ch == '"') {
 				stat = Stat::QuotedEnd;
 			} else if (ch == '\0') {
-				valList.push_back(Value(field));
+				valueOwner.push_back(new Value_String(_field));
 				break;
 			} else {
-				field.push_back(ch);
+				_field.push_back(ch);
 			}
 		} else if (stat == Stat::QuotedEnd) {
 			if (ch == '"') {
-				field.push_back(ch);
+				_field.push_back(ch);
 				stat = Stat::Quoted;
 			} else if (ch == '\0') {
-				valList.push_back(Value(field));
+				valueOwner.push_back(new Value_String(_field));
 				break;
 			} else {
 				eatNextChar = false;
