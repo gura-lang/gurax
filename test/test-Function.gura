@@ -346,4 +346,7 @@ TestCase('Operator *') {
 	Tester(`('abcdefghijklmnopqrstuvwxyz'.Mid * 8))
 	Tester(`('abcdefghijklmnopqrstuvwxyz'.Mid * (8, 5)))
 	Tester(`(Color * ['black', 'red', 'green', ('blue', 64)]))
+	Person = struct { name as String, age as Number, mobile as String }
+	p = Person * ('hoge', 23, 'xxx-yyyy-zzzz')
+	Tester(`Format('%s %d %s', p.name, p.age, p.mobile))
 }
