@@ -333,3 +333,17 @@ TestCase('noCast') {
 	Tester(`f(3))
 	Tester(`g(3))
 }
+
+TestCase('Operator *') {
+	Tester(`(Format * 'Name'))
+	Tester(`(Format * ('Name:%s Age:%d', 'hoge', 23)))
+	Tester(`(math.Sqrt * 2))
+	Tester(`(math.Sqrt * (2,)))
+	Tester(`(math.Atan2 * (2, 3)))
+	Tester(`(Color * 'black'))
+	Tester(`(Color * ('black', 64)))
+	Tester(`('abcdefghijklmnopqrstuvwxyz'.Left * 8))
+	Tester(`('abcdefghijklmnopqrstuvwxyz'.Mid * 8))
+	Tester(`('abcdefghijklmnopqrstuvwxyz'.Mid * (8, 5)))
+	Tester(`(Color * ['black', 'red', 'green', ('blue', 64)]))
+}

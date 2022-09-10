@@ -217,6 +217,12 @@ void Value_VType::DoCall(Processor& processor, Argument& argument)
 	constructor.Call(processor, argument);
 }
 
+Value* Value_VType::DoEval(Processor& processor, Argument& argument) const
+{
+	const Function& constructor = GetVTypeThis().GetConstructor();
+	return constructor.Eval(processor, argument);
+}
+
 Value* Value_VType::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool notFoundErrorFlag)
 {
 	const PropSlot* pPropSlot = GetVTypeThis().LookupPropSlot(pSymbol);

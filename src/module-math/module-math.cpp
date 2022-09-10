@@ -13,6 +13,7 @@ private:
 	Operator* _pOperator;
 public:
 	Function_Unary(Operator* pOperator);
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const override;
 };
 
@@ -21,6 +22,15 @@ Function_Unary::Function_Unary(Operator* pOperator) :
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
+}
+
+Value* Function_Unary::DoEval(Processor& processor, Argument& argument) const
+{
+	// Arguments
+	ArgPicker args(argument);
+	Value& value = args.PickValue();
+	// Function body
+	return _pOperator->EvalUnary(processor, value);
 }
 
 void Function_Unary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
@@ -38,6 +48,7 @@ private:
 	Operator* _pOperator;
 public:
 	Function_Binary(Operator* pOperator);
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const override;
 };
 
@@ -47,6 +58,16 @@ Function_Binary::Function_Binary(Operator* pOperator) :
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("valueL", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("valueR", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
+}
+
+Value* Function_Binary::DoEval(Processor& processor, Argument& argument) const
+{
+	// Arguments
+	ArgPicker args(argument);
+	Value& valueL = args.PickValue();
+	Value& valueR = args.PickValue();
+	// Function body
+	return _pOperator->EvalBinary(processor, valueL, valueR);
 }
 
 void Function_Binary::DoCompose(Composer& composer, Expr_Caller& exprCaller) const
