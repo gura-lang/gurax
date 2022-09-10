@@ -77,6 +77,27 @@ public:
 	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
 };
 
+//------------------------------------------------------------------------------
+// Stream_StringReader
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Stream_StringReader : public Stream {
+private:
+	RefPtr<StringReferable> _pStr;
+public:
+	Stream_StringReader(StringReferable* pStr);
+public:
+	virtual const char* GetName() const override { return "String"; };
+	virtual const char* GetIdentifier() const override { return ""; }
+	virtual size_t DoGetBytes() override;
+	virtual bool DoClose() override { return true; }
+	virtual int DoGetChar() override;
+	virtual bool DoPutChar(char ch) override { return false; }
+	virtual size_t DoRead(void* buff, size_t len) override;
+	virtual bool DoWrite(const void* buff, size_t len) override { return false; }
+	virtual bool DoFlush() override { return false; }
+	virtual bool DoSeek(size_t offset, size_t offsetPrev) override;
+};
+
 #if 0
 //------------------------------------------------------------------------------
 // Stream_Pointer

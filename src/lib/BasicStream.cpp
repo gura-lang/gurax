@@ -96,6 +96,44 @@ bool Stream_Binary::DoSeek(size_t offset, size_t offsetPrev)
 	return true;
 }
 
+//------------------------------------------------------------------------------
+// Stream_StringReader
+//------------------------------------------------------------------------------
+Stream_StringReader::Stream_StringReader(StringReferable* pStr) :
+	Stream(Flag::Readable | Flag::BwdSeekable | Flag::FwdSeekable), _pStr(pStr)
+{
+}
+
+size_t Stream_StringReader::DoGetBytes()
+{
+	const String& strTgt = _pStr->GetString();
+	return strTgt.size();
+}
+
+int Stream_StringReader::DoGetChar()
+{
+	const String& strTgt = _pStr->GetString();
+	return (_offset < strTgt.size())? strTgt[_offset++] : -1;
+}
+
+size_t Stream_StringReader::DoRead(void* buff, size_t len)
+{
+	const String& strTgt = _pStr->GetString();
+	if (_offset > strTgt.size()) {
+		Error::Issue(ErrorType::RangeError, "the offset is out of range");
+		return 0;
+	}
+	size_t lenRead = strTgt.copy(reinterpret_cast<char*>(buff), len, _offset);
+	_offset += lenRead;
+	return lenRead;
+}
+
+bool Stream_StringReader::DoSeek(size_t offset, size_t offsetPrev)
+{
+	// nothing to do here
+	return true;
+}
+
 #if 0
 //------------------------------------------------------------------------------
 // Stream_Pointer

@@ -16,8 +16,11 @@ public:
 	Gurax_DeclareReferable(Reader);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("csv.Reader");
+public:
+	enum class Stat { LineTop, FieldTop, Field, Quoted, QuotedEnd };
 private:
 	RefPtr<Stream> _pStream;
+	String _field;
 public:
 	// Constructor
 	Reader(Stream* pStream) : _pStream(pStream) {}
@@ -31,6 +34,7 @@ protected:
 	~Reader() = default;
 public:
 	Stream& GetStream() { return *_pStream; }
+	bool ReadLine(ValueOwner& valueOwner);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Reader& other) const { return this == &other; }

@@ -1067,21 +1067,16 @@ Gurax_DeclareMethod(String, ToReader)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns a `stream` instance that reads the string content as a binary sequence.\n");
+		"Returns a `Stream` instance that reads the string content as a binary sequence.\n");
 }
 
 Gurax_ImplementMethod(String, ToReader)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	if (Error::IsIssued()) return Value::nil();
 	// Function body
-	const String& str = valueThis.GetStringSTL();
-#endif
-	return Value::nil();
+	RefPtr<Stream> pStream(new Stream_StringReader(valueThis.GetStringReferable().Reference()));
+	return argument.ReturnValue(processor, new Value_Stream(pStream.release()));
 }
 
 // String#ToSymbol() as Symbol {block?}
