@@ -455,11 +455,18 @@ bool Value_Complex::Format_e(Formatter& formatter, FormatterFlags& formatterFlag
 	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
 		formatterFlags.precision = FormatterFlags::Prec::Default;
 	}
-	formatterFlags.FormatNumber_e(GetComplex().real(), buff, sizeof(buff));
-	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
-	formatterFlags.FormatNumber_e(GetComplex().imag(), buff, sizeof(buff));
-	::strcat(buff, "j");
-	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	Double real = GetComplex().real();
+	Double imag = GetComplex().imag();
+	if (real != 0. || imag == 0.) {
+		formatterFlags.FormatNumber_e(real, buff, sizeof(buff));
+		if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	}
+	if (imag != 0.) {
+		if (real != 0. && imag > 0.) formatter.PutChar('+');
+		formatterFlags.FormatNumber_e(imag, buff, sizeof(buff));
+		::strcat(buff, "j");
+		if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	}
 	return true;
 }
 
@@ -469,11 +476,18 @@ bool Value_Complex::Format_f(Formatter& formatter, FormatterFlags& formatterFlag
 	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
 		formatterFlags.precision = FormatterFlags::Prec::Default;
 	}
-	formatterFlags.FormatNumber_f(GetComplex().real(), buff, sizeof(buff));
-	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
-	formatterFlags.FormatNumber_f(GetComplex().imag(), buff, sizeof(buff));
-	::strcat(buff, "j");
-	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	Double real = GetComplex().real();
+	Double imag = GetComplex().imag();
+	if (real != 0. || imag == 0.) {
+		formatterFlags.FormatNumber_f(real, buff, sizeof(buff));
+		if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	}
+	if (imag != 0.) {
+		if (real != 0. && imag > 0.) formatter.PutChar('+');
+		formatterFlags.FormatNumber_f(imag, buff, sizeof(buff));
+		::strcat(buff, "j");
+		if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	}
 	return true;
 }
 
@@ -483,11 +497,18 @@ bool Value_Complex::Format_g(Formatter& formatter, FormatterFlags& formatterFlag
 	if (formatterFlags.precision == FormatterFlags::Prec::Null) {
 		formatterFlags.precision = FormatterFlags::Prec::Default;
 	}
-	formatterFlags.FormatNumber_g(GetComplex().real(), buff, sizeof(buff));
-	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
-	formatterFlags.FormatNumber_g(GetComplex().imag(), buff, sizeof(buff));
-	::strcat(buff, "j");
-	if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	Double real = GetComplex().real();
+	Double imag = GetComplex().imag();
+	if (real != 0. || imag == 0.) {
+		formatterFlags.FormatNumber_g(real, buff, sizeof(buff));
+		if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	}
+	if (imag != 0.) {
+		if (real != 0. && imag > 0.) formatter.PutChar('+');
+		formatterFlags.FormatNumber_g(imag, buff, sizeof(buff));
+		::strcat(buff, "j");
+		if (!formatter.PutAlignedString(formatterFlags, buff)) return false;
+	}
 	return true;
 }
 

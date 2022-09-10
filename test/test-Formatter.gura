@@ -33,6 +33,36 @@ TestCase('%d specifier for Bool') {
 	Tester(`Format('%d %d', true, false))
 }
 
+TestCase('Complex') {
+	Tester(`Format('%e', 0+0j))
+	Tester(`Format('%e', 2+0j))
+	Tester(`Format('%e', -2+0j))
+	Tester(`Format('%e', 0+3j))
+	Tester(`Format('%e', 0-3j))
+	Tester(`Format('%e', 2+3j))
+	Tester(`Format('%e', -2+3j))
+	Tester(`Format('%e', 2-3j))
+	Tester(`Format('%e', -2-3j))
+	Tester(`Format('%f', 0+0j))
+	Tester(`Format('%f', 2+0j))
+	Tester(`Format('%f', -2+0j))
+	Tester(`Format('%f', 0+3j))
+	Tester(`Format('%f', 0-3j))
+	Tester(`Format('%f', 2+3j))
+	Tester(`Format('%f', -2+3j))
+	Tester(`Format('%f', 2-3j))
+	Tester(`Format('%f', -2-3j))
+	Tester(`Format('%g', 0+0j))
+	Tester(`Format('%g', 2+0j))
+	Tester(`Format('%g', -2+0j))
+	Tester(`Format('%g', 0+3j))
+	Tester(`Format('%g', 0-3j))
+	Tester(`Format('%g', 2+3j))
+	Tester(`Format('%g', -2+3j))
+	Tester(`Format('%g', 2-3j))
+	Tester(`Format('%g', -2-3j))
+}
+
 /*
 testcase {
 	print('%e\n' % (math.pi * 1000000000))
