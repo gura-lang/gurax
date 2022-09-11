@@ -51,14 +51,32 @@ Gurax_ImplementConstructor(Writer)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// csv.Writer#WriteLine(fields+)
-Gurax_DeclareMethod(Writer, WriteLine)
+// csv.Writer#ResetFormatForNumber():reduce
+Gurax_DeclareMethod(Writer, ResetFormatForNumber)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("fields", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
+	Declare(VTYPE_Writer, Flag::Reduce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Skeleton.\n");
+		"Resets foratForNumber property to its default value.\n");
+}
+
+Gurax_ImplementMethod(Writer, ResetFormatForNumber)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	valueThis.GetWriter().ResetFormatForNumber();
+	return valueThis.Reference();
+}
+
+// csv.Writer#WriteLine(values*):reduce
+Gurax_DeclareMethod(Writer, WriteLine)
+{
+	Declare(VTYPE_Writer, Flag::Reduce);
+	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Writes a line of values in the CSV format.\n");
 }
 
 Gurax_ImplementMethod(Writer, WriteLine)
@@ -70,7 +88,7 @@ Gurax_ImplementMethod(Writer, WriteLine)
 	const ValueList& valList = args.PickList();
 	// Function body
 	valueThis.GetWriter().PutValues(valList, true);
-	return Value::nil();
+	return valueThis.Reference();
 }
 
 //-----------------------------------------------------------------------------
@@ -95,7 +113,8 @@ Gurax_ImplementPropertySetter(Writer, formatForNumber)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	const char* formatToSet = Value_String::GetString(value);
-	if (!Formatter().VerifyFormat(formatToSet, Formatter::VaType::Float, Formatter::VaType::None)) return;
+	if (!Formatter().VerifyFormat(formatToSet, Formatter::VaType::Int, Formatter::VaType::None) &&
+		!Formatter().VerifyFormat(formatToSet, Formatter::VaType::Float, Formatter::VaType::None)) return;
 	valueThis.GetWriter().SetFormatForNumber(formatToSet);
 }
 
@@ -111,6 +130,7 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Writer));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Writer, ResetFormatForNumber));
 	Assign(Gurax_CreateMethod(Writer, WriteLine));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Writer, formatForNumber));

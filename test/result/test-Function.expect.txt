@@ -351,3 +351,16 @@ OK
 ======== noCast ========
 f(3) .. OK
 g(3) .. a can't cast from Number to String
+======== Operator * ========
+Format * 'Name' .. Name
+Format * ('Name:%s Age:%d', 'hoge', 23) .. Name:hoge Age:23
+math.Sqrt * 2 .. 1.41421
+math.Sqrt * (2,) .. 1.41421
+math.Atan2 * (2, 3) .. 0.588003
+Color * 'black' .. <Color:#000000,ff>
+Color * ('black', 64) .. <Color:#000000,40>
+'abcdefghijklmnopqrstuvwxyz'.Left * 8 .. abcdefgh
+'abcdefghijklmnopqrstuvwxyz'.Mid * 8 .. ijklmnopqrstuvwxyz
+'abcdefghijklmnopqrstuvwxyz'.Mid * (8, 5) .. ijklm
+Color * ['black', 'red', 'green', ('blue', 64)] .. [<Color:#000000,ff>, <Color:#ff0000,ff>, <Color:#008000,ff>, <Color:#0000ff,40>]
+Format('%s %d %s', p.name, p.age, p.mobile) .. hoge 23 xxx-yyyy-zzzz

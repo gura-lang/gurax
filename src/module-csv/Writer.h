@@ -20,6 +20,8 @@ private:
 	String _str;
 	RefPtr<Stream> _pStream;
 	String _formatForNumber;
+private:
+	static const char* _formatForNumberDefault;
 public:
 	// Constructor
 	Writer(Stream* pStream);
@@ -36,6 +38,7 @@ public:
 	bool PutValues(const ValueList& valList, bool appendEOLFlag);
 	Stream& GetStream() { return *_pStream; }
 	void SetFormatForNumber(String formatForNumber) { _formatForNumber = formatForNumber; }
+	void ResetFormatForNumber() { _formatForNumber = _formatForNumberDefault; }
 	const char* GetFormatForNumber() const { return _formatForNumber.c_str(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

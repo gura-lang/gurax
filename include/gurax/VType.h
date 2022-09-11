@@ -78,6 +78,12 @@ public:
 	const Frame* GetFrameOuter() const { return _pFrame->GetFrameOuter(); }
 	Frame& GetFrameOfMember() { return *_pFrame->GetFrameLocal(); }
 	const Frame& GetFrameOfMember() const { return *_pFrame->GetFrameLocal(); }
+	ValueMap& GetValueMap() {
+		return dynamic_cast<Frame_OfMember*>(_pFrame->GetFrameLocal())->GetValueMap();
+	}
+	const ValueMap& GetValueMap() const {
+		return dynamic_cast<Frame_OfMember*>(_pFrame->GetFrameLocal())->GetValueMap();
+	}
 	PropSlotMap& GetPropSlotMap() {
 		return dynamic_cast<Frame_OfMember*>(_pFrame->GetFrameLocal())->GetPropSlotMap();
 	}

@@ -23,8 +23,7 @@ class ValueMap;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE FrameMap : public Referable {
 public:
-	using Map = std::unordered_map<const Symbol*, Frame*,
-						Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
+	using Map = std::unordered_map<const Symbol*, Frame*, Symbol::Hash_UniqId, Symbol::EqualTo_UniqId>;
 private:
 	Map _map;
 public:
@@ -208,6 +207,7 @@ protected:
 	// Destructor
 	virtual ~Frame_OfMember() override;
 public:
+	ValueMap& GetValueMap() { return *_pValueMap; }
 	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }
 public:
 	// Virtual functions of Frame

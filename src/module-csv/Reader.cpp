@@ -27,9 +27,14 @@ bool Reader::ReadLine(ValueOwner& valueOwner)
 		eatNextChar = true;
 		switch (stat) {
 		case Stat::LineTop:
-			if (ch == '\0') return false;
-			eatNextChar = false;
-			stat = Stat::FieldTop;
+			if (ch == '\0') {
+				return false;
+			} else if (ch == '\n') {
+				contFlag = false;
+			} else {
+				eatNextChar = false;
+				stat = Stat::FieldTop;
+			}
 			break;
 		case Stat::FieldTop:
 			_field.clear();
@@ -85,7 +90,7 @@ bool Reader::ReadLine(ValueOwner& valueOwner)
 
 String Reader::ToString(const StringStyle& ss) const
 {
-	return String().Format("csv.Reader");
+	return String().Format("csv.Reader:%s", _pStream->GetName());
 }
 
 //------------------------------------------------------------------------------
@@ -100,7 +105,7 @@ Value* Iterator_ReadLine::DoNextValue()
 
 String Iterator_ReadLine::ToString(const StringStyle& ss) const
 {
-	return String().Format("csv.ReadLine");
+	return String().Format("csv.ReadLine:%s", _pReader->GetStream().GetName());
 }
 
 Gurax_EndModuleScope(csv)

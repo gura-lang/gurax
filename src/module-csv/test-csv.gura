@@ -5,28 +5,70 @@
 import(util.tester) {*}
 import(csv)
 
-testText = R'''
-aaaaa,  "aaa"
-  "bb", ""aaa,
-  "aaaa" "aaa",1,2,3
-  "aaaa"  ,1,2,3
-"1234" aaa,1,2,3
-"1234" "5678"
-"1234" "5678,1,2
-,,
-"Hello ""world"", aaa",1,2
-"multiline
-test
-third line here",1,2
-"multiline again
-test
-third line here",1,2
-,,,,,,,,
-'''
+TestCase('Property') {
+	csv.Writer.PrintPropSlots()
+	csv.Reader.PrintPropSlots()
+}
 
-TestCase('Basic test') {
+TestCase('csv.Writer') {
+	w = csv.Writer(sys.cout)
+	w.WriteLine('field1')
+	w.WriteLine('field1', 'field2')
+	w.WriteLine('field1', 'field2', 'field3')
+	w.WriteLine('field1', 'field2', 'field3', 'field4')
+	w.WriteLine * ('field1', 'field2', 'field3', 'field4', 'field5')
+	w.WriteLine()
+	w.WriteLine(0).WriteLine(0, 1).WriteLine(0, 1, 2)
+	w.WriteLine(0, 1, 2, 3.1415)
+	w.formatForNumber = '%08d'
+	w.WriteLine(0, 1, 2, 3.1415)
+	w.formatForNumber = '%08x'
+	w.WriteLine(0x12345678, 0xffffffff, 0xa8a8a8a8)
+	w.ResetFormatForNumber().WriteLine(0, 1, 2, 3.1415)
+	csv.Writer(sys.cout) {|w|
+		Tester(`w.formatForNumber)
+	}
+}
+
+TestCase('csv.Reader') {
+	testText = R'''
+	field1
+	field1,field2
+	field1,field2,field3
+	field1,field2,field3,field4
+	field1, field2,field3 , field4 ,field5
+	"field1"
+	 "field1"
+	 "field1" 
+	"field1","field2"
+	"field1" ,"field2"
+	 "field1", field2
+	 "field1", ""field2
+	 "field1" "trail",field2,field3,field4
+	 "field1" ,field2
+	"field1" trail,field2,field3,field4
+	"field1" "trail"
+	"field1" "trail,field2,field3
+	
+	A
+	,
+	,,
+	,,,,,,,,
+	,,field3,,,,field7,,
+	"Hello ""world"", aaa",field2,field3
+	"multiline
+	test
+	third line here",field2,field3
+	"multiline again
+	test
+	third line here",field2,field3
+	'''
 	csv.Reader(testText.ToReader()).ReadLines {|row|
 		Println('----')
-		Println(('[' + row + ']').Join(','))
+		if (row.IsEmpty()) {
+			Println('(empty)')
+		} else {
+			Println(('[' + row + ']').Join(','))
+		}
 	}
 }
