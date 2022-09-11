@@ -50,6 +50,29 @@ Gurax_ImplementFunction(VType)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// VType#__memberSymbols__() {block?}
+Gurax_DeclareClassMethod(VType, __memberSymbols__)
+{
+	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementClassMethod(VType, __memberSymbols__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	SymbolList symbolList;
+	valueThis.GetVTypeThis().GetFrameOfMember().GatherSymbol(symbolList);
+	//valueThis.GetVTypeThis().GatherMemberSymbol(symbolList);
+	symbolList.Sort();
+	RefPtr<Iterator> pIterator(new Iterator_Symbol(std::move(symbolList)));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // VType#__propSlots__() {block?}
 Gurax_DeclareClassMethod(VType, __propSlots__)
 {
@@ -157,6 +180,7 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(VType));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(VType, __memberSymbols__));
 	Assign(Gurax_CreateMethod(VType, __propSlots__));
 	Assign(Gurax_CreateMethod(VType, __propSlot__));
 	// Assignment of property

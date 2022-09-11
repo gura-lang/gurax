@@ -1093,6 +1093,30 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
+//------------------------------------------------------------------------------
+// Iterator_Symbol
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Symbol : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Symbol");
+private:
+	SymbolList _symbolList;
+	size_t _idx;
+public:
+	Iterator_Symbol() : _idx(0) {}
+	Iterator_Symbol(SymbolList symbolList) : _symbolList(symbolList), _idx(0) {}
+public:
+	SymbolList& GetSymbolList() { return _symbolList; }
+	const SymbolList& GetSymbolList() const { return _symbolList; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetSymbolList().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 }
 
 #endif

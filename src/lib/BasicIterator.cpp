@@ -1124,4 +1124,20 @@ String Iterator_Combination::ToString(const StringStyle& ss) const
 	return String().Format("Combination:n=%zu:r=%zu", GetValueOwner().size(), _nExtract);
 }
 
+//------------------------------------------------------------------------------
+// Iterator_Symbol
+//------------------------------------------------------------------------------
+Value* Iterator_Symbol::DoNextValue()
+{
+	if (_idx >= _symbolList.size()) return nullptr;
+	return new Value_Symbol(_symbolList[_idx++]);
+}
+
+String Iterator_Symbol::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Format("Symbol");
+	return str;
+}
+
 }
