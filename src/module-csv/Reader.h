@@ -49,8 +49,9 @@ public:
 class GURAX_DLLDECLARE Iterator_ReadLine : public Iterator {
 private:
 	RefPtr<Reader> _pReader;
+	bool _asListFlag;
 public:
-	Iterator_ReadLine(Reader* pReader) : _pReader(pReader) {}
+	Iterator_ReadLine(Reader* pReader, bool asListFlag) : _pReader(pReader), _asListFlag(asListFlag) {}
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {

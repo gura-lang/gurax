@@ -100,7 +100,11 @@ Value* Iterator_ReadLine::DoNextValue()
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	if (!_pReader->ReadLine(*pValueOwner)) return nullptr;
-	return new Value_List(VTYPE_String, pValueOwner.release());
+	if (_asListFlag) {
+		return new Value_List(VTYPE_String, pValueOwner.release());
+	} else {
+		return new Value_Tuple(pValueOwner.release());
+	}
 }
 
 String Iterator_ReadLine::ToString(const StringStyle& ss) const

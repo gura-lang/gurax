@@ -51,11 +51,12 @@ Gurax_ImplementConstructor(Reader)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// csv.Reader#ReadLine() {block?}
+// csv.Reader#ReadLine():[asList] {block?}
 Gurax_DeclareMethod(Reader, ReadLine)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(asList));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -65,17 +66,22 @@ Gurax_ImplementMethod(Reader, ReadLine)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	// Argument
+	bool asListFlag = argument.IsSet(Gurax_Symbol(asList));
 	// Function body
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	if (!valueThis.GetReader().ReadLine(*pValueOwner)) return Value::nil();
-	return argument.ReturnValue(processor, new Value_List(VTYPE_String, pValueOwner.release()));
+	return asListFlag?
+		argument.ReturnValue(processor, new Value_List(VTYPE_String, pValueOwner.release())) :
+		argument.ReturnValue(processor, new Value_Tuple(pValueOwner.release()));
 }
 
-// csv.Reader#ReadLines() {block?}
+// csv.Reader#ReadLines():[asList] {block?}
 Gurax_DeclareMethod(Reader, ReadLines)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	DeclareAttrOpt(Gurax_Symbol(asList));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -85,8 +91,10 @@ Gurax_ImplementMethod(Reader, ReadLines)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	// Argument
+	bool asListFlag = argument.IsSet(Gurax_Symbol(asList));
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_ReadLine(valueThis.GetReader().Reference()));
+	RefPtr<Iterator> pIterator(new Iterator_ReadLine(valueThis.GetReader().Reference(), asListFlag));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

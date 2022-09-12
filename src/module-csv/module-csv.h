@@ -11,6 +11,12 @@
 #include "VType_Writer.h"
 
 Gurax_BeginModuleHeader(csv)
+
+//------------------------------------------------------------------------------
+// Symbol
+//------------------------------------------------------------------------------
+Gurax_DeclareSymbol(asList);
+
 Gurax_EndModuleHeader(csv)
 
 #endif

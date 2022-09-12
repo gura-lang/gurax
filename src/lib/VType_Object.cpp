@@ -46,8 +46,8 @@ Gurax_ImplementConstructor(Object)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Object#__prop__(symbol:Symbol):map {block?}
-Gurax_DeclareMethod(Object, __prop__)
+// Object##__prop__(symbol:Symbol):map {block?}
+Gurax_DeclareHybridMethod(Object, __prop__)
 {
 	Declare(VTYPE_Bool, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
@@ -57,7 +57,7 @@ Gurax_DeclareMethod(Object, __prop__)
 		"Returns the value of the specified property.\n");
 }
 
-Gurax_ImplementMethod(Object, __prop__)
+Gurax_ImplementHybridMethod(Object, __prop__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);

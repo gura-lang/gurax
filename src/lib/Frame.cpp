@@ -226,6 +226,11 @@ void Frame_ValueMap::GatherSymbol(SymbolList& symbolList) const
 	_pValueMap->GatherSymbol(symbolList);
 }
 
+void Frame_ValueMap::GatherMethodSymbol(SymbolList& symbolList) const
+{
+	_pValueMap->GatherMethodSymbol(symbolList);
+}
+
 //------------------------------------------------------------------------------
 // Frame_OfMember
 //------------------------------------------------------------------------------
@@ -283,6 +288,11 @@ void Frame_OfMember::GatherSymbol(SymbolList& symbolList) const
 	_pPropSlotMap->GatherSymbol(symbolList);
 }
 
+void Frame_OfMember::GatherMethodSymbol(SymbolList& symbolList) const
+{
+	_pValueMap->GatherMethodSymbol(symbolList);
+}
+
 //------------------------------------------------------------------------------
 // Frame_Branch
 //------------------------------------------------------------------------------
@@ -331,6 +341,11 @@ void Frame_Basement::GatherSymbol(SymbolList& symbolList) const
 	_pFrameOuter->GatherSymbol(symbolList);
 }
 
+void Frame_Basement::GatherMethodSymbol(SymbolList& symbolList) const
+{
+	_pFrameOuter->GatherMethodSymbol(symbolList);
+}
+
 //------------------------------------------------------------------------------
 // Frame_Module
 //------------------------------------------------------------------------------
@@ -373,6 +388,11 @@ void Frame_Module::GatherSymbol(SymbolList& symbolList) const
 	if (_pFrameLocal) _pFrameLocal->GatherSymbol(symbolList);
 }
 
+void Frame_Module::GatherMethodSymbol(SymbolList& symbolList) const
+{
+	if (_pFrameLocal) _pFrameLocal->GatherMethodSymbol(symbolList);
+}
+
 //------------------------------------------------------------------------------
 // Frame_Scope
 //------------------------------------------------------------------------------
@@ -413,6 +433,11 @@ Value* Frame_Scope::DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc)
 void Frame_Scope::GatherSymbol(SymbolList& symbolList) const
 {
 	if (_pFrameLocal) _pFrameLocal->GatherSymbol(symbolList);
+}
+
+void Frame_Scope::GatherMethodSymbol(SymbolList& symbolList) const
+{
+	if (_pFrameLocal) _pFrameLocal->GatherMethodSymbol(symbolList);
 }
 
 //------------------------------------------------------------------------------
@@ -462,6 +487,11 @@ Value* Frame_Block::DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc)
 void Frame_Block::GatherSymbol(SymbolList& symbolList) const
 {
 	_pFrameLocal->GatherSymbol(symbolList);
+}
+
+void Frame_Block::GatherMethodSymbol(SymbolList& symbolList) const
+{
+	_pFrameLocal->GatherMethodSymbol(symbolList);
 }
 
 }

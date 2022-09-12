@@ -51,6 +51,15 @@ void ValueMap::GatherSymbol(SymbolList& symbolList) const
 	}
 }
 
+void ValueMap::GatherMethodSymbol(SymbolList& symbolList) const
+{
+	for (auto pair : _map) {
+		const Symbol* pSymbol = pair.first;
+		const Value* pValue = pair.second;
+		if (pValue->IsInstanceOf(VTYPE_Function)) symbolList.push_back(pSymbol);
+	}
+}
+
 String ValueMap::ToString(const StringStyle& ss) const
 {
 	String str;

@@ -81,7 +81,7 @@ public:
 	virtual bool CanBeCallableMember() const override { return false; }
 	virtual bool CanEvalAsMethod(const Function& function) const override;
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const override {
-		GetVTypeThis().GatherMemberSymbol(symbolList);
+		GetVTypeThis().GatherMemberSymbol(symbolList, true);
 	}
 	virtual const DeclCallable* GetDeclCallableWithError() override;
 	virtual const DeclCallable* GetDeclCallable() override;

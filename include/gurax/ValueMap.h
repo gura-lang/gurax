@@ -33,6 +33,7 @@ public:
 	SymbolList GetKeys() const { return SymbolList::CollectKeys(*this); }
 	bool ExportTo(Frame& frameDst, bool overwriteFlag) const;
 	void GatherSymbol(SymbolList& symbolList) const;
+	void GatherMethodSymbol(SymbolList& symbolList) const;
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

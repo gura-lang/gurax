@@ -259,7 +259,7 @@ public:
 	virtual bool CanBeCallableMember() const { return false; }
 	virtual bool CanEvalAsMethod(const Function& function) const;
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const {
-		GetVTypeCustom().GatherMemberSymbol(symbolList);
+		GetVTypeCustom().GatherMemberSymbol(symbolList, true);
 	}
 	virtual const DeclCallable* GetDeclCallableWithError();
 	virtual const DeclCallable* GetDeclCallable();
