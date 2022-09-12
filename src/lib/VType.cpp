@@ -24,16 +24,16 @@ void VType::Assign(Function* pFunction)
 	GetFrameOfMember().Assign(pFunction);
 }
 
-void VType::GatherMemberSymbol(SymbolList& symbolList, bool inheritFlag) const
+void VType::GatherMemberSymbol(SymbolList& symbolList, bool escalateFlag) const
 {
 	GetFrameOfMember().GatherSymbol(symbolList);
-	if (inheritFlag && _pVTypeInh) _pVTypeInh->GatherMemberSymbol(symbolList, inheritFlag);
+	if (escalateFlag && _pVTypeInh) _pVTypeInh->GatherMemberSymbol(symbolList, escalateFlag);
 }
 
-void VType::GatherMethodSymbol(SymbolList& symbolList, bool inheritFlag) const
+void VType::GatherMethodSymbol(SymbolList& symbolList, bool escalateFlag) const
 {
 	GetFrameOfMember().GatherMethodSymbol(symbolList);
-	if (inheritFlag && _pVTypeInh) _pVTypeInh->GatherMethodSymbol(symbolList, inheritFlag);
+	if (escalateFlag && _pVTypeInh) _pVTypeInh->GatherMethodSymbol(symbolList, escalateFlag);
 }
 
 void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const

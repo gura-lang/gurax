@@ -99,8 +99,8 @@ public:
 	void Assign(VType& vtype) { GetFrameOfMember().Assign(vtype); }
 	void Assign(Function* pFunction);
 	void Assign(PropSlot* pPropSlot) { GetPropSlotMap().Assign(pPropSlot); }
-	void GatherMemberSymbol(SymbolList& symbolList, bool inheritFlag) const;
-	void GatherMethodSymbol(SymbolList& symbolList, bool inheritFlag) const;
+	void GatherMemberSymbol(SymbolList& symbolList, bool escalateFlag) const;
+	void GatherMethodSymbol(SymbolList& symbolList, bool escalateFlag) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;

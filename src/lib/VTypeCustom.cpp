@@ -145,8 +145,7 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 //------------------------------------------------------------------------------
 // VTypeCustom::ConstructorClass
 //------------------------------------------------------------------------------
-VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable,
-												Expr_Block* pExprBody) :
+VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, Expr_Block* pExprBody) :
 	Function(Type::Constructor, Symbol::Empty, pDeclCallable),
 	_vtypeCustom(vtypeCustom), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst())
 {
