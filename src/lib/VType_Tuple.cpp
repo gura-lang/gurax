@@ -214,6 +214,9 @@ void VType_Tuple::DoPrepare(Frame& frameOuter)
 
 Value* VType_Tuple::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
+	if (value.HasCustomProp()) {
+		return new Value_Tuple(value.GetCustomProps().Reference());
+	}
 	return nullptr;
 }
 

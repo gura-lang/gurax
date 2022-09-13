@@ -117,6 +117,7 @@ public:
 		bool InitCustomProp();
 		void SetCustomProp(size_t iProp, Value* pValue);
 		Value* GetCustomProp(size_t iProp);
+		const ValueOwner& GetCustomProps() { return *_pValuesProp; }
 	};
 private:
 	// These values are initialized by Value::CreateConstant().
@@ -217,6 +218,7 @@ public:
 	Function& LookupMethod(const Symbol* pSymbol) const;
 public:
 	bool InitCustomProp(VTypeCustom& vtypeCustom, Processor* pProcessor);
+	bool HasCustomProp() const { return !!_pCustomPack; }
 	void SetCustomProp(size_t iProp, Value* pValue) {
 		if (_pCustomPack) _pCustomPack->SetCustomProp(iProp, pValue);
 	}
@@ -224,6 +226,7 @@ public:
 		if (_pCustomPack) return _pCustomPack->GetCustomProp(iProp);
 		return Value::nil();
 	}
+	const ValueOwner& GetCustomProps() const { return _pCustomPack->GetCustomProps(); }
 public:
 	// Virtual functions
 	virtual Value* Clone() const = 0;

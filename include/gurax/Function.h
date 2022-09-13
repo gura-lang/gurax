@@ -308,6 +308,8 @@ public:
 protected:
 	// Destructor
 	virtual ~Constructor() = default;
+public:
+	virtual bool GatherPropValue(ValueOwner& valueOwner, Value& valueThis) const { return false; }
 };
 
 }

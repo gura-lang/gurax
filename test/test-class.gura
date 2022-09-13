@@ -589,3 +589,24 @@ TestCase('CallableMember') {
 	Tester(`a.f2)
 	Tester(`a.f3)
 }
+
+TestCase('Cast to Tuple') {
+	A = class {
+		v1 = 'value1'
+		v2 = 'value2'
+		s1:static = 'static1'
+		v3 = 'value3'
+	}
+	B = class(A) {
+		s2:static = 'static2'
+		v4 = 'value4'
+		v5 = 'value5'
+	}
+	C = class(B) {
+		v6 = 'value6'
+		s3:static = 'static3'
+		v7 = 'value7'
+	}
+	c = C()
+	Tester(`(c as Tuple))
+}

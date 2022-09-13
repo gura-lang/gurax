@@ -33,3 +33,9 @@ a3.c .. set by a2
 a1.c .. set by A
 a2.c .. set by A
 a3.c .. set by A
+======== Cast to Tuple ========
+A() as Tuple .. ('value1', 'value2', <Nil>, 'value4', <Nil>)
+A('Value1') as Tuple .. ('Value1', 'value2', <Nil>, 'value4', <Nil>)
+A('VALUE1', 'VALUE2') as Tuple .. ('VALUE1', 'VALUE2', <Nil>, 'value4', <Nil>)
+A('VALUE1', 'VALUE2', 'VALUE3', 'VALUE4', 'VALUE5') as Tuple .. ('VALUE1', 'VALUE2', 'VALUE3', 'VALUE4', 'VALUE5')
+A() as Tuple .. ()

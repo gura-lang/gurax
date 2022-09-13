@@ -71,3 +71,19 @@ TestCase('Class property') {
 	Tester(`a2.c)
 	Tester(`a3.c)
 }
+
+TestCase('Cast to Tuple') {
+	A = struct {
+		v1 = 'value1'
+		v2 = 'value2'
+		v3
+		v4 = 'value4'
+		v5
+	}
+	Tester(`(A() as Tuple))
+	Tester(`(A('Value1') as Tuple))
+	Tester(`(A('VALUE1', 'VALUE2') as Tuple))
+	Tester(`(A('VALUE1', 'VALUE2', 'VALUE3', 'VALUE4', 'VALUE5') as Tuple))
+	A = struct {}	
+	Tester(`(A() as Tuple))
+}

@@ -284,3 +284,5 @@ C.f3() this=<C>, v1=1, v2=2, v3=3
 a.f1 .. <CallableMember:A.f1()>
 a.f2 .. <CallableMember:A.f2()>
 a.f3 .. <Function:Println(values* as Any):map>
+======== Cast to Tuple ========
+c as Tuple .. ('value1', 'value2', 'value3', 'value4', 'value5', 'value6', 'value7')
