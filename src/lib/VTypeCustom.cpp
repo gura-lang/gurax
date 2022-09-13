@@ -146,7 +146,7 @@ void VTypeCustom::SetCustomPropOfClass(size_t iProp, Value* pValue)
 // VTypeCustom::ConstructorClass
 //------------------------------------------------------------------------------
 VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, Expr_Block* pExprBody) :
-	Function(Type::Constructor, Symbol::Empty, pDeclCallable),
+	Constructor(Symbol::Empty, pDeclCallable),
 	_vtypeCustom(vtypeCustom), _pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst())
 {
 	if (_pPUnitBody && _pPUnitBody->IsSequenceBegin()) _pPUnitBody = _pPUnitBody->GetPUnitCont();
@@ -204,7 +204,7 @@ String VTypeCustom::ConstructorClass::ToString(const StringStyle& ss) const
 // VTypeCustom::ConstructorClassDefault
 //------------------------------------------------------------------------------
 VTypeCustom::ConstructorClassDefault::ConstructorClassDefault(VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable) :
-	Function(Type::Constructor, Symbol::Empty, pDeclCallable), _vtypeCustom(vtypeCustom)
+	Constructor(Symbol::Empty, pDeclCallable), _vtypeCustom(vtypeCustom)
 {
 }
 
@@ -241,7 +241,7 @@ String VTypeCustom::ConstructorClassDefault::ToString(const StringStyle& ss) con
 //------------------------------------------------------------------------------
 VTypeCustom::ConstructorStruct::ConstructorStruct(
 	VTypeCustom& vtypeCustom, DeclCallable* pDeclCallable, PropSlotOwner* pPropSlotOwner) :
-	Function(Type::Constructor, Symbol::Empty, pDeclCallable),
+	Constructor(Symbol::Empty, pDeclCallable),
 	_vtypeCustom(vtypeCustom), _pPropSlotOwner(pPropSlotOwner)
 {
 }

@@ -12,7 +12,7 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE VTypeCustom : public VType {
 public:
-	class ConstructorClass : public Function {
+	class ConstructorClass : public Constructor {
 	protected:
 		VTypeCustom& _vtypeCustom;
 		RefPtr<Expr_Block> _pExprBody;
@@ -28,7 +28,7 @@ public:
 		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
 	};
-	class ConstructorClassDefault : public Function {
+	class ConstructorClassDefault : public Constructor {
 	protected:
 		VTypeCustom& _vtypeCustom;
 	public:
@@ -40,7 +40,7 @@ public:
 		virtual Value* DoEval(Processor& processor, Argument& argument) const override;
 		virtual String ToString(const StringStyle& ss = StringStyle::Empty) const override;
 	};
-	class ConstructorStruct : public Function {
+	class ConstructorStruct : public Constructor {
 	protected:
 		VTypeCustom& _vtypeCustom;
 		RefPtr<PropSlotOwner> _pPropSlotOwner;

@@ -292,6 +292,7 @@ public:
 	Gurax_DeclareReferable(Constructor);
 public:
 	// Constructor
+	Constructor(const Symbol* pSymbol, DeclCallable* pDeclCallable) : Function(Type::Constructor, pSymbol, pDeclCallable) {}		
 	Constructor(const char* name, DeclCallable::Flags flags) : Function(Type::Constructor, name, flags) {}		
 	// Copy constructor/operator
 	Constructor(const Constructor& src) = delete;
