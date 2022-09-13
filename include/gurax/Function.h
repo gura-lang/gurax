@@ -18,7 +18,7 @@ public: \
 	Statement_##name(const char* name_ = strName); \
 	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const override; \
 }; \
-Statement_##name::Statement_##name(const char* name_) : Function(Type::Statement, name_, Flag::None) \
+Statement_##name::Statement_##name(const char* name_) : Function(Type::Statement, name_, Flag::None)
 
 #define Gurax_DeclareStatement(name) Gurax_DeclareStatementAlias(name, #name)
 
@@ -34,7 +34,7 @@ public: \
 	Function_##name(const char* name_ = strName); \
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
 }; \
-Function_##name::Function_##name(const char* name_) : Function(Type::Function, name_, Flag::None) \
+Function_##name::Function_##name(const char* name_) : Function(Type::Function, name_, Flag::None)
 
 #define Gurax_DeclareFunction(name) Gurax_DeclareFunctionAlias(name, #name)
 
@@ -49,12 +49,12 @@ Value* Function_##name::DoEval(Processor& processor, Argument& argument) const
 
 // Declaration/implementation/creation of Constructor
 #define Gurax_DeclareConstructorAlias(name, strName) \
-class Constructor_##name : public Function { \
+class Constructor_##name : public Constructor { \
 public: \
 	Constructor_##name(const char* name_ = strName); \
 	virtual Value* DoEval(Processor& processor, Argument& argument) const override; \
 }; \
-Constructor_##name::Constructor_##name(const char* name_) : Function(Type::Constructor, name_, Flag::None) \
+Constructor_##name::Constructor_##name(const char* name_) : Constructor(name_, Flag::None)
 
 #define Gurax_DeclareConstructor(name) Gurax_DeclareConstructorAlias(name, #name)
 
@@ -281,6 +281,27 @@ public:
 	virtual Value* DoEval(Processor& processor, Argument& argument) const { return Value::nil(); }
 	virtual void DoCompose(Composer& composer, Expr_Caller& exprCaller) const {}
 	virtual String ToString(const StringStyle& ss = StringStyle::Empty) const;
+};
+
+//------------------------------------------------------------------------------
+// Constructor
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Constructor : public Function {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(Constructor);
+public:
+	// Constructor
+	Constructor(const char* name, DeclCallable::Flags flags) : Function(Type::Constructor, name, flags) {}		
+	// Copy constructor/operator
+	Constructor(const Constructor& src) = delete;
+	Constructor& operator=(const Constructor& src) = delete;
+	// Move constructor/operator
+	Constructor(Constructor&& src) = delete;
+	Constructor& operator=(Constructor&& src) noexcept = delete;
+protected:
+	// Destructor
+	virtual ~Constructor() = default;
 };
 
 }
