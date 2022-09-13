@@ -59,12 +59,12 @@ String VType::ToString(const StringStyle& ss) const
 	return str;
 }
 
-void VType::Declare(VType& vtypeInh, Flags flags, Function* pConstructor)
+void VType::Declare(VType& vtypeInh, Flags flags, Constructor* pConstructor)
 {
 	_pVTypeInh = &vtypeInh;
 	GetFrameOfMember().SetFrameOuter(_pVTypeInh->GetFrameOfMember().Reference());
 	_flags = flags;
-	_pConstructor.reset(pConstructor? pConstructor : Function::Empty.Reference());
+	_pConstructor.reset(pConstructor? pConstructor : Constructor::Empty.Reference());
 }
 
 String VType::MakeFullName() const

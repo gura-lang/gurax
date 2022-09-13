@@ -273,4 +273,14 @@ String Function::ToString(const StringStyle& ss) const
 	return String().Format("%s%s", MakeFullName().c_str(), GetDeclCallable().ToString(ss).c_str());
 }
 
+//------------------------------------------------------------------------------
+// Constructor
+//------------------------------------------------------------------------------
+RefPtr<Constructor> Constructor::Empty;
+
+void Constructor::Bootup()
+{
+	Empty.reset(new Constructor_Empty());
+}
+
 }

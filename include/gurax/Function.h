@@ -291,7 +291,12 @@ public:
 	// Referable declaration
 	Gurax_DeclareReferable(Constructor);
 public:
+	static RefPtr<Constructor> Empty;
+public:
+	static void Bootup();
+public:
 	// Constructor
+	Constructor(DeclCallable::Flags flags) : Function(Type::Constructor, flags) {}		
 	Constructor(const Symbol* pSymbol, DeclCallable* pDeclCallable) : Function(Type::Constructor, pSymbol, pDeclCallable) {}		
 	Constructor(const char* name, DeclCallable::Flags flags) : Function(Type::Constructor, name, flags) {}		
 	// Copy constructor/operator

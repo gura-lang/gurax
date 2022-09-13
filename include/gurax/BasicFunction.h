@@ -18,6 +18,16 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// Constructor_Empty
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Constructor_Empty : public Constructor {
+public:
+	Constructor_Empty() : Constructor(Flag::None) {}
+public:
+	virtual bool IsEmpty() const override { return true; }
+};
+
+//------------------------------------------------------------------------------
 // BasicFunction
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE BasicFunction {

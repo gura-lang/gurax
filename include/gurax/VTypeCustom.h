@@ -63,7 +63,7 @@ public:
 	VTypeCustom();
 public:
 	void Inherit();
-	void SetConstructor(Function* pConstructor) { _pConstructor.reset(pConstructor); }
+	void SetConstructor(Constructor* pConstructor) { _pConstructor.reset(pConstructor); }
 	void SetDestructor(Function* pDestructor) { _pDestructor.reset(pDestructor); }
 	void SetCastFunction(Function* pCastFunction) { _pCastFunction.reset(pCastFunction); }
 	const Function& GetDestructor() const { return *_pDestructor; }

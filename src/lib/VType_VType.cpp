@@ -28,7 +28,7 @@ static const char* g_docHelp_en = u8R"**(
 // Implementation of constructor
 //------------------------------------------------------------------------------
 // VType(value):map {block?}
-Gurax_DeclareFunction(VType)
+Gurax_DeclareConstructor(VType)
 {
 	Declare(VTYPE_VType, Flag::Map);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
@@ -38,7 +38,7 @@ Gurax_DeclareFunction(VType)
 		"Creates a `VType` instance that represents the type information of the given `value`.\n");
 }
 
-Gurax_ImplementFunction(VType)
+Gurax_ImplementConstructor(VType)
 {
 	// Arguments
 	ArgPicker args(argument);
@@ -178,7 +178,7 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateFunction(VType));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(VType));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(VType, __methodSymbols__));
 	Assign(Gurax_CreateMethod(VType, __propSlots__));

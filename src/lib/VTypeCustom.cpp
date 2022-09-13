@@ -12,7 +12,7 @@ VTypeCustom::VTypeCustom() :
 	VType(Symbol::Empty), _pValuesPropOfInstInit(new ValueOwner()), _pValuesPropOfClass(new ValueOwner())
 {
 	// _pConstructor, _pDestructor and _pCastFunction must be initialized.
-	_pConstructor.reset(Function::Empty.Reference());
+	_pConstructor.reset(Constructor::Empty.Reference());
 	_pDestructor.reset(Function::Empty.Reference());
 	_pCastFunction.reset(Function::Empty.Reference());
 }
@@ -90,7 +90,7 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 	_pSymbol = pSymbol;
 	if (GetConstructor().IsEmpty()) {
 		Function& constructorInh = GetVTypeInh()->GetConstructor();
-		RefPtr<Function> pConstructor(new ConstructorClassDefault(*this, constructorInh.GetDeclCallable().Reference()));
+		RefPtr<Constructor> pConstructor(new ConstructorClassDefault(*this, constructorInh.GetDeclCallable().Reference()));
 		pConstructor->SetFrameOuter(processor.GetFrameCur());
 		SetConstructor(pConstructor.release());
 	}
@@ -114,7 +114,7 @@ bool VTypeCustom::DoAssignCustomMethod(RefPtr<Function> pFunction)
 		}
 		RefPtr<Expr_Block> pExprBody(dynamic_cast<Expr_Block*>(pFunction->GetExprBody().Reference()));
 		pFunction->DeclareBlock(Gurax_Symbol(block), DeclBlock::Occur::ZeroOrOnce);
-		RefPtr<Function> pConstructor(new ConstructorClass(
+		RefPtr<Constructor> pConstructor(new ConstructorClass(
 						*this, pFunction->GetDeclCallable().Reference(), pExprBody.release()));
 		pConstructor->SetFrameOuter(GetFrame());
 		SetConstructor(pConstructor.release());

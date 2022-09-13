@@ -16,6 +16,7 @@ namespace Gurax {
 class Argument;
 class DeclCallable;
 class Processor;
+class Constructor;
 
 //------------------------------------------------------------------------------
 // VType
@@ -37,7 +38,7 @@ protected:
 	const Symbol* _pSymbol;
 	Flags _flags;
 	RefPtr<Frame_Scope> _pFrame;
-	RefPtr<Function> _pConstructor;
+	RefPtr<Constructor> _pConstructor;
 private:
 	static UniqId _uniqIdNext;
 	static const UniqId UniqId_Invalid = 0;
@@ -57,7 +58,7 @@ public:
 	virtual ~VType() = default;
 public:
 	UniqId GetUniqId() const { return _uniqId; }
-	void Declare(VType& vtypeInh, Flags flags, Function* pConstructor = nullptr);
+	void Declare(VType& vtypeInh, Flags flags, Constructor* pConstructor = nullptr);
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	VType* GetVTypeInh() const { return _pVTypeInh; }
@@ -91,8 +92,8 @@ public:
 		return dynamic_cast<Frame_OfMember*>(_pFrame->GetFrameLocal())->GetPropSlotMap();
 	}
 	const PropSlot* LookupPropSlot(const Symbol* pSymbol) const;
-	Function& GetConstructor() { return *_pConstructor; }
-	const Function& GetConstructor() const { return *_pConstructor; }
+	Constructor& GetConstructor() { return *_pConstructor; }
+	const Constructor& GetConstructor() const { return *_pConstructor; }
 	Value* Cast(const Value& value, const Symbol* pSymbol = nullptr, DeclArg::Flags flags = DeclArg::Flag::None) const;
 	void Assign(const Symbol* pSymbol, Value* pValue) { GetFrameOfMember().Assign(pSymbol, pValue); }
 	void Assign(const char* name, Value* pValue) { GetFrameOfMember().Assign(name, pValue); }

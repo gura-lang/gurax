@@ -13,6 +13,7 @@ bool Initialize(int& argc, char** argv)
 	Binary::Bootup();
 	Color::Bootup();
 	Codec::Bootup();
+	Constructor::Bootup();
 	DeclCallable::Bootup();
 	DeclArg::Bootup();
 	Directory::Bootup();
