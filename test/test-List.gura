@@ -846,10 +846,10 @@ TestCase('Any |+| List, List |+| Any') {
 	Tester(`(111 |+| [1, 2, 3, 4] |+| 222))
 }
 
-TestCase('List#Clone()') {
+TestCase('List#__clone__()') {
 	a = [1, 2, 3, 4]
 	Tester(`a)
-	b = a.Clone()
+	b = a.__clone__()
 	b.Add(5, 6, 7)
 	Tester(`a)
 	Tester(`b)

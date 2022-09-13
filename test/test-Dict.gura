@@ -61,11 +61,11 @@ TestCase('Dict#Append()') {
 		'keyA' => 'valueA', 'keyB' => 'valueB', 'keyC' => 'valueC', 'keyD' => 'valueD', 'keyE' => 'valueE',
 		'key0' => 'value0-mod', 'key5' => 'value5-mod'
 	}
-	d = d1.Clone()
+	d = d1.__clone__()
 	Tester(`d.Append(d2))
-	d = d1.Clone()
+	d = d1.__clone__()
 	Tester(`d.Append(d2):timid)
-	d = d1.Clone()
+	d = d1.__clone__()
 	Tester(`d.Append(d2):strict)
 }
 

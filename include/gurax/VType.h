@@ -43,9 +43,10 @@ private:
 	static UniqId _uniqIdNext;
 	static const UniqId UniqId_Invalid = 0;
 public:
-	static VType Empty;
+	static VType Invalid;
 public:
 	// Constructor
+	VType();
 	explicit VType(const Symbol* pSymbol);
 	explicit VType(const char* name) : VType(Symbol::Add(name)) {}
 	// Copy constructor/operator
@@ -57,11 +58,13 @@ public:
 	// Destructor
 	virtual ~VType() = default;
 public:
+	bool IsValid() const { return _uniqId != UniqId_Invalid; }
+	bool IsInvalid() const { return _uniqId == UniqId_Invalid; }
 	UniqId GetUniqId() const { return _uniqId; }
 	void Declare(VType& vtypeInh, Flags flags, Constructor* pConstructor = nullptr);
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
-	VType* GetVTypeInh() const { return _pVTypeInh; }
+	VType& GetVTypeInh() const { return *_pVTypeInh; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	String MakeFullName() const;

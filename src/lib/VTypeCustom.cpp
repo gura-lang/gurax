@@ -19,10 +19,10 @@ VTypeCustom::VTypeCustom() :
 
 void VTypeCustom::Inherit()
 {
-	if (GetVTypeInh()->IsCustom()) {
-		VTypeCustom* pVTypeInh = dynamic_cast<VTypeCustom*>(GetVTypeInh());
-		_pValuesPropOfInstInit.reset(pVTypeInh->GetValuesPropOfInstInit().Clone());
-		_pValuesPropOfClass.reset(pVTypeInh->GetValuesPropOfClass().Clone());
+	if (GetVTypeInh().IsCustom()) {
+		VTypeCustom& vtypeInh = dynamic_cast<VTypeCustom&>(GetVTypeInh());
+		_pValuesPropOfInstInit.reset(vtypeInh.GetValuesPropOfInstInit().Clone());
+		_pValuesPropOfClass.reset(vtypeInh.GetValuesPropOfClass().Clone());
 	}
 }
 
@@ -89,7 +89,7 @@ void VTypeCustom::PrepareForAssignment(Processor& processor, const Symbol* pSymb
 	if (!_pSymbol->IsEmpty()) return;
 	_pSymbol = pSymbol;
 	if (GetConstructor().IsEmpty()) {
-		Function& constructorInh = GetVTypeInh()->GetConstructor();
+		Function& constructorInh = GetVTypeInh().GetConstructor();
 		RefPtr<Constructor> pConstructor(new ConstructorClassDefault(*this, constructorInh.GetDeclCallable().Reference()));
 		pConstructor->SetFrameOuter(processor.GetFrameCur());
 		SetConstructor(pConstructor.release());
@@ -154,11 +154,11 @@ VTypeCustom::ConstructorClass::ConstructorClass(VTypeCustom& vtypeCustom, DeclCa
 
 Value* VTypeCustom::ConstructorClass::DoEval(Processor& processor, Argument& argument) const
 {
-	VType* pVTypeInh = GetVTypeCustom().GetVTypeInh();
-	Function& constructorInh = pVTypeInh->GetConstructor();
+	VType& vtypeInh = GetVTypeCustom().GetVTypeInh();
+	Function& constructorInh = vtypeInh.GetConstructor();
 	if (constructorInh.IsEmpty()) {
 		Error::Issue(ErrorType::ValueError,
-			 "value type %s does not have a constructor", pVTypeInh->MakeFullName().c_str());
+			 "value type %s does not have a constructor", vtypeInh.MakeFullName().c_str());
 		return Value::nil();
 	}
 	bool dynamicScopeFlag = false;
@@ -210,11 +210,11 @@ VTypeCustom::ConstructorClassDefault::ConstructorClassDefault(VTypeCustom& vtype
 
 Value* VTypeCustom::ConstructorClassDefault::DoEval(Processor& processor, Argument& argument) const
 {
-	VType* pVTypeInh = GetVTypeCustom().GetVTypeInh();
-	Function& constructorInh = pVTypeInh->GetConstructor();
+	VType& vtypeInh = GetVTypeCustom().GetVTypeInh();
+	Function& constructorInh = vtypeInh.GetConstructor();
 	if (constructorInh.IsEmpty()) {
 		Error::Issue(ErrorType::ValueError,
-			 "value type %s does not have a constructor", pVTypeInh->MakeFullName().c_str());
+			 "value type %s does not have a constructor", vtypeInh.MakeFullName().c_str());
 		return Value::nil();
 	}
 	RefPtr<Expr_Block> pExprBlock(argument.SuspendExprOfBlock());

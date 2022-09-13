@@ -68,7 +68,7 @@ void VType_Any::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VType::Empty, Flag::Immutable);
+	Declare(VType::Invalid, Flag::Immutable);
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Any, __str__));
 	// Assignment of operator

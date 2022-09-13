@@ -33,14 +33,14 @@ true.__str__():bracket .. <Bool:true>
 nil.__str__():bracket .. <Nil>
 2 / 3r.__str__():bracket .. <Rational:2/3r>
 2 + 3j.__str__():bracket .. <Complex:2+3j>
-======== Object#IsInstanceOf() ========
-math.e.IsInstanceOf(Number) .. true
-math.e.IsInstanceOf(Bool) .. false
-true.IsInstanceOf(Bool) .. true
-true.IsInstanceOf(Number) .. false
-Printf.IsInstanceOf(Function) .. true
-Printf.IsInstanceOf(Number) .. false
-% {}.IsInstanceOf(Dict) .. true
-% {}.IsInstanceOf(Number) .. false
-'hello'.IsInstanceOf(String) .. true
-'hello'.IsInstanceOf(Number) .. false
+======== Object#__instanceOf__() ========
+math.e.__instanceOf__(Number) .. true
+math.e.__instanceOf__(Bool) .. false
+true.__instanceOf__(Bool) .. true
+true.__instanceOf__(Number) .. false
+Printf.__instanceOf__(Function) .. true
+Printf.__instanceOf__(Number) .. false
+% {}.__instanceOf__(Dict) .. true
+% {}.__instanceOf__(Number) .. false
+'hello'.__instanceOf__(String) .. true
+'hello'.__instanceOf__(Number) .. false

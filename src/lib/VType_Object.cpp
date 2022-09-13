@@ -90,8 +90,8 @@ Gurax_ImplementClassMethod(Object, __str__)
 	return new Value_String(valueThis.ToString(StringStyle(flags)));
 }
 
-// Object#Clone()
-Gurax_DeclareMethod(Object, Clone)
+// Object#__clone__()
+Gurax_DeclareMethod(Object, __clone__)
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(
@@ -99,7 +99,7 @@ Gurax_DeclareMethod(Object, Clone)
 		"Creates a cloned object.\n");
 }
 
-Gurax_ImplementMethod(Object, Clone)
+Gurax_ImplementMethod(Object, __clone__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -110,8 +110,8 @@ Gurax_ImplementMethod(Object, Clone)
 	return Value::nil();
 }
 
-// Object#IsInstanceOf(vtype:VType)
-Gurax_DeclareMethod(Object, IsInstanceOf)
+// Object#__instanceOf__(vtype:VType)
+Gurax_DeclareMethod(Object, __instanceOf__)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("vtype", VTYPE_VType, ArgOccur::Once, ArgFlag::None);
@@ -120,7 +120,7 @@ Gurax_DeclareMethod(Object, IsInstanceOf)
 		"Returns `true` if the object is an instance of the specified `vtype`.\n");
 }
 
-Gurax_ImplementMethod(Object, IsInstanceOf)
+Gurax_ImplementMethod(Object, __instanceOf__)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
@@ -134,8 +134,8 @@ Gurax_ImplementMethod(Object, IsInstanceOf)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// Object#__id__
-Gurax_DeclareProperty_R(Object, __id__)
+// Object##__id__
+Gurax_DeclareHybridProperty_R(Object, __id__)
 {
 	Declare(VTYPE_VType, Flag::None);
 	AddHelp(
@@ -143,14 +143,14 @@ Gurax_DeclareProperty_R(Object, __id__)
 		"The object ID.");
 }
 
-Gurax_ImplementPropertyGetter(Object, __id__)
+Gurax_ImplementHybridPropertyGetter(Object, __id__)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_String(String().Format("#%p", &valueThis));
 }
 
-// Object#__vtype__
-Gurax_DeclareProperty_R(Object, __vtype__)
+// Object##__vtype__
+Gurax_DeclareHybridProperty_R(Object, __vtype__)
 {
 	Declare(VTYPE_VType, Flag::None);
 	AddHelp(
@@ -158,10 +158,31 @@ Gurax_DeclareProperty_R(Object, __vtype__)
 		"The value type of this object.");
 }
 
-Gurax_ImplementPropertyGetter(Object, __vtype__)
+Gurax_ImplementHybridPropertyGetter(Object, __vtype__)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_VType(valueThis.GetVTypeCustom());
+	VType& vtype = valueThis.IsType(VTYPE_VType)?
+				Value_VType::GetVTypeThis(valueThis) : valueThis.GetVTypeCustom();
+	return new Value_VType(vtype);
+}
+
+// Object##__vtypeInh__
+Gurax_DeclareHybridProperty_R(Object, __vtypeInh__)
+{
+	Declare(VTYPE_VType, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The value type of this object's parent class.");
+}
+
+Gurax_ImplementHybridPropertyGetter(Object, __vtypeInh__)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	VType& vtype = valueThis.IsType(VTYPE_VType)?
+				Value_VType::GetVTypeThis(valueThis) : valueThis.GetVTypeCustom();
+	VType& vtypeInh = vtype.GetVTypeInh();
+	if (vtypeInh.IsInvalid()) return Value::nil();
+	return new Value_VType(vtypeInh);
 }
 
 //------------------------------------------------------------------------------
@@ -174,15 +195,16 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VType::Empty, Flag::Immutable, Gurax_CreateConstructor(Object));
+	Declare(VType::Invalid, Flag::Immutable, Gurax_CreateConstructor(Object));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Object, __prop__));
 	Assign(Gurax_CreateMethod(Object, __str__));
-	Assign(Gurax_CreateMethod(Object, Clone));
-	Assign(Gurax_CreateMethod(Object, IsInstanceOf));
+	Assign(Gurax_CreateMethod(Object, __clone__));
+	Assign(Gurax_CreateMethod(Object, __instanceOf__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Object, __id__));
 	Assign(Gurax_CreateProperty(Object, __vtype__));
+	Assign(Gurax_CreateProperty(Object, __vtypeInh__));
 }
 
 //------------------------------------------------------------------------------

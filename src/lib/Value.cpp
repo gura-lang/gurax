@@ -32,7 +32,7 @@ void Value::CreateConstant()
 
 bool Value::IsInstanceOf(const VType& vtype) const
 {
-	for (const VType* pVType = &GetVTypeCustom(); pVType; pVType = pVType->GetVTypeInh()) {
+	for (const VType* pVType = &GetVTypeCustom(); pVType->IsValid(); pVType = &pVType->GetVTypeInh()) {
 		if (pVType->IsIdentical(vtype)) return true;
 	}
 	return false;
@@ -429,9 +429,9 @@ Value::CustomPack::~CustomPack()
 			Value::Delete(funcDestructor.Eval(*_pProcessor, *pArgument));
 			if (Error::IsIssued()) return;
 		}
-		const VType* pVType = pVTypeCustom->GetVTypeInh();
-		if (!pVType || !pVType->IsCustom()) break;
-		pVTypeCustom = dynamic_cast<const VTypeCustom*>(pVType);
+		const VType& vtypeInh = pVTypeCustom->GetVTypeInh();
+		if (!vtypeInh.IsCustom()) break;
+		pVTypeCustom = dynamic_cast<const VTypeCustom*>(&vtypeInh);
 	}
 }
 
