@@ -176,7 +176,7 @@ classref(`markdown.document).compose@jekyll_navi(dirNameOut as string, title as 
 	itemStack = []
 	itemList = itemListRoot
 	this.render@toc {|level as number, indices[] as number, anchorName as string, text as string|
-		item = NaviItem(level, indices.clone(), anchorName, text)
+		item = NaviItem(level, indices.__clone__(), anchorName, text)
 		if (!itemStack.isempty()) {
 			itemPrev = itemStack[-1]
 			if (level <= itemPrev.level) {

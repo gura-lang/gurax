@@ -73,3 +73,11 @@ TestCase('Object#__instanceOf__()') {
 	Tester(`'hello'.__instanceOf__(String))
 	Tester(`'hello'.__instanceOf__(Number))
 }
+
+TestCase('Object#__vtype__') {
+	Tester(`math.e.__vtype__.__name__)
+	Tester(`true.__vtype__.__name__)
+	Tester(`Printf.__vtype__.__name__)
+	Tester(`%{}.__vtype__.__name__)
+	Tester(`'hello'.__vtype__.__name__)
+}

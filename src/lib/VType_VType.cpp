@@ -140,6 +140,36 @@ Gurax_ImplementHybridPropertyGetter(VType, __fullName__)
 	return new Value_String(valueThis.GetVTypeThis().MakeFullName());
 }
 
+// VType##__name__
+Gurax_DeclareHybridProperty_R(VType, __name__)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The name of the VType.");
+}
+
+Gurax_ImplementHybridPropertyGetter(VType, __name__)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetVTypeThis().GetName());
+}
+
+// VType##__symbol__
+Gurax_DeclareHybridProperty_R(VType, __symbol__)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The symbol of the VType.");
+}
+
+Gurax_ImplementHybridPropertyGetter(VType, __symbol__)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetVTypeThis().GetSymbol());
+}
+
 //------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
@@ -185,6 +215,8 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(VType, __propSlot__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(VType, __fullName__));
+	Assign(Gurax_CreateProperty(VType, __name__));
+	Assign(Gurax_CreateProperty(VType, __symbol__));
 	// Assignment of operator
 	Gurax_AssignOpBinary(As, Any, VType);
 	Gurax_AssignOpBinary(Eq, VType, VType);

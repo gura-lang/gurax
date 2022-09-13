@@ -59,7 +59,7 @@ ReadLines('../../guest/glew-2.1.0/include/GL/glew.h') {|line|
 			sys.cerr.Printf('Error: function name not found: %s\n', funcName)
 		}
 	} elsif (m = line.Match(r'^/\* -+\s+(\w+)\s+-+ \*/')) {
-		infoTbl.last.IsInstanceOf(SepInfo) && infoTbl.Erase(-1)
+		infoTbl.last.__instanceOf__(SepInfo) && infoTbl.Erase(-1)
 		infoTbl.Add(SepInfo(m[1]))
 	}
 }

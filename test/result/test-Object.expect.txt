@@ -44,3 +44,9 @@ Printf.__instanceOf__(Number) .. false
 % {}.__instanceOf__(Number) .. false
 'hello'.__instanceOf__(String) .. true
 'hello'.__instanceOf__(Number) .. false
+======== Object#__vtype__ ========
+math.e.__vtype__.__name__ .. Number
+true.__vtype__.__name__ .. Bool
+Printf.__vtype__.__name__ .. Function
+% {}.__vtype__.__name__ .. Dict
+'hello'.__vtype__.__name__ .. String

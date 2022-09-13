@@ -6,7 +6,7 @@ Exec(pathName as String, silentFlag as Bool) {block} = {
 	cntReplaced = 0
 	ReadLines(pathName) {|line, iLine|
 		rtn = block(line, iLine)
-		if (rtn.IsInstanceOf(List) || line != rtn) {
+		if (rtn.__instanceOf__(List) || line != rtn) {
 			if (!silentFlag) {
 				(cntReplaced == 0) && Printf('%s\n', pathName)
 				Printf('-- replaced at line.%d\n', iLine + 1)
