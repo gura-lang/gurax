@@ -55,6 +55,7 @@ public:
 	void Set(Int pos, Value* pValue);
 	void Add(Value* pValue) { push_back(pValue); }
 	void Add(const ValueList& values);
+	void Add(Iterator& iterator);
 	void AddX(const ValueList& values);
 	void Insert(Int pos, Value* pValue) { insert(begin() + pos, pValue); }
 	void Insert(Int pos, const ValueList& values);

@@ -1105,6 +1105,10 @@ void PUnit_ListElem<discardValueFlag, xlistFlag, expandFlag>::Exec(Processor& pr
 			} else {
 				valueTypedOwner.Add(iterator);
 			}
+			if (Error::IsIssued()) {
+				processor.ErrorDone();
+				return;
+			}
 		} else {
 			valueTypedOwner.Add(pValueElem.release());
 		}
@@ -1114,6 +1118,16 @@ void PUnit_ListElem<discardValueFlag, xlistFlag, expandFlag>::Exec(Processor& pr
 				valueTypedOwner.AddX(Value_List::GetValueTypedOwner(*pValueElem));
 			} else {
 				valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValueElem));
+			}
+		} else {
+			valueTypedOwner.Add(pValueElem.release());
+		}
+	} else if (pValueElem->IsTuple()) {
+		if constexpr (expandFlag) {
+			if (xlistFlag) {
+				valueTypedOwner.AddX(Value_Tuple::GetValueOwner(*pValueElem));
+			} else {
+				valueTypedOwner.Add(Value_Tuple::GetValueOwner(*pValueElem));
 			}
 		} else {
 			valueTypedOwner.Add(pValueElem.release());
@@ -1225,8 +1239,6 @@ void PUnit_TupleElem<discardValueFlag, expandFlag>::Exec(Processor& processor) c
 {
 	RefPtr<Value> pValueElem(processor.PopValue());
 	ValueOwner& valueOwner = Value_Tuple::GetValueOwner(processor.PeekValue(GetOffset()));
-	valueOwner.push_back(pValueElem.release());
-#if 0
 	if (pValueElem->IsIterator()) {
 		if constexpr (expandFlag) {
 			Iterator& iterator = Value_Iterator::GetIterator(*pValueElem);
@@ -1234,32 +1246,36 @@ void PUnit_TupleElem<discardValueFlag, expandFlag>::Exec(Processor& processor) c
 				processor.ErrorDone();
 				return;
 			}
-			valueTypedOwner.Add(iterator);
+			valueOwner.Add(iterator);
+			if (Error::IsIssued()) {
+				processor.ErrorDone();
+				return;
+			}
 		} else {
-			valueTypedOwner.Add(pValueElem.release());
+			valueOwner.Add(pValueElem.release());
 		}
 	} else if (pValueElem->IsList()) {
 		if constexpr (expandFlag) {
-			valueTypedOwner.Add(Value_List::GetValueTypedOwner(*pValueElem));
+			valueOwner.Add(Value_List::GetValueOwner(*pValueElem));
 		} else {
-			valueTypedOwner.Add(pValueElem.release());
+			valueOwner.Add(pValueElem.release());
+		}
+	} else if (pValueElem->IsTuple()) {
+		if constexpr (expandFlag) {
+			valueOwner.Add(Value_Tuple::GetValueOwner(*pValueElem));
+		} else {
+			valueOwner.Add(pValueElem.release());
 		}
 	} else if (pValueElem->IsType(VTYPE_Array)) {
 		if constexpr (expandFlag) {
 			const Array& array = Value_Array::GetArray(*pValueElem);
-			array.ExtractElems(valueTypedOwner.GetValueOwnerToModify());
-			if (array.IsMultidemensional()) {
-				valueTypedOwner.UpdateVTypeOfElems(VTYPE_Tuple);
-			} else {
-				valueTypedOwner.UpdateVTypeOfElems(VTYPE_Number);
-			}
+			array.ExtractElems(valueOwner);
 		} else {
-			valueTypedOwner.Add(pValueElem.release());
+			valueOwner.Add(pValueElem.release());
 		}
-	} else {
-		valueTypedOwner.Add(pValueElem.release());
+	} else if (!pValueElem->IsUndefined()) {
+		valueOwner.Add(pValueElem.release());
 	}
-#endif
 	if constexpr (discardValueFlag) processor.RemoveValues(0, GetOffset() + 1);
 	processor.SetPUnitCur(_GetPUnitCont());
 }

@@ -153,6 +153,15 @@ void ValueOwner::Add(const ValueList& values)
 	insert(end(), values.begin(), values.end());
 }
 
+void ValueOwner::Add(Iterator& iterator)
+{
+	for (;;) {
+		RefPtr<Value> pValue(iterator.NextValue());
+		if (!pValue) break;
+		push_back(pValue.release());
+	}
+}
+
 void ValueOwner::AddX(const ValueList& values)
 {
 	for (const Value* pValue : values) {
