@@ -210,6 +210,7 @@ public:
 	virtual void Compose(Composer& composer) = 0;
 	virtual void ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag);
 	virtual void ComposeWithinLister(Composer& composer);
+	virtual void ComposeWithinTuple(Composer& composer);
 	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol);
 	virtual void ComposeWithinAssignment(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol);
@@ -705,6 +706,7 @@ public:
 	virtual bool IsUnaryOp(OpType opType) const override { return GetOperator()->IsType(opType); }
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinLister(Composer& composer) override;
+	virtual void ComposeWithinTuple(Composer& composer) override;
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:

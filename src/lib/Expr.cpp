@@ -146,6 +146,12 @@ void Expr::ComposeWithinLister(Composer& composer)
 	composer.Add_ListElem(0, false, false, *this);								// [List]
 }
 
+void Expr::ComposeWithinTuple(Composer& composer)
+{
+	ComposeOrNil(composer);														// [Tuple Any]
+	composer.Add_TupleElem(0, false, *this);									// [Tuple]
+}
+
 void Expr::ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol)
 {
 	Error::IssueWith(ErrorType::InvalidOperation, *this, "invalid assignment");
@@ -695,6 +701,16 @@ void Expr_UnaryOp::ComposeWithinLister(Composer& composer)
 	}
 }
 
+void Expr_UnaryOp::ComposeWithinTuple(Composer& composer)
+{
+	if (GetOperator()->IsType(OpType::PostMul)) {
+		GetExprChild().ComposeOrNil(composer);									// [Tuple Any]
+		composer.Add_TupleElem(0, true, *this);									// [Tuple]
+	} else {
+		Expr_Unary::ComposeWithinTuple(composer);								// [Tuple]
+	}
+}
+
 void Expr_UnaryOp::ComposeWithinArgSlot(Composer& composer)
 {
 	if (GetOperator()->IsType(OpType::PostMul)) {
@@ -1091,8 +1107,9 @@ void Expr_Tuple::Compose(Composer& composer)
 	size_t nExprs = GetExprLinkElem().CountSequence();
 	composer.Add_CreateTuple(nExprs, *this);									// [Tuple]
 	for (Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-		pExpr->ComposeOrNil(composer);											// [Tuple Elem]
-		composer.Add_TupleElem(0, false, *this);								// [Tuple]
+		pExpr->ComposeWithinTuple(composer);
+		//pExpr->ComposeOrNil(composer);										// [Tuple Elem]
+		//composer.Add_TupleElem(0, false, *this);								// [Tuple]
 	}	
 }
 
