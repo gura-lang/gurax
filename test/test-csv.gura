@@ -34,6 +34,22 @@ TestCase('csv.Writer') {
 		('field1', 'field2', 'field3', 'field4', 'field5')
 	])
 	w.WriteLine()
+	w.WriteLines([
+		['field1']
+		['field1', 'field2']
+		['field1', 'field2', 'field3']
+		['field1', 'field2', 'field3', 'field4']
+		['field1', 'field2', 'field3', 'field4', 'field5']
+	])
+	w.WriteLine()
+	w.WriteLines([
+		['field1']
+		['field1', 'field2']
+		['field1', 'field2', 'field3']
+		['field1', 'field2', 'field3', 'field4']
+		['field1', 'field2', 'field3', 'field4', 'field5']
+	].Each())
+	w.WriteLine()
 	w.WriteLine * [
 		('field1',),
 		('field1', 'field2')

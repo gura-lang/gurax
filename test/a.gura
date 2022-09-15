@@ -1,5 +1,0 @@
-fruits = ['apple', 'orange', 'grape']
-Println(fruits.Find(fruits:*len > 5))
-Println(fruits.Find(fruits:*len > 6))
-Println(fruits.Find(fruits:*StartsWith('g')))
-//Println(fruits.Find(&{$fruit.len > 5}))

@@ -91,11 +91,11 @@ Gurax_ImplementMethod(Writer, WriteLine)
 	return valueThis.Reference();
 }
 
-// csv.Writer#WriteLines(tuples[] as Tuple):reduce
+// csv.Writer#WriteLines(iterator as Iterator):reduce
 Gurax_DeclareMethod(Writer, WriteLines)
 {
 	Declare(VTYPE_Writer, Flag::Reduce);
-	DeclareArg("tuples", VTYPE_Tuple, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("iterator", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Writes lines of values in the CSV format.\n");
@@ -107,11 +107,25 @@ Gurax_ImplementMethod(Writer, WriteLines)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const ValueList& valList = args.PickList();
+	Iterator& iterator = args.PickIterator();
+	if (!iterator.MustBeFinite()) return Value::nil();
 	// Function body
-	for (const Value* pValue : valList) {
-		const ValueOwner& valOwner = Value_Tuple::GetValueOwner(*pValue);
-		valueThis.GetWriter().PutValues(valOwner, true);
+	for (;;) {
+		RefPtr<Value> pValue(iterator.NextValue());
+		if (!pValue) {
+			if (Error::IsIssued()) return Value::nil();
+			break;
+		}
+		if (pValue->IsType(VTYPE_List)) {
+			const ValueOwner& valOwner = Value_List::GetValueOwner(*pValue);
+			valueThis.GetWriter().PutValues(valOwner, true);
+		} else if (pValue->IsType(VTYPE_Tuple)) {
+			const ValueOwner& valOwner = Value_Tuple::GetValueOwner(*pValue);
+			valueThis.GetWriter().PutValues(valOwner, true);
+		} else {
+			Error::Issue(ErrorType::TypeError, "must be a Tuple value");
+			return false;
+		}
 	}
 	return valueThis.Reference();
 }
