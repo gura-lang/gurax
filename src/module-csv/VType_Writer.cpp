@@ -91,6 +91,31 @@ Gurax_ImplementMethod(Writer, WriteLine)
 	return valueThis.Reference();
 }
 
+// csv.Writer#WriteLines(tuples[] as Tuple):reduce
+Gurax_DeclareMethod(Writer, WriteLines)
+{
+	Declare(VTYPE_Writer, Flag::Reduce);
+	DeclareArg("tuples", VTYPE_Tuple, ArgOccur::Once, ArgFlag::ListVar);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Writes lines of values in the CSV format.\n");
+}
+
+Gurax_ImplementMethod(Writer, WriteLines)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& valList = args.PickList();
+	// Function body
+	for (const Value* pValue : valList) {
+		const ValueOwner& valOwner = Value_Tuple::GetValueOwner(*pValue);
+		valueThis.GetWriter().PutValues(valOwner, true);
+	}
+	return valueThis.Reference();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -132,6 +157,7 @@ void VType_Writer::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Writer, ResetFormatForNumber));
 	Assign(Gurax_CreateMethod(Writer, WriteLine));
+	Assign(Gurax_CreateMethod(Writer, WriteLines));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Writer, formatForNumber));
 }

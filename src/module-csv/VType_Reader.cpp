@@ -51,12 +51,13 @@ Gurax_ImplementConstructor(Reader)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// csv.Reader#ReadLine():[asList] {block?}
+// csv.Reader#ReadLine():[asList,asTuple] {block?}
 Gurax_DeclareMethod(Reader, ReadLine)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(asList));
+	DeclareAttrOpt(Gurax_Symbol(asTuple));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
@@ -76,12 +77,13 @@ Gurax_ImplementMethod(Reader, ReadLine)
 		argument.ReturnValue(processor, new Value_Tuple(pValueOwner.release()));
 }
 
-// csv.Reader#ReadLines():[asList] {block?}
+// csv.Reader#ReadLines():[asList,asTuple] {block?}
 Gurax_DeclareMethod(Reader, ReadLines)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(asList));
+	DeclareAttrOpt(Gurax_Symbol(asTuple));
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");

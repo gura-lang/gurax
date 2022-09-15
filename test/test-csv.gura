@@ -7,7 +7,9 @@ import(csv)
 
 TestCase('Property') {
 	csv.Writer.PrintPropSlots()
+	csv.Writer.PrintMethods()
 	csv.Reader.PrintPropSlots()
+	csv.Reader.PrintMethods()
 }
 
 TestCase('csv.Writer') {
@@ -16,13 +18,35 @@ TestCase('csv.Writer') {
 	w.WriteLine('field1', 'field2')
 	w.WriteLine('field1', 'field2', 'field3')
 	w.WriteLine('field1', 'field2', 'field3', 'field4')
+	w.WriteLine('field1', 'field2', 'field3', 'field4', 'field5')
+	w.WriteLine()
+	w.WriteLine * ('field1',)
+	w.WriteLine * ('field1', 'field2')
+	w.WriteLine * ('field1', 'field2', 'field3')
+	w.WriteLine * ('field1', 'field2', 'field3', 'field4')
 	w.WriteLine * ('field1', 'field2', 'field3', 'field4', 'field5')
+	w.WriteLine()
+	w.WriteLines([
+		('field1',),
+		('field1', 'field2')
+		('field1', 'field2', 'field3')
+		('field1', 'field2', 'field3', 'field4')
+		('field1', 'field2', 'field3', 'field4', 'field5')
+	])
+	w.WriteLine()
+	w.WriteLine * [
+		('field1',),
+		('field1', 'field2')
+		('field1', 'field2', 'field3')
+		('field1', 'field2', 'field3', 'field4')
+		('field1', 'field2', 'field3', 'field4', 'field5')
+	]
 	w.WriteLine()
 	w.WriteLine(0).WriteLine(0, 1).WriteLine(0, 1, 2)
 	w.WriteLine(0, 1, 2, 3.1415)
 	w.formatForNumber = '%08d'
 	w.WriteLine(0, 1, 2, 3.1415)
-	w.formatForNumber = '%08x'
+	w.formatForNumber = '%08xh'
 	w.WriteLine(0x12345678, 0xffffffff, 0xa8a8a8a8)
 	w.ResetFormatForNumber().WriteLine(0, 1, 2, 3.1415)
 	csv.Writer(sys.cout) {|w|

@@ -9,6 +9,7 @@ Gurax_BeginModule(csv)
 // Symbol
 //------------------------------------------------------------------------------
 Gurax_RealizeSymbol(asList);
+Gurax_RealizeSymbol(asTuple);
 
 //------------------------------------------------------------------------------
 // Implementation of function

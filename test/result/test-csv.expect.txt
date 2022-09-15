@@ -1,0 +1,221 @@
+======== Property ========
+csv.Writer
+  #formatForNumber  String       R/W
+csv.Writer#ResetFormatForNumber():reduce
+csv.Writer#WriteLine(values* as Any):reduce
+csv.Writer#WriteLines(tuples[] as Tuple):reduce
+csv.Reader
+csv.Reader#ReadLine():[asList,asTuple] {block?}
+csv.Reader#ReadLines():[asList,asTuple] {block?}
+======== csv.Writer ========
+"field1"
+"field1","field2"
+"field1","field2","field3"
+"field1","field2","field3","field4"
+"field1","field2","field3","field4","field5"
+
+"field1"
+"field1","field2"
+"field1","field2","field3"
+"field1","field2","field3","field4"
+"field1","field2","field3","field4","field5"
+
+"field1"
+"field1","field2"
+"field1","field2","field3"
+"field1","field2","field3","field4"
+"field1","field2","field3","field4","field5"
+
+"field1"
+"field1","field2"
+"field1","field2","field3"
+"field1","field2","field3","field4"
+"field1","field2","field3","field4","field5"
+
+0
+0,1
+0,1,2
+0,1,2,3.1415
+00000000,00000001,00000002,00000003
+12345678h,ffffffffh,a8a8a8a8h
+0,1,2,3.1415
+w.formatForNumber .. %g
+======== csv.Reader ========
+----
+[field1]
+----
+[field1],[field2]
+----
+[field1],[field2],[field3]
+----
+[field1],[field2],[field3],[field4]
+----
+[field1],[ field2],[field3 ],[ field4 ],[field5]
+----
+[field1]
+----
+[ "field1"]
+----
+[ "field1" ]
+----
+[field1],[field2]
+----
+[field1 ],[field2]
+----
+[ "field1"],[ field2]
+----
+[ "field1"],[ ""field2]
+----
+[ "field1" "trail"],[field2],[field3],[field4]
+----
+[ "field1" ],[field2]
+----
+[field1 trail],[field2],[field3],[field4]
+----
+[field1 "trail"]
+----
+[field1 "trail],[field2],[field3]
+----
+(empty)
+----
+[A]
+----
+[],[]
+----
+[],[],[]
+----
+[],[],[],[],[],[],[],[],[]
+----
+[],[],[field3],[],[],[],[field7],[],[]
+----
+[Hello "world", aaa],[field2],[field3]
+----
+[multiline
+test
+third line here],[field2],[field3]
+----
+[multiline again
+test
+third line here],[field2],[field3]
+======== CSV and struct ========
+name:Hayasaka Hiroko email:hayasaka_hiroko@example.com gender:female age:33 birthDay:1976/8/27 mobile:090-9134-30BF
+name:Hannda Yumiko email:hannda_yumiko@example.com gender:female age:75 birthDay:1934/10/20 mobile:080-6713-87BI
+name:Honma Chise email:honma_chise@example.com gender:female age:46 birthDay:1964/3/9 mobile:090-5237-82FJ
+name:Kawahata Nana email:kawahata_nana@example.com gender:female age:47 birthDay:1962/4/23 mobile:090-4760-51JA
+name:Kikuchi Takao email:kikuchi_takao@example.com gender:male age:35 birthDay:1975/1/1 mobile:080-1904-58CH
+name:Iwai Michiko email:iwai_michiko@example.com gender:female age:36 birthDay:1974/2/2 mobile:090-4520-77GH
+name:Kasai Satoshi email:kasai_satoshi@example.com gender:male age:24 birthDay:1985/12/23 mobile:090-8055-78CB
+name:Shima Masashi email:shima_masashi@example.com gender:male age:61 birthDay:1948/12/20 mobile:090-4180-99GH
+name:Suenaga Rena email:suenaga_rena@example.com gender:female age:80 birthDay:1929/5/22 mobile:080-1042-32EG
+name:Yokokawa Fumiyo email:yokokawa_fumiyo@example.com gender:female age:24 birthDay:1985/11/9 mobile:090-2679-49BI
+name:Yamanaka Mayuko email:yamanaka_mayuko@example.com gender:female age:62 birthDay:1947/9/9 mobile:090-1826-25EC
+name:Aoi Tatsuya email:aoi_tatsuya@example.com gender:male age:21 birthDay:1988/8/30 mobile:080-5257-80CB
+name:Tachikawa Hiroaki email:tachikawa_hiroaki@example.com gender:male age:40 birthDay:1970/1/25 mobile:090-3998-69FA
+name:Tsutsumi Manami email:tsutsumi_manami@example.com gender:female age:75 birthDay:1934/11/1 mobile:090-8224-26EH
+name:Sugimura Shunsuke email:sugimura_shunsuke@example.com gender:male age:70 birthDay:1939/8/10 mobile:090-6873-43DC
+name:Wakabayashi Mitsuru email:wakabayashi_mitsuru@example.com gender:male age:59 birthDay:1950/5/13 mobile:080-2151-64CI
+name:Maehara Tatsuhito email:maehara_tatsuhito@example.com gender:male age:49 birthDay:1960/6/21 mobile:080-5857- 9EA
+name:Chiba Hiroyuki email:chiba_hiroyuki@example.com gender:male age:59 birthDay:1950/5/8 mobile:080-2637-74JH
+name:Yoshioka Stmaria email:yoshioka_stmaria@example.com gender:male age:43 birthDay:1966/6/21 mobile:080-7737-22EA
+name:Kameyama Mitsunori email:kameyama_mitsunori@example.com gender:male age:65 birthDay:1944/7/22 mobile:090-4515-66EE
+name:Tamura Meisa email:tamura_meisa@example.com gender:female age:60 birthDay:1949/6/12 mobile:080- 698-23AC
+name:Taue Takashi email:taue_takashi@example.com gender:male age:34 birthDay:1975/5/15 mobile:090- 393- 7BD
+name:Yanagiya Yuujirou email:yanagiya_yuujirou@example.com gender:male age:32 birthDay:1977/12/18 mobile:080-1094-23CE
+name:Inagaki Ouga email:inagaki_ouga@example.com gender:male age:29 birthDay:1981/3/20 mobile:080-1535-79FF
+name:Kasahara Shidou email:kasahara_shidou@example.com gender:male age:58 birthDay:1951/8/3 mobile:090-2261-24IF
+name:Nakayama Yoshiki email:nakayama_yoshiki@example.com gender:male age:39 birthDay:1970/11/2 mobile:090-7101-88BF
+name:Takaya Masahiko email:takaya_masahiko@example.com gender:male age:29 birthDay:1980/4/12 mobile:090-6963-52GJ
+name:Nagao Erika email:nagao_erika@example.com gender:female age:29 birthDay:1980/11/23 mobile:080-2472-74DI
+name:Fujisawa Haruomi email:fujisawa_haruomi@example.com gender:male age:22 birthDay:1987/4/15 mobile:080-  76-16JF
+name:Kasai Ayaka email:kasai_ayaka@example.com gender:female age:67 birthDay:1942/12/2 mobile:090-4956-49FD
+('Hayasaka Hiroko', 'hayasaka_hiroko@example.com', 'female', '33', '1976/8/27', '090-9134-30BF')
+('Hannda Yumiko', 'hannda_yumiko@example.com', 'female', '75', '1934/10/20', '080-6713-87BI')
+('Honma Chise', 'honma_chise@example.com', 'female', '46', '1964/3/9', '090-5237-82FJ')
+('Kawahata Nana', 'kawahata_nana@example.com', 'female', '47', '1962/4/23', '090-4760-51JA')
+('Kikuchi Takao', 'kikuchi_takao@example.com', 'male', '35', '1975/1/1', '080-1904-58CH')
+('Iwai Michiko', 'iwai_michiko@example.com', 'female', '36', '1974/2/2', '090-4520-77GH')
+('Kasai Satoshi', 'kasai_satoshi@example.com', 'male', '24', '1985/12/23', '090-8055-78CB')
+('Shima Masashi', 'shima_masashi@example.com', 'male', '61', '1948/12/20', '090-4180-99GH')
+('Suenaga Rena', 'suenaga_rena@example.com', 'female', '80', '1929/5/22', '080-1042-32EG')
+('Yokokawa Fumiyo', 'yokokawa_fumiyo@example.com', 'female', '24', '1985/11/9', '090-2679-49BI')
+('Yamanaka Mayuko', 'yamanaka_mayuko@example.com', 'female', '62', '1947/9/9', '090-1826-25EC')
+('Aoi Tatsuya', 'aoi_tatsuya@example.com', 'male', '21', '1988/8/30', '080-5257-80CB')
+('Tachikawa Hiroaki', 'tachikawa_hiroaki@example.com', 'male', '40', '1970/1/25', '090-3998-69FA')
+('Tsutsumi Manami', 'tsutsumi_manami@example.com', 'female', '75', '1934/11/1', '090-8224-26EH')
+('Sugimura Shunsuke', 'sugimura_shunsuke@example.com', 'male', '70', '1939/8/10', '090-6873-43DC')
+('Wakabayashi Mitsuru', 'wakabayashi_mitsuru@example.com', 'male', '59', '1950/5/13', '080-2151-64CI')
+('Maehara Tatsuhito', 'maehara_tatsuhito@example.com', 'male', '49', '1960/6/21', '080-5857- 9EA')
+('Chiba Hiroyuki', 'chiba_hiroyuki@example.com', 'male', '59', '1950/5/8', '080-2637-74JH')
+('Yoshioka Stmaria', 'yoshioka_stmaria@example.com', 'male', '43', '1966/6/21', '080-7737-22EA')
+('Kameyama Mitsunori', 'kameyama_mitsunori@example.com', 'male', '65', '1944/7/22', '090-4515-66EE')
+('Tamura Meisa', 'tamura_meisa@example.com', 'female', '60', '1949/6/12', '080- 698-23AC')
+('Taue Takashi', 'taue_takashi@example.com', 'male', '34', '1975/5/15', '090- 393- 7BD')
+('Yanagiya Yuujirou', 'yanagiya_yuujirou@example.com', 'male', '32', '1977/12/18', '080-1094-23CE')
+('Inagaki Ouga', 'inagaki_ouga@example.com', 'male', '29', '1981/3/20', '080-1535-79FF')
+('Kasahara Shidou', 'kasahara_shidou@example.com', 'male', '58', '1951/8/3', '090-2261-24IF')
+('Nakayama Yoshiki', 'nakayama_yoshiki@example.com', 'male', '39', '1970/11/2', '090-7101-88BF')
+('Takaya Masahiko', 'takaya_masahiko@example.com', 'male', '29', '1980/4/12', '090-6963-52GJ')
+('Nagao Erika', 'nagao_erika@example.com', 'female', '29', '1980/11/23', '080-2472-74DI')
+('Fujisawa Haruomi', 'fujisawa_haruomi@example.com', 'male', '22', '1987/4/15', '080-  76-16JF')
+('Kasai Ayaka', 'kasai_ayaka@example.com', 'female', '67', '1942/12/2', '090-4956-49FD')
+('Hayasaka Hiroko', 'hayasaka_hiroko@example.com', 'female', '33', '1976/8/27', '090-9134-30BF')
+('Hannda Yumiko', 'hannda_yumiko@example.com', 'female', '75', '1934/10/20', '080-6713-87BI')
+('Honma Chise', 'honma_chise@example.com', 'female', '46', '1964/3/9', '090-5237-82FJ')
+('Kawahata Nana', 'kawahata_nana@example.com', 'female', '47', '1962/4/23', '090-4760-51JA')
+('Kikuchi Takao', 'kikuchi_takao@example.com', 'male', '35', '1975/1/1', '080-1904-58CH')
+('Iwai Michiko', 'iwai_michiko@example.com', 'female', '36', '1974/2/2', '090-4520-77GH')
+('Kasai Satoshi', 'kasai_satoshi@example.com', 'male', '24', '1985/12/23', '090-8055-78CB')
+('Shima Masashi', 'shima_masashi@example.com', 'male', '61', '1948/12/20', '090-4180-99GH')
+('Suenaga Rena', 'suenaga_rena@example.com', 'female', '80', '1929/5/22', '080-1042-32EG')
+('Yokokawa Fumiyo', 'yokokawa_fumiyo@example.com', 'female', '24', '1985/11/9', '090-2679-49BI')
+('Yamanaka Mayuko', 'yamanaka_mayuko@example.com', 'female', '62', '1947/9/9', '090-1826-25EC')
+('Aoi Tatsuya', 'aoi_tatsuya@example.com', 'male', '21', '1988/8/30', '080-5257-80CB')
+('Tachikawa Hiroaki', 'tachikawa_hiroaki@example.com', 'male', '40', '1970/1/25', '090-3998-69FA')
+('Tsutsumi Manami', 'tsutsumi_manami@example.com', 'female', '75', '1934/11/1', '090-8224-26EH')
+('Sugimura Shunsuke', 'sugimura_shunsuke@example.com', 'male', '70', '1939/8/10', '090-6873-43DC')
+('Wakabayashi Mitsuru', 'wakabayashi_mitsuru@example.com', 'male', '59', '1950/5/13', '080-2151-64CI')
+('Maehara Tatsuhito', 'maehara_tatsuhito@example.com', 'male', '49', '1960/6/21', '080-5857- 9EA')
+('Chiba Hiroyuki', 'chiba_hiroyuki@example.com', 'male', '59', '1950/5/8', '080-2637-74JH')
+('Yoshioka Stmaria', 'yoshioka_stmaria@example.com', 'male', '43', '1966/6/21', '080-7737-22EA')
+('Kameyama Mitsunori', 'kameyama_mitsunori@example.com', 'male', '65', '1944/7/22', '090-4515-66EE')
+('Tamura Meisa', 'tamura_meisa@example.com', 'female', '60', '1949/6/12', '080- 698-23AC')
+('Taue Takashi', 'taue_takashi@example.com', 'male', '34', '1975/5/15', '090- 393- 7BD')
+('Yanagiya Yuujirou', 'yanagiya_yuujirou@example.com', 'male', '32', '1977/12/18', '080-1094-23CE')
+('Inagaki Ouga', 'inagaki_ouga@example.com', 'male', '29', '1981/3/20', '080-1535-79FF')
+('Kasahara Shidou', 'kasahara_shidou@example.com', 'male', '58', '1951/8/3', '090-2261-24IF')
+('Nakayama Yoshiki', 'nakayama_yoshiki@example.com', 'male', '39', '1970/11/2', '090-7101-88BF')
+('Takaya Masahiko', 'takaya_masahiko@example.com', 'male', '29', '1980/4/12', '090-6963-52GJ')
+('Nagao Erika', 'nagao_erika@example.com', 'female', '29', '1980/11/23', '080-2472-74DI')
+('Fujisawa Haruomi', 'fujisawa_haruomi@example.com', 'male', '22', '1987/4/15', '080-  76-16JF')
+('Kasai Ayaka', 'kasai_ayaka@example.com', 'female', '67', '1942/12/2', '090-4956-49FD')
+Success
+"Hayasaka Hiroko","hayasaka_hiroko@example.com","female","33","1976/8/27","090-9134-30BF"
+"Hannda Yumiko","hannda_yumiko@example.com","female","75","1934/10/20","080-6713-87BI"
+"Honma Chise","honma_chise@example.com","female","46","1964/3/9","090-5237-82FJ"
+"Kawahata Nana","kawahata_nana@example.com","female","47","1962/4/23","090-4760-51JA"
+"Kikuchi Takao","kikuchi_takao@example.com","male","35","1975/1/1","080-1904-58CH"
+"Iwai Michiko","iwai_michiko@example.com","female","36","1974/2/2","090-4520-77GH"
+"Kasai Satoshi","kasai_satoshi@example.com","male","24","1985/12/23","090-8055-78CB"
+"Shima Masashi","shima_masashi@example.com","male","61","1948/12/20","090-4180-99GH"
+"Suenaga Rena","suenaga_rena@example.com","female","80","1929/5/22","080-1042-32EG"
+"Yokokawa Fumiyo","yokokawa_fumiyo@example.com","female","24","1985/11/9","090-2679-49BI"
+"Yamanaka Mayuko","yamanaka_mayuko@example.com","female","62","1947/9/9","090-1826-25EC"
+"Aoi Tatsuya","aoi_tatsuya@example.com","male","21","1988/8/30","080-5257-80CB"
+"Tachikawa Hiroaki","tachikawa_hiroaki@example.com","male","40","1970/1/25","090-3998-69FA"
+"Tsutsumi Manami","tsutsumi_manami@example.com","female","75","1934/11/1","090-8224-26EH"
+"Sugimura Shunsuke","sugimura_shunsuke@example.com","male","70","1939/8/10","090-6873-43DC"
+"Wakabayashi Mitsuru","wakabayashi_mitsuru@example.com","male","59","1950/5/13","080-2151-64CI"
+"Maehara Tatsuhito","maehara_tatsuhito@example.com","male","49","1960/6/21","080-5857- 9EA"
+"Chiba Hiroyuki","chiba_hiroyuki@example.com","male","59","1950/5/8","080-2637-74JH"
+"Yoshioka Stmaria","yoshioka_stmaria@example.com","male","43","1966/6/21","080-7737-22EA"
+"Kameyama Mitsunori","kameyama_mitsunori@example.com","male","65","1944/7/22","090-4515-66EE"
+"Tamura Meisa","tamura_meisa@example.com","female","60","1949/6/12","080- 698-23AC"
+"Taue Takashi","taue_takashi@example.com","male","34","1975/5/15","090- 393- 7BD"
+"Yanagiya Yuujirou","yanagiya_yuujirou@example.com","male","32","1977/12/18","080-1094-23CE"
+"Inagaki Ouga","inagaki_ouga@example.com","male","29","1981/3/20","080-1535-79FF"
+"Kasahara Shidou","kasahara_shidou@example.com","male","58","1951/8/3","090-2261-24IF"
+"Nakayama Yoshiki","nakayama_yoshiki@example.com","male","39","1970/11/2","090-7101-88BF"
+"Takaya Masahiko","takaya_masahiko@example.com","male","29","1980/4/12","090-6963-52GJ"
+"Nagao Erika","nagao_erika@example.com","female","29","1980/11/23","080-2472-74DI"
+"Fujisawa Haruomi","fujisawa_haruomi@example.com","male","22","1987/4/15","080-  76-16JF"
+"Kasai Ayaka","kasai_ayaka@example.com","female","67","1942/12/2","090-4956-49FD"
