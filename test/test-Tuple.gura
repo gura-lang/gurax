@@ -95,10 +95,10 @@ TestCase('Operator') {
 }
 
 TestCase('Expansion') {
-	Tester(`(['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog'],))
-	Tester(`(['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']*,))
-	Tester(`(('The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog'),))
-	Tester(`(('The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog')*,))
-	Tester(`(Range(10),))
-	Tester(`(Range(10)*,))
+	Tester(`(['The', 'quick', 'brown'], 'fox', ['jumps', 'over'], ['the', 'lazy', 'dog']))
+	Tester(`(['The', 'quick', 'brown']*, 'fox', ['jumps', 'over']*, ['the', 'lazy', 'dog']*))
+	Tester(`(('The', 'quick', 'brown'), 'fox', ('jumps', 'over'), ('the', 'lazy', 'dog')))
+	Tester(`(('The', 'quick', 'brown')*, 'fox', ('jumps', 'over')*, ('the', 'lazy', 'dog')*))
+	Tester(`(Range(6), 6, 7, Range(8, 11)))
+	Tester(`(Range(6)*, 6, 7, Range(8, 11)*))
 }

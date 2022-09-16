@@ -854,3 +854,12 @@ TestCase('List#__clone__()') {
 	Tester(`a)
 	Tester(`b)
 }
+
+TestCase('Expansion') {
+	Tester(`[['The', 'quick', 'brown'], 'fox', ['jumps', 'over'], ['the', 'lazy', 'dog']])
+	Tester(`[['The', 'quick', 'brown']*, 'fox', ['jumps', 'over']*, ['the', 'lazy', 'dog']*])
+	Tester(`[('The', 'quick', 'brown'), 'fox', ('jumps', 'over'), ('the', 'lazy', 'dog')])
+	Tester(`[('The', 'quick', 'brown')*, 'fox', ('jumps', 'over')*, ('the', 'lazy', 'dog')*])
+	Tester(`[Range(6), 6, 7, Range(8, 11)])
+	Tester(`[Range(6)*, 6, 7, Range(8, 11)*])
+}
