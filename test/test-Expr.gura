@@ -151,3 +151,21 @@ TestCase('To String') {
 	Tester(`x.__str__())
 	Tester(`x.__str__():dquoteString)
 }
+
+TestCase('Expr#Textize()') {
+	x = `{
+		(1, 2, 3)
+		(`a, `b, `c)
+		('foo', 'bar')
+		('foo'bbb, 'bar'aaa)
+		-hoge, hoge*
+		a + b * c - d
+		a = 10000
+		a += 10000
+		('foo', 'bar')
+		['foo', 'bar']
+		a[index]
+		a(a, b, c, d) {fdasjkfdsaj} else {fjdakfjask}
+	}
+	Print(x.Textize())
+}
