@@ -968,6 +968,7 @@ String Expr_Root::ToString(const StringStyle& ss, int indentLevel) const
 			if (pExpr != GetExprElemFirst()) str += indent;
 			str += pExpr->ToString(ss, indentLevel);
 			str += '\n';
+			// IsElimLastEOL() should be handled here
 		}
 	} else {
 		const Expr* pExprFirst = GetExprElemFirst();
@@ -1068,7 +1069,7 @@ String Expr_Block::ToString(const StringStyle& ss, int indentLevel) const
 			str += '\n';
 		}
 		str += indent;
-		str += "}\n";
+		str += ss.IsElimLastEOL()? "}" : "}\n";
 	} else {
 		str += '{';
 		if (HasExprParam()) {
@@ -1131,7 +1132,7 @@ String Expr_Tuple::ToString(const StringStyle& ss, int indentLevel) const
 			str += '\n';
 		}
 		str += indent;
-		str += ")\n";
+		str += ss.IsElimLastEOL()? ")" : ")\n";
 	} else {
 		str += '(';
 		const Expr* pExprFirst = GetExprElemFirst();
@@ -1189,7 +1190,7 @@ String Expr_Lister::ToString(const StringStyle& ss, int indentLevel) const
 			str += '\n';
 		}
 		str += indent;
-		str += "]\n";
+		str += ss.IsElimLastEOL()? "]" : "]\n";
 	} else {
 		str += '[';
 		const Expr* pExprFirst = GetExprElemFirst();

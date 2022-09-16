@@ -53,7 +53,7 @@ PanelTop = class(wx.Panel) {
 	EvalSample(sample as VType) = {
 		this.canvas.EvalSample(sample)
 		this.canvas.Refresh()
-		this.textCtrl.SetValue(sample.Draw.expr.EachElem():*Textize().Join('\n'))
+		this.textCtrl.SetValue(sample.Draw.expr.EachElem():*Textize('    ').Join('\n'))
 	}
 	OnListBox(event as wx.CommandEvent) = {
 		sample = Samples.samples[event.GetSelection()]

@@ -33,6 +33,7 @@ public:
 		static const Flags WithSquare		= (1 << 10);
 		static const Flags WithParenthesis	= (1 << 11);
 		static const Flags Brief			= (1 << 12);
+		static const Flags ElimLastEOL		= (1 << 13);
 	};
 private:
 	Flags _flags;
@@ -97,6 +98,8 @@ public:
 	StringStyle& UnsetWithParenthesis()	{ _flags &= ~Flag::WithParenthesis; return *this; }
 	StringStyle& SetBrief()				{ _flags |= Flag::Brief; return *this; }
 	StringStyle& UnsetBrief()			{ _flags &= ~Flag::Brief; return *this; }
+	StringStyle& SetElimLastEOL()		{ _flags |= Flag::ElimLastEOL; return *this; }
+	StringStyle& UnsetElimLastEOL()		{ _flags &= ~Flag::ElimLastEOL; return *this; }
 	bool IsBracket() const				{ return (_flags & Flag::Bracket) != 0; }
 	bool IsUnbracket() const			{ return (_flags & Flag::Unbracket) != 0; }
 	bool IsQuoteString() const			{ return (_flags & Flag::QuoteString) != 0; }
@@ -111,6 +114,7 @@ public:
 	bool IsWithSquare() const			{ return (_flags & Flag::WithSquare) != 0; }
 	bool IsWithParenthesis() const		{ return (_flags & Flag::WithParenthesis) != 0; }
 	bool IsBrief() const				{ return (_flags & Flag::Brief) != 0; }
+	bool IsElimLastEOL() const			{ return (_flags & Flag::ElimLastEOL) != 0; }
 	const char* GetMargin() const		{ return _margin.c_str(); }
 	const char* GetIndentUnit() const	{ return _indentUnit.c_str(); }
 	const char* GetComma() const		{ return _strsComma[static_cast<int>(IsCram())]; }
