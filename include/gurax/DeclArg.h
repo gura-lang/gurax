@@ -29,12 +29,13 @@ public:
 		static const Flags Map			= 1 << 4;	// :map
 		static const Flags NoMap		= 1 << 5;	// :noMap
 		static const Flags NoCast		= 1 << 6;	// :noCast
-		static const Flags OfClass		= 1 << 7;	// :static
-		static const Flags OfInstance	= 1 << 8;	// :instance
-		static const Flags Public		= 1 << 9;	// :public
-		static const Flags Private		= 1 << 10;	// :private
-		static const Flags Readable		= 1 << 11;	// :readable
-		static const Flags Writable		= 1 << 12;	// :writable
+		static const Flags StringCast	= 1 << 7;	// :stringCast
+		static const Flags OfClass		= 1 << 8;	// :static
+		static const Flags OfInstance	= 1 << 9;	// :instance
+		static const Flags Public		= 1 << 10;	// :public
+		static const Flags Private		= 1 << 11;	// :private
+		static const Flags Readable		= 1 << 12;	// :readable
+		static const Flags Writable		= 1 << 13;	// :writable
 	};
 	class GURAX_DLLDECLARE Occur {
 	private:
@@ -78,6 +79,7 @@ public:
 			Assoc(Gurax_Symbol(map),		Flag::Map);
 			Assoc(Gurax_Symbol(noMap),		Flag::NoMap);
 			Assoc(Gurax_Symbol(noCast),		Flag::NoCast);
+			Assoc(Gurax_Symbol(stringCast),	Flag::StringCast);
 			Assoc(Gurax_Symbol(static_),	Flag::OfClass);
 			//Assoc(Gurax_Symbol(instance),	Flag::OfInstance);
 			Assoc(Gurax_Symbol(public_),	Flag::Public);

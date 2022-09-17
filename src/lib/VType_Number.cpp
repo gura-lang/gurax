@@ -963,6 +963,11 @@ Value* VType_Number::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Rational)) {
 		return new Value_Number(Value_Rational::GetRational(value).ToDouble());
+	} else if (value.IsType(VTYPE_String) && ((flags & DeclArg::Flag::StringCast) != 0)) {
+		bool successFlag;
+		Double num = Value_String::GetStringSTL(value).ToDouble(&successFlag);
+		if (successFlag) return new Value_Number(num);
+		Error::Issue(ErrorType::CastError, "failed to convert from String to Number");
 	}
 	return nullptr;
 }

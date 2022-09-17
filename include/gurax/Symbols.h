@@ -508,6 +508,7 @@ Gurax_DeclareSymbol(sticky_at_btm);
 Gurax_DeclareSymbol(stream);
 Gurax_DeclareSymbol(strict);
 Gurax_DeclareSymbol(string);
+Gurax_DeclareSymbol(stringCast);
 Gurax_DeclareSymbol(stringUnquoted);
 Gurax_DeclareSymbol(suffix);
 Gurax_DeclareSymbol(suffixmgr);

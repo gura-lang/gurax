@@ -87,3 +87,14 @@ TestCase('Cast to Tuple') {
 	A = struct {}	
 	Tester(`(A() as Tuple))
 }
+
+TestCase('stringCast attribute') {
+	Person = struct {
+		name as String
+		age:stringCast as Number
+		phone as String
+	}
+	Tester(`Person)
+	p = Person('hoge', '34', 'aaaa-bbbb-cccc')
+	Printf('name:%s age:%d phone:%s\n', p.name, p.age, p.phone)
+}

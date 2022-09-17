@@ -505,6 +505,7 @@ Gurax_RealizeSymbolAlias(sticky_at_btm, "sticky@btm");
 Gurax_RealizeSymbol(stream);
 Gurax_RealizeSymbol(strict);
 Gurax_RealizeSymbol(string);
+Gurax_RealizeSymbol(stringCast);
 Gurax_RealizeSymbol(stringUnquoted);
 Gurax_RealizeSymbol(suffix);
 Gurax_RealizeSymbol(suffixmgr);

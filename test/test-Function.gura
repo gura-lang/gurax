@@ -350,3 +350,10 @@ TestCase('Operator *') {
 	p = Person * ('hoge', 23, 'xxx-yyyy-zzzz')
 	Tester(`Format('%s %d %s', p.name, p.age, p.mobile))
 }
+
+TestCase('stringCast attribute') {
+	f(a as Number) = a
+	g(a:stringCast as Number) = a
+	Tester(`f('1234'))
+	Tester(`g('1234'))
+}

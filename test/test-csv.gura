@@ -118,10 +118,11 @@ TestCase('CSV and struct') {
 		name as String
 		email as String
 		gender as String
-		age as String
+		age:stringCast as Number
 		birthDay as String
 		mobile as String
 	}
+	Println(Person)
 	text = R'''
 	"Hayasaka Hiroko","hayasaka_hiroko@example.com","female",33,"1976/8/27","090-9134-30BF"
 	"Hannda Yumiko","hannda_yumiko@example.com","female",75,"1934/10/20","080-6713-87BI"

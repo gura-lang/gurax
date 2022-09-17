@@ -364,3 +364,6 @@ Color * ('black', 64) .. <Color:#000000,40>
 'abcdefghijklmnopqrstuvwxyz'.Mid * (8, 5) .. ijklm
 Color * ['black', 'red', 'green', ('blue', 64)] .. [<Color:#000000,ff>, <Color:#ff0000,ff>, <Color:#008000,ff>, <Color:#0000ff,40>]
 Format('%s %d %s', p.name, p.age, p.mobile) .. hoge 23 xxx-yyyy-zzzz
+======== stringCast attribute ========
+f('1234') .. a can't cast from String to Number
+g('1234') .. 1234
