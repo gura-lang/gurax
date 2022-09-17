@@ -245,6 +245,7 @@ public:
 	}
 public:
 	bool IsIdentical(const Expr& expr) const { return this == &expr; }
+	static String TextizeExprList(const StringStyle& ss, const Expr* pExpr, int indentLevel);
 	String ToString() const { return ToString(StringStyle::Empty, 0); }
 	virtual String ToString(const StringStyle& ss, int indentLevel = 0) const = 0;
 };

@@ -187,6 +187,18 @@ bool Expr::IsPureAssign() const
 	return IsType<Expr_Assign>() && !InspectOperator();
 }
 
+String Expr::TextizeExprList(const StringStyle& ss, const Expr* pExpr, int indentLevel)
+{
+	String str;
+	String indent = ss.MakeIndent(indentLevel);
+	for ( ; pExpr; pExpr = pExpr->GetExprNext()) {
+		str += indent;
+		str += pExpr->ToString(ss, indentLevel);
+		str += '\n';
+	}
+	return str;
+}
+
 //------------------------------------------------------------------------------
 // Expr::Visitor_GatherArgSymbols
 //------------------------------------------------------------------------------
@@ -1062,11 +1074,12 @@ String Expr_Block::ToString(const StringStyle& ss, int indentLevel) const
 			str += '|';
 		}
 		str += '\n';
-		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			str += indentDown;
-			str += pExpr->ToString(ss, indentLevel + 1);
-			str += '\n';
-		}
+		str += TextizeExprList(ss, GetExprElemFirst(), indentLevel + 1);
+		//for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		//	str += indentDown;
+		//	str += pExpr->ToString(ss, indentLevel + 1);
+		//	str += '\n';
+		//}
 		str += indent;
 		str += "}";
 	} else {
@@ -1125,11 +1138,12 @@ String Expr_Tuple::ToString(const StringStyle& ss, int indentLevel) const
 		String indentDown = indent;
 		indentDown += ss.GetIndentUnit();
 		str += "(\n";
-		for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
-			str += indentDown;
-			str += pExpr->ToString(ss, indentLevel + 1);
-			str += '\n';
-		}
+		str += TextizeExprList(ss, GetExprElemFirst(), indentLevel + 1);
+		//for (const Expr* pExpr = GetExprElemFirst(); pExpr; pExpr = pExpr->GetExprNext()) {
+		//	str += indentDown;
+		//	str += pExpr->ToString(ss, indentLevel + 1);
+		//	str += '\n';
+		//}
 		str += indent;
 		str += ")";
 	} else {
