@@ -385,12 +385,13 @@ $packages += [Package_sdl_ttf]::new()
 #---------------------------------------------------------------------------------
 class Package_yaml {
 	[String] $name = "yaml"
-	[String] $ver = "0.2.5"
-	[String] $baseName = "$($this.name)-$($this.ver)"
-	[String[]] $fileNames = @("$($this.baseName).tar.gz")
+	[String] $ver = "0.7.0"
+	[String] $baseName = "yaml-cpp-yaml-cpp-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).zip")
 	[String] $dirName = $this.baseName
 	Build() {
-		#nmake /f win32\Makefile.msc
+		cmake -B build -G Ninja
+		ninja -C build
 	}
 }
 $packages += [Package_yaml]::new()
