@@ -385,9 +385,9 @@ $packages += [Package_sdl_ttf]::new()
 #---------------------------------------------------------------------------------
 class Package_yaml {
 	[String] $name = "yaml"
-	[String] $ver = "0.7.0"
-	[String] $baseName = "yaml-cpp-yaml-cpp-$($this.ver)"
-	[String[]] $fileNames = @("$($this.baseName).zip")
+	[String] $ver = "0.2.5"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).zip", "$($this.baseName)-gurapatch.zip")
 	[String] $dirName = $this.baseName
 	Build() {
 		cmake -B build -G Ninja
