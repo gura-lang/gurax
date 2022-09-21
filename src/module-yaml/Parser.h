@@ -18,11 +18,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("yaml.Parser");
 public:
+	using AnchorMap = std::map<String, Value*>;
 	class Stocker {
 	public:
 		virtual void Stock(Value* pValue) = 0;
 	};
-	class StockerList : public ListBase<Stocker*> {};
+	class StockerStack : public ListBase<Stocker*> {
+	public:
+		void Push(Stocker* pStocker) { push_back(pStocker); }
+		void Pop() { delete back(); pop_back(); }
+		Stocker* GetTop() { return back(); }
+	};
 	class Stocker_Mapping : public Stocker {
 	private:
 		RefPtr<Value_Dict> _pValueDict;
@@ -51,6 +57,7 @@ public:
 private:
 	yaml_parser_t _parser;
 	RefPtr<Stream> _pStream;
+	AnchorMap _anchorMap;
 public:
 	// Constructor
 	Parser(Stream* pStream);
