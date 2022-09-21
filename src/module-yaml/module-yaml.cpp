@@ -101,6 +101,33 @@ Gurax_ImplementFunction(Read)
 	return nullptr;
 }
 
+// yaml.Write(stream:w as Stream, value)
+Gurax_DeclareFunction(Write)
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::StreamW);
+	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(Write)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	const Value& value = args.PickValue();
+	// Function body
+	RefPtr<Emitter> pEmitter(new Emitter(stream.Reference()));
+	if (!pEmitter->EmitStreamStart()) return Value::nil();
+	if (!pEmitter->EmitDocumentStart()) return Value::nil();
+	if (!pEmitter->Emit(value)) return Value::nil();
+	if (!pEmitter->EmitDocumentEnd()) return Value::nil();
+	if (!pEmitter->EmitStreamEnd()) return Value::nil();
+	return Value::nil();
+}
+
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -114,6 +141,7 @@ Gurax_ModulePrepare()
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
 	Assign(Gurax_CreateFunction(Read));
+	Assign(Gurax_CreateFunction(Write));
 	return true;
 }
 
