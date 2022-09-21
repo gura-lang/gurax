@@ -39,5 +39,5 @@ workflows:
 TestCase('Basic test') {
 	value = yaml.Read(text.ToReader())
 	Println(value):noMap
-	yaml.Write(sys.cout, value[0])
+	yaml.Write(sys.cout, value)
 }

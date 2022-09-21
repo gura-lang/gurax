@@ -115,15 +115,13 @@ bool Emitter::Emit(const Value& value)
 		String str = value.ToString();
 		yaml_char_t* anchor = nullptr;
 		yaml_char_t* tag = nullptr;
-		yaml_char_t* valueRaw =
-			reinterpret_cast<unsigned char* >(const_cast<char* >(str.c_str()));
+		yaml_char_t* valueRaw = reinterpret_cast<unsigned char* >(const_cast<char* >(str.c_str()));
 		size_t length = str.size();
 		int plain_implicit = 1;
 		int quoted_implicit = 1;
 		yaml_scalar_style_t style = YAML_ANY_SCALAR_STYLE;
 		yaml_event_t event;
-		::yaml_scalar_event_initialize(&event,
-			anchor, tag, valueRaw, length, plain_implicit, quoted_implicit, style);
+		::yaml_scalar_event_initialize(&event, anchor, tag, valueRaw, length, plain_implicit, quoted_implicit, style);
 		if (!::yaml_emitter_emit(&_emitter, &event)) {
 			Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
 			return false;

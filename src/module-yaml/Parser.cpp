@@ -33,11 +33,11 @@ Value* Parser::Parse()
 		}
 		switch (event.type) {
 		case YAML_STREAM_START_EVENT:
-			::printf("STREAM_START\n");
+			//::printf("STREAM_START\n");
 			//yaml_encoding_t encoding = event.data.stream_start.encoding;
 			break;
 		case YAML_STREAM_END_EVENT:
-			::printf("STREAM_END\n");
+			//::printf("STREAM_END\n");
 			contFlag = false;
 			break;
 		case YAML_DOCUMENT_START_EVENT: {
@@ -45,7 +45,7 @@ Value* Parser::Parse()
 			//yaml_tag_directive_t* tag_start = event.data.document_start.tag_directives.start;
 			//yaml_tag_directive_t* tag_end = event.data.document_start.tag_directives.end;
 			//int implicit = event.data.document_start.implicit;
-			::printf("DOCUMENT_START\n");
+			//::printf("DOCUMENT_START\n");
 			//tag_start->handle;
 			//tag_start->prefix;
 			//tag_end->handle;
@@ -57,13 +57,13 @@ Value* Parser::Parse()
 		}
 		case YAML_DOCUMENT_END_EVENT: {
 			int implicit = event.data.document_end.implicit;
-			::printf("DOCUMENT_END\n");
+			//::printf("DOCUMENT_END\n");
 			stockerStack.Pop();
 			break;
 		}
 		case YAML_ALIAS_EVENT: {
 			yaml_char_t* anchor = event.data.alias.anchor;
-			::printf("ALIAS %s\n", anchor);
+			//::printf("ALIAS %s\n", anchor);
 			auto iter = _anchorMap.find(reinterpret_cast<char*>(anchor));
 			if (iter == _anchorMap.end()) {
 				Error::Issue(ErrorType::FormatError, "undefined anchor %s", anchor);
@@ -81,7 +81,7 @@ Value* Parser::Parse()
 			int plain_implicit = event.data.scalar.plain_implicit;
 			int quoted_implicit = event.data.scalar.quoted_implicit;
 			yaml_scalar_style_t style = event.data.scalar.style;
-			::printf("SCALAR %s %s\n", anchor, tag);
+			//::printf("SCALAR %s %s\n", anchor, tag);
 			RefPtr<Value_String> pValue(new Value_String(String(reinterpret_cast<char*>(valueRaw), length)));
 			stockerStack.GetTop()->Stock(pValue.Reference());
 			if (anchor) _anchorMap[reinterpret_cast<char *>(anchor)] = pValue.release();
@@ -92,7 +92,7 @@ Value* Parser::Parse()
 			yaml_char_t* tag = event.data.sequence_start.tag;
 			int implicit = event.data.sequence_start.implicit;
 			yaml_sequence_style_t style = event.data.sequence_start.style;
-			::printf("SEQUENCE_START %s %s\n", anchor, tag);
+			//::printf("SEQUENCE_START %s %s\n", anchor, tag);
 			RefPtr<Value_List> pValue(new Value_List());
 			stockerStack.GetTop()->Stock(pValue.Reference());
 			stockerStack.Push(new Stocker_Sequence(pValue.Reference()));
@@ -100,7 +100,7 @@ Value* Parser::Parse()
 			break;
 		}
 		case YAML_SEQUENCE_END_EVENT:
-			::printf("SEQUENCE_END\n");
+			//::printf("SEQUENCE_END\n");
 			stockerStack.Pop();
 			break;
 		case YAML_MAPPING_START_EVENT: {
@@ -108,7 +108,7 @@ Value* Parser::Parse()
 			yaml_char_t* tag = event.data.mapping_start.tag;
 			int implicit = event.data.mapping_start.implicit;
 			yaml_mapping_style_t style = event.data.mapping_start.style;
-			::printf("MAPPING_START %s %s\n", anchor, tag);
+			//::printf("MAPPING_START %s %s\n", anchor, tag);
 			RefPtr<Value_Dict> pValue(new Value_Dict());
 			stockerStack.GetTop()->Stock(pValue.Reference());
 			stockerStack.Push(new Stocker_Mapping(pValue.Reference()));
@@ -116,7 +116,7 @@ Value* Parser::Parse()
 			break;
 		}
 		case YAML_MAPPING_END_EVENT:
-			::printf("MAPPING_END\n");
+			//::printf("MAPPING_END\n");
 			stockerStack.Pop();
 			break;
 		default:
