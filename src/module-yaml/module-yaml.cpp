@@ -79,6 +79,28 @@ Gurax_ImplementFunction(Test)
 	return Value::nil();
 }
 
+// yaml.Read(stream as Stream)
+Gurax_DeclareFunction(Read)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(Read)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	// Function body
+	RefPtr<Parser> pParser(new Parser(stream.Reference()));
+	RefPtr<Value> pValue(pParser->Parse());
+	if (pValue) return pValue.release();
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Entries
 //------------------------------------------------------------------------------
@@ -91,6 +113,7 @@ Gurax_ModulePrepare()
 {
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	Assign(Gurax_CreateFunction(Read));
 	return true;
 }
 

@@ -36,23 +36,14 @@ public:
 		bool _keyFlag;
 	public:
 		Stocker_Mapping(Value_Dict* pValueDict) : _pValueDict(pValueDict), _keyFlag(true) {}
-		virtual void Stock(Value* pValue) override {
-			if (_keyFlag) {
-				_pValueKey.reset(pValue);
-			} else {
-				//_pValueDict->GetValueDict().Assign(*_pValueKey, pValue);
-			}
-			_keyFlag = !_keyFlag;
-		}
+		virtual void Stock(Value* pValue) override;
 	};
 	class Stocker_Sequence : public Stocker {
 	private:
 		RefPtr<Value_List> _pValueList;
 	public:
 		Stocker_Sequence(Value_List* pValueList) : _pValueList(pValueList) {}
-		virtual void Stock(Value* pValue) override {
-			_pValueList->GetValueTypedOwner().Add(pValue);
-		}
+		virtual void Stock(Value* pValue) override;
 	};
 private:
 	yaml_parser_t _parser;
@@ -72,6 +63,8 @@ protected:
 public:
 	Stream& GetStream() { return *_pStream; }
 	Value* Parse();
+protected:
+	static int ReadHandler(void* ext, char* buffer, int size, int* length);
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Parser& other) const { return this == &other; }
