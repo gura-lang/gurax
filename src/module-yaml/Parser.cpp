@@ -40,7 +40,7 @@ Value* Parser::Parse()
 			::printf("STREAM_END\n");
 			contFlag = false;
 			break;
-		case YAML_DOCUMENT_START_EVENT:
+		case YAML_DOCUMENT_START_EVENT: {
 			//yaml_version_directive_t* version_directive = event.data.document_start.version_directive;
 			//yaml_tag_directive_t* tag_start = event.data.document_start.tag_directives.start;
 			//yaml_tag_directive_t* tag_end = event.data.document_start.tag_directives.end;
@@ -50,11 +50,15 @@ Value* Parser::Parse()
 			//tag_start->prefix;
 			//tag_end->handle;
 			//tag_end->prefix;
+			RefPtr<Value_List> pValue(new Value_List());
+			stockerStack.GetTop()->Stock(pValue.Reference());
+			stockerStack.Push(new Stocker_Sequence(pValue.Reference()));
 			break;
+		}
 		case YAML_DOCUMENT_END_EVENT: {
 			int implicit = event.data.document_end.implicit;
 			::printf("DOCUMENT_END\n");
-			//contFlag = false;
+			stockerStack.Pop();
 			break;
 		}
 		case YAML_ALIAS_EVENT: {
