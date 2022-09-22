@@ -49,15 +49,15 @@ bool Parser::Parse(ValueOwner& valueOwner)
 			//tag_start->prefix;
 			//tag_end->handle;
 			//tag_end->prefix;
-			RefPtr<Value_List> pValue(new Value_List());
-			stockerStack.GetTop()->Stock(pValue.Reference());
-			stockerStack.Push(new Stocker_Sequence(pValue.Reference()));
+			//RefPtr<Value_List> pValue(new Value_List());
+			//stockerStack.GetTop()->Stock(pValue.Reference());
+			//stockerStack.Push(new Stocker_Sequence(pValue.Reference()));
 			break;
 		}
 		case YAML_DOCUMENT_END_EVENT: {
-			int implicit = event.data.document_end.implicit;
+			//int implicit = event.data.document_end.implicit;
 			//::printf("DOCUMENT_END\n");
-			stockerStack.Pop();
+			//stockerStack.Pop();
 			break;
 		}
 		case YAML_ALIAS_EVENT: {

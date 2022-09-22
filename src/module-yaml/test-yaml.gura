@@ -5,6 +5,18 @@
 import(util.tester) {*}
 import(yaml)
 
+ReadAndWrite(stream as Stream) = {
+	value = yaml.Read(stream)
+	Println(value):noMap
+	yaml.Write(sys.cout, value)
+}
+
+ReadAndWriteMulti(stream as Stream) = {
+	value = yaml.Read(stream):multi
+	Println(value):noMap
+	yaml.Write(sys.cout, value):multi
+}
+
 TestCase('Basic test') {
 	//value = yaml.Read(text.ToReader())
 	//value = yaml.Read(''.ToReader())
@@ -13,7 +25,116 @@ TestCase('Basic test') {
 }
 
 TestCase('Example 2.1 Sequene of Scalars (ball players)') {
+	ReadAndWrite(bR'''
 	- Mark McGwire
 	- Sammy Sosa
 	- Ken Griffey
+	''')
+}
+
+TestCase('Example 2.2 Mapping Scalars to Scalars (player statistics)') {
+	ReadAndWrite(bR'''
+	hr:  65    # Home runs
+	avg: 0.278 # Batting average
+	rbi: 147   # Runs Batted In
+	''')
+}
+
+TestCase('Example 2.3 Mapping Scalars to Sequences (ball clubs in each league)') {
+	ReadAndWrite(bR'''
+	american:
+	- Boston Red Sox
+	- Detroit Tigers
+	- New York Yankees
+	national:
+	- New York Mets
+	- Chicago Cubs
+	- Atlanta Braves	
+	''')
+}
+
+TestCase('Example 2.4 Sequence of Mappings (players’ statistics)') {
+	ReadAndWrite(bR'''
+	-
+	  name: Mark McGwire
+	  hr:   65
+	  avg:  0.278
+	-
+	  name: Sammy Sosa
+	  hr:   63
+	  avg:  0.288
+	''')
+}
+
+TestCase('Example 2.5 Sequence of Sequences') {
+	ReadAndWrite(bR'''
+	- [name        , hr, avg  ]
+	- [Mark McGwire, 65, 0.278]
+	- [Sammy Sosa  , 63, 0.288]
+	''')
+}
+
+TestCase('Example 2.6 Mapping of Mappings') {
+	ReadAndWrite(bR'''
+	Mark McGwire: {hr: 65, avg: 0.278}
+	Sammy Sosa: {
+	    hr: 63,
+	    avg: 0.288,
+	 }
+	''')
+}
+
+TestCase('Example 2.7 Two Documents in a Stream (each with a leading comment)') {
+	ReadAndWriteMulti(bR'''
+	# Ranking of 1998 home runs
+	---
+	- Mark McGwire
+	- Sammy Sosa
+	- Ken Griffey
+
+	# Team ranking
+	---
+	- Chicago Cubs
+	- St Louis Cardinals
+	''')
+}
+
+TestCase('') {
+	ReadAndWrite(bR'''
+	''')
+}
+
+TestCase('') {
+	ReadAndWrite(bR'''
+	''')
+}
+
+TestCase('') {
+	ReadAndWrite(bR'''
+	''')
+}
+
+TestCase('') {
+	ReadAndWrite(bR'''
+	''')
+}
+
+TestCase('') {
+	ReadAndWrite(bR'''
+	''')
+}
+
+TestCase('') {
+	ReadAndWrite(bR'''
+	''')
+}
+
+TestCase('') {
+	ReadAndWrite(bR'''
+	''')
+}
+
+TestCase('') {
+	ReadAndWrite(bR'''
+	''')
 }
