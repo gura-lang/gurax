@@ -79,11 +79,40 @@ Gurax_ImplementFunction(Test)
 	return Value::nil();
 }
 
-// yaml.Read(stream as Stream)
+// yaml.Parse(text as String):[multi]
+Gurax_DeclareFunction(Parse)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("text", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(multi));
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(Parse)
+{
+#if 0
+	// Arguments
+	ArgPicker args(argument);
+	const String& text = args.PickStringSTL();
+	bool multiFlag = argument.IsSet(Gurax_Symbol(multi));
+	// Function body
+	RefPtr<Parser> pParser(new Parser(new Stream_StringReader(text)));
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (!pParser->Parse(*pValueOwner)) return Value::nil();
+	if (multiFlag) return new Value_List(pValueOwner.release());
+	return pValueOwner->empty()? Value::nil() : pValueOwner->front()->Reference();
+#endif
+	return Value::nil();
+}
+
+// yaml.Read(stream as Stream):[multi]
 Gurax_DeclareFunction(Read)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(multi));
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -94,19 +123,22 @@ Gurax_ImplementFunction(Read)
 	// Arguments
 	ArgPicker args(argument);
 	Stream& stream = args.PickStream();
+	bool multiFlag = argument.IsSet(Gurax_Symbol(multi));
 	// Function body
 	RefPtr<Parser> pParser(new Parser(stream.Reference()));
-	RefPtr<Value> pValue(pParser->Parse());
-	if (pValue) return pValue.release();
-	return nullptr;
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	if (!pParser->Parse(*pValueOwner)) return Value::nil();
+	if (multiFlag) return new Value_List(pValueOwner.release());
+	return pValueOwner->empty()? Value::nil() : pValueOwner->front()->Reference();
 }
 
-// yaml.Write(stream:w as Stream, value)
+// yaml.Write(stream:w as Stream, value):[multi]
 Gurax_DeclareFunction(Write)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::StreamW);
 	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(multi));
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -118,12 +150,26 @@ Gurax_ImplementFunction(Write)
 	ArgPicker args(argument);
 	Stream& stream = args.PickStream();
 	const Value& value = args.PickValue();
+	bool multiFlag = argument.IsSet(Gurax_Symbol(multi));
 	// Function body
 	RefPtr<Emitter> pEmitter(new Emitter(stream.Reference()));
 	if (!pEmitter->EmitStreamStart()) return Value::nil();
-	if (!pEmitter->EmitDocumentStart()) return Value::nil();
-	if (!pEmitter->Emit(value)) return Value::nil();
-	if (!pEmitter->EmitDocumentEnd()) return Value::nil();
+	if (multiFlag) {
+		if (value.IsType(VTYPE_List)) {
+			for (const Value* pValueEach : Value_List::GetValueOwner(value)) {
+				if (!pEmitter->EmitDocumentStart()) return Value::nil();
+				if (!pEmitter->Emit(*pValueEach)) return Value::nil();
+				if (!pEmitter->EmitDocumentEnd()) return Value::nil();
+			}
+		} else {
+			Error::Issue(ErrorType::ValueError, "the value must be a List");
+			return Value::nil();
+		}
+	} else {
+		if (!pEmitter->EmitDocumentStart()) return Value::nil();
+		if (!pEmitter->Emit(value)) return Value::nil();
+		if (!pEmitter->EmitDocumentEnd()) return Value::nil();
+	}
 	if (!pEmitter->EmitStreamEnd()) return Value::nil();
 	return Value::nil();
 }
@@ -140,6 +186,7 @@ Gurax_ModulePrepare()
 {
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));
+	Assign(Gurax_CreateFunction(Parse));
 	Assign(Gurax_CreateFunction(Read));
 	Assign(Gurax_CreateFunction(Write));
 	return true;

@@ -29,6 +29,13 @@ public:
 		void Pop() { delete back(); pop_back(); }
 		Stocker* GetTop() { return back(); }
 	};
+	class Stocker_Stream : public Stocker {
+	private:
+		RefPtr<ValueOwner> _pValueOwner;
+	public:
+		Stocker_Stream(ValueOwner* pValueOwner) : _pValueOwner(pValueOwner) {}
+		virtual void Stock(Value* pValue) override;
+	};
 	class Stocker_Mapping : public Stocker {
 	private:
 		RefPtr<Value_Dict> _pValueDict;
@@ -62,7 +69,7 @@ protected:
 	~Parser();
 public:
 	Stream& GetStream() { return *_pStream; }
-	Value* Parse();
+	bool Parse(ValueOwner& valueOwner);
 protected:
 	static int ReadHandler(void* ext, char* buffer, int size, int* length);
 public:

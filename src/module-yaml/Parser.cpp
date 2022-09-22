@@ -20,16 +20,15 @@ Parser::~Parser()
 	for (auto pair : _anchorMap) Value::Delete(pair.second);
 }
 
-Value* Parser::Parse()
+bool Parser::Parse(ValueOwner& valueOwner)
 {
 	StockerStack stockerStack;
-	RefPtr<Value_List> pValueRtn(new Value_List());
-	stockerStack.Push(new Stocker_Sequence(pValueRtn.Reference()));
+	stockerStack.Push(new Stocker_Stream(valueOwner.Reference()));
 	for (bool contFlag = true; contFlag; ) {
 		yaml_event_t event;
 		if (!::yaml_parser_parse(&_parser, &event)) {
 			Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_parser.error));
-			return nullptr;
+			return false;
 		}
 		switch (event.type) {
 		case YAML_STREAM_START_EVENT:
@@ -67,7 +66,7 @@ Value* Parser::Parse()
 			auto iter = _anchorMap.find(reinterpret_cast<char*>(anchor));
 			if (iter == _anchorMap.end()) {
 				Error::Issue(ErrorType::FormatError, "undefined anchor %s", anchor);
-				return nullptr;
+				return false;
 			} else {
 				stockerStack.GetTop()->Stock(iter->second->Reference());
 			}
@@ -121,12 +120,12 @@ Value* Parser::Parse()
 			break;
 		default:
 			Error::Issue(ErrorType::FormatError, "unknown event %d\n", event.type);
-			return nullptr;
+			return false;
 		}
 		::yaml_event_delete(&event);
 	}
 	stockerStack.Pop();
-	return pValueRtn.release();
+	return true;
 }
 
 int Parser::ReadHandler(void* ext, char* buffer, int size, int* length)
@@ -144,6 +143,14 @@ String Parser::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Parser::Stocker
 //------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Parser::Stocker_Stream
+//------------------------------------------------------------------------------
+void Parser::Stocker_Stream::Stock(Value* pValue)
+{
+	_pValueOwner->Add(pValue);
+}
 
 //------------------------------------------------------------------------------
 // Parser::Stocker_Mapping
