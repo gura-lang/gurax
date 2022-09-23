@@ -2,8 +2,10 @@
 //==============================================================================
 // util.tester.gura
 //==============================================================================
+TestTitle(title as String) = Printf('======== %s ========\n', title)
+
 TestCase(title as String):void:dynamicScope {`block?} = scope {
-	Printf('======== %s ========\n', title)
+	TestTitle(title)
 	block && block.Eval()
 }
 

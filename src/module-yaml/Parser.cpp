@@ -147,20 +147,24 @@ String Parser::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Parser::Stocker_Stream
 //------------------------------------------------------------------------------
-void Parser::Stocker_Stream::Stock(Value* pValue)
+void Parser::Stocker_Stream::Stock(RefPtr<Value> pValue)
 {
-	_pValueOwner->Add(pValue);
+	_pValueOwner->Add(pValue.release());
 }
 
 //------------------------------------------------------------------------------
 // Parser::Stocker_Mapping
 //------------------------------------------------------------------------------
-void Parser::Stocker_Mapping::Stock(Value* pValue)
+void Parser::Stocker_Mapping::Stock(RefPtr<Value> pValue)
 {
 	if (_keyFlag) {
-		_pValueKey.reset(pValue);
+		if (pValue->IsType(VTYPE_List)) {
+			_pValueKey.reset(new Value_Tuple(Value_List::GetValueOwner(*pValue).Reference()));
+		} else {
+			_pValueKey.reset(pValue.release());
+		}
 	} else {
-		_pValueDict->GetValueDict().Assign(_pValueKey.release(), pValue);
+		_pValueDict->GetValueDict().Assign(_pValueKey.release(), pValue.release());
 	}
 	_keyFlag = !_keyFlag;
 }
@@ -168,9 +172,9 @@ void Parser::Stocker_Mapping::Stock(Value* pValue)
 //------------------------------------------------------------------------------
 // Parser::Stocker_Sequence
 //------------------------------------------------------------------------------
-void Parser::Stocker_Sequence::Stock(Value* pValue)
+void Parser::Stocker_Sequence::Stock(RefPtr<Value> pValue)
 {
-	_pValueList->GetValueTypedOwner().Add(pValue);
+	_pValueList->GetValueTypedOwner().Add(pValue.release());
 }
 
 Gurax_EndModuleScope(yaml)

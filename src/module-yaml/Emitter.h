@@ -37,7 +37,10 @@ public:
 	bool EmitStreamEnd();
 	bool EmitDocumentStart();
 	bool EmitDocumentEnd();
-	bool Emit(const Value& value);
+	bool EmitGeneric(const Value& value);
+	bool EmitSequence(const ValueList& valueList);
+	bool EmitMapping(const ValueDict& valueDict);
+	bool EmitScalar(const String& str);
 public:
 	static int WriteHandler(void* ext, unsigned char* buffer, size_t size);
 public:

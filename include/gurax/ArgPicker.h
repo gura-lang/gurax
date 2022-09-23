@@ -125,6 +125,7 @@ public:
 	Stream& PickStream();
 	const char* PickString()		{ return Pick<Value_String>().GetString(); }
 	const String& PickStringSTL()	{ return Pick<Value_String>().GetStringSTL(); }
+	const StringReferable& PickStringReferable() { return Pick<Value_String>().GetStringReferable(); }
 	const Symbol* PickSymbol()		{ return Pick<Value_Symbol>().GetSymbol(); }
 	Template& PickTemplate()		{ return Pick<Value_Template>().GetTemplate(); }
 	TimeDelta& PickTimeDelta()		{ return Pick<Value_TimeDelta>().GetTimeDelta(); }

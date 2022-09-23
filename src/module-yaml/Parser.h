@@ -21,7 +21,7 @@ public:
 	using AnchorMap = std::map<String, Value*>;
 	class Stocker {
 	public:
-		virtual void Stock(Value* pValue) = 0;
+		virtual void Stock(RefPtr<Value> pValue) = 0;
 	};
 	class StockerStack : public ListBase<Stocker*> {
 	public:
@@ -34,7 +34,7 @@ public:
 		RefPtr<ValueOwner> _pValueOwner;
 	public:
 		Stocker_Stream(ValueOwner* pValueOwner) : _pValueOwner(pValueOwner) {}
-		virtual void Stock(Value* pValue) override;
+		virtual void Stock(RefPtr<Value> pValue) override;
 	};
 	class Stocker_Mapping : public Stocker {
 	private:
@@ -43,14 +43,14 @@ public:
 		bool _keyFlag;
 	public:
 		Stocker_Mapping(Value_Dict* pValueDict) : _pValueDict(pValueDict), _keyFlag(true) {}
-		virtual void Stock(Value* pValue) override;
+		virtual void Stock(RefPtr<Value> pValue) override;
 	};
 	class Stocker_Sequence : public Stocker {
 	private:
 		RefPtr<Value_List> _pValueList;
 	public:
 		Stocker_Sequence(Value_List* pValueList) : _pValueList(pValueList) {}
-		virtual void Stock(Value* pValue) override;
+		virtual void Stock(RefPtr<Value> pValue) override;
 	};
 private:
 	yaml_parser_t _parser;

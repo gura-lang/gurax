@@ -5,16 +5,17 @@
 import(util.tester) {*}
 import(yaml)
 
-ReadAndWrite(stream as Stream) = {
-	value = yaml.Read(stream)
-	Println(value):noMap
-	yaml.Write(sys.cout, value)
-}
-
-ReadAndWriteMulti(stream as Stream) = {
-	value = yaml.Read(stream):multi
-	Println(value):noMap
-	yaml.Write(sys.cout, value):multi
+TestYAML(title as String, text as String) = {
+	TestTitle(title)
+	if (text.Find('---')) {
+		value = yaml.Parse(text):multi
+		Println(value):noMap
+		yaml.Write(sys.cout, value):multi
+	} else {
+		value = yaml.Parse(text)
+		Println(value):noMap
+		yaml.Write(sys.cout, value)
+	}
 }
 
 TestCase('Basic test') {
@@ -24,117 +25,223 @@ TestCase('Basic test') {
 	//yaml.Write(sys.cout, value)
 }
 
-TestCase('Example 2.1 Sequene of Scalars (ball players)') {
-	ReadAndWrite(bR'''
-	- Mark McGwire
-	- Sammy Sosa
-	- Ken Griffey
-	''')
-}
+TestYAML('Example 2.1 Sequene of Scalars (ball players)', R'''
+- Mark McGwire
+- Sammy Sosa
+- Ken Griffey
+''')
 
-TestCase('Example 2.2 Mapping Scalars to Scalars (player statistics)') {
-	ReadAndWrite(bR'''
-	hr:  65    # Home runs
-	avg: 0.278 # Batting average
-	rbi: 147   # Runs Batted In
-	''')
-}
+TestYAML('Example 2.2 Mapping Scalars to Scalars (player statistics)', R'''
+hr:  65    # Home runs
+avg: 0.278 # Batting average
+rbi: 147   # Runs Batted In
+''')
 
-TestCase('Example 2.3 Mapping Scalars to Sequences (ball clubs in each league)') {
-	ReadAndWrite(bR'''
-	american:
-	- Boston Red Sox
-	- Detroit Tigers
-	- New York Yankees
-	national:
-	- New York Mets
-	- Chicago Cubs
-	- Atlanta Braves	
-	''')
-}
+TestYAML('Example 2.3 Mapping Scalars to Sequences (ball clubs in each league)', R'''
+american:
+- Boston Red Sox
+- Detroit Tigers
+- New York Yankees
+national:
+- New York Mets
+- Chicago Cubs
+- Atlanta Braves	
+''')
 
-TestCase('Example 2.4 Sequence of Mappings (players’ statistics)') {
-	ReadAndWrite(bR'''
-	-
-	  name: Mark McGwire
-	  hr:   65
-	  avg:  0.278
-	-
-	  name: Sammy Sosa
-	  hr:   63
-	  avg:  0.288
-	''')
-}
+TestYAML('Example 2.4 Sequence of Mappings (players\' statistics)', R'''
+-
+    name: Mark McGwire
+    hr:   65
+    avg:  0.278
+-
+    name: Sammy Sosa
+    hr:   63
+    avg:  0.288
+''')
 
-TestCase('Example 2.5 Sequence of Sequences') {
-	ReadAndWrite(bR'''
-	- [name        , hr, avg  ]
-	- [Mark McGwire, 65, 0.278]
-	- [Sammy Sosa  , 63, 0.288]
-	''')
-}
+TestYAML('Example 2.5 Sequence of Sequences', R'''
+- [name        , hr, avg  ]
+- [Mark McGwire, 65, 0.278]
+- [Sammy Sosa  , 63, 0.288]
+''')
 
-TestCase('Example 2.6 Mapping of Mappings') {
-	ReadAndWrite(bR'''
-	Mark McGwire: {hr: 65, avg: 0.278}
-	Sammy Sosa: {
-	    hr: 63,
-	    avg: 0.288,
-	 }
-	''')
-}
+TestYAML('Example 2.6 Mapping of Mappings', R'''
+Mark McGwire: {hr: 65, avg: 0.278}
+Sammy Sosa: {
+	hr: 63,
+	avg: 0.288,
+	}
+''')
 
-TestCase('Example 2.7 Two Documents in a Stream (each with a leading comment)') {
-	ReadAndWriteMulti(bR'''
-	# Ranking of 1998 home runs
-	---
-	- Mark McGwire
-	- Sammy Sosa
-	- Ken Griffey
+TestYAML('Example 2.7 Two Documents in a Stream (each with a leading comment)', R'''
+# Ranking of 1998 home runs
+---
+- Mark McGwire
+- Sammy Sosa
+- Ken Griffey
 
-	# Team ranking
-	---
-	- Chicago Cubs
-	- St Louis Cardinals
-	''')
-}
+# Team ranking
+---
+- Chicago Cubs
+- St Louis Cardinals
+''')
 
-TestCase('') {
-	ReadAndWrite(bR'''
-	''')
-}
+TestYAML('Example 2.8 Play by Play Feed from a Game', R'''
+---
+time: 20:03:20
+player: Sammy Sosa
+action: strike (miss)
+...
+---
+time: 20:03:47
+player: Sammy Sosa
+action: grand slam
+...
+''')
 
-TestCase('') {
-	ReadAndWrite(bR'''
-	''')
-}
+TestYAML('Example 2.9 Single Document with Two Comments', R'''
+---
+hr: # 1998 hr ranking
+- Mark McGwire
+- Sammy Sosa
+# 1998 rbi ranking
+rbi:
+- Sammy Sosa
+- Ken Griffey
+''')
 
-TestCase('') {
-	ReadAndWrite(bR'''
-	''')
-}
+TestYAML('Example 2.10 Node for “Sammy Sosa” appears twice in this document', R'''
+---
+hr:
+- Mark McGwire
+# Following node labeled SS
+- &SS Sammy Sosa
+rbi:
+- *SS # Subsequent occurrence
+- Ken Griffey
+''')
 
-TestCase('') {
-	ReadAndWrite(bR'''
-	''')
-}
+TestYAML('Example 2.11 Mapping between Sequences', R'''
+? - Detroit Tigers
+  - Chicago cubs
+: - 2001-07-23
 
-TestCase('') {
-	ReadAndWrite(bR'''
-	''')
-}
+? [ New York Yankees,
+    Atlanta Braves ]
+: [ 2001-07-02, 2001-08-12,
+    2001-08-14 ]
+''')
 
-TestCase('') {
-	ReadAndWrite(bR'''
-	''')
-}
+TestYAML('Example 2.12 Compact Nested Mapping', R'''
+---
+# Products purchased
+- item    : Super Hoop
+  quantity: 1
+- item    : Basketball
+  quantity: 4
+- item    : Big Shoes
+  quantity: 1
+''')
 
-TestCase('') {
-	ReadAndWrite(bR'''
-	''')
-}
+TestYAML('Example 2.13 In literals, newlines are preserved', R'''
+# ASCII Art
+--- |
+  \//||\/||
+  // ||  ||__
+''')
 
-TestCase('') {
-	ReadAndWrite(bR'''
-	''')
-}
+TestYAML('Example 2.14 In the folded scalars, newlines become spaces', R'''
+--- >
+  Mark McGwire's
+  year was crippled
+  by a knee injury.
+''')
+
+TestYAML('Example 2.15 Folded newlines are preserved for “more indented” and blank lines', R'''
+--- >
+ Sammy Sosa completed another
+ fine season with great stats.
+
+   63 Home Runs
+   0.288 Batting Average
+
+ What a year!
+''')
+
+TestYAML('Example 2.16 Indentation determines scope', R'''
+name: Mark McGwire
+accomplishment: >
+  Mark set a major league
+  home run record in 1998.
+stats: |
+  65 Home Runs
+  0.278 Batting Average
+''')
+
+TestYAML('Example 2.17 Quoted Scalars', R'''
+unicode: "Sosa did fine.\u263A"
+control: "\b1998\t1999\t2000\n"
+hex esc: "\x0d\x0a is \r\n"
+
+single: '"Howdy!" he cried.'
+quoted: ' # Not a ''comment''.'
+tie-fighter: '|\-*-/|'
+''')
+
+TestYAML('Example 2.18 Multi-line Flow Scalars', R'''
+plain:
+  This unquoted scalar
+  spans many lines.
+
+quoted: "So does this
+  quoted scalar.\n"
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+
+TestYAML('', R'''
+''')
+

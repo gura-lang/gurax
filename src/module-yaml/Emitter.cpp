@@ -61,71 +61,93 @@ bool Emitter::EmitDocumentEnd()
 	return false;
 }
 
-bool Emitter::Emit(const Value& value)
+bool Emitter::EmitGeneric(const Value& value)
 {
 	if (value.IsType(VTYPE_List)) {
-		do {
-			yaml_char_t* anchor = nullptr;
-			yaml_char_t* tag = nullptr;
-			int implicit = 0;
-			yaml_sequence_style_t style = YAML_ANY_SEQUENCE_STYLE;
-			yaml_event_t event;
-			::yaml_sequence_start_event_initialize(&event, anchor, tag, implicit, style);
-			if (!::yaml_emitter_emit(&_emitter, &event)) {
-				Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
-				return false;
-			}
-		} while (0);
-		for (Value* pValueEach : Value_List::GetValueOwner(value)) {
-			if (!Emit(*pValueEach)) return false;
-		}
-		do {
-			yaml_event_t event;
-			::yaml_sequence_end_event_initialize(&event);
-			if (!::yaml_emitter_emit(&_emitter, &event)) {
-				Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
-				return false;
-			}
-		} while (0);
+		return EmitSequence(Value_List::GetValueOwner(value));
+	} else if (value.IsType(VTYPE_Tuple)) {
+		return EmitSequence(Value_Tuple::GetValueOwner(value));
 	} else if (value.IsType(VTYPE_Dict)) {
-		do {
-			yaml_char_t* anchor = nullptr;
-			yaml_char_t* tag = nullptr;
-			int implicit = 0;
-			yaml_mapping_style_t style = YAML_ANY_MAPPING_STYLE;
-			yaml_event_t event;
-			::yaml_mapping_start_event_initialize(&event, anchor, tag, implicit, style);
-			if (!::yaml_emitter_emit(&_emitter, &event)) {
-				return false;
-			}
-		} while (0);
-		for (auto pair : Value_Dict::GetValueDict(value).GetMap()) {
-			if (!Emit(*pair.first)) return false;
-			if (!Emit(*pair.second)) return false;
-		}
-		do {
-			yaml_event_t event;
-			::yaml_mapping_end_event_initialize(&event);
-			if (!::yaml_emitter_emit(&_emitter, &event)) {
-				Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
-				return false;
-			}
-		} while (0);
+		return EmitMapping(Value_Dict::GetValueDict(value));
 	} else {
-		String str = value.ToString();
+		return EmitScalar(value.ToString());
+	}
+	return true;
+}
+
+bool Emitter::EmitSequence(const ValueList& valueList)
+{
+	do {
 		yaml_char_t* anchor = nullptr;
 		yaml_char_t* tag = nullptr;
-		yaml_char_t* valueRaw = reinterpret_cast<unsigned char* >(const_cast<char* >(str.c_str()));
-		size_t length = str.size();
-		int plain_implicit = 1;
-		int quoted_implicit = 1;
-		yaml_scalar_style_t style = YAML_ANY_SCALAR_STYLE;
+		int implicit = 0;
+		yaml_sequence_style_t style = YAML_ANY_SEQUENCE_STYLE;
+		//yaml_sequence_style_t style = YAML_FLOW_SEQUENCE_STYLE;
 		yaml_event_t event;
-		::yaml_scalar_event_initialize(&event, anchor, tag, valueRaw, length, plain_implicit, quoted_implicit, style);
+		::yaml_sequence_start_event_initialize(&event, anchor, tag, implicit, style);
 		if (!::yaml_emitter_emit(&_emitter, &event)) {
 			Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
 			return false;
 		}
+	} while (0);
+	for (Value* pValueEach : valueList) {
+		if (!EmitGeneric(*pValueEach)) return false;
+	}
+	do {
+		yaml_event_t event;
+		::yaml_sequence_end_event_initialize(&event);
+		if (!::yaml_emitter_emit(&_emitter, &event)) {
+			Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
+			return false;
+		}
+	} while (0);
+	return true;
+}
+
+bool Emitter::EmitMapping(const ValueDict& valueDict)
+{
+	do {
+		yaml_char_t* anchor = nullptr;
+		yaml_char_t* tag = nullptr;
+		int implicit = 0;
+		yaml_mapping_style_t style = YAML_ANY_MAPPING_STYLE;
+		//yaml_mapping_style_t style = YAML_FLOW_MAPPING_STYLE;
+		yaml_event_t event;
+		::yaml_mapping_start_event_initialize(&event, anchor, tag, implicit, style);
+		if (!::yaml_emitter_emit(&_emitter, &event)) {
+			return false;
+		}
+	} while (0);
+	for (auto pair : valueDict.GetMap()) {
+		if (!EmitGeneric(*pair.first)) return false;
+		if (!EmitGeneric(*pair.second)) return false;
+	}
+	do {
+		yaml_event_t event;
+		::yaml_mapping_end_event_initialize(&event);
+		if (!::yaml_emitter_emit(&_emitter, &event)) {
+			Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
+			return false;
+		}
+	} while (0);
+	return true;
+}
+
+bool Emitter::EmitScalar(const String& str)
+{
+	yaml_char_t* anchor = nullptr;
+	yaml_char_t* tag = nullptr;
+	yaml_char_t* valueRaw = reinterpret_cast<unsigned char* >(const_cast<char* >(str.c_str()));
+	size_t length = str.size();
+	int plain_implicit = 1;
+	int quoted_implicit = 1;
+	yaml_scalar_style_t style = YAML_ANY_SCALAR_STYLE;
+	//yaml_scalar_style_t style = YAML_DOUBLE_QUOTED_SCALAR_STYLE;
+	yaml_event_t event;
+	::yaml_scalar_event_initialize(&event, anchor, tag, valueRaw, length, plain_implicit, quoted_implicit, style);
+	if (!::yaml_emitter_emit(&_emitter, &event)) {
+		Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
+		return false;
 	}
 	return true;
 }
