@@ -6,6 +6,11 @@
 Gurax_BeginModule(yaml)
 
 //------------------------------------------------------------------------------
+// Symbol
+//------------------------------------------------------------------------------
+Gurax_RealizeSymbol(json);
+
+//------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
 // yaml.Parse(text as String):[multi] {block?}
@@ -74,13 +79,14 @@ Gurax_ImplementFunction(Read)
 	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
-// yaml.Write(stream:w as Stream, value):[multi]:void
+// yaml.Write(stream:w as Stream, value):[multi,json]:void
 Gurax_DeclareFunction(Write)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::StreamW);
 	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(multi));
+	DeclareAttrOpt(Gurax_Symbol(json));
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -93,8 +99,9 @@ Gurax_ImplementFunction(Write)
 	Stream& stream = args.PickStream();
 	const Value& value = args.PickValue();
 	bool multiFlag = argument.IsSet(Gurax_Symbol(multi));
+	bool jsonFlag = argument.IsSet(Gurax_Symbol(json));
 	// Function body
-	RefPtr<Emitter> pEmitter(new Emitter(stream.Reference()));
+	RefPtr<Emitter> pEmitter(new Emitter(stream.Reference(), jsonFlag));
 	if (!pEmitter->EmitStreamStart()) return Value::nil();
 	if (multiFlag) {
 		if (value.IsType(VTYPE_List)) {

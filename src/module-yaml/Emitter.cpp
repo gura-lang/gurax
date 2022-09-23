@@ -8,7 +8,9 @@ Gurax_BeginModuleScope(yaml)
 //------------------------------------------------------------------------------
 // Emitter
 //------------------------------------------------------------------------------
-Emitter::Emitter(Stream* pStream) : _pStream(pStream)
+Emitter::Emitter(Stream* pStream, bool jsonFlag) : _pStream(pStream),
+	_sequence_style(jsonFlag? YAML_FLOW_SEQUENCE_STYLE : YAML_ANY_SEQUENCE_STYLE),
+	_mapping_style(jsonFlag? YAML_FLOW_MAPPING_STYLE : YAML_ANY_MAPPING_STYLE)
 {
 	::yaml_emitter_initialize(&_emitter);
 	::yaml_emitter_set_output(&_emitter, reinterpret_cast<yaml_write_handler_t*>(WriteHandler), this);
@@ -69,10 +71,14 @@ bool Emitter::EmitGeneric(const Value& value)
 		return EmitSequence(Value_Tuple::GetValueOwner(value));
 	} else if (value.IsType(VTYPE_Dict)) {
 		return EmitMapping(Value_Dict::GetValueDict(value));
+	} else if (value.IsType(VTYPE_String)) {
+		return EmitScalar(Value_String::GetStringSTL(value), YAML_ANY_SCALAR_STYLE);
+		// YAML_DOUBLE_QUOTED_SCALAR_STYLE;
+	} else if (value.IsType(VTYPE_Number)) {
+		return EmitScalar(value.ToString(), YAML_LITERAL_SCALAR_STYLE);
 	} else {
-		return EmitScalar(value.ToString());
+		return EmitScalar(value.ToString(), YAML_ANY_SCALAR_STYLE);
 	}
-	return true;
 }
 
 bool Emitter::EmitSequence(const ValueList& valueList)
@@ -81,10 +87,8 @@ bool Emitter::EmitSequence(const ValueList& valueList)
 		yaml_char_t* anchor = nullptr;
 		yaml_char_t* tag = nullptr;
 		int implicit = 0;
-		yaml_sequence_style_t style = YAML_ANY_SEQUENCE_STYLE;
-		//yaml_sequence_style_t style = YAML_FLOW_SEQUENCE_STYLE;
 		yaml_event_t event;
-		::yaml_sequence_start_event_initialize(&event, anchor, tag, implicit, style);
+		::yaml_sequence_start_event_initialize(&event, anchor, tag, implicit, _sequence_style);
 		if (!::yaml_emitter_emit(&_emitter, &event)) {
 			Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
 			return false;
@@ -110,17 +114,14 @@ bool Emitter::EmitMapping(const ValueDict& valueDict)
 		yaml_char_t* anchor = nullptr;
 		yaml_char_t* tag = nullptr;
 		int implicit = 0;
-		yaml_mapping_style_t style = YAML_ANY_MAPPING_STYLE;
-		//yaml_mapping_style_t style = YAML_FLOW_MAPPING_STYLE;
 		yaml_event_t event;
-		::yaml_mapping_start_event_initialize(&event, anchor, tag, implicit, style);
+		::yaml_mapping_start_event_initialize(&event, anchor, tag, implicit, _mapping_style);
 		if (!::yaml_emitter_emit(&_emitter, &event)) {
 			return false;
 		}
 	} while (0);
 	for (auto pair : valueDict.GetMap()) {
-		if (!EmitGeneric(*pair.first)) return false;
-		if (!EmitGeneric(*pair.second)) return false;
+		if (!EmitGeneric(*pair.first) || !EmitGeneric(*pair.second)) return false;
 	}
 	do {
 		yaml_event_t event;
@@ -133,18 +134,16 @@ bool Emitter::EmitMapping(const ValueDict& valueDict)
 	return true;
 }
 
-bool Emitter::EmitScalar(const String& str)
+bool Emitter::EmitScalar(const String& str, yaml_scalar_style_t style)
 {
 	yaml_char_t* anchor = nullptr;
 	yaml_char_t* tag = nullptr;
-	yaml_char_t* valueRaw = reinterpret_cast<unsigned char* >(const_cast<char* >(str.c_str()));
+	yaml_char_t* value = reinterpret_cast<yaml_char_t*>(const_cast<char*>(str.c_str()));
 	size_t length = str.size();
 	int plain_implicit = 1;
 	int quoted_implicit = 1;
-	yaml_scalar_style_t style = YAML_ANY_SCALAR_STYLE;
-	//yaml_scalar_style_t style = YAML_DOUBLE_QUOTED_SCALAR_STYLE;
 	yaml_event_t event;
-	::yaml_scalar_event_initialize(&event, anchor, tag, valueRaw, length, plain_implicit, quoted_implicit, style);
+	::yaml_scalar_event_initialize(&event, anchor, tag, value, length, plain_implicit, quoted_implicit, style);
 	if (!::yaml_emitter_emit(&_emitter, &event)) {
 		Error::Issue(ErrorType::FormatError, "%s", GetYAMLErrorText(_emitter.error));
 		return false;

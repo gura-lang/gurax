@@ -20,9 +20,11 @@ public:
 protected:
 	yaml_emitter_t _emitter;
 	RefPtr<Stream> _pStream;
+	yaml_sequence_style_t _sequence_style;
+	yaml_mapping_style_t _mapping_style;
 public:
 	// Constructor
-	Emitter(Stream* pStream);
+	Emitter(Stream* pStream, bool jsonFlag);
 	// Copy constructor/operator
 	Emitter(const Emitter& src) = delete;
 	Emitter& operator=(const Emitter& src) = delete;
@@ -40,7 +42,7 @@ public:
 	bool EmitGeneric(const Value& value);
 	bool EmitSequence(const ValueList& valueList);
 	bool EmitMapping(const ValueDict& valueDict);
-	bool EmitScalar(const String& str);
+	bool EmitScalar(const String& str, yaml_scalar_style_t style);
 public:
 	static int WriteHandler(void* ext, unsigned char* buffer, size_t size);
 public:
