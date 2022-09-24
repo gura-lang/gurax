@@ -1,0 +1,740 @@
+======== Blank ========
+
+# Gurax Style
+(nil)
+
+# YAML Style
+
+
+# JSON Style
+""
+======== Example 2.1 Sequene of Scalars (ball players) ========
+|- Mark McGwire
+|- Sammy Sosa
+|- Ken Griffey
+
+# Gurax Style
+['Mark McGwire', 'Sammy Sosa', 'Ken Griffey']
+
+# YAML Style
+- Mark McGwire
+- Sammy Sosa
+- Ken Griffey
+
+# JSON Style
+["Mark McGwire", "Sammy Sosa", "Ken Griffey"]
+======== Example 2.2 Mapping Scalars to Scalars (player statistics) ========
+|hr:  65    # Home runs
+|avg: 0.278 # Batting average
+|rbi: 147   # Runs Batted In
+
+# Gurax Style
+%{'avg' => '0.278', 'hr' => '65', 'rbi' => '147'}
+
+# YAML Style
+hr: 65
+avg: 0.278
+rbi: 147
+
+# JSON Style
+{"hr": "65", "avg": "0.278", "rbi": "147"}
+======== Example 2.3 Mapping Scalars to Sequences (ball clubs in each league) ========
+|american:
+|- Boston Red Sox
+|- Detroit Tigers
+|- New York Yankees
+|national:
+|- New York Mets
+|- Chicago Cubs
+|- Atlanta Braves	
+
+# Gurax Style
+%{'american' => ['Boston Red Sox', 'Detroit Tigers', 'New York Yankees'], 'national' => ['New York Mets', 'Chicago Cubs', 'Atlanta Braves']}
+
+# YAML Style
+american:
+- Boston Red Sox
+- Detroit Tigers
+- New York Yankees
+national:
+- New York Mets
+- Chicago Cubs
+- Atlanta Braves
+
+# JSON Style
+{"american": ["Boston Red Sox", "Detroit Tigers", "New York Yankees"], "national": [
+    "New York Mets", "Chicago Cubs", "Atlanta Braves"]}
+======== Example 2.4 Sequence of Mappings (players' statistics) ========
+|-
+|    name: Mark McGwire
+|    hr:   65
+|    avg:  0.278
+|-
+|    name: Sammy Sosa
+|    hr:   63
+|    avg:  0.288
+
+# Gurax Style
+[%{'avg' => '0.278', 'hr' => '65', 'name' => 'Mark McGwire'}, %{'avg' => '0.288', 'hr' => '63', 'name' => 'Sammy Sosa'}]
+
+# YAML Style
+- name: Mark McGwire
+  hr: 65
+  avg: 0.278
+- name: Sammy Sosa
+  hr: 63
+  avg: 0.288
+
+# JSON Style
+[{"name": "Mark McGwire", "hr": "65", "avg": "0.278"}, {"name": "Sammy Sosa", "hr": "63",
+    "avg": "0.288"}]
+======== Example 2.5 Sequence of Sequences ========
+|- [name        , hr, avg  ]
+|- [Mark McGwire, 65, 0.278]
+|- [Sammy Sosa  , 63, 0.288]
+
+# Gurax Style
+[['name', 'hr', 'avg'], ['Mark McGwire', '65', '0.278'], ['Sammy Sosa', '63', '0.288']]
+
+# YAML Style
+- - name
+  - hr
+  - avg
+- - Mark McGwire
+  - 65
+  - 0.278
+- - Sammy Sosa
+  - 63
+  - 0.288
+
+# JSON Style
+[["name", "hr", "avg"], ["Mark McGwire", "65", "0.278"], ["Sammy Sosa", "63", "0.288"]]
+======== Example 2.6 Mapping of Mappings ========
+|Mark McGwire: {hr: 65, avg: 0.278}
+|Sammy Sosa: {
+|	hr: 63,
+|	avg: 0.288,
+|	}
+
+# Gurax Style
+%{'Mark McGwire' => %{'avg' => '0.278', 'hr' => '65'}, 'Sammy Sosa' => %{'avg' => '0.288', 'hr' => '63'}}
+
+# YAML Style
+Mark McGwire:
+  hr: 65
+  avg: 0.278
+Sammy Sosa:
+  hr: 63
+  avg: 0.288
+
+# JSON Style
+{"Mark McGwire": {"hr": "65", "avg": "0.278"}, "Sammy Sosa": {"hr": "63", "avg": "0.288"}}
+======== Example 2.7 Two Documents in a Stream (each with a leading comment) ========
+|# Ranking of 1998 home runs
+|---
+|- Mark McGwire
+|- Sammy Sosa
+|- Ken Griffey
+|
+|# Team ranking
+|---
+|- Chicago Cubs
+|- St Louis Cardinals
+
+# Gurax Style
+[['Mark McGwire', 'Sammy Sosa', 'Ken Griffey'], ['Chicago Cubs', 'St Louis Cardinals']]
+
+# YAML Style
+- Mark McGwire
+- Sammy Sosa
+- Ken Griffey
+---
+- Chicago Cubs
+- St Louis Cardinals
+
+# JSON Style
+["Mark McGwire", "Sammy Sosa", "Ken Griffey"]
+--- ["Chicago Cubs", "St Louis Cardinals"]
+======== Example 2.8 Play by Play Feed from a Game ========
+|---
+|time: 20:03:20
+|player: Sammy Sosa
+|action: strike (miss)
+|...
+|---
+|time: 20:03:47
+|player: Sammy Sosa
+|action: grand slam
+|...
+
+# Gurax Style
+[%{'action' => 'strike (miss)', 'player' => 'Sammy Sosa', 'time' => '20:03:20'}, %{'action' => 'grand slam', 'player' => 'Sammy Sosa', 'time' => '20:03:47'}]
+
+# YAML Style
+time: 20:03:20
+player: Sammy Sosa
+action: strike (miss)
+---
+time: 20:03:47
+player: Sammy Sosa
+action: grand slam
+
+# JSON Style
+{"time": "20:03:20", "player": "Sammy Sosa", "action": "strike (miss)"}
+--- {"time": "20:03:47", "player": "Sammy Sosa", "action": "grand slam"}
+======== Example 2.9 Single Document with Two Comments ========
+|---
+|hr: # 1998 hr ranking
+|- Mark McGwire
+|- Sammy Sosa
+|# 1998 rbi ranking
+|rbi:
+|- Sammy Sosa
+|- Ken Griffey
+
+# Gurax Style
+[%{'hr' => ['Mark McGwire', 'Sammy Sosa'], 'rbi' => ['Sammy Sosa', 'Ken Griffey']}]
+
+# YAML Style
+hr:
+- Mark McGwire
+- Sammy Sosa
+rbi:
+- Sammy Sosa
+- Ken Griffey
+
+# JSON Style
+{"hr": ["Mark McGwire", "Sammy Sosa"], "rbi": ["Sammy Sosa", "Ken Griffey"]}
+======== Example 2.10 Node for gSammy Sosah appears twice in this document ========
+|---
+|hr:
+|- Mark McGwire
+|# Following node labeled SS
+|- &SS Sammy Sosa
+|rbi:
+|- *SS # Subsequent occurrence
+|- Ken Griffey
+
+# Gurax Style
+[%{'hr' => ['Mark McGwire', 'Sammy Sosa'], 'rbi' => ['Sammy Sosa', 'Ken Griffey']}]
+
+# YAML Style
+hr:
+- Mark McGwire
+- Sammy Sosa
+rbi:
+- Sammy Sosa
+- Ken Griffey
+
+# JSON Style
+{"hr": ["Mark McGwire", "Sammy Sosa"], "rbi": ["Sammy Sosa", "Ken Griffey"]}
+======== Example 2.11 Mapping between Sequences ========
+|? - Detroit Tigers
+|  - Chicago cubs
+|: - 2001-07-23
+|
+|? [ New York Yankees,
+|    Atlanta Braves ]
+|: [ 2001-07-02, 2001-08-12,
+|    2001-08-14 ]
+
+# Gurax Style
+%{('Detroit Tigers', 'Chicago cubs') => ['2001-07-23'], ('New York Yankees', 'Atlanta Braves') => ['2001-07-02', '2001-08-12', '2001-08-14']}
+
+# YAML Style
+? - New York Yankees
+  - Atlanta Braves
+: - 2001-07-02
+  - 2001-08-12
+  - 2001-08-14
+? - Detroit Tigers
+  - Chicago cubs
+: - 2001-07-23
+
+# JSON Style
+{? ["New York Yankees", "Atlanta Braves"] : ["2001-07-02", "2001-08-12", "2001-08-14"],
+  ? ["Detroit Tigers", "Chicago cubs"] : ["2001-07-23"]}
+======== Example 2.12 Compact Nested Mapping ========
+|---
+|# Products purchased
+|- item    : Super Hoop
+|  quantity: 1
+|- item    : Basketball
+|  quantity: 4
+|- item    : Big Shoes
+|  quantity: 1
+
+# Gurax Style
+[[%{'item' => 'Super Hoop', 'quantity' => '1'}, %{'item' => 'Basketball', 'quantity' => '4'}, %{'item' => 'Big Shoes', 'quantity' => '1'}]]
+
+# YAML Style
+- quantity: 1
+  item: Super Hoop
+- quantity: 4
+  item: Basketball
+- quantity: 1
+  item: Big Shoes
+
+# JSON Style
+[{"quantity": "1", "item": "Super Hoop"}, {"quantity": "4", "item": "Basketball"},
+  {"quantity": "1", "item": "Big Shoes"}]
+======== Example 2.13 In literals, newlines are preserved ========
+|# ASCII Art
+|--- |
+|  \//||\/||
+|  // ||  ||__
+
+# Gurax Style
+['\\//||\\/||\n// ||  ||__\n']
+
+# YAML Style
+'\//||\/||
+
+  // ||  ||__
+
+  '
+
+# JSON Style
+"\\//||\\/||\n// ||  ||__\n"
+======== Example 2.14 In the folded scalars, newlines become spaces ========
+|--- >
+|  Mark McGwire's
+|  year was crippled
+|  by a knee injury.
+
+# Gurax Style
+["Mark McGwire's year was crippled by a knee injury.\n"]
+
+# YAML Style
+'Mark McGwire''s year was crippled by a knee injury.
+
+  '
+
+# JSON Style
+"Mark McGwire's year was crippled by a knee injury.\n"
+======== Example 2.15 Folded newlines are preserved for gmore indentedh and blank lines ========
+|--- >
+| Sammy Sosa completed another
+| fine season with great stats.
+|
+|   63 Home Runs
+|   0.288 Batting Average
+|
+| What a year!
+
+# Gurax Style
+['Sammy Sosa completed another fine season with great stats.\n\n  63 Home Runs\n  0.288 Batting Average\n\nWhat a year!\n']
+
+# YAML Style
+"Sammy Sosa completed another fine season with great stats.\n\n  63 Home Runs\n  0.288
+  Batting Average\n\nWhat a year!\n"
+
+# JSON Style
+"Sammy Sosa completed another fine season with great stats.\n\n  63 Home Runs\n  0.288
+  Batting Average\n\nWhat a year!\n"
+======== Example 2.16 Indentation determines scope ========
+|name: Mark McGwire
+|accomplishment: >
+|  Mark set a major league
+|  home run record in 1998.
+|stats: |
+|  65 Home Runs
+|  0.278 Batting Average
+
+# Gurax Style
+%{'accomplishment' => 'Mark set a major league home run record in 1998.\n', 'name' => 'Mark McGwire', 'stats' => '65 Home Runs\n0.278 Batting Average\n'}
+
+# YAML Style
+name: Mark McGwire
+stats: '65 Home Runs
+
+  0.278 Batting Average
+
+  '
+accomplishment: 'Mark set a major league home run record in 1998.
+
+  '
+
+# JSON Style
+{"name": "Mark McGwire", "stats": "65 Home Runs\n0.278 Batting Average\n", "accomplishment": "Mark
+    set a major league home run record in 1998.\n"}
+======== Example 2.17 Quoted Scalars ========
+|unicode: "Sosa did fine.\u263A"
+|control: "\b1998\t1999\t2000\n"
+|hex esc: "\x0d\x0a is \r\n"
+|
+|single: '"Howdy!" he cried.'
+|quoted: ' # Not a ''comment''.'
+|tie-fighter: '|\-*-/|'
+
+# Gurax Style
+%{'control' => '\b1998\t1999\t2000\n', 'hex esc' => '\r\n is \r\n', 'quoted' => " # Not a 'comment'.", 'single' => '"Howdy!" he cried.', 'tie-fighter' => '|\\-*-/|', 'unicode' => 'Sosa did fine.
+
+# YAML Style
+unicode: "Sosa did fine.\u263A"
+control: "\b1998\t1999\t2000\n"
+tie-fighter: '|\-*-/|'
+hex esc: "\r\n is \r\n"
+quoted: ' # Not a ''comment''.'
+single: '"Howdy!" he cried.'
+
+# JSON Style
+{"unicode": "Sosa did fine.\u263A", "control": "\b1998\t1999\t2000\n", "tie-fighter": "|\\-*-/|",
+  "hex esc": "\r\n is \r\n", "quoted": " # Not a 'comment'.", "single": "\"Howdy!\"
+    he cried."}
+======== Example 2.18 Multi-line Flow Scalars ========
+|plain:
+|  This unquoted scalar
+|  spans many lines.
+|
+|quoted: "So does this
+|  quoted scalar.\n"
+
+# Gurax Style
+%{'plain' => 'This unquoted scalar spans many lines.', 'quoted' => 'So does this quoted scalar.\n'}
+
+# YAML Style
+plain: This unquoted scalar spans many lines.
+quoted: 'So does this quoted scalar.
+
+  '
+
+# JSON Style
+{"plain": "This unquoted scalar spans many lines.", "quoted": "So does this quoted
+    scalar.\n"}
+======== Example 2.19 Integers ========
+|canonical: 12345
+|decimal: +12345
+|octal: 0o14
+|hexadecimal: 0xC
+
+# Gurax Style
+%{'canonical' => '12345', 'decimal' => '+12345', 'hexadecimal' => '0xC', 'octal' => '0o14'}
+
+# YAML Style
+canonical: 12345
+decimal: +12345
+octal: 0o14
+hexadecimal: 0xC
+
+# JSON Style
+{"canonical": "12345", "decimal": "+12345", "octal": "0o14", "hexadecimal": "0xC"}
+======== Example 2.20 Floating Point ========
+|canonical: 1.23015e+3
+|exponential: 12.3015e+02
+|fixed: 1230.15
+|negative infinity: -.inf
+|not a number: .nan
+
+# Gurax Style
+%{'canonical' => '1.23015e+3', 'exponential' => '12.3015e+02', 'fixed' => '1230.15', 'negative infinity' => '-.inf', 'not a number' => '.nan'}
+
+# YAML Style
+fixed: 1230.15
+canonical: 1.23015e+3
+exponential: 12.3015e+02
+negative infinity: -.inf
+not a number: .nan
+
+# JSON Style
+{"fixed": "1230.15", "canonical": "1.23015e+3", "exponential": "12.3015e+02", "negative infinity": "-.inf",
+  "not a number": ".nan"}
+======== Example 2.21 Miscellaneous ========
+|null:
+|booleans: [ true, false ]
+|string: '012345'
+
+# Gurax Style
+%{'booleans' => ['true', 'false'], 'null' => '', 'string' => '012345'}
+
+# YAML Style
+booleans:
+- true
+- false
+null:
+string: 012345
+
+# JSON Style
+{"booleans": ["true", "false"], "null": "", "string": "012345"}
+======== Example 2.22 Timestamps ========
+|canonical: 2001-12-15T02:59:43.1Z
+|iso8601: 2001-12-14t21:59:43.10-05:00
+|spaced: 2001-12-14 21:59:43.10 -5
+|date: 2002-12-14
+
+# Gurax Style
+%{'canonical' => '2001-12-15T02:59:43.1Z', 'date' => '2002-12-14', 'iso8601' => '2001-12-14t21:59:43.10-05:00', 'spaced' => '2001-12-14 21:59:43.10 -5'}
+
+# YAML Style
+spaced: 2001-12-14 21:59:43.10 -5
+canonical: 2001-12-15T02:59:43.1Z
+iso8601: 2001-12-14t21:59:43.10-05:00
+date: 2002-12-14
+
+# JSON Style
+{"spaced": "2001-12-14 21:59:43.10 -5", "canonical": "2001-12-15T02:59:43.1Z", "iso8601": "2001-12-14t21:59:43.10-05:00",
+  "date": "2002-12-14"}
+======== Example 2.23 Various Explicit Tags ========
+|---
+|not-date: !!str 2002-04-28
+|
+|picture: !!binary |
+| R0lGODlhDAAMAIQAAP//9/X
+| 17unp5WZmZgAAAOfn515eXv
+| Pz7Y6OjuDg4J+fn5OTk6enp
+| 56enmleECcgggoBADs=
+|
+|application specific tag: !something |
+| The semantics of the tag
+| above may be different for
+| different documents.
+
+# Gurax Style
+[%{'application specific tag' => 'The semantics of the tag\nabove may be different for\ndifferent documents.\n', 'not-date' => '2002-04-28', 'picture' => 'R0lGODlhDAAMAIQAAP//9/X\n17unp5WZmZgAAAOfn515eXv\nPz7Y6OjuDg4J+fn5OTk6enp\n56enmleECcgggoBADs=\n'}]
+
+# YAML Style
+picture: 'R0lGODlhDAAMAIQAAP//9/X
+
+  17unp5WZmZgAAAOfn515eXv
+
+  Pz7Y6OjuDg4J+fn5OTk6enp
+
+  56enmleECcgggoBADs=
+
+  '
+not-date: 2002-04-28
+application specific tag: 'The semantics of the tag
+
+  above may be different for
+
+  different documents.
+
+  '
+
+# JSON Style
+{"picture": "R0lGODlhDAAMAIQAAP//9/X\n17unp5WZmZgAAAOfn515eXv\nPz7Y6OjuDg4J+fn5OTk6enp\n56enmleECcgggoBADs=\n",
+  "not-date": "2002-04-28", "application specific tag": "The semantics of the tag\nabove
+    may be different for\ndifferent documents.\n"}
+======== Example 2.24 Global Tags ========
+|%TAG ! tag:clarkevans.com,2002:
+|--- !shape
+|  # Use the ! handle for presenting
+|  # tag:clarkevans.com,2002:circle
+|- !circle
+|  center: &ORIGIN {x: 73, y: 129}
+|  radius: 7
+|- !line
+|  start: *ORIGIN
+|  finish: { x: 89, y: 102 }
+|- !label
+|  start: *ORIGIN
+|  color: 0xFFEEBB
+|  text: Pretty vector drawing.
+
+# Gurax Style
+[[%{'center' => %{'x' => '73', 'y' => '129'}, 'radius' => '7'}, %{'finish' => %{'x' => '89', 'y' => '102'}, 'start' => %{'x' => '73', 'y' => '129'}}, %{'color' => '0xFFEEBB', 'start' => %{'x' => '73', 'y' => '129'}, 'text' => 'Pretty vector drawing.'}]]
+
+# YAML Style
+- center:
+    x: 73
+    y: 129
+  radius: 7
+- start:
+    x: 73
+    y: 129
+  finish:
+    x: 89
+    y: 102
+- start:
+    x: 73
+    y: 129
+  color: 0xFFEEBB
+  text: Pretty vector drawing.
+
+# JSON Style
+[{"center": {"x": "73", "y": "129"}, "radius": "7"}, {"start": {"x": "73", "y": "129"},
+    "finish": {"x": "89", "y": "102"}}, {"start": {"x": "73", "y": "129"}, "color": "0xFFEEBB",
+    "text": "Pretty vector drawing."}]
+======== Example 2.25 Unordered Sets ========
+|# Sets are represented as a
+|# Mapping where each key is
+|# associated with a null value
+|--- !!set
+|? Mark McGwire
+|? Sammy Sosa
+|? Ken Griffey
+
+# Gurax Style
+[%{'Ken Griffey' => '', 'Mark McGwire' => '', 'Sammy Sosa' => ''}]
+
+# YAML Style
+Mark McGwire:
+Sammy Sosa:
+Ken Griffey:
+
+# JSON Style
+{"Mark McGwire": "", "Sammy Sosa": "", "Ken Griffey": ""}
+======== Example 2.26 Ordered Mappings ========
+|# Ordered maps are represented as
+|# A sequence of mappings, with
+|# each mapping having one key
+|--- !!omap
+|- Mark McGwire: 65
+|- Sammy Sosa: 63
+|- Ken Griffey: 58
+
+# Gurax Style
+[[%{'Mark McGwire' => '65'}, %{'Sammy Sosa' => '63'}, %{'Ken Griffey' => '58'}]]
+
+# YAML Style
+- Mark McGwire: 65
+- Sammy Sosa: 63
+- Ken Griffey: 58
+
+# JSON Style
+[{"Mark McGwire": "65"}, {"Sammy Sosa": "63"}, {"Ken Griffey": "58"}]
+======== Example 2.27 Invoice ========
+|--- !<tag:clarkevans.com,2002:invoice>
+|invoice: 34843
+|date   : 2001-01-23
+|bill-to: &id001
+|  given  : Chris
+|  family : Dumars
+|  address:
+|    lines: |
+|      458 Walkman Dr.
+|      Suite #292
+|    city    : Royal Oak
+|    state   : MI
+|    postal  : 48046
+|ship-to: *id001
+|product:
+|- sku         : BL394D
+|  quantity    : 4
+|  description : Basketball
+|  price       : 450.00
+|- sku         : BL4438H
+|  quantity    : 1
+|  description : Super Hoop
+|  price       : 2392.00
+|tax  : 251.42
+|total: 4443.52
+|comments:
+|  Late afternoon is best.
+|  Backup contact is Nancy
+|  Billsmer @ 338-4338.
+
+# Gurax Style
+[%{'bill-to' => %{'address' => %{'city' => 'Royal Oak', 'lines' => '458 Walkman Dr.\nSuite #292\n', 'postal' => '48046', 'state' => 'MI'}, 'family' => 'Dumars', 'given' => 'Chris'}, 'comments' => 'Late afternoon is best. Backup contact is Nancy Billsmer @ 338-4338.', 'date' => '2001-01-23', 'invoice' => '34843', 'product' => [%{'description' => 'Basketball', 'price' => '450.00', 'quantity' => '4', 'sku' => 'BL394D'}, %{'description' => 'Super Hoop', 'price' => '2392.00', 'quantity' => '1', 'sku' => 'BL4438H'}], 'ship-to' => %{'address' => %{'city' => 'Royal Oak', 'lines' => '458 Walkman Dr.\nSuite #292\n', 'postal' => '48046', 'state' => 'MI'}, 'family' => 'Dumars', 'given' => 'Chris'}, 'tax' => '251.42', 'total' => '4443.52'}]
+
+# YAML Style
+tax: 251.42
+invoice: 34843
+comments: Late afternoon is best. Backup contact is Nancy Billsmer @ 338-4338.
+date: 2001-01-23
+bill-to:
+  given: Chris
+  family: Dumars
+  address:
+    postal: 48046
+    lines: '458 Walkman Dr.
+
+      Suite #292
+
+      '
+    state: MI
+    city: Royal Oak
+total: 4443.52
+ship-to:
+  given: Chris
+  family: Dumars
+  address:
+    postal: 48046
+    lines: '458 Walkman Dr.
+
+      Suite #292
+
+      '
+    state: MI
+    city: Royal Oak
+product:
+- price: 450.00
+  sku: BL394D
+  quantity: 4
+  description: Basketball
+- price: 2392.00
+  sku: BL4438H
+  quantity: 1
+  description: Super Hoop
+
+# JSON Style
+{"tax": "251.42", "invoice": "34843", "comments": "Late afternoon is best. Backup
+    contact is Nancy Billsmer @ 338-4338.", "date": "2001-01-23", "bill-to": {"given": "Chris",
+    "family": "Dumars", "address": {"postal": "48046", "lines": "458 Walkman Dr.\nSuite
+        #292\n", "state": "MI", "city": "Royal Oak"}}, "total": "4443.52", "ship-to": {
+    "given": "Chris", "family": "Dumars", "address": {"postal": "48046", "lines": "458
+        Walkman Dr.\nSuite #292\n", "state": "MI", "city": "Royal Oak"}}, "product": [
+    {"price": "450.00", "sku": "BL394D", "quantity": "4", "description": "Basketball"},
+    {"price": "2392.00", "sku": "BL4438H", "quantity": "1", "description": "Super
+        Hoop"}]}
+======== Example 2.28 Log File ========
+|---
+|Time: 2001-11-23 15:01:42 -5
+|User: ed
+|Warning:
+|  This is an error message
+|  for the log file
+|---
+|Time: 2001-11-23 15:02:31 -5
+|User: ed
+|Warning:
+|  A slightly different error
+|  message.
+|---
+|Date: 2001-11-23 15:03:17 -5
+|User: ed
+|Fatal:
+|  Unknown variable "bar"
+|Stack:
+|- file: TopClass.py
+|  line: 23
+|  code: |
+|    x = MoreObject("345\n")
+|- file: MoreClass.py
+|  line: 58
+|  code: |-
+|    foo = bar
+
+# Gurax Style
+[%{'Time' => '2001-11-23 15:01:42 -5', 'User' => 'ed', 'Warning' => 'This is an error message for the log file'}, %{'Time' => '2001-11-23 15:02:31 -5', 'User' => 'ed', 'Warning' => 'A slightly different error message.'}, %{'Date' => '2001-11-23 15:03:17 -5', 'Fatal' => 'Unknown variable "bar"', 'Stack' => [%{'code' => 'x = MoreObject("345\\n")\n', 'file' => 'TopClass.py', 'line' => '23'}, %{'code' => 'foo = bar', 'file' => 'MoreClass.py', 'line' => '58'}], 'User' => 'ed'}]
+
+# YAML Style
+User: ed
+Time: 2001-11-23 15:01:42 -5
+Warning: This is an error message for the log file
+---
+User: ed
+Time: 2001-11-23 15:02:31 -5
+Warning: A slightly different error message.
+---
+Stack:
+- line: 23
+  file: TopClass.py
+  code: 'x = MoreObject("345\n")
+
+    '
+- line: 58
+  file: MoreClass.py
+  code: foo = bar
+Date: 2001-11-23 15:03:17 -5
+User: ed
+Fatal: Unknown variable "bar"
+
+# JSON Style
+{"User": "ed", "Time": "2001-11-23 15:01:42 -5", "Warning": "This is an error message
+    for the log file"}
+--- {"User": "ed", "Time": "2001-11-23 15:02:31 -5", "Warning": "A slightly different
+    error message."}
+--- {"Stack": [{"line": "23", "file": "TopClass.py", "code": "x = MoreObject(\"345\\n\")\n"},
+    {"line": "58", "file": "MoreClass.py", "code": "foo = bar"}], "Date": "2001-11-23
+    15:03:17 -5", "User": "ed", "Fatal": "Unknown variable \"bar\""}
