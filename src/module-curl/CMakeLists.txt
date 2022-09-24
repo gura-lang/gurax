@@ -53,7 +53,7 @@ target_sources(curl.gurd PRIVATE
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
 target_link_options(curl.gurd PRIVATE
-	$<$<PLATFORM_ID:Windows>:/NODEFAULTLIB:msvcrt>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(curl.gurd PRIVATE guraxcore
