@@ -58,29 +58,52 @@ target_link_options(wx.gurd PRIVATE
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(wx.gurd PRIVATE guraxcore
-	$<$<PLATFORM_ID:Windows>:wxbase31ud>
-	$<$<PLATFORM_ID:Windows>:wxbase31ud_net>
-	$<$<PLATFORM_ID:Windows>:wxbase31ud_xml>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_adv>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_aui>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_core>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_gl>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_html>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_media>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_propgrid>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_qa>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_ribbon>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_richtext>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_stc>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_webview>
-	$<$<PLATFORM_ID:Windows>:wxmsw31ud_xrc>
-	$<$<PLATFORM_ID:Windows>:wxexpatd>
-	$<$<PLATFORM_ID:Windows>:wxjpegd>
-	$<$<PLATFORM_ID:Windows>:wxpngd>
-	$<$<PLATFORM_ID:Windows>:wxregexud>
-	$<$<PLATFORM_ID:Windows>:wxscintillad>
-	$<$<PLATFORM_ID:Windows>:wxtiffd>
-	$<$<PLATFORM_ID:Windows>:wxzlibd>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxbase31u>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxbase31u_net>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxbase31u_xml>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_adv>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_aui>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_core>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_gl>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_html>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_media>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_propgrid>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_qa>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_ribbon>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_richtext>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_stc>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_webview>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxmsw31u_xrc>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxexpat>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxjpeg>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxpng>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxregexu>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxscintilla>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxtiff>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Release>>:wxzlib>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxbase31ud>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxbase31ud_net>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxbase31ud_xml>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_adv>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_aui>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_core>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_gl>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_html>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_media>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_propgrid>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_qa>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_ribbon>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_richtext>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_stc>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_webview>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxmsw31ud_xrc>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxexpatd>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxjpegd>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxpngd>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxregexud>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxscintillad>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxtiffd>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:wxzlibd>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 #-------------------------------------------------------------------------------

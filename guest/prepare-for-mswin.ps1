@@ -451,7 +451,8 @@ class Package_wx {
 	[String[]] $fileNames = @("$($this.baseName).7z")
 	[String] $dirName = $this.baseName
 	Build() {
-		ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Debug" /p:Platform=x64'
+		#ExecCommand msbuild 'build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Debug" /p:Platform=x64'
+		msbuild build\msw\wx_vc16.sln /Clp:DisableConsoleColor /t:Build /p:Configuration="DLL Release" /p:Platform=x64
 		copy lib\vc_x64_dll\*.dll ..\..\bin
 	}
 }
