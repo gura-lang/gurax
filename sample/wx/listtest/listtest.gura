@@ -10,7 +10,7 @@
 import(wx)
 import(xpm)
 
-xpm.Include('../sample.xpm')
+xpm.Include('sample.xpm')
 xpm.Include('bitmaps/toolbrai.xpm')
 xpm.Include('bitmaps/toolchar.xpm')
 xpm.Include('bitmaps/toolchec.xpm')

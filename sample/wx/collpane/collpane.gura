@@ -11,7 +11,7 @@
 import(wx)
 import(xpm)
 
-xpm.Include('../sample.xpm')
+xpm.Include('sample.xpm')
 
 // ============================================================================
 // declarations

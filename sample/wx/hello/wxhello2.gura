@@ -1,0 +1,85 @@
+#!/usr/bin/env gurax
+// wxWidgets "Hello world" Program
+import(wx)
+
+[ID_Hello] = 1..
+
+MyApp = class(wx.App) {
+	OnInit() = {
+		frame = MyFrame('Hello World', wx.Point(50, 50), wx.Size(450, 340))
+		frame.Show(true)
+		true
+	}
+}
+
+MyFrame = class(wx.Frame) {
+	__init__(title as String, pos as wx.Point, size as wx.Size) = {
+			|nil, wx.ID_ANY, title, pos, size|
+		wx.MenuBar {|menuBar|
+			this.SetMenuBar(menuBar)
+			wx.Menu {|menu|
+				menuBar.Append(menu, '&File')
+				menu.Append(ID_Hello, '&Hello...\tCtrl-H',
+							'Help string shown in status bar for this menu item')
+				menu.AppendSeparator()
+				menu.Append(wx.ID_EXIT)
+			}
+			wx.Menu {|menu|
+				menuBar.Append(menu, '&Sub Menu')
+				wx.Menu {|menuSub|
+					menu.AppendSubMenu(menuSub, 'Sub Menu 1')
+					menuSub.Append(wx.ID_ANY, 'Item 1-1')
+					menuSub.Append(wx.ID_ANY, 'Item 1-2')
+					menuSub.Append(wx.ID_ANY, 'Item 1-3')
+				}
+				wx.Menu {|menuSub|
+					menu.AppendSubMenu(menuSub, 'Sub Menu 2')
+					menuSub.Append(wx.ID_ANY, 'Item 2-1')
+					menuSub.Append(wx.ID_ANY, 'Item 2-2')
+					menuSub.Append(wx.ID_ANY, 'Item 2-3')
+				}
+				wx.Menu {|menuSub|
+					menu.AppendSubMenu(menuSub, 'Sub Menu 3')
+					wx.Menu {|menuSubSub|
+						menuSub.AppendSubMenu(menuSubSub, 'Sub Menu 3-1')
+						wx.Menu {|menuSubSubSub|
+							menuSubSub.AppendSubMenu(menuSubSubSub, 'Sub Menu 3-1-1')
+							menuSubSubSub.Append(wx.ID_ANY, 'Item 3-1-1-1')
+							menuSubSubSub.Append(wx.ID_ANY, 'Item 3-1-1-2')
+							menuSubSubSub.Append(wx.ID_ANY, 'Item 3-1-1-2')
+						}
+						menuSubSub.Append(wx.ID_ANY, 'Item 3-1-2')
+						menuSubSub.Append(wx.ID_ANY, 'Item 3-1-3')
+					}
+					wx.Menu {|menuSubSub|
+						menuSub.AppendSubMenu(menuSubSub, 'Sub Menu 3-2')
+						menuSubSub.Append(wx.ID_ANY, 'Item 3-2-1')
+						menuSubSub.Append(wx.ID_ANY, 'Item 3-2-2')
+						menuSubSub.Append(wx.ID_ANY, 'Item 3-2-3')
+					}
+				}
+			}
+			wx.Menu {|menu|
+				menuBar.Append(menu, '&Help')
+				menu.Append(wx.ID_ABOUT)
+			}
+		}
+		this.CreateStatusBar()
+		this.SetStatusText('Welcome to wxWidgets!')
+		this.Bind(wx.EVT_MENU, this.OnHello, ID_Hello)
+		this.Bind(wx.EVT_MENU, this.OnExit, wx.ID_EXIT)
+		this.Bind(wx.EVT_MENU, this.OnAbout, wx.ID_ABOUT)
+	}
+	OnHello(event as wx.CommandEvent) = {
+		Println('Hello world from wxWidgets!')
+	}
+	OnExit(event as wx.CommandEvent) = {
+		this.Close(true)
+	}
+	OnAbout(event as wx.CommandEvent) = {
+		wx.MessageBox("This is a wxWidgets' Hello world sample",
+					'About Hello World', wx.OK | wx.ICON_INFORMATION)
+	}
+}
+
+wx.ImplementApp(MyApp())
