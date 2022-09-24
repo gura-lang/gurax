@@ -9,7 +9,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES Windows)
 #add_subdirectory(module-base64)			# built-in module
 #add_subdirectory(module-bmp)				# built-in module
 add_subdirectory(module-bzip2)
-add_subdirectory(module-cairo)
+# add_subdirectory(module-cairo)
 #add_subdirectory(module-codecs)			# built-in module
 #add_subdirectory(module-codecs_basic)		# built-in module
 #add_subdirectory(module-codecs_chinese)	# built-in module
@@ -17,7 +17,7 @@ add_subdirectory(module-cairo)
 #add_subdirectory(module-codecs_japanese)	# built-in module
 add_subdirectory(module-conio)
 add_subdirectory(module-csv)
-add_subdirectory(module-curl)
+# add_subdirectory(module-curl)
 add_subdirectory(module-diff)
 #add_subdirectory(module-fs)				# built-in module
 add_subdirectory(module-gif)
@@ -38,6 +38,7 @@ add_subdirectory(module-sdl)
 #add_subdirectory(module-sys)				# built-in module
 add_subdirectory(module-tar)
 add_subdirectory(module-xpm)
+add_subdirectory(module-yaml)
 add_subdirectory(module-zip)
 endif ()
 
@@ -46,3 +47,5 @@ add_subdirectory(module-markdown)
 add_subdirectory(module-zip)
 #add_subdirectory(module-re)
 endif ()
+
+include(CPack)

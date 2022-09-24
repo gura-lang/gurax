@@ -64,6 +64,7 @@ cases="$cases tar"
 cases="$cases try"
 cases="$cases value"
 cases="$cases while"
+cases="$cases yaml"
 
 if [ $# -eq 0 ]; then
 	echo "usage: tester all/casename [update]"
