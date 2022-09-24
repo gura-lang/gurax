@@ -22,6 +22,7 @@ protected:
 	RefPtr<Stream> _pStream;
 	yaml_sequence_style_t _sequence_style;
 	yaml_mapping_style_t _mapping_style;
+	yaml_scalar_style_t _scalar_style_String;
 public:
 	// Constructor
 	Emitter(Stream* pStream, bool jsonFlag);

@@ -10,7 +10,8 @@ Gurax_BeginModuleScope(yaml)
 //------------------------------------------------------------------------------
 Emitter::Emitter(Stream* pStream, bool jsonFlag) : _pStream(pStream),
 	_sequence_style(jsonFlag? YAML_FLOW_SEQUENCE_STYLE : YAML_ANY_SEQUENCE_STYLE),
-	_mapping_style(jsonFlag? YAML_FLOW_MAPPING_STYLE : YAML_ANY_MAPPING_STYLE)
+	_mapping_style(jsonFlag? YAML_FLOW_MAPPING_STYLE : YAML_ANY_MAPPING_STYLE),
+	_scalar_style_String(jsonFlag? YAML_DOUBLE_QUOTED_SCALAR_STYLE : YAML_ANY_SCALAR_STYLE)
 {
 	::yaml_emitter_initialize(&_emitter);
 	::yaml_emitter_set_output(&_emitter, reinterpret_cast<yaml_write_handler_t*>(WriteHandler), this);
@@ -72,12 +73,11 @@ bool Emitter::EmitGeneric(const Value& value)
 	} else if (value.IsType(VTYPE_Dict)) {
 		return EmitMapping(Value_Dict::GetValueDict(value));
 	} else if (value.IsType(VTYPE_String)) {
-		return EmitScalar(Value_String::GetStringSTL(value), YAML_ANY_SCALAR_STYLE);
-		// YAML_DOUBLE_QUOTED_SCALAR_STYLE;
+		return EmitScalar(Value_String::GetStringSTL(value), _scalar_style_String);
 	} else if (value.IsType(VTYPE_Number)) {
 		return EmitScalar(value.ToString(), YAML_LITERAL_SCALAR_STYLE);
 	} else {
-		return EmitScalar(value.ToString(), YAML_ANY_SCALAR_STYLE);
+		return EmitScalar(value.ToString(), _scalar_style_String);
 	}
 }
 

@@ -10,21 +10,24 @@ TestYAML(title as String, text as String) = {
 	Print('|' + text.EachLine())
 	if (text.Find('---')) {
 		value = yaml.Parse(text):multi
-		Println(value):noMap
+    Println('\n# Gurax Style')
+		Println(cond(value, value, '(nil)')):noMap
+    Println('\n# YAML Style')
 		yaml.Write(sys.cout, value):multi
+    Println('\n# JSON Style')
+		yaml.Write(sys.cout, value):multi:json
 	} else {
 		value = yaml.Parse(text)
-		Println(value):noMap
+    Println('\n# Gurax Style')
+		Println(cond(value, value, '(nil)')):noMap
+    Println('\n# YAML Style')
 		yaml.Write(sys.cout, value)
+    Println('\n# JSON Style')
+		yaml.Write(sys.cout, value):json
 	}
 }
 
-TestCase('Basic test') {
-	//value = yaml.Read(text.ToReader())
-	//value = yaml.Read(''.ToReader())
-	//Println(value):noMap
-	//yaml.Write(sys.cout, value)
-}
+TestYAML('Blank', '')
 
 TestYAML('Example 2.1 Sequene of Scalars (ball players)', R'''
 - Mark McGwire
@@ -339,3 +342,4 @@ Stack:
   code: |-
     foo = bar
 ''')
+
