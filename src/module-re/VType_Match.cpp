@@ -27,7 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// re.Match(pattern:Pattern, str:String):map {block?}
+// re.Match(pattern as Pattern, str as String):map {block?}
 Gurax_DeclareConstructor(Match)
 {
 	Declare(VTYPE_Pattern, Flag::Map);

@@ -8,7 +8,7 @@ Gurax_BeginModule(re)
 //------------------------------------------------------------------------------
 // Implementation of method for String
 //------------------------------------------------------------------------------
-// String#Match(pattern:re.Pattern, pos?:Number, posEnd?:Number):map {block?}
+// String#Match(pattern as re.Pattern, pos? as Number, posEnd? as Number):map {block?}
 Gurax_DeclareMethod(String, Match)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -36,7 +36,7 @@ Gurax_ImplementMethod(String, Match)
 	return argument.ReturnValue(processor, new Value_Match(pMatch.release()));
 }
 
-// String#Sub(pattern:Pattern, replace, cnt?:Number):map {block?}
+// String#Sub(pattern as Pattern, replace, cnt? as Number):map {block?}
 Gurax_DeclareMethod(String, Sub)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -75,7 +75,7 @@ Gurax_ImplementMethod(String, Sub)
 		pValueRtn.release();
 }
 
-// String#SplitReg(pattern:Pattern, cntMax?:Number):map {block?}
+// String#SplitReg(pattern as Pattern, cntMax? as Number):map {block?}
 Gurax_DeclareMethod(String, SplitReg)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -100,7 +100,7 @@ Gurax_ImplementMethod(String, SplitReg)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// String#Scan(pattern:Pattern, pos?:Number, posEnd?:Number):map {block?}
+// String#Scan(pattern as Pattern, pos? as Number, posEnd? as Number):map {block?}
 Gurax_DeclareMethod(String, Scan)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -129,7 +129,7 @@ Gurax_ImplementMethod(String, Scan)
 //------------------------------------------------------------------------------
 // Implementation of method for List
 //------------------------------------------------------------------------------
-// List#Grep(pattern:Pattern) {block?}
+// List#Grep(pattern as Pattern) {block?}
 Gurax_DeclareMethod(List, Grep)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -156,7 +156,7 @@ Gurax_ImplementMethod(List, Grep)
 //------------------------------------------------------------------------------
 // Implementation of method for Iterator
 //------------------------------------------------------------------------------
-// Iterator#Grep(pattern:Pattern) {block?}
+// Iterator#Grep(pattern as Pattern) {block?}
 Gurax_DeclareMethod(Iterator, Grep)
 {
 	Declare(VTYPE_Iterator, Flag::Map);

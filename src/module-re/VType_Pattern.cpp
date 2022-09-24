@@ -27,7 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// re.Pattern(pattern:String):map:[icase,multiLine] {block?}
+// re.Pattern(pattern as String):map:[icase,multiLine] {block?}
 Gurax_DeclareConstructor(Pattern)
 {
 	Declare(VTYPE_Pattern, Flag::Map);
@@ -61,7 +61,7 @@ Gurax_ImplementConstructor(Pattern)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// re.Pattern#Match(str:String, pos?:Number, posEnd?:Number):map {block?}
+// re.Pattern#Match(str as String, pos? as Number, posEnd? as Number):map {block?}
 Gurax_DeclareMethod(Pattern, Match)
 {
 	Declare(VTYPE_Match, Flag::Map);
@@ -149,7 +149,7 @@ Gurax_ImplementMethod(Pattern, Sub)
 		pValueRtn.release();
 }
 
-// re.Pattern#Split(str:String, cntMax?:Number):map {block?}
+// re.Pattern#Split(str as String, cntMax? as Number):map {block?}
 Gurax_DeclareMethod(Pattern, Split)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -179,7 +179,7 @@ Gurax_ImplementMethod(Pattern, Split)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// re.Pattern#Scan(str:String, pos?:Number, posEnd?:Number):map {block?}
+// re.Pattern#Scan(str as String, pos? as Number, posEnd? as Number):map {block?}
 Gurax_DeclareMethod(Pattern, Scan)
 {
 	Declare(VTYPE_String, Flag::Map);
