@@ -27,7 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// markdown.Document(stream?:Stream:r) {block?}
+// markdown.Document(stream:r? as Stream) {block?}
 Gurax_DeclareConstructor(Document)
 {
 	Declare(VTYPE_Document, Flag::None);
@@ -35,9 +35,9 @@ Gurax_DeclareConstructor(Document)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns an instance of `markdown.document`.\n"
-		"If `stream` is specified, the content of the instance shall be initialized\n"
-		"with the result of parsing the stream.\n");
+		"Returns an instance of `markdown.Document`.\n"
+		"If the `stream` is specified, the the instance shall be created after parsing the stream.\n"
+		"Otherwise, it creates an instance with blank data.\n");
 }
 
 Gurax_ImplementConstructor(Document)
@@ -54,14 +54,43 @@ Gurax_ImplementConstructor(Document)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// markdown.Document#CountItem(type:Symbol)
+// markdown.Document#CountItem(type as Symbol)
 Gurax_DeclareMethod(Document, CountItem)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("type", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Count the number of items of the specified type.");
+		"Count the number of items of the specified symbol of type.\n"
+		"The symbols are: "
+		"`` `Root``, "		// container, can be a parent
+		"`` `Header1``, "		// container
+		"`` `Header2``, "		// container
+		"`` `Header3``, "		// container
+		"`` `Header4``, "		// container
+		"`` `Header5``, "		// container
+		"`` `Header6``, "		// container
+		"`` `Paragraph``, "	// container
+		"`` `BlockQuote``, "	// container, can be a parent
+		"`` `Emphasis``, "	// container
+		"`` `Strong``, "		// container
+		"`` `Strike``, "		// container
+		"`` `CodeBlock``, "	// container, can be a parent
+		"`` `OList``, "		// container, can be a parent
+		"`` `UList``, "		// container, can be a parent
+		"`` `ListItem``, "	// container, can be a parent
+		"`` `Line``, "		// container
+		"`` `Link``, "		// container
+		"`` `Image``, "		// text
+		"`` `Text``, "		// text
+		"`` `Comment``, "		// text
+		"`` `Code``, "		// text
+		"`` `Entity``, "		// text
+		"`` `Tag``, "			// container and text (attributes), can be a parent
+		"`` `HorzRule``, "	// no-content
+		"`` `LineBreak``, "	// no-content
+		"`` `Referee``."		// no-content
+	);
 }
 
 Gurax_ImplementMethod(Document, CountItem)
@@ -81,7 +110,7 @@ Gurax_ImplementMethod(Document, CountItem)
 	return new Value_Number(cnt);
 }
 
-// markdown.Document#Parse(str:String):reduce
+// markdown.Document#Parse(str as String):reduce
 Gurax_DeclareMethod(Document, Parse)
 {
 	Declare(VTYPE_Document, Flag::Reduce);
@@ -103,7 +132,7 @@ Gurax_ImplementMethod(Document, Parse)
 	return argument.GetValueThis().Reference();
 }
 
-// markdown.Document#Read(stream:Stream:r):reduce
+// markdown.Document#Read(stream:r as Stream):reduce
 Gurax_DeclareMethod(Document, Read)
 {
 	Declare(VTYPE_Document, Flag::Reduce);
