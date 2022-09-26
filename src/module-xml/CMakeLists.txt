@@ -31,19 +31,24 @@ target_compile_options(xml.gurd PRIVATE
 	$<$<PLATFORM_ID:Linux>:-Wall -O2>
 	$<$<PLATFORM_ID:Darwin>:-Wall -O2>)
 target_compile_definitions(xml.gurd PRIVATE GURAX_MODULE_SEPARATED
-	$<$<PLATFORM_ID:Windows>:>
+	$<$<PLATFORM_ID:Windows>:XML_STATIC>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(xml.gurd PRIVATE
 	module-xml.cpp
-	Util.cpp)
+	Util.cpp
+	Document.cpp
+	Element.cpp
+	Parser.cpp
+	VType_Document.cpp
+	VType_Element.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
 target_link_options(xml.gurd PRIVATE
-	$<$<PLATFORM_ID:Windows>:>
+	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(xml.gurd PRIVATE guraxcore

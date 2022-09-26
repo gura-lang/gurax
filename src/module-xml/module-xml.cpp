@@ -26,6 +26,9 @@ Gurax_ImplementFunction(Test)
 	const char* str = args.PickString();
 	Int num = args.PickNumber<Int>();
 	// Function body
+	XML_Parser parser = ::XML_ParserCreate(nullptr);
+	
+	::XML_ParserFree(parser);
 	return new Value_String(String::Repeat(str, num));
 }
 
