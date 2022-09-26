@@ -37,7 +37,7 @@ add_subdirectory(module-re)
 add_subdirectory(module-sdl)
 #add_subdirectory(module-sys)				# built-in module
 add_subdirectory(module-tar)
-add_subdirectory(module-wx)
+#add_subdirectory(module-wx)
 add_subdirectory(module-xpm)
 add_subdirectory(module-yaml)
 add_subdirectory(module-zip)

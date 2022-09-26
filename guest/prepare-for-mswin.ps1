@@ -458,6 +458,22 @@ class Package_wx {
 }
 $packages += [Package_wx]::new()
 
+#---------------------------------------------------------------------------------
+# Package: expat
+#---------------------------------------------------------------------------------
+class Package_expat {
+	[String] $name = "expat"
+	[String] $ver = "2.4.9"
+	[String] $baseName = "$($this.name)-$($this.ver)"
+	[String[]] $fileNames = @("$($this.baseName).tar.gz")
+	[String] $dirName = $this.baseName
+	Build() {
+		cmake -B build -DEXPAT_SHARED_LIBS=OFF -DEXPAT_MSVC_STATIC_CRT=ON .
+		cmake --build build --config Release
+	}
+}
+$packages += [Package_expat]::new()
+
 #------------------------------------------------------------------------------
 # call main
 #------------------------------------------------------------------------------
