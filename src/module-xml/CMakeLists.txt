@@ -36,6 +36,7 @@ target_compile_definitions(xml.gurd PRIVATE GURAX_MODULE_SEPARATED
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(xml.gurd PRIVATE
 	module-xml.cpp
+	CP932.cpp
 	Util.cpp
 	Document.cpp
 	Element.cpp
@@ -48,7 +49,7 @@ target_sources(xml.gurd PRIVATE
 set(CMAKE_SHARED_LIBRARY_PREFIX)
 set(CMAKE_SHARED_LIBRARY_SUFFIX)
 target_link_options(xml.gurd PRIVATE
-	$<$<AND:$<PLATFORM_ID:Windows>,$<CONFIG:Debug>>:-NODEFAULTLIB:MSVCRT>
+	$<$<PLATFORM_ID:Windows>:-NODEFAULTLIB:LIBCMT>
 	$<$<PLATFORM_ID:Linux>:>
 	$<$<PLATFORM_ID:Darwin>:>)
 target_link_libraries(xml.gurd PRIVATE guraxcore

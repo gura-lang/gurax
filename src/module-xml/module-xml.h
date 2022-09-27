@@ -5,6 +5,7 @@
 #define GURAX_MODULE_XML_H
 #include <gurax.h>
 #include <expat.h>
+#include "CP932.h"
 #include "Util.h"
 #include "Parser.h"
 #include "VType_Document.h"
