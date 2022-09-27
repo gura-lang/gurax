@@ -148,14 +148,12 @@ int XMLCALL Parser::UnknownEncodingHandler(void* encodingHandlerData, const XML_
 	return XML_STATUS_ERROR;
 }
 
-void XMLCALL Parser::StartNamespaceDeclHandler(void* userData,
-							const XML_Char* prefix, const XML_Char* uri)
+void XMLCALL Parser::StartNamespaceDeclHandler(void* userData, const XML_Char* prefix, const XML_Char* uri)
 {
 	// <tag xmlns:prefix="uri">
 }
 
-void XMLCALL Parser::EndNamespaceDeclHandler(void* userData,
-													const XML_Char* prefix)
+void XMLCALL Parser::EndNamespaceDeclHandler(void* userData, const XML_Char* prefix)
 {
 }
 
@@ -210,14 +208,14 @@ int XMLCALL Parser::NotStandaloneHandler(void* userData)
 	return 0;
 }
 
-int Parser::Convert_shift_jis(void *data, const char *s)
+int Parser::Convert_shift_jis(void* data, const char* s)
 {
 	UInt16 codeCP932 = (static_cast<UInt16>(static_cast<UInt8>(s[0])) << 8) + static_cast<UInt8>(s[1]);
 	UInt16 codeUTF16 = CP932ToUTF16(codeCP932);
 	return (codeUTF16 == 0)? -1 : codeUTF16;
 }
 
-int Parser::Convert_euc_jp(void *data, const char *s)
+int Parser::Convert_euc_jp(void* data, const char* s)
 {
 	UInt16 codeEUCJP = (static_cast<UInt16>(static_cast<UInt8>(s[0])) << 8) + static_cast<UInt8>(s[1]);
 	UInt16 codeCP932 = EUCJPToCP932(codeEUCJP);
