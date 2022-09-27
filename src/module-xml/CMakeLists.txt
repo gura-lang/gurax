@@ -38,9 +38,11 @@ target_sources(xml.gurd PRIVATE
 	module-xml.cpp
 	CP932.cpp
 	Util.cpp
+	Attr.cpp
 	Document.cpp
 	Element.cpp
 	Parser.cpp
+	VType_Attr.cpp
 	VType_Document.cpp
 	VType_Element.cpp)
 #-------------------------------------------------------------------------------

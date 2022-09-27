@@ -8,6 +8,7 @@
 #include "CP932.h"
 #include "Util.h"
 #include "Parser.h"
+#include "VType_Attr.h"
 #include "VType_Document.h"
 #include "VType_Element.h"
 

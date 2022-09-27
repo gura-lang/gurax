@@ -125,8 +125,7 @@ void XMLCALL Parser::SkippedEntityHandler(void* userData,
 
 int XMLCALL Parser::UnknownEncodingHandler(void* encodingHandlerData, const XML_Char* name, XML_Encoding* info)
 {
-#if 0
-	for (int i = 0; i < ArraySizeOf(info->map); i++) info->map[i] = -1;
+	for (int i = 0; i < Gurax_ArraySizeOf(info->map); i++) info->map[i] = -1;
 	if (::strcasecmp(name, "shift_jis") == 0) {
 		for (int i = 0; i <= 0x7f; i++) info->map[i] = i;
 		for (int i = 0x81; i <= 0x9f; i++) info->map[i] = -2;
@@ -144,7 +143,6 @@ int XMLCALL Parser::UnknownEncodingHandler(void* encodingHandlerData, const XML_
 		info->release = nullptr;
 		return XML_STATUS_OK;
 	}
-#endif
 	return XML_STATUS_ERROR;
 }
 
