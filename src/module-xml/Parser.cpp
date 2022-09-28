@@ -68,9 +68,9 @@ bool Parser::Parse(Stream& stream)
 void XMLCALL Parser::StartElementHandler(void* userData, const XML_Char* name, const XML_Char** atts)
 {
 	// <name attr0="value0" attr1="value1" attr2="value">
-
+	RefPtr<Element> pElement(new Element(Element::Type::Tag, name));
 	for (const XML_Char** p = atts; *p && *(p + 1); p += 2) {
-		//new Attr(*p, *(p + 1));
+		pElement->GetAttrs().push_back(new Attr(*p, *(p + 1)));
 	}
 }
 
