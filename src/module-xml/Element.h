@@ -4,8 +4,11 @@
 #ifndef GURAX_MODULE_XML_ELEMENT_H
 #define GURAX_MODULE_XML_ELEMENT_H
 #include <gurax.h>
+#include "Attr.h"
 
 Gurax_BeginModuleScope(xml)
+
+class ElementOwner;
 
 //------------------------------------------------------------------------------
 // Element
@@ -16,6 +19,8 @@ public:
 	Gurax_DeclareReferable(Element);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.Element");
+private:
+	RefPtr<ElementOwner> _pElementsChild;
 public:
 	// Constructor
 	Element() {}
@@ -34,6 +39,26 @@ public:
 	bool IsLessThan(const Element& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
+
+//------------------------------------------------------------------------------
+// ElementList
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ElementList : public ListBase<Element*> {
+};
+
+//------------------------------------------------------------------------------
+// ElementOwner
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE ElementOwner : public ElementList, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(ElementOwner);
+public:
+	ElementOwner() {}
+	~ElementOwner() { Clear(); }
+	void Clear();
+};
+
 
 Gurax_EndModuleScope(xml)
 

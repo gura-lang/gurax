@@ -13,4 +13,17 @@ String Element::ToString(const StringStyle& ss) const
 	return String().Format("xml.Element");
 }
 
+//------------------------------------------------------------------------------
+// ElementList
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// ElementOwner
+//------------------------------------------------------------------------------
+void ElementOwner::Clear()
+{
+	for (Element* pElement : *this) Element::Delete(pElement);
+	clear();
+}
+
 Gurax_EndModuleScope(xml)

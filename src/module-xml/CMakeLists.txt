@@ -36,6 +36,7 @@ target_compile_definitions(xml.gurd PRIVATE GURAX_MODULE_SEPARATED
 	$<$<PLATFORM_ID:Darwin>:>)
 target_sources(xml.gurd PRIVATE
 	module-xml.cpp
+	Attr.cpp
 	CP932.cpp
 	Util.cpp
 	Attr.cpp
