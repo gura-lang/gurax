@@ -20,10 +20,11 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.Element");
 private:
+	RefPtr<AttrOwner> _pAttrs;
 	RefPtr<ElementOwner> _pElementsChild;
 public:
 	// Constructor
-	Element() {}
+	Element(const XML_Char* name, const XML_Char** atts);
 	// Copy constructor/operator
 	Element(const Element& src) = delete;
 	Element& operator=(const Element& src) = delete;
