@@ -35,6 +35,25 @@ public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
+//------------------------------------------------------------------------------
+// AttrList
+//------------------------------------------------------------------------------
+class AttrList : public ListBase<Attr*> {
+};
+
+//------------------------------------------------------------------------------
+// AttrOwner
+//------------------------------------------------------------------------------
+class AttrOwner : public AttrList, public Referable {
+public:
+	// Referable declaration
+	Gurax_DeclareReferable(AttrOwner);
+public:
+	AttrOwner() {}
+	~AttrOwner() { Clear(); }
+	void Clear();
+};
+
 Gurax_EndModuleScope(xml)
 
 #endif

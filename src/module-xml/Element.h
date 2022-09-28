@@ -43,13 +43,13 @@ public:
 //------------------------------------------------------------------------------
 // ElementList
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ElementList : public ListBase<Element*> {
+class ElementList : public ListBase<Element*> {
 };
 
 //------------------------------------------------------------------------------
 // ElementOwner
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE ElementOwner : public ElementList, public Referable {
+class ElementOwner : public ElementList, public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(ElementOwner);
@@ -58,7 +58,6 @@ public:
 	~ElementOwner() { Clear(); }
 	void Clear();
 };
-
 
 Gurax_EndModuleScope(xml)
 
