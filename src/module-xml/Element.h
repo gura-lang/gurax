@@ -15,17 +15,21 @@ class ElementOwner;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Element : public Referable {
 public:
+	enum class Type { None, Tag, Text, Comment };
+public:
 	// Referable declaration
 	Gurax_DeclareReferable(Element);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.Element");
+
 private:
-	String _name;
+	Type _type;
+	String _str;
 	RefPtr<AttrOwner> _pAttrs;
 	RefPtr<ElementOwner> _pElementsChild;
 public:
 	// Constructor
-	Element(const char* name);
+	Element(Type type, String str);
 	// Copy constructor/operator
 	Element(const Element& src) = delete;
 	Element& operator=(const Element& src) = delete;
@@ -34,6 +38,10 @@ public:
 	Element& operator=(Element&& src) noexcept = delete;
 protected:
 	~Element() = default;
+public:
+	const char* GetName() const { return _str.c_str(); }
+	AttrOwner& GetAttrs() { return *_pAttrs; }
+	ElementOwner& GetElementsChild() { return *_pElementsChild; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Element& other) const { return this == &other; }

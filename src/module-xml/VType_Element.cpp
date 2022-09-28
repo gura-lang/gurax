@@ -42,7 +42,7 @@ Gurax_ImplementConstructor(Element)
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Element> pElement(new Element(""));
+	RefPtr<Element> pElement(new Element(Element::Type::Tag, ""));
 	return argument.ReturnValue(processor, new Value_Element(pElement.release()));
 }
 

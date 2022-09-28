@@ -27,10 +27,12 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// xml.Attr() {block?}
+// xml.Attr(name as String, value as String) {block?}
 Gurax_DeclareConstructor(Attr)
 {
 	Declare(VTYPE_Attr, Flag::None);
+	DeclareArg("name", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareArg("value", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,9 +42,11 @@ Gurax_DeclareConstructor(Attr)
 Gurax_ImplementConstructor(Attr)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	const char* name = args.PickString();
+	const char* value = args.PickString();
 	// Function body
-	RefPtr<Attr> pAttr(new Attr());
+	RefPtr<Attr> pAttr(new Attr(name, value));
 	return argument.ReturnValue(processor, new Value_Attr(pAttr.release()));
 }
 

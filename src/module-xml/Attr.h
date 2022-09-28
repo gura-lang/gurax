@@ -16,9 +16,12 @@ public:
 	Gurax_DeclareReferable(Attr);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.Attr");
+private:
+	String _name;
+	String _value;
 public:
 	// Constructor
-	Attr() {}
+	Attr(String name, String value) : _name(name), _value(value) {}
 	// Copy constructor/operator
 	Attr(const Attr& src) = delete;
 	Attr& operator=(const Attr& src) = delete;
@@ -27,6 +30,9 @@ public:
 	Attr& operator=(Attr&& src) noexcept = delete;
 protected:
 	~Attr() = default;
+public:
+	const char* GetName() const { return _name.c_str(); }
+	const char* GetValue() const { return _value.c_str(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Attr& other) const { return this == &other; }

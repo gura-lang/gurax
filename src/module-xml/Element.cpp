@@ -8,8 +8,8 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Element
 //------------------------------------------------------------------------------
-Element::Element(const char* name) :
-	_name(name), _pAttrs(new AttrOwner()), _pElementsChild(new ElementOwner())
+Element::Element(Type type, String str) :
+	_type(type), _str(str), _pAttrs(new AttrOwner()), _pElementsChild(new ElementOwner())
 {
 }
 
