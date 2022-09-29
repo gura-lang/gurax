@@ -15,13 +15,12 @@ class NodeOwner;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Node : public Referable {
 public:
-	enum class Type { None, Tag, Text, Comment };
+	enum class Type { None, Element, Text, Comment };
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Node);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.Node");
-
 private:
 	Type _type;
 	String _str;

@@ -5,6 +5,7 @@
 #define GURAX_MODULE_XML_PARSER_H
 #include <gurax.h>
 #include <expat.h>
+#include "Node.h"
 
 Gurax_BeginModuleScope(xml)
 
