@@ -20,6 +20,8 @@ public:
 private:
 	String _text;
 public:
+	static Text Empty;
+public:
 	// Constructor
 	Text(String text);
 	// Copy constructor/operator

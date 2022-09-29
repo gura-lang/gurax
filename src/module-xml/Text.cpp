@@ -8,6 +8,8 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Text
 //------------------------------------------------------------------------------
+Text Text::Empty("");
+
 Text::Text(String text) : Node(Type::Text), _text(text) {}
 
 String Text::ToString(const StringStyle& ss) const

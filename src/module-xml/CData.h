@@ -5,6 +5,7 @@
 #define GURAX_MODULE_XML_CDATA_H
 #include <gurax.h>
 #include "Node.h"
+#include "Text.h"
 
 Gurax_BeginModuleScope(xml)
 
@@ -17,6 +18,8 @@ public:
 	Gurax_DeclareReferable(CData);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.CData");
+private:
+	RefPtr<Text> _pText;
 public:
 	// Constructor
 	CData() : Node(Type::CData) {}
@@ -28,6 +31,9 @@ public:
 	CData& operator=(CData&& src) noexcept = delete;
 protected:
 	~CData() = default;
+public:
+	void SetText(Text* pText) { _pText.reset(pText); }
+	const Text& GetText() const { return _pText? *_pText : Text::Empty; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const CData& other) const { return this == &other; }
