@@ -1,71 +1,71 @@
 //==============================================================================
-// Element.h
+// Node.h
 //==============================================================================
-#ifndef GURAX_MODULE_XML_ELEMENT_H
-#define GURAX_MODULE_XML_ELEMENT_H
+#ifndef GURAX_MODULE_XML_NODE_H
+#define GURAX_MODULE_XML_NODE_H
 #include <gurax.h>
 #include "Attr.h"
 
 Gurax_BeginModuleScope(xml)
 
-class ElementOwner;
+class NodeOwner;
 
 //------------------------------------------------------------------------------
-// Element
+// Node
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Element : public Referable {
+class GURAX_DLLDECLARE Node : public Referable {
 public:
 	enum class Type { None, Tag, Text, Comment };
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Element);
+	Gurax_DeclareReferable(Node);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("xml.Element");
+	Gurax_MemoryPoolAllocator("xml.Node");
 
 private:
 	Type _type;
 	String _str;
 	RefPtr<AttrOwner> _pAttrs;
-	RefPtr<ElementOwner> _pElementsChild;
+	RefPtr<NodeOwner> _pNodesChild;
 public:
 	// Constructor
-	Element(Type type, String str);
+	Node(Type type, String str);
 	// Copy constructor/operator
-	Element(const Element& src) = delete;
-	Element& operator=(const Element& src) = delete;
+	Node(const Node& src) = delete;
+	Node& operator=(const Node& src) = delete;
 	// Move constructor/operator
-	Element(Element&& src) noexcept = delete;
-	Element& operator=(Element&& src) noexcept = delete;
+	Node(Node&& src) noexcept = delete;
+	Node& operator=(Node&& src) noexcept = delete;
 protected:
-	~Element() = default;
+	~Node() = default;
 public:
 	const char* GetName() const { return _str.c_str(); }
 	AttrOwner& GetAttrs() { return *_pAttrs; }
-	ElementOwner& GetElementsChild() { return *_pElementsChild; }
+	NodeOwner& GetNodesChild() { return *_pNodesChild; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Element& other) const { return this == &other; }
-	bool IsEqualTo(const Element& other) const { return IsIdentical(other); }
-	bool IsLessThan(const Element& other) const { return this < &other; }
+	bool IsIdentical(const Node& other) const { return this == &other; }
+	bool IsEqualTo(const Node& other) const { return IsIdentical(other); }
+	bool IsLessThan(const Node& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 
 //------------------------------------------------------------------------------
-// ElementList
+// NodeList
 //------------------------------------------------------------------------------
-class ElementList : public ListBase<Element*> {
+class NodeList : public ListBase<Node*> {
 };
 
 //------------------------------------------------------------------------------
-// ElementOwner
+// NodeOwner
 //------------------------------------------------------------------------------
-class ElementOwner : public ElementList, public Referable {
+class NodeOwner : public NodeList, public Referable {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(ElementOwner);
+	Gurax_DeclareReferable(NodeOwner);
 public:
-	ElementOwner() {}
-	~ElementOwner() { Clear(); }
+	NodeOwner() {}
+	~NodeOwner() { Clear(); }
 	void Clear();
 };
 

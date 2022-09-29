@@ -10,7 +10,7 @@
 #include "Parser.h"
 #include "VType_Attr.h"
 #include "VType_Document.h"
-#include "VType_Element.h"
+#include "VType_Node.h"
 
 Gurax_BeginModuleHeader(xml)
 Gurax_EndModuleHeader(xml)

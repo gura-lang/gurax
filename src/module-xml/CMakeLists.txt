@@ -41,11 +41,11 @@ target_sources(xml.gurd PRIVATE
 	Util.cpp
 	Attr.cpp
 	Document.cpp
-	Element.cpp
+	Node.cpp
 	Parser.cpp
 	VType_Attr.cpp
 	VType_Document.cpp
-	VType_Element.cpp)
+	VType_Node.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

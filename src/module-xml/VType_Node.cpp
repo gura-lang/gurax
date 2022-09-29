@@ -1,5 +1,5 @@
 //==============================================================================
-// VType_Element.cpp
+// VType_Node.cpp
 //==============================================================================
 #include "stdafx.h"
 
@@ -27,30 +27,30 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// xml.Element() {block?}
-Gurax_DeclareConstructor(Element)
+// xml.Node() {block?}
+Gurax_DeclareConstructor(Node)
 {
-	Declare(VTYPE_Element, Flag::None);
+	Declare(VTYPE_Node, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `xml.Element` instance.");
+		"Creates a `xml.Node` instance.");
 }
 
-Gurax_ImplementConstructor(Element)
+Gurax_ImplementConstructor(Node)
 {
 	// Arguments
 	//ArgPicker args(argument);
 	// Function body
-	RefPtr<Element> pElement(new Element(Element::Type::Tag, ""));
-	return argument.ReturnValue(processor, new Value_Element(pElement.release()));
+	RefPtr<Node> pNode(new Node(Node::Type::Tag, ""));
+	return argument.ReturnValue(processor, new Value_Node(pNode.release()));
 }
 
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.Element#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Element, MethodSkeleton)
+// xml.Node#MethodSkeleton(num1 as Number, num2 as Number)
+Gurax_DeclareMethod(Node, MethodSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -60,7 +60,7 @@ Gurax_DeclareMethod(Element, MethodSkeleton)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Element, MethodSkeleton)
+Gurax_ImplementMethod(Node, MethodSkeleton)
 {
 	// Target
 	//auto& valueThis = GetValueThis(argument);
@@ -75,8 +75,8 @@ Gurax_ImplementMethod(Element, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// xml.Element#propSkeleton
-Gurax_DeclareProperty_R(Element, propSkeleton)
+// xml.Node#propSkeleton
+Gurax_DeclareProperty_R(Node, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -84,37 +84,37 @@ Gurax_DeclareProperty_R(Element, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Element, propSkeleton)
+Gurax_ImplementPropertyGetter(Node, propSkeleton)
 {
 	//auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Number(3);
 }
 
 //------------------------------------------------------------------------------
-// VType_Element
+// VType_Node
 //------------------------------------------------------------------------------
-VType_Element VTYPE_Element("Element");
+VType_Node VTYPE_Node("Node");
 
-void VType_Element::DoPrepare(Frame& frameOuter)
+void VType_Node::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Element));
+	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Node));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Element, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Node, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Element, propSkeleton));
+	Assign(Gurax_CreateProperty(Node, propSkeleton));
 }
 
 //------------------------------------------------------------------------------
-// Value_Element
+// Value_Node
 //------------------------------------------------------------------------------
-VType& Value_Element::vtype = VTYPE_Element;
+VType& Value_Node::vtype = VTYPE_Node;
 
-String Value_Element::ToString(const StringStyle& ss) const
+String Value_Node::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetElement().ToString(ss));
+	return ToStringGeneric(ss, GetNode().ToString(ss));
 }
 
 Gurax_EndModuleScope(xml)

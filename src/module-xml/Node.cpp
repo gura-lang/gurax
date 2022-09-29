@@ -1,33 +1,33 @@
 //==============================================================================
-// Element.cpp
+// Node.cpp
 //==============================================================================
 #include "stdafx.h"
 
 Gurax_BeginModuleScope(xml)
 
 //------------------------------------------------------------------------------
-// Element
+// Node
 //------------------------------------------------------------------------------
-Element::Element(Type type, String str) :
-	_type(type), _str(str), _pAttrs(new AttrOwner()), _pElementsChild(new ElementOwner())
+Node::Node(Type type, String str) :
+	_type(type), _str(str), _pAttrs(new AttrOwner()), _pNodesChild(new NodeOwner())
 {
 }
 
-String Element::ToString(const StringStyle& ss) const
+String Node::ToString(const StringStyle& ss) const
 {
-	return String().Format("xml.Element");
+	return String().Format("xml.Node");
 }
 
 //------------------------------------------------------------------------------
-// ElementList
+// NodeList
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-// ElementOwner
+// NodeOwner
 //------------------------------------------------------------------------------
-void ElementOwner::Clear()
+void NodeOwner::Clear()
 {
-	for (Element* pElement : *this) Element::Delete(pElement);
+	for (Node* pNode : *this) Node::Delete(pNode);
 	clear();
 }
 
