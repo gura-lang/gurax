@@ -104,26 +104,22 @@ void XMLCALL Parser::EndCdataSectionHandler(void* userData)
 	// ]]>
 }
 
-void XMLCALL Parser::DefaultHandler(void* userData,
-											const XML_Char* text, int len)
+void XMLCALL Parser::DefaultHandler(void* userData, const XML_Char* text, int len)
 {
 }
 
-void XMLCALL Parser::DefaultHandlerExpand(void* userData,
-											const XML_Char* text, int len)
+void XMLCALL Parser::DefaultHandlerExpand(void* userData, const XML_Char* text, int len)
 {
 }
 
-int XMLCALL Parser::ExternalEntityRefHandler(XML_Parser parser,
-							const XML_Char* args, const XML_Char* base,
-							const XML_Char* systemId, const XML_Char* publicId)
+int XMLCALL Parser::ExternalEntityRefHandler(XML_Parser parser, const XML_Char* args,
+				const XML_Char* base, const XML_Char* systemId, const XML_Char* publicId)
 {
 	// <!ENTITY>
 	return 0;
 }
 
-void XMLCALL Parser::SkippedEntityHandler(void* userData,
-							const XML_Char* entityName, int isParameterEntity)
+void XMLCALL Parser::SkippedEntityHandler(void* userData, const XML_Char* entityName, int isParameterEntity)
 {
 }
 
@@ -159,15 +155,13 @@ void XMLCALL Parser::EndNamespaceDeclHandler(void* userData, const XML_Char* pre
 {
 }
 
-void XMLCALL Parser::XmlDeclHandler(void* userData,
-				const XML_Char* version, const XML_Char* encoding, int standalone)
+void XMLCALL Parser::XmlDeclHandler(void* userData, const XML_Char* version, const XML_Char* encoding, int standalone)
 {
 	// <?xml version="version" encoding="encoding" standalone="yes|no"?>
 }
 
-void XMLCALL Parser::StartDoctypeDeclHandler(void* userData,
-				const XML_Char* doctypeName, const XML_Char* systemId,
-				const XML_Char* publicId, int hasInternalSubset)
+void XMLCALL Parser::StartDoctypeDeclHandler(void* userData, const XML_Char* doctypeName,
+			const XML_Char* systemId, const XML_Char* publicId, int hasInternalSubset)
 {
 	// <!DOCTYPE doctypeName systemId "publicId"[
 	// declarations
@@ -190,18 +184,15 @@ void XMLCALL Parser::AttlistDeclHandler(void* userData,
 	// DTD
 }
 
-void XMLCALL Parser::EntityDeclHandler(void* userData,
-			const XML_Char* entityName, int isParameterEntity,
-			const XML_Char* value, int valueLength, const XML_Char* base,
-			const XML_Char* systemId, const XML_Char* publicId,
-			const XML_Char* notationName)
+void XMLCALL Parser::EntityDeclHandler(void* userData, const XML_Char* entityName, int isParameterEntity,
+			const XML_Char* value, int valueLength, const XML_Char* base, const XML_Char* systemId,
+			const XML_Char* publicId, const XML_Char* notationName)
 {
 	// <!ENTITY>
 }
 
-void XMLCALL Parser::NotationDeclHandler(void* userData,
-			const XML_Char* notationName, const XML_Char* base,
-			const XML_Char* systemId, const XML_Char* publicId)
+void XMLCALL Parser::NotationDeclHandler(void* userData, const XML_Char* notationName,
+			const XML_Char* base, const XML_Char* systemId, const XML_Char* publicId)
 {
 }
 
