@@ -4,6 +4,7 @@
 #ifndef GURAX_MODULE_XML_DOCUMENT_H
 #define GURAX_MODULE_XML_DOCUMENT_H
 #include <gurax.h>
+#include "Element.h"
 
 Gurax_BeginModuleScope(xml)
 
@@ -16,6 +17,8 @@ public:
 	Gurax_DeclareReferable(Document);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.Document");
+private:
+	RefPtr<Element> _pElementRoot;
 public:
 	// Constructor
 	Document() {}
@@ -27,6 +30,9 @@ public:
 	Document& operator=(Document&& src) noexcept = delete;
 protected:
 	~Document() = default;
+public:
+	void SetElementRoot(Element* pElement) { _pElementRoot.reset(pElement); }
+	Element& GetElementRoot() { return *_pElementRoot; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Document& other) const { return this == &other; }

@@ -15,7 +15,7 @@ class NodeOwner;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Node : public Referable {
 public:
-	enum class Type { None, Element, Text, Comment };
+	enum class Type { None, CData, Comment, Element, Text };
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Node);
@@ -23,12 +23,9 @@ public:
 	Gurax_MemoryPoolAllocator("xml.Node");
 private:
 	Type _type;
-	String _str;
-	RefPtr<AttrOwner> _pAttrs;
-	RefPtr<NodeOwner> _pNodesChild;
 public:
 	// Constructor
-	Node(Type type, String str);
+	Node(Type type) : _type(type) {}
 	// Copy constructor/operator
 	Node(const Node& src) = delete;
 	Node& operator=(const Node& src) = delete;
@@ -38,9 +35,7 @@ public:
 protected:
 	~Node() = default;
 public:
-	const char* GetName() const { return _str.c_str(); }
-	AttrOwner& GetAttrs() { return *_pAttrs; }
-	NodeOwner& GetNodesChild() { return *_pNodesChild; }
+	Type GetType() const { return _type; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Node& other) const { return this == &other; }

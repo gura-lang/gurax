@@ -68,20 +68,34 @@ bool Parser::Parse(Stream& stream)
 void XMLCALL Parser::StartElementHandler(void* userData, const XML_Char* name, const XML_Char** atts)
 {
 	// <name attr0="value0" attr1="value1" attr2="value">
-	RefPtr<Node> pNode(new Node(Node::Type::Element, name));
+	Parser& parser = *reinterpret_cast<Parser*>(userData);
+	RefPtr<Element> pElement(new Element(name));
 	for (const XML_Char** p = atts; *p && *(p + 1); p += 2) {
-		pNode->GetAttrs().push_back(new Attr(*p, *(p + 1)));
+		pElement->GetAttrs().push_back(new Attr(*p, *(p + 1)));
+	}
+	if (parser.HasElement()) {
+		Element& elementCur = parser.GetElementCur();
+		parser.PushElement(pElement.get());
+		elementCur.GetNodesChild().push_back(pElement.release());
+	} else {
+		parser.PushElement(pElement.get());
+		parser.GetDocument().SetElementRoot(pElement.release());
 	}
 }
 
 void XMLCALL Parser::EndElementHandler(void* userData, const XML_Char* name)
 {
 	// </name>
+	Parser& parser = *reinterpret_cast<Parser*>(userData);
+	parser.PopElement();
 }
 
 void XMLCALL Parser::CharacterDataHandler(void* userData, const XML_Char* text, int len)
 {
 	// text
+	Parser& parser = *reinterpret_cast<Parser*>(userData);
+	RefPtr<Text> pText(new Text(text));
+	parser.GetElementCur().GetNodesChild().push_back(pText.release());
 }
 
 void XMLCALL Parser::ProcessingInstructionHandler(void* userData, const XML_Char* target, const XML_Char* data)
@@ -92,16 +106,25 @@ void XMLCALL Parser::ProcessingInstructionHandler(void* userData, const XML_Char
 void XMLCALL Parser::CommentHandler(void* userData, const XML_Char* data)
 {
 	// <--data-->
+	Parser& parser = *reinterpret_cast<Parser*>(userData);
+	RefPtr<Comment> pComment(new Comment(data));
+	parser.GetElementCur().GetNodesChild().push_back(pComment.release());
 }
 
 void XMLCALL Parser::StartCdataSectionHandler(void* userData)
 {
 	// <![CDATA[
+	Parser& parser = *reinterpret_cast<Parser*>(userData);
+	RefPtr<CData> pCData(new CData());
+	parser.PushCData(pCData.get());
+	parser.GetElementCur().GetNodesChild().push_back(pCData.release());
 }
 
 void XMLCALL Parser::EndCdataSectionHandler(void* userData)
 {
 	// ]]>
+	Parser& parser = *reinterpret_cast<Parser*>(userData);
+	parser.PopCData();
 }
 
 void XMLCALL Parser::DefaultHandler(void* userData, const XML_Char* text, int len)

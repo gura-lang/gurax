@@ -37,14 +37,21 @@ target_compile_definitions(xml.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(xml.gurd PRIVATE
 	module-xml.cpp
 	Attr.cpp
+	CData.cpp
+	Comment.cpp
 	CP932.cpp
-	Util.cpp
-	Attr.cpp
 	Document.cpp
+	Element.cpp
 	Node.cpp
 	Parser.cpp
+	Text.cpp
+	Util.cpp
 	VType_Attr.cpp
-	VType_Document.cpp)
+	VType_CData.cpp
+	VType_Comment.cpp
+	VType_Document.cpp
+	VType_Element.cpp
+	VType_Text.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

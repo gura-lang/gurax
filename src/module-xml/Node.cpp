@@ -8,11 +8,6 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Node
 //------------------------------------------------------------------------------
-Node::Node(Type type, String str) :
-	_type(type), _str(str), _pAttrs(new AttrOwner()), _pNodesChild(new NodeOwner())
-{
-}
-
 String Node::ToString(const StringStyle& ss) const
 {
 	return String().Format("xml.Node");
