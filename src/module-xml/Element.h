@@ -33,6 +33,7 @@ public:
 protected:
 	~Element() = default;
 public:
+	virtual Value* CreateValue() const;
 	AttrOwner& GetAttrs() { return *_pAttrs; }
 	NodeOwner& GetNodesChild() { return *_pNodesChild; }
 public:

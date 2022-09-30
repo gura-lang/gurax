@@ -31,6 +31,8 @@ public:
 protected:
 	~Comment() = default;
 public:
+	virtual Value* CreateValue() const;
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Comment& other) const { return this == &other; }
 	bool IsEqualTo(const Comment& other) const { return IsIdentical(other); }

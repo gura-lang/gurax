@@ -24,7 +24,7 @@ private:
 	XML_Parser _parser;
 	RefPtr<Document> _pDocument;
 	ElementStack _elementStack;
-	CDataStack _cdataStack;
+	RefPtr<CData> _pCData;
 public:
 	// Constructor
 	Parser();
@@ -45,10 +45,10 @@ public:
 	bool HasElement() const { return !_elementStack.empty(); }
 	Element& GetElementCur() { return *_elementStack.back(); }
 public:
-	void PushCData(CData* pCData) { _cdataStack.push_back(pCData); }
-	void PopCData() { _cdataStack.pop_back(); }
-	bool HasCData() const { return !_cdataStack.empty(); }
-	CData& GetCDataCur() { return *_cdataStack.back(); }
+	void SetCData(CData* pCData) { _pCData.reset(pCData); }
+	void ClearCData() { _pCData.reset(nullptr); }
+	bool HasCData() const { return !!_pCData; }
+	CData& GetCDataCur() { return *_pCData; }
 private:
 	static void XMLCALL StartElementHandler(void* userData, const XML_Char* name, const XML_Char** atts);
 	static void XMLCALL EndElementHandler(void* userData, const XML_Char* name);

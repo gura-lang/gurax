@@ -36,6 +36,7 @@ protected:
 	~Node() = default;
 public:
 	Type GetType() const { return _type; }
+	virtual Value* CreateValue() const = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Node& other) const { return this == &other; }

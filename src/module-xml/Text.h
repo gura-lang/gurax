@@ -33,6 +33,8 @@ public:
 protected:
 	~Text() = default;
 public:
+	virtual Value* CreateValue() const;
+public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Text& other) const { return this == &other; }
 	bool IsEqualTo(const Text& other) const { return IsIdentical(other); }

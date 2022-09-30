@@ -120,7 +120,7 @@ void XMLCALL Parser::StartCdataSectionHandler(void* userData)
 	// <![CDATA[
 	Parser& parser = *reinterpret_cast<Parser*>(userData);
 	RefPtr<CData> pCData(new CData());
-	parser.PushCData(pCData.get());
+	parser.SetCData(pCData.Reference());
 	parser.GetElementCur().GetNodesChild().push_back(pCData.release());
 }
 
@@ -128,7 +128,7 @@ void XMLCALL Parser::EndCdataSectionHandler(void* userData)
 {
 	// ]]>
 	Parser& parser = *reinterpret_cast<Parser*>(userData);
-	parser.PopCData();
+	parser.ClearCData();
 }
 
 void XMLCALL Parser::DefaultHandler(void* userData, const XML_Char* text, int len)

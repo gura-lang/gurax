@@ -34,6 +34,7 @@ protected:
 public:
 	void SetText(Text* pText) { _pText.reset(pText); }
 	const Text& GetText() const { return _pText? *_pText : Text::Empty; }
+	virtual Value* CreateValue() const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const CData& other) const { return this == &other; }
