@@ -44,10 +44,12 @@ Gurax_ModulePrepare()
 {
 	// Assignment of VType
 	Assign(VTYPE_Attr);
+	Assign(VTYPE_Attrs);
 	Assign(VTYPE_CData);
 	Assign(VTYPE_Comment);
 	Assign(VTYPE_Document);
 	Assign(VTYPE_Element);
+	Assign(VTYPE_Nodes);
 	Assign(VTYPE_Text);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Test));

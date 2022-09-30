@@ -47,10 +47,12 @@ target_sources(xml.gurd PRIVATE
 	Text.cpp
 	Util.cpp
 	VType_Attr.cpp
+	VType_Attrs.cpp
 	VType_CData.cpp
 	VType_Comment.cpp
 	VType_Document.cpp
 	VType_Element.cpp
+	VType_Nodes.cpp
 	VType_Text.cpp)
 #-------------------------------------------------------------------------------
 # Link
