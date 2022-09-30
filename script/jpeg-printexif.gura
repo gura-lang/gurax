@@ -1,0 +1,18 @@
+#!/usr/bin/env gurax
+import(jpeg)
+import(argopt)
+
+argopt.Parser {|p|
+	errorFlag = false
+	try { [argv, opt] = p.Parse(sys.argv) } catch { errorFlag = true }
+	if (errorFlag || argv.len < 1) {
+		sys.cerr.Println('usage: print-exif jpeg-file')
+		sys.Exit(1)
+	}
+}
+fileName = argv[0]
+c = jpeg.Content(fileName)
+Println('==== IFD0 ====')
+c.exif.ifd0.Print()
+Println('==== IFD1 ====')
+c.exif.ifd1.Print()

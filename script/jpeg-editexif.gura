@@ -1,0 +1,60 @@
+#!/usr/bin/env gurax
+import(re)
+import(jpeg)
+import(argopt)
+
+tmplHelp = tR'''
+usage: jpeg-editexif.gura file cmd..
+'''
+
+argopt.Parser {|p|
+	[argv, opt] = p.Parse(sys.argv)
+	if (argv.len < 1) {
+		tmplHelp.Render(sys.cerr)
+		sys.Exit(1)
+	}
+	fileNameSrc = argv[0]
+	fields = path.SplitExt(fileNameSrc)
+	fileNameDst = fields[0] + '.edit' + fields[1]
+}
+content = jpeg.Content(fileNameSrc)
+if (argv.len == 1) {
+	Println('==== IFD0 ====')
+	content.exif.ifd0.Print()
+	Println('==== IFD1 ====')
+	content.exif.ifd1.Print()
+} else {
+	argv.Offset(1) {|arg|
+		if (!(m = arg.Match(r'^([\w\.]+)=(.*)'))) {
+			sys.cerr.Println('invalid format of command')
+			sys.Exit(1)
+		}
+		tagName = m[1]
+		tagValue = m[2]
+		ifd = content.exif.ifd0
+		while (m = tagName.Match(r'^([^\.]+)\.(.+)')) {
+			ifd = ifd.FindTag(m[1].ToSymbol()).value
+			tagName = m[2]
+		}
+		tagSymbol = tagName.ToSymbol()
+		if (tagValue.IsEmpty()) {
+			ifd.DeleteTag(tagSymbol)
+		} else {
+			tag = ifd.CreateTag(tagSymbol)
+			if (tag.vtypeAcceptable == Number) {
+				tag.value = tagValue.ToNumber()
+			} elsif (tag.vtypeAcceptable == Rational) {
+				fields = tagValue.Split('/'):list
+				if (fields.len == 1) {
+					tag.value = Rational(fields[0].ToNumber())
+				} elsif (fields.len == 2) {
+					tag.value = Rational(fields[0].ToNumber(), fields[1].ToNumber())
+				}
+			} else {
+				tag.value = tagValue
+			}
+		}
+	}
+	content.Write(fileNameDst)
+	Printf('%s was created\n', fileNameDst)
+}
