@@ -60,6 +60,29 @@ public:
 	void Clear();
 };
 
+//------------------------------------------------------------------------------
+// Iterator_Attr
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Attr : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Attr");
+private:
+	RefPtr<AttrOwner> _pAttrOwner;
+	size_t _idx;
+public:
+	Iterator_Attr(AttrOwner* pAttrOwner) : _pAttrOwner(pAttrOwner), _idx(0) {}
+public:
+	AttrOwner& GetAttrOwner() { return *_pAttrOwner; }
+	const AttrOwner& GetAttrOwner() const { return *_pAttrOwner; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
+	virtual size_t GetLength() const override { return GetAttrOwner().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
 Gurax_EndModuleScope(xml)
 
 #endif

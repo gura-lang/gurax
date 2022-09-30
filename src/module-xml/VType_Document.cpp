@@ -75,19 +75,19 @@ Gurax_ImplementMethod(Document, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// xml.Document#propSkeleton
-Gurax_DeclareProperty_R(Document, propSkeleton)
+// xml.Document#root
+Gurax_DeclareProperty_R(Document, root)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Element, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Document, propSkeleton)
+Gurax_ImplementPropertyGetter(Document, root)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Element(valueThis.GetDocument().GetElementRoot().Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ void VType_Document::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Document, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Document, propSkeleton));
+	Assign(Gurax_CreateProperty(Document, root));
 }
 
 //------------------------------------------------------------------------------

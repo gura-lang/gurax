@@ -26,4 +26,21 @@ void NodeOwner::Clear()
 	clear();
 }
 
+//------------------------------------------------------------------------------
+// Iterator_Node
+//------------------------------------------------------------------------------
+Value* Iterator_Node::DoNextValue()
+{
+	const NodeOwner& nodeOwner = GetNodeOwner();
+	if (_idx >= nodeOwner.size()) return nullptr;
+	return nodeOwner[_idx++]->CreateValue();
+}
+
+String Iterator_Node::ToString(const StringStyle& ss) const
+{
+	String str;
+	str.Format("Node");
+	return str;
+}
+
 Gurax_EndModuleScope(xml)
