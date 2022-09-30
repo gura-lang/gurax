@@ -51,28 +51,6 @@ Gurax_ImplementConstructor(Element)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.Element#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Element, MethodSkeleton)
-{
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Element, MethodSkeleton)
-{
-	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
-	// Function body
-	return new Value_Number(num1 + num2);
-}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -107,6 +85,21 @@ Gurax_ImplementPropertyGetter(Element, children)
 	return new Value_Nodes(valueThis.GetElement().GetNodesChild().Reference());
 }
 
+// xml.Element#name
+Gurax_DeclareProperty_R(Element, name)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Element, name)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetElement().GetName());
+}
+
 //------------------------------------------------------------------------------
 // VType_Element
 //------------------------------------------------------------------------------
@@ -119,10 +112,11 @@ void VType_Element::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Element));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Element, MethodSkeleton));
+	//Assign(Gurax_CreateMethod(Element, Each));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Element, attrs));
 	Assign(Gurax_CreateProperty(Element, children));
+	Assign(Gurax_CreateProperty(Element, name));
 }
 
 //------------------------------------------------------------------------------

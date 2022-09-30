@@ -49,27 +49,23 @@ Gurax_ImplementConstructor(Nodes)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.Nodes#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Nodes, MethodSkeleton)
+// xml.Nodes#Each() {block?}
+Gurax_DeclareMethod(Nodes, Each)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Nodes, MethodSkeleton)
+Gurax_ImplementMethod(Nodes, Each)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	RefPtr<Iterator> pIterator(new Iterator_Node(valueThis.GetNodes().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +98,7 @@ void VType_Nodes::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Nodes));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Nodes, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Nodes, Each));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Nodes, propSkeleton));
 }

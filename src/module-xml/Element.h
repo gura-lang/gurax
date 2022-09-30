@@ -34,6 +34,7 @@ protected:
 	~Element() = default;
 public:
 	virtual Value* CreateValue() const;
+	const char* GetName() const { return _name.c_str(); }
 	AttrOwner& GetAttrs() { return *_pAttrs; }
 	NodeOwner& GetNodesChild() { return *_pNodesChild; }
 public:
