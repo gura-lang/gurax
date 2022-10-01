@@ -65,6 +65,7 @@ public:
 	virtual size_t DoCalcHash() const override { return 0; }
 	virtual bool IsEqualTo(const Value& value) const override { return false; }
 	virtual bool IsLessThan(const Value& value) const override { return false; }
+	bool DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
 

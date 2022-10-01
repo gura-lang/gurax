@@ -71,8 +71,8 @@ Gurax_ImplementMethod(Attrs, Each)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// xml.Attrs#propSkeleton
-Gurax_DeclareProperty_R(Attrs, propSkeleton)
+// xml.Attrs#len
+Gurax_DeclareProperty_R(Attrs, len)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -80,10 +80,10 @@ Gurax_DeclareProperty_R(Attrs, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Attrs, propSkeleton)
+Gurax_ImplementPropertyGetter(Attrs, len)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetAttrs().size());
 }
 
 //------------------------------------------------------------------------------
@@ -100,13 +100,22 @@ void VType_Attrs::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Attrs, Each));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Attrs, propSkeleton));
+	Assign(Gurax_CreateProperty(Attrs, len));
 }
 
 //------------------------------------------------------------------------------
 // Value_Attrs
 //------------------------------------------------------------------------------
 VType& Value_Attrs::vtype = VTYPE_Attrs;
+
+bool Value_Attrs::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
+{
+	const AttrOwner& attrs = GetAttrs();
+	size_t idx = 0;
+	if (!Index::GetIndexNumber(valueIndex, attrs.size(), &idx)) return false;
+	*ppValue = new Value_Attr(attrs[idx]->Reference());
+	return true;
+}
 
 String Value_Attrs::ToString(const StringStyle& ss) const
 {

@@ -71,8 +71,8 @@ Gurax_ImplementMethod(Nodes, Each)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// xml.Nodes#propSkeleton
-Gurax_DeclareProperty_R(Nodes, propSkeleton)
+// xml.Nodes#len
+Gurax_DeclareProperty_R(Nodes, len)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
@@ -80,10 +80,10 @@ Gurax_DeclareProperty_R(Nodes, propSkeleton)
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Nodes, propSkeleton)
+Gurax_ImplementPropertyGetter(Nodes, len)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetNodes().size());
 }
 
 //------------------------------------------------------------------------------
@@ -100,13 +100,22 @@ void VType_Nodes::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Nodes, Each));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Nodes, propSkeleton));
+	Assign(Gurax_CreateProperty(Nodes, len));
 }
 
 //------------------------------------------------------------------------------
 // Value_Nodes
 //------------------------------------------------------------------------------
 VType& Value_Nodes::vtype = VTYPE_Nodes;
+
+bool Value_Nodes::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
+{
+	const NodeOwner& nodes = GetNodes();
+	size_t idx = 0;
+	if (!Index::GetIndexNumber(valueIndex, nodes.size(), &idx)) return false;
+	*ppValue = nodes[idx]->CreateValue();
+	return true;
+}
 
 String Value_Nodes::ToString(const StringStyle& ss) const
 {
