@@ -55,9 +55,8 @@ bool Parser::Parse(Stream& stream)
 			return false;
 		} else if (status == XML_STATUS_ERROR) {
 			Error::Issue(ErrorType::FormatError, "expat: %s at line %lu\n",
-					::XML_ErrorString(XML_GetErrorCode(_parser)),
-					::XML_GetCurrentLineNumber(_parser));
-			break;
+				::XML_ErrorString(XML_GetErrorCode(_parser)), ::XML_GetCurrentLineNumber(_parser));
+			return false;
 		} else if (status != XML_STATUS_OK) {
 			return false;
 		}

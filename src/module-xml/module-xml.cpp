@@ -8,28 +8,49 @@ Gurax_BeginModule(xml)
 //------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
-// xml.Test()
-Gurax_DeclareFunction(Test)
+// xml.Parse(text as String) {block?}
+Gurax_DeclareFunction(Parse)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
+		"");
 }
 
-Gurax_ImplementFunction(Test)
+Gurax_ImplementFunction(Parse)
 {
 	// Arguments
 	ArgPicker args(argument);
-	const char* str = args.PickString();
-	Int num = args.PickNumber<Int>();
+	const StringReferable& text = args.PickStringReferable();
 	// Function body
-	XML_Parser parser = ::XML_ParserCreate(nullptr);
-	
-	::XML_ParserFree(parser);
-	return new Value_String(String::Repeat(str, num));
+	RefPtr<Stream> pStream(new Stream_StringReader(text.Reference()));
+	RefPtr<Parser> pParser(new Parser());
+	if (!pParser->Parse(*pStream)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Document(pParser->GetDocument().Reference()));
+}
+
+// xml.Read(stream as Stream) {block?}
+Gurax_DeclareFunction(Read)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementFunction(Read)
+{
+	// Arguments
+	ArgPicker args(argument);
+	Stream& stream = args.PickStream();
+	// Function body
+	RefPtr<Parser> pParser(new Parser());
+	if (!pParser->Parse(stream)) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Document(pParser->GetDocument().Reference()));
 }
 
 //------------------------------------------------------------------------------
@@ -52,7 +73,8 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Nodes);
 	Assign(VTYPE_Text);
 	// Assignment of function
-	Assign(Gurax_CreateFunction(Test));
+	Assign(Gurax_CreateFunction(Parse));
+	Assign(Gurax_CreateFunction(Read));
 	return true;
 }
 
