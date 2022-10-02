@@ -27,10 +27,13 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// xml.XmlDecl() {block?}
+// xml.XmlDecl(version as String, encoding as String, standalone as Bool) {block?}
 Gurax_DeclareConstructor(XmlDecl)
 {
 	Declare(VTYPE_XmlDecl, Flag::None);
+	DeclareArg("version", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareArg("encoding", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareArg("standalone", VTYPE_Bool, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -40,9 +43,12 @@ Gurax_DeclareConstructor(XmlDecl)
 Gurax_ImplementConstructor(XmlDecl)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	const char* version = args.PickString();
+	const char* encoding = args.PickString();
+	bool standalone = args.PickBool();
 	// Function body
-	RefPtr<XmlDecl> pXmlDecl(new XmlDecl());
+	RefPtr<XmlDecl> pXmlDecl(new XmlDecl(version, encoding, standalone? 1 : 0));
 	return argument.ReturnValue(processor, new Value_XmlDecl(pXmlDecl.release()));
 }
 

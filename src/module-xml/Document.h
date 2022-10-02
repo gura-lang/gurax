@@ -33,10 +33,17 @@ public:
 protected:
 	~Document() = default;
 public:
+	bool HasXmlDecl() const { return !!_pXmlDecl; }
 	void SetXmlDecl(XmlDecl* pXmlDecl) { _pXmlDecl.reset(pXmlDecl); }
-	void SetElementRoot(Element* pElement) { _pElementRoot.reset(pElement); }
 	XmlDecl& GetXmlDecl() { return *_pXmlDecl; }
+	const XmlDecl& GetXmlDecl() const { return *_pXmlDecl; }
+public:
+	bool HasElementRoot() const { return !!_pElementRoot; }
+	void SetElementRoot(Element* pElement) { _pElementRoot.reset(pElement); }
 	Element& GetElementRoot() { return *_pElementRoot; }
+	const Element& GetElementRoot() const { return *_pElementRoot; }
+public:
+	bool Compose(Stream& stream) const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Document& other) const { return this == &other; }

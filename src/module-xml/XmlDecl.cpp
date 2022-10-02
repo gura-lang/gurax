@@ -8,8 +8,16 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // XmlDecl
 //------------------------------------------------------------------------------
+String XmlDecl::Textize() const
+{
+	return String().Format("<?xml version=\"%s\" encoding=\"%s\" standalone=\"%s\"?>",
+		_version.c_str(), _encoding.c_str(), _standalone? "yes" : "no");
+}
+
 bool XmlDecl::Compose(Stream& stream) const
 {
+	stream.Print(Textize().c_str());
+	stream.Print("\n");
 	return !Error::IsIssued();
 }
 

@@ -49,27 +49,26 @@ Gurax_ImplementConstructor(Document)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.Document#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Document, MethodSkeleton)
+// xml.Document#Compose(stream? as Stream):void
+Gurax_DeclareMethod(Document, Compose)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Document, MethodSkeleton)
+Gurax_ImplementMethod(Document, Compose)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	Stream* pStream = args.IsValid()? &args.PickStream() : Stream::COut.get();
 	// Function body
-	return new Value_Number(num1 + num2);
+	valueThis.GetDocument().Compose(*pStream);
+	return Value::nil();
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +101,7 @@ void VType_Document::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Document));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Document, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Document, Compose));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Document, root));
 }

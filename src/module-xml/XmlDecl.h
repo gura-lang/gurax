@@ -19,8 +19,13 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.XmlDecl");
 public:
+	String _version;
+	String _encoding;
+	int _standalone;
+public:
 	// Constructor
-	XmlDecl() : Node(Type::XmlDecl) {}
+	XmlDecl(String version, String encoding, int standalone) : Node(Type::XmlDecl),
+		_version(version), _encoding(encoding), _standalone(standalone) {}
 	// Copy constructor/operator
 	XmlDecl(const XmlDecl& src) = delete;
 	XmlDecl& operator=(const XmlDecl& src) = delete;
@@ -30,6 +35,7 @@ public:
 protected:
 	~XmlDecl() = default;
 public:
+	String Textize() const;
 	virtual Value* CreateValue() const override;
 	virtual bool Compose(Stream& stream) const override;
 public:

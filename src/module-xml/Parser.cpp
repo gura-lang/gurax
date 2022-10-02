@@ -184,6 +184,9 @@ void XMLCALL Parser::EndNamespaceDeclHandler(void* userData, const XML_Char* pre
 void XMLCALL Parser::XmlDeclHandler(void* userData, const XML_Char* version, const XML_Char* encoding, int standalone)
 {
 	// <?xml version="version" encoding="encoding" standalone="yes|no"?>
+	Parser& parser = *reinterpret_cast<Parser*>(userData);
+	RefPtr<XmlDecl> pXmlDecl(new XmlDecl(version? version : "", encoding? encoding : "", standalone));
+	parser.GetDocument().SetXmlDecl(pXmlDecl.release());
 }
 
 void XMLCALL Parser::StartDoctypeDeclHandler(void* userData, const XML_Char* doctypeName,
