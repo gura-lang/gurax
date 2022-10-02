@@ -5,6 +5,7 @@
 #define GURAX_MODULE_XML_VTYPE_COMMENT_H
 #include <gurax.h>
 #include "Comment.h"
+#include "VType_Node.h"
 
 Gurax_BeginModuleScope(xml)
 
@@ -22,24 +23,20 @@ extern GURAX_DLLDECLARE VType_Comment VTYPE_Comment;
 //------------------------------------------------------------------------------
 // Value_Comment
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Comment : public Value_Object {
+class GURAX_DLLDECLARE Value_Comment : public Value_Node {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Comment);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Comment");
-protected:
-	RefPtr<Comment> _pComment;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Comment() = delete;
-	explicit Value_Comment(Comment* pComment, VType& vtype = VTYPE_Comment) :
-		Value_Object(vtype), _pComment(pComment) {}
+	explicit Value_Comment(Comment* pComment, VType& vtype = VTYPE_Comment) : Value_Node(pComment, vtype) {}
 	// Copy constructor/operator
-	Value_Comment(const Value_Comment& src) :
-		Value_Object(src), _pComment(src._pComment->Reference()) {}
+	Value_Comment(const Value_Comment& src) : Value_Node(src) {}
 	Value_Comment& operator=(const Value_Comment& src) = delete;
 	// Move constructor/operator
 	Value_Comment(Value_Comment&& src) noexcept = delete;
@@ -48,8 +45,8 @@ protected:
 	// Destructor
 	~Value_Comment() = default;
 public:
-	Comment& GetComment() { return *_pComment; }
-	const Comment& GetComment() const { return *_pComment; }
+	Comment& GetComment() { return dynamic_cast<Comment&>(GetNode()); }
+	const Comment& GetComment() const { return dynamic_cast<const Comment&>(GetNode()); }
 public:
 	static Comment& GetComment(Value& value) {
 		return dynamic_cast<Value_Comment&>(value).GetComment();

@@ -5,6 +5,7 @@
 #define GURAX_MODULE_XML_VTYPE_CDATA_H
 #include <gurax.h>
 #include "CData.h"
+#include "VType_Node.h"
 
 Gurax_BeginModuleScope(xml)
 
@@ -22,24 +23,20 @@ extern GURAX_DLLDECLARE VType_CData VTYPE_CData;
 //------------------------------------------------------------------------------
 // Value_CData
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_CData : public Value_Object {
+class GURAX_DLLDECLARE Value_CData : public Value_Node {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_CData);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_CData");
-protected:
-	RefPtr<CData> _pCData;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_CData() = delete;
-	explicit Value_CData(CData* pCData, VType& vtype = VTYPE_CData) :
-		Value_Object(vtype), _pCData(pCData) {}
+	explicit Value_CData(CData* pCData, VType& vtype = VTYPE_CData) : Value_Node(pCData, vtype) {}
 	// Copy constructor/operator
-	Value_CData(const Value_CData& src) :
-		Value_Object(src), _pCData(src._pCData->Reference()) {}
+	Value_CData(const Value_CData& src) : Value_Node(src) {}
 	Value_CData& operator=(const Value_CData& src) = delete;
 	// Move constructor/operator
 	Value_CData(Value_CData&& src) noexcept = delete;
@@ -48,8 +45,8 @@ protected:
 	// Destructor
 	~Value_CData() = default;
 public:
-	CData& GetCData() { return *_pCData; }
-	const CData& GetCData() const { return *_pCData; }
+	CData& GetCData() { return dynamic_cast<CData&>(GetNode()); }
+	const CData& GetCData() const { return dynamic_cast<const CData&>(GetNode()); }
 public:
 	static CData& GetCData(Value& value) {
 		return dynamic_cast<Value_CData&>(value).GetCData();

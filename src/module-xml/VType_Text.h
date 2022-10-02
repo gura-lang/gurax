@@ -5,6 +5,7 @@
 #define GURAX_MODULE_XML_VTYPE_TEXT_H
 #include <gurax.h>
 #include "Text.h"
+#include "VType_Node.h"
 
 Gurax_BeginModuleScope(xml)
 
@@ -22,24 +23,20 @@ extern GURAX_DLLDECLARE VType_Text VTYPE_Text;
 //------------------------------------------------------------------------------
 // Value_Text
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Text : public Value_Object {
+class GURAX_DLLDECLARE Value_Text : public Value_Node {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Text);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Text");
-protected:
-	RefPtr<Text> _pText;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Text() = delete;
-	explicit Value_Text(Text* pText, VType& vtype = VTYPE_Text) :
-		Value_Object(vtype), _pText(pText) {}
+	explicit Value_Text(Text* pText, VType& vtype = VTYPE_Text) : Value_Node(pText, vtype) {}
 	// Copy constructor/operator
-	Value_Text(const Value_Text& src) :
-		Value_Object(src), _pText(src._pText->Reference()) {}
+	Value_Text(const Value_Text& src) : Value_Node(src) {}
 	Value_Text& operator=(const Value_Text& src) = delete;
 	// Move constructor/operator
 	Value_Text(Value_Text&& src) noexcept = delete;
@@ -48,8 +45,8 @@ protected:
 	// Destructor
 	~Value_Text() = default;
 public:
-	Text& GetText() { return *_pText; }
-	const Text& GetText() const { return *_pText; }
+	Text& GetText() { return dynamic_cast<Text&>(GetNode()); }
+	const Text& GetText() const { return dynamic_cast<const Text&>(GetNode()); }
 public:
 	static Text& GetText(Value& value) {
 		return dynamic_cast<Value_Text&>(value).GetText();

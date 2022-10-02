@@ -70,6 +70,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Comment);
 	Assign(VTYPE_Document);
 	Assign(VTYPE_Element);
+	Assign(VTYPE_Node);
 	Assign(VTYPE_Nodes);
 	Assign(VTYPE_Text);
 	// Assignment of function

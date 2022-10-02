@@ -34,6 +34,7 @@ protected:
 	~Text() = default;
 public:
 	virtual Value* CreateValue() const;
+	const char* GetText() const { return _text.c_str(); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Text& other) const { return this == &other; }

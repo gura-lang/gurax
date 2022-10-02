@@ -10,7 +10,7 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 String Attr::ToString(const StringStyle& ss) const
 {
-	return String().Format("xml.Attr");
+	return String().Format("%s=\"%s\"", GetName(), String::EscapeHTML(GetValue(), true).c_str());
 }
 
 //------------------------------------------------------------------------------
@@ -38,9 +38,7 @@ Value* Iterator_Attr::DoNextValue()
 
 String Iterator_Attr::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Attr");
-	return str;
+	return String().Format("Attr");
 }
 
 Gurax_EndModuleScope(xml)

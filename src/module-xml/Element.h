@@ -36,7 +36,12 @@ public:
 	virtual Value* CreateValue() const;
 	const char* GetName() const { return _name.c_str(); }
 	AttrOwner& GetAttrs() { return *_pAttrs; }
+	const AttrOwner& GetAttrs() const { return *_pAttrs; }
 	NodeOwner& GetNodesChild() { return *_pNodesChild; }
+	const NodeOwner& GetNodesChild() const { return *_pNodesChild; }
+	String MakeStartTag() const;
+	String MakeEndTag() const;
+	String MakeEmptyTag() const;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Element& other) const { return this == &other; }

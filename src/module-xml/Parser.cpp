@@ -8,7 +8,7 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Parser
 //------------------------------------------------------------------------------
-Parser::Parser()
+Parser::Parser() : _pDocument(new Document())
 {
 	_parser = ::XML_ParserCreate(nullptr);
 	::XML_SetUserData(_parser, this);

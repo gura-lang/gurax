@@ -15,9 +15,33 @@ Value* Element::CreateValue() const
 	return new Value_Element(Reference());
 }
 
+String Element::MakeStartTag() const
+{
+	String str;
+	str += "<";
+	str += GetName();
+	for (auto pAttr : GetAttrs()) {
+		str += " ";
+		str += pAttr->ToString();
+	}
+	str += ">";
+	return str;
+}
+
+String Element::MakeEndTag() const
+{
+	return String().Format("</%s>", GetName());
+}
+
+String Element::MakeEmptyTag() const
+{
+	return String().Format("<%s/>", GetName());
+}
+
+
 String Element::ToString(const StringStyle& ss) const
 {
-	return String().Format("xml.Element");
+	return String().Format("xml.Element:%s", GetName());
 }
 
 Gurax_EndModuleScope(xml)

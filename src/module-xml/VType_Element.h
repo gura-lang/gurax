@@ -5,6 +5,7 @@
 #define GURAX_MODULE_XML_VTYPE_ELEMENT_H
 #include <gurax.h>
 #include "Element.h"
+#include "VType_Node.h"
 
 Gurax_BeginModuleScope(xml)
 
@@ -22,24 +23,20 @@ extern GURAX_DLLDECLARE VType_Element VTYPE_Element;
 //------------------------------------------------------------------------------
 // Value_Element
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Value_Element : public Value_Object {
+class GURAX_DLLDECLARE Value_Element : public Value_Node {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Value_Element);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Element");
-protected:
-	RefPtr<Element> _pElement;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Element() = delete;
-	explicit Value_Element(Element* pElement, VType& vtype = VTYPE_Element) :
-		Value_Object(vtype), _pElement(pElement) {}
+	explicit Value_Element(Element* pElement, VType& vtype = VTYPE_Element) : Value_Node(pElement, vtype) {}
 	// Copy constructor/operator
-	Value_Element(const Value_Element& src) :
-		Value_Object(src), _pElement(src._pElement->Reference()) {}
+	Value_Element(const Value_Element& src) : Value_Node(src) {}
 	Value_Element& operator=(const Value_Element& src) = delete;
 	// Move constructor/operator
 	Value_Element(Value_Element&& src) noexcept = delete;
@@ -48,8 +45,8 @@ protected:
 	// Destructor
 	~Value_Element() = default;
 public:
-	Element& GetElement() { return *_pElement; }
-	const Element& GetElement() const { return *_pElement; }
+	Element& GetElement() { return dynamic_cast<Element&>(GetNode()); }
+	const Element& GetElement() const { return dynamic_cast<const Element&>(GetNode()); }
 public:
 	static Element& GetElement(Value& value) {
 		return dynamic_cast<Value_Element&>(value).GetElement();

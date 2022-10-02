@@ -52,6 +52,7 @@ target_sources(xml.gurd PRIVATE
 	VType_Comment.cpp
 	VType_Document.cpp
 	VType_Element.cpp
+	VType_Node.cpp
 	VType_Nodes.cpp
 	VType_Text.cpp)
 #-------------------------------------------------------------------------------
