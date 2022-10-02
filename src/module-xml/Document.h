@@ -5,6 +5,7 @@
 #define GURAX_MODULE_XML_DOCUMENT_H
 #include <gurax.h>
 #include "Element.h"
+#include "XmlDecl.h"
 
 Gurax_BeginModuleScope(xml)
 
@@ -18,6 +19,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.Document");
 private:
+	RefPtr<XmlDecl> _pXmlDecl;
 	RefPtr<Element> _pElementRoot;
 public:
 	// Constructor
@@ -31,7 +33,9 @@ public:
 protected:
 	~Document() = default;
 public:
+	void SetXmlDecl(XmlDecl* pXmlDecl) { _pXmlDecl.reset(pXmlDecl); }
 	void SetElementRoot(Element* pElement) { _pElementRoot.reset(pElement); }
+	XmlDecl& GetXmlDecl() { return *_pXmlDecl; }
 	Element& GetElementRoot() { return *_pElementRoot; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
