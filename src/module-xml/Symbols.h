@@ -11,6 +11,7 @@ Gurax_DeclareSymbol(cdata);
 Gurax_DeclareSymbol(comment);
 Gurax_DeclareSymbol(element);
 Gurax_DeclareSymbol(text);
+Gurax_DeclareSymbol(xmldecl);
 
 Gurax_EndModuleScope(xml)
 

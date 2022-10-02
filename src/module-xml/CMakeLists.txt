@@ -47,6 +47,7 @@ target_sources(xml.gurd PRIVATE
 	Symbols.cpp
 	Text.cpp
 	Util.cpp
+	XmlDecl.cpp
 	VType_Attr.cpp
 	VType_Attrs.cpp
 	VType_CData.cpp
@@ -55,7 +56,8 @@ target_sources(xml.gurd PRIVATE
 	VType_Element.cpp
 	VType_Node.cpp
 	VType_Nodes.cpp
-	VType_Text.cpp)
+	VType_Text.cpp
+	VType_XmlDecl.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------

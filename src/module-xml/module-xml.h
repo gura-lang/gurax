@@ -17,6 +17,7 @@
 #include "VType_Node.h"
 #include "VType_Nodes.h"
 #include "VType_Text.h"
+#include "VType_XmlDecl.h"
 
 Gurax_BeginModuleHeader(xml)
 Gurax_EndModuleHeader(xml)

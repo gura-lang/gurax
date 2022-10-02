@@ -34,10 +34,10 @@ protected:
 public:
 	void SetText(Text* pText) { _pText.reset(pText); }
 	const Text& GetText() const { return _pText? *_pText : Text::Empty; }
-	String TextizeStart() const;
-	String TextizeEnd() const;
+	const char* TextizeStart() const;
+	const char* TextizeEnd() const;
 	virtual Value* CreateValue() const override;
-	virtual void Compose(Stream& stream) const override;
+	virtual bool Compose(Stream& stream) const override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const CData& other) const { return this == &other; }

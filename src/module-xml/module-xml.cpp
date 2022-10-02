@@ -73,6 +73,7 @@ Gurax_ModulePrepare()
 	Assign(VTYPE_Node);
 	Assign(VTYPE_Nodes);
 	Assign(VTYPE_Text);
+	Assign(VTYPE_XmlDecl);
 	// Assignment of function
 	Assign(Gurax_CreateFunction(Parse));
 	Assign(Gurax_CreateFunction(Read));

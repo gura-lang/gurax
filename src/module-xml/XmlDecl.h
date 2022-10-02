@@ -1,47 +1,42 @@
 //==============================================================================
-// Text.h
+// XmlDecl.h
 //==============================================================================
-#ifndef GURAX_MODULE_XML_TEXT_H
-#define GURAX_MODULE_XML_TEXT_H
+#ifndef GURAX_MODULE_XML_XMLDECL_H
+#define GURAX_MODULE_XML_XMLDECL_H
 #include <gurax.h>
 #include "Node.h"
+#include "Text.h"
 
 Gurax_BeginModuleScope(xml)
 
 //------------------------------------------------------------------------------
-// Text
+// XmlDecl
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Text : public Node {
+class GURAX_DLLDECLARE XmlDecl : public Node {
 public:
 	// Referable declaration
-	Gurax_DeclareReferable(Text);
+	Gurax_DeclareReferable(XmlDecl);
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("xml.Text");
-private:
-	String _text;
-public:
-	static Text Empty;
+	Gurax_MemoryPoolAllocator("xml.XmlDecl");
 public:
 	// Constructor
-	Text(String text);
+	XmlDecl() : Node(Type::XmlDecl) {}
 	// Copy constructor/operator
-	Text(const Text& src) = delete;
-	Text& operator=(const Text& src) = delete;
+	XmlDecl(const XmlDecl& src) = delete;
+	XmlDecl& operator=(const XmlDecl& src) = delete;
 	// Move constructor/operator
-	Text(Text&& src) noexcept = delete;
-	Text& operator=(Text&& src) noexcept = delete;
+	XmlDecl(XmlDecl&& src) noexcept = delete;
+	XmlDecl& operator=(XmlDecl&& src) noexcept = delete;
 protected:
-	~Text() = default;
+	~XmlDecl() = default;
 public:
-	const char* GetText() const { return _text.c_str(); }
-	String Textize() const;
 	virtual Value* CreateValue() const override;
 	virtual bool Compose(Stream& stream) const override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
-	bool IsIdentical(const Text& other) const { return this == &other; }
-	bool IsEqualTo(const Text& other) const { return IsIdentical(other); }
-	bool IsLessThan(const Text& other) const { return this < &other; }
+	bool IsIdentical(const XmlDecl& other) const { return this == &other; }
+	bool IsEqualTo(const XmlDecl& other) const { return IsIdentical(other); }
+	bool IsLessThan(const XmlDecl& other) const { return this < &other; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
 

@@ -34,12 +34,14 @@ protected:
 	~Element() = default;
 public:
 	virtual Value* CreateValue() const override;
-	virtual void Compose(Stream& stream) const override;
+	virtual bool Compose(Stream& stream) const override;
 	const char* GetName() const { return _name.c_str(); }
 	AttrOwner& GetAttrs() { return *_pAttrs; }
 	const AttrOwner& GetAttrs() const { return *_pAttrs; }
 	NodeOwner& GetNodesChild() { return *_pNodesChild; }
 	const NodeOwner& GetNodesChild() const { return *_pNodesChild; }
+	bool HasAttrs() const { return !GetAttrs().empty(); }
+	bool HasNodesChild() const { return !GetNodesChild().empty(); }
 	String TextizeStart() const;
 	String TextizeEnd() const;
 	String TextizeEmpty() const;

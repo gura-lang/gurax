@@ -10,11 +10,12 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 Comment::Comment(String data) : Node(Type::Comment), _data(data) {}
 
-void Comment::Compose(Stream& stream) const
+bool Comment::Compose(Stream& stream) const
 {
 	stream.Print("<--");
 	stream.Print(String::EscapeHTML(GetData(), false).c_str());
 	stream.Print("-->");
+	return !Error::IsIssued();
 }
 
 String Comment::Textize() const

@@ -16,7 +16,7 @@ class NodeOwner;
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Node : public Referable {
 public:
-	enum class Type { None, CData, Comment, Element, Text };
+	enum class Type { None, CData, Comment, Element, Text, XmlDecl };
 	class SymbolAssoc_Type : public SymbolAssoc<Type, Type::None> {
 	public:
 		SymbolAssoc_Type() {
@@ -24,6 +24,7 @@ public:
 			Assoc(Gurax_Symbol(comment),	Type::Comment);
 			Assoc(Gurax_Symbol(element),	Type::Element);
 			Assoc(Gurax_Symbol(text),		Type::Text);
+			Assoc(Gurax_Symbol(xmldecl),	Type::XmlDecl);
 		}
 		static const SymbolAssoc& GetInstance() {
 			static SymbolAssoc* pSymbolAssoc = nullptr;
@@ -51,7 +52,7 @@ protected:
 public:
 	Type GetType() const { return _type; }
 	virtual Value* CreateValue() const = 0;
-	virtual void Compose(Stream& stream) const = 0;
+	virtual bool Compose(Stream& stream) const = 0;
 public:
 	static Type SymbolToType(const Symbol* pSymbol) {
 		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
