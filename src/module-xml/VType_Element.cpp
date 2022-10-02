@@ -51,6 +51,56 @@ Gurax_ImplementConstructor(Element)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// xml.Element#TextizeStart()
+Gurax_DeclareMethod(Element, TextizeStart)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, TextizeStart)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_String(valueThis.GetElement().TextizeStart());
+}
+
+// xml.Element#TextizeEnd()
+Gurax_DeclareMethod(Element, TextizeEnd)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, TextizeEnd)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_String(valueThis.GetElement().TextizeEnd());
+}
+
+// xml.Element#TextizeEmpty()
+Gurax_DeclareMethod(Element, TextizeEmpty)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, TextizeEmpty)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_String(valueThis.GetElement().TextizeEmpty());
+}
 
 //-----------------------------------------------------------------------------
 // Implementation of property
@@ -112,7 +162,9 @@ void VType_Element::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(Element));
 	// Assignment of method
-	//Assign(Gurax_CreateMethod(Element, Each));
+	Assign(Gurax_CreateMethod(Element, TextizeStart));
+	Assign(Gurax_CreateMethod(Element, TextizeEnd));
+	Assign(Gurax_CreateMethod(Element, TextizeEmpty));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Element, attrs));
 	Assign(Gurax_CreateProperty(Element, children));

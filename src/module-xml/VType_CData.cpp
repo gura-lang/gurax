@@ -49,27 +49,38 @@ Gurax_ImplementConstructor(CData)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.CData#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(CData, MethodSkeleton)
+// xml.CData#TextizeStart()
+Gurax_DeclareMethod(CData, TextizeStart)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(CData, MethodSkeleton)
+Gurax_ImplementMethod(CData, TextizeStart)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	return new Value_String(valueThis.GetCData().TextizeStart());
+}
+
+// xml.CData#TextizeEnd()
+Gurax_DeclareMethod(CData, TextizeEnd)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(CData, TextizeEnd)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_String(valueThis.GetCData().TextizeEnd());
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +113,8 @@ void VType_CData::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(CData));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(CData, MethodSkeleton));
+	Assign(Gurax_CreateMethod(CData, TextizeStart));
+	Assign(Gurax_CreateMethod(CData, TextizeEnd));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(CData, propSkeleton));
 }

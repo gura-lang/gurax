@@ -10,6 +10,22 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 Comment::Comment(String data) : Node(Type::Comment), _data(data) {}
 
+void Comment::Compose(Stream& stream) const
+{
+	stream.Print("<--");
+	stream.Print(String::EscapeHTML(GetData(), false).c_str());
+	stream.Print("-->");
+}
+
+String Comment::Textize() const
+{
+	String str;
+	str += "<--";
+	str += _data;
+	str += "-->";
+	return str;
+}
+
 Value* Comment::CreateValue() const
 {
 	return new Value_Comment(Reference());

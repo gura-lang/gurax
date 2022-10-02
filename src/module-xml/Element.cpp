@@ -10,12 +10,16 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 Element::Element(String name) : Node(Type::Element), _name(name), _pAttrs(new AttrOwner()), _pNodesChild(new NodeOwner()) {}
 
+void Element::Compose(Stream& stream) const
+{
+}
+
 Value* Element::CreateValue() const
 {
 	return new Value_Element(Reference());
 }
 
-String Element::MakeStartTag() const
+String Element::TextizeStart() const
 {
 	String str;
 	str += "<";
@@ -28,12 +32,12 @@ String Element::MakeStartTag() const
 	return str;
 }
 
-String Element::MakeEndTag() const
+String Element::TextizeEnd() const
 {
 	return String().Format("</%s>", GetName());
 }
 
-String Element::MakeEmptyTag() const
+String Element::TextizeEmpty() const
 {
 	return String().Format("<%s/>", GetName());
 }

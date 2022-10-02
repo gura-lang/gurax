@@ -27,27 +27,94 @@ static const char* g_docHelp_en = u8R"**(
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.Node#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Node, MethodSkeleton)
+// xml.Node#Compose(stream? as Stream)
+Gurax_DeclareMethod(Node, Compose)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Node, MethodSkeleton)
+Gurax_ImplementMethod(Node, Compose)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	Stream* pStream = args.IsValid()? &args.PickStream() : Stream::COut.get();
 	// Function body
-	return new Value_Number(num1 + num2);
+	valueThis.GetNode().Compose(*pStream);
+	return Value::nil();
+}
+
+// xml.Node#IsCData()
+Gurax_DeclareMethod(Node, IsCData)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Node, IsCData)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetNode().GetType() == Node::Type::CData);
+}
+
+// xml.Node#IsComment()
+Gurax_DeclareMethod(Node, IsComment)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Node, IsComment)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetNode().GetType() == Node::Type::Comment);
+}
+
+// xml.Node#IsElement()
+Gurax_DeclareMethod(Node, IsElement)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Node, IsElement)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetNode().GetType() == Node::Type::Element);
+}
+
+// xml.Node#IsText()
+Gurax_DeclareMethod(Node, IsText)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Node, IsText)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	return new Value_Bool(valueThis.GetNode().GetType() == Node::Type::Text);
 }
 
 //-----------------------------------------------------------------------------
@@ -81,7 +148,11 @@ void VType_Node::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Node, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Node, Compose));
+	Assign(Gurax_CreateMethod(Node, IsCData));
+	Assign(Gurax_CreateMethod(Node, IsComment));
+	Assign(Gurax_CreateMethod(Node, IsElement));
+	Assign(Gurax_CreateMethod(Node, IsText));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Node, type));
 }

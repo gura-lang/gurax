@@ -51,6 +51,7 @@ protected:
 public:
 	Type GetType() const { return _type; }
 	virtual Value* CreateValue() const = 0;
+	virtual void Compose(Stream& stream) const = 0;
 public:
 	static Type SymbolToType(const Symbol* pSymbol) {
 		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);

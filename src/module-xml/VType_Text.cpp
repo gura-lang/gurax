@@ -51,27 +51,21 @@ Gurax_ImplementConstructor(Text)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.Text#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Text, MethodSkeleton)
+// xml.Text#Textize()
+Gurax_DeclareMethod(Text, Textize)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Text, MethodSkeleton)
+Gurax_ImplementMethod(Text, Textize)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_Number(num1 + num2);
+	return new Value_String(valueThis.GetText().Textize());
 }
 
 //-----------------------------------------------------------------------------
@@ -104,7 +98,7 @@ void VType_Text::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(Text));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Text, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Text, Textize));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Text, propSkeleton));
 }

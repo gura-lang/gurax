@@ -33,8 +33,10 @@ public:
 protected:
 	~Text() = default;
 public:
-	virtual Value* CreateValue() const;
 	const char* GetText() const { return _text.c_str(); }
+	String Textize() const;
+	virtual Value* CreateValue() const override;
+	virtual void Compose(Stream& stream) const override;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Text& other) const { return this == &other; }

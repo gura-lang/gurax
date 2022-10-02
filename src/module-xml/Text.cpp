@@ -12,6 +12,16 @@ Text Text::Empty("");
 
 Text::Text(String text) : Node(Type::Text), _text(text) {}
 
+String Text::Textize() const
+{
+	return _text;
+}
+
+void Text::Compose(Stream& stream) const
+{
+	stream.Print(String::EscapeHTML(GetText(), false).c_str());
+}
+
 Value* Text::CreateValue() const
 {
 	return new Value_Text(Reference());
