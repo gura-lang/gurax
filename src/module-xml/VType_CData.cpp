@@ -100,7 +100,7 @@ void VType_CData::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(CData));
+	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(CData));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(CData, MethodSkeleton));
 	// Assignment of property

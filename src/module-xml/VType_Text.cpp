@@ -102,7 +102,7 @@ void VType_Text::DoPrepare(Frame& frameOuter)
 	// Add help
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
-	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Text));
+	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(Text));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Text, MethodSkeleton));
 	// Assignment of property

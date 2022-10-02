@@ -19,7 +19,7 @@ Value* Text::CreateValue() const
 
 String Text::ToString(const StringStyle& ss) const
 {
-	return String().Format("xml.Text:%s", String::Enquote(GetText(), '\''));
+	return String().Format("xml.Text:%s", String::Enquote(GetText(), '\'').c_str());
 }
 
 Gurax_EndModuleScope(xml)

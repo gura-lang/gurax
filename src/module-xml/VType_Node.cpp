@@ -53,19 +53,20 @@ Gurax_ImplementMethod(Node, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// xml.Node#propSkeleton
-Gurax_DeclareProperty_R(Node, propSkeleton)
+// xml.Node#type
+Gurax_DeclareProperty_R(Node, type)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(Node, propSkeleton)
+Gurax_ImplementPropertyGetter(Node, type)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	Node::Type type = valueThis.GetNode().GetType();
+	return new Value_Symbol(Node::TypeToSymbol(type));
 }
 
 //------------------------------------------------------------------------------
@@ -82,7 +83,7 @@ void VType_Node::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Node, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Node, propSkeleton));
+	Assign(Gurax_CreateProperty(Node, type));
 }
 
 //------------------------------------------------------------------------------

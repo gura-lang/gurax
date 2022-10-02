@@ -5,6 +5,7 @@
 #define GURAX_MODULE_XML_NODE_H
 #include <gurax.h>
 #include "Attr.h"
+#include "Symbols.h"
 
 Gurax_BeginModuleScope(xml)
 
@@ -16,6 +17,19 @@ class NodeOwner;
 class GURAX_DLLDECLARE Node : public Referable {
 public:
 	enum class Type { None, CData, Comment, Element, Text };
+	class SymbolAssoc_Type : public SymbolAssoc<Type, Type::None> {
+	public:
+		SymbolAssoc_Type() {
+			Assoc(Gurax_Symbol(cdata),		Type::CData);
+			Assoc(Gurax_Symbol(comment),	Type::Comment);
+			Assoc(Gurax_Symbol(element),	Type::Element);
+			Assoc(Gurax_Symbol(text),		Type::Text);
+		}
+		static const SymbolAssoc& GetInstance() {
+			static SymbolAssoc* pSymbolAssoc = nullptr;
+			return pSymbolAssoc? *pSymbolAssoc : *(pSymbolAssoc = new SymbolAssoc_Type());
+		}
+	};
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Node);
@@ -37,6 +51,13 @@ protected:
 public:
 	Type GetType() const { return _type; }
 	virtual Value* CreateValue() const = 0;
+public:
+	static Type SymbolToType(const Symbol* pSymbol) {
+		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
+	}
+	static const Symbol* TypeToSymbol(Type type) {
+		return SymbolAssoc_Type::GetInstance().ToSymbol(type);
+	}
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Node& other) const { return this == &other; }

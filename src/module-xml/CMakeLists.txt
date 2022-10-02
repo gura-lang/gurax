@@ -44,6 +44,7 @@ target_sources(xml.gurd PRIVATE
 	Element.cpp
 	Node.cpp
 	Parser.cpp
+	Symbols.cpp
 	Text.cpp
 	Util.cpp
 	VType_Attr.cpp
