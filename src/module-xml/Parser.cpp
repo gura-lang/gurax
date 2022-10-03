@@ -93,10 +93,10 @@ void XMLCALL Parser::CharacterDataHandler(void* userData, const XML_Char* text, 
 {
 	// text
 	Parser& parser = *reinterpret_cast<Parser*>(userData);
-	RefPtr<Text> pText(new Text(String(text, len)));
 	if (parser.HasCData()) {
-		parser.GetCDataCur().SetText(pText.release());
+		parser.GetCDataCur().AddText(String(text, len).c_str());
 	} else {
+		RefPtr<Text> pText(new Text(String(text, len)));
 		parser.GetElementCur().GetNodesChild().push_back(pText.release());
 	}
 }
@@ -121,10 +121,12 @@ void XMLCALL Parser::StartCdataSectionHandler(void* userData)
 	RefPtr<CData> pCData(new CData());
 	parser.SetCData(pCData.Reference());
 	parser.GetElementCur().GetNodesChild().push_back(pCData.release());
+	::printf("Start CData %d\n", parser.HasCData());
 }
 
 void XMLCALL Parser::EndCdataSectionHandler(void* userData)
 {
+	::printf("End CData\n");
 	// ]]>
 	Parser& parser = *reinterpret_cast<Parser*>(userData);
 	parser.ClearCData();

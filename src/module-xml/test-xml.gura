@@ -5,6 +5,22 @@
 import(util.tester) {*}
 import(xml)
 
-TestCase('Basic test') {
-	Println(xml.Test('hello', 4))
-}
+text = R'''
+<?xml version="1.0" encoding="UTF-8"?>
+<SoftwareEngineer>
+<empl id="01">
+<name>
+<projectname> Man-router</projectname>
+<Workingdomain> machine learning</Workingdomain>
+</name>
+<Enddate>
+<entities><![CDATA[
+This is the local project with the fibre optics.
+All the statistical manipulation is performed. Example. '"&<> and submission date 12/12/2020
+]]></entities>
+</Enddate>
+</empl>
+</SoftwareEngineer>
+'''
+
+xml.Parse(text).Compose()

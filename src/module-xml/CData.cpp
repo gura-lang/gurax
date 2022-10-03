@@ -21,7 +21,7 @@ const char* CData::TextizeEnd() const
 bool CData::Compose(Stream& stream) const
 {
 	stream.Print(TextizeStart());
-	if (!GetText().Compose(stream)) return false;
+	stream.Print(_text.c_str());
 	stream.Print(TextizeEnd());
 	return !Error::IsIssued();
 }

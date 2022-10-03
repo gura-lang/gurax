@@ -19,7 +19,7 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.CData");
 private:
-	RefPtr<Text> _pText;
+	String _text;
 public:
 	// Constructor
 	CData() : Node(Type::CData) {}
@@ -32,8 +32,8 @@ public:
 protected:
 	~CData() = default;
 public:
-	void SetText(Text* pText) { _pText.reset(pText); }
-	const Text& GetText() const { return _pText? *_pText : Text::Empty; }
+	void AddText(const char* text) { _text += text; }
+	const char* GetText() { return _text.c_str(); }
 	const char* TextizeStart() const;
 	const char* TextizeEnd() const;
 	virtual Value* CreateValue() const override;
