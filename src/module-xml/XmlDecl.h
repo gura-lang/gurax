@@ -19,13 +19,14 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("xml.XmlDecl");
 public:
-	String _version;
-	String _encoding;
+	std::unique_ptr<String> _pVersion;
+	std::unique_ptr<String> _pEncoding;
 	int _standalone;
 public:
 	// Constructor
-	XmlDecl(String version, String encoding, int standalone) : Node(Type::XmlDecl),
-		_version(version), _encoding(encoding), _standalone(standalone) {}
+	XmlDecl(const char* version, const char* encoding, int standalone) : Node(Type::XmlDecl),
+		_pVersion(version? new String(version) : nullptr), _pEncoding(encoding? new String(encoding) : nullptr),
+		_standalone(standalone) {}
 	// Copy constructor/operator
 	XmlDecl(const XmlDecl& src) = delete;
 	XmlDecl& operator=(const XmlDecl& src) = delete;

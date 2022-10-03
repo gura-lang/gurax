@@ -185,7 +185,7 @@ void XMLCALL Parser::XmlDeclHandler(void* userData, const XML_Char* version, con
 {
 	// <?xml version="version" encoding="encoding" standalone="yes|no"?>
 	Parser& parser = *reinterpret_cast<Parser*>(userData);
-	RefPtr<XmlDecl> pXmlDecl(new XmlDecl(version? version : "", encoding? encoding : "", standalone));
+	RefPtr<XmlDecl> pXmlDecl(new XmlDecl(version, encoding, standalone));
 	parser.GetDocument().SetXmlDecl(pXmlDecl.release());
 }
 
@@ -193,12 +193,11 @@ void XMLCALL Parser::StartDoctypeDeclHandler(void* userData, const XML_Char* doc
 			const XML_Char* systemId, const XML_Char* publicId, int hasInternalSubset)
 {
 	// <!DOCTYPE doctypeName systemId "publicId"[
-	// declarations
-	// ]>
 }
 
 void XMLCALL Parser::EndDoctypeDeclHandler(void* userData)
 {
+	// ]>
 }
 
 void XMLCALL Parser::ElementDeclHandler(void* userData, const XML_Char* name, XML_Content* model)

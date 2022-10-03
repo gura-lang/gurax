@@ -10,8 +10,13 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 String XmlDecl::Textize() const
 {
-	return String().Format("<?xml version=\"%s\" encoding=\"%s\" standalone=\"%s\"?>",
-		_version.c_str(), _encoding.c_str(), _standalone? "yes" : "no");
+	String str;
+	str = "<?xml";
+	if (_pVersion) str.Format(" version=\"%s\"", _pVersion->c_str());
+	if (_pEncoding) str.Format(" encoding=\"%s\"", _pEncoding->c_str());
+	if (_standalone >= 0) str.Format(" standalone=\"%s\"", _standalone? "yes" : "no");
+	str += "?>";
+	return str;
 }
 
 bool XmlDecl::Compose(Stream& stream) const
