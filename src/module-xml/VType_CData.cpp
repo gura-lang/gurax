@@ -49,8 +49,8 @@ Gurax_ImplementConstructor(CData)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.CData#TextizeStart()
-Gurax_DeclareMethod(CData, TextizeStart)
+// xml.CData#Textize()
+Gurax_DeclareMethod(CData, Textize)
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(
@@ -58,29 +58,12 @@ Gurax_DeclareMethod(CData, TextizeStart)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(CData, TextizeStart)
+Gurax_ImplementMethod(CData, Textize)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	return new Value_String(valueThis.GetCData().TextizeStart());
-}
-
-// xml.CData#TextizeEnd()
-Gurax_DeclareMethod(CData, TextizeEnd)
-{
-	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(CData, TextizeEnd)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	return new Value_String(valueThis.GetCData().TextizeEnd());
+	return new Value_String(valueThis.GetCData().Textize());
 }
 
 //-----------------------------------------------------------------------------
@@ -113,8 +96,7 @@ void VType_CData::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(CData));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(CData, TextizeStart));
-	Assign(Gurax_CreateMethod(CData, TextizeEnd));
+	Assign(Gurax_CreateMethod(CData, Textize));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(CData, propSkeleton));
 }

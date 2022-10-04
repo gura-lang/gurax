@@ -75,3 +75,6 @@ target_link_libraries(xml.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS xml.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS
+	script/xml.gura
+	DESTINATION module/site)

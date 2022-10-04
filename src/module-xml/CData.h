@@ -34,8 +34,7 @@ protected:
 public:
 	void AddText(const char* text, size_t len) { _text.append(text, len); }
 	const char* GetText() { return _text.c_str(); }
-	const char* TextizeStart() const;
-	const char* TextizeEnd() const;
+	String Textize() const;
 	virtual Value* CreateValue() const override;
 	virtual bool Compose(Stream& stream) const override;
 public:

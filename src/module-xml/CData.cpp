@@ -8,21 +8,20 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // CData
 //------------------------------------------------------------------------------
-const char* CData::TextizeStart() const
+String CData::Textize() const
 {
-	return "<![CDATA[";
-}
-
-const char* CData::TextizeEnd() const
-{
-	return "]]>";
+	String str;
+	str += "<![CDATA[";
+	str += _text;
+	str += "]]>";
+	return str;
 }
 
 bool CData::Compose(Stream& stream) const
 {
-	stream.Print(TextizeStart());
+	stream.Print("<![CDATA[");
 	stream.Print(_text.c_str());
-	stream.Print(TextizeEnd());
+	stream.Print("]]>");
 	return !Error::IsIssued();
 }
 
