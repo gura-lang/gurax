@@ -5,7 +5,19 @@
 import(util.tester) {*}
 import(xml)
 
-ParseAndCompose(text as String) = xml.Parse(text).Compose()
+PrintTree(node as xml.Node, indentLevel as Number = 0):map:void = {
+	Printf('%*s%s\n', indentLevel * 2, '', node)
+	if (node.IsElement()) {
+		PrintTree(node.children.Each(), indentLevel + 1)
+	}	
+}
+
+ParseAndCompose(text as String) = {
+	Println('----------------------------------------------------------------')
+	doc = xml.Parse(text)
+	doc.Compose()
+	PrintTree(doc.root)
+}
 
 ParseAndCompose(R'''
 <?xml version="1.0"?>
