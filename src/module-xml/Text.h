@@ -33,6 +33,7 @@ public:
 protected:
 	~Text() = default;
 public:
+	void AddText(const char* text, size_t len) { _text.append(text, len); }
 	const char* GetText() const { return _text.c_str(); }
 	String Textize() const;
 	virtual Value* CreateValue() const override;

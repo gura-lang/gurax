@@ -32,7 +32,7 @@ public:
 protected:
 	~CData() = default;
 public:
-	void AddText(const char* text) { _text += text; }
+	void AddText(const char* text, size_t len) { _text.append(text, len); }
 	const char* GetText() { return _text.c_str(); }
 	const char* TextizeStart() const;
 	const char* TextizeEnd() const;

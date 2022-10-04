@@ -93,12 +93,18 @@ void XMLCALL Parser::CharacterDataHandler(void* userData, const XML_Char* text, 
 {
 	// text
 	Parser& parser = *reinterpret_cast<Parser*>(userData);
-	if (parser.HasCData()) {
-		parser.GetCDataCur().AddText(String(text, len).c_str());
-	} else {
-		RefPtr<Text> pText(new Text(String(text, len)));
-		parser.GetElementCur().GetNodesChild().push_back(pText.release());
+	NodeOwner& nodes = parser.GetElementCur().GetNodesChild();
+	if (!nodes.empty()) {
+		Node* pNodeLast = nodes.back();
+		if (pNodeLast->GetType() == Node::Type::CData) {
+			dynamic_cast<CData*>(pNodeLast)->AddText(text, len);
+			return;
+		} else if (pNodeLast->GetType() == Node::Type::Text) {
+			dynamic_cast<Text*>(pNodeLast)->AddText(text, len);
+			return;
+		}
 	}
+	nodes.push_back(new Text(String(text, len)));
 }
 
 void XMLCALL Parser::ProcessingInstructionHandler(void* userData, const XML_Char* target, const XML_Char* data)
