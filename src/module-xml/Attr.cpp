@@ -16,6 +16,14 @@ String Attr::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // AttrList
 //------------------------------------------------------------------------------
+const Attr* AttrList::Find(const char* name) const
+{
+	for (auto pAttr : *this) {
+		if (::strcmp(pAttr->GetName(), name) == 0) return pAttr;
+	}
+	Error::Issue(ErrorType::IndexError, "the specified attribute is not found.");
+	return nullptr;
+}
 
 //------------------------------------------------------------------------------
 // AttrOwner

@@ -111,10 +111,22 @@ VType& Value_Attrs::vtype = VTYPE_Attrs;
 bool Value_Attrs::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	const AttrOwner& attrs = GetAttrs();
-	size_t idx = 0;
-	if (!Index::GetIndexNumber(valueIndex, attrs.size(), &idx)) return false;
-	*ppValue = new Value_Attr(attrs[idx]->Reference());
-	return true;
+	if (valueIndex.IsType(VTYPE_Number)) {
+		size_t idx = 0;
+		if (!Index::GetIndexNumber(valueIndex, attrs.size(), &idx)) return false;
+		*ppValue = new Value_Attr(attrs[idx]->Reference());
+		return true;
+	} else if (valueIndex.IsType(VTYPE_String)) {
+		const Attr* pAttr = attrs.Find(Value_String::GetString(valueIndex));
+		if (pAttr) {
+			*ppValue = new Value_Attr(pAttr->Reference());
+			return true;
+		}
+		Error::Issue(ErrorType::IndexError, "the specified attribute is not found.");
+		return false;
+	}
+	Error::Issue(ErrorType::IndexError, "the index value must be a Number or String.");
+	return false;
 }
 
 String Value_Attrs::ToString(const StringStyle& ss) const

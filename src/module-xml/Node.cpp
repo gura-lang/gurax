@@ -33,14 +33,13 @@ Value* Iterator_Node::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
 	if (_idx >= nodeOwner.size()) return nullptr;
-	return nodeOwner[_idx++]->CreateValue();
+	Node* pNode = nodeOwner[_idx++];
+	return pNode->CreateValue();
 }
 
 String Iterator_Node::ToString(const StringStyle& ss) const
 {
-	String str;
-	str.Format("Node");
-	return str;
+	return String().Format("Node");
 }
 
 Gurax_EndModuleScope(xml)
