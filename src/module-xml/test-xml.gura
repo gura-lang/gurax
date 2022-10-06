@@ -73,3 +73,14 @@ All the statistical manipulation is performed. Example. '"&<> and submission dat
 </empl>
 </SoftwareEngineer>
 ''')
+
+TestCase('') {
+  doc = xml.Parse(R'''
+  <?xml version="1.0"?>
+  <PurchaseOrder PurchaseOrderNumber="99503" OrderDate="1999-10-20">
+  </PurchaseOrder>
+  ''')
+  elem = doc.root
+  Tester(`elem.attrs['PurchaseOrderNumber'])
+  Tester(`elem.attrs['OrderDate'])
+}

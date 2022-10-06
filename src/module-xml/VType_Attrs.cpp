@@ -119,7 +119,7 @@ bool Value_Attrs::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) con
 	} else if (valueIndex.IsType(VTYPE_String)) {
 		const Attr* pAttr = attrs.Find(Value_String::GetString(valueIndex));
 		if (pAttr) {
-			*ppValue = new Value_Attr(pAttr->Reference());
+			*ppValue = new Value_String(pAttr->GetValue());
 			return true;
 		}
 		Error::Issue(ErrorType::IndexError, "the specified attribute is not found.");
