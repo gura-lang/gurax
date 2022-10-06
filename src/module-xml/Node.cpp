@@ -27,9 +27,9 @@ void NodeOwner::Clear()
 }
 
 //------------------------------------------------------------------------------
-// Iterator_Node
+// Iterator_Each
 //------------------------------------------------------------------------------
-Value* Iterator_Node::DoNextValue()
+Value* Iterator_Each::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
 	if (_idx >= nodeOwner.size()) return nullptr;
@@ -37,9 +37,45 @@ Value* Iterator_Node::DoNextValue()
 	return pNode->CreateValue();
 }
 
-String Iterator_Node::ToString(const StringStyle& ss) const
+String Iterator_Each::ToString(const StringStyle& ss) const
 {
-	return String().Format("Node");
+	return String().Format("Each");
+}
+
+//------------------------------------------------------------------------------
+// Iterator_EachElement
+//------------------------------------------------------------------------------
+Value* Iterator_EachElement::DoNextValue()
+{
+	const NodeOwner& nodeOwner = GetNodeOwner();
+	for ( ; _idx < nodeOwner.size(); _idx++) {
+		Node* pNode = nodeOwner[_idx];
+		if (pNode->IsElement(_tagName.c_str())) return pNode->CreateValue();
+	} 
+	return nullptr;
+}
+
+String Iterator_EachElement::ToString(const StringStyle& ss) const
+{
+	return String().Format("EachElement");
+}
+
+//------------------------------------------------------------------------------
+// Iterator_EachText
+//------------------------------------------------------------------------------
+Value* Iterator_EachText::DoNextValue()
+{
+	const NodeOwner& nodeOwner = GetNodeOwner();
+	for ( ; _idx < nodeOwner.size(); _idx++) {
+		Node* pNode = nodeOwner[_idx];
+		if (pNode->GetType() == Node::Type::Text) return pNode->CreateValue();
+	} 
+	return nullptr;
+}
+
+String Iterator_EachText::ToString(const StringStyle& ss) const
+{
+	return String().Format("EachText");
 }
 
 Gurax_EndModuleScope(xml)

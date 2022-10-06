@@ -51,6 +51,7 @@ protected:
 	~Node() = default;
 public:
 	Type GetType() const { return _type; }
+	virtual bool IsElement(const char* tagName) const { return false; }
 	virtual Value* CreateValue() const = 0;
 	virtual bool Compose(Stream& stream) const = 0;
 public:
@@ -88,17 +89,17 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_Node
+// Iterator_Each
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Node : public Iterator {
+class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Iterator_Node");
+	Gurax_MemoryPoolAllocator("Iterator_Each");
 private:
 	RefPtr<NodeOwner> _pNodeOwner;
 	size_t _idx;
 public:
-	Iterator_Node(NodeOwner* pNodeOwner) : _pNodeOwner(pNodeOwner), _idx(0) {}
+	Iterator_Each(NodeOwner* pNodeOwner) : _pNodeOwner(pNodeOwner), _idx(0) {}
 public:
 	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
 	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
@@ -106,6 +107,54 @@ public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
 	virtual size_t GetLength() const override { return GetNodeOwner().size(); }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_EachElement
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_EachElement : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_EachElement");
+private:
+	RefPtr<NodeOwner> _pNodeOwner;
+	String _tagName;
+	size_t _idx;
+public:
+	Iterator_EachElement(NodeOwner* pNodeOwner, String tagName) :
+					_pNodeOwner(pNodeOwner), _tagName(tagName), _idx(0) {}
+public:
+	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
+	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+
+//------------------------------------------------------------------------------
+// Iterator_EachText
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_EachText : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_EachText");
+private:
+	RefPtr<NodeOwner> _pNodeOwner;
+	size_t _idx;
+public:
+	Iterator_EachText(NodeOwner* pNodeOwner) : _pNodeOwner(pNodeOwner), _idx(0) {}
+public:
+	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
+	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
