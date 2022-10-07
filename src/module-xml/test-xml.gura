@@ -5,21 +5,7 @@
 import(util.tester) {*}
 import(xml)
 
-PrintTree(node as xml.Node, indentLevel as Number = 0):map:void = {
-	Printf('%*s%s\n', indentLevel * 2, '', node)
-	if (node.IsElement()) {
-		PrintTree(node.children.Each(), indentLevel + 1)
-	}	
-}
-
-ParseAndCompose(text as String) = {
-	Println('----------------------------------------------------------------')
-	doc = xml.Parse(text)
-	doc.Compose()
-	PrintTree(doc.root)
-}
-
-ParseAndCompose(R'''
+sampleText1 = R'''
 <?xml version="1.0"?>
 <PurchaseOrder PurchaseOrderNumber="99503" OrderDate="1999-10-20">
   <Address Type="Shipping">
@@ -54,7 +40,23 @@ ParseAndCompose(R'''
     </Item>
   </Items>
 </PurchaseOrder>
-''')
+'''
+
+PrintTree(node as xml.Node, indentLevel as Number = 0):map:void = {
+	Printf('%*s%s\n', indentLevel * 2, '', node)
+	if (node.IsElement()) {
+		PrintTree(node.children.Each(), indentLevel + 1)
+	}	
+}
+
+ParseAndCompose(text as String) = {
+	Println('----------------------------------------------------------------')
+	doc = xml.Parse(text)
+	doc.Compose()
+	PrintTree(doc.root)
+}
+
+ParseAndCompose(sampleText1)
 
 ParseAndCompose(R'''
 <?xml version="1.0" encoding="UTF-8"?>
@@ -74,13 +76,48 @@ All the statistical manipulation is performed. Example. '"&<> and submission dat
 </SoftwareEngineer>
 ''')
 
-TestCase('') {
-  doc = xml.Parse(R'''
-  <?xml version="1.0"?>
-  <PurchaseOrder PurchaseOrderNumber="99503" OrderDate="1999-10-20">
-  </PurchaseOrder>
-  ''')
-  elem = doc.root
+TestCase('Element#Each()') {
+  doc = xml.Parse(sampleText1)
+  Println(doc.root.Each())
+}
+
+TestCase('Element#EachText()') {
+  doc = xml.Parse(sampleText1)
+  Println(doc.root.EachText())
+}
+
+TestCase('Element#EachElement()') {
+  doc = xml.Parse(sampleText1)
+  Println('EachElement()')
+  Println(doc.root.EachElement())
+  Println("EachElement('Address')")
+  Println(doc.root.EachElement('Address'))
+}
+
+TestCase('Element#attrs') {
+  elem = xml.Parse(sampleText1).root
   Tester(`elem.attrs['PurchaseOrderNumber'])
   Tester(`elem.attrs['OrderDate'])
+}
+
+TestCase('Element#GetAttr()') {
+  elem = xml.Parse(sampleText1).root
+  Tester(`elem.GetAttr('PurchaseOrderNumber'))
+  Tester(`elem.GetAttr('OrderDate'))
+}
+
+TestCase('Element#GetAttrName()') {
+  elem = xml.Parse(sampleText1).root
+  Tester(`elem.GetAttrName(0))
+  Tester(`elem.GetAttrName(1))
+  Tester(`elem.GetAttrName('PurchaseOrderNumber'))
+  Tester(`elem.GetAttrName('OrderDate'))
+}
+
+TestCase('Element#GetAttrValue()') {
+  elem = xml.Parse(sampleText1).root
+  Tester(`elem.GetAttrValue(0))
+  Tester(`elem.GetAttrValue(1))
+  Tester(`elem.GetAttrValue('PurchaseOrderNumber'))
+  Tester(`elem.GetAttrValue('OrderDate'))
 }

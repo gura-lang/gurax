@@ -47,6 +47,7 @@ public:
 class AttrList : public ListBase<Attr*> {
 public:
 	const Attr* Find(const char* name) const;
+	const Attr* IndexGet(const Value& valueIndex) const;
 };
 
 //------------------------------------------------------------------------------

@@ -48,8 +48,8 @@ String Iterator_Each::ToString(const StringStyle& ss) const
 Value* Iterator_EachElement::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
-	for ( ; _idx < nodeOwner.size(); _idx++) {
-		Node* pNode = nodeOwner[_idx];
+	while (_idx < nodeOwner.size()) {
+		Node* pNode = nodeOwner[_idx++];
 		if (pNode->IsElement(_tagName.c_str())) return pNode->CreateValue();
 	} 
 	return nullptr;
@@ -66,8 +66,8 @@ String Iterator_EachElement::ToString(const StringStyle& ss) const
 Value* Iterator_EachText::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
-	for ( ; _idx < nodeOwner.size(); _idx++) {
-		Node* pNode = nodeOwner[_idx];
+	while (_idx < nodeOwner.size()) {
+		Node* pNode = nodeOwner[_idx++];
 		if (pNode->GetType() == Node::Type::Text) return pNode->CreateValue();
 	} 
 	return nullptr;

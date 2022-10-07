@@ -51,6 +51,136 @@ Gurax_ImplementConstructor(Element)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
+// xml.Element#Each() {block?}
+Gurax_DeclareMethod(Element, Each)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, Each)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetElement().GetNodesChild().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// xml.Element#EachElement(tagName? as String) {block?}
+Gurax_DeclareMethod(Element, EachElement)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, EachElement)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* tagName = args.IsValid()? args.PickString() : "";
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_EachElement(valueThis.GetElement().GetNodesChild().Reference(), tagName));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// xml.Element#EachText() {block?}
+Gurax_DeclareMethod(Element, EachText)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, EachText)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_EachText(valueThis.GetElement().GetNodesChild().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// xml.Element#GetAttr(index)
+Gurax_DeclareMethod(Element, GetAttr)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("index", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, GetAttr)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Value& valueIndex = args.PickValue();
+	// Function body
+	const Attr* pAttr = valueThis.GetElement().GetAttrs().IndexGet(valueIndex);
+	if (!pAttr) return Value::nil();
+	return new Value_Attr(pAttr->Reference());
+}
+
+// xml.Element#GetAttrName(index)
+Gurax_DeclareMethod(Element, GetAttrName)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("index", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, GetAttrName)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Value& valueIndex = args.PickValue();
+	// Function body
+	const Attr* pAttr = valueThis.GetElement().GetAttrs().IndexGet(valueIndex);
+	if (!pAttr) return Value::nil();
+	return new Value_String(pAttr->GetName());
+}
+
+// xml.Element#GetAttrValue(index)
+Gurax_DeclareMethod(Element, GetAttrValue)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("index", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, GetAttrValue)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Value& valueIndex = args.PickValue();
+	// Function body
+	const Attr* pAttr = valueThis.GetElement().GetAttrs().IndexGet(valueIndex);
+	if (!pAttr) return Value::nil();
+	return new Value_String(pAttr->GetValue());
+}
+
 // xml.Element#TextizeStart()
 Gurax_DeclareMethod(Element, TextizeStart)
 {
@@ -162,6 +292,12 @@ void VType_Element::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(Element));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Element, Each));
+	Assign(Gurax_CreateMethod(Element, EachElement));
+	Assign(Gurax_CreateMethod(Element, EachText));
+	Assign(Gurax_CreateMethod(Element, GetAttr));
+	Assign(Gurax_CreateMethod(Element, GetAttrName));
+	Assign(Gurax_CreateMethod(Element, GetAttrValue));
 	Assign(Gurax_CreateMethod(Element, TextizeStart));
 	Assign(Gurax_CreateMethod(Element, TextizeEnd));
 	Assign(Gurax_CreateMethod(Element, TextizeEmpty));

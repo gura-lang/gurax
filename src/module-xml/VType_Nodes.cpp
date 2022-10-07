@@ -52,7 +52,7 @@ Gurax_ImplementConstructor(Nodes)
 // xml.Nodes#Each() {block?}
 Gurax_DeclareMethod(Nodes, Each)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -68,11 +68,11 @@ Gurax_ImplementMethod(Nodes, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// xml.Nodes#EachElement(tagName as String) {block?}
+// xml.Nodes#EachElement(tagName? as String) {block?}
 Gurax_DeclareMethod(Nodes, EachElement)
 {
-	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -85,7 +85,7 @@ Gurax_ImplementMethod(Nodes, EachElement)
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const char* tagName = args.PickString();
+	const char* tagName = args.IsValid()? args.PickString() : "";
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_EachElement(valueThis.GetNodes().Reference(), tagName));
 	return argument.ReturnIterator(processor, pIterator.release());
@@ -94,7 +94,7 @@ Gurax_ImplementMethod(Nodes, EachElement)
 // xml.Nodes#EachText() {block?}
 Gurax_DeclareMethod(Nodes, EachText)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),

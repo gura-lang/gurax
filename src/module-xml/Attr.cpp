@@ -25,6 +25,22 @@ const Attr* AttrList::Find(const char* name) const
 	return nullptr;
 }
 
+const Attr* AttrList::IndexGet(const Value& valueIndex) const
+{
+	if (valueIndex.IsType(VTYPE_Number)) {
+		size_t idx = 0;
+		if (!Index::GetIndexNumber(valueIndex, size(), &idx)) return false;
+		return at(idx);
+	} else if (valueIndex.IsType(VTYPE_String)) {
+		const Attr* pAttr = Find(Value_String::GetString(valueIndex));
+		if (pAttr) return pAttr;
+		Error::Issue(ErrorType::IndexError, "the specified attribute is not found.");
+		return nullptr;
+	}
+	Error::Issue(ErrorType::IndexError, "the index value for attributes must be a Number or String.");
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // AttrOwner
 //------------------------------------------------------------------------------
