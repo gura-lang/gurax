@@ -120,6 +120,22 @@ Gurax_ImplementMethod(Node, IsText)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
+// xml.Node#parent
+Gurax_DeclareProperty_R(Node, parent)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Node, parent)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	RefPtr<Node> pNodeParent(valueThis.GetNode().LockNodeParent());
+	return pNodeParent? pNodeParent->CreateValue() : Value::nil();
+}
+
 // xml.Node#type
 Gurax_DeclareProperty_R(Node, type)
 {
@@ -154,6 +170,7 @@ void VType_Node::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Node, IsElement));
 	Assign(Gurax_CreateMethod(Node, IsText));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Node, parent));
 	Assign(Gurax_CreateProperty(Node, type));
 }
 
