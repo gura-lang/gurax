@@ -38,6 +38,7 @@ public:
 	Gurax_MemoryPoolAllocator("xml.Node");
 private:
 	Type _type;
+	RefPtr<WeakPtr> _pwNodeParent;
 public:
 	// Constructor
 	Node(Type type) : _type(type) {}
@@ -50,6 +51,8 @@ public:
 protected:
 	~Node() = default;
 public:
+	void SetNodeParent(const Node& nodeParent) { _pwNodeParent.reset(nodeParent.GetWeakPtr()); }
+	Node* LockNodeParent() const { return _pwNodeParent? _pwNodeParent->Lock() : nullptr; }
 	Type GetType() const { return _type; }
 	virtual bool IsElement(const char* tagName) const { return false; }
 	virtual Value* CreateValue() const = 0;

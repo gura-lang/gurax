@@ -75,7 +75,7 @@ void XMLCALL Parser::StartElementHandler(void* userData, const XML_Char* name, c
 	if (parser.HasElement()) {
 		Element& elementCur = parser.GetElementCur();
 		parser.PushElement(pElement.get());
-		elementCur.GetNodesChild().push_back(pElement.release());
+		elementCur.AddNodeChild(pElement.release());
 	} else {
 		parser.PushElement(pElement.get());
 		parser.GetDocument().SetElementRoot(pElement.release());
@@ -93,7 +93,7 @@ void XMLCALL Parser::CharacterDataHandler(void* userData, const XML_Char* text, 
 {
 	// text
 	Parser& parser = *reinterpret_cast<Parser*>(userData);
-	NodeOwner& nodes = parser.GetElementCur().GetNodesChild();
+	const NodeOwner& nodes = parser.GetElementCur().GetNodesChild();
 	if (!nodes.empty()) {
 		Node* pNodeLast = nodes.back();
 		if (pNodeLast->GetType() == Node::Type::CData) {
@@ -104,7 +104,7 @@ void XMLCALL Parser::CharacterDataHandler(void* userData, const XML_Char* text, 
 			return;
 		}
 	}
-	nodes.push_back(new Text(String(text, len)));
+	parser.GetElementCur().AddNodeChild(new Text(String(text, len)));
 }
 
 void XMLCALL Parser::ProcessingInstructionHandler(void* userData, const XML_Char* target, const XML_Char* data)
@@ -117,7 +117,7 @@ void XMLCALL Parser::CommentHandler(void* userData, const XML_Char* data)
 	// <--data-->
 	Parser& parser = *reinterpret_cast<Parser*>(userData);
 	RefPtr<Comment> pComment(new Comment(data));
-	parser.GetElementCur().GetNodesChild().push_back(pComment.release());
+	parser.GetElementCur().AddNodeChild(pComment.release());
 }
 
 void XMLCALL Parser::StartCdataSectionHandler(void* userData)
@@ -125,7 +125,7 @@ void XMLCALL Parser::StartCdataSectionHandler(void* userData)
 	// <![CDATA[
 	Parser& parser = *reinterpret_cast<Parser*>(userData);
 	RefPtr<CData> pCData(new CData());
-	parser.GetElementCur().GetNodesChild().push_back(pCData.release());
+	parser.GetElementCur().AddNodeChild(pCData.release());
 }
 
 void XMLCALL Parser::EndCdataSectionHandler(void* userData)

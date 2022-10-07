@@ -39,7 +39,10 @@ public:
 	const char* GetName() const { return _name.c_str(); }
 	AttrOwner& GetAttrs() { return *_pAttrs; }
 	const AttrOwner& GetAttrs() const { return *_pAttrs; }
-	NodeOwner& GetNodesChild() { return *_pNodesChild; }
+	void AddNodeChild(Node* pNodeChild) {
+		pNodeChild->SetNodeParent(*this);
+		_pNodesChild->push_back(pNodeChild);
+	}
 	const NodeOwner& GetNodesChild() const { return *_pNodesChild; }
 	bool HasAttrs() const { return !GetAttrs().empty(); }
 	bool HasNodesChild() const { return !GetNodesChild().empty(); }
