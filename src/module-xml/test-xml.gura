@@ -42,18 +42,16 @@ sampleText1 = R'''
 </PurchaseOrder>
 '''
 
-PrintTree(node as xml.Node, indentLevel as Number = 0):map:void = {
-	Printf('%*s%s\n', indentLevel * 2, '', node)
-	if (node.IsElement()) {
-		PrintTree(node.children.Each(), indentLevel + 1)
-	}	
+WalkTree(node as xml.Node, func as Function, indentLevel as Number = 0):map:void = {
+  func(node, indentLevel)
+	node.IsElement() && WalkTree(node.children.Each(), func, indentLevel + 1)
 }
 
 ParseAndCompose(text as String) = {
 	Println('----------------------------------------------------------------')
 	doc = xml.Parse(text)
 	doc.Compose()
-	PrintTree(doc.root)
+  WalkTree(doc.root, &{|node, indentLevel| Printf('%*s%s\n', indentLevel * 2, '', node)})
 }
 
 ParseAndCompose(sampleText1)
@@ -98,6 +96,14 @@ TestCase('Element#attrs') {
   elem = xml.Parse(sampleText1).root
   Tester(`elem.attrs['PurchaseOrderNumber'])
   Tester(`elem.attrs['OrderDate'])
+}
+
+TestCase('Node#parent') {
+  doc = xml.Parse(sampleText1)
+  WalkTree(doc.root, &{|node, indentLevel|
+    Printf('%*s%s%s -> %s\n', indentLevel * 2, '', node.type,
+          cond(node.IsElement(), '(' + node.name + ')', ''),
+          cond(node.parent, 'element(' + node.parent.name + ')', 'nil'))})
 }
 
 TestCase('Element#GetAttr()') {
