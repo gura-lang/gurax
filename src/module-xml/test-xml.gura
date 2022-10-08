@@ -132,8 +132,8 @@ TestCase('XmlDecl') {
     PrintXmlDecl(xmlDecl as xml.XmlDecl) = {
       Printf('version=%s encoding=%s standalone=%s\n', xmlDecl.version, xmlDecl.encoding, xmlDecl.standalone)
     }
-    xml.Parse('<?xml version="1.0"?>\n<root></root>\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
-    xml.Parse('<?xml version="1.0" encoding="utf-8"?>\n<root></root>\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
-    xml.Parse('<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n<root></root>\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
-    xml.Parse('<?xml version="1.0" encoding="utf-8" standalone="no"?>\n<root></root>\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
+    xml.Parse('<?xml version="1.0"?>\n<root />\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
+    xml.Parse('<?xml version="1.0" encoding="utf-8"?>\n<root />\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
+    xml.Parse('<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n<root />\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
+    xml.Parse('<?xml version="1.0" encoding="utf-8" standalone="no"?>\n<root />\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
 }
