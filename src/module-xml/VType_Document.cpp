@@ -85,8 +85,25 @@ Gurax_DeclareProperty_R(Document, root)
 
 Gurax_ImplementPropertyGetter(Document, root)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Element(valueThis.GetDocument().GetElementRoot().Reference());
+	Document& doc = GetValueThis(valueTarget).GetDocument();
+	if (doc.HasElementRoot()) return new Value_Element(doc.GetElementRoot().Reference());
+	return Value::nil();
+}
+
+// xml.Document#xmlDecl
+Gurax_DeclareProperty_R(Document, xmlDecl)
+{
+	Declare(VTYPE_Element, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Document, xmlDecl)
+{
+	Document& doc = GetValueThis(valueTarget).GetDocument();
+	if (doc.HasXmlDecl()) return new Value_XmlDecl(doc.GetXmlDecl().Reference());
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -104,6 +121,7 @@ void VType_Document::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Document, Compose));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Document, root));
+	Assign(Gurax_CreateProperty(Document, xmlDecl));
 }
 
 //------------------------------------------------------------------------------

@@ -37,6 +37,10 @@ protected:
 	~XmlDecl() = default;
 public:
 	String Textize() const;
+	const char* GetVersion() const { return _pVersion? _pVersion->c_str() : nullptr; }
+	const char* GetEncoding() const { return _pEncoding? _pEncoding->c_str() : nullptr; }
+	bool HasStandalone() const { return _standalone >= 0; }
+	bool GetStandalone() const { return static_cast<bool>(_standalone); }
 	virtual Value* CreateValue() const override;
 	virtual bool Compose(Stream& stream) const override;
 public:

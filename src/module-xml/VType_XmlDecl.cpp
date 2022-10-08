@@ -81,19 +81,55 @@ Gurax_ImplementMethod(XmlDecl, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// xml.XmlDecl#propSkeleton
-Gurax_DeclareProperty_R(XmlDecl, propSkeleton)
+// xml.XmlDecl#version
+Gurax_DeclareProperty_R(XmlDecl, version)
 {
-	Declare(VTYPE_Number, Flag::None);
+	Declare(VTYPE_String, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
 }
 
-Gurax_ImplementPropertyGetter(XmlDecl, propSkeleton)
+Gurax_ImplementPropertyGetter(XmlDecl, version)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	const char* str = valueThis.GetXmlDecl().GetVersion();
+	if (str) return new Value_String(str);
+	return Value::nil();
+}
+
+// xml.XmlDecl#encoding
+Gurax_DeclareProperty_R(XmlDecl, encoding)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(XmlDecl, encoding)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const char* str = valueThis.GetXmlDecl().GetEncoding();
+	if (str) return new Value_String(str);
+	return Value::nil();
+}
+
+// xml.XmlDecl#standalone
+Gurax_DeclareProperty_R(XmlDecl, standalone)
+{
+	Declare(VTYPE_Bool, Flag::Nil);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(XmlDecl, standalone)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const XmlDecl& xmlDecl = valueThis.GetXmlDecl();
+	if (xmlDecl.HasStandalone()) return new Value_Bool(static_cast<bool>(xmlDecl.GetStandalone()));
+	return Value::nil();
 }
 
 //------------------------------------------------------------------------------
@@ -110,7 +146,9 @@ void VType_XmlDecl::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(XmlDecl, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(XmlDecl, propSkeleton));
+	Assign(Gurax_CreateProperty(XmlDecl, version));
+	Assign(Gurax_CreateProperty(XmlDecl, encoding));
+	Assign(Gurax_CreateProperty(XmlDecl, standalone));
 }
 
 //------------------------------------------------------------------------------
