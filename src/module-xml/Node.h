@@ -54,6 +54,7 @@ public:
 	void SetNodeParent(const Node& nodeParent) { _pwNodeParent.reset(nodeParent.GetWeakPtr()); }
 	Node* LockNodeParent() const { return _pwNodeParent? _pwNodeParent->Lock() : nullptr; }
 	Type GetType() const { return _type; }
+	size_t GetDepth() const;
 	virtual bool IsElement(const char* tagName) const { return false; }
 	virtual Value* CreateValue() const = 0;
 	virtual bool Compose(Stream& stream) const = 0;

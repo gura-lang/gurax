@@ -8,6 +8,14 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Node
 //------------------------------------------------------------------------------
+size_t Node::GetDepth() const
+{
+	size_t depth = 0;
+	RefPtr<Node> pNode(LockNodeParent());
+	for ( ; pNode; depth++) pNode.reset(pNode->LockNodeParent());
+	return depth;
+}
+
 String Node::ToString(const StringStyle& ss) const
 {
 	return String().Format("xml.Node");

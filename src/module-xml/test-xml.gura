@@ -42,21 +42,7 @@ sampleText1 = R'''
 </PurchaseOrder>
 '''
 
-WalkTree(node as xml.Node, func as Function, indentLevel as Number = 0):map:void = {
-  func(node, indentLevel)
-	node.IsElement() && WalkTree(node.children.Each(), func, indentLevel + 1)
-}
-
-ParseAndCompose(text as String) = {
-	Println('----------------------------------------------------------------')
-	doc = xml.Parse(text)
-	doc.Compose()
-  WalkTree(doc.root, &{|node, indentLevel| Printf('%*s%s\n', indentLevel * 2, '', node)})
-}
-
-ParseAndCompose(sampleText1)
-
-ParseAndCompose(R'''
+sampleText2 = R'''
 <?xml version="1.0" encoding="UTF-8"?>
 <SoftwareEngineer>
 <empl id="01">
@@ -72,7 +58,33 @@ All the statistical manipulation is performed. Example. '"&<> and submission dat
 </Enddate>
 </empl>
 </SoftwareEngineer>
-''')
+'''
+
+WalkTree(node as xml.Node, func as Function):map:void = {
+  func(node)
+	node.IsElement() && WalkTree(node.children.Each(), func)
+}
+
+ParseAndCompose(text as String) = {
+	doc = xml.Parse(text)
+	doc.Compose()
+  Println()
+  WalkTree(doc.root, &{|node| Printf('%*s%s\n', node.depth * 2, '', node)})
+}
+
+Println('----------------------------------------------------------------')
+ParseAndCompose(sampleText1)
+
+Println('----------------------------------------------------------------')
+ParseAndCompose(sampleText2)
+
+TestCase('Node#parent') {
+  doc = xml.Parse(sampleText1)
+  WalkTree(doc.root, &{|node|
+    Printf('%*s%s%s -> %s\n', node.depth * 2, '', node.type,
+          cond(node.IsElement(), '(' + node.name + ')', ''),
+          cond(node.parent, 'element(' + node.parent.name + ')', 'nil'))})
+}
 
 TestCase('Element#Each()') {
   doc = xml.Parse(sampleText1)
@@ -90,20 +102,6 @@ TestCase('Element#EachElement()') {
   Println(doc.root.EachElement())
   Println("EachElement('Address')")
   Println(doc.root.EachElement('Address'))
-}
-
-TestCase('Element#attrs') {
-  elem = xml.Parse(sampleText1).root
-  Tester(`elem.attrs['PurchaseOrderNumber'])
-  Tester(`elem.attrs['OrderDate'])
-}
-
-TestCase('Node#parent') {
-  doc = xml.Parse(sampleText1)
-  WalkTree(doc.root, &{|node, indentLevel|
-    Printf('%*s%s%s -> %s\n', indentLevel * 2, '', node.type,
-          cond(node.IsElement(), '(' + node.name + ')', ''),
-          cond(node.parent, 'element(' + node.parent.name + ')', 'nil'))})
 }
 
 TestCase('Element#GetAttr()') {
@@ -126,6 +124,12 @@ TestCase('Element#GetAttrValue()') {
   Tester(`elem.GetAttrValue(1))
   Tester(`elem.GetAttrValue('PurchaseOrderNumber'))
   Tester(`elem.GetAttrValue('OrderDate'))
+}
+
+TestCase('Element#attrs') {
+  elem = xml.Parse(sampleText1).root
+  Tester(`elem.attrs['PurchaseOrderNumber'])
+  Tester(`elem.attrs['OrderDate'])
 }
 
 TestCase('XmlDecl') {
