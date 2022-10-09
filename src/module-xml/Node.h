@@ -93,12 +93,27 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// IteratorFactory
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE IteratorFactory {
+public:
+	virtual Iterator* CreateIterator(NodeOwner* pNodeOwner) const = 0;
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_Each");
+public:
+	class GURAX_DLLDECLARE IteratorFactoryEx : public IteratorFactory {
+	public:
+		virtual Iterator* CreateIterator(NodeOwner* pNodeOwner) const {
+			return new Iterator_Each(pNodeOwner);
+		}
+	};
 private:
 	RefPtr<NodeOwner> _pNodeOwner;
 	size_t _idx;
@@ -162,6 +177,31 @@ public:
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
+
+#if 0
+//------------------------------------------------------------------------------
+// Iterator_Walk
+//------------------------------------------------------------------------------
+class GURAX_DLLDECLARE Iterator_Walk : public Iterator {
+public:
+	// Uses MemoryPool allocator
+	Gurax_MemoryPoolAllocator("Iterator_Walk");
+private:
+	std::unique_ptr<IteratorFactory> _pIteratorFactory;
+	IteratorList _iteratorStack;
+public:
+	Iterator_Walk(IteratorFactory* pIteratorFactory, NodeOwner* pNodeOwner) {
+		_pIteratorFactory.reset(pIteratorFactory);
+		_iteratorStack.push_back(pIteratorFactory->CreateIterator(pNodeOwner));
+	}
+public:
+	// Virtual functions of Iterator
+	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
+	virtual size_t GetLength() const override { return -1; }
+	virtual Value* DoNextValue() override;
+	virtual String ToString(const StringStyle& ss) const override;
+};
+#endif
 
 Gurax_EndModuleScope(xml)
 

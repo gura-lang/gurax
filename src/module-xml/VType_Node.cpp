@@ -117,6 +117,27 @@ Gurax_ImplementMethod(Node, IsText)
 	return new Value_Bool(valueThis.GetNode().GetType() == Node::Type::Text);
 }
 
+#if 0
+// xml.Node#Walk() {block?}
+Gurax_DeclareMethod(Node, Walk)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Node, Walk)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_Walk(new Iterator_Each::IteratorFactoryEx(),
+		));
+	return new Value_Bool(valueThis.GetNode().GetType() == Node::Type::Text);
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
