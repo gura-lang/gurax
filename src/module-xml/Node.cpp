@@ -86,7 +86,6 @@ String Iterator_EachText::ToString(const StringStyle& ss) const
 	return String().Format("EachText");
 }
 
-#if 0
 //------------------------------------------------------------------------------
 // Iterator_Walk
 //------------------------------------------------------------------------------
@@ -95,15 +94,18 @@ Value* Iterator_Walk::DoNextValue()
 	while (!_iteratorStack.empty()) {
 		Iterator* pIterator = _iteratorStack.back();
 		RefPtr<Value> pValue(pIterator->NextValue());
-		if (pValue) {
-			if (pValue->IsType(VTYPE_Element)) {
-				const NodeOwner& nodesChild = Value_Element::GetElement(*pValue).GetNodesChild();
-				_iteratorStack.push_back(_pIteratorFactory->CreateIterator(nodesChild.Reference()));
-			}
+		if (!pValue) {
+			_iteratorStack.pop_back();
+			Iterator::Delete(pIterator);
+		} else if (pValue->IsType(VTYPE_Element)) {
+			const NodeOwner& nodesChild = Value_Element::GetElement(*pValue).GetNodesChild();
+			_iteratorStack.push_back(new Iterator_Each(nodesChild.Reference()));
+			return pValue.release();
+		} else if (pValue->IsType(VTYPE_Text)) {
+			return pValue.release();
+		} else {
 			return pValue.release();
 		}
-		_iteratorStack.pop_back();
-		Iterator::Delete(pIterator);
 	}
 	return nullptr;
 }
@@ -112,6 +114,5 @@ String Iterator_Walk::ToString(const StringStyle& ss) const
 {
 	return String().Format("Walk");
 }
-#endif
 
 Gurax_EndModuleScope(xml)

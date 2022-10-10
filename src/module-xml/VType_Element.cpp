@@ -232,6 +232,26 @@ Gurax_ImplementMethod(Element, TextizeEmpty)
 	return new Value_String(valueThis.GetElement().TextizeEmpty());
 }
 
+// xml.Element#Walk() {block?}
+Gurax_DeclareMethod(Element, Walk)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, Walk)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	Element& element = valueThis.GetElement();
+	RefPtr<Iterator> pIterator(new Iterator_Walk(element.GetNodesChild().Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -301,6 +321,7 @@ void VType_Element::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Element, TextizeStart));
 	Assign(Gurax_CreateMethod(Element, TextizeEnd));
 	Assign(Gurax_CreateMethod(Element, TextizeEmpty));
+	Assign(Gurax_CreateMethod(Element, Walk));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Element, attrs));
 	Assign(Gurax_CreateProperty(Element, children));

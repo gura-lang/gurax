@@ -17,6 +17,15 @@ class NodeOwner;
 class GURAX_DLLDECLARE Node : public Referable {
 public:
 	enum class Type { None, CData, Comment, Element, Text, XmlDecl };
+	class TypeMask {
+		static const UInt32 None	= 0;
+		static const UInt32 CData	= (1 << 0);
+		static const UInt32 Comment	= (1 << 1);
+		static const UInt32 Element	= (1 << 2);
+		static const UInt32 Text	= (1 << 3);
+		static const UInt32 XmlDecl	= (1 << 4);
+		static const UInt32 Any		= CData | Comment | Element | Text | XmlDecl;
+	};
 	class SymbolAssoc_Type : public SymbolAssoc<Type, Type::None> {
 	public:
 		SymbolAssoc_Type() {
@@ -93,27 +102,12 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// IteratorFactory
-//------------------------------------------------------------------------------
-class GURAX_DLLDECLARE IteratorFactory {
-public:
-	virtual Iterator* CreateIterator(NodeOwner* pNodeOwner) const = 0;
-};
-
-//------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Each : public Iterator {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_Each");
-public:
-	class GURAX_DLLDECLARE IteratorFactoryEx : public IteratorFactory {
-	public:
-		virtual Iterator* CreateIterator(NodeOwner* pNodeOwner) const {
-			return new Iterator_Each(pNodeOwner);
-		}
-	};
 private:
 	RefPtr<NodeOwner> _pNodeOwner;
 	size_t _idx;
@@ -178,21 +172,20 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 };
 
-#if 0
 //------------------------------------------------------------------------------
 // Iterator_Walk
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Walk : public Iterator {
+private:
+	UInt32 _typeMask;
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_Walk");
 private:
-	std::unique_ptr<IteratorFactory> _pIteratorFactory;
 	IteratorList _iteratorStack;
 public:
-	Iterator_Walk(IteratorFactory* pIteratorFactory, NodeOwner* pNodeOwner) {
-		_pIteratorFactory.reset(pIteratorFactory);
-		_iteratorStack.push_back(pIteratorFactory->CreateIterator(pNodeOwner));
+	Iterator_Walk(NodeOwner* pNodeOwner) {
+		_iteratorStack.push_back(new Iterator_Each(pNodeOwner));
 	}
 public:
 	// Virtual functions of Iterator
@@ -201,7 +194,6 @@ public:
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };
-#endif
 
 Gurax_EndModuleScope(xml)
 
