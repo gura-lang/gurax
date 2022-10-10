@@ -248,7 +248,7 @@ Gurax_ImplementMethod(Element, Walk)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	Element& element = valueThis.GetElement();
-	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Any, element.GetNodesChild().Reference()));
+	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Any, element.Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -268,7 +268,7 @@ Gurax_ImplementMethod(Element, WalkElement)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	Element& element = valueThis.GetElement();
-	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Element, element.GetNodesChild().Reference()));
+	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Element, element.Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -288,7 +288,7 @@ Gurax_ImplementMethod(Element, WalkText)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	Element& element = valueThis.GetElement();
-	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Text, element.GetNodesChild().Reference()));
+	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Text, element.Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

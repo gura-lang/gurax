@@ -10,6 +10,7 @@
 Gurax_BeginModuleScope(xml)
 
 class NodeOwner;
+class Element;
 
 //------------------------------------------------------------------------------
 // Node
@@ -181,11 +182,10 @@ public:
 	Gurax_MemoryPoolAllocator("Iterator_Walk");
 private:
 	UInt32 _typeMask;
+	RefPtr<Element> _pElement;
 	IteratorList _iteratorStack;
 public:
-	Iterator_Walk(UInt32 typeMask, NodeOwner* pNodeOwner) : _typeMask(typeMask) {
-		_iteratorStack.push_back(new Iterator_Each(pNodeOwner));
-	}
+	Iterator_Walk(UInt32 typeMask, Element* pElement);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }

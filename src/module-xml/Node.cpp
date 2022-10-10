@@ -89,8 +89,17 @@ String Iterator_EachText::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_Walk
 //------------------------------------------------------------------------------
+Iterator_Walk::Iterator_Walk(UInt32 typeMask, Element* pElement) : _typeMask(typeMask), _pElement(pElement)
+{
+	_iteratorStack.push_back(new Iterator_Each(pElement->GetNodesChild().Reference()));
+}
+
 Value* Iterator_Walk::DoNextValue()
 {
+	if (_pElement) {
+		RefPtr<Element> pElement(_pElement.release());
+		if (_typeMask & Node::TypeMask::Element) return pElement->CreateValue();
+	}
 	while (!_iteratorStack.empty()) {
 		Iterator* pIterator = _iteratorStack.back();
 		RefPtr<Value> pValue(pIterator->NextValue());

@@ -60,16 +60,11 @@ All the statistical manipulation is performed. Example. '"&<> and submission dat
 </SoftwareEngineer>
 '''
 
-WalkTree(node as xml.Node, func as Function):map:void = {
-  func(node)
-	node.IsElement() && WalkTree(node.children.Each(), func)
-}
-
 ParseAndCompose(text as String) = {
 	doc = xml.Parse(text)
 	doc.Compose()
   Println()
-  WalkTree(doc.root, &{|node| Printf('%*s%s\n', node.depth * 2, '', node)})
+  doc.root.Walk {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
 }
 
 Println('----------------------------------------------------------------')
@@ -80,10 +75,11 @@ ParseAndCompose(sampleText2)
 
 TestCase('Node#parent') {
   doc = xml.Parse(sampleText1)
-  WalkTree(doc.root, &{|node|
+  doc.root.Walk {|node|
     Printf('%*s%s%s -> %s\n', node.depth * 2, '', node.type,
           cond(node.IsElement(), '(' + node.name + ')', ''),
-          cond(node.parent, 'element(' + node.parent.name + ')', 'nil'))})
+          cond(node.parent, 'element(' + node.parent.name + ')', 'nil'))
+  }
 }
 
 TestCase('Element#Each()') {
