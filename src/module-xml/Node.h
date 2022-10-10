@@ -17,7 +17,7 @@ class NodeOwner;
 class GURAX_DLLDECLARE Node : public Referable {
 public:
 	enum class Type { None, CData, Comment, Element, Text, XmlDecl };
-	class TypeMask {
+	struct TypeMask {
 		static const UInt32 None	= 0;
 		static const UInt32 CData	= (1 << 0);
 		static const UInt32 Comment	= (1 << 1);
@@ -176,15 +176,14 @@ public:
 // Iterator_Walk
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE Iterator_Walk : public Iterator {
-private:
-	UInt32 _typeMask;
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_Walk");
 private:
+	UInt32 _typeMask;
 	IteratorList _iteratorStack;
 public:
-	Iterator_Walk(NodeOwner* pNodeOwner) {
+	Iterator_Walk(UInt32 typeMask, NodeOwner* pNodeOwner) : _typeMask(typeMask) {
 		_iteratorStack.push_back(new Iterator_Each(pNodeOwner));
 	}
 public:

@@ -97,14 +97,20 @@ Value* Iterator_Walk::DoNextValue()
 		if (!pValue) {
 			_iteratorStack.pop_back();
 			Iterator::Delete(pIterator);
+		} else if (pValue->IsType(VTYPE_CData)) {
+			if (_typeMask & Node::TypeMask::CData) return pValue.release();
+		} else if (pValue->IsType(VTYPE_Comment)) {
+			if (_typeMask & Node::TypeMask::Comment) return pValue.release();
 		} else if (pValue->IsType(VTYPE_Element)) {
 			const NodeOwner& nodesChild = Value_Element::GetElement(*pValue).GetNodesChild();
 			_iteratorStack.push_back(new Iterator_Each(nodesChild.Reference()));
-			return pValue.release();
+			if (_typeMask & Node::TypeMask::Element) return pValue.release();
 		} else if (pValue->IsType(VTYPE_Text)) {
-			return pValue.release();
+			if (_typeMask & Node::TypeMask::Text) return pValue.release();
+		} else if (pValue->IsType(VTYPE_XmlDecl)) {
+			if (_typeMask & Node::TypeMask::XmlDecl) return pValue.release();
 		} else {
-			return pValue.release();
+			// nothing to do
 		}
 	}
 	return nullptr;
