@@ -232,10 +232,14 @@ Gurax_ImplementMethod(Element, TextizeEmpty)
 	return new Value_String(valueThis.GetElement().TextizeEmpty());
 }
 
-// xml.Element#Walk() {block?}
+// xml.Element#Walk():[cdata,comment,element,text] {block?}
 Gurax_DeclareMethod(Element, Walk)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(cdata));
+	DeclareAttrOpt(Gurax_Symbol(comment));
+	DeclareAttrOpt(Gurax_Symbol(element));
+	DeclareAttrOpt(Gurax_Symbol(text));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -246,49 +250,15 @@ Gurax_ImplementMethod(Element, Walk)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	UInt32 typeMask = 0;
+	if (argument.IsSet(Gurax_Symbol(cdata))) typeMask |= Node::TypeMask::CData;
+	if (argument.IsSet(Gurax_Symbol(comment))) typeMask |= Node::TypeMask::Comment;
+	if (argument.IsSet(Gurax_Symbol(element))) typeMask |= Node::TypeMask::Element;
+	if (argument.IsSet(Gurax_Symbol(text))) typeMask |= Node::TypeMask::Text;
+	if (!typeMask) typeMask = Node::TypeMask::Any;
 	// Function body
 	const Element& element = valueThis.GetElement();
-	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Any, element.Reference()));
-	return argument.ReturnIterator(processor, pIterator.release());
-}
-
-// xml.Element#WalkElement() {block?}
-Gurax_DeclareMethod(Element, WalkElement)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Element, WalkElement)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	Element& element = valueThis.GetElement();
-	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Element, element.Reference()));
-	return argument.ReturnIterator(processor, pIterator.release());
-}
-
-// xml.Element#WalkText() {block?}
-Gurax_DeclareMethod(Element, WalkText)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Element, WalkText)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	Element& element = valueThis.GetElement();
-	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Text, element.Reference()));
+	RefPtr<Iterator> pIterator(new Iterator_Walk(typeMask, element.Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -362,8 +332,6 @@ void VType_Element::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Element, TextizeEnd));
 	Assign(Gurax_CreateMethod(Element, TextizeEmpty));
 	Assign(Gurax_CreateMethod(Element, Walk));
-	Assign(Gurax_CreateMethod(Element, WalkElement));
-	Assign(Gurax_CreateMethod(Element, WalkText));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Element, attrs));
 	Assign(Gurax_CreateProperty(Element, children));

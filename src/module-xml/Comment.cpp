@@ -34,7 +34,7 @@ Value* Comment::CreateValue() const
 
 String Comment::ToString(const StringStyle& ss) const
 {
-	return String().Format("xml.Comment");
+	return String().Format("xml.Comment:%s", String::Enquote(GetData(), '\'').c_str());
 }
 
 Gurax_EndModuleScope(xml)

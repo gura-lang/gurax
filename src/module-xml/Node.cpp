@@ -103,15 +103,15 @@ Value* Iterator_Walk::DoNextValue()
 	while (!_nodePickerStack.empty()) {
 		NodePicker* pNodePicker = _nodePickerStack.back();
 		const Node* pNode = pNodePicker->Next();
-		if (pNode) {
-			if (pNode->GetType() == Node::Type::Element) {
-				const NodeOwner& nodesChild = dynamic_cast<const Element*>(pNode)->GetNodesChild();
-				_nodePickerStack.push_back(new NodePicker(nodesChild.Reference()));
-			}
-			if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
-		} else {
+		if (!pNode) {
 			_nodePickerStack.pop_back();
 			delete pNodePicker;
+		} else if (pNode->GetType() == Node::Type::Element) {
+			const NodeOwner& nodesChild = dynamic_cast<const Element*>(pNode)->GetNodesChild();
+			_nodePickerStack.push_back(new NodePicker(nodesChild.Reference()));
+			if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
+		} else {
+			if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
 		}
 	}
 	return nullptr;

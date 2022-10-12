@@ -8,6 +8,7 @@ import(xml)
 sampleText1 = R'''
 <?xml version="1.0"?>
 <PurchaseOrder PurchaseOrderNumber="99503" OrderDate="1999-10-20">
+  <!-- Address #1 -->
   <Address Type="Shipping">
     <Name>Ellen Adams</Name>
     <Street>123 Maple Street</Street>
@@ -16,6 +17,7 @@ sampleText1 = R'''
     <Zip>10999</Zip>
     <Country>USA</Country>
   </Address>
+  <!-- Address #2 -->
   <Address Type="Billing">
     <Name>Tai Yee</Name>
     <Street>8 Oak Avenue</Street>
@@ -136,4 +138,22 @@ TestCase('XmlDecl') {
     xml.Parse('<?xml version="1.0" encoding="utf-8"?>\n<root />\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
     xml.Parse('<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n<root />\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
     xml.Parse('<?xml version="1.0" encoding="utf-8" standalone="no"?>\n<root />\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
+}
+
+TestCase('Element#Walk()') {
+  doc = xml.Parse(sampleText1)
+  Println('Walk()')
+  doc.root.Walk {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println()
+  Println('Walk():element')
+  doc.root.Walk():element {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println()
+  Println('Walk():text')
+  doc.root.Walk():text {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println()
+  Println('Walk():comment')
+  doc.root.Walk():comment {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println()
+  Println('Walk():text:comment')
+  doc.root.Walk():text:comment {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
 }
