@@ -15,7 +15,7 @@ class Element;
 //------------------------------------------------------------------------------
 // Node
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Node : public Referable {
+class Node : public Referable {
 public:
 	enum class Type { None, CData, Comment, Element, Text, XmlDecl };
 	struct TypeMask {
@@ -105,7 +105,7 @@ public:
 //------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Each : public Iterator {
+class Iterator_Each : public Iterator {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_Each");
@@ -128,7 +128,7 @@ public:
 //------------------------------------------------------------------------------
 // Iterator_EachElement
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_EachElement : public Iterator {
+class Iterator_EachElement : public Iterator {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_EachElement");
@@ -153,7 +153,7 @@ public:
 //------------------------------------------------------------------------------
 // Iterator_EachText
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_EachText : public Iterator {
+class Iterator_EachText : public Iterator {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_EachText");
@@ -176,14 +176,25 @@ public:
 //------------------------------------------------------------------------------
 // Iterator_Walk
 //------------------------------------------------------------------------------
-class GURAX_DLLDECLARE Iterator_Walk : public Iterator {
+class Iterator_Walk : public Iterator {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_Walk");
+public:
+	class NodePicker {
+	private:
+		RefPtr<NodeOwner> _pNodes;
+		size_t _idx;
+	public:
+		NodePicker(NodeOwner* pNodes) : _pNodes(pNodes), _idx(0) {}
+		const Node* Next();
+	};
+	class NodePickerStack : public ListBase<NodePicker*> {};
 private:
 	UInt32 _typeMask;
 	RefPtr<Element> _pElement;
 	IteratorList _iteratorStack;
+	NodePickerStack _nodePickerStack;
 public:
 	Iterator_Walk(UInt32 typeMask, Element* pElement);
 public:
