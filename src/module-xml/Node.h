@@ -66,6 +66,7 @@ public:
 	Type GetType() const { return _type; }
 	size_t GetDepth() const;
 	virtual bool IsElement(const char* tagName) const { return false; }
+	virtual bool CheckTypeMask(UInt32 typeMask) const = 0;
 	virtual Value* CreateValue() const = 0;
 	virtual bool Compose(Stream& stream) const = 0;
 public:
@@ -189,7 +190,10 @@ public:
 		NodePicker(NodeOwner* pNodes) : _pNodes(pNodes), _idx(0) {}
 		const Node* Next();
 	};
-	class NodePickerStack : public ListBase<NodePicker*> {};
+	class NodePickerStack : public ListBase<NodePicker*> {
+	public:
+		~NodePickerStack();
+	};
 private:
 	UInt32 _typeMask;
 	RefPtr<Element> _pElement;

@@ -247,7 +247,7 @@ Gurax_ImplementMethod(Element, Walk)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	Element& element = valueThis.GetElement();
+	const Element& element = valueThis.GetElement();
 	RefPtr<Iterator> pIterator(new Iterator_Walk(Node::TypeMask::Any, element.Reference()));
 	return argument.ReturnIterator(processor, pIterator.release());
 }

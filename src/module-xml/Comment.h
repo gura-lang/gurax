@@ -33,6 +33,7 @@ protected:
 public:
 	const char* GetData() const { return _data.c_str(); }
 	String Textize() const;
+	virtual bool CheckTypeMask(UInt32 typeMask) const { return typeMask & TypeMask::Comment; }
 	virtual Value* CreateValue() const override;
 	virtual bool Compose(Stream& stream) const override;
 public:

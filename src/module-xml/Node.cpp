@@ -103,23 +103,15 @@ Value* Iterator_Walk::DoNextValue()
 	while (!_nodePickerStack.empty()) {
 		NodePicker* pNodePicker = _nodePickerStack.back();
 		const Node* pNode = pNodePicker->Next();
-		if (!pNode) {
+		if (pNode) {
+			if (pNode->GetType() == Node::Type::Element) {
+				const NodeOwner& nodesChild = dynamic_cast<const Element*>(pNode)->GetNodesChild();
+				_nodePickerStack.push_back(new NodePicker(nodesChild.Reference()));
+			}
+			if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
+		} else {
 			_nodePickerStack.pop_back();
 			delete pNodePicker;
-		} else if (pNode->GetType() == Node::Type::CData) {
-			if (_typeMask & Node::TypeMask::CData) return pNode->CreateValue();
-		} else if (pNode->GetType() == Node::Type::Comment) {
-			if (_typeMask & Node::TypeMask::Comment) return pNode->CreateValue();
-		} else if (pNode->GetType() == Node::Type::Element) {
-			const NodeOwner& nodesChild = dynamic_cast<const Element*>(pNode)->GetNodesChild();
-			_nodePickerStack.push_back(new NodePicker(nodesChild.Reference()));
-			if (_typeMask & Node::TypeMask::Element) return pNode->CreateValue();
-		} else if (pNode->GetType() == Node::Type::Text) {
-			if (_typeMask & Node::TypeMask::Text) return pNode->CreateValue();
-		} else if (pNode->GetType() == Node::Type::XmlDecl) {
-			if (_typeMask & Node::TypeMask::XmlDecl) return pNode->CreateValue();
-		} else {
-			// nothing to do
 		}
 	}
 	return nullptr;
@@ -137,6 +129,14 @@ const Node* Iterator_Walk::NodePicker::Next()
 {
 	if (_idx < _pNodes->size()) return _pNodes->at(_idx++);
 	return nullptr;
+}
+
+//------------------------------------------------------------------------------
+// Iterator_Walk::NodePickerStack
+//------------------------------------------------------------------------------
+Iterator_Walk::NodePickerStack::~NodePickerStack()
+{
+	for (NodePicker* pNodePicker : *this) delete pNodePicker;
 }
 
 Gurax_EndModuleScope(xml)

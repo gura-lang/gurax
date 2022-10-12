@@ -41,6 +41,7 @@ public:
 	const char* GetEncoding() const { return _pEncoding? _pEncoding->c_str() : nullptr; }
 	bool HasStandalone() const { return _standalone >= 0; }
 	bool GetStandalone() const { return static_cast<bool>(_standalone); }
+	virtual bool CheckTypeMask(UInt32 typeMask) const { return typeMask & TypeMask::XmlDecl; }
 	virtual Value* CreateValue() const override;
 	virtual bool Compose(Stream& stream) const override;
 public:
