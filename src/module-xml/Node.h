@@ -104,6 +104,39 @@ public:
 };
 
 //------------------------------------------------------------------------------
+// NodePicker
+//------------------------------------------------------------------------------
+class NodePicker {
+private:
+	RefPtr<NodeOwner> _pNodes;
+	size_t _idx;
+public:
+	NodePicker(NodeOwner* pNodes) : _pNodes(pNodes), _idx(0) {}
+	const Node* Next();
+};
+
+//------------------------------------------------------------------------------
+// NodePickerStack
+//------------------------------------------------------------------------------
+class NodePickerStack : public ListBase<NodePicker*> {
+public:
+	~NodePickerStack();
+};
+
+//------------------------------------------------------------------------------
+// NodeWalker
+//------------------------------------------------------------------------------
+class NodeWalker {
+private:
+	bool _firstFlag;
+	RefPtr<Element> _pElement;
+	NodePickerStack _nodePickerStack;
+public:
+	NodeWalker(Element* pElement);
+	const Node* Next();
+};
+
+//------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
 class Iterator_Each : public Iterator {
@@ -181,24 +214,9 @@ class Iterator_Walk : public Iterator {
 public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_Walk");
-public:
-	class NodePicker {
-	private:
-		RefPtr<NodeOwner> _pNodes;
-		size_t _idx;
-	public:
-		NodePicker(NodeOwner* pNodes) : _pNodes(pNodes), _idx(0) {}
-		const Node* Next();
-	};
-	class NodePickerStack : public ListBase<NodePicker*> {
-	public:
-		~NodePickerStack();
-	};
 private:
 	UInt32 _typeMask;
-	RefPtr<Element> _pElement;
-	IteratorList _iteratorStack;
-	NodePickerStack _nodePickerStack;
+	NodeWalker _nodeWalker;
 public:
 	Iterator_Walk(UInt32 typeMask, Element* pElement);
 public:

@@ -35,6 +35,54 @@ void NodeOwner::Clear()
 }
 
 //------------------------------------------------------------------------------
+// NodePicker
+//------------------------------------------------------------------------------
+const Node* NodePicker::Next()
+{
+	if (_idx < _pNodes->size()) return _pNodes->at(_idx++);
+	return nullptr;
+}
+
+//------------------------------------------------------------------------------
+// NodePickerStack
+//------------------------------------------------------------------------------
+NodePickerStack::~NodePickerStack()
+{
+	for (NodePicker* pNodePicker : *this) delete pNodePicker;
+}
+
+//------------------------------------------------------------------------------
+// NodeWalker
+//------------------------------------------------------------------------------
+NodeWalker::NodeWalker(Element* pElement) : _pElement(pElement), _firstFlag(true)
+{
+	_nodePickerStack.push_back(new NodePicker(pElement->GetNodesChild().Reference()));
+}
+
+const Node* NodeWalker::Next()
+{
+	if (_firstFlag) {
+		_firstFlag = false;
+		return _pElement.get();
+	}
+	while (!_nodePickerStack.empty()) {
+		NodePicker* pNodePicker = _nodePickerStack.back();
+		const Node* pNode = pNodePicker->Next();
+		if (!pNode) {
+			_nodePickerStack.pop_back();
+			delete pNodePicker;
+		} else if (pNode->GetType() == Node::Type::Element) {
+			const NodeOwner& nodesChild = dynamic_cast<const Element*>(pNode)->GetNodesChild();
+			_nodePickerStack.push_back(new NodePicker(nodesChild.Reference()));
+			return pNode;
+		} else {
+			return pNode;
+		}
+	}
+	return nullptr;
+}
+
+//------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
 Value* Iterator_Each::DoNextValue()
@@ -89,30 +137,16 @@ String Iterator_EachText::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_Walk
 //------------------------------------------------------------------------------
-Iterator_Walk::Iterator_Walk(UInt32 typeMask, Element* pElement) : _typeMask(typeMask), _pElement(pElement)
+Iterator_Walk::Iterator_Walk(UInt32 typeMask, Element* pElement) : _typeMask(typeMask), _nodeWalker(pElement)
 {
-	_nodePickerStack.push_back(new NodePicker(pElement->GetNodesChild().Reference()));
 }
 
 Value* Iterator_Walk::DoNextValue()
 {
-	if (_pElement) {
-		RefPtr<Element> pElement(_pElement.release());
-		if (_typeMask & Node::TypeMask::Element) return pElement->CreateValue();
-	}
-	while (!_nodePickerStack.empty()) {
-		NodePicker* pNodePicker = _nodePickerStack.back();
-		const Node* pNode = pNodePicker->Next();
-		if (!pNode) {
-			_nodePickerStack.pop_back();
-			delete pNodePicker;
-		} else if (pNode->GetType() == Node::Type::Element) {
-			const NodeOwner& nodesChild = dynamic_cast<const Element*>(pNode)->GetNodesChild();
-			_nodePickerStack.push_back(new NodePicker(nodesChild.Reference()));
-			if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
-		} else {
-			if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
-		}
+	for (;;) {
+		const Node* pNode = _nodeWalker.Next();
+		if (!pNode) return nullptr;
+		if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
 	}
 	return nullptr;
 }
@@ -120,23 +154,6 @@ Value* Iterator_Walk::DoNextValue()
 String Iterator_Walk::ToString(const StringStyle& ss) const
 {
 	return String().Format("Walk");
-}
-
-//------------------------------------------------------------------------------
-// Iterator_Walk::NodePicker
-//------------------------------------------------------------------------------
-const Node* Iterator_Walk::NodePicker::Next()
-{
-	if (_idx < _pNodes->size()) return _pNodes->at(_idx++);
-	return nullptr;
-}
-
-//------------------------------------------------------------------------------
-// Iterator_Walk::NodePickerStack
-//------------------------------------------------------------------------------
-Iterator_Walk::NodePickerStack::~NodePickerStack()
-{
-	for (NodePicker* pNodePicker : *this) delete pNodePicker;
 }
 
 Gurax_EndModuleScope(xml)
