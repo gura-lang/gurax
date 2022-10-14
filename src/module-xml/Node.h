@@ -70,6 +70,7 @@ public:
 	virtual Value* CreateValue() const = 0;
 	virtual bool Compose(Stream& stream) const = 0;
 public:
+	static UInt32 GetTypeMask(const Argument& argument);
 	static Type SymbolToType(const Symbol* pSymbol) {
 		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
 	}
@@ -146,8 +147,9 @@ public:
 private:
 	RefPtr<NodeOwner> _pNodeOwner;
 	size_t _idx;
+	UInt32 _typeMask;
 public:
-	Iterator_Each(NodeOwner* pNodeOwner) : _pNodeOwner(pNodeOwner), _idx(0) {}
+	Iterator_Each(NodeOwner* pNodeOwner, UInt32 typeMask) : _pNodeOwner(pNodeOwner), _idx(0), _typeMask(typeMask) {}
 public:
 	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
 	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
@@ -160,42 +162,19 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_EachElement
+// Iterator_FindElement
 //------------------------------------------------------------------------------
-class Iterator_EachElement : public Iterator {
+class Iterator_FindElement : public Iterator {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Iterator_EachElement");
+	Gurax_MemoryPoolAllocator("Iterator_FindElement");
 private:
 	RefPtr<NodeOwner> _pNodeOwner;
 	String _tagName;
 	size_t _idx;
 public:
-	Iterator_EachElement(NodeOwner* pNodeOwner, String tagName) :
+	Iterator_FindElement(NodeOwner* pNodeOwner, String tagName) :
 					_pNodeOwner(pNodeOwner), _tagName(tagName), _idx(0) {}
-public:
-	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
-	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
-	virtual size_t GetLength() const override { return -1; }
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// Iterator_EachText
-//------------------------------------------------------------------------------
-class Iterator_EachText : public Iterator {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Iterator_EachText");
-private:
-	RefPtr<NodeOwner> _pNodeOwner;
-	size_t _idx;
-public:
-	Iterator_EachText(NodeOwner* pNodeOwner) : _pNodeOwner(pNodeOwner), _idx(0) {}
 public:
 	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
 	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
@@ -215,10 +194,10 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Iterator_Walk");
 private:
-	UInt32 _typeMask;
 	NodeWalker _nodeWalker;
+	UInt32 _typeMask;
 public:
-	Iterator_Walk(UInt32 typeMask, Element* pElement);
+	Iterator_Walk(Element* pElement, UInt32 typeMask);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }

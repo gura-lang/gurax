@@ -21,6 +21,17 @@ String Node::ToString(const StringStyle& ss) const
 	return String().Format("xml.Node");
 }
 
+UInt32 Node::GetTypeMask(const Argument& argument)
+{
+	UInt32 typeMask = 0;
+	if (argument.IsSet(Gurax_Symbol(cdata))) typeMask |= Node::TypeMask::CData;
+	if (argument.IsSet(Gurax_Symbol(comment))) typeMask |= Node::TypeMask::Comment;
+	if (argument.IsSet(Gurax_Symbol(element))) typeMask |= Node::TypeMask::Element;
+	if (argument.IsSet(Gurax_Symbol(text))) typeMask |= Node::TypeMask::Text;
+	if (!typeMask) typeMask = Node::TypeMask::Any;
+	return typeMask;
+}
+
 //------------------------------------------------------------------------------
 // NodeList
 //------------------------------------------------------------------------------
@@ -88,9 +99,11 @@ const Node* NodeWalker::Next()
 Value* Iterator_Each::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
-	if (_idx >= nodeOwner.size()) return nullptr;
-	Node* pNode = nodeOwner[_idx++];
-	return pNode->CreateValue();
+	while (_idx < nodeOwner.size()) {
+		Node* pNode = nodeOwner[_idx++];
+		if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
+	} 
+	return nullptr;
 }
 
 String Iterator_Each::ToString(const StringStyle& ss) const
@@ -99,9 +112,9 @@ String Iterator_Each::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_EachElement
+// Iterator_FindElement
 //------------------------------------------------------------------------------
-Value* Iterator_EachElement::DoNextValue()
+Value* Iterator_FindElement::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
 	while (_idx < nodeOwner.size()) {
@@ -111,33 +124,15 @@ Value* Iterator_EachElement::DoNextValue()
 	return nullptr;
 }
 
-String Iterator_EachElement::ToString(const StringStyle& ss) const
+String Iterator_FindElement::ToString(const StringStyle& ss) const
 {
-	return String().Format("EachElement");
-}
-
-//------------------------------------------------------------------------------
-// Iterator_EachText
-//------------------------------------------------------------------------------
-Value* Iterator_EachText::DoNextValue()
-{
-	const NodeOwner& nodeOwner = GetNodeOwner();
-	while (_idx < nodeOwner.size()) {
-		Node* pNode = nodeOwner[_idx++];
-		if (pNode->GetType() == Node::Type::Text) return pNode->CreateValue();
-	} 
-	return nullptr;
-}
-
-String Iterator_EachText::ToString(const StringStyle& ss) const
-{
-	return String().Format("EachText");
+	return String().Format("FindElement");
 }
 
 //------------------------------------------------------------------------------
 // Iterator_Walk
 //------------------------------------------------------------------------------
-Iterator_Walk::Iterator_Walk(UInt32 typeMask, Element* pElement) : _typeMask(typeMask), _nodeWalker(pElement)
+Iterator_Walk::Iterator_Walk(Element* pElement, UInt32 typeMask) : _nodeWalker(pElement), _typeMask(typeMask)
 {
 }
 

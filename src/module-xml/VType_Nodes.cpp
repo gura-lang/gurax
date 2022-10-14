@@ -49,10 +49,14 @@ Gurax_ImplementConstructor(Nodes)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.Nodes#Each() {block?}
+// xml.Nodes#Each():[cdata,comment,element,text] {block?}
 Gurax_DeclareMethod(Nodes, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(cdata));
+	DeclareAttrOpt(Gurax_Symbol(comment));
+	DeclareAttrOpt(Gurax_Symbol(element));
+	DeclareAttrOpt(Gurax_Symbol(text));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -64,49 +68,30 @@ Gurax_ImplementMethod(Nodes, Each)
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetNodes().Reference()));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetNodes().Reference(), Node::GetTypeMask(argument)));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// xml.Nodes#EachElement(tagName? as String) {block?}
-Gurax_DeclareMethod(Nodes, EachElement)
+// xml.Nodes#FindElement(tagName as String) {block?}
+Gurax_DeclareMethod(Nodes, FindElement)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Nodes, EachElement)
+Gurax_ImplementMethod(Nodes, FindElement)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	const char* tagName = args.IsValid()? args.PickString() : "";
+	const char* tagName = args.PickString();
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_EachElement(valueThis.GetNodes().Reference(), tagName));
-	return argument.ReturnIterator(processor, pIterator.release());
-}
-
-// xml.Nodes#EachText() {block?}
-Gurax_DeclareMethod(Nodes, EachText)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Nodes, EachText)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_EachText(valueThis.GetNodes().Reference()));
+	RefPtr<Iterator> pIterator(new Iterator_FindElement(valueThis.GetNodes().Reference(), tagName));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -141,8 +126,7 @@ void VType_Nodes::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Nodes));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Nodes, Each));
-	Assign(Gurax_CreateMethod(Nodes, EachElement));
-	Assign(Gurax_CreateMethod(Nodes, EachText));
+	Assign(Gurax_CreateMethod(Nodes, FindElement));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Nodes, len));
 }

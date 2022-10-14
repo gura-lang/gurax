@@ -87,19 +87,14 @@ TestCase('Node#parent') {
 TestCase('Element#Each()') {
   doc = xml.Parse(sampleText1)
   Println(doc.root.Each())
+  Println(doc.root.Each():text)
+  Println(doc.root.Each():comment)
 }
 
-TestCase('Element#EachText()') {
+TestCase('Element#FindElement()') {
   doc = xml.Parse(sampleText1)
-  Println(doc.root.EachText())
-}
-
-TestCase('Element#EachElement()') {
-  doc = xml.Parse(sampleText1)
-  Println('EachElement()')
-  Println(doc.root.EachElement())
-  Println("EachElement('Address')")
-  Println(doc.root.EachElement('Address'))
+  Println("FindElement('Address')")
+  Println(doc.root.FindElement('Address'))
 }
 
 TestCase('Element#GetAttr()') {

@@ -50,7 +50,6 @@ String Element::TextizeEmpty() const
 	return String().Format("<%s/>", GetName());
 }
 
-
 String Element::ToString(const StringStyle& ss) const
 {
 	return String().Format("xml.Element:%s", GetName());
