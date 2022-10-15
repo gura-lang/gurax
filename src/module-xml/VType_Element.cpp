@@ -326,19 +326,7 @@ Gurax_DeclareProperty_R(Element, text)
 Gurax_ImplementPropertyGetter(Element, text)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	const NodeOwner& nodes = valueThis.GetElement().GetNodesChild();
-	String str;
-	for (const Node* pNode : nodes) {
-		if (pNode->GetType() == Node::Type::Text) {
-			str += dynamic_cast<const Text*>(pNode)->GetText();
-		} else if (pNode->GetType() == Node::Type::CData) {
-			str += dynamic_cast<const CData*>(pNode)->GetText();
-		} else {
-			Error::Issue(ErrorType::FormatError, "can't extract a text from structured data");
-			return Value::nil();
-		}
-	}
-	return new Value_String(str);
+	return new Value_String(valueThis.GetElement().AccumText());
 }
 
 //------------------------------------------------------------------------------

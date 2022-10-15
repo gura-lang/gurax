@@ -27,6 +27,18 @@ Value* Element::CreateValue() const
 	return new Value_Element(Reference());
 }
 
+String Element::AccumText() const
+{
+	String str;
+	NodeWalker nodeWalker(Reference());
+	for (;;) {
+		const Node* pNode = nodeWalker.Next();
+		if (!pNode) break;
+		if (pNode->CheckTypeMask(Node::TypeMask::Text | Node::TypeMask::CData)) str += pNode->GetText();
+	}
+	return str;
+}
+
 String Element::TextizeStart() const
 {
 	String str;

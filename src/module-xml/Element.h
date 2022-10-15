@@ -47,6 +47,7 @@ public:
 	const NodeOwner& GetNodesChild() const { return *_pNodesChild; }
 	bool HasAttrs() const { return !GetAttrs().empty(); }
 	bool HasNodesChild() const { return !GetNodesChild().empty(); }
+	String AccumText() const;
 	String TextizeStart() const;
 	String TextizeEnd() const;
 	String TextizeEmpty() const;
