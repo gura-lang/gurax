@@ -32,7 +32,7 @@ Value* CData::CreateValue() const
 
 String CData::ToString(const StringStyle& ss) const
 {
-	return String().Format("xml.CData");
+	return String().Format("xml.CData:%s", String::Enquote(GetText(), '\'').c_str());
 }
 
 Gurax_EndModuleScope(xml)

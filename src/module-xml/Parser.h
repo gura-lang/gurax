@@ -23,6 +23,7 @@ public:
 private:
 	XML_Parser _parser;
 	RefPtr<Document> _pDocument;
+	RefPtr<CData> _pCData;
 	ElementStack _elementStack;
 public:
 	// Constructor
@@ -43,6 +44,11 @@ public:
 	void PopElement() { _elementStack.pop_back(); }
 	bool HasElement() const { return !_elementStack.empty(); }
 	Element& GetElementCur() { return *_elementStack.back(); }
+public:
+	void SetCData(CData* pCData) { _pCData.reset(pCData); }
+	void ClearCData() { _pCData.reset(); }
+	bool HasCData() const { return !!_pCData; }
+	CData& GetCData() { return *_pCData; }
 private:
 	static void XMLCALL StartElementHandler(void* userData, const XML_Char* name, const XML_Char** atts);
 	static void XMLCALL EndElementHandler(void* userData, const XML_Char* name);

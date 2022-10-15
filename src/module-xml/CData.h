@@ -33,7 +33,7 @@ protected:
 	~CData() = default;
 public:
 	void AddText(const char* text, size_t len) { _text.append(text, len); }
-	const char* GetText() { return _text.c_str(); }
+	const char* GetText() const { return _text.c_str(); }
 	String Textize() const;
 	virtual bool CheckTypeMask(UInt32 typeMask) const { return typeMask & TypeMask::CData; }
 	virtual Value* CreateValue() const override;
