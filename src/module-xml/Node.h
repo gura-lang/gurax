@@ -71,6 +71,7 @@ public:
 	virtual Value* CreateValue() const = 0;
 	virtual bool Compose(Stream& stream) const = 0;
 public:
+	static String ExtractField(const char** pPath);
 	static UInt32 GetTypeMask(const Argument& argument);
 	static Type SymbolToType(const Symbol* pSymbol) {
 		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
@@ -91,7 +92,8 @@ public:
 //------------------------------------------------------------------------------
 class NodeList : public ListBase<Node*> {
 public:
-	Value* FindElement(const char* tagName) const;
+	const Element* FindElement(const char* tagName) const;
+	const Element* FindElement(const char** pPath) const;
 };
 
 //------------------------------------------------------------------------------

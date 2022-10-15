@@ -114,9 +114,9 @@ Gurax_ImplementMethod(Nodes, FindElement)
 	ArgPicker args(argument);
 	const char* tagName = args.PickString();
 	// Function body
-	RefPtr<Value> pValue(valueThis.GetNodes().FindElement(tagName));
-	if (!pValue) return Value::nil();
-	return argument.ReturnValue(processor, pValue.release());
+	const Element* pElement = valueThis.GetNodes().FindElement(tagName);
+	if (!pElement) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Element(pElement->Reference()));
 }
 
 //-----------------------------------------------------------------------------

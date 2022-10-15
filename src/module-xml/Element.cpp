@@ -27,6 +27,17 @@ Value* Element::CreateValue() const
 	return new Value_Element(Reference());
 }
 
+const Element* Element::Locate(const char* path)
+{
+	const Element *pElement = this;
+	if (::strcmp(pElement->GetName(),  Node::ExtractField(&path).c_str()) != 0) return nullptr;
+	while (*path) {
+		pElement = pElement->GetNodesChild().FindElement(&path);
+		if (!pElement) break;
+	}
+	return pElement;
+}
+
 String Element::AccumText() const
 {
 	String str;

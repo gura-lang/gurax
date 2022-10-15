@@ -21,6 +21,22 @@ String Node::ToString(const StringStyle& ss) const
 	return String().Format("xml.Node");
 }
 
+String Node::ExtractField(const char** pPath)
+{
+	const char* start = *pPath;
+	const char* end = start;
+	for ( ; ; end++) {
+		if (!*end) {
+			*pPath = end;
+			break;
+		} else if (*end == '/') {
+			*pPath = end + 1;
+			break;
+		}
+	}
+	return String(start, end);
+}
+
 UInt32 Node::GetTypeMask(const Argument& argument)
 {
 	UInt32 typeMask = 0;
@@ -35,12 +51,17 @@ UInt32 Node::GetTypeMask(const Argument& argument)
 //------------------------------------------------------------------------------
 // NodeList
 //------------------------------------------------------------------------------
-Value* NodeList::FindElement(const char* tagName) const
+const Element* NodeList::FindElement(const char* tagName) const
 {
 	for (const Node* pNode : *this) {
-		if (pNode->IsElement(tagName)) return pNode->CreateValue();
+		if (pNode->IsElement(tagName)) return dynamic_cast<const Element*>(pNode);
 	}
 	return nullptr;
+}
+
+const Element* NodeList::FindElement(const char** pPath) const
+{
+	return FindElement(Node::ExtractField(pPath).c_str());
 }
 
 //------------------------------------------------------------------------------
