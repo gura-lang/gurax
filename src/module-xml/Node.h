@@ -89,6 +89,8 @@ public:
 // NodeList
 //------------------------------------------------------------------------------
 class NodeList : public ListBase<Node*> {
+public:
+	Value* FindElement(const char* tagName) const;
 };
 
 //------------------------------------------------------------------------------
@@ -162,18 +164,18 @@ public:
 };
 
 //------------------------------------------------------------------------------
-// Iterator_FindElement
+// Iterator_EnumElement
 //------------------------------------------------------------------------------
-class Iterator_FindElement : public Iterator {
+class Iterator_EnumElement : public Iterator {
 public:
 	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Iterator_FindElement");
+	Gurax_MemoryPoolAllocator("Iterator_EnumElement");
 private:
 	RefPtr<NodeOwner> _pNodeOwner;
 	String _tagName;
 	size_t _idx;
 public:
-	Iterator_FindElement(NodeOwner* pNodeOwner, String tagName) :
+	Iterator_EnumElement(NodeOwner* pNodeOwner, String tagName) :
 					_pNodeOwner(pNodeOwner), _tagName(tagName), _idx(0) {}
 public:
 	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }

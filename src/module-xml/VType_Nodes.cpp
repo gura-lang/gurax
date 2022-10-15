@@ -72,10 +72,33 @@ Gurax_ImplementMethod(Nodes, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
+// xml.Nodes#EnumElement(tagName as String) {block?}
+Gurax_DeclareMethod(Nodes, EnumElement)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Nodes, EnumElement)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* tagName = args.PickString();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_EnumElement(valueThis.GetNodes().Reference(), tagName));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // xml.Nodes#FindElement(tagName as String) {block?}
 Gurax_DeclareMethod(Nodes, FindElement)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Element, Flag::None);
 	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
@@ -91,8 +114,9 @@ Gurax_ImplementMethod(Nodes, FindElement)
 	ArgPicker args(argument);
 	const char* tagName = args.PickString();
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_FindElement(valueThis.GetNodes().Reference(), tagName));
-	return argument.ReturnIterator(processor, pIterator.release());
+	RefPtr<Value> pValue(valueThis.GetNodes().FindElement(tagName));
+	if (!pValue) return Value::nil();
+	return argument.ReturnValue(processor, pValue.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -126,6 +150,7 @@ void VType_Nodes::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Nodes));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Nodes, Each));
+	Assign(Gurax_CreateMethod(Nodes, EnumElement));
 	Assign(Gurax_CreateMethod(Nodes, FindElement));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Nodes, len));

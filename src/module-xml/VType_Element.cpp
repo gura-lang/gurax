@@ -75,10 +75,33 @@ Gurax_ImplementMethod(Element, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
+// xml.Element#EnumElement(tagName as String) {block?}
+Gurax_DeclareMethod(Element, EnumElement)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, EnumElement)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* tagName = args.PickString();
+	// Function body
+	RefPtr<Iterator> pIterator(new Iterator_EnumElement(valueThis.GetElement().GetNodesChild().Reference(), tagName));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // xml.Element#FindElement(tagName as String) {block?}
 Gurax_DeclareMethod(Element, FindElement)
 {
-	Declare(VTYPE_Iterator, Flag::None);
+	Declare(VTYPE_Element, Flag::None);
 	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
@@ -94,8 +117,9 @@ Gurax_ImplementMethod(Element, FindElement)
 	ArgPicker args(argument);
 	const char* tagName = args.PickString();
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_FindElement(valueThis.GetElement().GetNodesChild().Reference(), tagName));
-	return argument.ReturnIterator(processor, pIterator.release());
+	RefPtr<Value> pValue(valueThis.GetElement().GetNodesChild().FindElement(tagName));
+	if (!pValue) return Value::nil();
+	return argument.ReturnValue(processor, pValue.release());
 }
 
 // xml.Element#GetAttr(index)
@@ -290,6 +314,33 @@ Gurax_ImplementPropertyGetter(Element, name)
 	return new Value_String(valueThis.GetElement().GetName());
 }
 
+// xml.Element#text
+Gurax_DeclareProperty_R(Element, text)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementPropertyGetter(Element, text)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	const NodeOwner& nodes = valueThis.GetElement().GetNodesChild();
+	String str;
+	for (const Node* pNode : nodes) {
+		if (pNode->GetType() == Node::Type::Text) {
+			str += dynamic_cast<const Text*>(pNode)->GetText();
+		} else if (pNode->GetType() == Node::Type::CData) {
+			str += dynamic_cast<const CData*>(pNode)->GetText();
+		} else {
+			Error::Issue(ErrorType::FormatError, "can't extract a text from structured data");
+			return Value::nil();
+		}
+	}
+	return new Value_String(str);
+}
+
 //------------------------------------------------------------------------------
 // VType_Element
 //------------------------------------------------------------------------------
@@ -303,6 +354,7 @@ void VType_Element::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(Element));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Element, Each));
+	Assign(Gurax_CreateMethod(Element, EnumElement));
 	Assign(Gurax_CreateMethod(Element, FindElement));
 	Assign(Gurax_CreateMethod(Element, GetAttr));
 	Assign(Gurax_CreateMethod(Element, GetAttrName));
@@ -315,6 +367,7 @@ void VType_Element::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Element, attrs));
 	Assign(Gurax_CreateProperty(Element, children));
 	Assign(Gurax_CreateProperty(Element, name));
+	Assign(Gurax_CreateProperty(Element, text));
 }
 
 //------------------------------------------------------------------------------

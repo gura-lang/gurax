@@ -342,6 +342,12 @@ TestCase('Element#Each()') {
   Println(doc.root.Each():comment)
 }
 
+TestCase('Element#EnumElement()') {
+  doc = xml.Parse(sampleText1)
+  Println("EnumElement('Address')")
+  Println(doc.root.EnumElement('Address'))
+}
+
 TestCase('Element#FindElement()') {
   doc = xml.Parse(sampleText1)
   Println("FindElement('Address')")

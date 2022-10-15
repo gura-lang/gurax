@@ -35,6 +35,13 @@ UInt32 Node::GetTypeMask(const Argument& argument)
 //------------------------------------------------------------------------------
 // NodeList
 //------------------------------------------------------------------------------
+Value* NodeList::FindElement(const char* tagName) const
+{
+	for (const Node* pNode : *this) {
+		if (pNode->IsElement(tagName)) return pNode->CreateValue();
+	}
+	return nullptr;
+}
 
 //------------------------------------------------------------------------------
 // NodeOwner
@@ -112,9 +119,9 @@ String Iterator_Each::ToString(const StringStyle& ss) const
 }
 
 //------------------------------------------------------------------------------
-// Iterator_FindElement
+// Iterator_EnumElement
 //------------------------------------------------------------------------------
-Value* Iterator_FindElement::DoNextValue()
+Value* Iterator_EnumElement::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
 	while (_idx < nodeOwner.size()) {
@@ -124,9 +131,9 @@ Value* Iterator_FindElement::DoNextValue()
 	return nullptr;
 }
 
-String Iterator_FindElement::ToString(const StringStyle& ss) const
+String Iterator_EnumElement::ToString(const StringStyle& ss) const
 {
-	return String().Format("FindElement");
+	return String().Format("EnumElement");
 }
 
 //------------------------------------------------------------------------------
