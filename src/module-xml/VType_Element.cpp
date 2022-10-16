@@ -51,10 +51,11 @@ Gurax_ImplementConstructor(Element)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.Element#Each():[cdata,comment,element,text] {block?}
-Gurax_DeclareMethod(Element, Each)
+// xml.Element#EachChild(tagName? as String):[cdata,comment,element,text] {block?}
+Gurax_DeclareMethod(Element, EachChild)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(cdata));
 	DeclareAttrOpt(Gurax_Symbol(comment));
 	DeclareAttrOpt(Gurax_Symbol(element));
@@ -65,61 +66,17 @@ Gurax_DeclareMethod(Element, Each)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Element, Each)
+Gurax_ImplementMethod(Element, EachChild)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	// Argument
+	ArgPicker args(argument);
+	const char* tagName = args.IsValid()? args.PickString() : "";
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Each(
-			valueThis.GetElement().GetNodesChild().Reference(), Node::GetTypeMask(argument)));
+			valueThis.GetElement().GetNodesChild().Reference(), Node::GetTypeMask(argument, tagName), tagName));
 	return argument.ReturnIterator(processor, pIterator.release());
-}
-
-// xml.Element#EnumElement(tagName as String) {block?}
-Gurax_DeclareMethod(Element, EnumElement)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Element, EnumElement)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const char* tagName = args.PickString();
-	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_EnumElement(valueThis.GetElement().GetNodesChild().Reference(), tagName));
-	return argument.ReturnIterator(processor, pIterator.release());
-}
-
-// xml.Element#FindElement(tagName as String) {block?}
-Gurax_DeclareMethod(Element, FindElement)
-{
-	Declare(VTYPE_Element, Flag::None);
-	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Element, FindElement)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const char* tagName = args.PickString();
-	// Function body
-	const Element* pElement = valueThis.GetElement().GetNodesChild().FindElement(tagName);
-	if (!pElement) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Element(pElement->Reference()));
 }
 
 // xml.Element#GetAttr(index)
@@ -191,6 +148,29 @@ Gurax_ImplementMethod(Element, GetAttrValue)
 	return new Value_String(pAttr->GetValue());
 }
 
+// xml.Element#Path(path as String) {block?} as Element
+Gurax_DeclareMethod(Element, Path)
+{
+	Declare(VTYPE_Element, Flag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Element, Path)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* path = args.PickString();
+	// Function body
+	const Element* pElement = valueThis.GetElement().Path(path);
+	if (!pElement) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Element(pElement->Reference()));
+}
+
 // xml.Element#TextizeStart()
 Gurax_DeclareMethod(Element, TextizeStart)
 {
@@ -242,8 +222,8 @@ Gurax_ImplementMethod(Element, TextizeEmpty)
 	return new Value_String(valueThis.GetElement().TextizeEmpty());
 }
 
-// xml.Element#Walk():[cdata,comment,element,text] {block?}
-Gurax_DeclareMethod(Element, Walk)
+// xml.Element#WalkChild():[cdata,comment,element,text] {block?}
+Gurax_DeclareMethod(Element, WalkChild)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(cdata));
@@ -256,13 +236,13 @@ Gurax_DeclareMethod(Element, Walk)
 		"Skeleton.\n");
 }
 
-Gurax_ImplementMethod(Element, Walk)
+Gurax_ImplementMethod(Element, WalkChild)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	const Element& element = valueThis.GetElement();
-	RefPtr<Iterator> pIterator(new Iterator_Walk(element.Reference(), Node::GetTypeMask(argument)));
+	RefPtr<Iterator> pIterator(new Iterator_Walk(element.Reference(), Node::GetTypeMask(argument, "")));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -341,16 +321,15 @@ void VType_Element::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(Element));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Element, Each));
-	Assign(Gurax_CreateMethod(Element, EnumElement));
-	Assign(Gurax_CreateMethod(Element, FindElement));
+	Assign(Gurax_CreateMethod(Element, EachChild));
 	Assign(Gurax_CreateMethod(Element, GetAttr));
 	Assign(Gurax_CreateMethod(Element, GetAttrName));
 	Assign(Gurax_CreateMethod(Element, GetAttrValue));
+	Assign(Gurax_CreateMethod(Element, Path));
 	Assign(Gurax_CreateMethod(Element, TextizeStart));
 	Assign(Gurax_CreateMethod(Element, TextizeEnd));
 	Assign(Gurax_CreateMethod(Element, TextizeEmpty));
-	Assign(Gurax_CreateMethod(Element, Walk));
+	Assign(Gurax_CreateMethod(Element, WalkChild));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Element, attrs));
 	Assign(Gurax_CreateProperty(Element, children));

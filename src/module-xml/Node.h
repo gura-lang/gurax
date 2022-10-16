@@ -72,7 +72,7 @@ public:
 	virtual bool Compose(Stream& stream) const = 0;
 public:
 	static String ExtractField(const char** pPath);
-	static UInt32 GetTypeMask(const Argument& argument);
+	static UInt32 GetTypeMask(const Argument& argument, const char* tagName);
 	static Type SymbolToType(const Symbol* pSymbol) {
 		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
 	}
@@ -151,10 +151,12 @@ public:
 	Gurax_MemoryPoolAllocator("Iterator_Each");
 private:
 	RefPtr<NodeOwner> _pNodeOwner;
-	size_t _idx;
 	UInt32 _typeMask;
+	String _tagName;
+	size_t _idx;
 public:
-	Iterator_Each(NodeOwner* pNodeOwner, UInt32 typeMask) : _pNodeOwner(pNodeOwner), _idx(0), _typeMask(typeMask) {}
+	Iterator_Each(NodeOwner* pNodeOwner, UInt32 typeMask, String tagName) :
+			_pNodeOwner(pNodeOwner), _typeMask(typeMask), _tagName(tagName), _idx(0) {}
 public:
 	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
 	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
@@ -162,31 +164,6 @@ public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenDetermined; }
 	virtual size_t GetLength() const override { return GetNodeOwner().size(); }
-	virtual Value* DoNextValue() override;
-	virtual String ToString(const StringStyle& ss) const override;
-};
-
-//------------------------------------------------------------------------------
-// Iterator_EnumElement
-//------------------------------------------------------------------------------
-class Iterator_EnumElement : public Iterator {
-public:
-	// Uses MemoryPool allocator
-	Gurax_MemoryPoolAllocator("Iterator_EnumElement");
-private:
-	RefPtr<NodeOwner> _pNodeOwner;
-	String _tagName;
-	size_t _idx;
-public:
-	Iterator_EnumElement(NodeOwner* pNodeOwner, String tagName) :
-					_pNodeOwner(pNodeOwner), _tagName(tagName), _idx(0) {}
-public:
-	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
-	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
-public:
-	// Virtual functions of Iterator
-	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }
-	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override;
 	virtual String ToString(const StringStyle& ss) const override;
 };

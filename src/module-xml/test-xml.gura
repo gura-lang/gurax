@@ -295,7 +295,7 @@ ParseAndCompose(text as String) = {
 	doc = xml.Parse(text)
 	doc.Compose()
   Println()
-  doc.root.Walk {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  doc.root.WalkChild {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
 }
 
 Print(R'''
@@ -328,30 +328,20 @@ ParseAndCompose(sampleText4)
 
 TestCase('Node#parent') {
   doc = xml.Parse(sampleText1)
-  doc.root.Walk {|node|
+  doc.root.WalkChild {|node|
     Printf('%*s%s%s -> %s\n', node.depth * 2, '', node.type,
           cond(node.IsElement(), '(' + node.name + ')', ''),
           cond(node.parent, 'element(' + node.parent.name + ')', 'nil'))
   }
 }
 
-TestCase('Element#Each()') {
+TestCase('Element#EachChild()') {
   doc = xml.Parse(sampleText1)
-  Println(doc.root.Each())
-  Println(doc.root.Each():text)
-  Println(doc.root.Each():comment)
-}
-
-TestCase('Element#EnumElement()') {
-  doc = xml.Parse(sampleText1)
-  Println("EnumElement('Address')")
-  Println(doc.root.EnumElement('Address'))
-}
-
-TestCase('Element#FindElement()') {
-  doc = xml.Parse(sampleText1)
-  Println("FindElement('Address')")
-  Println(doc.root.FindElement('Address'))
+  Println(doc.root.EachChild())
+  Println(doc.root.EachChild():text)
+  Println(doc.root.EachChild():comment)
+  Println("EachChild('Address')")
+  Println(doc.root.EachChild('Address'))
 }
 
 TestCase('Element#GetAttr()') {
@@ -392,20 +382,20 @@ TestCase('XmlDecl') {
     xml.Parse('<?xml version="1.0" encoding="utf-8" standalone="no"?>\n<root />\n') {|doc| PrintXmlDecl(doc.xmlDecl)}
 }
 
-TestCase('Element#Walk()') {
+TestCase('Element#WalkChild()') {
   doc = xml.Parse(sampleText1)
-  Println('Walk()')
-  doc.root.Walk {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println('WalkChild()')
+  doc.root.WalkChild {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
   Println()
-  Println('Walk():element')
-  doc.root.Walk():element {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println('WalkChild():element')
+  doc.root.WalkChild():element {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
   Println()
-  Println('Walk():text')
-  doc.root.Walk():text {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println('WalkChild():text')
+  doc.root.WalkChild():text {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
   Println()
-  Println('Walk():comment')
-  doc.root.Walk():comment {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println('WalkChild():comment')
+  doc.root.WalkChild():comment {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
   Println()
-  Println('Walk():text:comment')
-  doc.root.Walk():text:comment {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println('WalkChild():text:comment')
+  doc.root.WalkChild():text:comment {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
 }

@@ -37,14 +37,14 @@ String Node::ExtractField(const char** pPath)
 	return String(start, end);
 }
 
-UInt32 Node::GetTypeMask(const Argument& argument)
+UInt32 Node::GetTypeMask(const Argument& argument, const char* tagName)
 {
 	UInt32 typeMask = 0;
 	if (argument.IsSet(Gurax_Symbol(cdata))) typeMask |= Node::TypeMask::CData;
 	if (argument.IsSet(Gurax_Symbol(comment))) typeMask |= Node::TypeMask::Comment;
 	if (argument.IsSet(Gurax_Symbol(element))) typeMask |= Node::TypeMask::Element;
 	if (argument.IsSet(Gurax_Symbol(text))) typeMask |= Node::TypeMask::Text;
-	if (!typeMask) typeMask = Node::TypeMask::Any;
+	if (!*tagName && !typeMask) typeMask = Node::TypeMask::Any;
 	return typeMask;
 }
 
@@ -129,6 +129,7 @@ Value* Iterator_Each::DoNextValue()
 	const NodeOwner& nodeOwner = GetNodeOwner();
 	while (_idx < nodeOwner.size()) {
 		Node* pNode = nodeOwner[_idx++];
+		if (!_tagName.empty() && pNode->IsElement(_tagName.c_str())) return pNode->CreateValue();
 		if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
 	} 
 	return nullptr;
@@ -137,24 +138,6 @@ Value* Iterator_Each::DoNextValue()
 String Iterator_Each::ToString(const StringStyle& ss) const
 {
 	return String().Format("Each");
-}
-
-//------------------------------------------------------------------------------
-// Iterator_EnumElement
-//------------------------------------------------------------------------------
-Value* Iterator_EnumElement::DoNextValue()
-{
-	const NodeOwner& nodeOwner = GetNodeOwner();
-	while (_idx < nodeOwner.size()) {
-		Node* pNode = nodeOwner[_idx++];
-		if (pNode->IsElement(_tagName.c_str())) return pNode->CreateValue();
-	} 
-	return nullptr;
-}
-
-String Iterator_EnumElement::ToString(const StringStyle& ss) const
-{
-	return String().Format("EnumElement");
 }
 
 //------------------------------------------------------------------------------

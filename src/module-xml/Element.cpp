@@ -27,11 +27,10 @@ Value* Element::CreateValue() const
 	return new Value_Element(Reference());
 }
 
-const Element* Element::Locate(const char* path)
+const Element* Element::Path(const char* path) const
 {
 	const Element *pElement = this;
 	if (*path == '/') path++;
-	if (::strcmp(pElement->GetName(),  Node::ExtractField(&path).c_str()) != 0) return nullptr;
 	while (*path) {
 		pElement = pElement->GetNodesChild().FindElement(&path);
 		if (!pElement) return nullptr;

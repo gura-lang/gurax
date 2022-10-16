@@ -8,6 +8,14 @@ Gurax_BeginModuleScope(xml)
 //------------------------------------------------------------------------------
 // Document
 //------------------------------------------------------------------------------
+const Element* Document::Path(const char* path)
+{
+	const Element* pElement = &GetElementRoot();
+	if (*path == '/') path++;
+	if (::strcmp(pElement->GetName(),  Node::ExtractField(&path).c_str()) != 0) return nullptr;
+	return pElement->Path(path);
+}
+
 bool Document::Compose(Stream& stream) const
 {
 	return

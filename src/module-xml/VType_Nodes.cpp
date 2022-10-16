@@ -49,10 +49,11 @@ Gurax_ImplementConstructor(Nodes)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// xml.Nodes#Each():[cdata,comment,element,text] {block?}
+// xml.Nodes#Each(tagName? as String):[cdata,comment,element,text] {block?}
 Gurax_DeclareMethod(Nodes, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(cdata));
 	DeclareAttrOpt(Gurax_Symbol(comment));
 	DeclareAttrOpt(Gurax_Symbol(element));
@@ -67,56 +68,12 @@ Gurax_ImplementMethod(Nodes, Each)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetNodes().Reference(), Node::GetTypeMask(argument)));
-	return argument.ReturnIterator(processor, pIterator.release());
-}
-
-// xml.Nodes#EnumElement(tagName as String) {block?}
-Gurax_DeclareMethod(Nodes, EnumElement)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Nodes, EnumElement)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
+	// Argument
 	ArgPicker args(argument);
-	const char* tagName = args.PickString();
+	const char* tagName = args.IsValid()? args.PickString() : "";
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_EnumElement(valueThis.GetNodes().Reference(), tagName));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetNodes().Reference(), Node::GetTypeMask(argument, tagName), tagName));
 	return argument.ReturnIterator(processor, pIterator.release());
-}
-
-// xml.Nodes#FindElement(tagName as String) {block?}
-Gurax_DeclareMethod(Nodes, FindElement)
-{
-	Declare(VTYPE_Element, Flag::None);
-	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
-}
-
-Gurax_ImplementMethod(Nodes, FindElement)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const char* tagName = args.PickString();
-	// Function body
-	const Element* pElement = valueThis.GetNodes().FindElement(tagName);
-	if (!pElement) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Element(pElement->Reference()));
 }
 
 //-----------------------------------------------------------------------------
@@ -150,8 +107,6 @@ void VType_Nodes::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Nodes));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Nodes, Each));
-	Assign(Gurax_CreateMethod(Nodes, EnumElement));
-	Assign(Gurax_CreateMethod(Nodes, FindElement));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Nodes, len));
 }

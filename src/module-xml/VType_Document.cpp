@@ -71,7 +71,7 @@ Gurax_ImplementMethod(Document, Compose)
 	return Value::nil();
 }
 
-// xml.Document#Path(path as String) as Element {block?}
+// xml.Document#Path(path as String) {block?} as Element
 Gurax_DeclareMethod(Document, Path)
 {
 	Declare(VTYPE_Element, Flag::None);
@@ -89,7 +89,7 @@ Gurax_ImplementMethod(Document, Path)
 	ArgPicker args(argument);
 	const char* path = args.PickString();
 	// Function body
-	const Element* pElement = valueThis.GetDocument().GetElementRoot().Locate(path);
+	const Element* pElement = valueThis.GetDocument().Path(path);
 	if (!pElement) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Element(pElement->Reference()));
 }
