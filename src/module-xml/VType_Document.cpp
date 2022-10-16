@@ -71,6 +71,29 @@ Gurax_ImplementMethod(Document, Compose)
 	return Value::nil();
 }
 
+// xml.Document#Path(path as String) as Element {block?}
+Gurax_DeclareMethod(Document, Path)
+{
+	Declare(VTYPE_Element, Flag::None);
+	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Document, Path)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const char* path = args.PickString();
+	// Function body
+	const Element* pElement = valueThis.GetDocument().GetElementRoot().Locate(path);
+	if (!pElement) return Value::nil();
+	return argument.ReturnValue(processor, new Value_Element(pElement->Reference()));
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -119,6 +142,7 @@ void VType_Document::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Document));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Document, Compose));
+	Assign(Gurax_CreateMethod(Document, Path));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Document, root));
 	Assign(Gurax_CreateProperty(Document, xmlDecl));

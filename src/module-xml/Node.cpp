@@ -26,7 +26,7 @@ String Node::ExtractField(const char** pPath)
 	const char* start = *pPath;
 	const char* end = start;
 	for ( ; ; end++) {
-		if (!*end) {
+		if (*end == '\0') {
 			*pPath = end;
 			break;
 		} else if (*end == '/') {
