@@ -398,4 +398,7 @@ TestCase('Element#WalkChild()') {
   Println()
   Println('WalkChild():text:comment')
   doc.root.WalkChild():text:comment {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
+  Println()
+  Println('WalkChild(\'Name\')')
+  doc.root.WalkChild('Name') {|node| Printf('%s\n', node.text)}
 }
