@@ -34,7 +34,9 @@ protected:
 	~Element() = default;
 public:
 	virtual bool IsElement(const char* tagName) const override { return !*tagName || _name == tagName; }
-	virtual bool CheckTypeMask(UInt32 typeMask) const { return typeMask & TypeMask::Element; }
+	virtual bool CheckTypeMask(UInt32 typeMask, const char* tagName) const {
+		return (typeMask & TypeMask::Element) && (!*tagName || _name == tagName);
+	}
 	virtual Value* CreateValue() const override;
 	virtual bool Compose(Stream& stream) const override;
 	const char* GetName() const { return _name.c_str(); }

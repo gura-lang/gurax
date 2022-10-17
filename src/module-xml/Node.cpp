@@ -129,8 +129,7 @@ Value* Iterator_Each::DoNextValue()
 	const NodeOwner& nodeOwner = GetNodeOwner();
 	while (_idx < nodeOwner.size()) {
 		Node* pNode = nodeOwner[_idx++];
-		if (!_tagName.empty() && pNode->IsElement(_tagName.c_str())) return pNode->CreateValue();
-		if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
+		if (pNode->CheckTypeMask(_typeMask, _tagName.c_str())) return pNode->CreateValue();
 	} 
 	return nullptr;
 }
@@ -152,7 +151,7 @@ Value* Iterator_Walk::DoNextValue()
 	for (;;) {
 		const Node* pNode = _nodeWalker.Next();
 		if (!pNode) return nullptr;
-		if (pNode->CheckTypeMask(_typeMask)) return pNode->CreateValue();
+		if (pNode->CheckTypeMask(_typeMask, "")) return pNode->CreateValue();
 	}
 	return nullptr;
 }

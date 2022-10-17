@@ -66,7 +66,7 @@ public:
 	Type GetType() const { return _type; }
 	size_t GetDepth() const;
 	virtual bool IsElement(const char* tagName) const { return false; }
-	virtual bool CheckTypeMask(UInt32 typeMask) const = 0;
+	virtual bool CheckTypeMask(UInt32 typeMask, const char* tagName) const = 0;
 	virtual const char* GetText() const { return ""; }
 	virtual Value* CreateValue() const = 0;
 	virtual bool Compose(Stream& stream) const = 0;

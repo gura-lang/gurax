@@ -45,7 +45,7 @@ String Element::AccumText() const
 	for (;;) {
 		const Node* pNode = nodeWalker.Next();
 		if (!pNode) break;
-		if (pNode->CheckTypeMask(Node::TypeMask::Text | Node::TypeMask::CData)) str += pNode->GetText();
+		if (pNode->CheckTypeMask(Node::TypeMask::Text | Node::TypeMask::CData, "")) str += pNode->GetText();
 	}
 	return str;
 }

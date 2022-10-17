@@ -34,7 +34,9 @@ protected:
 public:
 	void AddText(const char* text, size_t len) { _text.append(text, len); }
 	String Textize() const;
-	virtual bool CheckTypeMask(UInt32 typeMask) const override { return typeMask & TypeMask::CData; }
+	virtual bool CheckTypeMask(UInt32 typeMask, const char* tagName) const override {
+		return typeMask & TypeMask::CData;
+	}
 	virtual const char* GetText() const override { return _text.c_str(); }
 	virtual Value* CreateValue() const override;
 	virtual bool Compose(Stream& stream) const override;
