@@ -94,6 +94,35 @@ Gurax_ImplementMethod(Document, Path)
 	return argument.ReturnValue(processor, new Value_Element(pElement->Reference()));
 }
 
+// xml.Document#Walk(tagName? as String):[cdata,comment,element,text] {block?}
+Gurax_DeclareMethod(Document, Walk)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(cdata));
+	DeclareAttrOpt(Gurax_Symbol(comment));
+	DeclareAttrOpt(Gurax_Symbol(element));
+	DeclareAttrOpt(Gurax_Symbol(text));
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Skeleton.\n");
+}
+
+Gurax_ImplementMethod(Document, Walk)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Argument
+	ArgPicker args(argument);
+	const char* tagName = args.IsValid()? args.PickString() : "";
+	// Function body
+	const Element& element = valueThis.GetDocument().GetElementRoot();
+	RefPtr<Iterator> pIterator(new Iterator_Walk(
+			element.Reference(), Node::GetTypeMask(argument.GetAttr()), tagName));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
@@ -143,6 +172,7 @@ void VType_Document::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Document, Compose));
 	Assign(Gurax_CreateMethod(Document, Path));
+	Assign(Gurax_CreateMethod(Document, Walk));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Document, root));
 	Assign(Gurax_CreateProperty(Document, xmlDecl));

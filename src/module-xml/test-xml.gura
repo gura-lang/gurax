@@ -383,7 +383,7 @@ TestCase('XmlDecl') {
 }
 
 TestCase('Element#WalkChild()') {
-  doc = xml.Parse(sampleText1)
+  doc = xml.Parse(sampleText3)
   Println('WalkChild()')
   doc.root.WalkChild {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
   Println()
@@ -399,6 +399,11 @@ TestCase('Element#WalkChild()') {
   Println('WalkChild():text:comment')
   doc.root.WalkChild():text:comment {|node| Printf('%*s%s\n', node.depth * 2, '', node)}
   Println()
-  Println('WalkChild(\'Name\')')
-  doc.root.WalkChild('Name') {|node| Printf('%s\n', node.text)}
+  Println('WalkChild(\'TITLE\')')
+  doc.root.WalkChild('TITLE') {|node| Printf('%s\n', node.text)}
+}
+
+TestCase('Document#Walk()') {
+  doc = xml.Parse(sampleText3)
+  doc.Walk('TITLE') {|node| Printf('%s\n', node.text)}
 }
