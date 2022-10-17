@@ -72,7 +72,7 @@ public:
 	virtual bool Compose(Stream& stream) const = 0;
 public:
 	static String ExtractField(const char** pPath);
-	static UInt32 GetTypeMask(const Attribute& attr, const char* tagName);
+	static UInt32 GetTypeMask(const Attribute& attr);
 	static Type SymbolToType(const Symbol* pSymbol) {
 		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
 	}
@@ -155,8 +155,7 @@ private:
 	String _tagName;
 	size_t _idx;
 public:
-	Iterator_Each(NodeOwner* pNodeOwner, UInt32 typeMask, String tagName) :
-			_pNodeOwner(pNodeOwner), _typeMask(typeMask), _tagName(tagName), _idx(0) {}
+	Iterator_Each(NodeOwner* pNodeOwner, UInt32 typeMask, String tagName);
 public:
 	NodeOwner& GetNodeOwner() { return *_pNodeOwner; }
 	const NodeOwner& GetNodeOwner() const { return *_pNodeOwner; }
@@ -178,8 +177,9 @@ public:
 private:
 	NodeWalker _nodeWalker;
 	UInt32 _typeMask;
+	String _tagName;
 public:
-	Iterator_Walk(Element* pElement, UInt32 typeMask);
+	Iterator_Walk(Element* pElement, UInt32 typeMask, String tagName);
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override { return Flag::Finite | Flag::LenUndetermined; }

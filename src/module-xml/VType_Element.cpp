@@ -76,7 +76,7 @@ Gurax_ImplementMethod(Element, EachChild)
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Each(
 			valueThis.GetElement().GetNodesChild().Reference(),
-			Node::GetTypeMask(argument.GetAttr(), tagName), tagName));
+			Node::GetTypeMask(argument.GetAttr()), tagName));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -223,10 +223,11 @@ Gurax_ImplementMethod(Element, TextizeEmpty)
 	return new Value_String(valueThis.GetElement().TextizeEmpty());
 }
 
-// xml.Element#WalkChild():[cdata,comment,element,text] {block?}
+// xml.Element#WalkChild(tagName? as String):[cdata,comment,element,text] {block?}
 Gurax_DeclareMethod(Element, WalkChild)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("tagName", VTYPE_String, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(cdata));
 	DeclareAttrOpt(Gurax_Symbol(comment));
 	DeclareAttrOpt(Gurax_Symbol(element));
@@ -241,9 +242,13 @@ Gurax_ImplementMethod(Element, WalkChild)
 {
 	// Target
 	auto& valueThis = GetValueThis(argument);
+	// Argument
+	ArgPicker args(argument);
+	const char* tagName = args.IsValid()? args.PickString() : "";
 	// Function body
 	const Element& element = valueThis.GetElement();
-	RefPtr<Iterator> pIterator(new Iterator_Walk(element.Reference(), Node::GetTypeMask(argument.GetAttr(), "")));
+	RefPtr<Iterator> pIterator(new Iterator_Walk(
+			element.Reference(), Node::GetTypeMask(argument.GetAttr()), tagName));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

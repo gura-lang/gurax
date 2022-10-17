@@ -37,10 +37,9 @@ String Node::ExtractField(const char** pPath)
 	return String(start, end);
 }
 
-UInt32 Node::GetTypeMask(const Attribute& attr, const char* tagName)
+UInt32 Node::GetTypeMask(const Attribute& attr)
 {
 	UInt32 typeMask = 0;
-	if (!*tagName) typeMask |= Node::TypeMask::Element;
 	if (attr.IsSet(Gurax_Symbol(cdata))) typeMask |= Node::TypeMask::CData;
 	if (attr.IsSet(Gurax_Symbol(comment))) typeMask |= Node::TypeMask::Comment;
 	if (attr.IsSet(Gurax_Symbol(element))) typeMask |= Node::TypeMask::Element;
@@ -124,6 +123,11 @@ const Node* NodeWalker::Next()
 //------------------------------------------------------------------------------
 // Iterator_Each
 //------------------------------------------------------------------------------
+Iterator_Each::Iterator_Each(NodeOwner* pNodeOwner, UInt32 typeMask, String tagName) :
+		_pNodeOwner(pNodeOwner), _typeMask(typeMask), _tagName(tagName), _idx(0)
+{
+}
+
 Value* Iterator_Each::DoNextValue()
 {
 	const NodeOwner& nodeOwner = GetNodeOwner();
@@ -142,7 +146,8 @@ String Iterator_Each::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // Iterator_Walk
 //------------------------------------------------------------------------------
-Iterator_Walk::Iterator_Walk(Element* pElement, UInt32 typeMask) : _nodeWalker(pElement), _typeMask(typeMask)
+Iterator_Walk::Iterator_Walk(Element* pElement, UInt32 typeMask, String tagName) :
+		_nodeWalker(pElement), _typeMask(typeMask), _tagName(tagName)
 {
 }
 
@@ -151,7 +156,7 @@ Value* Iterator_Walk::DoNextValue()
 	for (;;) {
 		const Node* pNode = _nodeWalker.Next();
 		if (!pNode) return nullptr;
-		if (pNode->CheckTypeMask(_typeMask, "")) return pNode->CreateValue();
+		if (pNode->CheckTypeMask(_typeMask, _tagName.c_str())) return pNode->CreateValue();
 	}
 	return nullptr;
 }
