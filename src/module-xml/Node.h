@@ -72,7 +72,7 @@ public:
 	virtual bool Compose(Stream& stream) const = 0;
 public:
 	static String ExtractField(const char** pPath);
-	static UInt32 GetTypeMask(const Argument& argument, const char* tagName);
+	static UInt32 GetTypeMask(const Attribute& attr, const char* tagName);
 	static Type SymbolToType(const Symbol* pSymbol) {
 		return SymbolAssoc_Type::GetInstance().ToAssociated(pSymbol);
 	}

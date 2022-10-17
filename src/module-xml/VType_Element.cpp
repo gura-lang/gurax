@@ -75,7 +75,8 @@ Gurax_ImplementMethod(Element, EachChild)
 	const char* tagName = args.IsValid()? args.PickString() : "";
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Each(
-			valueThis.GetElement().GetNodesChild().Reference(), Node::GetTypeMask(argument, tagName), tagName));
+			valueThis.GetElement().GetNodesChild().Reference(),
+			Node::GetTypeMask(argument.GetAttr(), tagName), tagName));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -242,7 +243,7 @@ Gurax_ImplementMethod(Element, WalkChild)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	const Element& element = valueThis.GetElement();
-	RefPtr<Iterator> pIterator(new Iterator_Walk(element.Reference(), Node::GetTypeMask(argument, "")));
+	RefPtr<Iterator> pIterator(new Iterator_Walk(element.Reference(), Node::GetTypeMask(argument.GetAttr(), "")));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 

@@ -37,14 +37,14 @@ String Node::ExtractField(const char** pPath)
 	return String(start, end);
 }
 
-UInt32 Node::GetTypeMask(const Argument& argument, const char* tagName)
+UInt32 Node::GetTypeMask(const Attribute& attr, const char* tagName)
 {
 	UInt32 typeMask = 0;
-	if (argument.IsSet(Gurax_Symbol(cdata))) typeMask |= Node::TypeMask::CData;
-	if (argument.IsSet(Gurax_Symbol(comment))) typeMask |= Node::TypeMask::Comment;
-	if (argument.IsSet(Gurax_Symbol(element))) typeMask |= Node::TypeMask::Element;
-	if (argument.IsSet(Gurax_Symbol(text))) typeMask |= Node::TypeMask::Text;
-	if (!*tagName && !typeMask) typeMask = Node::TypeMask::Any;
+	if (!*tagName) typeMask |= Node::TypeMask::Element;
+	if (attr.IsSet(Gurax_Symbol(cdata))) typeMask |= Node::TypeMask::CData;
+	if (attr.IsSet(Gurax_Symbol(comment))) typeMask |= Node::TypeMask::Comment;
+	if (attr.IsSet(Gurax_Symbol(element))) typeMask |= Node::TypeMask::Element;
+	if (attr.IsSet(Gurax_Symbol(text))) typeMask |= Node::TypeMask::Text;
 	return typeMask;
 }
 

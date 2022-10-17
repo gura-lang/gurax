@@ -72,7 +72,8 @@ Gurax_ImplementMethod(Nodes, Each)
 	ArgPicker args(argument);
 	const char* tagName = args.IsValid()? args.PickString() : "";
 	// Function body
-	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetNodes().Reference(), Node::GetTypeMask(argument, tagName), tagName));
+	RefPtr<Iterator> pIterator(new Iterator_Each(valueThis.GetNodes().Reference(),
+			Node::GetTypeMask(argument.GetAttr(), tagName), tagName));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
