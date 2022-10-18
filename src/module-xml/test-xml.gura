@@ -405,5 +405,18 @@ TestCase('Element#WalkChild()') {
 
 TestCase('Document#Walk()') {
   doc = xml.Parse(sampleText3)
-  doc.Walk('TITLE') {|node| Printf('%s\n', node.text)}
+  Printf('TITLE: %s\n', doc.Walk('TITLE'):*text)
+  Printf('ARTIST: %s\n', doc.Walk('ARTIST'):*text)
+}
+
+TestCase('Index access') {
+  doc = xml.Parse(sampleText3)
+  doc.root.EachChild('CD') {|node|
+    Printf('TITLE "%s"\n', node['TITLE'].text)
+    Printf('  ARTIST  %s\n', node['ARTIST'].text)
+    Printf('  COUNTRY %s\n', node['COUNTRY'].text)
+    Printf('  COMPANY %s\n', node['COMPANY'].text)
+    Printf('  PRICE   %s\n', node['PRICE'].text)
+    Printf('  YEAR    %s\n', node['YEAR'].text)
+  }
 }

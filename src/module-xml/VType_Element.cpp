@@ -353,4 +353,17 @@ String Value_Element::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetElement().ToString(ss));
 }
 
+bool Value_Element::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
+{
+	if (!valueIndex.IsType(VTYPE_String)) {
+		Error::Issue(ErrorType::IndexError, "index must be a string");
+		return false;
+	}
+	const char* path = Value_String::GetString(valueIndex);
+	const Element* pElement = GetElement().Path(path);
+	if (!pElement) return false;
+	*ppValue = new Value_Element(pElement->Reference());
+	return true;
+}
+
 Gurax_EndModuleScope(xml)
