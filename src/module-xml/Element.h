@@ -49,7 +49,7 @@ public:
 	const NodeOwner& GetNodesChild() const { return *_pNodesChild; }
 	bool HasAttrs() const { return !GetAttrs().empty(); }
 	bool HasNodesChild() const { return !GetNodesChild().empty(); }
-	const Element* Path(const char* path) const;
+	Value* Path(const char* path) const;
 	String AccumText() const;
 	String TextizeStart() const;
 	String TextizeEnd() const;

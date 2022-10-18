@@ -1,0 +1,1481 @@
+----------------------------------------------------------------
+sampleText1
+----------------------------------------------------------------
+<?xml version="1.0"?>
+<PurchaseOrder PurchaseOrderNumber="99503" OrderDate="1999-10-20">
+  <-- Address #1 -->
+  <Address Type="Shipping">
+    <Name>Ellen Adams</Name>
+    <Street>123 Maple Street</Street>
+    <City>Mill Valley</City>
+    <State>CA</State>
+    <Zip>10999</Zip>
+    <Country>USA</Country>
+  </Address>
+  <-- Address #2 -->
+  <Address Type="Billing">
+    <Name>Tai Yee</Name>
+    <Street>8 Oak Avenue</Street>
+    <City>Old Town</City>
+    <State>PA</State>
+    <Zip>95819</Zip>
+    <Country>USA</Country>
+  </Address>
+  <DeliveryNotes>Please leave packages in shed by driveway.</DeliveryNotes>
+  <Items>
+    <Item PartNumber="872-AA">
+      <ProductName>Lawnmower</ProductName>
+      <Quantity>1</Quantity>
+      <USPrice>148.95</USPrice>
+      <Comment>Confirm this is electric</Comment>
+    </Item>
+    <Item PartNumber="926-AA">
+      <ProductName>Baby Monitor</ProductName>
+      <Quantity>2</Quantity>
+      <USPrice>39.98</USPrice>
+      <ShipDate>1999-05-21</ShipDate>
+    </Item>
+  </Items>
+</PurchaseOrder>
+----------------------------------------------------------------
+sampleText2
+----------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<SoftwareEngineer>
+<empl id="01">
+<name>
+<projectname> Man-router</projectname>
+<Workingdomain> machine learning</Workingdomain>
+</name>
+<Enddate>
+<entities><![CDATA[
+This is the local project with the fibre optics.
+All the statistical manipulation is performed. Example. '"&<> and submission date 12/12/2020
+]]></entities>
+</Enddate>
+</empl>
+</SoftwareEngineer>
+----------------------------------------------------------------
+sampleText3
+----------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<CATALOG>
+  <CD>
+    <TITLE>Empire Burlesque</TITLE>
+    <ARTIST>Bob Dylan</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>Columbia</COMPANY>
+    <PRICE>10.90</PRICE>
+    <YEAR>1985</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Hide your heart</TITLE>
+    <ARTIST>Bonnie Tyler</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>CBS Records</COMPANY>
+    <PRICE>9.90</PRICE>
+    <YEAR>1988</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Greatest Hits</TITLE>
+    <ARTIST>Dolly Parton</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>RCA</COMPANY>
+    <PRICE>9.90</PRICE>
+    <YEAR>1982</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Still got the blues</TITLE>
+    <ARTIST>Gary Moore</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>Virgin records</COMPANY>
+    <PRICE>10.20</PRICE>
+    <YEAR>1990</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Eros</TITLE>
+    <ARTIST>Eros Ramazzotti</ARTIST>
+    <COUNTRY>EU</COUNTRY>
+    <COMPANY>BMG</COMPANY>
+    <PRICE>9.90</PRICE>
+    <YEAR>1997</YEAR>
+  </CD>
+  <CD>
+    <TITLE>One night only</TITLE>
+    <ARTIST>Bee Gees</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>Polydor</COMPANY>
+    <PRICE>10.90</PRICE>
+    <YEAR>1998</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Sylvias Mother</TITLE>
+    <ARTIST>Dr.Hook</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>CBS</COMPANY>
+    <PRICE>8.10</PRICE>
+    <YEAR>1973</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Maggie May</TITLE>
+    <ARTIST>Rod Stewart</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>Pickwick</COMPANY>
+    <PRICE>8.50</PRICE>
+    <YEAR>1990</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Romanza</TITLE>
+    <ARTIST>Andrea Bocelli</ARTIST>
+    <COUNTRY>EU</COUNTRY>
+    <COMPANY>Polydor</COMPANY>
+    <PRICE>10.80</PRICE>
+    <YEAR>1996</YEAR>
+  </CD>
+  <CD>
+    <TITLE>When a man loves a woman</TITLE>
+    <ARTIST>Percy Sledge</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>Atlantic</COMPANY>
+    <PRICE>8.70</PRICE>
+    <YEAR>1987</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Black angel</TITLE>
+    <ARTIST>Savage Rose</ARTIST>
+    <COUNTRY>EU</COUNTRY>
+    <COMPANY>Mega</COMPANY>
+    <PRICE>10.90</PRICE>
+    <YEAR>1995</YEAR>
+  </CD>
+  <CD>
+    <TITLE>1999 Grammy Nominees</TITLE>
+    <ARTIST>Many</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>Grammy</COMPANY>
+    <PRICE>10.20</PRICE>
+    <YEAR>1999</YEAR>
+  </CD>
+  <CD>
+    <TITLE>For the good times</TITLE>
+    <ARTIST>Kenny Rogers</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>Mucik Master</COMPANY>
+    <PRICE>8.70</PRICE>
+    <YEAR>1995</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Big Willie style</TITLE>
+    <ARTIST>Will Smith</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>Columbia</COMPANY>
+    <PRICE>9.90</PRICE>
+    <YEAR>1997</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Tupelo Honey</TITLE>
+    <ARTIST>Van Morrison</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>Polydor</COMPANY>
+    <PRICE>8.20</PRICE>
+    <YEAR>1971</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Soulsville</TITLE>
+    <ARTIST>Jorn Hoel</ARTIST>
+    <COUNTRY>Norway</COUNTRY>
+    <COMPANY>WEA</COMPANY>
+    <PRICE>7.90</PRICE>
+    <YEAR>1996</YEAR>
+  </CD>
+  <CD>
+    <TITLE>The very best of</TITLE>
+    <ARTIST>Cat Stevens</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>Island</COMPANY>
+    <PRICE>8.90</PRICE>
+    <YEAR>1990</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Stop</TITLE>
+    <ARTIST>Sam Brown</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>A and M</COMPANY>
+    <PRICE>8.90</PRICE>
+    <YEAR>1988</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Bridge of Spies</TITLE>
+    <ARTIST>T'Pau</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>Siren</COMPANY>
+    <PRICE>7.90</PRICE>
+    <YEAR>1987</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Private Dancer</TITLE>
+    <ARTIST>Tina Turner</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>Capitol</COMPANY>
+    <PRICE>8.90</PRICE>
+    <YEAR>1983</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Midt om natten</TITLE>
+    <ARTIST>Kim Larsen</ARTIST>
+    <COUNTRY>EU</COUNTRY>
+    <COMPANY>Medley</COMPANY>
+    <PRICE>7.80</PRICE>
+    <YEAR>1983</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Pavarotti Gala Concert</TITLE>
+    <ARTIST>Luciano Pavarotti</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>DECCA</COMPANY>
+    <PRICE>9.90</PRICE>
+    <YEAR>1991</YEAR>
+  </CD>
+  <CD>
+    <TITLE>The dock of the bay</TITLE>
+    <ARTIST>Otis Redding</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>Stax Records</COMPANY>
+    <PRICE>7.90</PRICE>
+    <YEAR>1968</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Picture book</TITLE>
+    <ARTIST>Simply Red</ARTIST>
+    <COUNTRY>EU</COUNTRY>
+    <COMPANY>Elektra</COMPANY>
+    <PRICE>7.20</PRICE>
+    <YEAR>1985</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Red</TITLE>
+    <ARTIST>The Communards</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>London</COMPANY>
+    <PRICE>7.80</PRICE>
+    <YEAR>1987</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Unchain my heart</TITLE>
+    <ARTIST>Joe Cocker</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>EMI</COMPANY>
+    <PRICE>8.20</PRICE>
+    <YEAR>1987</YEAR>
+  </CD>
+</CATALOG>
+----------------------------------------------------------------
+sampleText4
+----------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<Example>
+  <![CDATA[
+     characters with markup
+  ]]>
+  <script>
+     <![CDATA[
+        <message> Welcome to TutorialsPoint </message>
+     ]]>
+  </script>
+</Example>
+======== Node#parent ========
+======== Element#EachChild() ========
+<xml.Text:'\n  '>
+<xml.Text:'\n  '>
+<xml.Text:'\n  '>
+<xml.Text:'\n  '>
+<xml.Text:'\n  '>
+<xml.Text:'\n  '>
+<xml.Text:'\n'>
+<xml.Comment:' Address #1 '>
+<xml.Comment:' Address #2 '>
+EachChild('Address')
+<xml.Element:Address>
+<xml.Element:Address>
+======== Element#GetAttr() ========
+elem.GetAttr('PurchaseOrderNumber') .. <xml.Attr:PurchaseOrderNumber="99503">
+elem.GetAttr('OrderDate') .. <xml.Attr:OrderDate="1999-10-20">
+======== Element#GetAttrName() ========
+elem.GetAttrName(0) .. PurchaseOrderNumber
+elem.GetAttrName(1) .. OrderDate
+elem.GetAttrName('PurchaseOrderNumber') .. PurchaseOrderNumber
+elem.GetAttrName('OrderDate') .. OrderDate
+======== Element#GetAttrValue() ========
+elem.GetAttrValue(0) .. 99503
+elem.GetAttrValue(1) .. 1999-10-20
+elem.GetAttrValue('PurchaseOrderNumber') .. 99503
+elem.GetAttrValue('OrderDate') .. 1999-10-20
+======== Element#attrs ========
+elem.attrs['PurchaseOrderNumber'] .. <xml.Attr:PurchaseOrderNumber="99503">
+elem.attrs['OrderDate'] .. <xml.Attr:OrderDate="1999-10-20">
+======== XmlDecl ========
+version=1.0 encoding= standalone=
+version=1.0 encoding=utf-8 standalone=
+version=1.0 encoding=utf-8 standalone=true
+version=1.0 encoding=utf-8 standalone=false
+======== Element#WalkChild() ========
+WalkChild()
+
+WalkChild():element
+<xml.Element:CATALOG>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+  <xml.Element:CD>
+    <xml.Element:TITLE>
+    <xml.Element:ARTIST>
+    <xml.Element:COUNTRY>
+    <xml.Element:COMPANY>
+    <xml.Element:PRICE>
+    <xml.Element:YEAR>
+
+WalkChild():text
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Empire Burlesque'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Bob Dylan'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Columbia'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1985'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Hide your heart'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Bonnie Tyler'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'CBS Records'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1988'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Greatest Hits'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Dolly Parton'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'RCA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1982'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Still got the blues'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Gary Moore'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Virgin records'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1990'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Eros'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Eros Ramazzotti'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'BMG'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1997'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'One night only'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Bee Gees'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Polydor'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1998'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Sylvias Mother'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Dr.Hook'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'CBS'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.10'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1973'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Maggie May'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Rod Stewart'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Pickwick'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.50'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1990'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Romanza'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Andrea Bocelli'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Polydor'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.80'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1996'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'When a man loves a woman'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Percy Sledge'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Atlantic'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.70'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1987'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Black angel'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Savage Rose'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Mega'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1995'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'1999 Grammy Nominees'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Many'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Grammy'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1999'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'For the good times'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Kenny Rogers'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Mucik Master'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.70'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1995'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Big Willie style'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Will Smith'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Columbia'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1997'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Tupelo Honey'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Van Morrison'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Polydor'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1971'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Soulsville'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Jorn Hoel'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Norway'>
+    <xml.Text:'\n    '>
+      <xml.Text:'WEA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1996'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'The very best of'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Cat Stevens'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Island'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1990'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Stop'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Sam Brown'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'A and M'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1988'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Bridge of Spies'>
+    <xml.Text:'\n    '>
+      <xml.Text:'T\'Pau'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Siren'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1987'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Private Dancer'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Tina Turner'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Capitol'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1983'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Midt om natten'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Kim Larsen'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Medley'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.80'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1983'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Pavarotti Gala Concert'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Luciano Pavarotti'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'DECCA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1991'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'The dock of the bay'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Otis Redding'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Stax Records'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1968'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Picture book'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Simply Red'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Elektra'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1985'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Red'>
+    <xml.Text:'\n    '>
+      <xml.Text:'The Communards'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'London'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.80'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1987'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Unchain my heart'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Joe Cocker'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EMI'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1987'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n'>
+
+WalkChild():comment
+
+WalkChild():text:comment
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Empire Burlesque'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Bob Dylan'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Columbia'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1985'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Hide your heart'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Bonnie Tyler'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'CBS Records'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1988'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Greatest Hits'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Dolly Parton'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'RCA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1982'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Still got the blues'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Gary Moore'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Virgin records'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1990'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Eros'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Eros Ramazzotti'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'BMG'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1997'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'One night only'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Bee Gees'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Polydor'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1998'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Sylvias Mother'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Dr.Hook'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'CBS'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.10'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1973'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Maggie May'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Rod Stewart'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Pickwick'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.50'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1990'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Romanza'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Andrea Bocelli'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Polydor'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.80'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1996'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'When a man loves a woman'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Percy Sledge'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Atlantic'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.70'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1987'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Black angel'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Savage Rose'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Mega'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1995'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'1999 Grammy Nominees'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Many'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Grammy'>
+    <xml.Text:'\n    '>
+      <xml.Text:'10.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1999'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'For the good times'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Kenny Rogers'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Mucik Master'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.70'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1995'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Big Willie style'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Will Smith'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Columbia'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1997'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Tupelo Honey'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Van Morrison'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Polydor'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1971'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Soulsville'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Jorn Hoel'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Norway'>
+    <xml.Text:'\n    '>
+      <xml.Text:'WEA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1996'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'The very best of'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Cat Stevens'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Island'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1990'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Stop'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Sam Brown'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'A and M'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1988'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Bridge of Spies'>
+    <xml.Text:'\n    '>
+      <xml.Text:'T\'Pau'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Siren'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1987'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Private Dancer'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Tina Turner'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Capitol'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1983'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Midt om natten'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Kim Larsen'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Medley'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.80'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1983'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Pavarotti Gala Concert'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Luciano Pavarotti'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'DECCA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'9.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1991'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'The dock of the bay'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Otis Redding'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Stax Records'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.90'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1968'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Picture book'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Simply Red'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EU'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Elektra'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1985'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Red'>
+    <xml.Text:'\n    '>
+      <xml.Text:'The Communards'>
+    <xml.Text:'\n    '>
+      <xml.Text:'UK'>
+    <xml.Text:'\n    '>
+      <xml.Text:'London'>
+    <xml.Text:'\n    '>
+      <xml.Text:'7.80'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1987'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n  '>
+    <xml.Text:'\n    '>
+      <xml.Text:'Unchain my heart'>
+    <xml.Text:'\n    '>
+      <xml.Text:'Joe Cocker'>
+    <xml.Text:'\n    '>
+      <xml.Text:'USA'>
+    <xml.Text:'\n    '>
+      <xml.Text:'EMI'>
+    <xml.Text:'\n    '>
+      <xml.Text:'8.20'>
+    <xml.Text:'\n    '>
+      <xml.Text:'1987'>
+    <xml.Text:'\n  '>
+  <xml.Text:'\n'>
+
+WalkChild('TITLE')
+Empire Burlesque
+Hide your heart
+Greatest Hits
+Still got the blues
+Eros
+One night only
+Sylvias Mother
+Maggie May
+Romanza
+When a man loves a woman
+Black angel
+1999 Grammy Nominees
+For the good times
+Big Willie style
+Tupelo Honey
+Soulsville
+The very best of
+Stop
+Bridge of Spies
+Private Dancer
+Midt om natten
+Pavarotti Gala Concert
+The dock of the bay
+Picture book
+Red
+Unchain my heart
+======== Document#Walk() ========
+TITLE: Empire Burlesque
+TITLE: Hide your heart
+TITLE: Greatest Hits
+TITLE: Still got the blues
+TITLE: Eros
+TITLE: One night only
+TITLE: Sylvias Mother
+TITLE: Maggie May
+TITLE: Romanza
+TITLE: When a man loves a woman
+TITLE: Black angel
+TITLE: 1999 Grammy Nominees
+TITLE: For the good times
+TITLE: Big Willie style
+TITLE: Tupelo Honey
+TITLE: Soulsville
+TITLE: The very best of
+TITLE: Stop
+TITLE: Bridge of Spies
+TITLE: Private Dancer
+TITLE: Midt om natten
+TITLE: Pavarotti Gala Concert
+TITLE: The dock of the bay
+TITLE: Picture book
+TITLE: Red
+TITLE: Unchain my heart
+ARTIST: Bob Dylan
+ARTIST: Bonnie Tyler
+ARTIST: Dolly Parton
+ARTIST: Gary Moore
+ARTIST: Eros Ramazzotti
+ARTIST: Bee Gees
+ARTIST: Dr.Hook
+ARTIST: Rod Stewart
+ARTIST: Andrea Bocelli
+ARTIST: Percy Sledge
+ARTIST: Savage Rose
+ARTIST: Many
+ARTIST: Kenny Rogers
+ARTIST: Will Smith
+ARTIST: Van Morrison
+ARTIST: Jorn Hoel
+ARTIST: Cat Stevens
+ARTIST: Sam Brown
+ARTIST: T'Pau
+ARTIST: Tina Turner
+ARTIST: Kim Larsen
+ARTIST: Luciano Pavarotti
+ARTIST: Otis Redding
+ARTIST: Simply Red
+ARTIST: The Communards
+ARTIST: Joe Cocker
+======== Index access ========
+TITLE "Empire Burlesque"
+  ARTIST  Bob Dylan
+  COUNTRY USA
+  COMPANY Columbia
+  PRICE   10.90
+  YEAR    1985
+TITLE "Hide your heart"
+  ARTIST  Bonnie Tyler
+  COUNTRY UK
+  COMPANY CBS Records
+  PRICE   9.90
+  YEAR    1988
+TITLE "Greatest Hits"
+  ARTIST  Dolly Parton
+  COUNTRY USA
+  COMPANY RCA
+  PRICE   9.90
+  YEAR    1982
+TITLE "Still got the blues"
+  ARTIST  Gary Moore
+  COUNTRY UK
+  COMPANY Virgin records
+  PRICE   10.20
+  YEAR    1990
+TITLE "Eros"
+  ARTIST  Eros Ramazzotti
+  COUNTRY EU
+  COMPANY BMG
+  PRICE   9.90
+  YEAR    1997
+TITLE "One night only"
+  ARTIST  Bee Gees
+  COUNTRY UK
+  COMPANY Polydor
+  PRICE   10.90
+  YEAR    1998
+TITLE "Sylvias Mother"
+  ARTIST  Dr.Hook
+  COUNTRY UK
+  COMPANY CBS
+  PRICE   8.10
+  YEAR    1973
+TITLE "Maggie May"
+  ARTIST  Rod Stewart
+  COUNTRY UK
+  COMPANY Pickwick
+  PRICE   8.50
+  YEAR    1990
+TITLE "Romanza"
+  ARTIST  Andrea Bocelli
+  COUNTRY EU
+  COMPANY Polydor
+  PRICE   10.80
+  YEAR    1996
+TITLE "When a man loves a woman"
+  ARTIST  Percy Sledge
+  COUNTRY USA
+  COMPANY Atlantic
+  PRICE   8.70
+  YEAR    1987
+TITLE "Black angel"
+  ARTIST  Savage Rose
+  COUNTRY EU
+  COMPANY Mega
+  PRICE   10.90
+  YEAR    1995
+TITLE "1999 Grammy Nominees"
+  ARTIST  Many
+  COUNTRY USA
+  COMPANY Grammy
+  PRICE   10.20
+  YEAR    1999
+TITLE "For the good times"
+  ARTIST  Kenny Rogers
+  COUNTRY UK
+  COMPANY Mucik Master
+  PRICE   8.70
+  YEAR    1995
+TITLE "Big Willie style"
+  ARTIST  Will Smith
+  COUNTRY USA
+  COMPANY Columbia
+  PRICE   9.90
+  YEAR    1997
+TITLE "Tupelo Honey"
+  ARTIST  Van Morrison
+  COUNTRY UK
+  COMPANY Polydor
+  PRICE   8.20
+  YEAR    1971
+TITLE "Soulsville"
+  ARTIST  Jorn Hoel
+  COUNTRY Norway
+  COMPANY WEA
+  PRICE   7.90
+  YEAR    1996
+TITLE "The very best of"
+  ARTIST  Cat Stevens
+  COUNTRY UK
+  COMPANY Island
+  PRICE   8.90
+  YEAR    1990
+TITLE "Stop"
+  ARTIST  Sam Brown
+  COUNTRY UK
+  COMPANY A and M
+  PRICE   8.90
+  YEAR    1988
+TITLE "Bridge of Spies"
+  ARTIST  T'Pau
+  COUNTRY UK
+  COMPANY Siren
+  PRICE   7.90
+  YEAR    1987
+TITLE "Private Dancer"
+  ARTIST  Tina Turner
+  COUNTRY UK
+  COMPANY Capitol
+  PRICE   8.90
+  YEAR    1983
+TITLE "Midt om natten"
+  ARTIST  Kim Larsen
+  COUNTRY EU
+  COMPANY Medley
+  PRICE   7.80
+  YEAR    1983
+TITLE "Pavarotti Gala Concert"
+  ARTIST  Luciano Pavarotti
+  COUNTRY UK
+  COMPANY DECCA
+  PRICE   9.90
+  YEAR    1991
+TITLE "The dock of the bay"
+  ARTIST  Otis Redding
+  COUNTRY USA
+  COMPANY Stax Records
+  PRICE   7.90
+  YEAR    1968
+TITLE "Picture book"
+  ARTIST  Simply Red
+  COUNTRY EU
+  COMPANY Elektra
+  PRICE   7.20
+  YEAR    1985
+TITLE "Red"
+  ARTIST  The Communards
+  COUNTRY UK
+  COMPANY London
+  PRICE   7.80
+  YEAR    1987
+TITLE "Unchain my heart"
+  ARTIST  Joe Cocker
+  COUNTRY USA
+  COMPANY EMI
+  PRICE   8.20
+  YEAR    1987

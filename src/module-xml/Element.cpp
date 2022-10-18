@@ -27,15 +27,24 @@ Value* Element::CreateValue() const
 	return new Value_Element(Reference());
 }
 
-const Element* Element::Path(const char* path) const
+Value* Element::Path(const char* path) const
 {
 	const Element *pElement = this;
 	if (*path == '/') path++;
 	while (*path) {
+		if (*path == '@') {
+			const char* name = path + 1;
+			const Attr* pAttr = pElement->GetAttrs().Find(name);
+			if (!pAttr) {
+				Error::Issue(ErrorType::PathError, "failed to find the attribute %s", name);
+				return nullptr;
+			}
+			return new Value_String(pAttr->GetValue());
+		}
 		pElement = pElement->GetNodesChild().FindElement(&path);
 		if (!pElement) return nullptr;
 	}
-	return pElement;
+	return new Value_Element(pElement->Reference());
 }
 
 String Element::AccumText() const

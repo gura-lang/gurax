@@ -167,9 +167,9 @@ Gurax_ImplementMethod(Element, Path)
 	ArgPicker args(argument);
 	const char* path = args.PickString();
 	// Function body
-	const Element* pElement = valueThis.GetElement().Path(path);
-	if (!pElement) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Element(pElement->Reference()));
+	RefPtr<Value> pValueRtn(valueThis.GetElement().Path(path));
+	if (!pValueRtn) return Value::nil();
+	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
 // xml.Element#TextizeStart()
@@ -360,9 +360,9 @@ bool Value_Element::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) c
 		return false;
 	}
 	const char* path = Value_String::GetString(valueIndex);
-	const Element* pElement = GetElement().Path(path);
-	if (!pElement) return false;
-	*ppValue = new Value_Element(pElement->Reference());
+	RefPtr<Value> pValueRtn(GetElement().Path(path));
+	if (!pValueRtn) return false;
+	*ppValue = pValueRtn.release();
 	return true;
 }
 

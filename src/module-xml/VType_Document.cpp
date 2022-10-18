@@ -89,9 +89,9 @@ Gurax_ImplementMethod(Document, Path)
 	ArgPicker args(argument);
 	const char* path = args.PickString();
 	// Function body
-	const Element* pElement = valueThis.GetDocument().Path(path);
-	if (!pElement) return Value::nil();
-	return argument.ReturnValue(processor, new Value_Element(pElement->Reference()));
+	RefPtr<Value> pValueRtn(valueThis.GetDocument().Path(path));
+	if (!pValueRtn) return Value::nil();
+	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
 // xml.Document#Walk(tagName? as String):[cdata,comment,element,text] {block?}

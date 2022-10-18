@@ -42,7 +42,7 @@ public:
 	void SetElementRoot(Element* pElement) { _pElementRoot.reset(pElement); }
 	Element& GetElementRoot() { return *_pElementRoot; }
 	const Element& GetElementRoot() const { return *_pElementRoot; }
-	const Element* Path(const char* path);
+	Value* Path(const char* path) const;
 public:
 	bool Compose(Stream& stream) const;
 public:
