@@ -64,6 +64,7 @@ cases="$cases tar"
 cases="$cases try"
 cases="$cases value"
 cases="$cases while"
+cases="$cases xml"
 cases="$cases yaml"
 
 if [ $# -eq 0 ]; then

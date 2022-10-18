@@ -1479,3 +1479,7 @@ TITLE "Unchain my heart"
   COMPANY EMI
   PRICE   8.20
   YEAR    1987
+Shipping
+Billing
+doc.root['@PurchaseOrderNumber'] .. 99503
+doc.root['Address/@Type'] .. Shipping
