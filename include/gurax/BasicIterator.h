@@ -20,7 +20,7 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined;
+		return Flag::Finite | Flag::LenDetermined | Flag::Rewindable;
 	}
 	virtual size_t GetLength() const override { return 0; }
 	virtual Value* DoNextValue() override { return nullptr; }
@@ -38,7 +38,7 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return Flag::Infinite | Flag::LenUndetermined;
+		return Flag::Infinite | Flag::LenUndetermined | Flag::Rewindable;
 	}
 	virtual size_t GetLength() const override { return -1; }
 	virtual Value* DoNextValue() override { return _pValue->Reference(); }
@@ -58,7 +58,7 @@ public:
 public:
 	// Virtual functions of Iterator
 	virtual Flags GetFlags() const override {
-		return Flag::Finite | Flag::LenDetermined;
+		return Flag::Finite | Flag::LenDetermined | Flag::Rewindable;
 	}
 	virtual size_t GetLength() const override { return _num; }
 	virtual Value* DoNextValue() override;

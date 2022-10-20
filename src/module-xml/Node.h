@@ -93,7 +93,6 @@ public:
 class NodeList : public ListBase<Node*> {
 public:
 	const Element* FindElement(const char* tagName) const;
-	const Element* FindElement(const char** pPath) const;
 };
 
 //------------------------------------------------------------------------------

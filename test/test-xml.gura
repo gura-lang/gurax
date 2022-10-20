@@ -414,8 +414,8 @@ TestCase('Index access') {
     doc.root.EachChild('CD') {|node|
       Printf('TITLE "%s"\n', node['TITLE'].text)
       Printf('  ARTIST  %s\n', node['ARTIST'].text)
-      Printf('  COUNTRY %s\n', node['COUNTRY'].text)
-      Printf('  COMPANY %s\n', node['COMPANY'].text)
+      Printf('  COUNTRY %s\n', node['COUNTRY/text()'])
+      Printf('  COMPANY %s\n', node['COMPANY/text()'])
       Printf('  PRICE   %s\n', node['PRICE'].text)
       Printf('  YEAR    %s\n', node['YEAR'].text)
     }

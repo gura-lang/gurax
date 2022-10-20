@@ -58,11 +58,6 @@ const Element* NodeList::FindElement(const char* tagName) const
 	return nullptr;
 }
 
-const Element* NodeList::FindElement(const char** pPath) const
-{
-	return FindElement(Node::ExtractField(pPath).c_str());
-}
-
 //------------------------------------------------------------------------------
 // NodeOwner
 //------------------------------------------------------------------------------

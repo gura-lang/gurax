@@ -41,7 +41,11 @@ Value* Element::Path(const char* path) const
 			}
 			return new Value_String(pAttr->GetValue());
 		}
-		pElement = pElement->GetNodesChild().FindElement(&path);
+		String field = Node::ExtractField(&path);
+		if (field == "text()") {
+			return new Value_String(pElement->AccumText());
+		}
+		pElement = pElement->GetNodesChild().FindElement(field.c_str());
 		if (!pElement) return nullptr;
 	}
 	return new Value_Element(pElement->Reference());

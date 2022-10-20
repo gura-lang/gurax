@@ -27,6 +27,8 @@ public:
 		static const Flags Finite			= (1 << 0);
 		static const Flags LenUndetermined	= (0 << 1);
 		static const Flags LenDetermined	= (1 << 1);
+		static const Flags Rewindable		= (1 << 2);
+		static const Flags Unrewindable		= (0 << 2);
 	};
 protected:
 	Int _idxCur;
@@ -92,11 +94,17 @@ public:
 		if (!_pValuePeeked) _pValuePeeked.reset(DoNextValue());
 		return _pValuePeeked.Reference();
 	}
+	void Rewind() {
+		_idxCur = 0, _idxNext = -1;
+		_pValuePeeked.reset();
+		DoRewind();
+	}
 public:
 	// Virtual functions
 	virtual Flags GetFlags() const = 0;
 	virtual Value* DoNextValue() = 0;
 	virtual size_t GetLength() const = 0;
+	virtual void DoRewind() {}
 	virtual String ToString(const StringStyle& ss) const;
 };
 
