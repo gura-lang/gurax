@@ -46,6 +46,47 @@ Gurax_ImplementConstructor(Object)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Object#__clone__()
+Gurax_DeclareMethod(Object, __clone__)
+{
+	Declare(VTYPE_Any, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Creates a cloned object.\n");
+}
+
+Gurax_ImplementMethod(Object, __clone__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	RefPtr<Value> pValue(valueThis.Clone());
+	if (pValue) return pValue.release();
+	Error::Issue(ErrorType::ValueError, "failed to create a cloned object");
+	return Value::nil();
+}
+
+// Object#__instanceOf__(vtype:VType)
+Gurax_DeclareMethod(Object, __instanceOf__)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("vtype", VTYPE_VType, ArgOccur::Once, ArgFlag::None);
+	AddHelp(
+		Gurax_Symbol(en), 
+		"Returns `true` if the object is an instance of the specified `vtype`.\n");
+}
+
+Gurax_ImplementMethod(Object, __instanceOf__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const VType& vtype = args.Pick<Value_VType>().GetVTypeThis();
+	// Function body
+	return new Value_Bool(valueThis.IsInstanceOf(vtype));
+}
+
 // Object##__prop__(symbol:Symbol):map {block?}
 Gurax_DeclareHybridMethod(Object, __prop__)
 {
@@ -88,47 +129,6 @@ Gurax_ImplementClassMethod(Object, __str__)
 	StringStyle::Flags flags = StringStyle::ToFlags(argument);
 	// Function body
 	return new Value_String(valueThis.ToString(StringStyle(flags)));
-}
-
-// Object#__clone__()
-Gurax_DeclareMethod(Object, __clone__)
-{
-	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates a cloned object.\n");
-}
-
-Gurax_ImplementMethod(Object, __clone__)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	RefPtr<Value> pValue(valueThis.Clone());
-	if (pValue) return pValue.release();
-	Error::Issue(ErrorType::ValueError, "failed to create a cloned object");
-	return Value::nil();
-}
-
-// Object#__instanceOf__(vtype:VType)
-Gurax_DeclareMethod(Object, __instanceOf__)
-{
-	Declare(VTYPE_Bool, Flag::None);
-	DeclareArg("vtype", VTYPE_VType, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Returns `true` if the object is an instance of the specified `vtype`.\n");
-}
-
-Gurax_ImplementMethod(Object, __instanceOf__)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const VType& vtype = args.Pick<Value_VType>().GetVTypeThis();
-	// Function body
-	return new Value_Bool(valueThis.IsInstanceOf(vtype));
 }
 
 //------------------------------------------------------------------------------
@@ -197,10 +197,10 @@ void VType_Object::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VType::Invalid, Flag::Immutable, Gurax_CreateConstructor(Object));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Object, __prop__));
-	Assign(Gurax_CreateMethod(Object, __str__));
 	Assign(Gurax_CreateMethod(Object, __clone__));
 	Assign(Gurax_CreateMethod(Object, __instanceOf__));
+	Assign(Gurax_CreateMethod(Object, __prop__));
+	Assign(Gurax_CreateMethod(Object, __str__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Object, __id__));
 	Assign(Gurax_CreateProperty(Object, __vtype__));

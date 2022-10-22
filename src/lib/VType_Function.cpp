@@ -89,6 +89,33 @@ Gurax_ImplementConstructor(Function)
 }
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// Function#__help__(lang? as Symbol) {block?}
+Gurax_DeclareMethod(Function, __help__)
+{
+	Declare(VTYPE_Help, Flag::Map);
+	DeclareArg("lang", VTYPE_Symbol, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Function, __help__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
+	// Function body
+	RefPtr<Value> pValueRtn(Value::nil());
+	const Help* pHelp = valueThis.GetFunction().GetHelpHolder().Lookup(pLangCode);
+	if (pHelp) pValueRtn.reset(new Value_Help(pHelp->Reference()));
+	return argument.ReturnValue(processor, pValueRtn.release());
+}
+
+//------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
 // Function#expr
@@ -242,6 +269,8 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Function));
 	// Assignment of function
 	frameOuter.Assign(Gurax_CreateFunction(_function_));
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Function, __help__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Function, expr));
 	Assign(Gurax_CreateProperty(Function, name));

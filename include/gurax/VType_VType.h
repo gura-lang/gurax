@@ -77,7 +77,6 @@ public:
 	virtual HelpHolder* GetHelpHolder() const override { return &_pVTypeThis->GetHelpHolder(); }
 	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const override;
 	virtual bool IsVType() const override { return true; }
-	//virtual bool CanBeCallableMember() const override { return !GetVTypeThis().GetConstructor().IsEmpty(); }
 	virtual bool CanBeCallableMember() const override { return false; }
 	virtual bool CanEvalAsMethod(const Function& function) const override;
 	virtual void GatherMemberSymbol(SymbolList& symbolList) const override {

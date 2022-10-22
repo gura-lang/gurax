@@ -70,7 +70,7 @@ Gurax_ImplementHybridMethod(VType, __help__)
 	ArgPicker args(argument);
 	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
 	// Function body
-	const VType& vtypeThis = valueThis.GetVTypeCustom();
+	const VType& vtypeThis = valueThis.GetVTypeThis();
 	const Help* pHelp = argument.IsSet(Gurax_Symbol(class_))?
 		vtypeThis.GetHelpHolder().Lookup(pLangCode) : vtypeThis.GetConstructor().GetHelpHolder().Lookup(pLangCode);
 	RefPtr<Value> pValueRtn(Value::nil());
