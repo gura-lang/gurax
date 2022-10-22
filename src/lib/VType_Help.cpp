@@ -27,7 +27,7 @@ static const char* g_docHelp_en = u8R"**(
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Help(value, lang?:Symbol) {block?}
+// Help(value, lang? as Symbol) {block?}
 Gurax_DeclareConstructor(Help)
 {
 	Declare(VTYPE_Help, Flag::None);
