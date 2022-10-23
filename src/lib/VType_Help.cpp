@@ -109,8 +109,8 @@ Gurax_DeclareProperty_R(Help, doc)
 
 Gurax_ImplementPropertyGetter(Help, doc)
 {
-	auto& valueThis = GetValueThis(valueTarget);
-	return new Value_String(valueThis.GetHelp().GetDocReferable().Reference());
+	const Help& help = GetValueThis(valueTarget).GetHelp();
+	return new Value_String(help.GetDocReferable().Reference());
 }
 
 // Help#lang
@@ -126,6 +126,22 @@ Gurax_ImplementPropertyGetter(Help, lang)
 {
 	auto& valueThis = GetValueThis(valueTarget);
 	return new Value_Symbol(valueThis.GetHelp().GetLangCode());
+}
+
+// Help#tmplDoc
+Gurax_DeclareProperty_R(Help, tmplDoc)
+{
+	Declare(VTYPE_Template, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"Template object of text of the help.");
+}
+
+Gurax_ImplementPropertyGetter(Help, tmplDoc)
+{
+	const Help& help = GetValueThis(valueTarget).GetHelp();
+	if (!help.HasTmplDoc()) return Value::nil();
+	return new Value_Template(help.GetTmplDoc().Reference());
 }
 
 //------------------------------------------------------------------------------
@@ -180,6 +196,7 @@ void VType_Help::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Help, doc));
 	Assign(Gurax_CreateProperty(Help, lang));
+	Assign(Gurax_CreateProperty(Help, tmplDoc));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Question, Any);
 	Gurax_AssignOpBinary(ModMod, Any, String);
