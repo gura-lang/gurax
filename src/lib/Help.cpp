@@ -30,15 +30,16 @@ Help::~Help()
 	Template::Delete(_pTmplDoc);
 }
 
-const Template& Help::GetTmplDoc()
+const Template* Help::GetTmplDoc()
 {
 	if (!_pTmplDoc) {
 		_pTmplDoc = new Template();
 		bool autoIndentFlag = true;
 		bool appendLastEOLFlag = true;
-		_pTmplDoc->ParseString(GetDoc(), autoIndentFlag, appendLastEOLFlag);
+		if (!_pTmplDoc->ParseString(GetDoc(), autoIndentFlag, appendLastEOLFlag) ||
+			!_pTmplDoc->PrepareAndCompose()) return nullptr;
 	}
-	return *_pTmplDoc;
+	return _pTmplDoc;
 }
 
 String Help::ToString(const StringStyle& ss) const

@@ -90,7 +90,7 @@ public:
 	const String& GetDocSTL() const { return _pDoc->GetStringSTL(); }
 	const StringReferable& GetDocReferable() const { return *_pDoc; }
 	bool HasTmplDoc() const { return !!_pTmplDoc; }
-	const Template& GetTmplDoc();
+	const Template* GetTmplDoc();
 	Help* Clone() const { return new Help(*this); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

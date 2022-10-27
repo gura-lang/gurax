@@ -140,7 +140,9 @@ Gurax_DeclareProperty_R(Help, tmplDoc)
 Gurax_ImplementPropertyGetter(Help, tmplDoc)
 {
 	Help& help = GetValueThis(valueTarget).GetHelp();
-	return new Value_Template(help.GetTmplDoc().Reference());
+	const Template* pTemplate = help.GetTmplDoc();
+	if (!pTemplate) return Value::nil();
+	return new Value_Template(pTemplate->Reference());
 }
 
 //------------------------------------------------------------------------------
