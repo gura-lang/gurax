@@ -266,7 +266,7 @@ VType_wxVideoMode VTYPE_wxVideoMode("VideoMode");
 void VType_wxVideoMode::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(VideoMode_gurax));
 	// Assignment of method

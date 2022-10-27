@@ -65,7 +65,7 @@ VType_wxGridCellEnumEditor VTYPE_wxGridCellEnumEditor("GridCellEnumEditor");
 void VType_wxGridCellEnumEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellChoiceEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellEnumEditor_gurax));
 	// Assignment of method

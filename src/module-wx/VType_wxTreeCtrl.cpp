@@ -2042,7 +2042,7 @@ VType_wxTreeCtrl VTYPE_wxTreeCtrl("TreeCtrl");
 void VType_wxTreeCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(TreeCtrl_gurax));
 	// Assignment of method

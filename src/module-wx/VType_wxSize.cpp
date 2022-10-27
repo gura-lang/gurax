@@ -504,7 +504,7 @@ VType_wxSize VTYPE_wxSize("Size");
 void VType_wxSize::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Size_gurax));
 	// Assignment of method

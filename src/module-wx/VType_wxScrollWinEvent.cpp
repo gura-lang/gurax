@@ -132,7 +132,7 @@ VType_wxScrollWinEvent VTYPE_wxScrollWinEvent("ScrollWinEvent");
 void VType_wxScrollWinEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

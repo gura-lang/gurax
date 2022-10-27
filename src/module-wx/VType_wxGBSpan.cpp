@@ -156,7 +156,7 @@ VType_wxGBSpan VTYPE_wxGBSpan("GBSpan");
 void VType_wxGBSpan::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(GBSpan_gurax));
 	// Assignment of method

@@ -94,7 +94,7 @@ VType_Comment VTYPE_Comment("Comment");
 void VType_Comment::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Node, Flag::Immutable, Gurax_CreateConstructor(Comment));
 	// Assignment of method

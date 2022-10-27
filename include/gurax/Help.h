@@ -51,9 +51,7 @@ protected:
 public:
 	void AddHelp(Help* pHelp);
 	void AddHelp(const Symbol* pLangCode, StringReferable* pDoc);
-	void AddHelp(const Symbol* pLangCode, const char* doc) {
-		AddHelp(pLangCode, new StringReferable(doc));
-	}
+	void AddHelp(const Symbol* pLangCode, const char* doc);
 	void AddHelpTmpl(const Symbol* pLangCode, const char* doc);
 	const Help* GetDefault() const { return _helpOwner.empty()? nullptr : _helpOwner.front(); }
 	const Help* Lookup(const Symbol* pLangCode) const { return _helpOwner.Lookup(pLangCode); }
@@ -92,7 +90,7 @@ public:
 	const String& GetDocSTL() const { return _pDoc->GetStringSTL(); }
 	const StringReferable& GetDocReferable() const { return *_pDoc; }
 	bool HasTmplDoc() const { return !!_pTmplDoc; }
-	const Template& GetTmplDoc() const { return *_pTmplDoc; }
+	const Template& GetTmplDoc();
 	Help* Clone() const { return new Help(*this); }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

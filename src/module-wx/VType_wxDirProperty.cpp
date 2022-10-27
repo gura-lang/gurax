@@ -45,7 +45,7 @@ VType_wxDirProperty VTYPE_wxDirProperty("DirProperty");
 void VType_wxDirProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxLongStringProperty, Flag::Mutable);
 	// Assignment of method

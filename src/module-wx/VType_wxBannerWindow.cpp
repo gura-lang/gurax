@@ -224,7 +224,7 @@ VType_wxBannerWindow VTYPE_wxBannerWindow("BannerWindow");
 void VType_wxBannerWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(BannerWindow_gurax));
 	// Assignment of method

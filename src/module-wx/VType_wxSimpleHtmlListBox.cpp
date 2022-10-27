@@ -440,7 +440,7 @@ VType_wxSimpleHtmlListBox VTYPE_wxSimpleHtmlListBox("SimpleHtmlListBox");
 void VType_wxSimpleHtmlListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxHtmlListBox, Flag::Mutable, Gurax_CreateConstructor(SimpleHtmlListBox_gurax));
 	// Assignment of method

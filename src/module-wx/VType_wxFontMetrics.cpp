@@ -192,7 +192,7 @@ VType_wxFontMetrics VTYPE_wxFontMetrics("FontMetrics");
 void VType_wxFontMetrics::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(FontMetrics_gurax));
 	// Assignment of method

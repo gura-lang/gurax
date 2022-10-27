@@ -108,7 +108,7 @@ VType_wxPrintAbortDialog VTYPE_wxPrintAbortDialog("PrintAbortDialog");
 void VType_wxPrintAbortDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(PrintAbortDialog_gurax));
 	// Assignment of method

@@ -30,6 +30,17 @@ Help::~Help()
 	Template::Delete(_pTmplDoc);
 }
 
+const Template& Help::GetTmplDoc()
+{
+	if (!_pTmplDoc) {
+		_pTmplDoc = new Template();
+		bool autoIndentFlag = true;
+		bool appendLastEOLFlag = true;
+		_pTmplDoc->ParseString(GetDoc(), autoIndentFlag, appendLastEOLFlag);
+	}
+	return *_pTmplDoc;
+}
+
 String Help::ToString(const StringStyle& ss) const
 {
 	return String().Format("Help:%s", GetLangCode()->GetName());
@@ -78,6 +89,17 @@ void HelpHolder::AddHelp(const Symbol* pLangCode, StringReferable* pDoc)
 	AddHelp(new Help(pLangCode, pDoc));
 }
 
+void HelpHolder::AddHelp(const Symbol* pLangCode, const char* doc)
+{
+	AddHelp(pLangCode, new StringReferable(doc));
+}
+
+void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
+{
+	AddHelp(pLangCode, new StringReferable(doc));
+}
+
+#if 0
 void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
 {
 	RefPtr<Template> pTmpl(new Template());
@@ -95,5 +117,6 @@ void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
 	Error::Clear();
 	AddHelp(pLangCode, str.c_str());
 }
+#endif
 
 }

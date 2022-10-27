@@ -256,7 +256,7 @@ VType_Palette VTYPE_Palette("Palette");
 void VType_Palette::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Palette));
 	// Assignment of class method

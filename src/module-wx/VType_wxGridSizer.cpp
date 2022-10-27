@@ -395,7 +395,7 @@ VType_wxGridSizer VTYPE_wxGridSizer("GridSizer");
 void VType_wxGridSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSizer, Flag::Mutable, Gurax_CreateConstructor(GridSizer_gurax));
 	// Assignment of method

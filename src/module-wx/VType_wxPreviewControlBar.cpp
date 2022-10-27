@@ -145,7 +145,7 @@ VType_wxPreviewControlBar VTYPE_wxPreviewControlBar("PreviewControlBar");
 void VType_wxPreviewControlBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(PreviewControlBar_gurax));
 	// Assignment of method

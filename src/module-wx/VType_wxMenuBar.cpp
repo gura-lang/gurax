@@ -709,7 +709,7 @@ VType_wxMenuBar VTYPE_wxMenuBar("MenuBar");
 void VType_wxMenuBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(MenuBar_gurax));
 	// Assignment of method

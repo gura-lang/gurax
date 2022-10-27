@@ -212,7 +212,7 @@ VType_wxFontPickerCtrl VTYPE_wxFontPickerCtrl("FontPickerCtrl");
 void VType_wxFontPickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(FontPickerCtrl_gurax));
 	// Assignment of method

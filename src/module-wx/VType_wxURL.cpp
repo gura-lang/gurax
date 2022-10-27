@@ -173,7 +173,7 @@ VType_wxURL VTYPE_wxURL("URL");
 void VType_wxURL::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxURI, Flag::Mutable, Gurax_CreateConstructor(URL_gurax));
 	// Assignment of method

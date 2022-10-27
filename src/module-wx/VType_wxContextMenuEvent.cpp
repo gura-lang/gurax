@@ -90,7 +90,7 @@ VType_wxContextMenuEvent VTYPE_wxContextMenuEvent("ContextMenuEvent");
 void VType_wxContextMenuEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

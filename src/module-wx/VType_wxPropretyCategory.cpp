@@ -45,7 +45,7 @@ VType_wxPropretyCategory VTYPE_wxPropretyCategory("PropretyCategory");
 void VType_wxPropretyCategory::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPGProperty, Flag::Mutable);
 	// Assignment of method

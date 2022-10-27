@@ -594,7 +594,7 @@ VType_wxSlider VTYPE_wxSlider("Slider");
 void VType_wxSlider::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Slider_gurax));
 	// Assignment of method

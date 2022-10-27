@@ -156,7 +156,7 @@ VType_wxGBPosition VTYPE_wxGBPosition("GBPosition");
 void VType_wxGBPosition::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(GBPosition_gurax));
 	// Assignment of method
