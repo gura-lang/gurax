@@ -14,7 +14,7 @@ ComposeMethodHelp(vtype as VType) = {
 	str = '# Method\n'
 	str += '\n'
 	vtype.__methods__ {|method|
-		str += method.name + '\n'
+		str += method.__str__():unbracket + '\n\n'
 	}
 	str
 }
