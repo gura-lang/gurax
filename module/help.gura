@@ -1,0 +1,20 @@
+#!/usr/bin/env gurax
+
+ComposePropertyHelp(vtype as VType) = {
+	str = '# Property\n'
+	str
+}
+
+ComposeOperatorHelp(vtype as VType) = {
+	str = '# Operator\n'
+	str
+}
+
+ComposeMethodHelp(vtype as VType) = {
+	str = '# Method\n'
+	str += '\n'
+	vtype.__methods__ {|method|
+		str += method.name + '\n'
+	}
+	str
+}

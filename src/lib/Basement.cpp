@@ -43,6 +43,7 @@ bool Basement::Initialize(int argc, char** argv)
 	if (!_cmdLine.GetBool("naked")) {
 		if (!Module::ImportByName(processor, "markdown")) return false;
 		if (!Module::ImportByName(processor, "zip")) return false;
+		if (!Module::ImportByName(processor, "help")) return false;
 	}
 	if (!Module::ImportByNameList(processor, _cmdLine.GetStringList("import"))) return false;
 	for (const String& cmd : _cmdLine.GetStringList("command")) {
