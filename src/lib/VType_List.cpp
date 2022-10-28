@@ -22,6 +22,10 @@ static const char* g_docHelp_en = u8R"**(
 # Constructor
 
 # Method
+
+${List.__methods__() {|method|}}
+${method.name}
+${end}
 )**";
 
 //------------------------------------------------------------------------------

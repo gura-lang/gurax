@@ -101,6 +101,34 @@ Gurax_ImplementHybridMethod(VType, __methodSymbols__)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
+// VType##__methods__() {block?}
+Gurax_DeclareHybridMethod(VType, __methods__)
+{
+	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementHybridMethod(VType, __methods__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	SymbolList symbolList;
+	VType& vtype = valueThis.IsType(VTYPE_VType)? valueThis.GetVTypeThis() : valueThis.GetVTypeCustom();
+	vtype.GatherMethodSymbol(symbolList, false);
+	symbolList.Sort();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	for (const Symbol* pSymbol : symbolList) {
+		RefPtr<Value> pValue(vtype.GetFrameOfMember().Retrieve(pSymbol));
+		if (pValue) pValueOwner->push_back(pValue.release());
+	}
+	RefPtr<Iterator> pIterator(new Iterator_Each(pValueOwner.release()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // VType#__propSlots__() {block?}
 Gurax_DeclareClassMethod(VType, __propSlots__)
 {
@@ -240,6 +268,7 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(VType, __help__));
 	Assign(Gurax_CreateMethod(VType, __methodSymbols__));
+	Assign(Gurax_CreateMethod(VType, __methods__));
 	Assign(Gurax_CreateMethod(VType, __propSlots__));
 	Assign(Gurax_CreateMethod(VType, __propSlot__));
 	// Assignment of property

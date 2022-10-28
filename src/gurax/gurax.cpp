@@ -43,6 +43,7 @@ bool Main(int argc, char* argv[])
 		.OptBool("list",			'L')
 		.OptBool("quiet",			'q')
 		.OptBool("shared-script",	'S')
+		.OptString("template",		'T')
 		.OptBool("version",			'v');
 	if (!Initialize(argc, argv)) return false;
 	if (cmdLine.GetBool("help")) {
@@ -52,29 +53,41 @@ bool Main(int argc, char* argv[])
 		Stream::COut->Printf("%s\n", Version::GetBanner(false));
 		return true;
 	}
-	if (cmdLine.argc < 2) {
+	const char* pathNameTemplate = cmdLine.GetString("template", nullptr);
+	if (pathNameTemplate) {
+		RefPtr<Stream> pStream(Stream::Open(pathNameTemplate, Stream::OpenFlag::Read));
+		if (!pStream) return false;
+		RefPtr<Template> pTemplate(new Template());
+		bool autoIndentFlag = true;
+		bool appendLastEOLFlag = true;
+		if (!pTemplate->ParseStream(*pStream, autoIndentFlag, appendLastEOLFlag) || !pTemplate->PrepareAndCompose()) return false;
+		Processor& processor = Basement::Inst.GetProcessor();
+		pTemplate->Render(processor, *Stream::COut);
+		return !Error::IsIssued();
+	} else if (cmdLine.argc < 2) {
 		if (!Basement::Inst.GetCommandDoneFlag()) RunREPL();
 		return true;
+	} else {
+		const char* arg = cmdLine.argv[1];
+		String pathName =
+			PathName(arg).IsAbsName()? arg :
+			cmdLine.GetBool("shared-script")? PathName(arg).JoinBefore(OAL::GetDirName_Script().c_str()) :
+			PathName(arg).MakeAbsName();
+		RefPtr<Stream> pStream(Stream::Open(pathName.c_str(), Stream::OpenFlag::Read));
+		if (!pStream) return false;
+		RefPtr<Expr_Collector> pExprRoot(Parser::ParseStream(*pStream));
+		if (!pExprRoot) return false;
+		Composer composer;
+		pExprRoot->Compose(composer);
+		if (Error::IsIssued()) return false;
+		if (cmdLine.GetBool("list")) {
+			composer.PrintPUnit();
+			return true;
+		}
+		Processor& processor = Basement::Inst.GetProcessor();
+		RefPtr<Value> pValue(pExprRoot->Eval(processor));
+		return !Error::IsIssued();
 	}
-	const char* arg = cmdLine.argv[1];
-	String pathName =
-		PathName(arg).IsAbsName()? arg :
-		cmdLine.GetBool("shared-script")? PathName(arg).JoinBefore(OAL::GetDirName_Script().c_str()) :
-		PathName(arg).MakeAbsName();
-	RefPtr<Stream> pStream(Stream::Open(pathName.c_str(), Stream::OpenFlag::Read));
-	if (!pStream) return false;
-	RefPtr<Expr_Collector> pExprRoot(Parser::ParseStream(*pStream));
-	if (!pExprRoot) return false;
-	Composer composer;
-	pExprRoot->Compose(composer);
-	if (Error::IsIssued()) return false;
-	if (cmdLine.GetBool("list")) {
-		composer.PrintPUnit();
-		return true;
-	}
-	Processor& processor = Basement::Inst.GetProcessor();
-	RefPtr<Value> pValue(pExprRoot->Eval(processor));
-	return !Error::IsIssued();
 }
 
 //------------------------------------------------------------------------------

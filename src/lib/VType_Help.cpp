@@ -134,7 +134,7 @@ Gurax_DeclareProperty_R(Help, tmplDoc)
 	Declare(VTYPE_Template, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Template object of text of the help.");
+		"Template object created from the help text.");
 }
 
 Gurax_ImplementPropertyGetter(Help, tmplDoc)
