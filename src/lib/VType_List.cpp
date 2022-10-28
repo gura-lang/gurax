@@ -15,11 +15,11 @@ static const char* g_docHelp_en = u8R"**(
 
 ${help.ComposePropertyHelp(List)}
 
-${help.ComposeOperatorHelp(List)}
+# Operator
 
 # Cast Operation
 
-# Constructor
+${help.ComposeConstructorHelp(List)}
 
 ${help.ComposeMethodHelp(List)}
 )**";
