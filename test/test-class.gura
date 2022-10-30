@@ -467,8 +467,8 @@ TestCase('Call to class method') {
 		}
 		f() = {
 			Println('f()')
-			g()
-			Tester(`h())
+			A.g()
+			Tester(`A.h())
 		}
 	}
 	a = A()

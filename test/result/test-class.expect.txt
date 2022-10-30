@@ -224,7 +224,7 @@ a.Test() .. first second third
 ======== Call to class method ========
 f()
 g()
-h() .. the function A.h must be evaluated with an instance
+A.h() .. the function must be evaluated with an instance
 ======== Constructor call with mapping ========
 [1, 2, 3]
 ======== Destructor of inherited class ========

@@ -26,6 +26,7 @@ VType::VType(const Symbol* pSymbol) :
 void VType::Assign(Function* pFunction)
 {
 	pFunction->SetVTypeOfOwner(*this);
+
 	GetFrameOfMember().Assign(pFunction);
 }
 
@@ -179,7 +180,11 @@ Value* VType::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 
 bool VType::DoAssignCustomMethod(RefPtr<Function> pFunction)
 {
-	pFunction->SetFrameOuter(GetFrame());
+	//pFunction->SetFrameOuter(GetFrame());
+	//RefPtr<Frame> pFrame(new Frame_Scope(
+	//	Basement::Inst.GetProcessor().GetFrameCur().Reference(), GetFrame().Reference()));
+	//pFunction->SetFrameOuter(*pFrame);
+	pFunction->SetFrameOuter(Basement::Inst.GetProcessor().GetFrameCur());
 	pFunction->SetVTypeOfOwner(*this);
 	const Symbol* pSymbol = pFunction->GetSymbol();
 	GetFrameOfMember().Assign(pSymbol, new Value_Function(pFunction.release()));

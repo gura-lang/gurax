@@ -1496,8 +1496,7 @@ Function* Expr_Caller::GenerateFunction(
 	pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 	pExprBody->SetPUnitEnd(composer.PeekPUnitCont());
 	if (pDottedSymbol) _pDeclCallable->SetDottedSymbol(pDottedSymbol.release());
-	return new FunctionCustom(type, pSymbol,
-							  GetDeclCallable().Reference(), pExprBody->Reference(), pHelpHolder.release());
+	return new FunctionCustom(type, pSymbol, GetDeclCallable().Reference(), pExprBody->Reference(), pHelpHolder.release());
 }
 
 // This method is used by Template.
