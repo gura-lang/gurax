@@ -271,23 +271,17 @@ bool Value::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Att
 {
 	VType& vtype = GetVTypeCustom();
 	const PropSlot* pPropSlot = vtype.LookupPropSlot(pSymbol);
-	if (pPropSlot) {
-		if (!pPropSlot->CheckValidAttribute(attr)) return false;
-		if (!pPropSlot->IsSet(PropSlot::Flag::Writable)) {
-			Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
-			return false;
-		}
-		return pPropSlot->SetValue(*this, *pValue, attr);
+	if (!pPropSlot) {
+		Error::Issue(ErrorType::PropertyError,
+			 "value type '%s' doesn't have a property '%s'", vtype.MakeFullName().c_str(), pSymbol->GetName());
+		return false;
 	}
-	//if (attr.IsSet(Gurax_Symbol(assign))) {
-	//	RefPtr<PropSlot> pPropSlot(new PropSlot(pSymbol, PropSlot::Flag::Readable | PropSlot::Flag::Writable));
-	//	vtype.Assign(pPropSlot.Reference());
-	//	return pPropSlot->SetValue(*this, *pValue, attr);
-	//}
-	Error::Issue(ErrorType::PropertyError,
-				 "value type '%s' doesn't have a property '%s'",
-				 vtype.MakeFullName().c_str(), pSymbol->GetName());
-	return false;
+	if (!pPropSlot->CheckValidAttribute(attr)) return false;
+	if (!pPropSlot->IsSet(PropSlot::Flag::Writable)) {
+		Error::Issue(ErrorType::PropertyError, "property '%s' is not writable", pSymbol->GetName());
+		return false;
+	}
+	return pPropSlot->SetValue(*this, *pValue, attr);
 }
 
 bool Value::DoAssignCustomMethod(RefPtr<Function> pFunction)
