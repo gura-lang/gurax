@@ -196,6 +196,22 @@ Gurax_ImplementHybridPropertyGetter(VType, __fullName__)
 	return new Value_String(valueThis.GetVTypeThis().MakeFullName());
 }
 
+// VType##__init__
+Gurax_DeclareHybridProperty_R(VType, __init__)
+{
+	Declare(VTYPE_Function, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The constructor of the VType.");
+}
+
+Gurax_ImplementHybridPropertyGetter(VType, __init__)
+{
+	Function& constructor = GetValueThis(valueTarget).GetVTypeThis().GetConstructor();
+	if (constructor.IsEmpty()) return Value::nil();
+	return new Value_Function(constructor.Reference());
+}
+
 // VType##__name__
 Gurax_DeclareHybridProperty_R(VType, __name__)
 {
@@ -273,6 +289,7 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(VType, __propSlot__));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(VType, __fullName__));
+	Assign(Gurax_CreateProperty(VType, __init__));
 	Assign(Gurax_CreateProperty(VType, __name__));
 	Assign(Gurax_CreateProperty(VType, __symbol__));
 	// Assignment of operator
