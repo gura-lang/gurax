@@ -1,5 +1,13 @@
 #!/usr/bin/env gurax
 
+ComposeFunctionHelp(func) = {
+	doc = func.__help__().doc
+	str = '**' + func.__str__():unbracket + '**\n\n'
+	str += doc
+	str += cond(doc.EndsWith('\n'), '', '\n')
+	str
+}
+
 ComposePropertyHelp(vtype as VType) = {
 	str = ''
 	str += '# Property\n'
@@ -7,20 +15,21 @@ ComposePropertyHelp(vtype as VType) = {
 }
 
 ComposeConstructorHelp(vtype as VType) = {
-	str = ''
-	str += '# Constructor\n'
-	str
+	if (vtype.__init__) {
+		str = ''
+		str += '# Constructor\n\n'
+		str += ComposeFunctionHelp(vtype.__init__)
+		str += '\n'
+		str
+	}
 }
 
 ComposeMethodHelp(vtype as VType) = {
 	str = ''
-	str += '# Method\n'
-	str += '\n'
+	str += '# Method\n\n'
 	vtype.__methods__ {|method|
-		doc = method.__help__().doc
-		str += '**' + method.__str__():unbracket + '**\n\n'
-		str += doc
-		str += cond(doc.EndsWith('\n'), '\n', '\n\n')
+		str += ComposeFunctionHelp(method)
+		str += '\n'
 	}
 	str
 }

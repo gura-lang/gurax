@@ -16,26 +16,26 @@ of red, blue, green and alpha elements.
 
 # Predefined Variable
 
-# Property
+${help.ComposePropertyHelp(Color)}
 
 # Operator
 
 # Cast Operation
 
-The following value types are casted to `Color` instance.
+The following value types may be casted to `Color` instance.
 
 - `String` ... Regarded as a color name.
-- `Expr` ... If the expression is a pure symbol, it's regarded as a color name.
+- `Expr` ... If the expression is a pure symbol, it is regarded as a color name.
 
-# Constructor
+${help.ComposeConstructorHelp(Color)}
 
-# Method
+${help.ComposeMethodHelp(Color)}
 )**";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Color(name:String, alpha?:Number) {block?}
+// Color(name:String, alpha? as Number) {block?}
 Gurax_DeclareConstructor(Color)
 {
 	Declare(VTYPE_Color, Flag::None);
@@ -44,9 +44,10 @@ Gurax_DeclareConstructor(Color)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Color` instance from a name defined by W3C (www.w3.org).\n"
-		"The argument `alpha` specifies the alpha value of the created color\n"
-		"and takes 255 if omitted.\n");
+		"Creates a `Color` instance from a color name specified by the argument `name`.\n"
+		"The color names are defined by W3C (www.w3.org).\n"
+		"The argument `alpha` specifies the alpha value between 0 and 255.\n"
+		"It will be 255 if omitted.\n");
 }
 
 Gurax_ImplementConstructor(Color)
@@ -65,7 +66,7 @@ Gurax_ImplementConstructor(Color)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Color.RGB(r:Number, g:Number, b:Number) {block?}
+// Color.RGB(r as Number, g as Number, b as Number) {block?}
 Gurax_DeclareClassMethod(Color, RGB)
 {
 	Declare(VTYPE_Color, Flag::Map);
@@ -75,7 +76,7 @@ Gurax_DeclareClassMethod(Color, RGB)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Color` instance from red, green and blue elements of color,\n"
+		"Creates a `Color` instance from the arguments `r` for red, `g` for green, and `b` for blue of color elements,\n"
 		"each of which ranges between 0 and 255.\n");
 }
 
@@ -91,7 +92,7 @@ Gurax_ImplementClassMethod(Color, RGB)
 	return argument.ReturnValue(processor, new Value_Color(Color(r, g, b)));
 }
 
-// Color.RGBA(r:Number, g:Number, b:Number, a:Number) {block?}
+// Color.RGBA(r as Number, g as Number, b as Number, a as Number) {block?}
 Gurax_DeclareClassMethod(Color, RGBA)
 {
 	Declare(VTYPE_Color, Flag::Map);
@@ -102,7 +103,7 @@ Gurax_DeclareClassMethod(Color, RGBA)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `Color` instance from red, green, blue and alpha elements of color,\n"
+		"Creates a `Color` instance from the arguments `r` for red, `g` for green, `b` for blue, and `a` for alpha of color elements,\n"
 		"each of which ranges between 0 and 255.\n");
 }
 

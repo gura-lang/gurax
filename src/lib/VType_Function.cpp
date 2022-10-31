@@ -285,6 +285,21 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Mul, VType, Any);
 }
 
+Value* VType_Function::DoCastFrom(const Value& value, DeclArg::Flags flags) const
+{
+	if (value.IsType(VTYPE_VType)) {
+		const VType& vtype = Value_VType::GetVTypeThis(value);
+		const Constructor& constructor = vtype.GetConstructor();
+		if (constructor.IsEmpty()) {
+			Error::Issue(ErrorType::ValueError,
+				 "value type %s does not have a constructor", vtype.MakeFullName().c_str());
+			return nullptr;
+		}
+		return new Value_Function(constructor.Reference());
+	}
+	return nullptr;
+}
+
 //------------------------------------------------------------------------------
 // Value_Function
 //------------------------------------------------------------------------------
@@ -292,8 +307,7 @@ VType& Value_Function::vtype = VTYPE_Function;
 
 String Value_Function::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetFunction().ToString(
-							ss.IsUnbracket()? ss : StringStyle::Cram));
+	return ToStringGeneric(ss, GetFunction().ToString(ss.IsUnbracket()? ss : StringStyle::Cram));
 }
 
 void Value_Function::PresentHelp(Processor& processor, const Symbol* pLangCode) const
