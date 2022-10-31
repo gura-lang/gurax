@@ -18,7 +18,7 @@ ComposeMethodHelp(vtype as VType) = {
 	str += '\n'
 	vtype.__methods__ {|method|
 		doc = method.__help__().doc
-		str += '*' + method.__str__():unbracket + '*\n'
+		str += '**' + method.__str__():unbracket + '**\n\n'
 		str += doc
 		str += cond(doc.EndsWith('\n'), '\n', '\n\n')
 	}

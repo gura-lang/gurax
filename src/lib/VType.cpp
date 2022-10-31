@@ -180,10 +180,10 @@ Value* VType::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 
 bool VType::DoAssignCustomMethod(RefPtr<Function> pFunction)
 {
-	//pFunction->SetFrameOuter(GetFrame());
 	//RefPtr<Frame> pFrame(new Frame_Scope(
 	//	Basement::Inst.GetProcessor().GetFrameCur().Reference(), GetFrame().Reference()));
 	//pFunction->SetFrameOuter(*pFrame);
+	//pFunction->SetFrameOuter(GetFrame());
 	pFunction->SetFrameOuter(Basement::Inst.GetProcessor().GetFrameCur());
 	pFunction->SetVTypeOfOwner(*this);
 	const Symbol* pSymbol = pFunction->GetSymbol();

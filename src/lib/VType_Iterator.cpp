@@ -96,7 +96,22 @@ Gurax_DeclareMethod(Iterator, After)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Creates an iterator that returns a sequence of elements from the target iterable after the condition specified by `criteria` is met.\n"
+		"\n"
+		"`criteria` is a `Function` or an iterable.\n"
+		"\n"
+		"A function as the criteria has a format `f(value as Any)` or `f(value as Any, idx as Number)` where `value` is each element value and `idx` is the index\n"
+		"starting from zero. It is supposed to return a `Bool` value by determining whether `value` matches the condition.\n"
+		"\n"
+		"```\n"
+		"[3, 1, 4, 1, 5, 9].After(Function(value) {value >= 4}):list // Returns [1, 5, 9]\n"
+		"```\n"
+		"\n"
+		"An iterable as the criteria is a sequence of `Bool` values that is scanned along with the target iterable.\n"
+		"\n"
+		"```\n"
+		"[3, 1, 4, 1, 5, 9].After([false, false, true, false, false, false]):list // Returns [1, 5, 9]\n"
+		"```\n");
 }
 
 Gurax_ImplementMethod(Iterator, After)
@@ -108,7 +123,7 @@ Gurax_ImplementMethod(Iterator, After)
 	return VType_Iterator::Method_Since(processor, argument, iteratorSrc, false);
 }
 
-// Iterator#Align(n:Number, valueStuff?):map {block?}
+// Iterator#Align(n as Number, valueStuff?):map {block?}
 Gurax_DeclareMethod(Iterator, Align)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -117,8 +132,8 @@ Gurax_DeclareMethod(Iterator, Align)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates an iterator that extracts specified number of elements from the source iterable.\n"
-		"If the source iterable has fewer elements, the rest will be filled with the value of argument `valueStuff`"
+		"Creates an iterator that returns `n` pieces of elements from the source iterable.\n"
+		"If the source iterable has fewer elements, the rest will be filled with the value `valueStuff`\n"
 		"or `nil` when the argument is omitted.\n");
 }
 
@@ -149,7 +164,14 @@ Gurax_DeclareMethod(Iterator, And)
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"");
+		"Returns the last value if all the values are determined as `true`, and returns `false` otherwise.\n"
+		"\n"
+		"```\n"
+		"[true, true, true].And()           // Returns true\n"
+		"[true, false, true].And()          // Returns false\n"
+		"['apple', 'grape', 'orange'].And() // Returns 'orange'\n"
+		"['apple', false, 'orange'].And()   // Returns false\n"
+		"```\n");
 }
 
 Gurax_ImplementMethod(Iterator, And)
@@ -257,7 +279,7 @@ Gurax_ImplementMethod(Iterator, Before)
 	return VType_Iterator::Method_Until(processor, argument, iteratorSrc, false);
 }
 
-// Iterator#Combination(n:Number) {block?}
+// Iterator#Combination(n as Number) {block?}
 Gurax_DeclareMethod(Iterator, Combination)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -363,7 +385,7 @@ Gurax_ImplementMethod(Iterator, CountFalse)
 	return new Value_Number(cnt);
 }
 
-// Iterator#CountIf(criteria:Function)
+// Iterator#CountIf(criteria as Function)
 Gurax_DeclareMethod(Iterator, CountIf)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -409,7 +431,7 @@ Gurax_ImplementMethod(Iterator, CountTrue)
 	return new Value_Number(cnt);
 }
 
-// Iterator#Cycle(n?:Number) {block?}
+// Iterator#Cycle(n? as Number) {block?}
 Gurax_DeclareMethod(Iterator, Cycle)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -626,7 +648,7 @@ Value* VType_Iterator::Method_Flatten(Processor& processor, Argument& argument, 
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#Fold(size:number, advance?:number):map:[iterItem,neat] {block?}
+// Iterator#Fold(size as Number, advance? as Number):map:[iterItem,neat] {block?}
 Gurax_DeclareMethod(Iterator, Fold)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -665,7 +687,7 @@ Value* VType_Iterator::Method_Fold(Processor& processor, Argument& argument, Ite
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#Format(format:String):map {block?}
+// Iterator#Format(format as String):map {block?}
 Gurax_DeclareMethod(Iterator, Format)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -689,7 +711,7 @@ Gurax_ImplementMethod(Iterator, Format)
 	return Value::nil();
 }
 
-// Iterator#Head(n:number):map {block?}
+// Iterator#Head(n as Number):map {block?}
 Gurax_DeclareMethod(Iterator, Head)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -714,7 +736,7 @@ Gurax_ImplementMethod(Iterator, Head)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#Join(sep?:String):map
+// Iterator#Join(sep? as String):map
 Gurax_DeclareMethod(Iterator, Join)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -760,7 +782,7 @@ Gurax_ImplementMethod(Iterator, Joinb)
 	return Value::nil();
 }
 
-// Iterator#Map(func:Function) {block?}
+// Iterator#Map(func as Function) {block?}
 Gurax_DeclareMethod(Iterator, Map)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -864,7 +886,7 @@ Gurax_ImplementMethod(Iterator, NilTo)
 	return Value::nil();
 }
 
-// Iterator#Offset(offset:Number):map:[raise] {block?}
+// Iterator#Offset(offset as Number):map:[raise] {block?}
 Gurax_DeclareMethod(Iterator, Offset)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -910,7 +932,7 @@ Gurax_ImplementMethod(Iterator, Or)
 	return iteratorThis.Or();
 }
 
-// Iterator#Pack(format:String)
+// Iterator#Pack(format as String)
 Gurax_DeclareMethod(Iterator, Pack)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -933,7 +955,7 @@ Gurax_ImplementMethod(Iterator, Pack)
 	return Value::nil();
 }
 
-// Iterator#Permutation(n?:Number) {block?}
+// Iterator#Permutation(n? as Number) {block?}
 Gurax_DeclareMethod(Iterator, Permutation)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -979,7 +1001,7 @@ Value* VType_Iterator::Method_Permutation(
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#PingPong(n?:Number):[sticky,sticky@top,sticky@btm] {block?}
+// Iterator#PingPong(n? as Number):[sticky,sticky@top,sticky@btm] {block?}
 Gurax_DeclareMethod(Iterator, PingPong)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -1030,7 +1052,7 @@ Value* VType_Iterator::Method_PingPong(
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#Print(stream?:Stream:w):void
+// Iterator#Print(stream?:w as Stream):void
 Gurax_DeclareMethod(Iterator, Print)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1053,7 +1075,7 @@ Gurax_ImplementMethod(Iterator, Print)
 	return Value::nil();
 }
 
-// Iterator#Printf(format:String, stream?:Stream:w):void
+// Iterator#Printf(format as String, stream?:w as Stream):void
 Gurax_DeclareMethod(Iterator, Printf)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1077,7 +1099,7 @@ Gurax_ImplementMethod(Iterator, Printf)
 	return Value::nil();
 }
 
-// Iterator#Println(stream?:Stream:w):void
+// Iterator#Println(stream?:w as Stream):void
 Gurax_DeclareMethod(Iterator, Println)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1220,7 +1242,7 @@ Value* VType_Iterator::Method_Reverse(
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#RoundOff(threshold?:number) {block?}
+// Iterator#RoundOff(threshold? as number) {block?}
 Gurax_DeclareMethod(Iterator, RoundOff)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -1310,7 +1332,7 @@ Value* VType_Iterator::Method_Since(Processor& processor, Argument& argument,
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#Skip(n:Number):map {block?}
+// Iterator#Skip(n as Number):map {block?}
 Gurax_DeclareMethod(Iterator, Skip)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -1489,7 +1511,7 @@ Gurax_ImplementMethod(Iterator, Sum)
 	return iteratorThis.Sum(processor);
 }
 
-// Iterator#Tail(n:number):map {block?}
+// Iterator#Tail(n as Number):map {block?}
 Gurax_DeclareMethod(Iterator, Tail)
 {
 	Declare(VTYPE_Iterator, Flag::None);
