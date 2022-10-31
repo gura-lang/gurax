@@ -158,7 +158,7 @@ Gurax_ImplementMethod(List, Clear)
 	return argument.GetValueThis().Reference();
 }
 
-// List#Erase(pos*:Number):reduce
+// List#Erase(pos* as Number):reduce
 Gurax_DeclareMethod(List, Erase)
 {
 	Declare(VTYPE_List, Flag::Reduce);
@@ -185,7 +185,7 @@ Gurax_ImplementMethod(List, Erase)
 	return argument.GetValueThis().Reference();
 }
 
-// List#Get(pos:Number):map:flat
+// List#Get(pos as Number):map:flat
 Gurax_DeclareMethod(List, Get)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
@@ -210,7 +210,7 @@ Gurax_ImplementMethod(List, Get)
 	return valueOwner.Get(pos).Reference();
 }
 
-// List#Insert(pos:Number, values+):reduce
+// List#Insert(pos as Number, values+):reduce
 Gurax_DeclareMethod(List, Insert)
 {
 	Declare(VTYPE_List, Flag::Reduce);
@@ -252,7 +252,7 @@ Gurax_ImplementMethod(List, IsEmpty)
 	return new Value_Bool(valueThis.GetValueOwner().empty());
 }
 
-// List#Put(pos:Number, value:noMap):reduce:map
+// List#Put(pos as Number, value:noMap as Any):reduce:map
 Gurax_DeclareMethod(List, Put)
 {
 	Declare(VTYPE_List, Flag::Reduce | Flag::Map);
@@ -279,7 +279,7 @@ Gurax_ImplementMethod(List, Put)
 	return argument.GetValueThis().Reference();
 }
 
-// List#Shuffle(random?:Random):reduce
+// List#Shuffle(random? as Random):reduce
 Gurax_DeclareMethod(List, Shuffle)
 {
 	Declare(VTYPE_List, Flag::Reduce);
@@ -353,7 +353,7 @@ Gurax_ImplementMethod(List, After)
 	return VType_Iterator::Method_Since(processor, argument, *pIteratorSrc, false);
 }
 
-// List#Align(n:Number, value?):map {block?}
+// List#Align(n as Number, value? as Any):map {block?}
 Gurax_DeclareMethod(List, Align)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -442,7 +442,7 @@ Gurax_ImplementMethod(List, Before)
 	return VType_Iterator::Method_Until(processor, argument, *pIteratorSrc, false);
 }
 
-// List#Combination(n:Number) {block?}
+// List#Combination(n as Number) {block?}
 Gurax_DeclareMethod(List, Combination)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -522,7 +522,7 @@ Gurax_ImplementMethod(List, CountFalse)
 	return new Value_Number(cnt);
 }
 
-// List#CountIf(criteria:Function)
+// List#CountIf(criteria as Function)
 Gurax_DeclareMethod(List, CountIf)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -564,7 +564,7 @@ Gurax_ImplementMethod(List, CountTrue)
 	return new Value_Number(cnt);
 }
 
-// List#Cycle(n?:Number) {block?}
+// List#Cycle(n? as Number) {block?}
 Gurax_DeclareMethod(List, Cycle)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -655,7 +655,7 @@ Gurax_ImplementMethod(List, Flatten)
 	return VType_Iterator::Method_Flatten(processor, argument, *pIteratorSrc);
 }
 
-// List#Fold(size:number, advance?:number):map:[iterItem,neat] {block?}
+// List#Fold(size as number, advance? as number):map:[iterItem,neat] {block?}
 Gurax_DeclareMethod(List, Fold)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -677,7 +677,7 @@ Gurax_ImplementMethod(List, Fold)
 	return VType_Iterator::Method_Fold(processor, argument, *pIteratorSrc);
 }
 
-// List#Format(format:String):map {block?}
+// List#Format(format as String):map {block?}
 Gurax_DeclareMethod(List, Format)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -699,7 +699,7 @@ Gurax_ImplementMethod(List, Format)
 	return Value::nil();
 }
 
-// List#Head(n:number):map {block?}
+// List#Head(n as number):map {block?}
 Gurax_DeclareMethod(List, Head)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -724,7 +724,7 @@ Gurax_ImplementMethod(List, Head)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// List#Join(sep?:String):map
+// List#Join(sep? as String):map
 Gurax_DeclareMethod(List, Join)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -763,7 +763,7 @@ Gurax_ImplementMethod(List, Joinb)
 	return Value::nil();
 }
 
-// List#Map(func:Function) {block?}
+// List#Map(func as Function) {block?}
 Gurax_DeclareMethod(List, Map)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -857,7 +857,7 @@ Gurax_ImplementMethod(List, NilTo)
 	return Value::nil();
 }
 
-// List#Offset(offset:Number):map:[raise] {block?}
+// List#Offset(offset as Number):map:[raise] {block?}
 Gurax_DeclareMethod(List, Offset)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -904,7 +904,7 @@ Gurax_ImplementMethod(List, Or)
 	return pIteratorThis->Or();
 }
 
-// List#Pack(format:String)
+// List#Pack(format as String)
 Gurax_DeclareMethod(List, Pack)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -925,7 +925,7 @@ Gurax_ImplementMethod(List, Pack)
 	return Value::nil();
 }
 
-// List#Permutation(n?:Number) {block?}
+// List#Permutation(n? as Number) {block?}
 Gurax_DeclareMethod(List, Permutation)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -943,7 +943,7 @@ Gurax_ImplementMethod(List, Permutation)
 	return VType_Iterator::Method_Permutation(processor, argument, valueTypedOwner);
 }
 
-// List#PingPong(n?:Number):[sticky,sticky@top,sticky@btm] {block?}
+// List#PingPong(n? as Number):[sticky,sticky@top,sticky@btm] {block?}
 Gurax_DeclareMethod(List, PingPong)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -964,7 +964,7 @@ Gurax_ImplementMethod(List, PingPong)
 	return VType_Iterator::Method_PingPong(processor, argument, valueTypedOwner);
 }
 
-// List#Print(stream?:Stream:w):void
+// List#Print(stream?:w as Stream):void
 Gurax_DeclareMethod(List, Print)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -985,7 +985,7 @@ Gurax_ImplementMethod(List, Print)
 	return Value::nil();
 }
 
-// List#Printf(format:String, stream?:Stream:w):void
+// List#Printf(format as String, stream?:w as Stream):void
 Gurax_DeclareMethod(List, Printf)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1007,7 +1007,7 @@ Gurax_ImplementMethod(List, Printf)
 	return Value::nil();
 }
 
-// List#Println(stream?:Stream:w):void
+// List#Println(stream?:w as Stream):void
 Gurax_DeclareMethod(List, Println)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -1129,7 +1129,7 @@ Gurax_ImplementMethod(List, Reverse)
 	return VType_Iterator::Method_Reverse(processor, argument, valueTypedOwner);
 }
 
-// List#RoundOff(threshold?:number) {block?}
+// List#RoundOff(threshold? as Number) {block?}
 Gurax_DeclareMethod(List, RoundOff)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -1187,7 +1187,7 @@ Gurax_ImplementMethod(List, Since)
 	return VType_Iterator::Method_Since(processor, argument, *pIteratorSrc, true);
 }
 
-// List#Skip(n:Number):map {block?}
+// List#Skip(n as Number):map {block?}
 Gurax_DeclareMethod(List, Skip)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -1280,7 +1280,7 @@ Gurax_ImplementMethod(List, Sum)
 	return pIteratorThis->Sum(processor);
 }
 
-// List#Tail(n:number):map {block?}
+// List#Tail(n as number):map {block?}
 Gurax_DeclareMethod(List, Tail)
 {
 	Declare(VTYPE_Iterator, Flag::None);
