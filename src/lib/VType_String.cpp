@@ -52,7 +52,7 @@ Gurax_ImplementConstructor(String)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// String#Align(width:Number, align:Symbol, padding?:String):map as String
+// String#Align(width as Number, align as Symbol, padding? as String):map as String
 Gurax_DeclareMethod(String, Align)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -122,7 +122,7 @@ Gurax_ImplementMethod(String, Capitalize)
 	return new Value_String(str.Capitalize());
 }
 
-// String#Center(width:Number, padding?:String):map as String
+// String#Center(width as Number, padding? as String):map as String
 Gurax_DeclareMethod(String, Center)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -252,7 +252,7 @@ Gurax_ImplementMethod(String, EachLine)
 	return argument.ReturnIterator(processor, new VType_String::Iterator_EachLine(str.Reference(), chopFlag));
 }
 
-// String#Encode(codec:Codec):Binary {block?}
+// String#Encode(codec as Codec):Binary {block?}
 Gurax_DeclareMethod(String, Encode)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -295,7 +295,7 @@ Gurax_ImplementMethod(String, EncodeURI)
 	return new Value_String(str.EncodeURI());
 }
 
-// String#EndsWith(sub:String, posEnd?:Number):map:[rest,icase]
+// String#EndsWith(sub as String, posEnd? as Number):map:[rest,icase]
 Gurax_DeclareMethod(String, EndsWith)
 {
 	Declare(VTYPE_Any, Flag::Map);
@@ -395,7 +395,7 @@ Gurax_ImplementMethod(String, EscapeHTML)
 	return new Value_String(str.EscapeHTML(quoteFlag));
 }
 
-// String#Find(sub:String, pos?:Number):map:[icase]
+// String#Find(sub as String, pos? as Number):map:[icase]
 Gurax_DeclareMethod(String, Find)
 {
 	Declare(VTYPE_Any, Flag::Map);
@@ -429,7 +429,7 @@ Gurax_ImplementMethod(String, Find)
 	return (pFound == str.end())? Value::nil() : new Value_Number(str.CalcPos(pFound));
 }
 
-// String#Fold(len:Number, step?:Number):[neat] as Iterator {block?}
+// String#Fold(len as Number, step? as Number):[neat] as Iterator {block?}
 Gurax_DeclareMethod(String, Fold)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -461,7 +461,7 @@ Gurax_ImplementMethod(String, Fold)
 		processor, new VType_String::Iterator_Fold(str.Reference(), lenPerFold, lenStep, neatFlag));
 }
 
-// String#Foldw(width:Number, padding?:String) as Iterator {block?}
+// String#Foldw(width as Number, padding? as String) as Iterator {block?}
 Gurax_DeclareMethod(String, Foldw)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
@@ -570,7 +570,7 @@ Gurax_ImplementMethod(String, IsSpace)
 	return new Value_Bool(str.IsSpace());
 }
 
-// String#Left(len?:Number):map as String
+// String#Left(len? as Number):map as String
 Gurax_DeclareMethod(String, Left)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -595,7 +595,7 @@ Gurax_ImplementMethod(String, Left)
 	return new Value_String(str.Left(len));
 }
 
-// String#LJust(width:Number, padding?:String):map as String
+// String#LJust(width as Number, padding? as String):map as String
 Gurax_DeclareMethod(String, LJust)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -647,7 +647,7 @@ Gurax_ImplementMethod(String, Lower)
 	return new Value_String(str.Lower());
 }
 
-// String#Mid(pos:Number, len?:Number):map as String {block?}
+// String#Mid(pos as Number, len? as Number):map as String {block?}
 Gurax_DeclareMethod(String, Mid)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -682,7 +682,7 @@ Gurax_ImplementMethod(String, Mid)
 	return new Value_String(str.Mid(pos, len));
 }
 
-// String#Render(stream?:Stream:w):void
+// String#Render(stream?:w as Stream):void
 Gurax_DeclareMethod(String, Render)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -707,7 +707,7 @@ Gurax_ImplementMethod(String, Render)
 	return Value::nil();
 }
 
-// String#Replace(match:String, sub:String, count?:number):map:[icase] as String {block?}
+// String#Replace(match as String, sub as String, count? as Number):map:[icase] as String {block?}
 Gurax_DeclareMethod(String, Replace)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -726,7 +726,7 @@ Gurax_DeclareMethod(String, Replace)
 		"\n"
 		"With an attribute `:icase`, character cases are ignored while matching strings.\n"
 		"\n"
-		"If `block` is specified, it would be evaluated with a block parameter `|result:String, replaced:boolean|`,\n"
+		"If `block` is specified, it would be evaluated with a block parameter `|result as String, replaced as Bool|`,\n"
 		"where `result` is the result string and `replaced` indicates if there is any change\n"
 		"between the result and its original string.\n"
 		"In this case, the block's result would become the function's returned value.\n");
@@ -751,7 +751,7 @@ Gurax_ImplementMethod(String, Replace)
 	return new Value_String(strRtn);
 }
 
-// String#ReplaceM(map[]:String, count?:number):map:[icase] as String {block?}
+// String#ReplaceM(map[] as String, count? as Number):map:[icase] as String {block?}
 Gurax_DeclareMethod(String, ReplaceM)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -772,7 +772,7 @@ Gurax_DeclareMethod(String, ReplaceM)
 		"\n"
 		"With an attribute `:icase`, character cases are ignored while matching strings.\n"
 		"\n"
-		"If `block` is specified, it would be evaluated with a block parameter `|result:String, replaced:boolean|`,\n"
+		"If `block` is specified, it would be evaluated with a block parameter `|result as String, replaced as Bool|`,\n"
 		"where `result` is the result string and `replaced` indicates if there is any change\n"
 		"between the result and its original string.\n"
 		"In this case, the block's result would become the function's returned value.\n");
@@ -796,7 +796,7 @@ Gurax_ImplementMethod(String, ReplaceM)
 	return new Value_String(strRtn);
 }
 
-// String#Right(len?:Number):map as String {block?}
+// String#Right(len? as Number):map as String {block?}
 Gurax_DeclareMethod(String, Right)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -822,7 +822,7 @@ Gurax_ImplementMethod(String, Right)
 	return new Value_String(str.Right(len));
 }
 
-// String#RJust(width:Number, padding?:String):map as String
+// String#RJust(width as Number, padding? as String):map as String
 Gurax_DeclareMethod(String, RJust)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -856,7 +856,7 @@ Gurax_ImplementMethod(String, RJust)
 	return new Value_String(str.RJust(width, padding));
 }
 
-// String#Split(sep?:String, count?:Number):[icase] as String {block?}
+// String#Split(sep? as String, count? as Number):[icase] as String {block?}
 Gurax_DeclareMethod(String, Split)
 {
 	Declare(VTYPE_String, Flag::None);
@@ -893,7 +893,7 @@ Gurax_ImplementMethod(String, Split)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// String#StartsWith(sub:String, pos?:Number):map:[rest,icase]
+// String#StartsWith(sub as String, pos? as Number):map:[rest,icase]
 Gurax_DeclareMethod(String, StartsWith)
 {
 	Declare(VTYPE_Any, Flag::Map);
@@ -1112,7 +1112,7 @@ Gurax_DeclareClassMethod(String, Translator)
 		"appears with a suffix symbol \"`$`\",\n"
 		"which is meant to translate the string into another language.\n"
 		"\n"
-		"The procedure is described in `block` takes a block parameter `|str:string|`\n"
+		"The procedure is described in `block` takes a block parameter `|str as String|`\n"
 		"where `str` is the original String, and is expected to return a string\n"
 		"translated from the original.\n");
 }
