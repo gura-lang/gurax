@@ -259,6 +259,7 @@ Gurax_DeclareSymbol(horz);
 Gurax_DeclareSymbol(host);
 Gurax_DeclareSymbol(hour);
 Gurax_DeclareSymbol(http);
+Gurax_DeclareSymbol(hybrid);
 Gurax_DeclareSymbol(i);
 Gurax_DeclareSymbol(I);
 Gurax_DeclareSymbol(icase);

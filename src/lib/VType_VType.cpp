@@ -78,11 +78,12 @@ Gurax_ImplementHybridMethod(VType, __help__)
 	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
-// VType##__methodSymbols__():[class,instance] {block?}
+// VType##__methodSymbols__():[class,hybrid,instance] {block?}
 Gurax_DeclareHybridMethod(VType, __methodSymbols__)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareAttrOpt(Gurax_Symbol(class_));
+	DeclareAttrOpt(Gurax_Symbol(hybrid));
 	DeclareAttrOpt(Gurax_Symbol(instance));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
@@ -96,22 +97,34 @@ Gurax_ImplementHybridMethod(VType, __methodSymbols__)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	SymbolList symbolList;
-	Function::Flags flagsMask = Function::Flag::None;
-	if (argument.IsSet(Gurax_Symbol(class_))) flagsMask |= Function::Flag::OfClass;
-	if (argument.IsSet(Gurax_Symbol(instance))) flagsMask |= Function::Flag::OfInstance;
-	if (!flagsMask) flagsMask = Function::Flag::OfClass | Function::Flag::OfInstance;
 	VType& vtype = valueThis.IsType(VTYPE_VType)? valueThis.GetVTypeThis() : valueThis.GetVTypeCustom();
-	vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteriaEx(flagsMask), false);
+	bool allFlag = true;
+	if (argument.IsSet(Gurax_Symbol(class_))) {
+		vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteria_ClassMethod(), false);
+		allFlag = false;
+	}
+	if (argument.IsSet(Gurax_Symbol(hybrid))) {
+		vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteria_HybridMethod(), false);
+		allFlag = false;
+	}
+	if (argument.IsSet(Gurax_Symbol(instance))) {
+		vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteria_InstanceMethod(), false);
+		allFlag = false;
+	}
+	if (allFlag) {
+		vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteria_Method(), false);
+	}
 	symbolList.Sort();
 	RefPtr<Iterator> pIterator(new Iterator_Symbol(std::move(symbolList)));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// VType##__methods__():[class,instance] {block?}
+// VType##__methods__():[class,hybrid,instance] {block?}
 Gurax_DeclareHybridMethod(VType, __methods__)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareAttrOpt(Gurax_Symbol(class_));
+	DeclareAttrOpt(Gurax_Symbol(hybrid));
 	DeclareAttrOpt(Gurax_Symbol(instance));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
@@ -125,12 +138,23 @@ Gurax_ImplementHybridMethod(VType, __methods__)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	SymbolList symbolList;
-	Function::Flags flagsMask = Function::Flag::None;
-	if (argument.IsSet(Gurax_Symbol(class_))) flagsMask |= Function::Flag::OfClass;
-	if (argument.IsSet(Gurax_Symbol(instance))) flagsMask |= Function::Flag::OfInstance;
-	if (!flagsMask) flagsMask = Function::Flag::OfClass | Function::Flag::OfInstance;
 	VType& vtype = valueThis.IsType(VTYPE_VType)? valueThis.GetVTypeThis() : valueThis.GetVTypeCustom();
-	vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteriaEx(flagsMask), false);
+	bool allFlag = true;
+	if (argument.IsSet(Gurax_Symbol(class_))) {
+		vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteria_ClassMethod(), false);
+		allFlag = false;
+	}
+	if (argument.IsSet(Gurax_Symbol(hybrid))) {
+		vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteria_HybridMethod(), false);
+		allFlag = false;
+	}
+	if (argument.IsSet(Gurax_Symbol(instance))) {
+		vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteria_InstanceMethod(), false);
+		allFlag = false;
+	}
+	if (allFlag) {
+		vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteria_Method(), false);
+	}
 	symbolList.Sort();
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	for (const Symbol* pSymbol : symbolList) {

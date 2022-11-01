@@ -34,6 +34,14 @@ ComposeMethodHelp(vtype as VType) = {
 			str += '\n'
 		}
 	}
+	methods = vtype.__methods__():hybrid:list
+	if (!methods.IsEmpty()) {
+		str += '# Hybrid Method\n\n'
+		methods.Each {|method|
+			str += ComposeFunctionHelp(method)
+			str += '\n'
+		}
+	}
 	methods = vtype.__methods__():instance:list
 	if (!methods.IsEmpty()) {
 		str += '# Instance Method\n\n'

@@ -29,13 +29,28 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Function");
 public:
-	class GURAX_DLLDECLARE GatherCriteriaEx : public Frame::GatherCriteria {
-	private:
-		Function::Flags _flagsMask;
+	class GURAX_DLLDECLARE GatherCriteria_Method : public Frame::GatherCriteria {
 	public:
-		GatherCriteriaEx(Function::Flags flagsMask) : _flagsMask(flagsMask) {}
 		virtual bool IsEligible(const Value& value) const override {
-			return value.IsType(VTYPE_Function) && dynamic_cast<const Value_Function&>(value).GetFunction().IsSet(_flagsMask);
+			return value.IsType(VTYPE_Function) && dynamic_cast<const Value_Function&>(value).GetFunction().IsTypeMethod();
+		}
+	};
+	class GURAX_DLLDECLARE GatherCriteria_ClassMethod : public Frame::GatherCriteria {
+	public:
+		virtual bool IsEligible(const Value& value) const override {
+			return value.IsType(VTYPE_Function) && dynamic_cast<const Value_Function&>(value).GetFunction().IsClassMethod();
+		}
+	};
+	class GURAX_DLLDECLARE GatherCriteria_HybridMethod : public Frame::GatherCriteria {
+	public:
+		virtual bool IsEligible(const Value& value) const override {
+			return value.IsType(VTYPE_Function) && dynamic_cast<const Value_Function&>(value).GetFunction().IsHybridMethod();
+		}
+	};
+	class GURAX_DLLDECLARE GatherCriteria_InstanceMethod : public Frame::GatherCriteria {
+	public:
+		virtual bool IsEligible(const Value& value) const override {
+			return value.IsType(VTYPE_Function) && dynamic_cast<const Value_Function&>(value).GetFunction().IsInstanceMethod();
 		}
 	};
 protected:
