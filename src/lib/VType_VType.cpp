@@ -78,10 +78,12 @@ Gurax_ImplementHybridMethod(VType, __help__)
 	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
-// VType##__methodSymbols__() {block?}
+// VType##__methodSymbols__():[class,instance] {block?}
 Gurax_DeclareHybridMethod(VType, __methodSymbols__)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareAttrOpt(Gurax_Symbol(class_));
+	DeclareAttrOpt(Gurax_Symbol(instance));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -94,7 +96,10 @@ Gurax_ImplementHybridMethod(VType, __methodSymbols__)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	SymbolList symbolList;
-	Function::Flags flagsMask = Function::Flag::OfClass | Function::Flag::OfInstance;
+	Function::Flags flagsMask = Function::Flag::None;
+	if (argument.IsSet(Gurax_Symbol(class_))) flagsMask |= Function::Flag::OfClass;
+	if (argument.IsSet(Gurax_Symbol(instance))) flagsMask |= Function::Flag::OfInstance;
+	if (!flagsMask) flagsMask = Function::Flag::OfClass | Function::Flag::OfInstance;
 	VType& vtype = valueThis.IsType(VTYPE_VType)? valueThis.GetVTypeThis() : valueThis.GetVTypeCustom();
 	vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteriaEx(flagsMask), false);
 	symbolList.Sort();
@@ -102,10 +107,12 @@ Gurax_ImplementHybridMethod(VType, __methodSymbols__)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// VType##__methods__() {block?}
+// VType##__methods__():[class,instance] {block?}
 Gurax_DeclareHybridMethod(VType, __methods__)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
+	DeclareAttrOpt(Gurax_Symbol(class_));
+	DeclareAttrOpt(Gurax_Symbol(instance));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -118,7 +125,10 @@ Gurax_ImplementHybridMethod(VType, __methods__)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	SymbolList symbolList;
-	Function::Flags flagsMask = Function::Flag::OfClass | Function::Flag::OfInstance;
+	Function::Flags flagsMask = Function::Flag::None;
+	if (argument.IsSet(Gurax_Symbol(class_))) flagsMask |= Function::Flag::OfClass;
+	if (argument.IsSet(Gurax_Symbol(instance))) flagsMask |= Function::Flag::OfInstance;
+	if (!flagsMask) flagsMask = Function::Flag::OfClass | Function::Flag::OfInstance;
 	VType& vtype = valueThis.IsType(VTYPE_VType)? valueThis.GetVTypeThis() : valueThis.GetVTypeCustom();
 	vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteriaEx(flagsMask), false);
 	symbolList.Sort();
