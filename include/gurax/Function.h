@@ -202,6 +202,9 @@ public:
 	bool IsTypeFunction() const { return _type == Type::Function; }
 	bool IsTypeConstructor() const { return _type == Type::Constructor; }
 	bool IsTypeMethod() const { return _type == Type::Method; }
+	bool IsClassMethod() const { return (GetFlags() & (Flag::OfClass | Flag::OfInstance)) == Flag::OfClass; }
+	bool IsInstanceMethod() const { return (GetFlags() & (Flag::OfClass | Flag::OfInstance)) == Flag::OfInstance; }
+	bool IsHybridMethod() const { return (GetFlags() & (Flag::OfClass | Flag::OfInstance)) == (Flag::OfClass | Flag::OfInstance); }
 	void SetSymbol(const Symbol* pSymbol) { _pSymbol = pSymbol; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }

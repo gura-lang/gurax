@@ -26,10 +26,21 @@ ComposeConstructorHelp(vtype as VType) = {
 
 ComposeMethodHelp(vtype as VType) = {
 	str = ''
-	str += '# Method\n\n'
-	vtype.__methods__ {|method|
-		str += ComposeFunctionHelp(method)
-		str += '\n'
+	methods = vtype.__methods__():class:list
+	if (!methods.IsEmpty()) {
+		str += '# Class Method\n\n'
+		methods.Each {|method|
+			str += ComposeFunctionHelp(method)
+			str += '\n'
+		}
+	}
+	methods = vtype.__methods__():instance:list
+	if (!methods.IsEmpty()) {
+		str += '# Instance Method\n\n'
+		methods.Each {|method|
+			str += ComposeFunctionHelp(method)
+			str += '\n'
+		}
 	}
 	str
 }
