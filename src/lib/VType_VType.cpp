@@ -94,8 +94,9 @@ Gurax_ImplementHybridMethod(VType, __methodSymbols__)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	SymbolList symbolList;
+	Function::Flags flagsMask = Function::Flag::OfClass | Function::Flag::OfInstance;
 	VType& vtype = valueThis.IsType(VTYPE_VType)? valueThis.GetVTypeThis() : valueThis.GetVTypeCustom();
-	vtype.GatherMethodSymbol(symbolList, false);
+	vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteriaEx(flagsMask), false);
 	symbolList.Sort();
 	RefPtr<Iterator> pIterator(new Iterator_Symbol(std::move(symbolList)));
 	return argument.ReturnIterator(processor, pIterator.release());
@@ -117,8 +118,9 @@ Gurax_ImplementHybridMethod(VType, __methods__)
 	auto& valueThis = GetValueThis(argument);
 	// Function body
 	SymbolList symbolList;
+	Function::Flags flagsMask = Function::Flag::OfClass | Function::Flag::OfInstance;
 	VType& vtype = valueThis.IsType(VTYPE_VType)? valueThis.GetVTypeThis() : valueThis.GetVTypeCustom();
-	vtype.GatherMethodSymbol(symbolList, false);
+	vtype.GatherMemberSymbolIf(symbolList, Value_Function::GatherCriteriaEx(flagsMask), false);
 	symbolList.Sort();
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	for (const Symbol* pSymbol : symbolList) {

@@ -28,6 +28,16 @@ public:
 	Gurax_DeclareReferable(Value_Function);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Function");
+public:
+	class GURAX_DLLDECLARE GatherCriteriaEx : public Frame::GatherCriteria {
+	private:
+		Function::Flags _flagsMask;
+	public:
+		GatherCriteriaEx(Function::Flags flagsMask) : _flagsMask(flagsMask) {}
+		virtual bool IsEligible(const Value& value) const override {
+			return value.IsType(VTYPE_Function) && dynamic_cast<const Value_Function&>(value).GetFunction().IsSet(_flagsMask);
+		}
+	};
 protected:
 	RefPtr<Function> _pFunction;
 public:

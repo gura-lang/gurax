@@ -104,7 +104,7 @@ public:
 	void Assign(Function* pFunction);
 	void Assign(PropSlot* pPropSlot) { GetPropSlotMap().Assign(pPropSlot); }
 	void GatherMemberSymbol(SymbolList& symbolList, bool escalateFlag) const;
-	void GatherMethodSymbol(SymbolList& symbolList, bool escalateFlag) const;
+	void GatherMemberSymbolIf(SymbolList& symbolList, const Frame::GatherCriteria& gatherCriteria, bool escalateFlag) const;
 	void PresentHelp(Processor& processor, const Symbol* pLangCode) const;
 public:
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;

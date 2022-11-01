@@ -51,12 +51,13 @@ void ValueMap::GatherSymbol(SymbolList& symbolList) const
 	}
 }
 
-void ValueMap::GatherMethodSymbol(SymbolList& symbolList) const
+void ValueMap::GatherSymbolIf(SymbolList& symbolList, const Frame::GatherCriteria& gatherCriteria) const
 {
 	for (auto pair : _map) {
 		const Symbol* pSymbol = pair.first;
 		const Value* pValue = pair.second;
-		if (pValue->IsInstanceOf(VTYPE_Function)) symbolList.push_back(pSymbol);
+		//if (pValue->IsInstanceOf(VTYPE_Function)) symbolList.push_back(pSymbol);
+		if (gatherCriteria.IsEligible(*pValue)) symbolList.push_back(pSymbol);
 	}
 }
 

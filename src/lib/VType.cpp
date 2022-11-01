@@ -36,10 +36,10 @@ void VType::GatherMemberSymbol(SymbolList& symbolList, bool escalateFlag) const
 	if (escalateFlag && _pVTypeInh) _pVTypeInh->GatherMemberSymbol(symbolList, escalateFlag);
 }
 
-void VType::GatherMethodSymbol(SymbolList& symbolList, bool escalateFlag) const
+void VType::GatherMemberSymbolIf(SymbolList& symbolList, const Frame::GatherCriteria& gatherCriteria, bool escalateFlag) const
 {
-	GetFrameOfMember().GatherMethodSymbol(symbolList);
-	if (escalateFlag && _pVTypeInh) _pVTypeInh->GatherMethodSymbol(symbolList, escalateFlag);
+	GetFrameOfMember().GatherSymbolIf(symbolList, gatherCriteria);
+	if (escalateFlag && _pVTypeInh) _pVTypeInh->GatherMemberSymbolIf(symbolList, gatherCriteria, escalateFlag);
 }
 
 void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const

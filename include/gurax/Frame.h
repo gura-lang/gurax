@@ -52,6 +52,11 @@ class GURAX_DLLDECLARE Frame : public Referable {
 public:
 	// Referable declaration
 	Gurax_DeclareReferable(Frame);
+public:
+	class GURAX_DLLDECLARE GatherCriteria {
+	public:
+		virtual bool IsEligible(const Value& value) const = 0;
+	};
 protected:
 	RefPtr<Frame> _pFrameOuter;
 	RefPtr<FrameMap> _pFrameMap;
@@ -116,7 +121,7 @@ public:
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const { return true; }
 	virtual const DottedSymbol& GetDottedSymbol() const { return DottedSymbol::Empty; }
 	virtual void GatherSymbol(SymbolList& symbolList) const {}
-	virtual void GatherMethodSymbol(SymbolList& symbolList) const {}
+	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const {}
 	virtual const char* GetTypeName() const = 0;
 	virtual void PrintTree(Stream& stream, int indentLevel = 0) const;
 public:
@@ -184,7 +189,7 @@ public:
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
-	virtual void GatherMethodSymbol(SymbolList& symbolList) const override;
+	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const override;
 	virtual const char* GetTypeName() const override { return name; }
 };
 
@@ -220,7 +225,7 @@ public:
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual bool ExportTo(Frame& frameDst, bool overwriteFlag) const override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
-	virtual void GatherMethodSymbol(SymbolList& symbolList) const override;
+	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const override;
 	virtual const char* GetTypeName() const override { return name; }
 };
 
@@ -273,7 +278,7 @@ public:
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
-	virtual void GatherMethodSymbol(SymbolList& symbolList) const override;
+	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const override;
 	virtual const char* GetTypeName() const override { return name; }
 };
 
@@ -304,7 +309,7 @@ public:
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual const DottedSymbol& GetDottedSymbol() const override { return *_pDottedSymbol; }
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
-	virtual void GatherMethodSymbol(SymbolList& symbolList) const override;
+	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const override;
 	virtual const char* GetTypeName() const override { return name; }
 };
 
@@ -330,7 +335,7 @@ public:
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
-	virtual void GatherMethodSymbol(SymbolList& symbolList) const override;
+	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const override;
 	virtual const char* GetTypeName() const override { return name; }
 };
 
@@ -376,7 +381,7 @@ public:
 	virtual Value* DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual Value* DoRetrieveLocal(const Symbol* pSymbol, Frame** ppFrameSrc) override;
 	virtual void GatherSymbol(SymbolList& symbolList) const override;
-	virtual void GatherMethodSymbol(SymbolList& symbolList) const override;
+	virtual void GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const override;
 	virtual const char* GetTypeName() const override { return name; }
 };
 

@@ -226,9 +226,9 @@ void Frame_ValueMap::GatherSymbol(SymbolList& symbolList) const
 	_pValueMap->GatherSymbol(symbolList);
 }
 
-void Frame_ValueMap::GatherMethodSymbol(SymbolList& symbolList) const
+void Frame_ValueMap::GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const
 {
-	_pValueMap->GatherMethodSymbol(symbolList);
+	_pValueMap->GatherSymbolIf(symbolList, gatherCriteria);
 }
 
 //------------------------------------------------------------------------------
@@ -288,9 +288,9 @@ void Frame_OfMember::GatherSymbol(SymbolList& symbolList) const
 	_pPropSlotMap->GatherSymbol(symbolList);
 }
 
-void Frame_OfMember::GatherMethodSymbol(SymbolList& symbolList) const
+void Frame_OfMember::GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const
 {
-	_pValueMap->GatherMethodSymbol(symbolList);
+	_pValueMap->GatherSymbolIf(symbolList, gatherCriteria);
 }
 
 //------------------------------------------------------------------------------
@@ -341,9 +341,9 @@ void Frame_Basement::GatherSymbol(SymbolList& symbolList) const
 	_pFrameOuter->GatherSymbol(symbolList);
 }
 
-void Frame_Basement::GatherMethodSymbol(SymbolList& symbolList) const
+void Frame_Basement::GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const
 {
-	_pFrameOuter->GatherMethodSymbol(symbolList);
+	_pFrameOuter->GatherSymbolIf(symbolList, gatherCriteria);
 }
 
 //------------------------------------------------------------------------------
@@ -388,9 +388,9 @@ void Frame_Module::GatherSymbol(SymbolList& symbolList) const
 	if (_pFrameLocal) _pFrameLocal->GatherSymbol(symbolList);
 }
 
-void Frame_Module::GatherMethodSymbol(SymbolList& symbolList) const
+void Frame_Module::GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const
 {
-	if (_pFrameLocal) _pFrameLocal->GatherMethodSymbol(symbolList);
+	if (_pFrameLocal) _pFrameLocal->GatherSymbolIf(symbolList, gatherCriteria);
 }
 
 //------------------------------------------------------------------------------
@@ -435,9 +435,9 @@ void Frame_Scope::GatherSymbol(SymbolList& symbolList) const
 	if (_pFrameLocal) _pFrameLocal->GatherSymbol(symbolList);
 }
 
-void Frame_Scope::GatherMethodSymbol(SymbolList& symbolList) const
+void Frame_Scope::GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const
 {
-	if (_pFrameLocal) _pFrameLocal->GatherMethodSymbol(symbolList);
+	if (_pFrameLocal) _pFrameLocal->GatherSymbolIf(symbolList, gatherCriteria);
 }
 
 //------------------------------------------------------------------------------
@@ -489,9 +489,9 @@ void Frame_Block::GatherSymbol(SymbolList& symbolList) const
 	_pFrameLocal->GatherSymbol(symbolList);
 }
 
-void Frame_Block::GatherMethodSymbol(SymbolList& symbolList) const
+void Frame_Block::GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& gatherCriteria) const
 {
-	_pFrameLocal->GatherMethodSymbol(symbolList);
+	_pFrameLocal->GatherSymbolIf(symbolList, gatherCriteria);
 }
 
 }
