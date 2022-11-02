@@ -2,7 +2,7 @@
 
 ComposeFunctionHelp(func) = {
 	doc = func.__help__().doc
-	str = '**' + func.__str__():unbracket + '**\n\n'
+	str = '__' + func.__str__():unbracket + '__\n\n'
 	str += doc
 	str += cond(doc.EndsWith('\n'), '', '\n')
 	str
@@ -26,26 +26,23 @@ ComposeConstructorHelp(vtype as VType) = {
 
 ComposeMethodHelp(vtype as VType) = {
 	str = ''
-	methods = vtype.__methods__():class:list
-	if (!methods.IsEmpty()) {
+	methodsClass = vtype.__methods__():class:list
+	methodsHybrid = vtype.__methods__():hybrid:list
+	methodsInstance = vtype.__methods__():instance:list
+	if (!methodsClass.IsEmpty()) {
 		str += '# Class Method\n\n'
-		methods.Each {|method|
+		methodsClass.Each {|method|
+			str += ComposeFunctionHelp(method)
+			str += '\n'
+		}
+		methodsHybrid.Each {|method|
 			str += ComposeFunctionHelp(method)
 			str += '\n'
 		}
 	}
-	methods = vtype.__methods__():hybrid:list
-	if (!methods.IsEmpty()) {
-		str += '# Hybrid Method\n\n'
-		methods.Each {|method|
-			str += ComposeFunctionHelp(method)
-			str += '\n'
-		}
-	}
-	methods = vtype.__methods__():instance:list
-	if (!methods.IsEmpty()) {
+	if (!methodsInstance.IsEmpty()) {
 		str += '# Instance Method\n\n'
-		methods.Each {|method|
+		methodsInstance.Each {|method|
 			str += ComposeFunctionHelp(method)
 			str += '\n'
 		}
