@@ -70,7 +70,7 @@ It uses a string specified by the argument `padding` to fill lacking spaces.
 If omitted, a white space is used for padding.
 
 This method takes into account the character width based on the specification
-of East Asian Width. A kanji-character occupies two characters in width.\n
+of East Asian Width. A kanji-character occupies two characters in width.
 )**");
 }
 
@@ -105,8 +105,9 @@ Gurax_DeclareMethod(String, Capitalize)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), 
-		"Returns a string that capitalizes the first character.\n");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Returns a string that capitalizes the first character.
+)**");
 }
 
 Gurax_ImplementMethod(String, Capitalize)
@@ -127,17 +128,18 @@ Gurax_DeclareMethod(String, Center)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), 
-		"Align the string to the center within the specified `width`\n"
-		"and returns the result.\n"
-		"\n"
-		"If the string width is narrower than the specified `width`, nothing would be done.\n"
-		"\n"
-		"It uses a string specified by the argument `padding` to fill lacking spaces.\n"
-		"If omitted, a white space is used for padding.\n"
-		"\n"
-		"This method takes into account the character width based on the specification\n"
-		"of East Asian Width. A kanji-character occupies two characters in width.\n");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Align the string to the center within the specified `width`
+and returns the result.
+
+If the string width is narrower than the specified `width`, nothing would be done.
+
+It uses a string specified by the argument `padding` to fill lacking spaces.
+If omitted, a white space is used for padding.
+
+This method takes into account the character width based on the specification
+of East Asian Width. A kanji-character occupies two characters in width.
+)**");
 }
 
 Gurax_ImplementMethod(String, Center)
