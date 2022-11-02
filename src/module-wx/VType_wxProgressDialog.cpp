@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-# Property
+${help.ComposePropertyHelp(wxProgressDialog)}
 
 # Operator
 
 # Cast Operation
 
-# Constructor
+${help.ComposeConstructorHelp(wxProgressDialog)}
 
-# Method
+${help.ComposeMethodHelp(wxProgressDialog)}
 )**";
 
 //------------------------------------------------------------------------------

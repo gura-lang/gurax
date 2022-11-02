@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 The class `TimeDelta` represents a difference between two instances of `DateTime`.
 
-# Property
+${help.ComposePropertyHelp(TimeDelta)}
 
 # Operator
 
 # Cast Operation
 
-# Constructor
+${help.ComposeConstructorHelp(TimeDelta)}
 
-# Method
+${help.ComposeMethodHelp(TimeDelta)}
 )**";
 
 //------------------------------------------------------------------------------

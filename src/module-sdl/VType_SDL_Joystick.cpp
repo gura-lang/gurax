@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-# Property
+${help.ComposePropertyHelp(SDL_Joystick)}
 
 # Operator
 
 # Cast Operation
 
-# Constructor
+${help.ComposeConstructorHelp(SDL_Joystick)}
 
-# Method
+${help.ComposeMethodHelp(SDL_Joystick)}
 )**";
 
 //------------------------------------------------------------------------------

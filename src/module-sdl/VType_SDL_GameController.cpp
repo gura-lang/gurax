@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-# Property
+${help.ComposePropertyHelp(SDL_GameController)}
 
 # Operator
 
 # Cast Operation
 
-# Constructor
+${help.ComposeConstructorHelp(SDL_GameController)}
 
-# Method
+${help.ComposeMethodHelp(SDL_GameController)}
 )**";
 
 //-----------------------------------------------------------------------------

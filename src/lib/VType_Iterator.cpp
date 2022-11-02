@@ -13,7 +13,7 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-# Property
+${help.ComposePropertyHelp(Iterator)}
 
 # Operator
 
@@ -25,9 +25,9 @@ Example:
 
 # Cast Operation
 
-# Constructor
+${help.ComposeConstructorHelp(Iterator)}
 
-# Method
+${help.ComposeMethodHelp(Iterator)}
 )**";
 
 //-----------------------------------------------------------------------------
