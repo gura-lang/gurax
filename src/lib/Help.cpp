@@ -92,11 +92,13 @@ void HelpHolder::AddHelp(const Symbol* pLangCode, StringReferable* pDoc)
 
 void HelpHolder::AddHelp(const Symbol* pLangCode, const char* doc)
 {
+	while (String::IsSpace(*doc)) doc++;
 	AddHelp(pLangCode, new StringReferable(doc));
 }
 
 void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
 {
+	while (String::IsSpace(*doc)) doc++;
 	AddHelp(pLangCode, new StringReferable(doc));
 }
 
