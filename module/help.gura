@@ -52,3 +52,7 @@ ComposeMethodHelp(vtype as VType) = {
 	}
 	str
 }
+
+Render@html(vtype as VType, out?:w as Stream) = {
+	markdown.Document(vtype.__help__():class.tmplDoc.Eval().ToReader()).Render@html(out || sys.cout)
+}
