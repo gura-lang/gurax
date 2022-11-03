@@ -27,6 +27,30 @@ ${help.ComposeMethodHelp(PropSlot)}
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// PropSlot#__help__(lang? as Symbol) {block?}
+Gurax_DeclareMethod(PropSlot, __help__)
+{
+	Declare(VTYPE_Help, Flag::Map);
+	DeclareArg("lang", VTYPE_Symbol, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(PropSlot, __help__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
+	// Function body
+	RefPtr<Value> pValueRtn(Value::nil());
+	const Help* pHelp = valueThis.GetPropSlot().GetHelpHolder().Lookup(pLangCode);
+	if (pHelp) pValueRtn.reset(new Value_Help(pHelp->Reference()));
+	return argument.ReturnValue(processor, pValueRtn.release());
+}
+
 // PropSlot#IsSet(symbol:Symbol)
 Gurax_DeclareMethod(PropSlot, IsSet)
 {
@@ -55,6 +79,21 @@ Gurax_ImplementMethod(PropSlot, IsSet)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// PropSlot#name
+Gurax_DeclareProperty_R(PropSlot, name)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The property's name.");
+}
+
+Gurax_ImplementPropertyGetter(PropSlot, name)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetPropSlot().GetName());
+}
+
 // PropSlot#symbol
 Gurax_DeclareProperty_R(PropSlot, symbol)
 {
@@ -127,8 +166,10 @@ void VType_PropSlot::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
+	Assign(Gurax_CreateMethod(PropSlot, __help__));
 	Assign(Gurax_CreateMethod(PropSlot, IsSet));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(PropSlot, name));
 	Assign(Gurax_CreateProperty(PropSlot, symbol));
 	Assign(Gurax_CreateProperty(PropSlot, vtype));
 	Assign(Gurax_CreateProperty(PropSlot, isOfClass));

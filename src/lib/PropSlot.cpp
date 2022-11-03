@@ -55,9 +55,8 @@ bool PropSlot::SetValue(Value& valueTarget, const Value& value, const Attribute&
 String PropSlot::ToString(const StringStyle& ss) const
 {
 	String str;
-	str.Format("PropSlot:%s", _pSymbol->GetName());
+	str += GetName();
 	if (IsSet(Flag::ListVar)) str += "[]";
-	str.Format(":%s", GetVType().MakeFullName().c_str());
 	if (IsSet(Flag::Nil)) str += ":nil";
 	if (IsSet(Flag::StreamR)) str += ":r";
 	if (IsSet(Flag::StreamW)) str += ":w";
@@ -77,6 +76,7 @@ String PropSlot::ToString(const StringStyle& ss) const
 			str += "]";
 		}
 	}
+	str.Format(" as %s", GetVType().MakeFullName().c_str());
 	return str;
 }
 

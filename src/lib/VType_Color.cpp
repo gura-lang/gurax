@@ -14,18 +14,47 @@ static const char* g_docHelp_en = u8R"**(
 The `Color` class provides a structure to represent color data that consists
 of red, blue, green and alpha elements.
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(Color)}
 
-# Operator
+__Color.zero__ as `Color` (read only) ... 
+
+__Color.black__ as `Color` (read only) ... 
+
+__Color.silver__ as `Color` (read only) ... 
+
+__Color.gray__ as `Color` (read only) ... 
+
+__Color.white__ as `Color` (read only) ... 
+
+__Color.maroon__ as `Color` (read only) ... 
+
+__Color.red__ as `Color` (read only) ... 
+
+__Color.purple__ as `Color` (read only) ... 
+
+__Color.fuchsia__ as `Color` (read only) ... 
+
+__Color.green__ as `Color` (read only) ... 
+
+__Color.lime__ as `Color` (read only) ... 
+
+__Color.olive__ as `Color` (read only) ... 
+
+__Color.yellow__ as `Color` (read only) ... 
+
+__Color.navy__ as `Color` (read only) ... 
+
+__Color.blue__ as `Color` (read only) ... 
+
+__Color.teal__ as `Color` (read only) ... 
+
+__Color.aqua__ as `Color` (read only) ... 
 
 # Cast Operation
 
-The following value types may be casted to `Color` instance.
+`String` to `Color` ... Regarded as a color name.
 
-- `String` ... Regarded as a color name.
-- `Expr` ... If the expression is a pure symbol, it is regarded as a color name.
+`Expr` to `Color` ... If the expression is a pure symbol, it is regarded as a color name.
 
 ${help.ComposeConstructorHelp(Color)}
 
@@ -150,7 +179,7 @@ Gurax_DeclareProperty_RW(Color, r)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Value of the red element.");
+		"The red element of the color ranging between 0 and 255.");
 }
 
 Gurax_ImplementPropertyGetter(Color, r)
@@ -173,7 +202,7 @@ Gurax_DeclareProperty_RW(Color, g)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Value of the green element.");
+		"The green element of the color ranging between 0 and 255.");
 }
 
 Gurax_ImplementPropertyGetter(Color, g)
@@ -196,7 +225,7 @@ Gurax_DeclareProperty_RW(Color, b)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Value of the blue element.");
+		"The green element of the color ranging between 0 and 255.");
 }
 
 Gurax_ImplementPropertyGetter(Color, b)
@@ -219,7 +248,7 @@ Gurax_DeclareProperty_RW(Color, a)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Value of the alpha element.");
+		"The alpha element of the color ranging between 0 and 255.");
 }
 
 Gurax_ImplementPropertyGetter(Color, a)
@@ -243,7 +272,7 @@ Gurax_DeclareProperty_R(Color, grayScale)
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Gray-scale value calculated from RGB.\n");
+		"The gray-scaled number the color ranging between 0 and 255.");
 }
 
 Gurax_ImplementPropertyGetter(Color, grayScale)

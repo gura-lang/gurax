@@ -150,6 +150,21 @@ Gurax_ImplementPropertyGetter(Function, name)
 	return new Value_String(valueThis.GetFunction().GetName());
 }
 
+// Function#symbol
+Gurax_DeclareProperty_R(Function, symbol)
+{
+	Declare(VTYPE_Symbol, Flag::None);
+	AddHelp(
+		Gurax_Symbol(en),
+		"The symbol of the function.");
+}
+
+Gurax_ImplementPropertyGetter(Function, symbol)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Symbol(valueThis.GetFunction().GetSymbol());
+}
+
 // Function#type
 Gurax_DeclareProperty_R(Function, type)
 {
@@ -274,6 +289,7 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Function, expr));
 	Assign(Gurax_CreateProperty(Function, name));
+	Assign(Gurax_CreateProperty(Function, symbol));
 	Assign(Gurax_CreateProperty(Function, type));
 	Assign(Gurax_CreateProperty(Function, vtypeResult));
 	// Assignment of operator

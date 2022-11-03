@@ -11,13 +11,26 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(List)}
 
 # Operator
 
+`Any in List` ... 
+
+`List |+| List` ...
+
+`Any |+| List` ...
+
+`List |+| Any` ...
+
+
 # Cast Operation
+
+`Iterator` to `List` ... Creates a `List` instance that contains element values from the `Iterator`.
+
+`Array` to `List` ...
+
+`Tuple` to `List` ...
 
 ${help.ComposeConstructorHelp(List)}
 

@@ -10,7 +10,17 @@ ComposeFunctionHelp(func) = {
 
 ComposePropertyHelp(vtype as VType) = {
 	str = ''
-	str += '# Property\n'
+	str += '# Property\n\n'
+	vtype.__propSlots__().Each {|propSlot|
+		doc = propSlot.__help__().doc
+		str += Format('__%s%s%s__ as `%s` (%s) ... %s', vtype.__fullName__,
+			cond(propSlot.isOfClass, '.', '#'), propSlot.name, propSlot.vtype.__fullName__,
+			cond(propSlot.IsSet(`R) && !propSlot.IsSet(`W), 'read only',
+				cond(!propSlot.IsSet(`R) && propSlot.IsSet(`W), 'write only', 'read/write')),
+			doc)
+		str += cond(doc.EndsWith('\n'), '', '\n')
+		str += '\n'
+	}
 	str
 }
 

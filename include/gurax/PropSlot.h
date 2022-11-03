@@ -339,6 +339,7 @@ public:
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
 	void AddHelpTmpl(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelpTmpl(pLangCode, doc); }
 	const Symbol* GetSymbol() const { return _pSymbol; }
+	const char* GetName() const { return _pSymbol->GetName(); }
 	VType& GetVType() const { return *_pVType; }
 	const Flags GetFlags() const { return _flags; }
 	bool IsSet(Flags flags) const { return (GetFlags() & flags) != 0; }
