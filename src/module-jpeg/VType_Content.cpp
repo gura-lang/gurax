@@ -35,7 +35,7 @@ Gurax_DeclareConstructor(Content)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Creates a `jpeg.Content` instance.");
+		"Reads JPEG image data from `stream` and creates a `jpeg.Content` instance.");
 }
 
 Gurax_ImplementConstructor(Content)
@@ -59,7 +59,7 @@ Gurax_DeclareMethod(Content, AddSegment)
 	DeclareArg("segment", VTYPE_Segment, DeclArg::Occur::Once, DeclArg::Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Adds `Segment` instance to the content.");
+		"Adds a `segment` to the target content.");
 }
 
 Gurax_ImplementMethod(Content, AddSegment)
@@ -101,7 +101,7 @@ Gurax_DeclareMethod(Content, GetBuffImage)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns an image data as a Binary.");
+		"Returns an image data in `Binary`.");
 }
 
 Gurax_ImplementMethod(Content, GetBuffImage)
@@ -119,7 +119,7 @@ Gurax_DeclareMethod(Content, SetBuffImage)
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Sets an image data.");
+		"Sets an image data `buffImage`.");
 }
 
 Gurax_ImplementMethod(Content, SetBuffImage)
@@ -141,7 +141,7 @@ Gurax_DeclareMethod(Content, Write)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Writes the content data to the specified stream.\n");
+		"Writes the content data to the specified `stream`.\n");
 }
 
 Gurax_ImplementMethod(Content, Write)
