@@ -1461,9 +1461,9 @@ bool Document::FeedChar(char ch)
 			} else if (IsBeginTag(_field.c_str(), tagName, attrs, closedFlag, markdownAcceptableFlag)) {
 				const char* p = nullptr;
 				int headerLevelShift = 0;
-				if ((p = String::StartsWith<CharICase>(tagName.c_str(), "gura.headerdown")) != nullptr) {
+				if ((p = String::StartsWith<CharICase>(tagName.c_str(), "gurax.headerdown")) != nullptr) {
 					headerLevelShift = +1;
-				} else if ((p = String::StartsWith<CharICase>(tagName.c_str(), "gura.headerup")) != nullptr) {
+				} else if ((p = String::StartsWith<CharICase>(tagName.c_str(), "gurax.headerup")) != nullptr) {
 					headerLevelShift = -1;
 				}
 				if (p == nullptr) {

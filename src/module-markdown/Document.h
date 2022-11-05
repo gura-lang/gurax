@@ -165,6 +165,7 @@ public:
 protected:
 	~Document() = default;
 public:
+	void SetHeaderLevelOffset(int headerLevelOffset) { _headerLevelOffset = headerLevelOffset; }
 	bool ParseCharSeq(CharSeq& charSeq);
 	bool ParseStream(Stream& stream) { return ParseCharSeq(stream); }
 	bool ParseString(const char* str);

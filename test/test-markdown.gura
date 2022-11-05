@@ -116,7 +116,7 @@ TestCase@markdown('list-1', R'''
    The batch file may occur an error that says it cannot find `vcvarsall.bat`.
    In such a case, you have to edit `gura\gura-guest\setup.bat
    and modify `VCVARSALL` variable so that it points to a right directory of Visual Studio.
-3. Open `gura\src\gura.sln` with Visual Studio 2010, switch the configuration to Release
+3. Open `gura\src\gurax.sln` with Visual Studio 2010, switch the configuration to Release
    and build it.
 ''')
 						
@@ -1306,83 +1306,83 @@ TestCase@markdown('tag that accepts markdown', R'''
 <tr><@td>`code` *emphasized* **strong**</@td><td></td></tr>
 </table>
 ''')
-				  
-TestCase@markdown('gura.headerdown/gura.headerup', R'''
+
+TestCase@markdown('gurax.headerdown/gurax.headerup', R'''
 # header1
 
-<gura.headerdown />
+<gurax.headerdown />
 # header1 after headerdown
-<gura.headerup />
+<gurax.headerup />
 
 # header1 after headerdown and headerup
 
-<gura.headerdown2 />
+<gurax.headerdown2 />
 
 # header1 after 2 times of headerdown
 
-<gura.headerup2 />
+<gurax.headerup2 />
 
 ## header2
 
-<gura.headerdown />
+<gurax.headerdown />
 ## header2 after headerdown
-<gura.headerup />
+<gurax.headerup />
 
 ## header2 after headerdown and headerup
 
-<gura.headerdown2 />
+<gurax.headerdown2 />
 
 ## header2 after 2 times of headerdown
 
-<gura.headerup2 />
+<gurax.headerup2 />
 
 ### header3
 
-<gura.headerdown />
+<gurax.headerdown />
 ### header3 after headerdown
-<gura.headerup />
+<gurax.headerup />
 
 ### header3 after headerdown and headerup
 
-<gura.headerdown2 />
+<gurax.headerdown2 />
 
 ### header3 after 2 times of headerdown
 
-<gura.headerup2 />
+<gurax.headerup2 />
 
 header1
 ==
 
-<gura.headerdown />
+<gurax.headerdown />
 header1 after headerdown
 ==
-<gura.headerup />
+<gurax.headerup />
 
 header1 after headerdown and headerup
 ==
 
-<gura.headerdown2 />
+<gurax.headerdown2 />
 
 header1 after 2 times of headerdown
 ==
-<gura.headerup2 />
+<gurax.headerup2 />
 
 header2
 --
 
-<gura.headerdown />
+<gurax.headerdown />
 header2 after headerdown
 --
-<gura.headerup />
+<gurax.headerup />
 
 header2 after headerdown and headerup
 --
 
-<gura.headerdown2 />
+<gurax.headerdown2 />
 
 header2 after 2 times of headerdown
 --
-<gura.headerup2 />
+<gurax.headerup2 />
 ''')
 
 text@todo = R'''

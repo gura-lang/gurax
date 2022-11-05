@@ -27,15 +27,16 @@ ${help.ComposeMethodHelp(markdown.Document, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// markdown.Document(stream:r? as Stream) {block?}
+// markdown.Document(stream:r? as Stream, headerOffset? as Number) {block?}
 Gurax_DeclareConstructor(Document)
 {
 	Declare(VTYPE_Document, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
+	DeclareArg("headerOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
-		"Returns an instance of `markdown.Document`.\n"
+		"Creates an instance of `markdown.Document`.\n"
 		"If the `stream` is specified, the the instance shall be created after parsing the stream.\n"
 		"Otherwise, it creates an instance with blank data.\n");
 }
@@ -45,8 +46,11 @@ Gurax_ImplementConstructor(Document)
 	// Arguments
 	ArgPicker args(argument);
 	Stream* pStream = args.IsValid()? &args.PickStream() : nullptr;
+	int headerOffset = args.IsValid()? args.PickNumberNonNeg<int>() : 0;
+	if (Error::IsIssued()) return Value::nil();
 	// Function body
 	RefPtr<Document> pDocument(new Document());
+	pDocument->SetHeaderLevelOffset(headerOffset);
 	if (pStream && !pDocument->ParseStream(*pStream)) return Value::nil();
 	return argument.ReturnValue(processor, new Value_Document(pDocument.release()));
 }

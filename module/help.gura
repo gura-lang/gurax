@@ -60,10 +60,12 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 	str
 }
 
-Render@html(vtype as VType, lang as Symbol = `en, out?:w as Stream) = {
-	markdown.Document(vtype.__help__(lang):class.tmplDoc.Eval().ToReader()).Render@html(out || sys.cout)
+Render@html(vtype as VType, lang as Symbol = `en, out?:w as Stream, headerOffset = 0) = {
+	out = out || sys.cout
+	out.Printf('<h%d>%s Class</h%d>\n\n', headerOffset + 1, vtype.__fullName__, headerOffset + 1)
+	markdown.Document(vtype.__help__(lang):class.tmplDoc.Eval().ToReader(), headerOffset + 1).Render@html(out)
 }
 
-Render@console(vtype as VType, lang as Symbol = `en, colorFlag as Bool = true) = {
-	markdown.Document(vtype.__help__(lang):class.tmplDoc.Eval().ToReader()).Render@console(colorFlag)
+Render@console(vtype as VType, lang as Symbol = `en, colorFlag as Bool = true, headerOffset = 0) = {
+	markdown.Document(vtype.__help__(lang):class.tmplDoc.Eval().ToReader(), headerOffset + 1).Render@console(colorFlag)
 }
