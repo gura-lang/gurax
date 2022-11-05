@@ -13,7 +13,7 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(Stream)}
+${help.ComposePropertyHelp(Stream, `en)}
 
 # Operator
 
@@ -23,9 +23,9 @@ ${help.ComposePropertyHelp(Stream)}
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(Stream)}
+${help.ComposeConstructorHelp(Stream, `en)}
 
-${help.ComposeMethodHelp(Stream)}
+${help.ComposeMethodHelp(Stream, `en)}
 )**";
 
 //------------------------------------------------------------------------------

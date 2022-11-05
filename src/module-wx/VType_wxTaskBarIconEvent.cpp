@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxTaskBarIconEvent)}
+${help.ComposePropertyHelp(wxTaskBarIconEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxTaskBarIconEvent)}
+${help.ComposeConstructorHelp(wxTaskBarIconEvent, `en)}
 
-${help.ComposeMethodHelp(wxTaskBarIconEvent)}
+${help.ComposeMethodHelp(wxTaskBarIconEvent, `en)}
 )**";
 
 //------------------------------------------------------------------------------

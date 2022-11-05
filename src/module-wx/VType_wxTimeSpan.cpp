@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxTimeSpan)}
+${help.ComposePropertyHelp(wxTimeSpan, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxTimeSpan)}
+${help.ComposeConstructorHelp(wxTimeSpan, `en)}
 
-${help.ComposeMethodHelp(wxTimeSpan)}
+${help.ComposeMethodHelp(wxTimeSpan, `en)}
 )**";
 
 //------------------------------------------------------------------------------

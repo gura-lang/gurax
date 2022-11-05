@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(TTF_Font)}
+${help.ComposePropertyHelp(TTF_Font, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(TTF_Font)}
+${help.ComposeConstructorHelp(TTF_Font, `en)}
 
-${help.ComposeMethodHelp(TTF_Font)}
+${help.ComposeMethodHelp(TTF_Font, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

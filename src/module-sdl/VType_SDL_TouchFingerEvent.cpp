@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(SDL_TouchFingerEvent)}
+${help.ComposePropertyHelp(SDL_TouchFingerEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(SDL_TouchFingerEvent)}
+${help.ComposeConstructorHelp(SDL_TouchFingerEvent, `en)}
 
-${help.ComposeMethodHelp(SDL_TouchFingerEvent)}
+${help.ComposeMethodHelp(SDL_TouchFingerEvent, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

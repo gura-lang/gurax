@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxHtmlColourCell)}
+${help.ComposePropertyHelp(wxHtmlColourCell, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxHtmlColourCell)}
+${help.ComposeConstructorHelp(wxHtmlColourCell, `en)}
 
-${help.ComposeMethodHelp(wxHtmlColourCell)}
+${help.ComposeMethodHelp(wxHtmlColourCell, `en)}
 )**";
 
 //------------------------------------------------------------------------------

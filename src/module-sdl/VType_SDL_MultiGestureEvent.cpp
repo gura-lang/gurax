@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(SDL_MultiGestureEvent)}
+${help.ComposePropertyHelp(SDL_MultiGestureEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(SDL_MultiGestureEvent)}
+${help.ComposeConstructorHelp(SDL_MultiGestureEvent, `en)}
 
-${help.ComposeMethodHelp(SDL_MultiGestureEvent)}
+${help.ComposeMethodHelp(SDL_MultiGestureEvent, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

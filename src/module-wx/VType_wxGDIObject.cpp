@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxGDIObject)}
+${help.ComposePropertyHelp(wxGDIObject, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxGDIObject)}
+${help.ComposeConstructorHelp(wxGDIObject, `en)}
 
-${help.ComposeMethodHelp(wxGDIObject)}
+${help.ComposeMethodHelp(wxGDIObject, `en)}
 )**";
 
 //------------------------------------------------------------------------------

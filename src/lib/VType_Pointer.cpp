@@ -13,7 +13,7 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(Pointer)}
+${help.ComposePropertyHelp(Pointer, `en)}
 
 - `p.int8 = 10` .. Writes data into the pointed memory and increments the address by 1 byte.
 - `p.int32 = 10` .. Writes data into the pointed memory and increments the address by 4 byte.
@@ -26,9 +26,9 @@ ${help.ComposePropertyHelp(Pointer)}
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(Pointer)}
+${help.ComposeConstructorHelp(Pointer, `en)}
 
-${help.ComposeMethodHelp(Pointer)}
+${help.ComposeMethodHelp(Pointer, `en)}
 )**";
 
 //------------------------------------------------------------------------------

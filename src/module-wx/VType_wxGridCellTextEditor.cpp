@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxGridCellTextEditor)}
+${help.ComposePropertyHelp(wxGridCellTextEditor, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxGridCellTextEditor)}
+${help.ComposeConstructorHelp(wxGridCellTextEditor, `en)}
 
-${help.ComposeMethodHelp(wxGridCellTextEditor)}
+${help.ComposeMethodHelp(wxGridCellTextEditor, `en)}
 )**";
 
 //------------------------------------------------------------------------------

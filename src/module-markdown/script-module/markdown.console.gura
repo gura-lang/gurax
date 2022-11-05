@@ -226,8 +226,8 @@ Renderer = class {
 	MakeAlign(str as String, width as Number, align as Symbol):map:static = str.Align(width, align)
 }
 
-Render@console(doc as Document, colorFlag as Bool = true) = {
-	Renderer(colorFlag).FeedDocument(doc)
+Document.Render@console(colorFlag as Bool = true) = {
+	Renderer(colorFlag).FeedDocument(this)
 } %% R'''
 Renders the content of markdown document to the console.
 
@@ -235,4 +235,4 @@ In default, it uses colors to highlight items.
 Specify the argument `colorFlag` with `false` to disable the coloring process.
 '''
 
-sys.Presenter {|str as String| Render@console(Document() << str) }
+sys.Presenter {|str as String| (Document() << str).Render@console() }

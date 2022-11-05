@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(cairo_font_options_t)}
+${help.ComposePropertyHelp(cairo_font_options_t, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(cairo_font_options_t)}
+${help.ComposeConstructorHelp(cairo_font_options_t, `en)}
 
-${help.ComposeMethodHelp(cairo_font_options_t)}
+${help.ComposeMethodHelp(cairo_font_options_t, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

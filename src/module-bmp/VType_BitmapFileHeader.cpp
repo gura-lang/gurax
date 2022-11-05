@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(BitmapFileHeader)}
+${help.ComposePropertyHelp(BitmapFileHeader, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(BitmapFileHeader)}
+${help.ComposeConstructorHelp(BitmapFileHeader, `en)}
 
-${help.ComposeMethodHelp(BitmapFileHeader)}
+${help.ComposeMethodHelp(BitmapFileHeader, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

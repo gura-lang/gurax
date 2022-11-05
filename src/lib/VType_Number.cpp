@@ -13,7 +13,7 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(Number)}
+${help.ComposePropertyHelp(Number, `en)}
 
 Number.format
 
@@ -21,9 +21,9 @@ Number.format
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(Number)}
+${help.ComposeConstructorHelp(Number, `en)}
 
-${help.ComposeMethodHelp(Number)}
+${help.ComposeMethodHelp(Number, `en)}
 )**";
 
 //------------------------------------------------------------------------------

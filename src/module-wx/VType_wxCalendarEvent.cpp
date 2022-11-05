@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxCalendarEvent)}
+${help.ComposePropertyHelp(wxCalendarEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxCalendarEvent)}
+${help.ComposeConstructorHelp(wxCalendarEvent, `en)}
 
-${help.ComposeMethodHelp(wxCalendarEvent)}
+${help.ComposeMethodHelp(wxCalendarEvent, `en)}
 )**";
 
 //------------------------------------------------------------------------------

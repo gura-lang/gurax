@@ -14,7 +14,7 @@ static const char* g_docHelp_en = u8R"**(
 The `Color` class provides a structure to represent color data that consists
 of red, blue, green and alpha elements.
 
-${help.ComposePropertyHelp(Color)}
+${help.ComposePropertyHelp(Color, `en)}
 
 __Color.zero__ as `Color` (read only) ... 
 
@@ -56,9 +56,9 @@ __Color.aqua__ as `Color` (read only) ...
 
 `Expr` to `Color` ... If the expression is a pure symbol, it is regarded as a color name.
 
-${help.ComposeConstructorHelp(Color)}
+${help.ComposeConstructorHelp(Color, `en)}
 
-${help.ComposeMethodHelp(Color)}
+${help.ComposeMethodHelp(Color, `en)}
 )**";
 
 //------------------------------------------------------------------------------

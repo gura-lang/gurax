@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(cairo_glyph_t)}
+${help.ComposePropertyHelp(cairo_glyph_t, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(cairo_glyph_t)}
+${help.ComposeConstructorHelp(cairo_glyph_t, `en)}
 
-${help.ComposeMethodHelp(cairo_glyph_t)}
+${help.ComposeMethodHelp(cairo_glyph_t, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

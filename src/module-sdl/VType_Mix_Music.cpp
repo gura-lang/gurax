@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(Mix_Music)}
+${help.ComposePropertyHelp(Mix_Music, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(Mix_Music)}
+${help.ComposeConstructorHelp(Mix_Music, `en)}
 
-${help.ComposeMethodHelp(Mix_Music)}
+${help.ComposeMethodHelp(Mix_Music, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

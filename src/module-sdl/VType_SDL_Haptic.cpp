@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(SDL_Haptic)}
+${help.ComposePropertyHelp(SDL_Haptic, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(SDL_Haptic)}
+${help.ComposeConstructorHelp(SDL_Haptic, `en)}
 
-${help.ComposeMethodHelp(SDL_Haptic)}
+${help.ComposeMethodHelp(SDL_Haptic, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

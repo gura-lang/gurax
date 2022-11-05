@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxPasswordEntryDialog)}
+${help.ComposePropertyHelp(wxPasswordEntryDialog, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxPasswordEntryDialog)}
+${help.ComposeConstructorHelp(wxPasswordEntryDialog, `en)}
 
-${help.ComposeMethodHelp(wxPasswordEntryDialog)}
+${help.ComposeMethodHelp(wxPasswordEntryDialog, `en)}
 )**";
 
 //------------------------------------------------------------------------------

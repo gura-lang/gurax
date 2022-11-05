@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxVideoMode)}
+${help.ComposePropertyHelp(wxVideoMode, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxVideoMode)}
+${help.ComposeConstructorHelp(wxVideoMode, `en)}
 
-${help.ComposeMethodHelp(wxVideoMode)}
+${help.ComposeMethodHelp(wxVideoMode, `en)}
 )**";
 
 //------------------------------------------------------------------------------

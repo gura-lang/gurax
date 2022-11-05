@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(SDL_GLContext)}
+${help.ComposePropertyHelp(SDL_GLContext, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(SDL_GLContext)}
+${help.ComposeConstructorHelp(SDL_GLContext, `en)}
 
-${help.ComposeMethodHelp(SDL_GLContext)}
+${help.ComposeMethodHelp(SDL_GLContext, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -1,18 +1,18 @@
 #!/usr/bin/env gurax
 
-ComposeFunctionHelp(func) = {
-	doc = func.__help__().doc
+ComposeFunctionHelp(func, lang as Symbol = `en) = {
+	doc = func.__help__(lang).doc
 	str = '__' + func.__str__():unbracket + '__\n\n'
 	str += doc
 	str += cond(doc.EndsWith('\n'), '', '\n')
 	str
 }
 
-ComposePropertyHelp(vtype as VType) = {
+ComposePropertyHelp(vtype as VType, lang as Symbol = `en) = {
 	str = ''
 	str += '# Property\n\n'
 	vtype.__propSlots__().Each {|propSlot|
-		doc = propSlot.__help__().doc
+		doc = propSlot.__help__(lang).doc
 		str += Format('__%s%s%s__ as `%s` (%s) ... %s', vtype.__fullName__,
 			cond(propSlot.isOfClass, '.', '#'), propSlot.name, propSlot.vtype.__fullName__,
 			cond(propSlot.IsSet(`R) && !propSlot.IsSet(`W), 'read only',
@@ -24,17 +24,17 @@ ComposePropertyHelp(vtype as VType) = {
 	str
 }
 
-ComposeConstructorHelp(vtype as VType) = {
+ComposeConstructorHelp(vtype as VType, lang as Symbol = `en) = {
 	if (vtype.__init__) {
 		str = ''
 		str += '# Constructor\n\n'
-		str += ComposeFunctionHelp(vtype.__init__)
+		str += ComposeFunctionHelp(vtype.__init__, lang)
 		str += '\n'
 		str
 	}
 }
 
-ComposeMethodHelp(vtype as VType) = {
+ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 	str = ''
 	methodsClass = vtype.__methods__():class:list
 	methodsHybrid = vtype.__methods__():hybrid:list
@@ -42,24 +42,28 @@ ComposeMethodHelp(vtype as VType) = {
 	if (!methodsClass.IsEmpty()) {
 		str += '# Class Method\n\n'
 		methodsClass.Each {|method|
-			str += ComposeFunctionHelp(method)
+			str += ComposeFunctionHelp(method, lang)
 			str += '\n'
 		}
 		methodsHybrid.Each {|method|
-			str += ComposeFunctionHelp(method)
+			str += ComposeFunctionHelp(method, lang)
 			str += '\n'
 		}
 	}
 	if (!methodsInstance.IsEmpty()) {
 		str += '# Instance Method\n\n'
 		methodsInstance.Each {|method|
-			str += ComposeFunctionHelp(method)
+			str += ComposeFunctionHelp(method, lang)
 			str += '\n'
 		}
 	}
 	str
 }
 
-Render@html(vtype as VType, out?:w as Stream) = {
-	markdown.Document(vtype.__help__():class.tmplDoc.Eval().ToReader()).Render@html(out || sys.cout)
+Render@html(vtype as VType, lang as Symbol = `en, out?:w as Stream) = {
+	markdown.Document(vtype.__help__(lang):class.tmplDoc.Eval().ToReader()).Render@html(out || sys.cout)
+}
+
+Render@console(vtype as VType, lang as Symbol = `en, colorFlag as Bool = true) = {
+	markdown.Document(vtype.__help__(lang):class.tmplDoc.Eval().ToReader()).Render@console(colorFlag)
 }

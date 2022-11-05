@@ -11,7 +11,7 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-${help.ComposePropertyHelp(List)}
+${help.ComposePropertyHelp(List, `en)}
 
 # Operator
 
@@ -32,9 +32,9 @@ ${help.ComposePropertyHelp(List)}
 
 `Tuple` to `List` ...
 
-${help.ComposeConstructorHelp(List)}
+${help.ComposeConstructorHelp(List, `en)}
 
-${help.ComposeMethodHelp(List)}
+${help.ComposeMethodHelp(List, `en)}
 )**";
 
 //------------------------------------------------------------------------------

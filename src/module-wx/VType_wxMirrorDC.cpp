@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxMirrorDC)}
+${help.ComposePropertyHelp(wxMirrorDC, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxMirrorDC)}
+${help.ComposeConstructorHelp(wxMirrorDC, `en)}
 
-${help.ComposeMethodHelp(wxMirrorDC)}
+${help.ComposeMethodHelp(wxMirrorDC, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(SDL_JoyAxisEvent)}
+${help.ComposePropertyHelp(SDL_JoyAxisEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(SDL_JoyAxisEvent)}
+${help.ComposeConstructorHelp(SDL_JoyAxisEvent, `en)}
 
-${help.ComposeMethodHelp(SDL_JoyAxisEvent)}
+${help.ComposeMethodHelp(SDL_JoyAxisEvent, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

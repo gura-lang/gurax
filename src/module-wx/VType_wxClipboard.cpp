@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxClipboard)}
+${help.ComposePropertyHelp(wxClipboard, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxClipboard)}
+${help.ComposeConstructorHelp(wxClipboard, `en)}
 
-${help.ComposeMethodHelp(wxClipboard)}
+${help.ComposeMethodHelp(wxClipboard, `en)}
 )**";
 
 //------------------------------------------------------------------------------

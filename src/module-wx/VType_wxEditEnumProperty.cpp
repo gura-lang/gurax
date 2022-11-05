@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxEditEnumProperty)}
+${help.ComposePropertyHelp(wxEditEnumProperty, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxEditEnumProperty)}
+${help.ComposeConstructorHelp(wxEditEnumProperty, `en)}
 
-${help.ComposeMethodHelp(wxEditEnumProperty)}
+${help.ComposeMethodHelp(wxEditEnumProperty, `en)}
 )**";
 
 //------------------------------------------------------------------------------

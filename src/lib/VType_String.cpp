@@ -11,7 +11,7 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-${help.ComposePropertyHelp(String)}
+${help.ComposePropertyHelp(String, `en)}
 
 # Operator
 
@@ -39,9 +39,9 @@ ${help.ComposePropertyHelp(String)}
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(String)}
+${help.ComposeConstructorHelp(String, `en)}
 
-${help.ComposeMethodHelp(String)}
+${help.ComposeMethodHelp(String, `en)}
 )**";
 
 //------------------------------------------------------------------------------

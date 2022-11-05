@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxCollapsiblePane)}
+${help.ComposePropertyHelp(wxCollapsiblePane, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxCollapsiblePane)}
+${help.ComposeConstructorHelp(wxCollapsiblePane, `en)}
 
-${help.ComposeMethodHelp(wxCollapsiblePane)}
+${help.ComposeMethodHelp(wxCollapsiblePane, `en)}
 )**";
 
 //------------------------------------------------------------------------------

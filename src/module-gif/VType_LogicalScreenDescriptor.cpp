@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(LogicalScreenDescriptor)}
+${help.ComposePropertyHelp(LogicalScreenDescriptor, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(LogicalScreenDescriptor)}
+${help.ComposeConstructorHelp(LogicalScreenDescriptor, `en)}
 
-${help.ComposeMethodHelp(LogicalScreenDescriptor)}
+${help.ComposeMethodHelp(LogicalScreenDescriptor, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

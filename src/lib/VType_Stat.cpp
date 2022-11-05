@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 The `Stat` class provides information such as file name, size and creation time of a file.
 `This is a base class from which `fs.Stat` and `zip.Stat` inherit.\n"
 
-${help.ComposePropertyHelp(Stat)}
+${help.ComposePropertyHelp(Stat, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(Stat)}
+${help.ComposeConstructorHelp(Stat, `en)}
 
-${help.ComposeMethodHelp(Stat)}
+${help.ComposeMethodHelp(Stat, `en)}
 )**";
 
 //------------------------------------------------------------------------------

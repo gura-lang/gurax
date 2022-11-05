@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(Mix_Chunk)}
+${help.ComposePropertyHelp(Mix_Chunk, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(Mix_Chunk)}
+${help.ComposeConstructorHelp(Mix_Chunk, `en)}
 
-${help.ComposeMethodHelp(Mix_Chunk)}
+${help.ComposeMethodHelp(Mix_Chunk, `en)}
 )**";
 
 //-----------------------------------------------------------------------------
