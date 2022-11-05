@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(GraphicControlExtension, `en)}
+${help.ComposePropertyHelp(gif.GraphicControlExtension, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(GraphicControlExtension, `en)}
+${help.ComposeConstructorHelp(gif.GraphicControlExtension, `en)}
 
-${help.ComposeMethodHelp(GraphicControlExtension, `en)}
+${help.ComposeMethodHelp(gif.GraphicControlExtension, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

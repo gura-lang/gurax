@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxFileSystemWatcherEvent, `en)}
+${help.ComposePropertyHelp(wx.FileSystemWatcherEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxFileSystemWatcherEvent, `en)}
+${help.ComposeConstructorHelp(wx.FileSystemWatcherEvent, `en)}
 
-${help.ComposeMethodHelp(wxFileSystemWatcherEvent, `en)}
+${help.ComposeMethodHelp(wx.FileSystemWatcherEvent, `en)}
 )**";
 
 //------------------------------------------------------------------------------

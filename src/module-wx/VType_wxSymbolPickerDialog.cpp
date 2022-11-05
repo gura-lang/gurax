@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxSymbolPickerDialog, `en)}
+${help.ComposePropertyHelp(wx.SymbolPickerDialog, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxSymbolPickerDialog, `en)}
+${help.ComposeConstructorHelp(wx.SymbolPickerDialog, `en)}
 
-${help.ComposeMethodHelp(wxSymbolPickerDialog, `en)}
+${help.ComposeMethodHelp(wx.SymbolPickerDialog, `en)}
 )**";
 
 //------------------------------------------------------------------------------

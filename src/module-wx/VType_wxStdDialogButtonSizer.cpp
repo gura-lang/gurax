@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxStdDialogButtonSizer, `en)}
+${help.ComposePropertyHelp(wx.StdDialogButtonSizer, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxStdDialogButtonSizer, `en)}
+${help.ComposeConstructorHelp(wx.StdDialogButtonSizer, `en)}
 
-${help.ComposeMethodHelp(wxStdDialogButtonSizer, `en)}
+${help.ComposeMethodHelp(wx.StdDialogButtonSizer, `en)}
 )**";
 
 //------------------------------------------------------------------------------

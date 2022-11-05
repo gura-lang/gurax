@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(cairo_device_t, `en)}
+${help.ComposePropertyHelp(cairo.cairo_device_t, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(cairo_device_t, `en)}
+${help.ComposeConstructorHelp(cairo.cairo_device_t, `en)}
 
-${help.ComposeMethodHelp(cairo_device_t, `en)}
+${help.ComposeMethodHelp(cairo.cairo_device_t, `en)}
 )**";
 
 //-----------------------------------------------------------------------------

@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxAuiToolBarArt, `en)}
+${help.ComposePropertyHelp(wx.AuiToolBarArt, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxAuiToolBarArt, `en)}
+${help.ComposeConstructorHelp(wx.AuiToolBarArt, `en)}
 
-${help.ComposeMethodHelp(wxAuiToolBarArt, `en)}
+${help.ComposeMethodHelp(wx.AuiToolBarArt, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(SDL_AudioSpec, `en)}
+${help.ComposePropertyHelp(sdl.SDL_AudioSpec, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(SDL_AudioSpec, `en)}
+${help.ComposeConstructorHelp(sdl.SDL_AudioSpec, `en)}
 
-${help.ComposeMethodHelp(SDL_AudioSpec, `en)}
+${help.ComposeMethodHelp(sdl.SDL_AudioSpec, `en)}
 )**";
 
 //------------------------------------------------------------------------------

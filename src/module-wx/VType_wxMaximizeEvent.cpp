@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxMaximizeEvent, `en)}
+${help.ComposePropertyHelp(wx.MaximizeEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxMaximizeEvent, `en)}
+${help.ComposeConstructorHelp(wx.MaximizeEvent, `en)}
 
-${help.ComposeMethodHelp(wxMaximizeEvent, `en)}
+${help.ComposeMethodHelp(wx.MaximizeEvent, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxAffineMatrix2D, `en)}
+${help.ComposePropertyHelp(wx.AffineMatrix2D, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxAffineMatrix2D, `en)}
+${help.ComposeConstructorHelp(wx.AffineMatrix2D, `en)}
 
-${help.ComposeMethodHelp(wxAffineMatrix2D, `en)}
+${help.ComposeMethodHelp(wx.AffineMatrix2D, `en)}
 )**";
 
 //------------------------------------------------------------------------------

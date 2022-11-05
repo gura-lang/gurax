@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxFontDialog, `en)}
+${help.ComposePropertyHelp(wx.FontDialog, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxFontDialog, `en)}
+${help.ComposeConstructorHelp(wx.FontDialog, `en)}
 
-${help.ComposeMethodHelp(wxFontDialog, `en)}
+${help.ComposeMethodHelp(wx.FontDialog, `en)}
 )**";
 
 //------------------------------------------------------------------------------

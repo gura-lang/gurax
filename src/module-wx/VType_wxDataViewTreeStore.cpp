@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxDataViewTreeStore, `en)}
+${help.ComposePropertyHelp(wx.DataViewTreeStore, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxDataViewTreeStore, `en)}
+${help.ComposeConstructorHelp(wx.DataViewTreeStore, `en)}
 
-${help.ComposeMethodHelp(wxDataViewTreeStore, `en)}
+${help.ComposeMethodHelp(wx.DataViewTreeStore, `en)}
 )**";
 
 //------------------------------------------------------------------------------

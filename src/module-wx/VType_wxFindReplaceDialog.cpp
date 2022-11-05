@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxFindReplaceDialog, `en)}
+${help.ComposePropertyHelp(wx.FindReplaceDialog, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxFindReplaceDialog, `en)}
+${help.ComposeConstructorHelp(wx.FindReplaceDialog, `en)}
 
-${help.ComposeMethodHelp(wxFindReplaceDialog, `en)}
+${help.ComposeMethodHelp(wx.FindReplaceDialog, `en)}
 )**";
 
 //------------------------------------------------------------------------------

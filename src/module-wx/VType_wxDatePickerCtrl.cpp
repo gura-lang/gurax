@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxDatePickerCtrl, `en)}
+${help.ComposePropertyHelp(wx.DatePickerCtrl, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxDatePickerCtrl, `en)}
+${help.ComposeConstructorHelp(wx.DatePickerCtrl, `en)}
 
-${help.ComposeMethodHelp(wxDatePickerCtrl, `en)}
+${help.ComposeMethodHelp(wx.DatePickerCtrl, `en)}
 )**";
 
 //------------------------------------------------------------------------------

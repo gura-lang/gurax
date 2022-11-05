@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxCheckListBox, `en)}
+${help.ComposePropertyHelp(wx.CheckListBox, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxCheckListBox, `en)}
+${help.ComposeConstructorHelp(wx.CheckListBox, `en)}
 
-${help.ComposeMethodHelp(wxCheckListBox, `en)}
+${help.ComposeMethodHelp(wx.CheckListBox, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxLayoutConstraints, `en)}
+${help.ComposePropertyHelp(wx.LayoutConstraints, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxLayoutConstraints, `en)}
+${help.ComposeConstructorHelp(wx.LayoutConstraints, `en)}
 
-${help.ComposeMethodHelp(wxLayoutConstraints, `en)}
+${help.ComposeMethodHelp(wx.LayoutConstraints, `en)}
 )**";
 
 //------------------------------------------------------------------------------

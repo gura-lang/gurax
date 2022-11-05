@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxAutoBufferedPaintDC, `en)}
+${help.ComposePropertyHelp(wx.AutoBufferedPaintDC, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxAutoBufferedPaintDC, `en)}
+${help.ComposeConstructorHelp(wx.AutoBufferedPaintDC, `en)}
 
-${help.ComposeMethodHelp(wxAutoBufferedPaintDC, `en)}
+${help.ComposeMethodHelp(wx.AutoBufferedPaintDC, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxSingoeChoiceDialog, `en)}
+${help.ComposePropertyHelp(wx.SingoeChoiceDialog, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxSingoeChoiceDialog, `en)}
+${help.ComposeConstructorHelp(wx.SingoeChoiceDialog, `en)}
 
-${help.ComposeMethodHelp(wxSingoeChoiceDialog, `en)}
+${help.ComposeMethodHelp(wx.SingoeChoiceDialog, `en)}
 )**";
 
 //------------------------------------------------------------------------------

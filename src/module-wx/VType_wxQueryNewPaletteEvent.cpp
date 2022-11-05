@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxQueryNewPaletteEvent, `en)}
+${help.ComposePropertyHelp(wx.QueryNewPaletteEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxQueryNewPaletteEvent, `en)}
+${help.ComposeConstructorHelp(wx.QueryNewPaletteEvent, `en)}
 
-${help.ComposeMethodHelp(wxQueryNewPaletteEvent, `en)}
+${help.ComposeMethodHelp(wx.QueryNewPaletteEvent, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -15,15 +15,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(Storage, `en)}
+${help.ComposePropertyHelp(mtp.Storage, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(Storage, `en)}
+${help.ComposeConstructorHelp(mtp.Storage, `en)}
 
-${help.ComposeMethodHelp(Storage, `en)}
+${help.ComposeMethodHelp(mtp.Storage, `en)}
 )**";
 
 // mtp.Storage(iDevice? as Number, iStorage? as Number) {block?}

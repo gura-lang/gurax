@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxRibbonGallery, `en)}
+${help.ComposePropertyHelp(wx.RibbonGallery, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxRibbonGallery, `en)}
+${help.ComposeConstructorHelp(wx.RibbonGallery, `en)}
 
-${help.ComposeMethodHelp(wxRibbonGallery, `en)}
+${help.ComposeMethodHelp(wx.RibbonGallery, `en)}
 )**";
 
 //------------------------------------------------------------------------------

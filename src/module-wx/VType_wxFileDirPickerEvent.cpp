@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxFileDirPickerEvent, `en)}
+${help.ComposePropertyHelp(wx.FileDirPickerEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxFileDirPickerEvent, `en)}
+${help.ComposeConstructorHelp(wx.FileDirPickerEvent, `en)}
 
-${help.ComposeMethodHelp(wxFileDirPickerEvent, `en)}
+${help.ComposeMethodHelp(wx.FileDirPickerEvent, `en)}
 )**";
 
 //------------------------------------------------------------------------------

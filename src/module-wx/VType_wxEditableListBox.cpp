@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxEditableListBox, `en)}
+${help.ComposePropertyHelp(wx.EditableListBox, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxEditableListBox, `en)}
+${help.ComposeConstructorHelp(wx.EditableListBox, `en)}
 
-${help.ComposeMethodHelp(wxEditableListBox, `en)}
+${help.ComposeMethodHelp(wx.EditableListBox, `en)}
 )**";
 
 //------------------------------------------------------------------------------

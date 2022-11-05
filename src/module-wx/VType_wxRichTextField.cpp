@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxRichTextField, `en)}
+${help.ComposePropertyHelp(wx.RichTextField, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxRichTextField, `en)}
+${help.ComposeConstructorHelp(wx.RichTextField, `en)}
 
-${help.ComposeMethodHelp(wxRichTextField, `en)}
+${help.ComposeMethodHelp(wx.RichTextField, `en)}
 )**";
 
 //------------------------------------------------------------------------------

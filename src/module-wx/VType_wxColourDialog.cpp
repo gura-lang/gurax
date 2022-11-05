@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxColourDialog, `en)}
+${help.ComposePropertyHelp(wx.ColourDialog, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxColourDialog, `en)}
+${help.ComposeConstructorHelp(wx.ColourDialog, `en)}
 
-${help.ComposeMethodHelp(wxColourDialog, `en)}
+${help.ComposeMethodHelp(wx.ColourDialog, `en)}
 )**";
 
 //------------------------------------------------------------------------------

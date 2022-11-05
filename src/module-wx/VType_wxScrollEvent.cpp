@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxScrollEvent, `en)}
+${help.ComposePropertyHelp(wx.ScrollEvent, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxScrollEvent, `en)}
+${help.ComposeConstructorHelp(wx.ScrollEvent, `en)}
 
-${help.ComposeMethodHelp(wxScrollEvent, `en)}
+${help.ComposeMethodHelp(wx.ScrollEvent, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxMultiChoiceDialog, `en)}
+${help.ComposePropertyHelp(wx.MultiChoiceDialog, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxMultiChoiceDialog, `en)}
+${help.ComposeConstructorHelp(wx.MultiChoiceDialog, `en)}
 
-${help.ComposeMethodHelp(wxMultiChoiceDialog, `en)}
+${help.ComposeMethodHelp(wx.MultiChoiceDialog, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxGrid, `en)}
+${help.ComposePropertyHelp(wx.Grid, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxGrid, `en)}
+${help.ComposeConstructorHelp(wx.Grid, `en)}
 
-${help.ComposeMethodHelp(wxGrid, `en)}
+${help.ComposeMethodHelp(wx.Grid, `en)}
 )**";
 
 //------------------------------------------------------------------------------

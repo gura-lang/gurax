@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxBitmapHandler, `en)}
+${help.ComposePropertyHelp(wx.BitmapHandler, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxBitmapHandler, `en)}
+${help.ComposeConstructorHelp(wx.BitmapHandler, `en)}
 
-${help.ComposeMethodHelp(wxBitmapHandler, `en)}
+${help.ComposeMethodHelp(wx.BitmapHandler, `en)}
 )**";
 
 //------------------------------------------------------------------------------

@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(cairo_rectangle_t, `en)}
+${help.ComposePropertyHelp(cairo.cairo_rectangle_t, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(cairo_rectangle_t, `en)}
+${help.ComposeConstructorHelp(cairo.cairo_rectangle_t, `en)}
 
-${help.ComposeMethodHelp(cairo_rectangle_t, `en)}
+${help.ComposeMethodHelp(cairo.cairo_rectangle_t, `en)}
 )**";
 
 //------------------------------------------------------------------------------

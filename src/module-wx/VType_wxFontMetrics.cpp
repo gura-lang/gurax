@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxFontMetrics, `en)}
+${help.ComposePropertyHelp(wx.FontMetrics, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxFontMetrics, `en)}
+${help.ComposeConstructorHelp(wx.FontMetrics, `en)}
 
-${help.ComposeMethodHelp(wxFontMetrics, `en)}
+${help.ComposeMethodHelp(wx.FontMetrics, `en)}
 )**";
 
 //------------------------------------------------------------------------------

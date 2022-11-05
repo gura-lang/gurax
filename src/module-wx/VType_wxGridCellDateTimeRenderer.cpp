@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxGridCellDateTimeRenderer, `en)}
+${help.ComposePropertyHelp(wx.GridCellDateTimeRenderer, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxGridCellDateTimeRenderer, `en)}
+${help.ComposeConstructorHelp(wx.GridCellDateTimeRenderer, `en)}
 
-${help.ComposeMethodHelp(wxGridCellDateTimeRenderer, `en)}
+${help.ComposeMethodHelp(wx.GridCellDateTimeRenderer, `en)}
 )**";
 
 //------------------------------------------------------------------------------

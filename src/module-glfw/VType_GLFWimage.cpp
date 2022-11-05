@@ -13,15 +13,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(GLFWimage, `en)}
+${help.ComposePropertyHelp(glfw.GLFWimage, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(GLFWimage, `en)}
+${help.ComposeConstructorHelp(glfw.GLFWimage, `en)}
 
-${help.ComposeMethodHelp(GLFWimage, `en)}
+${help.ComposeMethodHelp(glfw.GLFWimage, `en)}
 )**";
 
 //------------------------------------------------------------------------------

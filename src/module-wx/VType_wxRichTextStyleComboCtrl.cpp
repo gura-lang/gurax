@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxRichTextStyleComboCtrl, `en)}
+${help.ComposePropertyHelp(wx.RichTextStyleComboCtrl, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxRichTextStyleComboCtrl, `en)}
+${help.ComposeConstructorHelp(wx.RichTextStyleComboCtrl, `en)}
 
-${help.ComposeMethodHelp(wxRichTextStyleComboCtrl, `en)}
+${help.ComposeMethodHelp(wx.RichTextStyleComboCtrl, `en)}
 )**";
 
 //------------------------------------------------------------------------------

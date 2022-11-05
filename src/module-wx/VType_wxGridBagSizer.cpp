@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxGridBagSizer, `en)}
+${help.ComposePropertyHelp(wx.GridBagSizer, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxGridBagSizer, `en)}
+${help.ComposeConstructorHelp(wx.GridBagSizer, `en)}
 
-${help.ComposeMethodHelp(wxGridBagSizer, `en)}
+${help.ComposeMethodHelp(wx.GridBagSizer, `en)}
 )**";
 
 //------------------------------------------------------------------------------

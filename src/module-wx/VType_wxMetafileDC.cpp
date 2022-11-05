@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxMetafileDC, `en)}
+${help.ComposePropertyHelp(wx.MetafileDC, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxMetafileDC, `en)}
+${help.ComposeConstructorHelp(wx.MetafileDC, `en)}
 
-${help.ComposeMethodHelp(wxMetafileDC, `en)}
+${help.ComposeMethodHelp(wx.MetafileDC, `en)}
 )**";
 
 //------------------------------------------------------------------------------

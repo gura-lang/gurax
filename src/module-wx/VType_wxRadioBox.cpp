@@ -14,15 +14,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-${help.ComposePropertyHelp(wxRadioBox, `en)}
+${help.ComposePropertyHelp(wx.RadioBox, `en)}
 
 # Operator
 
 # Cast Operation
 
-${help.ComposeConstructorHelp(wxRadioBox, `en)}
+${help.ComposeConstructorHelp(wx.RadioBox, `en)}
 
-${help.ComposeMethodHelp(wxRadioBox, `en)}
+${help.ComposeMethodHelp(wx.RadioBox, `en)}
 )**";
 
 //------------------------------------------------------------------------------
