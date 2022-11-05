@@ -70,7 +70,12 @@ void VType::Declare(VType& vtypeInh, Flags flags, Constructor* pConstructor)
 	_pVTypeInh = &vtypeInh;
 	GetFrameOfMember().SetFrameOuter(_pVTypeInh->GetFrameOfMember().Reference());
 	_flags = flags;
-	_pConstructor.reset(pConstructor? pConstructor : Constructor::Empty.Reference());
+	if (pConstructor) {
+		pConstructor->SetFrameOuter(Basement::Inst.GetProcessor().GetFrameCur());
+		_pConstructor.reset(pConstructor);
+	} else {
+		_pConstructor.reset(Constructor::Empty.Reference());
+	}
 }
 
 String VType::MakeFullName() const

@@ -144,6 +144,7 @@ f(a = 1, b = 2, c = 3, d = 4, e = 5)
 Function
   #expr             Expr         R
   #name             String       R
+  #symbol           Symbol       R
   #type             Symbol       R
   #vtypeResult      Any          R,nil
 ======== Default Value (1) ========

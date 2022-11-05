@@ -14,66 +14,66 @@ A .. <VType:A(name as String):map{block?}>
 A was destroyed
 ======== Property Declaration ========
 --------
-A.__propSlot__(`a1) .. <PropSlot:a1:Any:nil:R:W>
-A.__propSlot__(`a2) .. <PropSlot:a2:Number:nil:R:W>
-A.__propSlot__(`a3) .. <PropSlot:a3:String:nil:R:W>
-A.__propSlot__(`a4) .. <PropSlot:a4:Number:R:W>
-A.__propSlot__(`a5) .. <PropSlot:a5:String:R:W>
-A.__propSlot__(`a6) .. <PropSlot:a6:Number:R:W>
-A.__propSlot__(`a7) .. <PropSlot:a7:String:R:W>
-A.__propSlot__(`a8) .. <PropSlot:a8:Number:nil:R:W>
-A.__propSlot__(`a9) .. <PropSlot:a9:String:nil:R:W>
+A.__propSlot__(`a1) .. <PropSlot:a1:nil:R:W as Any>
+A.__propSlot__(`a2) .. <PropSlot:a2:nil:R:W as Number>
+A.__propSlot__(`a3) .. <PropSlot:a3:nil:R:W as String>
+A.__propSlot__(`a4) .. <PropSlot:a4:R:W as Number>
+A.__propSlot__(`a5) .. <PropSlot:a5:R:W as String>
+A.__propSlot__(`a6) .. <PropSlot:a6:R:W as Number>
+A.__propSlot__(`a7) .. <PropSlot:a7:R:W as String>
+A.__propSlot__(`a8) .. <PropSlot:a8:nil:R:W as Number>
+A.__propSlot__(`a9) .. <PropSlot:a9:nil:R:W as String>
 --------
-A.__propSlot__(`b1) .. <PropSlot:b1[]:Any:nil:R:W>
-A.__propSlot__(`b2) .. <PropSlot:b2[]:Number:nil:R:W>
-A.__propSlot__(`b3) .. <PropSlot:b3[]:String:nil:R:W>
-A.__propSlot__(`b4) .. <PropSlot:b4[]:Number:R:W>
-A.__propSlot__(`b5) .. <PropSlot:b5[]:String:R:W>
-A.__propSlot__(`b6) .. <PropSlot:b6[]:Any:R:W>
-A.__propSlot__(`b7) .. <PropSlot:b7[]:Any:R:W>
-A.__propSlot__(`b8) .. <PropSlot:b8[]:Number:R:W>
-A.__propSlot__(`b9) .. <PropSlot:b9[]:String:R:W>
-A.__propSlot__(`b10) .. <PropSlot:b10[]:Number:nil:R:W>
+A.__propSlot__(`b1) .. <PropSlot:b1[]:nil:R:W as Any>
+A.__propSlot__(`b2) .. <PropSlot:b2[]:nil:R:W as Number>
+A.__propSlot__(`b3) .. <PropSlot:b3[]:nil:R:W as String>
+A.__propSlot__(`b4) .. <PropSlot:b4[]:R:W as Number>
+A.__propSlot__(`b5) .. <PropSlot:b5[]:R:W as String>
+A.__propSlot__(`b6) .. <PropSlot:b6[]:R:W as Any>
+A.__propSlot__(`b7) .. <PropSlot:b7[]:R:W as Any>
+A.__propSlot__(`b8) .. <PropSlot:b8[]:R:W as Number>
+A.__propSlot__(`b9) .. <PropSlot:b9[]:R:W as String>
+A.__propSlot__(`b10) .. <PropSlot:b10[]:nil:R:W as Number>
 --------
-A.__propSlot__(`c1) .. <PropSlot:c1:Any:nil:public:R:W>
-A.__propSlot__(`c2) .. <PropSlot:c2:Number:nil:public:R:W>
-A.__propSlot__(`c3) .. <PropSlot:c3:String:nil:public:R:W>
-A.__propSlot__(`c4) .. <PropSlot:c4:Number:public:R:W>
-A.__propSlot__(`c5) .. <PropSlot:c5:String:public:R:W>
-A.__propSlot__(`c6) .. <PropSlot:c6:Number:nil:public:R:W>
-A.__propSlot__(`c7) .. <PropSlot:c7:String:nil:public:R:W>
+A.__propSlot__(`c1) .. <PropSlot:c1:nil:public:R:W as Any>
+A.__propSlot__(`c2) .. <PropSlot:c2:nil:public:R:W as Number>
+A.__propSlot__(`c3) .. <PropSlot:c3:nil:public:R:W as String>
+A.__propSlot__(`c4) .. <PropSlot:c4:public:R:W as Number>
+A.__propSlot__(`c5) .. <PropSlot:c5:public:R:W as String>
+A.__propSlot__(`c6) .. <PropSlot:c6:nil:public:R:W as Number>
+A.__propSlot__(`c7) .. <PropSlot:c7:nil:public:R:W as String>
 --------
-A.__propSlot__(`d1) .. <PropSlot:d1[]:Any:nil:public:R:W>
-A.__propSlot__(`d2) .. <PropSlot:d2[]:Number:nil:public:R:W>
-A.__propSlot__(`d3) .. <PropSlot:d3[]:String:nil:public:R:W>
-A.__propSlot__(`d4) .. <PropSlot:d4[]:Number:public:R:W>
-A.__propSlot__(`d5) .. <PropSlot:d5[]:String:public:R:W>
-A.__propSlot__(`d6) .. <PropSlot:d6[]:Any:public:R:W>
-A.__propSlot__(`d7) .. <PropSlot:d7[]:Any:R:W>
-A.__propSlot__(`d8) .. <PropSlot:d8[]:Number:public:R:W>
-A.__propSlot__(`d9) .. <PropSlot:d9[]:String:public:R:W>
-A.__propSlot__(`d10) .. <PropSlot:d10[]:Number:nil:public:R:W>
-A.__propSlot__(`d11) .. <PropSlot:d11[]:String:nil:public:R:W>
+A.__propSlot__(`d1) .. <PropSlot:d1[]:nil:public:R:W as Any>
+A.__propSlot__(`d2) .. <PropSlot:d2[]:nil:public:R:W as Number>
+A.__propSlot__(`d3) .. <PropSlot:d3[]:nil:public:R:W as String>
+A.__propSlot__(`d4) .. <PropSlot:d4[]:public:R:W as Number>
+A.__propSlot__(`d5) .. <PropSlot:d5[]:public:R:W as String>
+A.__propSlot__(`d6) .. <PropSlot:d6[]:public:R:W as Any>
+A.__propSlot__(`d7) .. <PropSlot:d7[]:R:W as Any>
+A.__propSlot__(`d8) .. <PropSlot:d8[]:public:R:W as Number>
+A.__propSlot__(`d9) .. <PropSlot:d9[]:public:R:W as String>
+A.__propSlot__(`d10) .. <PropSlot:d10[]:nil:public:R:W as Number>
+A.__propSlot__(`d11) .. <PropSlot:d11[]:nil:public:R:W as String>
 --------
-A.__propSlot__(`e1) .. <PropSlot:e1:Any:nil:public:R:W>
-A.__propSlot__(`e2) .. <PropSlot:e2:Number:nil:public:R:W>
-A.__propSlot__(`e3) .. <PropSlot:e3:String:nil:public:R:W>
-A.__propSlot__(`e4) .. <PropSlot:e4:Number:public:R:W>
-A.__propSlot__(`e5) .. <PropSlot:e5:String:public:R:W>
-A.__propSlot__(`e6) .. <PropSlot:e6:Number:nil:public:R:W>
-A.__propSlot__(`e7) .. <PropSlot:e7:String:nil:public:R:W>
+A.__propSlot__(`e1) .. <PropSlot:e1:nil:public:R:W as Any>
+A.__propSlot__(`e2) .. <PropSlot:e2:nil:public:R:W as Number>
+A.__propSlot__(`e3) .. <PropSlot:e3:nil:public:R:W as String>
+A.__propSlot__(`e4) .. <PropSlot:e4:public:R:W as Number>
+A.__propSlot__(`e5) .. <PropSlot:e5:public:R:W as String>
+A.__propSlot__(`e6) .. <PropSlot:e6:nil:public:R:W as Number>
+A.__propSlot__(`e7) .. <PropSlot:e7:nil:public:R:W as String>
 --------
-A.__propSlot__(`f1) .. <PropSlot:f1[]:Any:nil:public:R:W>
-A.__propSlot__(`f2) .. <PropSlot:f2[]:Number:nil:public:R:W>
-A.__propSlot__(`f3) .. <PropSlot:f3[]:String:nil:public:R:W>
-A.__propSlot__(`f4) .. <PropSlot:f4[]:Number:public:R:W>
-A.__propSlot__(`f5) .. <PropSlot:f5[]:String:public:R:W>
-A.__propSlot__(`f6) .. <PropSlot:f6[]:Any:public:R:W>
-A.__propSlot__(`f7) .. <PropSlot:f7[]:Any:public:R:W>
-A.__propSlot__(`f8) .. <PropSlot:f8[]:Number:public:R:W>
-A.__propSlot__(`f9) .. <PropSlot:f9[]:String:public:R:W>
-A.__propSlot__(`f10) .. <PropSlot:f10[]:Number:nil:public:R:W>
-A.__propSlot__(`f11) .. <PropSlot:f11[]:String:nil:public:R:W>
+A.__propSlot__(`f1) .. <PropSlot:f1[]:nil:public:R:W as Any>
+A.__propSlot__(`f2) .. <PropSlot:f2[]:nil:public:R:W as Number>
+A.__propSlot__(`f3) .. <PropSlot:f3[]:nil:public:R:W as String>
+A.__propSlot__(`f4) .. <PropSlot:f4[]:public:R:W as Number>
+A.__propSlot__(`f5) .. <PropSlot:f5[]:public:R:W as String>
+A.__propSlot__(`f6) .. <PropSlot:f6[]:public:R:W as Any>
+A.__propSlot__(`f7) .. <PropSlot:f7[]:public:R:W as Any>
+A.__propSlot__(`f8) .. <PropSlot:f8[]:public:R:W as Number>
+A.__propSlot__(`f9) .. <PropSlot:f9[]:public:R:W as String>
+A.__propSlot__(`f10) .. <PropSlot:f10[]:nil:public:R:W as Number>
+A.__propSlot__(`f11) .. <PropSlot:f11[]:nil:public:R:W as String>
 ======== Property Access ========
 a.a1 .. <Nil>
 a.n1 .. 3
@@ -113,15 +113,15 @@ a.s4 = 3 .. 3
 a.s4 = 'world' .. world
 a.s4 = nil .. <Nil>
 ======== Constant Property ========
-A.__propSlot__(`a1) .. <PropSlot:a1:Any:nil:public:R>
-A.__propSlot__(`n1) .. <PropSlot:n1:Number:public:R>
-A.__propSlot__(`n2) .. <PropSlot:n2:Number:nil:public:R>
-A.__propSlot__(`n3) .. <PropSlot:n3:Number:nil:public:R>
-A.__propSlot__(`n4) .. <PropSlot:n4:Number:public:R>
-A.__propSlot__(`s1) .. <PropSlot:s1:String:public:R>
-A.__propSlot__(`s2) .. <PropSlot:s2:String:nil:public:R>
-A.__propSlot__(`s3) .. <PropSlot:s3:String:nil:public:R>
-A.__propSlot__(`s4) .. <PropSlot:s4:String:public:R>
+A.__propSlot__(`a1) .. <PropSlot:a1:nil:public:R as Any>
+A.__propSlot__(`n1) .. <PropSlot:n1:public:R as Number>
+A.__propSlot__(`n2) .. <PropSlot:n2:nil:public:R as Number>
+A.__propSlot__(`n3) .. <PropSlot:n3:nil:public:R as Number>
+A.__propSlot__(`n4) .. <PropSlot:n4:public:R as Number>
+A.__propSlot__(`s1) .. <PropSlot:s1:public:R as String>
+A.__propSlot__(`s2) .. <PropSlot:s2:nil:public:R as String>
+A.__propSlot__(`s3) .. <PropSlot:s3:nil:public:R as String>
+A.__propSlot__(`s4) .. <PropSlot:s4:public:R as String>
 a.a1 .. <Nil>
 a.n1 .. 3
 a.n2 .. 3
@@ -141,8 +141,8 @@ a.s2 = 'xxxx' .. property 's2' is not writable
 a.s3 = 'xxxx' .. property 's3' is not writable
 a.s4 = 'xxxx' .. property 's4' is not writable
 ======== Class Property ========
-A.__propSlot__(`p) .. <PropSlot:p:String:static:R:W>
-B.__propSlot__(`p) .. <PropSlot:p:String:static:R:W>
+A.__propSlot__(`p) .. <PropSlot:p:static:R:W as String>
+B.__propSlot__(`p) .. <PropSlot:p:static:R:W as String>
 A.p .. hello
 a1.p .. hello
 a2.p .. hello
@@ -164,7 +164,7 @@ a2.p .. world
 b1.p .. !!!!
 b2.p .. !!!!
 ======== Dict as Property ========
-<PropSlot:d:Dict:R:W>
+<PropSlot:d:R:W as Dict>
 a.d .. %{}
 A.ds .. %{}
 a.ds .. %{}
@@ -186,12 +186,12 @@ A = class {a[] as Number = ['h']} .. a can't cast from String to Number
 Taro is 10 years old.
 Hanako is 12 years old.
 ======== Inheritance ========
-A.__propSlot__(`p1) .. <PropSlot:p1:String:R:W>
-A.__propSlot__(`p2) .. <PropSlot:p2:String:R:W>
-A.__propSlot__(`p3) .. <PropSlot:p3:String:R:W>
-B.__propSlot__(`p1) .. <PropSlot:p1:String:R:W>
-B.__propSlot__(`p2) .. <PropSlot:p2:String:R:W>
-B.__propSlot__(`p3) .. <PropSlot:p3:String:R:W>
+A.__propSlot__(`p1) .. <PropSlot:p1:R:W as String>
+A.__propSlot__(`p2) .. <PropSlot:p2:R:W as String>
+A.__propSlot__(`p3) .. <PropSlot:p3:R:W as String>
+B.__propSlot__(`p1) .. <PropSlot:p1:R:W as String>
+B.__propSlot__(`p2) .. <PropSlot:p2:R:W as String>
+B.__propSlot__(`p3) .. <PropSlot:p3:R:W as String>
 a.p1 .. A#p1
 a.p2 .. A#p2
 a.p3 .. A#p3
