@@ -50,9 +50,10 @@ String Function::MakeFullName() const
 		str += IsHybridMethod()? "##" : IsInstanceMethod()? "#" : ".";
 		str += GetName();
 		return str;
+	} else {
+		RefPtr<Frame> pFrame(LockFrameOuter());
+		return Frame::MakeFullName(pFrame.get(), GetName());
 	}
-	RefPtr<Frame> pFrame(LockFrameOuter());
-	return Frame::MakeFullName(pFrame.get(), GetName());
 }
 
 void Function::LinkHelp(VType& vtype, const Symbol* pSymbol)
