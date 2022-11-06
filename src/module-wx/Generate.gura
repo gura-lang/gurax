@@ -444,15 +444,15 @@ static const char* g_docHelp_en = u8R"**(
 
 # Predefined Variable
 
-# Property
+$\{help.ComposePropertyHelp(wx.${className}, `en)}
 
 # Operator
 
 # Cast Operation
 
-# Constructor
+$\{help.ComposeConstructorHelp(wx.${className}, `en)}
 
-# Method
+$\{help.ComposeMethodHelp(wx.${className}, `en)}
 )**";
 
 //------------------------------------------------------------------------------
@@ -484,7 +484,7 @@ VType_wx${className} VTYPE_wx${className}("${className}");
 void VType_wx${className}::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 ${if (classNameParent)}
 	Declare(VTYPE_wx${classNameParent}, Flag::Mutable${if (funcInfoConstructor) {

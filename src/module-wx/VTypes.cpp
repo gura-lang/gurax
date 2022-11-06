@@ -12,13 +12,6 @@ Gurax_BeginModuleScope(wx)
 void AssignVTypes(Frame& frame)
 {
 	frame.Assign(VTYPE_wxEventType);
-	frame.Assign(VTYPE_wxGridCornerHeaderRenderer);
-	frame.Assign(VTYPE_wxGridCornerHeaderRendererDefault);
-	frame.Assign(VTYPE_wxGridHeaderLabelsRenderer);
-	frame.Assign(VTYPE_wxGridColumnHeaderRenderer);
-	frame.Assign(VTYPE_wxGridRowHeaderRenderer);
-	frame.Assign(VTYPE_wxGridColumnHeaderRendererDefault);
-	frame.Assign(VTYPE_wxGridRowHeaderRendererDefault);
 	frame.Assign(VTYPE_wxAboutDialogInfo);
 	frame.Assign(VTYPE_wxAcceleratorEntry);
 	frame.Assign(VTYPE_wxAcceleratorTable);
@@ -205,7 +198,14 @@ void AssignVTypes(Frame& frame)
 	frame.Assign(VTYPE_wxGridCellRenderer);
 	frame.Assign(VTYPE_wxGridCellStringRenderer);
 	frame.Assign(VTYPE_wxGridCellTextEditor);
+	frame.Assign(VTYPE_wxGridColumnHeaderRenderer);
+	frame.Assign(VTYPE_wxGridColumnHeaderRendererDefault);
+	frame.Assign(VTYPE_wxGridCornerHeaderRenderer);
+	frame.Assign(VTYPE_wxGridCornerHeaderRendererDefault);
 	frame.Assign(VTYPE_wxGridEvent);
+	frame.Assign(VTYPE_wxGridHeaderLabelsRenderer);
+	frame.Assign(VTYPE_wxGridRowHeaderRenderer);
+	frame.Assign(VTYPE_wxGridRowHeaderRendererDefault);
 	frame.Assign(VTYPE_wxGridSizer);
 	frame.Assign(VTYPE_wxGridSizesInfo);
 	frame.Assign(VTYPE_wxGridTableBase);

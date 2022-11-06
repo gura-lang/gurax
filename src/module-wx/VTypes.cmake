@@ -4,13 +4,6 @@
 #===============================================================================
 set(SRCFILES_VTYPE
 	VType_wxEventType.cpp
-	VType_wxGridCornerHeaderRenderer.cpp
-	VType_wxGridCornerHeaderRendererDefault.cpp
-	VType_wxGridHeaderLabelsRenderer.cpp
-	VType_wxGridColumnHeaderRenderer.cpp
-	VType_wxGridRowHeaderRenderer.cpp
-	VType_wxGridColumnHeaderRendererDefault.cpp
-	VType_wxGridRowHeaderRendererDefault.cpp
 	VType_wxAboutDialogInfo.cpp
 	VType_wxAcceleratorEntry.cpp
 	VType_wxAcceleratorTable.cpp
@@ -197,7 +190,14 @@ set(SRCFILES_VTYPE
 	VType_wxGridCellRenderer.cpp
 	VType_wxGridCellStringRenderer.cpp
 	VType_wxGridCellTextEditor.cpp
+	VType_wxGridColumnHeaderRenderer.cpp
+	VType_wxGridColumnHeaderRendererDefault.cpp
+	VType_wxGridCornerHeaderRenderer.cpp
+	VType_wxGridCornerHeaderRendererDefault.cpp
 	VType_wxGridEvent.cpp
+	VType_wxGridHeaderLabelsRenderer.cpp
+	VType_wxGridRowHeaderRenderer.cpp
+	VType_wxGridRowHeaderRendererDefault.cpp
 	VType_wxGridSizer.cpp
 	VType_wxGridSizesInfo.cpp
 	VType_wxGridTableBase.cpp
