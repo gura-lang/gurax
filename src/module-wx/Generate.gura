@@ -953,73 +953,76 @@ path.Glob('metafile/*.gura').Each {|pathName|
 	fileName = path.FileName(pathName)
 	(fileName in ['VType_wxEventType.gura']) && continue
 	Expr(pathName).EachElem {|expr|
-		if (expr.IsAssign() && expr.left.IsIdentifier() && expr.right.IsCaller() && expr.right.car.IsIdentifier(`Class)) {
-			className = expr.left.symbolName
-			params = expr.right.EachParam():list
-			if (!params.first) {
-				classNameParent = nil
-			} elsif (params.first.IsIdentifier()) {
-				classNameParent = params.first.symbolName
-			} else {
-				sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
-				sys.Exit(1)
-			}
-			classInfo = ClassInfo(className, classNameParent)
-			classInfo.loosePointerFlag = expr.right.attr.IsSet(`loosePointer)
-			classInfo.holdEntityFlag = expr.right.attr.IsSet(`holdEntity)
-			classInfo.noCopyConstructorFlag = expr.right.attr.IsSet(`noCopyConstructor)
-			expr.right.block.EachElem {|expr|
-				if (expr.IsIndexer()) {
-					params = expr.EachParam():list
-					if (!expr.car.IsIdentifier()) {
-						sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
-						sys.Exit(1)
-					}
-					if (expr.car.symbolName == '@include') {
-						classInfo.includeFiles = params::string
-					} elsif (expr.car.symbolName == '@mixin') {
-						classInfo.classNamesToMixin = params::symbolName
-					} else {
-						sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
-						sys.Exit(1)
-					}
-				} elsif (expr.IsCaller() && expr.car.symbolName == '@enum') {
-					params = expr.block.EachElem():list
-					params.Each {|param|
-						if (param.IsIdentifier()) {
-							classInfo.enumNameTbl.Append(param.symbolName)
-						} elsif (param.IsCaller()) {
-							classInfo.enumNameTbl.Append(param.car.symbolName)
-							classInfo.constNameTbl.Append(param.block.EachElem():*symbolName)
-						}
-					}
+		if (expr.IsAssign() && expr.left.IsIdentifier()) {
+			exprAssigned = expr.right
+			if (exprAssigned.IsCaller() && exprAssigned.car.IsIdentifier(`Class)) {
+				className = expr.left.symbolName
+				params = expr.right.EachParam():list
+				if (!params.first) {
+					classNameParent = nil
+				} elsif (params.first.IsIdentifier()) {
+					classNameParent = params.first.symbolName
 				} else {
-					funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
-					if (funcInfo.name == '__init__') {
-						funcInfo.name = classInfo.className
-						classInfo.funcInfoConstructor = funcInfo
-					} elsif (funcInfo.name == '__cast__') {
-						classInfo.funcInfoCast = funcInfo
-					} elsif (funcInfo.type == `function) {
-						classInfo.funcInfoTbl.Add(funcInfo)
-					} elsif (funcInfo.type == `propGetter || funcInfo.type == `propSetter) {
-						propInfo = classInfo.propInfoTbl.Find(classInfo.propInfoTbl:*GetName() == funcInfo.name)
-						if (!propInfo) {
-							propInfo = PropInfo()
-							classInfo.propInfoTbl.Add(propInfo)
+					sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
+					sys.Exit(1)
+				}
+				classInfo = ClassInfo(className, classNameParent)
+				classInfo.loosePointerFlag = expr.right.attr.IsSet(`loosePointer)
+				classInfo.holdEntityFlag = expr.right.attr.IsSet(`holdEntity)
+				classInfo.noCopyConstructorFlag = expr.right.attr.IsSet(`noCopyConstructor)
+				expr.right.block.EachElem {|expr|
+					if (expr.IsIndexer()) {
+						params = expr.EachParam():list
+						if (!expr.car.IsIdentifier()) {
+							sys.cerr.Printf('%d: identifier must be specified\n', expr.lineNoTop)
+							sys.Exit(1)
 						}
-						if (funcInfo.type == `propGetter) {
-							propInfo.funcInfo_propGetter = funcInfo
+						if (expr.car.symbolName == '@include') {
+							classInfo.includeFiles = params::string
+						} elsif (expr.car.symbolName == '@mixin') {
+							classInfo.classNamesToMixin = params::symbolName
 						} else {
-							propInfo.funcInfo_propSetter = funcInfo
+							sys.cerr.Printf('unknown directive: %s\n', expr.car.symbolName)
+							sys.Exit(1)
+						}
+					} elsif (expr.IsCaller() && expr.car.symbolName == '@enum') {
+						params = expr.block.EachElem():list
+						params.Each {|param|
+							if (param.IsIdentifier()) {
+								classInfo.enumNameTbl.Append(param.symbolName)
+							} elsif (param.IsCaller()) {
+								classInfo.enumNameTbl.Append(param.car.symbolName)
+								classInfo.constNameTbl.Append(param.block.EachElem():*symbolName)
+							}
+						}
+					} else {
+						funcInfo = cbridge.CreateFuncInfo(r, 'wx', expr)
+						if (funcInfo.name == '__init__') {
+							funcInfo.name = classInfo.className
+							classInfo.funcInfoConstructor = funcInfo
+						} elsif (funcInfo.name == '__cast__') {
+							classInfo.funcInfoCast = funcInfo
+						} elsif (funcInfo.type == `function) {
+							classInfo.funcInfoTbl.Add(funcInfo)
+						} elsif (funcInfo.type == `propGetter || funcInfo.type == `propSetter) {
+							propInfo = classInfo.propInfoTbl.Find(classInfo.propInfoTbl:*GetName() == funcInfo.name)
+							if (!propInfo) {
+								propInfo = PropInfo()
+								classInfo.propInfoTbl.Add(propInfo)
+							}
+							if (funcInfo.type == `propGetter) {
+								propInfo.funcInfo_propGetter = funcInfo
+							} else {
+								propInfo.funcInfo_propSetter = funcInfo
+							}
 						}
 					}
 				}
-			}
-			if (expr.right.attr.IsSet(`mixin)) {
-				classInfoToMixinTbl.Add(classInfo)
-			} else {
-				classInfoTbl.Add(classInfo)
+				if (expr.right.attr.IsSet(`mixin)) {
+					classInfoToMixinTbl.Add(classInfo)
+				} else {
+					classInfoTbl.Add(classInfo)
+				}
 			}
 		} elsif (expr.IsCaller()) {
 			if (!expr.car.IsIdentifier()) {
