@@ -913,4 +913,5 @@ DC = Class {
 		return Value_Tuple::Create(new Value_Number(x), new Value_Number(y));
 		'''
 	GetLogicalOrigin() as Point
-}
+} %% R'''
+'''

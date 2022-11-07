@@ -954,10 +954,25 @@ path.Glob('metafile/*.gura').Each {|pathName|
 	(fileName in ['VType_wxEventType.gura']) && continue
 	Expr(pathName).EachElem {|expr|
 		if (expr.IsAssign() && expr.left.IsIdentifier()) {
-			exprAssigned = expr.right
-			if (exprAssigned.IsCaller() && exprAssigned.car.IsIdentifier(`Class)) {
+			exprBody = expr.right
+			while (exprBody.IsBinaryOp() && exprBody.operator.symbol == `%%) {
+				exprHelp = exprBody.right
+				if (exprHelp.IsString()) {
+					exprHelp.string
+					//*******
+				} elsif (exprHelp.IsSuffixed()) {
+					exprHelp.string
+					exprHelp.symbol
+					//*******
+				} else {
+					sys.cerr.Printf('invalid help format')
+					sys.Exit(1)
+				}
+				exprBody = exprBody.left
+			}
+			if (exprBody.IsCaller() && exprBody.car.IsIdentifier(`Class)) {
 				className = expr.left.symbolName
-				params = expr.right.EachParam():list
+				params = exprBody.EachParam():list
 				if (!params.first) {
 					classNameParent = nil
 				} elsif (params.first.IsIdentifier()) {
@@ -967,10 +982,10 @@ path.Glob('metafile/*.gura').Each {|pathName|
 					sys.Exit(1)
 				}
 				classInfo = ClassInfo(className, classNameParent)
-				classInfo.loosePointerFlag = expr.right.attr.IsSet(`loosePointer)
-				classInfo.holdEntityFlag = expr.right.attr.IsSet(`holdEntity)
-				classInfo.noCopyConstructorFlag = expr.right.attr.IsSet(`noCopyConstructor)
-				expr.right.block.EachElem {|expr|
+				classInfo.loosePointerFlag = exprBody.attr.IsSet(`loosePointer)
+				classInfo.holdEntityFlag = exprBody.attr.IsSet(`holdEntity)
+				classInfo.noCopyConstructorFlag = exprBody.attr.IsSet(`noCopyConstructor)
+				exprBody.block.EachElem {|expr|
 					if (expr.IsIndexer()) {
 						params = expr.EachParam():list
 						if (!expr.car.IsIdentifier()) {
@@ -1018,7 +1033,7 @@ path.Glob('metafile/*.gura').Each {|pathName|
 						}
 					}
 				}
-				if (expr.right.attr.IsSet(`mixin)) {
+				if (exprBody.attr.IsSet(`mixin)) {
 					classInfoToMixinTbl.Add(classInfo)
 				} else {
 					classInfoTbl.Add(classInfo)
