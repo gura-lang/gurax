@@ -1438,33 +1438,34 @@ Function* Expr_Caller::GenerateFunction(
 		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
 		return nullptr;
 	}
-	ExprList exprs;
+	ExprList exprsHelp;
 	do {
 		Expr* pExpr = &exprAssigned;
 		while (pExpr->IsBinaryOp(OpType::ModMod)) {
 			Expr_BinaryOp* pExprEx = dynamic_cast<Expr_BinaryOp*>(pExpr);
-			exprs.push_back(&pExprEx->GetExprLeft());
-			pExpr = &pExprEx->GetExprRight();
+			exprsHelp.push_back(&pExprEx->GetExprRight());
+			pExpr = &pExprEx->GetExprLeft();
 		}
-		exprs.push_back(pExpr);
+		exprsHelp.push_back(pExpr);
 	} while (0);
 	Expr* pExprBody = nullptr;
 	RefPtr<HelpHolder> pHelpHolder(new HelpHolder());
-	if (exprs.size() == 1) {
-		pExprBody = exprs.front();
+	if (exprsHelp.size() == 1) {
+		pExprBody = exprsHelp.front();
 	} else {
-		for (Expr* pExpr : exprs) {
+		auto ppExpr = exprsHelp.rbegin();
+		pExprBody = *ppExpr++;
+		for ( ; ppExpr != exprsHelp.rend(); ppExpr++) {
+			const Expr* pExpr = *ppExpr;
 			if (pExpr->IsType<Expr_String>()) {
-				Expr_String& exprEx = dynamic_cast<Expr_String&>(*pExpr);
+				const Expr_String& exprEx = dynamic_cast<const Expr_String&>(*pExpr);
 				pHelpHolder->AddHelp(Gurax_Symbol(en), exprEx.GetSegmentReferable().Reference());
 			} else if (pExpr->IsSuffixed(SuffixMgr::Mode::String)) {
-				Expr_Suffixed& exprEx = dynamic_cast<Expr_Suffixed&>(*pExpr);
+				const Expr_Suffixed& exprEx = dynamic_cast<const Expr_Suffixed&>(*pExpr);
 				pHelpHolder->AddHelp(exprEx.GetSymbol(), exprEx.GetSegmentReferable().Reference());
-			} else if (pExprBody) {
-				Error::IssueWith(ErrorType::SyntaxError, *this, "duplicated function body");
-				return nullptr;
 			} else {
-				pExprBody = pExpr;
+				Error::IssueWith(ErrorType::SyntaxError, *pExpr, "invalid expression for help");
+				return nullptr;
 			}
 		}
 	}

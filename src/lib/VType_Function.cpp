@@ -91,11 +91,12 @@ Gurax_ImplementConstructor(Function)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Function#__help__(lang? as Symbol) {block?}
+// Function#__help__(lang? as Symbol):map:[nil] {block?}
 Gurax_DeclareMethod(Function, __help__)
 {
 	Declare(VTYPE_Help, Flag::Map);
 	DeclareArg("lang", VTYPE_Symbol, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(nil));
 	AddHelp(
 		Gurax_Symbol(en),
 		"");
@@ -108,10 +109,16 @@ Gurax_ImplementMethod(Function, __help__)
 	// Arguments
 	ArgPicker args(argument);
 	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
+	bool nilFlag = argument.IsSet(Gurax_Symbol(nil));
 	// Function body
 	RefPtr<Value> pValueRtn(Value::nil());
 	const Help* pHelp = valueThis.GetFunction().GetHelpHolder().Lookup(pLangCode);
-	if (pHelp) pValueRtn.reset(new Value_Help(pHelp->Reference()));
+	if (pHelp) {
+		pValueRtn.reset(new Value_Help(pHelp->Reference()));
+	} else if (!nilFlag) {
+		Error::Issue(ErrorType::SymbolError, "no help defined for language symbol %s", pLangCode->GetName());
+		return Value::nil();
+	}
 	return argument.ReturnValue(processor, pValueRtn.release());
 }
 

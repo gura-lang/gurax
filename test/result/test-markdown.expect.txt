@@ -128,7 +128,7 @@ markdown.Item
       <text>' variable so that it points to a right directory of Visual Studio.'
     <li>
       <text>'Open '
-      <code>'gura\\src\\gura.sln'
+      <code>'gura\\src\\gurax.sln'
       <text>' with Visual Studio 2010, switch the configuration to Release and build it.'
 ======== list-2 ========
 <root>
@@ -2460,7 +2460,7 @@ markdown.Item
         <strong>
           <text>'strong'
       <tag>'td'
-======== gura.headerdown/gura.headerup ========
+======== gurax.headerdown/gurax.headerup ========
 <root>
   <h1>
     <text>'header1'
