@@ -1438,6 +1438,7 @@ Function* Expr_Caller::GenerateFunction(
 		Error::IssueWith(ErrorType::SyntaxError, *this, "identifier is expected");
 		return nullptr;
 	}
+	Expr* pExprBody = &exprAssigned;
 	ExprList exprsHelp;
 	do {
 		Expr* pExpr = &exprAssigned;
@@ -1446,33 +1447,27 @@ Function* Expr_Caller::GenerateFunction(
 			exprsHelp.push_back(&pExprEx->GetExprRight());
 			pExpr = &pExprEx->GetExprLeft();
 		}
-		exprsHelp.push_back(pExpr);
+		pExprBody = pExpr;
 	} while (0);
-	Expr* pExprBody = nullptr;
 	RefPtr<HelpHolder> pHelpHolder(new HelpHolder());
-	if (exprsHelp.size() == 1) {
-		pExprBody = exprsHelp.front();
-	} else {
-		auto ppExpr = exprsHelp.rbegin();
-		pExprBody = *ppExpr++;
-		for ( ; ppExpr != exprsHelp.rend(); ppExpr++) {
-			const Expr* pExpr = *ppExpr;
-			if (pExpr->IsType<Expr_String>()) {
-				const Expr_String& exprEx = dynamic_cast<const Expr_String&>(*pExpr);
-				pHelpHolder->AddHelp(Gurax_Symbol(en), exprEx.GetSegmentReferable().Reference());
-			} else if (pExpr->IsSuffixed(SuffixMgr::Mode::String)) {
-				const Expr_Suffixed& exprEx = dynamic_cast<const Expr_Suffixed&>(*pExpr);
-				pHelpHolder->AddHelp(exprEx.GetSymbol(), exprEx.GetSegmentReferable().Reference());
-			} else {
-				Error::IssueWith(ErrorType::SyntaxError, *pExpr, "invalid expression for help");
-				return nullptr;
-			}
+	auto ppExprHelp = exprsHelp.rbegin();
+	for ( ; ppExprHelp != exprsHelp.rend(); ppExprHelp++) {
+		const Expr* pExprHelp = *ppExprHelp;
+		if (pExprHelp->IsType<Expr_String>()) {
+			const Expr_String& exprEx = dynamic_cast<const Expr_String&>(*pExprHelp);
+			pHelpHolder->AddHelp(Gurax_Symbol(en), exprEx.GetSegmentReferable().Reference());
+		} else if (pExprHelp->IsSuffixed(SuffixMgr::Mode::String)) {
+			const Expr_Suffixed& exprEx = dynamic_cast<const Expr_Suffixed&>(*pExprHelp);
+			pHelpHolder->AddHelp(exprEx.GetSymbol(), exprEx.GetSegmentReferable().Reference());
+		} else {
+			Error::IssueWith(ErrorType::SyntaxError, *pExprHelp, "invalid expression for help");
+			return nullptr;
 		}
 	}
-	if (!pExprBody) {
-		Error::IssueWith(ErrorType::SyntaxError, *this, "no function body");
-		return nullptr;
-	}
+	//if (!pExprBody) {
+	//	Error::IssueWith(ErrorType::SyntaxError, *this, "no function body");
+	//	return nullptr;
+	//}
 	PUnit* pPUnitOfBranch = composer.PeekPUnitCont();
 	composer.Add_Jump(*this);
 	pExprBody->SetPUnitFirst(composer.PeekPUnitCont());

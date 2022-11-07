@@ -1,0 +1,16 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-Help.gura
+//==============================================================================
+import(util.tester) {*}
+
+f() = {
+} %% R'''
+This function simply returns `nil`.
+'''en %% R'''
+Cette fonction renvoie simplement `nil`.
+'''fr %% R'''
+この関数は単に `nil` を返します。
+'''jp
+
+Print(f.__help__([`en, `jp, `fr]):*doc)
