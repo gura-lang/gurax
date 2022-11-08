@@ -278,7 +278,7 @@ VType_wxSashLayoutWindow VTYPE_wxSashLayoutWindow("SashLayoutWindow");
 void VType_wxSashLayoutWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSashWindow, Flag::Mutable, Gurax_CreateConstructor(SashLayoutWindow_gurax));
 	// Assignment of method

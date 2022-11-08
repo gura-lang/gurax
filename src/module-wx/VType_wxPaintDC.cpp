@@ -67,7 +67,7 @@ VType_wxPaintDC VTYPE_wxPaintDC("PaintDC");
 void VType_wxPaintDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxClientDC, Flag::Mutable, Gurax_CreateConstructor(PaintDC_gurax));
 	// Assignment of method

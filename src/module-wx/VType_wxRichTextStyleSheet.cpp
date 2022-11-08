@@ -663,7 +663,7 @@ VType_wxRichTextStyleSheet VTYPE_wxRichTextStyleSheet("RichTextStyleSheet");
 void VType_wxRichTextStyleSheet::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(RichTextStyleSheet_gurax));
 	// Assignment of method

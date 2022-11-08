@@ -753,7 +753,7 @@ VType_wxSizerItem VTYPE_wxSizerItem("SizerItem");
 void VType_wxSizerItem::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method

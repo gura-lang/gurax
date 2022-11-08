@@ -92,7 +92,7 @@ VType_wxGridCellNumberEditor VTYPE_wxGridCellNumberEditor("GridCellNumberEditor"
 void VType_wxGridCellNumberEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellTextEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellNumberEditor_gurax));
 	// Assignment of method

@@ -493,7 +493,7 @@ VType_wxRadioBox VTYPE_wxRadioBox("RadioBox");
 void VType_wxRadioBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(RadioBox_gurax));
 	// Assignment of method

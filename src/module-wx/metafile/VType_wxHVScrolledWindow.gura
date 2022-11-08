@@ -9,4 +9,18 @@ HVScrolledWindow = Class(Panel) {
 	//OnGetRowHeight(row as size_t):virtual as Coord
 	//OnGetColumnWidth(columnas as size_t):virtual as Coord
 	//OnGetRowsHeightHint(rowMing as size_t, rowMax as size_t):virtual
- }
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HVScrolledWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HVScrolledWindow, `en)}
+
+${help.ComposeMethodHelp(wx.HVScrolledWindow, `en)}
+'''

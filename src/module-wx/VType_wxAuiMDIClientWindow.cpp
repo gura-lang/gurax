@@ -71,7 +71,7 @@ VType_wxAuiMDIClientWindow VTYPE_wxAuiMDIClientWindow("AuiMDIClientWindow");
 void VType_wxAuiMDIClientWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxAuiNotebook, Flag::Mutable, Gurax_CreateConstructor(AuiMDIClientWindow_gurax));
 	// Assignment of method

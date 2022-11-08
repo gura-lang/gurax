@@ -102,7 +102,7 @@ VType_wxGridCellBoolEditor VTYPE_wxGridCellBoolEditor("GridCellBoolEditor");
 void VType_wxGridCellBoolEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellBoolEditor_gurax));
 	// Assignment of method

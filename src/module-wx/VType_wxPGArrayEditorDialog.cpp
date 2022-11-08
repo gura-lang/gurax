@@ -206,7 +206,7 @@ VType_wxPGArrayEditorDialog VTYPE_wxPGArrayEditorDialog("PGArrayEditorDialog");
 void VType_wxPGArrayEditorDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable);
 	// Assignment of method

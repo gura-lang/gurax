@@ -232,7 +232,7 @@ VType_wxAnimation VTYPE_wxAnimation("Animation");
 void VType_wxAnimation::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(Animation_gurax));
 	// Assignment of method

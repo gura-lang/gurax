@@ -45,7 +45,7 @@ VType_wxRichTextParagraph VTYPE_wxRichTextParagraph("RichTextParagraph");
 void VType_wxRichTextParagraph::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxRichTextCompositeObject, Flag::Mutable);
 	// Assignment of method

@@ -404,7 +404,7 @@ VType_wxHeaderColumnSimple VTYPE_wxHeaderColumnSimple("HeaderColumnSimple");
 void VType_wxHeaderColumnSimple::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSettableHeaderColumn, Flag::Mutable, Gurax_CreateConstructor(HeaderColumnSimple_gurax));
 	// Assignment of method

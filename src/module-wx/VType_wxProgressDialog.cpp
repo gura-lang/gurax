@@ -77,7 +77,7 @@ VType_wxProgressDialog VTYPE_wxProgressDialog("ProgressDialog");
 void VType_wxProgressDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGenericProgressDialog, Flag::Mutable, Gurax_CreateConstructor(ProgressDialog_gurax));
 	// Assignment of method

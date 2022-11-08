@@ -121,7 +121,7 @@ VType_wxColourProperty VTYPE_wxColourProperty("ColourProperty");
 void VType_wxColourProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSystemColourProperty, Flag::Mutable, Gurax_CreateConstructor(ColourProperty_gurax));
 	// Assignment of method

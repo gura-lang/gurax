@@ -364,7 +364,7 @@ VType_wxMessageDialog VTYPE_wxMessageDialog("MessageDialog");
 void VType_wxMessageDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(MessageDialog_gurax));
 	// Assignment of method

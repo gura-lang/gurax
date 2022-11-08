@@ -465,7 +465,7 @@ VType_wxSashWindow VTYPE_wxSashWindow("SashWindow");
 void VType_wxSashWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(SashWindow_gurax));
 	// Assignment of method

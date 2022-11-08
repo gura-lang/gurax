@@ -45,7 +45,7 @@ VType_wxRearrangeDialog VTYPE_wxRearrangeDialog("RearrangeDialog");
 void VType_wxRearrangeDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable);
 	// Assignment of method

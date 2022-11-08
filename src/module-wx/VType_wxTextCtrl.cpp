@@ -1512,7 +1512,7 @@ VType_wxTextCtrl VTYPE_wxTextCtrl("TextCtrl");
 void VType_wxTextCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(TextCtrl_gurax));
 	// Assignment of method

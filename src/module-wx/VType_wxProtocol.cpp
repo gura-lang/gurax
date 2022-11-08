@@ -336,7 +336,7 @@ VType_wxProtocol VTYPE_wxProtocol("Protocol");
 void VType_wxProtocol::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSocketClient, Flag::Mutable);
 	// Assignment of method

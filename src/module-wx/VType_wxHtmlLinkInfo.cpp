@@ -128,7 +128,7 @@ VType_wxHtmlLinkInfo VTYPE_wxHtmlLinkInfo("HtmlLinkInfo");
 void VType_wxHtmlLinkInfo::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(HtmlLinkInfo_gurax));
 	// Assignment of method

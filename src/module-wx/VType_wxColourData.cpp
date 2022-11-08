@@ -246,7 +246,7 @@ VType_wxColourData VTYPE_wxColourData("ColourData");
 void VType_wxColourData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ColourData_gurax));
 	// Assignment of method

@@ -228,7 +228,7 @@ VType_wxGridCellFloatRenderer VTYPE_wxGridCellFloatRenderer("GridCellFloatRender
 void VType_wxGridCellFloatRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellStringRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellFloatRenderer_gurax));
 	// Assignment of method

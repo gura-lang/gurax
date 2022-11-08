@@ -233,7 +233,7 @@ VType_wxRichTextFormattingDialogFactory VTYPE_wxRichTextFormattingDialogFactory(
 void VType_wxRichTextFormattingDialogFactory::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(RichTextFormattingDialogFactory_gurax));
 	// Assignment of method

@@ -137,7 +137,7 @@ VType_wxColourDialog VTYPE_wxColourDialog("ColourDialog");
 void VType_wxColourDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(ColourDialog_gurax));
 	// Assignment of method

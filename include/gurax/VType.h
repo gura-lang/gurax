@@ -70,6 +70,7 @@ public:
 	String MakeFullName() const;
 	DottedSymbol* MakeDottedSymbol() const;
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
+	void AddHelp(const char* langCode, const char* doc) { _pHelpHolder->AddHelp(Symbol::Add(langCode), doc); }
 	void AddHelpTmpl(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelpTmpl(pLangCode, doc); }
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const VType& vtype) const { return this == &vtype; }

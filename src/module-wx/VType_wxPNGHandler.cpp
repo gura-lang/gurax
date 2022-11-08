@@ -61,7 +61,7 @@ VType_wxPNGHandler VTYPE_wxPNGHandler("PNGHandler");
 void VType_wxPNGHandler::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxImageHandler, Flag::Mutable, Gurax_CreateConstructor(PNGHandler_gurax));
 	// Assignment of method

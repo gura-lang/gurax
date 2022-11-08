@@ -196,7 +196,7 @@ VType_wxFileCtrlEvent VTYPE_wxFileCtrlEvent("FileCtrlEvent");
 void VType_wxFileCtrlEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

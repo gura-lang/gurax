@@ -158,7 +158,7 @@ VType_wxDirFilterListCtrl VTYPE_wxDirFilterListCtrl("DirFilterListCtrl");
 void VType_wxDirFilterListCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxChoice, Flag::Mutable, Gurax_CreateConstructor(DirFilterListCtrl_gurax));
 	// Assignment of method

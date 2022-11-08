@@ -826,7 +826,7 @@ VType_wxDialog VTYPE_wxDialog("Dialog");
 void VType_wxDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxTopLevelWindow, Flag::Mutable, Gurax_CreateConstructor(Dialog_gurax));
 	// Assignment of method

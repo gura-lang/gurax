@@ -1075,7 +1075,7 @@ VType_wxMenu VTYPE_wxMenu("Menu");
 void VType_wxMenu::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Menu_gurax));
 	// Assignment of method

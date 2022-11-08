@@ -1190,7 +1190,7 @@ VType_wxRect VTYPE_wxRect("Rect");
 void VType_wxRect::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Rect_gurax));
 	// Assignment of method

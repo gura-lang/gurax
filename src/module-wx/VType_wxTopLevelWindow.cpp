@@ -884,7 +884,7 @@ VType_wxTopLevelWindow VTYPE_wxTopLevelWindow("TopLevelWindow");
 void VType_wxTopLevelWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNonOwnedWindow, Flag::Mutable, Gurax_CreateConstructor(TopLevelWindow_gurax));
 	// Assignment of method

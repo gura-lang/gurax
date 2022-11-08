@@ -160,7 +160,7 @@ VType_wxStaticBoxSizer VTYPE_wxStaticBoxSizer("StaticBoxSizer");
 void VType_wxStaticBoxSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBoxSizer, Flag::Mutable, Gurax_CreateConstructor(StaticBoxSizer_gurax));
 	// Assignment of method

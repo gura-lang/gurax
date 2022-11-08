@@ -52,4 +52,18 @@ ${help.ComposePropertyHelp(wx.AboutDialogInfo, `en)}
 ${help.ComposeConstructorHelp(wx.AboutDialogInfo, `en)}
 
 ${help.ComposeMethodHelp(wx.AboutDialogInfo, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AboutDialogInfo, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AboutDialogInfo, `ja)}
+
+${help.ComposeMethodHelp(wx.AboutDialogInfo, `ja)}
+'''ja

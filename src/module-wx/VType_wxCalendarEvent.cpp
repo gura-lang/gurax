@@ -45,7 +45,7 @@ VType_wxCalendarEvent VTYPE_wxCalendarEvent("CalendarEvent");
 void VType_wxCalendarEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDateEvent, Flag::Mutable);
 	// Assignment of method

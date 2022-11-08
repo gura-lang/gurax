@@ -85,7 +85,7 @@ VType_wxWizardEvent VTYPE_wxWizardEvent("WizardEvent");
 void VType_wxWizardEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

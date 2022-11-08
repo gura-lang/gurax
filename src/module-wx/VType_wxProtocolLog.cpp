@@ -113,7 +113,7 @@ VType_wxProtocolLog VTYPE_wxProtocolLog("ProtocolLog");
 void VType_wxProtocolLog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ProtocolLog_gurax));
 	// Assignment of method

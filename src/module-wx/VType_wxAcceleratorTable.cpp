@@ -115,7 +115,7 @@ VType_wxAcceleratorTable VTYPE_wxAcceleratorTable("AcceleratorTable");
 void VType_wxAcceleratorTable::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AcceleratorTable_gurax));
 	// Assignment of method

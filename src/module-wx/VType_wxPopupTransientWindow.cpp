@@ -45,7 +45,7 @@ VType_wxPopupTransientWindow VTYPE_wxPopupTransientWindow("PopupTransientWindow"
 void VType_wxPopupTransientWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPopupWindow, Flag::Mutable);
 	// Assignment of method

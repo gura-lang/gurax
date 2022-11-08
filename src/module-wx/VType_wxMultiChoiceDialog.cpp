@@ -142,7 +142,7 @@ VType_wxMultiChoiceDialog VTYPE_wxMultiChoiceDialog("MultiChoiceDialog");
 void VType_wxMultiChoiceDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(MultiChoiceDialog_gurax));
 	// Assignment of method

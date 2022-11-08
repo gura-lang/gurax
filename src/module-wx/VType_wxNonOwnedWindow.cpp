@@ -98,7 +98,7 @@ VType_wxNonOwnedWindow VTYPE_wxNonOwnedWindow("NonOwnedWindow");
 void VType_wxNonOwnedWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable);
 	// Assignment of method

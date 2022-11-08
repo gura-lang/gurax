@@ -164,7 +164,7 @@ VType_wxGridCellAttrProvider VTYPE_wxGridCellAttrProvider("GridCellAttrProvider"
 void VType_wxGridCellAttrProvider::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxClientDataContainer, Flag::Mutable, Gurax_CreateConstructor(GridCellAttrProvider_gurax));
 	// Assignment of method

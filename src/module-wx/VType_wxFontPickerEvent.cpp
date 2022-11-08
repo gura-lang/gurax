@@ -90,7 +90,7 @@ VType_wxFontPickerEvent VTYPE_wxFontPickerEvent("FontPickerEvent");
 void VType_wxFontPickerEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

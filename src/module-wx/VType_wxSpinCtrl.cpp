@@ -318,7 +318,7 @@ VType_wxSpinCtrl VTYPE_wxSpinCtrl("SpinCtrl");
 void VType_wxSpinCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(SpinCtrl_gurax));
 	// Assignment of method

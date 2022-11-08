@@ -5912,7 +5912,7 @@ VType_wxWindow VTYPE_wxWindow("Window");
 void VType_wxWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Window_gurax));
 	// Assignment of method

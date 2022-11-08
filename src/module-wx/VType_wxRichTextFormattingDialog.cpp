@@ -558,7 +558,7 @@ VType_wxRichTextFormattingDialog VTYPE_wxRichTextFormattingDialog("RichTextForma
 void VType_wxRichTextFormattingDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPropertySheetDialog, Flag::Mutable, Gurax_CreateConstructor(RichTextFormattingDialog_gurax));
 	// Assignment of method

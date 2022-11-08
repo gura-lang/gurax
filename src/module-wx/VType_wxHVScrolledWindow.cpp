@@ -9,6 +9,21 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HVScrolledWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HVScrolledWindow, `en)}
+
+${help.ComposeMethodHelp(wx.HVScrolledWindow, `en)}
+)**";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -739,7 +754,7 @@ VType_wxHVScrolledWindow VTYPE_wxHVScrolledWindow("HVScrolledWindow");
 void VType_wxHVScrolledWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable);
 	// Assignment of method

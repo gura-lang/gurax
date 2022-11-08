@@ -128,7 +128,7 @@ VType_wxSingleChoiceDialog VTYPE_wxSingleChoiceDialog("SingleChoiceDialog");
 void VType_wxSingleChoiceDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable);
 	// Assignment of method

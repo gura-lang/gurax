@@ -547,7 +547,7 @@ VType_wxVListBox VTYPE_wxVListBox("VListBox");
 void VType_wxVListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxVScrolledWindow, Flag::Mutable);
 	// Assignment of method

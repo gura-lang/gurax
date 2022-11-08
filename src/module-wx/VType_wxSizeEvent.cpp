@@ -136,7 +136,7 @@ VType_wxSizeEvent VTYPE_wxSizeEvent("SizeEvent");
 void VType_wxSizeEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

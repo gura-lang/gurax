@@ -338,7 +338,7 @@ VType_wxBrush VTYPE_wxBrush("Brush");
 void VType_wxBrush::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Brush_gurax));
 	// Assignment of method

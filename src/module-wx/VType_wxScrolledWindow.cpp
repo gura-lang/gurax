@@ -868,7 +868,7 @@ VType_wxScrolledWindow VTYPE_wxScrolledWindow("ScrolledWindow");
 void VType_wxScrolledWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(ScrolledWindow_gurax));
 	// Assignment of method

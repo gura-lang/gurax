@@ -2481,7 +2481,7 @@ VType_wxPGProperty VTYPE_wxPGProperty("PGProperty");
 void VType_wxPGProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

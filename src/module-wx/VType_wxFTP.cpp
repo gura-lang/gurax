@@ -45,7 +45,7 @@ VType_wxFTP VTYPE_wxFTP("FTP");
 void VType_wxFTP::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxProtocol, Flag::Mutable);
 	// Assignment of method

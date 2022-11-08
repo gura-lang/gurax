@@ -505,7 +505,7 @@ VType_wxPen VTYPE_wxPen("Pen");
 void VType_wxPen::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Pen_gurax));
 	// Assignment of method

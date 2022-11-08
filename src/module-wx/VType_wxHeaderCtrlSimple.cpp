@@ -251,7 +251,7 @@ VType_wxHeaderCtrlSimple VTYPE_wxHeaderCtrlSimple("HeaderCtrlSimple");
 void VType_wxHeaderCtrlSimple::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxHeaderCtrl, Flag::Mutable, Gurax_CreateConstructor(HeaderCtrlSimple_gurax));
 	// Assignment of method

@@ -698,7 +698,7 @@ VType_wxSplitterWindow VTYPE_wxSplitterWindow("SplitterWindow");
 void VType_wxSplitterWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(SplitterWindow_gurax));
 	// Assignment of method

@@ -759,7 +759,7 @@ VType_wxToolBarToolBase VTYPE_wxToolBarToolBase("ToolBarToolBase");
 void VType_wxToolBarToolBase::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxGraphicsPath VTYPE_wxGraphicsPath("GraphicsPath");
 void VType_wxGraphicsPath::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGraphicsObject, Flag::Mutable);
 	// Assignment of method

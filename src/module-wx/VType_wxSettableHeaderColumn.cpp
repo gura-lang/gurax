@@ -447,7 +447,7 @@ VType_wxSettableHeaderColumn VTYPE_wxSettableHeaderColumn("SettableHeaderColumn"
 void VType_wxSettableHeaderColumn::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxHeaderColumn, Flag::Mutable);
 	// Assignment of method

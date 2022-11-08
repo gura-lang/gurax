@@ -256,7 +256,7 @@ VType_wxBitmapComboBox VTYPE_wxBitmapComboBox("BitmapComboBox");
 void VType_wxBitmapComboBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxComboBox, Flag::Mutable, Gurax_CreateConstructor(BitmapComboBox_gurax));
 	// Assignment of method

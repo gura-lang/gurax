@@ -370,7 +370,7 @@ VType_wxFileCtrl VTYPE_wxFileCtrl("FileCtrl");
 void VType_wxFileCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(FileCtrl_gurax));
 	// Assignment of method

@@ -203,7 +203,7 @@ VType_wxSimplebook VTYPE_wxSimplebook("Simplebook");
 void VType_wxSimplebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Simplebook_gurax));
 	// Assignment of method

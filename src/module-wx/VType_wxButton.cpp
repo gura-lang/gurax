@@ -191,7 +191,7 @@ VType_wxButton VTYPE_wxButton("Button");
 void VType_wxButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxAnyButton, Flag::Mutable, Gurax_CreateConstructor(Button_gurax));
 	// Assignment of method

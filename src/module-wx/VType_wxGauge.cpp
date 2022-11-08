@@ -298,7 +298,7 @@ VType_wxGauge VTYPE_wxGauge("Gauge");
 void VType_wxGauge::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Gauge_gurax));
 	// Assignment of method

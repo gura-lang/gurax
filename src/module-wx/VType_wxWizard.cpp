@@ -508,7 +508,7 @@ VType_wxWizard VTYPE_wxWizard("Wizard");
 void VType_wxWizard::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(Wizard_gurax));
 	// Assignment of method

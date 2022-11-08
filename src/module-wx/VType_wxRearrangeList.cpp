@@ -230,7 +230,7 @@ VType_wxRearrangeList VTYPE_wxRearrangeList("RearrangeList");
 void VType_wxRearrangeList::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCheckListBox, Flag::Mutable, Gurax_CreateConstructor(RearrangeList_gurax));
 	// Assignment of method

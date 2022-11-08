@@ -538,7 +538,7 @@ VType_wxDateTime VTYPE_wxDateTime("DateTime");
 void VType_wxDateTime::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(DateTime_gurax));
 	// Assignment of constant value

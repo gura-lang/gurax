@@ -45,7 +45,7 @@ VType_wxHtmlWordWithTabsCell VTYPE_wxHtmlWordWithTabsCell("HtmlWordWithTabsCell"
 void VType_wxHtmlWordWithTabsCell::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxHtmlWordCell, Flag::Mutable);
 	// Assignment of method

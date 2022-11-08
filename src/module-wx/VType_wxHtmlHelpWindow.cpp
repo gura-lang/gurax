@@ -430,7 +430,7 @@ VType_wxHtmlHelpWindow VTYPE_wxHtmlHelpWindow("HtmlHelpWindow");
 void VType_wxHtmlHelpWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(HtmlHelpWindow_gurax));
 	// Assignment of method

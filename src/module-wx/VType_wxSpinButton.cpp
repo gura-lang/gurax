@@ -189,7 +189,7 @@ VType_wxSpinButton VTYPE_wxSpinButton("SpinButton");
 void VType_wxSpinButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(SpinButton_gurax));
 	// Assignment of method

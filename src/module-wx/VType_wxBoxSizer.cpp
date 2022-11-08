@@ -175,7 +175,7 @@ VType_wxBoxSizer VTYPE_wxBoxSizer("BoxSizer");
 void VType_wxBoxSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSizer, Flag::Mutable, Gurax_CreateConstructor(BoxSizer_gurax));
 	// Assignment of method

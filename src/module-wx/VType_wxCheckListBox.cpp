@@ -197,7 +197,7 @@ VType_wxCheckListBox VTYPE_wxCheckListBox("CheckListBox");
 void VType_wxCheckListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxListBox, Flag::Mutable, Gurax_CreateConstructor(CheckListBox_gurax));
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxArrayStringProperty VTYPE_wxArrayStringProperty("ArrayStringProperty");
 void VType_wxArrayStringProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPGProperty, Flag::Mutable);
 	// Assignment of method

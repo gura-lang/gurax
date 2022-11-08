@@ -125,7 +125,7 @@ VType_wxCursorProperty VTYPE_wxCursorProperty("CursorProperty");
 void VType_wxCursorProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEnumProperty, Flag::Mutable, Gurax_CreateConstructor(CursorProperty_gurax));
 	// Assignment of method

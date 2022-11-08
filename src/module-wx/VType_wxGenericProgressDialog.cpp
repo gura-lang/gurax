@@ -220,7 +220,7 @@ VType_wxGenericProgressDialog VTYPE_wxGenericProgressDialog("GenericProgressDial
 void VType_wxGenericProgressDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(GenericProgressDialog_gurax));
 	// Assignment of method

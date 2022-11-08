@@ -244,7 +244,7 @@ VType_wxFilePickerCtrl VTYPE_wxFilePickerCtrl("FilePickerCtrl");
 void VType_wxFilePickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(FilePickerCtrl_gurax));
 	// Assignment of method

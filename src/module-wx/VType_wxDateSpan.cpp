@@ -557,7 +557,7 @@ VType_wxDateSpan VTYPE_wxDateSpan("DateSpan");
 void VType_wxDateSpan::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(DateSpan_gurax));
 	// Assignment of method

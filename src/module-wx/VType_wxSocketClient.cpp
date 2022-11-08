@@ -45,7 +45,7 @@ VType_wxSocketClient VTYPE_wxSocketClient("SocketClient");
 void VType_wxSocketClient::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSocketBase, Flag::Mutable);
 	// Assignment of method

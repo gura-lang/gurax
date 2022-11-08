@@ -475,7 +475,9 @@ VType_wx${className} VTYPE_wx${className}("${className}");
 void VType_wx${className}::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+${helpInfoTbl.Each {|helpInfo|}}
+	AddHelp("${helpInfo.langCode}", g_docHelp_${helpInfo.langCode});
+${end}
 	// Declaration of VType
 ${if (classNameParent)}
 	Declare(VTYPE_wx${classNameParent}, Flag::Mutable${if (funcInfoConstructor) {
@@ -962,6 +964,7 @@ path.Glob('metafile/*.gura').Each {|pathName|
 				}
 				exprBody = exprBody.left
 			}
+			helpInfoTbl = helpInfoTbl.Reverse():list
 			if (exprBody.IsCaller() && exprBody.car.IsIdentifier(`Class)) {
 				className = expr.left.symbolName
 				params = exprBody.EachParam():list

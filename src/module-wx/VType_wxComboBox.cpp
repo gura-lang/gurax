@@ -1492,7 +1492,7 @@ VType_wxComboBox VTYPE_wxComboBox("ComboBox");
 void VType_wxComboBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ComboBox_gurax));
 	// Assignment of method

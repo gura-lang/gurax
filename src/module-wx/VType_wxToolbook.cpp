@@ -79,7 +79,7 @@ VType_wxToolbook VTYPE_wxToolbook("Toolbook");
 void VType_wxToolbook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Toolbook_gurax));
 	// Assignment of method

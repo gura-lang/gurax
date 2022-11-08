@@ -663,7 +663,7 @@ VType_wxChoice VTYPE_wxChoice("Choice");
 void VType_wxChoice::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Choice_gurax));
 	// Assignment of method

@@ -240,7 +240,7 @@ VType_wxDirPickerCtrl VTYPE_wxDirPickerCtrl("DirPickerCtrl");
 void VType_wxDirPickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(DirPickerCtrl_gurax));
 	// Assignment of method

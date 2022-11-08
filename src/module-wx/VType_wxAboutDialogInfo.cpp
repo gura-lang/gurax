@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.AboutDialogInfo, `en)}
 ${help.ComposeMethodHelp(wx.AboutDialogInfo, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AboutDialogInfo, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AboutDialogInfo, `ja)}
+
+${help.ComposeMethodHelp(wx.AboutDialogInfo, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -810,7 +826,8 @@ VType_wxAboutDialogInfo VTYPE_wxAboutDialogInfo("AboutDialogInfo");
 void VType_wxAboutDialogInfo::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
+	AddHelp("ja", g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AboutDialogInfo_gurax));
 	// Assignment of method

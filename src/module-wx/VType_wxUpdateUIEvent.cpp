@@ -300,7 +300,7 @@ VType_wxUpdateUIEvent VTYPE_wxUpdateUIEvent("UpdateUIEvent");
 void VType_wxUpdateUIEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

@@ -230,7 +230,7 @@ VType_wxCheckBox VTYPE_wxCheckBox("CheckBox");
 void VType_wxCheckBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CheckBox_gurax));
 	// Assignment of method

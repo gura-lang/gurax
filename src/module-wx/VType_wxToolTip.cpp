@@ -229,7 +229,7 @@ VType_wxToolTip VTYPE_wxToolTip("ToolTip");
 void VType_wxToolTip::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(ToolTip_gurax));
 	// Assignment of method

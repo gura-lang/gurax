@@ -45,7 +45,7 @@ VType_wxInputStream VTYPE_wxInputStream("InputStream");
 void VType_wxInputStream::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxStreamBase, Flag::Mutable);
 	// Assignment of method

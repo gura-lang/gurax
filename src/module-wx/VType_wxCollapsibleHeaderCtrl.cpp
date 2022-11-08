@@ -126,7 +126,7 @@ VType_wxCollapsibleHeaderCtrl VTYPE_wxCollapsibleHeaderCtrl("CollapsibleHeaderCt
 void VType_wxCollapsibleHeaderCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CollapsibleHeaderCtrl_gurax));
 	// Assignment of method

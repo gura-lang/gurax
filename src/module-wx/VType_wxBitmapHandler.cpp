@@ -293,7 +293,7 @@ VType_wxBitmapHandler VTYPE_wxBitmapHandler("BitmapHandler");
 void VType_wxBitmapHandler::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(BitmapHandler_gurax));
 	// Assignment of method

@@ -187,7 +187,7 @@ VType_wxAccessible VTYPE_wxAccessible("Accessible");
 void VType_wxAccessible::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(Accessible_gurax));
 	// Assignment of method

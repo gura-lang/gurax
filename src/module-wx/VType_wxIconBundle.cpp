@@ -45,7 +45,7 @@ VType_wxIconBundle VTYPE_wxIconBundle("IconBundle");
 void VType_wxIconBundle::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable);
 	// Assignment of method

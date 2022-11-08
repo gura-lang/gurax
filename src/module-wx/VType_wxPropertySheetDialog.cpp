@@ -459,7 +459,7 @@ VType_wxPropertySheetDialog VTYPE_wxPropertySheetDialog("PropertySheetDialog");
 void VType_wxPropertySheetDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(PropertySheetDialog_gurax));
 	// Assignment of method

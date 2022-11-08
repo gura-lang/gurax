@@ -114,7 +114,7 @@ VType_wxGridCellTextEditor VTYPE_wxGridCellTextEditor("GridCellTextEditor");
 void VType_wxGridCellTextEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellTextEditor_gurax));
 	// Assignment of method

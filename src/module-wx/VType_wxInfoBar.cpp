@@ -330,7 +330,7 @@ VType_wxInfoBar VTYPE_wxInfoBar("InfoBar");
 void VType_wxInfoBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(InfoBar_gurax));
 	// Assignment of method

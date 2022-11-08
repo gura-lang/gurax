@@ -564,7 +564,7 @@ VType_wxCalendarCtrl VTYPE_wxCalendarCtrl("CalendarCtrl");
 void VType_wxCalendarCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CalendarCtrl_gurax));
 	// Assignment of method

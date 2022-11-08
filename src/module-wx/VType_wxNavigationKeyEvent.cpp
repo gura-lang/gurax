@@ -246,7 +246,7 @@ VType_wxNavigationKeyEvent VTYPE_wxNavigationKeyEvent("NavigationKeyEvent");
 void VType_wxNavigationKeyEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

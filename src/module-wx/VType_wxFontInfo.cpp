@@ -339,7 +339,7 @@ VType_wxFontInfo VTYPE_wxFontInfo("FontInfo");
 void VType_wxFontInfo::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(FontInfo_gurax));
 	// Assignment of method

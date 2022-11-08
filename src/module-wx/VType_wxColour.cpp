@@ -527,7 +527,7 @@ VType_wxColour VTYPE_wxColour("Colour");
 void VType_wxColour::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Colour_gurax));
 	// Assignment of method

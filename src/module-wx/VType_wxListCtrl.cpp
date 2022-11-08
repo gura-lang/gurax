@@ -2079,7 +2079,7 @@ VType_wxListCtrl VTYPE_wxListCtrl("ListCtrl");
 void VType_wxListCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ListCtrl_gurax));
 	// Assignment of method

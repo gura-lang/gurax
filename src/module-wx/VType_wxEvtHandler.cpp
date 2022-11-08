@@ -99,7 +99,7 @@ VType_wxEvtHandler VTYPE_wxEvtHandler("EvtHandler");
 void VType_wxEvtHandler::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(EvtHandler_gurax));
 	// Assignment of method

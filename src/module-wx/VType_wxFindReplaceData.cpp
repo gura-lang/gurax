@@ -197,7 +197,7 @@ VType_wxFindReplaceData VTYPE_wxFindReplaceData("FindReplaceData");
 void VType_wxFindReplaceData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(FindReplaceData_gurax));
 	// Assignment of method

@@ -90,7 +90,7 @@ VType_wxGridCellChoiceEditor VTYPE_wxGridCellChoiceEditor("GridCellChoiceEditor"
 void VType_wxGridCellChoiceEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellChoiceEditor_gurax));
 	// Assignment of method

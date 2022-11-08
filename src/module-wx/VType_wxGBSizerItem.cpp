@@ -305,7 +305,7 @@ VType_wxGBSizerItem VTYPE_wxGBSizerItem("GBSizerItem");
 void VType_wxGBSizerItem::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSizerItem, Flag::Mutable, Gurax_CreateConstructor(GBSizerItem_gurax));
 	// Assignment of method

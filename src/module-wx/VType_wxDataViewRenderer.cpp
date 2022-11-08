@@ -45,7 +45,7 @@ VType_wxDataViewRenderer VTYPE_wxDataViewRenderer("DataViewRenderer");
 void VType_wxDataViewRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

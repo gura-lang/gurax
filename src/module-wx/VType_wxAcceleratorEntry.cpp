@@ -268,7 +268,7 @@ VType_wxAcceleratorEntry VTYPE_wxAcceleratorEntry("AcceleratorEntry");
 void VType_wxAcceleratorEntry::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AcceleratorEntry_gurax));
 	// Assignment of method

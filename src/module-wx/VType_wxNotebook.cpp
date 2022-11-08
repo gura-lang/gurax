@@ -346,7 +346,7 @@ VType_wxNotebook VTYPE_wxNotebook("Notebook");
 void VType_wxNotebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Notebook_gurax));
 	// Assignment of method

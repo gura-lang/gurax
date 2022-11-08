@@ -283,7 +283,7 @@ VType_wxListItemAttr VTYPE_wxListItemAttr("ListItemAttr");
 void VType_wxListItemAttr::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ListItemAttr_gurax));
 	// Assignment of method

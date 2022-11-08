@@ -212,7 +212,7 @@ VType_wxStaticBitmap VTYPE_wxStaticBitmap("StaticBitmap");
 void VType_wxStaticBitmap::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticBitmap_gurax));
 	// Assignment of method

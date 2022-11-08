@@ -62,7 +62,7 @@ VType_wxGridCellBoolRenderer VTYPE_wxGridCellBoolRenderer("GridCellBoolRenderer"
 void VType_wxGridCellBoolRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellBoolRenderer_gurax));
 	// Assignment of method

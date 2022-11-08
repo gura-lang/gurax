@@ -129,7 +129,7 @@ VType_wxFindReplaceDialog VTYPE_wxFindReplaceDialog("FindReplaceDialog");
 void VType_wxFindReplaceDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(FindReplaceDialog_gurax));
 	// Assignment of method

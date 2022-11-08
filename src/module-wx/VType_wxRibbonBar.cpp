@@ -573,7 +573,7 @@ VType_wxRibbonBar VTYPE_wxRibbonBar("RibbonBar");
 void VType_wxRibbonBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxRibbonControl, Flag::Mutable, Gurax_CreateConstructor(RibbonBar_gurax));
 	// Assignment of method

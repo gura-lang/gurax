@@ -740,7 +740,7 @@ VType_wxAuiMDIChildFrame VTYPE_wxAuiMDIChildFrame("AuiMDIChildFrame");
 void VType_wxAuiMDIChildFrame::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxFrame, Flag::Mutable, Gurax_CreateConstructor(AuiMDIChildFrame_gurax));
 	// Assignment of method

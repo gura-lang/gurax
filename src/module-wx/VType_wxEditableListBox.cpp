@@ -163,7 +163,7 @@ VType_wxEditableListBox VTYPE_wxEditableListBox("EditableListBox");
 void VType_wxEditableListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(EditableListBox_gurax));
 	// Assignment of method

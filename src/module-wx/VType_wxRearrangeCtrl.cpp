@@ -151,7 +151,7 @@ VType_wxRearrangeCtrl VTYPE_wxRearrangeCtrl("RearrangeCtrl");
 void VType_wxRearrangeCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(RearrangeCtrl_gurax));
 	// Assignment of method

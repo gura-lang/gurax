@@ -537,7 +537,7 @@ VType_wxFrame VTYPE_wxFrame("Frame");
 void VType_wxFrame::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxTopLevelWindow, Flag::Mutable, Gurax_CreateConstructor(Frame_gurax));
 	// Assignment of method

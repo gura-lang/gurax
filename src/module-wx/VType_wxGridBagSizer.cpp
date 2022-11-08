@@ -436,7 +436,7 @@ VType_wxGridBagSizer VTYPE_wxGridBagSizer("GridBagSizer");
 void VType_wxGridBagSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxFlexGridSizer, Flag::Mutable);
 	// Assignment of method

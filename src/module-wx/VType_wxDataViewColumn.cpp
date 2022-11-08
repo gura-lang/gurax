@@ -144,7 +144,7 @@ VType_wxDataViewColumn VTYPE_wxDataViewColumn("DataViewColumn");
 void VType_wxDataViewColumn::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSettableHeaderColumn, Flag::Mutable, Gurax_CreateConstructor(DataViewColumn_gurax));
 	// Assignment of method

@@ -5710,7 +5710,7 @@ VType_wxGrid VTYPE_wxGrid("Grid");
 void VType_wxGrid::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxScrolledCanvas, Flag::Mutable, Gurax_CreateConstructor(Grid_gurax));
 	// Assignment of constant value
