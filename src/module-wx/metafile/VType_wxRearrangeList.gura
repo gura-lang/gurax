@@ -10,4 +10,18 @@ RearrangeList = Class(CheckListBox) {
 	CanMoveCurrentDown() as bool
 	MoveCurrentUp() as bool
 	MoveCurrentDown() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RearrangeList, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RearrangeList, `en)}
+
+${help.ComposeMethodHelp(wx.RearrangeList, `en)}
+'''

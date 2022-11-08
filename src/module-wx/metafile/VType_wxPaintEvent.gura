@@ -3,7 +3,21 @@
 //==============================================================================
 PaintEvent = Class(Event) {
 	//__init__(id as int)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PaintEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PaintEvent, `en)}
+
+${help.ComposeMethodHelp(wx.PaintEvent, `en)}
+'''
 
 @event {
 	EVT_PAINT >> PaintEvent

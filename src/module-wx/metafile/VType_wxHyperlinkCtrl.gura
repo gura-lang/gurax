@@ -15,7 +15,21 @@ HyperlinkCtrl = Class(Control) {
 	SetURL(url as const_String_r) as void
 	SetVisited(visited as bool = true) as void
 	SetVisitedColour(colour as const_Colour_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HyperlinkCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HyperlinkCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.HyperlinkCtrl, `en)}
+'''
 
 @const { // Styles
 	HL_ALIGN_LEFT

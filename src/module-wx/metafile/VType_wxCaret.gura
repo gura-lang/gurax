@@ -8,4 +8,18 @@ Caret = Class():loosePointer {
 	IsOk() as bool
 	IsVisible() as bool
 	Show(show as bool = true) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Caret, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Caret, `en)}
+
+${help.ComposeMethodHelp(wx.Caret, `en)}
+'''

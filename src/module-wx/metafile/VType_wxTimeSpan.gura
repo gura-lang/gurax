@@ -2,4 +2,18 @@
 // VType_wxTimeSpan.gura
 //==============================================================================
 TimeSpan = Class {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TimeSpan, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TimeSpan, `en)}
+
+${help.ComposeMethodHelp(wx.TimeSpan, `en)}
+'''

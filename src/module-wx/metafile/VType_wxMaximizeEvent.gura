@@ -4,7 +4,21 @@
 MaximizeEvent = Class(Event) {
 	@include['wx/event.h']
 	//__init__(id as int = 0)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MaximizeEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MaximizeEvent, `en)}
+
+${help.ComposeMethodHelp(wx.MaximizeEvent, `en)}
+'''
 
 @event {
 	EVT_MAXIMIZE >> MaximizeEvent

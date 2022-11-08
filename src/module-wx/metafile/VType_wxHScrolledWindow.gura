@@ -6,4 +6,18 @@ HScrolledWindow = Class(Panel) {
 	@mixin[VarHScrollHelper]
 	//__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxPanelNameStr)
 	//Create(parent as Window_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, name as const_String_r = wxPanelNameStr) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HScrolledWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HScrolledWindow, `en)}
+
+${help.ComposeMethodHelp(wx.HScrolledWindow, `en)}
+'''

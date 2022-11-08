@@ -6,4 +6,18 @@ CursorProperty = Class(EnumProperty) {
 	__init__(label as const_String_r = wxPG_LABEL, name as const_String_r = wxPG_LABEL, value as int = 0) as wxCursorProperty
 	OnMeasureImage(item as int) as Size
 	OnCustomPaint(dc as DC_r, rect as const_Rect_r, paintdata as PGPaintData_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CursorProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CursorProperty, `en)}
+
+${help.ComposeMethodHelp(wx.CursorProperty, `en)}
+'''

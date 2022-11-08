@@ -6,4 +6,18 @@ FindReplaceDialog = Class(Dialog) {
 	__init__(parent as Window_p, data as FindReplaceData_p, title as String, style as int = 0)
 	Create(parent as Window_p, data as FindReplaceData_p, title as const_String_r, style as int = 0) as bool
 	GetData() as FindReplaceData_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FindReplaceDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FindReplaceDialog, `en)}
+
+${help.ComposeMethodHelp(wx.FindReplaceDialog, `en)}
+'''

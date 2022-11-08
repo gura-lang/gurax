@@ -41,7 +41,21 @@ Dialog = Class(TopLevelWindow) {
 	Show(show as bool = 1) as bool
 	ShowModal() as int
 	ShowWindowModal() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Dialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Dialog, `en)}
+
+${help.ComposeMethodHelp(wx.Dialog, `en)}
+'''
 
 @const { // Styles
 	CAPTION

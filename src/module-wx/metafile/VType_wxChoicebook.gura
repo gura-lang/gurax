@@ -6,7 +6,21 @@ Choicebook = Class(BookCtrlBase) {
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = '')
 	GetChoiceCtrl() as Choice_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Choicebook, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Choicebook, `en)}
+
+${help.ComposeMethodHelp(wx.Choicebook, `en)}
+'''
 
 @const { // Styles
 	CHB_DEFAULT

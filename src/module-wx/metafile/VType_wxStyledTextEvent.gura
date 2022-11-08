@@ -3,4 +3,18 @@
 //==============================================================================
 StyledTextEvent = Class(CommandEvent) {
 	@include['wx/stc/stc.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StyledTextEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StyledTextEvent, `en)}
+
+${help.ComposeMethodHelp(wx.StyledTextEvent, `en)}
+'''

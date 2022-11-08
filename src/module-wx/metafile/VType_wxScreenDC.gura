@@ -3,4 +3,18 @@
 //==============================================================================
 ScreenDC = Class(DC) {
 	@include['wx/dcscreen.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ScreenDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ScreenDC, `en)}
+
+${help.ComposeMethodHelp(wx.ScreenDC, `en)}
+'''

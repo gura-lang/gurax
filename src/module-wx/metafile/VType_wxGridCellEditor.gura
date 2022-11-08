@@ -3,4 +3,18 @@
 //==============================================================================
 GridCellEditor = Class(ClientDataContainer) {
 	@include['wx/grid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellEditor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellEditor, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellEditor, `en)}
+'''

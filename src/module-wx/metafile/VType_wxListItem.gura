@@ -31,7 +31,21 @@ ListItem = Class(Object) {
 	SetWidth(width as int) as void
 	SetData(data as long) as void
 	//SetData(data as void_p) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ListItem, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ListItem, `en)}
+
+${help.ComposeMethodHelp(wx.ListItem, `en)}
+'''
 
 @const {
 	LIST_FORMAT_LEFT

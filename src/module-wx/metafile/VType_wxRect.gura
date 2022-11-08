@@ -270,7 +270,21 @@ Rect = Class {
 		int y = Value_Number::GetNumber<int>(value_gurax);
 		valueThis_gurax.GetEntity().y = y;
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Rect, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Rect, `en)}
+
+${help.ComposeMethodHelp(wx.Rect, `en)}
+'''
 
 (const_Rect_r != const_Rect_r) as bool
 (const_Rect_r == const_Rect_r) as bool

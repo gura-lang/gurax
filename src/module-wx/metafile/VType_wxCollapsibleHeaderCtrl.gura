@@ -7,7 +7,21 @@ CollapsibleHeaderCtrl = Class(Control) {
 		style as long = wxBORDER_NONE, validator as Validator = wxDefaultValidator, name as String = wxCollapsibleHeaderCtrlNameStr)
 	SetCollapsed(collapsed as bool = true) as void
 	IsCollapsed() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CollapsibleHeaderCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CollapsibleHeaderCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.CollapsibleHeaderCtrl, `en)}
+'''
 
 @event {
 	EVT_COLLAPSIBLEHEADER_CHANGED	>> CommandEvent

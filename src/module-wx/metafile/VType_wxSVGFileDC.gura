@@ -3,4 +3,18 @@
 //==============================================================================
 SVGFileDC = Class(DC) {
 	@include['wx/dcsvg.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SVGFileDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SVGFileDC, `en)}
+
+${help.ComposeMethodHelp(wx.SVGFileDC, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 Position = Class {
 	@include['wx/position.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Position, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Position, `en)}
+
+${help.ComposeMethodHelp(wx.Position, `en)}
+'''

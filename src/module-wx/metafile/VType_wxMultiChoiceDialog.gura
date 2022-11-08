@@ -7,4 +7,18 @@ MultiChoiceDialog = Class(Dialog) {
 	GetSelections() as ArrayInt
 	SetSelections(selections as const_ArrayInt_r) as void
 	ShowModal() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MultiChoiceDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MultiChoiceDialog, `en)}
+
+${help.ComposeMethodHelp(wx.MultiChoiceDialog, `en)}
+'''

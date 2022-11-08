@@ -3,4 +3,18 @@
 //==============================================================================
 RibbonPanel = Class(RibbonControl) {
 	@include['wx/ribbon/panel.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonPanel, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonPanel, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonPanel, `en)}
+'''

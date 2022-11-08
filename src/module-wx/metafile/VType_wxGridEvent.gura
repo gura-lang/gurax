@@ -10,7 +10,21 @@ GridEvent = Class(NotifyEvent) {
 	MetaDown() as bool
 	Selecting() as bool
 	ShiftDown() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridEvent, `en)}
+
+${help.ComposeMethodHelp(wx.GridEvent, `en)}
+'''
 
 @event {
 	EVT_GRID_CELL_CHANGING		>> GridEvent

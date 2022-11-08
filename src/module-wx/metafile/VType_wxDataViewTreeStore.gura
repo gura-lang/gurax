@@ -3,4 +3,18 @@
 //==============================================================================
 DataViewTreeStore = Class(DataViewModel) {
 	@include['wx/dataview.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataViewTreeStore, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataViewTreeStore, `en)}
+
+${help.ComposeMethodHelp(wx.DataViewTreeStore, `en)}
+'''

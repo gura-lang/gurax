@@ -5,4 +5,18 @@ TipWindow = Class(Window) {
 	@include['wx/tipwin.h']
 	SetBoundingRect(rectBound as const_Rect_r) as void
 	//SetTipWindowPtr(windowPtr as TipWindow_p_p) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TipWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TipWindow, `en)}
+
+${help.ComposeMethodHelp(wx.TipWindow, `en)}
+'''

@@ -12,7 +12,21 @@ ScrollBar = Class(Control) {
 	SetScrollbar(position as int, thumbSize as int, range as int, pageSize as int, refresh as bool = true) as void
 	SetThumbPosition(viewStart as int) as void
 	IsVertical() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ScrollBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ScrollBar, `en)}
+
+${help.ComposeMethodHelp(wx.ScrollBar, `en)}
+'''
 
 @const {
 	SB_HORIZONTAL

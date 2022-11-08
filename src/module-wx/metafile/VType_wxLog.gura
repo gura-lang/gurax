@@ -30,4 +30,18 @@ Log = Class():loosePointer {
 	DisableTimestamp():static as void
 	GetVerbose():static as bool
 	SetVerbose(verbose as bool = true):static as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Log, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Log, `en)}
+
+${help.ComposeMethodHelp(wx.Log, `en)}
+'''

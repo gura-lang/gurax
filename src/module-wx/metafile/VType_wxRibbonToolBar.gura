@@ -3,4 +3,18 @@
 //==============================================================================
 RibbonToolBar = Class(RibbonControl) {
 	@include['wx/ribbon/toolbar.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonToolBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonToolBar, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonToolBar, `en)}
+'''

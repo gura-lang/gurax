@@ -19,4 +19,18 @@ RichTextStyleListBox = Class(HtmlListBox) {
 	SetStyleSheet(styleSheet as RichTextStyleSheet_p) as void
 	//SetStyleType(styleType as RichTextStyleListBox::wxRichTextStyleType) as void
 	UpdateStyles() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextStyleListBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextStyleListBox, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleListBox, `en)}
+'''

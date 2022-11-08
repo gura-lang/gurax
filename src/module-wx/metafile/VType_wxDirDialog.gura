@@ -10,4 +10,18 @@ DirDialog = Class(Dialog) {
 	SetMessage(message as const_String_r) as void
 	SetPath(path as const_String_r) as void
 	ShowModal() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DirDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DirDialog, `en)}
+
+${help.ComposeMethodHelp(wx.DirDialog, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 MirrorDC = Class(DC) {
 	@include['wx/dcmirror.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MirrorDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MirrorDC, `en)}
+
+${help.ComposeMethodHelp(wx.MirrorDC, `en)}
+'''

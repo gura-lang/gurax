@@ -10,7 +10,21 @@ DirPickerCtrl = Class(PickerBase) {
 	SetDirName(dirname as const_FileName_r) as void
 	SetInitialDirectory(dir as const_String_r) as void
 	SetPath(dirname as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DirPickerCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DirPickerCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.DirPickerCtrl, `en)}
+'''
 
 @const { // Styles
 	DIRP_DEFAULT_STYLE

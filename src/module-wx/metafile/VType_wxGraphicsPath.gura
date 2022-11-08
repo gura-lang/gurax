@@ -3,4 +3,18 @@
 //==============================================================================
 GraphicsPath = Class(GraphicsObject) {
 	@include['wx/graphics.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GraphicsPath, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GraphicsPath, `en)}
+
+${help.ComposeMethodHelp(wx.GraphicsPath, `en)}
+'''

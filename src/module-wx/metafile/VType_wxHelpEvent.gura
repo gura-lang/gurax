@@ -2,7 +2,21 @@
 // VType_wxHelpEvent.gura
 //==============================================================================
 HelpEvent = Class(CommandEvent) {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HelpEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HelpEvent, `en)}
+
+${help.ComposeMethodHelp(wx.HelpEvent, `en)}
+'''
 
 @event {
 	EVT_HELP >> HelpEvent

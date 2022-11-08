@@ -2,4 +2,18 @@
 // VType_wxEventType.gura
 //==============================================================================
 EventType = Class {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.EventType, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.EventType, `en)}
+
+${help.ComposeMethodHelp(wx.EventType, `en)}
+'''

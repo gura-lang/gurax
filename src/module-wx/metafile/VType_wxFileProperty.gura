@@ -3,4 +3,18 @@
 //==============================================================================
 FileProperty = Class(PGProperty) {
 	@include['wx/propgrid/props.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FileProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FileProperty, `en)}
+
+${help.ComposeMethodHelp(wx.FileProperty, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 DataViewIndexListModel = Class(DataViewListModel) {
 	@include['wx/dataview.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataViewIndexListModel, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataViewIndexListModel, `en)}
+
+${help.ComposeMethodHelp(wx.DataViewIndexListModel, `en)}
+'''

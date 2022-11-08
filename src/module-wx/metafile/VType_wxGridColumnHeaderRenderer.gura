@@ -3,4 +3,18 @@
 //==============================================================================
 GridColumnHeaderRenderer = Class(GridHeaderLabelsRenderer) {
 	@include['wx/grid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridColumnHeaderRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridColumnHeaderRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GridColumnHeaderRenderer, `en)}
+'''

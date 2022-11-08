@@ -7,7 +7,21 @@ MoveEvent = Class(Event) {
 	GetRect() as Rect
 	SetRect(rect as const_Rect_r) as void
 	SetPosition(pos as const_Point_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MoveEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MoveEvent, `en)}
+
+${help.ComposeMethodHelp(wx.MoveEvent, `en)}
+'''
 
 @event {
 	EVT_MOVE		>> MoveEvent

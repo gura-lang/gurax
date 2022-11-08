@@ -5,4 +5,18 @@ ToggleButton = Class(AnyButton) {
 	@include['wx/tglbtn.h']
 	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxCheckBoxNameStr)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ToggleButton, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ToggleButton, `en)}
+
+${help.ComposeMethodHelp(wx.ToggleButton, `en)}
+'''

@@ -19,4 +19,18 @@ Timer = Class(EvtHandler) {
 	Start(milliseconds as int = -1, oneShot as bool = wxTIMER_CONTINUOUS):virtual as bool
 	StartOnce(milliseconds as int = -1) as bool
 	Stop():virtual as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Timer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Timer, `en)}
+
+${help.ComposeMethodHelp(wx.Timer, `en)}
+'''

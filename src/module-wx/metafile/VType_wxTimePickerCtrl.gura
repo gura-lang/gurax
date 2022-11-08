@@ -3,4 +3,18 @@
 //==============================================================================
 TimePickerCtrl = Class(Control) {
 	@include['wx/timectrl.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TimePickerCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TimePickerCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.TimePickerCtrl, `en)}
+'''

@@ -5,4 +5,18 @@ HyperlinkEvent = Class(CommandEvent) {
 	@include['wx/hyperlink.h']
 	GetURL() as String
 	SetURL(url as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HyperlinkEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HyperlinkEvent, `en)}
+
+${help.ComposeMethodHelp(wx.HyperlinkEvent, `en)}
+'''

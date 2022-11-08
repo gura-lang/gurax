@@ -3,4 +3,18 @@
 //==============================================================================
 HeaderColumn = Class():loosePointer {
 	@include['wx/headercol.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HeaderColumn, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HeaderColumn, `en)}
+
+${help.ComposeMethodHelp(wx.HeaderColumn, `en)}
+'''

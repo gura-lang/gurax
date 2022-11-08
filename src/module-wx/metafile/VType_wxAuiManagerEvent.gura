@@ -16,4 +16,18 @@ AuiManagerEvent = Class(Event) {
 	SetManager(manager as AuiManager_p) as void
 	//SetPane(pane as AuiPaneInfo_p) as void
 	Veto(veto as bool = true) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiManagerEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiManagerEvent, `en)}
+
+${help.ComposeMethodHelp(wx.AuiManagerEvent, `en)}
+'''

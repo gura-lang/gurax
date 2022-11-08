@@ -7,7 +7,21 @@ StaticLine = Class(Control) {
 		style as long = wxLI_HORIZONTAL, name as String = wxStaticLineNameStr)
 	IsVertical() as bool
 	GetDefaultSize():static as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StaticLine, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StaticLine, `en)}
+
+${help.ComposeMethodHelp(wx.StaticLine, `en)}
+'''
 
 @const { // Styles
 	LI_HORIZONTAL

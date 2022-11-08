@@ -3,4 +3,18 @@
 //==============================================================================
 FileSystem = Class(Object) {
 	@include['wx/filesys.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FileSystem, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FileSystem, `en)}
+
+${help.ComposeMethodHelp(wx.FileSystem, `en)}
+'''

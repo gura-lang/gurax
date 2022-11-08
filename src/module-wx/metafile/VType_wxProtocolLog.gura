@@ -6,4 +6,18 @@ ProtocolLog = Class():loosePointer {
 	__init__(traceMask as const_String_r)
 	LogRequest(str as const_String_r) as void
 	LogResponse(str as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ProtocolLog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ProtocolLog, `en)}
+
+${help.ComposeMethodHelp(wx.ProtocolLog, `en)}
+'''

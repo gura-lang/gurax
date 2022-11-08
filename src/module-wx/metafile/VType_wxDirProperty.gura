@@ -7,4 +7,18 @@
 
 PropertyGridEvent = Class(CommandEvent) {
 	@include['wx/propgrid/propgrid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PropertyGridEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PropertyGridEvent, `en)}
+
+${help.ComposeMethodHelp(wx.PropertyGridEvent, `en)}
+'''

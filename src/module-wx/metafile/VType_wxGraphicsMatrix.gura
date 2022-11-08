@@ -3,4 +3,18 @@
 //==============================================================================
 GraphicsMatrix = Class(GraphicsObject) {
 	@include['wx/graphics.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GraphicsMatrix, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GraphicsMatrix, `en)}
+
+${help.ComposeMethodHelp(wx.GraphicsMatrix, `en)}
+'''

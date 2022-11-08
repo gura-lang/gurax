@@ -966,7 +966,21 @@ Window = Class(EvtHandler) {
 	RegisterHotKey(hotkeyId as int, modifiers as int, virtualKeyCode as int) as bool
 	UnregisterHotKey(hotkeyId as int) as bool
 	UpdateWindowUI(flags as long = wxUPDATE_UI_NONE) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Window, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Window, `en)}
+
+${help.ComposeMethodHelp(wx.Window, `en)}
+'''
 
 @const { // Styles
 	BORDER_DEFAULT

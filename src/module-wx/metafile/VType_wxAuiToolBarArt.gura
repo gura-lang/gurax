@@ -3,4 +3,18 @@
 //==============================================================================
 AuiToolBarArt = Class():loosePointer {
 	@include['wx/aui/auibar.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiToolBarArt, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiToolBarArt, `en)}
+
+${help.ComposeMethodHelp(wx.AuiToolBarArt, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 RearrangeDialog = Class(Dialog) {
 	@include['wx/rearrangectrl.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RearrangeDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RearrangeDialog, `en)}
+
+${help.ComposeMethodHelp(wx.RearrangeDialog, `en)}
+'''

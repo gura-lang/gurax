@@ -3,4 +3,18 @@
 //==============================================================================
 PNGHandler = Class(ImageHandler) {
 	__init__()
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PNGHandler, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PNGHandler, `en)}
+
+${help.ComposeMethodHelp(wx.PNGHandler, `en)}
+'''

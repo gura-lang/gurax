@@ -39,5 +39,19 @@ Icon = Class(GDIObject):holdEntity {
 	SetDepth(depth as int) as void
 	SetHeight(height as int) as void
 	SetWidth(width as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Icon, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Icon, `en)}
+
+${help.ComposeMethodHelp(wx.Icon, `en)}
+'''
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              

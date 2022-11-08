@@ -33,4 +33,18 @@ DataViewEvent = Class(NotifyEvent) {
 	SetDataBuffer(buf as void_p) as void
 	GetDragFlags() as int
 	SetDropEffect(effect as DragResult) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataViewEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataViewEvent, `en)}
+
+${help.ComposeMethodHelp(wx.DataViewEvent, `en)}
+'''

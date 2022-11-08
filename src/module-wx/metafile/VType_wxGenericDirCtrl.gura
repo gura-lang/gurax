@@ -29,7 +29,21 @@ GenericDirCtrl = Class(Control) {
 	SelectPath(path as const_String_r, select as bool = true) as void
 	SelectPaths(paths as const_ArrayString_r) as void
 	UnselectAll() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GenericDirCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GenericDirCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.GenericDirCtrl, `en)}
+'''
 
 @const { // Styles
 	DIRCTRL_DIR_ONLY

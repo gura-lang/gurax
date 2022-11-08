@@ -2,4 +2,18 @@
 // VType_wxGDIImageHandler.gura
 //==============================================================================
 GDIImageHandler = Class():loosePointer {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GDIImageHandler, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GDIImageHandler, `en)}
+
+${help.ComposeMethodHelp(wx.GDIImageHandler, `en)}
+'''

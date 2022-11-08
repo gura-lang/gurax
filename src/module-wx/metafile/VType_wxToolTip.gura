@@ -11,4 +11,18 @@ ToolTip = Class(Object) {
 	SetDelay(msecs as long):static as void
 	SetMaxWidth(width as int):static as void
 	SetReshow(msecs as long):static as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ToolTip, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ToolTip, `en)}
+
+${help.ComposeMethodHelp(wx.ToolTip, `en)}
+'''

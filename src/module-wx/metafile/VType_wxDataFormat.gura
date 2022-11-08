@@ -2,4 +2,18 @@
 // VType_wxDataFormat.gura
 //==============================================================================
 DataFormat = Class {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataFormat, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataFormat, `en)}
+
+${help.ComposeMethodHelp(wx.DataFormat, `en)}
+'''

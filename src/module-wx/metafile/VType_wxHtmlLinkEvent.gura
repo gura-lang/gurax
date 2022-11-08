@@ -4,4 +4,18 @@
 HtmlLinkEvent = Class(CommandEvent) {
 	@include['wx/html/htmlwin.h']
 	GetLinkInfo() as const_HtmlLinkInfo_r
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlLinkEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlLinkEvent, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlLinkEvent, `en)}
+'''

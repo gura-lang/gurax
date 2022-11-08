@@ -8,7 +8,21 @@ SashEvent = Class(CommandEvent) {
 	SetEdge(edge as SashEdgePosition) as void
 	SetDragRect(rect as const_Rect_r) as void
 	SetDragStatus(status as SashDragStatus) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SashEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SashEvent, `en)}
+
+${help.ComposeMethodHelp(wx.SashEvent, `en)}
+'''
 
 @event {
 	EVT_SASH_DRAGGED >> SashEvent

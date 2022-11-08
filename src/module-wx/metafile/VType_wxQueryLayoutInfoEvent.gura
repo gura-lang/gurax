@@ -12,7 +12,21 @@ QueryLayoutInfoEvent = Class(Event) {
 	SetOrientation(orientation as LayoutOrientation) as void
 	SetRequestedLength(length as int) as void
 	SetSize(size as const_Size_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.QueryLayoutInfoEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.QueryLayoutInfoEvent, `en)}
+
+${help.ComposeMethodHelp(wx.QueryLayoutInfoEvent, `en)}
+'''
 
 @event {
 	EVT_QUERY_LAYOUT_INFO > QueryLayoutInfoEvent

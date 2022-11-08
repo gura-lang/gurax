@@ -5,7 +5,21 @@ EraseEvent = Class(Event) {
 	@include['wx/event.h']
 	//__init__(id as int = 0, dc as DC_p = NULL)
 	GetDC() as DC_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.EraseEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.EraseEvent, `en)}
+
+${help.ComposeMethodHelp(wx.EraseEvent, `en)}
+'''
 
 @event {
 	EVT_ERASE_BACKGROUND >> EraseEvent

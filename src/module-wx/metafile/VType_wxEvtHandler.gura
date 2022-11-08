@@ -11,4 +11,18 @@ EvtHandler = Class {
 			new EventUserData(processor_gurax.Reference(), funct.Reference(), userData.Reference(), eventValueFactory));
 		return Value::nil();
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.EvtHandler, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.EvtHandler, `en)}
+
+${help.ComposeMethodHelp(wx.EvtHandler, `en)}
+'''

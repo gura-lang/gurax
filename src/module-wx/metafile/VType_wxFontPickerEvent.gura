@@ -6,4 +6,18 @@ FontPickerEvent = Class(CommandEvent) {
 	//__init__(generator as Object_p, id as int, font as const_Font_r)
 	GetFont() as Font
 	SetFont(f as const_Font_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FontPickerEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FontPickerEvent, `en)}
+
+${help.ComposeMethodHelp(wx.FontPickerEvent, `en)}
+'''

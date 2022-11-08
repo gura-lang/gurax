@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextStyleOrganiserDialog = Class(Dialog) {
 	@include['wx/richtext/richtextstyledlg.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextStyleOrganiserDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextStyleOrganiserDialog, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleOrganiserDialog, `en)}
+'''

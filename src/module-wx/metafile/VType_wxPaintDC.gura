@@ -4,4 +4,18 @@
 PaintDC = Class(ClientDC) {
 	@include['wx/dcclient.h']
 	__init__(window as Window_p)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PaintDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PaintDC, `en)}
+
+${help.ComposeMethodHelp(wx.PaintDC, `en)}
+'''

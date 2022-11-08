@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextProperties = Class {
 	@include['wx/richtext/richtextbuffer.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextProperties, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextProperties, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextProperties, `en)}
+'''

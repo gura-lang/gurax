@@ -57,7 +57,21 @@ ToolBar = Class(Control) {
 	//InsertTool(pos as size_t, tool as ToolBarToolBase_p) as ToolBarToolBase_p
 	SetMargins(x as int, y as int) as void
 	//SetMargins(size as const_Size_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ToolBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ToolBar, `en)}
+
+${help.ComposeMethodHelp(wx.ToolBar, `en)}
+'''
 
 @const { // Styles
 	TB_FLAT

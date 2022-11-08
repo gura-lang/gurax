@@ -94,7 +94,21 @@ HtmlHelpWindow = Class(Window) {
 	RefreshLists() as void
 	GetController() as HtmlHelpController_p
 	SetController(controller as HtmlHelpController_p) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlHelpWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlHelpWindow, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpWindow, `en)}
+'''
 
 @const {
 	HF_TOOLBAR

@@ -322,7 +322,21 @@ RichTextCtrl = Class(Control) {
 	//wxRichTextAttr() as bool_WriteImage_(const_Bitmapbitmap,_BitmapType_bitmapType=wxBITMAP_TYPE_PNG,_const_RichTextAttrtextAttr=
 	//GetBuffer() as RichTextBuffer
 	//GetBuffer() as RichTextBuffer
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextCtrl, `en)}
+'''
 
 @const { // Styles
 	RE_CENTRE_CARET

@@ -3,4 +3,18 @@
 //==============================================================================
 AuiToolBarEvent = Class(NotifyEvent) {
 	@include['wx/aui/auibar.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiToolBarEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiToolBarEvent, `en)}
+
+${help.ComposeMethodHelp(wx.AuiToolBarEvent, `en)}
+'''

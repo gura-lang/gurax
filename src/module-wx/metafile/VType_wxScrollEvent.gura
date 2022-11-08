@@ -7,7 +7,21 @@ ScrollEvent = Class(CommandEvent) {
 	GetPosition() as int
 	SetOrientation(orient as int) as void
 	SetPosition(pos as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ScrollEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ScrollEvent, `en)}
+
+${help.ComposeMethodHelp(wx.ScrollEvent, `en)}
+'''
 
 @event {
 	//EVT_SCROLL						>> ScrollEvent

@@ -13,4 +13,18 @@ BitmapHandler = Class():loosePointer {
 	SetExtension(extension as const_String_r) as void
 	SetName(name as const_String_r) as void
 	SetType(type as BitmapType) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BitmapHandler, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BitmapHandler, `en)}
+
+${help.ComposeMethodHelp(wx.BitmapHandler, `en)}
+'''

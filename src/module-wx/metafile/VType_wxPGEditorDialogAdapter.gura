@@ -3,4 +3,18 @@
 //==============================================================================
 PGEditorDialogAdapter = Class():loosePointer {
 	@include['wx/propgrid/editors.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PGEditorDialogAdapter, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PGEditorDialogAdapter, `en)}
+
+${help.ComposeMethodHelp(wx.PGEditorDialogAdapter, `en)}
+'''

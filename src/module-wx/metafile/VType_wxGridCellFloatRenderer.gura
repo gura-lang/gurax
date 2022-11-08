@@ -11,4 +11,18 @@ GridCellFloatRenderer = Class(GridCellStringRenderer) {
 	SetParameters(params as const_String_r) as void
 	SetPrecision(precision as int) as void
 	SetWidth(width as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellFloatRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellFloatRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellFloatRenderer, `en)}
+'''

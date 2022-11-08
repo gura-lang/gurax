@@ -5,4 +5,18 @@ BitmapToggleButton = Class(ToggleButton) {
 	@include['wx/tglbtn.h']
 	__init__(parent as Window_p, id as WindowID, label as Bitmap, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxCheckBoxNameStr)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BitmapToggleButton, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BitmapToggleButton, `en)}
+
+${help.ComposeMethodHelp(wx.BitmapToggleButton, `en)}
+'''

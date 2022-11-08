@@ -37,7 +37,21 @@ MouseEvent = Class(Event) {
 	RightDClick() as bool
 	RightDown() as bool
 	RightUp() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MouseEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MouseEvent, `en)}
+
+${help.ComposeMethodHelp(wx.MouseEvent, `en)}
+'''
 
 @event {
 	EVT_LEFT_DOWN				>> MouseEvent

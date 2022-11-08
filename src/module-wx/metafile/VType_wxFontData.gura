@@ -17,4 +17,18 @@ FontData = Class {
 	SetInitialFont(font as const_Font_r) as void
 	SetRange(min as int, max as int) as void
 	SetShowHelp(showHelp as bool) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FontData, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FontData, `en)}
+
+${help.ComposeMethodHelp(wx.FontData, `en)}
+'''

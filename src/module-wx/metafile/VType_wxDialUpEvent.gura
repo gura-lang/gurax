@@ -3,7 +3,21 @@
 //==============================================================================
 DialUpEvent = Class(Event) {
 	@include['wx/dialup.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DialUpEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DialUpEvent, `en)}
+
+${help.ComposeMethodHelp(wx.DialUpEvent, `en)}
+'''
 
 @event {
 	EVT_DIALUP_CONNECTED	>> DialUpEvent

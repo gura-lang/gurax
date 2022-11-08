@@ -93,7 +93,21 @@ Colour = Class {
 		}
 		return nullptr;
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Colour, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Colour, `en)}
+
+${help.ComposeMethodHelp(wx.Colour, `en)}
+'''
 
 @const {
 	ALPHA_OPAQUE

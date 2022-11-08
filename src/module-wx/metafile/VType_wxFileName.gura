@@ -3,4 +3,18 @@
 //==============================================================================
 FileName = Class {
 	@include['wx/filename.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FileName, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FileName, `en)}
+
+${help.ComposeMethodHelp(wx.FileName, `en)}
+'''

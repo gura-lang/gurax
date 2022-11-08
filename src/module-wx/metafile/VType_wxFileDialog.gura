@@ -27,7 +27,21 @@ FileDialog = Class(Dialog) {
 	SetPath(path as const_String_r) as void
 	SetWildcard(wildCard as const_String_r) as void
 	ShowModal() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FileDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FileDialog, `en)}
+
+${help.ComposeMethodHelp(wx.FileDialog, `en)}
+'''
 
 @const { // Styles
 	FD_DEFAULT_STYLE

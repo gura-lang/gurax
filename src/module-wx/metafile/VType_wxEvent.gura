@@ -23,4 +23,18 @@ Event = Class {
 	ShouldPropagate() as bool
 	Skip(skip as bool = true) as void
 	StopPropagation() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Event, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Event, `en)}
+
+${help.ComposeMethodHelp(wx.Event, `en)}
+'''

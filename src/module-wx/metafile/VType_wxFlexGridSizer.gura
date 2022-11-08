@@ -109,4 +109,18 @@ FlexGridSizer = Class(GridSizer) {
 		'''
 	RecalcSizes() as void
 	CalcMin() as Size
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FlexGridSizer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FlexGridSizer, `en)}
+
+${help.ComposeMethodHelp(wx.FlexGridSizer, `en)}
+'''

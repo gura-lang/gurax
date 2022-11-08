@@ -45,4 +45,18 @@ PropertyGridManager = Class(Panel) {
 	SetPageSplitterPosition(page as int, pos as int, column as int = 0) as void
 	SetSplitterPosition(pos as int, column as int = 0) as void
 	ShowHeader(show as bool = true) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PropertyGridManager, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PropertyGridManager, `en)}
+
+${help.ComposeMethodHelp(wx.PropertyGridManager, `en)}
+'''

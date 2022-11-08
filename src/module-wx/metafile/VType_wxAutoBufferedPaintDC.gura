@@ -3,4 +3,18 @@
 //==============================================================================
 AutoBufferedPaintDC = Class(DC) {
 	@include['wx/dcbuffer.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AutoBufferedPaintDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AutoBufferedPaintDC, `en)}
+
+${help.ComposeMethodHelp(wx.AutoBufferedPaintDC, `en)}
+'''

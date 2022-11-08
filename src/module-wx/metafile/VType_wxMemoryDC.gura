@@ -3,4 +3,18 @@
 //==============================================================================
 MemoryDC = Class(DC) {
 	@include['wx/dcmemory.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MemoryDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MemoryDC, `en)}
+
+${help.ComposeMethodHelp(wx.MemoryDC, `en)}
+'''

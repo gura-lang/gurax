@@ -3,4 +3,18 @@
 //==============================================================================
 GridTableBase = Class(Object) {
 	@include['wx/grid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridTableBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridTableBase, `en)}
+
+${help.ComposeMethodHelp(wx.GridTableBase, `en)}
+'''

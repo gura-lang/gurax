@@ -103,4 +103,18 @@ GBSizerItem = Class(SizerItem) {
 		return Value_Tuple::Create(new Value_Number(row), new Value_Number(col));
 		'''
 	//GetSpan() as GBSpan
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GBSizerItem, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GBSizerItem, `en)}
+
+${help.ComposeMethodHelp(wx.GBSizerItem, `en)}
+'''

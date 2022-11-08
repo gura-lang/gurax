@@ -51,4 +51,18 @@ Bitmap = Class(GDIObject):holdEntity {
 		}
 		return nullptr;
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Bitmap, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Bitmap, `en)}
+
+${help.ComposeMethodHelp(wx.Bitmap, `en)}
+'''

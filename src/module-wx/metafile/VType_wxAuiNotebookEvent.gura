@@ -3,4 +3,18 @@
 //==============================================================================
 AuiNotebookEvent = Class(BookCtrlEvent) {
 	@include['wx/aui/auibook.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiNotebookEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiNotebookEvent, `en)}
+
+${help.ComposeMethodHelp(wx.AuiNotebookEvent, `en)}
+'''

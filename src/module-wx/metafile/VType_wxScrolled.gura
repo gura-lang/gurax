@@ -66,4 +66,18 @@ Scrolled = Class():mixin {
 	IsAutoScrolling() as bool
 	StopAutoScrolling() as void
 	SendAutoScrollEvents(event as ScrollWinEvent_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Scrolled, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Scrolled, `en)}
+
+${help.ComposeMethodHelp(wx.Scrolled, `en)}
+'''

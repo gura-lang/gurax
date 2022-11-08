@@ -4,5 +4,19 @@
 /*
 PostScriptDC = Class(DC) {
 	@include['wx/dcps.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PostScriptDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PostScriptDC, `en)}
+
+${help.ComposeMethodHelp(wx.PostScriptDC, `en)}
+'''
 */

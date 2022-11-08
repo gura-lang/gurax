@@ -3,4 +3,18 @@
 //==============================================================================
 DataViewVirtualListModel = Class(DataViewListModel) {
 	@include['wx/dataview.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataViewVirtualListModel, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataViewVirtualListModel, `en)}
+
+${help.ComposeMethodHelp(wx.DataViewVirtualListModel, `en)}
+'''

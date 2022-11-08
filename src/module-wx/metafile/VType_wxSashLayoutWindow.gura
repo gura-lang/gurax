@@ -11,4 +11,18 @@ SashLayoutWindow = Class(SashWindow) {
 	SetAlignment(alignment as LayoutAlignment) as void
 	SetDefaultSize(size as const_Size_r) as void
 	SetOrientation(orientation as LayoutOrientation) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SashLayoutWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SashLayoutWindow, `en)}
+
+${help.ComposeMethodHelp(wx.SashLayoutWindow, `en)}
+'''

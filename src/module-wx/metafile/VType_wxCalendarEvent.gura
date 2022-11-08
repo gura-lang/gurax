@@ -5,4 +5,18 @@ CalendarEvent = Class(DateEvent) {
 	@include['wx/calctrl.h']
 	//GetWeekDay() as DateTime::WeekDay
 	//SetWeekDay(day as DateTime::WeekDay)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CalendarEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CalendarEvent, `en)}
+
+${help.ComposeMethodHelp(wx.CalendarEvent, `en)}
+'''

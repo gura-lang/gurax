@@ -8,7 +8,21 @@ CalculateLayoutEvent = Class(Event) {
 	GetRect() as Rect
 	SetFlags(flags as int) as void
 	SetRect(rect as const_Rect_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CalculateLayoutEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CalculateLayoutEvent, `en)}
+
+${help.ComposeMethodHelp(wx.CalculateLayoutEvent, `en)}
+'''
 
 @event {
 	EVT_CALCULATE_LAYOUT >> CalculateLayoutEvent

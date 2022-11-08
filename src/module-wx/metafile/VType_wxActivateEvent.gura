@@ -6,7 +6,21 @@ ActivateEvent = Class(Event) {
 	//__init__(eventType as EventType = wxEVT_NULL, active as bool = true, id as int = 0, ActivationReason as Reason = Reason_Unknown)
 	GetActive() as bool
 	//GetActivationReason() as Reason
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ActivateEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ActivateEvent, `en)}
+
+${help.ComposeMethodHelp(wx.ActivateEvent, `en)}
+'''
 
 @event {
 	EVT_ACTIVATE		>> ActivateEvent

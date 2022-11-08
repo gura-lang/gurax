@@ -12,4 +12,18 @@ ColourData = Class {
 	SetCustomColour(i as int, colour as const_Colour_r) as void
 	ToString() as String
 	FromString(str as const_String_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ColourData, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ColourData, `en)}
+
+${help.ComposeMethodHelp(wx.ColourData, `en)}
+'''

@@ -5,4 +5,18 @@ WithImages = Class():mixin {
 	AssignImageList(imageList as ImageList_p) as void
 	SetImageList(imageList as ImageList_p) as void
 	GetImageList() as ImageList_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.WithImages, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.WithImages, `en)}
+
+${help.ComposeMethodHelp(wx.WithImages, `en)}
+'''

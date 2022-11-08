@@ -2,4 +2,18 @@
 // VType_wxIconBundle.gura
 //==============================================================================
 IconBundle = Class(GDIObject):holdEntity {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.IconBundle, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.IconBundle, `en)}
+
+${help.ComposeMethodHelp(wx.IconBundle, `en)}
+'''

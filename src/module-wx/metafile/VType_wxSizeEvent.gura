@@ -7,7 +7,21 @@ SizeEvent = Class(Event) {
 	SetSize(size as Size) as void
 	GetRect() as Rect
 	SetRect(rect as Rect) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SizeEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SizeEvent, `en)}
+
+${help.ComposeMethodHelp(wx.SizeEvent, `en)}
+'''
 
 @event {
 	EVT_SIZE >> SizeEvent

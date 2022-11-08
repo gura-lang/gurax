@@ -5,4 +5,18 @@ ColourPickerEvent = Class(CommandEvent) {
 	@include['wx/clrpicker.h']
 	GetColour() as Colour
 	SetColour(pos as const_Colour_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ColourPickerEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ColourPickerEvent, `en)}
+
+${help.ComposeMethodHelp(wx.ColourPickerEvent, `en)}
+'''

@@ -10,7 +10,21 @@ CollapsiblePane = Class(Control) {
 	GetPane() as Window_p
 	IsCollapsed() as bool
 	IsExpanded() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CollapsiblePane, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CollapsiblePane, `en)}
+
+${help.ComposeMethodHelp(wx.CollapsiblePane, `en)}
+'''
 
 @const { // Styles
 	CP_DEFAULT_STYLE

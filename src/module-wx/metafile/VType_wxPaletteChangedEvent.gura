@@ -5,4 +5,18 @@ PaletteChangedEvent = Class(Event) {
 	//__init__(winid as WindowID = 0)
 	SetChangedWindow(win as Window_p) as void
 	GetChangedWindow() as Window_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PaletteChangedEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PaletteChangedEvent, `en)}
+
+${help.ComposeMethodHelp(wx.PaletteChangedEvent, `en)}
+'''

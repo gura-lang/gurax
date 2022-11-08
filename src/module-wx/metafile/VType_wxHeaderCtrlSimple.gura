@@ -11,4 +11,18 @@ HeaderCtrlSimple = Class(HeaderCtrl) {
 	HideColumn(idx as unsigned_int) as void
 	ShowSortIndicator(idx as unsigned_int, sortOrder as bool = true) as void
 	RemoveSortIndicator() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HeaderCtrlSimple, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HeaderCtrlSimple, `en)}
+
+${help.ComposeMethodHelp(wx.HeaderCtrlSimple, `en)}
+'''

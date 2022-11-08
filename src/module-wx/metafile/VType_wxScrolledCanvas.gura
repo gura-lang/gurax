@@ -5,7 +5,21 @@ ScrolledCanvas = Class(Window) {
 	@mixin[Scrolled]
 	__init__(parent as Window_p, id as WindowID = -1, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize,
 		style as long = wxHSCROLL | wxVSCROLL, name as const_String_r = "scrolledWindow")
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ScrolledCanvas, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ScrolledCanvas, `en)}
+
+${help.ComposeMethodHelp(wx.ScrolledCanvas, `en)}
+'''
 
 @const { // Styles
 	HSCROLL

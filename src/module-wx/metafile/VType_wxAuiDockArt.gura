@@ -3,4 +3,18 @@
 //==============================================================================
 AuiDockArt = Class():loosePointer {
 	@include['wx/aui/framemanager.h', 'wx/aui/dockart.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiDockArt, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiDockArt, `en)}
+
+${help.ComposeMethodHelp(wx.AuiDockArt, `en)}
+'''

@@ -54,4 +54,18 @@ BannerWindow = Class(Window) {
 	SetBitmap(bmp as const_Bitmap_r) as void
 	SetText(title as const_String_r, message as const_String_r) as void
 	SetGradient(start as const_Colour_r, end as const_Colour_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BannerWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BannerWindow, `en)}
+
+${help.ComposeMethodHelp(wx.BannerWindow, `en)}
+'''

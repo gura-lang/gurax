@@ -13,4 +13,18 @@ FileSystemWatcherEvent = Class(Event) {
 	GetErrorDescription() as String
 	GetWarningType() as FSWWarningType
 	ToString() as String
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FileSystemWatcherEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FileSystemWatcherEvent, `en)}
+
+${help.ComposeMethodHelp(wx.FileSystemWatcherEvent, `en)}
+'''

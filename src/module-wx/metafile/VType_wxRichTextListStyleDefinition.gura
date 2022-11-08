@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextListStyleDefinition = Class(RichTextParagraphStyleDefinition) {
 	@include['wx/richtext/richtextstyles.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextListStyleDefinition, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextListStyleDefinition, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextListStyleDefinition, `en)}
+'''

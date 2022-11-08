@@ -10,4 +10,18 @@ Simplebook = Class(BookCtrlBase) {
 	SetEffectsTimeouts(showTimeout as unsigned, hideTimeout as unsigned) as void
 	SetEffectTimeout(timeout as unsigned) as void
 	ShowNewPage(page as Window_p) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Simplebook, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Simplebook, `en)}
+
+${help.ComposeMethodHelp(wx.Simplebook, `en)}
+'''

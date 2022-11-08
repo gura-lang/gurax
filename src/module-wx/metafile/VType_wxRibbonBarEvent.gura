@@ -3,4 +3,18 @@
 //==============================================================================
 RibbonBarEvent = Class(NotifyEvent) {
 	@include['wx/ribbon/bar.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonBarEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonBarEvent, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonBarEvent, `en)}
+'''

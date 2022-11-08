@@ -3,4 +3,18 @@
 //==============================================================================
 AuiToolBarItem = Class {
 	@include['wx/aui/auibar.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiToolBarItem, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiToolBarItem, `en)}
+
+${help.ComposeMethodHelp(wx.AuiToolBarItem, `en)}
+'''

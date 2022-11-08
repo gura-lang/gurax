@@ -37,7 +37,21 @@ StatusBar = Class(Control) {
 		pEntity_gurax->SetStatusWidths(widths_field.sizeT<int>(), widths_field.data());
 		return Value::nil();
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StatusBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StatusBar, `en)}
+
+${help.ComposeMethodHelp(wx.StatusBar, `en)}
+'''
 
 @const { // Styles
 	STB_SIZEGRIP

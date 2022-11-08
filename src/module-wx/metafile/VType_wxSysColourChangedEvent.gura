@@ -3,7 +3,21 @@
 //==============================================================================
 SysColourChangedEvent = Class(Event) {
 	@include['wx/event.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SysColourChangedEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SysColourChangedEvent, `en)}
+
+${help.ComposeMethodHelp(wx.SysColourChangedEvent, `en)}
+'''
 
 @event {
 	EVT_SYS_COLOUR_CHANGED >> SysColourChangedEvent

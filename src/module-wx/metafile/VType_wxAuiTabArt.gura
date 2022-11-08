@@ -3,4 +3,18 @@
 //==============================================================================
 AuiTabArt = Class():loosePointer {
 	@include['wx/aui/auibook.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiTabArt, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiTabArt, `en)}
+
+${help.ComposeMethodHelp(wx.AuiTabArt, `en)}
+'''

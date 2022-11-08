@@ -3,4 +3,18 @@
 //==============================================================================
 PrinterDC = Class(DC) {
 	@include['wx/dcprint.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PrinterDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PrinterDC, `en)}
+
+${help.ComposeMethodHelp(wx.PrinterDC, `en)}
+'''

@@ -6,7 +6,21 @@ WizardEvent = Class(NotifyEvent) {
 	//__init__(type as EventType = wxEVT_NULL, id as int = wxID_ANY, direction as bool = true, page as WizardPage_p = 0)
 	GetDirection() as bool
 	GetPage() as WizardPage_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.WizardEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.WizardEvent, `en)}
+
+${help.ComposeMethodHelp(wx.WizardEvent, `en)}
+'''
 
 @event {
 	EVT_WIZARD_PAGE_CHANGED			>> WizardEvent

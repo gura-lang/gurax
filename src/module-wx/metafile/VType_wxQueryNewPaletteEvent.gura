@@ -6,4 +6,18 @@ QueryNewPaletteEvent = Class(Event) {
 	//__init__(winid as WindowID = 0)
 	SetPaletteRealized(realized as bool) as void
 	GetPaletteRealized() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.QueryNewPaletteEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.QueryNewPaletteEvent, `en)}
+
+${help.ComposeMethodHelp(wx.QueryNewPaletteEvent, `en)}
+'''

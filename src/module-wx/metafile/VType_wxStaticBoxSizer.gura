@@ -44,4 +44,18 @@ StaticBoxSizer = Class(BoxSizer) {
 	GetStaticBox() as StaticBox_p
 	CalcMin() as Size
 	RecalcSizes() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StaticBoxSizer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StaticBoxSizer, `en)}
+
+${help.ComposeMethodHelp(wx.StaticBoxSizer, `en)}
+'''

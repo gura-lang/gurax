@@ -6,4 +6,18 @@ BufferedDC = Class(DC) {
 	//Unmask() as void
 	SetStyle(style as int) as void
 	GetStyle() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BufferedDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BufferedDC, `en)}
+
+${help.ComposeMethodHelp(wx.BufferedDC, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 FlagsProperty = Class(PGProperty) {
 	@include['wx/propgrid/props.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FlagsProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FlagsProperty, `en)}
+
+${help.ComposeMethodHelp(wx.FlagsProperty, `en)}
+'''

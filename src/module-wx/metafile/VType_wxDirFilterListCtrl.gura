@@ -7,4 +7,18 @@ DirFilterListCtrl = Class(Choice) {
 	Create(parent as GenericDirCtrl_p, id as WindowID = wxID_ANY, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0) as bool
 	Init() as void
 	FillFilterList(filter as const_String_r, defaultFilter as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DirFilterListCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DirFilterListCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.DirFilterListCtrl, `en)}
+'''

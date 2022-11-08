@@ -57,4 +57,18 @@ GridCellAttr = Class(ClientDataContainer) {
 		'''
 	GetOverflow() as bool
 	//GetKind() as AttrKind
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellAttr, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellAttr, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellAttr, `en)}
+'''

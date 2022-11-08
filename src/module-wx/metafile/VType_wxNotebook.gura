@@ -17,7 +17,21 @@ Notebook = Class(BookCtrlBase) {
 	SetSelection(page as size_t) as int
 	ChangeSelection(page as size_t) as int
 	InsertPage(index as size_t, page as Window_p, text as const_String_r, select as bool = false, imageId as int = wxNotebook::NO_IMAGE) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Notebook, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Notebook, `en)}
+
+${help.ComposeMethodHelp(wx.Notebook, `en)}
+'''
 
 @const { // Styles
 	NB_TOP

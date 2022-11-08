@@ -6,7 +6,21 @@ ProcessEvent = Class(Event) {
 	//__init__(id as int = 0, pid as int = 0, exitcode as int = 0)
 	GetExitCode() as int
 	GetPid() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ProcessEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ProcessEvent, `en)}
+
+${help.ComposeMethodHelp(wx.ProcessEvent, `en)}
+'''
 
 @event {
 	EVT_END_PROCESS >> ProcessEvent

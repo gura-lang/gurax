@@ -15,4 +15,18 @@ RibbonControl = Class(Control) {
 	Realise() as bool
 	GetAncestorRibbonBar() as RibbonBar_p
 	GetBestSizeForParentSize(parentSize as const_Size_r) as Size
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonControl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonControl, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonControl, `en)}
+'''

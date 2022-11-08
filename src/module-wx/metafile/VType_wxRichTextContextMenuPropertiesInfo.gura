@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextContextMenuPropertiesInfo = Class {
 	@include['wx/richtext/richtextctrl.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextContextMenuPropertiesInfo, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextContextMenuPropertiesInfo, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextContextMenuPropertiesInfo, `en)}
+'''

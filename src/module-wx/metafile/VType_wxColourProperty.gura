@@ -6,4 +6,18 @@ ColourProperty = Class(SystemColourProperty) {
 	__init__(label as const_String_r = wxPG_LABEL, name as const_String_r = wxPG_LABEL, value as const_Colour_r = *wxWHITE)
 	ValueToString(value as Variant_r, argFlags as int = 0) as String
 	GetColour(index as int) as Colour
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ColourProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ColourProperty, `en)}
+
+${help.ComposeMethodHelp(wx.ColourProperty, `en)}
+'''

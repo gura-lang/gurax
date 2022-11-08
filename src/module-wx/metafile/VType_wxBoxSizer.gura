@@ -9,4 +9,18 @@ BoxSizer = Class(Sizer) {
 	GetOrientation() as int
 	SetOrientation(orient as int) as void
 	RecalcSizes() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BoxSizer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BoxSizer, `en)}
+
+${help.ComposeMethodHelp(wx.BoxSizer, `en)}
+'''

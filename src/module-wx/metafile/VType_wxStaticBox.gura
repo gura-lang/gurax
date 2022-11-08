@@ -4,4 +4,18 @@
 StaticBox = Class(Control) {
 	__init__(parent as Window_p, id as WindowID, label as String, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = wxStaticBoxNameStr)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StaticBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StaticBox, `en)}
+
+${help.ComposeMethodHelp(wx.StaticBox, `en)}
+'''

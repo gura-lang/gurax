@@ -5,4 +5,18 @@ GridCellEnumRenderer = Class(GridCellStringRenderer) {
 	@include['wx/grid.h']
 	__init__(choices as const_String_r = wxEmptyString)
 	SetParameters(params as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellEnumRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellEnumRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellEnumRenderer, `en)}
+'''

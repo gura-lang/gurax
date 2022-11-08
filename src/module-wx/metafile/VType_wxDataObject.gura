@@ -2,4 +2,18 @@
 // VType_wxDataObject.gura
 //==============================================================================
 DataObject = Class():loosePointer {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataObject, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataObject, `en)}
+
+${help.ComposeMethodHelp(wx.DataObject, `en)}
+'''

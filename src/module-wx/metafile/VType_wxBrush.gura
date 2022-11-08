@@ -49,7 +49,21 @@ Brush = Class(GDIObject):holdEntity {
 	SetStyle(style as BrushStyle) as void
 	SetColour(colour as const_Colour_r) as void
 	SetColourRGB(red as unsigned_char, green as unsigned_char, blue as unsigned_char) as void = SetColour
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Brush, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Brush, `en)}
+
+${help.ComposeMethodHelp(wx.Brush, `en)}
+'''
 
 @enum {
 	BrushStyle {

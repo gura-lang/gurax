@@ -8,7 +8,21 @@ ColourPickerCtrl = Class(PickerBase) {
 	GetColour() as Colour
 	SetColour(col as const_Colour_r) as void
 	//7SetColour(colname as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ColourPickerCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ColourPickerCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.ColourPickerCtrl, `en)}
+'''
 
 @const { // Styles
 	CLRP_DEFAULT_STYLE

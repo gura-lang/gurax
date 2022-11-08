@@ -65,7 +65,21 @@ CalendarDateAttr = Class {
 	SetTextColour(colText as const_Colour_r) as void
 	GetMark():static as CalendarDateAttr
 	SetMark(m as const_CalendarDateAttr_r):static as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CalendarDateAttr, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CalendarDateAttr, `en)}
+
+${help.ComposeMethodHelp(wx.CalendarDateAttr, `en)}
+'''
 
 @enum {
 	CalendarDateBorder {

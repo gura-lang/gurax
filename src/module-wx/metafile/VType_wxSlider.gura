@@ -26,7 +26,21 @@ Slider = Class(Control) {
 	SetTick(tickPos as int) as void
 	SetTickFreq(n as int) as void
 	SetValue(value as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Slider, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Slider, `en)}
+
+${help.ComposeMethodHelp(wx.Slider, `en)}
+'''
 
 @const { // Styles
 	SL_HORIZONTAL

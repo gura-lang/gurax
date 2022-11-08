@@ -2,4 +2,18 @@
 // VType_wxLayoutConstraints.gura
 //==============================================================================
 LayoutConstraints = Class(Object) {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.LayoutConstraints, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.LayoutConstraints, `en)}
+
+${help.ComposeMethodHelp(wx.LayoutConstraints, `en)}
+'''

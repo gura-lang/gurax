@@ -7,4 +7,18 @@ GridCellNumberEditor = Class(GridCellTextEditor) {
 	SetParameters(params as const_String_r) as void
 	//HasRange() as bool
 	//GetString() as String
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellNumberEditor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellNumberEditor, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellNumberEditor, `en)}
+'''

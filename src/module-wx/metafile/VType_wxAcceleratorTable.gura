@@ -40,4 +40,18 @@ AcceleratorTable = Class {
 		return Value::nil();
 		'''
 	IsOk() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AcceleratorTable, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AcceleratorTable, `en)}
+
+${help.ComposeMethodHelp(wx.AcceleratorTable, `en)}
+'''

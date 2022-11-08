@@ -17,4 +17,18 @@ SymbolPickerDialog = Class(Dialog) {
 	SetSymbol(value as String) as void
 	SetUnicodeMode(unicodeMode as bool) as void
 	UseNormalFont() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SymbolPickerDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SymbolPickerDialog, `en)}
+
+${help.ComposeMethodHelp(wx.SymbolPickerDialog, `en)}
+'''

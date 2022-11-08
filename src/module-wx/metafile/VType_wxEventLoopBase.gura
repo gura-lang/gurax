@@ -22,4 +22,18 @@ EventLoopBase = Class():loosePointer {
 	GetActive():static as EventLoopBase_p
 	SetActive(loop as EventLoopBase_p):static as void
 	//OnExit() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.EventLoopBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.EventLoopBase, `en)}
+
+${help.ComposeMethodHelp(wx.EventLoopBase, `en)}
+'''

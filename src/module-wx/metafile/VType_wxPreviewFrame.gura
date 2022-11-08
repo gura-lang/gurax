@@ -3,4 +3,18 @@
 //==============================================================================
 PreviewFrame = Class(Frame) {
 	@include['wx/print.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PreviewFrame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PreviewFrame, `en)}
+
+${help.ComposeMethodHelp(wx.PreviewFrame, `en)}
+'''

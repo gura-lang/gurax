@@ -3,4 +3,18 @@
 //==============================================================================
 DocChildFrame = Class(Frame) {
 	@include['wx/docview.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DocChildFrame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DocChildFrame, `en)}
+
+${help.ComposeMethodHelp(wx.DocChildFrame, `en)}
+'''

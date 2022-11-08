@@ -3,4 +3,18 @@
 //==============================================================================
 SplashScreen = Class(Frame) {
 	@include['wx/splash.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SplashScreen, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SplashScreen, `en)}
+
+${help.ComposeMethodHelp(wx.SplashScreen, `en)}
+'''

@@ -5,7 +5,21 @@ CollapsiblePaneEvent = Class(CommandEvent) {
 	@include['wx/collpane.h']
 	GetCollapsed() as bool
 	SetCollapsed(collapsed as bool) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CollapsiblePaneEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CollapsiblePaneEvent, `en)}
+
+${help.ComposeMethodHelp(wx.CollapsiblePaneEvent, `en)}
+'''
 
 @event {
 	EVT_COLLAPSIBLEPANE_CHANGED >> CollapsiblePaneEvent

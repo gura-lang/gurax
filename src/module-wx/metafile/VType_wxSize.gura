@@ -152,7 +152,21 @@ Size = Class {
 		} while (0);
 		return Value::nil();
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Size, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Size, `en)}
+
+${help.ComposeMethodHelp(wx.Size, `en)}
+'''
 
 (const_Size_r == const_Size_r) as bool
 (const_Size_r != const_Size_r) as bool

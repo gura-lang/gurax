@@ -56,4 +56,18 @@ Menu = Class(EvtHandler) {
 	Detach() as void
 	IsAttached() as bool
 	//GetMenuItems() as MenuItemList
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Menu, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Menu, `en)}
+
+${help.ComposeMethodHelp(wx.Menu, `en)}
+'''

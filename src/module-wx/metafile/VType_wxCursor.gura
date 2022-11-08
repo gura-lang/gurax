@@ -2,4 +2,18 @@
 // VType_wxCursor.gura
 //==============================================================================
 Cursor = Class(GDIObject):holdEntity {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Cursor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Cursor, `en)}
+
+${help.ComposeMethodHelp(wx.Cursor, `en)}
+'''

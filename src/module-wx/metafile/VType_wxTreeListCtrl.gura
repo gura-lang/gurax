@@ -3,7 +3,21 @@
 //==============================================================================
 TreeListCtrl = Class(Window) {
 	@include['wx/treelist.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TreeListCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TreeListCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.TreeListCtrl, `en)}
+'''
 
 @const { // Styles
 	TL_SINGLE

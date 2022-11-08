@@ -8,4 +8,18 @@ GBSpan = Class {
 	GetRowspan() as int
 	SetColspan(colspan as int) as void
 	SetRowspan(rowspan as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GBSpan, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GBSpan, `en)}
+
+${help.ComposeMethodHelp(wx.GBSpan, `en)}
+'''

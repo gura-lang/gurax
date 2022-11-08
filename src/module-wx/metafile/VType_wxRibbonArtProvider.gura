@@ -3,4 +3,18 @@
 //==============================================================================
 RibbonArtProvider = Class():loosePointer {
 	@include['wx/ribbon/art.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonArtProvider, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonArtProvider, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonArtProvider, `en)}
+'''

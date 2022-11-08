@@ -5,7 +5,21 @@ FocusEvent = Class(Event) {
 	//__init__(eventType as EventType = wxEVT_NULL, id as int = 0)
 	GetWindow() as Window_p
 	SetWindow(win as Window_p) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FocusEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FocusEvent, `en)}
+
+${help.ComposeMethodHelp(wx.FocusEvent, `en)}
+'''
 
 @event {
 	EVT_SET_FOCUS	>> FocusEvent

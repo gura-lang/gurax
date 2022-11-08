@@ -3,4 +3,18 @@
 //==============================================================================
 RegConfig = Class(ConfigBase) {
 	@include['wx/msw/regconf.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RegConfig, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RegConfig, `en)}
+
+${help.ComposeMethodHelp(wx.RegConfig, `en)}
+'''

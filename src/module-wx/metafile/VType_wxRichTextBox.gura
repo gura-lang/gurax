@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextBox = Class(RichTextParagraphLayoutBox) {
 	@include['wx/richtext/richtextbuffer.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextBox, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextBox, `en)}
+'''

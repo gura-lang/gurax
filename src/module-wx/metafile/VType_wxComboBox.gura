@@ -23,7 +23,21 @@ ComboBox = Class(Control) {
 	GetStringSelection() as String
 	SetString(n as unsigned_int, text as const_String_r) as void
 	GetCount() as unsigned_int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ComboBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ComboBox, `en)}
+
+${help.ComposeMethodHelp(wx.ComboBox, `en)}
+'''
 
 @const { // Styles
 	CB_SIMPLE

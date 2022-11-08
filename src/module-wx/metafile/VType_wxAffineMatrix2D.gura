@@ -3,4 +3,18 @@
 //==============================================================================
 AffineMatrix2D = Class {
 	@include['wx/affinematrix2d.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AffineMatrix2D, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AffineMatrix2D, `en)}
+
+${help.ComposeMethodHelp(wx.AffineMatrix2D, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 DatagramSocket = Class(SocketBase) {
 	@include['wx/socket.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DatagramSocket, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DatagramSocket, `en)}
+
+${help.ComposeMethodHelp(wx.DatagramSocket, `en)}
+'''

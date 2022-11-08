@@ -17,4 +17,18 @@ VarVScrollHelper = Class():mixin {
 	//OnGetRowsHeightHint(rowMin as size_t, rowMax as size_t):virtual as void
 	//EstimateTotalHeight():virtual as Coord
 	//OnGetRowHeight(row as size_t):virtual as Coord
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.VarVScrollHelper, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.VarVScrollHelper, `en)}
+
+${help.ComposeMethodHelp(wx.VarVScrollHelper, `en)}
+'''

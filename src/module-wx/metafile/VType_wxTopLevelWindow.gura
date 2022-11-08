@@ -46,4 +46,18 @@ TopLevelWindow = Class(NonOwnedWindow) {
 	ShowFullScreen(show as bool, style as long = wxFULLSCREEN_ALL) as bool
 	//UseNativeDecorations(native as bool = true) as void
 	//UseNativeDecorationsByDefault(native as bool = true) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TopLevelWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TopLevelWindow, `en)}
+
+${help.ComposeMethodHelp(wx.TopLevelWindow, `en)}
+'''

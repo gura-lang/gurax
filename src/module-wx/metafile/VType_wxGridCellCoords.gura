@@ -3,4 +3,18 @@
 //==============================================================================
 GridCellCoords = Class {
 	@include['wx/grid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellCoords, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellCoords, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellCoords, `en)}
+'''

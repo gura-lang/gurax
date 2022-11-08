@@ -250,7 +250,21 @@ Sizer = Class():loosePointer {
 	//SetItemMinSize(sizer as Sizer_p, size as const_Size_r) as bool
 	//SetItemMinSize(index as size_t, width as int, height as int) as bool
 	//SetItemMinSize(index as size_t, size as const_Size_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Sizer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Sizer, `en)}
+
+${help.ComposeMethodHelp(wx.Sizer, `en)}
+'''
 
 @const { // Flags
 	TOP

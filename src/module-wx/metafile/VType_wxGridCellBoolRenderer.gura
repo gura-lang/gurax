@@ -4,4 +4,18 @@
 GridCellBoolRenderer = Class(GridCellRenderer) {
 	@include['wx/grid.h']
 	__init__()
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellBoolRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellBoolRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellBoolRenderer, `en)}
+'''

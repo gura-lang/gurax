@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextStyleComboCtrl = Class(ComboCtrl) {
 	@include['wx/richtext/richtextstyles.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextStyleComboCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextStyleComboCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleComboCtrl, `en)}
+'''

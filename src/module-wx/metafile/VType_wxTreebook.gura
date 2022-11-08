@@ -15,7 +15,21 @@ Treebook = Class(BookCtrlBase) {
 	InsertPage(pagePos as size_t, page as Window_p, text as const_String_r, bSelect as bool = false, imageId as int = wxNOT_FOUND) as bool
 	InsertSubPage(pagePos as size_t, page as Window_p, text as const_String_r, bSelect as bool = false, imageId as int = wxNOT_FOUND) as bool
 	IsNodeExpanded(pageId as size_t) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Treebook, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Treebook, `en)}
+
+${help.ComposeMethodHelp(wx.Treebook, `en)}
+'''
 
 @event {
 	EVT_TREEBOOK_PAGE_CHANGED	>> BookCtrlEvent

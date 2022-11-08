@@ -28,4 +28,18 @@ AuiManager = Class(EvtHandler) {
 	//AddPane(window as Window_p, pane_info as const_AuiPaneInfo_r, drop_pos as const_Point_r) as bool
 	//GetPane(window as Window_p) as AuiPaneInfo
 	//GetPane(name as const_String_r) as AuiPaneInfo
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiManager, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiManager, `en)}
+
+${help.ComposeMethodHelp(wx.AuiManager, `en)}
+'''

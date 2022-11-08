@@ -5,4 +5,18 @@ NumberEntryDialog = Class(Dialog) {
 	@include['wx/numdlg.h']
 	__init__(parent as Window_p, message as const_String_r, prompt as const_String_r, caption as const_String_r, value as long, min as long, max as long, pos as const_Point_r = wxDefaultPosition)
 	GetValue() as long
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.NumberEntryDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.NumberEntryDialog, `en)}
+
+${help.ComposeMethodHelp(wx.NumberEntryDialog, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 DataViewModel = Class():loosePointer {
 	@include['wx/dataview.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataViewModel, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataViewModel, `en)}
+
+${help.ComposeMethodHelp(wx.DataViewModel, `en)}
+'''

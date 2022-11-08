@@ -3,4 +3,18 @@
 //==============================================================================
 GraphicsContext = Class(GraphicsObject) {
 	@include['wx/graphics.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GraphicsContext, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GraphicsContext, `en)}
+
+${help.ComposeMethodHelp(wx.GraphicsContext, `en)}
+'''

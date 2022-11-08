@@ -83,4 +83,18 @@ TextEntry = Class():mixin {
 		} while (0);
 		return Value::nil();
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TextEntry, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TextEntry, `en)}
+
+${help.ComposeMethodHelp(wx.TextEntry, `en)}
+'''

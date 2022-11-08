@@ -37,4 +37,18 @@ ToolBarToolBase = Class(Object) {
 	Attach(tbar as ToolBar_p) as void
 	SetDropdownMenu(menu as Menu_p) as void
 	GetDropdownMenu() as Menu_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ToolBarToolBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ToolBarToolBase, `en)}
+
+${help.ComposeMethodHelp(wx.ToolBarToolBase, `en)}
+'''

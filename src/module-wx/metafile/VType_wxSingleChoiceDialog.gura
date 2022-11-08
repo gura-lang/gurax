@@ -9,4 +9,18 @@ SingleChoiceDialog = Class(Dialog) {
 	GetStringSelection() as String
 	SetSelection(selection as int) as void
 	ShowModal() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SingleChoiceDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SingleChoiceDialog, `en)}
+
+${help.ComposeMethodHelp(wx.SingleChoiceDialog, `en)}
+'''

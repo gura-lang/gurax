@@ -3,4 +3,18 @@
 //==============================================================================
 HtmlContainerCell = Class(HtmlCell) {
 	@include['wx/html/htmlcell.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlContainerCell, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlContainerCell, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlContainerCell, `en)}
+'''

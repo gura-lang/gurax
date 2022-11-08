@@ -2,4 +2,18 @@
 // VType_wxOutputStream.gura
 //==============================================================================
 OutputStream = Class(StreamBase) {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.OutputStream, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.OutputStream, `en)}
+
+${help.ComposeMethodHelp(wx.OutputStream, `en)}
+'''

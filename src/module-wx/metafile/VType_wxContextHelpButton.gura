@@ -5,4 +5,18 @@ ContextHelpButton = Class(BitmapButton) {
 	@include['wx/cshelp.h']
 	__init__(parent as Window_p, id as WindowID = wxID_CONTEXT_HELP, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxBU_AUTODRAW)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ContextHelpButton, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ContextHelpButton, `en)}
+
+${help.ComposeMethodHelp(wx.ContextHelpButton, `en)}
+'''

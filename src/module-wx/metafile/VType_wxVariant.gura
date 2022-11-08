@@ -16,4 +16,18 @@ Variant = Class {
 		}
 		return nullptr;
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Variant, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Variant, `en)}
+
+${help.ComposeMethodHelp(wx.Variant, `en)}
+'''

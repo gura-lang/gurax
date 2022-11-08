@@ -14,4 +14,18 @@ VarHScrollHelper = Class():mixin {
 	ScrollColumns(columns as int) as bool
 	ScrollToColumn(column as size_t) as bool
 	SetColumnCount(columnCount as size_t) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.VarHScrollHelper, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.VarHScrollHelper, `en)}
+
+${help.ComposeMethodHelp(wx.VarHScrollHelper, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 ConfigBase = Class():loosePointer {
 	@include['wx/config.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ConfigBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ConfigBase, `en)}
+
+${help.ComposeMethodHelp(wx.ConfigBase, `en)}
+'''

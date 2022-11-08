@@ -26,7 +26,21 @@ RibbonBar = Class(RibbonControl) {
 	HidePanels() as void
 	ArePanelsShown() as bool
 	Realize() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonBar, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonBar, `en)}
+'''
 
 @const { // Styles
 	RIBBON_BAR_DEFAULT_STYLE

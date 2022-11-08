@@ -4,4 +4,18 @@
 GridCellNumberRenderer = Class(GridCellStringRenderer) {
 	@include['wx/grid.h']
 	__init__()
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellNumberRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellNumberRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellNumberRenderer, `en)}
+'''

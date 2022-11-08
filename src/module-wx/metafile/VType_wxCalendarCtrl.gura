@@ -27,7 +27,21 @@ CalendarCtrl = Class(Control) {
 	Mark(day as size_t, mark as bool) as void
 	SetDateRange(lowerdate as const_DateTime_r = wxDefaultDateTime, upperdate as const_DateTime_r = wxDefaultDateTime) as bool
 	GetDateRange(lowerdate as DateTime_p, upperdate as DateTime_p) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CalendarCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CalendarCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.CalendarCtrl, `en)}
+'''
 
 @const { // Styles
 	CAL_SUNDAY_FIRST

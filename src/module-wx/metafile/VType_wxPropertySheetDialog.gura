@@ -20,4 +20,18 @@ PropertySheetDialog = Class(Dialog) {
 	SetSheetInnerBorder(border as int) as void
 	GetSheetInnerBorder() as int
 	GetContentWindow() as Window_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PropertySheetDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PropertySheetDialog, `en)}
+
+${help.ComposeMethodHelp(wx.PropertySheetDialog, `en)}
+'''

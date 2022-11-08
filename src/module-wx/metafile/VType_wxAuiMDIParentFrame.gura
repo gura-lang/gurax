@@ -21,4 +21,18 @@ AuiMDIParentFrame = Class(Frame) {
 	ArrangeIcons() as void
 	ActivateNext() as void
 	ActivatePrevious() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiMDIParentFrame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiMDIParentFrame, `en)}
+
+${help.ComposeMethodHelp(wx.AuiMDIParentFrame, `en)}
+'''

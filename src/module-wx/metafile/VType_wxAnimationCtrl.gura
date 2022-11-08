@@ -14,7 +14,21 @@ AnimationCtrl = Class(Control) {
 	SetAnimation(anim as const_Animation_r) as void
 	SetInactiveBitmap(bmp as const_Bitmap_r) as void
 	Stop() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AnimationCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AnimationCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.AnimationCtrl, `en)}
+'''
 
 @const { // Styles
 	AC_DEFAULT_STYLE

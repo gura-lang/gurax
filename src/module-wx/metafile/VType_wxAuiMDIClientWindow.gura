@@ -4,4 +4,18 @@
 AuiMDIClientWindow = Class(AuiNotebook) {
 	@include['wx/aui/tabmdi.h']
 	__init__(parent as AuiMDIParentFrame_p, style as long = 0)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiMDIClientWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiMDIClientWindow, `en)}
+
+${help.ComposeMethodHelp(wx.AuiMDIClientWindow, `en)}
+'''

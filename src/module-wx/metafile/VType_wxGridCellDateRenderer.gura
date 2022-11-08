@@ -5,4 +5,18 @@ GridCellDateRenderer = Class(GridCellStringRenderer) {
 	@include['wx/grid.h']
 	__init__(outformat as const_String_r = "")
 	SetParameters(params as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellDateRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellDateRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellDateRenderer, `en)}
+'''

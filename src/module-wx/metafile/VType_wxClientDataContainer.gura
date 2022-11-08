@@ -3,4 +3,18 @@
 //==============================================================================
 ClientDataContainer = Class {
 	@include['wx/grid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ClientDataContainer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ClientDataContainer, `en)}
+
+${help.ComposeMethodHelp(wx.ClientDataContainer, `en)}
+'''

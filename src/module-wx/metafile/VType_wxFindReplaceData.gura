@@ -10,4 +10,18 @@ FindReplaceData = Class(Object) {
 	SetFindString(str as const_String_r) as void
 	SetFlags(flags as Uint32) as void
 	SetReplaceString(str as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FindReplaceData, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FindReplaceData, `en)}
+
+${help.ComposeMethodHelp(wx.FindReplaceData, `en)}
+'''

@@ -34,4 +34,18 @@ MenuBar = Class(Window) {
 	IsAttached() as bool
 	Attach(frame as Frame_p) as void
 	Detach() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MenuBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MenuBar, `en)}
+
+${help.ComposeMethodHelp(wx.MenuBar, `en)}
+'''

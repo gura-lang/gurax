@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextParagraph = Class(RichTextCompositeObject) {
 	@include['wx/richtext/richtextbuffer.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextParagraph, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextParagraph, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextParagraph, `en)}
+'''

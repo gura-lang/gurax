@@ -24,4 +24,18 @@ RichTextFormattingDialog = Class(PropertySheetDialog) {
 	GetDialogStyleDefinition(win as Window_p):static as RichTextStyleDefinition_p
 	GetFormattingDialogFactory():static as RichTextFormattingDialogFactory_p
 	SetFormattingDialogFactory(factory as RichTextFormattingDialogFactory_p):static as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextFormattingDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextFormattingDialog, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextFormattingDialog, `en)}
+'''

@@ -112,7 +112,21 @@ DateTime = Class {
 	IsSameTime(dt as const_DateTime_r) as bool
 	IsStrictlyBetween(t1 as const_DateTime_r, t2 as const_DateTime_r) as bool
 	IsBetween(t1 as const_DateTime_r, t2 as const_DateTime_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DateTime, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DateTime, `en)}
+
+${help.ComposeMethodHelp(wx.DateTime, `en)}
+'''
 
 (const_DateTime_r + const_DateSpan_r) as DateTime
 (const_DateTime_r + const_TimeSpan_r) as DateTime

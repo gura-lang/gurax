@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextCharacterStyleDefinition = Class(RichTextStyleDefinition) {
 	@include['wx/richtext/richtextstyles.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextCharacterStyleDefinition, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextCharacterStyleDefinition, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextCharacterStyleDefinition, `en)}
+'''

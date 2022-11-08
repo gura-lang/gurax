@@ -21,7 +21,21 @@ RadioBox = Class(Control) {
 	GetString(n as unsigned_int) as String
 	SetString(n as unsigned_int, string as const_String_r) as void
 	GetSelection() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RadioBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RadioBox, `en)}
+
+${help.ComposeMethodHelp(wx.RadioBox, `en)}
+'''
 
 @const { // Styles
 	RA_SPECIFY_ROWS

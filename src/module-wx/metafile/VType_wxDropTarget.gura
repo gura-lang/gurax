@@ -13,4 +13,18 @@ DropTarget = Class():loosePointer {
 	SetDataObject(data as DataObject_p) as void
 	SetDefaultAction(action as DragResult) as void
 	GetDefaultAction() as DragResult
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DropTarget, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DropTarget, `en)}
+
+${help.ComposeMethodHelp(wx.DropTarget, `en)}
+'''

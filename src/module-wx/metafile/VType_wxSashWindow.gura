@@ -22,7 +22,21 @@ SashWindow = Class(Window) {
 	GetExtraBorderSize() as int
 	SashHitTest(x as int, y as int, tolerance as int = 2) as SashEdgePosition
 	SizeWindows() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SashWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SashWindow, `en)}
+
+${help.ComposeMethodHelp(wx.SashWindow, `en)}
+'''
 
 @enum {
 	SashDragStatus {

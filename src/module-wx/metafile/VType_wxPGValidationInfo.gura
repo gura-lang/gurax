@@ -3,4 +3,18 @@
 //==============================================================================
 PGValidationInfo = Class {
 	@include['wx/propgrid/propgrid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PGValidationInfo, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PGValidationInfo, `en)}
+
+${help.ComposeMethodHelp(wx.PGValidationInfo, `en)}
+'''

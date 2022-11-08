@@ -7,4 +7,18 @@ ColourDialog = Class(Dialog) {
 	Create(parent as Window_p, data? as ColourData_p) as bool
 	GetColourData() as ColourData
 	ShowModal() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ColourDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ColourDialog, `en)}
+
+${help.ComposeMethodHelp(wx.ColourDialog, `en)}
+'''

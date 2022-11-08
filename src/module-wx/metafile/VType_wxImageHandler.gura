@@ -2,4 +2,18 @@
 // VType_wxImageHandler.gura
 //==============================================================================
 ImageHandler = Class(Object) {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ImageHandler, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ImageHandler, `en)}
+
+${help.ComposeMethodHelp(wx.ImageHandler, `en)}
+'''

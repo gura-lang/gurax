@@ -6,4 +6,18 @@ StatusBarPane = Class {
 	GetWidth() as int
 	GetStyle() as int
 	GetText() as String
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StatusBarPane, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StatusBarPane, `en)}
+
+${help.ComposeMethodHelp(wx.StatusBarPane, `en)}
+'''

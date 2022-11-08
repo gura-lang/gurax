@@ -4,4 +4,18 @@
 GridCellEnumEditor = Class(GridCellChoiceEditor) {
 	@include['wx/grid.h']
 	__init__(choices as const_String_r = wxEmptyString)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellEnumEditor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellEnumEditor, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellEnumEditor, `en)}
+'''

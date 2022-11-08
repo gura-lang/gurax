@@ -223,4 +223,18 @@ TextAttr = Class {
 	SetTextEffects(effects as int) as void
 	SetURL(url as const_String_r) as void
 	//Merge(base as const_TextAttr_r, overlay as const_TextAttr_r):static as TextAttr
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TextAttr, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TextAttr, `en)}
+
+${help.ComposeMethodHelp(wx.TextAttr, `en)}
+'''

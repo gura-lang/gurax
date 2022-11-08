@@ -12,4 +12,18 @@ RichTextFormattingDialogFactory = Class():loosePointer {
 	GetPageImage(id as int) as int
 	SetSheetStyle(dialog as RichTextFormattingDialog_p) as bool
 	ShowHelp(page as int, dialog as RichTextFormattingDialog_p) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextFormattingDialogFactory, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextFormattingDialogFactory, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextFormattingDialogFactory, `en)}
+'''

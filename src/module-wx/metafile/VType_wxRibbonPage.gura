@@ -3,4 +3,18 @@
 //==============================================================================
 RibbonPage = Class(RibbonControl) {
 	@include['wx/ribbon/page.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonPage, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonPage, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonPage, `en)}
+'''

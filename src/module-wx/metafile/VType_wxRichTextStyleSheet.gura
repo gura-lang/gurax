@@ -29,4 +29,18 @@ RichTextStyleSheet = Class {
 	SetName(name as const_String_r) as void
 	GetProperties() as RichTextProperties
 	SetProperties(props as const_RichTextProperties_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextStyleSheet, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextStyleSheet, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleSheet, `en)}
+'''

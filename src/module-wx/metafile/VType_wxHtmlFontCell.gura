@@ -3,4 +3,18 @@
 //==============================================================================
 HtmlFontCell = Class(HtmlCell) {
 	@include['wx/html/htmlcell.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlFontCell, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlFontCell, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlFontCell, `en)}
+'''

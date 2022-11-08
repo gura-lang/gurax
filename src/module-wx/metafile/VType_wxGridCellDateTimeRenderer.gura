@@ -5,4 +5,18 @@ GridCellDateTimeRenderer = Class(GridCellDateRenderer) {
 	@include['wx/grid.h']
 	__init__(outformat as const_String_r = wxDefaultDateTimeFormat, informat as const_String_r = wxDefaultDateTimeFormat)
 	SetParameters(params as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellDateTimeRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellDateTimeRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellDateTimeRenderer, `en)}
+'''

@@ -20,4 +20,18 @@ HeaderColumnSimple = Class(SettableHeaderColumn) {
 	IsSortKey() as bool
 	SetSortOrder(ascending as bool) as void
 	IsSortOrderAscending() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HeaderColumnSimple, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HeaderColumnSimple, `en)}
+
+${help.ComposeMethodHelp(wx.HeaderColumnSimple, `en)}
+'''

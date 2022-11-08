@@ -3,4 +3,18 @@
 //==============================================================================
 Rect2DDouble = Class {
 	@include['wx/graphics.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Rect2DDouble, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Rect2DDouble, `en)}
+
+${help.ComposeMethodHelp(wx.Rect2DDouble, `en)}
+'''

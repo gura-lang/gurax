@@ -3,4 +3,18 @@
 //==============================================================================
 SocketClient = Class(SocketBase) {
 	@include['wx/socket.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SocketClient, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SocketClient, `en)}
+
+${help.ComposeMethodHelp(wx.SocketClient, `en)}
+'''

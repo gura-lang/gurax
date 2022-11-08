@@ -3,4 +3,18 @@
 //==============================================================================
 VarScrollHelperBase = Class():mixin {
 	@include['wx/vscroll.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.VarScrollHelperBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.VarScrollHelperBase, `en)}
+
+${help.ComposeMethodHelp(wx.VarScrollHelperBase, `en)}
+'''

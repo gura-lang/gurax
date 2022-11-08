@@ -120,7 +120,21 @@ TreeCtrl = Class(Control) {
 	UnselectAll() as void
 	UnselectItem(item as const_TreeItemId_r) as void
 	SelectChildren(parent as const_TreeItemId_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TreeCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TreeCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.TreeCtrl, `en)}
+'''
 
 @const { // Styles
 	TR_EDIT_LABELS

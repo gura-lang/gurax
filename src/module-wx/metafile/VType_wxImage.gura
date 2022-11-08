@@ -104,4 +104,18 @@ Image = Class(Object) {
 		}
 		return nullptr;
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Image, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Image, `en)}
+
+${help.ComposeMethodHelp(wx.Image, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextLine = Class {
 	@include['wx/richtext/richtextctrl.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextLine, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextLine, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextLine, `en)}
+'''

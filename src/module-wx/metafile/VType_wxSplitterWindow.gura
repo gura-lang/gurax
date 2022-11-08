@@ -30,7 +30,21 @@ SplitterWindow = Class(Window) {
 	SplitVertically(window1 as Window_p, window2 as Window_p, sashPosition as int = 0) as bool
 	Unsplit(toRemove as Window_p = NULL) as bool
 	UpdateSize() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SplitterWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SplitterWindow, `en)}
+
+${help.ComposeMethodHelp(wx.SplitterWindow, `en)}
+'''
 
 @enum {
 	SplitMode {

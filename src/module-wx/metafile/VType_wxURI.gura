@@ -26,4 +26,18 @@ URI = Class {
 	HasUserInfo() as bool
 	IsReference() as bool
 	Resolve(base as const_URI_r, flags as int = wxURI_STRICT) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.URI, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.URI, `en)}
+
+${help.ComposeMethodHelp(wx.URI, `en)}
+'''

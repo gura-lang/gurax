@@ -10,4 +10,18 @@ StaticBitmap = Class(Control) {
 	GetIcon() as Icon
 	SetBitmap(label as const_Bitmap_r) as void
 	SetIcon(label as const_Icon_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StaticBitmap, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StaticBitmap, `en)}
+
+${help.ComposeMethodHelp(wx.StaticBitmap, `en)}
+'''

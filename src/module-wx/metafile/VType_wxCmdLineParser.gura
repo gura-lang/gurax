@@ -3,4 +3,18 @@
 //==============================================================================
 CmdLineParser = Class {
 	@include['wx/cmdline.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CmdLineParser, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CmdLineParser, `en)}
+
+${help.ComposeMethodHelp(wx.CmdLineParser, `en)}
+'''

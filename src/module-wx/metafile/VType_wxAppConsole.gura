@@ -5,4 +5,18 @@ AppConsole = Class(EvtHandler) {
 	@include['wx/app.h']
 	__init__()
 	OnInit():virtual as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AppConsole, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AppConsole, `en)}
+
+${help.ComposeMethodHelp(wx.AppConsole, `en)}
+'''

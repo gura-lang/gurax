@@ -45,7 +45,21 @@ VideoMode = Class {
 		int refresh = Value_Number::GetNumber<int>(value_gurax);
 		valueThis_gurax.GetEntity().refresh = refresh;
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.VideoMode, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.VideoMode, `en)}
+
+${help.ComposeMethodHelp(wx.VideoMode, `en)}
+'''
 
 (const_VideoMode_r != const_VideoMode_r) as bool
 (const_VideoMode_r == const_VideoMode_r) as bool

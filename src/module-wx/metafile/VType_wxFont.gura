@@ -137,4 +137,18 @@ Font = Class(GDIObject):holdEntity {
 	SetUnderlined(underlined as bool) as void
 	SetStrikethrough(strikethrough as bool) as void
 	SetWeight(weight as FontWeight) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Font, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Font, `en)}
+
+${help.ComposeMethodHelp(wx.Font, `en)}
+'''

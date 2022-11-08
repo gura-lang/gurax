@@ -6,4 +6,18 @@ LayoutAlgorithm = Class(Object) {
 	LayoutFrame(frame as Frame_p, mainWindow as Window_p = nullptr) as bool
 	LayoutMDIFrame(frame as MDIParentFrame_p, rect as Rect_p = nullptr) as bool
 	LayoutWindow(parent as Window_p, mainWindow as Window_p = nullptr) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.LayoutAlgorithm, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.LayoutAlgorithm, `en)}
+
+${help.ComposeMethodHelp(wx.LayoutAlgorithm, `en)}
+'''

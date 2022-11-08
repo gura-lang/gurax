@@ -112,4 +112,18 @@ ImageList = Class():loosePointer {
 		} while (0);
 		return Value::nil();
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ImageList, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ImageList, `en)}
+
+${help.ComposeMethodHelp(wx.ImageList, `en)}
+'''

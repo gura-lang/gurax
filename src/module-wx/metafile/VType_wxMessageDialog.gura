@@ -24,7 +24,21 @@ MessageDialog = Class(Dialog) {
 	GetCancelLabel() as String
 	GetHelpLabel() as String
 	GetEffectiveIcon() as long
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MessageDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MessageDialog, `en)}
+
+${help.ComposeMethodHelp(wx.MessageDialog, `en)}
+'''
 
 @const { // Styles
 	OK

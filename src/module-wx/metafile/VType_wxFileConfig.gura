@@ -27,4 +27,18 @@ FileConfig = Class(ConfigBase) {
 	GetLocalFile(basename as const_String_r, style as int = 0):static as FileName
 	GetGlobalFileName(szFile as const_String_r):static as String
 	GetLocalFileName(szFile as const_String_r, style as int = 0):static as String
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FileConfig, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FileConfig, `en)}
+
+${help.ComposeMethodHelp(wx.FileConfig, `en)}
+'''

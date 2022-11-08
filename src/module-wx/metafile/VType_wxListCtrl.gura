@@ -294,7 +294,21 @@ ListCtrl = Class(Control) {
 	OnGetItemColumnImage(item as long, column as long):virtual:const as int
 	OnGetItemImage(item as long):virtual:const as int
 	OnGetItemText(item as long, column as long):virtual:const as wxString
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ListCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ListCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.ListCtrl, `en)}
+'''
 
 @const { // Styles
 	LC_LIST

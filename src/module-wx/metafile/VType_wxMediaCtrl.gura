@@ -23,4 +23,18 @@ MediaCtrl = Class(Control) {
 	ShowPlayerControls(flags as MediaCtrlPlayerControls = wxMEDIACTRLPLAYERCONTROLS_DEFAULT) as bool
 	Stop() as bool
 	Tell() as FileOffset
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MediaCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MediaCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.MediaCtrl, `en)}
+'''

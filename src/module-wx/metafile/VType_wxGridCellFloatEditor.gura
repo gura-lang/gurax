@@ -5,4 +5,18 @@ GridCellFloatEditor = Class(GridCellTextEditor) {
 	@include['wx/grid.h']
 	__init__(width as int = -1, precision as int = -1, format as int = wxGRID_FLOAT_FORMAT_DEFAULT)
 	SetParameters(params as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellFloatEditor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellFloatEditor, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellFloatEditor, `en)}
+'''

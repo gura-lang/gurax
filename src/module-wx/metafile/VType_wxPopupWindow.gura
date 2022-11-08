@@ -3,4 +3,18 @@
 //==============================================================================
 PopupWindow = Class(NonOwnedWindow) {
 	@include['wx/popupwin.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PopupWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PopupWindow, `en)}
+
+${help.ComposeMethodHelp(wx.PopupWindow, `en)}
+'''

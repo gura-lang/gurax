@@ -303,5 +303,19 @@ Grid = Class(ScrolledCanvas) {
 	//GetColRight(col as int) as int
 	//GetColLeft(col as int) as int
 	//GetRowMinimalHeight(col as int) as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Grid, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Grid, `en)}
+
+${help.ComposeMethodHelp(wx.Grid, `en)}
+'''
 

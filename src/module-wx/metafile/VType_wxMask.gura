@@ -2,4 +2,18 @@
 // VType_wxMask.gura
 //==============================================================================
 Mask = Class(Object) {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Mask, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Mask, `en)}
+
+${help.ComposeMethodHelp(wx.Mask, `en)}
+'''

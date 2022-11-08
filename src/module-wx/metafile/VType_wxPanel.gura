@@ -11,4 +11,18 @@ Panel = Class(Window) {
 	OnSysColourChanged(event as SysColourChangedEvent_r) as void
 	SetFocus() as void
 	SetFocusIgnoringChildren() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Panel, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Panel, `en)}
+
+${help.ComposeMethodHelp(wx.Panel, `en)}
+'''

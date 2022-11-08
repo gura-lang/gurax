@@ -4,4 +4,18 @@
 HtmlWindow = Class(ScrolledWindow) {
 	@include['wx/html/htmlwin.h']
 	@mixin[HtmlWindowInterface]
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlWindow, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlWindow, `en)}
+'''

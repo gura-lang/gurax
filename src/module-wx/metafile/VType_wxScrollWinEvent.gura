@@ -8,7 +8,21 @@ ScrollWinEvent = Class(Event) {
 	GetPosition() as int
 	SetOrientation(orient as int) as void
 	SetPosition(pos as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ScrollWinEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ScrollWinEvent, `en)}
+
+${help.ComposeMethodHelp(wx.ScrollWinEvent, `en)}
+'''
 
 @event {
 	EVT_SCROLLWIN_TOP			>> ScrollWinEvent

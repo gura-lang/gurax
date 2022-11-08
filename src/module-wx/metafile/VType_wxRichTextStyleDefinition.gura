@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextStyleDefinition = Class():loosePointer {
 	@include['wx/richtext/richtextstyles.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextStyleDefinition, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextStyleDefinition, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleDefinition, `en)}
+'''

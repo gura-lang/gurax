@@ -3,4 +3,18 @@
 //==============================================================================
 PropertyGridPage = Class(EvtHandler) {
 	@include['wx/propgrid/manager.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PropertyGridPage, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PropertyGridPage, `en)}
+
+${help.ComposeMethodHelp(wx.PropertyGridPage, `en)}
+'''

@@ -17,4 +17,18 @@ DataViewColumn = Class(SettableHeaderColumn) {
 	GetModelColumn() as unsigned_int
 	GetOwner() as DataViewCtrl_p
 	GetRenderer() as DataViewRenderer_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataViewColumn, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataViewColumn, `en)}
+
+${help.ComposeMethodHelp(wx.DataViewColumn, `en)}
+'''

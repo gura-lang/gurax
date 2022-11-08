@@ -3,4 +3,18 @@
 //==============================================================================
 DocParentFrame = Class(Frame) {
 	@include['wx/docview.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DocParentFrame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DocParentFrame, `en)}
+
+${help.ComposeMethodHelp(wx.DocParentFrame, `en)}
+'''

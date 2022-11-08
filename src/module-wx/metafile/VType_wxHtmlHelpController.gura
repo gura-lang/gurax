@@ -3,4 +3,18 @@
 //==============================================================================
 HtmlHelpController = Class(HelpControllerBase) {
 	@include['wx/html/helpctrl.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlHelpController, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlHelpController, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpController, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 DataViewItem = Class {
 	@include['wx/dataview.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataViewItem, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataViewItem, `en)}
+
+${help.ComposeMethodHelp(wx.DataViewItem, `en)}
+'''

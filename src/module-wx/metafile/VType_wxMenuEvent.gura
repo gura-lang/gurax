@@ -7,7 +7,21 @@ MenuEvent = Class(Event) {
 	GetMenu() as Menu_p
 	GetMenuId() as int
 	IsPopup() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MenuEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MenuEvent, `en)}
+
+${help.ComposeMethodHelp(wx.MenuEvent, `en)}
+'''
 
 @event {
 	EVT_MENU_OPEN			>> MenuEvent

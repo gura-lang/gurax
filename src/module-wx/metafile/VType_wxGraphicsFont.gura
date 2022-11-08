@@ -3,4 +3,18 @@
 //==============================================================================
 GraphicsFont = Class(GraphicsObject) {
 	@include['wx/graphics.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GraphicsFont, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GraphicsFont, `en)}
+
+${help.ComposeMethodHelp(wx.GraphicsFont, `en)}
+'''

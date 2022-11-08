@@ -3,4 +3,18 @@
 //==============================================================================
 PGEditor = Class():loosePointer {
 	@include['wx/propgrid/editors.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PGEditor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PGEditor, `en)}
+
+${help.ComposeMethodHelp(wx.PGEditor, `en)}
+'''

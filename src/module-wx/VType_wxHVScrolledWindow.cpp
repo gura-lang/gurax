@@ -9,21 +9,6 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
-# Overview
-
-# Predefined Variable
-
-${help.ComposePropertyHelp(wx.HVScrolledWindow, `en)}
-
-# Operator
-
-# Cast Operation
-
-${help.ComposeConstructorHelp(wx.HVScrolledWindow, `en)}
-
-${help.ComposeMethodHelp(wx.HVScrolledWindow, `en)}
-)**";
 
 //------------------------------------------------------------------------------
 // Implementation of constructor

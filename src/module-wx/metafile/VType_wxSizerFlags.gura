@@ -19,4 +19,18 @@ SizerFlags = Class {
 	Shaped():returnThis
 	Top():returnThis
 	TripleBorder(direction as int = wxALL):returnThis
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SizerFlags, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SizerFlags, `en)}
+
+${help.ComposeMethodHelp(wx.SizerFlags, `en)}
+'''

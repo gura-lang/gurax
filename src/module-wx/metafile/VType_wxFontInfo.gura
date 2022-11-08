@@ -30,4 +30,18 @@ FontInfo = Class {
 	Strikethrough(strikethrough as bool = true):returnThis
 	Encoding(encoding as FontEncoding):returnThis
 	AllFlags(flags as int):returnThis
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FontInfo, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FontInfo, `en)}
+
+${help.ComposeMethodHelp(wx.FontInfo, `en)}
+'''

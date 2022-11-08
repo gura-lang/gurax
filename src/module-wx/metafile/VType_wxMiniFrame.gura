@@ -3,4 +3,18 @@
 //==============================================================================
 MiniFrame = Class(Frame) {
 	@include['wx/minifram.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MiniFrame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MiniFrame, `en)}
+
+${help.ComposeMethodHelp(wx.MiniFrame, `en)}
+'''

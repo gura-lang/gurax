@@ -439,21 +439,12 @@ Gurax_BeginModuleScope(wx)
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
-static const char* g_docHelp_en = u8R"**(
-# Overview
-
-# Predefined Variable
-
-$\{help.ComposePropertyHelp(wx.${className}, `en)}
-
-# Operator
-
-# Cast Operation
-
-$\{help.ComposeConstructorHelp(wx.${className}, `en)}
-
-$\{help.ComposeMethodHelp(wx.${className}, `en)}
+${helpInfoTbl.Each {|helpInfo, idx|}}
+${cond(idx > 0, "")}
+static const char* g_docHelp_${helpInfo.langCode} = u8R"**(
+${helpInfo.doc}
 )**";
+${end}
 
 //------------------------------------------------------------------------------
 // Implementation of constructor
@@ -847,10 +838,13 @@ EvalTmplPropertyImplementation(className as String, propInfo as PropInfo):map = 
 	}
 }
 
+HelpInfo = struct { langCode as Symbol, doc as String }
+
 ClassInfo = class {
 	typeInfo as cbridge.TypeInfo
 	className as String
 	classNameParent:nil as String
+	helpInfoTbl[] as HelpInfo = []
 	classInfoParent:nil as ClassInfo
 	funcInfoConstructor as cbridge.FuncInfo
 	funcInfoCast as cbridge.FuncInfo
@@ -955,15 +949,13 @@ path.Glob('metafile/*.gura').Each {|pathName|
 	Expr(pathName).EachElem {|expr|
 		if (expr.IsAssign() && expr.left.IsIdentifier()) {
 			exprBody = expr.right
+			helpInfoTbl = []
 			while (exprBody.IsBinaryOp() && exprBody.operator.symbol == `%%) {
 				exprHelp = exprBody.right
 				if (exprHelp.IsString()) {
-					exprHelp.string
-					//*******
+					helpInfoTbl.Add(HelpInfo(`en, exprHelp.string))
 				} elsif (exprHelp.IsSuffixed()) {
-					exprHelp.string
-					exprHelp.symbol
-					//*******
+					helpInfoTbl.Add(HelpInfo(exprHelp.symbol, exprHelp.string))
 				} else {
 					sys.cerr.Printf('invalid help format')
 					sys.Exit(1)
@@ -982,6 +974,7 @@ path.Glob('metafile/*.gura').Each {|pathName|
 					sys.Exit(1)
 				}
 				classInfo = ClassInfo(className, classNameParent)
+				classInfo.helpInfoTbl = helpInfoTbl
 				classInfo.loosePointerFlag = exprBody.attr.IsSet(`loosePointer)
 				classInfo.holdEntityFlag = exprBody.attr.IsSet(`holdEntity)
 				classInfo.noCopyConstructorFlag = exprBody.attr.IsSet(`noCopyConstructor)
@@ -1383,6 +1376,7 @@ GenerateVType(classInfoTbl[] as ClassInfo) = {
 		classInfoRoot = classInfo.GetClassInfoRoot()
 		className = classInfo.className
 		classNameParent = cond(classInfoParent, classInfoParent.className)
+		helpInfoTbl = classInfo.helpInfoTbl
 		classNameRoot = cond(classInfoRoot, classInfoRoot.className)
 		funcInfoConstructor = classInfo.funcInfoConstructor
 		funcInfoCast = classInfo.funcInfoCast

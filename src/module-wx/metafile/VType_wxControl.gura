@@ -12,4 +12,18 @@ Control = Class(Window) {
 	SetLabel(label as const_String_r) as void
 	SetLabelText(text as const_String_r) as void
 	SetLabelMarkup(markup as const_String_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Control, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Control, `en)}
+
+${help.ComposeMethodHelp(wx.Control, `en)}
+'''

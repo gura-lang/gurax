@@ -99,7 +99,21 @@ ListBox = Class(Control) {
 	SetString(n as unsigned_int, s as const_String_r) as void
 	FindString(s as const_String_r, bCase as bool = false) as int
 	Create(parent as Window_p, id as WindowID, pos as const_Point_r, size as const_Size_r, choices as const_ArrayString_r, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxListBoxNameStr) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ListBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ListBox, `en)}
+
+${help.ComposeMethodHelp(wx.ListBox, `en)}
+'''
 
 @const { // Styles
 	LB_SINGLE

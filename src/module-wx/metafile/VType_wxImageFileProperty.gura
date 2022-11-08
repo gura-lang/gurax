@@ -3,4 +3,18 @@
 //==============================================================================
 ImageFileProperty = Class(FileProperty) {
 	@include['wx/propgrid/advprops.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ImageFileProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ImageFileProperty, `en)}
+
+${help.ComposeMethodHelp(wx.ImageFileProperty, `en)}
+'''

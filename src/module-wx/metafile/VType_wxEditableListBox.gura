@@ -13,7 +13,21 @@ EditableListBox = Class(Panel) {
 		pEntity_gurax->GetStrings(strings);
 		return Util::CreateList(strings);
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.EditableListBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.EditableListBox, `en)}
+
+${help.ComposeMethodHelp(wx.EditableListBox, `en)}
+'''
 
 @const { // Styles
 	EL_ALLOW_NEW

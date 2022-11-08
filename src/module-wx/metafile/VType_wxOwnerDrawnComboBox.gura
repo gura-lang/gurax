@@ -3,4 +3,18 @@
 //==============================================================================
 OwnerDrawnComboBox = Class(ComboCtrl) {
 	@include['wx/odcombo.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.OwnerDrawnComboBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.OwnerDrawnComboBox, `en)}
+
+${help.ComposeMethodHelp(wx.OwnerDrawnComboBox, `en)}
+'''

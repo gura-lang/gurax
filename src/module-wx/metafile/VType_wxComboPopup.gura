@@ -26,4 +26,18 @@ ComboPopup = Class():loosePointer {
 	OnPopup() as void
 	PaintComboControl(dc as DC_r, rect as const_Rect_r) as void
 	SetStringValue(value as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ComboPopup, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ComboPopup, `en)}
+
+${help.ComposeMethodHelp(wx.ComboPopup, `en)}
+'''

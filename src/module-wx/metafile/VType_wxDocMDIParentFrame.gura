@@ -3,4 +3,18 @@
 //==============================================================================
 DocMDIParentFrame = Class(MDIParentFrame) {
 	@include['wx/docmdi.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DocMDIParentFrame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DocMDIParentFrame, `en)}
+
+${help.ComposeMethodHelp(wx.DocMDIParentFrame, `en)}
+'''

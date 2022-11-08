@@ -11,4 +11,18 @@ FileCtrlEvent = Class(CommandEvent) {
 	SetFiles(files as const_ArrayString_r) as void
 	SetDirectory(directory as const_String_r) as void
 	SetFilterIndex(index as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FileCtrlEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FileCtrlEvent, `en)}
+
+${help.ComposeMethodHelp(wx.FileCtrlEvent, `en)}
+'''

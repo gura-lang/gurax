@@ -68,7 +68,21 @@ DataViewCtrl = Class(Control) {
 	//AppendToggleColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 30, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
 	//PrependToggleColumn(label as const_String_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 30, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
 	//PrependToggleColumn(label as const_Bitmap_r, model_column as unsigned_int, mode as DataViewCellMode = wxDATAVIEW_CELL_INERT, width as int = 30, align as Alignment = wxALIGN_CENTER, flags as int = wxDATAVIEW_COL_RESIZABLE) as DataViewColumn_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataViewCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataViewCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.DataViewCtrl, `en)}
+'''
 
 @const { // Styles
 	DV_SINGLE

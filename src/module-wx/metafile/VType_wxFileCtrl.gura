@@ -18,7 +18,21 @@ FileCtrl = Class(Control) {
 	SetFilterIndex(filterIndex as int) as void
 	SetWildcard(wildCard as const_String_r) as void
 	ShowHidden(show as bool) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FileCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FileCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.FileCtrl, `en)}
+'''
 
 @const {
 	FC_DEFAULT_STYLE

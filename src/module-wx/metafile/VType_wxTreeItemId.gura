@@ -6,4 +6,18 @@ TreeItemId = Class {
 	IsOk() as bool
 	//GetID() as void_p
 	Unset() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TreeItemId, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TreeItemId, `en)}
+
+${help.ComposeMethodHelp(wx.TreeItemId, `en)}
+'''

@@ -3,4 +3,18 @@
 //==============================================================================
 MDIChildFrame = Class(Frame) {
 	@include['wx/mdi.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MDIChildFrame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MDIChildFrame, `en)}
+
+${help.ComposeMethodHelp(wx.MDIChildFrame, `en)}
+'''

@@ -17,4 +17,18 @@ App = Class(AppConsole) {
 	OnUnhandledException():virtual as void
 
 	SetInstance(app as AppConsole_p):static as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.App, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.App, `en)}
+
+${help.ComposeMethodHelp(wx.App, `en)}
+'''

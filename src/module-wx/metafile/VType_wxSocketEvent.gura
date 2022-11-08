@@ -7,7 +7,21 @@ SocketEvent = Class(Event) {
 	//GetClientData() as void_p
 	GetSocket() as SocketBase_p
 	//GetSocketEvent() as SocketNotify
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SocketEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SocketEvent, `en)}
+
+${help.ComposeMethodHelp(wx.SocketEvent, `en)}
+'''
 
 @event {
 	EVT_SOCKET >> SocketEvent

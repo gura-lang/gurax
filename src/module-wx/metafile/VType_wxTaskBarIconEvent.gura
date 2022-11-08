@@ -4,4 +4,18 @@
 TaskBarIconEvent = Class(Event) {
 	@include['wx/taskbar.h']
 	//__init__(evtType as EventType, tbIcon as TaskBarIcon_p)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TaskBarIconEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TaskBarIconEvent, `en)}
+
+${help.ComposeMethodHelp(wx.TaskBarIconEvent, `en)}
+'''

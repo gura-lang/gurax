@@ -2,4 +2,18 @@
 // VType_wxRefCounter.gura
 //==============================================================================
 RefCounter = Class {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RefCounter, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RefCounter, `en)}
+
+${help.ComposeMethodHelp(wx.RefCounter, `en)}
+'''

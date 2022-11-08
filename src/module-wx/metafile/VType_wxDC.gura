@@ -914,4 +914,17 @@ DC = Class {
 		'''
 	GetLogicalOrigin() as Point
 } %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DC, `en)}
+
+${help.ComposeMethodHelp(wx.DC, `en)}
 '''

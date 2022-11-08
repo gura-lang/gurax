@@ -5,7 +5,21 @@ SimpleHtmlListBox = Class(HtmlListBox) {
 	@include['wx/htmllbox.h']
 	@mixin[ItemContainer]
 	__init__(parent as Window_p, id as WindowID, pos as const_Point_r, size as const_Size_r, choices as const_ArrayString_r, style as long = wxHLB_DEFAULT_STYLE, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxSimpleHtmlListBoxNameStr)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SimpleHtmlListBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SimpleHtmlListBox, `en)}
+
+${help.ComposeMethodHelp(wx.SimpleHtmlListBox, `en)}
+'''
 
 @const { // Styles
 	HLB_DEFAULT_STYLE

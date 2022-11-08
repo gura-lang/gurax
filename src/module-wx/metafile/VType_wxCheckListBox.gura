@@ -14,7 +14,21 @@ CheckListBox = Class(ListBox) {
 		pEntity_gurax->GetCheckedItems(checkedItems);
 		return Util::CreateList(checkedItems);
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CheckListBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CheckListBox, `en)}
+
+${help.ComposeMethodHelp(wx.CheckListBox, `en)}
+'''
 
 @event {
 	EVT_CHECKLISTBOX >> CommandEvent

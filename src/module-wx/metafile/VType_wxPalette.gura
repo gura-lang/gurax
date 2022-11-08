@@ -2,4 +2,18 @@
 // VType_wxPalette.gura
 //==============================================================================
 Palette = Class(GDIObject):holdEntity {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Palette, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Palette, `en)}
+
+${help.ComposeMethodHelp(wx.Palette, `en)}
+'''

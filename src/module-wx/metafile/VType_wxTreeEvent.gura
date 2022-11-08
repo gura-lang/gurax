@@ -11,4 +11,18 @@ TreeEvent = Class(NotifyEvent) {
 	GetPoint() as Point
 	IsEditCancelled() as bool
 	SetToolTip(tooltip as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TreeEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TreeEvent, `en)}
+
+${help.ComposeMethodHelp(wx.TreeEvent, `en)}
+'''

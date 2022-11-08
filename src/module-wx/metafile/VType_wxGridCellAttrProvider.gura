@@ -11,4 +11,18 @@ GridCellAttrProvider = Class(ClientDataContainer) {
 	//GetColumnHeaderRenderer(col as int) as GridColumnHeaderRenderer
 	//GetRowHeaderRenderer(row as int) as GridRowHeaderRenderer
 	GetCornerRenderer() as GridCornerHeaderRenderer
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellAttrProvider, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellAttrProvider, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellAttrProvider, `en)}
+'''

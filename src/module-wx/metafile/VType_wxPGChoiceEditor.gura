@@ -3,4 +3,18 @@
 //==============================================================================
 PGChoiceEditor = Class {
 	@include['wx/propgrid/editors.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PGChoiceEditor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PGChoiceEditor, `en)}
+
+${help.ComposeMethodHelp(wx.PGChoiceEditor, `en)}
+'''

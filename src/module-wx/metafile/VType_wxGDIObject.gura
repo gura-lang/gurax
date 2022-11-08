@@ -2,4 +2,18 @@
 // VType_wxGDIObject.gura
 //==============================================================================
 GDIObject = Class(Object) {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GDIObject, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GDIObject, `en)}
+
+${help.ComposeMethodHelp(wx.GDIObject, `en)}
+'''

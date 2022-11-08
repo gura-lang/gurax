@@ -11,4 +11,18 @@ Animation = Class(Object):holdEntity {
 	IsOk() as bool
 	Load(stream as InputStream_r, type as AnimationType = wxANIMATION_TYPE_ANY) as bool
 	LoadFile(name as const_String_r, type as AnimationType = wxANIMATION_TYPE_ANY) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Animation, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Animation, `en)}
+
+${help.ComposeMethodHelp(wx.Animation, `en)}
+'''

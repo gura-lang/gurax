@@ -3,4 +3,18 @@
 //==============================================================================
 NumericPropertyValidator = Class(TextValidator) {
 	@include['wx/propgrid/props.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.NumericPropertyValidator, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.NumericPropertyValidator, `en)}
+
+${help.ComposeMethodHelp(wx.NumericPropertyValidator, `en)}
+'''

@@ -43,7 +43,21 @@ TextCtrl = Class(Control) {
 	SetStyle(start as long, end as long, style as const_TextAttr_r) as bool
 	ShowPosition(pos as long) as void
 	XYToPosition(x as long, y as long) as long
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TextCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TextCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.TextCtrl, `en)}
+'''
 
 @const { // Styles
 	TE_PROCESS_ENTER

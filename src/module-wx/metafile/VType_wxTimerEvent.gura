@@ -4,7 +4,21 @@
 TimerEvent = Class(Event) {
 	GetInterval() as int
 	//GetTimer() as Timer
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TimerEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TimerEvent, `en)}
+
+${help.ComposeMethodHelp(wx.TimerEvent, `en)}
+'''
 
 @event {
     EVT_TIMER >> TimerEvent

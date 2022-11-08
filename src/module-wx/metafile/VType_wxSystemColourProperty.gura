@@ -3,4 +3,18 @@
 //==============================================================================
 SystemColourProperty = Class(EnumProperty) {
 	@include['wx/propgrid/advprops.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SystemColourProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SystemColourProperty, `en)}
+
+${help.ComposeMethodHelp(wx.SystemColourProperty, `en)}
+'''

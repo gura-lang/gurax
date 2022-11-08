@@ -3,4 +3,18 @@
 //==============================================================================
 RibbonButtonBar = Class(RibbonControl) {
 	@include['wx/ribbon/buttonbar.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RibbonButtonBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RibbonButtonBar, `en)}
+
+${help.ComposeMethodHelp(wx.RibbonButtonBar, `en)}
+'''

@@ -143,4 +143,18 @@ ItemContainer = Class():mixin {
 	//Set(n as unsigned_int, items as const_String_p) as void
 	//Set(n as unsigned_int, items as const_String_p, clientData as void_p_p) as void
 	//Set(n as unsigned_int, items as const_String_p, clientData as ClientData_p_p) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ItemContainer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ItemContainer, `en)}
+
+${help.ComposeMethodHelp(wx.ItemContainer, `en)}
+'''

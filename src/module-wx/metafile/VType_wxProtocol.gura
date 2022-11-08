@@ -16,4 +16,18 @@ Protocol = Class(SocketClient) {
 	DetachLog() as ProtocolLog_p
 	LogRequest(str as const_String_r) as void
 	LogResponse(str as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Protocol, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Protocol, `en)}
+
+${help.ComposeMethodHelp(wx.Protocol, `en)}
+'''

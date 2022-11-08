@@ -146,7 +146,21 @@ AuiToolBar = Class(Control) {
 	//SetCustomOverflowItems(prepend as const_AuiToolBarItemArray_r, append as const_AuiToolBarItemArray_r) as void
 	GetHintSize(dock_direction as int) as Size
 	//IsPaneValid(pane as const_AuiPaneInfo_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiToolBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiToolBar, `en)}
+
+${help.ComposeMethodHelp(wx.AuiToolBar, `en)}
+'''
 
 @const { // Styles
 	AUI_TB_TEXT

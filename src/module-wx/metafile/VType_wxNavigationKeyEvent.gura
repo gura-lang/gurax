@@ -11,7 +11,21 @@ NavigationKeyEvent = Class(Event) {
 	SetFlags(flags as long) as void
 	SetFromTab(fromTab as bool) as void
 	SetWindowChange(windowChange as bool) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.NavigationKeyEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.NavigationKeyEvent, `en)}
+
+${help.ComposeMethodHelp(wx.NavigationKeyEvent, `en)}
+'''
 
 @event {
 	EVT_NAVIGATION_KEY	>> NavigationKeyEvent

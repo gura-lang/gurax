@@ -37,4 +37,18 @@ SizerItem = Class(Object) {
 	SetUserData(userData as Object_p) as void
 	//SetWindow(window as Window_p) as void
 	Show(show as bool) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SizerItem, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SizerItem, `en)}
+
+${help.ComposeMethodHelp(wx.SizerItem, `en)}
+'''

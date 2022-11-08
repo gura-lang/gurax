@@ -15,7 +15,21 @@ SpinCtrl = Class(Control) {
 	SetSelection(from as long, to as long) as void
 	SetValue(text as const_String_r) as void
 	//SetValue(value as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SpinCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SpinCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.SpinCtrl, `en)}
+'''
 
 @event {
 	EVT_SPINCTRL >> SpinEvent

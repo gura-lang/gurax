@@ -4,4 +4,18 @@
 GridCellAutoWrapStringEditor = Class(GridCellTextEditor) {
 	@include['wx/grid.h']
 	__init__()
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellAutoWrapStringEditor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellAutoWrapStringEditor, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellAutoWrapStringEditor, `en)}
+'''

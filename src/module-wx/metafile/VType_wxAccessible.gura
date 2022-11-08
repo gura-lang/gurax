@@ -24,7 +24,21 @@ Accessible = Class(Object) {
 	//Navigate(navDir as NavDir, fromId as int, toId as int_p, toObject as Accessible_p_p) as AccStatus
 	Select(childId as int, selectFlags as AccSelectionFlags) as AccStatus
 	SetWindow(window as Window_p) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Accessible, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Accessible, `en)}
+
+${help.ComposeMethodHelp(wx.Accessible, `en)}
+'''
 
 @enum {
 	AccRole {

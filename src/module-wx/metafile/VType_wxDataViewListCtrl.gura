@@ -3,4 +3,18 @@
 //==============================================================================
 DataViewListCtrl = Class(DataViewCtrl) {
 	@include['wx/dataview.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DataViewListCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DataViewListCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.DataViewListCtrl, `en)}
+'''

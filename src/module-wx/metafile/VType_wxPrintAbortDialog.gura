@@ -5,4 +5,18 @@ PrintAbortDialog = Class(Dialog) {
 	@include['wx/print.h']
 	__init__(parent as Window_p, documentTitle as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = wxDEFAULT_DIALOG_STYLE, name as const_String_r = "dialog")
 	SetProgress(currentPage as int, totalPages as int, currentCopy as int, totalCopies as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PrintAbortDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PrintAbortDialog, `en)}
+
+${help.ComposeMethodHelp(wx.PrintAbortDialog, `en)}
+'''

@@ -10,7 +10,21 @@ Button = Class(AnyButton) {
 	SetAuthNeeded(needed as bool = true) as void
 	SetDefault() as Window_p
 	SetLabel(label as String) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Button, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Button, `en)}
+
+${help.ComposeMethodHelp(wx.Button, `en)}
+'''
 
 @const { // Styles
 	BU_LEFT

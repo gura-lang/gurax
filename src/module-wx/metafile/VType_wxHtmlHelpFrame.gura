@@ -3,4 +3,18 @@
 //==============================================================================
 HtmlHelpFrame = Class(Frame) {
 	@include['wx/html/helpfrm.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlHelpFrame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlHelpFrame, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpFrame, `en)}
+'''

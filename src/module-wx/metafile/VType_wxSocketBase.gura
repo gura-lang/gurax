@@ -3,4 +3,18 @@
 //==============================================================================
 SocketBase = Class():loosePointer {
 	@include['wx/socket.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SocketBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SocketBase, `en)}
+
+${help.ComposeMethodHelp(wx.SocketBase, `en)}
+'''

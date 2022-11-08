@@ -5,7 +5,21 @@ ContextMenuEvent = Class(CommandEvent) {
 	@include['wx/event.h']
 	GetPosition() as Point
 	SetPosition(point as const_Point_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ContextMenuEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ContextMenuEvent, `en)}
+
+${help.ComposeMethodHelp(wx.ContextMenuEvent, `en)}
+'''
 
 @event {
 	EVT_CONTEXT_MENU >> ContextMenuEvent

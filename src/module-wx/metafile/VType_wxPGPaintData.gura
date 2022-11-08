@@ -19,4 +19,18 @@ PGPaintData = Class {
 		R'''
 		return new Value_Number(valueThis_gurax.GetEntity().m_drawnHeight);
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PGPaintData, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PGPaintData, `en)}
+
+${help.ComposeMethodHelp(wx.PGPaintData, `en)}
+'''

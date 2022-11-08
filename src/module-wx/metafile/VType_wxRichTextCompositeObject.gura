@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextCompositeObject = Class(RichTextObject) {
 	@include['wx/richtext/richtextbuffer.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextCompositeObject, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextCompositeObject, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextCompositeObject, `en)}
+'''

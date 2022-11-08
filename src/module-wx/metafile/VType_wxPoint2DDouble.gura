@@ -3,4 +3,18 @@
 //==============================================================================
 Point2DDouble = Class {
 	@include['wx/graphics.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Point2DDouble, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Point2DDouble, `en)}
+
+${help.ComposeMethodHelp(wx.Point2DDouble, `en)}
+'''

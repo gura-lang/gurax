@@ -3,4 +3,18 @@
 //==============================================================================
 PrintPreview = Class():loosePointer {
 	@include['wx/print.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PrintPreview, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PrintPreview, `en)}
+
+${help.ComposeMethodHelp(wx.PrintPreview, `en)}
+'''

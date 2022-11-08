@@ -8,4 +8,18 @@ HtmlLinkInfo = Class():loosePointer {
 	GetHref() as String
 	GetHtmlCell() as HtmlCell_p
 	GetTarget() as String
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlLinkInfo, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlLinkInfo, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlLinkInfo, `en)}
+'''

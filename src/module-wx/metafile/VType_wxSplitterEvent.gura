@@ -3,4 +3,18 @@
 //==============================================================================
 SplitterEvent = Class(NotifyEvent) {
 	@include['wx/splitter.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SplitterEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SplitterEvent, `en)}
+
+${help.ComposeMethodHelp(wx.SplitterEvent, `en)}
+'''

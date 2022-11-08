@@ -27,7 +27,21 @@ DateSpan = Class {
 	Weeks(weeks as int):static as DateSpan
 	Year():static as DateSpan
 	Years(years as int):static as DateSpan
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DateSpan, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DateSpan, `en)}
+
+${help.ComposeMethodHelp(wx.DateSpan, `en)}
+'''
 
 //(-const_DateSpan_r) as DateSpan
 (const_DateSpan_r + const_DateSpan_r) as DateSpan

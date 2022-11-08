@@ -38,4 +38,18 @@ ListItemAttr = Class() {
 	SetBackgroundColour(colour as const_Colour_r) as void
 	SetFont(font as const_Font_r) as void
 	SetTextColour(colour as const_Colour_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ListItemAttr, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ListItemAttr, `en)}
+
+${help.ComposeMethodHelp(wx.ListItemAttr, `en)}
+'''

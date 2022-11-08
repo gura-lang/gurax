@@ -9,7 +9,21 @@ FontPickerCtrl = Class(PickerBase) {
 	GetSelectedFont() as Font
 	SetMaxPointSize(max as unsigned_int) as void
 	SetSelectedFont(font as const_Font_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FontPickerCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FontPickerCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.FontPickerCtrl, `en)}
+'''
 
 @const { // Styles
 	FNTP_DEFAULT_STYLE

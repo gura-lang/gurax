@@ -3,4 +3,18 @@
 //==============================================================================
 HtmlColourCell = Class(HtmlCell) {
 	@include['wx/html/htmlcell.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlColourCell, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlColourCell, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlColourCell, `en)}
+'''

@@ -21,7 +21,21 @@ PickerBase = Class(Control) {
 	SetPickerCtrl(picker as Control_p) as void
 	UpdatePickerFromTextCtrl() as void
 	UpdateTextCtrlFromPicker() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PickerBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PickerBase, `en)}
+
+${help.ComposeMethodHelp(wx.PickerBase, `en)}
+'''
 
 @const { // Styles
 	PB_USE_TEXTCTRL

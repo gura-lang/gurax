@@ -3,4 +3,18 @@
 //==============================================================================
 MetafileDC = Class(DC) {
 	@include['wx/metafile.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MetafileDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MetafileDC, `en)}
+
+${help.ComposeMethodHelp(wx.MetafileDC, `en)}
+'''

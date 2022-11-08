@@ -121,4 +121,18 @@ PGProperty = Class {
 	UpdateParentValues() as PGProperty_p
 	UsesAutoUnspecified() as bool
 	SetValuePlain(value as Variant) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PGProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PGProperty, `en)}
+
+${help.ComposeMethodHelp(wx.PGProperty, `en)}
+'''

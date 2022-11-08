@@ -36,4 +36,18 @@ AuiMDIChildFrame = Class(Frame) {
 	IsTopLevel() as bool
 	SetMDIParentFrame(parent as AuiMDIParentFrame_p) as void
 	GetMDIParentFrame() as AuiMDIParentFrame_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiMDIChildFrame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiMDIChildFrame, `en)}
+
+${help.ComposeMethodHelp(wx.AuiMDIChildFrame, `en)}
+'''

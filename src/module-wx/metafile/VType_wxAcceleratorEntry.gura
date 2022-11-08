@@ -13,4 +13,18 @@ AcceleratorEntry = Class {
 	ToString() as String
 	ToRawString() as String
 	FromString(str as const_String_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AcceleratorEntry, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AcceleratorEntry, `en)}
+
+${help.ComposeMethodHelp(wx.AcceleratorEntry, `en)}
+'''

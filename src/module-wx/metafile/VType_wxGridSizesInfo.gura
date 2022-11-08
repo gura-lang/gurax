@@ -3,4 +3,18 @@
 //==============================================================================
 GridSizesInfo = Class {
 	@include['wx/grid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridSizesInfo, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridSizesInfo, `en)}
+
+${help.ComposeMethodHelp(wx.GridSizesInfo, `en)}
+'''

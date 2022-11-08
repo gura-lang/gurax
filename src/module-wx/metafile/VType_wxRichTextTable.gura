@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextTable = Class(RichTextBox) {
 	@include['wx/richtext/richtextbuffer.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextTable, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextTable, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextTable, `en)}
+'''

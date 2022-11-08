@@ -5,4 +5,18 @@ CommandLinkButton = Class(Button) {
 	@include['wx/commandlinkbutton.h']
 	__init__(parent as Window_p, id as WindowID, mainLabel as String = '', note as String = '', pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, validator as Validator = wxDefaultValidator, name as String = wxButtonNameStr)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CommandLinkButton, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CommandLinkButton, `en)}
+
+${help.ComposeMethodHelp(wx.CommandLinkButton, `en)}
+'''

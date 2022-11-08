@@ -30,4 +30,18 @@ BookCtrlBase = Class(Control) {
 	RemovePage(page as size_t) as bool
 	GetPageCount() as size_t
 	GetPage(page as size_t) as Window_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BookCtrlBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BookCtrlBase, `en)}
+
+${help.ComposeMethodHelp(wx.BookCtrlBase, `en)}
+'''

@@ -14,7 +14,21 @@ RichTextStyleListCtrl = Class(Control) {
 	///SetStyleSheet(styleSheet as RichTextStyleSheet_p) as void
 	//SetStyleType(styleType as RichTextStyleListBox.wxRichTextStyleType) as void
 	///UpdateStyles() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextStyleListCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextStyleListCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleListCtrl, `en)}
+'''
 
 @const {
 	RICHTEXTSTYLELIST_HIDE_TYPE_SELECTOR

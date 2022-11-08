@@ -11,4 +11,18 @@ GLCanvas = Class(Window) {
 	SwapBuffers() as bool
 	//IsDisplaySupported(const int *attribList):static as bool
 	IsExtensionSupported(extension as const_char_p):static as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GLCanvas, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GLCanvas, `en)}
+
+${help.ComposeMethodHelp(wx.GLCanvas, `en)}
+'''

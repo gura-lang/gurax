@@ -3,4 +3,18 @@
 //==============================================================================
 GridTableMessage = Class():noCopyConstructor {
 	@include['wx/grid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridTableMessage, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridTableMessage, `en)}
+
+${help.ComposeMethodHelp(wx.GridTableMessage, `en)}
+'''

@@ -49,4 +49,18 @@ HtmlHelpDialog = Class(Dialog) {
 	GetController() as HtmlHelpController_p
 	SetController(controller as HtmlHelpController_p) as void
 	SetTitleFormat(format as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlHelpDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlHelpDialog, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpDialog, `en)}
+'''

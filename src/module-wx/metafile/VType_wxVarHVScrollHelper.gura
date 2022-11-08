@@ -19,4 +19,18 @@ VarHVScrollHelper = Class():mixin {
 	//ScrollToRowColumn(pos as const_Position_r) as bool
 	VirtualHitTest(x as Coord, y as Coord) as Position
 	//VirtualHitTest(pos as const_Point_r) as Position
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.VarHVScrollHelper, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.VarHVScrollHelper, `en)}
+
+${help.ComposeMethodHelp(wx.VarHVScrollHelper, `en)}
+'''

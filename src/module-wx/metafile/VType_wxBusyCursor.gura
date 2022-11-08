@@ -4,4 +4,18 @@
 BusyCursor = Class {
 	@include['wx/utils.h']
 	__init__(cursor as const_Cursor_p = wxHOURGLASS_CURSOR)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BusyCursor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BusyCursor, `en)}
+
+${help.ComposeMethodHelp(wx.BusyCursor, `en)}
+'''

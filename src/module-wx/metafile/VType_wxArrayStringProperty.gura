@@ -3,4 +3,18 @@
 //==============================================================================
 ArrayStringProperty = Class(PGProperty) {
 	@include['wx/propgrid/props.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ArrayStringProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ArrayStringProperty, `en)}
+
+${help.ComposeMethodHelp(wx.ArrayStringProperty, `en)}
+'''

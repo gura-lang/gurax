@@ -5,4 +5,18 @@ DateEvent = Class(Event) {
 	@include['wx/dateevt.h']
 	GetDate() as const_DateTime_r
 	SetDate (date as const_DateTime_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DateEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DateEvent, `en)}
+
+${help.ComposeMethodHelp(wx.DateEvent, `en)}
+'''

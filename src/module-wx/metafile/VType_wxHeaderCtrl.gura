@@ -19,7 +19,21 @@ HeaderCtrl = Class(Control) {
 	ShowCustomizeDialog() as bool
 	GetColumnTitleWidth(col as const_HeaderColumn_r) as int
 	//MoveColumnInOrderArray(order as ArrayInt_r, idx as unsigned_int, pos as unsigned_int):static as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HeaderCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HeaderCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.HeaderCtrl, `en)}
+'''
 
 @const { // Styles
 	HD_ALLOW_REORDER

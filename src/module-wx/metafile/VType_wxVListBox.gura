@@ -37,4 +37,18 @@ VListBox = Class(VScrolledWindow) {
 	Toggle(item as size_t) as void
 	SetMargins(pt as const_Point_r) as void
 	SetMarginsXY(x as Coord, y as Coord) as void = SetMargins
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.VListBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.VListBox, `en)}
+
+${help.ComposeMethodHelp(wx.VListBox, `en)}
+'''

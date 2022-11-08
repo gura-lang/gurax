@@ -3,4 +3,18 @@
 //==============================================================================
 FTP = Class(Protocol) {
 	@include['wx/protocol/ftp.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FTP, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FTP, `en)}
+
+${help.ComposeMethodHelp(wx.FTP, `en)}
+'''

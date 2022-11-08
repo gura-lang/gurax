@@ -4,7 +4,21 @@
 MouseCaptureChangedEvent = Class(Event) {
 	//__init__(windowId as WindowID = 0, gainedCapture as Window_p = NULL)
 	GetCapturedWindow() as Window_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MouseCaptureChangedEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MouseCaptureChangedEvent, `en)}
+
+${help.ComposeMethodHelp(wx.MouseCaptureChangedEvent, `en)}
+'''
 
 @event {
 	EVT_MOUSE_CAPTURE_CHANGED >> MouseCaptureChangedEvent

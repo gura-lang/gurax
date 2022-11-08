@@ -3,4 +3,18 @@
 //==============================================================================
 WizardPageSimple = Class(WizardPage) {
 	@include['wx/wizard.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.WizardPageSimple, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.WizardPageSimple, `en)}
+
+${help.ComposeMethodHelp(wx.WizardPageSimple, `en)}
+'''

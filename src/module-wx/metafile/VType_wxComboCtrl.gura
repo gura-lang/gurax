@@ -59,7 +59,21 @@ ComboCtrl = Class(Control) {
 	UseAltPopupWindow(enable as bool = true) as void
 	//SetMargins(pt as const_Point_r) as bool
 	SetMargins(left as Coord, top as Coord = -1) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ComboCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ComboCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.ComboCtrl, `en)}
+'''
 
 @const { // Styles
 	CB_READONLY

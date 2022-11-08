@@ -5,7 +5,21 @@ Toolbook = Class(BookCtrlBase) {
 	@include['wx/toolbook.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = '')
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Toolbook, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Toolbook, `en)}
+
+${help.ComposeMethodHelp(wx.Toolbook, `en)}
+'''
 
 @const {
 	TBK_BUTTONBAR

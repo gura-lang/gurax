@@ -6,7 +6,21 @@ StaticText = Class(Control) {
 		style as long = 0, name as String = wxStaticTextNameStr)
 	IsEllipsized() as bool
 	Wrap(width as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StaticText, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StaticText, `en)}
+
+${help.ComposeMethodHelp(wx.StaticText, `en)}
+'''
 
 @const { // Styles
 	ALIGN_LEFT

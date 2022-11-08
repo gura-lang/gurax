@@ -7,4 +7,18 @@
 
 MultiChoiceProperty = Class(PGProperty) {
 	@include['wx/propgrid/advprops.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MultiChoiceProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MultiChoiceProperty, `en)}
+
+${help.ComposeMethodHelp(wx.MultiChoiceProperty, `en)}
+'''

@@ -8,7 +8,21 @@ RadioButton = Class(Control) {
 	Create(parent as Window_p, id as WindowID, label as const_String_r, pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0, validator as const_Validator_r = wxDefaultValidator, name as const_String_r = wxRadioButtonNameStr) as bool
 	GetValue() as bool
 	SetValue(value as bool) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RadioButton, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RadioButton, `en)}
+
+${help.ComposeMethodHelp(wx.RadioButton, `en)}
+'''
 
 @const { // Styles
 	RB_GROUP

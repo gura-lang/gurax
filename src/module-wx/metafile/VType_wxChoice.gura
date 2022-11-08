@@ -16,7 +16,21 @@ Choice = Class(Control) {
 	FindString(s as const_String_r, bCase as bool = false) as int
 	GetString(n as unsigned_int) as String
 	SetString(pos as unsigned_int, s as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Choice, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Choice, `en)}
+
+${help.ComposeMethodHelp(wx.Choice, `en)}
+'''
 
 @event {
 	EVT_CHOICE >> CommandEvent

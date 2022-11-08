@@ -12,7 +12,21 @@ CheckBox = Class(Control) {
 	IsChecked() as bool
 	SetValue(state as bool) as void
 	Set3StateValue(state as CheckBoxState) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CheckBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CheckBox, `en)}
+
+${help.ComposeMethodHelp(wx.CheckBox, `en)}
+'''
 
 @const { // Styles
 	CHK_2STATE

@@ -3,7 +3,21 @@
 //==============================================================================
 MouseCaptureLostEvent = Class(Event) {
 	//__init__(windowId as WindowID = 0)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MouseCaptureLostEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MouseCaptureLostEvent, `en)}
+
+${help.ComposeMethodHelp(wx.MouseCaptureLostEvent, `en)}
+'''
 
 @event {
 	EVT_MOUSE_CAPTURE_LOST >> MouseCaptureLostEvent

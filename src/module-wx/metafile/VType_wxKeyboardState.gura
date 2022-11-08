@@ -16,4 +16,18 @@ KeyboardState = Class():mixin {
 	SetShiftDown(down as bool) as void
 	SetAltDown(down as bool) as void
 	SetMetaDown(down as bool) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.KeyboardState, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.KeyboardState, `en)}
+
+${help.ComposeMethodHelp(wx.KeyboardState, `en)}
+'''

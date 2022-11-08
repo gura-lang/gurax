@@ -3,4 +3,18 @@
 //==============================================================================
 GridCellRenderer = Class(RefCounter) {
 	@include['wx/grid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellRenderer, `en)}
+'''

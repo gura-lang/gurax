@@ -2,4 +2,18 @@
 // VType_wxVisualAttributes.gura
 //==============================================================================
 VisualAttributes = Class {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.VisualAttributes, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.VisualAttributes, `en)}
+
+${help.ComposeMethodHelp(wx.VisualAttributes, `en)}
+'''

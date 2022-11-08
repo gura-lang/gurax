@@ -8,4 +8,18 @@ PreviewControlBar = Class(Panel) {
 	//GetPrintPreview() as PrintPreviewBase_p
 	GetZoomControl() as int
 	SetZoomControl(percent as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PreviewControlBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PreviewControlBar, `en)}
+
+${help.ComposeMethodHelp(wx.PreviewControlBar, `en)}
+'''

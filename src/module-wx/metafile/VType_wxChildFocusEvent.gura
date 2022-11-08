@@ -3,7 +3,21 @@
 //==============================================================================
 ChildFocusEvent = Class(CommandEvent) {
 	@include['wx/event.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ChildFocusEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ChildFocusEvent, `en)}
+
+${help.ComposeMethodHelp(wx.ChildFocusEvent, `en)}
+'''
 
 @event {
 	EVT_CHILD_FOCUS >> ChildFocusEvent

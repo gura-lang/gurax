@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextSelection = Class {
 	@include['wx/richtext/richtextbuffer.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextSelection, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextSelection, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextSelection, `en)}
+'''

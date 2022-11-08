@@ -3,4 +3,18 @@
 //==============================================================================
 TextValidator = Class(Validator) {
 	@include['wx/valtext.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.TextValidator, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.TextValidator, `en)}
+
+${help.ComposeMethodHelp(wx.TextValidator, `en)}
+'''

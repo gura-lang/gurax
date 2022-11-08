@@ -89,7 +89,21 @@ PropertyGrid = Class(Control) {
 	AutoGetTranslation(enable as bool):static as void
 	//RegisterEditorClass(editor as PGEditor_p, noDefCheck as bool = false):static as PGEditor_p
 	//DoRegisterEditorClass(editor as PGEditor_p, name as const_String_r, noDefCheck as bool = false):static as PGEditor_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PropertyGrid, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PropertyGrid, `en)}
+
+${help.ComposeMethodHelp(wx.PropertyGrid, `en)}
+'''
 
 @event {
 	EVT_PG_SELECTED				>> PropertyGridEvent

@@ -5,7 +5,21 @@ Listbook = Class(BookCtrlBase) {
 	@include['wx/listbook.h']
 	__init__(parent as Window_p, id as WindowID, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = 0, name as String = '')
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Listbook, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Listbook, `en)}
+
+${help.ComposeMethodHelp(wx.Listbook, `en)}
+'''
 
 @const {
 	LB_DEFAULT

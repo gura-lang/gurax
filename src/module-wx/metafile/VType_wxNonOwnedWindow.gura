@@ -37,4 +37,18 @@ NonOwnedWindow = Class(Window) {
 		} while (0);
 		return Value::nil();
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.NonOwnedWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.NonOwnedWindow, `en)}
+
+${help.ComposeMethodHelp(wx.NonOwnedWindow, `en)}
+'''

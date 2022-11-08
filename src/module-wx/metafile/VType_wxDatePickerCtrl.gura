@@ -9,7 +9,21 @@ DatePickerCtrl = Class(Control) {
 	GetValue() as DateTime
 	SetRange(dt1 as const_DateTime_r, dt2 as const_DateTime_r) as void
 	SetValue(dt as const_DateTime_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DatePickerCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DatePickerCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.DatePickerCtrl, `en)}
+'''
 
 @const { // Styles
 	DP_SPIN

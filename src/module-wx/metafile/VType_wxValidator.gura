@@ -9,4 +9,18 @@ Validator = Class(EvtHandler) {
 	TransferFromWindow() as bool
 	TransferToWindow() as bool
 	Validate(parent as Window_p) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Validator, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Validator, `en)}
+
+${help.ComposeMethodHelp(wx.Validator, `en)}
+'''

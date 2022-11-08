@@ -3,4 +3,18 @@
 //==============================================================================
 RichTextAttr = Class(TextAttr) {
 	@include['wx/richtext/richtextbuffer.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.RichTextAttr, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.RichTextAttr, `en)}
+
+${help.ComposeMethodHelp(wx.RichTextAttr, `en)}
+'''

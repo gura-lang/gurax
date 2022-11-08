@@ -5,4 +5,18 @@ GraphicsObject = Class(Object) {
 	@include['wx/graphics.h']
 	GetRenderer() as GraphicsRenderer_p
 	IsNull() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GraphicsObject, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GraphicsObject, `en)}
+
+${help.ComposeMethodHelp(wx.GraphicsObject, `en)}
+'''

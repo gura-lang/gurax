@@ -16,4 +16,18 @@ BitmapComboBox = Class(ComboBox) {
 	//Insert(item as const_String_r, bitmap as const_Bitmap_r, pos as unsigned_int, clientData as void_p) as int
 	//Insert(item as const_String_r, bitmap as const_Bitmap_r, pos as unsigned_int, clientData as ClientData_p) as int
 	SetItemBitmap(n as unsigned_int, bitmap as const_Bitmap_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BitmapComboBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BitmapComboBox, `en)}
+
+${help.ComposeMethodHelp(wx.BitmapComboBox, `en)}
+'''

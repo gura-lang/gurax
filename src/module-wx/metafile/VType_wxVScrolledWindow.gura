@@ -4,4 +4,18 @@
 VScrolledWindow = Class(Panel) {
 	@include['wx/vscroll.h']
 	@mixin[VarVScrollHelper]
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.VScrolledWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.VScrolledWindow, `en)}
+
+${help.ComposeMethodHelp(wx.VScrolledWindow, `en)}
+'''

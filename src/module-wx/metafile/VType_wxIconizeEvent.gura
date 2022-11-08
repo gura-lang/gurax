@@ -6,7 +6,21 @@ IconizeEvent = Class(Event) {
 	//__init__(id as int = 0, iconized as bool = true)
 	IsIconized() as bool
 	//Iconized() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.IconizeEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.IconizeEvent, `en)}
+
+${help.ComposeMethodHelp(wx.IconizeEvent, `en)}
+'''
 
 @event {
 	EVT_ICONIZE >> IconizeEvent

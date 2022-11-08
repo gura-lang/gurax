@@ -2,4 +2,18 @@
 // VType_wxStreamBase.gura
 //==============================================================================
 StreamBase = Class():loosePointer {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StreamBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StreamBase, `en)}
+
+${help.ComposeMethodHelp(wx.StreamBase, `en)}
+'''

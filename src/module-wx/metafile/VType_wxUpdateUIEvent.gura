@@ -14,7 +14,21 @@ UpdateUIEvent = Class(CommandEvent) {
 	GetText() as String
 	SetText(text as const_String_r) as void
 	Show(show as bool) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.UpdateUIEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.UpdateUIEvent, `en)}
+
+${help.ComposeMethodHelp(wx.UpdateUIEvent, `en)}
+'''
 
 @event {
 	EVT_UPDATE_UI	>> UpdateUIEvent

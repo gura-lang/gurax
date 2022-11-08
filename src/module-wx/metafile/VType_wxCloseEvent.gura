@@ -10,7 +10,21 @@ CloseEvent = Class(Event) {
 	SetLoggingOff(loggingOff as bool) as void
 	Veto(veto as bool = true) as void
 	GetVeto() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CloseEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CloseEvent, `en)}
+
+${help.ComposeMethodHelp(wx.CloseEvent, `en)}
+'''
 
 @event {
 	EVT_QUERY_END_SESSION	>> CloseEvent

@@ -4,4 +4,18 @@
 PrintData = Class {
 	@include['wx/cmndata.h']
 	__init__()
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PrintData, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PrintData, `en)}
+
+${help.ComposeMethodHelp(wx.PrintData, `en)}
+'''

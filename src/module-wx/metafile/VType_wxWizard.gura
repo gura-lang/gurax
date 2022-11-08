@@ -22,7 +22,21 @@ Wizard = Class(Dialog) {
 	SetBorder(border as int) as void
 	SetMinimumBitmapWidth(width as int) as void
 	SetPageSize(sizePage as const_Size_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Wizard, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Wizard, `en)}
+
+${help.ComposeMethodHelp(wx.Wizard, `en)}
+'''
 
 @const { // Extra Styles
 	WIZARD_EX_HELPBUTTON

@@ -93,4 +93,18 @@ GridSizer = Class(Sizer) {
 	SetVGap(gap as int) as void
 	CalcMin() as Size
 	RecalcSizes() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridSizer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridSizer, `en)}
+
+${help.ComposeMethodHelp(wx.GridSizer, `en)}
+'''

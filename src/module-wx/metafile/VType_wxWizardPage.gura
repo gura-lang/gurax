@@ -8,4 +8,18 @@ WizardPage = Class(Panel) {
 	GetBitmap() as Bitmap
 	GetNext() as WizardPage_p
 	GetPrev() as WizardPage_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.WizardPage, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.WizardPage, `en)}
+
+${help.ComposeMethodHelp(wx.WizardPage, `en)}
+'''

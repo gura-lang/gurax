@@ -13,4 +13,18 @@ FontDialog = Class(Dialog) {
 		'''
 	ShowModal() as int
 	GetFontData() as FontData_r
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FontDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FontDialog, `en)}
+
+${help.ComposeMethodHelp(wx.FontDialog, `en)}
+'''

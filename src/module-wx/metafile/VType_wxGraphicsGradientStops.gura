@@ -3,4 +3,18 @@
 //==============================================================================
 GraphicsGradientStops = Class {
 	@include['wx/graphics.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GraphicsGradientStops, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GraphicsGradientStops, `en)}
+
+${help.ComposeMethodHelp(wx.GraphicsGradientStops, `en)}
+'''

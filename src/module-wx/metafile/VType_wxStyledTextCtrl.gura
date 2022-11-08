@@ -662,7 +662,21 @@ StyledTextCtrl = Class(Control) {
 	ShowPosition(pos as long) as void
 	//HitTest(pt as const_Point_r, pos as long_p) as TextCtrlHitTestResult
 	//HitTest(pt as const_Point_r, col as TextCoord_p, row as TextCoord_p) as TextCtrlHitTestResult
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StyledTextCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StyledTextCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.StyledTextCtrl, `en)}
+'''
 
 @event {
 	EVT_STC_CHANGE					>> StyledTextEvent

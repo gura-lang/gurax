@@ -5,7 +5,21 @@ SpinEvent = Class(NotifyEvent) {
 	//__init__(commandType as EventType = wxEVT_NULL, id as int = 0)
 	GetPosition() as int
 	SetPosition(pos as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SpinEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SpinEvent, `en)}
+
+${help.ComposeMethodHelp(wx.SpinEvent, `en)}
+'''
 
 @event {
 	EVT_SPIN		>> SpinEvent

@@ -9,4 +9,18 @@ FontProperty = Class(PGProperty) {
 	OnEvent(propgrid as PropertyGrid_p, primary as Window_p, event as Event_r) as bool
 	ChildChanged(thisValue as Variant_r, childIndex as int, childValue as Variant_r) as Variant
 	RefreshChildren() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FontProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FontProperty, `en)}
+
+${help.ComposeMethodHelp(wx.FontProperty, `en)}
+'''

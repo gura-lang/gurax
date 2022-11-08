@@ -3,4 +3,18 @@
 //==============================================================================
 AuiDefaultToolBarArt = Class(AuiToolBarArt) {
 	@include['wx/aui/auibar.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiDefaultToolBarArt, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiDefaultToolBarArt, `en)}
+
+${help.ComposeMethodHelp(wx.AuiDefaultToolBarArt, `en)}
+'''

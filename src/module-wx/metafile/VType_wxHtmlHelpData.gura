@@ -3,4 +3,18 @@
 //==============================================================================
 HtmlHelpData = Class():loosePointer {
 	@include['wx/html/helpdata.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlHelpData, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlHelpData, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpData, `en)}
+'''

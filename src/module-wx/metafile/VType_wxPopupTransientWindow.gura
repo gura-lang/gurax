@@ -3,4 +3,18 @@
 //==============================================================================
 PopupTransientWindow = Class(PopupWindow) {
 	@include['wx/popupwin.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PopupTransientWindow, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PopupTransientWindow, `en)}
+
+${help.ComposeMethodHelp(wx.PopupTransientWindow, `en)}
+'''

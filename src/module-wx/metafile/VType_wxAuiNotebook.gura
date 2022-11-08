@@ -5,7 +5,21 @@ AuiNotebook = Class(BookCtrlBase) {
 	@include['wx/aui/auibook.h']
 	__init__(parent as Window_p, id as WindowID = wxID_ANY, pos as Point = wxDefaultPosition, size as Size = wxDefaultSize,
 		style as long = wxAUI_NB_DEFAULT_STYLE)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AuiNotebook, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AuiNotebook, `en)}
+
+${help.ComposeMethodHelp(wx.AuiNotebook, `en)}
+'''
 
 @const { // Styles
 	AUI_NB_DEFAULT_STYLE

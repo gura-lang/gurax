@@ -6,7 +6,21 @@ DropFilesEvent = Class(Event) {
 	//GetFiles() as String_p
 	GetNumberOfFiles() as int
 	GetPosition() as Point
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.DropFilesEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.DropFilesEvent, `en)}
+
+${help.ComposeMethodHelp(wx.DropFilesEvent, `en)}
+'''
 
 @event {
 	EVT_DROP_FILES >> DropFilesEvent

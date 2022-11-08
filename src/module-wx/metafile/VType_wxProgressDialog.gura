@@ -4,4 +4,18 @@
 ProgressDialog = Class(GenericProgressDialog) {
 	@include['wx/progdlg.h']
 	__init__(title as const_String_r, message as const_String_r, maximum as int = 100, parent as Window_p = NULL, style as int = wxPD_APP_MODAL | wxPD_AUTO_HIDE)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ProgressDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ProgressDialog, `en)}
+
+${help.ComposeMethodHelp(wx.ProgressDialog, `en)}
+'''

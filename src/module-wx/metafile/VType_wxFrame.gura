@@ -29,7 +29,21 @@ Frame = Class(TopLevelWindow) {
 	SetToolBar(toolBar as ToolBar_p) as void
 	PushStatusText(text as const_String_r, number as int = 0) as void
 	PopStatusText(number as int = 0) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Frame, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Frame, `en)}
+
+${help.ComposeMethodHelp(wx.Frame, `en)}
+'''
 
 @const { // Styles
 	DEFAULT_FRAME_STYLE

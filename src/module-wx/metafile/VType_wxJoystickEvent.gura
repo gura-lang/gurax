@@ -15,7 +15,21 @@ JoystickEvent = Class(Event) {
 	IsButton() as bool
 	IsMove() as bool
 	IsZMove() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.JoystickEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.JoystickEvent, `en)}
+
+${help.ComposeMethodHelp(wx.JoystickEvent, `en)}
+'''
 
 @event {
 	EVT_JOY_BUTTON_DOWN	>> JoystickEvent

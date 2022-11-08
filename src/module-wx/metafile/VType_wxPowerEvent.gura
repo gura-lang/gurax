@@ -6,7 +6,21 @@ PowerEvent = Class(Event) {
 	//__init__(evtType as EventType)
 	Veto() as void
 	IsVetoed() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PowerEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PowerEvent, `en)}
+
+${help.ComposeMethodHelp(wx.PowerEvent, `en)}
+'''
 
 @event {
 	EVT_POWER_SUSPENDING		>> PowerEvent

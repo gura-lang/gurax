@@ -15,4 +15,18 @@ InfoBar = Class(Control) {
 	SetEffectDuration(duration as int) as void
 	GetEffectDuration() as int
 	SetFont(font as const_Font_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.InfoBar, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.InfoBar, `en)}
+
+${help.ComposeMethodHelp(wx.InfoBar, `en)}
+'''

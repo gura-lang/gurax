@@ -4,4 +4,18 @@
 InitDialogEvent = Class(Event) {
 	@include['wx/event.h']
 	//__init__(id as int = 0)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.InitDialogEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.InitDialogEvent, `en)}
+
+${help.ComposeMethodHelp(wx.InitDialogEvent, `en)}
+'''

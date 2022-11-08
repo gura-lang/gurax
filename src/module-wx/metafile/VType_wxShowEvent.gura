@@ -7,7 +7,21 @@ ShowEvent = Class(Event) {
 	SetShow(show as bool) as void
 	IsShown() as bool
 	//GetShow() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.ShowEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.ShowEvent, `en)}
+
+${help.ComposeMethodHelp(wx.ShowEvent, `en)}
+'''
 
 @event {
 	EVT_SHOW >> ShowEvent

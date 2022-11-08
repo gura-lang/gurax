@@ -38,4 +38,18 @@ AboutDialogInfo = Class {
 	HasDocWriters() as bool
 	HasArtists() as bool
 	HasTranslators() as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.AboutDialogInfo, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.AboutDialogInfo, `en)}
+
+${help.ComposeMethodHelp(wx.AboutDialogInfo, `en)}
+'''

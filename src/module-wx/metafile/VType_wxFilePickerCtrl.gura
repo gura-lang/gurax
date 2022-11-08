@@ -10,7 +10,21 @@ FilePickerCtrl = Class(PickerBase) {
 	SetFileName(filename as const_FileName_r) as void
 	SetInitialDirectory(dir as const_String_r) as void
 	SetPath(filename as const_String_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FilePickerCtrl, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FilePickerCtrl, `en)}
+
+${help.ComposeMethodHelp(wx.FilePickerCtrl, `en)}
+'''
 
 @const { // Styles
 	FLP_DEFAULT_STYLE

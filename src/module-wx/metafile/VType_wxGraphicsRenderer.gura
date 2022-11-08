@@ -27,4 +27,18 @@ GraphicsRenderer = Class():loosePointer {
 	CreateSubBitmap(bitmap as const_GraphicsBitmap_r, x as Double, y as Double, w as Double, h as Double) as GraphicsBitmap
 	GetDefaultRenderer():static as GraphicsRenderer_p
 	GetCairoRenderer():static as GraphicsRenderer_p
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GraphicsRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GraphicsRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GraphicsRenderer, `en)}
+'''

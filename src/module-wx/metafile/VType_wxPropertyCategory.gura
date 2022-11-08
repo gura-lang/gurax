@@ -3,4 +3,18 @@
 //==============================================================================
 PropertyCategory = Class(PGProperty) {
 	@include['wx/propgrid/property.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PropertyCategory, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PropertyCategory, `en)}
+
+${help.ComposeMethodHelp(wx.PropertyCategory, `en)}
+'''

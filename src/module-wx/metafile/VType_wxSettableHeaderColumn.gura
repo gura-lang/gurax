@@ -20,4 +20,18 @@ SettableHeaderColumn = Class(HeaderColumn) {
 	UnsetAsSortKey() as void
 	SetSortOrder(ascending as bool) as void
 	ToggleSortOrder() as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SettableHeaderColumn, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SettableHeaderColumn, `en)}
+
+${help.ComposeMethodHelp(wx.SettableHeaderColumn, `en)}
+'''

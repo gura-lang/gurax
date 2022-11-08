@@ -3,4 +3,18 @@
 //==============================================================================
 HTTP = Class(Protocol) {
 	@include['wx/protocol/http.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HTTP, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HTTP, `en)}
+
+${help.ComposeMethodHelp(wx.HTTP, `en)}
+'''

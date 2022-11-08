@@ -7,7 +7,21 @@ IdleEvent = Class(Event) {
 	RequestMore(needMore as bool = true) as void
 	GetMode():static as IdleMode
 	SetMode(mode as IdleMode):static as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.IdleEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.IdleEvent, `en)}
+
+${help.ComposeMethodHelp(wx.IdleEvent, `en)}
+'''
 
 @event {
 	EVT_IDLE >> IdleEvent

@@ -3,4 +3,18 @@
 //==============================================================================
 HtmlWordCell = Class(HtmlCell) {
 	@include['wx/html/htmlcell.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlWordCell, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlWordCell, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlWordCell, `en)}
+'''

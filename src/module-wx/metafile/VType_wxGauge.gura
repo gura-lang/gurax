@@ -14,7 +14,21 @@ Gauge = Class(Control) {
 	SetRange(range as int) as void
 	SetShadowWidth(width as int) as void
 	SetValue(pos as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Gauge, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Gauge, `en)}
+
+${help.ComposeMethodHelp(wx.Gauge, `en)}
+'''
 
 @const { // Styles
 	GA_HORIZONTAL

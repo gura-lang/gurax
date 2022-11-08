@@ -21,4 +21,18 @@ HelpControllerBase = Class():loosePointer {
 	SetViewer(viewer as const_String_r, flags as long = wxHELP_NETSCAPE) as void
 	Initialize(file as const_String_r) as bool
 	//Initialize(file as const_String_r, server as int) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HelpControllerBase, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HelpControllerBase, `en)}
+
+${help.ComposeMethodHelp(wx.HelpControllerBase, `en)}
+'''

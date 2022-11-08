@@ -21,7 +21,21 @@ Point = Class {
 		int y = Value_Number::GetNumber<int>(value_gurax);
 		valueThis_gurax.GetEntity().y = y;
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Point, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Point, `en)}
+
+${help.ComposeMethodHelp(wx.Point, `en)}
+'''
 
 (const_Point_r == const_Point_r) as bool
 (const_Point_r != const_Point_r) as bool

@@ -9,7 +9,21 @@ SetCursorEvent = Class(Event) {
 	GetY() as Coord
 	HasCursor() as bool
 	SetCursor(cursor as const_Cursor_r) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SetCursorEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SetCursorEvent, `en)}
+
+${help.ComposeMethodHelp(wx.SetCursorEvent, `en)}
+'''
 
 @event {
 	EVT_SET_CURSOR >> SetCursorEvent

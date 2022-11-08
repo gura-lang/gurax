@@ -3,4 +3,18 @@
 //==============================================================================
 HtmlWordWithTabsCell = Class(HtmlWordCell) {
 	@include['wx/html/htmlcell.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlWordWithTabsCell, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlWordWithTabsCell, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlWordWithTabsCell, `en)}
+'''

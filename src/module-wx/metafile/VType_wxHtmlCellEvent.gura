@@ -8,4 +8,18 @@ HtmlCellEvent = Class(CommandEvent) {
 	GetPoint() as Point
 	//GetMouseEvent() as MouseEvent
 	SetLinkClicked(linkclicked as bool) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlCellEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlCellEvent, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlCellEvent, `en)}
+'''

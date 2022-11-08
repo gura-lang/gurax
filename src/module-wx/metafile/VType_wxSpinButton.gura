@@ -10,7 +10,21 @@ SpinButton = Class(Control) {
 	GetValue() as int
 	SetRange(min as int, max as int) as void
 	SetValue(value as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.SpinButton, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.SpinButton, `en)}
+
+${help.ComposeMethodHelp(wx.SpinButton, `en)}
+'''
 
 @event {
 	EVT_SPIN >> SpinEvent

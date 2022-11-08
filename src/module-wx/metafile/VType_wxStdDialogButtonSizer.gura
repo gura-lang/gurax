@@ -10,4 +10,18 @@ StdDialogButtonSizer = Class(BoxSizer) {
 	SetNegativeButton(button as Button_p) as void
 	RecalcSizes() as void
 	CalcMin() as Size
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.StdDialogButtonSizer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.StdDialogButtonSizer, `en)}
+
+${help.ComposeMethodHelp(wx.StdDialogButtonSizer, `en)}
+'''

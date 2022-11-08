@@ -2,4 +2,18 @@
 // VType_wxMenuItem.gura
 //==============================================================================
 MenuItem = Class(Object) {
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.MenuItem, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.MenuItem, `en)}
+
+${help.ComposeMethodHelp(wx.MenuItem, `en)}
+'''

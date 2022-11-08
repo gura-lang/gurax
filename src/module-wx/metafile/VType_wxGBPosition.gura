@@ -8,7 +8,21 @@ GBPosition = Class {
 	GetRow() as int
 	SetCol(col as int) as void
 	SetRow(row as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GBPosition, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GBPosition, `en)}
+
+${help.ComposeMethodHelp(wx.GBPosition, `en)}
+'''
 
 (const_GBPosition_r == const_GBPosition_r) as bool
 (const_GBPosition_r != const_GBPosition_r) as bool

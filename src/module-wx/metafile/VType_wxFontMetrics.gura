@@ -58,4 +58,18 @@ FontMetrics = Class {
 		int averageWidth = Value_Number::GetNumber<int>(value_gurax);
 		valueThis_gurax.GetEntity().averageWidth = averageWidth;
 		'''
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FontMetrics, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FontMetrics, `en)}
+
+${help.ComposeMethodHelp(wx.FontMetrics, `en)}
+'''

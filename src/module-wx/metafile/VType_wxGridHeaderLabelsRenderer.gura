@@ -3,4 +3,18 @@
 //==============================================================================
 GridHeaderLabelsRenderer = Class():loosePointer {
 	@include['wx/grid.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridHeaderLabelsRenderer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridHeaderLabelsRenderer, `en)}
+
+${help.ComposeMethodHelp(wx.GridHeaderLabelsRenderer, `en)}
+'''

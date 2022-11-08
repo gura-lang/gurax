@@ -3,4 +3,18 @@
 //==============================================================================
 UIntProperty = Class(PGProperty) {
 	@include['wx/propgrid/props.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.UIntProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.UIntProperty, `en)}
+
+${help.ComposeMethodHelp(wx.UIntProperty, `en)}
+'''

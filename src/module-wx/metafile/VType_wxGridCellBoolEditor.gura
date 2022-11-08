@@ -6,4 +6,18 @@ GridCellBoolEditor = Class(GridCellEditor) {
 	__init__()
 	IsTrueValue(value as const_String_r):static as bool
 	UseStringValues(valueTrue as const_String_r = "1", valueFalse as const_String_r = wxEmptyString):static as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridCellBoolEditor, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridCellBoolEditor, `en)}
+
+${help.ComposeMethodHelp(wx.GridCellBoolEditor, `en)}
+'''

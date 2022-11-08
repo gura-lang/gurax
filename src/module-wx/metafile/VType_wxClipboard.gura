@@ -15,4 +15,18 @@ Clipboard = Class(Object) {
 	Open() as bool
 	SetData(data as DataObject_p) as bool
 	UsePrimarySelection(primary as bool = false) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.Clipboard, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.Clipboard, `en)}
+
+${help.ComposeMethodHelp(wx.Clipboard, `en)}
+'''

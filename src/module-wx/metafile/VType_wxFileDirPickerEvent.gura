@@ -3,4 +3,18 @@
 //==============================================================================
 FileDirPickerEvent = Class(CommandEvent) {
 	@include['wx/filepicker.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.FileDirPickerEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.FileDirPickerEvent, `en)}
+
+${help.ComposeMethodHelp(wx.FileDirPickerEvent, `en)}
+'''

@@ -12,4 +12,18 @@ PGArrayEditorDialog = Class(Dialog) {
 	//GetTextCtrlValidator() as Validator_p
 	IsModified() as bool
 	GetSelection() as int
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.PGArrayEditorDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.PGArrayEditorDialog, `en)}
+
+${help.ComposeMethodHelp(wx.PGArrayEditorDialog, `en)}
+'''

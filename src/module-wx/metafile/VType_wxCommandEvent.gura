@@ -11,7 +11,21 @@ CommandEvent = Class(Event) {
 	SetExtraLong(extraLong as long) as void
 	SetInt(intCommand as int) as void
 	SetString(string as String) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.CommandEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.CommandEvent, `en)}
+
+${help.ComposeMethodHelp(wx.CommandEvent, `en)}
+'''
 
 @event {
 	EVT_BUTTON						>> CommandEvent

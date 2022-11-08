@@ -31,4 +31,18 @@ GridBagSizer = Class(FlexGridSizer) {
 	SetItemSpan(window as Window_p, span as const_GBSpan_r) as bool
 	//SetItemSpan(sizer as Sizer_p, span as const_GBSpan_r) as bool
 	//SetItemSpan(index as size_t, span as const_GBSpan_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GridBagSizer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GridBagSizer, `en)}
+
+${help.ComposeMethodHelp(wx.GridBagSizer, `en)}
+'''

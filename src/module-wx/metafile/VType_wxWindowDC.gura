@@ -4,4 +4,18 @@
 WindowDC = Class(DC) {
 	@include['wx/dcclient.h']
 	__init__(window as Window_p)
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.WindowDC, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.WindowDC, `en)}
+
+${help.ComposeMethodHelp(wx.WindowDC, `en)}
+'''

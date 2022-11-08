@@ -8,4 +8,18 @@ BoolProperty = Class(PGProperty) {
 	StringToValue(variant as Variant_r, text as const_String_r, argFlags as int = 0) as bool
 	IntToValue(variant as Variant_r, number as int, argFlags as int = 0) as bool
 	DoSetAttribute(name as const_String_r, value as Variant_r) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BoolProperty, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BoolProperty, `en)}
+
+${help.ComposeMethodHelp(wx.BoolProperty, `en)}
+'''

@@ -7,4 +7,18 @@ BookCtrlEvent = Class(NotifyEvent) {
 	GetSelection() as int
 	SetOldSelection(page as int) as void
 	SetSelection(page as int) as void
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.BookCtrlEvent, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.BookCtrlEvent, `en)}
+
+${help.ComposeMethodHelp(wx.BookCtrlEvent, `en)}
+'''

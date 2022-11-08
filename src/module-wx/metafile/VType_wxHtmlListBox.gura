@@ -11,7 +11,21 @@ HtmlListBox = Class(VListBox) {
 	//GetSelectedTextColour(colFg as const_Colour_r):virtual as Colour
 	//OnGetItemMarkup(n as size_t):virtual as String
 	//OnGetItem(n as size_t):virtual as String
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.HtmlListBox, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.HtmlListBox, `en)}
+
+${help.ComposeMethodHelp(wx.HtmlListBox, `en)}
+'''
 
 @event {
 	EVT_HTML_CELL_CLICKED	>> HtmlCellEvent

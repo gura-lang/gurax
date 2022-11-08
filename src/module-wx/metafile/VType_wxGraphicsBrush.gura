@@ -3,4 +3,18 @@
 //==============================================================================
 GraphicsBrush = Class(GraphicsObject) {
 	@include['wx/graphics.h']
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GraphicsBrush, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GraphicsBrush, `en)}
+
+${help.ComposeMethodHelp(wx.GraphicsBrush, `en)}
+'''

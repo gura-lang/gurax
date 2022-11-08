@@ -13,7 +13,21 @@ GenericProgressDialog = Class(Dialog) {
 	WasCancelled() as bool
 	WasSkipped() as bool
 	//Update(value as int, newmsg as const_String_r = wxEmptyString, skip as bool_p = NULL) as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.GenericProgressDialog, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.GenericProgressDialog, `en)}
+
+${help.ComposeMethodHelp(wx.GenericProgressDialog, `en)}
+'''
 
 @const {
 	PD_APP_MODAL

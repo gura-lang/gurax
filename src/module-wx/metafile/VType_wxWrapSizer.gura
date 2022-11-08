@@ -8,4 +8,18 @@ WrapSizer = Class(BoxSizer) {
 	RecalcSizes() as void
 	CalcMin() as Size
 	//IsSpaceItem(item as SizerItem_p):virtual as bool
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.WrapSizer, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.WrapSizer, `en)}
+
+${help.ComposeMethodHelp(wx.WrapSizer, `en)}
+'''

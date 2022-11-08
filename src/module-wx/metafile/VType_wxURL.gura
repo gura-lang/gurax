@@ -10,4 +10,18 @@ URL = Class(URI) {
 	IsOk() as bool
 	SetProxy(url_proxy as const_String_r) as void
 	SetURL(url as const_String_r) as URLError
-}
+} %% R'''
+# Overview
+
+# Predefined Variable
+
+${help.ComposePropertyHelp(wx.URL, `en)}
+
+# Operator
+
+# Cast Operation
+
+${help.ComposeConstructorHelp(wx.URL, `en)}
+
+${help.ComposeMethodHelp(wx.URL, `en)}
+'''
