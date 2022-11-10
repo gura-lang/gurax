@@ -6,6 +6,17 @@
 Gurax_BeginModule(jpeg)
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Function
+
+# Class
+)**";
+
+//------------------------------------------------------------------------------
 // Implementation of function
 //------------------------------------------------------------------------------
 // jpeg.Read(stream:Stream):[rgb,rgba] {block?}
@@ -69,6 +80,8 @@ Gurax_ModulePrepare()
 {
 	// Initialization of static data
 	TagInfo::Initialize();
+	// Add help
+	AddHelp("en", g_docHelp_en);
 	// Assignment of VType
 	Assign(VTYPE_Content);
 	Assign(VTYPE_Exif);

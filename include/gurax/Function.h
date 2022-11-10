@@ -256,7 +256,7 @@ public:
 	HelpHolder& GetHelpHolder() { return *_pHelpHolder; }
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
-	void AddHelp(const char* langCode, const char* doc) { _pHelpHolder->AddHelp(Symbol::Add(langCode), doc); }
+	void AddHelp(const char* langCode, const char* doc) { _pHelpHolder->AddHelp(langCode, doc); }
 	void LinkHelp(VType& vtype, const Symbol* pSymbol);
 	void Exec(Processor& processor, Argument& argument) const;
 	Value* Eval(Processor& processor, Argument& argument) const;

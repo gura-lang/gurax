@@ -51,7 +51,9 @@ protected:
 public:
 	void AddHelp(Help* pHelp);
 	void AddHelp(const Symbol* pLangCode, StringReferable* pDoc);
+	void AddHelp(const char* langCode, StringReferable* pDoc) { AddHelp(Symbol::Add(langCode), pDoc); }
 	void AddHelp(const Symbol* pLangCode, const char* doc);
+	void AddHelp(const char* langCode, const char* doc) { AddHelp(Symbol::Add(langCode), doc); }
 	void AddHelpTmpl(const Symbol* pLangCode, const char* doc);
 	const Help* GetDefault() const { return _helpOwner.empty()? nullptr : _helpOwner.front(); }
 	const Help* LookupLoose(const Symbol* pLangCode) const;
