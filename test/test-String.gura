@@ -444,6 +444,8 @@ TestCase('String#ToBinary()') {
 TestCase('String#ToReader()') {
 	str = 'abcdefghijklmnopqrstuvwxyz'
 	str.ToReader().Read().Dump()
+	str = 'あいうえおかきくけこ'
+	str.ToReader().Read().Dump()
 }
 
 TestCase('String#ToSymbol()') {

@@ -113,7 +113,7 @@ size_t Stream_StringReader::DoGetBytes()
 int Stream_StringReader::DoGetChar()
 {
 	const String& strTgt = _pStr->GetString();
-	return (_offset < strTgt.size())? strTgt[_offset++] : -1;
+	return (_offset < strTgt.size())? static_cast<UInt8>(strTgt[_offset++]) : -1;
 }
 
 size_t Stream_StringReader::DoRead(void* buff, size_t len)

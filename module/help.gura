@@ -10,7 +10,7 @@ ComposeFunctionHelp(func, lang as Symbol = `en) = {
 
 ComposePropertyHelp(vtype as VType, lang as Symbol = `en) = {
 	str = ''
-	str += '# Property\n\n'
+	str += cond(lang == `ja, '# プロパティ\n\n', '# Property\n\n')
 	vtype.__propSlots__().Each {|propSlot|
 		doc = propSlot.__help__(lang).doc
 		str += Format('__%s%s%s__ as `%s` (%s) ... %s', vtype.__fullName__,
@@ -27,7 +27,7 @@ ComposePropertyHelp(vtype as VType, lang as Symbol = `en) = {
 ComposeConstructorHelp(vtype as VType, lang as Symbol = `en) = {
 	if (vtype.__init__) {
 		str = ''
-		str += '# Constructor\n\n'
+		str += cond(lang == `ja, '# コンストラクタ\n\n', '# Constructor\n\n')
 		str += ComposeFunctionHelp(vtype.__init__, lang)
 		str += '\n'
 		str
@@ -40,7 +40,7 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 	methodsHybrid = vtype.__methods__():hybrid:list
 	methodsInstance = vtype.__methods__():instance:list
 	if (!methodsClass.IsEmpty()) {
-		str += '# Class Method\n\n'
+		str += cond(lang == `ja, '# クラスメソッド\n\n', '# Class Method\n\n')
 		methodsClass.Each {|method|
 			str += ComposeFunctionHelp(method, lang)
 			str += '\n'
@@ -51,7 +51,7 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 		}
 	}
 	if (!methodsInstance.IsEmpty()) {
-		str += '# Instance Method\n\n'
+		str += cond(lang == `ja, '# インスタンスメソッド\n\n', '# Instance Method\n\n')
 		methodsInstance.Each {|method|
 			str += ComposeFunctionHelp(method, lang)
 			str += '\n'
@@ -62,7 +62,8 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 
 Render@html(vtype as VType, lang as Symbol = `en, out?:w as Stream, headerOffset = 0) = {
 	out = out || sys.cout
-	out.Printf('<h%d>%s Class</h%d>\n\n', headerOffset + 1, vtype.__fullName__, headerOffset + 1)
+	out.Printf(cond(lang == `ja, '<h%d>%s クラス</h%d>\n\n', '<h%d>%s Class</h%d>\n\n'),
+		headerOffset + 1, vtype.__fullName__, headerOffset + 1)
 	markdown.Document(vtype.__help__(lang):class.tmplDoc.Eval().ToReader(), headerOffset + 1).Render@html(out)
 }
 
