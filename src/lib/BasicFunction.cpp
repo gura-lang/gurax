@@ -1,4 +1,4 @@
-//==============================================================================
+﻿//==============================================================================
 // BasicFunction.cpp
 //==============================================================================
 #include "stdafx.h"
@@ -8,14 +8,17 @@ namespace Gurax {
 //------------------------------------------------------------------------------
 // BasicFunction
 //------------------------------------------------------------------------------
-// Chr(code:number):map
+// Chr(code as Number):map
 Gurax_DeclareFunction(Chr)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts a UTF-32 code into a string.\n");
+	AddHelp("en", u8R"**(
+Coverts a UTF-32 character code `code` into a string and returns it.
+)**");
+	AddHelp("ja", u8R"**(
+UTF-32 キャラクタコード `code` を文字列に変換し、戻り値として返します。
+)**");
 }
 
 Gurax_ImplementFunction(Chr)
@@ -30,46 +33,39 @@ Gurax_ImplementFunction(Chr)
 	return new Value_String(str);
 }
 
-// Dim(n+:Number) {block?}
+// Dim(n+ as Number) {block?}
 Gurax_DeclareFunction(Dim)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns a list that contains `n` values of `nil`.\n"
-		"If you pass multiple numbers for `n`, it would create a nested list.\n"
-		"\n"
-		"Below is an example to create a one-dimentional list:\n"
-		"\n"
-		"    x = Dim(3)\n"
-		"    // x is [nil, nil, nil]\n"
-		"\n"
-		"Below is an example to create a two-dimentional list:\n"
-		"\n"
-		"    x = Dim(3, 2)\n"
-		"    // x is [[nil, nil], [nil, nil], [nil, nil]]\n"
-		"\n"
-		"The optional `block` should return values for each element\n"
-		"and takes block parameters: `|i0:number, i1:number, ..|`\n"
-		"where the arguments `i0` and `i1` take indices of the loops.\n"
-		"\n"
-		"Below is an example to create a one-dimentional list containing a string:\n"
-		"\n"
-		"    x = Dim(3) {'Hi'}\n"
-		"    // x is ['Hi', 'Hi', 'Hi']\n"
-		"\n"
-		"Below is an example to create a two-dimentional list that consists of strings\n"
-		"showing indices.\n"
-		"\n"
-		"    x = Dim(3, 2) {|i, j| format('%d-%d', i, j) }\n"
-		"    // x is [['0-0', '0-1'], ['1-0', '1-1'], ['2-0', '2-1']]\n");
+	AddHelp("en", u8R"**(
+Returns a list that contains `n` pieces of elements. The list is filled with `nil` values.
+Below is an example of creating a list with three elements:
+
+    x = Dim(3) // x is [nil, nil, nil]
+
+If you pass multiple numbers for the argument `n`, it would create a nested list.
+Below is an example of creating a two-dimentional list:
+
+    x = Dim(3, 2) // x is [[nil, nil], [nil, nil], [nil, nil]]
+
+The optional `block` specifies a procedure that is supposed to return element values.
+It takes block parameters `|i0 as number, i1 as number, ..|` where `i0` and `i1` represent indices while looping.
+
+Below is an example of creating a one-dimentional list containing a string:
+
+    x = Dim(3) {'Hi'} // x is ['Hi', 'Hi', 'Hi']
+
+Below is an example of creating a two-dimentional list containing strings.
+
+    x = Dim(3, 2) {|i, j| format('%d-%d', i, j)}
+                        // x is [['0-0', '0-1'], ['1-0', '1-1'], ['2-0', '2-1']]
+)**");
 }
 
 ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int>::iterator pCnt,
-				   NumList<Int>& idxList, NumList<Int>::iterator pIdx,
-				   const Expr_Block* pExprOfBlock, Argument* pArgSub)
+   NumList<Int>& idxList, NumList<Int>::iterator pIdx, const Expr_Block* pExprOfBlock, Argument* pArgSub)
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	if (pCnt + 1 != cntList.end()) {
@@ -147,7 +143,7 @@ Gurax_ImplementFunction(dir)
 	return new Value_List(VTYPE_Symbol, pValues.release());
 }
 
-// Format(format:String, values*):String:map
+// Format(format as String, values*):map
 Gurax_DeclareFunction(Format)
 {
 	Declare(VTYPE_String, Flag::Map);
@@ -265,7 +261,7 @@ Gurax_ImplementFunction(Int)
 	return Value::nil();
 }
 
-// Ord(str:String):map
+// Ord(str as String):map
 Gurax_DeclareFunction(Ord)
 {
 	Declare(VTYPE_Number, Flag::Map);
@@ -307,7 +303,7 @@ Gurax_ImplementFunction(Print)
 	return Value::nil();
 }
 
-// Printf(format:String, values*):void:map
+// Printf(format as String, values*):void:map
 Gurax_DeclareFunction(Printf)
 {
 	Declare(VTYPE_Nil, Flag::Map);
@@ -354,7 +350,7 @@ Gurax_ImplementFunction(Println)
 	return Value::nil();
 }
 
-// Range(num:Number, numEnd?:Number, step?:Number):map {block?}
+// Range(num as Number, numEnd? as Number, step? as Number):map {block?}
 Gurax_DeclareFunction(Range)
 {
 	Declare(VTYPE_Any, Flag::Map);
@@ -366,11 +362,11 @@ Gurax_DeclareFunction(Range)
 		Gurax_Symbol(en),
 		"Creates an iterator that generates a sequence of number that increases or decreases by a specified step.\n"
 		"\n"
-		"- `Range(num:Number)` .. finite sequence of n where `0 <= n < num` or `num < n <= 0`\n"
-		"- `Range(num:Number, numEnd:Number)` .. finite sequence of n where `num <= n < numEnd` or `numEnd < n <= num`\n"
-		"- `Range(num:Number, numEnd:Number, step:Number)` .. finite sequence of n\n"
+		"- `Range(num as Number)` .. finite sequence of n where `0 <= n < num` or `num < n <= 0`\n"
+		"- `Range(num as Number, numEnd as Number)` .. finite sequence of n where `num <= n < numEnd` or `numEnd < n <= num`\n"
+		"- `Range(num as Number, numEnd as Number, step as Number)` .. finite sequence of n\n"
 		"   where `num <= n < numEnd` or `numEnd < n <= num` with an increment of `step`\n"
-		"- `Range(num:Number, nil, step:Number)` .. infinite sequence that starts at `num` with an increment of `step`\n");
+		"- `Range(num as Number, nil, step as Number)` .. infinite sequence that starts at `num` with an increment of `step`\n");
 }
 
 Gurax_ImplementFunction(Range)
@@ -405,7 +401,7 @@ Gurax_ImplementFunction(Range)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// ReadLines(stream:Stream, nLines?:Number):[chop] {block?}
+// ReadLines(stream:Stream, nLines? as Number):[chop] {block?}
 Gurax_DeclareFunction(ReadLines)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -431,7 +427,7 @@ Gurax_ImplementFunction(ReadLines)
 }
 
 #if 0
-// hex(num:number, digits?:number):map:[upper]
+// hex(num as number, digits? as number):map:[upper]
 Gurax_DeclareFunction(hex)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
@@ -524,7 +520,7 @@ Gurax_ImplementFunction(tostring)
 	return Value(arg.GetValue(0).ToString(false));
 }
 
-// tosymbol(str:string):map
+// tosymbol(str as String):map
 Gurax_DeclareFunction(tosymbol)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);

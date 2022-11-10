@@ -1396,28 +1396,28 @@ GenerateVType(classInfoTbl[] as ClassInfo) = {
 		evtHandlerOrDerivFlag = classInfo.IsEvtHandlerOrDeriv()
 		refCounterOrDerivFlag = classInfo.IsRefCounterOrDeriv()
 		Println(className)
-		tmplHeader.Render(fileNameHeader)
-		tmplSource.Render(fileNameSource)
+		tmplHeader.Render(Stream(fileNameHeader, 'w').Write(Codec.bom@utf8))
+		tmplSource.Render(Stream(fileNameSource, 'w').Write(Codec.bom@utf8))
 	}
-	tmplVTypesH.Render('VTypes.h')
-	tmplVTypesCPP.Render('VTypes.cpp')
-	tmplVTypesCMake.Render('VTypes.cmake')
+	tmplVTypesH.Render(Stream('VTypes.h', 'w').Write(Codec.bom@utf8))
+	tmplVTypesCPP.Render(Stream('VTypes.cpp', 'w').Write(Codec.bom@utf8))
+	tmplVTypesCMake.Render(Stream('VTypes.cmake', 'w').Write(Codec.bom@utf8))
 }
 
 GenerateConst(constNameTbl[] as String) = {
-	tmplConsts.Render('Consts.cpp')
+	tmplConsts.Render(Stream('Consts.cpp', 'w').Write(Codec.bom@utf8))
 }
 
 GenerateEvent(eventInfoTbl[] as EventInfo, colAlign as Number) = {
-	tmplEvents.Render('Events.cpp')
+	tmplEvents.Render(Stream('Events.cpp', 'w').Write(Codec.bom@utf8))
 }
 
 GenerateFunction(funcInfoTbl[] as cbridge.FuncInfo) = {
-	tmplFunctions.Render('Functions.cpp')
+	tmplFunctions.Render(Stream('Functions.cpp', 'w').Write(Codec.bom@utf8))
 }
 
 GenerateOperator(funcInfoTbl[] as cbridge.FuncInfo) = {
-	tmplOperators.Render('Operators.cpp')
+	tmplOperators.Render(Stream('Operators.cpp', 'w').Write(Codec.bom@utf8))
 }
 
 GenerateVType(classInfoTbl)

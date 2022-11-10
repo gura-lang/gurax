@@ -27,6 +27,36 @@ ${help.ComposeMethodHelp(Module, `en)}
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
+// Module#__help__(lang? as Symbol):map:[nil] {block?}
+Gurax_DeclareMethod(Module, __help__)
+{
+	Declare(VTYPE_Help, Flag::Map);
+	DeclareArg("lang", VTYPE_Symbol, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(nil));
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Gurax_ImplementMethod(Module, __help__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
+	bool nilFlag = argument.IsSet(Gurax_Symbol(nil));
+	// Function body
+	RefPtr<Value> pValueRtn(Value::nil());
+	const Help* pHelp = valueThis.GetModule().GetHelpHolder().LookupLoose(pLangCode);
+	if (pHelp) {
+		pValueRtn.reset(new Value_Help(pHelp->Reference()));
+	} else if (!nilFlag) {
+		Error::Issue(ErrorType::SymbolError, "no help defined for language symbol %s", pLangCode->GetName());
+		return Value::nil();
+	}
+	return argument.ReturnValue(processor, pValueRtn.release());
+}
 
 //------------------------------------------------------------------------------
 // VType_Module
@@ -39,6 +69,8 @@ void VType_Module::DoPrepare(Frame& frameOuter)
 	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
+	// Assignment of method
+	Assign(Gurax_CreateMethod(Module, __help__));
 }
 
 //------------------------------------------------------------------------------
@@ -53,7 +85,7 @@ String Value_Module::ToString(const StringStyle& ss) const
 
 void Value_Module::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
-	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
+	const Help* pHelp = GetHelpHolder()->LookupLoose(pLangCode);
 	if (pHelp) Basement::Inst.Present(processor, pHelp->GetDocReferable().Reference());
 }
 

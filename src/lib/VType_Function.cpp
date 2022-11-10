@@ -112,7 +112,7 @@ Gurax_ImplementMethod(Function, __help__)
 	bool nilFlag = argument.IsSet(Gurax_Symbol(nil));
 	// Function body
 	RefPtr<Value> pValueRtn(Value::nil());
-	const Help* pHelp = valueThis.GetFunction().GetHelpHolder().Lookup(pLangCode);
+	const Help* pHelp = valueThis.GetFunction().GetHelpHolder().LookupLoose(pLangCode);
 	if (pHelp) {
 		pValueRtn.reset(new Value_Help(pHelp->Reference()));
 	} else if (!nilFlag) {

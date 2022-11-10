@@ -102,24 +102,11 @@ void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
 	AddHelp(pLangCode, new StringReferable(doc));
 }
 
-#if 0
-void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
+const Help* HelpHolder::LookupLoose(const Symbol* pLangCode) const
 {
-	RefPtr<Template> pTmpl(new Template());
-	bool autoIndentFlag = true;
-	bool appendLastEOLFlag = true;
-	if (pTmpl->ParseString(doc, autoIndentFlag, appendLastEOLFlag)) {
-		AddHelp(new Help(pLangCode, pTmpl.release()));
-		return;
-	}
-	String str;
-	for (Error* pError : Error::GetErrorOwner()) {
-		str += pError->MakeMessage();
-		str += "\n";
-	}
-	Error::Clear();
-	AddHelp(pLangCode, str.c_str());
+	const Help* pHelp = _helpOwner.Lookup(pLangCode);
+	if (pHelp) return pHelp;
+	return GetDefault();
 }
-#endif
 
 }

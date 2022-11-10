@@ -54,7 +54,7 @@ Gurax_ImplementConstructor(Help)
 	}
 	const Help* pHelp = nullptr;
 	if (pLangCode) {
-		pHelp = pHelpHolder->Lookup(pLangCode);
+		pHelp = pHelpHolder->LookupLoose(pLangCode);
 		if (!pHelp) {
 			Error::Issue(ErrorType::ValueError, "no help in language `%s", pLangCode->GetName());
 			return Value::nil();

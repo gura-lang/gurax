@@ -258,7 +258,7 @@ void Function::DoExec(Processor& processor, Argument& argument) const
 void Function::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
 	String str = ToString();
-	const Help* pHelp = GetHelpHolder().Lookup(pLangCode);
+	const Help* pHelp = GetHelpHolder().LookupLoose(pLangCode);
 	if (pHelp) {
 		str += "\n---\n";
 		str += pHelp->GetDoc();

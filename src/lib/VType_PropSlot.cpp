@@ -46,7 +46,7 @@ Gurax_ImplementMethod(PropSlot, __help__)
 	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
 	// Function body
 	RefPtr<Value> pValueRtn(Value::nil());
-	const Help* pHelp = valueThis.GetPropSlot().GetHelpHolder().Lookup(pLangCode);
+	const Help* pHelp = valueThis.GetPropSlot().GetHelpHolder().LookupLoose(pLangCode);
 	if (pHelp) pValueRtn.reset(new Value_Help(pHelp->Reference()));
 	return argument.ReturnValue(processor, pValueRtn.release());
 }
@@ -188,7 +188,7 @@ String Value_PropSlot::ToString(const StringStyle& ss) const
 
 void Value_PropSlot::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
-	const Help* pHelp = GetHelpHolder()->Lookup(pLangCode);
+	const Help* pHelp = GetHelpHolder()->LookupLoose(pLangCode);
 	if (pHelp) Basement::Inst.Present(processor, pHelp->GetDocReferable().Reference());
 }
 

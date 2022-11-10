@@ -72,7 +72,8 @@ Gurax_ImplementHybridMethod(VType, __help__)
 	// Function body
 	const VType& vtypeThis = valueThis.GetVTypeThis();
 	const Help* pHelp = argument.IsSet(Gurax_Symbol(class_))?
-		vtypeThis.GetHelpHolder().Lookup(pLangCode) : vtypeThis.GetConstructor().GetHelpHolder().Lookup(pLangCode);
+				vtypeThis.GetHelpHolder().LookupLoose(pLangCode) :
+				vtypeThis.GetConstructor().GetHelpHolder().LookupLoose(pLangCode);
 	RefPtr<Value> pValueRtn(Value::nil());
 	if (pHelp) pValueRtn.reset(new Value_Help(pHelp->Reference()));
 	return argument.ReturnValue(processor, pValueRtn.release());

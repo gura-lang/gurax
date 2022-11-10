@@ -44,7 +44,7 @@ void VType::GatherMemberSymbolIf(SymbolList& symbolList, const Frame::GatherCrit
 
 void VType::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
-	const Help* pHelp = GetHelpHolder().Lookup(pLangCode);
+	const Help* pHelp = GetHelpHolder().LookupLoose(pLangCode);
 	if (pHelp) {
 		Basement::Inst.Present(processor, pHelp->GetDocReferable().Reference());
 	}
