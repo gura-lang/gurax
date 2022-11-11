@@ -6,6 +6,42 @@
 namespace Gurax {
 
 //------------------------------------------------------------------------------
+// Implementation of method
+//------------------------------------------------------------------------------
+// __help__(lang? as Symbol) {block?}
+class Function_help : public Function {
+private:
+	RefPtr<Module::WeakPtr> _pwModule;
+public:
+	Function_help(Module& module);
+	virtual Value* DoEval(Processor& processor, Argument& argument) const override;
+};
+
+Function_help::Function_help(Module& module) :
+		Function(Type::Function, "__help__", Flag::None), _pwModule(module.GetWeakPtr())
+{
+	Declare(VTYPE_Help, Flag::Map);
+	DeclareArg("lang", VTYPE_Symbol, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(
+		Gurax_Symbol(en),
+		"");
+}
+
+Value* Function_help::DoEval(Processor& processor, Argument& argument) const
+{
+	// Arguments
+	ArgPicker args(argument);
+	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
+	// Function body
+	RefPtr<Module> pModule(_pwModule->Lock());
+	const Help* pHelp = pModule? pModule->GetHelpHolder().LookupLoose(pLangCode) : nullptr;
+	RefPtr<Value> pValueRtn(Value::nil());
+	if (pHelp) pValueRtn.reset(new Value_Help(pHelp->Reference()));
+	return argument.ReturnValue(processor, pValueRtn.release());
+}
+
+//------------------------------------------------------------------------------
 // Module
 //------------------------------------------------------------------------------
 ModuleMap Module::_moduleMap;
@@ -17,6 +53,7 @@ Module::Module(Frame* pFrameOuter, DottedSymbol* pDottedSymbol) :
 	_pFrame(new Frame_Module(pFrameOuter, pDottedSymbol->Reference())),
 	_pHelpHolder(new HelpHolder()), _pPropSlotMap(new PropSlotMap())
 {
+	Assign(new Function_help(*this));
 }
 
 void Module::GatherMemberSymbol(SymbolList& symbolList) const
