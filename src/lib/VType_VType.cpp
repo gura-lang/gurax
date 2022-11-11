@@ -50,35 +50,6 @@ Gurax_ImplementConstructor(VType)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// VType##__help__(lang? as Symbol):[class] {block?}
-Gurax_DeclareHybridMethod(VType, __help__)
-{
-	Declare(VTYPE_Help, Flag::Map);
-	DeclareArg("lang", VTYPE_Symbol, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
-	DeclareAttrOpt(Gurax_Symbol(class_));
-	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementHybridMethod(VType, __help__)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
-	// Function body
-	const VType& vtypeThis = valueThis.GetVTypeThis();
-	const Help* pHelp = argument.IsSet(Gurax_Symbol(class_))?
-				vtypeThis.GetHelpHolder().LookupLoose(pLangCode) :
-				vtypeThis.GetConstructor().GetHelpHolder().LookupLoose(pLangCode);
-	RefPtr<Value> pValueRtn(Value::nil());
-	if (pHelp) pValueRtn.reset(new Value_Help(pHelp->Reference()));
-	return argument.ReturnValue(processor, pValueRtn.release());
-}
-
 // VType##__methodSymbols__():[class,hybrid,instance] {block?}
 Gurax_DeclareHybridMethod(VType, __methodSymbols__)
 {
@@ -319,7 +290,6 @@ void VType_VType::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(VType));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(VType, __help__));
 	Assign(Gurax_CreateMethod(VType, __methodSymbols__));
 	Assign(Gurax_CreateMethod(VType, __methods__));
 	Assign(Gurax_CreateMethod(VType, __propSlots__));

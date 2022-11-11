@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 
 ComposeFunctionHelp(func, lang as Symbol = `en) = {
-	doc = func.__help__(lang).doc
+	doc = Help(func, lang).doc
 	str = '__' + func.__str__():unbracket + '__\n\n'
 	str += doc
 	str += cond(doc.EndsWith('\n'), '', '\n')
@@ -12,7 +12,7 @@ ComposePropertyHelp(vtype as VType, lang as Symbol = `en) = {
 	str = ''
 	str += cond(lang == `ja, '# プロパティ\n\n', '# Property\n\n')
 	vtype.__propSlots__().Each {|propSlot|
-		doc = propSlot.__help__(lang).doc
+		doc = Help(propSlot, lang).doc
 		str += Format('__%s%s%s__ as `%s` (%s) ... %s', vtype.__fullName__,
 			cond(propSlot.isOfClass, '.', '#'), propSlot.name, propSlot.vtype.__fullName__,
 			cond(propSlot.IsSet(`R) && !propSlot.IsSet(`W), 'read only',
@@ -64,9 +64,9 @@ Render@html(vtype as VType, lang as Symbol = `en, out?:w as Stream, headerOffset
 	out = out || sys.cout
 	out.Printf(cond(lang == `ja, '<h%d>%s クラス</h%d>\n\n', '<h%d>%s Class</h%d>\n\n'),
 		headerOffset + 1, vtype.__fullName__, headerOffset + 1)
-	markdown.Document(vtype.__help__(lang):class.tmplDoc.Eval().ToReader(), headerOffset + 1).Render@html(out)
+	markdown.Document(Help(vtype, lang):class.tmplDoc.Eval().ToReader(), headerOffset + 1).Render@html(out)
 }
 
 Render@console(vtype as VType, lang as Symbol = `en, colorFlag as Bool = true, headerOffset = 0) = {
-	markdown.Document(vtype.__help__(lang):class.tmplDoc.Eval().ToReader(), headerOffset + 1).Render@console(colorFlag)
+	markdown.Document(Help(vtype, lang):class.tmplDoc.Eval().ToReader(), headerOffset + 1).Render@console(colorFlag)
 }

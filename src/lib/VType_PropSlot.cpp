@@ -24,33 +24,6 @@ ${help.ComposeConstructorHelp(PropSlot, `en)}
 ${help.ComposeMethodHelp(PropSlot, `en)}
 )**";
 
-//------------------------------------------------------------------------------
-// Implementation of method
-//------------------------------------------------------------------------------
-// PropSlot#__help__(lang? as Symbol) {block?}
-Gurax_DeclareMethod(PropSlot, __help__)
-{
-	Declare(VTYPE_Help, Flag::Map);
-	DeclareArg("lang", VTYPE_Symbol, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
-}
-
-Gurax_ImplementMethod(PropSlot, __help__)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	// Arguments
-	ArgPicker args(argument);
-	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
-	// Function body
-	RefPtr<Value> pValueRtn(Value::nil());
-	const Help* pHelp = valueThis.GetPropSlot().GetHelpHolder().LookupLoose(pLangCode);
-	if (pHelp) pValueRtn.reset(new Value_Help(pHelp->Reference()));
-	return argument.ReturnValue(processor, pValueRtn.release());
-}
-
 // PropSlot#IsSet(symbol:Symbol)
 Gurax_DeclareMethod(PropSlot, IsSet)
 {
@@ -166,7 +139,6 @@ void VType_PropSlot::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method
-	Assign(Gurax_CreateMethod(PropSlot, __help__));
 	Assign(Gurax_CreateMethod(PropSlot, IsSet));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(PropSlot, name));

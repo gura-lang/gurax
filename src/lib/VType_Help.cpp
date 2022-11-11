@@ -27,13 +27,14 @@ ${help.ComposeMethodHelp(Help, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Help(value, lang? as Symbol):[class,raise] {block?}
+// Help(value, lang? as Symbol):map:[class,raise] {block?}
 Gurax_DeclareConstructor(Help)
 {
-	Declare(VTYPE_Help, Flag::None);
+	Declare(VTYPE_Help, Flag::Map);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("lang", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(class_));
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),

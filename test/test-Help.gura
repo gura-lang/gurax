@@ -13,4 +13,4 @@ Cette fonction renvoie simplement `nil`.
 この関数は単に `nil` を返します。
 '''jp
 
-Print(f.__help__([`en, `jp, `fr]):*doc)
+Print(Help(f, [`en, `jp, `fr]):*doc)
