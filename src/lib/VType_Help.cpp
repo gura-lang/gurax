@@ -27,12 +27,13 @@ ${help.ComposeMethodHelp(Help, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Help(value, lang? as Symbol) {block?}
+// Help(value, lang? as Symbol):[class,raise] {block?}
 Gurax_DeclareConstructor(Help)
 {
 	Declare(VTYPE_Help, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("lang", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(class_));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(
 		Gurax_Symbol(en),
@@ -44,29 +45,23 @@ Gurax_ImplementConstructor(Help)
 	// Arguments
 	ArgPicker args(argument);
 	const Value& value = args.PickValue();
-	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : nullptr;
+	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : Gurax_Symbol(en);
 	// Function body
-	HelpHolder* pHelpHolder = value.GetHelpHolder();
+	HelpHolder* pHelpHolder = value.GetHelpHolder(argument.IsSet(Gurax_Symbol(class_)));
 	if (!pHelpHolder) {
 		Error::Issue(ErrorType::ValueError,
 					 "value type '%s' doesn't have help", value.GetVTypeCustom().MakeFullName().c_str());
 		return Value::nil();
 	}
-	const Help* pHelp = nullptr;
-	if (pLangCode) {
-		pHelp = pHelpHolder->LookupLoose(pLangCode);
-		if (!pHelp) {
-			Error::Issue(ErrorType::ValueError, "no help in language `%s", pLangCode->GetName());
-			return Value::nil();
-		}
-	} else {
-		pHelp = pHelpHolder->GetDefault();
-		if (!pHelp) {
-			Error::Issue(ErrorType::ValueError, "no help");
-			return Value::nil();
-		}
+	RefPtr<Value> pValueRtn(Value::nil());
+	const Help* pHelp = pHelpHolder->LookupLoose(pLangCode);
+	if (pHelp) {
+		pValueRtn.reset(new Value_Help(pHelp->Clone()));
+	} else if (argument.IsSet(Gurax_Symbol(raise))) {
+		Error::Issue(ErrorType::ValueError, "no help in language `%s", pLangCode->GetName());
+		return Value::nil();
 	}
-	return argument.ReturnValue(processor, new Value_Help(pHelp->Clone()));
+	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
 //-----------------------------------------------------------------------------
@@ -132,7 +127,7 @@ Gurax_ImplementOpUnary(Question, Any)
 // Any %% String
 Gurax_ImplementOpBinary(ModMod, Any, String)
 {
-	HelpHolder* pHelpHolder = valueL.GetHelpHolder();
+	HelpHolder* pHelpHolder = valueL.GetHelpHolder(true);
 	if (!pHelpHolder) {
 		Error::Issue(ErrorType::ValueError,
 				 "can't assign help to value type '%s'", valueL.GetVTypeCustom().MakeFullName().c_str());
@@ -145,7 +140,7 @@ Gurax_ImplementOpBinary(ModMod, Any, String)
 // Any %% Help
 Gurax_ImplementOpBinary(ModMod, Any, Help)
 {
-	HelpHolder* pHelpHolder = valueL.GetHelpHolder();
+	HelpHolder* pHelpHolder = valueL.GetHelpHolder(true);
 	if (!pHelpHolder) {
 		Error::Issue(ErrorType::ValueError,
 				 "can't assign help to value type '%s'", valueL.GetVTypeCustom().MakeFullName().c_str());

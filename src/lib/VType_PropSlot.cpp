@@ -188,7 +188,7 @@ String Value_PropSlot::ToString(const StringStyle& ss) const
 
 void Value_PropSlot::PresentHelp(Processor& processor, const Symbol* pLangCode) const
 {
-	const Help* pHelp = GetHelpHolder()->LookupLoose(pLangCode);
+	const Help* pHelp = GetHelpHolder(false)->LookupLoose(pLangCode);
 	if (pHelp) Basement::Inst.Present(processor, pHelp->GetDocReferable().Reference());
 }
 

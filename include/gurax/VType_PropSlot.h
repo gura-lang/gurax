@@ -74,7 +74,7 @@ public:
 	}
 	virtual String ToString(const StringStyle& ss) const override;
 	// Virtual functions for runtime process
-	virtual HelpHolder* GetHelpHolder() const override { return &_pPropSlot->GetHelpHolder(); }
+	virtual HelpHolder* GetHelpHolder(bool classFlag) const override { return &_pPropSlot->GetHelpHolder(); }
 	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const override;
 };
 

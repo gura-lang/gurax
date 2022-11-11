@@ -100,7 +100,7 @@ public:
 	virtual String ToString(const StringStyle& ss) const override;
 public:
 	// Virtual functions for runtime process
-	virtual HelpHolder* GetHelpHolder() const override { return &_pFunction->GetHelpHolder(); }
+	virtual HelpHolder* GetHelpHolder(bool classFlag) const override { return &_pFunction->GetHelpHolder(); }
 	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const override;
 	virtual bool CanBeCallableMember() const override { return _pFunction->IsTypeMethod(); }
 	virtual const DeclCallable* GetDeclCallable() override;
