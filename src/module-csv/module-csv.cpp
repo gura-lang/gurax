@@ -6,6 +6,17 @@
 Gurax_BeginModule(csv)
 
 //------------------------------------------------------------------------------
+// Help
+//------------------------------------------------------------------------------
+static const char* g_docHelp_en = u8R"**(
+# Overview
+
+# Function
+
+# Class
+)**";
+
+//------------------------------------------------------------------------------
 // Symbol
 //------------------------------------------------------------------------------
 Gurax_RealizeSymbol(asList);
@@ -45,6 +56,8 @@ Gurax_ModuleValidate()
 
 Gurax_ModulePrepare()
 {
+	// Add help
+	AddHelp("en", g_docHelp_en);
 	// Assignment of VType
 	Assign(VTYPE_Reader);
 	Assign(VTYPE_Writer);
