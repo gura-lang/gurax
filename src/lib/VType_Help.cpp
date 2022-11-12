@@ -48,10 +48,9 @@ Gurax_ImplementConstructor(Help)
 	const Value& value = args.PickValue();
 	const Symbol* pLangCode = args.IsValid()? args.PickSymbol() : Gurax_Symbol(en);
 	// Function body
-	HelpHolder* pHelpHolder = value.GetHelpHolder(argument.IsSet(Gurax_Symbol(class_)));
+	const HelpHolder* pHelpHolder = value.GetHelpHolder(argument.IsSet(Gurax_Symbol(class_)));
 	if (!pHelpHolder) {
-		Error::Issue(ErrorType::ValueError,
-					 "value type '%s' doesn't have help", value.GetVTypeCustom().MakeFullName().c_str());
+		Error::Issue(ErrorType::ValueError, "value type '%s' doesn't have help", value.GetVTypeCustom().MakeFullName().c_str());
 		return Value::nil();
 	}
 	RefPtr<Value> pValueRtn(Value::nil());
