@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Expr)
 	Declare(VTYPE_Expr, Flag::Map);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an `Expr` instance by parsing the scripts from the given stream.");
+	AddHelp("en", u8R"**(
+Creates an `Expr` instance by parsing the scripts from the given stream.
+)**");
 }
 
 Gurax_ImplementConstructor(Expr)
@@ -60,9 +60,9 @@ Gurax_DeclareMethod(Expr, EachElem)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns an iterator that returns `Expr` instance of the contained elements.\n");
+	AddHelp("en", u8R"**(
+Returns an iterator that returns `Expr` instance of the contained elements.
+)**");
 }
 
 Gurax_ImplementMethod(Expr, EachElem)
@@ -79,9 +79,9 @@ Gurax_DeclareMethod(Expr, EachParam)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An iterator that returns `Expr` instance of the parameter elements.\n");
+	AddHelp("en", u8R"**(
+An iterator that returns `Expr` instance of the parameter elements.
+)**");
 }
 
 Gurax_ImplementMethod(Expr, EachParam)
@@ -98,9 +98,9 @@ Gurax_DeclareMethod(Expr, EachPUnit)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns an iterator that enumerates `PUnit` instances stored in the target `Expr`.\n");
+	AddHelp("en", u8R"**(
+Returns an iterator that enumerates `PUnit` instances stored in the target `Expr`.
+)**");
 }
 
 Gurax_ImplementMethod(Expr, EachPUnit)
@@ -117,9 +117,9 @@ Gurax_ImplementMethod(Expr, EachPUnit)
 Gurax_DeclareMethod(Expr, Eval)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Evaluates the target `Expr` and returns its result value.");
+	AddHelp("en", u8R"**(
+Evaluates the target `Expr` and returns its result value.
+)**");
 }
 
 Gurax_ImplementMethod(Expr, Eval)
@@ -135,9 +135,9 @@ Gurax_ImplementMethod(Expr, Eval)
 Gurax_DeclareMethod(Expr, IsAssign)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Assign");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Assign
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsAssign)
@@ -153,9 +153,9 @@ Gurax_DeclareMethod(Expr, IsBinaryOp)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is BinaryOp");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is BinaryOp
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsBinaryOp)
@@ -176,9 +176,9 @@ Gurax_ImplementMethod(Expr, IsBinaryOp)
 Gurax_DeclareMethod(Expr, IsBlock)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Block");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Block
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsBlock)
@@ -193,9 +193,9 @@ Gurax_ImplementMethod(Expr, IsBlock)
 Gurax_DeclareMethod(Expr, IsCaller)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Caller");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Caller
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsCaller)
@@ -211,11 +211,11 @@ Gurax_DeclareMethod(Expr, IsIdentifier)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Identifier.\n"
-		"If the argument `symbol` is specifieid,\n"
-		"it also checks if the identifier's symbol matches with that.\n");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Identifier.
+If the argument `symbol` is specifieid,
+it also checks if the identifier's symbol matches with that.
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsIdentifier)
@@ -235,9 +235,9 @@ Gurax_ImplementMethod(Expr, IsIdentifier)
 Gurax_DeclareMethod(Expr, IsIndexer)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Indexer");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Indexer
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsIndexer)
@@ -252,9 +252,9 @@ Gurax_ImplementMethod(Expr, IsIndexer)
 Gurax_DeclareMethod(Expr, IsTuple)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Tuple");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Tuple
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsTuple)
@@ -269,9 +269,9 @@ Gurax_ImplementMethod(Expr, IsTuple)
 Gurax_DeclareMethod(Expr, IsLister)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Lister");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Lister
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsLister)
@@ -286,9 +286,9 @@ Gurax_ImplementMethod(Expr, IsLister)
 Gurax_DeclareMethod(Expr, IsMember)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Member");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Member
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsMember)
@@ -303,9 +303,9 @@ Gurax_ImplementMethod(Expr, IsMember)
 Gurax_DeclareMethod(Expr, IsPureAssign)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Assign without any operation.");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Assign without any operation.
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsPureAssign)
@@ -320,9 +320,9 @@ Gurax_ImplementMethod(Expr, IsPureAssign)
 Gurax_DeclareMethod(Expr, IsRoot)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Root");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Root
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsRoot)
@@ -337,9 +337,9 @@ Gurax_ImplementMethod(Expr, IsRoot)
 Gurax_DeclareMethod(Expr, IsSuffixed)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Suffixed");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Suffixed
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsSuffixed)
@@ -355,9 +355,9 @@ Gurax_DeclareMethod(Expr, IsUnaryOp)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is UnaryOp");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is UnaryOp
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsUnaryOp)
@@ -378,9 +378,9 @@ Gurax_ImplementMethod(Expr, IsUnaryOp)
 Gurax_DeclareMethod(Expr, IsValue)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is Value");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is Value
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsValue)
@@ -395,9 +395,9 @@ Gurax_ImplementMethod(Expr, IsValue)
 Gurax_DeclareMethod(Expr, IsString)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the expression is String");
+	AddHelp("en", u8R"**(
+Returns `true` if the expression is String
+)**");
 }
 
 Gurax_ImplementMethod(Expr, IsString)
@@ -414,9 +414,9 @@ Gurax_DeclareClassMethod(Expr, Parse)
 	Declare(VTYPE_Expr, Flag::Map);
 	DeclareArg("script", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an `Expr` instance by parsing the given script.");
+	AddHelp("en", u8R"**(
+Creates an `Expr` instance by parsing the given script.
+)**");
 }
 
 Gurax_ImplementClassMethod(Expr, Parse)
@@ -441,9 +441,9 @@ Gurax_DeclareClassMethod(Expr, Textize)
 	DeclareAttrOpt(Gurax_Symbol(brief));
 	DeclareAttrOpt(Gurax_Symbol(crammed));
 	DeclareAttrOpt(Gurax_Symbol(oneLine));
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethod(Expr, Textize)
@@ -468,9 +468,9 @@ Gurax_ImplementClassMethod(Expr, Textize)
 Gurax_DeclareProperty_R(Expr, attr)
 {
 	Declare(VTYPE_Attribute, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The attribute.\n");
+	AddHelp("en", u8R"**(
+The attribute.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, attr)
@@ -485,9 +485,9 @@ Gurax_ImplementPropertyGetter(Expr, attr)
 Gurax_DeclareProperty_R(Expr, block)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the block element.\n");
+	AddHelp("en", u8R"**(
+An `Expr` instance of the block element.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, block)
@@ -502,9 +502,9 @@ Gurax_ImplementPropertyGetter(Expr, block)
 Gurax_DeclareProperty_R(Expr, car)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the car element.\n");
+	AddHelp("en", u8R"**(
+An `Expr` instance of the car element.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, car)
@@ -519,9 +519,9 @@ Gurax_ImplementPropertyGetter(Expr, car)
 Gurax_DeclareProperty_R(Expr, child)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the child element.\n");
+	AddHelp("en", u8R"**(
+An `Expr` instance of the child element.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, child)
@@ -536,9 +536,9 @@ Gurax_ImplementPropertyGetter(Expr, child)
 Gurax_DeclareProperty_R(Expr, left)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the left element.\n");
+	AddHelp("en", u8R"**(
+An `Expr` instance of the left element.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, left)
@@ -553,9 +553,9 @@ Gurax_ImplementPropertyGetter(Expr, left)
 Gurax_DeclareProperty_R(Expr, lineNoBtm)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Line number of the bottom of the Expr's source code.\n");
+	AddHelp("en", u8R"**(
+Line number of the bottom of the Expr's source code.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, lineNoBtm)
@@ -568,9 +568,9 @@ Gurax_ImplementPropertyGetter(Expr, lineNoBtm)
 Gurax_DeclareProperty_R(Expr, lineNoTop)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Line number of the top of the Expr's source code.\n");
+	AddHelp("en", u8R"**(
+Line number of the top of the Expr's source code.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, lineNoTop)
@@ -583,9 +583,9 @@ Gurax_ImplementPropertyGetter(Expr, lineNoTop)
 Gurax_DeclareProperty_R(Expr, mode)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The member accessor's mode in symbol.\n");
+	AddHelp("en", u8R"**(
+The member accessor's mode in symbol.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, mode)
@@ -600,9 +600,9 @@ Gurax_ImplementPropertyGetter(Expr, mode)
 Gurax_DeclarePropertyAlias_R(Expr, operator_, "operator")
 {
 	Declare(VTYPE_Operator, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The operator that is associated with the expr.\n");
+	AddHelp("en", u8R"**(
+The operator that is associated with the expr.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, operator_)
@@ -617,9 +617,9 @@ Gurax_ImplementPropertyGetter(Expr, operator_)
 Gurax_DeclareProperty_R(Expr, pathNameSrc)
 {
 	Declare(VTYPE_String, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Path name of the Expr's source code.\n");
+	AddHelp("en", u8R"**(
+Path name of the Expr's source code.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, pathNameSrc)
@@ -634,9 +634,9 @@ Gurax_ImplementPropertyGetter(Expr, pathNameSrc)
 Gurax_DeclareProperty_R(Expr, right)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the right element.\n");
+	AddHelp("en", u8R"**(
+An `Expr` instance of the right element.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, right)
@@ -651,9 +651,9 @@ Gurax_ImplementPropertyGetter(Expr, right)
 Gurax_DeclareProperty_R(Expr, string)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The string that is associated with the expr.");
+	AddHelp("en", u8R"**(
+The string that is associated with the expr.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, string)
@@ -668,9 +668,9 @@ Gurax_ImplementPropertyGetter(Expr, string)
 Gurax_DeclareProperty_R(Expr, symbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The symbol that is associated with identifier or member.\n");
+	AddHelp("en", u8R"**(
+The symbol that is associated with identifier or member.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, symbol)
@@ -685,9 +685,9 @@ Gurax_ImplementPropertyGetter(Expr, symbol)
 Gurax_DeclareProperty_R(Expr, symbolName)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The name of the symbol that is associated with identifier or member.\n");
+	AddHelp("en", u8R"**(
+The name of the symbol that is associated with identifier or member.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, symbolName)
@@ -702,9 +702,9 @@ Gurax_ImplementPropertyGetter(Expr, symbolName)
 Gurax_DeclareProperty_R(Expr, target)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the target element.\n");
+	AddHelp("en", u8R"**(
+An `Expr` instance of the target element.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, target)
@@ -719,9 +719,9 @@ Gurax_ImplementPropertyGetter(Expr, target)
 Gurax_DeclareProperty_R(Expr, trailer)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance of the trailer element.\n");
+	AddHelp("en", u8R"**(
+An `Expr` instance of the trailer element.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, trailer)
@@ -736,9 +736,9 @@ Gurax_ImplementPropertyGetter(Expr, trailer)
 Gurax_DeclareProperty_R(Expr, type)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A `symbol` that represents the expression's type");
+	AddHelp("en", u8R"**(
+A `symbol` that represents the expression's type
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, type)
@@ -751,9 +751,9 @@ Gurax_ImplementPropertyGetter(Expr, type)
 Gurax_DeclareProperty_R(Expr, uniqId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The unique ID of symbol that is associated with identifier or member.\n");
+	AddHelp("en", u8R"**(
+The unique ID of symbol that is associated with identifier or member.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, uniqId)
@@ -768,9 +768,9 @@ Gurax_ImplementPropertyGetter(Expr, uniqId)
 Gurax_DeclareProperty_R(Expr, value)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value that is associated with the expr.");
+	AddHelp("en", u8R"**(
+The value that is associated with the expr.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Expr, value)
