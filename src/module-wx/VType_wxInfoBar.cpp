@@ -35,9 +35,9 @@ Gurax_DeclareConstructorAlias(InfoBar_gurax, "InfoBar")
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("winid", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.InfoBar.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.InfoBar.
+)**");
 }
 
 Gurax_ImplementConstructorEx(InfoBar_gurax, processor_gurax, argument_gurax)
@@ -64,9 +64,9 @@ Gurax_DeclareMethodAlias(wxInfoBar, Create_gurax, "Create")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("winid", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, Create_gurax, processor_gurax, argument_gurax)
@@ -92,9 +92,9 @@ Gurax_DeclareMethodAlias(wxInfoBar, AddButton_gurax, "AddButton")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("btnid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, AddButton_gurax, processor_gurax, argument_gurax)
@@ -116,9 +116,9 @@ Gurax_ImplementMethodEx(wxInfoBar, AddButton_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxInfoBar, Dismiss_gurax, "Dismiss")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, Dismiss_gurax, processor_gurax, argument_gurax)
@@ -137,9 +137,9 @@ Gurax_DeclareMethodAlias(wxInfoBar, RemoveButton_gurax, "RemoveButton")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("btnid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, RemoveButton_gurax, processor_gurax, argument_gurax)
@@ -162,9 +162,9 @@ Gurax_DeclareMethodAlias(wxInfoBar, ShowMessage_gurax, "ShowMessage")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("msg", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, ShowMessage_gurax, processor_gurax, argument_gurax)
@@ -189,9 +189,9 @@ Gurax_DeclareMethodAlias(wxInfoBar, SetShowHideEffects_gurax, "SetShowHideEffect
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("showEffect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hideEffect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, SetShowHideEffects_gurax, processor_gurax, argument_gurax)
@@ -213,9 +213,9 @@ Gurax_ImplementMethodEx(wxInfoBar, SetShowHideEffects_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxInfoBar, GetShowEffect_gurax, "GetShowEffect")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, GetShowEffect_gurax, processor_gurax, argument_gurax)
@@ -233,9 +233,9 @@ Gurax_ImplementMethodEx(wxInfoBar, GetShowEffect_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxInfoBar, GetHideEffect_gurax, "GetHideEffect")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, GetHideEffect_gurax, processor_gurax, argument_gurax)
@@ -254,9 +254,9 @@ Gurax_DeclareMethodAlias(wxInfoBar, SetEffectDuration_gurax, "SetEffectDuration"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("duration", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, SetEffectDuration_gurax, processor_gurax, argument_gurax)
@@ -277,9 +277,9 @@ Gurax_ImplementMethodEx(wxInfoBar, SetEffectDuration_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxInfoBar, GetEffectDuration_gurax, "GetEffectDuration")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, GetEffectDuration_gurax, processor_gurax, argument_gurax)
@@ -298,9 +298,9 @@ Gurax_DeclareMethodAlias(wxInfoBar, SetFont_gurax, "SetFont")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxInfoBar, SetFont_gurax, processor_gurax, argument_gurax)

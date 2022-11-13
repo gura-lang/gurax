@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(ToolTip_gurax, "ToolTip")
 	Declare(VTYPE_wxToolTip, Flag::None);
 	DeclareArg("tip", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.ToolTip.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.ToolTip.
+)**");
 }
 
 Gurax_ImplementConstructorEx(ToolTip_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementConstructorEx(ToolTip_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxToolTip, GetTip_gurax, "GetTip")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolTip, GetTip_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_DeclareMethodAlias(wxToolTip, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolTip, GetWindow_gurax, processor_gurax, argument_gurax)
@@ -98,9 +98,9 @@ Gurax_DeclareMethodAlias(wxToolTip, SetTip_gurax, "SetTip")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tip", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolTip, SetTip_gurax, processor_gurax, argument_gurax)
@@ -122,9 +122,9 @@ Gurax_DeclareClassMethodAlias(wxToolTip, Enable_gurax, "Enable")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxToolTip, Enable_gurax, processor_gurax, argument_gurax)
@@ -142,9 +142,9 @@ Gurax_DeclareClassMethodAlias(wxToolTip, SetAutoPop_gurax, "SetAutoPop")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("msecs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxToolTip, SetAutoPop_gurax, processor_gurax, argument_gurax)
@@ -162,9 +162,9 @@ Gurax_DeclareClassMethodAlias(wxToolTip, SetDelay_gurax, "SetDelay")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("msecs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxToolTip, SetDelay_gurax, processor_gurax, argument_gurax)
@@ -182,9 +182,9 @@ Gurax_DeclareClassMethodAlias(wxToolTip, SetMaxWidth_gurax, "SetMaxWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxToolTip, SetMaxWidth_gurax, processor_gurax, argument_gurax)
@@ -202,9 +202,9 @@ Gurax_DeclareClassMethodAlias(wxToolTip, SetReshow_gurax, "SetReshow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("msecs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxToolTip, SetReshow_gurax, processor_gurax, argument_gurax)

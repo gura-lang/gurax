@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(Validator_gurax, "Validator")
 {
 	Declare(VTYPE_wxValidator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Validator.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Validator.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Validator_gurax, processor_gurax, argument_gurax)
@@ -55,9 +55,9 @@ Gurax_DeclareMethodAlias(wxValidator, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxValidator, GetWindow_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_DeclareMethodAlias(wxValidator, SetWindow_gurax, "SetWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxValidator, SetWindow_gurax, processor_gurax, argument_gurax)
@@ -100,9 +100,9 @@ Gurax_ImplementMethodEx(wxValidator, SetWindow_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxValidator, TransferFromWindow_gurax, "TransferFromWindow")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxValidator, TransferFromWindow_gurax, processor_gurax, argument_gurax)
@@ -120,9 +120,9 @@ Gurax_ImplementMethodEx(wxValidator, TransferFromWindow_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxValidator, TransferToWindow_gurax, "TransferToWindow")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxValidator, TransferToWindow_gurax, processor_gurax, argument_gurax)
@@ -141,9 +141,9 @@ Gurax_DeclareMethodAlias(wxValidator, Validate_gurax, "Validate")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxValidator, Validate_gurax, processor_gurax, argument_gurax)

@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxBufferedDC, SetStyle_gurax, "SetStyle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxBufferedDC, SetStyle_gurax, processor_gurax, argument_gurax)
@@ -60,9 +60,9 @@ Gurax_ImplementMethodEx(wxBufferedDC, SetStyle_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxBufferedDC, GetStyle_gurax, "GetStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxBufferedDC, GetStyle_gurax, processor_gurax, argument_gurax)

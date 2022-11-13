@@ -35,9 +35,9 @@ Gurax_DeclareConstructor(Content)
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `gif.Content` instance.");
+	AddHelp("en", u8R"**(
+Creates a `gif.Content` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Content)
@@ -65,9 +65,9 @@ Gurax_DeclareMethod(Content, AddImage)
 	DeclareArg("leftPos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("topPos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("disposalMethod", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethod(Content, AddImage)
@@ -103,9 +103,9 @@ Gurax_DeclareMethod(Content, EachImage)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that returns images stored in the GIF file.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that returns images stored in the GIF file.
+)**");
 }
 
 Gurax_ImplementMethod(Content, EachImage)
@@ -123,9 +123,9 @@ Gurax_DeclareMethod(Content, Write)
 	Declare(VTYPE_Content, Flag::Reduce);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("colorBackground", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethod(Content, Write)
@@ -150,9 +150,9 @@ Gurax_ImplementMethod(Content, Write)
 Gurax_DeclareProperty_R(Content, CommentExtension)
 {
 	Declare(VTYPE_CommentExtension, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Content, CommentExtension)
@@ -167,9 +167,9 @@ Gurax_ImplementPropertyGetter(Content, CommentExtension)
 Gurax_DeclareProperty_R(Content, LogicalScreenDescriptor)
 {
 	Declare(VTYPE_LogicalScreenDescriptor, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Content, LogicalScreenDescriptor)
@@ -182,9 +182,9 @@ Gurax_ImplementPropertyGetter(Content, LogicalScreenDescriptor)
 Gurax_DeclareProperty_RW(Content, LoopCount)
 {
 	Declare(VTYPE_Number, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Content, LoopCount)
@@ -206,9 +206,9 @@ Gurax_ImplementPropertySetter(Content, LoopCount)
 Gurax_DeclareProperty_R(Content, PlainTextExtension)
 {
 	Declare(VTYPE_PlainTextExtension, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Content, PlainTextExtension)

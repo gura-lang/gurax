@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(GridCellDateRenderer_gurax, "GridCellDateRenderer"
 	Declare(VTYPE_wxGridCellDateRenderer, Flag::None);
 	DeclareArg("outformat", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.GridCellDateRenderer.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.GridCellDateRenderer.
+)**");
 }
 
 Gurax_ImplementConstructorEx(GridCellDateRenderer_gurax, processor_gurax, argument_gurax)
@@ -58,9 +58,9 @@ Gurax_DeclareMethodAlias(wxGridCellDateRenderer, SetParameters_gurax, "SetParame
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellDateRenderer, SetParameters_gurax, processor_gurax, argument_gurax)

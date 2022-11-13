@@ -14,9 +14,9 @@ Gurax_DeclareFunction(Reader)
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Stream` instance that reads and uncompresses gzip-encoded data stream.");
+	AddHelp("en", u8R"**(
+Creates a `Stream` instance that reads and uncompresses gzip-encoded data stream.
+)**");
 }
 
 Gurax_ImplementFunction(Reader)
@@ -38,9 +38,9 @@ Gurax_DeclareFunction(Writer)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("level", VTYPE_Number, ArgOccur::ZeroOrOnce);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Stream` instance that compresses data into a gzip-encoded data stream.");
+	AddHelp("en", u8R"**(
+Creates a `Stream` instance that compresses data into a gzip-encoded data stream.
+)**");
 }
 
 Gurax_ImplementFunction(Writer)

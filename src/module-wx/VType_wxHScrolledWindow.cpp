@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.HScrolledWindow, `en)}
 Gurax_DeclareMethodAlias(wxHScrolledWindow, GetColumnCount_gurax, "GetColumnCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, GetColumnCount_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxHScrolledWindow, GetColumnCount_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxHScrolledWindow, GetVisibleColumnsBegin_gurax, "GetVisibleColumnsBegin")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, GetVisibleColumnsBegin_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_ImplementMethodEx(wxHScrolledWindow, GetVisibleColumnsBegin_gurax, process
 Gurax_DeclareMethodAlias(wxHScrolledWindow, GetVisibleColumnsEnd_gurax, "GetVisibleColumnsEnd")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, GetVisibleColumnsEnd_gurax, processor_gurax, argument_gurax)
@@ -97,9 +97,9 @@ Gurax_DeclareMethodAlias(wxHScrolledWindow, IsColumnVisible_gurax, "IsColumnVisi
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, IsColumnVisible_gurax, processor_gurax, argument_gurax)
@@ -121,9 +121,9 @@ Gurax_DeclareMethodAlias(wxHScrolledWindow, RefreshColumn_gurax, "RefreshColumn"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, RefreshColumn_gurax, processor_gurax, argument_gurax)
@@ -146,9 +146,9 @@ Gurax_DeclareMethodAlias(wxHScrolledWindow, RefreshColumns_gurax, "RefreshColumn
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, RefreshColumns_gurax, processor_gurax, argument_gurax)
@@ -171,9 +171,9 @@ Gurax_DeclareMethodAlias(wxHScrolledWindow, ScrollColumnPages_gurax, "ScrollColu
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pages", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, ScrollColumnPages_gurax, processor_gurax, argument_gurax)
@@ -195,9 +195,9 @@ Gurax_DeclareMethodAlias(wxHScrolledWindow, ScrollColumns_gurax, "ScrollColumns"
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("columns", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, ScrollColumns_gurax, processor_gurax, argument_gurax)
@@ -219,9 +219,9 @@ Gurax_DeclareMethodAlias(wxHScrolledWindow, ScrollToColumn_gurax, "ScrollToColum
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, ScrollToColumn_gurax, processor_gurax, argument_gurax)
@@ -243,9 +243,9 @@ Gurax_DeclareMethodAlias(wxHScrolledWindow, SetColumnCount_gurax, "SetColumnCoun
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("columnCount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHScrolledWindow, SetColumnCount_gurax, processor_gurax, argument_gurax)

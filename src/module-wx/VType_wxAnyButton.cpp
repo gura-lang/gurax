@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(AnyButton_gurax, "AnyButton")
 {
 	Declare(VTYPE_wxAnyButton, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.AnyButton.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.AnyButton.
+)**");
 }
 
 Gurax_ImplementConstructorEx(AnyButton_gurax, processor_gurax, argument_gurax)
@@ -55,9 +55,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmap_gurax, "GetBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, GetBitmap_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapCurrent_gurax, "GetBitmapCurrent"
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, GetBitmapCurrent_gurax, processor_gurax, argument_gurax)
@@ -97,9 +97,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapDisabled_gurax, "GetBitmapDisable
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, GetBitmapDisabled_gurax, processor_gurax, argument_gurax)
@@ -118,9 +118,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapFocus_gurax, "GetBitmapFocus")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, GetBitmapFocus_gurax, processor_gurax, argument_gurax)
@@ -139,9 +139,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapLabel_gurax, "GetBitmapLabel")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, GetBitmapLabel_gurax, processor_gurax, argument_gurax)
@@ -160,9 +160,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapPressed_gurax, "GetBitmapPressed"
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, GetBitmapPressed_gurax, processor_gurax, argument_gurax)
@@ -182,9 +182,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmap_gurax, "SetBitmap")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dir", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, SetBitmap_gurax, processor_gurax, argument_gurax)
@@ -209,9 +209,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapCurrent_gurax, "SetBitmapCurrent"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, SetBitmapCurrent_gurax, processor_gurax, argument_gurax)
@@ -234,9 +234,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapDisabled_gurax, "SetBitmapDisable
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, SetBitmapDisabled_gurax, processor_gurax, argument_gurax)
@@ -259,9 +259,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapFocus_gurax, "SetBitmapFocus")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, SetBitmapFocus_gurax, processor_gurax, argument_gurax)
@@ -284,9 +284,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapLabel_gurax, "SetBitmapLabel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, SetBitmapLabel_gurax, processor_gurax, argument_gurax)
@@ -309,9 +309,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapPressed_gurax, "SetBitmapPressed"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, SetBitmapPressed_gurax, processor_gurax, argument_gurax)
@@ -334,9 +334,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapMargins_gurax, "GetBitmapMargins"
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, GetBitmapMargins_gurax, processor_gurax, argument_gurax)
@@ -355,9 +355,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapPosition_gurax, "SetBitmapPositio
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dir", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, SetBitmapPosition_gurax, processor_gurax, argument_gurax)
@@ -379,9 +379,9 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapMargins_gurax, "SetBitmapMargins"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnyButton, SetBitmapMargins_gurax, processor_gurax, argument_gurax)

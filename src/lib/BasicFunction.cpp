@@ -120,9 +120,9 @@ Gurax_DeclareFunction(dir)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(dir)
@@ -149,67 +149,67 @@ Gurax_DeclareFunction(Format)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts `values` into string depending on formatter specifications\n"
-		"specified in `format` and returns the result in string.\n"
-		"\n"
-		"The format specifier has a format of `%[flags][width][.precision]specifier`.\n"
-		"The `specifier` takes one of the following characters:\n"
-		"\n"
-		"- `d`, `i` .. decimal integer number with a sign mark\n"
-		"- `u` .. decimal integer number wihout a sign mark\n"
-		"- `b` .. binary integer number without a sign mark\n"
-		"- `o` .. octal integer number without a sign mark\n"
-		"- `x` .. hexadecimal integer number in lower character without a sign mark\n"
-		"- `X` .. hexadecimal integer number in upper character without a sign mark\n"
-		"- `e` .. floating number in exponential form\n"
-		"- `E` .. floating number in exponential form (in upper character)\n"
-		"- `f` .. floating number in decimal form\n"
-		"- `F` .. floating number in decimal form (in upper character)\n"
-		"- `g` .. better form between `e` and `f`\n"
-		"- `G` .. better form between `E` and `F`\n"
-		"- `s` .. string\n"
-		"- `c` .. character\n"
-		"\n"
-		"The `flags` takes one of the following characters.\n"
-		"\n"
-		"- `+` .. Appends a character \"`+`\" before a positive number.\n"
-		"- `-` .. Adjust a string to left.\n"
-		"- `[SPC]` .. Appends a space character before a positive number.\n"
-		"- `#` .. Appends a prefix before a numbers \"`0b`\" for a binary,\n"
-		"         \"`0`\" for an octal and \"`0x`\" for a hexadecimal number.\n"
-		"- `0` .. Fills lacking columns with \"`0`\" instead of space characters.`\n"
-		"\n"
-		"The `width` is a decimal number that specifies a minimum character.\n"
-		"If the width of the corresponding field is less than this number,\n"
-		"the lacking part will be filled with space characters or \"`0`\".\n"
-		"If the width is equal to or more than this number, there's nothing to be processed.\n"
-		"If an asterisk character \"`*`\" is specified for `width`,\n"
-		"the minimum character width will be retrieved from the argument list.\n"
-		"\n"
-		"The `width` it a character width that appears on a console,\n"
-		"and it takes into account each character width based on the specification\n"
-		"of East Asian Width. This means that a kanji-character occupies two characters in width.\n"
-		"\n"
-		"The `precision` is a decimal number and has different effects depending on `specifier`.\n"
-		"\n"
-		"For specifiers that formats integer numbers, it specifies a minimum character width\n"
-		"and fills `0` for the lacking column.\n"
-		"Format specifiers \"`%03d`\" and \"`%.3d`\" have the same effect.\n"
-		"When it works in combination with `width`,\n"
-		"`precision` fills `0` in the lacking space before `width` does padding.\n"
-		"An example is shown below:\n"
-		"\n"
-		"    Format('%5.3d', 23) .. returns \"  023\"\n"
-		"\n"
-		"For specifiers `e`, `f` and `g`, it specifies a digit number after a decimal point.\n"
-		"Examples are shown below:\n"
-		"\n"
-		"    Format('%.3f', 1 / 3) .. returns \"0.333\"\n"
-		"    Format('%.5f', 1 / 3) .. returns \"0.33333\"\n"
-		"\n"
-		"It has no effect with other specifiers.\n");
+	AddHelp("en", u8R"**(
+Converts `values` into string depending on formatter specifications
+specified in `format` and returns the result in string.
+
+The format specifier has a format of `%[flags][width][.precision]specifier`.
+The `specifier` takes one of the following characters:
+
+- `d`, `i` .. decimal integer number with a sign mark
+- `u` .. decimal integer number wihout a sign mark
+- `b` .. binary integer number without a sign mark
+- `o` .. octal integer number without a sign mark
+- `x` .. hexadecimal integer number in lower character without a sign mark
+- `X` .. hexadecimal integer number in upper character without a sign mark
+- `e` .. floating number in exponential form
+- `E` .. floating number in exponential form (in upper character)
+- `f` .. floating number in decimal form
+- `F` .. floating number in decimal form (in upper character)
+- `g` .. better form between `e` and `f`
+- `G` .. better form between `E` and `F`
+- `s` .. string
+- `c` .. character
+
+The `flags` takes one of the following characters.
+
+- `+` .. Appends a character \"`+`\" before a positive number.
+- `-` .. Adjust a string to left.
+- `[SPC]` .. Appends a space character before a positive number.
+- `#` .. Appends a prefix before a numbers \"`0b`\" for a binary,
+         \"`0`\" for an octal and \"`0x`\" for a hexadecimal number.
+- `0` .. Fills lacking columns with \"`0`\" instead of space characters.`
+
+The `width` is a decimal number that specifies a minimum character.
+If the width of the corresponding field is less than this number,
+the lacking part will be filled with space characters or \"`0`\".
+If the width is equal to or more than this number, there's nothing to be processed.
+If an asterisk character \"`*`\" is specified for `width`,
+the minimum character width will be retrieved from the argument list.
+
+The `width` it a character width that appears on a console,
+and it takes into account each character width based on the specification
+of East Asian Width. This means that a kanji-character occupies two characters in width.
+
+The `precision` is a decimal number and has different effects depending on `specifier`.
+
+For specifiers that formats integer numbers, it specifies a minimum character width
+and fills `0` for the lacking column.
+Format specifiers \"`%03d`\" and \"`%.3d`\" have the same effect.
+When it works in combination with `width`,
+`precision` fills `0` in the lacking space before `width` does padding.
+An example is shown below:
+
+    Format('%5.3d', 23) .. returns \"  023\"
+
+For specifiers `e`, `f` and `g`, it specifies a digit number after a decimal point.
+Examples are shown below:
+
+    Format('%.3f', 1 / 3) .. returns \"0.333\"
+    Format('%.5f', 1 / 3) .. returns \"0.33333\"
+
+It has no effect with other specifiers.
+)**");
 }
 
 Gurax_ImplementFunction(Format)
@@ -230,14 +230,14 @@ Gurax_DeclareFunction(Int)
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts a value into an integer number like below:\n"
-		"\n"
-		"- With a number value, it would be converted into an integer number.\n"
-		"- With a string value, it would be parsed as an integer number.\n"
-		"  An error occurs if it has an invalid format.\n"
-		"- With a value of other types, an error occurs.\n");
+	AddHelp("en", u8R"**(
+Converts a value into an integer number like below:
+
+- With a number value, it would be converted into an integer number.
+- With a string value, it would be parsed as an integer number.
+  An error occurs if it has an invalid format.
+- With a value of other types, an error occurs.
+)**");
 }
 
 Gurax_ImplementFunction(Int)
@@ -266,10 +266,10 @@ Gurax_DeclareFunction(Ord)
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts the first character of a string into a number of UTF-32 code.\n"
-		"If the string contains more than one characters, it simply neglects trailing ones.\n");
+	AddHelp("en", u8R"**(
+Converts the first character of a string into a number of UTF-32 code.
+If the string contains more than one characters, it simply neglects trailing ones.
+)**");
 }
 
 Gurax_ImplementFunction(Ord)
@@ -287,9 +287,9 @@ Gurax_DeclareFunction(Print)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints out `values` to standard output.");
+	AddHelp("en", u8R"**(
+Prints out `values` to standard output.
+)**");
 }
 
 Gurax_ImplementFunction(Print)
@@ -309,12 +309,12 @@ Gurax_DeclareFunction(Printf)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints out `values` to standard output according to formatter specifiers specified in `format`.\n"
-		"\n"
-		"For detail information about formatter specications,\n"
-		"refer to the help or document of `Format()` function.");
+	AddHelp("en", u8R"**(
+Prints out `values` to standard output according to formatter specifiers specified in `format`.
+
+For detail information about formatter specications,
+refer to the help or document of `Format()` function.
+)**");
 }
 
 Gurax_ImplementFunction(Printf)
@@ -334,9 +334,9 @@ Gurax_DeclareFunction(Println)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints out `values` and an end-of-line character to the standard output.\n");
+	AddHelp("en", u8R"**(
+Prints out `values` and an end-of-line character to the standard output.
+)**");
 }
 
 Gurax_ImplementFunction(Println)
@@ -358,15 +358,15 @@ Gurax_DeclareFunction(Range)
 	DeclareArg("numEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("step", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that generates a sequence of number that increases or decreases by a specified step.\n"
-		"\n"
-		"- `Range(num as Number)` .. finite sequence of n where `0 <= n < num` or `num < n <= 0`\n"
-		"- `Range(num as Number, numEnd as Number)` .. finite sequence of n where `num <= n < numEnd` or `numEnd < n <= num`\n"
-		"- `Range(num as Number, numEnd as Number, step as Number)` .. finite sequence of n\n"
-		"   where `num <= n < numEnd` or `numEnd < n <= num` with an increment of `step`\n"
-		"- `Range(num as Number, nil, step as Number)` .. infinite sequence that starts at `num` with an increment of `step`\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that generates a sequence of number that increases or decreases by a specified step.
+
+- `Range(num as Number)` .. finite sequence of n where `0 <= n < num` or `num < n <= 0`
+- `Range(num as Number, numEnd as Number)` .. finite sequence of n where `num <= n < numEnd` or `numEnd < n <= num`
+- `Range(num as Number, numEnd as Number, step as Number)` .. finite sequence of n
+   where `num <= n < numEnd` or `numEnd < n <= num` with an increment of `step`
+- `Range(num as Number, nil, step as Number)` .. infinite sequence that starts at `num` with an increment of `step`
+)**");
 }
 
 Gurax_ImplementFunction(Range)
@@ -409,9 +409,9 @@ Gurax_DeclareFunction(ReadLines)
 	DeclareArg("nLines", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that reads each line from the `Stream` and returns it as a `String` instance.");
+	AddHelp("en", u8R"**(
+Creates an iterator that reads each line from the `Stream` and returns it as a `String` instance.
+)**");
 }
 
 Gurax_ImplementFunction(ReadLines)
@@ -434,14 +434,14 @@ Gurax_DeclareFunction(hex)
 	DeclareArg(env, "num", VTYPE_number);
 	DeclareArg(env, "digits", VTYPE_number, OCCUR_ZeroOrOnce);
 	DeclareAttr(Gurax_Symbol(upper));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts a number into a hexadecimal string.\n"
-		"Argument `digits` specifies a minimum columns of the converted result\n"
-		"and fills `0` in the lacking space.\n"
-		"\n"
-		"In default, it uses lower-case characters in its conversion,\n"
-		"while it uses upper-case ones when `:upper` attribute is specified.\n");
+	AddHelp("en", u8R"**(
+Converts a number into a hexadecimal string.
+Argument `digits` specifies a minimum columns of the converted result
+and fills `0` in the lacking space.
+
+In default, it uses lower-case characters in its conversion,
+while it uses upper-case ones when `:upper` attribute is specified.
+)**");
 }
 
 Gurax_ImplementFunction(hex)
@@ -470,21 +470,21 @@ Gurax_DeclareFunction(tonumber)
 	DeclareAttr(Gurax_Symbol(raise));
 	DeclareAttr(Gurax_Symbol(zero));
 	DeclareAttr(Gurax_Symbol(nil));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts a string value into a number by a lexical parsing.\n"
-		"If the value is not a string, it first tries to convert the value into a string.\n"
-		"\n"
-		"If the string starts with a sequence of characters that can be parsed as a number literal,\n"
-		"it's not a failure even when it contains other characters following them.\n"
-		"Specifying an attribute `:strict` doesn't allow such a case and fails the process.\n"
-		"\n"
-		"If it fails the conversion, it would return `nil` value.\n"
-		"Attributes described below are prepared to customize the behaviour in the case of a failure.\n"
-		"\n"
-		"- `:raise` .. raises an error\n"
-		"- `:zero` .. returns zero value\n"
-		"- `:nil` .. returns `nil` value (default)\n");
+	AddHelp("en", u8R"**(
+Converts a string value into a number by a lexical parsing.
+If the value is not a string, it first tries to convert the value into a string.
+
+If the string starts with a sequence of characters that can be parsed as a number literal,
+it's not a failure even when it contains other characters following them.
+Specifying an attribute `:strict` doesn't allow such a case and fails the process.
+
+If it fails the conversion, it would return `nil` value.
+Attributes described below are prepared to customize the behaviour in the case of a failure.
+
+- `:raise` .. raises an error
+- `:zero` .. returns zero value
+- `:nil` .. returns `nil` value (default)
+)**");
 }
 
 Gurax_ImplementFunction(tonumber)
@@ -510,9 +510,9 @@ Gurax_DeclareFunction(tostring)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
 	DeclareArg(env, "value", VTYPE_any);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts a value into a string.");
+	AddHelp("en", u8R"**(
+Converts a value into a string.
+)**");
 }
 
 Gurax_ImplementFunction(tostring)
@@ -525,9 +525,9 @@ Gurax_DeclareFunction(tosymbol)
 {
 	SetFuncAttr(VTYPE_any, RSLTMODE_Normal, FLAG_Map);
 	DeclareArg(env, "str", VTYPE_string);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts a string into a symbol.");
+	AddHelp("en", u8R"**(
+Converts a string into a symbol.
+)**");
 }
 
 Gurax_ImplementFunction(tosymbol)

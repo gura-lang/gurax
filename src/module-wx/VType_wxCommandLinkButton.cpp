@@ -42,9 +42,9 @@ Gurax_DeclareConstructorAlias(CommandLinkButton_gurax, "CommandLinkButton")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.CommandLinkButton.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.CommandLinkButton.
+)**");
 }
 
 Gurax_ImplementConstructorEx(CommandLinkButton_gurax, processor_gurax, argument_gurax)

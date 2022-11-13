@@ -36,9 +36,9 @@ Gurax_DeclareConstructor(SDL_Color)
 	DeclareArg("b", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("a", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `SDL_Color` instance.\n");
+	AddHelp("en", u8R"**(
+Creates a `SDL_Color` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(SDL_Color)
@@ -61,9 +61,9 @@ Gurax_ImplementConstructor(SDL_Color)
 Gurax_DeclareProperty_RW(SDL_Color, r)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Color, r)
@@ -82,9 +82,9 @@ Gurax_ImplementPropertySetter(SDL_Color, r)
 Gurax_DeclareProperty_RW(SDL_Color, g)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Color, g)
@@ -103,9 +103,9 @@ Gurax_ImplementPropertySetter(SDL_Color, g)
 Gurax_DeclareProperty_RW(SDL_Color, b)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Color, b)
@@ -124,9 +124,9 @@ Gurax_ImplementPropertySetter(SDL_Color, b)
 Gurax_DeclareProperty_RW(SDL_Color, a)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Color, a)

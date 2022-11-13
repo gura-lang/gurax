@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.TimerEvent, `en)}
 Gurax_DeclareMethodAlias(wxTimerEvent, GetInterval_gurax, "GetInterval")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxTimerEvent, GetInterval_gurax, processor_gurax, argument_gurax)

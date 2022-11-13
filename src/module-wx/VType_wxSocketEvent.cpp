@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxSocketEvent, GetSocket_gurax, "GetSocket")
 {
 	Declare(VTYPE_wxSocketBase, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSocketEvent, GetSocket_gurax, processor_gurax, argument_gurax)

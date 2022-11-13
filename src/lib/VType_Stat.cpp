@@ -34,9 +34,9 @@ Gurax_DeclareConstructor(Stat)
 	Declare(VTYPE_Stat, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Stat` instance from the specified path name.\n");
+	AddHelp("en", u8R"**(
+Creates a `Stat` instance from the specified path name.
+)**");
 }
 
 Gurax_ImplementConstructor(Stat)
@@ -59,9 +59,9 @@ Gurax_ImplementConstructor(Stat)
 Gurax_DeclareProperty_R(Stat, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the item.");
+	AddHelp("en", u8R"**(
+The path name of the item.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, name)
@@ -74,9 +74,9 @@ Gurax_ImplementPropertyGetter(Stat, name)
 Gurax_DeclareProperty_R(Stat, size)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The file size in bytes.");
+	AddHelp("en", u8R"**(
+The file size in bytes.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, size)
@@ -89,9 +89,9 @@ Gurax_ImplementPropertyGetter(Stat, size)
 Gurax_DeclareProperty_R(Stat, atime)
 {
 	Declare(VTYPE_DateTime, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A `DateTime` instance that represents when the file has been accessed at last.");
+	AddHelp("en", u8R"**(
+A `DateTime` instance that represents when the file has been accessed at last.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, atime)
@@ -104,9 +104,9 @@ Gurax_ImplementPropertyGetter(Stat, atime)
 Gurax_DeclareProperty_R(Stat, mtime)
 {
 	Declare(VTYPE_DateTime, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A `DateTime` instance that represents when the file has been modified at last.");
+	AddHelp("en", u8R"**(
+A `DateTime` instance that represents when the file has been modified at last.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, mtime)
@@ -119,9 +119,9 @@ Gurax_ImplementPropertyGetter(Stat, mtime)
 Gurax_DeclareProperty_R(Stat, ctime)
 {
 	Declare(VTYPE_DateTime, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A `DateTime` instance that represents when the file has been created.");
+	AddHelp("en", u8R"**(
+A `DateTime` instance that represents when the file has been created.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, ctime)
@@ -134,9 +134,9 @@ Gurax_ImplementPropertyGetter(Stat, ctime)
 Gurax_DeclareProperty_R(Stat, isblk)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the item is a block device.");
+	AddHelp("en", u8R"**(
+Returns `true` if the item is a block device.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, isblk)
@@ -149,9 +149,9 @@ Gurax_ImplementPropertyGetter(Stat, isblk)
 Gurax_DeclareProperty_R(Stat, ischr)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the item is a character device.");
+	AddHelp("en", u8R"**(
+Returns `true` if the item is a character device.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, ischr)
@@ -164,9 +164,9 @@ Gurax_ImplementPropertyGetter(Stat, ischr)
 Gurax_DeclareProperty_R(Stat, isdir)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the item is a directory.");
+	AddHelp("en", u8R"**(
+Returns `true` if the item is a directory.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, isdir)
@@ -179,9 +179,9 @@ Gurax_ImplementPropertyGetter(Stat, isdir)
 Gurax_DeclareProperty_R(Stat, isfifo)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the item is a FIFO.");
+	AddHelp("en", u8R"**(
+Returns `true` if the item is a FIFO.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, isfifo)
@@ -194,9 +194,9 @@ Gurax_ImplementPropertyGetter(Stat, isfifo)
 Gurax_DeclareProperty_R(Stat, islnk)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the item is a link.");
+	AddHelp("en", u8R"**(
+Returns `true` if the item is a link.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, islnk)
@@ -209,9 +209,9 @@ Gurax_ImplementPropertyGetter(Stat, islnk)
 Gurax_DeclareProperty_R(Stat, isreg)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the file is a regular file.");
+	AddHelp("en", u8R"**(
+Returns `true` if the file is a regular file.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, isreg)
@@ -224,9 +224,9 @@ Gurax_ImplementPropertyGetter(Stat, isreg)
 Gurax_DeclareProperty_R(Stat, issock)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the item is a socket.");
+	AddHelp("en", u8R"**(
+Returns `true` if the item is a socket.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, issock)
@@ -239,9 +239,9 @@ Gurax_ImplementPropertyGetter(Stat, issock)
 Gurax_DeclareProperty_R(Stat, gid)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The group ID that the item belongs to.");
+	AddHelp("en", u8R"**(
+The group ID that the item belongs to.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, gid)
@@ -254,9 +254,9 @@ Gurax_ImplementPropertyGetter(Stat, gid)
 Gurax_DeclareProperty_R(Stat, uid)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The user ID that the item belongs to.");
+	AddHelp("en", u8R"**(
+The user ID that the item belongs to.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Stat, uid)

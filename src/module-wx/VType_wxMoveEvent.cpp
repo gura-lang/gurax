@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxMoveEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMoveEvent, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -58,9 +58,9 @@ Gurax_DeclareMethodAlias(wxMoveEvent, GetRect_gurax, "GetRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMoveEvent, GetRect_gurax, processor_gurax, argument_gurax)
@@ -79,9 +79,9 @@ Gurax_DeclareMethodAlias(wxMoveEvent, SetRect_gurax, "SetRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMoveEvent, SetRect_gurax, processor_gurax, argument_gurax)
@@ -104,9 +104,9 @@ Gurax_DeclareMethodAlias(wxMoveEvent, SetPosition_gurax, "SetPosition")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMoveEvent, SetPosition_gurax, processor_gurax, argument_gurax)

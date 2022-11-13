@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxUpdateUIEvent, Check_gurax, "Check")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("check", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, Check_gurax, processor_gurax, argument_gurax)
@@ -61,9 +61,9 @@ Gurax_DeclareMethodAlias(wxUpdateUIEvent, Enable_gurax, "Enable")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, Enable_gurax, processor_gurax, argument_gurax)
@@ -84,9 +84,9 @@ Gurax_ImplementMethodEx(wxUpdateUIEvent, Enable_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxUpdateUIEvent, GetChecked_gurax, "GetChecked")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, GetChecked_gurax, processor_gurax, argument_gurax)
@@ -104,9 +104,9 @@ Gurax_ImplementMethodEx(wxUpdateUIEvent, GetChecked_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxUpdateUIEvent, GetEnabled_gurax, "GetEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, GetEnabled_gurax, processor_gurax, argument_gurax)
@@ -124,9 +124,9 @@ Gurax_ImplementMethodEx(wxUpdateUIEvent, GetEnabled_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxUpdateUIEvent, GetSetChecked_gurax, "GetSetChecked")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, GetSetChecked_gurax, processor_gurax, argument_gurax)
@@ -144,9 +144,9 @@ Gurax_ImplementMethodEx(wxUpdateUIEvent, GetSetChecked_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxUpdateUIEvent, GetSetEnabled_gurax, "GetSetEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, GetSetEnabled_gurax, processor_gurax, argument_gurax)
@@ -164,9 +164,9 @@ Gurax_ImplementMethodEx(wxUpdateUIEvent, GetSetEnabled_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxUpdateUIEvent, GetSetShown_gurax, "GetSetShown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, GetSetShown_gurax, processor_gurax, argument_gurax)
@@ -184,9 +184,9 @@ Gurax_ImplementMethodEx(wxUpdateUIEvent, GetSetShown_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxUpdateUIEvent, GetSetText_gurax, "GetSetText")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, GetSetText_gurax, processor_gurax, argument_gurax)
@@ -204,9 +204,9 @@ Gurax_ImplementMethodEx(wxUpdateUIEvent, GetSetText_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxUpdateUIEvent, GetShown_gurax, "GetShown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, GetShown_gurax, processor_gurax, argument_gurax)
@@ -224,9 +224,9 @@ Gurax_ImplementMethodEx(wxUpdateUIEvent, GetShown_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxUpdateUIEvent, GetText_gurax, "GetText")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, GetText_gurax, processor_gurax, argument_gurax)
@@ -245,9 +245,9 @@ Gurax_DeclareMethodAlias(wxUpdateUIEvent, SetText_gurax, "SetText")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, SetText_gurax, processor_gurax, argument_gurax)
@@ -269,9 +269,9 @@ Gurax_DeclareMethodAlias(wxUpdateUIEvent, Show_gurax, "Show")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxUpdateUIEvent, Show_gurax, processor_gurax, argument_gurax)

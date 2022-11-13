@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(StdDialogButtonSizer_gurax, "StdDialogButtonSizer"
 {
 	Declare(VTYPE_wxStdDialogButtonSizer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.StdDialogButtonSizer.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.StdDialogButtonSizer.
+)**");
 }
 
 Gurax_ImplementConstructorEx(StdDialogButtonSizer_gurax, processor_gurax, argument_gurax)
@@ -54,9 +54,9 @@ Gurax_DeclareMethodAlias(wxStdDialogButtonSizer, AddButton_gurax, "AddButton")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("button", VTYPE_wxButton, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStdDialogButtonSizer, AddButton_gurax, processor_gurax, argument_gurax)
@@ -78,9 +78,9 @@ Gurax_ImplementMethodEx(wxStdDialogButtonSizer, AddButton_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxStdDialogButtonSizer, Realize_gurax, "Realize")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStdDialogButtonSizer, Realize_gurax, processor_gurax, argument_gurax)
@@ -99,9 +99,9 @@ Gurax_DeclareMethodAlias(wxStdDialogButtonSizer, SetAffirmativeButton_gurax, "Se
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("button", VTYPE_wxButton, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStdDialogButtonSizer, SetAffirmativeButton_gurax, processor_gurax, argument_gurax)
@@ -124,9 +124,9 @@ Gurax_DeclareMethodAlias(wxStdDialogButtonSizer, SetCancelButton_gurax, "SetCanc
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("button", VTYPE_wxButton, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStdDialogButtonSizer, SetCancelButton_gurax, processor_gurax, argument_gurax)
@@ -149,9 +149,9 @@ Gurax_DeclareMethodAlias(wxStdDialogButtonSizer, SetNegativeButton_gurax, "SetNe
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("button", VTYPE_wxButton, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStdDialogButtonSizer, SetNegativeButton_gurax, processor_gurax, argument_gurax)
@@ -173,9 +173,9 @@ Gurax_ImplementMethodEx(wxStdDialogButtonSizer, SetNegativeButton_gurax, process
 Gurax_DeclareMethodAlias(wxStdDialogButtonSizer, RecalcSizes_gurax, "RecalcSizes")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStdDialogButtonSizer, RecalcSizes_gurax, processor_gurax, argument_gurax)
@@ -194,9 +194,9 @@ Gurax_DeclareMethodAlias(wxStdDialogButtonSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStdDialogButtonSizer, CalcMin_gurax, processor_gurax, argument_gurax)

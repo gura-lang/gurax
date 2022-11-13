@@ -41,9 +41,9 @@ Gurax_DeclareConstructorAlias(BitmapToggleButton_gurax, "BitmapToggleButton")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.BitmapToggleButton.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.BitmapToggleButton.
+)**");
 }
 
 Gurax_ImplementConstructorEx(BitmapToggleButton_gurax, processor_gurax, argument_gurax)

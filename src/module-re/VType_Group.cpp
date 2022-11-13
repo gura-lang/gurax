@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(re.Group, `en)}
 Gurax_DeclareProperty_R(Group, begin)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Group, begin)
@@ -47,9 +47,9 @@ Gurax_ImplementPropertyGetter(Group, begin)
 Gurax_DeclareProperty_R(Group, end)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Group, end)
@@ -63,9 +63,9 @@ Gurax_ImplementPropertyGetter(Group, end)
 Gurax_DeclareProperty_R(Group, string)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Group, string)

@@ -36,9 +36,9 @@ Gurax_DeclareConstructorAlias(ColourProperty_gurax, "ColourProperty")
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("value", VTYPE_wxColour, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.ColourProperty.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.ColourProperty.
+)**");
 }
 
 Gurax_ImplementConstructorEx(ColourProperty_gurax, processor_gurax, argument_gurax)
@@ -62,9 +62,9 @@ Gurax_DeclareMethodAlias(wxColourProperty, ValueToString_gurax, "ValueToString")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColourProperty, ValueToString_gurax, processor_gurax, argument_gurax)
@@ -90,9 +90,9 @@ Gurax_DeclareMethodAlias(wxColourProperty, GetColour_gurax, "GetColour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColourProperty, GetColour_gurax, processor_gurax, argument_gurax)

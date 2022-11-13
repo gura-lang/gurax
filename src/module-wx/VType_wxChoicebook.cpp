@@ -39,9 +39,9 @@ Gurax_DeclareConstructorAlias(Choicebook_gurax, "Choicebook")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Choicebook.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Choicebook.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Choicebook_gurax, processor_gurax, argument_gurax)
@@ -71,9 +71,9 @@ Gurax_DeclareMethodAlias(wxChoicebook, GetChoiceCtrl_gurax, "GetChoiceCtrl")
 {
 	Declare(VTYPE_wxChoice, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxChoicebook, GetChoiceCtrl_gurax, processor_gurax, argument_gurax)

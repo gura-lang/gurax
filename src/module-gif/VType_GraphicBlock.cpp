@@ -33,9 +33,9 @@ Gurax_DeclareMethod(GraphicBlock, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(GraphicBlock, MethodSkeleton)
@@ -57,9 +57,9 @@ Gurax_ImplementMethod(GraphicBlock, MethodSkeleton)
 Gurax_DeclareProperty_R(GraphicBlock, GraphicControlExtension)
 {
 	Declare(VTYPE_GraphicControlExtension, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(GraphicBlock, GraphicControlExtension)
@@ -72,9 +72,9 @@ Gurax_ImplementPropertyGetter(GraphicBlock, GraphicControlExtension)
 Gurax_DeclareProperty_R(GraphicBlock, ImageDescriptor)
 {
 	Declare(VTYPE_ImageDescriptor, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(GraphicBlock, ImageDescriptor)

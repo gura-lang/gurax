@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Stat)
 	Declare(VTYPE_StatEx, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `fs.Stat` instance from the specified path name.\n");
+	AddHelp("en", u8R"**(
+Creates a `fs.Stat` instance from the specified path name.
+)**");
 }
 
 Gurax_ImplementConstructor(Stat)

@@ -13,10 +13,10 @@ Gurax_DeclareFunction(Generate)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(upper));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Generates a Universal Unique Identifier (UUID). In default, results are output in\n"
-		"lower-case characters. Specifying :upper would generates it in upper-case characters.");
+	AddHelp("en", u8R"**(
+Generates a Universal Unique Identifier (UUID). In default, results are output in
+lower-case characters. Specifying :upper would generates it in upper-case characters.
+)**");
 }
 
 Gurax_ImplementFunction(Generate)

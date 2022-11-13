@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Writer)
 	Declare(VTYPE_Writer, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::StreamW);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `csv.Writer` instance.");
+	AddHelp("en", u8R"**(
+Creates a `csv.Writer` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Writer)
@@ -55,9 +55,9 @@ Gurax_ImplementConstructor(Writer)
 Gurax_DeclareMethod(Writer, ResetFormatForNumber)
 {
 	Declare(VTYPE_Writer, Flag::Reduce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Resets foratForNumber property to its default value.\n");
+	AddHelp("en", u8R"**(
+Resets foratForNumber property to its default value.
+)**");
 }
 
 Gurax_ImplementMethod(Writer, ResetFormatForNumber)
@@ -74,9 +74,9 @@ Gurax_DeclareMethod(Writer, WriteLine)
 {
 	Declare(VTYPE_Writer, Flag::Reduce);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Writes a line of values in the CSV format.\n");
+	AddHelp("en", u8R"**(
+Writes a line of values in the CSV format.
+)**");
 }
 
 Gurax_ImplementMethod(Writer, WriteLine)
@@ -96,9 +96,9 @@ Gurax_DeclareMethod(Writer, WriteLines)
 {
 	Declare(VTYPE_Writer, Flag::Reduce);
 	DeclareArg("iterator", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Writes lines of values in the CSV format.\n");
+	AddHelp("en", u8R"**(
+Writes lines of values in the CSV format.
+)**");
 }
 
 Gurax_ImplementMethod(Writer, WriteLines)
@@ -137,9 +137,9 @@ Gurax_ImplementMethod(Writer, WriteLines)
 Gurax_DeclareProperty_RW(Writer, formatForNumber)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Format string for converting a Number.");
+	AddHelp("en", u8R"**(
+Format string for converting a Number.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Writer, formatForNumber)

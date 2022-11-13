@@ -33,14 +33,14 @@ Gurax_DeclareConstructor(Palette)
 	Declare(VTYPE_Expr, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an `Palette` instance with entries designated by the argument `symbol` that takes following values:\n"
-		"\n"
-		"- `` `basic`` .. 16 basic colors.\n"
-		"- `` `mono`` .. 2 colors that are Black and white.\n"
-		"- `` `websafe`` .. 215 colors that are safe to be used for Web contents.\n"
-		"- `` `win256``.. 256 colors defined by Windows.\n");
+	AddHelp("en", u8R"**(
+Creates an `Palette` instance with entries designated by the argument `symbol` that takes following values:
+
+- `` `basic`` .. 16 basic colors.
+- `` `mono`` .. 2 colors that are Black and white.
+- `` `websafe`` .. 215 colors that are safe to be used for Web contents.
+- `` `win256``.. 256 colors defined by Windows.
+)**");
 }
 
 Gurax_ImplementConstructor(Palette)
@@ -64,10 +64,10 @@ Gurax_DeclareClassMethod(Palette, Create)
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an `Palette` instance filled with the specified color.\n"
-		"If the argument `color` is omitted, it will be filled with black.\n");
+	AddHelp("en", u8R"**(
+Creates an `Palette` instance filled with the specified color.
+If the argument `color` is omitted, it will be filled with black.
+)**");
 }
 
 Gurax_ImplementClassMethod(Palette, Create)
@@ -91,9 +91,9 @@ Gurax_DeclareMethod(Palette, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates an iterator that iterates each element in the palette.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that iterates each element in the palette.
+)**");
 }
 
 Gurax_ImplementMethod(Palette, Each)
@@ -111,9 +111,9 @@ Gurax_DeclareMethod(Palette, Fill)
 {
 	Declare(VTYPE_Palette, Flag::Reduce);
 	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Fills the palette with the specified color.\n");
+	AddHelp("en", u8R"**(
+Fills the palette with the specified color.
+)**");
 }
 
 Gurax_ImplementMethod(Palette, Fill)
@@ -135,12 +135,12 @@ Gurax_DeclareMethod(Palette, GetNearest)
 	Declare(VTYPE_Color, Flag::None);
 	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(index));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns a `color` instance in the palette that is the nearest with the specified color.\n"
-		"\n"
-		"If the attribute `:index` is specified, it would return an index\n"
-		"of the nearst entry instead of its `color` instance.\n");
+	AddHelp("en", u8R"**(
+Returns a `color` instance in the palette that is the nearest with the specified color.
+
+If the attribute `:index` is specified, it would return an index
+of the nearst entry instead of its `color` instance.
+)**");
 }
 
 Gurax_ImplementMethod(Palette, GetNearest)
@@ -168,11 +168,11 @@ Gurax_DeclareMethod(Palette, Shrink)
 {
 	Declare(VTYPE_Palette, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(align));
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Shrinks the size of the palette to a number powered by two that is\n"
-		"enough to contain unique entries. The ordef of existing entries will\n"
-		"be kept intact.\n");
+	AddHelp("en", u8R"**(
+Shrinks the size of the palette to a number powered by two that is
+enough to contain unique entries. The ordef of existing entries will
+be kept intact.
+)**");
 }
 
 Gurax_ImplementMethod(Palette, Shrink)
@@ -192,13 +192,13 @@ Gurax_DeclareMethod(Palette, UpdateBy)
 	DeclareArg("image_or_palette", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(shrink));
 	DeclareAttrOpt(Gurax_Symbol(align));
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Updates palette entries according to color data in an image or a palette.\n"
-		"\n"
-		"The order of existing entries will be kept intact. If attribute shrink is\n"
-		"specified, the whole size will be shrinked to a number powered by two that\n"
-		"is enough to contain unique entries.");
+	AddHelp("en", u8R"**(
+Updates palette entries according to color data in an image or a palette.
+
+The order of existing entries will be kept intact. If attribute shrink is
+specified, the whole size will be shrinked to a number powered by two that
+is enough to contain unique entries.
+)**");
 }
 
 Gurax_ImplementMethod(Palette, UpdateBy)
@@ -237,9 +237,9 @@ Gurax_ImplementMethod(Palette, UpdateBy)
 Gurax_DeclareProperty_R(Palette, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The number of elements in the palette.");
+	AddHelp("en", u8R"**(
+The number of elements in the palette.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Palette, len)

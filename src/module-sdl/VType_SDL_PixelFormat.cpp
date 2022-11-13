@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_PixelFormat, `en)}
 Gurax_DeclareProperty_R(SDL_PixelFormat, format)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_PixelFormat, format)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_PixelFormat, format)
 Gurax_DeclareProperty_R(SDL_PixelFormat, palette)
 {
 	Declare(VTYPE_SDL_Palette, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_PixelFormat, palette)
@@ -63,9 +63,9 @@ Gurax_ImplementPropertyGetter(SDL_PixelFormat, palette)
 Gurax_DeclareProperty_R(SDL_PixelFormat, BitsPerPixel)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_PixelFormat, BitsPerPixel)
@@ -78,9 +78,9 @@ Gurax_ImplementPropertyGetter(SDL_PixelFormat, BitsPerPixel)
 Gurax_DeclareProperty_R(SDL_PixelFormat, BytesPerPixel)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_PixelFormat, BytesPerPixel)
@@ -93,9 +93,9 @@ Gurax_ImplementPropertyGetter(SDL_PixelFormat, BytesPerPixel)
 Gurax_DeclareProperty_R(SDL_PixelFormat, Rmask)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_PixelFormat, Rmask)
@@ -108,9 +108,9 @@ Gurax_ImplementPropertyGetter(SDL_PixelFormat, Rmask)
 Gurax_DeclareProperty_R(SDL_PixelFormat, Gmask)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_PixelFormat, Gmask)
@@ -123,9 +123,9 @@ Gurax_ImplementPropertyGetter(SDL_PixelFormat, Gmask)
 Gurax_DeclareProperty_R(SDL_PixelFormat, Bmask)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_PixelFormat, Bmask)
@@ -138,9 +138,9 @@ Gurax_ImplementPropertyGetter(SDL_PixelFormat, Bmask)
 Gurax_DeclareProperty_R(SDL_PixelFormat, Amask)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_PixelFormat, Amask)

@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxFocusEvent, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFocusEvent, GetWindow_gurax, processor_gurax, argument_gurax)
@@ -58,9 +58,9 @@ Gurax_DeclareMethodAlias(wxFocusEvent, SetWindow_gurax, "SetWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFocusEvent, SetWindow_gurax, processor_gurax, argument_gurax)

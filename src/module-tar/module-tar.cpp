@@ -18,9 +18,9 @@ Gurax_DeclareFunction(Directory)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns a `Directory` instance that browses the contents in a TAR stream.");
+	AddHelp("en", u8R"**(
+Returns a `Directory` instance that browses the contents in a TAR stream.
+)**");
 }
 
 Gurax_ImplementFunction(Directory)
@@ -40,9 +40,9 @@ Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
+	AddHelp("en", u8R"**(
+Adds up the given two numbers and returns the result.
+)**");
 }
 
 Gurax_ImplementFunction(Test)
@@ -70,9 +70,9 @@ Gurax_ImplementFunction(Test)
 Gurax_DeclareModuleProperty_RW(codec)
 {
 	Declare(VTYPE_Codec, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(codec)

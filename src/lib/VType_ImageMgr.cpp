@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(ImageMgr, `en)}
 Gurax_DeclareClassMethod(ImageMgr, Dir)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns a list of `ImageMgr` instances that represent registered image managers.\n");
+	AddHelp("en", u8R"**(
+Returns a list of `ImageMgr` instances that represent registered image managers.
+)**");
 }
 
 Gurax_ImplementClassMethod(ImageMgr, Dir)
@@ -53,9 +53,9 @@ Gurax_DeclareClassMethod(ImageMgr, Lookup)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("imgTypeName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Looks up an `ImageMgr` instances that matches the specified `imgTypeName`.\n");
+	AddHelp("en", u8R"**(
+Looks up an `ImageMgr` instances that matches the specified `imgTypeName`.
+)**");
 }
 
 Gurax_ImplementClassMethod(ImageMgr, Lookup)
@@ -82,9 +82,9 @@ Gurax_DeclareClassMethod(ImageMgr, Register)
 	DeclareArg("extNames", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("funcRead", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("funcWrite", VTYPE_Function, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Register a new `ImageMgr` instance.\n");
+	AddHelp("en", u8R"**(
+Register a new `ImageMgr` instance.
+)**");
 }
 
 Gurax_ImplementClassMethod(ImageMgr, Register)
@@ -111,9 +111,9 @@ Gurax_DeclareMethod(ImageMgr, IsResponsible)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the data from the stream should be handled by this manager.");
+	AddHelp("en", u8R"**(
+Returns `true` if the data from the stream should be handled by this manager.
+)**");
 }
 
 Gurax_ImplementMethod(ImageMgr, IsResponsible)
@@ -134,9 +134,9 @@ Gurax_ImplementMethod(ImageMgr, IsResponsible)
 Gurax_DeclareProperty_R(ImageMgr, description)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Description for this manager.");
+	AddHelp("en", u8R"**(
+Description for this manager.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(ImageMgr, description)
@@ -149,9 +149,9 @@ Gurax_ImplementPropertyGetter(ImageMgr, description)
 Gurax_DeclareProperty_R(ImageMgr, imgTypeName)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Name of the image type for which this manager is responsible.");
+	AddHelp("en", u8R"**(
+Name of the image type for which this manager is responsible.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(ImageMgr, imgTypeName)

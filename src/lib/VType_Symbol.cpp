@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Symbol)
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Symbol` instance.");
+	AddHelp("en", u8R"**(
+Creates a `Symbol` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Symbol)
@@ -54,9 +54,9 @@ Gurax_ImplementConstructor(Symbol)
 Gurax_DeclareProperty_R(Symbol, symbolName)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The name of the symbol.");
+	AddHelp("en", u8R"**(
+The name of the symbol.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Symbol, symbolName)
@@ -69,9 +69,9 @@ Gurax_ImplementPropertyGetter(Symbol, symbolName)
 Gurax_DeclareProperty_R(Symbol, uniqId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The unique ID of the symbol.");
+	AddHelp("en", u8R"**(
+The unique ID of the symbol.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Symbol, uniqId)

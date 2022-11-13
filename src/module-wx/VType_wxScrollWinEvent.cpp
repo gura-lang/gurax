@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.ScrollWinEvent, `en)}
 Gurax_DeclareMethodAlias(wxScrollWinEvent, GetOrientation_gurax, "GetOrientation")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxScrollWinEvent, GetOrientation_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxScrollWinEvent, GetOrientation_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxScrollWinEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxScrollWinEvent, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_DeclareMethodAlias(wxScrollWinEvent, SetOrientation_gurax, "SetOrientation
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("orient", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxScrollWinEvent, SetOrientation_gurax, processor_gurax, argument_gurax)
@@ -101,9 +101,9 @@ Gurax_DeclareMethodAlias(wxScrollWinEvent, SetPosition_gurax, "SetPosition")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxScrollWinEvent, SetPosition_gurax, processor_gurax, argument_gurax)

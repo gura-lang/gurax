@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxHtmlCellEvent, GetCell_gurax, "GetCell")
 {
 	Declare(VTYPE_wxHtmlCell, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlCellEvent, GetCell_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_ImplementMethodEx(wxHtmlCellEvent, GetCell_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxHtmlCellEvent, GetLinkClicked_gurax, "GetLinkClicked")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlCellEvent, GetLinkClicked_gurax, processor_gurax, argument_gurax)
@@ -78,9 +78,9 @@ Gurax_DeclareMethodAlias(wxHtmlCellEvent, GetPoint_gurax, "GetPoint")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlCellEvent, GetPoint_gurax, processor_gurax, argument_gurax)
@@ -99,9 +99,9 @@ Gurax_DeclareMethodAlias(wxHtmlCellEvent, SetLinkClicked_gurax, "SetLinkClicked"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("linkclicked", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlCellEvent, SetLinkClicked_gurax, processor_gurax, argument_gurax)

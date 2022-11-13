@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Device)
 	Declare(VTYPE_Device, Flag::None);
 	DeclareArg("iDevice", VTYPE_Number, DeclArg::Occur::ZeroOrOnce, DeclArg::Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Create an `mtp.Device` instance.\n");
+	AddHelp("en", u8R"**(
+Create an `mtp.Device` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Device)
@@ -58,9 +58,9 @@ Gurax_DeclareMethod(Device, EnumStorage)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(Device, EnumStorage)
@@ -80,9 +80,9 @@ Gurax_ImplementMethod(Device, EnumStorage)
 Gurax_DeclareProperty_R(Device, friendlyName)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Device, friendlyName)
@@ -95,9 +95,9 @@ Gurax_ImplementPropertyGetter(Device, friendlyName)
 Gurax_DeclareProperty_R(Device, manufacturer)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Device, manufacturer)
@@ -110,9 +110,9 @@ Gurax_ImplementPropertyGetter(Device, manufacturer)
 Gurax_DeclareProperty_R(Device, description)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Device, description)

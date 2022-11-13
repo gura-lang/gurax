@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(ErrorType, `en)}
 Gurax_DeclareProperty_R(ErrorType, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(ErrorType, name)

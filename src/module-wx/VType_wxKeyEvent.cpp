@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.KeyEvent, `en)}
 Gurax_DeclareMethodAlias(wxKeyEvent, GetKeyCode_gurax, "GetKeyCode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, GetKeyCode_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_DeclareMethodAlias(wxKeyEvent, IsKeyInCategory_gurax, "IsKeyInCategory")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("category", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, IsKeyInCategory_gurax, processor_gurax, argument_gurax)
@@ -80,9 +80,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, IsKeyInCategory_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxKeyEvent, GetRawKeyFlags_gurax, "GetRawKeyFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, GetRawKeyFlags_gurax, processor_gurax, argument_gurax)
@@ -100,9 +100,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetRawKeyFlags_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxKeyEvent, GetUnicodeKey_gurax, "GetUnicodeKey")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, GetUnicodeKey_gurax, processor_gurax, argument_gurax)
@@ -120,9 +120,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetUnicodeKey_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxKeyEvent, GetX_gurax, "GetX")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, GetX_gurax, processor_gurax, argument_gurax)
@@ -140,9 +140,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetX_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxKeyEvent, GetY_gurax, "GetY")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, GetY_gurax, processor_gurax, argument_gurax)
@@ -160,9 +160,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetY_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxKeyEvent, DoAllowNextEvent_gurax, "DoAllowNextEvent")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, DoAllowNextEvent_gurax, processor_gurax, argument_gurax)
@@ -180,9 +180,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, DoAllowNextEvent_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxKeyEvent, IsNextEventAllowed_gurax, "IsNextEventAllowed")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, IsNextEventAllowed_gurax, processor_gurax, argument_gurax)
@@ -201,9 +201,9 @@ Gurax_DeclareMethodAlias(wxKeyEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -221,9 +221,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetPosition_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxKeyEvent, GetPositionXY_gurax, "GetPositionXY")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, GetPositionXY_gurax, processor_gurax, argument_gurax)
@@ -242,9 +242,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetPositionXY_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxKeyEvent, GetModifiers_gurax, "GetModifiers")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, GetModifiers_gurax, processor_gurax, argument_gurax)
@@ -262,9 +262,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, GetModifiers_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxKeyEvent, HasAnyModifiers_gurax, "HasAnyModifiers")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, HasAnyModifiers_gurax, processor_gurax, argument_gurax)
@@ -282,9 +282,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, HasAnyModifiers_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxKeyEvent, HasModifiers_gurax, "HasModifiers")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, HasModifiers_gurax, processor_gurax, argument_gurax)
@@ -302,9 +302,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, HasModifiers_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxKeyEvent, ControlDown_gurax, "ControlDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, ControlDown_gurax, processor_gurax, argument_gurax)
@@ -322,9 +322,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, ControlDown_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxKeyEvent, RawControlDown_gurax, "RawControlDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, RawControlDown_gurax, processor_gurax, argument_gurax)
@@ -342,9 +342,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, RawControlDown_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxKeyEvent, ShiftDown_gurax, "ShiftDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, ShiftDown_gurax, processor_gurax, argument_gurax)
@@ -362,9 +362,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, ShiftDown_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxKeyEvent, MetaDown_gurax, "MetaDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, MetaDown_gurax, processor_gurax, argument_gurax)
@@ -382,9 +382,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, MetaDown_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxKeyEvent, AltDown_gurax, "AltDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, AltDown_gurax, processor_gurax, argument_gurax)
@@ -402,9 +402,9 @@ Gurax_ImplementMethodEx(wxKeyEvent, AltDown_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxKeyEvent, CmdDown_gurax, "CmdDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, CmdDown_gurax, processor_gurax, argument_gurax)
@@ -423,9 +423,9 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetControlDown_gurax, "SetControlDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, SetControlDown_gurax, processor_gurax, argument_gurax)
@@ -447,9 +447,9 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetRawControlDown_gurax, "SetRawControlDown
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, SetRawControlDown_gurax, processor_gurax, argument_gurax)
@@ -471,9 +471,9 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetShiftDown_gurax, "SetShiftDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, SetShiftDown_gurax, processor_gurax, argument_gurax)
@@ -495,9 +495,9 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetAltDown_gurax, "SetAltDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, SetAltDown_gurax, processor_gurax, argument_gurax)
@@ -519,9 +519,9 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetMetaDown_gurax, "SetMetaDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxKeyEvent, SetMetaDown_gurax, processor_gurax, argument_gurax)

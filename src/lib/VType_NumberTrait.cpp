@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(NumberTrait, `en)}
 Gurax_DeclareProperty_R(NumberTrait, bytes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(NumberTrait, bytes)

@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxImage, Copy_gurax, "Copy")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Copy_gurax, processor_gurax, argument_gurax)
@@ -58,9 +58,9 @@ Gurax_DeclareMethodAlias(wxImage, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Clear_gurax, processor_gurax, argument_gurax)
@@ -82,9 +82,9 @@ Gurax_ImplementMethodEx(wxImage, Clear_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxImage, Destroy_gurax, "Destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Destroy_gurax, processor_gurax, argument_gurax)
@@ -102,9 +102,9 @@ Gurax_ImplementMethodEx(wxImage, Destroy_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxImage, InitAlpha_gurax, "InitAlpha")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, InitAlpha_gurax, processor_gurax, argument_gurax)
@@ -124,9 +124,9 @@ Gurax_DeclareMethodAlias(wxImage, BlurHorizontal_gurax, "BlurHorizontal")
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("blurRadius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, BlurHorizontal_gurax, processor_gurax, argument_gurax)
@@ -149,9 +149,9 @@ Gurax_DeclareMethodAlias(wxImage, BlurVertical_gurax, "BlurVertical")
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("blurRadius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, BlurVertical_gurax, processor_gurax, argument_gurax)
@@ -174,9 +174,9 @@ Gurax_DeclareMethodAlias(wxImage, Mirror_gurax, "Mirror")
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("horizontally", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Mirror_gurax, processor_gurax, argument_gurax)
@@ -200,9 +200,9 @@ Gurax_DeclareMethodAlias(wxImage, Paste_gurax, "Paste")
 	DeclareArg("image", VTYPE_wxImage, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Paste_gurax, processor_gurax, argument_gurax)
@@ -232,9 +232,9 @@ Gurax_DeclareMethodAlias(wxImage, Replace_gurax, "Replace")
 	DeclareArg("r2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("g2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Replace_gurax, processor_gurax, argument_gurax)
@@ -264,9 +264,9 @@ Gurax_DeclareMethodAlias(wxImage, Rescale_gurax, "Rescale")
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("quality", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Rescale_gurax, processor_gurax, argument_gurax)
@@ -296,9 +296,9 @@ Gurax_DeclareMethodAlias(wxImage, Resize_gurax, "Resize")
 	DeclareArg("green", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Resize_gurax, processor_gurax, argument_gurax)
@@ -333,9 +333,9 @@ Gurax_DeclareMethodAlias(wxImage, Rotate_gurax, "Rotate")
 	DeclareArg("interpolating", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("offsetAfterRotation", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Rotate_gurax, processor_gurax, argument_gurax)
@@ -362,9 +362,9 @@ Gurax_DeclareMethodAlias(wxImage, Rotate90_gurax, "Rotate90")
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("clockwise", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Rotate90_gurax, processor_gurax, argument_gurax)
@@ -386,9 +386,9 @@ Gurax_DeclareMethodAlias(wxImage, Rotate180_gurax, "Rotate180")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Rotate180_gurax, processor_gurax, argument_gurax)
@@ -407,9 +407,9 @@ Gurax_DeclareMethodAlias(wxImage, RotateHue_gurax, "RotateHue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, RotateHue_gurax, processor_gurax, argument_gurax)
@@ -434,9 +434,9 @@ Gurax_DeclareMethodAlias(wxImage, Scale_gurax, "Scale")
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("quality", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Scale_gurax, processor_gurax, argument_gurax)
@@ -466,9 +466,9 @@ Gurax_DeclareMethodAlias(wxImage, Size_gurax, "Size")
 	DeclareArg("green", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, Size_gurax, processor_gurax, argument_gurax)
@@ -499,9 +499,9 @@ Gurax_DeclareMethodAlias(wxImage, ConvertAlphaToMask_gurax, "ConvertAlphaToMask"
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("threshold", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, ConvertAlphaToMask_gurax, processor_gurax, argument_gurax)
@@ -527,9 +527,9 @@ Gurax_DeclareMethodAlias(wxImage, ConvertToGreyscale_gurax, "ConvertToGreyscale"
 	DeclareArg("weight_g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weight_b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, ConvertToGreyscale_gurax, processor_gurax, argument_gurax)
@@ -556,9 +556,9 @@ Gurax_DeclareMethodAlias(wxImage, ConvertToMono_gurax, "ConvertToMono")
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, ConvertToMono_gurax, processor_gurax, argument_gurax)
@@ -583,9 +583,9 @@ Gurax_DeclareMethodAlias(wxImage, ConvertToDisabled_gurax, "ConvertToDisabled")
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, ConvertToDisabled_gurax, processor_gurax, argument_gurax)
@@ -608,9 +608,9 @@ Gurax_DeclareMethodAlias(wxImage, ComputeHistogram_gurax, "ComputeHistogram")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("histogram", VTYPE_wxImageHistogram, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, ComputeHistogram_gurax, processor_gurax, argument_gurax)
@@ -634,9 +634,9 @@ Gurax_DeclareMethodAlias(wxImage, GetRed_gurax, "GetRed")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetRed_gurax, processor_gurax, argument_gurax)
@@ -660,9 +660,9 @@ Gurax_DeclareMethodAlias(wxImage, GetGreen_gurax, "GetGreen")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetGreen_gurax, processor_gurax, argument_gurax)
@@ -686,9 +686,9 @@ Gurax_DeclareMethodAlias(wxImage, GetBlue_gurax, "GetBlue")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetBlue_gurax, processor_gurax, argument_gurax)
@@ -710,9 +710,9 @@ Gurax_ImplementMethodEx(wxImage, GetBlue_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxImage, GetMaskRed_gurax, "GetMaskRed")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetMaskRed_gurax, processor_gurax, argument_gurax)
@@ -730,9 +730,9 @@ Gurax_ImplementMethodEx(wxImage, GetMaskRed_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxImage, GetMaskGreen_gurax, "GetMaskGreen")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetMaskGreen_gurax, processor_gurax, argument_gurax)
@@ -750,9 +750,9 @@ Gurax_ImplementMethodEx(wxImage, GetMaskGreen_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxImage, GetMaskBlue_gurax, "GetMaskBlue")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetMaskBlue_gurax, processor_gurax, argument_gurax)
@@ -770,9 +770,9 @@ Gurax_ImplementMethodEx(wxImage, GetMaskBlue_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxImage, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetWidth_gurax, processor_gurax, argument_gurax)
@@ -790,9 +790,9 @@ Gurax_ImplementMethodEx(wxImage, GetWidth_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxImage, GetHeight_gurax, "GetHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetHeight_gurax, processor_gurax, argument_gurax)
@@ -811,9 +811,9 @@ Gurax_DeclareMethodAlias(wxImage, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetSize_gurax, processor_gurax, argument_gurax)
@@ -832,9 +832,9 @@ Gurax_DeclareMethodAlias(wxImage, GetOption_gurax, "GetOption")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetOption_gurax, processor_gurax, argument_gurax)
@@ -856,9 +856,9 @@ Gurax_DeclareMethodAlias(wxImage, GetOptionInt_gurax, "GetOptionInt")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetOptionInt_gurax, processor_gurax, argument_gurax)
@@ -880,9 +880,9 @@ Gurax_DeclareMethodAlias(wxImage, GetPalette_gurax, "GetPalette")
 {
 	Declare(VTYPE_wxPalette, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetPalette_gurax, processor_gurax, argument_gurax)
@@ -902,9 +902,9 @@ Gurax_DeclareMethodAlias(wxImage, GetSubImage_gurax, "GetSubImage")
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetSubImage_gurax, processor_gurax, argument_gurax)
@@ -926,9 +926,9 @@ Gurax_ImplementMethodEx(wxImage, GetSubImage_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxImage, GetType_gurax, "GetType")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, GetType_gurax, processor_gurax, argument_gurax)
@@ -946,9 +946,9 @@ Gurax_ImplementMethodEx(wxImage, GetType_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxImage, HasAlpha_gurax, "HasAlpha")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, HasAlpha_gurax, processor_gurax, argument_gurax)
@@ -966,9 +966,9 @@ Gurax_ImplementMethodEx(wxImage, HasAlpha_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxImage, HasMask_gurax, "HasMask")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, HasMask_gurax, processor_gurax, argument_gurax)
@@ -987,9 +987,9 @@ Gurax_DeclareMethodAlias(wxImage, HasOption_gurax, "HasOption")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, HasOption_gurax, processor_gurax, argument_gurax)
@@ -1010,9 +1010,9 @@ Gurax_ImplementMethodEx(wxImage, HasOption_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxImage, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, IsOk_gurax, processor_gurax, argument_gurax)
@@ -1033,9 +1033,9 @@ Gurax_DeclareMethodAlias(wxImage, IsTransparent_gurax, "IsTransparent")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("threshold", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, IsTransparent_gurax, processor_gurax, argument_gurax)
@@ -1062,9 +1062,9 @@ Gurax_DeclareMethodAlias(wxImage, LoadFile_gurax, "LoadFile")
 	DeclareArg("stream", VTYPE_wxInputStream, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, LoadFile_gurax, processor_gurax, argument_gurax)
@@ -1092,9 +1092,9 @@ Gurax_DeclareMethodAlias(wxImage, SaveFile_gurax, "SaveFile")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("stream", VTYPE_wxOutputStream, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mimetype", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, SaveFile_gurax, processor_gurax, argument_gurax)
@@ -1117,9 +1117,9 @@ Gurax_ImplementMethodEx(wxImage, SaveFile_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxImage, ClearAlpha_gurax, "ClearAlpha")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, ClearAlpha_gurax, processor_gurax, argument_gurax)
@@ -1138,9 +1138,9 @@ Gurax_DeclareMethodAlias(wxImage, SetMask_gurax, "SetMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("hasMask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, SetMask_gurax, processor_gurax, argument_gurax)
@@ -1164,9 +1164,9 @@ Gurax_DeclareMethodAlias(wxImage, SetMaskColour_gurax, "SetMaskColour")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, SetMaskColour_gurax, processor_gurax, argument_gurax)
@@ -1193,9 +1193,9 @@ Gurax_DeclareMethodAlias(wxImage, SetMaskFromImage_gurax, "SetMaskFromImage")
 	DeclareArg("mr", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mg", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mb", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, SetMaskFromImage_gurax, processor_gurax, argument_gurax)
@@ -1222,9 +1222,9 @@ Gurax_DeclareMethodAlias(wxImage, SetOption_gurax, "SetOption")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, SetOption_gurax, processor_gurax, argument_gurax)
@@ -1247,9 +1247,9 @@ Gurax_DeclareMethodAlias(wxImage, SetPalette_gurax, "SetPalette")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("palette", VTYPE_wxPalette, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, SetPalette_gurax, processor_gurax, argument_gurax)
@@ -1272,9 +1272,9 @@ Gurax_DeclareMethodAlias(wxImage, SetType_gurax, "SetType")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxImage, SetType_gurax, processor_gurax, argument_gurax)
@@ -1296,9 +1296,9 @@ Gurax_DeclareClassMethodAlias(wxImage, CanRead_gurax, "CanRead")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, CanRead_gurax, processor_gurax, argument_gurax)
@@ -1315,9 +1315,9 @@ Gurax_ImplementClassMethodEx(wxImage, CanRead_gurax, processor_gurax, argument_g
 Gurax_DeclareClassMethodAlias(wxImage, GetImageExtWildcard_gurax, "GetImageExtWildcard")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, GetImageExtWildcard_gurax, processor_gurax, argument_gurax)
@@ -1332,9 +1332,9 @@ Gurax_DeclareClassMethodAlias(wxImage, AddHandler_gurax, "AddHandler")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxImageHandler, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, AddHandler_gurax, processor_gurax, argument_gurax)
@@ -1352,9 +1352,9 @@ Gurax_ImplementClassMethodEx(wxImage, AddHandler_gurax, processor_gurax, argumen
 Gurax_DeclareClassMethodAlias(wxImage, CleanUpHandlers_gurax, "CleanUpHandlers")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, CleanUpHandlers_gurax, processor_gurax, argument_gurax)
@@ -1369,9 +1369,9 @@ Gurax_DeclareClassMethodAlias(wxImage, FindHandler_gurax, "FindHandler")
 {
 	Declare(VTYPE_wxImageHandler, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, FindHandler_gurax, processor_gurax, argument_gurax)
@@ -1389,9 +1389,9 @@ Gurax_DeclareClassMethodAlias(wxImage, FindHandlerMime_gurax, "FindHandlerMime")
 {
 	Declare(VTYPE_wxImageHandler, Flag::None);
 	DeclareArg("mimetype", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, FindHandlerMime_gurax, processor_gurax, argument_gurax)
@@ -1408,9 +1408,9 @@ Gurax_ImplementClassMethodEx(wxImage, FindHandlerMime_gurax, processor_gurax, ar
 Gurax_DeclareClassMethodAlias(wxImage, InitStandardHandlers_gurax, "InitStandardHandlers")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, InitStandardHandlers_gurax, processor_gurax, argument_gurax)
@@ -1425,9 +1425,9 @@ Gurax_DeclareClassMethodAlias(wxImage, InsertHandler_gurax, "InsertHandler")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxImageHandler, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, InsertHandler_gurax, processor_gurax, argument_gurax)
@@ -1446,9 +1446,9 @@ Gurax_DeclareClassMethodAlias(wxImage, RemoveHandler_gurax, "RemoveHandler")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, RemoveHandler_gurax, processor_gurax, argument_gurax)
@@ -1467,9 +1467,9 @@ Gurax_DeclareClassMethodAlias(wxImage, GetImageCount_gurax, "GetImageCount")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxImage, GetImageCount_gurax, processor_gurax, argument_gurax)

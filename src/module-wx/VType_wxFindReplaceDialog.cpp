@@ -37,9 +37,9 @@ Gurax_DeclareConstructorAlias(FindReplaceDialog_gurax, "FindReplaceDialog")
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.FindReplaceDialog.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.FindReplaceDialog.
+)**");
 }
 
 Gurax_ImplementConstructorEx(FindReplaceDialog_gurax, processor_gurax, argument_gurax)
@@ -71,9 +71,9 @@ Gurax_DeclareMethodAlias(wxFindReplaceDialog, Create_gurax, "Create")
 	DeclareArg("data", VTYPE_wxFindReplaceData, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFindReplaceDialog, Create_gurax, processor_gurax, argument_gurax)
@@ -101,9 +101,9 @@ Gurax_DeclareMethodAlias(wxFindReplaceDialog, GetData_gurax, "GetData")
 {
 	Declare(VTYPE_wxFindReplaceData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFindReplaceDialog, GetData_gurax, processor_gurax, argument_gurax)

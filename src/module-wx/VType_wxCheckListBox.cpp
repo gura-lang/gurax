@@ -41,9 +41,9 @@ Gurax_DeclareConstructorAlias(CheckListBox_gurax, "CheckListBox")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.CheckListBox.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.CheckListBox.
+)**");
 }
 
 Gurax_ImplementConstructorEx(CheckListBox_gurax, processor_gurax, argument_gurax)
@@ -84,9 +84,9 @@ Gurax_DeclareMethodAlias(wxCheckListBox, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCheckListBox, Create_gurax, processor_gurax, argument_gurax)
@@ -120,9 +120,9 @@ Gurax_DeclareMethodAlias(wxCheckListBox, Check_gurax, "Check")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("check", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCheckListBox, Check_gurax, processor_gurax, argument_gurax)
@@ -145,9 +145,9 @@ Gurax_DeclareMethodAlias(wxCheckListBox, IsChecked_gurax, "IsChecked")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCheckListBox, IsChecked_gurax, processor_gurax, argument_gurax)
@@ -168,9 +168,9 @@ Gurax_ImplementMethodEx(wxCheckListBox, IsChecked_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxCheckListBox, GetCheckedItems_gurax, "GetCheckedItems")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCheckListBox, GetCheckedItems_gurax, processor_gurax, argument_gurax)

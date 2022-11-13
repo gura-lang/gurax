@@ -35,9 +35,9 @@ Gurax_DeclareConstructorAlias(ColourDialog_gurax, "ColourDialog")
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_wxColourData, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.ColourDialog.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.ColourDialog.
+)**");
 }
 
 Gurax_ImplementConstructorEx(ColourDialog_gurax, processor_gurax, argument_gurax)
@@ -63,9 +63,9 @@ Gurax_DeclareMethodAlias(wxColourDialog, Create_gurax, "Create")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_wxColourData, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColourDialog, Create_gurax, processor_gurax, argument_gurax)
@@ -89,9 +89,9 @@ Gurax_DeclareMethodAlias(wxColourDialog, GetColourData_gurax, "GetColourData")
 {
 	Declare(VTYPE_wxColourData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColourDialog, GetColourData_gurax, processor_gurax, argument_gurax)
@@ -109,9 +109,9 @@ Gurax_ImplementMethodEx(wxColourDialog, GetColourData_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxColourDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColourDialog, ShowModal_gurax, processor_gurax, argument_gurax)

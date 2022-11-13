@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(bmp.BitmapInfoHeader, `en)}
 Gurax_DeclareProperty_R(BitmapInfoHeader, biSize)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biSize.");
+	AddHelp("en", u8R"**(
+The value of biSize.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biSize)
@@ -47,9 +47,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biSize)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biWidth.");
+	AddHelp("en", u8R"**(
+The value of biWidth.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biWidth)
@@ -63,9 +63,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biWidth)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biHeight)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biHeight.");
+	AddHelp("en", u8R"**(
+The value of biHeight.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biHeight)
@@ -79,9 +79,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biHeight)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biPlanes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biPlanes.");
+	AddHelp("en", u8R"**(
+The value of biPlanes.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biPlanes)
@@ -95,9 +95,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biPlanes)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biBitCount)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biBitCount.");
+	AddHelp("en", u8R"**(
+The value of biBitCount.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biBitCount)
@@ -111,9 +111,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biBitCount)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biCompression)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biCompression.");
+	AddHelp("en", u8R"**(
+The value of biCompression.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biCompression)
@@ -127,9 +127,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biCompression)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biSizeImage)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biSizeImage.");
+	AddHelp("en", u8R"**(
+The value of biSizeImage.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biSizeImage)
@@ -143,9 +143,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biSizeImage)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biXPelsPerMeter)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biXPelsPerMeter.");
+	AddHelp("en", u8R"**(
+The value of biXPelsPerMeter.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biXPelsPerMeter)
@@ -159,9 +159,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biXPelsPerMeter)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biYPelsPerMeter)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biYPelsPerMeter.");
+	AddHelp("en", u8R"**(
+The value of biYPelsPerMeter.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biYPelsPerMeter)
@@ -175,9 +175,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biYPelsPerMeter)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biClrUsed)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biClrUsed.");
+	AddHelp("en", u8R"**(
+The value of biClrUsed.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biClrUsed)
@@ -191,9 +191,9 @@ Gurax_ImplementPropertyGetter(BitmapInfoHeader, biClrUsed)
 Gurax_DeclareProperty_R(BitmapInfoHeader, biClrImportant)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The value of biClrImportant.");
+	AddHelp("en", u8R"**(
+The value of biClrImportant.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(BitmapInfoHeader, biClrImportant)

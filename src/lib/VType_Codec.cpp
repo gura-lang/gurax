@@ -35,9 +35,9 @@ Gurax_DeclareConstructor(Codec)
 	DeclareArg("delcr", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("addcr", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Searches a `Codec` instance that has been registered with the specified encoding name.");
+	AddHelp("en", u8R"**(
+Searches a `Codec` instance that has been registered with the specified encoding name.
+)**");
 }
 
 Gurax_ImplementConstructor(Codec)
@@ -60,9 +60,9 @@ Gurax_ImplementConstructor(Codec)
 Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf8, "bom@utf8")
 {
 	Declare(VTYPE_Binary, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf8)
@@ -76,9 +76,9 @@ Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf8)
 Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf16be, "bom@utf16be")
 {
 	Declare(VTYPE_Binary, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf16be)
@@ -92,9 +92,9 @@ Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf16be)
 Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf16le, "bom@utf16le")
 {
 	Declare(VTYPE_Binary, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf16le)
@@ -108,9 +108,9 @@ Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf16le)
 Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf32be, "bom@utf32be")
 {
 	Declare(VTYPE_Binary, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf32be)
@@ -124,9 +124,9 @@ Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf32be)
 Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf32le, "bom@utf32le")
 {
 	Declare(VTYPE_Binary, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf32le)
@@ -140,9 +140,9 @@ Gurax_ImplementClassPropertyGetter(Codec, bom_at_utf32le)
 Gurax_DeclareClassProperty_R(Codec, names)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Codec, names)
@@ -161,9 +161,9 @@ Gurax_ImplementClassPropertyGetter(Codec, names)
 Gurax_DeclareProperty_RW(Codec, addcr)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Codec, addcr)
@@ -182,9 +182,9 @@ Gurax_ImplementPropertySetter(Codec, addcr)
 Gurax_DeclareProperty_RW(Codec, delcr)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Codec, delcr)
@@ -203,9 +203,9 @@ Gurax_ImplementPropertySetter(Codec, delcr)
 Gurax_DeclareProperty_R(Codec, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Codec, name)

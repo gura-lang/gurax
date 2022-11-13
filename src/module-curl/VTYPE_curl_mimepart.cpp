@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(curl_mimepart)
 {
 	Declare(VTYPE_curl_mimepart, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `curl.curl_mimepart` instance.");
+	AddHelp("en", u8R"**(
+Creates a `curl.curl_mimepart` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(curl_mimepart)
@@ -56,9 +56,9 @@ Gurax_DeclareMethod(curl_mimepart, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(curl_mimepart, MethodSkeleton)
@@ -80,9 +80,9 @@ Gurax_ImplementMethod(curl_mimepart, MethodSkeleton)
 Gurax_DeclareProperty_R(curl_mimepart, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(curl_mimepart, propSkeleton)

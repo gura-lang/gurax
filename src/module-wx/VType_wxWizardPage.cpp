@@ -38,9 +38,9 @@ Gurax_DeclareMethodAlias(wxWizardPage, Create_gurax, "Create")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parent", VTYPE_wxWizard, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxWizardPage, Create_gurax, processor_gurax, argument_gurax)
@@ -64,9 +64,9 @@ Gurax_DeclareMethodAlias(wxWizardPage, GetBitmap_gurax, "GetBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxWizardPage, GetBitmap_gurax, processor_gurax, argument_gurax)
@@ -85,9 +85,9 @@ Gurax_DeclareMethodAlias(wxWizardPage, GetNext_gurax, "GetNext")
 {
 	Declare(VTYPE_wxWizardPage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxWizardPage, GetNext_gurax, processor_gurax, argument_gurax)
@@ -106,9 +106,9 @@ Gurax_DeclareMethodAlias(wxWizardPage, GetPrev_gurax, "GetPrev")
 {
 	Declare(VTYPE_wxWizardPage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxWizardPage, GetPrev_gurax, processor_gurax, argument_gurax)

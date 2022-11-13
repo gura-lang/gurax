@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxPaletteChangedEvent, SetChangedWindow_gurax, "SetChan
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPaletteChangedEvent, SetChangedWindow_gurax, processor_gurax, argument_gurax)
@@ -62,9 +62,9 @@ Gurax_DeclareMethodAlias(wxPaletteChangedEvent, GetChangedWindow_gurax, "GetChan
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPaletteChangedEvent, GetChangedWindow_gurax, processor_gurax, argument_gurax)

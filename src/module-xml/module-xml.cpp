@@ -14,9 +14,9 @@ Gurax_DeclareFunction(Parse)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(Parse)
@@ -37,9 +37,9 @@ Gurax_DeclareFunction(Read)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(Read)

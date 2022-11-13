@@ -36,9 +36,9 @@ Gurax_DeclareConstructorAlias(CursorProperty_gurax, "CursorProperty")
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.CursorProperty.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.CursorProperty.
+)**");
 }
 
 Gurax_ImplementConstructorEx(CursorProperty_gurax, processor_gurax, argument_gurax)
@@ -63,9 +63,9 @@ Gurax_DeclareMethodAlias(wxCursorProperty, OnMeasureImage_gurax, "OnMeasureImage
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCursorProperty, OnMeasureImage_gurax, processor_gurax, argument_gurax)
@@ -89,9 +89,9 @@ Gurax_DeclareMethodAlias(wxCursorProperty, OnCustomPaint_gurax, "OnCustomPaint")
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("paintdata", VTYPE_wxPGPaintData, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCursorProperty, OnCustomPaint_gurax, processor_gurax, argument_gurax)

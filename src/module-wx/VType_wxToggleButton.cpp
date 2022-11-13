@@ -41,9 +41,9 @@ Gurax_DeclareConstructorAlias(ToggleButton_gurax, "ToggleButton")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.ToggleButton.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.ToggleButton.
+)**");
 }
 
 Gurax_ImplementConstructorEx(ToggleButton_gurax, processor_gurax, argument_gurax)

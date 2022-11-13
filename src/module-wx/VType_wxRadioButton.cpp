@@ -41,9 +41,9 @@ Gurax_DeclareConstructorAlias(RadioButton_gurax, "RadioButton")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.RadioButton.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.RadioButton.
+)**");
 }
 
 Gurax_ImplementConstructorEx(RadioButton_gurax, processor_gurax, argument_gurax)
@@ -82,9 +82,9 @@ Gurax_DeclareMethodAlias(wxRadioButton, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRadioButton, Create_gurax, processor_gurax, argument_gurax)
@@ -114,9 +114,9 @@ Gurax_ImplementMethodEx(wxRadioButton, Create_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxRadioButton, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRadioButton, GetValue_gurax, processor_gurax, argument_gurax)
@@ -135,9 +135,9 @@ Gurax_DeclareMethodAlias(wxRadioButton, SetValue_gurax, "SetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRadioButton, SetValue_gurax, processor_gurax, argument_gurax)

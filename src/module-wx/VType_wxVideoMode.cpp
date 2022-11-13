@@ -37,9 +37,9 @@ Gurax_DeclareConstructorAlias(VideoMode_gurax, "VideoMode")
 	DeclareArg("depth", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("freq", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.VideoMode.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.VideoMode.
+)**");
 }
 
 Gurax_ImplementConstructorEx(VideoMode_gurax, processor_gurax, argument_gurax)
@@ -67,9 +67,9 @@ Gurax_DeclareMethodAlias(wxVideoMode, Matches_gurax, "Matches")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("other", VTYPE_wxVideoMode, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVideoMode, Matches_gurax, processor_gurax, argument_gurax)
@@ -91,9 +91,9 @@ Gurax_ImplementMethodEx(wxVideoMode, Matches_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxVideoMode, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVideoMode, GetWidth_gurax, processor_gurax, argument_gurax)
@@ -111,9 +111,9 @@ Gurax_ImplementMethodEx(wxVideoMode, GetWidth_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxVideoMode, GetHeight_gurax, "GetHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVideoMode, GetHeight_gurax, processor_gurax, argument_gurax)
@@ -131,9 +131,9 @@ Gurax_ImplementMethodEx(wxVideoMode, GetHeight_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxVideoMode, GetDepth_gurax, "GetDepth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVideoMode, GetDepth_gurax, processor_gurax, argument_gurax)
@@ -151,9 +151,9 @@ Gurax_ImplementMethodEx(wxVideoMode, GetDepth_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxVideoMode, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVideoMode, IsOk_gurax, processor_gurax, argument_gurax)
@@ -173,9 +173,9 @@ Gurax_ImplementMethodEx(wxVideoMode, IsOk_gurax, processor_gurax, argument_gurax
 Gurax_DeclareProperty_RW(wxVideoMode, w)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxVideoMode, w)
@@ -195,9 +195,9 @@ Gurax_ImplementPropertySetter(wxVideoMode, w)
 Gurax_DeclareProperty_RW(wxVideoMode, h)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxVideoMode, h)
@@ -217,9 +217,9 @@ Gurax_ImplementPropertySetter(wxVideoMode, h)
 Gurax_DeclareProperty_RW(wxVideoMode, bpp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxVideoMode, bpp)
@@ -239,9 +239,9 @@ Gurax_ImplementPropertySetter(wxVideoMode, bpp)
 Gurax_DeclareProperty_RW(wxVideoMode, refresh)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxVideoMode, refresh)

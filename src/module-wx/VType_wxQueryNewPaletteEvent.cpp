@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxQueryNewPaletteEvent, SetPaletteRealized_gurax, "SetP
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("realized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxQueryNewPaletteEvent, SetPaletteRealized_gurax, processor_gurax, argument_gurax)
@@ -60,9 +60,9 @@ Gurax_ImplementMethodEx(wxQueryNewPaletteEvent, SetPaletteRealized_gurax, proces
 Gurax_DeclareMethodAlias(wxQueryNewPaletteEvent, GetPaletteRealized_gurax, "GetPaletteRealized")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxQueryNewPaletteEvent, GetPaletteRealized_gurax, processor_gurax, argument_gurax)

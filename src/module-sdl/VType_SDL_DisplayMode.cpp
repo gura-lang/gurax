@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_DisplayMode, `en)}
 Gurax_DeclareProperty_R(SDL_DisplayMode, format)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_DisplayMode, format)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_DisplayMode, format)
 Gurax_DeclareProperty_R(SDL_DisplayMode, w)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_DisplayMode, w)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_DisplayMode, w)
 Gurax_DeclareProperty_R(SDL_DisplayMode, h)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_DisplayMode, h)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_DisplayMode, h)
 Gurax_DeclareProperty_R(SDL_DisplayMode, refresh_rate)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_DisplayMode, refresh_rate)

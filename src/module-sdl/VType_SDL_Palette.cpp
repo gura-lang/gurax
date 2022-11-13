@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_Palette, `en)}
 Gurax_DeclareProperty_R(SDL_Palette, ncolors)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Palette, ncolors)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_Palette, ncolors)
 Gurax_DeclareProperty_R(SDL_Palette, colors)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Palette, colors)

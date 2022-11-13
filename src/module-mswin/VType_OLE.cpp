@@ -33,9 +33,9 @@ Gurax_DeclareMethod(OLE, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(OLE, MethodSkeleton)
@@ -57,9 +57,9 @@ Gurax_ImplementMethod(OLE, MethodSkeleton)
 Gurax_DeclareProperty_R(OLE, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(OLE, propSkeleton)

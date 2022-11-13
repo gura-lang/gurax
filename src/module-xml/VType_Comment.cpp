@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Comment)
 	Declare(VTYPE_Comment, Flag::None);
 	DeclareArg("data", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `xml.Comment` instance.");
+	AddHelp("en", u8R"**(
+Creates a `xml.Comment` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Comment)
@@ -55,9 +55,9 @@ Gurax_ImplementConstructor(Comment)
 Gurax_DeclareMethod(Comment, Textize)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(Comment, Textize)
@@ -75,9 +75,9 @@ Gurax_ImplementMethod(Comment, Textize)
 Gurax_DeclareProperty_R(Comment, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Comment, propSkeleton)

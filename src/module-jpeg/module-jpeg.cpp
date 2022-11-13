@@ -27,9 +27,9 @@ Gurax_DeclareFunction(Read)
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(Read)
@@ -52,9 +52,9 @@ Gurax_DeclareFunction(Write)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("image", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(Write)

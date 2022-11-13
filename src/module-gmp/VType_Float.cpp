@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Float)
 	Declare(VTYPE_Rational, Flag::None);
 	DeclareArg("num", VTYPE_Float, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `gmp.Float` instance.");
+	AddHelp("en", u8R"**(
+Creates a `gmp.Float` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Float)
@@ -57,9 +57,9 @@ Gurax_DeclareMethod(Float, set_str)
 	Declare(VTYPE_Nil, Flag::Reduce);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("base", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts to a string.\n");
+	AddHelp("en", u8R"**(
+Converts to a string.
+)**");
 }
 
 Gurax_ImplementMethod(Float, set_str)
@@ -86,9 +86,9 @@ Gurax_ImplementMethod(Float, set_str)
 Gurax_DeclareClassProperty_RW(Float, default_prec)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The default precision of the Float value.");
+	AddHelp("en", u8R"**(
+The default precision of the Float value.
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Float, default_prec)
@@ -109,9 +109,9 @@ Gurax_ImplementClassPropertySetter(Float, default_prec)
 Gurax_DeclareProperty_RW(Float, prec)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The precision of the Float value.");
+	AddHelp("en", u8R"**(
+The precision of the Float value.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Float, prec)
@@ -131,9 +131,9 @@ Gurax_ImplementPropertySetter(Float, prec)
 Gurax_DeclareProperty_R(Float, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Float, sign)

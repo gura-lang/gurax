@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.ToolBarToolBase, `en)}
 Gurax_DeclareMethodAlias(wxToolBarToolBase, GetId_gurax, "GetId")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetId_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, GetControl_gurax, "GetControl")
 {
 	Declare(VTYPE_wxControl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetControl_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetControl_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxToolBarToolBase, IsStretchable_gurax, "IsStretchable")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, IsStretchable_gurax, processor_gurax, argument_gurax)
@@ -97,9 +97,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, IsStretchable_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxToolBarToolBase, IsButton_gurax, "IsButton")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, IsButton_gurax, processor_gurax, argument_gurax)
@@ -117,9 +117,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, IsButton_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxToolBarToolBase, IsControl_gurax, "IsControl")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, IsControl_gurax, processor_gurax, argument_gurax)
@@ -137,9 +137,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, IsControl_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxToolBarToolBase, IsSeparator_gurax, "IsSeparator")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, IsSeparator_gurax, processor_gurax, argument_gurax)
@@ -157,9 +157,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, IsSeparator_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxToolBarToolBase, IsStretchableSpace_gurax, "IsStretchableSpace")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, IsStretchableSpace_gurax, processor_gurax, argument_gurax)
@@ -177,9 +177,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, IsStretchableSpace_gurax, processor_g
 Gurax_DeclareMethodAlias(wxToolBarToolBase, GetStyle_gurax, "GetStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetStyle_gurax, processor_gurax, argument_gurax)
@@ -197,9 +197,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetStyle_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxToolBarToolBase, GetKind_gurax, "GetKind")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetKind_gurax, processor_gurax, argument_gurax)
@@ -217,9 +217,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetKind_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxToolBarToolBase, MakeStretchable_gurax, "MakeStretchable")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, MakeStretchable_gurax, processor_gurax, argument_gurax)
@@ -237,9 +237,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, MakeStretchable_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxToolBarToolBase, IsEnabled_gurax, "IsEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, IsEnabled_gurax, processor_gurax, argument_gurax)
@@ -257,9 +257,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, IsEnabled_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxToolBarToolBase, IsToggled_gurax, "IsToggled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, IsToggled_gurax, processor_gurax, argument_gurax)
@@ -277,9 +277,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, IsToggled_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxToolBarToolBase, CanBeToggled_gurax, "CanBeToggled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, CanBeToggled_gurax, processor_gurax, argument_gurax)
@@ -298,9 +298,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, GetNormalBitmap_gurax, "GetNormalBit
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetNormalBitmap_gurax, processor_gurax, argument_gurax)
@@ -319,9 +319,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, GetDisabledBitmap_gurax, "GetDisable
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetDisabledBitmap_gurax, processor_gurax, argument_gurax)
@@ -340,9 +340,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, GetBitmap_gurax, "GetBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetBitmap_gurax, processor_gurax, argument_gurax)
@@ -360,9 +360,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetBitmap_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxToolBarToolBase, GetLabel_gurax, "GetLabel")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetLabel_gurax, processor_gurax, argument_gurax)
@@ -380,9 +380,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetLabel_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxToolBarToolBase, GetShortHelp_gurax, "GetShortHelp")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetShortHelp_gurax, processor_gurax, argument_gurax)
@@ -400,9 +400,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, GetShortHelp_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxToolBarToolBase, GetLongHelp_gurax, "GetLongHelp")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetLongHelp_gurax, processor_gurax, argument_gurax)
@@ -421,9 +421,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, GetClientData_gurax, "GetClientData"
 {
 	Declare(VTYPE_wxObject, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetClientData_gurax, processor_gurax, argument_gurax)
@@ -442,9 +442,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, Enable_gurax, "Enable")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, Enable_gurax, processor_gurax, argument_gurax)
@@ -466,9 +466,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, Toggle_gurax, "Toggle")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("toggle", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, Toggle_gurax, processor_gurax, argument_gurax)
@@ -490,9 +490,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, SetToggle_gurax, "SetToggle")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("toggle", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, SetToggle_gurax, processor_gurax, argument_gurax)
@@ -514,9 +514,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, SetShortHelp_gurax, "SetShortHelp")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("help", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, SetShortHelp_gurax, processor_gurax, argument_gurax)
@@ -538,9 +538,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, SetLongHelp_gurax, "SetLongHelp")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("help", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, SetLongHelp_gurax, processor_gurax, argument_gurax)
@@ -562,9 +562,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, SetNormalBitmap_gurax, "SetNormalBit
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, SetNormalBitmap_gurax, processor_gurax, argument_gurax)
@@ -587,9 +587,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, SetDisabledBitmap_gurax, "SetDisable
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, SetDisabledBitmap_gurax, processor_gurax, argument_gurax)
@@ -612,9 +612,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, SetLabel_gurax, "SetLabel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, SetLabel_gurax, processor_gurax, argument_gurax)
@@ -636,9 +636,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, SetClientData_gurax, "SetClientData"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, SetClientData_gurax, processor_gurax, argument_gurax)
@@ -660,9 +660,9 @@ Gurax_ImplementMethodEx(wxToolBarToolBase, SetClientData_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxToolBarToolBase, Detach_gurax, "Detach")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, Detach_gurax, processor_gurax, argument_gurax)
@@ -681,9 +681,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, Attach_gurax, "Attach")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tbar", VTYPE_wxToolBar, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, Attach_gurax, processor_gurax, argument_gurax)
@@ -706,9 +706,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, SetDropdownMenu_gurax, "SetDropdownM
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, SetDropdownMenu_gurax, processor_gurax, argument_gurax)
@@ -731,9 +731,9 @@ Gurax_DeclareMethodAlias(wxToolBarToolBase, GetDropdownMenu_gurax, "GetDropdownM
 {
 	Declare(VTYPE_wxMenu, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxToolBarToolBase, GetDropdownMenu_gurax, processor_gurax, argument_gurax)

@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_ControllerButtonEvent, `en)}
 Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, type)
 Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, which)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, which)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, which)
 Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, button)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, button)
@@ -91,9 +91,9 @@ Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, button)
 Gurax_DeclareProperty_R(SDL_ControllerButtonEvent, state)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_ControllerButtonEvent, state)

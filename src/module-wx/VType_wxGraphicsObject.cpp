@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxGraphicsObject, GetRenderer_gurax, "GetRenderer")
 {
 	Declare(VTYPE_wxGraphicsRenderer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGraphicsObject, GetRenderer_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_ImplementMethodEx(wxGraphicsObject, GetRenderer_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxGraphicsObject, IsNull_gurax, "IsNull")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGraphicsObject, IsNull_gurax, processor_gurax, argument_gurax)

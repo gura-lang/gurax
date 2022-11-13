@@ -41,9 +41,9 @@ Gurax_DeclareConstructorAlias(BitmapButton_gurax, "BitmapButton")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.BitmapButton.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.BitmapButton.
+)**");
 }
 
 Gurax_ImplementConstructorEx(BitmapButton_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_DeclareClassMethodAlias(wxBitmapButton, NewCloseButton_gurax, "NewCloseBut
 	Declare(VTYPE_wxBitmapButton, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("winid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxBitmapButton, NewCloseButton_gurax, processor_gurax, argument_gurax)

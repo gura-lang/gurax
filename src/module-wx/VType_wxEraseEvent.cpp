@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxEraseEvent, GetDC_gurax, "GetDC")
 {
 	Declare(VTYPE_wxDC, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEraseEvent, GetDC_gurax, processor_gurax, argument_gurax)

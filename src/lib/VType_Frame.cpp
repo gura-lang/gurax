@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(Frame)
 {
 	Declare(VTYPE_Frame, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Frame` instance of the current scope.\n");
+	AddHelp("en", u8R"**(
+Creates a `Frame` instance of the current scope.
+)**");
 }
 
 Gurax_ImplementConstructor(Frame)
@@ -53,9 +53,9 @@ Gurax_ImplementConstructor(Frame)
 Gurax_DeclareClassMethod(Frame, GetCurrent)
 {
 	Declare(VTYPE_Frame, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethod(Frame, GetCurrent)
@@ -67,9 +67,9 @@ Gurax_ImplementClassMethod(Frame, GetCurrent)
 Gurax_DeclareClassMethod(Frame, PrintStack)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethod(Frame, PrintStack)
@@ -90,10 +90,10 @@ Gurax_DeclareClassMethod(Frame, Where)
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Searches a value in the current environment and returns a `Frame` instance where it's found.\n"
-		"If the symbol is not found, it returns `nil`.\n");
+	AddHelp("en", u8R"**(
+Searches a value in the current environment and returns a `Frame` instance where it's found.
+If the symbol is not found, it returns `nil`.
+)**");
 }
 
 Gurax_ImplementClassMethod(Frame, Where)
@@ -124,9 +124,9 @@ Gurax_DeclareMethod(Frame, Assign)
 	Declare(VTYPE_Image, Flag::Reduce);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethod(Frame, Assign)
@@ -147,9 +147,9 @@ Gurax_ImplementMethod(Frame, Assign)
 Gurax_DeclareMethod(Frame, PrintTree)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints the frame's information.");
+	AddHelp("en", u8R"**(
+Prints the frame's information.
+)**");
 }
 
 Gurax_ImplementMethod(Frame, PrintTree)
@@ -168,9 +168,9 @@ Gurax_ImplementMethod(Frame, PrintTree)
 Gurax_DeclareProperty_R(Frame, id)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Frame, id)
@@ -183,9 +183,9 @@ Gurax_ImplementPropertyGetter(Frame, id)
 Gurax_DeclareProperty_R(Frame, local)
 {
 	Declare(VTYPE_Frame, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Frame, local)
@@ -200,9 +200,9 @@ Gurax_ImplementPropertyGetter(Frame, local)
 Gurax_DeclareProperty_R(Frame, outer)
 {
 	Declare(VTYPE_Frame, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Frame, outer)
@@ -217,9 +217,9 @@ Gurax_ImplementPropertyGetter(Frame, outer)
 Gurax_DeclareProperty_R(Frame, symbols)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Frame, symbols)
@@ -240,9 +240,9 @@ Gurax_ImplementPropertyGetter(Frame, symbols)
 Gurax_DeclareProperty_R(Frame, typeName)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Frame, typeName)

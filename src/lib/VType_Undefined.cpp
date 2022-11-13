@@ -32,9 +32,9 @@ Gurax_DeclareClassMethod(Undefined, __str__)
 {
 	Declare(VTYPE_String, Flag::None);
 	StringStyle::DeclareAttrOpt(*this);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Converts the object to a string.\n");
+	AddHelp("en", u8R"**(
+Converts the object to a string.
+)**");
 }
 
 Gurax_ImplementClassMethod(Undefined, __str__)

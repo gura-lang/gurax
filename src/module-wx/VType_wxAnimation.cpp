@@ -35,9 +35,9 @@ Gurax_DeclareConstructorAlias(Animation_gurax, "Animation")
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Animation.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Animation.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Animation_gurax, processor_gurax, argument_gurax)
@@ -60,9 +60,9 @@ Gurax_DeclareMethodAlias(wxAnimation, GetDelay_gurax, "GetDelay")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimation, GetDelay_gurax, processor_gurax, argument_gurax)
@@ -85,9 +85,9 @@ Gurax_DeclareMethodAlias(wxAnimation, GetFrame_gurax, "GetFrame")
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimation, GetFrame_gurax, processor_gurax, argument_gurax)
@@ -108,9 +108,9 @@ Gurax_ImplementMethodEx(wxAnimation, GetFrame_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxAnimation, GetFrameCount_gurax, "GetFrameCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimation, GetFrameCount_gurax, processor_gurax, argument_gurax)
@@ -129,9 +129,9 @@ Gurax_DeclareMethodAlias(wxAnimation, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimation, GetSize_gurax, processor_gurax, argument_gurax)
@@ -149,9 +149,9 @@ Gurax_ImplementMethodEx(wxAnimation, GetSize_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxAnimation, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimation, IsOk_gurax, processor_gurax, argument_gurax)
@@ -171,9 +171,9 @@ Gurax_DeclareMethodAlias(wxAnimation, Load_gurax, "Load")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("stream", VTYPE_wxInputStream, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimation, Load_gurax, processor_gurax, argument_gurax)
@@ -199,9 +199,9 @@ Gurax_DeclareMethodAlias(wxAnimation, LoadFile_gurax, "LoadFile")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimation, LoadFile_gurax, processor_gurax, argument_gurax)

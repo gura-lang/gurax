@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(BusyCursor_gurax, "BusyCursor")
 	Declare(VTYPE_wxBusyCursor, Flag::None);
 	DeclareArg("cursor", VTYPE_wxCursor, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.BusyCursor.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.BusyCursor.
+)**");
 }
 
 Gurax_ImplementConstructorEx(BusyCursor_gurax, processor_gurax, argument_gurax)

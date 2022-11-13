@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxHtmlLinkEvent, GetLinkInfo_gurax, "GetLinkInfo")
 {
 	Declare(VTYPE_wxHtmlLinkInfo, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlLinkEvent, GetLinkInfo_gurax, processor_gurax, argument_gurax)

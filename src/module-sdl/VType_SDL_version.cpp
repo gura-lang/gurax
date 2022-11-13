@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_version, `en)}
 Gurax_DeclareProperty_R(SDL_version, major)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_version, major)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_version, major)
 Gurax_DeclareProperty_R(SDL_version, minor)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_version, minor)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_version, minor)
 Gurax_DeclareProperty_R(SDL_version, patch)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_version, patch)

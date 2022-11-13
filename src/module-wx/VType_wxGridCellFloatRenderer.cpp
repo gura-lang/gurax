@@ -36,9 +36,9 @@ Gurax_DeclareConstructorAlias(GridCellFloatRenderer_gurax, "GridCellFloatRendere
 	DeclareArg("precision", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.GridCellFloatRenderer.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.GridCellFloatRenderer.
+)**");
 }
 
 Gurax_ImplementConstructorEx(GridCellFloatRenderer_gurax, processor_gurax, argument_gurax)
@@ -64,9 +64,9 @@ Gurax_ImplementConstructorEx(GridCellFloatRenderer_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, GetFormat_gurax, "GetFormat")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellFloatRenderer, GetFormat_gurax, processor_gurax, argument_gurax)
@@ -84,9 +84,9 @@ Gurax_ImplementMethodEx(wxGridCellFloatRenderer, GetFormat_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, GetPrecision_gurax, "GetPrecision")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellFloatRenderer, GetPrecision_gurax, processor_gurax, argument_gurax)
@@ -104,9 +104,9 @@ Gurax_ImplementMethodEx(wxGridCellFloatRenderer, GetPrecision_gurax, processor_g
 Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellFloatRenderer, GetWidth_gurax, processor_gurax, argument_gurax)
@@ -125,9 +125,9 @@ Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, SetFormat_gurax, "SetFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellFloatRenderer, SetFormat_gurax, processor_gurax, argument_gurax)
@@ -149,9 +149,9 @@ Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, SetParameters_gurax, "SetParam
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellFloatRenderer, SetParameters_gurax, processor_gurax, argument_gurax)
@@ -173,9 +173,9 @@ Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, SetPrecision_gurax, "SetPrecis
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("precision", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellFloatRenderer, SetPrecision_gurax, processor_gurax, argument_gurax)
@@ -197,9 +197,9 @@ Gurax_DeclareMethodAlias(wxGridCellFloatRenderer, SetWidth_gurax, "SetWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellFloatRenderer, SetWidth_gurax, processor_gurax, argument_gurax)

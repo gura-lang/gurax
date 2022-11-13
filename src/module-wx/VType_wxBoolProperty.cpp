@@ -36,9 +36,9 @@ Gurax_DeclareConstructorAlias(BoolProperty_gurax, "BoolProperty")
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("value", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.BoolProperty.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.BoolProperty.
+)**");
 }
 
 Gurax_ImplementConstructorEx(BoolProperty_gurax, processor_gurax, argument_gurax)
@@ -62,9 +62,9 @@ Gurax_DeclareMethodAlias(wxBoolProperty, ValueToString_gurax, "ValueToString")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxBoolProperty, ValueToString_gurax, processor_gurax, argument_gurax)
@@ -91,9 +91,9 @@ Gurax_DeclareMethodAlias(wxBoolProperty, StringToValue_gurax, "StringToValue")
 	DeclareArg("variant", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxBoolProperty, StringToValue_gurax, processor_gurax, argument_gurax)
@@ -121,9 +121,9 @@ Gurax_DeclareMethodAlias(wxBoolProperty, IntToValue_gurax, "IntToValue")
 	DeclareArg("variant", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("number", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxBoolProperty, IntToValue_gurax, processor_gurax, argument_gurax)
@@ -150,9 +150,9 @@ Gurax_DeclareMethodAlias(wxBoolProperty, DoSetAttribute_gurax, "DoSetAttribute")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxBoolProperty, DoSetAttribute_gurax, processor_gurax, argument_gurax)

@@ -32,9 +32,9 @@ Gurax_DeclareFunctionAlias(_function_, "&")
 {
 	Declare(VTYPE_Function, Flag::None);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Function` instance.\n");
+	AddHelp("en", u8R"**(
+Creates a `Function` instance.
+)**");
 }
 
 Gurax_ImplementFunction(_function_)
@@ -70,9 +70,9 @@ Gurax_DeclareConstructor(Function)
 	Declare(VTYPE_Random, Flag::None);
 	DeclareArg("argDecls", VTYPE_Quote, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::Once);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementConstructor(Function)
@@ -99,10 +99,10 @@ Gurax_ImplementConstructor(Function)
 Gurax_DeclareProperty_R(Function, expr)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `expr` instance that represents the function body.\n"
-		"Set to `nil` if the function has not been declared in a script.");
+	AddHelp("en", u8R"**(
+An `expr` instance that represents the function body.
+Set to `nil` if the function has not been declared in a script.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Function, expr)
@@ -116,9 +116,9 @@ Gurax_ImplementPropertyGetter(Function, expr)
 Gurax_DeclareProperty_R(Function, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The name of the function.");
+	AddHelp("en", u8R"**(
+The name of the function.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Function, name)
@@ -131,9 +131,9 @@ Gurax_ImplementPropertyGetter(Function, name)
 Gurax_DeclareProperty_R(Function, symbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The symbol of the function.");
+	AddHelp("en", u8R"**(
+The symbol of the function.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Function, symbol)
@@ -146,9 +146,9 @@ Gurax_ImplementPropertyGetter(Function, symbol)
 Gurax_DeclareProperty_R(Function, type)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The type of the function. One of `` `statement``, `` `function`` and `` `method``.");
+	AddHelp("en", u8R"**(
+The type of the function. One of `` `statement``, `` `function`` and `` `method``.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Function, type)
@@ -166,9 +166,9 @@ Gurax_DeclareProperty_R(Function, vtypeResult)
 {
 	Declare(VTYPE_Any, Flag::Nil);
 	DeclareAttrOpt(Gurax_Symbol(name));
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Function, vtypeResult)

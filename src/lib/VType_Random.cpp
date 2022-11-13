@@ -33,11 +33,11 @@ Gurax_DeclareConstructor(Random)
 	Declare(VTYPE_Random, Flag::Map);
 	DeclareArg("seed", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Random` instance that has been initialized with the specified seed.\n"
-		"If the argument `seed` is omitted, it creates an instance that holds a reference\n"
-		"to a random generator globally shared in the interpreter's environment.\n");
+	AddHelp("en", u8R"**(
+Creates a `Random` instance that has been initialized with the specified seed.
+If the argument `seed` is omitted, it creates an instance that holds a reference
+to a random generator globally shared in the interpreter's environment.
+)**");
 }
 
 Gurax_ImplementConstructor(Random)
@@ -59,12 +59,12 @@ Gurax_ImplementConstructor(Random)
 Gurax_DeclareHybridMethod(Random, Bool)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Randomly generates a boolean value, `true` or `false`.\n"
-		"\n"
-		"This method may take either an instance or `Random` class as its target.\n"
-		"If `Random` class is specified, a global instance of `Random` is used.\n");
+	AddHelp("en", u8R"**(
+Randomly generates a boolean value, `true` or `false`.
+
+This method may take either an instance or `Random` class as its target.
+If `Random` class is specified, a global instance of `Random` is used.
+)**");
 }
 
 Gurax_ImplementHybridMethod(Random, Bool)
@@ -83,14 +83,14 @@ Gurax_DeclareHybridMethod(Random, BoolSeq)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that randomly generates boolean numbers, `true` or `false`\n"
-		"for the specified times by `cnt`.\n"
-		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
-		"\n"
-		"This method may take either an instance or `Random` class as its target.\n"
-		"If `Random` class is specified, a global instance of `Random` is used.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that randomly generates boolean numbers, `true` or `false`
+for the specified times by `cnt`.
+If `cnt` is ommited, the iterator generates numbers indefinitely.
+
+This method may take either an instance or `Random` class as its target.
+If `Random` class is specified, a global instance of `Random` is used.
+)**");
 }
 
 Gurax_ImplementHybridMethod(Random, BoolSeq)
@@ -112,12 +112,12 @@ Gurax_ImplementHybridMethod(Random, BoolSeq)
 Gurax_DeclareHybridMethod(Random, Float)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Randomly generates a real number in the range of `[0, 1)`.\n"
-		"\n"
-		"This method may take either an instance or `Random` class as its target.\n"
-		"If `Random` class is specified, a global instance of `Random` is used.\n");
+	AddHelp("en", u8R"**(
+Randomly generates a real number in the range of `[0, 1)`.
+
+This method may take either an instance or `Random` class as its target.
+If `Random` class is specified, a global instance of `Random` is used.
+)**");
 }
 
 Gurax_ImplementHybridMethod(Random, Float)
@@ -136,14 +136,14 @@ Gurax_DeclareHybridMethod(Random, FloatSeq)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that randomly generates real numbers in the range of `[0, 1)`\n"
-		"for the specified times by `cnt`.\n"
-		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
-		"\n"
-		"This method may take either an instance or `Random` class as its target.\n"
-		"If `Random` class is specified, a global instance of `Random` is used.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that randomly generates real numbers in the range of `[0, 1)`
+for the specified times by `cnt`.
+If `cnt` is ommited, the iterator generates numbers indefinitely.
+
+This method may take either an instance or `Random` class as its target.
+If `Random` class is specified, a global instance of `Random` is used.
+)**");
 }
 
 Gurax_ImplementHybridMethod(Random, FloatSeq)
@@ -166,12 +166,12 @@ Gurax_DeclareHybridMethod(Random, Int)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Randomly generates an integer number within the range of `[0, range)`\n"
-		"\n"
-		"This method may take either an instance or `Random` class as its target.\n"
-		"If `Random` class is specified, a global instance of `Random` is used.\n");
+	AddHelp("en", u8R"**(
+Randomly generates an integer number within the range of `[0, range)`
+
+This method may take either an instance or `Random` class as its target.
+If `Random` class is specified, a global instance of `Random` is used.
+)**");
 }
 
 Gurax_ImplementHybridMethod(Random, Int)
@@ -195,14 +195,14 @@ Gurax_DeclareHybridMethod(Random, IntSeq)
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that randomly generates integer numbers in the range of `[0, range)`\n"
-		"for the specified times by `cnt`.\n"
-		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
-		"\n"
-		"This method may take either an instance or `Random` class as its target.\n"
-		"If `Random` class is specified, a global instance of `Random` is used.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that randomly generates integer numbers in the range of `[0, range)`
+for the specified times by `cnt`.
+If `cnt` is ommited, the iterator generates numbers indefinitely.
+
+This method may take either an instance or `Random` class as its target.
+If `Random` class is specified, a global instance of `Random` is used.
+)**");
 }
 
 Gurax_ImplementHybridMethod(Random, IntSeq)
@@ -227,14 +227,14 @@ Gurax_DeclareHybridMethod(Random, Normal)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("mean", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("stddev", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Randomly generates a real number based on uniform distribution\n"
-		"with specified mean and standard deviation values.\n"
-		"In default, the value of `mean` is `0` and `stddev` is `1`.\n"
-		"\n"
-		"This method may take either an instance or `Random` class as its target.\n"
-		"If `Random` class is specified, a global instance of `Random` is used.\n");
+	AddHelp("en", u8R"**(
+Randomly generates a real number based on uniform distribution
+with specified mean and standard deviation values.
+In default, the value of `mean` is `0` and `stddev` is `1`.
+
+This method may take either an instance or `Random` class as its target.
+If `Random` class is specified, a global instance of `Random` is used.
+)**");
 }
 
 Gurax_ImplementHybridMethod(Random, Normal)
@@ -259,16 +259,16 @@ Gurax_DeclareHybridMethod(Random, NormalSeq)
 	DeclareArg("stddev", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that randomly generates real numbers based\n"
-		"on uniform distribution with specified mean and standard deviation values\n"
-		"for the specified times by `cnt`.\n"
-		"If `cnt` is ommited, the iterator generates numbers indefinitely.\n"
-		"In default, the value of `mean` is `0` and `stddev` is `1`.\n"
-		"\n"
-		"This method may take either an instance or `Random` class as its target.\n"
-		"If `Random` class is specified, a global instance of `Random` is used.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that randomly generates real numbers based
+on uniform distribution with specified mean and standard deviation values
+for the specified times by `cnt`.
+If `cnt` is ommited, the iterator generates numbers indefinitely.
+In default, the value of `mean` is `0` and `stddev` is `1`.
+
+This method may take either an instance or `Random` class as its target.
+If `Random` class is specified, a global instance of `Random` is used.
+)**");
 }
 
 Gurax_ImplementHybridMethod(Random, NormalSeq)
@@ -292,12 +292,12 @@ Gurax_ImplementHybridMethod(Random, NormalSeq)
 Gurax_DeclareHybridMethod(Random, Reset)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Reset the seed of the random generator.\n"
-		"\n"
-		"This method may take either an instance or `Random` class as its target.\n"
-		"If `Random` class is specified, a global instance of `Random` is used.\n");
+	AddHelp("en", u8R"**(
+Reset the seed of the random generator.
+
+This method may take either an instance or `Random` class as its target.
+If `Random` class is specified, a global instance of `Random` is used.
+)**");
 }
 
 Gurax_ImplementHybridMethod(Random, Reset)
@@ -318,9 +318,9 @@ Gurax_ImplementHybridMethod(Random, Reset)
 Gurax_DeclareHybridProperty_RW(Random, seed)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Seed value of the random instance.");
+	AddHelp("en", u8R"**(
+Seed value of the random instance.
+)**");
 }
 
 Gurax_ImplementHybridPropertyGetter(Random, seed)

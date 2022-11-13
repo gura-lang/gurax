@@ -34,9 +34,9 @@ Gurax_DeclareConstructor(Rational)
 	DeclareArg("numer", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("denom", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Rational` instance.");
+	AddHelp("en", u8R"**(
+Creates a `Rational` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Rational)
@@ -57,9 +57,9 @@ Gurax_ImplementConstructor(Rational)
 Gurax_DeclareMethod(Rational, IsZero)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the target rational equals to zero.\n");
+	AddHelp("en", u8R"**(
+Returns `true` if the target rational equals to zero.
+)**");
 }
 
 Gurax_ImplementMethod(Rational, IsZero)
@@ -74,9 +74,9 @@ Gurax_ImplementMethod(Rational, IsZero)
 Gurax_DeclareMethod(Rational, IsPos)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the target rational is greater than zero.\n");
+	AddHelp("en", u8R"**(
+Returns `true` if the target rational is greater than zero.
+)**");
 }
 
 Gurax_ImplementMethod(Rational, IsPos)
@@ -91,9 +91,9 @@ Gurax_ImplementMethod(Rational, IsPos)
 Gurax_DeclareMethod(Rational, IsNeg)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the target rational is less than zero.\n");
+	AddHelp("en", u8R"**(
+Returns `true` if the target rational is less than zero.
+)**");
 }
 
 Gurax_ImplementMethod(Rational, IsNeg)
@@ -108,9 +108,9 @@ Gurax_ImplementMethod(Rational, IsNeg)
 Gurax_DeclareMethod(Rational, IsNonPos)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the target rational is less than or equals to zero.\n");
+	AddHelp("en", u8R"**(
+Returns `true` if the target rational is less than or equals to zero.
+)**");
 }
 
 Gurax_ImplementMethod(Rational, IsNonPos)
@@ -125,9 +125,9 @@ Gurax_ImplementMethod(Rational, IsNonPos)
 Gurax_DeclareMethod(Rational, IsNonNeg)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the target rational is greater than or equal to zero.\n");
+	AddHelp("en", u8R"**(
+Returns `true` if the target rational is greater than or equal to zero.
+)**");
 }
 
 Gurax_ImplementMethod(Rational, IsNonNeg)
@@ -142,9 +142,9 @@ Gurax_ImplementMethod(Rational, IsNonNeg)
 Gurax_DeclareMethod(Rational, Canonicalize)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns a `Rational` instance that has been canonicalized from the target.\n");
+	AddHelp("en", u8R"**(
+Returns a `Rational` instance that has been canonicalized from the target.
+)**");
 }
 
 Gurax_ImplementMethod(Rational, Canonicalize)
@@ -162,9 +162,9 @@ Gurax_ImplementMethod(Rational, Canonicalize)
 Gurax_DeclareClassProperty_RW(Rational, format)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Format string used to convert a rational into a string.");
+	AddHelp("en", u8R"**(
+Format string used to convert a rational into a string.
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Rational, format)
@@ -185,9 +185,9 @@ Gurax_ImplementClassPropertySetter(Rational, format)
 Gurax_DeclareClassProperty_RW(Rational, formatInt)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Format string used to convert a rational which demoninator is one into a string.");
+	AddHelp("en", u8R"**(
+Format string used to convert a rational which demoninator is one into a string.
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Rational, formatInt)
@@ -210,9 +210,9 @@ Gurax_ImplementClassPropertySetter(Rational, formatInt)
 Gurax_DeclareProperty_R(Rational, denom)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The denomation part of the rational number.");
+	AddHelp("en", u8R"**(
+The denomation part of the rational number.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Rational, denom)
@@ -225,9 +225,9 @@ Gurax_ImplementPropertyGetter(Rational, denom)
 Gurax_DeclareProperty_R(Rational, numer)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The numeration part of the rational number.");
+	AddHelp("en", u8R"**(
+The numeration part of the rational number.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Rational, numer)
@@ -240,9 +240,9 @@ Gurax_ImplementPropertyGetter(Rational, numer)
 Gurax_DeclareProperty_R(Rational, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The sign of the rational number. Returns 0 for a zero, -1 for a minus, and +1 for a plus.");
+	AddHelp("en", u8R"**(
+The sign of the rational number. Returns 0 for a zero, -1 for a minus, and +1 for a plus.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Rational, sign)

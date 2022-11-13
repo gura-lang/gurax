@@ -41,9 +41,9 @@ Gurax_DeclareConstructorAlias(NumberEntryDialog_gurax, "NumberEntryDialog")
 	DeclareArg("max", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.NumberEntryDialog.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.NumberEntryDialog.
+)**");
 }
 
 Gurax_ImplementConstructorEx(NumberEntryDialog_gurax, processor_gurax, argument_gurax)
@@ -73,9 +73,9 @@ Gurax_ImplementConstructorEx(NumberEntryDialog_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxNumberEntryDialog, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxNumberEntryDialog, GetValue_gurax, processor_gurax, argument_gurax)

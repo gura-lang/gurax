@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.CloseEvent, `en)}
 Gurax_DeclareMethodAlias(wxCloseEvent, CanVeto_gurax, "CanVeto")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCloseEvent, CanVeto_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxCloseEvent, CanVeto_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxCloseEvent, GetLoggingOff_gurax, "GetLoggingOff")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCloseEvent, GetLoggingOff_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_DeclareMethodAlias(wxCloseEvent, SetCanVeto_gurax, "SetCanVeto")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("canVeto", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCloseEvent, SetCanVeto_gurax, processor_gurax, argument_gurax)
@@ -101,9 +101,9 @@ Gurax_DeclareMethodAlias(wxCloseEvent, SetLoggingOff_gurax, "SetLoggingOff")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("loggingOff", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCloseEvent, SetLoggingOff_gurax, processor_gurax, argument_gurax)
@@ -125,9 +125,9 @@ Gurax_DeclareMethodAlias(wxCloseEvent, Veto_gurax, "Veto")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("veto", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCloseEvent, Veto_gurax, processor_gurax, argument_gurax)
@@ -148,9 +148,9 @@ Gurax_ImplementMethodEx(wxCloseEvent, Veto_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxCloseEvent, GetVeto_gurax, "GetVeto")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCloseEvent, GetVeto_gurax, processor_gurax, argument_gurax)

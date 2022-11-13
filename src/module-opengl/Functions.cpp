@@ -9,9 +9,9 @@ Gurax_BeginModuleScope(opengl)
 Gurax_DeclareFunctionAlias(glewInit_gurax, "glewInit")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glewInit_gurax, processor_gurax, argument_gurax)
@@ -26,9 +26,9 @@ Gurax_DeclareFunctionAlias(glewIsSupported_gurax, "glewIsSupported")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glewIsSupported_gurax, processor_gurax, argument_gurax)
@@ -46,9 +46,9 @@ Gurax_DeclareFunctionAlias(glewGetExtension_gurax, "glewGetExtension")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glewGetExtension_gurax, processor_gurax, argument_gurax)
@@ -66,9 +66,9 @@ Gurax_DeclareFunctionAlias(glewGetErrorString_gurax, "glewGetErrorString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("error", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glewGetErrorString_gurax, processor_gurax, argument_gurax)
@@ -86,9 +86,9 @@ Gurax_DeclareFunctionAlias(glewGetString_gurax, "glewGetString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("name", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glewGetString_gurax, processor_gurax, argument_gurax)
@@ -107,9 +107,9 @@ Gurax_DeclareFunctionAlias(glAccum_gurax, "glAccum")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("op", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glAccum_gurax, processor_gurax, argument_gurax)
@@ -129,9 +129,9 @@ Gurax_DeclareFunctionAlias(glAlphaFunc_gurax, "glAlphaFunc")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("func", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ref", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glAlphaFunc_gurax, processor_gurax, argument_gurax)
@@ -152,9 +152,9 @@ Gurax_DeclareFunctionAlias(glAreTexturesResident_gurax, "glAreTexturesResident")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("residences", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glAreTexturesResident_gurax, processor_gurax, argument_gurax)
@@ -174,9 +174,9 @@ Gurax_DeclareFunctionAlias(glArrayElement_gurax, "glArrayElement")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glArrayElement_gurax, processor_gurax, argument_gurax)
@@ -194,9 +194,9 @@ Gurax_DeclareFunctionAlias(glBegin_gurax, "glBegin")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBegin_gurax, processor_gurax, argument_gurax)
@@ -215,9 +215,9 @@ Gurax_DeclareFunctionAlias(glBindTexture_gurax, "glBindTexture")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindTexture_gurax, processor_gurax, argument_gurax)
@@ -242,9 +242,9 @@ Gurax_DeclareFunctionAlias(glBitmap_gurax, "glBitmap")
 	DeclareArg("xmove", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ymove", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bitmap", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBitmap_gurax, processor_gurax, argument_gurax)
@@ -269,9 +269,9 @@ Gurax_DeclareFunctionAlias(glBlendFunc_gurax, "glBlendFunc")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sfactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dfactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendFunc_gurax, processor_gurax, argument_gurax)
@@ -290,9 +290,9 @@ Gurax_DeclareFunctionAlias(glCallList_gurax, "glCallList")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("list", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCallList_gurax, processor_gurax, argument_gurax)
@@ -312,9 +312,9 @@ Gurax_DeclareFunctionAlias(glCallLists_gurax, "glCallLists")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("lists", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCallLists_gurax, processor_gurax, argument_gurax)
@@ -334,9 +334,9 @@ Gurax_DeclareFunctionAlias(glClear_gurax, "glClear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClear_gurax, processor_gurax, argument_gurax)
@@ -357,9 +357,9 @@ Gurax_DeclareFunctionAlias(glClearAccum_gurax, "glClearAccum")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearAccum_gurax, processor_gurax, argument_gurax)
@@ -383,9 +383,9 @@ Gurax_DeclareFunctionAlias(glClearColor_gurax, "glClearColor")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearColor_gurax, processor_gurax, argument_gurax)
@@ -406,9 +406,9 @@ Gurax_DeclareFunctionAlias(glClearDepth_gurax, "glClearDepth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearDepth_gurax, processor_gurax, argument_gurax)
@@ -426,9 +426,9 @@ Gurax_DeclareFunctionAlias(glClearIndex_gurax, "glClearIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearIndex_gurax, processor_gurax, argument_gurax)
@@ -446,9 +446,9 @@ Gurax_DeclareFunctionAlias(glClearStencil_gurax, "glClearStencil")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearStencil_gurax, processor_gurax, argument_gurax)
@@ -467,9 +467,9 @@ Gurax_DeclareFunctionAlias(glClipPlane_gurax, "glClipPlane")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("plane", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("equation", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClipPlane_gurax, processor_gurax, argument_gurax)
@@ -490,9 +490,9 @@ Gurax_DeclareFunctionAlias(glColor3b_gurax, "glColor3b")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3b_gurax, processor_gurax, argument_gurax)
@@ -512,9 +512,9 @@ Gurax_DeclareFunctionAlias(glColor3bv_gurax, "glColor3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3bv_gurax, processor_gurax, argument_gurax)
@@ -534,9 +534,9 @@ Gurax_DeclareFunctionAlias(glColor3d_gurax, "glColor3d")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3d_gurax, processor_gurax, argument_gurax)
@@ -556,9 +556,9 @@ Gurax_DeclareFunctionAlias(glColor3dv_gurax, "glColor3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3dv_gurax, processor_gurax, argument_gurax)
@@ -578,9 +578,9 @@ Gurax_DeclareFunctionAlias(glColor3f_gurax, "glColor3f")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3f_gurax, processor_gurax, argument_gurax)
@@ -600,9 +600,9 @@ Gurax_DeclareFunctionAlias(glColor3fv_gurax, "glColor3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3fv_gurax, processor_gurax, argument_gurax)
@@ -622,9 +622,9 @@ Gurax_DeclareFunctionAlias(glColor3i_gurax, "glColor3i")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3i_gurax, processor_gurax, argument_gurax)
@@ -644,9 +644,9 @@ Gurax_DeclareFunctionAlias(glColor3iv_gurax, "glColor3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3iv_gurax, processor_gurax, argument_gurax)
@@ -666,9 +666,9 @@ Gurax_DeclareFunctionAlias(glColor3s_gurax, "glColor3s")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3s_gurax, processor_gurax, argument_gurax)
@@ -688,9 +688,9 @@ Gurax_DeclareFunctionAlias(glColor3sv_gurax, "glColor3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3sv_gurax, processor_gurax, argument_gurax)
@@ -710,9 +710,9 @@ Gurax_DeclareFunctionAlias(glColor3ub_gurax, "glColor3ub")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3ub_gurax, processor_gurax, argument_gurax)
@@ -732,9 +732,9 @@ Gurax_DeclareFunctionAlias(glColor3ubv_gurax, "glColor3ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3ubv_gurax, processor_gurax, argument_gurax)
@@ -754,9 +754,9 @@ Gurax_DeclareFunctionAlias(glColor3ui_gurax, "glColor3ui")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3ui_gurax, processor_gurax, argument_gurax)
@@ -776,9 +776,9 @@ Gurax_DeclareFunctionAlias(glColor3uiv_gurax, "glColor3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3uiv_gurax, processor_gurax, argument_gurax)
@@ -798,9 +798,9 @@ Gurax_DeclareFunctionAlias(glColor3us_gurax, "glColor3us")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3us_gurax, processor_gurax, argument_gurax)
@@ -820,9 +820,9 @@ Gurax_DeclareFunctionAlias(glColor3usv_gurax, "glColor3usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor3usv_gurax, processor_gurax, argument_gurax)
@@ -843,9 +843,9 @@ Gurax_DeclareFunctionAlias(glColor4b_gurax, "glColor4b")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4b_gurax, processor_gurax, argument_gurax)
@@ -866,9 +866,9 @@ Gurax_DeclareFunctionAlias(glColor4bv_gurax, "glColor4bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4bv_gurax, processor_gurax, argument_gurax)
@@ -889,9 +889,9 @@ Gurax_DeclareFunctionAlias(glColor4d_gurax, "glColor4d")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4d_gurax, processor_gurax, argument_gurax)
@@ -912,9 +912,9 @@ Gurax_DeclareFunctionAlias(glColor4dv_gurax, "glColor4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4dv_gurax, processor_gurax, argument_gurax)
@@ -935,9 +935,9 @@ Gurax_DeclareFunctionAlias(glColor4f_gurax, "glColor4f")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4f_gurax, processor_gurax, argument_gurax)
@@ -958,9 +958,9 @@ Gurax_DeclareFunctionAlias(glColor4fv_gurax, "glColor4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4fv_gurax, processor_gurax, argument_gurax)
@@ -981,9 +981,9 @@ Gurax_DeclareFunctionAlias(glColor4i_gurax, "glColor4i")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4i_gurax, processor_gurax, argument_gurax)
@@ -1004,9 +1004,9 @@ Gurax_DeclareFunctionAlias(glColor4iv_gurax, "glColor4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4iv_gurax, processor_gurax, argument_gurax)
@@ -1027,9 +1027,9 @@ Gurax_DeclareFunctionAlias(glColor4s_gurax, "glColor4s")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4s_gurax, processor_gurax, argument_gurax)
@@ -1050,9 +1050,9 @@ Gurax_DeclareFunctionAlias(glColor4sv_gurax, "glColor4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4sv_gurax, processor_gurax, argument_gurax)
@@ -1073,9 +1073,9 @@ Gurax_DeclareFunctionAlias(glColor4ub_gurax, "glColor4ub")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4ub_gurax, processor_gurax, argument_gurax)
@@ -1096,9 +1096,9 @@ Gurax_DeclareFunctionAlias(glColor4ubv_gurax, "glColor4ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4ubv_gurax, processor_gurax, argument_gurax)
@@ -1119,9 +1119,9 @@ Gurax_DeclareFunctionAlias(glColor4ui_gurax, "glColor4ui")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4ui_gurax, processor_gurax, argument_gurax)
@@ -1142,9 +1142,9 @@ Gurax_DeclareFunctionAlias(glColor4uiv_gurax, "glColor4uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4uiv_gurax, processor_gurax, argument_gurax)
@@ -1165,9 +1165,9 @@ Gurax_DeclareFunctionAlias(glColor4us_gurax, "glColor4us")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4us_gurax, processor_gurax, argument_gurax)
@@ -1188,9 +1188,9 @@ Gurax_DeclareFunctionAlias(glColor4usv_gurax, "glColor4usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColor4usv_gurax, processor_gurax, argument_gurax)
@@ -1211,9 +1211,9 @@ Gurax_DeclareFunctionAlias(glColorMask_gurax, "glColorMask")
 	DeclareArg("green", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorMask_gurax, processor_gurax, argument_gurax)
@@ -1235,9 +1235,9 @@ Gurax_DeclareFunctionAlias(glColorMaterial_gurax, "glColorMaterial")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorMaterial_gurax, processor_gurax, argument_gurax)
@@ -1259,9 +1259,9 @@ Gurax_DeclareFunctionAlias(glColorPointer_gurax, "glColorPointer")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorPointer_gurax, processor_gurax, argument_gurax)
@@ -1286,9 +1286,9 @@ Gurax_DeclareFunctionAlias(glCopyPixels_gurax, "glCopyPixels")
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyPixels_gurax, processor_gurax, argument_gurax)
@@ -1316,9 +1316,9 @@ Gurax_DeclareFunctionAlias(glCopyTexImage1D_gurax, "glCopyTexImage1D")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyTexImage1D_gurax, processor_gurax, argument_gurax)
@@ -1349,9 +1349,9 @@ Gurax_DeclareFunctionAlias(glCopyTexImage2D_gurax, "glCopyTexImage2D")
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyTexImage2D_gurax, processor_gurax, argument_gurax)
@@ -1381,9 +1381,9 @@ Gurax_DeclareFunctionAlias(glCopyTexSubImage1D_gurax, "glCopyTexSubImage1D")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyTexSubImage1D_gurax, processor_gurax, argument_gurax)
@@ -1413,9 +1413,9 @@ Gurax_DeclareFunctionAlias(glCopyTexSubImage2D_gurax, "glCopyTexSubImage2D")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyTexSubImage2D_gurax, processor_gurax, argument_gurax)
@@ -1440,9 +1440,9 @@ Gurax_DeclareFunctionAlias(glCullFace_gurax, "glCullFace")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCullFace_gurax, processor_gurax, argument_gurax)
@@ -1461,9 +1461,9 @@ Gurax_DeclareFunctionAlias(glDeleteLists_gurax, "glDeleteLists")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("list", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteLists_gurax, processor_gurax, argument_gurax)
@@ -1483,9 +1483,9 @@ Gurax_DeclareFunctionAlias(glDeleteTextures_gurax, "glDeleteTextures")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteTextures_gurax, processor_gurax, argument_gurax)
@@ -1504,9 +1504,9 @@ Gurax_DeclareFunctionAlias(glDepthFunc_gurax, "glDepthFunc")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("func", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDepthFunc_gurax, processor_gurax, argument_gurax)
@@ -1524,9 +1524,9 @@ Gurax_DeclareFunctionAlias(glDepthMask_gurax, "glDepthMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDepthMask_gurax, processor_gurax, argument_gurax)
@@ -1545,9 +1545,9 @@ Gurax_DeclareFunctionAlias(glDepthRange_gurax, "glDepthRange")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("zNear", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("zFar", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDepthRange_gurax, processor_gurax, argument_gurax)
@@ -1566,9 +1566,9 @@ Gurax_DeclareFunctionAlias(glDisable_gurax, "glDisable")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDisable_gurax, processor_gurax, argument_gurax)
@@ -1586,9 +1586,9 @@ Gurax_DeclareFunctionAlias(glDisableClientState_gurax, "glDisableClientState")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("array", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDisableClientState_gurax, processor_gurax, argument_gurax)
@@ -1608,9 +1608,9 @@ Gurax_DeclareFunctionAlias(glDrawArrays_gurax, "glDrawArrays")
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawArrays_gurax, processor_gurax, argument_gurax)
@@ -1630,9 +1630,9 @@ Gurax_DeclareFunctionAlias(glDrawBuffer_gurax, "glDrawBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawBuffer_gurax, processor_gurax, argument_gurax)
@@ -1653,9 +1653,9 @@ Gurax_DeclareFunctionAlias(glDrawElements_gurax, "glDrawElements")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawElements_gurax, processor_gurax, argument_gurax)
@@ -1680,9 +1680,9 @@ Gurax_DeclareFunctionAlias(glDrawPixels_gurax, "glDrawPixels")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawPixels_gurax, processor_gurax, argument_gurax)
@@ -1704,9 +1704,9 @@ Gurax_DeclareFunctionAlias(glEdgeFlag_gurax, "glEdgeFlag")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEdgeFlag_gurax, processor_gurax, argument_gurax)
@@ -1725,9 +1725,9 @@ Gurax_DeclareFunctionAlias(glEdgeFlagPointer_gurax, "glEdgeFlagPointer")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEdgeFlagPointer_gurax, processor_gurax, argument_gurax)
@@ -1746,9 +1746,9 @@ Gurax_DeclareFunctionAlias(glEdgeFlagv_gurax, "glEdgeFlagv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEdgeFlagv_gurax, processor_gurax, argument_gurax)
@@ -1766,9 +1766,9 @@ Gurax_DeclareFunctionAlias(glEnable_gurax, "glEnable")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEnable_gurax, processor_gurax, argument_gurax)
@@ -1786,9 +1786,9 @@ Gurax_DeclareFunctionAlias(glEnableClientState_gurax, "glEnableClientState")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("array", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEnableClientState_gurax, processor_gurax, argument_gurax)
@@ -1805,9 +1805,9 @@ Gurax_ImplementFunctionEx(glEnableClientState_gurax, processor_gurax, argument_g
 Gurax_DeclareFunctionAlias(glEnd_gurax, "glEnd")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEnd_gurax, processor_gurax, argument_gurax)
@@ -1821,9 +1821,9 @@ Gurax_ImplementFunctionEx(glEnd_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glEndList_gurax, "glEndList")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEndList_gurax, processor_gurax, argument_gurax)
@@ -1838,9 +1838,9 @@ Gurax_DeclareFunctionAlias(glEvalCoord1d_gurax, "glEvalCoord1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalCoord1d_gurax, processor_gurax, argument_gurax)
@@ -1858,9 +1858,9 @@ Gurax_DeclareFunctionAlias(glEvalCoord1dv_gurax, "glEvalCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalCoord1dv_gurax, processor_gurax, argument_gurax)
@@ -1878,9 +1878,9 @@ Gurax_DeclareFunctionAlias(glEvalCoord1f_gurax, "glEvalCoord1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalCoord1f_gurax, processor_gurax, argument_gurax)
@@ -1898,9 +1898,9 @@ Gurax_DeclareFunctionAlias(glEvalCoord1fv_gurax, "glEvalCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalCoord1fv_gurax, processor_gurax, argument_gurax)
@@ -1919,9 +1919,9 @@ Gurax_DeclareFunctionAlias(glEvalCoord2d_gurax, "glEvalCoord2d")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalCoord2d_gurax, processor_gurax, argument_gurax)
@@ -1940,9 +1940,9 @@ Gurax_DeclareFunctionAlias(glEvalCoord2dv_gurax, "glEvalCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalCoord2dv_gurax, processor_gurax, argument_gurax)
@@ -1961,9 +1961,9 @@ Gurax_DeclareFunctionAlias(glEvalCoord2f_gurax, "glEvalCoord2f")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalCoord2f_gurax, processor_gurax, argument_gurax)
@@ -1982,9 +1982,9 @@ Gurax_DeclareFunctionAlias(glEvalCoord2fv_gurax, "glEvalCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("u", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalCoord2fv_gurax, processor_gurax, argument_gurax)
@@ -2004,9 +2004,9 @@ Gurax_DeclareFunctionAlias(glEvalMesh1_gurax, "glEvalMesh1")
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("i1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("i2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalMesh1_gurax, processor_gurax, argument_gurax)
@@ -2030,9 +2030,9 @@ Gurax_DeclareFunctionAlias(glEvalMesh2_gurax, "glEvalMesh2")
 	DeclareArg("i2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("j1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("j2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalMesh2_gurax, processor_gurax, argument_gurax)
@@ -2054,9 +2054,9 @@ Gurax_DeclareFunctionAlias(glEvalPoint1_gurax, "glEvalPoint1")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalPoint1_gurax, processor_gurax, argument_gurax)
@@ -2075,9 +2075,9 @@ Gurax_DeclareFunctionAlias(glEvalPoint2_gurax, "glEvalPoint2")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("j", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEvalPoint2_gurax, processor_gurax, argument_gurax)
@@ -2098,9 +2098,9 @@ Gurax_DeclareFunctionAlias(glFeedbackBuffer_gurax, "glFeedbackBuffer")
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFeedbackBuffer_gurax, processor_gurax, argument_gurax)
@@ -2119,9 +2119,9 @@ Gurax_ImplementFunctionEx(glFeedbackBuffer_gurax, processor_gurax, argument_gura
 Gurax_DeclareFunctionAlias(glFinish_gurax, "glFinish")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFinish_gurax, processor_gurax, argument_gurax)
@@ -2135,9 +2135,9 @@ Gurax_ImplementFunctionEx(glFinish_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glFlush_gurax, "glFlush")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFlush_gurax, processor_gurax, argument_gurax)
@@ -2153,9 +2153,9 @@ Gurax_DeclareFunctionAlias(glFogf_gurax, "glFogf")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFogf_gurax, processor_gurax, argument_gurax)
@@ -2175,9 +2175,9 @@ Gurax_DeclareFunctionAlias(glFogfv_gurax, "glFogfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFogfv_gurax, processor_gurax, argument_gurax)
@@ -2197,9 +2197,9 @@ Gurax_DeclareFunctionAlias(glFogi_gurax, "glFogi")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFogi_gurax, processor_gurax, argument_gurax)
@@ -2219,9 +2219,9 @@ Gurax_DeclareFunctionAlias(glFogiv_gurax, "glFogiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFogiv_gurax, processor_gurax, argument_gurax)
@@ -2240,9 +2240,9 @@ Gurax_DeclareFunctionAlias(glFrontFace_gurax, "glFrontFace")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFrontFace_gurax, processor_gurax, argument_gurax)
@@ -2265,9 +2265,9 @@ Gurax_DeclareFunctionAlias(glFrustum_gurax, "glFrustum")
 	DeclareArg("top", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("zNear", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("zFar", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFrustum_gurax, processor_gurax, argument_gurax)
@@ -2290,9 +2290,9 @@ Gurax_DeclareFunctionAlias(glGenLists_gurax, "glGenLists")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenLists_gurax, processor_gurax, argument_gurax)
@@ -2311,9 +2311,9 @@ Gurax_DeclareFunctionAlias(glGenTextures_gurax, "glGenTextures")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenTextures_gurax, processor_gurax, argument_gurax)
@@ -2333,9 +2333,9 @@ Gurax_DeclareFunctionAlias(glGetBooleanv_gurax, "glGetBooleanv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetBooleanv_gurax, processor_gurax, argument_gurax)
@@ -2355,9 +2355,9 @@ Gurax_DeclareFunctionAlias(glGetClipPlane_gurax, "glGetClipPlane")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("plane", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("equation", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetClipPlane_gurax, processor_gurax, argument_gurax)
@@ -2377,9 +2377,9 @@ Gurax_DeclareFunctionAlias(glGetDoublev_gurax, "glGetDoublev")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetDoublev_gurax, processor_gurax, argument_gurax)
@@ -2397,9 +2397,9 @@ Gurax_ImplementFunctionEx(glGetDoublev_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glGetError_gurax, "glGetError")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetError_gurax, processor_gurax, argument_gurax)
@@ -2415,9 +2415,9 @@ Gurax_DeclareFunctionAlias(glGetFloatv_gurax, "glGetFloatv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetFloatv_gurax, processor_gurax, argument_gurax)
@@ -2437,9 +2437,9 @@ Gurax_DeclareFunctionAlias(glGetIntegerv_gurax, "glGetIntegerv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetIntegerv_gurax, processor_gurax, argument_gurax)
@@ -2460,9 +2460,9 @@ Gurax_DeclareFunctionAlias(glGetLightfv_gurax, "glGetLightfv")
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetLightfv_gurax, processor_gurax, argument_gurax)
@@ -2484,9 +2484,9 @@ Gurax_DeclareFunctionAlias(glGetLightiv_gurax, "glGetLightiv")
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetLightiv_gurax, processor_gurax, argument_gurax)
@@ -2508,9 +2508,9 @@ Gurax_DeclareFunctionAlias(glGetMapdv_gurax, "glGetMapdv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("query", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetMapdv_gurax, processor_gurax, argument_gurax)
@@ -2532,9 +2532,9 @@ Gurax_DeclareFunctionAlias(glGetMapfv_gurax, "glGetMapfv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("query", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetMapfv_gurax, processor_gurax, argument_gurax)
@@ -2556,9 +2556,9 @@ Gurax_DeclareFunctionAlias(glGetMapiv_gurax, "glGetMapiv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("query", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetMapiv_gurax, processor_gurax, argument_gurax)
@@ -2580,9 +2580,9 @@ Gurax_DeclareFunctionAlias(glGetMaterialfv_gurax, "glGetMaterialfv")
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetMaterialfv_gurax, processor_gurax, argument_gurax)
@@ -2604,9 +2604,9 @@ Gurax_DeclareFunctionAlias(glGetMaterialiv_gurax, "glGetMaterialiv")
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetMaterialiv_gurax, processor_gurax, argument_gurax)
@@ -2627,9 +2627,9 @@ Gurax_DeclareFunctionAlias(glGetPixelMapfv_gurax, "glGetPixelMapfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetPixelMapfv_gurax, processor_gurax, argument_gurax)
@@ -2649,9 +2649,9 @@ Gurax_DeclareFunctionAlias(glGetPixelMapuiv_gurax, "glGetPixelMapuiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetPixelMapuiv_gurax, processor_gurax, argument_gurax)
@@ -2671,9 +2671,9 @@ Gurax_DeclareFunctionAlias(glGetPixelMapusv_gurax, "glGetPixelMapusv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetPixelMapusv_gurax, processor_gurax, argument_gurax)
@@ -2692,9 +2692,9 @@ Gurax_DeclareFunctionAlias(glGetPolygonStipple_gurax, "glGetPolygonStipple")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetPolygonStipple_gurax, processor_gurax, argument_gurax)
@@ -2712,9 +2712,9 @@ Gurax_DeclareFunctionAlias(glGetString_gurax, "glGetString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("name", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetString_gurax, processor_gurax, argument_gurax)
@@ -2734,9 +2734,9 @@ Gurax_DeclareFunctionAlias(glGetTexEnvfv_gurax, "glGetTexEnvfv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexEnvfv_gurax, processor_gurax, argument_gurax)
@@ -2758,9 +2758,9 @@ Gurax_DeclareFunctionAlias(glGetTexEnviv_gurax, "glGetTexEnviv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexEnviv_gurax, processor_gurax, argument_gurax)
@@ -2782,9 +2782,9 @@ Gurax_DeclareFunctionAlias(glGetTexGendv_gurax, "glGetTexGendv")
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexGendv_gurax, processor_gurax, argument_gurax)
@@ -2806,9 +2806,9 @@ Gurax_DeclareFunctionAlias(glGetTexGenfv_gurax, "glGetTexGenfv")
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexGenfv_gurax, processor_gurax, argument_gurax)
@@ -2830,9 +2830,9 @@ Gurax_DeclareFunctionAlias(glGetTexGeniv_gurax, "glGetTexGeniv")
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexGeniv_gurax, processor_gurax, argument_gurax)
@@ -2856,9 +2856,9 @@ Gurax_DeclareFunctionAlias(glGetTexImage_gurax, "glGetTexImage")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexImage_gurax, processor_gurax, argument_gurax)
@@ -2883,9 +2883,9 @@ Gurax_DeclareFunctionAlias(glGetTexLevelParameterfv_gurax, "glGetTexLevelParamet
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexLevelParameterfv_gurax, processor_gurax, argument_gurax)
@@ -2909,9 +2909,9 @@ Gurax_DeclareFunctionAlias(glGetTexLevelParameteriv_gurax, "glGetTexLevelParamet
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexLevelParameteriv_gurax, processor_gurax, argument_gurax)
@@ -2934,9 +2934,9 @@ Gurax_DeclareFunctionAlias(glGetTexParameterfv_gurax, "glGetTexParameterfv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexParameterfv_gurax, processor_gurax, argument_gurax)
@@ -2958,9 +2958,9 @@ Gurax_DeclareFunctionAlias(glGetTexParameteriv_gurax, "glGetTexParameteriv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexParameteriv_gurax, processor_gurax, argument_gurax)
@@ -2981,9 +2981,9 @@ Gurax_DeclareFunctionAlias(glHint_gurax, "glHint")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glHint_gurax, processor_gurax, argument_gurax)
@@ -3002,9 +3002,9 @@ Gurax_DeclareFunctionAlias(glIndexMask_gurax, "glIndexMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexMask_gurax, processor_gurax, argument_gurax)
@@ -3024,9 +3024,9 @@ Gurax_DeclareFunctionAlias(glIndexPointer_gurax, "glIndexPointer")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexPointer_gurax, processor_gurax, argument_gurax)
@@ -3046,9 +3046,9 @@ Gurax_DeclareFunctionAlias(glIndexd_gurax, "glIndexd")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexd_gurax, processor_gurax, argument_gurax)
@@ -3066,9 +3066,9 @@ Gurax_DeclareFunctionAlias(glIndexdv_gurax, "glIndexdv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexdv_gurax, processor_gurax, argument_gurax)
@@ -3086,9 +3086,9 @@ Gurax_DeclareFunctionAlias(glIndexf_gurax, "glIndexf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexf_gurax, processor_gurax, argument_gurax)
@@ -3106,9 +3106,9 @@ Gurax_DeclareFunctionAlias(glIndexfv_gurax, "glIndexfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexfv_gurax, processor_gurax, argument_gurax)
@@ -3126,9 +3126,9 @@ Gurax_DeclareFunctionAlias(glIndexi_gurax, "glIndexi")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexi_gurax, processor_gurax, argument_gurax)
@@ -3146,9 +3146,9 @@ Gurax_DeclareFunctionAlias(glIndexiv_gurax, "glIndexiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexiv_gurax, processor_gurax, argument_gurax)
@@ -3166,9 +3166,9 @@ Gurax_DeclareFunctionAlias(glIndexs_gurax, "glIndexs")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexs_gurax, processor_gurax, argument_gurax)
@@ -3186,9 +3186,9 @@ Gurax_DeclareFunctionAlias(glIndexsv_gurax, "glIndexsv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexsv_gurax, processor_gurax, argument_gurax)
@@ -3206,9 +3206,9 @@ Gurax_DeclareFunctionAlias(glIndexub_gurax, "glIndexub")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexub_gurax, processor_gurax, argument_gurax)
@@ -3226,9 +3226,9 @@ Gurax_DeclareFunctionAlias(glIndexubv_gurax, "glIndexubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIndexubv_gurax, processor_gurax, argument_gurax)
@@ -3245,9 +3245,9 @@ Gurax_ImplementFunctionEx(glIndexubv_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glInitNames_gurax, "glInitNames")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInitNames_gurax, processor_gurax, argument_gurax)
@@ -3264,9 +3264,9 @@ Gurax_DeclareFunctionAlias(glInterleavedArrays_gurax, "glInterleavedArrays")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInterleavedArrays_gurax, processor_gurax, argument_gurax)
@@ -3286,9 +3286,9 @@ Gurax_DeclareFunctionAlias(glIsEnabled_gurax, "glIsEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsEnabled_gurax, processor_gurax, argument_gurax)
@@ -3306,9 +3306,9 @@ Gurax_DeclareFunctionAlias(glIsList_gurax, "glIsList")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("list", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsList_gurax, processor_gurax, argument_gurax)
@@ -3326,9 +3326,9 @@ Gurax_DeclareFunctionAlias(glIsTexture_gurax, "glIsTexture")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsTexture_gurax, processor_gurax, argument_gurax)
@@ -3347,9 +3347,9 @@ Gurax_DeclareFunctionAlias(glLightModelf_gurax, "glLightModelf")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLightModelf_gurax, processor_gurax, argument_gurax)
@@ -3369,9 +3369,9 @@ Gurax_DeclareFunctionAlias(glLightModelfv_gurax, "glLightModelfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLightModelfv_gurax, processor_gurax, argument_gurax)
@@ -3391,9 +3391,9 @@ Gurax_DeclareFunctionAlias(glLightModeli_gurax, "glLightModeli")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLightModeli_gurax, processor_gurax, argument_gurax)
@@ -3413,9 +3413,9 @@ Gurax_DeclareFunctionAlias(glLightModeliv_gurax, "glLightModeliv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLightModeliv_gurax, processor_gurax, argument_gurax)
@@ -3436,9 +3436,9 @@ Gurax_DeclareFunctionAlias(glLightf_gurax, "glLightf")
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLightf_gurax, processor_gurax, argument_gurax)
@@ -3460,9 +3460,9 @@ Gurax_DeclareFunctionAlias(glLightfv_gurax, "glLightfv")
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLightfv_gurax, processor_gurax, argument_gurax)
@@ -3484,9 +3484,9 @@ Gurax_DeclareFunctionAlias(glLighti_gurax, "glLighti")
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLighti_gurax, processor_gurax, argument_gurax)
@@ -3508,9 +3508,9 @@ Gurax_DeclareFunctionAlias(glLightiv_gurax, "glLightiv")
 	DeclareArg("light", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLightiv_gurax, processor_gurax, argument_gurax)
@@ -3531,9 +3531,9 @@ Gurax_DeclareFunctionAlias(glLineStipple_gurax, "glLineStipple")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("factor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pattern", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLineStipple_gurax, processor_gurax, argument_gurax)
@@ -3552,9 +3552,9 @@ Gurax_DeclareFunctionAlias(glLineWidth_gurax, "glLineWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLineWidth_gurax, processor_gurax, argument_gurax)
@@ -3572,9 +3572,9 @@ Gurax_DeclareFunctionAlias(glListBase_gurax, "glListBase")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("base", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glListBase_gurax, processor_gurax, argument_gurax)
@@ -3591,9 +3591,9 @@ Gurax_ImplementFunctionEx(glListBase_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glLoadIdentity_gurax, "glLoadIdentity")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLoadIdentity_gurax, processor_gurax, argument_gurax)
@@ -3608,9 +3608,9 @@ Gurax_DeclareFunctionAlias(glLoadMatrixd_gurax, "glLoadMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLoadMatrixd_gurax, processor_gurax, argument_gurax)
@@ -3628,9 +3628,9 @@ Gurax_DeclareFunctionAlias(glLoadMatrixf_gurax, "glLoadMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLoadMatrixf_gurax, processor_gurax, argument_gurax)
@@ -3648,9 +3648,9 @@ Gurax_DeclareFunctionAlias(glLoadName_gurax, "glLoadName")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLoadName_gurax, processor_gurax, argument_gurax)
@@ -3668,9 +3668,9 @@ Gurax_DeclareFunctionAlias(glLogicOp_gurax, "glLogicOp")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("opcode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLogicOp_gurax, processor_gurax, argument_gurax)
@@ -3693,9 +3693,9 @@ Gurax_DeclareFunctionAlias(glMap1d_gurax, "glMap1d")
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("order", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("points", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMap1d_gurax, processor_gurax, argument_gurax)
@@ -3723,9 +3723,9 @@ Gurax_DeclareFunctionAlias(glMap1f_gurax, "glMap1f")
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("order", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("points", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMap1f_gurax, processor_gurax, argument_gurax)
@@ -3757,9 +3757,9 @@ Gurax_DeclareFunctionAlias(glMap2d_gurax, "glMap2d")
 	DeclareArg("vstride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vorder", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("points", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMap2d_gurax, processor_gurax, argument_gurax)
@@ -3795,9 +3795,9 @@ Gurax_DeclareFunctionAlias(glMap2f_gurax, "glMap2f")
 	DeclareArg("vstride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vorder", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("points", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMap2f_gurax, processor_gurax, argument_gurax)
@@ -3826,9 +3826,9 @@ Gurax_DeclareFunctionAlias(glMapGrid1d_gurax, "glMapGrid1d")
 	DeclareArg("un", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("u1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("u2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMapGrid1d_gurax, processor_gurax, argument_gurax)
@@ -3850,9 +3850,9 @@ Gurax_DeclareFunctionAlias(glMapGrid1f_gurax, "glMapGrid1f")
 	DeclareArg("un", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("u1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("u2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMapGrid1f_gurax, processor_gurax, argument_gurax)
@@ -3877,9 +3877,9 @@ Gurax_DeclareFunctionAlias(glMapGrid2d_gurax, "glMapGrid2d")
 	DeclareArg("vn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMapGrid2d_gurax, processor_gurax, argument_gurax)
@@ -3907,9 +3907,9 @@ Gurax_DeclareFunctionAlias(glMapGrid2f_gurax, "glMapGrid2f")
 	DeclareArg("vn", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMapGrid2f_gurax, processor_gurax, argument_gurax)
@@ -3934,9 +3934,9 @@ Gurax_DeclareFunctionAlias(glMaterialf_gurax, "glMaterialf")
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMaterialf_gurax, processor_gurax, argument_gurax)
@@ -3958,9 +3958,9 @@ Gurax_DeclareFunctionAlias(glMaterialfv_gurax, "glMaterialfv")
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMaterialfv_gurax, processor_gurax, argument_gurax)
@@ -3982,9 +3982,9 @@ Gurax_DeclareFunctionAlias(glMateriali_gurax, "glMateriali")
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMateriali_gurax, processor_gurax, argument_gurax)
@@ -4006,9 +4006,9 @@ Gurax_DeclareFunctionAlias(glMaterialiv_gurax, "glMaterialiv")
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMaterialiv_gurax, processor_gurax, argument_gurax)
@@ -4028,9 +4028,9 @@ Gurax_DeclareFunctionAlias(glMatrixMode_gurax, "glMatrixMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMatrixMode_gurax, processor_gurax, argument_gurax)
@@ -4048,9 +4048,9 @@ Gurax_DeclareFunctionAlias(glMultMatrixd_gurax, "glMultMatrixd")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultMatrixd_gurax, processor_gurax, argument_gurax)
@@ -4068,9 +4068,9 @@ Gurax_DeclareFunctionAlias(glMultMatrixf_gurax, "glMultMatrixf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultMatrixf_gurax, processor_gurax, argument_gurax)
@@ -4089,9 +4089,9 @@ Gurax_DeclareFunctionAlias(glNewList_gurax, "glNewList")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("list", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNewList_gurax, processor_gurax, argument_gurax)
@@ -4112,9 +4112,9 @@ Gurax_DeclareFunctionAlias(glNormal3b_gurax, "glNormal3b")
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ny", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3b_gurax, processor_gurax, argument_gurax)
@@ -4134,9 +4134,9 @@ Gurax_DeclareFunctionAlias(glNormal3bv_gurax, "glNormal3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3bv_gurax, processor_gurax, argument_gurax)
@@ -4156,9 +4156,9 @@ Gurax_DeclareFunctionAlias(glNormal3d_gurax, "glNormal3d")
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ny", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3d_gurax, processor_gurax, argument_gurax)
@@ -4178,9 +4178,9 @@ Gurax_DeclareFunctionAlias(glNormal3dv_gurax, "glNormal3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3dv_gurax, processor_gurax, argument_gurax)
@@ -4200,9 +4200,9 @@ Gurax_DeclareFunctionAlias(glNormal3f_gurax, "glNormal3f")
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ny", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3f_gurax, processor_gurax, argument_gurax)
@@ -4222,9 +4222,9 @@ Gurax_DeclareFunctionAlias(glNormal3fv_gurax, "glNormal3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3fv_gurax, processor_gurax, argument_gurax)
@@ -4244,9 +4244,9 @@ Gurax_DeclareFunctionAlias(glNormal3i_gurax, "glNormal3i")
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ny", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3i_gurax, processor_gurax, argument_gurax)
@@ -4266,9 +4266,9 @@ Gurax_DeclareFunctionAlias(glNormal3iv_gurax, "glNormal3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3iv_gurax, processor_gurax, argument_gurax)
@@ -4288,9 +4288,9 @@ Gurax_DeclareFunctionAlias(glNormal3s_gurax, "glNormal3s")
 	DeclareArg("nx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ny", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3s_gurax, processor_gurax, argument_gurax)
@@ -4310,9 +4310,9 @@ Gurax_DeclareFunctionAlias(glNormal3sv_gurax, "glNormal3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormal3sv_gurax, processor_gurax, argument_gurax)
@@ -4332,9 +4332,9 @@ Gurax_DeclareFunctionAlias(glNormalPointer_gurax, "glNormalPointer")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormalPointer_gurax, processor_gurax, argument_gurax)
@@ -4359,9 +4359,9 @@ Gurax_DeclareFunctionAlias(glOrtho_gurax, "glOrtho")
 	DeclareArg("top", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("zNear", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("zFar", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glOrtho_gurax, processor_gurax, argument_gurax)
@@ -4384,9 +4384,9 @@ Gurax_DeclareFunctionAlias(glPassThrough_gurax, "glPassThrough")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("token", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPassThrough_gurax, processor_gurax, argument_gurax)
@@ -4406,9 +4406,9 @@ Gurax_DeclareFunctionAlias(glPixelMapfv_gurax, "glPixelMapfv")
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mapsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPixelMapfv_gurax, processor_gurax, argument_gurax)
@@ -4430,9 +4430,9 @@ Gurax_DeclareFunctionAlias(glPixelMapuiv_gurax, "glPixelMapuiv")
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mapsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPixelMapuiv_gurax, processor_gurax, argument_gurax)
@@ -4454,9 +4454,9 @@ Gurax_DeclareFunctionAlias(glPixelMapusv_gurax, "glPixelMapusv")
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mapsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPixelMapusv_gurax, processor_gurax, argument_gurax)
@@ -4477,9 +4477,9 @@ Gurax_DeclareFunctionAlias(glPixelStoref_gurax, "glPixelStoref")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPixelStoref_gurax, processor_gurax, argument_gurax)
@@ -4499,9 +4499,9 @@ Gurax_DeclareFunctionAlias(glPixelStorei_gurax, "glPixelStorei")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPixelStorei_gurax, processor_gurax, argument_gurax)
@@ -4521,9 +4521,9 @@ Gurax_DeclareFunctionAlias(glPixelTransferf_gurax, "glPixelTransferf")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPixelTransferf_gurax, processor_gurax, argument_gurax)
@@ -4543,9 +4543,9 @@ Gurax_DeclareFunctionAlias(glPixelTransferi_gurax, "glPixelTransferi")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPixelTransferi_gurax, processor_gurax, argument_gurax)
@@ -4565,9 +4565,9 @@ Gurax_DeclareFunctionAlias(glPixelZoom_gurax, "glPixelZoom")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("xfactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("yfactor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPixelZoom_gurax, processor_gurax, argument_gurax)
@@ -4586,9 +4586,9 @@ Gurax_DeclareFunctionAlias(glPointSize_gurax, "glPointSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPointSize_gurax, processor_gurax, argument_gurax)
@@ -4607,9 +4607,9 @@ Gurax_DeclareFunctionAlias(glPolygonMode_gurax, "glPolygonMode")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPolygonMode_gurax, processor_gurax, argument_gurax)
@@ -4629,9 +4629,9 @@ Gurax_DeclareFunctionAlias(glPolygonOffset_gurax, "glPolygonOffset")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("factor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("units", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPolygonOffset_gurax, processor_gurax, argument_gurax)
@@ -4650,9 +4650,9 @@ Gurax_DeclareFunctionAlias(glPolygonStipple_gurax, "glPolygonStipple")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPolygonStipple_gurax, processor_gurax, argument_gurax)
@@ -4669,9 +4669,9 @@ Gurax_ImplementFunctionEx(glPolygonStipple_gurax, processor_gurax, argument_gura
 Gurax_DeclareFunctionAlias(glPopAttrib_gurax, "glPopAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPopAttrib_gurax, processor_gurax, argument_gurax)
@@ -4685,9 +4685,9 @@ Gurax_ImplementFunctionEx(glPopAttrib_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glPopClientAttrib_gurax, "glPopClientAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPopClientAttrib_gurax, processor_gurax, argument_gurax)
@@ -4701,9 +4701,9 @@ Gurax_ImplementFunctionEx(glPopClientAttrib_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(glPopMatrix_gurax, "glPopMatrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPopMatrix_gurax, processor_gurax, argument_gurax)
@@ -4717,9 +4717,9 @@ Gurax_ImplementFunctionEx(glPopMatrix_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glPopName_gurax, "glPopName")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPopName_gurax, processor_gurax, argument_gurax)
@@ -4736,9 +4736,9 @@ Gurax_DeclareFunctionAlias(glPrioritizeTextures_gurax, "glPrioritizeTextures")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("priorities", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPrioritizeTextures_gurax, processor_gurax, argument_gurax)
@@ -4758,9 +4758,9 @@ Gurax_DeclareFunctionAlias(glPushAttrib_gurax, "glPushAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPushAttrib_gurax, processor_gurax, argument_gurax)
@@ -4778,9 +4778,9 @@ Gurax_DeclareFunctionAlias(glPushClientAttrib_gurax, "glPushClientAttrib")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPushClientAttrib_gurax, processor_gurax, argument_gurax)
@@ -4797,9 +4797,9 @@ Gurax_ImplementFunctionEx(glPushClientAttrib_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(glPushMatrix_gurax, "glPushMatrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPushMatrix_gurax, processor_gurax, argument_gurax)
@@ -4814,9 +4814,9 @@ Gurax_DeclareFunctionAlias(glPushName_gurax, "glPushName")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPushName_gurax, processor_gurax, argument_gurax)
@@ -4835,9 +4835,9 @@ Gurax_DeclareFunctionAlias(glRasterPos2d_gurax, "glRasterPos2d")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos2d_gurax, processor_gurax, argument_gurax)
@@ -4856,9 +4856,9 @@ Gurax_DeclareFunctionAlias(glRasterPos2dv_gurax, "glRasterPos2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos2dv_gurax, processor_gurax, argument_gurax)
@@ -4877,9 +4877,9 @@ Gurax_DeclareFunctionAlias(glRasterPos2f_gurax, "glRasterPos2f")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos2f_gurax, processor_gurax, argument_gurax)
@@ -4898,9 +4898,9 @@ Gurax_DeclareFunctionAlias(glRasterPos2fv_gurax, "glRasterPos2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos2fv_gurax, processor_gurax, argument_gurax)
@@ -4919,9 +4919,9 @@ Gurax_DeclareFunctionAlias(glRasterPos2i_gurax, "glRasterPos2i")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos2i_gurax, processor_gurax, argument_gurax)
@@ -4940,9 +4940,9 @@ Gurax_DeclareFunctionAlias(glRasterPos2iv_gurax, "glRasterPos2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos2iv_gurax, processor_gurax, argument_gurax)
@@ -4961,9 +4961,9 @@ Gurax_DeclareFunctionAlias(glRasterPos2s_gurax, "glRasterPos2s")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos2s_gurax, processor_gurax, argument_gurax)
@@ -4982,9 +4982,9 @@ Gurax_DeclareFunctionAlias(glRasterPos2sv_gurax, "glRasterPos2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos2sv_gurax, processor_gurax, argument_gurax)
@@ -5004,9 +5004,9 @@ Gurax_DeclareFunctionAlias(glRasterPos3d_gurax, "glRasterPos3d")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos3d_gurax, processor_gurax, argument_gurax)
@@ -5026,9 +5026,9 @@ Gurax_DeclareFunctionAlias(glRasterPos3dv_gurax, "glRasterPos3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos3dv_gurax, processor_gurax, argument_gurax)
@@ -5048,9 +5048,9 @@ Gurax_DeclareFunctionAlias(glRasterPos3f_gurax, "glRasterPos3f")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos3f_gurax, processor_gurax, argument_gurax)
@@ -5070,9 +5070,9 @@ Gurax_DeclareFunctionAlias(glRasterPos3fv_gurax, "glRasterPos3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos3fv_gurax, processor_gurax, argument_gurax)
@@ -5092,9 +5092,9 @@ Gurax_DeclareFunctionAlias(glRasterPos3i_gurax, "glRasterPos3i")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos3i_gurax, processor_gurax, argument_gurax)
@@ -5114,9 +5114,9 @@ Gurax_DeclareFunctionAlias(glRasterPos3iv_gurax, "glRasterPos3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos3iv_gurax, processor_gurax, argument_gurax)
@@ -5136,9 +5136,9 @@ Gurax_DeclareFunctionAlias(glRasterPos3s_gurax, "glRasterPos3s")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos3s_gurax, processor_gurax, argument_gurax)
@@ -5158,9 +5158,9 @@ Gurax_DeclareFunctionAlias(glRasterPos3sv_gurax, "glRasterPos3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos3sv_gurax, processor_gurax, argument_gurax)
@@ -5181,9 +5181,9 @@ Gurax_DeclareFunctionAlias(glRasterPos4d_gurax, "glRasterPos4d")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos4d_gurax, processor_gurax, argument_gurax)
@@ -5204,9 +5204,9 @@ Gurax_DeclareFunctionAlias(glRasterPos4dv_gurax, "glRasterPos4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos4dv_gurax, processor_gurax, argument_gurax)
@@ -5227,9 +5227,9 @@ Gurax_DeclareFunctionAlias(glRasterPos4f_gurax, "glRasterPos4f")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos4f_gurax, processor_gurax, argument_gurax)
@@ -5250,9 +5250,9 @@ Gurax_DeclareFunctionAlias(glRasterPos4fv_gurax, "glRasterPos4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos4fv_gurax, processor_gurax, argument_gurax)
@@ -5273,9 +5273,9 @@ Gurax_DeclareFunctionAlias(glRasterPos4i_gurax, "glRasterPos4i")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos4i_gurax, processor_gurax, argument_gurax)
@@ -5296,9 +5296,9 @@ Gurax_DeclareFunctionAlias(glRasterPos4iv_gurax, "glRasterPos4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos4iv_gurax, processor_gurax, argument_gurax)
@@ -5319,9 +5319,9 @@ Gurax_DeclareFunctionAlias(glRasterPos4s_gurax, "glRasterPos4s")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos4s_gurax, processor_gurax, argument_gurax)
@@ -5342,9 +5342,9 @@ Gurax_DeclareFunctionAlias(glRasterPos4sv_gurax, "glRasterPos4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRasterPos4sv_gurax, processor_gurax, argument_gurax)
@@ -5362,9 +5362,9 @@ Gurax_DeclareFunctionAlias(glReadBuffer_gurax, "glReadBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glReadBuffer_gurax, processor_gurax, argument_gurax)
@@ -5388,9 +5388,9 @@ Gurax_DeclareFunctionAlias(glReadPixels_gurax, "glReadPixels")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glReadPixels_gurax, processor_gurax, argument_gurax)
@@ -5417,9 +5417,9 @@ Gurax_DeclareFunctionAlias(glRectd_gurax, "glRectd")
 	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRectd_gurax, processor_gurax, argument_gurax)
@@ -5441,9 +5441,9 @@ Gurax_DeclareFunctionAlias(glRectdv_gurax, "glRectdv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRectdv_gurax, processor_gurax, argument_gurax)
@@ -5465,9 +5465,9 @@ Gurax_DeclareFunctionAlias(glRectf_gurax, "glRectf")
 	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRectf_gurax, processor_gurax, argument_gurax)
@@ -5489,9 +5489,9 @@ Gurax_DeclareFunctionAlias(glRectfv_gurax, "glRectfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRectfv_gurax, processor_gurax, argument_gurax)
@@ -5513,9 +5513,9 @@ Gurax_DeclareFunctionAlias(glRecti_gurax, "glRecti")
 	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRecti_gurax, processor_gurax, argument_gurax)
@@ -5537,9 +5537,9 @@ Gurax_DeclareFunctionAlias(glRectiv_gurax, "glRectiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRectiv_gurax, processor_gurax, argument_gurax)
@@ -5561,9 +5561,9 @@ Gurax_DeclareFunctionAlias(glRects_gurax, "glRects")
 	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRects_gurax, processor_gurax, argument_gurax)
@@ -5585,9 +5585,9 @@ Gurax_DeclareFunctionAlias(glRectsv_gurax, "glRectsv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRectsv_gurax, processor_gurax, argument_gurax)
@@ -5606,9 +5606,9 @@ Gurax_DeclareFunctionAlias(glRenderMode_gurax, "glRenderMode")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRenderMode_gurax, processor_gurax, argument_gurax)
@@ -5629,9 +5629,9 @@ Gurax_DeclareFunctionAlias(glRotated_gurax, "glRotated")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRotated_gurax, processor_gurax, argument_gurax)
@@ -5655,9 +5655,9 @@ Gurax_DeclareFunctionAlias(glRotatef_gurax, "glRotatef")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRotatef_gurax, processor_gurax, argument_gurax)
@@ -5680,9 +5680,9 @@ Gurax_DeclareFunctionAlias(glScaled_gurax, "glScaled")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glScaled_gurax, processor_gurax, argument_gurax)
@@ -5704,9 +5704,9 @@ Gurax_DeclareFunctionAlias(glScalef_gurax, "glScalef")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glScalef_gurax, processor_gurax, argument_gurax)
@@ -5729,9 +5729,9 @@ Gurax_DeclareFunctionAlias(glScissor_gurax, "glScissor")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glScissor_gurax, processor_gurax, argument_gurax)
@@ -5753,9 +5753,9 @@ Gurax_DeclareFunctionAlias(glSelectBuffer_gurax, "glSelectBuffer")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSelectBuffer_gurax, processor_gurax, argument_gurax)
@@ -5774,9 +5774,9 @@ Gurax_DeclareFunctionAlias(glShadeModel_gurax, "glShadeModel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glShadeModel_gurax, processor_gurax, argument_gurax)
@@ -5796,9 +5796,9 @@ Gurax_DeclareFunctionAlias(glStencilFunc_gurax, "glStencilFunc")
 	DeclareArg("func", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ref", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glStencilFunc_gurax, processor_gurax, argument_gurax)
@@ -5818,9 +5818,9 @@ Gurax_DeclareFunctionAlias(glStencilMask_gurax, "glStencilMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glStencilMask_gurax, processor_gurax, argument_gurax)
@@ -5840,9 +5840,9 @@ Gurax_DeclareFunctionAlias(glStencilOp_gurax, "glStencilOp")
 	DeclareArg("fail", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("zfail", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("zpass", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glStencilOp_gurax, processor_gurax, argument_gurax)
@@ -5862,9 +5862,9 @@ Gurax_DeclareFunctionAlias(glTexCoord1d_gurax, "glTexCoord1d")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord1d_gurax, processor_gurax, argument_gurax)
@@ -5882,9 +5882,9 @@ Gurax_DeclareFunctionAlias(glTexCoord1dv_gurax, "glTexCoord1dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord1dv_gurax, processor_gurax, argument_gurax)
@@ -5902,9 +5902,9 @@ Gurax_DeclareFunctionAlias(glTexCoord1f_gurax, "glTexCoord1f")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord1f_gurax, processor_gurax, argument_gurax)
@@ -5922,9 +5922,9 @@ Gurax_DeclareFunctionAlias(glTexCoord1fv_gurax, "glTexCoord1fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord1fv_gurax, processor_gurax, argument_gurax)
@@ -5942,9 +5942,9 @@ Gurax_DeclareFunctionAlias(glTexCoord1i_gurax, "glTexCoord1i")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord1i_gurax, processor_gurax, argument_gurax)
@@ -5962,9 +5962,9 @@ Gurax_DeclareFunctionAlias(glTexCoord1iv_gurax, "glTexCoord1iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord1iv_gurax, processor_gurax, argument_gurax)
@@ -5982,9 +5982,9 @@ Gurax_DeclareFunctionAlias(glTexCoord1s_gurax, "glTexCoord1s")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord1s_gurax, processor_gurax, argument_gurax)
@@ -6002,9 +6002,9 @@ Gurax_DeclareFunctionAlias(glTexCoord1sv_gurax, "glTexCoord1sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord1sv_gurax, processor_gurax, argument_gurax)
@@ -6023,9 +6023,9 @@ Gurax_DeclareFunctionAlias(glTexCoord2d_gurax, "glTexCoord2d")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord2d_gurax, processor_gurax, argument_gurax)
@@ -6044,9 +6044,9 @@ Gurax_DeclareFunctionAlias(glTexCoord2dv_gurax, "glTexCoord2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord2dv_gurax, processor_gurax, argument_gurax)
@@ -6065,9 +6065,9 @@ Gurax_DeclareFunctionAlias(glTexCoord2f_gurax, "glTexCoord2f")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord2f_gurax, processor_gurax, argument_gurax)
@@ -6086,9 +6086,9 @@ Gurax_DeclareFunctionAlias(glTexCoord2fv_gurax, "glTexCoord2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord2fv_gurax, processor_gurax, argument_gurax)
@@ -6107,9 +6107,9 @@ Gurax_DeclareFunctionAlias(glTexCoord2i_gurax, "glTexCoord2i")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord2i_gurax, processor_gurax, argument_gurax)
@@ -6128,9 +6128,9 @@ Gurax_DeclareFunctionAlias(glTexCoord2iv_gurax, "glTexCoord2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord2iv_gurax, processor_gurax, argument_gurax)
@@ -6149,9 +6149,9 @@ Gurax_DeclareFunctionAlias(glTexCoord2s_gurax, "glTexCoord2s")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord2s_gurax, processor_gurax, argument_gurax)
@@ -6170,9 +6170,9 @@ Gurax_DeclareFunctionAlias(glTexCoord2sv_gurax, "glTexCoord2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord2sv_gurax, processor_gurax, argument_gurax)
@@ -6192,9 +6192,9 @@ Gurax_DeclareFunctionAlias(glTexCoord3d_gurax, "glTexCoord3d")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord3d_gurax, processor_gurax, argument_gurax)
@@ -6214,9 +6214,9 @@ Gurax_DeclareFunctionAlias(glTexCoord3dv_gurax, "glTexCoord3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord3dv_gurax, processor_gurax, argument_gurax)
@@ -6236,9 +6236,9 @@ Gurax_DeclareFunctionAlias(glTexCoord3f_gurax, "glTexCoord3f")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord3f_gurax, processor_gurax, argument_gurax)
@@ -6258,9 +6258,9 @@ Gurax_DeclareFunctionAlias(glTexCoord3fv_gurax, "glTexCoord3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord3fv_gurax, processor_gurax, argument_gurax)
@@ -6280,9 +6280,9 @@ Gurax_DeclareFunctionAlias(glTexCoord3i_gurax, "glTexCoord3i")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord3i_gurax, processor_gurax, argument_gurax)
@@ -6302,9 +6302,9 @@ Gurax_DeclareFunctionAlias(glTexCoord3iv_gurax, "glTexCoord3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord3iv_gurax, processor_gurax, argument_gurax)
@@ -6324,9 +6324,9 @@ Gurax_DeclareFunctionAlias(glTexCoord3s_gurax, "glTexCoord3s")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord3s_gurax, processor_gurax, argument_gurax)
@@ -6346,9 +6346,9 @@ Gurax_DeclareFunctionAlias(glTexCoord3sv_gurax, "glTexCoord3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord3sv_gurax, processor_gurax, argument_gurax)
@@ -6369,9 +6369,9 @@ Gurax_DeclareFunctionAlias(glTexCoord4d_gurax, "glTexCoord4d")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord4d_gurax, processor_gurax, argument_gurax)
@@ -6392,9 +6392,9 @@ Gurax_DeclareFunctionAlias(glTexCoord4dv_gurax, "glTexCoord4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord4dv_gurax, processor_gurax, argument_gurax)
@@ -6415,9 +6415,9 @@ Gurax_DeclareFunctionAlias(glTexCoord4f_gurax, "glTexCoord4f")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord4f_gurax, processor_gurax, argument_gurax)
@@ -6438,9 +6438,9 @@ Gurax_DeclareFunctionAlias(glTexCoord4fv_gurax, "glTexCoord4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord4fv_gurax, processor_gurax, argument_gurax)
@@ -6461,9 +6461,9 @@ Gurax_DeclareFunctionAlias(glTexCoord4i_gurax, "glTexCoord4i")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord4i_gurax, processor_gurax, argument_gurax)
@@ -6484,9 +6484,9 @@ Gurax_DeclareFunctionAlias(glTexCoord4iv_gurax, "glTexCoord4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord4iv_gurax, processor_gurax, argument_gurax)
@@ -6507,9 +6507,9 @@ Gurax_DeclareFunctionAlias(glTexCoord4s_gurax, "glTexCoord4s")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord4s_gurax, processor_gurax, argument_gurax)
@@ -6530,9 +6530,9 @@ Gurax_DeclareFunctionAlias(glTexCoord4sv_gurax, "glTexCoord4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoord4sv_gurax, processor_gurax, argument_gurax)
@@ -6553,9 +6553,9 @@ Gurax_DeclareFunctionAlias(glTexCoordPointer_gurax, "glTexCoordPointer")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoordPointer_gurax, processor_gurax, argument_gurax)
@@ -6578,9 +6578,9 @@ Gurax_DeclareFunctionAlias(glTexEnvf_gurax, "glTexEnvf")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexEnvf_gurax, processor_gurax, argument_gurax)
@@ -6602,9 +6602,9 @@ Gurax_DeclareFunctionAlias(glTexEnvfv_gurax, "glTexEnvfv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexEnvfv_gurax, processor_gurax, argument_gurax)
@@ -6626,9 +6626,9 @@ Gurax_DeclareFunctionAlias(glTexEnvi_gurax, "glTexEnvi")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexEnvi_gurax, processor_gurax, argument_gurax)
@@ -6650,9 +6650,9 @@ Gurax_DeclareFunctionAlias(glTexEnviv_gurax, "glTexEnviv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexEnviv_gurax, processor_gurax, argument_gurax)
@@ -6674,9 +6674,9 @@ Gurax_DeclareFunctionAlias(glTexGend_gurax, "glTexGend")
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexGend_gurax, processor_gurax, argument_gurax)
@@ -6698,9 +6698,9 @@ Gurax_DeclareFunctionAlias(glTexGendv_gurax, "glTexGendv")
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexGendv_gurax, processor_gurax, argument_gurax)
@@ -6722,9 +6722,9 @@ Gurax_DeclareFunctionAlias(glTexGenf_gurax, "glTexGenf")
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexGenf_gurax, processor_gurax, argument_gurax)
@@ -6746,9 +6746,9 @@ Gurax_DeclareFunctionAlias(glTexGenfv_gurax, "glTexGenfv")
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexGenfv_gurax, processor_gurax, argument_gurax)
@@ -6770,9 +6770,9 @@ Gurax_DeclareFunctionAlias(glTexGeni_gurax, "glTexGeni")
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexGeni_gurax, processor_gurax, argument_gurax)
@@ -6794,9 +6794,9 @@ Gurax_DeclareFunctionAlias(glTexGeniv_gurax, "glTexGeniv")
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexGeniv_gurax, processor_gurax, argument_gurax)
@@ -6823,9 +6823,9 @@ Gurax_DeclareFunctionAlias(glTexImage1D_gurax, "glTexImage1D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexImage1D_gurax, processor_gurax, argument_gurax)
@@ -6858,9 +6858,9 @@ Gurax_DeclareFunctionAlias(glTexImage2D_gurax, "glTexImage2D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexImage2D_gurax, processor_gurax, argument_gurax)
@@ -6888,9 +6888,9 @@ Gurax_DeclareFunctionAlias(glTexParameterf_gurax, "glTexParameterf")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexParameterf_gurax, processor_gurax, argument_gurax)
@@ -6912,9 +6912,9 @@ Gurax_DeclareFunctionAlias(glTexParameterfv_gurax, "glTexParameterfv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexParameterfv_gurax, processor_gurax, argument_gurax)
@@ -6936,9 +6936,9 @@ Gurax_DeclareFunctionAlias(glTexParameteri_gurax, "glTexParameteri")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexParameteri_gurax, processor_gurax, argument_gurax)
@@ -6960,9 +6960,9 @@ Gurax_DeclareFunctionAlias(glTexParameteriv_gurax, "glTexParameteriv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexParameteriv_gurax, processor_gurax, argument_gurax)
@@ -6988,9 +6988,9 @@ Gurax_DeclareFunctionAlias(glTexSubImage1D_gurax, "glTexSubImage1D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexSubImage1D_gurax, processor_gurax, argument_gurax)
@@ -7022,9 +7022,9 @@ Gurax_DeclareFunctionAlias(glTexSubImage2D_gurax, "glTexSubImage2D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexSubImage2D_gurax, processor_gurax, argument_gurax)
@@ -7052,9 +7052,9 @@ Gurax_DeclareFunctionAlias(glTranslated_gurax, "glTranslated")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTranslated_gurax, processor_gurax, argument_gurax)
@@ -7076,9 +7076,9 @@ Gurax_DeclareFunctionAlias(glTranslatef_gurax, "glTranslatef")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTranslatef_gurax, processor_gurax, argument_gurax)
@@ -7099,9 +7099,9 @@ Gurax_DeclareFunctionAlias(glVertex2d_gurax, "glVertex2d")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex2d_gurax, processor_gurax, argument_gurax)
@@ -7120,9 +7120,9 @@ Gurax_DeclareFunctionAlias(glVertex2dv_gurax, "glVertex2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex2dv_gurax, processor_gurax, argument_gurax)
@@ -7141,9 +7141,9 @@ Gurax_DeclareFunctionAlias(glVertex2f_gurax, "glVertex2f")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex2f_gurax, processor_gurax, argument_gurax)
@@ -7162,9 +7162,9 @@ Gurax_DeclareFunctionAlias(glVertex2fv_gurax, "glVertex2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex2fv_gurax, processor_gurax, argument_gurax)
@@ -7183,9 +7183,9 @@ Gurax_DeclareFunctionAlias(glVertex2i_gurax, "glVertex2i")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex2i_gurax, processor_gurax, argument_gurax)
@@ -7204,9 +7204,9 @@ Gurax_DeclareFunctionAlias(glVertex2iv_gurax, "glVertex2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex2iv_gurax, processor_gurax, argument_gurax)
@@ -7225,9 +7225,9 @@ Gurax_DeclareFunctionAlias(glVertex2s_gurax, "glVertex2s")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex2s_gurax, processor_gurax, argument_gurax)
@@ -7246,9 +7246,9 @@ Gurax_DeclareFunctionAlias(glVertex2sv_gurax, "glVertex2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex2sv_gurax, processor_gurax, argument_gurax)
@@ -7268,9 +7268,9 @@ Gurax_DeclareFunctionAlias(glVertex3d_gurax, "glVertex3d")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex3d_gurax, processor_gurax, argument_gurax)
@@ -7290,9 +7290,9 @@ Gurax_DeclareFunctionAlias(glVertex3dv_gurax, "glVertex3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex3dv_gurax, processor_gurax, argument_gurax)
@@ -7312,9 +7312,9 @@ Gurax_DeclareFunctionAlias(glVertex3f_gurax, "glVertex3f")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex3f_gurax, processor_gurax, argument_gurax)
@@ -7334,9 +7334,9 @@ Gurax_DeclareFunctionAlias(glVertex3fv_gurax, "glVertex3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex3fv_gurax, processor_gurax, argument_gurax)
@@ -7356,9 +7356,9 @@ Gurax_DeclareFunctionAlias(glVertex3i_gurax, "glVertex3i")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex3i_gurax, processor_gurax, argument_gurax)
@@ -7378,9 +7378,9 @@ Gurax_DeclareFunctionAlias(glVertex3iv_gurax, "glVertex3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex3iv_gurax, processor_gurax, argument_gurax)
@@ -7400,9 +7400,9 @@ Gurax_DeclareFunctionAlias(glVertex3s_gurax, "glVertex3s")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex3s_gurax, processor_gurax, argument_gurax)
@@ -7422,9 +7422,9 @@ Gurax_DeclareFunctionAlias(glVertex3sv_gurax, "glVertex3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex3sv_gurax, processor_gurax, argument_gurax)
@@ -7445,9 +7445,9 @@ Gurax_DeclareFunctionAlias(glVertex4d_gurax, "glVertex4d")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex4d_gurax, processor_gurax, argument_gurax)
@@ -7468,9 +7468,9 @@ Gurax_DeclareFunctionAlias(glVertex4dv_gurax, "glVertex4dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex4dv_gurax, processor_gurax, argument_gurax)
@@ -7491,9 +7491,9 @@ Gurax_DeclareFunctionAlias(glVertex4f_gurax, "glVertex4f")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex4f_gurax, processor_gurax, argument_gurax)
@@ -7514,9 +7514,9 @@ Gurax_DeclareFunctionAlias(glVertex4fv_gurax, "glVertex4fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex4fv_gurax, processor_gurax, argument_gurax)
@@ -7537,9 +7537,9 @@ Gurax_DeclareFunctionAlias(glVertex4i_gurax, "glVertex4i")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex4i_gurax, processor_gurax, argument_gurax)
@@ -7560,9 +7560,9 @@ Gurax_DeclareFunctionAlias(glVertex4iv_gurax, "glVertex4iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex4iv_gurax, processor_gurax, argument_gurax)
@@ -7583,9 +7583,9 @@ Gurax_DeclareFunctionAlias(glVertex4s_gurax, "glVertex4s")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex4s_gurax, processor_gurax, argument_gurax)
@@ -7606,9 +7606,9 @@ Gurax_DeclareFunctionAlias(glVertex4sv_gurax, "glVertex4sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertex4sv_gurax, processor_gurax, argument_gurax)
@@ -7629,9 +7629,9 @@ Gurax_DeclareFunctionAlias(glVertexPointer_gurax, "glVertexPointer")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexPointer_gurax, processor_gurax, argument_gurax)
@@ -7655,9 +7655,9 @@ Gurax_DeclareFunctionAlias(glViewport_gurax, "glViewport")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glViewport_gurax, processor_gurax, argument_gurax)
@@ -7686,9 +7686,9 @@ Gurax_DeclareFunctionAlias(glCopyTexSubImage3D_gurax, "glCopyTexSubImage3D")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyTexSubImage3D_gurax, processor_gurax, argument_gurax)
@@ -7719,9 +7719,9 @@ Gurax_DeclareFunctionAlias(glDrawRangeElements_gurax, "glDrawRangeElements")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawRangeElements_gurax, processor_gurax, argument_gurax)
@@ -7753,9 +7753,9 @@ Gurax_DeclareFunctionAlias(glTexImage3D_gurax, "glTexImage3D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexImage3D_gurax, processor_gurax, argument_gurax)
@@ -7792,9 +7792,9 @@ Gurax_DeclareFunctionAlias(glTexSubImage3D_gurax, "glTexSubImage3D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexSubImage3D_gurax, processor_gurax, argument_gurax)
@@ -7822,9 +7822,9 @@ Gurax_DeclareFunctionAlias(glActiveTexture_gurax, "glActiveTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glActiveTexture_gurax, processor_gurax, argument_gurax)
@@ -7842,9 +7842,9 @@ Gurax_DeclareFunctionAlias(glClientActiveTexture_gurax, "glClientActiveTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClientActiveTexture_gurax, processor_gurax, argument_gurax)
@@ -7868,9 +7868,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexImage1D_gurax, "glCompressedTexImage1D
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexImage1D_gurax, processor_gurax, argument_gurax)
@@ -7901,9 +7901,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexImage2D_gurax, "glCompressedTexImage2D
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexImage2D_gurax, processor_gurax, argument_gurax)
@@ -7936,9 +7936,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexImage3D_gurax, "glCompressedTexImage3D
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexImage3D_gurax, processor_gurax, argument_gurax)
@@ -7970,9 +7970,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexSubImage1D_gurax, "glCompressedTexSubI
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexSubImage1D_gurax, processor_gurax, argument_gurax)
@@ -8004,9 +8004,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexSubImage2D_gurax, "glCompressedTexSubI
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexSubImage2D_gurax, processor_gurax, argument_gurax)
@@ -8042,9 +8042,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexSubImage3D_gurax, "glCompressedTexSubI
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexSubImage3D_gurax, processor_gurax, argument_gurax)
@@ -8074,9 +8074,9 @@ Gurax_DeclareFunctionAlias(glGetCompressedTexImage_gurax, "glGetCompressedTexIma
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("lod", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("img", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetCompressedTexImage_gurax, processor_gurax, argument_gurax)
@@ -8096,9 +8096,9 @@ Gurax_DeclareFunctionAlias(glLoadTransposeMatrixd_gurax, "glLoadTransposeMatrixd
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLoadTransposeMatrixd_gurax, processor_gurax, argument_gurax)
@@ -8116,9 +8116,9 @@ Gurax_DeclareFunctionAlias(glLoadTransposeMatrixf_gurax, "glLoadTransposeMatrixf
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLoadTransposeMatrixf_gurax, processor_gurax, argument_gurax)
@@ -8136,9 +8136,9 @@ Gurax_DeclareFunctionAlias(glMultTransposeMatrixd_gurax, "glMultTransposeMatrixd
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultTransposeMatrixd_gurax, processor_gurax, argument_gurax)
@@ -8156,9 +8156,9 @@ Gurax_DeclareFunctionAlias(glMultTransposeMatrixf_gurax, "glMultTransposeMatrixf
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("m", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultTransposeMatrixf_gurax, processor_gurax, argument_gurax)
@@ -8177,9 +8177,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1d_gurax, "glMultiTexCoord1d")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1d_gurax, processor_gurax, argument_gurax)
@@ -8199,9 +8199,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1dv_gurax, "glMultiTexCoord1dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1dv_gurax, processor_gurax, argument_gurax)
@@ -8221,9 +8221,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1f_gurax, "glMultiTexCoord1f")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1f_gurax, processor_gurax, argument_gurax)
@@ -8243,9 +8243,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1fv_gurax, "glMultiTexCoord1fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1fv_gurax, processor_gurax, argument_gurax)
@@ -8265,9 +8265,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1i_gurax, "glMultiTexCoord1i")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1i_gurax, processor_gurax, argument_gurax)
@@ -8287,9 +8287,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1iv_gurax, "glMultiTexCoord1iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1iv_gurax, processor_gurax, argument_gurax)
@@ -8309,9 +8309,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1s_gurax, "glMultiTexCoord1s")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1s_gurax, processor_gurax, argument_gurax)
@@ -8331,9 +8331,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1sv_gurax, "glMultiTexCoord1sv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1sv_gurax, processor_gurax, argument_gurax)
@@ -8354,9 +8354,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2d_gurax, "glMultiTexCoord2d")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2d_gurax, processor_gurax, argument_gurax)
@@ -8377,9 +8377,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2dv_gurax, "glMultiTexCoord2dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2dv_gurax, processor_gurax, argument_gurax)
@@ -8400,9 +8400,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2f_gurax, "glMultiTexCoord2f")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2f_gurax, processor_gurax, argument_gurax)
@@ -8423,9 +8423,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2fv_gurax, "glMultiTexCoord2fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2fv_gurax, processor_gurax, argument_gurax)
@@ -8446,9 +8446,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2i_gurax, "glMultiTexCoord2i")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2i_gurax, processor_gurax, argument_gurax)
@@ -8469,9 +8469,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2iv_gurax, "glMultiTexCoord2iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2iv_gurax, processor_gurax, argument_gurax)
@@ -8492,9 +8492,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2s_gurax, "glMultiTexCoord2s")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2s_gurax, processor_gurax, argument_gurax)
@@ -8515,9 +8515,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2sv_gurax, "glMultiTexCoord2sv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2sv_gurax, processor_gurax, argument_gurax)
@@ -8539,9 +8539,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3d_gurax, "glMultiTexCoord3d")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3d_gurax, processor_gurax, argument_gurax)
@@ -8563,9 +8563,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3dv_gurax, "glMultiTexCoord3dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3dv_gurax, processor_gurax, argument_gurax)
@@ -8587,9 +8587,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3f_gurax, "glMultiTexCoord3f")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3f_gurax, processor_gurax, argument_gurax)
@@ -8611,9 +8611,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3fv_gurax, "glMultiTexCoord3fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3fv_gurax, processor_gurax, argument_gurax)
@@ -8635,9 +8635,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3i_gurax, "glMultiTexCoord3i")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3i_gurax, processor_gurax, argument_gurax)
@@ -8659,9 +8659,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3iv_gurax, "glMultiTexCoord3iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3iv_gurax, processor_gurax, argument_gurax)
@@ -8683,9 +8683,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3s_gurax, "glMultiTexCoord3s")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3s_gurax, processor_gurax, argument_gurax)
@@ -8707,9 +8707,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3sv_gurax, "glMultiTexCoord3sv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3sv_gurax, processor_gurax, argument_gurax)
@@ -8732,9 +8732,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4d_gurax, "glMultiTexCoord4d")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4d_gurax, processor_gurax, argument_gurax)
@@ -8757,9 +8757,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4dv_gurax, "glMultiTexCoord4dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4dv_gurax, processor_gurax, argument_gurax)
@@ -8782,9 +8782,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4f_gurax, "glMultiTexCoord4f")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4f_gurax, processor_gurax, argument_gurax)
@@ -8807,9 +8807,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4fv_gurax, "glMultiTexCoord4fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4fv_gurax, processor_gurax, argument_gurax)
@@ -8832,9 +8832,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4i_gurax, "glMultiTexCoord4i")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4i_gurax, processor_gurax, argument_gurax)
@@ -8857,9 +8857,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4iv_gurax, "glMultiTexCoord4iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4iv_gurax, processor_gurax, argument_gurax)
@@ -8882,9 +8882,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4s_gurax, "glMultiTexCoord4s")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4s_gurax, processor_gurax, argument_gurax)
@@ -8907,9 +8907,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4sv_gurax, "glMultiTexCoord4sv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4sv_gurax, processor_gurax, argument_gurax)
@@ -8929,9 +8929,9 @@ Gurax_DeclareFunctionAlias(glSampleCoverage_gurax, "glSampleCoverage")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("invert", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSampleCoverage_gurax, processor_gurax, argument_gurax)
@@ -8953,9 +8953,9 @@ Gurax_DeclareFunctionAlias(glBlendColor_gurax, "glBlendColor")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendColor_gurax, processor_gurax, argument_gurax)
@@ -8976,9 +8976,9 @@ Gurax_DeclareFunctionAlias(glBlendEquation_gurax, "glBlendEquation")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendEquation_gurax, processor_gurax, argument_gurax)
@@ -8999,9 +8999,9 @@ Gurax_DeclareFunctionAlias(glBlendFuncSeparate_gurax, "glBlendFuncSeparate")
 	DeclareArg("dfactorRGB", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sfactorAlpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dfactorAlpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendFuncSeparate_gurax, processor_gurax, argument_gurax)
@@ -9024,9 +9024,9 @@ Gurax_DeclareFunctionAlias(glFogCoordPointer_gurax, "glFogCoordPointer")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFogCoordPointer_gurax, processor_gurax, argument_gurax)
@@ -9046,9 +9046,9 @@ Gurax_DeclareFunctionAlias(glFogCoordd_gurax, "glFogCoordd")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFogCoordd_gurax, processor_gurax, argument_gurax)
@@ -9066,9 +9066,9 @@ Gurax_DeclareFunctionAlias(glFogCoorddv_gurax, "glFogCoorddv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFogCoorddv_gurax, processor_gurax, argument_gurax)
@@ -9086,9 +9086,9 @@ Gurax_DeclareFunctionAlias(glFogCoordf_gurax, "glFogCoordf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFogCoordf_gurax, processor_gurax, argument_gurax)
@@ -9106,9 +9106,9 @@ Gurax_DeclareFunctionAlias(glFogCoordfv_gurax, "glFogCoordfv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("coord", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFogCoordfv_gurax, processor_gurax, argument_gurax)
@@ -9129,9 +9129,9 @@ Gurax_DeclareFunctionAlias(glMultiDrawArrays_gurax, "glMultiDrawArrays")
 	DeclareArg("first", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiDrawArrays_gurax, processor_gurax, argument_gurax)
@@ -9155,9 +9155,9 @@ Gurax_DeclareFunctionAlias(glMultiDrawElements_gurax, "glMultiDrawElements")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::ListVar | ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiDrawElements_gurax, processor_gurax, argument_gurax)
@@ -9186,9 +9186,9 @@ Gurax_DeclareFunctionAlias(glPointParameterf_gurax, "glPointParameterf")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPointParameterf_gurax, processor_gurax, argument_gurax)
@@ -9208,9 +9208,9 @@ Gurax_DeclareFunctionAlias(glPointParameterfv_gurax, "glPointParameterfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPointParameterfv_gurax, processor_gurax, argument_gurax)
@@ -9230,9 +9230,9 @@ Gurax_DeclareFunctionAlias(glPointParameteri_gurax, "glPointParameteri")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPointParameteri_gurax, processor_gurax, argument_gurax)
@@ -9252,9 +9252,9 @@ Gurax_DeclareFunctionAlias(glPointParameteriv_gurax, "glPointParameteriv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPointParameteriv_gurax, processor_gurax, argument_gurax)
@@ -9275,9 +9275,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3b_gurax, "glSecondaryColor3b")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3b_gurax, processor_gurax, argument_gurax)
@@ -9297,9 +9297,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3bv_gurax, "glSecondaryColor3bv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3bv_gurax, processor_gurax, argument_gurax)
@@ -9319,9 +9319,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3d_gurax, "glSecondaryColor3d")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3d_gurax, processor_gurax, argument_gurax)
@@ -9341,9 +9341,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3dv_gurax, "glSecondaryColor3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3dv_gurax, processor_gurax, argument_gurax)
@@ -9363,9 +9363,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3f_gurax, "glSecondaryColor3f")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3f_gurax, processor_gurax, argument_gurax)
@@ -9385,9 +9385,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3fv_gurax, "glSecondaryColor3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3fv_gurax, processor_gurax, argument_gurax)
@@ -9407,9 +9407,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3i_gurax, "glSecondaryColor3i")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3i_gurax, processor_gurax, argument_gurax)
@@ -9429,9 +9429,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3iv_gurax, "glSecondaryColor3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3iv_gurax, processor_gurax, argument_gurax)
@@ -9451,9 +9451,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3s_gurax, "glSecondaryColor3s")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3s_gurax, processor_gurax, argument_gurax)
@@ -9473,9 +9473,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3sv_gurax, "glSecondaryColor3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3sv_gurax, processor_gurax, argument_gurax)
@@ -9495,9 +9495,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3ub_gurax, "glSecondaryColor3ub")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3ub_gurax, processor_gurax, argument_gurax)
@@ -9517,9 +9517,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3ubv_gurax, "glSecondaryColor3ubv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3ubv_gurax, processor_gurax, argument_gurax)
@@ -9539,9 +9539,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3ui_gurax, "glSecondaryColor3ui")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3ui_gurax, processor_gurax, argument_gurax)
@@ -9561,9 +9561,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3uiv_gurax, "glSecondaryColor3uiv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3uiv_gurax, processor_gurax, argument_gurax)
@@ -9583,9 +9583,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3us_gurax, "glSecondaryColor3us")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3us_gurax, processor_gurax, argument_gurax)
@@ -9605,9 +9605,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColor3usv_gurax, "glSecondaryColor3usv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColor3usv_gurax, processor_gurax, argument_gurax)
@@ -9628,9 +9628,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColorPointer_gurax, "glSecondaryColorPoint
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColorPointer_gurax, processor_gurax, argument_gurax)
@@ -9652,9 +9652,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2d_gurax, "glWindowPos2d")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2d_gurax, processor_gurax, argument_gurax)
@@ -9673,9 +9673,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2dv_gurax, "glWindowPos2dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2dv_gurax, processor_gurax, argument_gurax)
@@ -9694,9 +9694,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2f_gurax, "glWindowPos2f")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2f_gurax, processor_gurax, argument_gurax)
@@ -9715,9 +9715,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2fv_gurax, "glWindowPos2fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2fv_gurax, processor_gurax, argument_gurax)
@@ -9736,9 +9736,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2i_gurax, "glWindowPos2i")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2i_gurax, processor_gurax, argument_gurax)
@@ -9757,9 +9757,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2iv_gurax, "glWindowPos2iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2iv_gurax, processor_gurax, argument_gurax)
@@ -9778,9 +9778,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2s_gurax, "glWindowPos2s")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2s_gurax, processor_gurax, argument_gurax)
@@ -9799,9 +9799,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2sv_gurax, "glWindowPos2sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2sv_gurax, processor_gurax, argument_gurax)
@@ -9821,9 +9821,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3d_gurax, "glWindowPos3d")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3d_gurax, processor_gurax, argument_gurax)
@@ -9843,9 +9843,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3dv_gurax, "glWindowPos3dv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3dv_gurax, processor_gurax, argument_gurax)
@@ -9865,9 +9865,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3f_gurax, "glWindowPos3f")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3f_gurax, processor_gurax, argument_gurax)
@@ -9887,9 +9887,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3fv_gurax, "glWindowPos3fv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3fv_gurax, processor_gurax, argument_gurax)
@@ -9909,9 +9909,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3i_gurax, "glWindowPos3i")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3i_gurax, processor_gurax, argument_gurax)
@@ -9931,9 +9931,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3iv_gurax, "glWindowPos3iv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3iv_gurax, processor_gurax, argument_gurax)
@@ -9953,9 +9953,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3s_gurax, "glWindowPos3s")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3s_gurax, processor_gurax, argument_gurax)
@@ -9975,9 +9975,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3sv_gurax, "glWindowPos3sv")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3sv_gurax, processor_gurax, argument_gurax)
@@ -9996,9 +9996,9 @@ Gurax_DeclareFunctionAlias(glBeginQuery_gurax, "glBeginQuery")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBeginQuery_gurax, processor_gurax, argument_gurax)
@@ -10018,9 +10018,9 @@ Gurax_DeclareFunctionAlias(glBindBuffer_gurax, "glBindBuffer")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindBuffer_gurax, processor_gurax, argument_gurax)
@@ -10042,9 +10042,9 @@ Gurax_DeclareFunctionAlias(glBufferData_gurax, "glBufferData")
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("usage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBufferData_gurax, processor_gurax, argument_gurax)
@@ -10068,9 +10068,9 @@ Gurax_DeclareFunctionAlias(glBufferSubData_gurax, "glBufferSubData")
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBufferSubData_gurax, processor_gurax, argument_gurax)
@@ -10092,9 +10092,9 @@ Gurax_DeclareFunctionAlias(glDeleteBuffers_gurax, "glDeleteBuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteBuffers_gurax, processor_gurax, argument_gurax)
@@ -10114,9 +10114,9 @@ Gurax_DeclareFunctionAlias(glDeleteQueries_gurax, "glDeleteQueries")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteQueries_gurax, processor_gurax, argument_gurax)
@@ -10135,9 +10135,9 @@ Gurax_DeclareFunctionAlias(glEndQuery_gurax, "glEndQuery")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEndQuery_gurax, processor_gurax, argument_gurax)
@@ -10156,9 +10156,9 @@ Gurax_DeclareFunctionAlias(glGenBuffers_gurax, "glGenBuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenBuffers_gurax, processor_gurax, argument_gurax)
@@ -10178,9 +10178,9 @@ Gurax_DeclareFunctionAlias(glGenQueries_gurax, "glGenQueries")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenQueries_gurax, processor_gurax, argument_gurax)
@@ -10201,9 +10201,9 @@ Gurax_DeclareFunctionAlias(glGetBufferParameteriv_gurax, "glGetBufferParameteriv
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetBufferParameteriv_gurax, processor_gurax, argument_gurax)
@@ -10226,9 +10226,9 @@ Gurax_DeclareFunctionAlias(glGetBufferSubData_gurax, "glGetBufferSubData")
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetBufferSubData_gurax, processor_gurax, argument_gurax)
@@ -10251,9 +10251,9 @@ Gurax_DeclareFunctionAlias(glGetQueryObjectiv_gurax, "glGetQueryObjectiv")
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryObjectiv_gurax, processor_gurax, argument_gurax)
@@ -10275,9 +10275,9 @@ Gurax_DeclareFunctionAlias(glGetQueryObjectuiv_gurax, "glGetQueryObjectuiv")
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryObjectuiv_gurax, processor_gurax, argument_gurax)
@@ -10299,9 +10299,9 @@ Gurax_DeclareFunctionAlias(glGetQueryiv_gurax, "glGetQueryiv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryiv_gurax, processor_gurax, argument_gurax)
@@ -10321,9 +10321,9 @@ Gurax_DeclareFunctionAlias(glIsBuffer_gurax, "glIsBuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsBuffer_gurax, processor_gurax, argument_gurax)
@@ -10341,9 +10341,9 @@ Gurax_DeclareFunctionAlias(glIsQuery_gurax, "glIsQuery")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsQuery_gurax, processor_gurax, argument_gurax)
@@ -10362,9 +10362,9 @@ Gurax_DeclareFunctionAlias(glMapBuffer_gurax, "glMapBuffer")
 	Declare(VTYPE_Pointer, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("access", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMapBuffer_gurax, processor_gurax, argument_gurax)
@@ -10383,9 +10383,9 @@ Gurax_DeclareFunctionAlias(glUnmapBuffer_gurax, "glUnmapBuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUnmapBuffer_gurax, processor_gurax, argument_gurax)
@@ -10404,9 +10404,9 @@ Gurax_DeclareFunctionAlias(glAttachShader_gurax, "glAttachShader")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glAttachShader_gurax, processor_gurax, argument_gurax)
@@ -10427,9 +10427,9 @@ Gurax_DeclareFunctionAlias(glBindAttribLocation_gurax, "glBindAttribLocation")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindAttribLocation_gurax, processor_gurax, argument_gurax)
@@ -10450,9 +10450,9 @@ Gurax_DeclareFunctionAlias(glBlendEquationSeparate_gurax, "glBlendEquationSepara
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("modeRGB", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("modeAlpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendEquationSeparate_gurax, processor_gurax, argument_gurax)
@@ -10471,9 +10471,9 @@ Gurax_DeclareFunctionAlias(glCompileShader_gurax, "glCompileShader")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompileShader_gurax, processor_gurax, argument_gurax)
@@ -10490,9 +10490,9 @@ Gurax_ImplementFunctionEx(glCompileShader_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(glCreateProgram_gurax, "glCreateProgram")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateProgram_gurax, processor_gurax, argument_gurax)
@@ -10507,9 +10507,9 @@ Gurax_DeclareFunctionAlias(glCreateShader_gurax, "glCreateShader")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateShader_gurax, processor_gurax, argument_gurax)
@@ -10527,9 +10527,9 @@ Gurax_DeclareFunctionAlias(glDeleteProgram_gurax, "glDeleteProgram")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteProgram_gurax, processor_gurax, argument_gurax)
@@ -10547,9 +10547,9 @@ Gurax_DeclareFunctionAlias(glDeleteShader_gurax, "glDeleteShader")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteShader_gurax, processor_gurax, argument_gurax)
@@ -10568,9 +10568,9 @@ Gurax_DeclareFunctionAlias(glDetachShader_gurax, "glDetachShader")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDetachShader_gurax, processor_gurax, argument_gurax)
@@ -10589,9 +10589,9 @@ Gurax_DeclareFunctionAlias(glDisableVertexAttribArray_gurax, "glDisableVertexAtt
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDisableVertexAttribArray_gurax, processor_gurax, argument_gurax)
@@ -10610,9 +10610,9 @@ Gurax_DeclareFunctionAlias(glDrawBuffers_gurax, "glDrawBuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufs", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawBuffers_gurax, processor_gurax, argument_gurax)
@@ -10631,9 +10631,9 @@ Gurax_DeclareFunctionAlias(glEnableVertexAttribArray_gurax, "glEnableVertexAttri
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEnableVertexAttribArray_gurax, processor_gurax, argument_gurax)
@@ -10657,9 +10657,9 @@ Gurax_DeclareFunctionAlias(glGetActiveAttrib_gurax, "glGetActiveAttrib")
 	DeclareArg("size", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("type", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveAttrib_gurax, processor_gurax, argument_gurax)
@@ -10689,9 +10689,9 @@ Gurax_DeclareFunctionAlias(glGetActiveUniform_gurax, "glGetActiveUniform")
 	DeclareArg("size", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("type", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveUniform_gurax, processor_gurax, argument_gurax)
@@ -10718,9 +10718,9 @@ Gurax_DeclareFunctionAlias(glGetAttachedShaders_gurax, "glGetAttachedShaders")
 	DeclareArg("maxCount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("shaders", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetAttachedShaders_gurax, processor_gurax, argument_gurax)
@@ -10742,9 +10742,9 @@ Gurax_DeclareFunctionAlias(glGetAttribLocation_gurax, "glGetAttribLocation")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetAttribLocation_gurax, processor_gurax, argument_gurax)
@@ -10766,9 +10766,9 @@ Gurax_DeclareFunctionAlias(glGetProgramInfoLog_gurax, "glGetProgramInfoLog")
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("infoLog", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramInfoLog_gurax, processor_gurax, argument_gurax)
@@ -10791,9 +10791,9 @@ Gurax_DeclareFunctionAlias(glGetProgramiv_gurax, "glGetProgramiv")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramiv_gurax, processor_gurax, argument_gurax)
@@ -10816,9 +10816,9 @@ Gurax_DeclareFunctionAlias(glGetShaderInfoLog_gurax, "glGetShaderInfoLog")
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("infoLog", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetShaderInfoLog_gurax, processor_gurax, argument_gurax)
@@ -10842,9 +10842,9 @@ Gurax_DeclareFunctionAlias(glGetShaderSource_gurax, "glGetShaderSource")
 	DeclareArg("maxLength", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("source", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetShaderSource_gurax, processor_gurax, argument_gurax)
@@ -10867,9 +10867,9 @@ Gurax_DeclareFunctionAlias(glGetShaderiv_gurax, "glGetShaderiv")
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetShaderiv_gurax, processor_gurax, argument_gurax)
@@ -10890,9 +10890,9 @@ Gurax_DeclareFunctionAlias(glGetUniformLocation_gurax, "glGetUniformLocation")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetUniformLocation_gurax, processor_gurax, argument_gurax)
@@ -10913,9 +10913,9 @@ Gurax_DeclareFunctionAlias(glGetUniformfv_gurax, "glGetUniformfv")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetUniformfv_gurax, processor_gurax, argument_gurax)
@@ -10937,9 +10937,9 @@ Gurax_DeclareFunctionAlias(glGetUniformiv_gurax, "glGetUniformiv")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetUniformiv_gurax, processor_gurax, argument_gurax)
@@ -10961,9 +10961,9 @@ Gurax_DeclareFunctionAlias(glGetVertexAttribdv_gurax, "glGetVertexAttribdv")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexAttribdv_gurax, processor_gurax, argument_gurax)
@@ -10985,9 +10985,9 @@ Gurax_DeclareFunctionAlias(glGetVertexAttribfv_gurax, "glGetVertexAttribfv")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexAttribfv_gurax, processor_gurax, argument_gurax)
@@ -11009,9 +11009,9 @@ Gurax_DeclareFunctionAlias(glGetVertexAttribiv_gurax, "glGetVertexAttribiv")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexAttribiv_gurax, processor_gurax, argument_gurax)
@@ -11031,9 +11031,9 @@ Gurax_DeclareFunctionAlias(glIsProgram_gurax, "glIsProgram")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsProgram_gurax, processor_gurax, argument_gurax)
@@ -11051,9 +11051,9 @@ Gurax_DeclareFunctionAlias(glIsShader_gurax, "glIsShader")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsShader_gurax, processor_gurax, argument_gurax)
@@ -11071,9 +11071,9 @@ Gurax_DeclareFunctionAlias(glLinkProgram_gurax, "glLinkProgram")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glLinkProgram_gurax, processor_gurax, argument_gurax)
@@ -11093,9 +11093,9 @@ Gurax_DeclareFunctionAlias(glShaderSource_gurax, "glShaderSource")
 	DeclareArg("shader", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glShaderSource_gurax, processor_gurax, argument_gurax)
@@ -11125,9 +11125,9 @@ Gurax_DeclareFunctionAlias(glStencilFuncSeparate_gurax, "glStencilFuncSeparate")
 	DeclareArg("backfunc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ref", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glStencilFuncSeparate_gurax, processor_gurax, argument_gurax)
@@ -11149,9 +11149,9 @@ Gurax_DeclareFunctionAlias(glStencilMaskSeparate_gurax, "glStencilMaskSeparate")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glStencilMaskSeparate_gurax, processor_gurax, argument_gurax)
@@ -11173,9 +11173,9 @@ Gurax_DeclareFunctionAlias(glStencilOpSeparate_gurax, "glStencilOpSeparate")
 	DeclareArg("sfail", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dpfail", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dppass", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glStencilOpSeparate_gurax, processor_gurax, argument_gurax)
@@ -11197,9 +11197,9 @@ Gurax_DeclareFunctionAlias(glUniform1f_gurax, "glUniform1f")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1f_gurax, processor_gurax, argument_gurax)
@@ -11220,9 +11220,9 @@ Gurax_DeclareFunctionAlias(glUniform1fv_gurax, "glUniform1fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1fv_gurax, processor_gurax, argument_gurax)
@@ -11243,9 +11243,9 @@ Gurax_DeclareFunctionAlias(glUniform1i_gurax, "glUniform1i")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1i_gurax, processor_gurax, argument_gurax)
@@ -11266,9 +11266,9 @@ Gurax_DeclareFunctionAlias(glUniform1iv_gurax, "glUniform1iv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1iv_gurax, processor_gurax, argument_gurax)
@@ -11290,9 +11290,9 @@ Gurax_DeclareFunctionAlias(glUniform2f_gurax, "glUniform2f")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2f_gurax, processor_gurax, argument_gurax)
@@ -11314,9 +11314,9 @@ Gurax_DeclareFunctionAlias(glUniform2fv_gurax, "glUniform2fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2fv_gurax, processor_gurax, argument_gurax)
@@ -11338,9 +11338,9 @@ Gurax_DeclareFunctionAlias(glUniform2i_gurax, "glUniform2i")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2i_gurax, processor_gurax, argument_gurax)
@@ -11362,9 +11362,9 @@ Gurax_DeclareFunctionAlias(glUniform2iv_gurax, "glUniform2iv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2iv_gurax, processor_gurax, argument_gurax)
@@ -11387,9 +11387,9 @@ Gurax_DeclareFunctionAlias(glUniform3f_gurax, "glUniform3f")
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3f_gurax, processor_gurax, argument_gurax)
@@ -11412,9 +11412,9 @@ Gurax_DeclareFunctionAlias(glUniform3fv_gurax, "glUniform3fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3fv_gurax, processor_gurax, argument_gurax)
@@ -11437,9 +11437,9 @@ Gurax_DeclareFunctionAlias(glUniform3i_gurax, "glUniform3i")
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3i_gurax, processor_gurax, argument_gurax)
@@ -11462,9 +11462,9 @@ Gurax_DeclareFunctionAlias(glUniform3iv_gurax, "glUniform3iv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3iv_gurax, processor_gurax, argument_gurax)
@@ -11488,9 +11488,9 @@ Gurax_DeclareFunctionAlias(glUniform4f_gurax, "glUniform4f")
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4f_gurax, processor_gurax, argument_gurax)
@@ -11514,9 +11514,9 @@ Gurax_DeclareFunctionAlias(glUniform4fv_gurax, "glUniform4fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4fv_gurax, processor_gurax, argument_gurax)
@@ -11540,9 +11540,9 @@ Gurax_DeclareFunctionAlias(glUniform4i_gurax, "glUniform4i")
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4i_gurax, processor_gurax, argument_gurax)
@@ -11566,9 +11566,9 @@ Gurax_DeclareFunctionAlias(glUniform4iv_gurax, "glUniform4iv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4iv_gurax, processor_gurax, argument_gurax)
@@ -11591,9 +11591,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2fv_gurax, "glUniformMatrix2fv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix2fv_gurax, processor_gurax, argument_gurax)
@@ -11617,9 +11617,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3fv_gurax, "glUniformMatrix3fv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix3fv_gurax, processor_gurax, argument_gurax)
@@ -11643,9 +11643,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4fv_gurax, "glUniformMatrix4fv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix4fv_gurax, processor_gurax, argument_gurax)
@@ -11666,9 +11666,9 @@ Gurax_DeclareFunctionAlias(glUseProgram_gurax, "glUseProgram")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUseProgram_gurax, processor_gurax, argument_gurax)
@@ -11686,9 +11686,9 @@ Gurax_DeclareFunctionAlias(glValidateProgram_gurax, "glValidateProgram")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glValidateProgram_gurax, processor_gurax, argument_gurax)
@@ -11707,9 +11707,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1d_gurax, "glVertexAttrib1d")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1d_gurax, processor_gurax, argument_gurax)
@@ -11729,9 +11729,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1dv_gurax, "glVertexAttrib1dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1dv_gurax, processor_gurax, argument_gurax)
@@ -11751,9 +11751,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1f_gurax, "glVertexAttrib1f")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1f_gurax, processor_gurax, argument_gurax)
@@ -11773,9 +11773,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1fv_gurax, "glVertexAttrib1fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1fv_gurax, processor_gurax, argument_gurax)
@@ -11795,9 +11795,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1s_gurax, "glVertexAttrib1s")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1s_gurax, processor_gurax, argument_gurax)
@@ -11817,9 +11817,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1sv_gurax, "glVertexAttrib1sv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1sv_gurax, processor_gurax, argument_gurax)
@@ -11840,9 +11840,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2d_gurax, "glVertexAttrib2d")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2d_gurax, processor_gurax, argument_gurax)
@@ -11863,9 +11863,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2dv_gurax, "glVertexAttrib2dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2dv_gurax, processor_gurax, argument_gurax)
@@ -11886,9 +11886,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2f_gurax, "glVertexAttrib2f")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2f_gurax, processor_gurax, argument_gurax)
@@ -11909,9 +11909,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2fv_gurax, "glVertexAttrib2fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2fv_gurax, processor_gurax, argument_gurax)
@@ -11932,9 +11932,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2s_gurax, "glVertexAttrib2s")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2s_gurax, processor_gurax, argument_gurax)
@@ -11955,9 +11955,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2sv_gurax, "glVertexAttrib2sv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2sv_gurax, processor_gurax, argument_gurax)
@@ -11979,9 +11979,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3d_gurax, "glVertexAttrib3d")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3d_gurax, processor_gurax, argument_gurax)
@@ -12003,9 +12003,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3dv_gurax, "glVertexAttrib3dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3dv_gurax, processor_gurax, argument_gurax)
@@ -12027,9 +12027,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3f_gurax, "glVertexAttrib3f")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3f_gurax, processor_gurax, argument_gurax)
@@ -12051,9 +12051,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3fv_gurax, "glVertexAttrib3fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3fv_gurax, processor_gurax, argument_gurax)
@@ -12075,9 +12075,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3s_gurax, "glVertexAttrib3s")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3s_gurax, processor_gurax, argument_gurax)
@@ -12099,9 +12099,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3sv_gurax, "glVertexAttrib3sv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3sv_gurax, processor_gurax, argument_gurax)
@@ -12121,9 +12121,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nbv_gurax, "glVertexAttrib4Nbv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4Nbv_gurax, processor_gurax, argument_gurax)
@@ -12143,9 +12143,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Niv_gurax, "glVertexAttrib4Niv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4Niv_gurax, processor_gurax, argument_gurax)
@@ -12165,9 +12165,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nsv_gurax, "glVertexAttrib4Nsv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4Nsv_gurax, processor_gurax, argument_gurax)
@@ -12190,9 +12190,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nub_gurax, "glVertexAttrib4Nub")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4Nub_gurax, processor_gurax, argument_gurax)
@@ -12215,9 +12215,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nubv_gurax, "glVertexAttrib4Nubv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4Nubv_gurax, processor_gurax, argument_gurax)
@@ -12237,9 +12237,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nuiv_gurax, "glVertexAttrib4Nuiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4Nuiv_gurax, processor_gurax, argument_gurax)
@@ -12259,9 +12259,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4Nusv_gurax, "glVertexAttrib4Nusv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4Nusv_gurax, processor_gurax, argument_gurax)
@@ -12281,9 +12281,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4bv_gurax, "glVertexAttrib4bv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4bv_gurax, processor_gurax, argument_gurax)
@@ -12306,9 +12306,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4d_gurax, "glVertexAttrib4d")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4d_gurax, processor_gurax, argument_gurax)
@@ -12331,9 +12331,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4dv_gurax, "glVertexAttrib4dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4dv_gurax, processor_gurax, argument_gurax)
@@ -12356,9 +12356,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4f_gurax, "glVertexAttrib4f")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4f_gurax, processor_gurax, argument_gurax)
@@ -12381,9 +12381,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4fv_gurax, "glVertexAttrib4fv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4fv_gurax, processor_gurax, argument_gurax)
@@ -12403,9 +12403,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4iv_gurax, "glVertexAttrib4iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4iv_gurax, processor_gurax, argument_gurax)
@@ -12428,9 +12428,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4s_gurax, "glVertexAttrib4s")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4s_gurax, processor_gurax, argument_gurax)
@@ -12453,9 +12453,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4sv_gurax, "glVertexAttrib4sv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4sv_gurax, processor_gurax, argument_gurax)
@@ -12475,9 +12475,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4ubv_gurax, "glVertexAttrib4ubv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4ubv_gurax, processor_gurax, argument_gurax)
@@ -12497,9 +12497,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4uiv_gurax, "glVertexAttrib4uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4uiv_gurax, processor_gurax, argument_gurax)
@@ -12519,9 +12519,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4usv_gurax, "glVertexAttrib4usv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4usv_gurax, processor_gurax, argument_gurax)
@@ -12545,9 +12545,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribPointer_gurax, "glVertexAttribPointer")
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribPointer_gurax, processor_gurax, argument_gurax)
@@ -12573,9 +12573,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2x3fv_gurax, "glUniformMatrix2x3fv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix2x3fv_gurax, processor_gurax, argument_gurax)
@@ -12599,9 +12599,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2x4fv_gurax, "glUniformMatrix2x4fv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix2x4fv_gurax, processor_gurax, argument_gurax)
@@ -12625,9 +12625,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3x2fv_gurax, "glUniformMatrix3x2fv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix3x2fv_gurax, processor_gurax, argument_gurax)
@@ -12651,9 +12651,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3x4fv_gurax, "glUniformMatrix3x4fv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix3x4fv_gurax, processor_gurax, argument_gurax)
@@ -12677,9 +12677,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4x2fv_gurax, "glUniformMatrix4x2fv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix4x2fv_gurax, processor_gurax, argument_gurax)
@@ -12703,9 +12703,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4x3fv_gurax, "glUniformMatrix4x3fv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix4x3fv_gurax, processor_gurax, argument_gurax)
@@ -12727,9 +12727,9 @@ Gurax_DeclareFunctionAlias(glBeginConditionalRender_gurax, "glBeginConditionalRe
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBeginConditionalRender_gurax, processor_gurax, argument_gurax)
@@ -12748,9 +12748,9 @@ Gurax_DeclareFunctionAlias(glBeginTransformFeedback_gurax, "glBeginTransformFeed
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("primitiveMode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBeginTransformFeedback_gurax, processor_gurax, argument_gurax)
@@ -12770,9 +12770,9 @@ Gurax_DeclareFunctionAlias(glBindFragDataLocation_gurax, "glBindFragDataLocation
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("colorNumber", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindFragDataLocation_gurax, processor_gurax, argument_gurax)
@@ -12793,9 +12793,9 @@ Gurax_DeclareFunctionAlias(glClampColor_gurax, "glClampColor")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clamp", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClampColor_gurax, processor_gurax, argument_gurax)
@@ -12817,9 +12817,9 @@ Gurax_DeclareFunctionAlias(glClearBufferfi_gurax, "glClearBufferfi")
 	DeclareArg("drawBuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stencil", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearBufferfi_gurax, processor_gurax, argument_gurax)
@@ -12842,9 +12842,9 @@ Gurax_DeclareFunctionAlias(glClearBufferfv_gurax, "glClearBufferfv")
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawBuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearBufferfv_gurax, processor_gurax, argument_gurax)
@@ -12866,9 +12866,9 @@ Gurax_DeclareFunctionAlias(glClearBufferiv_gurax, "glClearBufferiv")
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawBuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearBufferiv_gurax, processor_gurax, argument_gurax)
@@ -12890,9 +12890,9 @@ Gurax_DeclareFunctionAlias(glClearBufferuiv_gurax, "glClearBufferuiv")
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawBuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearBufferuiv_gurax, processor_gurax, argument_gurax)
@@ -12916,9 +12916,9 @@ Gurax_DeclareFunctionAlias(glColorMaski_gurax, "glColorMaski")
 	DeclareArg("green", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorMaski_gurax, processor_gurax, argument_gurax)
@@ -12941,9 +12941,9 @@ Gurax_DeclareFunctionAlias(glDisablei_gurax, "glDisablei")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDisablei_gurax, processor_gurax, argument_gurax)
@@ -12963,9 +12963,9 @@ Gurax_DeclareFunctionAlias(glEnablei_gurax, "glEnablei")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEnablei_gurax, processor_gurax, argument_gurax)
@@ -12983,9 +12983,9 @@ Gurax_ImplementFunctionEx(glEnablei_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(glEndConditionalRender_gurax, "glEndConditionalRender")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEndConditionalRender_gurax, processor_gurax, argument_gurax)
@@ -12999,9 +12999,9 @@ Gurax_ImplementFunctionEx(glEndConditionalRender_gurax, processor_gurax, argumen
 Gurax_DeclareFunctionAlias(glEndTransformFeedback_gurax, "glEndTransformFeedback")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEndTransformFeedback_gurax, processor_gurax, argument_gurax)
@@ -13018,9 +13018,9 @@ Gurax_DeclareFunctionAlias(glGetBooleani_v_gurax, "glGetBooleani_v")
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetBooleani_v_gurax, processor_gurax, argument_gurax)
@@ -13041,9 +13041,9 @@ Gurax_DeclareFunctionAlias(glGetFragDataLocation_gurax, "glGetFragDataLocation")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetFragDataLocation_gurax, processor_gurax, argument_gurax)
@@ -13063,9 +13063,9 @@ Gurax_DeclareFunctionAlias(glGetStringi_gurax, "glGetStringi")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("name", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetStringi_gurax, processor_gurax, argument_gurax)
@@ -13086,9 +13086,9 @@ Gurax_DeclareFunctionAlias(glGetTexParameterIiv_gurax, "glGetTexParameterIiv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexParameterIiv_gurax, processor_gurax, argument_gurax)
@@ -13110,9 +13110,9 @@ Gurax_DeclareFunctionAlias(glGetTexParameterIuiv_gurax, "glGetTexParameterIuiv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTexParameterIuiv_gurax, processor_gurax, argument_gurax)
@@ -13138,9 +13138,9 @@ Gurax_DeclareFunctionAlias(glGetTransformFeedbackVarying_gurax, "glGetTransformF
 	DeclareArg("size", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("type", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTransformFeedbackVarying_gurax, processor_gurax, argument_gurax)
@@ -13166,9 +13166,9 @@ Gurax_DeclareFunctionAlias(glGetUniformuiv_gurax, "glGetUniformuiv")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetUniformuiv_gurax, processor_gurax, argument_gurax)
@@ -13190,9 +13190,9 @@ Gurax_DeclareFunctionAlias(glGetVertexAttribIiv_gurax, "glGetVertexAttribIiv")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexAttribIiv_gurax, processor_gurax, argument_gurax)
@@ -13214,9 +13214,9 @@ Gurax_DeclareFunctionAlias(glGetVertexAttribIuiv_gurax, "glGetVertexAttribIuiv")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexAttribIuiv_gurax, processor_gurax, argument_gurax)
@@ -13237,9 +13237,9 @@ Gurax_DeclareFunctionAlias(glIsEnabledi_gurax, "glIsEnabledi")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsEnabledi_gurax, processor_gurax, argument_gurax)
@@ -13260,9 +13260,9 @@ Gurax_DeclareFunctionAlias(glTexParameterIiv_gurax, "glTexParameterIiv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexParameterIiv_gurax, processor_gurax, argument_gurax)
@@ -13284,9 +13284,9 @@ Gurax_DeclareFunctionAlias(glTexParameterIuiv_gurax, "glTexParameterIuiv")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexParameterIuiv_gurax, processor_gurax, argument_gurax)
@@ -13307,9 +13307,9 @@ Gurax_DeclareFunctionAlias(glUniform1ui_gurax, "glUniform1ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1ui_gurax, processor_gurax, argument_gurax)
@@ -13330,9 +13330,9 @@ Gurax_DeclareFunctionAlias(glUniform1uiv_gurax, "glUniform1uiv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1uiv_gurax, processor_gurax, argument_gurax)
@@ -13354,9 +13354,9 @@ Gurax_DeclareFunctionAlias(glUniform2ui_gurax, "glUniform2ui")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2ui_gurax, processor_gurax, argument_gurax)
@@ -13378,9 +13378,9 @@ Gurax_DeclareFunctionAlias(glUniform2uiv_gurax, "glUniform2uiv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2uiv_gurax, processor_gurax, argument_gurax)
@@ -13403,9 +13403,9 @@ Gurax_DeclareFunctionAlias(glUniform3ui_gurax, "glUniform3ui")
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3ui_gurax, processor_gurax, argument_gurax)
@@ -13428,9 +13428,9 @@ Gurax_DeclareFunctionAlias(glUniform3uiv_gurax, "glUniform3uiv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3uiv_gurax, processor_gurax, argument_gurax)
@@ -13454,9 +13454,9 @@ Gurax_DeclareFunctionAlias(glUniform4ui_gurax, "glUniform4ui")
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4ui_gurax, processor_gurax, argument_gurax)
@@ -13480,9 +13480,9 @@ Gurax_DeclareFunctionAlias(glUniform4uiv_gurax, "glUniform4uiv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4uiv_gurax, processor_gurax, argument_gurax)
@@ -13503,9 +13503,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1i_gurax, "glVertexAttribI1i")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI1i_gurax, processor_gurax, argument_gurax)
@@ -13525,9 +13525,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1iv_gurax, "glVertexAttribI1iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI1iv_gurax, processor_gurax, argument_gurax)
@@ -13547,9 +13547,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1ui_gurax, "glVertexAttribI1ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI1ui_gurax, processor_gurax, argument_gurax)
@@ -13569,9 +13569,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI1uiv_gurax, "glVertexAttribI1uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI1uiv_gurax, processor_gurax, argument_gurax)
@@ -13592,9 +13592,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2i_gurax, "glVertexAttribI2i")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI2i_gurax, processor_gurax, argument_gurax)
@@ -13615,9 +13615,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2iv_gurax, "glVertexAttribI2iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI2iv_gurax, processor_gurax, argument_gurax)
@@ -13638,9 +13638,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2ui_gurax, "glVertexAttribI2ui")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI2ui_gurax, processor_gurax, argument_gurax)
@@ -13661,9 +13661,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI2uiv_gurax, "glVertexAttribI2uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI2uiv_gurax, processor_gurax, argument_gurax)
@@ -13685,9 +13685,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3i_gurax, "glVertexAttribI3i")
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI3i_gurax, processor_gurax, argument_gurax)
@@ -13709,9 +13709,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3iv_gurax, "glVertexAttribI3iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI3iv_gurax, processor_gurax, argument_gurax)
@@ -13733,9 +13733,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3ui_gurax, "glVertexAttribI3ui")
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI3ui_gurax, processor_gurax, argument_gurax)
@@ -13757,9 +13757,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI3uiv_gurax, "glVertexAttribI3uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI3uiv_gurax, processor_gurax, argument_gurax)
@@ -13779,9 +13779,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4bv_gurax, "glVertexAttribI4bv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI4bv_gurax, processor_gurax, argument_gurax)
@@ -13804,9 +13804,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4i_gurax, "glVertexAttribI4i")
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI4i_gurax, processor_gurax, argument_gurax)
@@ -13829,9 +13829,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4iv_gurax, "glVertexAttribI4iv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI4iv_gurax, processor_gurax, argument_gurax)
@@ -13851,9 +13851,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4sv_gurax, "glVertexAttribI4sv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI4sv_gurax, processor_gurax, argument_gurax)
@@ -13873,9 +13873,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4ubv_gurax, "glVertexAttribI4ubv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI4ubv_gurax, processor_gurax, argument_gurax)
@@ -13898,9 +13898,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4ui_gurax, "glVertexAttribI4ui")
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI4ui_gurax, processor_gurax, argument_gurax)
@@ -13923,9 +13923,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4uiv_gurax, "glVertexAttribI4uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI4uiv_gurax, processor_gurax, argument_gurax)
@@ -13945,9 +13945,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribI4usv_gurax, "glVertexAttribI4usv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribI4usv_gurax, processor_gurax, argument_gurax)
@@ -13970,9 +13970,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribIPointer_gurax, "glVertexAttribIPointer
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribIPointer_gurax, processor_gurax, argument_gurax)
@@ -13997,9 +13997,9 @@ Gurax_DeclareFunctionAlias(glDrawArraysInstanced_gurax, "glDrawArraysInstanced")
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawArraysInstanced_gurax, processor_gurax, argument_gurax)
@@ -14024,9 +14024,9 @@ Gurax_DeclareFunctionAlias(glDrawElementsInstanced_gurax, "glDrawElementsInstanc
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawElementsInstanced_gurax, processor_gurax, argument_gurax)
@@ -14048,9 +14048,9 @@ Gurax_DeclareFunctionAlias(glPrimitiveRestartIndex_gurax, "glPrimitiveRestartInd
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPrimitiveRestartIndex_gurax, processor_gurax, argument_gurax)
@@ -14070,9 +14070,9 @@ Gurax_DeclareFunctionAlias(glTexBuffer_gurax, "glTexBuffer")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("internalFormat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexBuffer_gurax, processor_gurax, argument_gurax)
@@ -14095,9 +14095,9 @@ Gurax_DeclareFunctionAlias(glFramebufferTexture_gurax, "glFramebufferTexture")
 	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferTexture_gurax, processor_gurax, argument_gurax)
@@ -14120,9 +14120,9 @@ Gurax_DeclareFunctionAlias(glGetBufferParameteri64v_gurax, "glGetBufferParameter
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetBufferParameteri64v_gurax, processor_gurax, argument_gurax)
@@ -14144,9 +14144,9 @@ Gurax_DeclareFunctionAlias(glGetInteger64i_v_gurax, "glGetInteger64i_v")
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetInteger64i_v_gurax, processor_gurax, argument_gurax)
@@ -14167,9 +14167,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribDivisor_gurax, "glVertexAttribDivisor")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("divisor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribDivisor_gurax, processor_gurax, argument_gurax)
@@ -14190,9 +14190,9 @@ Gurax_DeclareFunctionAlias(glBlendEquationSeparatei_gurax, "glBlendEquationSepar
 	DeclareArg("buf", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("modeRGB", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("modeAlpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendEquationSeparatei_gurax, processor_gurax, argument_gurax)
@@ -14213,9 +14213,9 @@ Gurax_DeclareFunctionAlias(glBlendEquationi_gurax, "glBlendEquationi")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("buf", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendEquationi_gurax, processor_gurax, argument_gurax)
@@ -14238,9 +14238,9 @@ Gurax_DeclareFunctionAlias(glBlendFuncSeparatei_gurax, "glBlendFuncSeparatei")
 	DeclareArg("dstRGB", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("srcAlpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dstAlpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendFuncSeparatei_gurax, processor_gurax, argument_gurax)
@@ -14264,9 +14264,9 @@ Gurax_DeclareFunctionAlias(glBlendFunci_gurax, "glBlendFunci")
 	DeclareArg("buf", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("src", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendFunci_gurax, processor_gurax, argument_gurax)
@@ -14286,9 +14286,9 @@ Gurax_DeclareFunctionAlias(glMinSampleShading_gurax, "glMinSampleShading")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMinSampleShading_gurax, processor_gurax, argument_gurax)
@@ -14305,9 +14305,9 @@ Gurax_ImplementFunctionEx(glMinSampleShading_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(glGetGraphicsResetStatus_gurax, "glGetGraphicsResetStatus")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetGraphicsResetStatus_gurax, processor_gurax, argument_gurax)
@@ -14325,9 +14325,9 @@ Gurax_DeclareFunctionAlias(glGetnCompressedTexImage_gurax, "glGetnCompressedTexI
 	DeclareArg("lod", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnCompressedTexImage_gurax, processor_gurax, argument_gurax)
@@ -14353,9 +14353,9 @@ Gurax_DeclareFunctionAlias(glGetnTexImage_gurax, "glGetnTexImage")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnTexImage_gurax, processor_gurax, argument_gurax)
@@ -14381,9 +14381,9 @@ Gurax_DeclareFunctionAlias(glGetnUniformdv_gurax, "glGetnUniformdv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnUniformdv_gurax, processor_gurax, argument_gurax)
@@ -14408,9 +14408,9 @@ Gurax_DeclareFunctionAlias(glMultiDrawArraysIndirectCount_gurax, "glMultiDrawArr
 	DeclareArg("drawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxdrawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiDrawArraysIndirectCount_gurax, processor_gurax, argument_gurax)
@@ -14437,9 +14437,9 @@ Gurax_DeclareFunctionAlias(glMultiDrawElementsIndirectCount_gurax, "glMultiDrawE
 	DeclareArg("drawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxdrawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiDrawElementsIndirectCount_gurax, processor_gurax, argument_gurax)
@@ -14466,9 +14466,9 @@ Gurax_DeclareFunctionAlias(glSpecializeShader_gurax, "glSpecializeShader")
 	DeclareArg("numSpecializationConstants", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pConstantIndex", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pConstantValue", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSpecializeShader_gurax, processor_gurax, argument_gurax)
@@ -14490,9 +14490,9 @@ Gurax_DeclareFunctionAlias(glClearDepthf_gurax, "glClearDepthf")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("d", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearDepthf_gurax, processor_gurax, argument_gurax)
@@ -14511,9 +14511,9 @@ Gurax_DeclareFunctionAlias(glDepthRangef_gurax, "glDepthRangef")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("f", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDepthRangef_gurax, processor_gurax, argument_gurax)
@@ -14535,9 +14535,9 @@ Gurax_DeclareFunctionAlias(glGetShaderPrecisionFormat_gurax, "glGetShaderPrecisi
 	DeclareArg("precisiontype", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("range", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("precision", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetShaderPrecisionFormat_gurax, processor_gurax, argument_gurax)
@@ -14557,9 +14557,9 @@ Gurax_ImplementFunctionEx(glGetShaderPrecisionFormat_gurax, processor_gurax, arg
 Gurax_DeclareFunctionAlias(glReleaseShaderCompiler_gurax, "glReleaseShaderCompiler")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glReleaseShaderCompiler_gurax, processor_gurax, argument_gurax)
@@ -14578,9 +14578,9 @@ Gurax_DeclareFunctionAlias(glShaderBinary_gurax, "glShaderBinary")
 	DeclareArg("binaryformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("binary", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glShaderBinary_gurax, processor_gurax, argument_gurax)
@@ -14602,9 +14602,9 @@ Gurax_DeclareFunctionAlias(glMemoryBarrierByRegion_gurax, "glMemoryBarrierByRegi
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("barriers", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMemoryBarrierByRegion_gurax, processor_gurax, argument_gurax)
@@ -14629,9 +14629,9 @@ Gurax_DeclareFunctionAlias(glPrimitiveBoundingBoxARB_gurax, "glPrimitiveBounding
 	DeclareArg("maxY", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxZ", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxW", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPrimitiveBoundingBoxARB_gurax, processor_gurax, argument_gurax)
@@ -14660,9 +14660,9 @@ Gurax_DeclareFunctionAlias(glDrawArraysInstancedBaseInstance_gurax, "glDrawArray
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("baseinstance", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawArraysInstancedBaseInstance_gurax, processor_gurax, argument_gurax)
@@ -14689,9 +14689,9 @@ Gurax_DeclareFunctionAlias(glDrawElementsInstancedBaseInstance_gurax, "glDrawEle
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("baseinstance", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawElementsInstancedBaseInstance_gurax, processor_gurax, argument_gurax)
@@ -14720,9 +14720,9 @@ Gurax_DeclareFunctionAlias(glDrawElementsInstancedBaseVertexBaseInstance_gurax, 
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("basevertex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("baseinstance", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawElementsInstancedBaseVertexBaseInstance_gurax, processor_gurax, argument_gurax)
@@ -14750,9 +14750,9 @@ Gurax_DeclareFunctionAlias(glGetImageHandleARB_gurax, "glGetImageHandleARB")
 	DeclareArg("layered", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("layer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetImageHandleARB_gurax, processor_gurax, argument_gurax)
@@ -14774,9 +14774,9 @@ Gurax_DeclareFunctionAlias(glGetTextureHandleARB_gurax, "glGetTextureHandleARB")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureHandleARB_gurax, processor_gurax, argument_gurax)
@@ -14795,9 +14795,9 @@ Gurax_DeclareFunctionAlias(glGetTextureSamplerHandleARB_gurax, "glGetTextureSamp
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureSamplerHandleARB_gurax, processor_gurax, argument_gurax)
@@ -14816,9 +14816,9 @@ Gurax_DeclareFunctionAlias(glIsImageHandleResidentARB_gurax, "glIsImageHandleRes
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("handle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsImageHandleResidentARB_gurax, processor_gurax, argument_gurax)
@@ -14836,9 +14836,9 @@ Gurax_DeclareFunctionAlias(glIsTextureHandleResidentARB_gurax, "glIsTextureHandl
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("handle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsTextureHandleResidentARB_gurax, processor_gurax, argument_gurax)
@@ -14856,9 +14856,9 @@ Gurax_DeclareFunctionAlias(glMakeImageHandleNonResidentARB_gurax, "glMakeImageHa
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMakeImageHandleNonResidentARB_gurax, processor_gurax, argument_gurax)
@@ -14877,9 +14877,9 @@ Gurax_DeclareFunctionAlias(glMakeImageHandleResidentARB_gurax, "glMakeImageHandl
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("access", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMakeImageHandleResidentARB_gurax, processor_gurax, argument_gurax)
@@ -14898,9 +14898,9 @@ Gurax_DeclareFunctionAlias(glMakeTextureHandleNonResidentARB_gurax, "glMakeTextu
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMakeTextureHandleNonResidentARB_gurax, processor_gurax, argument_gurax)
@@ -14918,9 +14918,9 @@ Gurax_DeclareFunctionAlias(glMakeTextureHandleResidentARB_gurax, "glMakeTextureH
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMakeTextureHandleResidentARB_gurax, processor_gurax, argument_gurax)
@@ -14940,9 +14940,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformHandleui64ARB_gurax, "glProgramUnifor
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformHandleui64ARB_gurax, processor_gurax, argument_gurax)
@@ -14965,9 +14965,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformHandleui64vARB_gurax, "glProgramUnifo
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformHandleui64vARB_gurax, processor_gurax, argument_gurax)
@@ -14989,9 +14989,9 @@ Gurax_DeclareFunctionAlias(glUniformHandleui64ARB_gurax, "glUniformHandleui64ARB
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformHandleui64ARB_gurax, processor_gurax, argument_gurax)
@@ -15012,9 +15012,9 @@ Gurax_DeclareFunctionAlias(glUniformHandleui64vARB_gurax, "glUniformHandleui64vA
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformHandleui64vARB_gurax, processor_gurax, argument_gurax)
@@ -15035,9 +15035,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL1ui64ARB_gurax, "glVertexAttribL1ui64A
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL1ui64ARB_gurax, processor_gurax, argument_gurax)
@@ -15057,9 +15057,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL1ui64vARB_gurax, "glVertexAttribL1ui64
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL1ui64vARB_gurax, processor_gurax, argument_gurax)
@@ -15081,9 +15081,9 @@ Gurax_DeclareFunctionAlias(glBindFragDataLocationIndexed_gurax, "glBindFragDataL
 	DeclareArg("colorNumber", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindFragDataLocationIndexed_gurax, processor_gurax, argument_gurax)
@@ -15105,9 +15105,9 @@ Gurax_DeclareFunctionAlias(glGetFragDataIndex_gurax, "glGetFragDataIndex")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetFragDataIndex_gurax, processor_gurax, argument_gurax)
@@ -15129,9 +15129,9 @@ Gurax_DeclareFunctionAlias(glBufferStorage_gurax, "glBufferStorage")
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBufferStorage_gurax, processor_gurax, argument_gurax)
@@ -15156,9 +15156,9 @@ Gurax_DeclareFunctionAlias(glClearBufferData_gurax, "glClearBufferData")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearBufferData_gurax, processor_gurax, argument_gurax)
@@ -15186,9 +15186,9 @@ Gurax_DeclareFunctionAlias(glClearBufferSubData_gurax, "glClearBufferSubData")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearBufferSubData_gurax, processor_gurax, argument_gurax)
@@ -15216,9 +15216,9 @@ Gurax_DeclareFunctionAlias(glClearNamedBufferDataEXT_gurax, "glClearNamedBufferD
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearNamedBufferDataEXT_gurax, processor_gurax, argument_gurax)
@@ -15246,9 +15246,9 @@ Gurax_DeclareFunctionAlias(glClearNamedBufferSubDataEXT_gurax, "glClearNamedBuff
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearNamedBufferSubDataEXT_gurax, processor_gurax, argument_gurax)
@@ -15276,9 +15276,9 @@ Gurax_DeclareFunctionAlias(glClearTexImage_gurax, "glClearTexImage")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearTexImage_gurax, processor_gurax, argument_gurax)
@@ -15310,9 +15310,9 @@ Gurax_DeclareFunctionAlias(glClearTexSubImage_gurax, "glClearTexSubImage")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearTexSubImage_gurax, processor_gurax, argument_gurax)
@@ -15341,9 +15341,9 @@ Gurax_DeclareFunctionAlias(glClipControl_gurax, "glClipControl")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("origin", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClipControl_gurax, processor_gurax, argument_gurax)
@@ -15363,9 +15363,9 @@ Gurax_DeclareFunctionAlias(glClampColorARB_gurax, "glClampColorARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clamp", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClampColorARB_gurax, processor_gurax, argument_gurax)
@@ -15386,9 +15386,9 @@ Gurax_DeclareFunctionAlias(glDispatchCompute_gurax, "glDispatchCompute")
 	DeclareArg("num_groups_x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num_groups_y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num_groups_z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDispatchCompute_gurax, processor_gurax, argument_gurax)
@@ -15408,9 +15408,9 @@ Gurax_DeclareFunctionAlias(glDispatchComputeIndirect_gurax, "glDispatchComputeIn
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("indirect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDispatchComputeIndirect_gurax, processor_gurax, argument_gurax)
@@ -15433,9 +15433,9 @@ Gurax_DeclareFunctionAlias(glDispatchComputeGroupSizeARB_gurax, "glDispatchCompu
 	DeclareArg("group_size_x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("group_size_y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("group_size_z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDispatchComputeGroupSizeARB_gurax, processor_gurax, argument_gurax)
@@ -15462,9 +15462,9 @@ Gurax_DeclareFunctionAlias(glCopyBufferSubData_gurax, "glCopyBufferSubData")
 	DeclareArg("readoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("writeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyBufferSubData_gurax, processor_gurax, argument_gurax)
@@ -15500,9 +15500,9 @@ Gurax_DeclareFunctionAlias(glCopyImageSubData_gurax, "glCopyImageSubData")
 	DeclareArg("srcWidth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("srcHeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("srcDepth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyImageSubData_gurax, processor_gurax, argument_gurax)
@@ -15539,9 +15539,9 @@ Gurax_DeclareFunctionAlias(glDebugMessageControlARB_gurax, "glDebugMessageContro
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("enabled", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDebugMessageControlARB_gurax, processor_gurax, argument_gurax)
@@ -15569,9 +15569,9 @@ Gurax_DeclareFunctionAlias(glDebugMessageInsertARB_gurax, "glDebugMessageInsertA
 	DeclareArg("severity", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buf", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDebugMessageInsertARB_gurax, processor_gurax, argument_gurax)
@@ -15601,9 +15601,9 @@ Gurax_DeclareFunctionAlias(glGetDebugMessageLogARB_gurax, "glGetDebugMessageLogA
 	DeclareArg("severities", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("lengths", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("messageLog", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetDebugMessageLogARB_gurax, processor_gurax, argument_gurax)
@@ -15629,9 +15629,9 @@ Gurax_DeclareFunctionAlias(glBindTextureUnit_gurax, "glBindTextureUnit")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("unit", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindTextureUnit_gurax, processor_gurax, argument_gurax)
@@ -15661,9 +15661,9 @@ Gurax_DeclareFunctionAlias(glBlitNamedFramebuffer_gurax, "glBlitNamedFramebuffer
 	DeclareArg("dstY1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("filter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlitNamedFramebuffer_gurax, processor_gurax, argument_gurax)
@@ -15693,9 +15693,9 @@ Gurax_DeclareFunctionAlias(glCheckNamedFramebufferStatus_gurax, "glCheckNamedFra
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCheckNamedFramebufferStatus_gurax, processor_gurax, argument_gurax)
@@ -15718,9 +15718,9 @@ Gurax_DeclareFunctionAlias(glClearNamedBufferData_gurax, "glClearNamedBufferData
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearNamedBufferData_gurax, processor_gurax, argument_gurax)
@@ -15748,9 +15748,9 @@ Gurax_DeclareFunctionAlias(glClearNamedBufferSubData_gurax, "glClearNamedBufferS
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearNamedBufferSubData_gurax, processor_gurax, argument_gurax)
@@ -15778,9 +15778,9 @@ Gurax_DeclareFunctionAlias(glClearNamedFramebufferfi_gurax, "glClearNamedFramebu
 	DeclareArg("drawbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stencil", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearNamedFramebufferfi_gurax, processor_gurax, argument_gurax)
@@ -15805,9 +15805,9 @@ Gurax_DeclareFunctionAlias(glClearNamedFramebufferfv_gurax, "glClearNamedFramebu
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearNamedFramebufferfv_gurax, processor_gurax, argument_gurax)
@@ -15831,9 +15831,9 @@ Gurax_DeclareFunctionAlias(glClearNamedFramebufferiv_gurax, "glClearNamedFramebu
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearNamedFramebufferiv_gurax, processor_gurax, argument_gurax)
@@ -15857,9 +15857,9 @@ Gurax_DeclareFunctionAlias(glClearNamedFramebufferuiv_gurax, "glClearNamedFrameb
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("drawbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClearNamedFramebufferuiv_gurax, processor_gurax, argument_gurax)
@@ -15886,9 +15886,9 @@ Gurax_DeclareFunctionAlias(glCompressedTextureSubImage1D_gurax, "glCompressedTex
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTextureSubImage1D_gurax, processor_gurax, argument_gurax)
@@ -15920,9 +15920,9 @@ Gurax_DeclareFunctionAlias(glCompressedTextureSubImage2D_gurax, "glCompressedTex
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTextureSubImage2D_gurax, processor_gurax, argument_gurax)
@@ -15958,9 +15958,9 @@ Gurax_DeclareFunctionAlias(glCompressedTextureSubImage3D_gurax, "glCompressedTex
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTextureSubImage3D_gurax, processor_gurax, argument_gurax)
@@ -15992,9 +15992,9 @@ Gurax_DeclareFunctionAlias(glCopyNamedBufferSubData_gurax, "glCopyNamedBufferSub
 	DeclareArg("readOffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("writeOffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyNamedBufferSubData_gurax, processor_gurax, argument_gurax)
@@ -16021,9 +16021,9 @@ Gurax_DeclareFunctionAlias(glCopyTextureSubImage1D_gurax, "glCopyTextureSubImage
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyTextureSubImage1D_gurax, processor_gurax, argument_gurax)
@@ -16053,9 +16053,9 @@ Gurax_DeclareFunctionAlias(glCopyTextureSubImage2D_gurax, "glCopyTextureSubImage
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyTextureSubImage2D_gurax, processor_gurax, argument_gurax)
@@ -16088,9 +16088,9 @@ Gurax_DeclareFunctionAlias(glCopyTextureSubImage3D_gurax, "glCopyTextureSubImage
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyTextureSubImage3D_gurax, processor_gurax, argument_gurax)
@@ -16117,9 +16117,9 @@ Gurax_DeclareFunctionAlias(glCreateBuffers_gurax, "glCreateBuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateBuffers_gurax, processor_gurax, argument_gurax)
@@ -16139,9 +16139,9 @@ Gurax_DeclareFunctionAlias(glCreateFramebuffers_gurax, "glCreateFramebuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("framebuffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateFramebuffers_gurax, processor_gurax, argument_gurax)
@@ -16161,9 +16161,9 @@ Gurax_DeclareFunctionAlias(glCreateProgramPipelines_gurax, "glCreateProgramPipel
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pipelines", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateProgramPipelines_gurax, processor_gurax, argument_gurax)
@@ -16184,9 +16184,9 @@ Gurax_DeclareFunctionAlias(glCreateQueries_gurax, "glCreateQueries")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateQueries_gurax, processor_gurax, argument_gurax)
@@ -16207,9 +16207,9 @@ Gurax_DeclareFunctionAlias(glCreateRenderbuffers_gurax, "glCreateRenderbuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("renderbuffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateRenderbuffers_gurax, processor_gurax, argument_gurax)
@@ -16229,9 +16229,9 @@ Gurax_DeclareFunctionAlias(glCreateSamplers_gurax, "glCreateSamplers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("samplers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateSamplers_gurax, processor_gurax, argument_gurax)
@@ -16252,9 +16252,9 @@ Gurax_DeclareFunctionAlias(glCreateTextures_gurax, "glCreateTextures")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateTextures_gurax, processor_gurax, argument_gurax)
@@ -16275,9 +16275,9 @@ Gurax_DeclareFunctionAlias(glCreateTransformFeedbacks_gurax, "glCreateTransformF
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateTransformFeedbacks_gurax, processor_gurax, argument_gurax)
@@ -16297,9 +16297,9 @@ Gurax_DeclareFunctionAlias(glCreateVertexArrays_gurax, "glCreateVertexArrays")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("arrays", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCreateVertexArrays_gurax, processor_gurax, argument_gurax)
@@ -16319,9 +16319,9 @@ Gurax_DeclareFunctionAlias(glDisableVertexArrayAttrib_gurax, "glDisableVertexArr
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDisableVertexArrayAttrib_gurax, processor_gurax, argument_gurax)
@@ -16341,9 +16341,9 @@ Gurax_DeclareFunctionAlias(glEnableVertexArrayAttrib_gurax, "glEnableVertexArray
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEnableVertexArrayAttrib_gurax, processor_gurax, argument_gurax)
@@ -16364,9 +16364,9 @@ Gurax_DeclareFunctionAlias(glFlushMappedNamedBufferRange_gurax, "glFlushMappedNa
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFlushMappedNamedBufferRange_gurax, processor_gurax, argument_gurax)
@@ -16386,9 +16386,9 @@ Gurax_DeclareFunctionAlias(glGenerateTextureMipmap_gurax, "glGenerateTextureMipm
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenerateTextureMipmap_gurax, processor_gurax, argument_gurax)
@@ -16409,9 +16409,9 @@ Gurax_DeclareFunctionAlias(glGetCompressedTextureImage_gurax, "glGetCompressedTe
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetCompressedTextureImage_gurax, processor_gurax, argument_gurax)
@@ -16434,9 +16434,9 @@ Gurax_DeclareFunctionAlias(glGetNamedBufferParameteri64v_gurax, "glGetNamedBuffe
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetNamedBufferParameteri64v_gurax, processor_gurax, argument_gurax)
@@ -16458,9 +16458,9 @@ Gurax_DeclareFunctionAlias(glGetNamedBufferParameteriv_gurax, "glGetNamedBufferP
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetNamedBufferParameteriv_gurax, processor_gurax, argument_gurax)
@@ -16483,9 +16483,9 @@ Gurax_DeclareFunctionAlias(glGetNamedBufferSubData_gurax, "glGetNamedBufferSubDa
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetNamedBufferSubData_gurax, processor_gurax, argument_gurax)
@@ -16509,9 +16509,9 @@ Gurax_DeclareFunctionAlias(glGetNamedFramebufferAttachmentParameteriv_gurax, "gl
 	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetNamedFramebufferAttachmentParameteriv_gurax, processor_gurax, argument_gurax)
@@ -16534,9 +16534,9 @@ Gurax_DeclareFunctionAlias(glGetNamedFramebufferParameteriv_gurax, "glGetNamedFr
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetNamedFramebufferParameteriv_gurax, processor_gurax, argument_gurax)
@@ -16558,9 +16558,9 @@ Gurax_DeclareFunctionAlias(glGetNamedRenderbufferParameteriv_gurax, "glGetNamedR
 	DeclareArg("renderbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetNamedRenderbufferParameteriv_gurax, processor_gurax, argument_gurax)
@@ -16583,9 +16583,9 @@ Gurax_DeclareFunctionAlias(glGetQueryBufferObjecti64v_gurax, "glGetQueryBufferOb
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryBufferObjecti64v_gurax, processor_gurax, argument_gurax)
@@ -16609,9 +16609,9 @@ Gurax_DeclareFunctionAlias(glGetQueryBufferObjectiv_gurax, "glGetQueryBufferObje
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryBufferObjectiv_gurax, processor_gurax, argument_gurax)
@@ -16635,9 +16635,9 @@ Gurax_DeclareFunctionAlias(glGetQueryBufferObjectui64v_gurax, "glGetQueryBufferO
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryBufferObjectui64v_gurax, processor_gurax, argument_gurax)
@@ -16661,9 +16661,9 @@ Gurax_DeclareFunctionAlias(glGetQueryBufferObjectuiv_gurax, "glGetQueryBufferObj
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryBufferObjectuiv_gurax, processor_gurax, argument_gurax)
@@ -16689,9 +16689,9 @@ Gurax_DeclareFunctionAlias(glGetTextureImage_gurax, "glGetTextureImage")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureImage_gurax, processor_gurax, argument_gurax)
@@ -16717,9 +16717,9 @@ Gurax_DeclareFunctionAlias(glGetTextureLevelParameterfv_gurax, "glGetTextureLeve
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureLevelParameterfv_gurax, processor_gurax, argument_gurax)
@@ -16743,9 +16743,9 @@ Gurax_DeclareFunctionAlias(glGetTextureLevelParameteriv_gurax, "glGetTextureLeve
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureLevelParameteriv_gurax, processor_gurax, argument_gurax)
@@ -16768,9 +16768,9 @@ Gurax_DeclareFunctionAlias(glGetTextureParameterIiv_gurax, "glGetTextureParamete
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureParameterIiv_gurax, processor_gurax, argument_gurax)
@@ -16792,9 +16792,9 @@ Gurax_DeclareFunctionAlias(glGetTextureParameterIuiv_gurax, "glGetTextureParamet
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureParameterIuiv_gurax, processor_gurax, argument_gurax)
@@ -16816,9 +16816,9 @@ Gurax_DeclareFunctionAlias(glGetTextureParameterfv_gurax, "glGetTextureParameter
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureParameterfv_gurax, processor_gurax, argument_gurax)
@@ -16840,9 +16840,9 @@ Gurax_DeclareFunctionAlias(glGetTextureParameteriv_gurax, "glGetTextureParameter
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureParameteriv_gurax, processor_gurax, argument_gurax)
@@ -16865,9 +16865,9 @@ Gurax_DeclareFunctionAlias(glGetTransformFeedbacki64_v_gurax, "glGetTransformFee
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTransformFeedbacki64_v_gurax, processor_gurax, argument_gurax)
@@ -16891,9 +16891,9 @@ Gurax_DeclareFunctionAlias(glGetTransformFeedbacki_v_gurax, "glGetTransformFeedb
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTransformFeedbacki_v_gurax, processor_gurax, argument_gurax)
@@ -16916,9 +16916,9 @@ Gurax_DeclareFunctionAlias(glGetTransformFeedbackiv_gurax, "glGetTransformFeedba
 	DeclareArg("xfb", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTransformFeedbackiv_gurax, processor_gurax, argument_gurax)
@@ -16941,9 +16941,9 @@ Gurax_DeclareFunctionAlias(glGetVertexArrayIndexed64iv_gurax, "glGetVertexArrayI
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexArrayIndexed64iv_gurax, processor_gurax, argument_gurax)
@@ -16967,9 +16967,9 @@ Gurax_DeclareFunctionAlias(glGetVertexArrayIndexediv_gurax, "glGetVertexArrayInd
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexArrayIndexediv_gurax, processor_gurax, argument_gurax)
@@ -16992,9 +16992,9 @@ Gurax_DeclareFunctionAlias(glGetVertexArrayiv_gurax, "glGetVertexArrayiv")
 	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexArrayiv_gurax, processor_gurax, argument_gurax)
@@ -17016,9 +17016,9 @@ Gurax_DeclareFunctionAlias(glInvalidateNamedFramebufferData_gurax, "glInvalidate
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("numAttachments", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("attachments", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInvalidateNamedFramebufferData_gurax, processor_gurax, argument_gurax)
@@ -17044,9 +17044,9 @@ Gurax_DeclareFunctionAlias(glInvalidateNamedFramebufferSubData_gurax, "glInvalid
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInvalidateNamedFramebufferSubData_gurax, processor_gurax, argument_gurax)
@@ -17073,9 +17073,9 @@ Gurax_DeclareFunctionAlias(glNamedBufferData_gurax, "glNamedBufferData")
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("usage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedBufferData_gurax, processor_gurax, argument_gurax)
@@ -17099,9 +17099,9 @@ Gurax_DeclareFunctionAlias(glNamedBufferStorage_gurax, "glNamedBufferStorage")
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedBufferStorage_gurax, processor_gurax, argument_gurax)
@@ -17125,9 +17125,9 @@ Gurax_DeclareFunctionAlias(glNamedBufferSubData_gurax, "glNamedBufferSubData")
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedBufferSubData_gurax, processor_gurax, argument_gurax)
@@ -17149,9 +17149,9 @@ Gurax_DeclareFunctionAlias(glNamedFramebufferDrawBuffer_gurax, "glNamedFramebuff
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedFramebufferDrawBuffer_gurax, processor_gurax, argument_gurax)
@@ -17172,9 +17172,9 @@ Gurax_DeclareFunctionAlias(glNamedFramebufferDrawBuffers_gurax, "glNamedFramebuf
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufs", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedFramebufferDrawBuffers_gurax, processor_gurax, argument_gurax)
@@ -17196,9 +17196,9 @@ Gurax_DeclareFunctionAlias(glNamedFramebufferParameteri_gurax, "glNamedFramebuff
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedFramebufferParameteri_gurax, processor_gurax, argument_gurax)
@@ -17219,9 +17219,9 @@ Gurax_DeclareFunctionAlias(glNamedFramebufferReadBuffer_gurax, "glNamedFramebuff
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedFramebufferReadBuffer_gurax, processor_gurax, argument_gurax)
@@ -17243,9 +17243,9 @@ Gurax_DeclareFunctionAlias(glNamedFramebufferRenderbuffer_gurax, "glNamedFramebu
 	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("renderbuffertarget", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("renderbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedFramebufferRenderbuffer_gurax, processor_gurax, argument_gurax)
@@ -17269,9 +17269,9 @@ Gurax_DeclareFunctionAlias(glNamedFramebufferTexture_gurax, "glNamedFramebufferT
 	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedFramebufferTexture_gurax, processor_gurax, argument_gurax)
@@ -17296,9 +17296,9 @@ Gurax_DeclareFunctionAlias(glNamedFramebufferTextureLayer_gurax, "glNamedFramebu
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("layer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedFramebufferTextureLayer_gurax, processor_gurax, argument_gurax)
@@ -17323,9 +17323,9 @@ Gurax_DeclareFunctionAlias(glNamedRenderbufferStorage_gurax, "glNamedRenderbuffe
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedRenderbufferStorage_gurax, processor_gurax, argument_gurax)
@@ -17350,9 +17350,9 @@ Gurax_DeclareFunctionAlias(glNamedRenderbufferStorageMultisample_gurax, "glNamed
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedRenderbufferStorageMultisample_gurax, processor_gurax, argument_gurax)
@@ -17376,9 +17376,9 @@ Gurax_DeclareFunctionAlias(glTextureBuffer_gurax, "glTextureBuffer")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureBuffer_gurax, processor_gurax, argument_gurax)
@@ -17402,9 +17402,9 @@ Gurax_DeclareFunctionAlias(glTextureBufferRange_gurax, "glTextureBufferRange")
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureBufferRange_gurax, processor_gurax, argument_gurax)
@@ -17428,9 +17428,9 @@ Gurax_DeclareFunctionAlias(glTextureParameterIiv_gurax, "glTextureParameterIiv")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureParameterIiv_gurax, processor_gurax, argument_gurax)
@@ -17452,9 +17452,9 @@ Gurax_DeclareFunctionAlias(glTextureParameterIuiv_gurax, "glTextureParameterIuiv
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureParameterIuiv_gurax, processor_gurax, argument_gurax)
@@ -17476,9 +17476,9 @@ Gurax_DeclareFunctionAlias(glTextureParameterf_gurax, "glTextureParameterf")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureParameterf_gurax, processor_gurax, argument_gurax)
@@ -17500,9 +17500,9 @@ Gurax_DeclareFunctionAlias(glTextureParameterfv_gurax, "glTextureParameterfv")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureParameterfv_gurax, processor_gurax, argument_gurax)
@@ -17524,9 +17524,9 @@ Gurax_DeclareFunctionAlias(glTextureParameteri_gurax, "glTextureParameteri")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureParameteri_gurax, processor_gurax, argument_gurax)
@@ -17548,9 +17548,9 @@ Gurax_DeclareFunctionAlias(glTextureParameteriv_gurax, "glTextureParameteriv")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureParameteriv_gurax, processor_gurax, argument_gurax)
@@ -17573,9 +17573,9 @@ Gurax_DeclareFunctionAlias(glTextureStorage1D_gurax, "glTextureStorage1D")
 	DeclareArg("levels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureStorage1D_gurax, processor_gurax, argument_gurax)
@@ -17600,9 +17600,9 @@ Gurax_DeclareFunctionAlias(glTextureStorage2D_gurax, "glTextureStorage2D")
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureStorage2D_gurax, processor_gurax, argument_gurax)
@@ -17629,9 +17629,9 @@ Gurax_DeclareFunctionAlias(glTextureStorage2DMultisample_gurax, "glTextureStorag
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureStorage2DMultisample_gurax, processor_gurax, argument_gurax)
@@ -17659,9 +17659,9 @@ Gurax_DeclareFunctionAlias(glTextureStorage3D_gurax, "glTextureStorage3D")
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureStorage3D_gurax, processor_gurax, argument_gurax)
@@ -17690,9 +17690,9 @@ Gurax_DeclareFunctionAlias(glTextureStorage3DMultisample_gurax, "glTextureStorag
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureStorage3DMultisample_gurax, processor_gurax, argument_gurax)
@@ -17722,9 +17722,9 @@ Gurax_DeclareFunctionAlias(glTextureSubImage1D_gurax, "glTextureSubImage1D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureSubImage1D_gurax, processor_gurax, argument_gurax)
@@ -17756,9 +17756,9 @@ Gurax_DeclareFunctionAlias(glTextureSubImage2D_gurax, "glTextureSubImage2D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureSubImage2D_gurax, processor_gurax, argument_gurax)
@@ -17794,9 +17794,9 @@ Gurax_DeclareFunctionAlias(glTextureSubImage3D_gurax, "glTextureSubImage3D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureSubImage3D_gurax, processor_gurax, argument_gurax)
@@ -17826,9 +17826,9 @@ Gurax_DeclareFunctionAlias(glTransformFeedbackBufferBase_gurax, "glTransformFeed
 	DeclareArg("xfb", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTransformFeedbackBufferBase_gurax, processor_gurax, argument_gurax)
@@ -17852,9 +17852,9 @@ Gurax_DeclareFunctionAlias(glTransformFeedbackBufferRange_gurax, "glTransformFee
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTransformFeedbackBufferRange_gurax, processor_gurax, argument_gurax)
@@ -17876,9 +17876,9 @@ Gurax_DeclareFunctionAlias(glUnmapNamedBuffer_gurax, "glUnmapNamedBuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUnmapNamedBuffer_gurax, processor_gurax, argument_gurax)
@@ -17898,9 +17898,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayAttribBinding_gurax, "glVertexArrayAttri
 	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("attribindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bindingindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayAttribBinding_gurax, processor_gurax, argument_gurax)
@@ -17925,9 +17925,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayAttribFormat_gurax, "glVertexArrayAttrib
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayAttribFormat_gurax, processor_gurax, argument_gurax)
@@ -17954,9 +17954,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayAttribIFormat_gurax, "glVertexArrayAttri
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayAttribIFormat_gurax, processor_gurax, argument_gurax)
@@ -17982,9 +17982,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayAttribLFormat_gurax, "glVertexArrayAttri
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayAttribLFormat_gurax, processor_gurax, argument_gurax)
@@ -18008,9 +18008,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayBindingDivisor_gurax, "glVertexArrayBind
 	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bindingindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("divisor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayBindingDivisor_gurax, processor_gurax, argument_gurax)
@@ -18031,9 +18031,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayElementBuffer_gurax, "glVertexArrayEleme
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayElementBuffer_gurax, processor_gurax, argument_gurax)
@@ -18056,9 +18056,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayVertexBuffer_gurax, "glVertexArrayVertex
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayVertexBuffer_gurax, processor_gurax, argument_gurax)
@@ -18085,9 +18085,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayVertexBuffers_gurax, "glVertexArrayVerte
 	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("offsets", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("strides", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayVertexBuffers_gurax, processor_gurax, argument_gurax)
@@ -18111,9 +18111,9 @@ Gurax_DeclareFunctionAlias(glDrawBuffersARB_gurax, "glDrawBuffersARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufs", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawBuffersARB_gurax, processor_gurax, argument_gurax)
@@ -18134,9 +18134,9 @@ Gurax_DeclareFunctionAlias(glBlendEquationSeparateiARB_gurax, "glBlendEquationSe
 	DeclareArg("buf", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("modeRGB", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("modeAlpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendEquationSeparateiARB_gurax, processor_gurax, argument_gurax)
@@ -18157,9 +18157,9 @@ Gurax_DeclareFunctionAlias(glBlendEquationiARB_gurax, "glBlendEquationiARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("buf", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendEquationiARB_gurax, processor_gurax, argument_gurax)
@@ -18182,9 +18182,9 @@ Gurax_DeclareFunctionAlias(glBlendFuncSeparateiARB_gurax, "glBlendFuncSeparateiA
 	DeclareArg("dstRGB", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("srcAlpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dstAlpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendFuncSeparateiARB_gurax, processor_gurax, argument_gurax)
@@ -18208,9 +18208,9 @@ Gurax_DeclareFunctionAlias(glBlendFunciARB_gurax, "glBlendFunciARB")
 	DeclareArg("buf", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("src", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlendFunciARB_gurax, processor_gurax, argument_gurax)
@@ -18234,9 +18234,9 @@ Gurax_DeclareFunctionAlias(glDrawElementsBaseVertex_gurax, "glDrawElementsBaseVe
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("basevertex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawElementsBaseVertex_gurax, processor_gurax, argument_gurax)
@@ -18263,9 +18263,9 @@ Gurax_DeclareFunctionAlias(glDrawElementsInstancedBaseVertex_gurax, "glDrawEleme
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("basevertex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawElementsInstancedBaseVertex_gurax, processor_gurax, argument_gurax)
@@ -18294,9 +18294,9 @@ Gurax_DeclareFunctionAlias(glDrawRangeElementsBaseVertex_gurax, "glDrawRangeElem
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("basevertex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawRangeElementsBaseVertex_gurax, processor_gurax, argument_gurax)
@@ -18321,9 +18321,9 @@ Gurax_DeclareFunctionAlias(glDrawArraysIndirect_gurax, "glDrawArraysIndirect")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indirect", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawArraysIndirect_gurax, processor_gurax, argument_gurax)
@@ -18344,9 +18344,9 @@ Gurax_DeclareFunctionAlias(glDrawElementsIndirect_gurax, "glDrawElementsIndirect
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indirect", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawElementsIndirect_gurax, processor_gurax, argument_gurax)
@@ -18368,9 +18368,9 @@ Gurax_DeclareFunctionAlias(glFramebufferParameteri_gurax, "glFramebufferParamete
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferParameteri_gurax, processor_gurax, argument_gurax)
@@ -18392,9 +18392,9 @@ Gurax_DeclareFunctionAlias(glGetFramebufferParameteriv_gurax, "glGetFramebufferP
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetFramebufferParameteriv_gurax, processor_gurax, argument_gurax)
@@ -18416,9 +18416,9 @@ Gurax_DeclareFunctionAlias(glGetNamedFramebufferParameterivEXT_gurax, "glGetName
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetNamedFramebufferParameterivEXT_gurax, processor_gurax, argument_gurax)
@@ -18440,9 +18440,9 @@ Gurax_DeclareFunctionAlias(glNamedFramebufferParameteriEXT_gurax, "glNamedFrameb
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedFramebufferParameteriEXT_gurax, processor_gurax, argument_gurax)
@@ -18463,9 +18463,9 @@ Gurax_DeclareFunctionAlias(glBindFramebuffer_gurax, "glBindFramebuffer")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindFramebuffer_gurax, processor_gurax, argument_gurax)
@@ -18485,9 +18485,9 @@ Gurax_DeclareFunctionAlias(glBindRenderbuffer_gurax, "glBindRenderbuffer")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("renderbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindRenderbuffer_gurax, processor_gurax, argument_gurax)
@@ -18515,9 +18515,9 @@ Gurax_DeclareFunctionAlias(glBlitFramebuffer_gurax, "glBlitFramebuffer")
 	DeclareArg("dstY1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("filter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBlitFramebuffer_gurax, processor_gurax, argument_gurax)
@@ -18544,9 +18544,9 @@ Gurax_DeclareFunctionAlias(glCheckFramebufferStatus_gurax, "glCheckFramebufferSt
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCheckFramebufferStatus_gurax, processor_gurax, argument_gurax)
@@ -18565,9 +18565,9 @@ Gurax_DeclareFunctionAlias(glDeleteFramebuffers_gurax, "glDeleteFramebuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("framebuffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteFramebuffers_gurax, processor_gurax, argument_gurax)
@@ -18587,9 +18587,9 @@ Gurax_DeclareFunctionAlias(glDeleteRenderbuffers_gurax, "glDeleteRenderbuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("renderbuffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteRenderbuffers_gurax, processor_gurax, argument_gurax)
@@ -18611,9 +18611,9 @@ Gurax_DeclareFunctionAlias(glFramebufferRenderbuffer_gurax, "glFramebufferRender
 	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("renderbuffertarget", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("renderbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferRenderbuffer_gurax, processor_gurax, argument_gurax)
@@ -18638,9 +18638,9 @@ Gurax_DeclareFunctionAlias(glFramebufferTexture1D_gurax, "glFramebufferTexture1D
 	DeclareArg("textarget", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferTexture1D_gurax, processor_gurax, argument_gurax)
@@ -18666,9 +18666,9 @@ Gurax_DeclareFunctionAlias(glFramebufferTexture2D_gurax, "glFramebufferTexture2D
 	DeclareArg("textarget", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferTexture2D_gurax, processor_gurax, argument_gurax)
@@ -18695,9 +18695,9 @@ Gurax_DeclareFunctionAlias(glFramebufferTexture3D_gurax, "glFramebufferTexture3D
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("layer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferTexture3D_gurax, processor_gurax, argument_gurax)
@@ -18724,9 +18724,9 @@ Gurax_DeclareFunctionAlias(glFramebufferTextureLayer_gurax, "glFramebufferTextur
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("layer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferTextureLayer_gurax, processor_gurax, argument_gurax)
@@ -18749,9 +18749,9 @@ Gurax_DeclareFunctionAlias(glGenFramebuffers_gurax, "glGenFramebuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("framebuffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenFramebuffers_gurax, processor_gurax, argument_gurax)
@@ -18771,9 +18771,9 @@ Gurax_DeclareFunctionAlias(glGenRenderbuffers_gurax, "glGenRenderbuffers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("renderbuffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenRenderbuffers_gurax, processor_gurax, argument_gurax)
@@ -18792,9 +18792,9 @@ Gurax_DeclareFunctionAlias(glGenerateMipmap_gurax, "glGenerateMipmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenerateMipmap_gurax, processor_gurax, argument_gurax)
@@ -18815,9 +18815,9 @@ Gurax_DeclareFunctionAlias(glGetFramebufferAttachmentParameteriv_gurax, "glGetFr
 	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetFramebufferAttachmentParameteriv_gurax, processor_gurax, argument_gurax)
@@ -18840,9 +18840,9 @@ Gurax_DeclareFunctionAlias(glGetRenderbufferParameteriv_gurax, "glGetRenderbuffe
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetRenderbufferParameteriv_gurax, processor_gurax, argument_gurax)
@@ -18862,9 +18862,9 @@ Gurax_DeclareFunctionAlias(glIsFramebuffer_gurax, "glIsFramebuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("framebuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsFramebuffer_gurax, processor_gurax, argument_gurax)
@@ -18882,9 +18882,9 @@ Gurax_DeclareFunctionAlias(glIsRenderbuffer_gurax, "glIsRenderbuffer")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("renderbuffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsRenderbuffer_gurax, processor_gurax, argument_gurax)
@@ -18905,9 +18905,9 @@ Gurax_DeclareFunctionAlias(glRenderbufferStorage_gurax, "glRenderbufferStorage")
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRenderbufferStorage_gurax, processor_gurax, argument_gurax)
@@ -18932,9 +18932,9 @@ Gurax_DeclareFunctionAlias(glRenderbufferStorageMultisample_gurax, "glRenderbuff
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glRenderbufferStorageMultisample_gurax, processor_gurax, argument_gurax)
@@ -18959,9 +18959,9 @@ Gurax_DeclareFunctionAlias(glFramebufferTextureARB_gurax, "glFramebufferTextureA
 	DeclareArg("attachment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferTextureARB_gurax, processor_gurax, argument_gurax)
@@ -18986,9 +18986,9 @@ Gurax_DeclareFunctionAlias(glFramebufferTextureFaceARB_gurax, "glFramebufferText
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("face", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferTextureFaceARB_gurax, processor_gurax, argument_gurax)
@@ -19014,9 +19014,9 @@ Gurax_DeclareFunctionAlias(glFramebufferTextureLayerARB_gurax, "glFramebufferTex
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("layer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferTextureLayerARB_gurax, processor_gurax, argument_gurax)
@@ -19040,9 +19040,9 @@ Gurax_DeclareFunctionAlias(glProgramParameteriARB_gurax, "glProgramParameteriARB
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramParameteriARB_gurax, processor_gurax, argument_gurax)
@@ -19065,9 +19065,9 @@ Gurax_DeclareFunctionAlias(glProgramBinary_gurax, "glProgramBinary")
 	DeclareArg("binaryFormat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("binary", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramBinary_gurax, processor_gurax, argument_gurax)
@@ -19090,9 +19090,9 @@ Gurax_DeclareFunctionAlias(glProgramParameteri_gurax, "glProgramParameteri")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramParameteri_gurax, processor_gurax, argument_gurax)
@@ -19121,9 +19121,9 @@ Gurax_DeclareFunctionAlias(glGetCompressedTextureSubImage_gurax, "glGetCompresse
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetCompressedTextureSubImage_gurax, processor_gurax, argument_gurax)
@@ -19161,9 +19161,9 @@ Gurax_DeclareFunctionAlias(glGetTextureSubImage_gurax, "glGetTextureSubImage")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetTextureSubImage_gurax, processor_gurax, argument_gurax)
@@ -19196,9 +19196,9 @@ Gurax_DeclareFunctionAlias(glSpecializeShaderARB_gurax, "glSpecializeShaderARB")
 	DeclareArg("numSpecializationConstants", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pConstantIndex", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("pConstantValue", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSpecializeShaderARB_gurax, processor_gurax, argument_gurax)
@@ -19222,9 +19222,9 @@ Gurax_DeclareFunctionAlias(glGetUniformdv_gurax, "glGetUniformdv")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetUniformdv_gurax, processor_gurax, argument_gurax)
@@ -19245,9 +19245,9 @@ Gurax_DeclareFunctionAlias(glUniform1d_gurax, "glUniform1d")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1d_gurax, processor_gurax, argument_gurax)
@@ -19268,9 +19268,9 @@ Gurax_DeclareFunctionAlias(glUniform1dv_gurax, "glUniform1dv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1dv_gurax, processor_gurax, argument_gurax)
@@ -19292,9 +19292,9 @@ Gurax_DeclareFunctionAlias(glUniform2d_gurax, "glUniform2d")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2d_gurax, processor_gurax, argument_gurax)
@@ -19316,9 +19316,9 @@ Gurax_DeclareFunctionAlias(glUniform2dv_gurax, "glUniform2dv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2dv_gurax, processor_gurax, argument_gurax)
@@ -19341,9 +19341,9 @@ Gurax_DeclareFunctionAlias(glUniform3d_gurax, "glUniform3d")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3d_gurax, processor_gurax, argument_gurax)
@@ -19366,9 +19366,9 @@ Gurax_DeclareFunctionAlias(glUniform3dv_gurax, "glUniform3dv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3dv_gurax, processor_gurax, argument_gurax)
@@ -19392,9 +19392,9 @@ Gurax_DeclareFunctionAlias(glUniform4d_gurax, "glUniform4d")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4d_gurax, processor_gurax, argument_gurax)
@@ -19418,9 +19418,9 @@ Gurax_DeclareFunctionAlias(glUniform4dv_gurax, "glUniform4dv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4dv_gurax, processor_gurax, argument_gurax)
@@ -19443,9 +19443,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2dv_gurax, "glUniformMatrix2dv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix2dv_gurax, processor_gurax, argument_gurax)
@@ -19469,9 +19469,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2x3dv_gurax, "glUniformMatrix2x3dv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix2x3dv_gurax, processor_gurax, argument_gurax)
@@ -19495,9 +19495,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2x4dv_gurax, "glUniformMatrix2x4dv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix2x4dv_gurax, processor_gurax, argument_gurax)
@@ -19521,9 +19521,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3dv_gurax, "glUniformMatrix3dv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix3dv_gurax, processor_gurax, argument_gurax)
@@ -19547,9 +19547,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3x2dv_gurax, "glUniformMatrix3x2dv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix3x2dv_gurax, processor_gurax, argument_gurax)
@@ -19573,9 +19573,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3x4dv_gurax, "glUniformMatrix3x4dv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix3x4dv_gurax, processor_gurax, argument_gurax)
@@ -19599,9 +19599,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4dv_gurax, "glUniformMatrix4dv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix4dv_gurax, processor_gurax, argument_gurax)
@@ -19625,9 +19625,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4x2dv_gurax, "glUniformMatrix4x2dv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix4x2dv_gurax, processor_gurax, argument_gurax)
@@ -19651,9 +19651,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4x3dv_gurax, "glUniformMatrix4x3dv")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix4x3dv_gurax, processor_gurax, argument_gurax)
@@ -19676,9 +19676,9 @@ Gurax_DeclareFunctionAlias(glGetUniformi64vARB_gurax, "glGetUniformi64vARB")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetUniformi64vARB_gurax, processor_gurax, argument_gurax)
@@ -19700,9 +19700,9 @@ Gurax_DeclareFunctionAlias(glGetUniformui64vARB_gurax, "glGetUniformui64vARB")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetUniformui64vARB_gurax, processor_gurax, argument_gurax)
@@ -19725,9 +19725,9 @@ Gurax_DeclareFunctionAlias(glGetnUniformi64vARB_gurax, "glGetnUniformi64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnUniformi64vARB_gurax, processor_gurax, argument_gurax)
@@ -19751,9 +19751,9 @@ Gurax_DeclareFunctionAlias(glGetnUniformui64vARB_gurax, "glGetnUniformui64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnUniformui64vARB_gurax, processor_gurax, argument_gurax)
@@ -19776,9 +19776,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1i64ARB_gurax, "glProgramUniform1i64A
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1i64ARB_gurax, processor_gurax, argument_gurax)
@@ -19801,9 +19801,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1i64vARB_gurax, "glProgramUniform1i64
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1i64vARB_gurax, processor_gurax, argument_gurax)
@@ -19826,9 +19826,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1ui64ARB_gurax, "glProgramUniform1ui6
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1ui64ARB_gurax, processor_gurax, argument_gurax)
@@ -19851,9 +19851,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1ui64vARB_gurax, "glProgramUniform1ui
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1ui64vARB_gurax, processor_gurax, argument_gurax)
@@ -19877,9 +19877,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2i64ARB_gurax, "glProgramUniform2i64A
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2i64ARB_gurax, processor_gurax, argument_gurax)
@@ -19903,9 +19903,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2i64vARB_gurax, "glProgramUniform2i64
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2i64vARB_gurax, processor_gurax, argument_gurax)
@@ -19929,9 +19929,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2ui64ARB_gurax, "glProgramUniform2ui6
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2ui64ARB_gurax, processor_gurax, argument_gurax)
@@ -19955,9 +19955,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2ui64vARB_gurax, "glProgramUniform2ui
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2ui64vARB_gurax, processor_gurax, argument_gurax)
@@ -19982,9 +19982,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3i64ARB_gurax, "glProgramUniform3i64A
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3i64ARB_gurax, processor_gurax, argument_gurax)
@@ -20009,9 +20009,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3i64vARB_gurax, "glProgramUniform3i64
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3i64vARB_gurax, processor_gurax, argument_gurax)
@@ -20036,9 +20036,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3ui64ARB_gurax, "glProgramUniform3ui6
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3ui64ARB_gurax, processor_gurax, argument_gurax)
@@ -20063,9 +20063,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3ui64vARB_gurax, "glProgramUniform3ui
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3ui64vARB_gurax, processor_gurax, argument_gurax)
@@ -20091,9 +20091,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4i64ARB_gurax, "glProgramUniform4i64A
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4i64ARB_gurax, processor_gurax, argument_gurax)
@@ -20119,9 +20119,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4i64vARB_gurax, "glProgramUniform4i64
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4i64vARB_gurax, processor_gurax, argument_gurax)
@@ -20147,9 +20147,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4ui64ARB_gurax, "glProgramUniform4ui6
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4ui64ARB_gurax, processor_gurax, argument_gurax)
@@ -20175,9 +20175,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4ui64vARB_gurax, "glProgramUniform4ui
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4ui64vARB_gurax, processor_gurax, argument_gurax)
@@ -20199,9 +20199,9 @@ Gurax_DeclareFunctionAlias(glUniform1i64ARB_gurax, "glUniform1i64ARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1i64ARB_gurax, processor_gurax, argument_gurax)
@@ -20222,9 +20222,9 @@ Gurax_DeclareFunctionAlias(glUniform1i64vARB_gurax, "glUniform1i64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1i64vARB_gurax, processor_gurax, argument_gurax)
@@ -20245,9 +20245,9 @@ Gurax_DeclareFunctionAlias(glUniform1ui64ARB_gurax, "glUniform1ui64ARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1ui64ARB_gurax, processor_gurax, argument_gurax)
@@ -20268,9 +20268,9 @@ Gurax_DeclareFunctionAlias(glUniform1ui64vARB_gurax, "glUniform1ui64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1ui64vARB_gurax, processor_gurax, argument_gurax)
@@ -20292,9 +20292,9 @@ Gurax_DeclareFunctionAlias(glUniform2i64ARB_gurax, "glUniform2i64ARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2i64ARB_gurax, processor_gurax, argument_gurax)
@@ -20316,9 +20316,9 @@ Gurax_DeclareFunctionAlias(glUniform2i64vARB_gurax, "glUniform2i64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2i64vARB_gurax, processor_gurax, argument_gurax)
@@ -20340,9 +20340,9 @@ Gurax_DeclareFunctionAlias(glUniform2ui64ARB_gurax, "glUniform2ui64ARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2ui64ARB_gurax, processor_gurax, argument_gurax)
@@ -20364,9 +20364,9 @@ Gurax_DeclareFunctionAlias(glUniform2ui64vARB_gurax, "glUniform2ui64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2ui64vARB_gurax, processor_gurax, argument_gurax)
@@ -20389,9 +20389,9 @@ Gurax_DeclareFunctionAlias(glUniform3i64ARB_gurax, "glUniform3i64ARB")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3i64ARB_gurax, processor_gurax, argument_gurax)
@@ -20414,9 +20414,9 @@ Gurax_DeclareFunctionAlias(glUniform3i64vARB_gurax, "glUniform3i64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3i64vARB_gurax, processor_gurax, argument_gurax)
@@ -20439,9 +20439,9 @@ Gurax_DeclareFunctionAlias(glUniform3ui64ARB_gurax, "glUniform3ui64ARB")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3ui64ARB_gurax, processor_gurax, argument_gurax)
@@ -20464,9 +20464,9 @@ Gurax_DeclareFunctionAlias(glUniform3ui64vARB_gurax, "glUniform3ui64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3ui64vARB_gurax, processor_gurax, argument_gurax)
@@ -20490,9 +20490,9 @@ Gurax_DeclareFunctionAlias(glUniform4i64ARB_gurax, "glUniform4i64ARB")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4i64ARB_gurax, processor_gurax, argument_gurax)
@@ -20516,9 +20516,9 @@ Gurax_DeclareFunctionAlias(glUniform4i64vARB_gurax, "glUniform4i64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4i64vARB_gurax, processor_gurax, argument_gurax)
@@ -20542,9 +20542,9 @@ Gurax_DeclareFunctionAlias(glUniform4ui64ARB_gurax, "glUniform4ui64ARB")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4ui64ARB_gurax, processor_gurax, argument_gurax)
@@ -20568,9 +20568,9 @@ Gurax_DeclareFunctionAlias(glUniform4ui64vARB_gurax, "glUniform4ui64vARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4ui64vARB_gurax, processor_gurax, argument_gurax)
@@ -20595,9 +20595,9 @@ Gurax_DeclareFunctionAlias(glColorSubTable_gurax, "glColorSubTable")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorSubTable_gurax, processor_gurax, argument_gurax)
@@ -20625,9 +20625,9 @@ Gurax_DeclareFunctionAlias(glColorTable_gurax, "glColorTable")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("table", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorTable_gurax, processor_gurax, argument_gurax)
@@ -20652,9 +20652,9 @@ Gurax_DeclareFunctionAlias(glColorTableParameterfv_gurax, "glColorTableParameter
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorTableParameterfv_gurax, processor_gurax, argument_gurax)
@@ -20676,9 +20676,9 @@ Gurax_DeclareFunctionAlias(glColorTableParameteriv_gurax, "glColorTableParameter
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorTableParameteriv_gurax, processor_gurax, argument_gurax)
@@ -20703,9 +20703,9 @@ Gurax_DeclareFunctionAlias(glConvolutionFilter1D_gurax, "glConvolutionFilter1D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glConvolutionFilter1D_gurax, processor_gurax, argument_gurax)
@@ -20734,9 +20734,9 @@ Gurax_DeclareFunctionAlias(glConvolutionFilter2D_gurax, "glConvolutionFilter2D")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glConvolutionFilter2D_gurax, processor_gurax, argument_gurax)
@@ -20762,9 +20762,9 @@ Gurax_DeclareFunctionAlias(glConvolutionParameterf_gurax, "glConvolutionParamete
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glConvolutionParameterf_gurax, processor_gurax, argument_gurax)
@@ -20786,9 +20786,9 @@ Gurax_DeclareFunctionAlias(glConvolutionParameterfv_gurax, "glConvolutionParamet
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glConvolutionParameterfv_gurax, processor_gurax, argument_gurax)
@@ -20810,9 +20810,9 @@ Gurax_DeclareFunctionAlias(glConvolutionParameteri_gurax, "glConvolutionParamete
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glConvolutionParameteri_gurax, processor_gurax, argument_gurax)
@@ -20834,9 +20834,9 @@ Gurax_DeclareFunctionAlias(glConvolutionParameteriv_gurax, "glConvolutionParamet
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glConvolutionParameteriv_gurax, processor_gurax, argument_gurax)
@@ -20860,9 +20860,9 @@ Gurax_DeclareFunctionAlias(glCopyColorSubTable_gurax, "glCopyColorSubTable")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyColorSubTable_gurax, processor_gurax, argument_gurax)
@@ -20888,9 +20888,9 @@ Gurax_DeclareFunctionAlias(glCopyColorTable_gurax, "glCopyColorTable")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyColorTable_gurax, processor_gurax, argument_gurax)
@@ -20916,9 +20916,9 @@ Gurax_DeclareFunctionAlias(glCopyConvolutionFilter1D_gurax, "glCopyConvolutionFi
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyConvolutionFilter1D_gurax, processor_gurax, argument_gurax)
@@ -20945,9 +20945,9 @@ Gurax_DeclareFunctionAlias(glCopyConvolutionFilter2D_gurax, "glCopyConvolutionFi
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCopyConvolutionFilter2D_gurax, processor_gurax, argument_gurax)
@@ -20973,9 +20973,9 @@ Gurax_DeclareFunctionAlias(glGetColorTable_gurax, "glGetColorTable")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("table", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetColorTable_gurax, processor_gurax, argument_gurax)
@@ -20998,9 +20998,9 @@ Gurax_DeclareFunctionAlias(glGetColorTableParameterfv_gurax, "glGetColorTablePar
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetColorTableParameterfv_gurax, processor_gurax, argument_gurax)
@@ -21022,9 +21022,9 @@ Gurax_DeclareFunctionAlias(glGetColorTableParameteriv_gurax, "glGetColorTablePar
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetColorTableParameteriv_gurax, processor_gurax, argument_gurax)
@@ -21047,9 +21047,9 @@ Gurax_DeclareFunctionAlias(glGetConvolutionFilter_gurax, "glGetConvolutionFilter
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetConvolutionFilter_gurax, processor_gurax, argument_gurax)
@@ -21072,9 +21072,9 @@ Gurax_DeclareFunctionAlias(glGetConvolutionParameterfv_gurax, "glGetConvolutionP
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetConvolutionParameterfv_gurax, processor_gurax, argument_gurax)
@@ -21096,9 +21096,9 @@ Gurax_DeclareFunctionAlias(glGetConvolutionParameteriv_gurax, "glGetConvolutionP
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetConvolutionParameteriv_gurax, processor_gurax, argument_gurax)
@@ -21122,9 +21122,9 @@ Gurax_DeclareFunctionAlias(glGetHistogram_gurax, "glGetHistogram")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetHistogram_gurax, processor_gurax, argument_gurax)
@@ -21148,9 +21148,9 @@ Gurax_DeclareFunctionAlias(glGetHistogramParameterfv_gurax, "glGetHistogramParam
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetHistogramParameterfv_gurax, processor_gurax, argument_gurax)
@@ -21172,9 +21172,9 @@ Gurax_DeclareFunctionAlias(glGetHistogramParameteriv_gurax, "glGetHistogramParam
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetHistogramParameteriv_gurax, processor_gurax, argument_gurax)
@@ -21198,9 +21198,9 @@ Gurax_DeclareFunctionAlias(glGetMinmax_gurax, "glGetMinmax")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("types", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetMinmax_gurax, processor_gurax, argument_gurax)
@@ -21224,9 +21224,9 @@ Gurax_DeclareFunctionAlias(glGetMinmaxParameterfv_gurax, "glGetMinmaxParameterfv
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetMinmaxParameterfv_gurax, processor_gurax, argument_gurax)
@@ -21248,9 +21248,9 @@ Gurax_DeclareFunctionAlias(glGetMinmaxParameteriv_gurax, "glGetMinmaxParameteriv
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetMinmaxParameteriv_gurax, processor_gurax, argument_gurax)
@@ -21275,9 +21275,9 @@ Gurax_DeclareFunctionAlias(glGetSeparableFilter_gurax, "glGetSeparableFilter")
 	DeclareArg("row", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("column", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("span", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetSeparableFilter_gurax, processor_gurax, argument_gurax)
@@ -21303,9 +21303,9 @@ Gurax_DeclareFunctionAlias(glHistogram_gurax, "glHistogram")
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sink", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glHistogram_gurax, processor_gurax, argument_gurax)
@@ -21328,9 +21328,9 @@ Gurax_DeclareFunctionAlias(glMinmax_gurax, "glMinmax")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sink", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMinmax_gurax, processor_gurax, argument_gurax)
@@ -21350,9 +21350,9 @@ Gurax_DeclareFunctionAlias(glResetHistogram_gurax, "glResetHistogram")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glResetHistogram_gurax, processor_gurax, argument_gurax)
@@ -21370,9 +21370,9 @@ Gurax_DeclareFunctionAlias(glResetMinmax_gurax, "glResetMinmax")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glResetMinmax_gurax, processor_gurax, argument_gurax)
@@ -21397,9 +21397,9 @@ Gurax_DeclareFunctionAlias(glSeparableFilter2D_gurax, "glSeparableFilter2D")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("row", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("column", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSeparableFilter2D_gurax, processor_gurax, argument_gurax)
@@ -21428,9 +21428,9 @@ Gurax_DeclareFunctionAlias(glMultiDrawArraysIndirectCountARB_gurax, "glMultiDraw
 	DeclareArg("drawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxdrawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiDrawArraysIndirectCountARB_gurax, processor_gurax, argument_gurax)
@@ -21457,9 +21457,9 @@ Gurax_DeclareFunctionAlias(glMultiDrawElementsIndirectCountARB_gurax, "glMultiDr
 	DeclareArg("drawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxdrawcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiDrawElementsIndirectCountARB_gurax, processor_gurax, argument_gurax)
@@ -21485,9 +21485,9 @@ Gurax_DeclareFunctionAlias(glDrawArraysInstancedARB_gurax, "glDrawArraysInstance
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawArraysInstancedARB_gurax, processor_gurax, argument_gurax)
@@ -21512,9 +21512,9 @@ Gurax_DeclareFunctionAlias(glDrawElementsInstancedARB_gurax, "glDrawElementsInst
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawElementsInstancedARB_gurax, processor_gurax, argument_gurax)
@@ -21537,9 +21537,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribDivisorARB_gurax, "glVertexAttribDiviso
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("divisor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribDivisorARB_gurax, processor_gurax, argument_gurax)
@@ -21562,9 +21562,9 @@ Gurax_DeclareFunctionAlias(glGetInternalformativ_gurax, "glGetInternalformativ")
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetInternalformativ_gurax, processor_gurax, argument_gurax)
@@ -21590,9 +21590,9 @@ Gurax_DeclareFunctionAlias(glGetInternalformati64v_gurax, "glGetInternalformati6
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetInternalformati64v_gurax, processor_gurax, argument_gurax)
@@ -21614,9 +21614,9 @@ Gurax_DeclareFunctionAlias(glInvalidateBufferData_gurax, "glInvalidateBufferData
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInvalidateBufferData_gurax, processor_gurax, argument_gurax)
@@ -21636,9 +21636,9 @@ Gurax_DeclareFunctionAlias(glInvalidateBufferSubData_gurax, "glInvalidateBufferS
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInvalidateBufferSubData_gurax, processor_gurax, argument_gurax)
@@ -21660,9 +21660,9 @@ Gurax_DeclareFunctionAlias(glInvalidateFramebuffer_gurax, "glInvalidateFramebuff
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("numAttachments", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("attachments", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInvalidateFramebuffer_gurax, processor_gurax, argument_gurax)
@@ -21688,9 +21688,9 @@ Gurax_DeclareFunctionAlias(glInvalidateSubFramebuffer_gurax, "glInvalidateSubFra
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInvalidateSubFramebuffer_gurax, processor_gurax, argument_gurax)
@@ -21715,9 +21715,9 @@ Gurax_DeclareFunctionAlias(glInvalidateTexImage_gurax, "glInvalidateTexImage")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInvalidateTexImage_gurax, processor_gurax, argument_gurax)
@@ -21743,9 +21743,9 @@ Gurax_DeclareFunctionAlias(glInvalidateTexSubImage_gurax, "glInvalidateTexSubIma
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glInvalidateTexSubImage_gurax, processor_gurax, argument_gurax)
@@ -21772,9 +21772,9 @@ Gurax_DeclareFunctionAlias(glFlushMappedBufferRange_gurax, "glFlushMappedBufferR
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFlushMappedBufferRange_gurax, processor_gurax, argument_gurax)
@@ -21794,9 +21794,9 @@ Gurax_DeclareFunctionAlias(glCurrentPaletteMatrixARB_gurax, "glCurrentPaletteMat
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCurrentPaletteMatrixARB_gurax, processor_gurax, argument_gurax)
@@ -21817,9 +21817,9 @@ Gurax_DeclareFunctionAlias(glMatrixIndexPointerARB_gurax, "glMatrixIndexPointerA
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMatrixIndexPointerARB_gurax, processor_gurax, argument_gurax)
@@ -21841,9 +21841,9 @@ Gurax_DeclareFunctionAlias(glMatrixIndexubvARB_gurax, "glMatrixIndexubvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMatrixIndexubvARB_gurax, processor_gurax, argument_gurax)
@@ -21863,9 +21863,9 @@ Gurax_DeclareFunctionAlias(glMatrixIndexuivARB_gurax, "glMatrixIndexuivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMatrixIndexuivARB_gurax, processor_gurax, argument_gurax)
@@ -21885,9 +21885,9 @@ Gurax_DeclareFunctionAlias(glMatrixIndexusvARB_gurax, "glMatrixIndexusvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMatrixIndexusvARB_gurax, processor_gurax, argument_gurax)
@@ -21909,9 +21909,9 @@ Gurax_DeclareFunctionAlias(glBindBuffersBase_gurax, "glBindBuffersBase")
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindBuffersBase_gurax, processor_gurax, argument_gurax)
@@ -21937,9 +21937,9 @@ Gurax_DeclareFunctionAlias(glBindBuffersRange_gurax, "glBindBuffersRange")
 	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("offsets", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("sizes", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindBuffersRange_gurax, processor_gurax, argument_gurax)
@@ -21964,9 +21964,9 @@ Gurax_DeclareFunctionAlias(glBindImageTextures_gurax, "glBindImageTextures")
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindImageTextures_gurax, processor_gurax, argument_gurax)
@@ -21988,9 +21988,9 @@ Gurax_DeclareFunctionAlias(glBindSamplers_gurax, "glBindSamplers")
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("samplers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindSamplers_gurax, processor_gurax, argument_gurax)
@@ -22012,9 +22012,9 @@ Gurax_DeclareFunctionAlias(glBindTextures_gurax, "glBindTextures")
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textures", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindTextures_gurax, processor_gurax, argument_gurax)
@@ -22038,9 +22038,9 @@ Gurax_DeclareFunctionAlias(glBindVertexBuffers_gurax, "glBindVertexBuffers")
 	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("offsets", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("strides", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindVertexBuffers_gurax, processor_gurax, argument_gurax)
@@ -22065,9 +22065,9 @@ Gurax_DeclareFunctionAlias(glMultiDrawArraysIndirect_gurax, "glMultiDrawArraysIn
 	DeclareArg("indirect", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiDrawArraysIndirect_gurax, processor_gurax, argument_gurax)
@@ -22092,9 +22092,9 @@ Gurax_DeclareFunctionAlias(glMultiDrawElementsIndirect_gurax, "glMultiDrawElemen
 	DeclareArg("indirect", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiDrawElementsIndirect_gurax, processor_gurax, argument_gurax)
@@ -22117,9 +22117,9 @@ Gurax_DeclareFunctionAlias(glSampleCoverageARB_gurax, "glSampleCoverageARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("invert", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSampleCoverageARB_gurax, processor_gurax, argument_gurax)
@@ -22138,9 +22138,9 @@ Gurax_DeclareFunctionAlias(glActiveTextureARB_gurax, "glActiveTextureARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glActiveTextureARB_gurax, processor_gurax, argument_gurax)
@@ -22158,9 +22158,9 @@ Gurax_DeclareFunctionAlias(glClientActiveTextureARB_gurax, "glClientActiveTextur
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glClientActiveTextureARB_gurax, processor_gurax, argument_gurax)
@@ -22179,9 +22179,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1dARB_gurax, "glMultiTexCoord1dARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1dARB_gurax, processor_gurax, argument_gurax)
@@ -22201,9 +22201,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1dvARB_gurax, "glMultiTexCoord1dvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1dvARB_gurax, processor_gurax, argument_gurax)
@@ -22223,9 +22223,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1fARB_gurax, "glMultiTexCoord1fARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1fARB_gurax, processor_gurax, argument_gurax)
@@ -22245,9 +22245,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1fvARB_gurax, "glMultiTexCoord1fvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1fvARB_gurax, processor_gurax, argument_gurax)
@@ -22267,9 +22267,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1iARB_gurax, "glMultiTexCoord1iARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1iARB_gurax, processor_gurax, argument_gurax)
@@ -22289,9 +22289,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1ivARB_gurax, "glMultiTexCoord1ivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1ivARB_gurax, processor_gurax, argument_gurax)
@@ -22311,9 +22311,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1sARB_gurax, "glMultiTexCoord1sARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1sARB_gurax, processor_gurax, argument_gurax)
@@ -22333,9 +22333,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord1svARB_gurax, "glMultiTexCoord1svARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord1svARB_gurax, processor_gurax, argument_gurax)
@@ -22356,9 +22356,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2dARB_gurax, "glMultiTexCoord2dARB")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2dARB_gurax, processor_gurax, argument_gurax)
@@ -22379,9 +22379,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2dvARB_gurax, "glMultiTexCoord2dvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2dvARB_gurax, processor_gurax, argument_gurax)
@@ -22402,9 +22402,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2fARB_gurax, "glMultiTexCoord2fARB")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2fARB_gurax, processor_gurax, argument_gurax)
@@ -22425,9 +22425,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2fvARB_gurax, "glMultiTexCoord2fvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2fvARB_gurax, processor_gurax, argument_gurax)
@@ -22448,9 +22448,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2iARB_gurax, "glMultiTexCoord2iARB")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2iARB_gurax, processor_gurax, argument_gurax)
@@ -22471,9 +22471,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2ivARB_gurax, "glMultiTexCoord2ivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2ivARB_gurax, processor_gurax, argument_gurax)
@@ -22494,9 +22494,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2sARB_gurax, "glMultiTexCoord2sARB")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2sARB_gurax, processor_gurax, argument_gurax)
@@ -22517,9 +22517,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord2svARB_gurax, "glMultiTexCoord2svARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord2svARB_gurax, processor_gurax, argument_gurax)
@@ -22541,9 +22541,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3dARB_gurax, "glMultiTexCoord3dARB")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3dARB_gurax, processor_gurax, argument_gurax)
@@ -22565,9 +22565,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3dvARB_gurax, "glMultiTexCoord3dvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3dvARB_gurax, processor_gurax, argument_gurax)
@@ -22589,9 +22589,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3fARB_gurax, "glMultiTexCoord3fARB")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3fARB_gurax, processor_gurax, argument_gurax)
@@ -22613,9 +22613,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3fvARB_gurax, "glMultiTexCoord3fvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3fvARB_gurax, processor_gurax, argument_gurax)
@@ -22637,9 +22637,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3iARB_gurax, "glMultiTexCoord3iARB")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3iARB_gurax, processor_gurax, argument_gurax)
@@ -22661,9 +22661,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3ivARB_gurax, "glMultiTexCoord3ivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3ivARB_gurax, processor_gurax, argument_gurax)
@@ -22685,9 +22685,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3sARB_gurax, "glMultiTexCoord3sARB")
 	DeclareArg("s", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3sARB_gurax, processor_gurax, argument_gurax)
@@ -22709,9 +22709,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord3svARB_gurax, "glMultiTexCoord3svARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord3svARB_gurax, processor_gurax, argument_gurax)
@@ -22734,9 +22734,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4dARB_gurax, "glMultiTexCoord4dARB")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4dARB_gurax, processor_gurax, argument_gurax)
@@ -22759,9 +22759,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4dvARB_gurax, "glMultiTexCoord4dvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4dvARB_gurax, processor_gurax, argument_gurax)
@@ -22784,9 +22784,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4fARB_gurax, "glMultiTexCoord4fARB")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4fARB_gurax, processor_gurax, argument_gurax)
@@ -22809,9 +22809,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4fvARB_gurax, "glMultiTexCoord4fvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4fvARB_gurax, processor_gurax, argument_gurax)
@@ -22834,9 +22834,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4iARB_gurax, "glMultiTexCoord4iARB")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4iARB_gurax, processor_gurax, argument_gurax)
@@ -22859,9 +22859,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4ivARB_gurax, "glMultiTexCoord4ivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4ivARB_gurax, processor_gurax, argument_gurax)
@@ -22884,9 +22884,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4sARB_gurax, "glMultiTexCoord4sARB")
 	DeclareArg("t", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("q", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4sARB_gurax, processor_gurax, argument_gurax)
@@ -22909,9 +22909,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoord4svARB_gurax, "glMultiTexCoord4svARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoord4svARB_gurax, processor_gurax, argument_gurax)
@@ -22931,9 +22931,9 @@ Gurax_DeclareFunctionAlias(glBeginQueryARB_gurax, "glBeginQueryARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBeginQueryARB_gurax, processor_gurax, argument_gurax)
@@ -22953,9 +22953,9 @@ Gurax_DeclareFunctionAlias(glDeleteQueriesARB_gurax, "glDeleteQueriesARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteQueriesARB_gurax, processor_gurax, argument_gurax)
@@ -22974,9 +22974,9 @@ Gurax_DeclareFunctionAlias(glEndQueryARB_gurax, "glEndQueryARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEndQueryARB_gurax, processor_gurax, argument_gurax)
@@ -22995,9 +22995,9 @@ Gurax_DeclareFunctionAlias(glGenQueriesARB_gurax, "glGenQueriesARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenQueriesARB_gurax, processor_gurax, argument_gurax)
@@ -23018,9 +23018,9 @@ Gurax_DeclareFunctionAlias(glGetQueryObjectivARB_gurax, "glGetQueryObjectivARB")
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryObjectivARB_gurax, processor_gurax, argument_gurax)
@@ -23042,9 +23042,9 @@ Gurax_DeclareFunctionAlias(glGetQueryObjectuivARB_gurax, "glGetQueryObjectuivARB
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryObjectuivARB_gurax, processor_gurax, argument_gurax)
@@ -23066,9 +23066,9 @@ Gurax_DeclareFunctionAlias(glGetQueryivARB_gurax, "glGetQueryivARB")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryivARB_gurax, processor_gurax, argument_gurax)
@@ -23088,9 +23088,9 @@ Gurax_DeclareFunctionAlias(glIsQueryARB_gurax, "glIsQueryARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsQueryARB_gurax, processor_gurax, argument_gurax)
@@ -23108,9 +23108,9 @@ Gurax_DeclareFunctionAlias(glMaxShaderCompilerThreadsARB_gurax, "glMaxShaderComp
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMaxShaderCompilerThreadsARB_gurax, processor_gurax, argument_gurax)
@@ -23129,9 +23129,9 @@ Gurax_DeclareFunctionAlias(glPointParameterfARB_gurax, "glPointParameterfARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPointParameterfARB_gurax, processor_gurax, argument_gurax)
@@ -23151,9 +23151,9 @@ Gurax_DeclareFunctionAlias(glPointParameterfvARB_gurax, "glPointParameterfvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPointParameterfvARB_gurax, processor_gurax, argument_gurax)
@@ -23174,9 +23174,9 @@ Gurax_DeclareFunctionAlias(glPolygonOffsetClamp_gurax, "glPolygonOffsetClamp")
 	DeclareArg("factor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("units", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clamp", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPolygonOffsetClamp_gurax, processor_gurax, argument_gurax)
@@ -23199,9 +23199,9 @@ Gurax_DeclareFunctionAlias(glGetProgramInterfaceiv_gurax, "glGetProgramInterface
 	DeclareArg("programInterface", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramInterfaceiv_gurax, processor_gurax, argument_gurax)
@@ -23224,9 +23224,9 @@ Gurax_DeclareFunctionAlias(glGetProgramResourceIndex_gurax, "glGetProgramResourc
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("programInterface", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramResourceIndex_gurax, processor_gurax, argument_gurax)
@@ -23248,9 +23248,9 @@ Gurax_DeclareFunctionAlias(glGetProgramResourceLocation_gurax, "glGetProgramReso
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("programInterface", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramResourceLocation_gurax, processor_gurax, argument_gurax)
@@ -23272,9 +23272,9 @@ Gurax_DeclareFunctionAlias(glGetProgramResourceLocationIndex_gurax, "glGetProgra
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("programInterface", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramResourceLocationIndex_gurax, processor_gurax, argument_gurax)
@@ -23299,9 +23299,9 @@ Gurax_DeclareFunctionAlias(glGetProgramResourceName_gurax, "glGetProgramResource
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramResourceName_gurax, processor_gurax, argument_gurax)
@@ -23331,9 +23331,9 @@ Gurax_DeclareFunctionAlias(glGetProgramResourceiv_gurax, "glGetProgramResourceiv
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramResourceiv_gurax, processor_gurax, argument_gurax)
@@ -23358,9 +23358,9 @@ Gurax_DeclareFunctionAlias(glProvokingVertex_gurax, "glProvokingVertex")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProvokingVertex_gurax, processor_gurax, argument_gurax)
@@ -23377,9 +23377,9 @@ Gurax_ImplementFunctionEx(glProvokingVertex_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(glGetGraphicsResetStatusARB_gurax, "glGetGraphicsResetStatusARB")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetGraphicsResetStatusARB_gurax, processor_gurax, argument_gurax)
@@ -23398,9 +23398,9 @@ Gurax_DeclareFunctionAlias(glGetnColorTableARB_gurax, "glGetnColorTableARB")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("table", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnColorTableARB_gurax, processor_gurax, argument_gurax)
@@ -23425,9 +23425,9 @@ Gurax_DeclareFunctionAlias(glGetnCompressedTexImageARB_gurax, "glGetnCompressedT
 	DeclareArg("lod", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("img", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnCompressedTexImageARB_gurax, processor_gurax, argument_gurax)
@@ -23452,9 +23452,9 @@ Gurax_DeclareFunctionAlias(glGetnConvolutionFilterARB_gurax, "glGetnConvolutionF
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnConvolutionFilterARB_gurax, processor_gurax, argument_gurax)
@@ -23481,9 +23481,9 @@ Gurax_DeclareFunctionAlias(glGetnHistogramARB_gurax, "glGetnHistogramARB")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnHistogramARB_gurax, processor_gurax, argument_gurax)
@@ -23509,9 +23509,9 @@ Gurax_DeclareFunctionAlias(glGetnMapdvARB_gurax, "glGetnMapdvARB")
 	DeclareArg("query", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnMapdvARB_gurax, processor_gurax, argument_gurax)
@@ -23535,9 +23535,9 @@ Gurax_DeclareFunctionAlias(glGetnMapfvARB_gurax, "glGetnMapfvARB")
 	DeclareArg("query", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnMapfvARB_gurax, processor_gurax, argument_gurax)
@@ -23561,9 +23561,9 @@ Gurax_DeclareFunctionAlias(glGetnMapivARB_gurax, "glGetnMapivARB")
 	DeclareArg("query", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnMapivARB_gurax, processor_gurax, argument_gurax)
@@ -23589,9 +23589,9 @@ Gurax_DeclareFunctionAlias(glGetnMinmaxARB_gurax, "glGetnMinmaxARB")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnMinmaxARB_gurax, processor_gurax, argument_gurax)
@@ -23616,9 +23616,9 @@ Gurax_DeclareFunctionAlias(glGetnPixelMapfvARB_gurax, "glGetnPixelMapfvARB")
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnPixelMapfvARB_gurax, processor_gurax, argument_gurax)
@@ -23640,9 +23640,9 @@ Gurax_DeclareFunctionAlias(glGetnPixelMapuivARB_gurax, "glGetnPixelMapuivARB")
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnPixelMapuivARB_gurax, processor_gurax, argument_gurax)
@@ -23664,9 +23664,9 @@ Gurax_DeclareFunctionAlias(glGetnPixelMapusvARB_gurax, "glGetnPixelMapusvARB")
 	DeclareArg("map", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnPixelMapusvARB_gurax, processor_gurax, argument_gurax)
@@ -23687,9 +23687,9 @@ Gurax_DeclareFunctionAlias(glGetnPolygonStippleARB_gurax, "glGetnPolygonStippleA
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pattern", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnPolygonStippleARB_gurax, processor_gurax, argument_gurax)
@@ -23713,9 +23713,9 @@ Gurax_DeclareFunctionAlias(glGetnTexImageARB_gurax, "glGetnTexImageARB")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("img", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnTexImageARB_gurax, processor_gurax, argument_gurax)
@@ -23741,9 +23741,9 @@ Gurax_DeclareFunctionAlias(glGetnUniformdvARB_gurax, "glGetnUniformdvARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnUniformdvARB_gurax, processor_gurax, argument_gurax)
@@ -23767,9 +23767,9 @@ Gurax_DeclareFunctionAlias(glGetnUniformfvARB_gurax, "glGetnUniformfvARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnUniformfvARB_gurax, processor_gurax, argument_gurax)
@@ -23793,9 +23793,9 @@ Gurax_DeclareFunctionAlias(glGetnUniformivARB_gurax, "glGetnUniformivARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnUniformivARB_gurax, processor_gurax, argument_gurax)
@@ -23819,9 +23819,9 @@ Gurax_DeclareFunctionAlias(glGetnUniformuivARB_gurax, "glGetnUniformuivARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetnUniformuivARB_gurax, processor_gurax, argument_gurax)
@@ -23849,9 +23849,9 @@ Gurax_DeclareFunctionAlias(glReadnPixelsARB_gurax, "glReadnPixelsARB")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glReadnPixelsARB_gurax, processor_gurax, argument_gurax)
@@ -23879,9 +23879,9 @@ Gurax_DeclareFunctionAlias(glFramebufferSampleLocationsfvARB_gurax, "glFramebuff
 	DeclareArg("start", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glFramebufferSampleLocationsfvARB_gurax, processor_gurax, argument_gurax)
@@ -23905,9 +23905,9 @@ Gurax_DeclareFunctionAlias(glNamedFramebufferSampleLocationsfvARB_gurax, "glName
 	DeclareArg("start", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedFramebufferSampleLocationsfvARB_gurax, processor_gurax, argument_gurax)
@@ -23928,9 +23928,9 @@ Gurax_DeclareFunctionAlias(glMinSampleShadingARB_gurax, "glMinSampleShadingARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMinSampleShadingARB_gurax, processor_gurax, argument_gurax)
@@ -23949,9 +23949,9 @@ Gurax_DeclareFunctionAlias(glBindSampler_gurax, "glBindSampler")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("unit", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindSampler_gurax, processor_gurax, argument_gurax)
@@ -23971,9 +23971,9 @@ Gurax_DeclareFunctionAlias(glDeleteSamplers_gurax, "glDeleteSamplers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("samplers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteSamplers_gurax, processor_gurax, argument_gurax)
@@ -23993,9 +23993,9 @@ Gurax_DeclareFunctionAlias(glGenSamplers_gurax, "glGenSamplers")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("samplers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenSamplers_gurax, processor_gurax, argument_gurax)
@@ -24016,9 +24016,9 @@ Gurax_DeclareFunctionAlias(glGetSamplerParameterIiv_gurax, "glGetSamplerParamete
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetSamplerParameterIiv_gurax, processor_gurax, argument_gurax)
@@ -24040,9 +24040,9 @@ Gurax_DeclareFunctionAlias(glGetSamplerParameterIuiv_gurax, "glGetSamplerParamet
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetSamplerParameterIuiv_gurax, processor_gurax, argument_gurax)
@@ -24064,9 +24064,9 @@ Gurax_DeclareFunctionAlias(glGetSamplerParameterfv_gurax, "glGetSamplerParameter
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetSamplerParameterfv_gurax, processor_gurax, argument_gurax)
@@ -24088,9 +24088,9 @@ Gurax_DeclareFunctionAlias(glGetSamplerParameteriv_gurax, "glGetSamplerParameter
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetSamplerParameteriv_gurax, processor_gurax, argument_gurax)
@@ -24110,9 +24110,9 @@ Gurax_DeclareFunctionAlias(glIsSampler_gurax, "glIsSampler")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsSampler_gurax, processor_gurax, argument_gurax)
@@ -24132,9 +24132,9 @@ Gurax_DeclareFunctionAlias(glSamplerParameterIiv_gurax, "glSamplerParameterIiv")
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSamplerParameterIiv_gurax, processor_gurax, argument_gurax)
@@ -24156,9 +24156,9 @@ Gurax_DeclareFunctionAlias(glSamplerParameterIuiv_gurax, "glSamplerParameterIuiv
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSamplerParameterIuiv_gurax, processor_gurax, argument_gurax)
@@ -24180,9 +24180,9 @@ Gurax_DeclareFunctionAlias(glSamplerParameterf_gurax, "glSamplerParameterf")
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSamplerParameterf_gurax, processor_gurax, argument_gurax)
@@ -24204,9 +24204,9 @@ Gurax_DeclareFunctionAlias(glSamplerParameterfv_gurax, "glSamplerParameterfv")
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSamplerParameterfv_gurax, processor_gurax, argument_gurax)
@@ -24228,9 +24228,9 @@ Gurax_DeclareFunctionAlias(glSamplerParameteri_gurax, "glSamplerParameteri")
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("param", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSamplerParameteri_gurax, processor_gurax, argument_gurax)
@@ -24252,9 +24252,9 @@ Gurax_DeclareFunctionAlias(glSamplerParameteriv_gurax, "glSamplerParameteriv")
 	DeclareArg("sampler", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSamplerParameteriv_gurax, processor_gurax, argument_gurax)
@@ -24275,9 +24275,9 @@ Gurax_DeclareFunctionAlias(glActiveShaderProgram_gurax, "glActiveShaderProgram")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pipeline", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glActiveShaderProgram_gurax, processor_gurax, argument_gurax)
@@ -24296,9 +24296,9 @@ Gurax_DeclareFunctionAlias(glBindProgramPipeline_gurax, "glBindProgramPipeline")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pipeline", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindProgramPipeline_gurax, processor_gurax, argument_gurax)
@@ -24317,9 +24317,9 @@ Gurax_DeclareFunctionAlias(glDeleteProgramPipelines_gurax, "glDeleteProgramPipel
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pipelines", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteProgramPipelines_gurax, processor_gurax, argument_gurax)
@@ -24339,9 +24339,9 @@ Gurax_DeclareFunctionAlias(glGenProgramPipelines_gurax, "glGenProgramPipelines")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pipelines", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenProgramPipelines_gurax, processor_gurax, argument_gurax)
@@ -24363,9 +24363,9 @@ Gurax_DeclareFunctionAlias(glGetProgramPipelineInfoLog_gurax, "glGetProgramPipel
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("infoLog", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramPipelineInfoLog_gurax, processor_gurax, argument_gurax)
@@ -24388,9 +24388,9 @@ Gurax_DeclareFunctionAlias(glGetProgramPipelineiv_gurax, "glGetProgramPipelineiv
 	DeclareArg("pipeline", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramPipelineiv_gurax, processor_gurax, argument_gurax)
@@ -24410,9 +24410,9 @@ Gurax_DeclareFunctionAlias(glIsProgramPipeline_gurax, "glIsProgramPipeline")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pipeline", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsProgramPipeline_gurax, processor_gurax, argument_gurax)
@@ -24432,9 +24432,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1d_gurax, "glProgramUniform1d")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1d_gurax, processor_gurax, argument_gurax)
@@ -24457,9 +24457,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1dv_gurax, "glProgramUniform1dv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1dv_gurax, processor_gurax, argument_gurax)
@@ -24482,9 +24482,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1f_gurax, "glProgramUniform1f")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1f_gurax, processor_gurax, argument_gurax)
@@ -24507,9 +24507,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1fv_gurax, "glProgramUniform1fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1fv_gurax, processor_gurax, argument_gurax)
@@ -24532,9 +24532,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1i_gurax, "glProgramUniform1i")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1i_gurax, processor_gurax, argument_gurax)
@@ -24557,9 +24557,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1iv_gurax, "glProgramUniform1iv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1iv_gurax, processor_gurax, argument_gurax)
@@ -24582,9 +24582,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1ui_gurax, "glProgramUniform1ui")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1ui_gurax, processor_gurax, argument_gurax)
@@ -24607,9 +24607,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform1uiv_gurax, "glProgramUniform1uiv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform1uiv_gurax, processor_gurax, argument_gurax)
@@ -24633,9 +24633,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2d_gurax, "glProgramUniform2d")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2d_gurax, processor_gurax, argument_gurax)
@@ -24659,9 +24659,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2dv_gurax, "glProgramUniform2dv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2dv_gurax, processor_gurax, argument_gurax)
@@ -24685,9 +24685,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2f_gurax, "glProgramUniform2f")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2f_gurax, processor_gurax, argument_gurax)
@@ -24711,9 +24711,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2fv_gurax, "glProgramUniform2fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2fv_gurax, processor_gurax, argument_gurax)
@@ -24737,9 +24737,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2i_gurax, "glProgramUniform2i")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2i_gurax, processor_gurax, argument_gurax)
@@ -24763,9 +24763,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2iv_gurax, "glProgramUniform2iv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2iv_gurax, processor_gurax, argument_gurax)
@@ -24789,9 +24789,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2ui_gurax, "glProgramUniform2ui")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2ui_gurax, processor_gurax, argument_gurax)
@@ -24815,9 +24815,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform2uiv_gurax, "glProgramUniform2uiv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform2uiv_gurax, processor_gurax, argument_gurax)
@@ -24842,9 +24842,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3d_gurax, "glProgramUniform3d")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3d_gurax, processor_gurax, argument_gurax)
@@ -24869,9 +24869,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3dv_gurax, "glProgramUniform3dv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3dv_gurax, processor_gurax, argument_gurax)
@@ -24896,9 +24896,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3f_gurax, "glProgramUniform3f")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3f_gurax, processor_gurax, argument_gurax)
@@ -24923,9 +24923,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3fv_gurax, "glProgramUniform3fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3fv_gurax, processor_gurax, argument_gurax)
@@ -24950,9 +24950,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3i_gurax, "glProgramUniform3i")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3i_gurax, processor_gurax, argument_gurax)
@@ -24977,9 +24977,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3iv_gurax, "glProgramUniform3iv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3iv_gurax, processor_gurax, argument_gurax)
@@ -25004,9 +25004,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3ui_gurax, "glProgramUniform3ui")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3ui_gurax, processor_gurax, argument_gurax)
@@ -25031,9 +25031,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform3uiv_gurax, "glProgramUniform3uiv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform3uiv_gurax, processor_gurax, argument_gurax)
@@ -25059,9 +25059,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4d_gurax, "glProgramUniform4d")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4d_gurax, processor_gurax, argument_gurax)
@@ -25087,9 +25087,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4dv_gurax, "glProgramUniform4dv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4dv_gurax, processor_gurax, argument_gurax)
@@ -25115,9 +25115,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4f_gurax, "glProgramUniform4f")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4f_gurax, processor_gurax, argument_gurax)
@@ -25143,9 +25143,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4fv_gurax, "glProgramUniform4fv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4fv_gurax, processor_gurax, argument_gurax)
@@ -25171,9 +25171,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4i_gurax, "glProgramUniform4i")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4i_gurax, processor_gurax, argument_gurax)
@@ -25199,9 +25199,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4iv_gurax, "glProgramUniform4iv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4iv_gurax, processor_gurax, argument_gurax)
@@ -25227,9 +25227,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4ui_gurax, "glProgramUniform4ui")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4ui_gurax, processor_gurax, argument_gurax)
@@ -25255,9 +25255,9 @@ Gurax_DeclareFunctionAlias(glProgramUniform4uiv_gurax, "glProgramUniform4uiv")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniform4uiv_gurax, processor_gurax, argument_gurax)
@@ -25282,9 +25282,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix2dv_gurax, "glProgramUniformMat
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix2dv_gurax, processor_gurax, argument_gurax)
@@ -25310,9 +25310,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix2fv_gurax, "glProgramUniformMat
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix2fv_gurax, processor_gurax, argument_gurax)
@@ -25338,9 +25338,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix2x3dv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix2x3dv_gurax, processor_gurax, argument_gurax)
@@ -25366,9 +25366,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix2x3fv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix2x3fv_gurax, processor_gurax, argument_gurax)
@@ -25394,9 +25394,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix2x4dv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix2x4dv_gurax, processor_gurax, argument_gurax)
@@ -25422,9 +25422,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix2x4fv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix2x4fv_gurax, processor_gurax, argument_gurax)
@@ -25450,9 +25450,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix3dv_gurax, "glProgramUniformMat
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix3dv_gurax, processor_gurax, argument_gurax)
@@ -25478,9 +25478,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix3fv_gurax, "glProgramUniformMat
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix3fv_gurax, processor_gurax, argument_gurax)
@@ -25506,9 +25506,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix3x2dv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix3x2dv_gurax, processor_gurax, argument_gurax)
@@ -25534,9 +25534,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix3x2fv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix3x2fv_gurax, processor_gurax, argument_gurax)
@@ -25562,9 +25562,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix3x4dv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix3x4dv_gurax, processor_gurax, argument_gurax)
@@ -25590,9 +25590,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix3x4fv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix3x4fv_gurax, processor_gurax, argument_gurax)
@@ -25618,9 +25618,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix4dv_gurax, "glProgramUniformMat
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix4dv_gurax, processor_gurax, argument_gurax)
@@ -25646,9 +25646,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix4fv_gurax, "glProgramUniformMat
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix4fv_gurax, processor_gurax, argument_gurax)
@@ -25674,9 +25674,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix4x2dv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix4x2dv_gurax, processor_gurax, argument_gurax)
@@ -25702,9 +25702,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix4x2fv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix4x2fv_gurax, processor_gurax, argument_gurax)
@@ -25730,9 +25730,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix4x3dv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix4x3dv_gurax, processor_gurax, argument_gurax)
@@ -25758,9 +25758,9 @@ Gurax_DeclareFunctionAlias(glProgramUniformMatrix4x3fv_gurax, "glProgramUniformM
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramUniformMatrix4x3fv_gurax, processor_gurax, argument_gurax)
@@ -25784,9 +25784,9 @@ Gurax_DeclareFunctionAlias(glUseProgramStages_gurax, "glUseProgramStages")
 	DeclareArg("pipeline", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stages", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUseProgramStages_gurax, processor_gurax, argument_gurax)
@@ -25806,9 +25806,9 @@ Gurax_DeclareFunctionAlias(glValidateProgramPipeline_gurax, "glValidateProgramPi
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pipeline", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glValidateProgramPipeline_gurax, processor_gurax, argument_gurax)
@@ -25829,9 +25829,9 @@ Gurax_DeclareFunctionAlias(glGetActiveAtomicCounterBufferiv_gurax, "glGetActiveA
 	DeclareArg("bufferIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveAtomicCounterBufferiv_gurax, processor_gurax, argument_gurax)
@@ -25858,9 +25858,9 @@ Gurax_DeclareFunctionAlias(glBindImageTexture_gurax, "glBindImageTexture")
 	DeclareArg("layer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("access", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindImageTexture_gurax, processor_gurax, argument_gurax)
@@ -25884,9 +25884,9 @@ Gurax_DeclareFunctionAlias(glMemoryBarrier_gurax, "glMemoryBarrier")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("barriers", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMemoryBarrier_gurax, processor_gurax, argument_gurax)
@@ -25905,9 +25905,9 @@ Gurax_DeclareFunctionAlias(glUniform1fARB_gurax, "glUniform1fARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1fARB_gurax, processor_gurax, argument_gurax)
@@ -25928,9 +25928,9 @@ Gurax_DeclareFunctionAlias(glUniform1fvARB_gurax, "glUniform1fvARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1fvARB_gurax, processor_gurax, argument_gurax)
@@ -25951,9 +25951,9 @@ Gurax_DeclareFunctionAlias(glUniform1iARB_gurax, "glUniform1iARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1iARB_gurax, processor_gurax, argument_gurax)
@@ -25974,9 +25974,9 @@ Gurax_DeclareFunctionAlias(glUniform1ivARB_gurax, "glUniform1ivARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform1ivARB_gurax, processor_gurax, argument_gurax)
@@ -25998,9 +25998,9 @@ Gurax_DeclareFunctionAlias(glUniform2fARB_gurax, "glUniform2fARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2fARB_gurax, processor_gurax, argument_gurax)
@@ -26022,9 +26022,9 @@ Gurax_DeclareFunctionAlias(glUniform2fvARB_gurax, "glUniform2fvARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2fvARB_gurax, processor_gurax, argument_gurax)
@@ -26046,9 +26046,9 @@ Gurax_DeclareFunctionAlias(glUniform2iARB_gurax, "glUniform2iARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2iARB_gurax, processor_gurax, argument_gurax)
@@ -26070,9 +26070,9 @@ Gurax_DeclareFunctionAlias(glUniform2ivARB_gurax, "glUniform2ivARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform2ivARB_gurax, processor_gurax, argument_gurax)
@@ -26095,9 +26095,9 @@ Gurax_DeclareFunctionAlias(glUniform3fARB_gurax, "glUniform3fARB")
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3fARB_gurax, processor_gurax, argument_gurax)
@@ -26120,9 +26120,9 @@ Gurax_DeclareFunctionAlias(glUniform3fvARB_gurax, "glUniform3fvARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3fvARB_gurax, processor_gurax, argument_gurax)
@@ -26145,9 +26145,9 @@ Gurax_DeclareFunctionAlias(glUniform3iARB_gurax, "glUniform3iARB")
 	DeclareArg("v0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3iARB_gurax, processor_gurax, argument_gurax)
@@ -26170,9 +26170,9 @@ Gurax_DeclareFunctionAlias(glUniform3ivARB_gurax, "glUniform3ivARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform3ivARB_gurax, processor_gurax, argument_gurax)
@@ -26196,9 +26196,9 @@ Gurax_DeclareFunctionAlias(glUniform4fARB_gurax, "glUniform4fARB")
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4fARB_gurax, processor_gurax, argument_gurax)
@@ -26222,9 +26222,9 @@ Gurax_DeclareFunctionAlias(glUniform4fvARB_gurax, "glUniform4fvARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4fvARB_gurax, processor_gurax, argument_gurax)
@@ -26248,9 +26248,9 @@ Gurax_DeclareFunctionAlias(glUniform4iARB_gurax, "glUniform4iARB")
 	DeclareArg("v1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4iARB_gurax, processor_gurax, argument_gurax)
@@ -26274,9 +26274,9 @@ Gurax_DeclareFunctionAlias(glUniform4ivARB_gurax, "glUniform4ivARB")
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniform4ivARB_gurax, processor_gurax, argument_gurax)
@@ -26299,9 +26299,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix2fvARB_gurax, "glUniformMatrix2fvARB")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix2fvARB_gurax, processor_gurax, argument_gurax)
@@ -26325,9 +26325,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix3fvARB_gurax, "glUniformMatrix3fvARB")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix3fvARB_gurax, processor_gurax, argument_gurax)
@@ -26351,9 +26351,9 @@ Gurax_DeclareFunctionAlias(glUniformMatrix4fvARB_gurax, "glUniformMatrix4fvARB")
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("transpose", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformMatrix4fvARB_gurax, processor_gurax, argument_gurax)
@@ -26376,9 +26376,9 @@ Gurax_DeclareFunctionAlias(glShaderStorageBlockBinding_gurax, "glShaderStorageBl
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("storageBlockIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("storageBlockBinding", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glShaderStorageBlockBinding_gurax, processor_gurax, argument_gurax)
@@ -26403,9 +26403,9 @@ Gurax_DeclareFunctionAlias(glGetActiveSubroutineName_gurax, "glGetActiveSubrouti
 	DeclareArg("bufsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveSubroutineName_gurax, processor_gurax, argument_gurax)
@@ -26433,9 +26433,9 @@ Gurax_DeclareFunctionAlias(glGetActiveSubroutineUniformName_gurax, "glGetActiveS
 	DeclareArg("bufsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveSubroutineUniformName_gurax, processor_gurax, argument_gurax)
@@ -26462,9 +26462,9 @@ Gurax_DeclareFunctionAlias(glGetActiveSubroutineUniformiv_gurax, "glGetActiveSub
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveSubroutineUniformiv_gurax, processor_gurax, argument_gurax)
@@ -26489,9 +26489,9 @@ Gurax_DeclareFunctionAlias(glGetProgramStageiv_gurax, "glGetProgramStageiv")
 	DeclareArg("shadertype", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramStageiv_gurax, processor_gurax, argument_gurax)
@@ -26514,9 +26514,9 @@ Gurax_DeclareFunctionAlias(glGetSubroutineIndex_gurax, "glGetSubroutineIndex")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("shadertype", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetSubroutineIndex_gurax, processor_gurax, argument_gurax)
@@ -26538,9 +26538,9 @@ Gurax_DeclareFunctionAlias(glGetSubroutineUniformLocation_gurax, "glGetSubroutin
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("shadertype", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetSubroutineUniformLocation_gurax, processor_gurax, argument_gurax)
@@ -26562,9 +26562,9 @@ Gurax_DeclareFunctionAlias(glGetUniformSubroutineuiv_gurax, "glGetUniformSubrout
 	DeclareArg("shadertype", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("location", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetUniformSubroutineuiv_gurax, processor_gurax, argument_gurax)
@@ -26586,9 +26586,9 @@ Gurax_DeclareFunctionAlias(glUniformSubroutinesuiv_gurax, "glUniformSubroutinesu
 	DeclareArg("shadertype", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("indices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformSubroutinesuiv_gurax, processor_gurax, argument_gurax)
@@ -26609,9 +26609,9 @@ Gurax_DeclareFunctionAlias(glDeleteNamedStringARB_gurax, "glDeleteNamedStringARB
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("namelen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteNamedStringARB_gurax, processor_gurax, argument_gurax)
@@ -26634,9 +26634,9 @@ Gurax_DeclareFunctionAlias(glGetNamedStringARB_gurax, "glGetNamedStringARB")
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stringlen", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("string", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetNamedStringARB_gurax, processor_gurax, argument_gurax)
@@ -26661,9 +26661,9 @@ Gurax_DeclareFunctionAlias(glGetNamedStringivARB_gurax, "glGetNamedStringivARB")
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetNamedStringivARB_gurax, processor_gurax, argument_gurax)
@@ -26685,9 +26685,9 @@ Gurax_DeclareFunctionAlias(glIsNamedStringARB_gurax, "glIsNamedStringARB")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("namelen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsNamedStringARB_gurax, processor_gurax, argument_gurax)
@@ -26710,9 +26710,9 @@ Gurax_DeclareFunctionAlias(glNamedStringARB_gurax, "glNamedStringARB")
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stringlen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("string", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNamedStringARB_gurax, processor_gurax, argument_gurax)
@@ -26737,9 +26737,9 @@ Gurax_DeclareFunctionAlias(glBufferPageCommitmentARB_gurax, "glBufferPageCommitm
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("commit", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBufferPageCommitmentARB_gurax, processor_gurax, argument_gurax)
@@ -26768,9 +26768,9 @@ Gurax_DeclareFunctionAlias(glTexPageCommitmentARB_gurax, "glTexPageCommitmentARB
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("commit", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexPageCommitmentARB_gurax, processor_gurax, argument_gurax)
@@ -26797,9 +26797,9 @@ Gurax_DeclareFunctionAlias(glGetInteger64v_gurax, "glGetInteger64v")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetInteger64v_gurax, processor_gurax, argument_gurax)
@@ -26819,9 +26819,9 @@ Gurax_DeclareFunctionAlias(glPatchParameterfv_gurax, "glPatchParameterfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPatchParameterfv_gurax, processor_gurax, argument_gurax)
@@ -26841,9 +26841,9 @@ Gurax_DeclareFunctionAlias(glPatchParameteri_gurax, "glPatchParameteri")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPatchParameteri_gurax, processor_gurax, argument_gurax)
@@ -26861,9 +26861,9 @@ Gurax_ImplementFunctionEx(glPatchParameteri_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(glTextureBarrier_gurax, "glTextureBarrier")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureBarrier_gurax, processor_gurax, argument_gurax)
@@ -26880,9 +26880,9 @@ Gurax_DeclareFunctionAlias(glTexBufferARB_gurax, "glTexBufferARB")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexBufferARB_gurax, processor_gurax, argument_gurax)
@@ -26906,9 +26906,9 @@ Gurax_DeclareFunctionAlias(glTexBufferRange_gurax, "glTexBufferRange")
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexBufferRange_gurax, processor_gurax, argument_gurax)
@@ -26935,9 +26935,9 @@ Gurax_DeclareFunctionAlias(glTextureBufferRangeEXT_gurax, "glTextureBufferRangeE
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureBufferRangeEXT_gurax, processor_gurax, argument_gurax)
@@ -26966,9 +26966,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexImage1DARB_gurax, "glCompressedTexImag
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexImage1DARB_gurax, processor_gurax, argument_gurax)
@@ -26999,9 +26999,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexImage2DARB_gurax, "glCompressedTexImag
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexImage2DARB_gurax, processor_gurax, argument_gurax)
@@ -27034,9 +27034,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexImage3DARB_gurax, "glCompressedTexImag
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexImage3DARB_gurax, processor_gurax, argument_gurax)
@@ -27068,9 +27068,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexSubImage1DARB_gurax, "glCompressedTexS
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexSubImage1DARB_gurax, processor_gurax, argument_gurax)
@@ -27102,9 +27102,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexSubImage2DARB_gurax, "glCompressedTexS
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexSubImage2DARB_gurax, processor_gurax, argument_gurax)
@@ -27140,9 +27140,9 @@ Gurax_DeclareFunctionAlias(glCompressedTexSubImage3DARB_gurax, "glCompressedTexS
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glCompressedTexSubImage3DARB_gurax, processor_gurax, argument_gurax)
@@ -27172,9 +27172,9 @@ Gurax_DeclareFunctionAlias(glGetCompressedTexImageARB_gurax, "glGetCompressedTex
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("lod", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("img", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetCompressedTexImageARB_gurax, processor_gurax, argument_gurax)
@@ -27196,9 +27196,9 @@ Gurax_DeclareFunctionAlias(glGetMultisamplefv_gurax, "glGetMultisamplefv")
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("val", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetMultisamplefv_gurax, processor_gurax, argument_gurax)
@@ -27219,9 +27219,9 @@ Gurax_DeclareFunctionAlias(glSampleMaski_gurax, "glSampleMaski")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSampleMaski_gurax, processor_gurax, argument_gurax)
@@ -27245,9 +27245,9 @@ Gurax_DeclareFunctionAlias(glTexImage2DMultisample_gurax, "glTexImage2DMultisamp
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexImage2DMultisample_gurax, processor_gurax, argument_gurax)
@@ -27276,9 +27276,9 @@ Gurax_DeclareFunctionAlias(glTexImage3DMultisample_gurax, "glTexImage3DMultisamp
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexImage3DMultisample_gurax, processor_gurax, argument_gurax)
@@ -27305,9 +27305,9 @@ Gurax_DeclareFunctionAlias(glTexStorage1D_gurax, "glTexStorage1D")
 	DeclareArg("levels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexStorage1D_gurax, processor_gurax, argument_gurax)
@@ -27332,9 +27332,9 @@ Gurax_DeclareFunctionAlias(glTexStorage2D_gurax, "glTexStorage2D")
 	DeclareArg("internalformat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexStorage2D_gurax, processor_gurax, argument_gurax)
@@ -27361,9 +27361,9 @@ Gurax_DeclareFunctionAlias(glTexStorage3D_gurax, "glTexStorage3D")
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexStorage3D_gurax, processor_gurax, argument_gurax)
@@ -27391,9 +27391,9 @@ Gurax_DeclareFunctionAlias(glTexStorage2DMultisample_gurax, "glTexStorage2DMulti
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexStorage2DMultisample_gurax, processor_gurax, argument_gurax)
@@ -27422,9 +27422,9 @@ Gurax_DeclareFunctionAlias(glTexStorage3DMultisample_gurax, "glTexStorage3DMulti
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexStorage3DMultisample_gurax, processor_gurax, argument_gurax)
@@ -27454,9 +27454,9 @@ Gurax_DeclareFunctionAlias(glTextureStorage2DMultisampleEXT_gurax, "glTextureSto
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureStorage2DMultisampleEXT_gurax, processor_gurax, argument_gurax)
@@ -27487,9 +27487,9 @@ Gurax_DeclareFunctionAlias(glTextureStorage3DMultisampleEXT_gurax, "glTextureSto
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fixedsamplelocations", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureStorage3DMultisampleEXT_gurax, processor_gurax, argument_gurax)
@@ -27521,9 +27521,9 @@ Gurax_DeclareFunctionAlias(glTextureView_gurax, "glTextureView")
 	DeclareArg("numlevels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("minlayer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("numlayers", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTextureView_gurax, processor_gurax, argument_gurax)
@@ -27550,9 +27550,9 @@ Gurax_DeclareFunctionAlias(glGetQueryObjecti64v_gurax, "glGetQueryObjecti64v")
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryObjecti64v_gurax, processor_gurax, argument_gurax)
@@ -27574,9 +27574,9 @@ Gurax_DeclareFunctionAlias(glGetQueryObjectui64v_gurax, "glGetQueryObjectui64v")
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryObjectui64v_gurax, processor_gurax, argument_gurax)
@@ -27597,9 +27597,9 @@ Gurax_DeclareFunctionAlias(glQueryCounter_gurax, "glQueryCounter")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glQueryCounter_gurax, processor_gurax, argument_gurax)
@@ -27619,9 +27619,9 @@ Gurax_DeclareFunctionAlias(glBindTransformFeedback_gurax, "glBindTransformFeedba
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindTransformFeedback_gurax, processor_gurax, argument_gurax)
@@ -27641,9 +27641,9 @@ Gurax_DeclareFunctionAlias(glDeleteTransformFeedbacks_gurax, "glDeleteTransformF
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteTransformFeedbacks_gurax, processor_gurax, argument_gurax)
@@ -27663,9 +27663,9 @@ Gurax_DeclareFunctionAlias(glDrawTransformFeedback_gurax, "glDrawTransformFeedba
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawTransformFeedback_gurax, processor_gurax, argument_gurax)
@@ -27685,9 +27685,9 @@ Gurax_DeclareFunctionAlias(glGenTransformFeedbacks_gurax, "glGenTransformFeedbac
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ids", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenTransformFeedbacks_gurax, processor_gurax, argument_gurax)
@@ -27706,9 +27706,9 @@ Gurax_DeclareFunctionAlias(glIsTransformFeedback_gurax, "glIsTransformFeedback")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsTransformFeedback_gurax, processor_gurax, argument_gurax)
@@ -27725,9 +27725,9 @@ Gurax_ImplementFunctionEx(glIsTransformFeedback_gurax, processor_gurax, argument
 Gurax_DeclareFunctionAlias(glPauseTransformFeedback_gurax, "glPauseTransformFeedback")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glPauseTransformFeedback_gurax, processor_gurax, argument_gurax)
@@ -27741,9 +27741,9 @@ Gurax_ImplementFunctionEx(glPauseTransformFeedback_gurax, processor_gurax, argum
 Gurax_DeclareFunctionAlias(glResumeTransformFeedback_gurax, "glResumeTransformFeedback")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glResumeTransformFeedback_gurax, processor_gurax, argument_gurax)
@@ -27760,9 +27760,9 @@ Gurax_DeclareFunctionAlias(glBeginQueryIndexed_gurax, "glBeginQueryIndexed")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBeginQueryIndexed_gurax, processor_gurax, argument_gurax)
@@ -27784,9 +27784,9 @@ Gurax_DeclareFunctionAlias(glDrawTransformFeedbackStream_gurax, "glDrawTransform
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawTransformFeedbackStream_gurax, processor_gurax, argument_gurax)
@@ -27807,9 +27807,9 @@ Gurax_DeclareFunctionAlias(glEndQueryIndexed_gurax, "glEndQueryIndexed")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEndQueryIndexed_gurax, processor_gurax, argument_gurax)
@@ -27831,9 +27831,9 @@ Gurax_DeclareFunctionAlias(glGetQueryIndexediv_gurax, "glGetQueryIndexediv")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetQueryIndexediv_gurax, processor_gurax, argument_gurax)
@@ -27856,9 +27856,9 @@ Gurax_DeclareFunctionAlias(glDrawTransformFeedbackInstanced_gurax, "glDrawTransf
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawTransformFeedbackInstanced_gurax, processor_gurax, argument_gurax)
@@ -27881,9 +27881,9 @@ Gurax_DeclareFunctionAlias(glDrawTransformFeedbackStreamInstanced_gurax, "glDraw
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("primcount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDrawTransformFeedbackStreamInstanced_gurax, processor_gurax, argument_gurax)
@@ -27906,9 +27906,9 @@ Gurax_DeclareFunctionAlias(glBindBufferBase_gurax, "glBindBufferBase")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindBufferBase_gurax, processor_gurax, argument_gurax)
@@ -27932,9 +27932,9 @@ Gurax_DeclareFunctionAlias(glBindBufferRange_gurax, "glBindBufferRange")
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindBufferRange_gurax, processor_gurax, argument_gurax)
@@ -27960,9 +27960,9 @@ Gurax_DeclareFunctionAlias(glGetActiveUniformBlockName_gurax, "glGetActiveUnifor
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("uniformBlockName", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveUniformBlockName_gurax, processor_gurax, argument_gurax)
@@ -27987,9 +27987,9 @@ Gurax_DeclareFunctionAlias(glGetActiveUniformBlockiv_gurax, "glGetActiveUniformB
 	DeclareArg("uniformBlockIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveUniformBlockiv_gurax, processor_gurax, argument_gurax)
@@ -28014,9 +28014,9 @@ Gurax_DeclareFunctionAlias(glGetActiveUniformName_gurax, "glGetActiveUniformName
 	DeclareArg("bufSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("uniformName", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveUniformName_gurax, processor_gurax, argument_gurax)
@@ -28042,9 +28042,9 @@ Gurax_DeclareFunctionAlias(glGetActiveUniformsiv_gurax, "glGetActiveUniformsiv")
 	DeclareArg("uniformIndices", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetActiveUniformsiv_gurax, processor_gurax, argument_gurax)
@@ -28068,9 +28068,9 @@ Gurax_DeclareFunctionAlias(glGetIntegeri_v_gurax, "glGetIntegeri_v")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetIntegeri_v_gurax, processor_gurax, argument_gurax)
@@ -28091,9 +28091,9 @@ Gurax_DeclareFunctionAlias(glGetUniformBlockIndex_gurax, "glGetUniformBlockIndex
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("uniformBlockName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetUniformBlockIndex_gurax, processor_gurax, argument_gurax)
@@ -28114,9 +28114,9 @@ Gurax_DeclareFunctionAlias(glUniformBlockBinding_gurax, "glUniformBlockBinding")
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("uniformBlockIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("uniformBlockBinding", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUniformBlockBinding_gurax, processor_gurax, argument_gurax)
@@ -28136,9 +28136,9 @@ Gurax_DeclareFunctionAlias(glBindVertexArray_gurax, "glBindVertexArray")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("array", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindVertexArray_gurax, processor_gurax, argument_gurax)
@@ -28157,9 +28157,9 @@ Gurax_DeclareFunctionAlias(glDeleteVertexArrays_gurax, "glDeleteVertexArrays")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("arrays", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteVertexArrays_gurax, processor_gurax, argument_gurax)
@@ -28179,9 +28179,9 @@ Gurax_DeclareFunctionAlias(glGenVertexArrays_gurax, "glGenVertexArrays")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("arrays", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenVertexArrays_gurax, processor_gurax, argument_gurax)
@@ -28200,9 +28200,9 @@ Gurax_DeclareFunctionAlias(glIsVertexArray_gurax, "glIsVertexArray")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("array", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsVertexArray_gurax, processor_gurax, argument_gurax)
@@ -28222,9 +28222,9 @@ Gurax_DeclareFunctionAlias(glGetVertexAttribLdv_gurax, "glGetVertexAttribLdv")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexAttribLdv_gurax, processor_gurax, argument_gurax)
@@ -28245,9 +28245,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL1d_gurax, "glVertexAttribL1d")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL1d_gurax, processor_gurax, argument_gurax)
@@ -28267,9 +28267,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL1dv_gurax, "glVertexAttribL1dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL1dv_gurax, processor_gurax, argument_gurax)
@@ -28290,9 +28290,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL2d_gurax, "glVertexAttribL2d")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL2d_gurax, processor_gurax, argument_gurax)
@@ -28313,9 +28313,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL2dv_gurax, "glVertexAttribL2dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL2dv_gurax, processor_gurax, argument_gurax)
@@ -28337,9 +28337,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL3d_gurax, "glVertexAttribL3d")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL3d_gurax, processor_gurax, argument_gurax)
@@ -28361,9 +28361,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL3dv_gurax, "glVertexAttribL3dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL3dv_gurax, processor_gurax, argument_gurax)
@@ -28386,9 +28386,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL4d_gurax, "glVertexAttribL4d")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL4d_gurax, processor_gurax, argument_gurax)
@@ -28411,9 +28411,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribL4dv_gurax, "glVertexAttribL4dv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribL4dv_gurax, processor_gurax, argument_gurax)
@@ -28436,9 +28436,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribLPointer_gurax, "glVertexAttribLPointer
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribLPointer_gurax, processor_gurax, argument_gurax)
@@ -28463,9 +28463,9 @@ Gurax_DeclareFunctionAlias(glBindVertexBuffer_gurax, "glBindVertexBuffer")
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindVertexBuffer_gurax, processor_gurax, argument_gurax)
@@ -28490,9 +28490,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayBindVertexBufferEXT_gurax, "glVertexArra
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayBindVertexBufferEXT_gurax, processor_gurax, argument_gurax)
@@ -28516,9 +28516,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayVertexAttribBindingEXT_gurax, "glVertexA
 	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("attribindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bindingindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayVertexAttribBindingEXT_gurax, processor_gurax, argument_gurax)
@@ -28543,9 +28543,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayVertexAttribFormatEXT_gurax, "glVertexAr
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayVertexAttribFormatEXT_gurax, processor_gurax, argument_gurax)
@@ -28572,9 +28572,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayVertexAttribIFormatEXT_gurax, "glVertexA
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayVertexAttribIFormatEXT_gurax, processor_gurax, argument_gurax)
@@ -28600,9 +28600,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayVertexAttribLFormatEXT_gurax, "glVertexA
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayVertexAttribLFormatEXT_gurax, processor_gurax, argument_gurax)
@@ -28626,9 +28626,9 @@ Gurax_DeclareFunctionAlias(glVertexArrayVertexBindingDivisorEXT_gurax, "glVertex
 	DeclareArg("vaobj", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bindingindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("divisor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexArrayVertexBindingDivisorEXT_gurax, processor_gurax, argument_gurax)
@@ -28649,9 +28649,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribBinding_gurax, "glVertexAttribBinding")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("attribindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bindingindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribBinding_gurax, processor_gurax, argument_gurax)
@@ -28674,9 +28674,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribFormat_gurax, "glVertexAttribFormat")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribFormat_gurax, processor_gurax, argument_gurax)
@@ -28701,9 +28701,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribIFormat_gurax, "glVertexAttribIFormat")
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribIFormat_gurax, processor_gurax, argument_gurax)
@@ -28727,9 +28727,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribLFormat_gurax, "glVertexAttribLFormat")
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("relativeoffset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribLFormat_gurax, processor_gurax, argument_gurax)
@@ -28751,9 +28751,9 @@ Gurax_DeclareFunctionAlias(glVertexBindingDivisor_gurax, "glVertexBindingDivisor
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bindingindex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("divisor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexBindingDivisor_gurax, processor_gurax, argument_gurax)
@@ -28772,9 +28772,9 @@ Gurax_DeclareFunctionAlias(glVertexBlendARB_gurax, "glVertexBlendARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexBlendARB_gurax, processor_gurax, argument_gurax)
@@ -28795,9 +28795,9 @@ Gurax_DeclareFunctionAlias(glWeightPointerARB_gurax, "glWeightPointerARB")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWeightPointerARB_gurax, processor_gurax, argument_gurax)
@@ -28819,9 +28819,9 @@ Gurax_DeclareFunctionAlias(glWeightbvARB_gurax, "glWeightbvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weights", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWeightbvARB_gurax, processor_gurax, argument_gurax)
@@ -28841,9 +28841,9 @@ Gurax_DeclareFunctionAlias(glWeightdvARB_gurax, "glWeightdvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weights", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWeightdvARB_gurax, processor_gurax, argument_gurax)
@@ -28863,9 +28863,9 @@ Gurax_DeclareFunctionAlias(glWeightfvARB_gurax, "glWeightfvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weights", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWeightfvARB_gurax, processor_gurax, argument_gurax)
@@ -28885,9 +28885,9 @@ Gurax_DeclareFunctionAlias(glWeightivARB_gurax, "glWeightivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weights", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWeightivARB_gurax, processor_gurax, argument_gurax)
@@ -28907,9 +28907,9 @@ Gurax_DeclareFunctionAlias(glWeightsvARB_gurax, "glWeightsvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weights", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWeightsvARB_gurax, processor_gurax, argument_gurax)
@@ -28929,9 +28929,9 @@ Gurax_DeclareFunctionAlias(glWeightubvARB_gurax, "glWeightubvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weights", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWeightubvARB_gurax, processor_gurax, argument_gurax)
@@ -28951,9 +28951,9 @@ Gurax_DeclareFunctionAlias(glWeightuivARB_gurax, "glWeightuivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weights", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWeightuivARB_gurax, processor_gurax, argument_gurax)
@@ -28973,9 +28973,9 @@ Gurax_DeclareFunctionAlias(glWeightusvARB_gurax, "glWeightusvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weights", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWeightusvARB_gurax, processor_gurax, argument_gurax)
@@ -28995,9 +28995,9 @@ Gurax_DeclareFunctionAlias(glBindBufferARB_gurax, "glBindBufferARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindBufferARB_gurax, processor_gurax, argument_gurax)
@@ -29017,9 +29017,9 @@ Gurax_DeclareFunctionAlias(glDeleteBuffersARB_gurax, "glDeleteBuffersARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteBuffersARB_gurax, processor_gurax, argument_gurax)
@@ -29039,9 +29039,9 @@ Gurax_DeclareFunctionAlias(glGenBuffersARB_gurax, "glGenBuffersARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buffers", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenBuffersARB_gurax, processor_gurax, argument_gurax)
@@ -29062,9 +29062,9 @@ Gurax_DeclareFunctionAlias(glGetBufferParameterivARB_gurax, "glGetBufferParamete
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetBufferParameterivARB_gurax, processor_gurax, argument_gurax)
@@ -29084,9 +29084,9 @@ Gurax_DeclareFunctionAlias(glIsBufferARB_gurax, "glIsBufferARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("buffer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsBufferARB_gurax, processor_gurax, argument_gurax)
@@ -29104,9 +29104,9 @@ Gurax_DeclareFunctionAlias(glUnmapBufferARB_gurax, "glUnmapBufferARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glUnmapBufferARB_gurax, processor_gurax, argument_gurax)
@@ -29125,9 +29125,9 @@ Gurax_DeclareFunctionAlias(glBindProgramARB_gurax, "glBindProgramARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glBindProgramARB_gurax, processor_gurax, argument_gurax)
@@ -29147,9 +29147,9 @@ Gurax_DeclareFunctionAlias(glDeleteProgramsARB_gurax, "glDeleteProgramsARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("programs", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDeleteProgramsARB_gurax, processor_gurax, argument_gurax)
@@ -29168,9 +29168,9 @@ Gurax_DeclareFunctionAlias(glDisableVertexAttribArrayARB_gurax, "glDisableVertex
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDisableVertexAttribArrayARB_gurax, processor_gurax, argument_gurax)
@@ -29188,9 +29188,9 @@ Gurax_DeclareFunctionAlias(glEnableVertexAttribArrayARB_gurax, "glEnableVertexAt
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glEnableVertexAttribArrayARB_gurax, processor_gurax, argument_gurax)
@@ -29209,9 +29209,9 @@ Gurax_DeclareFunctionAlias(glGenProgramsARB_gurax, "glGenProgramsARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("programs", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGenProgramsARB_gurax, processor_gurax, argument_gurax)
@@ -29232,9 +29232,9 @@ Gurax_DeclareFunctionAlias(glGetProgramEnvParameterdvARB_gurax, "glGetProgramEnv
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramEnvParameterdvARB_gurax, processor_gurax, argument_gurax)
@@ -29256,9 +29256,9 @@ Gurax_DeclareFunctionAlias(glGetProgramEnvParameterfvARB_gurax, "glGetProgramEnv
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramEnvParameterfvARB_gurax, processor_gurax, argument_gurax)
@@ -29280,9 +29280,9 @@ Gurax_DeclareFunctionAlias(glGetProgramLocalParameterdvARB_gurax, "glGetProgramL
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramLocalParameterdvARB_gurax, processor_gurax, argument_gurax)
@@ -29304,9 +29304,9 @@ Gurax_DeclareFunctionAlias(glGetProgramLocalParameterfvARB_gurax, "glGetProgramL
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramLocalParameterfvARB_gurax, processor_gurax, argument_gurax)
@@ -29328,9 +29328,9 @@ Gurax_DeclareFunctionAlias(glGetProgramStringARB_gurax, "glGetProgramStringARB")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("string", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramStringARB_gurax, processor_gurax, argument_gurax)
@@ -29352,9 +29352,9 @@ Gurax_DeclareFunctionAlias(glGetProgramivARB_gurax, "glGetProgramivARB")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetProgramivARB_gurax, processor_gurax, argument_gurax)
@@ -29376,9 +29376,9 @@ Gurax_DeclareFunctionAlias(glGetVertexAttribdvARB_gurax, "glGetVertexAttribdvARB
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexAttribdvARB_gurax, processor_gurax, argument_gurax)
@@ -29400,9 +29400,9 @@ Gurax_DeclareFunctionAlias(glGetVertexAttribfvARB_gurax, "glGetVertexAttribfvARB
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexAttribfvARB_gurax, processor_gurax, argument_gurax)
@@ -29424,9 +29424,9 @@ Gurax_DeclareFunctionAlias(glGetVertexAttribivARB_gurax, "glGetVertexAttribivARB
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pname", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetVertexAttribivARB_gurax, processor_gurax, argument_gurax)
@@ -29446,9 +29446,9 @@ Gurax_DeclareFunctionAlias(glIsProgramARB_gurax, "glIsProgramARB")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("program", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glIsProgramARB_gurax, processor_gurax, argument_gurax)
@@ -29471,9 +29471,9 @@ Gurax_DeclareFunctionAlias(glProgramEnvParameter4dARB_gurax, "glProgramEnvParame
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramEnvParameter4dARB_gurax, processor_gurax, argument_gurax)
@@ -29498,9 +29498,9 @@ Gurax_DeclareFunctionAlias(glProgramEnvParameter4dvARB_gurax, "glProgramEnvParam
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramEnvParameter4dvARB_gurax, processor_gurax, argument_gurax)
@@ -29525,9 +29525,9 @@ Gurax_DeclareFunctionAlias(glProgramEnvParameter4fARB_gurax, "glProgramEnvParame
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramEnvParameter4fARB_gurax, processor_gurax, argument_gurax)
@@ -29552,9 +29552,9 @@ Gurax_DeclareFunctionAlias(glProgramEnvParameter4fvARB_gurax, "glProgramEnvParam
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramEnvParameter4fvARB_gurax, processor_gurax, argument_gurax)
@@ -29579,9 +29579,9 @@ Gurax_DeclareFunctionAlias(glProgramLocalParameter4dARB_gurax, "glProgramLocalPa
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramLocalParameter4dARB_gurax, processor_gurax, argument_gurax)
@@ -29606,9 +29606,9 @@ Gurax_DeclareFunctionAlias(glProgramLocalParameter4dvARB_gurax, "glProgramLocalP
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramLocalParameter4dvARB_gurax, processor_gurax, argument_gurax)
@@ -29633,9 +29633,9 @@ Gurax_DeclareFunctionAlias(glProgramLocalParameter4fARB_gurax, "glProgramLocalPa
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramLocalParameter4fARB_gurax, processor_gurax, argument_gurax)
@@ -29660,9 +29660,9 @@ Gurax_DeclareFunctionAlias(glProgramLocalParameter4fvARB_gurax, "glProgramLocalP
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("params", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramLocalParameter4fvARB_gurax, processor_gurax, argument_gurax)
@@ -29685,9 +29685,9 @@ Gurax_DeclareFunctionAlias(glProgramStringARB_gurax, "glProgramStringARB")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("string", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glProgramStringARB_gurax, processor_gurax, argument_gurax)
@@ -29709,9 +29709,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1dARB_gurax, "glVertexAttrib1dARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1dARB_gurax, processor_gurax, argument_gurax)
@@ -29731,9 +29731,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1dvARB_gurax, "glVertexAttrib1dvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1dvARB_gurax, processor_gurax, argument_gurax)
@@ -29753,9 +29753,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1fARB_gurax, "glVertexAttrib1fARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1fARB_gurax, processor_gurax, argument_gurax)
@@ -29775,9 +29775,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1fvARB_gurax, "glVertexAttrib1fvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1fvARB_gurax, processor_gurax, argument_gurax)
@@ -29797,9 +29797,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1sARB_gurax, "glVertexAttrib1sARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1sARB_gurax, processor_gurax, argument_gurax)
@@ -29819,9 +29819,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib1svARB_gurax, "glVertexAttrib1svARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib1svARB_gurax, processor_gurax, argument_gurax)
@@ -29842,9 +29842,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2dARB_gurax, "glVertexAttrib2dARB")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2dARB_gurax, processor_gurax, argument_gurax)
@@ -29865,9 +29865,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2dvARB_gurax, "glVertexAttrib2dvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2dvARB_gurax, processor_gurax, argument_gurax)
@@ -29888,9 +29888,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2fARB_gurax, "glVertexAttrib2fARB")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2fARB_gurax, processor_gurax, argument_gurax)
@@ -29911,9 +29911,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2fvARB_gurax, "glVertexAttrib2fvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2fvARB_gurax, processor_gurax, argument_gurax)
@@ -29934,9 +29934,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2sARB_gurax, "glVertexAttrib2sARB")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2sARB_gurax, processor_gurax, argument_gurax)
@@ -29957,9 +29957,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib2svARB_gurax, "glVertexAttrib2svARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib2svARB_gurax, processor_gurax, argument_gurax)
@@ -29981,9 +29981,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3dARB_gurax, "glVertexAttrib3dARB")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3dARB_gurax, processor_gurax, argument_gurax)
@@ -30005,9 +30005,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3dvARB_gurax, "glVertexAttrib3dvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3dvARB_gurax, processor_gurax, argument_gurax)
@@ -30029,9 +30029,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3fARB_gurax, "glVertexAttrib3fARB")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3fARB_gurax, processor_gurax, argument_gurax)
@@ -30053,9 +30053,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3fvARB_gurax, "glVertexAttrib3fvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3fvARB_gurax, processor_gurax, argument_gurax)
@@ -30077,9 +30077,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3sARB_gurax, "glVertexAttrib3sARB")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3sARB_gurax, processor_gurax, argument_gurax)
@@ -30101,9 +30101,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib3svARB_gurax, "glVertexAttrib3svARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib3svARB_gurax, processor_gurax, argument_gurax)
@@ -30123,9 +30123,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4NbvARB_gurax, "glVertexAttrib4NbvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4NbvARB_gurax, processor_gurax, argument_gurax)
@@ -30145,9 +30145,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4NivARB_gurax, "glVertexAttrib4NivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4NivARB_gurax, processor_gurax, argument_gurax)
@@ -30167,9 +30167,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4NsvARB_gurax, "glVertexAttrib4NsvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4NsvARB_gurax, processor_gurax, argument_gurax)
@@ -30192,9 +30192,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4NubARB_gurax, "glVertexAttrib4NubARB")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4NubARB_gurax, processor_gurax, argument_gurax)
@@ -30217,9 +30217,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4NubvARB_gurax, "glVertexAttrib4NubvARB
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4NubvARB_gurax, processor_gurax, argument_gurax)
@@ -30239,9 +30239,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4NuivARB_gurax, "glVertexAttrib4NuivARB
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4NuivARB_gurax, processor_gurax, argument_gurax)
@@ -30261,9 +30261,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4NusvARB_gurax, "glVertexAttrib4NusvARB
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4NusvARB_gurax, processor_gurax, argument_gurax)
@@ -30283,9 +30283,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4bvARB_gurax, "glVertexAttrib4bvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4bvARB_gurax, processor_gurax, argument_gurax)
@@ -30308,9 +30308,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4dARB_gurax, "glVertexAttrib4dARB")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4dARB_gurax, processor_gurax, argument_gurax)
@@ -30333,9 +30333,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4dvARB_gurax, "glVertexAttrib4dvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4dvARB_gurax, processor_gurax, argument_gurax)
@@ -30358,9 +30358,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4fARB_gurax, "glVertexAttrib4fARB")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4fARB_gurax, processor_gurax, argument_gurax)
@@ -30383,9 +30383,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4fvARB_gurax, "glVertexAttrib4fvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4fvARB_gurax, processor_gurax, argument_gurax)
@@ -30405,9 +30405,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4ivARB_gurax, "glVertexAttrib4ivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4ivARB_gurax, processor_gurax, argument_gurax)
@@ -30430,9 +30430,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4sARB_gurax, "glVertexAttrib4sARB")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4sARB_gurax, processor_gurax, argument_gurax)
@@ -30455,9 +30455,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4svARB_gurax, "glVertexAttrib4svARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4svARB_gurax, processor_gurax, argument_gurax)
@@ -30477,9 +30477,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4ubvARB_gurax, "glVertexAttrib4ubvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4ubvARB_gurax, processor_gurax, argument_gurax)
@@ -30499,9 +30499,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4uivARB_gurax, "glVertexAttrib4uivARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4uivARB_gurax, processor_gurax, argument_gurax)
@@ -30521,9 +30521,9 @@ Gurax_DeclareFunctionAlias(glVertexAttrib4usvARB_gurax, "glVertexAttrib4usvARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttrib4usvARB_gurax, processor_gurax, argument_gurax)
@@ -30547,9 +30547,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribPointerARB_gurax, "glVertexAttribPointe
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pointer", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribPointerARB_gurax, processor_gurax, argument_gurax)
@@ -30573,9 +30573,9 @@ Gurax_DeclareFunctionAlias(glColorP3ui_gurax, "glColorP3ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorP3ui_gurax, processor_gurax, argument_gurax)
@@ -30595,9 +30595,9 @@ Gurax_DeclareFunctionAlias(glColorP3uiv_gurax, "glColorP3uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorP3uiv_gurax, processor_gurax, argument_gurax)
@@ -30617,9 +30617,9 @@ Gurax_DeclareFunctionAlias(glColorP4ui_gurax, "glColorP4ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorP4ui_gurax, processor_gurax, argument_gurax)
@@ -30639,9 +30639,9 @@ Gurax_DeclareFunctionAlias(glColorP4uiv_gurax, "glColorP4uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glColorP4uiv_gurax, processor_gurax, argument_gurax)
@@ -30662,9 +30662,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoordP1ui_gurax, "glMultiTexCoordP1ui")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoordP1ui_gurax, processor_gurax, argument_gurax)
@@ -30686,9 +30686,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoordP1uiv_gurax, "glMultiTexCoordP1uiv")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoordP1uiv_gurax, processor_gurax, argument_gurax)
@@ -30710,9 +30710,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoordP2ui_gurax, "glMultiTexCoordP2ui")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoordP2ui_gurax, processor_gurax, argument_gurax)
@@ -30734,9 +30734,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoordP2uiv_gurax, "glMultiTexCoordP2uiv")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoordP2uiv_gurax, processor_gurax, argument_gurax)
@@ -30758,9 +30758,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoordP3ui_gurax, "glMultiTexCoordP3ui")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoordP3ui_gurax, processor_gurax, argument_gurax)
@@ -30782,9 +30782,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoordP3uiv_gurax, "glMultiTexCoordP3uiv")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoordP3uiv_gurax, processor_gurax, argument_gurax)
@@ -30806,9 +30806,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoordP4ui_gurax, "glMultiTexCoordP4ui")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoordP4ui_gurax, processor_gurax, argument_gurax)
@@ -30830,9 +30830,9 @@ Gurax_DeclareFunctionAlias(glMultiTexCoordP4uiv_gurax, "glMultiTexCoordP4uiv")
 	DeclareArg("texture", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glMultiTexCoordP4uiv_gurax, processor_gurax, argument_gurax)
@@ -30853,9 +30853,9 @@ Gurax_DeclareFunctionAlias(glNormalP3ui_gurax, "glNormalP3ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormalP3ui_gurax, processor_gurax, argument_gurax)
@@ -30875,9 +30875,9 @@ Gurax_DeclareFunctionAlias(glNormalP3uiv_gurax, "glNormalP3uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glNormalP3uiv_gurax, processor_gurax, argument_gurax)
@@ -30897,9 +30897,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColorP3ui_gurax, "glSecondaryColorP3ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColorP3ui_gurax, processor_gurax, argument_gurax)
@@ -30919,9 +30919,9 @@ Gurax_DeclareFunctionAlias(glSecondaryColorP3uiv_gurax, "glSecondaryColorP3uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glSecondaryColorP3uiv_gurax, processor_gurax, argument_gurax)
@@ -30941,9 +30941,9 @@ Gurax_DeclareFunctionAlias(glTexCoordP1ui_gurax, "glTexCoordP1ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoordP1ui_gurax, processor_gurax, argument_gurax)
@@ -30963,9 +30963,9 @@ Gurax_DeclareFunctionAlias(glTexCoordP1uiv_gurax, "glTexCoordP1uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoordP1uiv_gurax, processor_gurax, argument_gurax)
@@ -30985,9 +30985,9 @@ Gurax_DeclareFunctionAlias(glTexCoordP2ui_gurax, "glTexCoordP2ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoordP2ui_gurax, processor_gurax, argument_gurax)
@@ -31007,9 +31007,9 @@ Gurax_DeclareFunctionAlias(glTexCoordP2uiv_gurax, "glTexCoordP2uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoordP2uiv_gurax, processor_gurax, argument_gurax)
@@ -31029,9 +31029,9 @@ Gurax_DeclareFunctionAlias(glTexCoordP3ui_gurax, "glTexCoordP3ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoordP3ui_gurax, processor_gurax, argument_gurax)
@@ -31051,9 +31051,9 @@ Gurax_DeclareFunctionAlias(glTexCoordP3uiv_gurax, "glTexCoordP3uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoordP3uiv_gurax, processor_gurax, argument_gurax)
@@ -31073,9 +31073,9 @@ Gurax_DeclareFunctionAlias(glTexCoordP4ui_gurax, "glTexCoordP4ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoordP4ui_gurax, processor_gurax, argument_gurax)
@@ -31095,9 +31095,9 @@ Gurax_DeclareFunctionAlias(glTexCoordP4uiv_gurax, "glTexCoordP4uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("coords", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glTexCoordP4uiv_gurax, processor_gurax, argument_gurax)
@@ -31119,9 +31119,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribP1ui_gurax, "glVertexAttribP1ui")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribP1ui_gurax, processor_gurax, argument_gurax)
@@ -31145,9 +31145,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribP1uiv_gurax, "glVertexAttribP1uiv")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribP1uiv_gurax, processor_gurax, argument_gurax)
@@ -31171,9 +31171,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribP2ui_gurax, "glVertexAttribP2ui")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribP2ui_gurax, processor_gurax, argument_gurax)
@@ -31197,9 +31197,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribP2uiv_gurax, "glVertexAttribP2uiv")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribP2uiv_gurax, processor_gurax, argument_gurax)
@@ -31223,9 +31223,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribP3ui_gurax, "glVertexAttribP3ui")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribP3ui_gurax, processor_gurax, argument_gurax)
@@ -31249,9 +31249,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribP3uiv_gurax, "glVertexAttribP3uiv")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribP3uiv_gurax, processor_gurax, argument_gurax)
@@ -31275,9 +31275,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribP4ui_gurax, "glVertexAttribP4ui")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribP4ui_gurax, processor_gurax, argument_gurax)
@@ -31301,9 +31301,9 @@ Gurax_DeclareFunctionAlias(glVertexAttribP4uiv_gurax, "glVertexAttribP4uiv")
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("normalized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexAttribP4uiv_gurax, processor_gurax, argument_gurax)
@@ -31325,9 +31325,9 @@ Gurax_DeclareFunctionAlias(glVertexP2ui_gurax, "glVertexP2ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexP2ui_gurax, processor_gurax, argument_gurax)
@@ -31347,9 +31347,9 @@ Gurax_DeclareFunctionAlias(glVertexP2uiv_gurax, "glVertexP2uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexP2uiv_gurax, processor_gurax, argument_gurax)
@@ -31369,9 +31369,9 @@ Gurax_DeclareFunctionAlias(glVertexP3ui_gurax, "glVertexP3ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexP3ui_gurax, processor_gurax, argument_gurax)
@@ -31391,9 +31391,9 @@ Gurax_DeclareFunctionAlias(glVertexP3uiv_gurax, "glVertexP3uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexP3uiv_gurax, processor_gurax, argument_gurax)
@@ -31413,9 +31413,9 @@ Gurax_DeclareFunctionAlias(glVertexP4ui_gurax, "glVertexP4ui")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexP4ui_gurax, processor_gurax, argument_gurax)
@@ -31435,9 +31435,9 @@ Gurax_DeclareFunctionAlias(glVertexP4uiv_gurax, "glVertexP4uiv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glVertexP4uiv_gurax, processor_gurax, argument_gurax)
@@ -31458,9 +31458,9 @@ Gurax_DeclareFunctionAlias(glDepthRangeArrayv_gurax, "glDepthRangeArrayv")
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDepthRangeArrayv_gurax, processor_gurax, argument_gurax)
@@ -31482,9 +31482,9 @@ Gurax_DeclareFunctionAlias(glDepthRangeIndexed_gurax, "glDepthRangeIndexed")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("f", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glDepthRangeIndexed_gurax, processor_gurax, argument_gurax)
@@ -31506,9 +31506,9 @@ Gurax_DeclareFunctionAlias(glGetDoublei_v_gurax, "glGetDoublei_v")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetDoublei_v_gurax, processor_gurax, argument_gurax)
@@ -31530,9 +31530,9 @@ Gurax_DeclareFunctionAlias(glGetFloati_v_gurax, "glGetFloati_v")
 	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glGetFloati_v_gurax, processor_gurax, argument_gurax)
@@ -31554,9 +31554,9 @@ Gurax_DeclareFunctionAlias(glScissorArrayv_gurax, "glScissorArrayv")
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glScissorArrayv_gurax, processor_gurax, argument_gurax)
@@ -31580,9 +31580,9 @@ Gurax_DeclareFunctionAlias(glScissorIndexed_gurax, "glScissorIndexed")
 	DeclareArg("bottom", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glScissorIndexed_gurax, processor_gurax, argument_gurax)
@@ -31605,9 +31605,9 @@ Gurax_DeclareFunctionAlias(glScissorIndexedv_gurax, "glScissorIndexedv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glScissorIndexedv_gurax, processor_gurax, argument_gurax)
@@ -31628,9 +31628,9 @@ Gurax_DeclareFunctionAlias(glViewportArrayv_gurax, "glViewportArrayv")
 	DeclareArg("first", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glViewportArrayv_gurax, processor_gurax, argument_gurax)
@@ -31654,9 +31654,9 @@ Gurax_DeclareFunctionAlias(glViewportIndexedf_gurax, "glViewportIndexedf")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glViewportIndexedf_gurax, processor_gurax, argument_gurax)
@@ -31679,9 +31679,9 @@ Gurax_DeclareFunctionAlias(glViewportIndexedfv_gurax, "glViewportIndexedfv")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("v", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glViewportIndexedfv_gurax, processor_gurax, argument_gurax)
@@ -31701,9 +31701,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2dARB_gurax, "glWindowPos2dARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2dARB_gurax, processor_gurax, argument_gurax)
@@ -31722,9 +31722,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2dvARB_gurax, "glWindowPos2dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2dvARB_gurax, processor_gurax, argument_gurax)
@@ -31743,9 +31743,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2fARB_gurax, "glWindowPos2fARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2fARB_gurax, processor_gurax, argument_gurax)
@@ -31764,9 +31764,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2fvARB_gurax, "glWindowPos2fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2fvARB_gurax, processor_gurax, argument_gurax)
@@ -31785,9 +31785,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2iARB_gurax, "glWindowPos2iARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2iARB_gurax, processor_gurax, argument_gurax)
@@ -31806,9 +31806,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2ivARB_gurax, "glWindowPos2ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2ivARB_gurax, processor_gurax, argument_gurax)
@@ -31827,9 +31827,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2sARB_gurax, "glWindowPos2sARB")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2sARB_gurax, processor_gurax, argument_gurax)
@@ -31848,9 +31848,9 @@ Gurax_DeclareFunctionAlias(glWindowPos2svARB_gurax, "glWindowPos2svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos2svARB_gurax, processor_gurax, argument_gurax)
@@ -31870,9 +31870,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3dARB_gurax, "glWindowPos3dARB")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3dARB_gurax, processor_gurax, argument_gurax)
@@ -31892,9 +31892,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3dvARB_gurax, "glWindowPos3dvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3dvARB_gurax, processor_gurax, argument_gurax)
@@ -31914,9 +31914,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3fARB_gurax, "glWindowPos3fARB")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3fARB_gurax, processor_gurax, argument_gurax)
@@ -31936,9 +31936,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3fvARB_gurax, "glWindowPos3fvARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3fvARB_gurax, processor_gurax, argument_gurax)
@@ -31958,9 +31958,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3iARB_gurax, "glWindowPos3iARB")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3iARB_gurax, processor_gurax, argument_gurax)
@@ -31980,9 +31980,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3ivARB_gurax, "glWindowPos3ivARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3ivARB_gurax, processor_gurax, argument_gurax)
@@ -32002,9 +32002,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3sARB_gurax, "glWindowPos3sARB")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("z", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3sARB_gurax, processor_gurax, argument_gurax)
@@ -32024,9 +32024,9 @@ Gurax_DeclareFunctionAlias(glWindowPos3svARB_gurax, "glWindowPos3svARB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunctionEx(glWindowPos3svARB_gurax, processor_gurax, argument_gurax)

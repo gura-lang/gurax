@@ -42,9 +42,9 @@ Gurax_DeclareConstructorAlias(ComboBox_gurax, "ComboBox")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.ComboBox.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.ComboBox.
+)**");
 }
 
 Gurax_ImplementConstructorEx(ComboBox_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_ImplementConstructorEx(ComboBox_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxComboBox, GetCurrentSelection_gurax, "GetCurrentSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetCurrentSelection_gurax, processor_gurax, argument_gurax)
@@ -96,9 +96,9 @@ Gurax_ImplementMethodEx(wxComboBox, GetCurrentSelection_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxComboBox, GetInsertionPoint_gurax, "GetInsertionPoint")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetInsertionPoint_gurax, processor_gurax, argument_gurax)
@@ -116,9 +116,9 @@ Gurax_ImplementMethodEx(wxComboBox, GetInsertionPoint_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxComboBox, IsEmpty_gurax, "IsEmpty")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, IsEmpty_gurax, processor_gurax, argument_gurax)
@@ -135,9 +135,9 @@ Gurax_ImplementMethodEx(wxComboBox, IsEmpty_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxComboBox, IsListEmpty_gurax, "IsListEmpty")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, IsListEmpty_gurax, processor_gurax, argument_gurax)
@@ -155,9 +155,9 @@ Gurax_ImplementMethodEx(wxComboBox, IsListEmpty_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxComboBox, IsTextEmpty_gurax, "IsTextEmpty")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, IsTextEmpty_gurax, processor_gurax, argument_gurax)
@@ -176,9 +176,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetValue_gurax, "SetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetValue_gurax, processor_gurax, argument_gurax)
@@ -199,9 +199,9 @@ Gurax_ImplementMethodEx(wxComboBox, SetValue_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxComboBox, Popup_gurax, "Popup")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Popup_gurax, processor_gurax, argument_gurax)
@@ -219,9 +219,9 @@ Gurax_ImplementMethodEx(wxComboBox, Popup_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxComboBox, Dismiss_gurax, "Dismiss")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Dismiss_gurax, processor_gurax, argument_gurax)
@@ -239,9 +239,9 @@ Gurax_ImplementMethodEx(wxComboBox, Dismiss_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxComboBox, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -260,9 +260,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetSelection_gurax, "SetSelection")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetSelection_gurax, processor_gurax, argument_gurax)
@@ -285,9 +285,9 @@ Gurax_DeclareMethodAlias(wxComboBox, FindString_gurax, "FindString")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bCase", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, FindString_gurax, processor_gurax, argument_gurax)
@@ -310,9 +310,9 @@ Gurax_DeclareMethodAlias(wxComboBox, GetString_gurax, "GetString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetString_gurax, processor_gurax, argument_gurax)
@@ -333,9 +333,9 @@ Gurax_ImplementMethodEx(wxComboBox, GetString_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxComboBox, GetStringSelection_gurax, "GetStringSelection")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetStringSelection_gurax, processor_gurax, argument_gurax)
@@ -355,9 +355,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetString_gurax, "SetString")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetString_gurax, processor_gurax, argument_gurax)
@@ -379,9 +379,9 @@ Gurax_ImplementMethodEx(wxComboBox, SetString_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxComboBox, GetCount_gurax, "GetCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetCount_gurax, processor_gurax, argument_gurax)
@@ -399,9 +399,9 @@ Gurax_ImplementMethodEx(wxComboBox, GetCount_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxComboBox, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Clear_gurax, processor_gurax, argument_gurax)
@@ -420,9 +420,9 @@ Gurax_DeclareMethodAlias(wxComboBox, Delete_gurax, "Delete")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Delete_gurax, processor_gurax, argument_gurax)
@@ -443,9 +443,9 @@ Gurax_ImplementMethodEx(wxComboBox, Delete_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxComboBox, HasClientData_gurax, "HasClientData")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, HasClientData_gurax, processor_gurax, argument_gurax)
@@ -463,9 +463,9 @@ Gurax_ImplementMethodEx(wxComboBox, HasClientData_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxComboBox, HasClientObjectData_gurax, "HasClientObjectData")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, HasClientObjectData_gurax, processor_gurax, argument_gurax)
@@ -483,9 +483,9 @@ Gurax_ImplementMethodEx(wxComboBox, HasClientObjectData_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxComboBox, HasClientUntypedData_gurax, "HasClientUntypedData")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, HasClientUntypedData_gurax, processor_gurax, argument_gurax)
@@ -505,9 +505,9 @@ Gurax_DeclareMethodAlias(wxComboBox, Append_gurax, "Append")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Append_gurax, processor_gurax, argument_gurax)
@@ -559,9 +559,9 @@ Gurax_DeclareMethodAlias(wxComboBox, GetClientData_gurax, "GetClientData")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetClientData_gurax, processor_gurax, argument_gurax)
@@ -584,9 +584,9 @@ Gurax_DeclareMethodAlias(wxComboBox, GetClientObject_gurax, "GetClientObject")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetClientObject_gurax, processor_gurax, argument_gurax)
@@ -610,9 +610,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetClientData_gurax, "SetClientData")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetClientData_gurax, processor_gurax, argument_gurax)
@@ -636,9 +636,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetClientObject_gurax, "SetClientObject")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetClientObject_gurax, processor_gurax, argument_gurax)
@@ -663,9 +663,9 @@ Gurax_DeclareMethodAlias(wxComboBox, Insert_gurax, "Insert")
 	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Insert_gurax, processor_gurax, argument_gurax)
@@ -719,9 +719,9 @@ Gurax_DeclareMethodAlias(wxComboBox, Set_gurax, "Set")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Set_gurax, processor_gurax, argument_gurax)
@@ -756,9 +756,9 @@ Gurax_DeclareMethodAlias(wxComboBox, AppendText_gurax, "AppendText")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, AppendText_gurax, processor_gurax, argument_gurax)
@@ -780,9 +780,9 @@ Gurax_DeclareMethodAlias(wxComboBox, AutoComplete_gurax, "AutoComplete")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("choices", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, AutoComplete_gurax, processor_gurax, argument_gurax)
@@ -803,9 +803,9 @@ Gurax_ImplementMethodEx(wxComboBox, AutoComplete_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxComboBox, AutoCompleteFileNames_gurax, "AutoCompleteFileNames")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, AutoCompleteFileNames_gurax, processor_gurax, argument_gurax)
@@ -823,9 +823,9 @@ Gurax_ImplementMethodEx(wxComboBox, AutoCompleteFileNames_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxComboBox, AutoCompleteDirectories_gurax, "AutoCompleteDirectories")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, AutoCompleteDirectories_gurax, processor_gurax, argument_gurax)
@@ -843,9 +843,9 @@ Gurax_ImplementMethodEx(wxComboBox, AutoCompleteDirectories_gurax, processor_gur
 Gurax_DeclareMethodAlias(wxComboBox, CanCopy_gurax, "CanCopy")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, CanCopy_gurax, processor_gurax, argument_gurax)
@@ -863,9 +863,9 @@ Gurax_ImplementMethodEx(wxComboBox, CanCopy_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxComboBox, CanCut_gurax, "CanCut")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, CanCut_gurax, processor_gurax, argument_gurax)
@@ -883,9 +883,9 @@ Gurax_ImplementMethodEx(wxComboBox, CanCut_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxComboBox, CanPaste_gurax, "CanPaste")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, CanPaste_gurax, processor_gurax, argument_gurax)
@@ -903,9 +903,9 @@ Gurax_ImplementMethodEx(wxComboBox, CanPaste_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxComboBox, CanRedo_gurax, "CanRedo")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, CanRedo_gurax, processor_gurax, argument_gurax)
@@ -923,9 +923,9 @@ Gurax_ImplementMethodEx(wxComboBox, CanRedo_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxComboBox, CanUndo_gurax, "CanUndo")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, CanUndo_gurax, processor_gurax, argument_gurax)
@@ -944,9 +944,9 @@ Gurax_DeclareMethodAlias(wxComboBox, ChangeValue_gurax, "ChangeValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, ChangeValue_gurax, processor_gurax, argument_gurax)
@@ -967,9 +967,9 @@ Gurax_ImplementMethodEx(wxComboBox, ChangeValue_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxComboBox, Copy_gurax, "Copy")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Copy_gurax, processor_gurax, argument_gurax)
@@ -987,9 +987,9 @@ Gurax_ImplementMethodEx(wxComboBox, Copy_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxComboBox, Cut_gurax, "Cut")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Cut_gurax, processor_gurax, argument_gurax)
@@ -1007,9 +1007,9 @@ Gurax_ImplementMethodEx(wxComboBox, Cut_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxComboBox, GetLastPosition_gurax, "GetLastPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetLastPosition_gurax, processor_gurax, argument_gurax)
@@ -1029,9 +1029,9 @@ Gurax_DeclareMethodAlias(wxComboBox, GetRange_gurax, "GetRange")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetRange_gurax, processor_gurax, argument_gurax)
@@ -1053,9 +1053,9 @@ Gurax_ImplementMethodEx(wxComboBox, GetRange_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxComboBox, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetValue_gurax, processor_gurax, argument_gurax)
@@ -1073,9 +1073,9 @@ Gurax_ImplementMethodEx(wxComboBox, GetValue_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxComboBox, IsEditable_gurax, "IsEditable")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, IsEditable_gurax, processor_gurax, argument_gurax)
@@ -1093,9 +1093,9 @@ Gurax_ImplementMethodEx(wxComboBox, IsEditable_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxComboBox, Paste_gurax, "Paste")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Paste_gurax, processor_gurax, argument_gurax)
@@ -1113,9 +1113,9 @@ Gurax_ImplementMethodEx(wxComboBox, Paste_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxComboBox, Redo_gurax, "Redo")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Redo_gurax, processor_gurax, argument_gurax)
@@ -1135,9 +1135,9 @@ Gurax_DeclareMethodAlias(wxComboBox, Remove_gurax, "Remove")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Remove_gurax, processor_gurax, argument_gurax)
@@ -1162,9 +1162,9 @@ Gurax_DeclareMethodAlias(wxComboBox, Replace_gurax, "Replace")
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Replace_gurax, processor_gurax, argument_gurax)
@@ -1188,9 +1188,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetEditable_gurax, "SetEditable")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("editable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetEditable_gurax, processor_gurax, argument_gurax)
@@ -1212,9 +1212,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetInsertionPoint_gurax, "SetInsertionPoint
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetInsertionPoint_gurax, processor_gurax, argument_gurax)
@@ -1235,9 +1235,9 @@ Gurax_ImplementMethodEx(wxComboBox, SetInsertionPoint_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxComboBox, SetInsertionPointEnd_gurax, "SetInsertionPointEnd")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetInsertionPointEnd_gurax, processor_gurax, argument_gurax)
@@ -1256,9 +1256,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetMaxLength_gurax, "SetMaxLength")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetMaxLength_gurax, processor_gurax, argument_gurax)
@@ -1279,9 +1279,9 @@ Gurax_ImplementMethodEx(wxComboBox, SetMaxLength_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxComboBox, SelectAll_gurax, "SelectAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SelectAll_gurax, processor_gurax, argument_gurax)
@@ -1299,9 +1299,9 @@ Gurax_ImplementMethodEx(wxComboBox, SelectAll_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxComboBox, SelectNone_gurax, "SelectNone")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SelectNone_gurax, processor_gurax, argument_gurax)
@@ -1320,9 +1320,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetHint_gurax, "SetHint")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("hint", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetHint_gurax, processor_gurax, argument_gurax)
@@ -1343,9 +1343,9 @@ Gurax_ImplementMethodEx(wxComboBox, SetHint_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxComboBox, GetHint_gurax, "GetHint")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetHint_gurax, processor_gurax, argument_gurax)
@@ -1364,9 +1364,9 @@ Gurax_DeclareMethodAlias(wxComboBox, GetMargins_gurax, "GetMargins")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, GetMargins_gurax, processor_gurax, argument_gurax)
@@ -1384,9 +1384,9 @@ Gurax_ImplementMethodEx(wxComboBox, GetMargins_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxComboBox, Undo_gurax, "Undo")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, Undo_gurax, processor_gurax, argument_gurax)
@@ -1405,9 +1405,9 @@ Gurax_DeclareMethodAlias(wxComboBox, WriteText_gurax, "WriteText")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, WriteText_gurax, processor_gurax, argument_gurax)
@@ -1429,9 +1429,9 @@ Gurax_DeclareMethodAlias(wxComboBox, SetMargins_gurax, "SetMargins")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxComboBox, SetMargins_gurax, processor_gurax, argument_gurax)

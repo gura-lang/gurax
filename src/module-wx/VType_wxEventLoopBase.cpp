@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.EventLoopBase, `en)}
 Gurax_DeclareMethodAlias(wxEventLoopBase, IsMain_gurax, "IsMain")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, IsMain_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, IsMain_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxEventLoopBase, Run_gurax, "Run")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, Run_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, Run_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxEventLoopBase, IsRunning_gurax, "IsRunning")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, IsRunning_gurax, processor_gurax, argument_gurax)
@@ -96,9 +96,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, IsRunning_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxEventLoopBase, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, IsOk_gurax, processor_gurax, argument_gurax)
@@ -117,9 +117,9 @@ Gurax_DeclareMethodAlias(wxEventLoopBase, Exit_gurax, "Exit")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, Exit_gurax, processor_gurax, argument_gurax)
@@ -142,9 +142,9 @@ Gurax_DeclareMethodAlias(wxEventLoopBase, ScheduleExit_gurax, "ScheduleExit")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, ScheduleExit_gurax, processor_gurax, argument_gurax)
@@ -166,9 +166,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, ScheduleExit_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxEventLoopBase, Pending_gurax, "Pending")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, Pending_gurax, processor_gurax, argument_gurax)
@@ -186,9 +186,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, Pending_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxEventLoopBase, Dispatch_gurax, "Dispatch")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, Dispatch_gurax, processor_gurax, argument_gurax)
@@ -207,9 +207,9 @@ Gurax_DeclareMethodAlias(wxEventLoopBase, DispatchTimeout_gurax, "DispatchTimeou
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("timeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, DispatchTimeout_gurax, processor_gurax, argument_gurax)
@@ -230,9 +230,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, DispatchTimeout_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxEventLoopBase, WakeUp_gurax, "WakeUp")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, WakeUp_gurax, processor_gurax, argument_gurax)
@@ -250,9 +250,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, WakeUp_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxEventLoopBase, WakeUpIdle_gurax, "WakeUpIdle")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, WakeUpIdle_gurax, processor_gurax, argument_gurax)
@@ -270,9 +270,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, WakeUpIdle_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxEventLoopBase, ProcessIdle_gurax, "ProcessIdle")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, ProcessIdle_gurax, processor_gurax, argument_gurax)
@@ -290,9 +290,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, ProcessIdle_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxEventLoopBase, IsYielding_gurax, "IsYielding")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, IsYielding_gurax, processor_gurax, argument_gurax)
@@ -311,9 +311,9 @@ Gurax_DeclareMethodAlias(wxEventLoopBase, Yield_gurax, "Yield")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("onlyIfNeeded", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, Yield_gurax, processor_gurax, argument_gurax)
@@ -335,9 +335,9 @@ Gurax_DeclareMethodAlias(wxEventLoopBase, YieldFor_gurax, "YieldFor")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("eventsToProcess", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, YieldFor_gurax, processor_gurax, argument_gurax)
@@ -359,9 +359,9 @@ Gurax_DeclareMethodAlias(wxEventLoopBase, IsEventAllowedInsideYield_gurax, "IsEv
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("cat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEventLoopBase, IsEventAllowedInsideYield_gurax, processor_gurax, argument_gurax)
@@ -382,9 +382,9 @@ Gurax_ImplementMethodEx(wxEventLoopBase, IsEventAllowedInsideYield_gurax, proces
 Gurax_DeclareClassMethodAlias(wxEventLoopBase, GetActive_gurax, "GetActive")
 {
 	Declare(VTYPE_wxEventLoopBase, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxEventLoopBase, GetActive_gurax, processor_gurax, argument_gurax)
@@ -399,9 +399,9 @@ Gurax_DeclareClassMethodAlias(wxEventLoopBase, SetActive_gurax, "SetActive")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("loop", VTYPE_wxEventLoopBase, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxEventLoopBase, SetActive_gurax, processor_gurax, argument_gurax)

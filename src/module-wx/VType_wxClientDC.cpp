@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(ClientDC_gurax, "ClientDC")
 	Declare(VTYPE_wxClientDC, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.ClientDC.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.ClientDC.
+)**");
 }
 
 Gurax_ImplementConstructorEx(ClientDC_gurax, processor_gurax, argument_gurax)

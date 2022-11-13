@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.CommandEvent, `en)}
 Gurax_DeclareMethodAlias(wxCommandEvent, GetExtraLong_gurax, "GetExtraLong")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCommandEvent, GetExtraLong_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxCommandEvent, GetExtraLong_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxCommandEvent, GetInt_gurax, "GetInt")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCommandEvent, GetInt_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_ImplementMethodEx(wxCommandEvent, GetInt_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxCommandEvent, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCommandEvent, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -96,9 +96,9 @@ Gurax_ImplementMethodEx(wxCommandEvent, GetSelection_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxCommandEvent, GetString_gurax, "GetString")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCommandEvent, GetString_gurax, processor_gurax, argument_gurax)
@@ -116,9 +116,9 @@ Gurax_ImplementMethodEx(wxCommandEvent, GetString_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxCommandEvent, IsChecked_gurax, "IsChecked")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCommandEvent, IsChecked_gurax, processor_gurax, argument_gurax)
@@ -136,9 +136,9 @@ Gurax_ImplementMethodEx(wxCommandEvent, IsChecked_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxCommandEvent, IsSelection_gurax, "IsSelection")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCommandEvent, IsSelection_gurax, processor_gurax, argument_gurax)
@@ -157,9 +157,9 @@ Gurax_DeclareMethodAlias(wxCommandEvent, SetExtraLong_gurax, "SetExtraLong")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("extraLong", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCommandEvent, SetExtraLong_gurax, processor_gurax, argument_gurax)
@@ -181,9 +181,9 @@ Gurax_DeclareMethodAlias(wxCommandEvent, SetInt_gurax, "SetInt")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("intCommand", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCommandEvent, SetInt_gurax, processor_gurax, argument_gurax)
@@ -205,9 +205,9 @@ Gurax_DeclareMethodAlias(wxCommandEvent, SetString_gurax, "SetString")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCommandEvent, SetString_gurax, processor_gurax, argument_gurax)

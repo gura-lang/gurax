@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_JoyHatEvent, `en)}
 Gurax_DeclareProperty_R(SDL_JoyHatEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, type)
 Gurax_DeclareProperty_R(SDL_JoyHatEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_JoyHatEvent, which)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, which)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, which)
 Gurax_DeclareProperty_R(SDL_JoyHatEvent, hat)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, hat)
@@ -91,9 +91,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, hat)
 Gurax_DeclareProperty_R(SDL_JoyHatEvent, value)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyHatEvent, value)

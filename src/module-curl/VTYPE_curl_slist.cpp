@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(curl_slist)
 	Declare(VTYPE_curl_slist, Flag::None);
 	DeclareArg("src", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `curl.curl_slist` instance.");
+	AddHelp("en", u8R"**(
+Creates a `curl.curl_slist` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(curl_slist)
@@ -67,9 +67,9 @@ Gurax_DeclareMethod(curl_slist, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(curl_slist, MethodSkeleton)
@@ -91,9 +91,9 @@ Gurax_ImplementMethod(curl_slist, MethodSkeleton)
 Gurax_DeclareProperty_R(curl_slist, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(curl_slist, propSkeleton)

@@ -39,9 +39,9 @@ Gurax_DeclareConstructorAlias(DataViewColumn_gurax, "DataViewColumn")
 	DeclareArg("align", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.DataViewColumn.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.DataViewColumn.
+)**");
 }
 
 Gurax_ImplementConstructorEx(DataViewColumn_gurax, processor_gurax, argument_gurax)
@@ -74,9 +74,9 @@ Gurax_ImplementConstructorEx(DataViewColumn_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxDataViewColumn, GetModelColumn_gurax, "GetModelColumn")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewColumn, GetModelColumn_gurax, processor_gurax, argument_gurax)
@@ -95,9 +95,9 @@ Gurax_DeclareMethodAlias(wxDataViewColumn, GetOwner_gurax, "GetOwner")
 {
 	Declare(VTYPE_wxDataViewCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewColumn, GetOwner_gurax, processor_gurax, argument_gurax)
@@ -116,9 +116,9 @@ Gurax_DeclareMethodAlias(wxDataViewColumn, GetRenderer_gurax, "GetRenderer")
 {
 	Declare(VTYPE_wxDataViewRenderer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewColumn, GetRenderer_gurax, processor_gurax, argument_gurax)

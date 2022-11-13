@@ -34,9 +34,9 @@ Gurax_DeclareConstructor(Complex)
 	DeclareArg("real", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("imag", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Complex` instance.");
+	AddHelp("en", u8R"**(
+Creates a `Complex` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Complex)
@@ -56,9 +56,9 @@ Gurax_ImplementConstructor(Complex)
 Gurax_DeclareClassProperty_RW(Complex, format)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Format string used to convert a complex number into a string.");
+	AddHelp("en", u8R"**(
+Format string used to convert a complex number into a string.
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Complex, format)
@@ -79,9 +79,9 @@ Gurax_ImplementClassPropertySetter(Complex, format)
 Gurax_DeclareClassProperty_RW(Complex, formatImag)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Format string used to convert the Imag part of a complex number into a string.");
+	AddHelp("en", u8R"**(
+Format string used to convert the Imag part of a complex number into a string.
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Complex, formatImag)
@@ -101,9 +101,9 @@ Gurax_ImplementClassPropertySetter(Complex, formatImag)
 Gurax_DeclareClassProperty_RW(Complex, formatReal)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Format string used to convert the real part of a complex number into a string.");
+	AddHelp("en", u8R"**(
+Format string used to convert the real part of a complex number into a string.
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(Complex, formatReal)
@@ -126,9 +126,9 @@ Gurax_ImplementClassPropertySetter(Complex, formatReal)
 Gurax_DeclareProperty_R(Complex, abs)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The absolute value of the number.");
+	AddHelp("en", u8R"**(
+The absolute value of the number.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Complex, abs)
@@ -141,9 +141,9 @@ Gurax_ImplementPropertyGetter(Complex, abs)
 Gurax_DeclareProperty_R(Complex, arg)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The argument value of the number. Always returns zero.");
+	AddHelp("en", u8R"**(
+The argument value of the number. Always returns zero.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Complex, arg)
@@ -156,9 +156,9 @@ Gurax_ImplementPropertyGetter(Complex, arg)
 Gurax_DeclareProperty_R(Complex, imag)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The imaginary part of the Complex value.");
+	AddHelp("en", u8R"**(
+The imaginary part of the Complex value.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Complex, imag)
@@ -171,9 +171,9 @@ Gurax_ImplementPropertyGetter(Complex, imag)
 Gurax_DeclareProperty_R(Complex, norm)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The norm value of the number.");
+	AddHelp("en", u8R"**(
+The norm value of the number.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Complex, norm)
@@ -186,9 +186,9 @@ Gurax_ImplementPropertyGetter(Complex, norm)
 Gurax_DeclareProperty_R(Complex, real)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The real part of the Complex Value.");
+	AddHelp("en", u8R"**(
+The real part of the Complex Value.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Complex, real)

@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(Pen_gurax, "Pen")
 	Declare(VTYPE_wxPen, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Pen.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Pen.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Pen_gurax, processor_gurax, argument_gurax)
@@ -90,9 +90,9 @@ Gurax_ImplementConstructorEx(Pen_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxPen, GetCap_gurax, "GetCap")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, GetCap_gurax, processor_gurax, argument_gurax)
@@ -111,9 +111,9 @@ Gurax_DeclareMethodAlias(wxPen, GetColour_gurax, "GetColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, GetColour_gurax, processor_gurax, argument_gurax)
@@ -131,9 +131,9 @@ Gurax_ImplementMethodEx(wxPen, GetColour_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxPen, GetDashes_gurax, "GetDashes")
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, GetDashes_gurax, processor_gurax, argument_gurax)
@@ -152,9 +152,9 @@ Gurax_ImplementMethodEx(wxPen, GetDashes_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxPen, GetJoin_gurax, "GetJoin")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, GetJoin_gurax, processor_gurax, argument_gurax)
@@ -173,9 +173,9 @@ Gurax_DeclareMethodAlias(wxPen, GetStipple_gurax, "GetStipple")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, GetStipple_gurax, processor_gurax, argument_gurax)
@@ -193,9 +193,9 @@ Gurax_ImplementMethodEx(wxPen, GetStipple_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxPen, GetStyle_gurax, "GetStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, GetStyle_gurax, processor_gurax, argument_gurax)
@@ -213,9 +213,9 @@ Gurax_ImplementMethodEx(wxPen, GetStyle_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxPen, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, GetWidth_gurax, processor_gurax, argument_gurax)
@@ -233,9 +233,9 @@ Gurax_ImplementMethodEx(wxPen, GetWidth_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxPen, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, IsOk_gurax, processor_gurax, argument_gurax)
@@ -253,9 +253,9 @@ Gurax_ImplementMethodEx(wxPen, IsOk_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxPen, IsNonTransparent_gurax, "IsNonTransparent")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, IsNonTransparent_gurax, processor_gurax, argument_gurax)
@@ -273,9 +273,9 @@ Gurax_ImplementMethodEx(wxPen, IsNonTransparent_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxPen, IsTransparent_gurax, "IsTransparent")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, IsTransparent_gurax, processor_gurax, argument_gurax)
@@ -294,9 +294,9 @@ Gurax_DeclareMethodAlias(wxPen, SetCap_gurax, "SetCap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("capStyle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, SetCap_gurax, processor_gurax, argument_gurax)
@@ -318,9 +318,9 @@ Gurax_DeclareMethodAlias(wxPen, SetDashes_gurax, "SetDashes")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dash", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, SetDashes_gurax, processor_gurax, argument_gurax)
@@ -343,9 +343,9 @@ Gurax_DeclareMethodAlias(wxPen, SetJoin_gurax, "SetJoin")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("join_style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, SetJoin_gurax, processor_gurax, argument_gurax)
@@ -367,9 +367,9 @@ Gurax_DeclareMethodAlias(wxPen, SetStipple_gurax, "SetStipple")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stipple", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, SetStipple_gurax, processor_gurax, argument_gurax)
@@ -392,9 +392,9 @@ Gurax_DeclareMethodAlias(wxPen, SetStyle_gurax, "SetStyle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, SetStyle_gurax, processor_gurax, argument_gurax)
@@ -416,9 +416,9 @@ Gurax_DeclareMethodAlias(wxPen, SetWidth_gurax, "SetWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, SetWidth_gurax, processor_gurax, argument_gurax)
@@ -440,9 +440,9 @@ Gurax_DeclareMethodAlias(wxPen, SetColour_gurax, "SetColour")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPen, SetColour_gurax, processor_gurax, argument_gurax)

@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.PGProperty, `en)}
 Gurax_DeclareMethodAlias(wxPGProperty, OnSetValue_gurax, "OnSetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, OnSetValue_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, DoGetValue_gurax, "DoGetValue")
 {
 	Declare(VTYPE_wxVariant, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, DoGetValue_gurax, processor_gurax, argument_gurax)
@@ -79,9 +79,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, ValidateValue_gurax, "ValidateValue")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("validationInfo", VTYPE_wxPGValidationInfo, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, ValidateValue_gurax, processor_gurax, argument_gurax)
@@ -108,9 +108,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, StringToValue_gurax, "StringToValue")
 	DeclareArg("variant", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, StringToValue_gurax, processor_gurax, argument_gurax)
@@ -138,9 +138,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, IntToValue_gurax, "IntToValue")
 	DeclareArg("variant", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("number", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IntToValue_gurax, processor_gurax, argument_gurax)
@@ -167,9 +167,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, ValueToString_gurax, "ValueToString")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, ValueToString_gurax, processor_gurax, argument_gurax)
@@ -195,9 +195,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetValueFromString_gurax, "SetValueFromSt
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetValueFromString_gurax, processor_gurax, argument_gurax)
@@ -222,9 +222,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetValueFromInt_gurax, "SetValueFromInt")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetValueFromInt_gurax, processor_gurax, argument_gurax)
@@ -249,9 +249,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, OnMeasureImage_gurax, "OnMeasureImage")
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, OnMeasureImage_gurax, processor_gurax, argument_gurax)
@@ -276,9 +276,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, OnEvent_gurax, "OnEvent")
 	DeclareArg("propgrid", VTYPE_wxPropertyGrid, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("wnd_primary", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("event", VTYPE_wxEvent, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, OnEvent_gurax, processor_gurax, argument_gurax)
@@ -308,9 +308,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, ChildChanged_gurax, "ChildChanged")
 	DeclareArg("childIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("childValue", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, ChildChanged_gurax, processor_gurax, argument_gurax)
@@ -336,9 +336,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, DoGetValidator_gurax, "DoGetValidator")
 {
 	Declare(VTYPE_wxValidator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, DoGetValidator_gurax, processor_gurax, argument_gurax)
@@ -359,9 +359,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, OnCustomPaint_gurax, "OnCustomPaint")
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("paintdata", VTYPE_wxPGPaintData, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, OnCustomPaint_gurax, processor_gurax, argument_gurax)
@@ -389,9 +389,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetCellRenderer_gurax, "GetCellRenderer")
 	Declare(VTYPE_wxPGCellRenderer, Flag::None);
 	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetCellRenderer_gurax, processor_gurax, argument_gurax)
@@ -412,9 +412,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetCellRenderer_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxPGProperty, GetChoiceSelection_gurax, "GetChoiceSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetChoiceSelection_gurax, processor_gurax, argument_gurax)
@@ -432,9 +432,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetChoiceSelection_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxPGProperty, RefreshChildren_gurax, "RefreshChildren")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, RefreshChildren_gurax, processor_gurax, argument_gurax)
@@ -454,9 +454,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, DoSetAttribute_gurax, "DoSetAttribute")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, DoSetAttribute_gurax, processor_gurax, argument_gurax)
@@ -480,9 +480,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetEditorDialog_gurax, "GetEditorDialog")
 {
 	Declare(VTYPE_wxPGEditorDialogAdapter, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetEditorDialog_gurax, processor_gurax, argument_gurax)
@@ -501,9 +501,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, OnValidationFailure_gurax, "OnValidationF
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pendingValue", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, OnValidationFailure_gurax, processor_gurax, argument_gurax)
@@ -527,9 +527,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, AddChoice_gurax, "AddChoice")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, AddChoice_gurax, processor_gurax, argument_gurax)
@@ -553,9 +553,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, AddPrivateChild_gurax, "AddPrivateChild")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("prop", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, AddPrivateChild_gurax, processor_gurax, argument_gurax)
@@ -579,9 +579,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, AdaptListToValue_gurax, "AdaptListToValue
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("list", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, AdaptListToValue_gurax, processor_gurax, argument_gurax)
@@ -607,9 +607,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, AppendChild_gurax, "AppendChild")
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareArg("childProperty", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, AppendChild_gurax, processor_gurax, argument_gurax)
@@ -632,9 +632,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, AreAllChildrenSpecified_gurax, "AreAllChi
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pendingList", VTYPE_wxVariant, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, AreAllChildrenSpecified_gurax, processor_gurax, argument_gurax)
@@ -655,9 +655,9 @@ Gurax_ImplementMethodEx(wxPGProperty, AreAllChildrenSpecified_gurax, processor_g
 Gurax_DeclareMethodAlias(wxPGProperty, AreChildrenComponents_gurax, "AreChildrenComponents")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, AreChildrenComponents_gurax, processor_gurax, argument_gurax)
@@ -677,9 +677,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, ChangeFlag_gurax, "ChangeFlag")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_wxPGPropertyFlags, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("set", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, ChangeFlag_gurax, processor_gurax, argument_gurax)
@@ -702,9 +702,9 @@ Gurax_ImplementMethodEx(wxPGProperty, ChangeFlag_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxPGProperty, DeleteChildren_gurax, "DeleteChildren")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, DeleteChildren_gurax, processor_gurax, argument_gurax)
@@ -723,9 +723,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, DeleteChoice_gurax, "DeleteChoice")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, DeleteChoice_gurax, processor_gurax, argument_gurax)
@@ -747,9 +747,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, Enable_gurax, "Enable")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, Enable_gurax, processor_gurax, argument_gurax)
@@ -771,9 +771,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, EnableCommonValue_gurax, "EnableCommonVal
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, EnableCommonValue_gurax, processor_gurax, argument_gurax)
@@ -794,9 +794,9 @@ Gurax_ImplementMethodEx(wxPGProperty, EnableCommonValue_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxPGProperty, GenerateComposedValue_gurax, "GenerateComposedValue")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GenerateComposedValue_gurax, processor_gurax, argument_gurax)
@@ -816,9 +816,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetAttribute_gurax, "GetAttribute")
 	Declare(VTYPE_wxVariant, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetAttribute_gurax, processor_gurax, argument_gurax)
@@ -841,9 +841,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetAttributeAsLong_gurax, "GetAttributeAs
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("defVal", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetAttributeAsLong_gurax, processor_gurax, argument_gurax)
@@ -867,9 +867,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetAttributeAsDouble_gurax, "GetAttribute
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("defVal", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetAttributeAsDouble_gurax, processor_gurax, argument_gurax)
@@ -892,9 +892,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetAttributesAsList_gurax, "GetAttributes
 {
 	Declare(VTYPE_wxVariant, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetAttributesAsList_gurax, processor_gurax, argument_gurax)
@@ -913,9 +913,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetAttributes_gurax, "GetAttributes")
 {
 	Declare(VTYPE_wxPGAttributeStorage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetAttributes_gurax, processor_gurax, argument_gurax)
@@ -933,9 +933,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetAttributes_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxPGProperty, GetBaseName_gurax, "GetBaseName")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetBaseName_gurax, processor_gurax, argument_gurax)
@@ -955,9 +955,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetCell_gurax, "GetCell")
 	Declare(VTYPE_wxPGCell, Flag::None);
 	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetCell_gurax, processor_gurax, argument_gurax)
@@ -980,9 +980,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetOrCreateCell_gurax, "GetOrCreateCell")
 	Declare(VTYPE_wxPGCell, Flag::None);
 	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetOrCreateCell_gurax, processor_gurax, argument_gurax)
@@ -1003,9 +1003,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetOrCreateCell_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxPGProperty, GetChildCount_gurax, "GetChildCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetChildCount_gurax, processor_gurax, argument_gurax)
@@ -1025,9 +1025,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetChildrenHeight_gurax, "GetChildrenHeig
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("lh", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("iMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetChildrenHeight_gurax, processor_gurax, argument_gurax)
@@ -1051,9 +1051,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetChoices_gurax, "GetChoices")
 {
 	Declare(VTYPE_wxPGChoices, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetChoices_gurax, processor_gurax, argument_gurax)
@@ -1072,9 +1072,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetDefaultValue_gurax, "GetDefaultValue")
 {
 	Declare(VTYPE_wxVariant, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetDefaultValue_gurax, processor_gurax, argument_gurax)
@@ -1092,9 +1092,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetDefaultValue_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxPGProperty, GetDisplayedString_gurax, "GetDisplayedString")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetDisplayedString_gurax, processor_gurax, argument_gurax)
@@ -1113,9 +1113,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetGrid_gurax, "GetGrid")
 {
 	Declare(VTYPE_wxPropertyGrid, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetGrid_gurax, processor_gurax, argument_gurax)
@@ -1134,9 +1134,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetGridIfDisplayed_gurax, "GetGridIfDispl
 {
 	Declare(VTYPE_wxPropertyGrid, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetGridIfDisplayed_gurax, processor_gurax, argument_gurax)
@@ -1154,9 +1154,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetGridIfDisplayed_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxPGProperty, GetHelpString_gurax, "GetHelpString")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetHelpString_gurax, processor_gurax, argument_gurax)
@@ -1174,9 +1174,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetHelpString_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxPGProperty, GetIndexInParent_gurax, "GetIndexInParent")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetIndexInParent_gurax, processor_gurax, argument_gurax)
@@ -1194,9 +1194,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetIndexInParent_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxPGProperty, GetLabel_gurax, "GetLabel")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetLabel_gurax, processor_gurax, argument_gurax)
@@ -1215,9 +1215,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetLastVisibleSubItem_gurax, "GetLastVisi
 {
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetLastVisibleSubItem_gurax, processor_gurax, argument_gurax)
@@ -1236,9 +1236,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetMainParent_gurax, "GetMainParent")
 {
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetMainParent_gurax, processor_gurax, argument_gurax)
@@ -1256,9 +1256,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetMainParent_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxPGProperty, GetMaxLength_gurax, "GetMaxLength")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetMaxLength_gurax, processor_gurax, argument_gurax)
@@ -1276,9 +1276,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetMaxLength_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxPGProperty, GetName_gurax, "GetName")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetName_gurax, processor_gurax, argument_gurax)
@@ -1297,9 +1297,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetParent_gurax, "GetParent")
 {
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetParent_gurax, processor_gurax, argument_gurax)
@@ -1319,9 +1319,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetPropertyByName_gurax, "GetPropertyByNa
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetPropertyByName_gurax, processor_gurax, argument_gurax)
@@ -1343,9 +1343,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetValidator_gurax, "GetValidator")
 {
 	Declare(VTYPE_wxValidator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetValidator_gurax, processor_gurax, argument_gurax)
@@ -1364,9 +1364,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_wxVariant, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetValue_gurax, processor_gurax, argument_gurax)
@@ -1385,9 +1385,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetValueImage_gurax, "GetValueImage")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetValueImage_gurax, processor_gurax, argument_gurax)
@@ -1406,9 +1406,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, GetValueAsString_gurax, "GetValueAsString
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetValueAsString_gurax, processor_gurax, argument_gurax)
@@ -1430,9 +1430,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetValueAsString_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxPGProperty, GetValueType_gurax, "GetValueType")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetValueType_gurax, processor_gurax, argument_gurax)
@@ -1450,9 +1450,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetValueType_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxPGProperty, GetY_gurax, "GetY")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, GetY_gurax, processor_gurax, argument_gurax)
@@ -1470,9 +1470,9 @@ Gurax_ImplementMethodEx(wxPGProperty, GetY_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxPGProperty, HasVisibleChildren_gurax, "HasVisibleChildren")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, HasVisibleChildren_gurax, processor_gurax, argument_gurax)
@@ -1492,9 +1492,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, Hide_gurax, "Hide")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("hide", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, Hide_gurax, processor_gurax, argument_gurax)
@@ -1518,9 +1518,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, Index_gurax, "Index")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("p", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, Index_gurax, processor_gurax, argument_gurax)
@@ -1545,9 +1545,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, InsertChild_gurax, "InsertChild")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("childProperty", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, InsertChild_gurax, processor_gurax, argument_gurax)
@@ -1573,9 +1573,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, InsertChoice_gurax, "InsertChoice")
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, InsertChoice_gurax, processor_gurax, argument_gurax)
@@ -1599,9 +1599,9 @@ Gurax_ImplementMethodEx(wxPGProperty, InsertChoice_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxPGProperty, IsCategory_gurax, "IsCategory")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IsCategory_gurax, processor_gurax, argument_gurax)
@@ -1619,9 +1619,9 @@ Gurax_ImplementMethodEx(wxPGProperty, IsCategory_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxPGProperty, IsEnabled_gurax, "IsEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IsEnabled_gurax, processor_gurax, argument_gurax)
@@ -1639,9 +1639,9 @@ Gurax_ImplementMethodEx(wxPGProperty, IsEnabled_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxPGProperty, IsExpanded_gurax, "IsExpanded")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IsExpanded_gurax, processor_gurax, argument_gurax)
@@ -1659,9 +1659,9 @@ Gurax_ImplementMethodEx(wxPGProperty, IsExpanded_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxPGProperty, IsRoot_gurax, "IsRoot")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IsRoot_gurax, processor_gurax, argument_gurax)
@@ -1679,9 +1679,9 @@ Gurax_ImplementMethodEx(wxPGProperty, IsRoot_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxPGProperty, IsSubProperty_gurax, "IsSubProperty")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IsSubProperty_gurax, processor_gurax, argument_gurax)
@@ -1700,9 +1700,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, IsSomeParent_gurax, "IsSomeParent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("candidateParent", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IsSomeParent_gurax, processor_gurax, argument_gurax)
@@ -1724,9 +1724,9 @@ Gurax_ImplementMethodEx(wxPGProperty, IsSomeParent_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxPGProperty, IsTextEditable_gurax, "IsTextEditable")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IsTextEditable_gurax, processor_gurax, argument_gurax)
@@ -1744,9 +1744,9 @@ Gurax_ImplementMethodEx(wxPGProperty, IsTextEditable_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxPGProperty, IsValueUnspecified_gurax, "IsValueUnspecified")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IsValueUnspecified_gurax, processor_gurax, argument_gurax)
@@ -1764,9 +1764,9 @@ Gurax_ImplementMethodEx(wxPGProperty, IsValueUnspecified_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxPGProperty, IsVisible_gurax, "IsVisible")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, IsVisible_gurax, processor_gurax, argument_gurax)
@@ -1786,9 +1786,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, Item_gurax, "Item")
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, Item_gurax, processor_gurax, argument_gurax)
@@ -1809,9 +1809,9 @@ Gurax_ImplementMethodEx(wxPGProperty, Item_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxPGProperty, RefreshEditor_gurax, "RefreshEditor")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, RefreshEditor_gurax, processor_gurax, argument_gurax)
@@ -1831,9 +1831,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetAttribute_gurax, "SetAttribute")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetAttribute_gurax, processor_gurax, argument_gurax)
@@ -1857,9 +1857,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetAttributes_gurax, "SetAttributes")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("attributes", VTYPE_wxPGAttributeStorage, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetAttributes_gurax, processor_gurax, argument_gurax)
@@ -1882,9 +1882,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetAutoUnspecified_gurax, "SetAutoUnspeci
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetAutoUnspecified_gurax, processor_gurax, argument_gurax)
@@ -1907,9 +1907,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetBackgroundColour_gurax, "SetBackground
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -1934,9 +1934,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetEditor_gurax, "SetEditor")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("editor", VTYPE_wxPGEditor, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetEditor_gurax, processor_gurax, argument_gurax)
@@ -1960,9 +1960,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetCell_gurax, "SetCell")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cell", VTYPE_wxPGCell, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetCell_gurax, processor_gurax, argument_gurax)
@@ -1986,9 +1986,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetChoices_gurax, "SetChoices")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("choices", VTYPE_wxPGChoices, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetChoices_gurax, processor_gurax, argument_gurax)
@@ -2011,9 +2011,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetChoiceSelection_gurax, "SetChoiceSelec
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("newValue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetChoiceSelection_gurax, processor_gurax, argument_gurax)
@@ -2035,9 +2035,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetDefaultValue_gurax, "SetDefaultValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetDefaultValue_gurax, processor_gurax, argument_gurax)
@@ -2061,9 +2061,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetFlagRecursively_gurax, "SetFlagRecursi
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_wxPGPropertyFlags, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("set", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetFlagRecursively_gurax, processor_gurax, argument_gurax)
@@ -2087,9 +2087,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetHelpString_gurax, "SetHelpString")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetHelpString_gurax, processor_gurax, argument_gurax)
@@ -2111,9 +2111,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetLabel_gurax, "SetLabel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetLabel_gurax, processor_gurax, argument_gurax)
@@ -2135,9 +2135,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetMaxLength_gurax, "SetMaxLength")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("maxLen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetMaxLength_gurax, processor_gurax, argument_gurax)
@@ -2159,9 +2159,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetModifiedStatus_gurax, "SetModifiedStat
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("modified", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetModifiedStatus_gurax, processor_gurax, argument_gurax)
@@ -2183,9 +2183,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetName_gurax, "SetName")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("newName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetName_gurax, processor_gurax, argument_gurax)
@@ -2207,9 +2207,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetParentalType_gurax, "SetParentalType")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetParentalType_gurax, processor_gurax, argument_gurax)
@@ -2232,9 +2232,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetTextColour_gurax, "SetTextColour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetTextColour_gurax, processor_gurax, argument_gurax)
@@ -2259,9 +2259,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetValidator_gurax, "SetValidator")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetValidator_gurax, processor_gurax, argument_gurax)
@@ -2286,9 +2286,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetValue_gurax, "SetValue")
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pList", VTYPE_wxVariant, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetValue_gurax, processor_gurax, argument_gurax)
@@ -2314,9 +2314,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetValueImage_gurax, "SetValueImage")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetValueImage_gurax, processor_gurax, argument_gurax)
@@ -2339,9 +2339,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetValueInEvent_gurax, "SetValueInEvent")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetValueInEvent_gurax, processor_gurax, argument_gurax)
@@ -2363,9 +2363,9 @@ Gurax_ImplementMethodEx(wxPGProperty, SetValueInEvent_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxPGProperty, SetValueToUnspecified_gurax, "SetValueToUnspecified")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetValueToUnspecified_gurax, processor_gurax, argument_gurax)
@@ -2384,9 +2384,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetWasModified_gurax, "SetWasModified")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("set", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetWasModified_gurax, processor_gurax, argument_gurax)
@@ -2408,9 +2408,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, UpdateParentValues_gurax, "UpdateParentVa
 {
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, UpdateParentValues_gurax, processor_gurax, argument_gurax)
@@ -2428,9 +2428,9 @@ Gurax_ImplementMethodEx(wxPGProperty, UpdateParentValues_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxPGProperty, UsesAutoUnspecified_gurax, "UsesAutoUnspecified")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, UsesAutoUnspecified_gurax, processor_gurax, argument_gurax)
@@ -2449,9 +2449,9 @@ Gurax_DeclareMethodAlias(wxPGProperty, SetValuePlain_gurax, "SetValuePlain")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPGProperty, SetValuePlain_gurax, processor_gurax, argument_gurax)

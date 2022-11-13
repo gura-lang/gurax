@@ -37,9 +37,9 @@ Gurax_DeclareClassMethodAlias(wxLog, AddTraceMask_gurax, "AddTraceMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, AddTraceMask_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementClassMethodEx(wxLog, AddTraceMask_gurax, processor_gurax, argumen
 Gurax_DeclareClassMethodAlias(wxLog, ClearTraceMasks_gurax, "ClearTraceMasks")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, ClearTraceMasks_gurax, processor_gurax, argument_gurax)
@@ -72,9 +72,9 @@ Gurax_ImplementClassMethodEx(wxLog, ClearTraceMasks_gurax, processor_gurax, argu
 Gurax_DeclareClassMethodAlias(wxLog, GetTraceMasks_gurax, "GetTraceMasks")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, GetTraceMasks_gurax, processor_gurax, argument_gurax)
@@ -89,9 +89,9 @@ Gurax_DeclareClassMethodAlias(wxLog, IsAllowedTraceMask_gurax, "IsAllowedTraceMa
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("mask", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, IsAllowedTraceMask_gurax, processor_gurax, argument_gurax)
@@ -109,9 +109,9 @@ Gurax_DeclareClassMethodAlias(wxLog, RemoveTraceMask_gurax, "RemoveTraceMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, RemoveTraceMask_gurax, processor_gurax, argument_gurax)
@@ -128,9 +128,9 @@ Gurax_ImplementClassMethodEx(wxLog, RemoveTraceMask_gurax, processor_gurax, argu
 Gurax_DeclareClassMethodAlias(wxLog, DontCreateOnDemand_gurax, "DontCreateOnDemand")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, DontCreateOnDemand_gurax, processor_gurax, argument_gurax)
@@ -144,9 +144,9 @@ Gurax_ImplementClassMethodEx(wxLog, DontCreateOnDemand_gurax, processor_gurax, a
 Gurax_DeclareClassMethodAlias(wxLog, GetActiveTarget_gurax, "GetActiveTarget")
 {
 	Declare(VTYPE_wxLog, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, GetActiveTarget_gurax, processor_gurax, argument_gurax)
@@ -161,9 +161,9 @@ Gurax_DeclareClassMethodAlias(wxLog, SetActiveTarget_gurax, "SetActiveTarget")
 {
 	Declare(VTYPE_wxLog, Flag::None);
 	DeclareArg("logtarget", VTYPE_wxLog, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, SetActiveTarget_gurax, processor_gurax, argument_gurax)
@@ -182,9 +182,9 @@ Gurax_DeclareClassMethodAlias(wxLog, SetThreadActiveTarget_gurax, "SetThreadActi
 {
 	Declare(VTYPE_wxLog, Flag::None);
 	DeclareArg("logger", VTYPE_wxLog, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, SetThreadActiveTarget_gurax, processor_gurax, argument_gurax)
@@ -202,9 +202,9 @@ Gurax_ImplementClassMethodEx(wxLog, SetThreadActiveTarget_gurax, processor_gurax
 Gurax_DeclareClassMethodAlias(wxLog, FlushActive_gurax, "FlushActive")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, FlushActive_gurax, processor_gurax, argument_gurax)
@@ -218,9 +218,9 @@ Gurax_ImplementClassMethodEx(wxLog, FlushActive_gurax, processor_gurax, argument
 Gurax_DeclareClassMethodAlias(wxLog, Resume_gurax, "Resume")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, Resume_gurax, processor_gurax, argument_gurax)
@@ -234,9 +234,9 @@ Gurax_ImplementClassMethodEx(wxLog, Resume_gurax, processor_gurax, argument_gura
 Gurax_DeclareClassMethodAlias(wxLog, Suspend_gurax, "Suspend")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, Suspend_gurax, processor_gurax, argument_gurax)
@@ -250,9 +250,9 @@ Gurax_ImplementClassMethodEx(wxLog, Suspend_gurax, processor_gurax, argument_gur
 Gurax_DeclareClassMethodAlias(wxLog, GetLogLevel_gurax, "GetLogLevel")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, GetLogLevel_gurax, processor_gurax, argument_gurax)
@@ -268,9 +268,9 @@ Gurax_DeclareClassMethodAlias(wxLog, IsLevelEnabled_gurax, "IsLevelEnabled")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("component", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, IsLevelEnabled_gurax, processor_gurax, argument_gurax)
@@ -290,9 +290,9 @@ Gurax_DeclareClassMethodAlias(wxLog, SetComponentLevel_gurax, "SetComponentLevel
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("component", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, SetComponentLevel_gurax, processor_gurax, argument_gurax)
@@ -311,9 +311,9 @@ Gurax_DeclareClassMethodAlias(wxLog, SetLogLevel_gurax, "SetLogLevel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("logLevel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, SetLogLevel_gurax, processor_gurax, argument_gurax)
@@ -331,9 +331,9 @@ Gurax_DeclareClassMethodAlias(wxLog, EnableLogging_gurax, "EnableLogging")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, EnableLogging_gurax, processor_gurax, argument_gurax)
@@ -350,9 +350,9 @@ Gurax_ImplementClassMethodEx(wxLog, EnableLogging_gurax, processor_gurax, argume
 Gurax_DeclareClassMethodAlias(wxLog, IsEnabled_gurax, "IsEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, IsEnabled_gurax, processor_gurax, argument_gurax)
@@ -366,9 +366,9 @@ Gurax_ImplementClassMethodEx(wxLog, IsEnabled_gurax, processor_gurax, argument_g
 Gurax_DeclareClassMethodAlias(wxLog, GetRepetitionCounting_gurax, "GetRepetitionCounting")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, GetRepetitionCounting_gurax, processor_gurax, argument_gurax)
@@ -383,9 +383,9 @@ Gurax_DeclareClassMethodAlias(wxLog, SetRepetitionCounting_gurax, "SetRepetition
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("repetCounting", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, SetRepetitionCounting_gurax, processor_gurax, argument_gurax)
@@ -402,9 +402,9 @@ Gurax_ImplementClassMethodEx(wxLog, SetRepetitionCounting_gurax, processor_gurax
 Gurax_DeclareClassMethodAlias(wxLog, GetTimestamp_gurax, "GetTimestamp")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, GetTimestamp_gurax, processor_gurax, argument_gurax)
@@ -419,9 +419,9 @@ Gurax_DeclareClassMethodAlias(wxLog, SetTimestamp_gurax, "SetTimestamp")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, SetTimestamp_gurax, processor_gurax, argument_gurax)
@@ -438,9 +438,9 @@ Gurax_ImplementClassMethodEx(wxLog, SetTimestamp_gurax, processor_gurax, argumen
 Gurax_DeclareClassMethodAlias(wxLog, DisableTimestamp_gurax, "DisableTimestamp")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, DisableTimestamp_gurax, processor_gurax, argument_gurax)
@@ -454,9 +454,9 @@ Gurax_ImplementClassMethodEx(wxLog, DisableTimestamp_gurax, processor_gurax, arg
 Gurax_DeclareClassMethodAlias(wxLog, GetVerbose_gurax, "GetVerbose")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, GetVerbose_gurax, processor_gurax, argument_gurax)
@@ -471,9 +471,9 @@ Gurax_DeclareClassMethodAlias(wxLog, SetVerbose_gurax, "SetVerbose")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("verbose", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxLog, SetVerbose_gurax, processor_gurax, argument_gurax)

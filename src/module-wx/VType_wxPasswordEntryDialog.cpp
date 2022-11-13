@@ -39,9 +39,9 @@ Gurax_DeclareConstructorAlias(PasswordEntryDialog_gurax, "PasswordEntryDialog")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.PasswordEntryDialog.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.PasswordEntryDialog.
+)**");
 }
 
 Gurax_ImplementConstructorEx(PasswordEntryDialog_gurax, processor_gurax, argument_gurax)

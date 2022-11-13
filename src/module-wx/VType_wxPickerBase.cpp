@@ -44,9 +44,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, CreateBase_gurax, "CreateBase")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, CreateBase_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_ImplementMethodEx(wxPickerBase, CreateBase_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxPickerBase, GetInternalMargin_gurax, "GetInternalMargin")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, GetInternalMargin_gurax, processor_gurax, argument_gurax)
@@ -96,9 +96,9 @@ Gurax_ImplementMethodEx(wxPickerBase, GetInternalMargin_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxPickerBase, GetPickerCtrlProportion_gurax, "GetPickerCtrlProportion")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, GetPickerCtrlProportion_gurax, processor_gurax, argument_gurax)
@@ -117,9 +117,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, GetTextCtrl_gurax, "GetTextCtrl")
 {
 	Declare(VTYPE_wxTextCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, GetTextCtrl_gurax, processor_gurax, argument_gurax)
@@ -138,9 +138,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, GetPickerCtrl_gurax, "GetPickerCtrl")
 {
 	Declare(VTYPE_wxControl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, GetPickerCtrl_gurax, processor_gurax, argument_gurax)
@@ -158,9 +158,9 @@ Gurax_ImplementMethodEx(wxPickerBase, GetPickerCtrl_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxPickerBase, GetTextCtrlProportion_gurax, "GetTextCtrlProportion")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, GetTextCtrlProportion_gurax, processor_gurax, argument_gurax)
@@ -178,9 +178,9 @@ Gurax_ImplementMethodEx(wxPickerBase, GetTextCtrlProportion_gurax, processor_gur
 Gurax_DeclareMethodAlias(wxPickerBase, HasTextCtrl_gurax, "HasTextCtrl")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, HasTextCtrl_gurax, processor_gurax, argument_gurax)
@@ -198,9 +198,9 @@ Gurax_ImplementMethodEx(wxPickerBase, HasTextCtrl_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxPickerBase, IsPickerCtrlGrowable_gurax, "IsPickerCtrlGrowable")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, IsPickerCtrlGrowable_gurax, processor_gurax, argument_gurax)
@@ -218,9 +218,9 @@ Gurax_ImplementMethodEx(wxPickerBase, IsPickerCtrlGrowable_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxPickerBase, IsTextCtrlGrowable_gurax, "IsTextCtrlGrowable")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, IsTextCtrlGrowable_gurax, processor_gurax, argument_gurax)
@@ -239,9 +239,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, SetInternalMargin_gurax, "SetInternalMarg
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("margin", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, SetInternalMargin_gurax, processor_gurax, argument_gurax)
@@ -263,9 +263,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, SetPickerCtrlGrowable_gurax, "SetPickerCt
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("grow", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, SetPickerCtrlGrowable_gurax, processor_gurax, argument_gurax)
@@ -287,9 +287,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, SetPickerCtrlProportion_gurax, "SetPicker
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("prop", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, SetPickerCtrlProportion_gurax, processor_gurax, argument_gurax)
@@ -311,9 +311,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, SetTextCtrlGrowable_gurax, "SetTextCtrlGr
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("grow", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, SetTextCtrlGrowable_gurax, processor_gurax, argument_gurax)
@@ -335,9 +335,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, SetTextCtrlProportion_gurax, "SetTextCtrl
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("prop", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, SetTextCtrlProportion_gurax, processor_gurax, argument_gurax)
@@ -359,9 +359,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, SetTextCtrl_gurax, "SetTextCtrl")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_wxTextCtrl, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, SetTextCtrl_gurax, processor_gurax, argument_gurax)
@@ -384,9 +384,9 @@ Gurax_DeclareMethodAlias(wxPickerBase, SetPickerCtrl_gurax, "SetPickerCtrl")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("picker", VTYPE_wxControl, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, SetPickerCtrl_gurax, processor_gurax, argument_gurax)
@@ -408,9 +408,9 @@ Gurax_ImplementMethodEx(wxPickerBase, SetPickerCtrl_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxPickerBase, UpdatePickerFromTextCtrl_gurax, "UpdatePickerFromTextCtrl")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, UpdatePickerFromTextCtrl_gurax, processor_gurax, argument_gurax)
@@ -428,9 +428,9 @@ Gurax_ImplementMethodEx(wxPickerBase, UpdatePickerFromTextCtrl_gurax, processor_
 Gurax_DeclareMethodAlias(wxPickerBase, UpdateTextCtrlFromPicker_gurax, "UpdateTextCtrlFromPicker")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxPickerBase, UpdateTextCtrlFromPicker_gurax, processor_gurax, argument_gurax)

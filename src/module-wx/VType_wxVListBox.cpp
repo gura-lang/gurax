@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.VListBox, `en)}
 Gurax_DeclareMethodAlias(wxVListBox, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, Clear_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxVListBox, Clear_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxVListBox, DeselectAll_gurax, "DeselectAll")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, DeselectAll_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_DeclareMethodAlias(wxVListBox, GetFirstSelected_gurax, "GetFirstSelected")
 {
 	Declare(VTYPE_Tuple, Flag::None);
 	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetFirstSelected_gurax, processor_gurax, argument_gurax)
@@ -100,9 +100,9 @@ Gurax_ImplementMethodEx(wxVListBox, GetFirstSelected_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxVListBox, GetItemCount_gurax, "GetItemCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetItemCount_gurax, processor_gurax, argument_gurax)
@@ -121,9 +121,9 @@ Gurax_DeclareMethodAlias(wxVListBox, GetMargins_gurax, "GetMargins")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetMargins_gurax, processor_gurax, argument_gurax)
@@ -143,9 +143,9 @@ Gurax_DeclareMethodAlias(wxVListBox, GetItemRect_gurax, "GetItemRect")
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetItemRect_gurax, processor_gurax, argument_gurax)
@@ -167,9 +167,9 @@ Gurax_DeclareMethodAlias(wxVListBox, GetNextSelected_gurax, "GetNextSelected")
 {
 	Declare(VTYPE_Tuple, Flag::None);
 	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetNextSelected_gurax, processor_gurax, argument_gurax)
@@ -190,9 +190,9 @@ Gurax_ImplementMethodEx(wxVListBox, GetNextSelected_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxVListBox, GetSelectedCount_gurax, "GetSelectedCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetSelectedCount_gurax, processor_gurax, argument_gurax)
@@ -210,9 +210,9 @@ Gurax_ImplementMethodEx(wxVListBox, GetSelectedCount_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxVListBox, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -231,9 +231,9 @@ Gurax_DeclareMethodAlias(wxVListBox, GetSelectionBackground_gurax, "GetSelection
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, GetSelectionBackground_gurax, processor_gurax, argument_gurax)
@@ -251,9 +251,9 @@ Gurax_ImplementMethodEx(wxVListBox, GetSelectionBackground_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxVListBox, HasMultipleSelection_gurax, "HasMultipleSelection")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, HasMultipleSelection_gurax, processor_gurax, argument_gurax)
@@ -272,9 +272,9 @@ Gurax_DeclareMethodAlias(wxVListBox, IsCurrent_gurax, "IsCurrent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, IsCurrent_gurax, processor_gurax, argument_gurax)
@@ -296,9 +296,9 @@ Gurax_DeclareMethodAlias(wxVListBox, IsSelected_gurax, "IsSelected")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, IsSelected_gurax, processor_gurax, argument_gurax)
@@ -321,9 +321,9 @@ Gurax_DeclareMethodAlias(wxVListBox, Select_gurax, "Select")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, Select_gurax, processor_gurax, argument_gurax)
@@ -345,9 +345,9 @@ Gurax_ImplementMethodEx(wxVListBox, Select_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxVListBox, SelectAll_gurax, "SelectAll")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, SelectAll_gurax, processor_gurax, argument_gurax)
@@ -367,9 +367,9 @@ Gurax_DeclareMethodAlias(wxVListBox, SelectRange_gurax, "SelectRange")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, SelectRange_gurax, processor_gurax, argument_gurax)
@@ -392,9 +392,9 @@ Gurax_DeclareMethodAlias(wxVListBox, SetItemCount_gurax, "SetItemCount")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, SetItemCount_gurax, processor_gurax, argument_gurax)
@@ -416,9 +416,9 @@ Gurax_DeclareMethodAlias(wxVListBox, SetSelection_gurax, "SetSelection")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("selection", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, SetSelection_gurax, processor_gurax, argument_gurax)
@@ -440,9 +440,9 @@ Gurax_DeclareMethodAlias(wxVListBox, SetSelectionBackground_gurax, "SetSelection
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, SetSelectionBackground_gurax, processor_gurax, argument_gurax)
@@ -465,9 +465,9 @@ Gurax_DeclareMethodAlias(wxVListBox, Toggle_gurax, "Toggle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, Toggle_gurax, processor_gurax, argument_gurax)
@@ -489,9 +489,9 @@ Gurax_DeclareMethodAlias(wxVListBox, SetMargins_gurax, "SetMargins")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, SetMargins_gurax, processor_gurax, argument_gurax)
@@ -515,9 +515,9 @@ Gurax_DeclareMethodAlias(wxVListBox, SetMarginsXY_gurax, "SetMarginsXY")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxVListBox, SetMarginsXY_gurax, processor_gurax, argument_gurax)

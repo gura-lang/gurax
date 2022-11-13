@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxDateEvent, GetDate_gurax, "GetDate")
 {
 	Declare(VTYPE_wxDateTime, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateEvent, GetDate_gurax, processor_gurax, argument_gurax)
@@ -58,9 +58,9 @@ Gurax_DeclareMethodAlias(wxDateEvent, SetDate_gurax, "SetDate")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("date", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateEvent, SetDate_gurax, processor_gurax, argument_gurax)

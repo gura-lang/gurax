@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxHtmlListBox, GetFileSystem_gurax, "GetFileSystem")
 {
 	Declare(VTYPE_wxFileSystem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlListBox, GetFileSystem_gurax, processor_gurax, argument_gurax)

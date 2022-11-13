@@ -35,9 +35,9 @@ Gurax_DeclareConstructorAlias(AuiMDIClientWindow_gurax, "AuiMDIClientWindow")
 	DeclareArg("parent", VTYPE_wxAuiMDIParentFrame, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.AuiMDIClientWindow.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.AuiMDIClientWindow.
+)**");
 }
 
 Gurax_ImplementConstructorEx(AuiMDIClientWindow_gurax, processor_gurax, argument_gurax)

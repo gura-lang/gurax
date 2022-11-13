@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(Colour_gurax, "Colour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Colour.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Colour.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Colour_gurax, processor_gurax, argument_gurax)
@@ -90,9 +90,9 @@ Gurax_ImplementConstructorEx(Colour_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxColour, Alpha_gurax, "Alpha")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, Alpha_gurax, processor_gurax, argument_gurax)
@@ -110,9 +110,9 @@ Gurax_ImplementMethodEx(wxColour, Alpha_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxColour, Blue_gurax, "Blue")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, Blue_gurax, processor_gurax, argument_gurax)
@@ -131,9 +131,9 @@ Gurax_DeclareMethodAlias(wxColour, GetAsString_gurax, "GetAsString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, GetAsString_gurax, processor_gurax, argument_gurax)
@@ -155,9 +155,9 @@ Gurax_ImplementMethodEx(wxColour, GetAsString_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxColour, Green_gurax, "Green")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, Green_gurax, processor_gurax, argument_gurax)
@@ -175,9 +175,9 @@ Gurax_ImplementMethodEx(wxColour, Green_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxColour, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, IsOk_gurax, processor_gurax, argument_gurax)
@@ -195,9 +195,9 @@ Gurax_ImplementMethodEx(wxColour, IsOk_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxColour, Red_gurax, "Red")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, Red_gurax, processor_gurax, argument_gurax)
@@ -216,9 +216,9 @@ Gurax_DeclareMethodAlias(wxColour, MakeDisabled_gurax, "MakeDisabled")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, MakeDisabled_gurax, processor_gurax, argument_gurax)
@@ -241,9 +241,9 @@ Gurax_DeclareMethodAlias(wxColour, ChangeLightness_gurax, "ChangeLightness")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("ialpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, ChangeLightness_gurax, processor_gurax, argument_gurax)
@@ -265,9 +265,9 @@ Gurax_DeclareMethodAlias(wxColour, SetRGB_gurax, "SetRGB")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colRGB", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, SetRGB_gurax, processor_gurax, argument_gurax)
@@ -289,9 +289,9 @@ Gurax_DeclareMethodAlias(wxColour, SetRGBA_gurax, "SetRGBA")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colRGBA", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, SetRGBA_gurax, processor_gurax, argument_gurax)
@@ -312,9 +312,9 @@ Gurax_ImplementMethodEx(wxColour, SetRGBA_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxColour, GetRGB_gurax, "GetRGB")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, GetRGB_gurax, processor_gurax, argument_gurax)
@@ -332,9 +332,9 @@ Gurax_ImplementMethodEx(wxColour, GetRGB_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxColour, GetRGBA_gurax, "GetRGBA")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, GetRGBA_gurax, processor_gurax, argument_gurax)
@@ -356,9 +356,9 @@ Gurax_DeclareMethodAlias(wxColour, Set_gurax, "Set")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColour, Set_gurax, processor_gurax, argument_gurax)
@@ -387,9 +387,9 @@ Gurax_DeclareClassMethodAlias(wxColour, MakeMonoRGB_gurax, "MakeMonoRGB")
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("on", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxColour, MakeMonoRGB_gurax, processor_gurax, argument_gurax)
@@ -413,9 +413,9 @@ Gurax_DeclareClassMethodAlias(wxColour, MakeDisabledRGB_gurax, "MakeDisabledRGB"
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxColour, MakeDisabledRGB_gurax, processor_gurax, argument_gurax)
@@ -442,9 +442,9 @@ Gurax_DeclareClassMethodAlias(wxColour, MakeGreyRGB_gurax, "MakeGreyRGB")
 	DeclareArg("weight_r", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("weight_g", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("weight_b", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxColour, MakeGreyRGB_gurax, processor_gurax, argument_gurax)
@@ -472,9 +472,9 @@ Gurax_DeclareClassMethodAlias(wxColour, AlphaBlend_gurax, "AlphaBlend")
 	DeclareArg("fg", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bg", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxColour, AlphaBlend_gurax, processor_gurax, argument_gurax)
@@ -497,9 +497,9 @@ Gurax_DeclareClassMethodAlias(wxColour, ChangeLightnessRGB_gurax, "ChangeLightne
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ialpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxColour, ChangeLightnessRGB_gurax, processor_gurax, argument_gurax)

@@ -45,9 +45,9 @@ Gurax_DeclareClassMethod(Error, Raise)
 	DeclareArg("errorType", VTYPE_ErrorType, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethod(Error, Raise)
@@ -72,9 +72,9 @@ Gurax_ImplementClassMethod(Error, Raise)
 Gurax_DeclareProperty_R(Error, errorType)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `ErrorType` instance associated with the error.\n");
+	AddHelp("en", u8R"**(
+An `ErrorType` instance associated with the error.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Error, errorType)
@@ -87,9 +87,9 @@ Gurax_ImplementPropertyGetter(Error, errorType)
 Gurax_DeclareProperty_R(Error, expr)
 {
 	Declare(VTYPE_Expr, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `Expr` instance that caused the error.\n");
+	AddHelp("en", u8R"**(
+An `Expr` instance that caused the error.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Error, expr)
@@ -102,9 +102,9 @@ Gurax_ImplementPropertyGetter(Error, expr)
 Gurax_DeclareProperty_R(Error, pathName)
 {
 	Declare(VTYPE_String, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of a file in which the error happened.");
+	AddHelp("en", u8R"**(
+The path name of a file in which the error happened.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Error, pathName)
@@ -119,9 +119,9 @@ Gurax_ImplementPropertyGetter(Error, pathName)
 Gurax_DeclareProperty_R(Error, lineNo)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The line number at which the error happened.");
+	AddHelp("en", u8R"**(
+The line number at which the error happened.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Error, lineNo)
@@ -134,9 +134,9 @@ Gurax_ImplementPropertyGetter(Error, lineNo)
 Gurax_DeclareProperty_R(Error, lineNoBtm)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The last line number of the expression region that causes the error.");
+	AddHelp("en", u8R"**(
+The last line number of the expression region that causes the error.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Error, lineNoBtm)
@@ -149,9 +149,9 @@ Gurax_ImplementPropertyGetter(Error, lineNoBtm)
 Gurax_DeclareProperty_R(Error, text)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The text of the error.");
+	AddHelp("en", u8R"**(
+The text of the error.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Error, text)

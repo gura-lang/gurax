@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(Accessible_gurax, "Accessible")
 	Declare(VTYPE_wxAccessible, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Accessible.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Accessible.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Accessible_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_DeclareMethodAlias(wxAccessible, DoDefaultAction_gurax, "DoDefaultAction")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("childId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAccessible, DoDefaultAction_gurax, processor_gurax, argument_gurax)
@@ -82,9 +82,9 @@ Gurax_DeclareMethodAlias(wxAccessible, GetLocation_gurax, "GetLocation")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("elementId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAccessible, GetLocation_gurax, processor_gurax, argument_gurax)
@@ -108,9 +108,9 @@ Gurax_DeclareMethodAlias(wxAccessible, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAccessible, GetWindow_gurax, processor_gurax, argument_gurax)
@@ -130,9 +130,9 @@ Gurax_DeclareMethodAlias(wxAccessible, Select_gurax, "Select")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("childId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("selectFlags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAccessible, Select_gurax, processor_gurax, argument_gurax)
@@ -155,9 +155,9 @@ Gurax_DeclareMethodAlias(wxAccessible, SetWindow_gurax, "SetWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAccessible, SetWindow_gurax, processor_gurax, argument_gurax)

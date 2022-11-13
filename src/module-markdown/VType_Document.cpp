@@ -34,11 +34,11 @@ Gurax_DeclareConstructor(Document)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareArg("headerOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of `markdown.Document`.\n"
-		"If the `stream` is specified, the the instance shall be created after parsing the stream.\n"
-		"Otherwise, it creates an instance with blank data.\n");
+	AddHelp("en", u8R"**(
+Creates an instance of `markdown.Document`.
+If the `stream` is specified, the the instance shall be created after parsing the stream.
+Otherwise, it creates an instance with blank data.
+)**");
 }
 
 Gurax_ImplementConstructor(Document)
@@ -63,38 +63,37 @@ Gurax_DeclareMethod(Document, CountItem)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("type", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Count the number of items of the specified symbol of type.\n"
-		"The symbols are: "
-		"`` `Root``, "		// container, can be a parent
-		"`` `Header1``, "		// container
-		"`` `Header2``, "		// container
-		"`` `Header3``, "		// container
-		"`` `Header4``, "		// container
-		"`` `Header5``, "		// container
-		"`` `Header6``, "		// container
-		"`` `Paragraph``, "	// container
-		"`` `BlockQuote``, "	// container, can be a parent
-		"`` `Emphasis``, "	// container
-		"`` `Strong``, "		// container
-		"`` `Strike``, "		// container
-		"`` `CodeBlock``, "	// container, can be a parent
-		"`` `OList``, "		// container, can be a parent
-		"`` `UList``, "		// container, can be a parent
-		"`` `ListItem``, "	// container, can be a parent
-		"`` `Line``, "		// container
-		"`` `Link``, "		// container
-		"`` `Image``, "		// text
-		"`` `Text``, "		// text
-		"`` `Comment``, "		// text
-		"`` `Code``, "		// text
-		"`` `Entity``, "		// text
-		"`` `Tag``, "			// container and text (attributes), can be a parent
-		"`` `HorzRule``, "	// no-content
-		"`` `LineBreak``, "	// no-content
-		"`` `Referee``."		// no-content
-	);
+	AddHelp("en", u8R"**(
+Count the number of items of the specified symbol of type.
+The symbols are: 
+`` `Root``, 
+`` `Header1``, 
+`` `Header2``, 
+`` `Header3``, 
+`` `Header4``, 
+`` `Header5``, 
+`` `Header6``, 
+`` `Paragraph``, 
+`` `BlockQuote``, 
+`` `Emphasis``, 
+`` `Strong``, 
+`` `Strike``, 
+`` `CodeBlock``, 
+`` `OList``, 
+`` `UList``, 
+`` `ListItem``, 
+`` `Line``, 
+`` `Link``, 
+`` `Image``, 
+`` `Text``, 
+`` `Comment``, 
+`` `Code``, 
+`` `Entity``, 
+`` `Tag``, 
+`` `HorzRule``, 
+`` `LineBreak``, 
+`` `Referee``.
+)**");
 }
 
 Gurax_ImplementMethod(Document, CountItem)
@@ -119,9 +118,9 @@ Gurax_DeclareMethod(Document, Parse)
 {
 	Declare(VTYPE_Document, Flag::Reduce);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Parses a Markdown text in a string.");
+	AddHelp("en", u8R"**(
+Parses a Markdown text in a string.
+)**");
 }
 
 Gurax_ImplementMethod(Document, Parse)
@@ -141,9 +140,9 @@ Gurax_DeclareMethod(Document, Read)
 {
 	Declare(VTYPE_Document, Flag::Reduce);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Parses a Markdown text from a stream.");
+	AddHelp("en", u8R"**(
+Parses a Markdown text from a stream.
+)**");
 }
 
 Gurax_ImplementMethod(Document, Read)
@@ -165,9 +164,9 @@ Gurax_ImplementMethod(Document, Read)
 Gurax_DeclareProperty_R(Document, refs)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"An `iterator` that returns referee items typed as `markdown.Item`.");
+	AddHelp("en", u8R"**(
+An `iterator` that returns referee items typed as `markdown.Item`.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Document, refs)
@@ -182,9 +181,9 @@ Gurax_ImplementPropertyGetter(Document, refs)
 Gurax_DeclareProperty_R(Document, root)
 {
 	Declare(VTYPE_Item, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The root item of the parsed Markdown document.");
+	AddHelp("en", u8R"**(
+The root item of the parsed Markdown document.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Document, root)

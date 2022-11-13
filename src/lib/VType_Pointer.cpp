@@ -70,9 +70,9 @@ Gurax_DeclareConstructor(Pointer)
 {
 	Declare(VTYPE_Pointer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Pointer` instance.");
+	AddHelp("en", u8R"**(
+Creates a `Pointer` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Pointer)
@@ -94,10 +94,10 @@ Gurax_DeclareClassMethod(Pointer, HasSame)
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("p1", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("p2", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Compares contents pointed by the specified by the two given pointers and returns\n"
-		"`true` if they are identical and `false` otherwise.\n");
+	AddHelp("en", u8R"**(
+Compares contents pointed by the specified by the two given pointers and returns
+`true` if they are identical and `false` otherwise.
+)**");
 }
 
 Gurax_ImplementClassMethod(Pointer, HasSame)
@@ -122,9 +122,9 @@ Gurax_DeclareMethod(Pointer, Append)
 	DeclareArg("pointer", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethod(Pointer, Append)
@@ -156,9 +156,9 @@ Gurax_DeclareMethod(Pointer, Decode)
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Decodes the data pointed by the pointer with the given `codec` and return the result as a `String`.\n");
+	AddHelp("en", u8R"**(
+Decodes the data pointed by the pointer with the given `codec` and return the result as a `String`.
+)**");
 }
 
 Gurax_ImplementMethod(Pointer, Decode)
@@ -182,21 +182,21 @@ Gurax_DeclareMethod(Pointer, Dump)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	DeclareArg("addrOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DumpStyle::DeclareAttrOpt(*this);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints a hexadecimal dump of the `Pointer` to the standard output.\n"
-		"If the argument `stream` is specified, the result would be output to the stream.\n"
-		"\n"
-		"In default, hexadecimal digit are printed with lower-case characters.\n"
-		"Specifying an attribute `:upper` would output them with upper-case characters instead.\n"
-		"\n"
-		"Specifying `:addr` attribute will apppend the current address number on each line.\n"
-		"\n"
-		"Example:\n"
-		"    >>> b'A quick brown fox jumps over the lazy dog.'.p.Dump():upper\n"
-		"    41 20 71 75 69 63 6B 20 62 72 6F 77 6E 20 66 6F  A quick brown fo\n"
-		"    78 20 6A 75 6D 70 73 20 6F 76 65 72 20 74 68 65  x jumps over the\n"
-		"    20 6C 61 7A 79 20 64 6F 67 2E                     lazy dog.\n");
+	AddHelp("en", u8R"**(
+Prints a hexadecimal dump of the `Pointer` to the standard output.
+If the argument `stream` is specified, the result would be output to the stream.
+
+In default, hexadecimal digit are printed with lower-case characters.
+Specifying an attribute `:upper` would output them with upper-case characters instead.
+
+Specifying `:addr` attribute will apppend the current address number on each line.
+
+Example:
+    >>> b'A quick brown fox jumps over the lazy dog.'.p.Dump():upper
+    41 20 71 75 69 63 6B 20 62 72 6F 77 6E 20 66 6F  A quick brown fo
+    78 20 6A 75 6D 70 73 20 6F 76 65 72 20 74 68 65  x jumps over the
+    20 6C 61 7A 79 20 64 6F 67 2E                     lazy dog.
+)**");
 }
 
 Gurax_ImplementMethod(Pointer, Dump)
@@ -222,71 +222,71 @@ Gurax_DeclareMethod(Pointer, Pack)
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Packs values in the argument list according to specifiers in the `format`\n"
-		"into a binary and adds it to where the pointer points.\n"
-		"The pointer offset is automatically incremented by the added length\n"
-		"unless `:stay` attribute is specified.\n"
-		"\n"
-		"This method returns a reference to the target instance itself.\n"
-		"\n"
-		"A specifier has a format of \"`nX`\" where `X` is a format character\n"
-		"that represents a packing format and `n` is a number of packing size.\n"
-		"The number can be omitted, and it would be treated as `1` in that case.\n"
-		"\n"
-		"Following format characters would take a `number` value from the argument list\n"
-		"and pack them into a binary sequence.\n"
-		"\n"
-		"- `b` .. One-byte signed number.\n"
-		"- `B` .. One-byte unsigned number.\n"
-		"- `h` .. Two-byte signed number.\n"
-		"- `H` .. Two-byte unsigned number.\n"
-		"- `i` .. Four-byte signed number.\n"
-		"- `I` .. Four-byte unsigned number.\n"
-		"- `l` .. Four-byte signed number.\n"
-		"- `L` .. Four-byte unsigned number.\n"
-		"- `q` .. Eight-byte signed number.\n"
-		"- `Q` .. Eight-byte unsigned number.\n"
-		"- `f` .. Float-typed number occupying four bytes.\n"
-		"- `d` .. Double-typed number occupying eight bytes.\n"
-		"\n"
-		"As for them, the packing size `n` means the number of values to be packed.\n"
-		"\n"
-		"Following format characters would take a `string` value from the argument list\n"
-		"and pack them into a binary sequence.\n"
-		"\n"
-		"- `s` .. Packs a sequence of UTF-8 codes in the string.\n"
-		"         The packing size `n` means the size of the room in bytes\n"
-		"         where the character codes are to be packed.\n"
-		"         Only the sequence within the allocated room would be packed.\n"
-		"         If the string length is smaller than the room,\n"
-		"         the lacking part would be filled with zero.\n"
-		"- `c` .. Picks the first byte of the string and packs it as a one-byte unsigned number.\n"
-		"         The packing size `n` means the number of values to be packed.\n"
-		"\n"
-		"Following format character would take no value from the argument list.\n"
-		"\n"
-		"- `x` .. Fills the binary with zero.\n"
-		"         The packing size `n` means the size of the room in bytes\n"
-		"         to be filled with zero.\n"
-		"\n"
-		"The default byte-order for numbers of two-byte, four-byte and eight-byte\n"
-		"depends on the system the interpreter is currently running.\n"
-		"You can change it by the following specifiers:\n"
-		"\n"
-		"- `@` .. System-dependent order.\n"
-		"- `=` .. System-dependent order.\n"
-		"- `<` .. Little endian\n"
-		"- `>` .. Big endian\n"
-		"- `!` .. Big endian\n"
-		"\n"
-		"You can specify an asterisk character \"`*`\" for the number of packing size\n"
-		"that picks that number from the argument list.\n"
-		"\n"
-		"You can specify encoding name embraced with \"`{`\" and \"`}`\" in the format\n"
-		"to change coding character set from UTF-8\n"
-		"while packing a string with format character \"`s`\".\n");
+	AddHelp("en", u8R"**(
+Packs values in the argument list according to specifiers in the `format`
+into a binary and adds it to where the pointer points.
+The pointer offset is automatically incremented by the added length
+unless `:stay` attribute is specified.
+
+This method returns a reference to the target instance itself.
+
+A specifier has a format of \"`nX`\" where `X` is a format character
+that represents a packing format and `n` is a number of packing size.
+The number can be omitted, and it would be treated as `1` in that case.
+
+Following format characters would take a `number` value from the argument list
+and pack them into a binary sequence.
+
+- `b` .. One-byte signed number.
+- `B` .. One-byte unsigned number.
+- `h` .. Two-byte signed number.
+- `H` .. Two-byte unsigned number.
+- `i` .. Four-byte signed number.
+- `I` .. Four-byte unsigned number.
+- `l` .. Four-byte signed number.
+- `L` .. Four-byte unsigned number.
+- `q` .. Eight-byte signed number.
+- `Q` .. Eight-byte unsigned number.
+- `f` .. Float-typed number occupying four bytes.
+- `d` .. Double-typed number occupying eight bytes.
+
+As for them, the packing size `n` means the number of values to be packed.
+
+Following format characters would take a `string` value from the argument list
+and pack them into a binary sequence.
+
+- `s` .. Packs a sequence of UTF-8 codes in the string.
+         The packing size `n` means the size of the room in bytes
+         where the character codes are to be packed.
+         Only the sequence within the allocated room would be packed.
+         If the string length is smaller than the room,
+         the lacking part would be filled with zero.
+- `c` .. Picks the first byte of the string and packs it as a one-byte unsigned number.
+         The packing size `n` means the number of values to be packed.
+
+Following format character would take no value from the argument list.
+
+- `x` .. Fills the binary with zero.
+         The packing size `n` means the size of the room in bytes
+         to be filled with zero.
+
+The default byte-order for numbers of two-byte, four-byte and eight-byte
+depends on the system the interpreter is currently running.
+You can change it by the following specifiers:
+
+- `@` .. System-dependent order.
+- `=` .. System-dependent order.
+- `<` .. Little endian
+- `>` .. Big endian
+- `!` .. Big endian
+
+You can specify an asterisk character \"`*`\" for the number of packing size
+that picks that number from the argument list.
+
+You can specify encoding name embraced with \"`{`\" and \"`}`\" in the format
+to change coding character set from UTF-8
+while packing a string with format character \"`s`\".
+)**");
 }
 
 Gurax_ImplementMethod(Pointer, Pack)
@@ -314,9 +314,9 @@ Gurax_DeclareMethod(Pointer, Put)
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethod(Pointer, Put)
@@ -349,67 +349,67 @@ Gurax_DeclareMethod(Pointer, Unpack)
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Extracts values from data sequence pointed by the `pointer` instance according to specifiers in the `format`\n"
-		"and returns a list containing the values.\n"
-		"\n"
-		"A specifier has a format of \"`nX`\" where `X` is a format character\n"
-		"that represents a packing format and `n` is a number of packing size.\n"
-		"The number can be omitted, and it would be treated as `1` in that case.\n"
-		"\n"
-		"Following format characters would extract an integer or float value of specified size\n"
-		"from the binary and returns a `number` value.\n"
-		"\n"
-		"- `b` .. One-byte signed number.\n"
-		"- `B` .. One-byte unsigned number.\n"
-		"- `h` .. Two-byte signed number.\n"
-		"- `H` .. Two-byte unsigned number.\n"
-		"- `i` .. Four-byte signed number.\n"
-		"- `I` .. Four-byte unsigned number.\n"
-		"- `l` .. Four-byte signed number.\n"
-		"- `L` .. Four-byte unsigned number.\n"
-		"- `q` .. Eight-byte signed number.\n"
-		"- `Q` .. Eight-byte unsigned number.\n"
-		"- `f` .. Float-typed number occupying four bytes.\n"
-		"- `d` .. Double-typed number occupying eight bytes.\n"
-		"\n"
-		"As for them, the packing size `n` means the number of values to be extracted.\n"
-		"\n"
-		"Following format characters would extract a string sequence from the binary\n"
-		"and returns a `string` value.\n"
-		"\n"
-		"- `s` .. Extracts a sequence of UTF-8 codes and returns `string` instance containing it.\n"
-		"         The unpacking size `n` means the size of the room in bytes\n"
-		"         where the character codes are to be unpacked.\n"
-		"- `c` .. Extracts a one-byte unsigned number and returns a `string` instance containing it.\n"
-		"         The unpacking size `n` means the number of values to be extracted.\n"
-		"\n"
-		"Following format character would not return any value.\n"
-		"\n"
-		"- `x` .. Advances the address by one byte.\n"
-		"         If the unpacking size `n` is specifies,\n"
-		"         it would advance the address by `n` bytes.\n"
-		"\n"
-		"The default byte-order for numbers of two-byte, four-byte and eight-byte\n"
-		"depends on the system the interpreter is currently running.\n"
-		"You can change it by the following specifiers:\n"
-		"\n"
-		"- `@` .. System-dependent order.\n"
-		"- `=` .. System-dependent order.\n"
-		"- `<` .. Little endian\n"
-		"- `>` .. Big endian\n"
-		"- `!` .. Big endian\n"
-		"\n"
-		"You can specify an asterisk character \"`*`\" for the number of unpacking size\n"
-		"that picks that number from the argument list.\n"
-		"\n"
-		"You can specify encoding name embraced with \"`{`\" and \"`}`\" in the format\n"
-		"to change coding character set from UTF-8\n"
-		"while extracting a string with format character \"`s`\".\n"
-		"\n"
-		"An error occurs if the binary size is smaller than the format reqeusts.\n"
-		"If the attribute `:nil` is specified, `nil` value would be returned for such a case.\n");
+	AddHelp("en", u8R"**(
+Extracts values from data sequence pointed by the `pointer` instance according to specifiers in the `format`
+and returns a list containing the values.
+
+A specifier has a format of \"`nX`\" where `X` is a format character
+that represents a packing format and `n` is a number of packing size.
+The number can be omitted, and it would be treated as `1` in that case.
+
+Following format characters would extract an integer or float value of specified size
+from the binary and returns a `number` value.
+
+- `b` .. One-byte signed number.
+- `B` .. One-byte unsigned number.
+- `h` .. Two-byte signed number.
+- `H` .. Two-byte unsigned number.
+- `i` .. Four-byte signed number.
+- `I` .. Four-byte unsigned number.
+- `l` .. Four-byte signed number.
+- `L` .. Four-byte unsigned number.
+- `q` .. Eight-byte signed number.
+- `Q` .. Eight-byte unsigned number.
+- `f` .. Float-typed number occupying four bytes.
+- `d` .. Double-typed number occupying eight bytes.
+
+As for them, the packing size `n` means the number of values to be extracted.
+
+Following format characters would extract a string sequence from the binary
+and returns a `string` value.
+
+- `s` .. Extracts a sequence of UTF-8 codes and returns `string` instance containing it.
+         The unpacking size `n` means the size of the room in bytes
+         where the character codes are to be unpacked.
+- `c` .. Extracts a one-byte unsigned number and returns a `string` instance containing it.
+         The unpacking size `n` means the number of values to be extracted.
+
+Following format character would not return any value.
+
+- `x` .. Advances the address by one byte.
+         If the unpacking size `n` is specifies,
+         it would advance the address by `n` bytes.
+
+The default byte-order for numbers of two-byte, four-byte and eight-byte
+depends on the system the interpreter is currently running.
+You can change it by the following specifiers:
+
+- `@` .. System-dependent order.
+- `=` .. System-dependent order.
+- `<` .. Little endian
+- `>` .. Big endian
+- `!` .. Big endian
+
+You can specify an asterisk character \"`*`\" for the number of unpacking size
+that picks that number from the argument list.
+
+You can specify encoding name embraced with \"`{`\" and \"`}`\" in the format
+to change coding character set from UTF-8
+while extracting a string with format character \"`s`\".
+
+An error occurs if the binary size is smaller than the format reqeusts.
+If the attribute `:nil` is specified, `nil` value would be returned for such a case.
+)**");
 }
 
 Gurax_ImplementMethod(Pointer, Unpack)
@@ -437,9 +437,9 @@ Gurax_ImplementMethod(Pointer, Unpack)
 Gurax_DeclareProperty_R(Pointer, bytesAvail)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"the data size available from the current pointer position.");
+	AddHelp("en", u8R"**(
+the data size available from the current pointer position.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, bytesAvail)
@@ -452,9 +452,9 @@ Gurax_ImplementPropertyGetter(Pointer, bytesAvail)
 Gurax_DeclareProperty_R(Pointer, bytesEntire)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"the entire size of the memory that the pointer covers.");
+	AddHelp("en", u8R"**(
+the entire size of the memory that the pointer covers.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, bytesEntire)
@@ -467,9 +467,9 @@ Gurax_ImplementPropertyGetter(Pointer, bytesEntire)
 Gurax_DeclareProperty_RW(Pointer, offset)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"the offset of the pointer.");
+	AddHelp("en", u8R"**(
+the offset of the pointer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, offset)
@@ -492,9 +492,9 @@ Gurax_DeclareProperty_RW(Pointer, int8)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of signed 8-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of signed 8-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, int8)
@@ -513,9 +513,9 @@ Gurax_DeclareProperty_RW(Pointer, int16)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of signed 16-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of signed 16-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, int16)
@@ -534,9 +534,9 @@ Gurax_DeclareProperty_RW(Pointer, int32)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of signed 32-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of signed 32-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, int32)
@@ -555,9 +555,9 @@ Gurax_DeclareProperty_RW(Pointer, int64)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of signed 64-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of signed 64-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, int64)
@@ -576,9 +576,9 @@ Gurax_DeclareProperty_RW(Pointer, uint8)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of unsigned 8-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of unsigned 8-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, uint8)
@@ -597,9 +597,9 @@ Gurax_DeclareProperty_RW(Pointer, uint16)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of unsigned 16-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of unsigned 16-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, uint16)
@@ -618,9 +618,9 @@ Gurax_DeclareProperty_RW(Pointer, uint32)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of unsigned 32-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of unsigned 32-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, uint32)
@@ -639,9 +639,9 @@ Gurax_DeclareProperty_RW(Pointer, uint64)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of unsigned 64-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of unsigned 64-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, uint64)
@@ -660,9 +660,9 @@ Gurax_DeclarePropertyAlias_RW(Pointer, float_, "float")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of unsigned 64-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of unsigned 64-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, float_)
@@ -681,9 +681,9 @@ Gurax_DeclarePropertyAlias_RW(Pointer, double_, "double")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(be));
 	DeclareAttrOpt(Gurax_Symbol(stay));
-	AddHelp(
-		Gurax_Symbol(en),
-		"read or write a number stored in a format of unsigned 64-bit integer.");
+	AddHelp("en", u8R"**(
+read or write a number stored in a format of unsigned 64-bit integer.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Pointer, double_)

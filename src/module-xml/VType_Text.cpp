@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Text)
 	Declare(VTYPE_Text, Flag::None);
 	DeclareArg("text", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `xml.Text` instance.");
+	AddHelp("en", u8R"**(
+Creates a `xml.Text` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Text)
@@ -55,9 +55,9 @@ Gurax_ImplementConstructor(Text)
 Gurax_DeclareMethod(Text, Textize)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(Text, Textize)
@@ -75,9 +75,9 @@ Gurax_ImplementMethod(Text, Textize)
 Gurax_DeclareProperty_R(Text, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Text, propSkeleton)

@@ -20,12 +20,12 @@ Gurax_DeclareFunction(Clock)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns the time duration in second since the system has started.\n"
-		"\n"
-		"If `block` is specified, it would calculate how much time has been spent\n"
-		"during evaluating the block.\n ");
+	AddHelp("en", u8R"**(
+Returns the time duration in second since the system has started.
+
+If `block` is specified, it would calculate how much time has been spent
+during evaluating the block.\n 
+)**");
 }
 
 Gurax_ImplementFunction(Clock)
@@ -45,11 +45,11 @@ Gurax_DeclareFunction(Exec)
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(fork));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Runs an executable file with argument specified by `args` and waits for the process to finish.\n"
-		"\n"
-		"If attribute `:fork` is specified, the executable runs in background.\n");
+	AddHelp("en", u8R"**(
+Runs an executable file with argument specified by `args` and waits for the process to finish.
+
+If attribute `:fork` is specified, the executable runs in background.
+)**");
 }
 
 Gurax_ImplementFunction(Exec)
@@ -74,9 +74,9 @@ Gurax_DeclareFunction(Redirect)
 	DeclareArg("cerr", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	DeclareAttrOpt(Gurax_Symbol(fork));
 	DeclareBlock(DeclBlock::Occur::Once);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(Redirect)
@@ -103,9 +103,9 @@ Gurax_DeclareFunction(Sleep)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("secs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Sleeps for a time specified in seconds.");
+	AddHelp("en", u8R"**(
+Sleeps for a time specified in seconds.
+)**");
 }
 
 Gurax_ImplementFunction(Sleep)

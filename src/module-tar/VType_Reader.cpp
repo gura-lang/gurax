@@ -34,9 +34,9 @@ Gurax_DeclareConstructor(Reader)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `tar.Reader` instance.");
+	AddHelp("en", u8R"**(
+Creates a `tar.Reader` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Reader)
@@ -72,9 +72,9 @@ Gurax_ImplementConstructor(Reader)
 Gurax_DeclareMethod(Reader, Close)
 {
 	Declare(VTYPE_Reader, Flag::Reduce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Close the tar.Reader instance.\n");
+	AddHelp("en", u8R"**(
+Close the tar.Reader instance.
+)**");
 }
 
 Gurax_ImplementMethod(Reader, Close)
@@ -92,9 +92,9 @@ Gurax_DeclareMethod(Reader, EachEntry)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(all));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethod(Reader, EachEntry)

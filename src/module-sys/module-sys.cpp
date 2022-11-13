@@ -15,9 +15,9 @@ Gurax_DeclareFunction(Exit)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("exitCode", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(Exit)
@@ -36,9 +36,9 @@ Gurax_DeclareFunction(Presenter)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareBlock(BlkOccur::Once);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Registers a function for help presentation.");
+	AddHelp("en", u8R"**(
+Registers a function for help presentation.
+)**");
 }
 
 Gurax_ImplementFunction(Presenter)
@@ -58,9 +58,9 @@ Gurax_ImplementFunction(Presenter)
 Gurax_DeclareModuleProperty_RW(argv)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A list of `string` that represents arguments in the command line.");
+	AddHelp("en", u8R"**(
+A list of `string` that represents arguments in the command line.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(argv)
@@ -77,9 +77,9 @@ Gurax_ImplementModulePropertySetter(argv)
 Gurax_DeclareModuleProperty_RW(cin)
 {
 	Declare(VTYPE_Stream, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A `stream` instance used for standard input on a console.");
+	AddHelp("en", u8R"**(
+A `stream` instance used for standard input on a console.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(cin)
@@ -98,9 +98,9 @@ Gurax_ImplementModulePropertySetter(cin)
 Gurax_DeclareModuleProperty_RW(cout)
 {
 	Declare(VTYPE_Stream, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A `stream` instance used for standard output on a console.");
+	AddHelp("en", u8R"**(
+A `stream` instance used for standard output on a console.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(cout)
@@ -119,9 +119,9 @@ Gurax_ImplementModulePropertySetter(cout)
 Gurax_DeclareModuleProperty_RW(cerr)
 {
 	Declare(VTYPE_Stream, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A `stream` instance used for standard error output on a console.");
+	AddHelp("en", u8R"**(
+A `stream` instance used for standard error output on a console.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(cerr)
@@ -140,9 +140,9 @@ Gurax_ImplementModulePropertySetter(cerr)
 Gurax_DeclareModuleProperty_R(dirBase)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the base directory.");
+	AddHelp("en", u8R"**(
+The path name of the base directory.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(dirBase)
@@ -154,9 +154,9 @@ Gurax_ImplementModulePropertyGetter(dirBase)
 Gurax_DeclareModuleProperty_R(dirFont)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the directory for font files.");
+	AddHelp("en", u8R"**(
+The path name of the directory for font files.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(dirFont)
@@ -168,9 +168,9 @@ Gurax_ImplementModulePropertyGetter(dirFont)
 Gurax_DeclareModuleProperty_R(dirInclude)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the directory for include files.");
+	AddHelp("en", u8R"**(
+The path name of the directory for include files.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(dirInclude)
@@ -182,9 +182,9 @@ Gurax_ImplementModulePropertyGetter(dirInclude)
 Gurax_DeclareModuleProperty_R(dirLib)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the directory for library files.");
+	AddHelp("en", u8R"**(
+The path name of the directory for library files.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(dirLib)
@@ -196,9 +196,9 @@ Gurax_ImplementModulePropertyGetter(dirLib)
 Gurax_DeclareModuleProperty_R(dirLocal)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the base directory for local files.");
+	AddHelp("en", u8R"**(
+The path name of the base directory for local files.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(dirLocal)
@@ -210,9 +210,9 @@ Gurax_ImplementModulePropertyGetter(dirLocal)
 Gurax_DeclareModuleProperty_R(dirMain)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the main directory.");
+	AddHelp("en", u8R"**(
+The path name of the main directory.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(dirMain)
@@ -224,9 +224,9 @@ Gurax_ImplementModulePropertyGetter(dirMain)
 Gurax_DeclareModuleProperty_R(dirModule)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the base directory for module files.");
+	AddHelp("en", u8R"**(
+The path name of the base directory for module files.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(dirModule)
@@ -238,9 +238,9 @@ Gurax_ImplementModulePropertyGetter(dirModule)
 Gurax_DeclareModuleProperty_R(dirScript)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the base directory for script files.");
+	AddHelp("en", u8R"**(
+The path name of the base directory for script files.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(dirScript)
@@ -252,9 +252,9 @@ Gurax_ImplementModulePropertyGetter(dirScript)
 Gurax_DeclareModuleProperty_R(executable)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The path name of the executable.");
+	AddHelp("en", u8R"**(
+The path name of the executable.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(executable)
@@ -266,9 +266,9 @@ Gurax_ImplementModulePropertyGetter(executable)
 Gurax_DeclareModuleProperty_RW(path)
 {
 	Declare(VTYPE_String, Flag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"A list of path names in which imported Gura modules are searched.");
+	AddHelp("en", u8R"**(
+A list of path names in which imported Gura modules are searched.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(path)
@@ -297,9 +297,9 @@ Gurax_ImplementModulePropertySetter(path)
 Gurax_DeclareModuleProperty_R(platform)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The symbol of the current platform.");
+	AddHelp("en", u8R"**(
+The symbol of the current platform.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(platform)
@@ -320,9 +320,9 @@ Gurax_ImplementModulePropertyGetter(platform)
 Gurax_DeclareModuleProperty_RW(ps1)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The first-level prompt in REPL.");
+	AddHelp("en", u8R"**(
+The first-level prompt in REPL.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(ps1)
@@ -339,9 +339,9 @@ Gurax_ImplementModulePropertySetter(ps1)
 Gurax_DeclareModuleProperty_RW(ps2)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The second-level prompt in REPL.");
+	AddHelp("en", u8R"**(
+The second-level prompt in REPL.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(ps2)
@@ -358,9 +358,9 @@ Gurax_ImplementModulePropertySetter(ps2)
 Gurax_DeclareModuleProperty_R(timeStamp)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The time stamp of the executable.");
+	AddHelp("en", u8R"**(
+The time stamp of the executable.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(timeStamp)
@@ -372,9 +372,9 @@ Gurax_ImplementModulePropertyGetter(timeStamp)
 Gurax_DeclareModuleProperty_R(version)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The version of the executable.");
+	AddHelp("en", u8R"**(
+The version of the executable.
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(version)

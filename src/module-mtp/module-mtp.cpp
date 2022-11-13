@@ -18,13 +18,13 @@ Gurax_DeclareFunction(Dir)
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates an iterator that lists item names in the specified directory.\n"
-		"If pathname is omitted, the current directory shall be listed.\n"
-		"\n"
-		"Though the default sensitiveness of character cases during pattern matching depends on the target directory,\n"
-		"it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that lists item names in the specified directory.
+If pathname is omitted, the current directory shall be listed.
+
+Though the default sensitiveness of character cases during pattern matching depends on the target directory,
+it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.
+)**");
 }
 
 Gurax_ImplementFunction(Dir)
@@ -56,13 +56,13 @@ Gurax_DeclareFunction(Glob)
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates an iterator for item names that match with a pattern supporting\n"
-		"UNIX shell-style wild cards. In default, case of characters is distinguished.\n"
-		"\n"
-		"Though the default sensitiveness of character cases during pattern matching depends on the current platform,\n"
-		"it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator for item names that match with a pattern supporting
+UNIX shell-style wild cards. In default, case of characters is distinguished.
+
+Though the default sensitiveness of character cases during pattern matching depends on the current platform,
+it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.
+)**");
 }
 
 Gurax_ImplementFunction(Glob)
@@ -87,9 +87,9 @@ Gurax_DeclareFunction(EnumDevice)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Enumerates MTP devices and returns a list of `mtp.Device` instances.\n");
+	AddHelp("en", u8R"**(
+Enumerates MTP devices and returns a list of `mtp.Device` instances.
+)**");
 }
 
 Gurax_ImplementFunction(EnumDevice)
@@ -116,13 +116,13 @@ Gurax_DeclareFunction(Walk)
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
-	AddHelp(
-		Gurax_Symbol(en), 
-		"Creates an iterator that recursively lists item names under the specified directory.\n"
-		"If `directory` is omitted, search starts at the current directory.\n"
-		"\n"
-		"Though the default sensitiveness of character cases during pattern matching depends on the target directory,\n"
-		"it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that recursively lists item names under the specified directory.
+If `directory` is omitted, search starts at the current directory.
+
+Though the default sensitiveness of character cases during pattern matching depends on the target directory,
+it can be changed by attributes `:case` for case-sensitive and `:icase` for case-insensitive.
+)**");
 }
 
 Gurax_ImplementFunction(Walk)

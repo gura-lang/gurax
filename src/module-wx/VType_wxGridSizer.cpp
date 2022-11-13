@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(GridSizer_gurax, "GridSizer")
 	Declare(VTYPE_wxGridSizer, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.GridSizer.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.GridSizer.
+)**");
 }
 
 Gurax_ImplementConstructorEx(GridSizer_gurax, processor_gurax, argument_gurax)
@@ -130,9 +130,9 @@ Gurax_ImplementConstructorEx(GridSizer_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxGridSizer, GetCols_gurax, "GetCols")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, GetCols_gurax, processor_gurax, argument_gurax)
@@ -150,9 +150,9 @@ Gurax_ImplementMethodEx(wxGridSizer, GetCols_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxGridSizer, GetRows_gurax, "GetRows")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, GetRows_gurax, processor_gurax, argument_gurax)
@@ -170,9 +170,9 @@ Gurax_ImplementMethodEx(wxGridSizer, GetRows_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxGridSizer, GetEffectiveColsCount_gurax, "GetEffectiveColsCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, GetEffectiveColsCount_gurax, processor_gurax, argument_gurax)
@@ -190,9 +190,9 @@ Gurax_ImplementMethodEx(wxGridSizer, GetEffectiveColsCount_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxGridSizer, GetEffectiveRowsCount_gurax, "GetEffectiveRowsCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, GetEffectiveRowsCount_gurax, processor_gurax, argument_gurax)
@@ -210,9 +210,9 @@ Gurax_ImplementMethodEx(wxGridSizer, GetEffectiveRowsCount_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxGridSizer, GetHGap_gurax, "GetHGap")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, GetHGap_gurax, processor_gurax, argument_gurax)
@@ -230,9 +230,9 @@ Gurax_ImplementMethodEx(wxGridSizer, GetHGap_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxGridSizer, GetVGap_gurax, "GetVGap")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, GetVGap_gurax, processor_gurax, argument_gurax)
@@ -251,9 +251,9 @@ Gurax_DeclareMethodAlias(wxGridSizer, SetCols_gurax, "SetCols")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cols", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, SetCols_gurax, processor_gurax, argument_gurax)
@@ -275,9 +275,9 @@ Gurax_DeclareMethodAlias(wxGridSizer, SetHGap_gurax, "SetHGap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("gap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, SetHGap_gurax, processor_gurax, argument_gurax)
@@ -299,9 +299,9 @@ Gurax_DeclareMethodAlias(wxGridSizer, SetRows_gurax, "SetRows")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rows", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, SetRows_gurax, processor_gurax, argument_gurax)
@@ -323,9 +323,9 @@ Gurax_DeclareMethodAlias(wxGridSizer, SetVGap_gurax, "SetVGap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("gap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, SetVGap_gurax, processor_gurax, argument_gurax)
@@ -347,9 +347,9 @@ Gurax_DeclareMethodAlias(wxGridSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, CalcMin_gurax, processor_gurax, argument_gurax)
@@ -367,9 +367,9 @@ Gurax_ImplementMethodEx(wxGridSizer, CalcMin_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxGridSizer, RecalcSizes_gurax, "RecalcSizes")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridSizer, RecalcSizes_gurax, processor_gurax, argument_gurax)

@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(PNGHandler_gurax, "PNGHandler")
 {
 	Declare(VTYPE_wxPNGHandler, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.PNGHandler.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.PNGHandler.
+)**");
 }
 
 Gurax_ImplementConstructorEx(PNGHandler_gurax, processor_gurax, argument_gurax)

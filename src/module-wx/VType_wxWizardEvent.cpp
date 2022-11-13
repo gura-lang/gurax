@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.WizardEvent, `en)}
 Gurax_DeclareMethodAlias(wxWizardEvent, GetDirection_gurax, "GetDirection")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxWizardEvent, GetDirection_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_DeclareMethodAlias(wxWizardEvent, GetPage_gurax, "GetPage")
 {
 	Declare(VTYPE_wxWizardPage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxWizardEvent, GetPage_gurax, processor_gurax, argument_gurax)

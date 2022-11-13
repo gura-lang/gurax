@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(VType)
 	Declare(VTYPE_VType, Flag::Map);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `VType` instance that represents the type information of the given `value`.\n");
+	AddHelp("en", u8R"**(
+Creates a `VType` instance that represents the type information of the given `value`.
+)**");
 }
 
 Gurax_ImplementConstructor(VType)
@@ -58,9 +58,9 @@ Gurax_DeclareHybridMethod(VType, __methodSymbols__)
 	DeclareAttrOpt(Gurax_Symbol(hybrid));
 	DeclareAttrOpt(Gurax_Symbol(instance));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementHybridMethod(VType, __methodSymbols__)
@@ -99,9 +99,9 @@ Gurax_DeclareHybridMethod(VType, __methods__)
 	DeclareAttrOpt(Gurax_Symbol(hybrid));
 	DeclareAttrOpt(Gurax_Symbol(instance));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementHybridMethod(VType, __methods__)
@@ -142,9 +142,9 @@ Gurax_DeclareClassMethod(VType, __propSlots__)
 {
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethod(VType, __propSlots__)
@@ -165,9 +165,9 @@ Gurax_DeclareClassMethod(VType, __propSlot__)
 	Declare(VTYPE_PropSlot, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None, nullptr);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethod(VType, __propSlot__)
@@ -193,9 +193,9 @@ Gurax_ImplementClassMethod(VType, __propSlot__)
 Gurax_DeclareHybridProperty_R(VType, __fullName__)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The full name of the VType.");
+	AddHelp("en", u8R"**(
+The full name of the VType.
+)**");
 }
 
 Gurax_ImplementHybridPropertyGetter(VType, __fullName__)
@@ -208,9 +208,9 @@ Gurax_ImplementHybridPropertyGetter(VType, __fullName__)
 Gurax_DeclareHybridProperty_R(VType, __init__)
 {
 	Declare(VTYPE_Function, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The constructor of the VType.");
+	AddHelp("en", u8R"**(
+The constructor of the VType.
+)**");
 }
 
 Gurax_ImplementHybridPropertyGetter(VType, __init__)
@@ -224,9 +224,9 @@ Gurax_ImplementHybridPropertyGetter(VType, __init__)
 Gurax_DeclareHybridProperty_R(VType, __name__)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The name of the VType.");
+	AddHelp("en", u8R"**(
+The name of the VType.
+)**");
 }
 
 Gurax_ImplementHybridPropertyGetter(VType, __name__)
@@ -239,9 +239,9 @@ Gurax_ImplementHybridPropertyGetter(VType, __name__)
 Gurax_DeclareHybridProperty_R(VType, __symbol__)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The symbol of the VType.");
+	AddHelp("en", u8R"**(
+The symbol of the VType.
+)**");
 }
 
 Gurax_ImplementHybridPropertyGetter(VType, __symbol__)

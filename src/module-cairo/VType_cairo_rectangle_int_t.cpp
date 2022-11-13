@@ -36,9 +36,9 @@ Gurax_DeclareConstructor(cairo_rectangle_int_t)
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `cairo_rectangle_int_t` instance.\n");
+	AddHelp("en", u8R"**(
+Creates a `cairo_rectangle_int_t` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(cairo_rectangle_int_t)
@@ -63,9 +63,9 @@ Gurax_DeclareMethod(cairo_rectangle_int_t, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(cairo_rectangle_int_t, MethodSkeleton)
@@ -87,9 +87,9 @@ Gurax_ImplementMethod(cairo_rectangle_int_t, MethodSkeleton)
 Gurax_DeclareProperty_R(cairo_rectangle_int_t, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(cairo_rectangle_int_t, propSkeleton)

@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(TeeeItemData_gurax, "TeeeItemData")
 {
 	Declare(VTYPE_wxTeeeItemData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.TeeeItemData.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.TeeeItemData.
+)**");
 }
 
 Gurax_ImplementConstructorEx(TeeeItemData_gurax, processor_gurax, argument_gurax)

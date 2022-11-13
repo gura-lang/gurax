@@ -39,9 +39,9 @@ Gurax_DeclareConstructorAlias(MultiChoiceDialog_gurax, "MultiChoiceDialog")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.MultiChoiceDialog.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.MultiChoiceDialog.
+)**");
 }
 
 Gurax_ImplementConstructorEx(MultiChoiceDialog_gurax, processor_gurax, argument_gurax)
@@ -70,9 +70,9 @@ Gurax_ImplementConstructorEx(MultiChoiceDialog_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMultiChoiceDialog, GetSelections_gurax, "GetSelections")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMultiChoiceDialog, GetSelections_gurax, processor_gurax, argument_gurax)
@@ -91,9 +91,9 @@ Gurax_DeclareMethodAlias(wxMultiChoiceDialog, SetSelections_gurax, "SetSelection
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("selections", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMultiChoiceDialog, SetSelections_gurax, processor_gurax, argument_gurax)
@@ -114,9 +114,9 @@ Gurax_ImplementMethodEx(wxMultiChoiceDialog, SetSelections_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxMultiChoiceDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMultiChoiceDialog, ShowModal_gurax, processor_gurax, argument_gurax)

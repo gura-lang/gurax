@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(Item)
 {
 	Declare(VTYPE_Item, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Item` instance.");
+	AddHelp("en", u8R"**(
+Creates a `Item` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Item)
@@ -54,9 +54,9 @@ Gurax_DeclareMethod(Item, CountDescendant)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("type", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Count the number of descendant items of the specified type.");
+	AddHelp("en", u8R"**(
+Count the number of descendant items of the specified type.
+)**");
 }
 
 Gurax_ImplementMethod(Item, CountDescendant)
@@ -82,10 +82,10 @@ Gurax_DeclareMethod(Item, Print)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("indent", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints structured content of the item.\n"
-		"Argument `indent` specifies an indentation level and is set to zero when omitted.\n");
+	AddHelp("en", u8R"**(
+Prints structured content of the item.
+Argument `indent` specifies an indentation level and is set to zero when omitted.
+)**");
 }
 
 Gurax_ImplementMethod(Item, Print)
@@ -108,9 +108,9 @@ Gurax_ImplementMethod(Item, Print)
 Gurax_DeclareProperty_R(Item, type)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Item, type)
@@ -123,9 +123,9 @@ Gurax_ImplementPropertyGetter(Item, type)
 Gurax_DeclareProperty_R(Item, text)
 {
 	Declare(VTYPE_String, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Item, text)
@@ -139,9 +139,9 @@ Gurax_ImplementPropertyGetter(Item, text)
 Gurax_DeclareProperty_R(Item, children)
 {
 	Declare(VTYPE_Iterator, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Item, children)
@@ -155,9 +155,9 @@ Gurax_ImplementPropertyGetter(Item, children)
 Gurax_DeclareProperty_R(Item, url)
 {
 	Declare(VTYPE_String, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Item, url)
@@ -171,9 +171,9 @@ Gurax_ImplementPropertyGetter(Item, url)
 Gurax_DeclareProperty_R(Item, title)
 {
 	Declare(VTYPE_String, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Item, title)
@@ -187,9 +187,9 @@ Gurax_ImplementPropertyGetter(Item, title)
 Gurax_DeclareProperty_R(Item, attrs)
 {
 	Declare(VTYPE_String, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Item, attrs)
@@ -203,9 +203,9 @@ Gurax_ImplementPropertyGetter(Item, attrs)
 Gurax_DeclareProperty_R(Item, align)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"`` `none``, `` `left``, `` `center``, `` `right``");
+	AddHelp("en", u8R"**(
+`` `none``, `` `left``, `` `center``, `` `right``
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Item, align)

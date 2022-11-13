@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(GridCellNumberRenderer_gurax, "GridCellNumberRende
 {
 	Declare(VTYPE_wxGridCellNumberRenderer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.GridCellNumberRenderer.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.GridCellNumberRenderer.
+)**");
 }
 
 Gurax_ImplementConstructorEx(GridCellNumberRenderer_gurax, processor_gurax, argument_gurax)

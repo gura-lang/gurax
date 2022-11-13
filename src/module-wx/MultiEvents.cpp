@@ -12,9 +12,9 @@ Gurax_DeclareFunction(EVT_JOYSTICK_EVENTS)
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(EVT_JOYSTICK_EVENTS)
@@ -36,9 +36,9 @@ Gurax_DeclareFunction(EVT_MOUSE_EVENTS)
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(EVT_MOUSE_EVENTS)
@@ -75,9 +75,9 @@ Gurax_DeclareFunction(EVT_SCROLL)
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(EVT_SCROLL)
@@ -104,9 +104,9 @@ Gurax_DeclareFunction(EVT_SCROLLWIN)
 	DeclareArg("handler", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("funct", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementFunction(EVT_SCROLLWIN)

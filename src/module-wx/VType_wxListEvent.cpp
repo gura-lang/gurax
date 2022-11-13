@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.ListEvent, `en)}
 Gurax_DeclareMethodAlias(wxListEvent, GetCacheFrom_gurax, "GetCacheFrom")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetCacheFrom_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxListEvent, GetCacheFrom_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxListEvent, GetCacheTo_gurax, "GetCacheTo")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetCacheTo_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_ImplementMethodEx(wxListEvent, GetCacheTo_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxListEvent, GetColumn_gurax, "GetColumn")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetColumn_gurax, processor_gurax, argument_gurax)
@@ -96,9 +96,9 @@ Gurax_ImplementMethodEx(wxListEvent, GetColumn_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxListEvent, GetImage_gurax, "GetImage")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetImage_gurax, processor_gurax, argument_gurax)
@@ -116,9 +116,9 @@ Gurax_ImplementMethodEx(wxListEvent, GetImage_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxListEvent, GetIndex_gurax, "GetIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetIndex_gurax, processor_gurax, argument_gurax)
@@ -137,9 +137,9 @@ Gurax_DeclareMethodAlias(wxListEvent, GetItem_gurax, "GetItem")
 {
 	Declare(VTYPE_wxListItem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetItem_gurax, processor_gurax, argument_gurax)
@@ -157,9 +157,9 @@ Gurax_ImplementMethodEx(wxListEvent, GetItem_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxListEvent, GetKeyCode_gurax, "GetKeyCode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetKeyCode_gurax, processor_gurax, argument_gurax)
@@ -177,9 +177,9 @@ Gurax_ImplementMethodEx(wxListEvent, GetKeyCode_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxListEvent, GetLabel_gurax, "GetLabel")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetLabel_gurax, processor_gurax, argument_gurax)
@@ -197,9 +197,9 @@ Gurax_ImplementMethodEx(wxListEvent, GetLabel_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxListEvent, GetMask_gurax, "GetMask")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetMask_gurax, processor_gurax, argument_gurax)
@@ -218,9 +218,9 @@ Gurax_DeclareMethodAlias(wxListEvent, GetPoint_gurax, "GetPoint")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetPoint_gurax, processor_gurax, argument_gurax)
@@ -238,9 +238,9 @@ Gurax_ImplementMethodEx(wxListEvent, GetPoint_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxListEvent, GetText_gurax, "GetText")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, GetText_gurax, processor_gurax, argument_gurax)
@@ -258,9 +258,9 @@ Gurax_ImplementMethodEx(wxListEvent, GetText_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxListEvent, IsEditCancelled_gurax, "IsEditCancelled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, IsEditCancelled_gurax, processor_gurax, argument_gurax)
@@ -279,9 +279,9 @@ Gurax_DeclareMethodAlias(wxListEvent, SetKeyCode_gurax, "SetKeyCode")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, SetKeyCode_gurax, processor_gurax, argument_gurax)
@@ -303,9 +303,9 @@ Gurax_DeclareMethodAlias(wxListEvent, SetIndex_gurax, "SetIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, SetIndex_gurax, processor_gurax, argument_gurax)
@@ -327,9 +327,9 @@ Gurax_DeclareMethodAlias(wxListEvent, SetColumn_gurax, "SetColumn")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, SetColumn_gurax, processor_gurax, argument_gurax)
@@ -351,9 +351,9 @@ Gurax_DeclareMethodAlias(wxListEvent, SetPoint_gurax, "SetPoint")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, SetPoint_gurax, processor_gurax, argument_gurax)
@@ -376,9 +376,9 @@ Gurax_DeclareMethodAlias(wxListEvent, SetItem_gurax, "SetItem")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxListItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, SetItem_gurax, processor_gurax, argument_gurax)
@@ -401,9 +401,9 @@ Gurax_DeclareMethodAlias(wxListEvent, SetCacheFrom_gurax, "SetCacheFrom")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cacheFrom", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, SetCacheFrom_gurax, processor_gurax, argument_gurax)
@@ -425,9 +425,9 @@ Gurax_DeclareMethodAlias(wxListEvent, SetCacheTo_gurax, "SetCacheTo")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cacheTo", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxListEvent, SetCacheTo_gurax, processor_gurax, argument_gurax)

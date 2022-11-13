@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxSetCursorEvent, GetCursor_gurax, "GetCursor")
 {
 	Declare(VTYPE_wxCursor, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSetCursorEvent, GetCursor_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_ImplementMethodEx(wxSetCursorEvent, GetCursor_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxSetCursorEvent, GetX_gurax, "GetX")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSetCursorEvent, GetX_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_ImplementMethodEx(wxSetCursorEvent, GetX_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxSetCursorEvent, GetY_gurax, "GetY")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSetCursorEvent, GetY_gurax, processor_gurax, argument_gurax)
@@ -97,9 +97,9 @@ Gurax_ImplementMethodEx(wxSetCursorEvent, GetY_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxSetCursorEvent, HasCursor_gurax, "HasCursor")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSetCursorEvent, HasCursor_gurax, processor_gurax, argument_gurax)
@@ -118,9 +118,9 @@ Gurax_DeclareMethodAlias(wxSetCursorEvent, SetCursor_gurax, "SetCursor")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cursor", VTYPE_wxCursor, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSetCursorEvent, SetCursor_gurax, processor_gurax, argument_gurax)

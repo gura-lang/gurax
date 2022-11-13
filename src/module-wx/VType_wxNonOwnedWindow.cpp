@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxNonOwnedWindow, SetShape_gurax, "SetShape")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxNonOwnedWindow, SetShape_gurax, processor_gurax, argument_gurax)

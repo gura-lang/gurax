@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxTipWindow, SetBoundingRect_gurax, "SetBoundingRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rectBound", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxTipWindow, SetBoundingRect_gurax, processor_gurax, argument_gurax)

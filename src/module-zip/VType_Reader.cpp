@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Reader)
 	Declare(VTYPE_Reader, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `zip.Reader` instance from the specified stream.");
+	AddHelp("en", u8R"**(
+Creates a `zip.Reader` instance from the specified stream.
+)**");
 }
 
 Gurax_ImplementConstructor(Reader)
@@ -59,10 +59,10 @@ Gurax_DeclareMethod(Reader, Entry)
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Seeks entry in the zip file that matches the specified name\n"
-		"and returns a `stream` instance associated with the entry.\n");
+	AddHelp("en", u8R"**(
+Seeks entry in the zip file that matches the specified name
+and returns a `stream` instance associated with the entry.
+)**");
 }
 
 Gurax_ImplementMethod(Reader, Entry)
@@ -93,13 +93,13 @@ Gurax_DeclareMethod(Reader, EachEntry)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(all));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an `iterator` instance that returns `stream` instances\n"
-		"associated with each entry in the ZIP file.\n"
-		"\n"
-		"In default, entries that represent directories are skipped.\n"
-		"Specify `:all` attribute to include them.\n");
+	AddHelp("en", u8R"**(
+Creates an `iterator` instance that returns `stream` instances
+associated with each entry in the ZIP file.
+
+In default, entries that represent directories are skipped.
+Specify `:all` attribute to include them.
+)**");
 }
 
 Gurax_ImplementMethod(Reader, EachEntry)

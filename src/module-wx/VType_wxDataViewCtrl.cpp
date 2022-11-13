@@ -40,9 +40,9 @@ Gurax_DeclareConstructorAlias(DataViewCtrl_gurax, "DataViewCtrl")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.DataViewCtrl.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.DataViewCtrl.
+)**");
 }
 
 Gurax_ImplementConstructorEx(DataViewCtrl_gurax, processor_gurax, argument_gurax)
@@ -79,9 +79,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -111,9 +111,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, AppendColumn_gurax, "AppendColumn")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("col", VTYPE_wxDataViewColumn, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, AppendColumn_gurax, processor_gurax, argument_gurax)
@@ -136,9 +136,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, PrependColumn_gurax, "PrependColumn")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("col", VTYPE_wxDataViewColumn, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, PrependColumn_gurax, processor_gurax, argument_gurax)
@@ -162,9 +162,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, InsertColumn_gurax, "InsertColumn")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_wxDataViewColumn, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, InsertColumn_gurax, processor_gurax, argument_gurax)
@@ -188,9 +188,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, AssociateModel_gurax, "AssociateModel")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("model", VTYPE_wxDataViewModel, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, AssociateModel_gurax, processor_gurax, argument_gurax)
@@ -212,9 +212,9 @@ Gurax_ImplementMethodEx(wxDataViewCtrl, AssociateModel_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxDataViewCtrl, ClearColumns_gurax, "ClearColumns")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, ClearColumns_gurax, processor_gurax, argument_gurax)
@@ -233,9 +233,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, Collapse_gurax, "Collapse")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, Collapse_gurax, processor_gurax, argument_gurax)
@@ -258,9 +258,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, DeleteColumn_gurax, "DeleteColumn")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("column", VTYPE_wxDataViewColumn, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, DeleteColumn_gurax, processor_gurax, argument_gurax)
@@ -284,9 +284,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, EditItem_gurax, "EditItem")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("column", VTYPE_wxDataViewColumn, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, EditItem_gurax, processor_gurax, argument_gurax)
@@ -311,9 +311,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, EnableDragSource_gurax, "EnableDragSour
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("format", VTYPE_wxDataFormat, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, EnableDragSource_gurax, processor_gurax, argument_gurax)
@@ -336,9 +336,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, EnableDropTarget_gurax, "EnableDropTarg
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("format", VTYPE_wxDataFormat, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, EnableDropTarget_gurax, processor_gurax, argument_gurax)
@@ -362,9 +362,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, EnsureVisible_gurax, "EnsureVisible")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("column", VTYPE_wxDataViewColumn, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, EnsureVisible_gurax, processor_gurax, argument_gurax)
@@ -388,9 +388,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, Expand_gurax, "Expand")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, Expand_gurax, processor_gurax, argument_gurax)
@@ -413,9 +413,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, ExpandAncestors_gurax, "ExpandAncestors
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, ExpandAncestors_gurax, processor_gurax, argument_gurax)
@@ -439,9 +439,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, GetColumn_gurax, "GetColumn")
 	Declare(VTYPE_wxDataViewColumn, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetColumn_gurax, processor_gurax, argument_gurax)
@@ -462,9 +462,9 @@ Gurax_ImplementMethodEx(wxDataViewCtrl, GetColumn_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxDataViewCtrl, GetColumnCount_gurax, "GetColumnCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetColumnCount_gurax, processor_gurax, argument_gurax)
@@ -483,9 +483,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, GetColumnPosition_gurax, "GetColumnPosi
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("column", VTYPE_wxDataViewColumn, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetColumnPosition_gurax, processor_gurax, argument_gurax)
@@ -508,9 +508,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, GetExpanderColumn_gurax, "GetExpanderCo
 {
 	Declare(VTYPE_wxDataViewColumn, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetExpanderColumn_gurax, processor_gurax, argument_gurax)
@@ -529,9 +529,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, GetCurrentItem_gurax, "GetCurrentItem")
 {
 	Declare(VTYPE_wxDataViewItem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetCurrentItem_gurax, processor_gurax, argument_gurax)
@@ -550,9 +550,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, GetCurrentColumn_gurax, "GetCurrentColu
 {
 	Declare(VTYPE_wxDataViewColumn, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetCurrentColumn_gurax, processor_gurax, argument_gurax)
@@ -570,9 +570,9 @@ Gurax_ImplementMethodEx(wxDataViewCtrl, GetCurrentColumn_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxDataViewCtrl, GetIndent_gurax, "GetIndent")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetIndent_gurax, processor_gurax, argument_gurax)
@@ -593,9 +593,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, GetItemRect_gurax, "GetItemRect")
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_wxDataViewColumn, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetItemRect_gurax, processor_gurax, argument_gurax)
@@ -619,9 +619,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, GetModel_gurax, "GetModel")
 {
 	Declare(VTYPE_wxDataViewModel, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetModel_gurax, processor_gurax, argument_gurax)
@@ -639,9 +639,9 @@ Gurax_ImplementMethodEx(wxDataViewCtrl, GetModel_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxDataViewCtrl, GetSelectedItemsCount_gurax, "GetSelectedItemsCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetSelectedItemsCount_gurax, processor_gurax, argument_gurax)
@@ -660,9 +660,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_wxDataViewItem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -681,9 +681,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, GetSortingColumn_gurax, "GetSortingColu
 {
 	Declare(VTYPE_wxDataViewColumn, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, GetSortingColumn_gurax, processor_gurax, argument_gurax)
@@ -701,9 +701,9 @@ Gurax_ImplementMethodEx(wxDataViewCtrl, GetSortingColumn_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxDataViewCtrl, HasSelection_gurax, "HasSelection")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, HasSelection_gurax, processor_gurax, argument_gurax)
@@ -722,9 +722,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, IsExpanded_gurax, "IsExpanded")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, IsExpanded_gurax, processor_gurax, argument_gurax)
@@ -747,9 +747,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, IsSelected_gurax, "IsSelected")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, IsSelected_gurax, processor_gurax, argument_gurax)
@@ -772,9 +772,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, Select_gurax, "Select")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, Select_gurax, processor_gurax, argument_gurax)
@@ -796,9 +796,9 @@ Gurax_ImplementMethodEx(wxDataViewCtrl, Select_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxDataViewCtrl, SelectAll_gurax, "SelectAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, SelectAll_gurax, processor_gurax, argument_gurax)
@@ -817,9 +817,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, SetExpanderColumn_gurax, "SetExpanderCo
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxDataViewColumn, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, SetExpanderColumn_gurax, processor_gurax, argument_gurax)
@@ -842,9 +842,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, SetCurrentItem_gurax, "SetCurrentItem")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, SetCurrentItem_gurax, processor_gurax, argument_gurax)
@@ -867,9 +867,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, SetIndent_gurax, "SetIndent")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("indent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, SetIndent_gurax, processor_gurax, argument_gurax)
@@ -891,9 +891,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, Unselect_gurax, "Unselect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, Unselect_gurax, processor_gurax, argument_gurax)
@@ -915,9 +915,9 @@ Gurax_ImplementMethodEx(wxDataViewCtrl, Unselect_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxDataViewCtrl, UnselectAll_gurax, "UnselectAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, UnselectAll_gurax, processor_gurax, argument_gurax)
@@ -936,9 +936,9 @@ Gurax_DeclareMethodAlias(wxDataViewCtrl, SetRowHeight_gurax, "SetRowHeight")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("rowHeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDataViewCtrl, SetRowHeight_gurax, processor_gurax, argument_gurax)

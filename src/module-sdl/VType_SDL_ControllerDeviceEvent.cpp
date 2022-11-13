@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_ControllerDeviceEvent, `en)}
 Gurax_DeclareProperty_R(SDL_ControllerDeviceEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_ControllerDeviceEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_ControllerDeviceEvent, type)
 Gurax_DeclareProperty_R(SDL_ControllerDeviceEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_ControllerDeviceEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_ControllerDeviceEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_ControllerDeviceEvent, which)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_ControllerDeviceEvent, which)

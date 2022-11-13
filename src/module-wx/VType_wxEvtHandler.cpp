@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(EvtHandler_gurax, "EvtHandler")
 {
 	Declare(VTYPE_wxEvtHandler, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.EvtHandler.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.EvtHandler.
+)**");
 }
 
 Gurax_ImplementConstructorEx(EvtHandler_gurax, processor_gurax, argument_gurax)
@@ -59,9 +59,9 @@ Gurax_DeclareMethodAlias(wxEvtHandler, Bind_gurax, "Bind")
 	DeclareArg("userData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("lastId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxEvtHandler, Bind_gurax, processor_gurax, argument_gurax)

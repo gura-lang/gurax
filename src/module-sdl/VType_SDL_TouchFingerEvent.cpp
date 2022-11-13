@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_TouchFingerEvent, `en)}
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, type)
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, touchId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, touchId)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, touchId)
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, fingerId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, fingerId)
@@ -91,9 +91,9 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, fingerId)
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, x)
@@ -106,9 +106,9 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, x)
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, y)
@@ -121,9 +121,9 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, y)
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, dx)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, dx)
@@ -136,9 +136,9 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, dx)
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, dy)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, dy)
@@ -151,9 +151,9 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, dy)
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, pressure)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, pressure)
@@ -166,9 +166,9 @@ Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, pressure)
 Gurax_DeclareProperty_R(SDL_TouchFingerEvent, windowID)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_TouchFingerEvent, windowID)

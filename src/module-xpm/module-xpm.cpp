@@ -16,9 +16,9 @@ Gurax_DeclareFunction(ParseIterator)
 	DeclareArg("image", VTYPE_Image, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt("rgb");
 	DeclareAttrOpt("rgba");
-	AddHelp(
-		Gurax_Symbol(en),
-		"Reads XPM data from Iterator.");
+	AddHelp("en", u8R"**(
+Reads XPM data from Iterator.
+)**");
 }
 
 Gurax_ImplementFunction(ParseIterator)

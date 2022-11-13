@@ -34,9 +34,9 @@ Gurax_DeclareConstructor(Binary)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Binary` instance.");
+	AddHelp("en", u8R"**(
+Creates a `Binary` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Binary)
@@ -53,9 +53,9 @@ Gurax_ImplementConstructor(Binary)
 Gurax_DeclareMethod(Binary, Clear)
 {
 	Declare(VTYPE_Binary, Flag::Reduce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Clear the content of the Binary.");
+	AddHelp("en", u8R"**(
+Clear the content of the Binary.
+)**");
 }
 
 Gurax_ImplementMethod(Binary, Clear)
@@ -75,9 +75,9 @@ Gurax_DeclareMethod(Binary, Decode)
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Decodes the binary with the given `codec` and return the result as a `String`.\n");
+	AddHelp("en", u8R"**(
+Decodes the binary with the given `codec` and return the result as a `String`.
+)**");
 }
 
 Gurax_ImplementMethod(Binary, Decode)
@@ -101,21 +101,21 @@ Gurax_DeclareMethod(Binary, Dump)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	DeclareArg("addrOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DumpStyle::DeclareAttrOpt(*this);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints a hexadecimal dump of the `Binary` to the standard output.\n"
-		"If the argument `stream` is specified, the result would be output to the stream.\n"
-		"\n"
-		"In default, hexadecimal digit are printed with lower-case characters.\n"
-		"Specifying an attribute `:upper` would output them with upper-case characters instead.\n"
-		"\n"
-		"Specifying `:addr` attribute will apppend the current address number on each line.\n"
-		"\n"
-		"Example:\n"
-		"    >>> b'A quick brown fox jumps over the lazy dog.'.Dump():upper\n"
-		"    41 20 71 75 69 63 6B 20 62 72 6F 77 6E 20 66 6F  A quick brown fo\n"
-		"    78 20 6A 75 6D 70 73 20 6F 76 65 72 20 74 68 65  x jumps over the\n"
-		"    20 6C 61 7A 79 20 64 6F 67 2E                     lazy dog.\n");
+	AddHelp("en", u8R"**(
+Prints a hexadecimal dump of the `Binary` to the standard output.
+If the argument `stream` is specified, the result would be output to the stream.
+
+In default, hexadecimal digit are printed with lower-case characters.
+Specifying an attribute `:upper` would output them with upper-case characters instead.
+
+Specifying `:addr` attribute will apppend the current address number on each line.
+
+Example:
+    >>> b'A quick brown fox jumps over the lazy dog.'.Dump():upper
+    41 20 71 75 69 63 6B 20 62 72 6F 77 6E 20 66 6F  A quick brown fo
+    78 20 6A 75 6D 70 73 20 6F 76 65 72 20 74 68 65  x jumps over the
+    20 6C 61 7A 79 20 64 6F 67 2E                     lazy dog.
+)**");
 }
 
 Gurax_ImplementMethod(Binary, Dump)
@@ -140,9 +140,9 @@ Gurax_DeclareMethod(Binary, Pointer)
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Pointer` instance that points memory in the `Binary`.");
+	AddHelp("en", u8R"**(
+Creates a `Pointer` instance that points memory in the `Binary`.
+)**");
 }
 
 Gurax_ImplementMethod(Binary, Pointer)
@@ -164,9 +164,9 @@ Gurax_DeclareMethod(Binary, Reader)
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Stream` instance that reads data from the `Binary`.");
+	AddHelp("en", u8R"**(
+Creates a `Stream` instance that reads data from the `Binary`.
+)**");
 }
 
 Gurax_ImplementMethod(Binary, Reader)
@@ -190,9 +190,9 @@ Gurax_DeclareMethod(Binary, Writer)
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Stream` instance that writes data into the `Binary`.");
+	AddHelp("en", u8R"**(
+Creates a `Stream` instance that writes data into the `Binary`.
+)**");
 }
 
 Gurax_ImplementMethod(Binary, Writer)
@@ -218,9 +218,9 @@ Gurax_ImplementMethod(Binary, Writer)
 Gurax_DeclareProperty_R(Binary, bytes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The binary's size in bytes.");
+	AddHelp("en", u8R"**(
+The binary's size in bytes.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Binary, bytes)
@@ -234,10 +234,10 @@ Gurax_ImplementPropertyGetter(Binary, bytes)
 Gurax_DeclareProperty_R(Binary, p)
 {
 	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns a `pointer` instance that accesses the binary.\n"
-		"This result is equivalent to that of calling the method `binary#Pointer()`");
+	AddHelp("en", u8R"**(
+Returns a `pointer` instance that accesses the binary.
+This result is equivalent to that of calling the method `binary#Pointer()`
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Binary, p)
@@ -250,9 +250,9 @@ Gurax_ImplementPropertyGetter(Binary, p)
 Gurax_DeclareProperty_R(Binary, writable)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns `true` if the binary data can be modified.\n");
+	AddHelp("en", u8R"**(
+Returns `true` if the binary data can be modified.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Binary, writable)

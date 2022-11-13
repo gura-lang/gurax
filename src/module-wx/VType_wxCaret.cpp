@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxCaret, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCaret, GetWindow_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_ImplementMethodEx(wxCaret, GetWindow_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxCaret, Hide_gurax, "Hide")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCaret, Hide_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_ImplementMethodEx(wxCaret, Hide_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxCaret, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCaret, IsOk_gurax, processor_gurax, argument_gurax)
@@ -97,9 +97,9 @@ Gurax_ImplementMethodEx(wxCaret, IsOk_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxCaret, IsVisible_gurax, "IsVisible")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCaret, IsVisible_gurax, processor_gurax, argument_gurax)
@@ -118,9 +118,9 @@ Gurax_DeclareMethodAlias(wxCaret, Show_gurax, "Show")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxCaret, Show_gurax, processor_gurax, argument_gurax)

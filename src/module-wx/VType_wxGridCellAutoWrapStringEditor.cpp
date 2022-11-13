@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(GridCellAutoWrapStringEditor_gurax, "GridCellAutoW
 {
 	Declare(VTYPE_wxGridCellAutoWrapStringEditor, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.GridCellAutoWrapStringEditor.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.GridCellAutoWrapStringEditor.
+)**");
 }
 
 Gurax_ImplementConstructorEx(GridCellAutoWrapStringEditor_gurax, processor_gurax, argument_gurax)

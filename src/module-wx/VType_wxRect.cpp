@@ -37,9 +37,9 @@ Gurax_DeclareConstructorAlias(Rect_gurax, "Rect")
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Rect.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Rect.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Rect_gurax, processor_gurax, argument_gurax)
@@ -67,9 +67,9 @@ Gurax_DeclareMethodAlias(wxRect, Contains_gurax, "Contains")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, Contains_gurax, processor_gurax, argument_gurax)
@@ -138,9 +138,9 @@ Gurax_ImplementMethodEx(wxRect, Contains_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxRect, GetBottom_gurax, "GetBottom")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetBottom_gurax, processor_gurax, argument_gurax)
@@ -159,9 +159,9 @@ Gurax_DeclareMethodAlias(wxRect, GetBottomLeft_gurax, "GetBottomLeft")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetBottomLeft_gurax, processor_gurax, argument_gurax)
@@ -180,9 +180,9 @@ Gurax_DeclareMethodAlias(wxRect, GetBottomRight_gurax, "GetBottomRight")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetBottomRight_gurax, processor_gurax, argument_gurax)
@@ -200,9 +200,9 @@ Gurax_ImplementMethodEx(wxRect, GetBottomRight_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxRect, GetHeight_gurax, "GetHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetHeight_gurax, processor_gurax, argument_gurax)
@@ -220,9 +220,9 @@ Gurax_ImplementMethodEx(wxRect, GetHeight_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxRect, GetLeft_gurax, "GetLeft")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetLeft_gurax, processor_gurax, argument_gurax)
@@ -241,9 +241,9 @@ Gurax_DeclareMethodAlias(wxRect, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -261,9 +261,9 @@ Gurax_ImplementMethodEx(wxRect, GetPosition_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxRect, GetRight_gurax, "GetRight")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetRight_gurax, processor_gurax, argument_gurax)
@@ -282,9 +282,9 @@ Gurax_DeclareMethodAlias(wxRect, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetSize_gurax, processor_gurax, argument_gurax)
@@ -302,9 +302,9 @@ Gurax_ImplementMethodEx(wxRect, GetSize_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxRect, GetTop_gurax, "GetTop")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetTop_gurax, processor_gurax, argument_gurax)
@@ -323,9 +323,9 @@ Gurax_DeclareMethodAlias(wxRect, GetTopLeft_gurax, "GetTopLeft")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetTopLeft_gurax, processor_gurax, argument_gurax)
@@ -344,9 +344,9 @@ Gurax_DeclareMethodAlias(wxRect, GetTopRight_gurax, "GetTopRight")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetTopRight_gurax, processor_gurax, argument_gurax)
@@ -364,9 +364,9 @@ Gurax_ImplementMethodEx(wxRect, GetTopRight_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxRect, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetWidth_gurax, processor_gurax, argument_gurax)
@@ -384,9 +384,9 @@ Gurax_ImplementMethodEx(wxRect, GetWidth_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxRect, GetX_gurax, "GetX")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetX_gurax, processor_gurax, argument_gurax)
@@ -404,9 +404,9 @@ Gurax_ImplementMethodEx(wxRect, GetX_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxRect, GetY_gurax, "GetY")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, GetY_gurax, processor_gurax, argument_gurax)
@@ -426,9 +426,9 @@ Gurax_DeclareMethodAlias(wxRect, Intersect_gurax, "Intersect")
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, Intersect_gurax, processor_gurax, argument_gurax)
@@ -450,9 +450,9 @@ Gurax_ImplementMethodEx(wxRect, Intersect_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxRect, IsEmpty_gurax, "IsEmpty")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, IsEmpty_gurax, processor_gurax, argument_gurax)
@@ -471,9 +471,9 @@ Gurax_DeclareMethodAlias(wxRect, SetHeight_gurax, "SetHeight")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetHeight_gurax, processor_gurax, argument_gurax)
@@ -495,9 +495,9 @@ Gurax_DeclareMethodAlias(wxRect, SetPosition_gurax, "SetPosition")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetPosition_gurax, processor_gurax, argument_gurax)
@@ -520,9 +520,9 @@ Gurax_DeclareMethodAlias(wxRect, SetSize_gurax, "SetSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetSize_gurax, processor_gurax, argument_gurax)
@@ -545,9 +545,9 @@ Gurax_DeclareMethodAlias(wxRect, SetWidth_gurax, "SetWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetWidth_gurax, processor_gurax, argument_gurax)
@@ -569,9 +569,9 @@ Gurax_DeclareMethodAlias(wxRect, SetX_gurax, "SetX")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetX_gurax, processor_gurax, argument_gurax)
@@ -593,9 +593,9 @@ Gurax_DeclareMethodAlias(wxRect, SetY_gurax, "SetY")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetY_gurax, processor_gurax, argument_gurax)
@@ -617,9 +617,9 @@ Gurax_DeclareMethodAlias(wxRect, SetLeft_gurax, "SetLeft")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("left", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetLeft_gurax, processor_gurax, argument_gurax)
@@ -641,9 +641,9 @@ Gurax_DeclareMethodAlias(wxRect, SetRight_gurax, "SetRight")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("right", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetRight_gurax, processor_gurax, argument_gurax)
@@ -665,9 +665,9 @@ Gurax_DeclareMethodAlias(wxRect, SetTop_gurax, "SetTop")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("top", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetTop_gurax, processor_gurax, argument_gurax)
@@ -689,9 +689,9 @@ Gurax_DeclareMethodAlias(wxRect, SetBottom_gurax, "SetBottom")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bottom", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetBottom_gurax, processor_gurax, argument_gurax)
@@ -713,9 +713,9 @@ Gurax_DeclareMethodAlias(wxRect, SetTopLeft_gurax, "SetTopLeft")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetTopLeft_gurax, processor_gurax, argument_gurax)
@@ -738,9 +738,9 @@ Gurax_DeclareMethodAlias(wxRect, SetBottomRight_gurax, "SetBottomRight")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetBottomRight_gurax, processor_gurax, argument_gurax)
@@ -763,9 +763,9 @@ Gurax_DeclareMethodAlias(wxRect, SetTopRight_gurax, "SetTopRight")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetTopRight_gurax, processor_gurax, argument_gurax)
@@ -788,9 +788,9 @@ Gurax_DeclareMethodAlias(wxRect, SetBottomLeft_gurax, "SetBottomLeft")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, SetBottomLeft_gurax, processor_gurax, argument_gurax)
@@ -815,9 +815,9 @@ Gurax_DeclareMethodAlias(wxRect, CentreIn_gurax, "CentreIn")
 	DeclareArg("r", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dir", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, CentreIn_gurax, processor_gurax, argument_gurax)
@@ -844,9 +844,9 @@ Gurax_DeclareMethodAlias(wxRect, CenterIn_gurax, "CenterIn")
 	DeclareArg("r", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dir", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, CenterIn_gurax, processor_gurax, argument_gurax)
@@ -871,9 +871,9 @@ Gurax_DeclareMethodAlias(wxRect, Deflate_gurax, "Deflate")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, Deflate_gurax, processor_gurax, argument_gurax)
@@ -943,9 +943,9 @@ Gurax_DeclareMethodAlias(wxRect, Inflate_gurax, "Inflate")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, Inflate_gurax, processor_gurax, argument_gurax)
@@ -1015,9 +1015,9 @@ Gurax_DeclareMethodAlias(wxRect, Offset_gurax, "Offset")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, Offset_gurax, processor_gurax, argument_gurax)
@@ -1071,9 +1071,9 @@ Gurax_DeclareMethodAlias(wxRect, Union_gurax, "Union")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRect, Union_gurax, processor_gurax, argument_gurax)
@@ -1097,9 +1097,9 @@ Gurax_ImplementMethodEx(wxRect, Union_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareProperty_RW(wxRect, width)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxRect, width)
@@ -1119,9 +1119,9 @@ Gurax_ImplementPropertySetter(wxRect, width)
 Gurax_DeclareProperty_RW(wxRect, height)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxRect, height)
@@ -1141,9 +1141,9 @@ Gurax_ImplementPropertySetter(wxRect, height)
 Gurax_DeclareProperty_RW(wxRect, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxRect, x)
@@ -1163,9 +1163,9 @@ Gurax_ImplementPropertySetter(wxRect, x)
 Gurax_DeclareProperty_RW(wxRect, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxRect, y)

@@ -35,9 +35,9 @@ Gurax_DeclareConstructorAlias(Point_gurax, "Point")
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Point.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Point.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Point_gurax, processor_gurax, argument_gurax)
@@ -63,9 +63,9 @@ Gurax_ImplementConstructorEx(Point_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareProperty_RW(wxPoint, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxPoint, x)
@@ -85,9 +85,9 @@ Gurax_ImplementPropertySetter(wxPoint, x)
 Gurax_DeclareProperty_RW(wxPoint, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxPoint, y)

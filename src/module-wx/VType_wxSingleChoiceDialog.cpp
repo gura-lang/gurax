@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.SingleChoiceDialog, `en)}
 Gurax_DeclareMethodAlias(wxSingleChoiceDialog, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSingleChoiceDialog, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxSingleChoiceDialog, GetSelection_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxSingleChoiceDialog, GetStringSelection_gurax, "GetStringSelection")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSingleChoiceDialog, GetStringSelection_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_DeclareMethodAlias(wxSingleChoiceDialog, SetSelection_gurax, "SetSelection
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("selection", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSingleChoiceDialog, SetSelection_gurax, processor_gurax, argument_gurax)
@@ -100,9 +100,9 @@ Gurax_ImplementMethodEx(wxSingleChoiceDialog, SetSelection_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxSingleChoiceDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSingleChoiceDialog, ShowModal_gurax, processor_gurax, argument_gurax)

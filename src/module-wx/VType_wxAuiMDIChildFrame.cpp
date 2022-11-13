@@ -40,9 +40,9 @@ Gurax_DeclareConstructorAlias(AuiMDIChildFrame_gurax, "AuiMDIChildFrame")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.AuiMDIChildFrame.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.AuiMDIChildFrame.
+)**");
 }
 
 Gurax_ImplementConstructorEx(AuiMDIChildFrame_gurax, processor_gurax, argument_gurax)
@@ -79,9 +79,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Create_gurax, processor_gurax, argument_gurax)
@@ -111,9 +111,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, SetMenuBar_gurax, "SetMenuBar")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("menuBar", VTYPE_wxMenuBar, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetMenuBar_gurax, processor_gurax, argument_gurax)
@@ -136,9 +136,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, GetMenuBar_gurax, "GetMenuBar")
 {
 	Declare(VTYPE_wxMenuBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetMenuBar_gurax, processor_gurax, argument_gurax)
@@ -157,9 +157,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, SetTitle_gurax, "SetTitle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetTitle_gurax, processor_gurax, argument_gurax)
@@ -180,9 +180,9 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetTitle_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, GetTitle_gurax, "GetTitle")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetTitle_gurax, processor_gurax, argument_gurax)
@@ -201,9 +201,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, SetIcons_gurax, "SetIcons")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icons", VTYPE_wxIconBundle, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetIcons_gurax, processor_gurax, argument_gurax)
@@ -226,9 +226,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, GetIcons_gurax, "GetIcons")
 {
 	Declare(VTYPE_wxIconBundle, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetIcons_gurax, processor_gurax, argument_gurax)
@@ -247,9 +247,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, SetIcon_gurax, "SetIcon")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icon", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetIcon_gurax, processor_gurax, argument_gurax)
@@ -272,9 +272,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, GetIcon_gurax, "GetIcon")
 {
 	Declare(VTYPE_wxIcon, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetIcon_gurax, processor_gurax, argument_gurax)
@@ -292,9 +292,9 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetIcon_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, Activate_gurax, "Activate")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Activate_gurax, processor_gurax, argument_gurax)
@@ -312,9 +312,9 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Activate_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, Destroy_gurax, "Destroy")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Destroy_gurax, processor_gurax, argument_gurax)
@@ -333,9 +333,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, Show_gurax, "Show")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Show_gurax, processor_gurax, argument_gurax)
@@ -361,9 +361,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, CreateStatusBar_gurax, "CreateStatu
 	DeclareArg("winid", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, CreateStatusBar_gurax, processor_gurax, argument_gurax)
@@ -391,9 +391,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, GetStatusBar_gurax, "GetStatusBar")
 {
 	Declare(VTYPE_wxStatusBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetStatusBar_gurax, processor_gurax, argument_gurax)
@@ -413,9 +413,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, SetStatusText_gurax, "SetStatusText
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("number", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetStatusText_gurax, processor_gurax, argument_gurax)
@@ -439,9 +439,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, SetStatusWidths_gurax, "SetStatusWi
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("widths_field", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetStatusWidths_gurax, processor_gurax, argument_gurax)
@@ -466,9 +466,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, CreateToolBar_gurax, "CreateToolBar
 	DeclareArg("winid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, CreateToolBar_gurax, processor_gurax, argument_gurax)
@@ -492,9 +492,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, GetToolBar_gurax, "GetToolBar")
 {
 	Declare(VTYPE_wxToolBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetToolBar_gurax, processor_gurax, argument_gurax)
@@ -513,9 +513,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, Maximize_gurax, "Maximize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("maximize", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Maximize_gurax, processor_gurax, argument_gurax)
@@ -536,9 +536,9 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Maximize_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, Restore_gurax, "Restore")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Restore_gurax, processor_gurax, argument_gurax)
@@ -557,9 +557,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, Iconize_gurax, "Iconize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("iconize", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Iconize_gurax, processor_gurax, argument_gurax)
@@ -580,9 +580,9 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, Iconize_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, IsMaximized_gurax, "IsMaximized")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, IsMaximized_gurax, processor_gurax, argument_gurax)
@@ -600,9 +600,9 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, IsMaximized_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, IsIconized_gurax, "IsIconized")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, IsIconized_gurax, processor_gurax, argument_gurax)
@@ -622,9 +622,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, ShowFullScreen_gurax, "ShowFullScre
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, ShowFullScreen_gurax, processor_gurax, argument_gurax)
@@ -646,9 +646,9 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, ShowFullScreen_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, IsFullScreen_gurax, "IsFullScreen")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, IsFullScreen_gurax, processor_gurax, argument_gurax)
@@ -666,9 +666,9 @@ Gurax_ImplementMethodEx(wxAuiMDIChildFrame, IsFullScreen_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, IsTopLevel_gurax, "IsTopLevel")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, IsTopLevel_gurax, processor_gurax, argument_gurax)
@@ -687,9 +687,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, SetMDIParentFrame_gurax, "SetMDIPar
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("parent", VTYPE_wxAuiMDIParentFrame, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, SetMDIParentFrame_gurax, processor_gurax, argument_gurax)
@@ -712,9 +712,9 @@ Gurax_DeclareMethodAlias(wxAuiMDIChildFrame, GetMDIParentFrame_gurax, "GetMDIPar
 {
 	Declare(VTYPE_wxAuiMDIParentFrame, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiMDIChildFrame, GetMDIParentFrame_gurax, processor_gurax, argument_gurax)

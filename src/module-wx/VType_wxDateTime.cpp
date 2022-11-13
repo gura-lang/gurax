@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(DateTime_gurax, "DateTime")
 {
 	Declare(VTYPE_wxDateTime, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.DateTime.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.DateTime.
+)**");
 }
 
 Gurax_ImplementConstructorEx(DateTime_gurax, processor_gurax, argument_gurax)
@@ -52,9 +52,9 @@ Gurax_ImplementConstructorEx(DateTime_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDateTime, ResetTime_gurax, "ResetTime")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, ResetTime_gurax, processor_gurax, argument_gurax)
@@ -73,9 +73,9 @@ Gurax_DeclareMethodAlias(wxDateTime, SetDay_gurax, "SetDay")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("day", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, SetDay_gurax, processor_gurax, argument_gurax)
@@ -97,9 +97,9 @@ Gurax_DeclareMethodAlias(wxDateTime, SetFromDOS_gurax, "SetFromDOS")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("ddt", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, SetFromDOS_gurax, processor_gurax, argument_gurax)
@@ -121,9 +121,9 @@ Gurax_DeclareMethodAlias(wxDateTime, SetHour_gurax, "SetHour")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("hour", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, SetHour_gurax, processor_gurax, argument_gurax)
@@ -145,9 +145,9 @@ Gurax_DeclareMethodAlias(wxDateTime, SetMillisecond_gurax, "SetMillisecond")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("millisecond", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, SetMillisecond_gurax, processor_gurax, argument_gurax)
@@ -169,9 +169,9 @@ Gurax_DeclareMethodAlias(wxDateTime, SetMinute_gurax, "SetMinute")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("minute", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, SetMinute_gurax, processor_gurax, argument_gurax)
@@ -193,9 +193,9 @@ Gurax_DeclareMethodAlias(wxDateTime, SetMonth_gurax, "SetMonth")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("month", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, SetMonth_gurax, processor_gurax, argument_gurax)
@@ -217,9 +217,9 @@ Gurax_DeclareMethodAlias(wxDateTime, SetSecond_gurax, "SetSecond")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("second", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, SetSecond_gurax, processor_gurax, argument_gurax)
@@ -240,9 +240,9 @@ Gurax_ImplementMethodEx(wxDateTime, SetSecond_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxDateTime, SetToCurrent_gurax, "SetToCurrent")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, SetToCurrent_gurax, processor_gurax, argument_gurax)
@@ -261,9 +261,9 @@ Gurax_DeclareMethodAlias(wxDateTime, SetYear_gurax, "SetYear")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("year", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, SetYear_gurax, processor_gurax, argument_gurax)
@@ -284,9 +284,9 @@ Gurax_ImplementMethodEx(wxDateTime, SetYear_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxDateTime, GetAsDOS_gurax, "GetAsDOS")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, GetAsDOS_gurax, processor_gurax, argument_gurax)
@@ -304,9 +304,9 @@ Gurax_ImplementMethodEx(wxDateTime, GetAsDOS_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxDateTime, IsValid_gurax, "IsValid")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, IsValid_gurax, processor_gurax, argument_gurax)
@@ -325,9 +325,9 @@ Gurax_DeclareMethodAlias(wxDateTime, IsWorkDay_gurax, "IsWorkDay")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("country", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, IsWorkDay_gurax, processor_gurax, argument_gurax)
@@ -350,9 +350,9 @@ Gurax_DeclareMethodAlias(wxDateTime, IsEarlierThan_gurax, "IsEarlierThan")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("datetime", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, IsEarlierThan_gurax, processor_gurax, argument_gurax)
@@ -375,9 +375,9 @@ Gurax_DeclareMethodAlias(wxDateTime, IsEqualTo_gurax, "IsEqualTo")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("datetime", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, IsEqualTo_gurax, processor_gurax, argument_gurax)
@@ -400,9 +400,9 @@ Gurax_DeclareMethodAlias(wxDateTime, IsLaterThan_gurax, "IsLaterThan")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("datetime", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, IsLaterThan_gurax, processor_gurax, argument_gurax)
@@ -425,9 +425,9 @@ Gurax_DeclareMethodAlias(wxDateTime, IsSameDate_gurax, "IsSameDate")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, IsSameDate_gurax, processor_gurax, argument_gurax)
@@ -450,9 +450,9 @@ Gurax_DeclareMethodAlias(wxDateTime, IsSameTime_gurax, "IsSameTime")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, IsSameTime_gurax, processor_gurax, argument_gurax)
@@ -476,9 +476,9 @@ Gurax_DeclareMethodAlias(wxDateTime, IsStrictlyBetween_gurax, "IsStrictlyBetween
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("t1", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t2", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, IsStrictlyBetween_gurax, processor_gurax, argument_gurax)
@@ -504,9 +504,9 @@ Gurax_DeclareMethodAlias(wxDateTime, IsBetween_gurax, "IsBetween")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("t1", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t2", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxDateTime, IsBetween_gurax, processor_gurax, argument_gurax)

@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.SpinEvent, `en)}
 Gurax_DeclareMethodAlias(wxSpinEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSpinEvent, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_DeclareMethodAlias(wxSpinEvent, SetPosition_gurax, "SetPosition")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSpinEvent, SetPosition_gurax, processor_gurax, argument_gurax)

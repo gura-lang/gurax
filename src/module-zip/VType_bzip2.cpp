@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(zip.bzip2, `en)}
 Gurax_DeclareClassProperty_RW(bzip2, blockSize100k)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(bzip2, blockSize100k)
@@ -50,9 +50,9 @@ Gurax_ImplementClassPropertySetter(bzip2, blockSize100k)
 Gurax_DeclareClassProperty_RW(bzip2, verbosity)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(bzip2, verbosity)
@@ -69,9 +69,9 @@ Gurax_ImplementClassPropertySetter(bzip2, verbosity)
 Gurax_DeclareClassProperty_RW(bzip2, workFactor)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassPropertyGetter(bzip2, workFactor)

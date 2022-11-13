@@ -35,9 +35,9 @@ Gurax_DeclareConstructorAlias(GLContext_gurax, "GLContext")
 	DeclareArg("win", VTYPE_wxGLCanvas, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("other", VTYPE_wxGLContext, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.GLContext.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.GLContext.
+)**");
 }
 
 Gurax_ImplementConstructorEx(GLContext_gurax, processor_gurax, argument_gurax)
@@ -60,9 +60,9 @@ Gurax_DeclareMethodAlias(wxGLContext, SetCurrent_gurax, "SetCurrent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("win", VTYPE_wxGLCanvas, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGLContext, SetCurrent_gurax, processor_gurax, argument_gurax)

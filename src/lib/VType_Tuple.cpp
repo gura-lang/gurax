@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(Tuple)
 {
 	Declare(VTYPE_Tuple, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Tuple` instance.");
+	AddHelp("en", u8R"**(
+Creates a `Tuple` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Tuple)
@@ -74,9 +74,9 @@ Gurax_ImplementMethod(Tuple, Each)
 Gurax_DeclareProperty_R(Tuple, first)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The first element in the tuple, or `nil` if the tuple is empty.");
+	AddHelp("en", u8R"**(
+The first element in the tuple, or `nil` if the tuple is empty.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Tuple, first)
@@ -91,9 +91,9 @@ Gurax_ImplementPropertyGetter(Tuple, first)
 Gurax_DeclareProperty_R(Tuple, last)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The last element in the tuple, or `nil` if the tuple is empty.");
+	AddHelp("en", u8R"**(
+The last element in the tuple, or `nil` if the tuple is empty.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Tuple, last)
@@ -108,9 +108,9 @@ Gurax_ImplementPropertyGetter(Tuple, last)
 Gurax_DeclareProperty_R(Tuple, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The number of elements in the tuple.");
+	AddHelp("en", u8R"**(
+The number of elements in the tuple.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Tuple, len)
@@ -123,9 +123,9 @@ Gurax_ImplementPropertyGetter(Tuple, len)
 Gurax_DeclareProperty_R(Tuple, tuple)
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Converts into a Tuple instance.");
+	AddHelp("en", u8R"**(
+Converts into a Tuple instance.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Tuple, tuple)

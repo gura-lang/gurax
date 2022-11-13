@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxMouseCaptureChangedEvent, GetCapturedWindow_gurax, "G
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseCaptureChangedEvent, GetCapturedWindow_gurax, processor_gurax, argument_gurax)

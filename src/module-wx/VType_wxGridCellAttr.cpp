@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, Clone_gurax, "Clone")
 {
 	Declare(VTYPE_wxGridCellAttr, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, Clone_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, Clone_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxGridCellAttr, DecRef_gurax, "DecRef")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, DecRef_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, DecRef_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxGridCellAttr, GetAlignment_gurax, "GetAlignment")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetAlignment_gurax, processor_gurax, argument_gurax)
@@ -99,9 +99,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, GetBackgroundColour_gurax, "GetBackgrou
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -123,9 +123,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, GetEditor_gurax, "GetEditor")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetEditor_gurax, processor_gurax, argument_gurax)
@@ -150,9 +150,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, GetFont_gurax, "GetFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetFont_gurax, processor_gurax, argument_gurax)
@@ -170,9 +170,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetFont_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxGridCellAttr, GetNonDefaultAlignment_gurax, "GetNonDefaultAlignment")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetNonDefaultAlignment_gurax, processor_gurax, argument_gurax)
@@ -195,9 +195,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, GetRenderer_gurax, "GetRenderer")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetRenderer_gurax, processor_gurax, argument_gurax)
@@ -222,9 +222,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, GetTextColour_gurax, "GetTextColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetTextColour_gurax, processor_gurax, argument_gurax)
@@ -242,9 +242,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetTextColour_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxGridCellAttr, HasAlignment_gurax, "HasAlignment")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, HasAlignment_gurax, processor_gurax, argument_gurax)
@@ -262,9 +262,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasAlignment_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxGridCellAttr, HasBackgroundColour_gurax, "HasBackgroundColour")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, HasBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -282,9 +282,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasBackgroundColour_gurax, processor_gur
 Gurax_DeclareMethodAlias(wxGridCellAttr, HasEditor_gurax, "HasEditor")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, HasEditor_gurax, processor_gurax, argument_gurax)
@@ -302,9 +302,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasEditor_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxGridCellAttr, HasFont_gurax, "HasFont")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, HasFont_gurax, processor_gurax, argument_gurax)
@@ -322,9 +322,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasFont_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxGridCellAttr, HasRenderer_gurax, "HasRenderer")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, HasRenderer_gurax, processor_gurax, argument_gurax)
@@ -342,9 +342,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasRenderer_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxGridCellAttr, HasTextColour_gurax, "HasTextColour")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, HasTextColour_gurax, processor_gurax, argument_gurax)
@@ -362,9 +362,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasTextColour_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxGridCellAttr, IncRef_gurax, "IncRef")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, IncRef_gurax, processor_gurax, argument_gurax)
@@ -382,9 +382,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, IncRef_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxGridCellAttr, IsReadOnly_gurax, "IsReadOnly")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, IsReadOnly_gurax, processor_gurax, argument_gurax)
@@ -404,9 +404,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetAlignment_gurax, "SetAlignment")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("hAlign", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vAlign", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetAlignment_gurax, processor_gurax, argument_gurax)
@@ -429,9 +429,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetBackgroundColour_gurax, "SetBackgrou
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colBack", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -454,9 +454,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetDefAttr_gurax, "SetDefAttr")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("defAttr", VTYPE_wxGridCellAttr, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetDefAttr_gurax, processor_gurax, argument_gurax)
@@ -479,9 +479,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetEditor_gurax, "SetEditor")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("editor", VTYPE_wxGridCellEditor, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetEditor_gurax, processor_gurax, argument_gurax)
@@ -504,9 +504,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetFont_gurax, "SetFont")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetFont_gurax, processor_gurax, argument_gurax)
@@ -529,9 +529,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetReadOnly_gurax, "SetReadOnly")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("isReadOnly", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetReadOnly_gurax, processor_gurax, argument_gurax)
@@ -553,9 +553,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetRenderer_gurax, "SetRenderer")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_wxGridCellRenderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetRenderer_gurax, processor_gurax, argument_gurax)
@@ -578,9 +578,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetTextColour_gurax, "SetTextColour")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colText", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetTextColour_gurax, processor_gurax, argument_gurax)
@@ -603,9 +603,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, MergeWith_gurax, "MergeWith")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mergefrom", VTYPE_wxGridCellAttr, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, MergeWith_gurax, processor_gurax, argument_gurax)
@@ -629,9 +629,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetSize_gurax, "SetSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("num_rows", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num_cols", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetSize_gurax, processor_gurax, argument_gurax)
@@ -654,9 +654,9 @@ Gurax_DeclareMethodAlias(wxGridCellAttr, SetOverflow_gurax, "SetOverflow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("allow", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, SetOverflow_gurax, processor_gurax, argument_gurax)
@@ -677,9 +677,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, SetOverflow_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxGridCellAttr, HasReadWriteMode_gurax, "HasReadWriteMode")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, HasReadWriteMode_gurax, processor_gurax, argument_gurax)
@@ -697,9 +697,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasReadWriteMode_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxGridCellAttr, HasOverflowMode_gurax, "HasOverflowMode")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, HasOverflowMode_gurax, processor_gurax, argument_gurax)
@@ -717,9 +717,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasOverflowMode_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxGridCellAttr, HasSize_gurax, "HasSize")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, HasSize_gurax, processor_gurax, argument_gurax)
@@ -737,9 +737,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, HasSize_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxGridCellAttr, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetSize_gurax, processor_gurax, argument_gurax)
@@ -758,9 +758,9 @@ Gurax_ImplementMethodEx(wxGridCellAttr, GetSize_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxGridCellAttr, GetOverflow_gurax, "GetOverflow")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttr, GetOverflow_gurax, processor_gurax, argument_gurax)

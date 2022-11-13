@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.TreeItemId, `en)}
 Gurax_DeclareMethodAlias(wxTreeItemId, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeItemId, IsOk_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxTreeItemId, IsOk_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxTreeItemId, Unset_gurax, "Unset")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeItemId, Unset_gurax, processor_gurax, argument_gurax)

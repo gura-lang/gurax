@@ -6,11 +6,11 @@ import(a) {*}
 import(a) {sym1, sym2, sym3, sym4}
   ##0 Import(`a)
 ======== Basic Test ========
-dir(foo) .. [`CheckName, `Func1, `Func2, `Func3, `Func4, `Func5, `__help__, `__name__, `var1, `var2, `var3, `var4, `var5]
+dir(foo) .. [`CheckName, `Func1, `Func2, `Func3, `Func4, `Func5, `__name__, `var1, `var2, `var3, `var4, `var5]
 ======== Dotted Symbol ========
-dir(foo) .. [`CheckName, `Func1, `Func2, `Func3, `Func4, `Func5, `__help__, `__name__, `sub1, `var1, `var2, `var3, `var4, `var5]
-dir(foo.sub1) .. [`CheckName, `__help__, `__name__, `sub2]
-dir(foo.sub1.sub2) .. [`CheckName, `__help__, `__name__]
+dir(foo) .. [`CheckName, `Func1, `Func2, `Func3, `Func4, `Func5, `__name__, `sub1, `var1, `var2, `var3, `var4, `var5]
+dir(foo.sub1) .. [`CheckName, `__name__, `sub2]
+dir(foo.sub1.sub2) .. [`CheckName, `__name__]
 ======== __name__ variable ========
 __name__ .. __main__
 foo.__name__ .. foo

@@ -15,19 +15,19 @@ Gurax_DeclareFunction(Clear)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("region", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Clears the screen.\n"
-		"\n"
-		"In default, it clears whole the screen.\n"
-		"Argument `region` that takes one of the symbols below\n"
-		"would specify the region to be cleared.\n"
-		"\n"
-		"- `` `line`` .. clears characters in the line where the cursor exists.\n"
-		"- `` `left`` .. clears characters on the left side of the cursor.\n"
-		"- `` `right`` .. clears characters on the right side of the cursor.\n"
-		"- `` `top`` .. clears characters on the above side of the cursor.\n"
-		"- `` `bottom`` .. clears characters on the below side of the cursor.\n");
+	AddHelp("en", u8R"**(
+Clears the screen.
+
+In default, it clears whole the screen.
+Argument `region` that takes one of the symbols below
+would specify the region to be cleared.
+
+- `` `line`` .. clears characters in the line where the cursor exists.
+- `` `left`` .. clears characters on the left side of the cursor.
+- `` `right`` .. clears characters on the right side of the cursor.
+- `` `top`` .. clears characters on the above side of the cursor.
+- `` `bottom`` .. clears characters on the below side of the cursor.
+)**");
 }
 
 Gurax_ImplementFunction(Clear)
@@ -44,9 +44,9 @@ Gurax_ImplementFunction(Clear)
 Gurax_DeclareFunction(Flush)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Flushes the pending request of drawing.\n");
+	AddHelp("en", u8R"**(
+Flushes the pending request of drawing.
+)**");
 }
 
 Gurax_ImplementFunction(Flush)
@@ -60,9 +60,9 @@ Gurax_ImplementFunction(Flush)
 Gurax_DeclareFunction(GetWinSize)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns the screen size as a tuple `(width, height)`.");
+	AddHelp("en", u8R"**(
+Returns the screen size as a tuple `(width, height)`.
+)**");
 }
 
 Gurax_ImplementFunction(GetWinSize)
@@ -80,13 +80,13 @@ Gurax_DeclareFunction(MoveTo)
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Moves cursor to the specified position.\n"
-		"The most top-left position on the screen is represented as `0, 0`.\n"
-		"\n"
-		"If `block` is specified, the cursor is moved before evaluating the block,\n"
-		"and then gets back to where it has been when done.\n");
+	AddHelp("en", u8R"**(
+Moves cursor to the specified position.
+The most top-left position on the screen is represented as `0, 0`.
+
+If `block` is specified, the cursor is moved before evaluating the block,
+and then gets back to where it has been when done.
+)**");
 }
 
 Gurax_ImplementFunction(MoveTo)
@@ -106,31 +106,31 @@ Gurax_DeclareFunction(ReadKey)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Reads a keyboard input and returns a character code number associated with the key\n"
-		"without blocking."
-		"\n"
-		"If `:raise` attribute is specified, hitting `Ctrl-C` issues a terminating signal\n"
-		"that causes the program done.\n"
-		"\n"
-		"Character code numbers of some of the special keys are defined as below:\n"
-		"\n"
-		"- `conio.K_BACKSPACE`\n"
-		"- `conio.K_TAB`\n"
-		"- `conio.K_RETURN`\n"
-		"- `conio.K_ESCAPE`\n"
-		"- `conio.K_SPACE`\n"
-		"- `conio.K_UP`\n"
-		"- `conio.K_DOWN`\n"
-		"- `conio.K_RIGHT`\n"
-		"- `conio.K_LEFT`\n"
-		"- `conio.K_INSERT`\n"
-		"- `conio.K_HOME`\n"
-		"- `conio.K_END`\n"
-		"- `conio.K_PAGEUP`\n"
-		"- `conio.K_PAGEDOWN`\n"
-		"- `conio.K_DELETE`\n");
+	AddHelp("en", u8R"**(
+Reads a keyboard input and returns a character code number associated with the key
+without blocking.
+
+If `:raise` attribute is specified, hitting `Ctrl-C` issues a terminating signal
+that causes the program done.
+
+Character code numbers of some of the special keys are defined as below:
+
+- `conio.K_BACKSPACE`
+- `conio.K_TAB`
+- `conio.K_RETURN`
+- `conio.K_ESCAPE`
+- `conio.K_SPACE`
+- `conio.K_UP`
+- `conio.K_DOWN`
+- `conio.K_RIGHT`
+- `conio.K_LEFT`
+- `conio.K_INSERT`
+- `conio.K_HOME`
+- `conio.K_END`
+- `conio.K_PAGEUP`
+- `conio.K_PAGEDOWN`
+- `conio.K_DELETE`
+)**");
 }
 
 Gurax_ImplementFunction(ReadKey)
@@ -149,37 +149,37 @@ Gurax_DeclareFunction(SetColor)
 	DeclareArg("fg", VTYPE_Symbol, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("bg", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Sets foreground and background color of text by specifying a color symbol.\n"
-		"Available color symbols are listed below:\n"
-		"\n"
-		"- `` `black``\n"
-		"- `` `blue``\n"
-		"- `` `green``\n"
-		"- `` `aqua``\n"
-		"- `` `cyan``\n"
-		"- `` `red``\n"
-		"- `` `purple``\n"
-		"- `` `magenta``\n"
-		"- `` `yellow``\n"
-		"- `` `white``\n"
-		"- `` `gray``\n"
-		"- `` `brightBlue``\n"
-		"- `` `brightGreen``\n"
-		"- `` `brightAqua``\n"
-		"- `` `brightCyan``\n"
-		"- `` `brightRed``\n"
-		"- `` `brightPurple``\n"
-		"- `` `brightMagenta``\n"
-		"- `` `brightYellow``\n"
-		"- `` `brightWhite``\n"
-		"\n"
-		"If `fg` is set to nil, the foreground color remains unchanged.\n"
-		"If `bg` is omitted or set to nil, the background color remains unchanged.\n"
-		"\n"
-		"If `block` is specified, the color is changed before evaluating the block,\n"
-		"and then gets back to what has been set when done.\n");
+	AddHelp("en", u8R"**(
+Sets foreground and background color of text by specifying a color symbol.
+Available color symbols are listed below:
+
+- `` `black``
+- `` `blue``
+- `` `green``
+- `` `aqua``
+- `` `cyan``
+- `` `red``
+- `` `purple``
+- `` `magenta``
+- `` `yellow``
+- `` `white``
+- `` `gray``
+- `` `brightBlue``
+- `` `brightGreen``
+- `` `brightAqua``
+- `` `brightCyan``
+- `` `brightRed``
+- `` `brightPurple``
+- `` `brightMagenta``
+- `` `brightYellow``
+- `` `brightWhite``
+
+If `fg` is set to nil, the foreground color remains unchanged.
+If `bg` is omitted or set to nil, the background color remains unchanged.
+
+If `block` is specified, the color is changed before evaluating the block,
+and then gets back to what has been set when done.
+)**");
 }
 
 Gurax_ImplementFunction(SetColor)
@@ -198,30 +198,30 @@ Gurax_DeclareFunction(WaitKey)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Waits for a keyboard input and returns a character code number associated with the key.\n"
-		"\n"
-		"If `:raise` attribute is specified, hitting `Ctrl-C` issues a terminating signal\n"
-		"that causes the program done.\n"
-		"\n"
-		"Character code numbers of some of the special keys are defined as below:\n"
-		"\n"
-		"- `conio.K_BACKSPACE`\n"
-		"- `conio.K_TAB`\n"
-		"- `conio.K_RETURN`\n"
-		"- `conio.K_ESCAPE`\n"
-		"- `conio.K_SPACE`\n"
-		"- `conio.K_UP`\n"
-		"- `conio.K_DOWN`\n"
-		"- `conio.K_RIGHT`\n"
-		"- `conio.K_LEFT`\n"
-		"- `conio.K_INSERT`\n"
-		"- `conio.K_HOME`\n"
-		"- `conio.K_END`\n"
-		"- `conio.K_PAGEUP`\n"
-		"- `conio.K_PAGEDOWN`\n"
-		"- `conio.K_DELETE`\n");
+	AddHelp("en", u8R"**(
+Waits for a keyboard input and returns a character code number associated with the key.
+
+If `:raise` attribute is specified, hitting `Ctrl-C` issues a terminating signal
+that causes the program done.
+
+Character code numbers of some of the special keys are defined as below:
+
+- `conio.K_BACKSPACE`
+- `conio.K_TAB`
+- `conio.K_RETURN`
+- `conio.K_ESCAPE`
+- `conio.K_SPACE`
+- `conio.K_UP`
+- `conio.K_DOWN`
+- `conio.K_RIGHT`
+- `conio.K_LEFT`
+- `conio.K_INSERT`
+- `conio.K_HOME`
+- `conio.K_END`
+- `conio.K_PAGEUP`
+- `conio.K_PAGEDOWN`
+- `conio.K_DELETE`
+)**");
 }
 
 Gurax_ImplementFunction(WaitKey)

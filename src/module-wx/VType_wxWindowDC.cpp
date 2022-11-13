@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(WindowDC_gurax, "WindowDC")
 	Declare(VTYPE_wxWindowDC, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.WindowDC.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.WindowDC.
+)**");
 }
 
 Gurax_ImplementConstructorEx(WindowDC_gurax, processor_gurax, argument_gurax)

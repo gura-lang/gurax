@@ -39,9 +39,9 @@ ${help.ComposeMethodHelp(wx.PGPaintData, `en)}
 Gurax_DeclareProperty_R(wxPGPaintData, m_choiceItem)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxPGPaintData, m_choiceItem)
@@ -53,9 +53,9 @@ Gurax_ImplementPropertyGetter(wxPGPaintData, m_choiceItem)
 Gurax_DeclareProperty_R(wxPGPaintData, m_drawnWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxPGPaintData, m_drawnWidth)
@@ -67,9 +67,9 @@ Gurax_ImplementPropertyGetter(wxPGPaintData, m_drawnWidth)
 Gurax_DeclareProperty_R(wxPGPaintData, m_drawnHeight)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxPGPaintData, m_drawnHeight)

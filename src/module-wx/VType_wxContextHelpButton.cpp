@@ -38,9 +38,9 @@ Gurax_DeclareConstructorAlias(ContextHelpButton_gurax, "ContextHelpButton")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.ContextHelpButton.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.ContextHelpButton.
+)**");
 }
 
 Gurax_ImplementConstructorEx(ContextHelpButton_gurax, processor_gurax, argument_gurax)

@@ -39,9 +39,9 @@ Gurax_DeclareConstructorAlias(Toolbook_gurax, "Toolbook")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Toolbook.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Toolbook.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Toolbook_gurax, processor_gurax, argument_gurax)

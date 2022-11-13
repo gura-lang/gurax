@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(PrintData_gurax, "PrintData")
 {
 	Declare(VTYPE_wxPrintData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.PrintData.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.PrintData.
+)**");
 }
 
 Gurax_ImplementConstructorEx(PrintData_gurax, processor_gurax, argument_gurax)

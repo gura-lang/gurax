@@ -33,9 +33,9 @@ Gurax_DeclareConstructor(Content)
 	Declare(VTYPE_Content, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `bmp.Content` instance.");
+	AddHelp("en", u8R"**(
+Creates a `bmp.Content` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(Content)
@@ -57,9 +57,9 @@ Gurax_DeclareMethod(Content, Write)
 {
 	Declare(VTYPE_Content, Flag::Reduce);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethod(Content, Write)
@@ -81,9 +81,9 @@ Gurax_ImplementMethod(Content, Write)
 Gurax_DeclareProperty_R(Content, bfh)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The structure data of BitmapFileHeader.");
+	AddHelp("en", u8R"**(
+The structure data of BitmapFileHeader.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Content, bfh)
@@ -96,9 +96,9 @@ Gurax_ImplementPropertyGetter(Content, bfh)
 Gurax_DeclareProperty_R(Content, bih)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The structure data of BitmapInfoHeader.");
+	AddHelp("en", u8R"**(
+The structure data of BitmapInfoHeader.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Content, bih)
@@ -111,9 +111,9 @@ Gurax_ImplementPropertyGetter(Content, bih)
 Gurax_DeclareProperty_R(Content, rawImage)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"`Pointer` pointed at the raw image data.");
+	AddHelp("en", u8R"**(
+`Pointer` pointed at the raw image data.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(Content, rawImage)

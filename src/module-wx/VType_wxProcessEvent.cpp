@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.ProcessEvent, `en)}
 Gurax_DeclareMethodAlias(wxProcessEvent, GetExitCode_gurax, "GetExitCode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxProcessEvent, GetExitCode_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxProcessEvent, GetExitCode_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxProcessEvent, GetPid_gurax, "GetPid")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxProcessEvent, GetPid_gurax, processor_gurax, argument_gurax)

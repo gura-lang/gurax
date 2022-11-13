@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxContextMenuEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxContextMenuEvent, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -58,9 +58,9 @@ Gurax_DeclareMethodAlias(wxContextMenuEvent, SetPosition_gurax, "SetPosition")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxContextMenuEvent, SetPosition_gurax, processor_gurax, argument_gurax)

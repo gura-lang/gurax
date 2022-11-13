@@ -41,9 +41,9 @@ Gurax_DeclareConstructorAlias(Button_gurax, "Button")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Button.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Button.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Button_gurax, processor_gurax, argument_gurax)
@@ -74,9 +74,9 @@ Gurax_ImplementConstructorEx(Button_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxButton, GetAuthNeeded_gurax, "GetAuthNeeded")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxButton, GetAuthNeeded_gurax, processor_gurax, argument_gurax)
@@ -94,9 +94,9 @@ Gurax_ImplementMethodEx(wxButton, GetAuthNeeded_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxButton, GetLabel_gurax, "GetLabel")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxButton, GetLabel_gurax, processor_gurax, argument_gurax)
@@ -115,9 +115,9 @@ Gurax_DeclareMethodAlias(wxButton, SetAuthNeeded_gurax, "SetAuthNeeded")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("needed", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxButton, SetAuthNeeded_gurax, processor_gurax, argument_gurax)
@@ -139,9 +139,9 @@ Gurax_DeclareMethodAlias(wxButton, SetDefault_gurax, "SetDefault")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxButton, SetDefault_gurax, processor_gurax, argument_gurax)
@@ -160,9 +160,9 @@ Gurax_DeclareMethodAlias(wxButton, SetLabel_gurax, "SetLabel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxButton, SetLabel_gurax, processor_gurax, argument_gurax)

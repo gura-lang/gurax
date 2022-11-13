@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_SysWMinfo, `en)}
 Gurax_DeclareProperty_R(SDL_SysWMinfo, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_SysWMinfo, propSkeleton)

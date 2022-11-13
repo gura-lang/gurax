@@ -38,9 +38,9 @@ Gurax_DeclareMethodAlias(wxSizer, Add_gurax, "Add")
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Add_gurax, processor_gurax, argument_gurax)
@@ -179,9 +179,9 @@ Gurax_DeclareMethodAlias(wxSizer, AddSpacer_gurax, "AddSpacer")
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, AddSpacer_gurax, processor_gurax, argument_gurax)
@@ -204,9 +204,9 @@ Gurax_DeclareMethodAlias(wxSizer, AddStretchSpacer_gurax, "AddStretchSpacer")
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("prop", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, AddStretchSpacer_gurax, processor_gurax, argument_gurax)
@@ -229,9 +229,9 @@ Gurax_DeclareMethodAlias(wxSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, CalcMin_gurax, processor_gurax, argument_gurax)
@@ -250,9 +250,9 @@ Gurax_DeclareMethodAlias(wxSizer, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("delete_windows", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Clear_gurax, processor_gurax, argument_gurax)
@@ -275,9 +275,9 @@ Gurax_DeclareMethodAlias(wxSizer, ComputeFittingClientSize_gurax, "ComputeFittin
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, ComputeFittingClientSize_gurax, processor_gurax, argument_gurax)
@@ -301,9 +301,9 @@ Gurax_DeclareMethodAlias(wxSizer, ComputeFittingWindowSize_gurax, "ComputeFittin
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, ComputeFittingWindowSize_gurax, processor_gurax, argument_gurax)
@@ -326,9 +326,9 @@ Gurax_DeclareMethodAlias(wxSizer, Detach_gurax, "Detach")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Detach_gurax, processor_gurax, argument_gurax)
@@ -352,9 +352,9 @@ Gurax_DeclareMethodAlias(wxSizer, Fit_gurax, "Fit")
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Fit_gurax, processor_gurax, argument_gurax)
@@ -377,9 +377,9 @@ Gurax_DeclareMethodAlias(wxSizer, FitInside_gurax, "FitInside")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, FitInside_gurax, processor_gurax, argument_gurax)
@@ -404,9 +404,9 @@ Gurax_DeclareMethodAlias(wxSizer, InformFirstDirection_gurax, "InformFirstDirect
 	DeclareArg("direction", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("availableOtherDir", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, InformFirstDirection_gurax, processor_gurax, argument_gurax)
@@ -430,9 +430,9 @@ Gurax_DeclareMethodAlias(wxSizer, GetContainingWindow_gurax, "GetContainingWindo
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, GetContainingWindow_gurax, processor_gurax, argument_gurax)
@@ -451,9 +451,9 @@ Gurax_DeclareMethodAlias(wxSizer, SetContainingWindow_gurax, "SetContainingWindo
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, SetContainingWindow_gurax, processor_gurax, argument_gurax)
@@ -475,9 +475,9 @@ Gurax_ImplementMethodEx(wxSizer, SetContainingWindow_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxSizer, GetItemCount_gurax, "GetItemCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, GetItemCount_gurax, processor_gurax, argument_gurax)
@@ -498,9 +498,9 @@ Gurax_DeclareMethodAlias(wxSizer, GetItem_gurax, "GetItem")
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("recursive", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, GetItem_gurax, processor_gurax, argument_gurax)
@@ -526,9 +526,9 @@ Gurax_DeclareMethodAlias(wxSizer, GetItemById_gurax, "GetItemById")
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("recursive", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, GetItemById_gurax, processor_gurax, argument_gurax)
@@ -551,9 +551,9 @@ Gurax_DeclareMethodAlias(wxSizer, GetMinSize_gurax, "GetMinSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, GetMinSize_gurax, processor_gurax, argument_gurax)
@@ -572,9 +572,9 @@ Gurax_DeclareMethodAlias(wxSizer, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -593,9 +593,9 @@ Gurax_DeclareMethodAlias(wxSizer, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, GetSize_gurax, processor_gurax, argument_gurax)
@@ -615,9 +615,9 @@ Gurax_DeclareMethodAlias(wxSizer, Hide_gurax, "Hide")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("recursive", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Hide_gurax, processor_gurax, argument_gurax)
@@ -643,9 +643,9 @@ Gurax_DeclareMethodAlias(wxSizer, Insert_gurax, "Insert")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Insert_gurax, processor_gurax, argument_gurax)
@@ -718,9 +718,9 @@ Gurax_DeclareMethodAlias(wxSizer, InsertSpacer_gurax, "InsertSpacer")
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, InsertSpacer_gurax, processor_gurax, argument_gurax)
@@ -745,9 +745,9 @@ Gurax_DeclareMethodAlias(wxSizer, InsertStretchSpacer_gurax, "InsertStretchSpace
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("prop", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, InsertStretchSpacer_gurax, processor_gurax, argument_gurax)
@@ -770,9 +770,9 @@ Gurax_ImplementMethodEx(wxSizer, InsertStretchSpacer_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxSizer, IsEmpty_gurax, "IsEmpty")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, IsEmpty_gurax, processor_gurax, argument_gurax)
@@ -791,9 +791,9 @@ Gurax_DeclareMethodAlias(wxSizer, IsShown_gurax, "IsShown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, IsShown_gurax, processor_gurax, argument_gurax)
@@ -815,9 +815,9 @@ Gurax_ImplementMethodEx(wxSizer, IsShown_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxSizer, Layout_gurax, "Layout")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Layout_gurax, processor_gurax, argument_gurax)
@@ -838,9 +838,9 @@ Gurax_DeclareMethodAlias(wxSizer, Prepend_gurax, "Prepend")
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_wxSizerFlags, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Prepend_gurax, processor_gurax, argument_gurax)
@@ -866,9 +866,9 @@ Gurax_DeclareMethodAlias(wxSizer, PrependSpacer_gurax, "PrependSpacer")
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, PrependSpacer_gurax, processor_gurax, argument_gurax)
@@ -891,9 +891,9 @@ Gurax_DeclareMethodAlias(wxSizer, PrependStretchSpacer_gurax, "PrependStretchSpa
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("prop", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, PrependStretchSpacer_gurax, processor_gurax, argument_gurax)
@@ -915,9 +915,9 @@ Gurax_ImplementMethodEx(wxSizer, PrependStretchSpacer_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxSizer, RecalcSizes_gurax, "RecalcSizes")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, RecalcSizes_gurax, processor_gurax, argument_gurax)
@@ -938,9 +938,9 @@ Gurax_DeclareMethodAlias(wxSizer, Replace_gurax, "Replace")
 	DeclareArg("oldwin", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("newwin", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("recursive", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Replace_gurax, processor_gurax, argument_gurax)
@@ -969,9 +969,9 @@ Gurax_DeclareMethodAlias(wxSizer, SetDimension_gurax, "SetDimension")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, SetDimension_gurax, processor_gurax, argument_gurax)
@@ -996,9 +996,9 @@ Gurax_DeclareMethodAlias(wxSizer, SetMinSize_gurax, "SetMinSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, SetMinSize_gurax, processor_gurax, argument_gurax)
@@ -1021,9 +1021,9 @@ Gurax_DeclareMethodAlias(wxSizer, SetSizeHints_gurax, "SetSizeHints")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, SetSizeHints_gurax, processor_gurax, argument_gurax)
@@ -1048,9 +1048,9 @@ Gurax_DeclareMethodAlias(wxSizer, Show_gurax, "Show")
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("recursive", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, Show_gurax, processor_gurax, argument_gurax)
@@ -1075,9 +1075,9 @@ Gurax_DeclareMethodAlias(wxSizer, ShowItems_gurax, "ShowItems")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, ShowItems_gurax, processor_gurax, argument_gurax)
@@ -1101,9 +1101,9 @@ Gurax_DeclareMethodAlias(wxSizer, SetItemMinSize_gurax, "SetItemMinSize")
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizer, SetItemMinSize_gurax, processor_gurax, argument_gurax)

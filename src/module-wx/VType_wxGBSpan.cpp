@@ -35,9 +35,9 @@ Gurax_DeclareConstructorAlias(GBSpan_gurax, "GBSpan")
 	DeclareArg("rowspan", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("colspan", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.GBSpan.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.GBSpan.
+)**");
 }
 
 Gurax_ImplementConstructorEx(GBSpan_gurax, processor_gurax, argument_gurax)
@@ -60,9 +60,9 @@ Gurax_ImplementConstructorEx(GBSpan_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxGBSpan, GetColspan_gurax, "GetColspan")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGBSpan, GetColspan_gurax, processor_gurax, argument_gurax)
@@ -80,9 +80,9 @@ Gurax_ImplementMethodEx(wxGBSpan, GetColspan_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxGBSpan, GetRowspan_gurax, "GetRowspan")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGBSpan, GetRowspan_gurax, processor_gurax, argument_gurax)
@@ -101,9 +101,9 @@ Gurax_DeclareMethodAlias(wxGBSpan, SetColspan_gurax, "SetColspan")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGBSpan, SetColspan_gurax, processor_gurax, argument_gurax)
@@ -125,9 +125,9 @@ Gurax_DeclareMethodAlias(wxGBSpan, SetRowspan_gurax, "SetRowspan")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rowspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGBSpan, SetRowspan_gurax, processor_gurax, argument_gurax)

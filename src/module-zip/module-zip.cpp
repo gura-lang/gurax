@@ -19,9 +19,9 @@ Gurax_DeclareFunction(Directory)
 	Declare(VTYPE_Directory, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns a `Directory` instance that browses the contents in a ZIP stream.");
+	AddHelp("en", u8R"**(
+Returns a `Directory` instance that browses the contents in a ZIP stream.
+)**");
 }
 
 Gurax_ImplementFunction(Directory)
@@ -42,9 +42,9 @@ Gurax_DeclareFunction(Inspect)
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Prints all descriptors in the ZIP-format file.");
+	AddHelp("en", u8R"**(
+Prints all descriptors in the ZIP-format file.
+)**");
 }
 
 Gurax_ImplementFunction(Inspect)
@@ -65,9 +65,9 @@ Gurax_ImplementFunction(Inspect)
 Gurax_DeclareModuleProperty_RW(codec)
 {
 	Declare(VTYPE_Codec, Flag::Nil);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementModulePropertyGetter(codec)

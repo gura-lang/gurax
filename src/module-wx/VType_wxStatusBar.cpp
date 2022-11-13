@@ -37,9 +37,9 @@ Gurax_DeclareConstructorAlias(StatusBar_gurax, "StatusBar")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.StatusBar.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.StatusBar.
+)**");
 }
 
 Gurax_ImplementConstructorEx(StatusBar_gurax, processor_gurax, argument_gurax)
@@ -71,9 +71,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, Create_gurax, "Create")
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, Create_gurax, processor_gurax, argument_gurax)
@@ -102,9 +102,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetFieldRect_gurax, "GetFieldRect")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, GetFieldRect_gurax, processor_gurax, argument_gurax)
@@ -127,9 +127,9 @@ Gurax_ImplementMethodEx(wxStatusBar, GetFieldRect_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxStatusBar, GetFieldsCount_gurax, "GetFieldsCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, GetFieldsCount_gurax, processor_gurax, argument_gurax)
@@ -149,9 +149,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetField_gurax, "GetField")
 	Declare(VTYPE_wxStatusBarPane, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, GetField_gurax, processor_gurax, argument_gurax)
@@ -173,9 +173,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetBorders_gurax, "GetBorders")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, GetBorders_gurax, processor_gurax, argument_gurax)
@@ -194,9 +194,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetStatusText_gurax, "GetStatusText")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, GetStatusText_gurax, processor_gurax, argument_gurax)
@@ -219,9 +219,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetStatusWidth_gurax, "GetStatusWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, GetStatusWidth_gurax, processor_gurax, argument_gurax)
@@ -243,9 +243,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetStatusStyle_gurax, "GetStatusStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, GetStatusStyle_gurax, processor_gurax, argument_gurax)
@@ -267,9 +267,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, PopStatusText_gurax, "PopStatusText")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("field", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, PopStatusText_gurax, processor_gurax, argument_gurax)
@@ -293,9 +293,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, PushStatusText_gurax, "PushStatusText")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("field", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, PushStatusText_gurax, processor_gurax, argument_gurax)
@@ -319,9 +319,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetFieldsCount_gurax, "SetFieldsCount")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("widths", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, SetFieldsCount_gurax, processor_gurax, argument_gurax)
@@ -347,9 +347,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetMinHeight_gurax, "SetMinHeight")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, SetMinHeight_gurax, processor_gurax, argument_gurax)
@@ -371,9 +371,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetStatusStyles_gurax, "SetStatusStyles")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("styles", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, SetStatusStyles_gurax, processor_gurax, argument_gurax)
@@ -396,9 +396,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetStatusText_gurax, "SetStatusText")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, SetStatusText_gurax, processor_gurax, argument_gurax)
@@ -422,9 +422,9 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetStatusWidths_gurax, "SetStatusWidths")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("widths_field", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBar, SetStatusWidths_gurax, processor_gurax, argument_gurax)

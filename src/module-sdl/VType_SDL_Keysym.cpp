@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_Keysym, `en)}
 Gurax_DeclareProperty_R(SDL_Keysym, scancode)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Keysym, scancode)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_Keysym, scancode)
 Gurax_DeclareProperty_R(SDL_Keysym, sym)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Keysym, sym)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_Keysym, sym)
 Gurax_DeclareProperty_R(SDL_Keysym, mod)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Keysym, mod)

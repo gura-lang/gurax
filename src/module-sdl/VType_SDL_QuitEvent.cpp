@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_QuitEvent, `en)}
 Gurax_DeclareProperty_R(SDL_QuitEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_QuitEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_QuitEvent, type)
 Gurax_DeclareProperty_R(SDL_QuitEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_QuitEvent, timestamp)

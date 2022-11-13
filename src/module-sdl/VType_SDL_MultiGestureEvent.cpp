@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_MultiGestureEvent, `en)}
 Gurax_DeclareProperty_R(SDL_MultiGestureEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, type)
 Gurax_DeclareProperty_R(SDL_MultiGestureEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_MultiGestureEvent, touchId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, touchId)
@@ -76,9 +76,9 @@ Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, touchId)
 Gurax_DeclareProperty_R(SDL_MultiGestureEvent, dTheta)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, dTheta)
@@ -91,9 +91,9 @@ Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, dTheta)
 Gurax_DeclareProperty_R(SDL_MultiGestureEvent, dDist)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, dDist)
@@ -106,9 +106,9 @@ Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, dDist)
 Gurax_DeclareProperty_R(SDL_MultiGestureEvent, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, x)
@@ -121,9 +121,9 @@ Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, x)
 Gurax_DeclareProperty_R(SDL_MultiGestureEvent, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, y)
@@ -136,9 +136,9 @@ Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, y)
 Gurax_DeclareProperty_R(SDL_MultiGestureEvent, numFingers)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_MultiGestureEvent, numFingers)

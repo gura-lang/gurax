@@ -35,14 +35,14 @@ Gurax_DeclareConstructor(Pattern)
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	DeclareAttrOpt(Gurax_Symbol(multiLine));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `re.pattern` instance from the given pattern string.\n"
-		"\n"
-		"Following attributes would customize some traits of the pattern:\n"
-		"\n"
-		"- `:icase` .. Ignores character cases.\n"
-		"- `:multiLine` .. Matches \"`.`\" with a line break.\n");
+	AddHelp("en", u8R"**(
+Creates a `re.pattern` instance from the given pattern string.
+
+Following attributes would customize some traits of the pattern:
+
+- `:icase` .. Ignores character cases.
+- `:multiLine` .. Matches \"`.`\" with a line break.
+)**");
 }
 
 Gurax_ImplementConstructor(Pattern)
@@ -69,16 +69,16 @@ Gurax_DeclareMethod(Pattern, Match)
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Applies a pattern matching to the given string and returns a `re.Match` instance\n"
-		"if the matching successes. If not, it would return `nil`.\n"
-		"\n"
-		"The argument `pos` specifies the starting position for matching process.\n"
-		"If omitted, it starts from the beginning of the string.\n"
-		"\n"
-		"The argument `endpos` specifies the ending position for matching process.\n"
-		"If omitted, it would be processed until the end of the string.\n");
+	AddHelp("en", u8R"**(
+Applies a pattern matching to the given string and returns a `re.Match` instance
+if the matching successes. If not, it would return `nil`.
+
+The argument `pos` specifies the starting position for matching process.
+If omitted, it starts from the beginning of the string.
+
+The argument `endpos` specifies the ending position for matching process.
+If omitted, it would be processed until the end of the string.
+)**");
 }
 
 Gurax_ImplementMethod(Pattern, Match)
@@ -105,20 +105,20 @@ Gurax_DeclareMethod(Pattern, Sub)
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Substitutes strings that matches `pattern` with the specified replacer.\n"
-		"\n"
-		"The argument `replace` takes a `string` or `function`.\n"
-		"\n"
-		"If a `string` is specified, it would be used as a substituting string,\n"
-		"in which you can use macros `\\0`, `\\1`, `\\2` .. to refer to matched groups.\n"
-		"\n"
-		"If a `function` is specified, it would be called with an argument `m:re.Match`\n"
-		"and is expected to return a string for subsitution.\n"
-		"\n"
-		"The argument `count` specifies the maximum number of substitutions.\n"
-		"If omitted, no limit would be applied.\n");
+	AddHelp("en", u8R"**(
+Substitutes strings that matches `pattern` with the specified replacer.
+
+The argument `replace` takes a `string` or `function`.
+
+If a `string` is specified, it would be used as a substituting string,
+in which you can use macros `\\0`, `\\1`, `\\2` .. to refer to matched groups.
+
+If a `function` is specified, it would be called with an argument `m:re.Match`
+and is expected to return a string for subsitution.
+
+The argument `count` specifies the maximum number of substitutions.
+If omitted, no limit would be applied.
+)**");
 }
 
 Gurax_ImplementMethod(Pattern, Sub)
@@ -156,12 +156,12 @@ Gurax_DeclareMethod(Pattern, Split)
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cntMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that splits the source string with the specified pattern.\n"
-		"\n"
-		"The argument `cntMax` specifies the maximum number for splitting.\n"
-		"If omitted, no limit would be applied.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that splits the source string with the specified pattern.
+
+The argument `cntMax` specifies the maximum number for splitting.
+If omitted, no limit would be applied.
+)**");
 }
 
 Gurax_ImplementMethod(Pattern, Split)
@@ -187,15 +187,15 @@ Gurax_DeclareMethod(Pattern, Scan)
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an iterator that returns strings that match the specified pattern.\n"
-		"\n"
-		"The argument `pos` specifies the starting position for matching process.\n"
-		"If omitted, it starts from the beginning of the string.\n"
-		"\n"
-		"The argument `posEnd` specifies the ending position for matching process.\n"
-		"If omitted, it would be processed until the end of the string.\n");
+	AddHelp("en", u8R"**(
+Creates an iterator that returns strings that match the specified pattern.
+
+The argument `pos` specifies the starting position for matching process.
+If omitted, it starts from the beginning of the string.
+
+The argument `posEnd` specifies the ending position for matching process.
+If omitted, it would be processed until the end of the string.
+)**");
 }
 
 Gurax_ImplementMethod(Pattern, Scan)

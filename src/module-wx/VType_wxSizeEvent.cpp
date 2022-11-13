@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxSizeEvent, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizeEvent, GetSize_gurax, processor_gurax, argument_gurax)
@@ -58,9 +58,9 @@ Gurax_DeclareMethodAlias(wxSizeEvent, SetSize_gurax, "SetSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizeEvent, SetSize_gurax, processor_gurax, argument_gurax)
@@ -83,9 +83,9 @@ Gurax_DeclareMethodAlias(wxSizeEvent, GetRect_gurax, "GetRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizeEvent, GetRect_gurax, processor_gurax, argument_gurax)
@@ -104,9 +104,9 @@ Gurax_DeclareMethodAlias(wxSizeEvent, SetRect_gurax, "SetRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSizeEvent, SetRect_gurax, processor_gurax, argument_gurax)

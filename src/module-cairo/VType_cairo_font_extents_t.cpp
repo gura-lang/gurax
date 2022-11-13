@@ -32,9 +32,9 @@ Gurax_DeclareConstructor(cairo_font_extents_t)
 {
 	Declare(VTYPE_cairo_font_extents_t, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `cairo_font_extents_t` instance.\n");
+	AddHelp("en", u8R"**(
+Creates a `cairo_font_extents_t` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(cairo_font_extents_t)
@@ -55,9 +55,9 @@ Gurax_DeclareMethod(cairo_font_extents_t, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(cairo_font_extents_t, MethodSkeleton)
@@ -79,9 +79,9 @@ Gurax_ImplementMethod(cairo_font_extents_t, MethodSkeleton)
 Gurax_DeclareProperty_RW(cairo_font_extents_t, ascent)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(cairo_font_extents_t, ascent)
@@ -100,9 +100,9 @@ Gurax_ImplementPropertySetter(cairo_font_extents_t, ascent)
 Gurax_DeclareProperty_RW(cairo_font_extents_t, descent)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(cairo_font_extents_t, descent)
@@ -121,9 +121,9 @@ Gurax_ImplementPropertySetter(cairo_font_extents_t, descent)
 Gurax_DeclareProperty_RW(cairo_font_extents_t, height)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(cairo_font_extents_t, height)
@@ -142,9 +142,9 @@ Gurax_ImplementPropertySetter(cairo_font_extents_t, height)
 Gurax_DeclareProperty_RW(cairo_font_extents_t, max_x_advance)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(cairo_font_extents_t, max_x_advance)
@@ -163,9 +163,9 @@ Gurax_ImplementPropertySetter(cairo_font_extents_t, max_x_advance)
 Gurax_DeclareProperty_RW(cairo_font_extents_t, max_y_advance)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(cairo_font_extents_t, max_y_advance)

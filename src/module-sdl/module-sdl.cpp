@@ -12,9 +12,9 @@ Gurax_BeginModule(sdl)
 Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Adds up the given two numbers and returns the result.");
+	AddHelp("en", u8R"**(
+Adds up the given two numbers and returns the result.
+)**");
 }
 
 Gurax_ImplementFunction(Test)

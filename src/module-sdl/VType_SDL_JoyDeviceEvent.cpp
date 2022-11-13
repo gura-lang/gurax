@@ -31,9 +31,9 @@ ${help.ComposeMethodHelp(sdl.SDL_JoyDeviceEvent, `en)}
 Gurax_DeclareProperty_R(SDL_JoyDeviceEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyDeviceEvent, type)
@@ -46,9 +46,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyDeviceEvent, type)
 Gurax_DeclareProperty_R(SDL_JoyDeviceEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyDeviceEvent, timestamp)
@@ -61,9 +61,9 @@ Gurax_ImplementPropertyGetter(SDL_JoyDeviceEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_JoyDeviceEvent, which)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_JoyDeviceEvent, which)

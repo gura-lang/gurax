@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(Icon_gurax, "Icon")
 	Declare(VTYPE_wxIcon, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.Icon.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.Icon.
+)**");
 }
 
 Gurax_ImplementConstructorEx(Icon_gurax, processor_gurax, argument_gurax)
@@ -78,9 +78,9 @@ Gurax_DeclareMethodAlias(wxIcon, CopyFromBitmap_gurax, "CopyFromBitmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIcon, CopyFromBitmap_gurax, processor_gurax, argument_gurax)
@@ -102,9 +102,9 @@ Gurax_ImplementMethodEx(wxIcon, CopyFromBitmap_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxIcon, GetDepth_gurax, "GetDepth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIcon, GetDepth_gurax, processor_gurax, argument_gurax)
@@ -122,9 +122,9 @@ Gurax_ImplementMethodEx(wxIcon, GetDepth_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxIcon, GetHeight_gurax, "GetHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIcon, GetHeight_gurax, processor_gurax, argument_gurax)
@@ -142,9 +142,9 @@ Gurax_ImplementMethodEx(wxIcon, GetHeight_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxIcon, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIcon, GetWidth_gurax, processor_gurax, argument_gurax)
@@ -162,9 +162,9 @@ Gurax_ImplementMethodEx(wxIcon, GetWidth_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxIcon, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIcon, IsOk_gurax, processor_gurax, argument_gurax)
@@ -186,9 +186,9 @@ Gurax_DeclareMethodAlias(wxIcon, LoadFile_gurax, "LoadFile")
 	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("desiredWidth", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("desiredHeight", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIcon, LoadFile_gurax, processor_gurax, argument_gurax)
@@ -216,9 +216,9 @@ Gurax_DeclareMethodAlias(wxIcon, SetDepth_gurax, "SetDepth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIcon, SetDepth_gurax, processor_gurax, argument_gurax)
@@ -240,9 +240,9 @@ Gurax_DeclareMethodAlias(wxIcon, SetHeight_gurax, "SetHeight")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIcon, SetHeight_gurax, processor_gurax, argument_gurax)
@@ -264,9 +264,9 @@ Gurax_DeclareMethodAlias(wxIcon, SetWidth_gurax, "SetWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIcon, SetWidth_gurax, processor_gurax, argument_gurax)

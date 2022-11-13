@@ -41,9 +41,9 @@ Gurax_DeclareConstructorAlias(GLCanvas_gurax, "GLCanvas")
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("palette", VTYPE_wxPalette, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.GLCanvas.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.GLCanvas.
+)**");
 }
 
 Gurax_ImplementConstructorEx(GLCanvas_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_DeclareMethodAlias(wxGLCanvas, SetColour_gurax, "SetColour")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("colour", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGLCanvas, SetColour_gurax, processor_gurax, argument_gurax)
@@ -100,9 +100,9 @@ Gurax_DeclareMethodAlias(wxGLCanvas, SetCurrent_gurax, "SetCurrent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("context", VTYPE_wxGLContext, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGLCanvas, SetCurrent_gurax, processor_gurax, argument_gurax)
@@ -124,9 +124,9 @@ Gurax_ImplementMethodEx(wxGLCanvas, SetCurrent_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxGLCanvas, SwapBuffers_gurax, "SwapBuffers")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxGLCanvas, SwapBuffers_gurax, processor_gurax, argument_gurax)
@@ -145,9 +145,9 @@ Gurax_DeclareClassMethodAlias(wxGLCanvas, IsExtensionSupported_gurax, "IsExtensi
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("extension", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wxGLCanvas, IsExtensionSupported_gurax, processor_gurax, argument_gurax)

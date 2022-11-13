@@ -9,9 +9,9 @@ Gurax_BeginModule(curl)
 Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 static long OnChunkBgn(curl_fileinfo* finfo, void* data, int remains)

@@ -34,9 +34,9 @@ Gurax_DeclareConstructorAlias(ProtocolLog_gurax, "ProtocolLog")
 	Declare(VTYPE_wxProtocolLog, Flag::None);
 	DeclareArg("traceMask", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.ProtocolLog.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.ProtocolLog.
+)**");
 }
 
 Gurax_ImplementConstructorEx(ProtocolLog_gurax, processor_gurax, argument_gurax)
@@ -58,9 +58,9 @@ Gurax_DeclareMethodAlias(wxProtocolLog, LogRequest_gurax, "LogRequest")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxProtocolLog, LogRequest_gurax, processor_gurax, argument_gurax)
@@ -82,9 +82,9 @@ Gurax_DeclareMethodAlias(wxProtocolLog, LogResponse_gurax, "LogResponse")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxProtocolLog, LogResponse_gurax, processor_gurax, argument_gurax)

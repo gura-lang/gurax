@@ -42,9 +42,9 @@ Gurax_DeclareConstructorAlias(FileCtrl_gurax, "FileCtrl")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.FileCtrl.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.FileCtrl.
+)**");
 }
 
 Gurax_ImplementConstructorEx(FileCtrl_gurax, processor_gurax, argument_gurax)
@@ -85,9 +85,9 @@ Gurax_DeclareMethodAlias(wxFileCtrl, Create_gurax, "Create")
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -118,9 +118,9 @@ Gurax_ImplementMethodEx(wxFileCtrl, Create_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxFileCtrl, GetDirectory_gurax, "GetDirectory")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, GetDirectory_gurax, processor_gurax, argument_gurax)
@@ -138,9 +138,9 @@ Gurax_ImplementMethodEx(wxFileCtrl, GetDirectory_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxFileCtrl, GetFilename_gurax, "GetFilename")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, GetFilename_gurax, processor_gurax, argument_gurax)
@@ -158,9 +158,9 @@ Gurax_ImplementMethodEx(wxFileCtrl, GetFilename_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxFileCtrl, GetFilterIndex_gurax, "GetFilterIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, GetFilterIndex_gurax, processor_gurax, argument_gurax)
@@ -178,9 +178,9 @@ Gurax_ImplementMethodEx(wxFileCtrl, GetFilterIndex_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxFileCtrl, GetPath_gurax, "GetPath")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, GetPath_gurax, processor_gurax, argument_gurax)
@@ -198,9 +198,9 @@ Gurax_ImplementMethodEx(wxFileCtrl, GetPath_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxFileCtrl, GetWildcard_gurax, "GetWildcard")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, GetWildcard_gurax, processor_gurax, argument_gurax)
@@ -219,9 +219,9 @@ Gurax_DeclareMethodAlias(wxFileCtrl, SetDirectory_gurax, "SetDirectory")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("directory", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, SetDirectory_gurax, processor_gurax, argument_gurax)
@@ -243,9 +243,9 @@ Gurax_DeclareMethodAlias(wxFileCtrl, SetFilename_gurax, "SetFilename")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, SetFilename_gurax, processor_gurax, argument_gurax)
@@ -267,9 +267,9 @@ Gurax_DeclareMethodAlias(wxFileCtrl, SetPath_gurax, "SetPath")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, SetPath_gurax, processor_gurax, argument_gurax)
@@ -291,9 +291,9 @@ Gurax_DeclareMethodAlias(wxFileCtrl, SetFilterIndex_gurax, "SetFilterIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("filterIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, SetFilterIndex_gurax, processor_gurax, argument_gurax)
@@ -315,9 +315,9 @@ Gurax_DeclareMethodAlias(wxFileCtrl, SetWildcard_gurax, "SetWildcard")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("wildCard", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, SetWildcard_gurax, processor_gurax, argument_gurax)
@@ -339,9 +339,9 @@ Gurax_DeclareMethodAlias(wxFileCtrl, ShowHidden_gurax, "ShowHidden")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxFileCtrl, ShowHidden_gurax, processor_gurax, argument_gurax)

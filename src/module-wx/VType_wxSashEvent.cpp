@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxSashEvent, GetDragRect_gurax, "GetDragRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSashEvent, GetDragRect_gurax, processor_gurax, argument_gurax)
@@ -57,9 +57,9 @@ Gurax_ImplementMethodEx(wxSashEvent, GetDragRect_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxSashEvent, GetDragStatus_gurax, "GetDragStatus")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSashEvent, GetDragStatus_gurax, processor_gurax, argument_gurax)
@@ -77,9 +77,9 @@ Gurax_ImplementMethodEx(wxSashEvent, GetDragStatus_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxSashEvent, GetEdge_gurax, "GetEdge")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSashEvent, GetEdge_gurax, processor_gurax, argument_gurax)
@@ -98,9 +98,9 @@ Gurax_DeclareMethodAlias(wxSashEvent, SetEdge_gurax, "SetEdge")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("edge", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSashEvent, SetEdge_gurax, processor_gurax, argument_gurax)
@@ -122,9 +122,9 @@ Gurax_DeclareMethodAlias(wxSashEvent, SetDragRect_gurax, "SetDragRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSashEvent, SetDragRect_gurax, processor_gurax, argument_gurax)
@@ -147,9 +147,9 @@ Gurax_DeclareMethodAlias(wxSashEvent, SetDragStatus_gurax, "SetDragStatus")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("status", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxSashEvent, SetDragStatus_gurax, processor_gurax, argument_gurax)

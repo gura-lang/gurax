@@ -39,9 +39,9 @@ ${help.ComposeMethodHelp(wx.EventType, `en)}
 Gurax_DeclareProperty_R(wxEventType, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wxEventType, name)

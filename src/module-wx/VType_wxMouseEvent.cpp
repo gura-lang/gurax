@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.MouseEvent, `en)}
 Gurax_DeclareMethodAlias(wxMouseEvent, Aux1DClick_gurax, "Aux1DClick")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Aux1DClick_gurax, processor_gurax, argument_gurax)
@@ -56,9 +56,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Aux1DClick_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxMouseEvent, Aux1Down_gurax, "Aux1Down")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Aux1Down_gurax, processor_gurax, argument_gurax)
@@ -76,9 +76,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Aux1Down_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMouseEvent, Aux1Up_gurax, "Aux1Up")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Aux1Up_gurax, processor_gurax, argument_gurax)
@@ -96,9 +96,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Aux1Up_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxMouseEvent, Aux2DClick_gurax, "Aux2DClick")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Aux2DClick_gurax, processor_gurax, argument_gurax)
@@ -116,9 +116,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Aux2DClick_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxMouseEvent, Aux2Down_gurax, "Aux2Down")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Aux2Down_gurax, processor_gurax, argument_gurax)
@@ -136,9 +136,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Aux2Down_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMouseEvent, Aux2Up_gurax, "Aux2Up")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Aux2Up_gurax, processor_gurax, argument_gurax)
@@ -157,9 +157,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, Button_gurax, "Button")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("but", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Button_gurax, processor_gurax, argument_gurax)
@@ -181,9 +181,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, ButtonDClick_gurax, "ButtonDClick")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("but", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, ButtonDClick_gurax, processor_gurax, argument_gurax)
@@ -206,9 +206,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, ButtonDown_gurax, "ButtonDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("but", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, ButtonDown_gurax, processor_gurax, argument_gurax)
@@ -231,9 +231,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, ButtonUp_gurax, "ButtonUp")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("but", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, ButtonUp_gurax, processor_gurax, argument_gurax)
@@ -255,9 +255,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, ButtonUp_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMouseEvent, Dragging_gurax, "Dragging")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Dragging_gurax, processor_gurax, argument_gurax)
@@ -275,9 +275,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Dragging_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMouseEvent, Entering_gurax, "Entering")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Entering_gurax, processor_gurax, argument_gurax)
@@ -295,9 +295,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Entering_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMouseEvent, GetButton_gurax, "GetButton")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetButton_gurax, processor_gurax, argument_gurax)
@@ -315,9 +315,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetButton_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxMouseEvent, GetClickCount_gurax, "GetClickCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetClickCount_gurax, processor_gurax, argument_gurax)
@@ -335,9 +335,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetClickCount_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxMouseEvent, GetLinesPerAction_gurax, "GetLinesPerAction")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetLinesPerAction_gurax, processor_gurax, argument_gurax)
@@ -355,9 +355,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetLinesPerAction_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxMouseEvent, GetColumnsPerAction_gurax, "GetColumnsPerAction")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetColumnsPerAction_gurax, processor_gurax, argument_gurax)
@@ -377,9 +377,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, GetLogicalPosition_gurax, "GetLogicalPosi
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetLogicalPosition_gurax, processor_gurax, argument_gurax)
@@ -401,9 +401,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetLogicalPosition_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxMouseEvent, GetWheelDelta_gurax, "GetWheelDelta")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetWheelDelta_gurax, processor_gurax, argument_gurax)
@@ -421,9 +421,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetWheelDelta_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxMouseEvent, GetWheelRotation_gurax, "GetWheelRotation")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetWheelRotation_gurax, processor_gurax, argument_gurax)
@@ -441,9 +441,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetWheelRotation_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxMouseEvent, GetWheelAxis_gurax, "GetWheelAxis")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetWheelAxis_gurax, processor_gurax, argument_gurax)
@@ -461,9 +461,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetWheelAxis_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxMouseEvent, IsButton_gurax, "IsButton")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, IsButton_gurax, processor_gurax, argument_gurax)
@@ -481,9 +481,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, IsButton_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMouseEvent, IsPageScroll_gurax, "IsPageScroll")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, IsPageScroll_gurax, processor_gurax, argument_gurax)
@@ -501,9 +501,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, IsPageScroll_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxMouseEvent, Leaving_gurax, "Leaving")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Leaving_gurax, processor_gurax, argument_gurax)
@@ -521,9 +521,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Leaving_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxMouseEvent, LeftDClick_gurax, "LeftDClick")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, LeftDClick_gurax, processor_gurax, argument_gurax)
@@ -541,9 +541,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, LeftDClick_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxMouseEvent, LeftDown_gurax, "LeftDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, LeftDown_gurax, processor_gurax, argument_gurax)
@@ -561,9 +561,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, LeftDown_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMouseEvent, LeftUp_gurax, "LeftUp")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, LeftUp_gurax, processor_gurax, argument_gurax)
@@ -581,9 +581,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, LeftUp_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxMouseEvent, MetaDown_gurax, "MetaDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, MetaDown_gurax, processor_gurax, argument_gurax)
@@ -601,9 +601,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, MetaDown_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMouseEvent, MiddleDClick_gurax, "MiddleDClick")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, MiddleDClick_gurax, processor_gurax, argument_gurax)
@@ -621,9 +621,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, MiddleDClick_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxMouseEvent, MiddleDown_gurax, "MiddleDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, MiddleDown_gurax, processor_gurax, argument_gurax)
@@ -641,9 +641,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, MiddleDown_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxMouseEvent, MiddleUp_gurax, "MiddleUp")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, MiddleUp_gurax, processor_gurax, argument_gurax)
@@ -661,9 +661,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, MiddleUp_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMouseEvent, Moving_gurax, "Moving")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Moving_gurax, processor_gurax, argument_gurax)
@@ -681,9 +681,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Moving_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxMouseEvent, RightDClick_gurax, "RightDClick")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, RightDClick_gurax, processor_gurax, argument_gurax)
@@ -701,9 +701,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, RightDClick_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxMouseEvent, RightDown_gurax, "RightDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, RightDown_gurax, processor_gurax, argument_gurax)
@@ -721,9 +721,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, RightDown_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxMouseEvent, RightUp_gurax, "RightUp")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, RightUp_gurax, processor_gurax, argument_gurax)
@@ -741,9 +741,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, RightUp_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxMouseEvent, GetX_gurax, "GetX")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetX_gurax, processor_gurax, argument_gurax)
@@ -761,9 +761,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetX_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxMouseEvent, GetY_gurax, "GetY")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetY_gurax, processor_gurax, argument_gurax)
@@ -781,9 +781,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetY_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxMouseEvent, LeftIsDown_gurax, "LeftIsDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, LeftIsDown_gurax, processor_gurax, argument_gurax)
@@ -801,9 +801,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, LeftIsDown_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxMouseEvent, MiddleIsDown_gurax, "MiddleIsDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, MiddleIsDown_gurax, processor_gurax, argument_gurax)
@@ -821,9 +821,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, MiddleIsDown_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxMouseEvent, RightIsDown_gurax, "RightIsDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, RightIsDown_gurax, processor_gurax, argument_gurax)
@@ -841,9 +841,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, RightIsDown_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxMouseEvent, Aux1IsDown_gurax, "Aux1IsDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Aux1IsDown_gurax, processor_gurax, argument_gurax)
@@ -861,9 +861,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, Aux1IsDown_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxMouseEvent, Aux2IsDown_gurax, "Aux2IsDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, Aux2IsDown_gurax, processor_gurax, argument_gurax)
@@ -882,9 +882,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetX_gurax, "SetX")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetX_gurax, processor_gurax, argument_gurax)
@@ -906,9 +906,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetY_gurax, "SetY")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetY_gurax, processor_gurax, argument_gurax)
@@ -930,9 +930,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetPosition_gurax, "SetPosition")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetPosition_gurax, processor_gurax, argument_gurax)
@@ -955,9 +955,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetLeftDown_gurax, "SetLeftDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetLeftDown_gurax, processor_gurax, argument_gurax)
@@ -979,9 +979,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetMiddleDown_gurax, "SetMiddleDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetMiddleDown_gurax, processor_gurax, argument_gurax)
@@ -1003,9 +1003,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetRightDown_gurax, "SetRightDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetRightDown_gurax, processor_gurax, argument_gurax)
@@ -1027,9 +1027,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetAux1Down_gurax, "SetAux1Down")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetAux1Down_gurax, processor_gurax, argument_gurax)
@@ -1051,9 +1051,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetAux2Down_gurax, "SetAux2Down")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetAux2Down_gurax, processor_gurax, argument_gurax)
@@ -1075,9 +1075,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -1095,9 +1095,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetPosition_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxMouseEvent, GetPositionXY_gurax, "GetPositionXY")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetPositionXY_gurax, processor_gurax, argument_gurax)
@@ -1116,9 +1116,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetPositionXY_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxMouseEvent, GetModifiers_gurax, "GetModifiers")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, GetModifiers_gurax, processor_gurax, argument_gurax)
@@ -1136,9 +1136,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, GetModifiers_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxMouseEvent, HasAnyModifiers_gurax, "HasAnyModifiers")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, HasAnyModifiers_gurax, processor_gurax, argument_gurax)
@@ -1156,9 +1156,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, HasAnyModifiers_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxMouseEvent, HasModifiers_gurax, "HasModifiers")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, HasModifiers_gurax, processor_gurax, argument_gurax)
@@ -1176,9 +1176,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, HasModifiers_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxMouseEvent, ControlDown_gurax, "ControlDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, ControlDown_gurax, processor_gurax, argument_gurax)
@@ -1196,9 +1196,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, ControlDown_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxMouseEvent, RawControlDown_gurax, "RawControlDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, RawControlDown_gurax, processor_gurax, argument_gurax)
@@ -1216,9 +1216,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, RawControlDown_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxMouseEvent, ShiftDown_gurax, "ShiftDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, ShiftDown_gurax, processor_gurax, argument_gurax)
@@ -1236,9 +1236,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, ShiftDown_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxMouseEvent, AltDown_gurax, "AltDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, AltDown_gurax, processor_gurax, argument_gurax)
@@ -1256,9 +1256,9 @@ Gurax_ImplementMethodEx(wxMouseEvent, AltDown_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxMouseEvent, CmdDown_gurax, "CmdDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, CmdDown_gurax, processor_gurax, argument_gurax)
@@ -1277,9 +1277,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetControlDown_gurax, "SetControlDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetControlDown_gurax, processor_gurax, argument_gurax)
@@ -1301,9 +1301,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetRawControlDown_gurax, "SetRawControlDo
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetRawControlDown_gurax, processor_gurax, argument_gurax)
@@ -1325,9 +1325,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetShiftDown_gurax, "SetShiftDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetShiftDown_gurax, processor_gurax, argument_gurax)
@@ -1349,9 +1349,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetAltDown_gurax, "SetAltDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetAltDown_gurax, processor_gurax, argument_gurax)
@@ -1373,9 +1373,9 @@ Gurax_DeclareMethodAlias(wxMouseEvent, SetMetaDown_gurax, "SetMetaDown")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxMouseEvent, SetMetaDown_gurax, processor_gurax, argument_gurax)

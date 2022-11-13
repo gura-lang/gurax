@@ -34,9 +34,9 @@ Gurax_DeclareConstructor(Writer)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `Writer` instance from the speicifed stream.");
+	AddHelp("en", u8R"**(
+Creates a `Writer` instance from the speicifed stream.
+)**");
 }
 
 Gurax_ImplementConstructor(Writer)
@@ -66,15 +66,15 @@ Gurax_DeclareMethod(Writer, Add)
 	DeclareArg("fileName", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("timeStamp", VTYPE_DateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Reads data from `stream` and adds it to the zip file with the specified file name.\n"
-		"\n"
-		"Argument `compression` specifies the compression method and takes one of the following symbols:\n"
-		"\n"
-		"- `` `store``\n"
-		"- `` `deflate``\n"
-		"- `` `bzip2``\n");
+	AddHelp("en", u8R"**(
+Reads data from `stream` and adds it to the zip file with the specified file name.
+
+Argument `compression` specifies the compression method and takes one of the following symbols:
+
+- `` `store``
+- `` `deflate``
+- `` `bzip2``
+)**");
 }
 
 Gurax_ImplementMethod(Writer, Add)
@@ -110,9 +110,9 @@ Gurax_ImplementMethod(Writer, Add)
 Gurax_DeclareMethod(Writer, Close)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Closes the zip file after flushing cached data.");
+	AddHelp("en", u8R"**(
+Closes the zip file after flushing cached data.
+)**");
 }
 
 Gurax_ImplementMethod(Writer, Close)

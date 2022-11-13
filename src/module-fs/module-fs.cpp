@@ -13,12 +13,12 @@ Gurax_DeclareFunction(ChangeDir)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("dirName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Changes the current working directory to `pathname`.\n"
-		"\n"
-		"The block would be evaluated if specified, and the working directory would be changed\n"
-		"only during that evaluation period.\n");
+	AddHelp("en", u8R"**(
+Changes the current working directory to `pathname`.
+
+The block would be evaluated if specified, and the working directory would be changed
+only during that evaluation period.
+)**");
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 }
 
@@ -57,47 +57,47 @@ Gurax_DeclareFunction(ChangeMode)
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(followLink));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Changes the access mode of a file specified by `pathname`.\n"
-		"\n"
-		"There are two formats to specify the mode: one is by a number, and another in a string.\n"
-		"\n"
-		"When specified in a number, following bits are associated with access permissions:\n"
-		"\n"
-		"- `b8 b7 b6` .. Read, write and executable permissions for owners\n"
-		"- `b5 b4 b3` .. Read, write and executable permissions for groups\n"
-		"- `b2 b1 b0` .. Read, write and executable permissions for others\n"
-		"\n"
-		"When set to one, each permission is validated.\n"
-		"\n"
-		"When specified in a string, it accepts a permission directive\n"
-		"in a format of following regular expression\n"
-		"    [ugoa]+([-+=][rwx]+)+\n"
-		"It starts with characters that represent target which permissions are modified as described below:\n"
-		"\n"
-		"- `u` .. owners\n"
-		"- `g` .. groups\n"
-		"- `o` .. others\n"
-		"- `a` .. all users\n"
-		"\n"
-		"Then, follows an operation:\n"
-		"- `-` .. remove\n"
-		"- `+` .. append\n"
-		"- `=` .. set\n"
-		"\n"
-		"At last, permission attributes are specified as below:\n"
-		"\n"
-		"- `r` .. read permission\n"
-		"- `w` .. write permission\n"
-		"- `x` .. executable permission\n"
-		"\n"
-		"If the modification target is a link file, each platform would have different result:\n"
-		"\n"
-		"- Linux .. Modifies permissions of the link file itself.\n"
-		"           Specifying `:followLink` attribute would modify permsisions of the target file\n instead.\n"
-		"- MacOS .. Modifies permissions of the target file. Attribute `:followLink` has no effect.\n"
-		"- Windows .. Modifies permissions of the link file. Attribute `:followLink` has no effect.\n");
+	AddHelp("en", u8R"**(
+Changes the access mode of a file specified by `pathname`.
+
+There are two formats to specify the mode: one is by a number, and another in a string.
+
+When specified in a number, following bits are associated with access permissions:
+
+- `b8 b7 b6` .. Read, write and executable permissions for owners
+- `b5 b4 b3` .. Read, write and executable permissions for groups
+- `b2 b1 b0` .. Read, write and executable permissions for others
+
+When set to one, each permission is validated.
+
+When specified in a string, it accepts a permission directive
+in a format of following regular expression
+    [ugoa]+([-+=][rwx]+)+
+It starts with characters that represent target which permissions are modified as described below:
+
+- `u` .. owners
+- `g` .. groups
+- `o` .. others
+- `a` .. all users
+
+Then, follows an operation:
+- `-` .. remove
+- `+` .. append
+- `=` .. set
+
+At last, permission attributes are specified as below:
+
+- `r` .. read permission
+- `w` .. write permission
+- `x` .. executable permission
+
+If the modification target is a link file, each platform would have different result:
+
+- Linux .. Modifies permissions of the link file itself.
+           Specifying `:followLink` attribute would modify permsisions of the target file\n instead.
+- MacOS .. Modifies permissions of the target file. Attribute `:followLink` has no effect.
+- Windows .. Modifies permissions of the link file. Attribute `:followLink` has no effect.
+)**");
 }
 
 Gurax_ImplementFunction(ChangeMode)
@@ -134,17 +134,17 @@ Gurax_DeclareFunction(Copy)
 	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	//DeclareAttrOpt(Gurax_Symbol(followLink));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Copies a file.\n"
-		"\n"
-		"An argument `src` needs to specify a path name of a file that is to be copied\n"
-		"while `dst` can specify a path name of either a file or a directory.\n"
-		"If `dst` is a directory, the file would be copied into that.\n"
-		"Otherwise, it would create a copy of `src` that has a name specified by `dst`.\n"
-		"\n"
-		"If a destination file already exists, an error occurs.\n"
-		"Specifying an attribute `:overwrite` would overwrite an existing one.\n");
+	AddHelp("en", u8R"**(
+Copies a file.
+
+An argument `src` needs to specify a path name of a file that is to be copied
+while `dst` can specify a path name of either a file or a directory.
+If `dst` is a directory, the file would be copied into that.
+Otherwise, it would create a copy of `src` that has a name specified by `dst`.
+
+If a destination file already exists, an error occurs.
+Specifying an attribute `:overwrite` would overwrite an existing one.
+)**");
 }
 
 Gurax_ImplementFunction(Copy)
@@ -169,13 +169,13 @@ Gurax_DeclareFunction(CopyDir)
 	DeclareArg("dirNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dirNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(tree));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Copies a directory.\n"
-		"\n"
-		"Arguments `src` and `dst` specify source directory and destination directory respectively.\n"
-		"In default, sub directories are not copied.`\n"
-		"Specifying `:tree` attribute would copy all the sub directories in the source.\n");
+	AddHelp("en", u8R"**(
+Copies a directory.
+
+Arguments `src` and `dst` specify source directory and destination directory respectively.
+In default, sub directories are not copied.`
+Specifying `:tree` attribute would copy all the sub directories in the source.
+)**");
 }
 
 Gurax_ImplementFunction(CopyDir)
@@ -198,12 +198,12 @@ Gurax_DeclareFunction(CreateDir)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("dirName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(tree));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a directory.\n"
-		"\n"
-		"If `pathname` consists of multiple sub directories and some of them still doesn't exist,\n"
-		"an error occurs. Specifying `:tree` attribute would create such directories.\n");
+	AddHelp("en", u8R"**(
+Creates a directory.
+
+If `pathname` consists of multiple sub directories and some of them still doesn't exist,
+an error occurs. Specifying `:tree` attribute would create such directories.
+)**");
 }
 
 Gurax_ImplementFunction(CreateDir)
@@ -225,9 +225,9 @@ Gurax_DeclareFunction(CreateLink)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("pathNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Copies a symbolic link.\n");
+	AddHelp("en", u8R"**(
+Copies a symbolic link.
+)**");
 }
 
 Gurax_ImplementFunction(CreateLink)
@@ -248,9 +248,9 @@ Gurax_DeclareFunction(Exists)
 {
 	Declare(VTYPE_Bool, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns true if the specified file exists in a file system.");
+	AddHelp("en", u8R"**(
+Returns true if the specified file exists in a file system.
+)**");
 }
 
 Gurax_ImplementFunction(Exists)
@@ -267,9 +267,9 @@ Gurax_ImplementFunction(Exists)
 Gurax_DeclareFunction(GetCurDir)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Returns the current working directory.");
+	AddHelp("en", u8R"**(
+Returns the current working directory.
+)**");
 }
 
 Gurax_ImplementFunction(GetCurDir)
@@ -283,9 +283,9 @@ Gurax_DeclareFunction(Remove)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Removes a file from the file system.");
+	AddHelp("en", u8R"**(
+Removes a file from the file system.
+)**");
 }
 
 Gurax_ImplementFunction(Remove)
@@ -307,12 +307,12 @@ Gurax_DeclareFunction(RemoveDir)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("dirName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(tree));
-	AddHelp(
-		Gurax_Symbol(en),
-		"Removes a directory.\n"
-		"\n"
-		"If the directory contains sub directories, an error occurs.\n"
-		"Specifying `:tree` attribute would delete such a directory.\n");
+	AddHelp("en", u8R"**(
+Removes a directory.
+
+If the directory contains sub directories, an error occurs.
+Specifying `:tree` attribute would delete such a directory.
+)**");
 }
 
 Gurax_ImplementFunction(RemoveDir)
@@ -334,9 +334,9 @@ Gurax_DeclareFunction(Rename)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("pathNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Renames a file or directory.");
+	AddHelp("en", u8R"**(
+Renames a file or directory.
+)**");
 }
 
 Gurax_ImplementFunction(Rename)

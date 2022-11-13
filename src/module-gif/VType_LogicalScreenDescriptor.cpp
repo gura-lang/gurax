@@ -33,9 +33,9 @@ Gurax_DeclareMethod(LogicalScreenDescriptor, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Skeleton.\n");
+	AddHelp("en", u8R"**(
+Skeleton.
+)**");
 }
 
 Gurax_ImplementMethod(LogicalScreenDescriptor, MethodSkeleton)
@@ -57,9 +57,9 @@ Gurax_ImplementMethod(LogicalScreenDescriptor, MethodSkeleton)
 Gurax_DeclareProperty_R(LogicalScreenDescriptor, LogicalScreenWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, LogicalScreenWidth)
@@ -73,9 +73,9 @@ Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, LogicalScreenWidth)
 Gurax_DeclareProperty_R(LogicalScreenDescriptor, LogicalScreenHeight)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, LogicalScreenHeight)
@@ -89,9 +89,9 @@ Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, LogicalScreenHeight)
 Gurax_DeclareProperty_R(LogicalScreenDescriptor, BackgroundColorIndex)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, BackgroundColorIndex)
@@ -105,9 +105,9 @@ Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, BackgroundColorIndex)
 Gurax_DeclareProperty_R(LogicalScreenDescriptor, PixelAspectRatio)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, PixelAspectRatio)
@@ -121,9 +121,9 @@ Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, PixelAspectRatio)
 Gurax_DeclareProperty_R(LogicalScreenDescriptor, GlobalColorTableFlag)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, GlobalColorTableFlag)
@@ -137,9 +137,9 @@ Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, GlobalColorTableFlag)
 Gurax_DeclareProperty_R(LogicalScreenDescriptor, ColorResolution)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, ColorResolution)
@@ -153,9 +153,9 @@ Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, ColorResolution)
 Gurax_DeclareProperty_R(LogicalScreenDescriptor, SortFlag)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, SortFlag)
@@ -169,9 +169,9 @@ Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, SortFlag)
 Gurax_DeclareProperty_R(LogicalScreenDescriptor, SizeOfGlobalColorTable)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(LogicalScreenDescriptor, SizeOfGlobalColorTable)

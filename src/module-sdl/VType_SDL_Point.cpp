@@ -34,9 +34,9 @@ Gurax_DeclareConstructor(SDL_Point)
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `SDL_Point` instance.\n");
+	AddHelp("en", u8R"**(
+Creates a `SDL_Point` instance.
+)**");
 }
 
 Gurax_ImplementConstructor(SDL_Point)
@@ -57,9 +57,9 @@ Gurax_ImplementConstructor(SDL_Point)
 Gurax_DeclareProperty_RW(SDL_Point, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Point, x)
@@ -78,9 +78,9 @@ Gurax_ImplementPropertySetter(SDL_Point, x)
 Gurax_DeclareProperty_RW(SDL_Point, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementPropertyGetter(SDL_Point, y)

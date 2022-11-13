@@ -36,9 +36,9 @@ ${help.ComposeMethodHelp(wx.IconizeEvent, `en)}
 Gurax_DeclareMethodAlias(wxIconizeEvent, IsIconized_gurax, "IsIconized")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxIconizeEvent, IsIconized_gurax, processor_gurax, argument_gurax)

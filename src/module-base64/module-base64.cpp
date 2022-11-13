@@ -19,22 +19,22 @@ Gurax_DeclareFunction(Decode)
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Reads data formatted in a base-n format from stream `src` and decodes it into the stream `dst`.\n"
-		"If `dst` is omitted, the result will be returned as `Binary` value.\n"
-		"\n"
-		"In default, base64 format is applied. The following attributes can specify the format:\n"
-		"\n"
-		"- `:base16` .. Base16 format\n"
-		"- `:base32` .. Base32 format\n"
-		"- `:base32hex` .. Base32hex format\n"
-		"- `:base64` .. Base64 format. Default.\n"
-		"\n"
-		"The following two lines have the same effect:\n"
-		"\n"
-		"    base64.Decode(src, dst)\n"
-		"    Stream.Pipe(base64.Reader(src), dst)\n");
+	AddHelp("en", u8R"**(
+Reads data formatted in a base-n format from stream `src` and decodes it into the stream `dst`.
+If `dst` is omitted, the result will be returned as `Binary` value.
+
+In default, base64 format is applied. The following attributes can specify the format:
+
+- `:base16` .. Base16 format
+- `:base32` .. Base32 format
+- `:base32hex` .. Base32hex format
+- `:base64` .. Base64 format. Default.
+
+The following two lines have the same effect:
+
+    base64.Decode(src, dst)
+    Stream.Pipe(base64.Reader(src), dst)
+)**");
 }
 
 Gurax_ImplementFunction(Decode)
@@ -77,28 +77,28 @@ Gurax_DeclareFunction(Encode)
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareAttrOpt(Gurax_Symbol(singleLine));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Reads data from stream `src` and encodes it in a base-n format into the stream `dst`.\n"
-		"If `dst` is omitted, the result will be returned as `Binary` value.\n"
-		"\n"
-		"In default, base64 format is applied. The following attributes can specify the format:\n"
-		"\n"
-		"- `:base16` .. Base16 format\n"
-		"- `:base32` .. Base32 format\n"
-		"- `:base32hex` .. Base32hex format\n"
-		"- `:base64` .. Base64 format. Default.\n"
-		"\n"
-		"In default, output characters are folded by the length specified by `lineLen`.\n"
-		"If the argument is omitted, pre-defined length for each format is applied:\n"
-		"64 characters for base32 and base32hex and 76 for base16 and base64.\n"
-		"\n"
-		"Specifying the attribute `:singleLine` puts the result in a single line without folding.\n"
-		"\n"
-		"The following two lines have the same effect:\n"
-		"\n"
-		"    base64.Encode(src, dst)\n"
-		"    Stream.Pipe(src, base64.Writer(dst))\n");
+	AddHelp("en", u8R"**(
+Reads data from stream `src` and encodes it in a base-n format into the stream `dst`.
+If `dst` is omitted, the result will be returned as `Binary` value.
+
+In default, base64 format is applied. The following attributes can specify the format:
+
+- `:base16` .. Base16 format
+- `:base32` .. Base32 format
+- `:base32hex` .. Base32hex format
+- `:base64` .. Base64 format. Default.
+
+In default, output characters are folded by the length specified by `lineLen`.
+If the argument is omitted, pre-defined length for each format is applied:
+64 characters for base32 and base32hex and 76 for base16 and base64.
+
+Specifying the attribute `:singleLine` puts the result in a single line without folding.
+
+The following two lines have the same effect:
+
+    base64.Encode(src, dst)
+    Stream.Pipe(src, base64.Writer(dst))
+)**");
 }
 
 Gurax_ImplementFunction(Encode)
@@ -143,17 +143,17 @@ Gurax_DeclareFunction(Reader)
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a readable `Stream` instance that decodes a sequence of base-n format\n"
-		"from the stream `src`.\n"
-		"\n"
-		"In default, base64 format is applied. The following attributes can specify the format:\n"
-		"\n"
-		"- `:base16` .. Base16 format\n"
-		"- `:base32` .. Base32 format\n"
-		"- `:base32hex` .. Base32hex format\n"
-		"- `:base64` .. Base64 format. Default.\n");
+	AddHelp("en", u8R"**(
+Creates a readable `Stream` instance that decodes a sequence of base-n format
+from the stream `src`.
+
+In default, base64 format is applied. The following attributes can specify the format:
+
+- `:base16` .. Base16 format
+- `:base32` .. Base32 format
+- `:base32hex` .. Base32hex format
+- `:base64` .. Base64 format. Default.
+)**");
 }
 
 Gurax_ImplementFunction(Reader)
@@ -183,23 +183,23 @@ Gurax_DeclareFunction(Writer)
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareAttrOpt(Gurax_Symbol(singleLine));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a writable `Stream` instance that encodes written data into base-n format.\n"
-		"The result is emitted to the stream `dst`.\n"
-		"\n"
-		"In default, base64 format is applied. The following attributes can specify the format:\n"
-		"\n"
-		"- `:base16` .. Base16 format\n"
-		"- `:base32` .. Base32 format\n"
-		"- `:base32hex` .. Base32hex format\n"
-		"- `:base64` .. Base64 format. Default.\n"
-		"\n"
-		"In default, output characters are folded by the length specified by `lineLen`.\n"
-		"If the argument is omitted, pre-defined length for each format is applied:\n"
-		"64 characters for base32 and base32hex and 76 for base16 and base64.\n"
-		"\n"
-		"Specifying the attribute `:singleLine` puts the result in a single line without folding.\n");
+	AddHelp("en", u8R"**(
+Creates a writable `Stream` instance that encodes written data into base-n format.
+The result is emitted to the stream `dst`.
+
+In default, base64 format is applied. The following attributes can specify the format:
+
+- `:base16` .. Base16 format
+- `:base32` .. Base32 format
+- `:base32hex` .. Base32hex format
+- `:base64` .. Base64 format. Default.
+
+In default, output characters are folded by the length specified by `lineLen`.
+If the argument is omitted, pre-defined length for each format is applied:
+64 characters for base32 and base32hex and 76 for base16 and base64.
+
+Specifying the attribute `:singleLine` puts the result in a single line without folding.
+)**");
 }
 
 Gurax_ImplementFunction(Writer)

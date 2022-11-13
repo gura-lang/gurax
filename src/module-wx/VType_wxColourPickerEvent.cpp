@@ -37,9 +37,9 @@ Gurax_DeclareMethodAlias(wxColourPickerEvent, GetColour_gurax, "GetColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColourPickerEvent, GetColour_gurax, processor_gurax, argument_gurax)
@@ -58,9 +58,9 @@ Gurax_DeclareMethodAlias(wxColourPickerEvent, SetColour_gurax, "SetColour")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxColourPickerEvent, SetColour_gurax, processor_gurax, argument_gurax)

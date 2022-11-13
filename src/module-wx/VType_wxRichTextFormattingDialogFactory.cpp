@@ -33,9 +33,9 @@ Gurax_DeclareConstructorAlias(RichTextFormattingDialogFactory_gurax, "RichTextFo
 {
 	Declare(VTYPE_wxRichTextFormattingDialogFactory, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.RichTextFormattingDialogFactory.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.RichTextFormattingDialogFactory.
+)**");
 }
 
 Gurax_ImplementConstructorEx(RichTextFormattingDialogFactory_gurax, processor_gurax, argument_gurax)
@@ -54,9 +54,9 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialogFactory, CreateButtons_gurax,
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("dialog", VTYPE_wxRichTextFormattingDialog, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextFormattingDialogFactory, CreateButtons_gurax, processor_gurax, argument_gurax)
@@ -80,9 +80,9 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialogFactory, CreatePages_gurax, "
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pages", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dialog", VTYPE_wxRichTextFormattingDialog, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextFormattingDialogFactory, CreatePages_gurax, processor_gurax, argument_gurax)
@@ -106,9 +106,9 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialogFactory, GetPageId_gurax, "Ge
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextFormattingDialogFactory, GetPageId_gurax, processor_gurax, argument_gurax)
@@ -129,9 +129,9 @@ Gurax_ImplementMethodEx(wxRichTextFormattingDialogFactory, GetPageId_gurax, proc
 Gurax_DeclareMethodAlias(wxRichTextFormattingDialogFactory, GetPageIdCount_gurax, "GetPageIdCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextFormattingDialogFactory, GetPageIdCount_gurax, processor_gurax, argument_gurax)
@@ -150,9 +150,9 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialogFactory, GetPageImage_gurax, 
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextFormattingDialogFactory, GetPageImage_gurax, processor_gurax, argument_gurax)
@@ -174,9 +174,9 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialogFactory, SetSheetStyle_gurax,
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("dialog", VTYPE_wxRichTextFormattingDialog, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextFormattingDialogFactory, SetSheetStyle_gurax, processor_gurax, argument_gurax)
@@ -200,9 +200,9 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialogFactory, ShowHelp_gurax, "Sho
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dialog", VTYPE_wxRichTextFormattingDialog, ArgOccur::Once, ArgFlag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextFormattingDialogFactory, ShowHelp_gurax, processor_gurax, argument_gurax)

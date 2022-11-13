@@ -38,9 +38,9 @@ Gurax_DeclareConstructor(TimeDelta)
 	DeclareArg("msecs", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("usecs", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates a `TimeDelta` instance from specified time factors like numbers of days and hours.\n");
+	AddHelp("en", u8R"**(
+Creates a `TimeDelta` instance from specified time factors like numbers of days and hours.
+)**");
 }
 
 Gurax_ImplementConstructor(TimeDelta)
@@ -66,9 +66,9 @@ Gurax_ImplementConstructor(TimeDelta)
 Gurax_DeclareProperty_RW(TimeDelta, days)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The days value of the time delta.");
+	AddHelp("en", u8R"**(
+The days value of the time delta.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(TimeDelta, days)
@@ -87,9 +87,9 @@ Gurax_ImplementPropertySetter(TimeDelta, days)
 Gurax_DeclareProperty_RW(TimeDelta, hours)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The hours value of the time delta.");
+	AddHelp("en", u8R"**(
+The hours value of the time delta.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(TimeDelta, hours)
@@ -108,9 +108,9 @@ Gurax_ImplementPropertySetter(TimeDelta, hours)
 Gurax_DeclareProperty_RW(TimeDelta, mins)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The minutes value of the time delta.");
+	AddHelp("en", u8R"**(
+The minutes value of the time delta.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(TimeDelta, mins)
@@ -129,9 +129,9 @@ Gurax_ImplementPropertySetter(TimeDelta, mins)
 Gurax_DeclareProperty_RW(TimeDelta, secs)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The seconds value of the time delta.");
+	AddHelp("en", u8R"**(
+The seconds value of the time delta.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(TimeDelta, secs)
@@ -150,9 +150,9 @@ Gurax_ImplementPropertySetter(TimeDelta, secs)
 Gurax_DeclareProperty_RW(TimeDelta, secsPacked)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The packed seconds value of the time delta.");
+	AddHelp("en", u8R"**(
+The packed seconds value of the time delta.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(TimeDelta, secsPacked)
@@ -171,9 +171,9 @@ Gurax_ImplementPropertySetter(TimeDelta, secsPacked)
 Gurax_DeclareProperty_RW(TimeDelta, msecs)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The micro-seconds value of the time delta.");
+	AddHelp("en", u8R"**(
+The micro-seconds value of the time delta.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(TimeDelta, msecs)
@@ -192,9 +192,9 @@ Gurax_ImplementPropertySetter(TimeDelta, msecs)
 Gurax_DeclareProperty_RW(TimeDelta, usecs)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The micro-seconds value of the time delta.");
+	AddHelp("en", u8R"**(
+The micro-seconds value of the time delta.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(TimeDelta, usecs)
@@ -213,9 +213,9 @@ Gurax_ImplementPropertySetter(TimeDelta, usecs)
 Gurax_DeclareProperty_RW(TimeDelta, usecsPacked)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"The packed micro-seconds value of the time delta.");
+	AddHelp("en", u8R"**(
+The packed micro-seconds value of the time delta.
+)**");
 }
 
 Gurax_ImplementPropertyGetter(TimeDelta, usecsPacked)

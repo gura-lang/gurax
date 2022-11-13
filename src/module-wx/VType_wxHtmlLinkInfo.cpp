@@ -35,9 +35,9 @@ Gurax_DeclareConstructorAlias(HtmlLinkInfo_gurax, "HtmlLinkInfo")
 	DeclareArg("href", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("target", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.HtmlLinkInfo.");
+	AddHelp("en", u8R"**(
+Creates an instance of wx.HtmlLinkInfo.
+)**");
 }
 
 Gurax_ImplementConstructorEx(HtmlLinkInfo_gurax, processor_gurax, argument_gurax)
@@ -59,9 +59,9 @@ Gurax_ImplementConstructorEx(HtmlLinkInfo_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxHtmlLinkInfo, GetHref_gurax, "GetHref")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetHref_gurax, processor_gurax, argument_gurax)
@@ -80,9 +80,9 @@ Gurax_DeclareMethodAlias(wxHtmlLinkInfo, GetHtmlCell_gurax, "GetHtmlCell")
 {
 	Declare(VTYPE_wxHtmlCell, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetHtmlCell_gurax, processor_gurax, argument_gurax)
@@ -100,9 +100,9 @@ Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetHtmlCell_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxHtmlLinkInfo, GetTarget_gurax, "GetTarget")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp("en", u8R"**(
+
+)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlLinkInfo, GetTarget_gurax, processor_gurax, argument_gurax)
