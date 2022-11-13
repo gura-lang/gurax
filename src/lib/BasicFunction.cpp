@@ -173,18 +173,18 @@ The `specifier` takes one of the following characters:
 
 The `flags` takes one of the following characters.
 
-- `+` .. Appends a character \"`+`\" before a positive number.
+- `+` .. Appends a character "`+`" before a positive number.
 - `-` .. Adjust a string to left.
 - `[SPC]` .. Appends a space character before a positive number.
-- `#` .. Appends a prefix before a numbers \"`0b`\" for a binary,
-         \"`0`\" for an octal and \"`0x`\" for a hexadecimal number.
-- `0` .. Fills lacking columns with \"`0`\" instead of space characters.`
+- `#` .. Appends a prefix before a numbers "`0b`" for a binary,
+         "`0`" for an octal and "`0x`" for a hexadecimal number.
+- `0` .. Fills lacking columns with "`0`" instead of space characters.`
 
 The `width` is a decimal number that specifies a minimum character.
 If the width of the corresponding field is less than this number,
-the lacking part will be filled with space characters or \"`0`\".
+the lacking part will be filled with space characters or "`0`".
 If the width is equal to or more than this number, there's nothing to be processed.
-If an asterisk character \"`*`\" is specified for `width`,
+If an asterisk character "`*`" is specified for `width`,
 the minimum character width will be retrieved from the argument list.
 
 The `width` it a character width that appears on a console,
@@ -195,18 +195,18 @@ The `precision` is a decimal number and has different effects depending on `spec
 
 For specifiers that formats integer numbers, it specifies a minimum character width
 and fills `0` for the lacking column.
-Format specifiers \"`%03d`\" and \"`%.3d`\" have the same effect.
+Format specifiers "`%03d`" and "`%.3d`" have the same effect.
 When it works in combination with `width`,
 `precision` fills `0` in the lacking space before `width` does padding.
 An example is shown below:
 
-    Format('%5.3d', 23) .. returns \"  023\"
+    Format('%5.3d', 23) .. returns "  023"
 
 For specifiers `e`, `f` and `g`, it specifies a digit number after a decimal point.
 Examples are shown below:
 
-    Format('%.3f', 1 / 3) .. returns \"0.333\"
-    Format('%.5f', 1 / 3) .. returns \"0.33333\"
+    Format('%.3f', 1 / 3) .. returns "0.333"
+    Format('%.5f', 1 / 3) .. returns "0.33333"
 
 It has no effect with other specifiers.
 )**");
