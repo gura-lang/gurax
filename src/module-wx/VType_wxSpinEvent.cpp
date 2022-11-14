@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxSpinEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -58,7 +57,6 @@ Gurax_DeclareMethodAlias(wxSpinEvent, SetPosition_gurax, "SetPosition")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -88,7 +86,7 @@ VType_wxSpinEvent VTYPE_wxSpinEvent("SpinEvent");
 void VType_wxSpinEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

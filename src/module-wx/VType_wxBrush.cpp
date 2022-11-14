@@ -88,7 +88,6 @@ Gurax_DeclareMethodAlias(wxBrush, GetColour_gurax, "GetColour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -109,7 +108,6 @@ Gurax_DeclareMethodAlias(wxBrush, GetStipple_gurax, "GetStipple")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -129,7 +127,6 @@ Gurax_DeclareMethodAlias(wxBrush, GetStyle_gurax, "GetStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -149,7 +146,6 @@ Gurax_DeclareMethodAlias(wxBrush, IsHatch_gurax, "IsHatch")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -169,7 +165,6 @@ Gurax_DeclareMethodAlias(wxBrush, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -189,7 +184,6 @@ Gurax_DeclareMethodAlias(wxBrush, IsNonTransparent_gurax, "IsNonTransparent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -209,7 +203,6 @@ Gurax_DeclareMethodAlias(wxBrush, IsTransparent_gurax, "IsTransparent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -230,7 +223,6 @@ Gurax_DeclareMethodAlias(wxBrush, SetStipple_gurax, "SetStipple")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -255,7 +247,6 @@ Gurax_DeclareMethodAlias(wxBrush, SetStyle_gurax, "SetStyle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -279,7 +270,6 @@ Gurax_DeclareMethodAlias(wxBrush, SetColour_gurax, "SetColour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -306,7 +296,6 @@ Gurax_DeclareMethodAlias(wxBrush, SetColourRGB_gurax, "SetColourRGB")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -338,7 +327,7 @@ VType_wxBrush VTYPE_wxBrush("Brush");
 void VType_wxBrush::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Brush_gurax));
 	// Assignment of method

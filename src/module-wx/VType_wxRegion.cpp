@@ -162,7 +162,6 @@ Gurax_DeclareMethodAlias(wxRegion, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -183,7 +182,6 @@ Gurax_DeclareMethodAlias(wxRegion, Contains_gurax, "Contains")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -277,7 +275,6 @@ Gurax_DeclareMethodAlias(wxRegion, ConvertToBitmap_gurax, "ConvertToBitmap")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -298,7 +295,6 @@ Gurax_DeclareMethodAlias(wxRegion, Intersect_gurax, "Intersect")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -373,7 +369,6 @@ Gurax_DeclareMethodAlias(wxRegion, IsEmpty_gurax, "IsEmpty")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -394,7 +389,6 @@ Gurax_DeclareMethodAlias(wxRegion, IsEqual_gurax, "IsEqual")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("region", VTYPE_wxRegion, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -419,7 +413,6 @@ Gurax_DeclareMethodAlias(wxRegion, Subtract_gurax, "Subtract")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -473,7 +466,6 @@ Gurax_DeclareMethodAlias(wxRegion, Union_gurax, "Union")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -585,7 +577,6 @@ Gurax_DeclareMethodAlias(wxRegion, Xor_gurax, "Xor")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -660,7 +651,6 @@ Gurax_DeclareMethodAlias(wxRegion, GetBoxXYWH_gurax, "GetBoxXYWH")
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -682,7 +672,6 @@ Gurax_DeclareMethodAlias(wxRegion, GetBoxRect_gurax, "GetBoxRect")
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -703,7 +692,6 @@ Gurax_DeclareMethodAlias(wxRegion, Offset_gurax, "Offset")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -765,7 +753,7 @@ VType_wxRegion VTYPE_wxRegion("Region");
 void VType_wxRegion::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Region_gurax));
 	// Assignment of method

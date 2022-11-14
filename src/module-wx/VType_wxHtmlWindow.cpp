@@ -45,7 +45,7 @@ VType_wxHtmlWindow VTYPE_wxHtmlWindow("HtmlWindow");
 void VType_wxHtmlWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxScrolledWindow, Flag::Mutable);
 	// Assignment of method

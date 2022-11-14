@@ -64,7 +64,6 @@ Gurax_DeclareProperty_RW(wxPoint, x)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -86,7 +85,6 @@ Gurax_DeclareProperty_RW(wxPoint, y)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -112,7 +110,7 @@ VType_wxPoint VTYPE_wxPoint("Point");
 void VType_wxPoint::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Point_gurax));
 	// Assignment of method

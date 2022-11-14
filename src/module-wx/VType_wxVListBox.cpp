@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxVListBox, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -57,7 +56,6 @@ Gurax_DeclareMethodAlias(wxVListBox, DeselectAll_gurax, "DeselectAll")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -78,7 +76,6 @@ Gurax_DeclareMethodAlias(wxVListBox, GetFirstSelected_gurax, "GetFirstSelected")
 	Declare(VTYPE_Tuple, Flag::None);
 	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -101,7 +98,6 @@ Gurax_DeclareMethodAlias(wxVListBox, GetItemCount_gurax, "GetItemCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -122,7 +118,6 @@ Gurax_DeclareMethodAlias(wxVListBox, GetMargins_gurax, "GetMargins")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -144,7 +139,6 @@ Gurax_DeclareMethodAlias(wxVListBox, GetItemRect_gurax, "GetItemRect")
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -168,7 +162,6 @@ Gurax_DeclareMethodAlias(wxVListBox, GetNextSelected_gurax, "GetNextSelected")
 	Declare(VTYPE_Tuple, Flag::None);
 	DeclareArg("cookie", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -191,7 +184,6 @@ Gurax_DeclareMethodAlias(wxVListBox, GetSelectedCount_gurax, "GetSelectedCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -211,7 +203,6 @@ Gurax_DeclareMethodAlias(wxVListBox, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -232,7 +223,6 @@ Gurax_DeclareMethodAlias(wxVListBox, GetSelectionBackground_gurax, "GetSelection
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -252,7 +242,6 @@ Gurax_DeclareMethodAlias(wxVListBox, HasMultipleSelection_gurax, "HasMultipleSel
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -273,7 +262,6 @@ Gurax_DeclareMethodAlias(wxVListBox, IsCurrent_gurax, "IsCurrent")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -297,7 +285,6 @@ Gurax_DeclareMethodAlias(wxVListBox, IsSelected_gurax, "IsSelected")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -322,7 +309,6 @@ Gurax_DeclareMethodAlias(wxVListBox, Select_gurax, "Select")
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -346,7 +332,6 @@ Gurax_DeclareMethodAlias(wxVListBox, SelectAll_gurax, "SelectAll")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -368,7 +353,6 @@ Gurax_DeclareMethodAlias(wxVListBox, SelectRange_gurax, "SelectRange")
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -393,7 +377,6 @@ Gurax_DeclareMethodAlias(wxVListBox, SetItemCount_gurax, "SetItemCount")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -417,7 +400,6 @@ Gurax_DeclareMethodAlias(wxVListBox, SetSelection_gurax, "SetSelection")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("selection", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -441,7 +423,6 @@ Gurax_DeclareMethodAlias(wxVListBox, SetSelectionBackground_gurax, "SetSelection
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -466,7 +447,6 @@ Gurax_DeclareMethodAlias(wxVListBox, Toggle_gurax, "Toggle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -490,7 +470,6 @@ Gurax_DeclareMethodAlias(wxVListBox, SetMargins_gurax, "SetMargins")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -516,7 +495,6 @@ Gurax_DeclareMethodAlias(wxVListBox, SetMarginsXY_gurax, "SetMarginsXY")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -547,7 +525,7 @@ VType_wxVListBox VTYPE_wxVListBox("VListBox");
 void VType_wxVListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxVScrolledWindow, Flag::Mutable);
 	// Assignment of method

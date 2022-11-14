@@ -80,7 +80,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, Apply_gurax, "Apply")
 	DeclareArg("style", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("compareWith", VTYPE_wxTextAttr, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -106,7 +105,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, Merge_gurax, "Merge")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("overlay", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -132,7 +130,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, EqPartial_gurax, "EqPartial")
 	DeclareArg("attr", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weakTest", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -157,7 +154,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetAlignment_gurax, "GetAlignment")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -178,7 +174,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetBackgroundColour_gurax, "GetBackgroundCo
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -198,7 +193,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetBulletFont_gurax, "GetBulletFont")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -218,7 +212,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetBulletName_gurax, "GetBulletName")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -238,7 +231,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetBulletNumber_gurax, "GetBulletNumber")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -258,7 +250,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetBulletStyle_gurax, "GetBulletStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -278,7 +269,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetBulletText_gurax, "GetBulletText")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -298,7 +288,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetCharacterStyleName_gurax, "GetCharacterS
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -318,7 +307,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFlags_gurax, "GetFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -339,7 +327,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFont_gurax, "GetFont")
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -361,7 +348,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFontAttributes_gurax, "GetFontAttributes
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -387,7 +373,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFontEncoding_gurax, "GetFontEncoding")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -407,7 +392,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFontFaceName_gurax, "GetFontFaceName")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -427,7 +411,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFontFamily_gurax, "GetFontFamily")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -447,7 +430,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFontSize_gurax, "GetFontSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -467,7 +449,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFontStyle_gurax, "GetFontStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -487,7 +468,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFontUnderlined_gurax, "GetFontUnderlined
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -507,7 +487,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetFontWeight_gurax, "GetFontWeight")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -527,7 +506,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetLeftIndent_gurax, "GetLeftIndent")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -547,7 +525,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetLeftSubIndent_gurax, "GetLeftSubIndent")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -567,7 +544,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetLineSpacing_gurax, "GetLineSpacing")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -587,7 +563,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetListStyleName_gurax, "GetListStyleName")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -607,7 +582,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetOutlineLevel_gurax, "GetOutlineLevel")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -627,7 +601,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetParagraphSpacingAfter_gurax, "GetParagra
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -647,7 +620,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetParagraphSpacingBefore_gurax, "GetParagr
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -667,7 +639,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetParagraphStyleName_gurax, "GetParagraphS
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -687,7 +658,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetRightIndent_gurax, "GetRightIndent")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -707,7 +677,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetTabs_gurax, "GetTabs")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -728,7 +697,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetTextColour_gurax, "GetTextColour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -748,7 +716,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetTextEffectFlags_gurax, "GetTextEffectFla
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -768,7 +735,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetTextEffects_gurax, "GetTextEffects")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -788,7 +754,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, GetURL_gurax, "GetURL")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -808,7 +773,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasAlignment_gurax, "HasAlignment")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -828,7 +792,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasBackgroundColour_gurax, "HasBackgroundCo
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -848,7 +811,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasBulletName_gurax, "HasBulletName")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -868,7 +830,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasBulletNumber_gurax, "HasBulletNumber")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -888,7 +849,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasBulletStyle_gurax, "HasBulletStyle")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -908,7 +868,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasBulletText_gurax, "HasBulletText")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -928,7 +887,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasCharacterStyleName_gurax, "HasCharacterS
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -949,7 +907,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFlag_gurax, "HasFlag")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -972,7 +929,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFont_gurax, "HasFont")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -992,7 +948,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFontEncoding_gurax, "HasFontEncoding")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1012,7 +967,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFontFaceName_gurax, "HasFontFaceName")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1032,7 +986,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFontFamily_gurax, "HasFontFamily")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1052,7 +1005,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFontItalic_gurax, "HasFontItalic")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1072,7 +1024,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFontSize_gurax, "HasFontSize")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1092,7 +1043,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFontPointSize_gurax, "HasFontPointSize")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1112,7 +1062,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFontPixelSize_gurax, "HasFontPixelSize")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1132,7 +1081,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFontUnderlined_gurax, "HasFontUnderlined
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1152,7 +1100,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasFontWeight_gurax, "HasFontWeight")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1172,7 +1119,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasLeftIndent_gurax, "HasLeftIndent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1192,7 +1138,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasLineSpacing_gurax, "HasLineSpacing")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1212,7 +1157,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasListStyleName_gurax, "HasListStyleName")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1232,7 +1176,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasOutlineLevel_gurax, "HasOutlineLevel")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1252,7 +1195,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasPageBreak_gurax, "HasPageBreak")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1272,7 +1214,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasParagraphSpacingAfter_gurax, "HasParagra
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1292,7 +1233,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasParagraphSpacingBefore_gurax, "HasParagr
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1312,7 +1252,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasParagraphStyleName_gurax, "HasParagraphS
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1332,7 +1271,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasRightIndent_gurax, "HasRightIndent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1352,7 +1290,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasTabs_gurax, "HasTabs")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1372,7 +1309,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasTextColour_gurax, "HasTextColour")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1392,7 +1328,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasTextEffects_gurax, "HasTextEffects")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1412,7 +1347,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, HasURL_gurax, "HasURL")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1432,7 +1366,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, IsCharacterStyle_gurax, "IsCharacterStyle")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1452,7 +1385,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, IsDefault_gurax, "IsDefault")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1472,7 +1404,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, IsParagraphStyle_gurax, "IsParagraphStyle")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1493,7 +1424,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetAlignment_gurax, "SetAlignment")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("alignment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1517,7 +1447,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetBackgroundColour_gurax, "SetBackgroundCo
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colBack", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1542,7 +1471,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetBulletFont_gurax, "SetBulletFont")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1566,7 +1494,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetBulletName_gurax, "SetBulletName")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1590,7 +1517,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetBulletNumber_gurax, "SetBulletNumber")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1614,7 +1540,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetBulletStyle_gurax, "SetBulletStyle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1638,7 +1563,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetBulletText_gurax, "SetBulletText")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1662,7 +1586,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetCharacterStyleName_gurax, "SetCharacterS
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1686,7 +1609,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFlags_gurax, "SetFlags")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1711,7 +1633,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFont_gurax, "SetFont")
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1738,7 +1659,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFontEncoding_gurax, "SetFontEncoding")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("encoding", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1762,7 +1682,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFontFaceName_gurax, "SetFontFaceName")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("faceName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1786,7 +1705,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFontFamily_gurax, "SetFontFamily")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("family", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1810,7 +1728,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFontSize_gurax, "SetFontSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pointSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1834,7 +1751,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFontPointSize_gurax, "SetFontPointSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pointSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1858,7 +1774,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFontPixelSize_gurax, "SetFontPixelSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pixelSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1882,7 +1797,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFontStyle_gurax, "SetFontStyle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("fontStyle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1906,7 +1820,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFontUnderlined_gurax, "SetFontUnderlined
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("underlined", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1930,7 +1843,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetFontWeight_gurax, "SetFontWeight")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("fontWeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1955,7 +1867,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetLeftIndent_gurax, "SetLeftIndent")
 	DeclareArg("indent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("subIndent", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1981,7 +1892,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetLineSpacing_gurax, "SetLineSpacing")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("spacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2005,7 +1915,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetListStyleName_gurax, "SetListStyleName")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2029,7 +1938,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetOutlineLevel_gurax, "SetOutlineLevel")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2053,7 +1961,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetPageBreak_gurax, "SetPageBreak")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pageBreak", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2077,7 +1984,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetParagraphSpacingAfter_gurax, "SetParagra
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("spacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2101,7 +2007,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetParagraphSpacingBefore_gurax, "SetParagr
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("spacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2125,7 +2030,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetParagraphStyleName_gurax, "SetParagraphS
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2149,7 +2053,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetRightIndent_gurax, "SetRightIndent")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("indent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2173,7 +2076,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetTabs_gurax, "SetTabs")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tabs", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2197,7 +2099,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetTextColour_gurax, "SetTextColour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colText", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2222,7 +2123,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetTextEffectFlags_gurax, "SetTextEffectFla
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2246,7 +2146,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetTextEffects_gurax, "SetTextEffects")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("effects", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2270,7 +2169,6 @@ Gurax_DeclareMethodAlias(wxTextAttr, SetURL_gurax, "SetURL")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("url", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2300,7 +2198,7 @@ VType_wxTextAttr VTYPE_wxTextAttr("TextAttr");
 void VType_wxTextAttr::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(TextAttr_gurax));
 	// Assignment of method

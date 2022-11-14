@@ -80,7 +80,6 @@ Gurax_DeclareMethodAlias(wxEditableListBox, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -112,7 +111,6 @@ Gurax_DeclareMethodAlias(wxEditableListBox, SetStrings_gurax, "SetStrings")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("strings", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -135,7 +133,6 @@ Gurax_DeclareMethodAlias(wxEditableListBox, GetStrings_gurax, "GetStrings")
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -163,7 +160,7 @@ VType_wxEditableListBox VTYPE_wxEditableListBox("EditableListBox");
 void VType_wxEditableListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(EditableListBox_gurax));
 	// Assignment of method

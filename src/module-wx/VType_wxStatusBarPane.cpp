@@ -61,7 +61,6 @@ Gurax_DeclareMethodAlias(wxStatusBarPane, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -81,7 +80,6 @@ Gurax_DeclareMethodAlias(wxStatusBarPane, GetStyle_gurax, "GetStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -101,7 +99,6 @@ Gurax_DeclareMethodAlias(wxStatusBarPane, GetText_gurax, "GetText")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -128,7 +125,7 @@ VType_wxStatusBarPane VTYPE_wxStatusBarPane("StatusBarPane");
 void VType_wxStatusBarPane::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(StatusBarPane_gurax));
 	// Assignment of method

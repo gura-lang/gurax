@@ -38,7 +38,6 @@ Gurax_DeclareMethodAlias(wxMoveEvent, GetPosition_gurax, "GetPosition")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -59,7 +58,6 @@ Gurax_DeclareMethodAlias(wxMoveEvent, GetRect_gurax, "GetRect")
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -80,7 +78,6 @@ Gurax_DeclareMethodAlias(wxMoveEvent, SetRect_gurax, "SetRect")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -105,7 +102,6 @@ Gurax_DeclareMethodAlias(wxMoveEvent, SetPosition_gurax, "SetPosition")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -136,7 +132,7 @@ VType_wxMoveEvent VTYPE_wxMoveEvent("MoveEvent");
 void VType_wxMoveEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

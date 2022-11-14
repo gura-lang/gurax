@@ -85,7 +85,6 @@ Gurax_DeclareMethodAlias(wxCheckListBox, Create_gurax, "Create")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -121,7 +120,6 @@ Gurax_DeclareMethodAlias(wxCheckListBox, Check_gurax, "Check")
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("check", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -146,7 +144,6 @@ Gurax_DeclareMethodAlias(wxCheckListBox, IsChecked_gurax, "IsChecked")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -169,7 +166,6 @@ Gurax_DeclareMethodAlias(wxCheckListBox, GetCheckedItems_gurax, "GetCheckedItems
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -197,7 +193,7 @@ VType_wxCheckListBox VTYPE_wxCheckListBox("CheckListBox");
 void VType_wxCheckListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxListBox, Flag::Mutable, Gurax_CreateConstructor(CheckListBox_gurax));
 	// Assignment of method

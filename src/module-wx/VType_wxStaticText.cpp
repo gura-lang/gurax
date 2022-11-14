@@ -73,7 +73,6 @@ Gurax_DeclareMethodAlias(wxStaticText, IsEllipsized_gurax, "IsEllipsized")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -94,7 +93,6 @@ Gurax_DeclareMethodAlias(wxStaticText, Wrap_gurax, "Wrap")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -124,7 +122,7 @@ VType_wxStaticText VTYPE_wxStaticText("StaticText");
 void VType_wxStaticText::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticText_gurax));
 	// Assignment of method

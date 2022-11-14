@@ -77,7 +77,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, ApplyStyle_gurax, "ApplySty
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -112,7 +111,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, Create_gurax, "Create")
 	DeclareArg("sz", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -145,7 +143,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, GetImageList_gurax, "GetIma
 	Declare(VTYPE_wxImageList, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -167,7 +164,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, GetStyle_gurax, "GetStyle")
 	DeclareArg("ctrl", VTYPE_wxRichTextCtrl, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -194,7 +190,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, GetStyleDefinition_gurax, "
 	Declare(VTYPE_wxRichTextStyleDefinition, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -215,7 +210,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, GetStyleSheet_gurax, "GetSt
 	Declare(VTYPE_wxRichTextStyleSheet, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -236,7 +230,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, SetAttributes_gurax, "SetAt
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("attr", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -261,7 +254,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, SetOptions_gurax, "SetOptio
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("options", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -284,7 +276,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, GetOptions_gurax, "GetOptio
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -305,7 +296,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, HasOption_gurax, "HasOption
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("option", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -329,7 +319,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, SetImageList_gurax, "SetIma
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -355,7 +344,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, SetStyle_gurax, "SetStyle")
 	DeclareArg("style", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("update", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -383,7 +371,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, SetStyleDefinition_gurax, "
 	DeclareArg("sheet", VTYPE_wxRichTextStyleSheet, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("update", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -410,7 +397,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, UpdateDisplay_gurax, "Updat
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -431,7 +417,6 @@ Gurax_DeclareMethodAlias(wxRichTextFormattingDialog, GetAttributes_gurax, "GetAt
 	Declare(VTYPE_wxTextAttr, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -452,7 +437,6 @@ Gurax_DeclareClassMethodAlias(wxRichTextFormattingDialog, GetDialog_gurax, "GetD
 	Declare(VTYPE_wxRichTextFormattingDialog, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -473,7 +457,6 @@ Gurax_DeclareClassMethodAlias(wxRichTextFormattingDialog, GetDialogAttributes_gu
 	Declare(VTYPE_wxTextAttr, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -494,7 +477,6 @@ Gurax_DeclareClassMethodAlias(wxRichTextFormattingDialog, GetDialogStyleDefiniti
 	Declare(VTYPE_wxRichTextStyleDefinition, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -514,7 +496,6 @@ Gurax_DeclareClassMethodAlias(wxRichTextFormattingDialog, GetFormattingDialogFac
 {
 	Declare(VTYPE_wxRichTextFormattingDialogFactory, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -531,7 +512,6 @@ Gurax_DeclareClassMethodAlias(wxRichTextFormattingDialog, SetFormattingDialogFac
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("factory", VTYPE_wxRichTextFormattingDialogFactory, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -558,7 +538,7 @@ VType_wxRichTextFormattingDialog VTYPE_wxRichTextFormattingDialog("RichTextForma
 void VType_wxRichTextFormattingDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPropertySheetDialog, Flag::Mutable, Gurax_CreateConstructor(RichTextFormattingDialog_gurax));
 	// Assignment of method

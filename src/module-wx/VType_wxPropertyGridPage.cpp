@@ -45,7 +45,7 @@ VType_wxPropertyGridPage VTYPE_wxPropertyGridPage("PropertyGridPage");
 void VType_wxPropertyGridPage::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable);
 	// Assignment of method

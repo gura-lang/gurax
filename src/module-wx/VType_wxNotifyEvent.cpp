@@ -45,7 +45,7 @@ VType_wxNotifyEvent VTYPE_wxNotifyEvent("NotifyEvent");
 void VType_wxNotifyEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

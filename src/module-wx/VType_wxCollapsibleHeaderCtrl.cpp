@@ -76,7 +76,6 @@ Gurax_DeclareMethodAlias(wxCollapsibleHeaderCtrl, SetCollapsed_gurax, "SetCollap
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("collapsed", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -99,7 +98,6 @@ Gurax_DeclareMethodAlias(wxCollapsibleHeaderCtrl, IsCollapsed_gurax, "IsCollapse
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -126,7 +124,7 @@ VType_wxCollapsibleHeaderCtrl VTYPE_wxCollapsibleHeaderCtrl("CollapsibleHeaderCt
 void VType_wxCollapsibleHeaderCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CollapsibleHeaderCtrl_gurax));
 	// Assignment of method

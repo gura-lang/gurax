@@ -71,7 +71,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, GetMaximumSizeX_gurax, "GetMaximumSizeX")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -91,7 +90,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, GetMaximumSizeY_gurax, "GetMaximumSizeY")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -111,7 +109,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, GetMinimumSizeX_gurax, "GetMinimumSizeX")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -131,7 +128,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, GetMinimumSizeY_gurax, "GetMinimumSizeY")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -152,7 +148,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, GetSashVisible_gurax, "GetSashVisible")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("edge", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -176,7 +171,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, SetMaximumSizeX_gurax, "SetMaximumSizeX")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -200,7 +194,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, SetMaximumSizeY_gurax, "SetMaximumSizeY")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -224,7 +217,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, SetMinimumSizeX_gurax, "SetMinimumSizeX")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -248,7 +240,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, SetMinimumSizeY_gurax, "SetMinimumSizeY")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -273,7 +264,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, SetSashVisible_gurax, "SetSashVisible")
 	DeclareArg("edge", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("visible", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -298,7 +288,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, GetEdgeMargin_gurax, "GetEdgeMargin")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("edge", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -322,7 +311,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, SetDefaultBorderSize_gurax, "SetDefaultBo
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -345,7 +333,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, GetDefaultBorderSize_gurax, "GetDefaultBo
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -366,7 +353,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, SetExtraBorderSize_gurax, "SetExtraBorder
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -389,7 +375,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, GetExtraBorderSize_gurax, "GetExtraBorder
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -412,7 +397,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, SashHitTest_gurax, "SashHitTest")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("tolerance", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -438,7 +422,6 @@ Gurax_DeclareMethodAlias(wxSashWindow, SizeWindows_gurax, "SizeWindows")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -465,7 +448,7 @@ VType_wxSashWindow VTYPE_wxSashWindow("SashWindow");
 void VType_wxSashWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(SashWindow_gurax));
 	// Assignment of method

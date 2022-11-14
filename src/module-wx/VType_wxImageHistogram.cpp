@@ -45,7 +45,7 @@ VType_wxImageHistogram VTYPE_wxImageHistogram("ImageHistogram");
 void VType_wxImageHistogram::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

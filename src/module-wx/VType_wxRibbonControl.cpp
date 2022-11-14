@@ -74,7 +74,6 @@ Gurax_DeclareMethodAlias(wxRibbonControl, SetArtProvider_gurax, "SetArtProvider"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("art", VTYPE_wxRibbonArtProvider, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -99,7 +98,6 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetArtProvider_gurax, "GetArtProvider"
 	Declare(VTYPE_wxRibbonArtProvider, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -119,7 +117,6 @@ Gurax_DeclareMethodAlias(wxRibbonControl, IsSizingContinuous_gurax, "IsSizingCon
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -141,7 +138,6 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetNextSmallerSize_gurax, "GetNextSmal
 	DeclareArg("direction", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -166,7 +162,6 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetNextLargerSize_gurax, "GetNextLarge
 	DeclareArg("direction", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -189,7 +184,6 @@ Gurax_DeclareMethodAlias(wxRibbonControl, Realize_gurax, "Realize")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -209,7 +203,6 @@ Gurax_DeclareMethodAlias(wxRibbonControl, Realise_gurax, "Realise")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -230,7 +223,6 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetAncestorRibbonBar_gurax, "GetAncest
 	Declare(VTYPE_wxRibbonBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -252,7 +244,6 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetBestSizeForParentSize_gurax, "GetBe
 	DeclareArg("parentSize", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -283,7 +274,7 @@ VType_wxRibbonControl VTYPE_wxRibbonControl("RibbonControl");
 void VType_wxRibbonControl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(RibbonControl_gurax));
 	// Assignment of method

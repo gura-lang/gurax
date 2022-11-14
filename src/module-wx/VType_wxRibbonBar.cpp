@@ -75,7 +75,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -107,7 +106,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, SetTabCtrlMargins_gurax, "SetTabCtrlMargin
 	DeclareArg("left", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("right", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -132,7 +130,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, SetArtProvider_gurax, "SetArtProvider")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("art", VTYPE_wxRibbonArtProvider, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -157,7 +154,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, SetActivePage_gurax, "SetActivePage")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -180,7 +176,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, GetActivePage_gurax, "GetActivePage")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -202,7 +197,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, GetPage_gurax, "GetPage")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -225,7 +219,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, GetPageCount_gurax, "GetPageCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -245,7 +238,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, DismissExpandedPanel_gurax, "DismissExpand
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -266,7 +258,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, GetPageNumber_gurax, "GetPageNumber")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("page", VTYPE_wxRibbonPage, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -291,7 +282,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, DeletePage_gurax, "DeletePage")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -314,7 +304,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, ClearPages_gurax, "ClearPages")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -335,7 +324,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, IsPageShown_gurax, "IsPageShown")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -360,7 +348,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, ShowPage_gurax, "ShowPage")
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("show_tab", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -385,7 +372,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, HidePage_gurax, "HidePage")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -409,7 +395,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, IsPageHighlighted_gurax, "IsPageHighlighte
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -434,7 +419,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, AddPageHighlight_gurax, "AddPageHighlight"
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("highlight", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -459,7 +443,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, RemovePageHighlight_gurax, "RemovePageHigh
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -483,7 +466,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, ShowPanels_gurax, "ShowPanels")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -506,7 +488,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, HidePanels_gurax, "HidePanels")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -526,7 +507,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, ArePanelsShown_gurax, "ArePanelsShown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -546,7 +526,6 @@ Gurax_DeclareMethodAlias(wxRibbonBar, Realize_gurax, "Realize")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -573,7 +552,7 @@ VType_wxRibbonBar VTYPE_wxRibbonBar("RibbonBar");
 void VType_wxRibbonBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxRibbonControl, Flag::Mutable, Gurax_CreateConstructor(RibbonBar_gurax));
 	// Assignment of method

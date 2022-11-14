@@ -38,7 +38,6 @@ Gurax_DeclareMethodAlias(wxFocusEvent, GetWindow_gurax, "GetWindow")
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -59,7 +58,6 @@ Gurax_DeclareMethodAlias(wxFocusEvent, SetWindow_gurax, "SetWindow")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -90,7 +88,7 @@ VType_wxFocusEvent VTYPE_wxFocusEvent("FocusEvent");
 void VType_wxFocusEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

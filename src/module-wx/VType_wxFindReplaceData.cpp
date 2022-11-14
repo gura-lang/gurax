@@ -58,7 +58,6 @@ Gurax_DeclareMethodAlias(wxFindReplaceData, GetFindString_gurax, "GetFindString"
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -78,7 +77,6 @@ Gurax_DeclareMethodAlias(wxFindReplaceData, GetFlags_gurax, "GetFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -98,7 +96,6 @@ Gurax_DeclareMethodAlias(wxFindReplaceData, GetReplaceString_gurax, "GetReplaceS
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -119,7 +116,6 @@ Gurax_DeclareMethodAlias(wxFindReplaceData, SetFindString_gurax, "SetFindString"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -143,7 +139,6 @@ Gurax_DeclareMethodAlias(wxFindReplaceData, SetFlags_gurax, "SetFlags")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -167,7 +162,6 @@ Gurax_DeclareMethodAlias(wxFindReplaceData, SetReplaceString_gurax, "SetReplaceS
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -197,7 +191,7 @@ VType_wxFindReplaceData VTYPE_wxFindReplaceData("FindReplaceData");
 void VType_wxFindReplaceData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(FindReplaceData_gurax));
 	// Assignment of method

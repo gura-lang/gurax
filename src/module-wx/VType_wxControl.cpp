@@ -73,7 +73,6 @@ Gurax_DeclareMethodAlias(wxControl, Command_gurax, "Command")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -97,7 +96,6 @@ Gurax_DeclareMethodAlias(wxControl, GetLabel_gurax, "GetLabel")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -117,7 +115,6 @@ Gurax_DeclareMethodAlias(wxControl, GetLabelText_gurax, "GetLabelText")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -140,7 +137,6 @@ Gurax_DeclareMethodAlias(wxControl, GetSizeFromTextSizeXY_gurax, "GetSizeFromTex
 	DeclareArg("ylen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -167,7 +163,6 @@ Gurax_DeclareMethodAlias(wxControl, GetSizeFromTextSize_gurax, "GetSizeFromTextS
 	DeclareArg("tsize", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -192,7 +187,6 @@ Gurax_DeclareMethodAlias(wxControl, SetLabel_gurax, "SetLabel")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -216,7 +210,6 @@ Gurax_DeclareMethodAlias(wxControl, SetLabelText_gurax, "SetLabelText")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -240,7 +233,6 @@ Gurax_DeclareMethodAlias(wxControl, SetLabelMarkup_gurax, "SetLabelMarkup")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("markup", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -270,7 +262,7 @@ VType_wxControl VTYPE_wxControl("Control");
 void VType_wxControl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Control_gurax));
 	// Assignment of method

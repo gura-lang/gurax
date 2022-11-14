@@ -73,7 +73,6 @@ Gurax_DeclareMethodAlias(wxGrid, DrawCellHighlight_gurax, "DrawCellHighlight")
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("attr", VTYPE_wxGridCellAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -101,7 +100,6 @@ Gurax_DeclareMethodAlias(wxGrid, DrawRowLabels_gurax, "DrawRowLabels")
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rows", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -128,7 +126,6 @@ Gurax_DeclareMethodAlias(wxGrid, DrawRowLabel_gurax, "DrawRowLabel")
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -155,7 +152,6 @@ Gurax_DeclareMethodAlias(wxGrid, DrawColLabels_gurax, "DrawColLabels")
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cols", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -182,7 +178,6 @@ Gurax_DeclareMethodAlias(wxGrid, DrawColLabel_gurax, "DrawColLabel")
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -208,7 +203,6 @@ Gurax_DeclareMethodAlias(wxGrid, DrawCornerLabel_gurax, "DrawCornerLabel")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -238,7 +232,6 @@ Gurax_DeclareMethodAlias(wxGrid, DrawTextRectangle_gurax, "DrawTextRectangle")
 	DeclareArg("verticalAlignment", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("textOrientation", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -272,7 +265,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellHighlightColour_gurax, "GetCellHighlight
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -292,7 +284,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellHighlightPenWidth_gurax, "GetCellHighlig
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -312,7 +303,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellHighlightROPenWidth_gurax, "GetCellHighl
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -333,7 +323,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellHighlightColour_gurax, "SetCellHighlight
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -358,7 +347,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellHighlightPenWidth_gurax, "SetCellHighlig
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -382,7 +370,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellHighlightROPenWidth_gurax, "SetCellHighl
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -411,7 +398,6 @@ Gurax_DeclareMethodAlias(wxGrid, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -444,7 +430,6 @@ Gurax_DeclareMethodAlias(wxGrid, CreateGrid_gurax, "CreateGrid")
 	DeclareArg("numCols", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("selmode", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -473,7 +458,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetTable_gurax, "SetTable")
 	DeclareArg("takeOwnership", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("selmode", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -501,7 +485,6 @@ Gurax_DeclareMethodAlias(wxGrid, ProcessTableMessage_gurax, "ProcessTableMessage
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("msg", VTYPE_wxGridTableMessage, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -526,7 +509,6 @@ Gurax_DeclareMethodAlias(wxGrid, EnableGridLines_gurax, "EnableGridLines")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -551,7 +533,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetColGridLinePen_gurax, "GetColGridLinePen")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -575,7 +556,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultGridLinePen_gurax, "GetDefaultGridLin
 	Declare(VTYPE_wxPen, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -596,7 +576,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetGridLineColour_gurax, "GetGridLineColour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -618,7 +597,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetRowGridLinePen_gurax, "GetRowGridLinePen")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -641,7 +619,6 @@ Gurax_DeclareMethodAlias(wxGrid, GridLinesEnabled_gurax, "GridLinesEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -662,7 +639,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetGridLineColour_gurax, "SetGridLineColour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -686,7 +662,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetColLabelTextOrientation_gurax, "GetColLabelT
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -707,7 +682,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetColLabelValue_gurax, "GetColLabelValue")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -731,7 +705,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetLabelBackgroundColour_gurax, "GetLabelBackgr
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -752,7 +725,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetLabelFont_gurax, "GetLabelFont")
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -773,7 +745,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetLabelTextColour_gurax, "GetLabelTextColour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -794,7 +765,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetRowLabelValue_gurax, "GetRowLabelValue")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -817,7 +787,6 @@ Gurax_DeclareMethodAlias(wxGrid, HideColLabels_gurax, "HideColLabels")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -837,7 +806,6 @@ Gurax_DeclareMethodAlias(wxGrid, HideRowLabels_gurax, "HideRowLabels")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -859,7 +827,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColLabelAlignment_gurax, "SetColLabelAlignme
 	DeclareArg("horiz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vert", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -884,7 +851,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColLabelTextOrientation_gurax, "SetColLabelT
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("textOrientation", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -909,7 +875,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColLabelValue_gurax, "SetColLabelValue")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -934,7 +899,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetLabelBackgroundColour_gurax, "SetLabelBackgr
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -959,7 +923,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetLabelFont_gurax, "SetLabelFont")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -984,7 +947,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetLabelTextColour_gurax, "SetLabelTextColour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1010,7 +972,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetRowLabelAlignment_gurax, "SetRowLabelAlignme
 	DeclareArg("horiz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vert", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1036,7 +997,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetRowLabelValue_gurax, "SetRowLabelValue")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1061,7 +1021,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetUseNativeColLabels_gurax, "SetUseNativeColLa
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("native", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1085,7 +1044,6 @@ Gurax_DeclareMethodAlias(wxGrid, UseNativeColHeader_gurax, "UseNativeColHeader")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("native", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1111,7 +1069,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellBackgroundColour_gurax, "GetCellBackgrou
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1138,7 +1095,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellFont_gurax, "GetCellFont")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1165,7 +1121,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellTextColour_gurax, "GetCellTextColour")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1190,7 +1145,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultCellBackgroundColour_gurax, "GetDefau
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1211,7 +1165,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultCellFont_gurax, "GetDefaultCellFont")
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1232,7 +1185,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultCellTextColour_gurax, "GetDefaultCell
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1256,7 +1208,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellAlignment_gurax, "SetCellAlignment")
 	DeclareArg("horiz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vert", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1285,7 +1236,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellBackgroundColour_gurax, "SetCellBackgrou
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1314,7 +1264,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellFont_gurax, "SetCellFont")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1343,7 +1292,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellTextColour_gurax, "SetCellTextColour")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1371,7 +1319,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetDefaultCellAlignment_gurax, "SetDefaultCellA
 	DeclareArg("horiz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vert", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1396,7 +1343,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetDefaultCellBackgroundColour_gurax, "SetDefau
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1421,7 +1367,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetDefaultCellFont_gurax, "SetDefaultCellFont")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1446,7 +1391,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetDefaultCellTextColour_gurax, "SetDefaultCell
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1470,7 +1414,6 @@ Gurax_DeclareMethodAlias(wxGrid, CanEnableCellControl_gurax, "CanEnableCellContr
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1490,7 +1433,6 @@ Gurax_DeclareMethodAlias(wxGrid, DisableCellEditControl_gurax, "DisableCellEditC
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1511,7 +1453,6 @@ Gurax_DeclareMethodAlias(wxGrid, EnableCellEditControl_gurax, "EnableCellEditCon
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1535,7 +1476,6 @@ Gurax_DeclareMethodAlias(wxGrid, EnableEditing_gurax, "EnableEditing")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("edit", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1561,7 +1501,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellEditor_gurax, "GetCellEditor")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1588,7 +1527,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellRenderer_gurax, "GetCellRenderer")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1614,7 +1552,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellValue_gurax, "GetCellValue")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1639,7 +1576,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultEditor_gurax, "GetDefaultEditor")
 	Declare(VTYPE_wxGridCellEditor, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1662,7 +1598,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultEditorForCell_gurax, "GetDefaultEdito
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1688,7 +1623,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultEditorForType_gurax, "GetDefaultEdito
 	DeclareArg("typeName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1712,7 +1646,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultRenderer_gurax, "GetDefaultRenderer")
 	Declare(VTYPE_wxGridCellRenderer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1735,7 +1668,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultRendererForCell_gurax, "GetDefaultRen
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1761,7 +1693,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultRendererForType_gurax, "GetDefaultRen
 	DeclareArg("typeName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1784,7 +1715,6 @@ Gurax_DeclareMethodAlias(wxGrid, HideCellEditControl_gurax, "HideCellEditControl
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1804,7 +1734,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsCellEditControlEnabled_gurax, "IsCellEditCont
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1824,7 +1753,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsCellEditControlShown_gurax, "IsCellEditContro
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1844,7 +1772,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsCurrentCellReadOnly_gurax, "IsCurrentCellRead
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1864,7 +1791,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsEditable_gurax, "IsEditable")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1886,7 +1812,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsReadOnly_gurax, "IsReadOnly")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1913,7 +1838,6 @@ Gurax_DeclareMethodAlias(wxGrid, RegisterDataType_gurax, "RegisterDataType")
 	DeclareArg("renderer", VTYPE_wxGridCellRenderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("editor", VTYPE_wxGridCellEditor, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1940,7 +1864,6 @@ Gurax_DeclareMethodAlias(wxGrid, SaveEditControlValue_gurax, "SaveEditControlVal
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1963,7 +1886,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellEditor_gurax, "SetCellEditor")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("editor", VTYPE_wxGridCellEditor, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1992,7 +1914,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellRenderer_gurax, "SetCellRenderer")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("renderer", VTYPE_wxGridCellRenderer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2021,7 +1942,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellValue_gurax, "SetCellValue")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2047,7 +1967,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColFormatBool_gurax, "SetColFormatBool")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2072,7 +1991,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColFormatCustom_gurax, "SetColFormatCustom")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("typeName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2099,7 +2017,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColFormatFloat_gurax, "SetColFormatFloat")
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("precision", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2127,7 +2044,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColFormatNumber_gurax, "SetColFormatNumber")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2151,7 +2067,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetDefaultEditor_gurax, "SetDefaultEditor")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("editor", VTYPE_wxGridCellEditor, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2176,7 +2091,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetDefaultRenderer_gurax, "SetDefaultRenderer")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_wxGridCellRenderer, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2203,7 +2117,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetReadOnly_gurax, "SetReadOnly")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("isReadOnly", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2228,7 +2141,6 @@ Gurax_DeclareMethodAlias(wxGrid, ShowCellEditControl_gurax, "ShowCellEditControl
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2248,7 +2160,6 @@ Gurax_DeclareMethodAlias(wxGrid, AutoSize_gurax, "AutoSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2269,7 +2180,6 @@ Gurax_DeclareMethodAlias(wxGrid, AutoSizeColLabelSize_gurax, "AutoSizeColLabelSi
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2294,7 +2204,6 @@ Gurax_DeclareMethodAlias(wxGrid, AutoSizeColumn_gurax, "AutoSizeColumn")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("setAsMin", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2319,7 +2228,6 @@ Gurax_DeclareMethodAlias(wxGrid, AutoSizeColumns_gurax, "AutoSizeColumns")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("setAsMin", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2344,7 +2252,6 @@ Gurax_DeclareMethodAlias(wxGrid, AutoSizeRow_gurax, "AutoSizeRow")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("setAsMin", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2369,7 +2276,6 @@ Gurax_DeclareMethodAlias(wxGrid, AutoSizeRowLabelSize_gurax, "AutoSizeRowLabelSi
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2393,7 +2299,6 @@ Gurax_DeclareMethodAlias(wxGrid, AutoSizeRows_gurax, "AutoSizeRows")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("setAsMin", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2418,7 +2323,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellOverflow_gurax, "GetCellOverflow")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2442,7 +2346,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetColLabelSize_gurax, "GetColLabelSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2462,7 +2365,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetColMinimalAcceptableWidth_gurax, "GetColMini
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2483,7 +2385,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetColSize_gurax, "GetColSize")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2507,7 +2408,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsColShown_gurax, "IsColShown")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2530,7 +2430,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultCellOverflow_gurax, "GetDefaultCellOv
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2550,7 +2449,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultColLabelSize_gurax, "GetDefaultColLab
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2570,7 +2468,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultColSize_gurax, "GetDefaultColSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2590,7 +2487,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultRowLabelSize_gurax, "GetDefaultRowLab
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2610,7 +2506,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetDefaultRowSize_gurax, "GetDefaultRowSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2630,7 +2525,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetRowMinimalAcceptableHeight_gurax, "GetRowMin
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2650,7 +2544,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetRowLabelSize_gurax, "GetRowLabelSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2671,7 +2564,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetRowSize_gurax, "GetRowSize")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2695,7 +2587,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsRowShown_gurax, "IsRowShown")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2721,7 +2612,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellOverflow_gurax, "SetCellOverflow")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("allow", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2747,7 +2637,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColLabelSize_gurax, "SetColLabelSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2771,7 +2660,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColMinimalAcceptableWidth_gurax, "SetColMini
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2796,7 +2684,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColMinimalWidth_gurax, "SetColMinimalWidth")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2822,7 +2709,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColSize_gurax, "SetColSize")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2847,7 +2733,6 @@ Gurax_DeclareMethodAlias(wxGrid, HideCol_gurax, "HideCol")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2871,7 +2756,6 @@ Gurax_DeclareMethodAlias(wxGrid, ShowCol_gurax, "ShowCol")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2895,7 +2779,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetDefaultCellOverflow_gurax, "SetDefaultCellOv
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("allow", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2920,7 +2803,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetDefaultColSize_gurax, "SetDefaultColSize")
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("resizeExistingCols", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2946,7 +2828,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetDefaultRowSize_gurax, "SetDefaultRowSize")
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("resizeExistingRows", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2971,7 +2852,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetRowLabelSize_gurax, "SetRowLabelSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2995,7 +2875,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetRowMinimalAcceptableHeight_gurax, "SetRowMin
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3020,7 +2899,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetRowMinimalHeight_gurax, "SetRowMinimalHeight
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3046,7 +2924,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetRowSize_gurax, "SetRowSize")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3071,7 +2948,6 @@ Gurax_DeclareMethodAlias(wxGrid, HideRow_gurax, "HideRow")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3095,7 +2971,6 @@ Gurax_DeclareMethodAlias(wxGrid, ShowRow_gurax, "ShowRow")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3119,7 +2994,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetColSizes_gurax, "GetColSizes")
 	Declare(VTYPE_wxGridSizesInfo, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3140,7 +3014,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetRowSizes_gurax, "GetRowSizes")
 	Declare(VTYPE_wxGridSizesInfo, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3161,7 +3034,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColSizes_gurax, "SetColSizes")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sizeInfo", VTYPE_wxGridSizesInfo, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3186,7 +3058,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetRowSizes_gurax, "SetRowSizes")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sizeInfo", VTYPE_wxGridSizesInfo, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3214,7 +3085,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetCellSize_gurax, "SetCellSize")
 	DeclareArg("num_rows", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num_cols", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3242,7 +3112,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetCellSize_gurax, "GetCellSize")
 	DeclareArg("coords", VTYPE_wxGridCellCoords, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3266,7 +3135,6 @@ Gurax_DeclareMethodAlias(wxGrid, CanDragCell_gurax, "CanDragCell")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3286,7 +3154,6 @@ Gurax_DeclareMethodAlias(wxGrid, CanDragColMove_gurax, "CanDragColMove")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3307,7 +3174,6 @@ Gurax_DeclareMethodAlias(wxGrid, CanDragColSize_gurax, "CanDragColSize")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3330,7 +3196,6 @@ Gurax_DeclareMethodAlias(wxGrid, CanDragGridSize_gurax, "CanDragGridSize")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3351,7 +3216,6 @@ Gurax_DeclareMethodAlias(wxGrid, CanDragRowSize_gurax, "CanDragRowSize")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3375,7 +3239,6 @@ Gurax_DeclareMethodAlias(wxGrid, DisableColResize_gurax, "DisableColResize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3399,7 +3262,6 @@ Gurax_DeclareMethodAlias(wxGrid, DisableRowResize_gurax, "DisableRowResize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3422,7 +3284,6 @@ Gurax_DeclareMethodAlias(wxGrid, DisableDragColMove_gurax, "DisableDragColMove")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3442,7 +3303,6 @@ Gurax_DeclareMethodAlias(wxGrid, DisableDragColSize_gurax, "DisableDragColSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3462,7 +3322,6 @@ Gurax_DeclareMethodAlias(wxGrid, DisableDragGridSize_gurax, "DisableDragGridSize
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3482,7 +3341,6 @@ Gurax_DeclareMethodAlias(wxGrid, DisableDragRowSize_gurax, "DisableDragRowSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3503,7 +3361,6 @@ Gurax_DeclareMethodAlias(wxGrid, EnableDragCell_gurax, "EnableDragCell")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3527,7 +3384,6 @@ Gurax_DeclareMethodAlias(wxGrid, EnableDragColMove_gurax, "EnableDragColMove")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3551,7 +3407,6 @@ Gurax_DeclareMethodAlias(wxGrid, EnableDragColSize_gurax, "EnableDragColSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3575,7 +3430,6 @@ Gurax_DeclareMethodAlias(wxGrid, EnableDragGridSize_gurax, "EnableDragGridSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3599,7 +3453,6 @@ Gurax_DeclareMethodAlias(wxGrid, EnableDragRowSize_gurax, "EnableDragRowSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3623,7 +3476,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetColAt_gurax, "GetColAt")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("colPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3647,7 +3499,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetColPos_gurax, "GetColPos")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("colID", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3672,7 +3523,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColPos_gurax, "SetColPos")
 	DeclareArg("colID", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("newPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3697,7 +3547,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColumnsOrder_gurax, "SetColumnsOrder")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("order", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3720,7 +3569,6 @@ Gurax_DeclareMethodAlias(wxGrid, ResetColPos_gurax, "ResetColPos")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3740,7 +3588,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetGridCursorCol_gurax, "GetGridCursorCol")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3760,7 +3607,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetGridCursorRow_gurax, "GetGridCursorRow")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3782,7 +3628,6 @@ Gurax_DeclareMethodAlias(wxGrid, GoToCell_gurax, "GoToCell")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3807,7 +3652,6 @@ Gurax_DeclareMethodAlias(wxGrid, MoveCursorDown_gurax, "MoveCursorDown")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("expandSelection", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3831,7 +3675,6 @@ Gurax_DeclareMethodAlias(wxGrid, MoveCursorDownBlock_gurax, "MoveCursorDownBlock
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("expandSelection", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3855,7 +3698,6 @@ Gurax_DeclareMethodAlias(wxGrid, MoveCursorLeft_gurax, "MoveCursorLeft")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("expandSelection", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3879,7 +3721,6 @@ Gurax_DeclareMethodAlias(wxGrid, MoveCursorLeftBlock_gurax, "MoveCursorLeftBlock
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("expandSelection", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3903,7 +3744,6 @@ Gurax_DeclareMethodAlias(wxGrid, MoveCursorRight_gurax, "MoveCursorRight")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("expandSelection", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3927,7 +3767,6 @@ Gurax_DeclareMethodAlias(wxGrid, MoveCursorRightBlock_gurax, "MoveCursorRightBlo
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("expandSelection", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3951,7 +3790,6 @@ Gurax_DeclareMethodAlias(wxGrid, MoveCursorUp_gurax, "MoveCursorUp")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("expandSelection", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3975,7 +3813,6 @@ Gurax_DeclareMethodAlias(wxGrid, MoveCursorUpBlock_gurax, "MoveCursorUpBlock")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("expandSelection", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3998,7 +3835,6 @@ Gurax_DeclareMethodAlias(wxGrid, MovePageDown_gurax, "MovePageDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4018,7 +3854,6 @@ Gurax_DeclareMethodAlias(wxGrid, MovePageUp_gurax, "MovePageUp")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4040,7 +3875,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetGridCursor_gurax, "SetGridCursor")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4065,7 +3899,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetTabBehaviour_gurax, "SetTabBehaviour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("behaviour", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4088,7 +3921,6 @@ Gurax_DeclareMethodAlias(wxGrid, ClearSelection_gurax, "ClearSelection")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4109,7 +3941,6 @@ Gurax_DeclareMethodAlias(wxGrid, DeselectRow_gurax, "DeselectRow")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4133,7 +3964,6 @@ Gurax_DeclareMethodAlias(wxGrid, DeselectCol_gurax, "DeselectCol")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4158,7 +3988,6 @@ Gurax_DeclareMethodAlias(wxGrid, DeselectCell_gurax, "DeselectCell")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4182,7 +4011,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetSelectedCols_gurax, "GetSelectedCols")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4202,7 +4030,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetSelectedRows_gurax, "GetSelectedRows")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4223,7 +4050,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetSelectionBackground_gurax, "GetSelectionBack
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4244,7 +4070,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetSelectionForeground_gurax, "GetSelectionFore
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4264,7 +4089,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetSelectionMode_gurax, "GetSelectionMode")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4286,7 +4110,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsInSelection_gurax, "IsInSelection")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4310,7 +4133,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsSelection_gurax, "IsSelection")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4330,7 +4152,6 @@ Gurax_DeclareMethodAlias(wxGrid, SelectAll_gurax, "SelectAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4355,7 +4176,6 @@ Gurax_DeclareMethodAlias(wxGrid, SelectBlock_gurax, "SelectBlock")
 	DeclareArg("rightCol", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("addToSelected", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4384,7 +4204,6 @@ Gurax_DeclareMethodAlias(wxGrid, SelectCol_gurax, "SelectCol")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("addToSelected", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4410,7 +4229,6 @@ Gurax_DeclareMethodAlias(wxGrid, SelectRow_gurax, "SelectRow")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("addToSelected", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4435,7 +4253,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetSelectionBackground_gurax, "SetSelectionBack
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4460,7 +4277,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetSelectionForeground_gurax, "SetSelectionFore
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("c", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4485,7 +4301,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetSelectionMode_gurax, "SetSelectionMode")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("selmode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4508,7 +4323,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetScrollLineX_gurax, "GetScrollLineX")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4528,7 +4342,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetScrollLineY_gurax, "GetScrollLineY")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4551,7 +4364,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsVisible_gurax, "IsVisible")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("wholeCellVisible", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4578,7 +4390,6 @@ Gurax_DeclareMethodAlias(wxGrid, MakeCellVisible_gurax, "MakeCellVisible")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4603,7 +4414,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetScrollLineX_gurax, "SetScrollLineX")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4627,7 +4437,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetScrollLineY_gurax, "SetScrollLineY")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4653,7 +4462,6 @@ Gurax_DeclareMethodAlias(wxGrid, BlockToDeviceRect_gurax, "BlockToDeviceRect")
 	DeclareArg("bottomRight", VTYPE_wxGridCellCoords, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4682,7 +4490,6 @@ Gurax_DeclareMethodAlias(wxGrid, CellToRect_gurax, "CellToRect")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4708,7 +4515,6 @@ Gurax_DeclareMethodAlias(wxGrid, XToCol_gurax, "XToCol")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clipToMinMax", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4733,7 +4539,6 @@ Gurax_DeclareMethodAlias(wxGrid, XToEdgeOfCol_gurax, "XToEdgeOfCol")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4759,7 +4564,6 @@ Gurax_DeclareMethodAlias(wxGrid, XYToCell_gurax, "XYToCell")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4784,7 +4588,6 @@ Gurax_DeclareMethodAlias(wxGrid, YToEdgeOfRow_gurax, "YToEdgeOfRow")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4809,7 +4612,6 @@ Gurax_DeclareMethodAlias(wxGrid, YToRow_gurax, "YToRow")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clipToMinMax", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4835,7 +4637,6 @@ Gurax_DeclareMethodAlias(wxGrid, AppendCols_gurax, "AppendCols")
 	DeclareArg("numCols", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("updateLabels", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4862,7 +4663,6 @@ Gurax_DeclareMethodAlias(wxGrid, AppendRows_gurax, "AppendRows")
 	DeclareArg("numRows", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("updateLabels", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4887,7 +4687,6 @@ Gurax_DeclareMethodAlias(wxGrid, AreHorzGridLinesClipped_gurax, "AreHorzGridLine
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4907,7 +4706,6 @@ Gurax_DeclareMethodAlias(wxGrid, AreVertGridLinesClipped_gurax, "AreVertGridLine
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4927,7 +4725,6 @@ Gurax_DeclareMethodAlias(wxGrid, BeginBatch_gurax, "BeginBatch")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4947,7 +4744,6 @@ Gurax_DeclareMethodAlias(wxGrid, ClearGrid_gurax, "ClearGrid")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4968,7 +4764,6 @@ Gurax_DeclareMethodAlias(wxGrid, ClipHorzGridLines_gurax, "ClipHorzGridLines")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("clip", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4992,7 +4787,6 @@ Gurax_DeclareMethodAlias(wxGrid, ClipVertGridLines_gurax, "ClipVertGridLines")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("clip", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5018,7 +4812,6 @@ Gurax_DeclareMethodAlias(wxGrid, DeleteCols_gurax, "DeleteCols")
 	DeclareArg("numCols", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("updateLabels", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5048,7 +4841,6 @@ Gurax_DeclareMethodAlias(wxGrid, DeleteRows_gurax, "DeleteRows")
 	DeclareArg("numRows", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("updateLabels", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5075,7 +4867,6 @@ Gurax_DeclareMethodAlias(wxGrid, EndBatch_gurax, "EndBatch")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5095,7 +4886,6 @@ Gurax_DeclareMethodAlias(wxGrid, Fit_gurax, "Fit")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5115,7 +4905,6 @@ Gurax_DeclareMethodAlias(wxGrid, ForceRefresh_gurax, "ForceRefresh")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5135,7 +4924,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetBatchCount_gurax, "GetBatchCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5155,7 +4943,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetNumberCols_gurax, "GetNumberCols")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5175,7 +4962,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetNumberRows_gurax, "GetNumberRows")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5198,7 +4984,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetOrCreateCellAttr_gurax, "GetOrCreateCellAttr
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5223,7 +5008,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetTable_gurax, "GetTable")
 	Declare(VTYPE_wxGridTableBase, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5246,7 +5030,6 @@ Gurax_DeclareMethodAlias(wxGrid, InsertCols_gurax, "InsertCols")
 	DeclareArg("numCols", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("updateLabels", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5276,7 +5059,6 @@ Gurax_DeclareMethodAlias(wxGrid, InsertRows_gurax, "InsertRows")
 	DeclareArg("numRows", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("updateLabels", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5305,7 +5087,6 @@ Gurax_DeclareMethodAlias(wxGrid, RefreshAttr_gurax, "RefreshAttr")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5332,7 +5113,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetAttr_gurax, "SetAttr")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("attr", VTYPE_wxGridCellAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5360,7 +5140,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetColAttr_gurax, "SetColAttr")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("attr", VTYPE_wxGridCellAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5387,7 +5166,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetMargins_gurax, "SetMargins")
 	DeclareArg("extraWidth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extraHeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5413,7 +5191,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetRowAttr_gurax, "SetRowAttr")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("attr", VTYPE_wxGridCellAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5439,7 +5216,6 @@ Gurax_DeclareMethodAlias(wxGrid, CalcRowLabelsExposed_gurax, "CalcRowLabelsExpos
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("reg", VTYPE_wxRegion, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5464,7 +5240,6 @@ Gurax_DeclareMethodAlias(wxGrid, CalcColLabelsExposed_gurax, "CalcColLabelsExpos
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("reg", VTYPE_wxRegion, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5488,7 +5263,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetSortingColumn_gurax, "GetSortingColumn")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5509,7 +5283,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsSortingBy_gurax, "IsSortingBy")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5532,7 +5305,6 @@ Gurax_DeclareMethodAlias(wxGrid, IsSortOrderAscending_gurax, "IsSortOrderAscendi
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5554,7 +5326,6 @@ Gurax_DeclareMethodAlias(wxGrid, SetSortingColumn_gurax, "SetSortingColumn")
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ascending", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5578,7 +5349,6 @@ Gurax_DeclareMethodAlias(wxGrid, UnsetSortingColumn_gurax, "UnsetSortingColumn")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5599,7 +5369,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetGridWindow_gurax, "GetGridWindow")
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5620,7 +5389,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetGridRowLabelWindow_gurax, "GetGridRowLabelWi
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5641,7 +5409,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetGridColLabelWindow_gurax, "GetGridColLabelWi
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5662,7 +5429,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetGridCornerLabelWindow_gurax, "GetGridCornerL
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5683,7 +5449,6 @@ Gurax_DeclareMethodAlias(wxGrid, GetGridColHeader_gurax, "GetGridColHeader")
 	Declare(VTYPE_wxHeaderCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5710,7 +5475,7 @@ VType_wxGrid VTYPE_wxGrid("Grid");
 void VType_wxGrid::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxScrolledCanvas, Flag::Mutable, Gurax_CreateConstructor(Grid_gurax));
 	// Assignment of constant value

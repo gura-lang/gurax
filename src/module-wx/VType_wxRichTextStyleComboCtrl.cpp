@@ -45,7 +45,7 @@ VType_wxRichTextStyleComboCtrl VTYPE_wxRichTextStyleComboCtrl("RichTextStyleComb
 void VType_wxRichTextStyleComboCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxComboCtrl, Flag::Mutable);
 	// Assignment of method

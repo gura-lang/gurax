@@ -600,9 +600,8 @@ Gurax_DeclareMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.nam
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
 }
 
 Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -640,9 +639,8 @@ Gurax_DeclareClassMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInf
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
 }
 
 Gurax_ImplementClassMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -668,9 +666,8 @@ tmplPropertyImplementation_R = tR'''
 Gurax_DeclareProperty_R(wx${className}, ${propInfo.GetName()})
 {
 	Declare(VTYPE_${propInfo.GetTypeInfo().vtype}, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wx${className}, ${propInfo.GetName()})
@@ -684,9 +681,8 @@ tmplPropertyImplementation_W = tR'''
 Gurax_DeclareProperty_W(wx${className}, ${propInfo.GetName()})
 {
 	Declare(VTYPE_${propInfo.GetTypeInfo().vtype}, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
 }
 
 Gurax_ImplementPropertySetter(wx${className}, ${propInfo.GetName()})
@@ -701,9 +697,8 @@ tmplPropertyImplementation_RW = tR'''
 Gurax_DeclareProperty_RW(wx${className}, ${propInfo.GetName()})
 {
 	Declare(VTYPE_${propInfo.GetTypeInfo().vtype}, Flag::None);
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
 }
 
 Gurax_ImplementPropertyGetter(wx${className}, ${propInfo.GetName()})
@@ -758,9 +753,8 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
-	AddHelp(
-		Gurax_Symbol(en),
-		"");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
 }
 
 Gurax_ImplementFunctionEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -1097,9 +1091,9 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.${className}.");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Creates an instance of wx.${className}.
+)**");
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -1126,9 +1120,9 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.${className}.");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Creates an instance of wx.${className}.
+)**");
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -1157,9 +1151,9 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.${className}.");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Creates an instance of wx.${className}.
+)**");
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -1187,9 +1181,9 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(
-		Gurax_Symbol(en),
-		"Creates an instance of wx.${className}.");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Creates an instance of wx.${className}.
+)**");
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)

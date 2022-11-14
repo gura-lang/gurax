@@ -45,7 +45,7 @@ VType_wxAutoBufferedPaintDC VTYPE_wxAutoBufferedPaintDC("AutoBufferedPaintDC");
 void VType_wxAutoBufferedPaintDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDC, Flag::Mutable);
 	// Assignment of method

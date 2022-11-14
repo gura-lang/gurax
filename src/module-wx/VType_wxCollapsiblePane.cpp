@@ -83,7 +83,6 @@ Gurax_DeclareMethodAlias(wxCollapsiblePane, Create_gurax, "Create")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -116,7 +115,6 @@ Gurax_DeclareMethodAlias(wxCollapsiblePane, Collapse_gurax, "Collapse")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("collapse", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -139,7 +137,6 @@ Gurax_DeclareMethodAlias(wxCollapsiblePane, Expand_gurax, "Expand")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -160,7 +157,6 @@ Gurax_DeclareMethodAlias(wxCollapsiblePane, GetPane_gurax, "GetPane")
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -180,7 +176,6 @@ Gurax_DeclareMethodAlias(wxCollapsiblePane, IsCollapsed_gurax, "IsCollapsed")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -200,7 +195,6 @@ Gurax_DeclareMethodAlias(wxCollapsiblePane, IsExpanded_gurax, "IsExpanded")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -227,7 +221,7 @@ VType_wxCollapsiblePane VTYPE_wxCollapsiblePane("CollapsiblePane");
 void VType_wxCollapsiblePane::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CollapsiblePane_gurax));
 	// Assignment of method

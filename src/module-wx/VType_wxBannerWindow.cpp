@@ -106,7 +106,6 @@ Gurax_DeclareMethodAlias(wxBannerWindow, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -139,7 +138,6 @@ Gurax_DeclareMethodAlias(wxBannerWindow, SetBitmap_gurax, "SetBitmap")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -165,7 +163,6 @@ Gurax_DeclareMethodAlias(wxBannerWindow, SetText_gurax, "SetText")
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -191,7 +188,6 @@ Gurax_DeclareMethodAlias(wxBannerWindow, SetGradient_gurax, "SetGradient")
 	DeclareArg("start", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("end", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -224,7 +220,7 @@ VType_wxBannerWindow VTYPE_wxBannerWindow("BannerWindow");
 void VType_wxBannerWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(BannerWindow_gurax));
 	// Assignment of method

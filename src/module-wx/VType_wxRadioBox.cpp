@@ -82,7 +82,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, Enable_gurax, "Enable")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -108,7 +107,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, FindString_gurax, "FindString")
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bCase", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -132,7 +130,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, GetColumnCount_gurax, "GetColumnCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -153,7 +150,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, GetItemFromPoint_gurax, "GetItemFromPoint")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -178,7 +174,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, GetItemHelpText_gurax, "GetItemHelpText")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -203,7 +198,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, GetItemToolTip_gurax, "GetItemToolTip")
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -226,7 +220,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, GetRowCount_gurax, "GetRowCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -247,7 +240,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, IsItemEnabled_gurax, "IsItemEnabled")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -271,7 +263,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, IsItemShown_gurax, "IsItemShown")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -296,7 +287,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, SetItemHelpText_gurax, "SetItemHelpText")
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("helptext", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -322,7 +312,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, SetItemToolTip_gurax, "SetItemToolTip")
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -347,7 +336,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, SetSelection_gurax, "SetSelection")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -372,7 +360,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, Show_gurax, "Show")
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -396,7 +383,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, GetCount_gurax, "GetCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -417,7 +403,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, GetString_gurax, "GetString")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -442,7 +427,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, SetString_gurax, "SetString")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -466,7 +450,6 @@ Gurax_DeclareMethodAlias(wxRadioBox, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -493,7 +476,7 @@ VType_wxRadioBox VTYPE_wxRadioBox("RadioBox");
 void VType_wxRadioBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(RadioBox_gurax));
 	// Assignment of method

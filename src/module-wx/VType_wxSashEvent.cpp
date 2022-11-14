@@ -38,7 +38,6 @@ Gurax_DeclareMethodAlias(wxSashEvent, GetDragRect_gurax, "GetDragRect")
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -58,7 +57,6 @@ Gurax_DeclareMethodAlias(wxSashEvent, GetDragStatus_gurax, "GetDragStatus")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -78,7 +76,6 @@ Gurax_DeclareMethodAlias(wxSashEvent, GetEdge_gurax, "GetEdge")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -99,7 +96,6 @@ Gurax_DeclareMethodAlias(wxSashEvent, SetEdge_gurax, "SetEdge")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("edge", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -123,7 +119,6 @@ Gurax_DeclareMethodAlias(wxSashEvent, SetDragRect_gurax, "SetDragRect")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -148,7 +143,6 @@ Gurax_DeclareMethodAlias(wxSashEvent, SetDragStatus_gurax, "SetDragStatus")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("status", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -178,7 +172,7 @@ VType_wxSashEvent VTYPE_wxSashEvent("SashEvent");
 void VType_wxSashEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

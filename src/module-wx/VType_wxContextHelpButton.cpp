@@ -78,7 +78,7 @@ VType_wxContextHelpButton VTYPE_wxContextHelpButton("ContextHelpButton");
 void VType_wxContextHelpButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBitmapButton, Flag::Mutable, Gurax_CreateConstructor(ContextHelpButton_gurax));
 	// Assignment of method

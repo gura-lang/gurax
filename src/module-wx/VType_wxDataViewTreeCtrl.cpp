@@ -45,7 +45,7 @@ VType_wxDataViewTreeCtrl VTYPE_wxDataViewTreeCtrl("DataViewTreeCtrl");
 void VType_wxDataViewTreeCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDataViewCtrl, Flag::Mutable);
 	// Assignment of method

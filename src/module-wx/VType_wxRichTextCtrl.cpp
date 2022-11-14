@@ -84,7 +84,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Create_gurax, "Create")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -117,7 +116,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Init_gurax, "Init")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -139,7 +137,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetRange_gurax, "GetRange")
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -164,7 +161,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetLineLength_gurax, "GetLineLength")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("lineNo", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -188,7 +184,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetLineText_gurax, "GetLineText")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("lineNo", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -211,7 +206,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetNumberOfLines_gurax, "GetNumberOfLin
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -231,7 +225,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsModified_gurax, "IsModified")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -251,7 +244,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsEditable_gurax, "IsEditable")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -271,7 +263,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsSingleLine_gurax, "IsSingleLine")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -291,7 +282,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsMultiLine_gurax, "IsMultiLine")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -311,7 +301,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetStringSelection_gurax, "GetStringSel
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -331,7 +320,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetFilename_gurax, "GetFilename")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -352,7 +340,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetFilename_gurax, "SetFilename")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -376,7 +363,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetDelayedLayoutThreshold_gurax, "SetDe
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("threshold", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -399,7 +385,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetDelayedLayoutThreshold_gurax, "GetDe
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -419,7 +404,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetFullLayoutRequired_gurax, "GetFullLa
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -440,7 +424,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetFullLayoutRequired_gurax, "SetFullLa
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("b", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -463,7 +446,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetFullLayoutSavedPosition_gurax, "GetF
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -484,7 +466,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetFullLayoutSavedPosition_gurax, "SetF
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -507,7 +488,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ForceDelayedLayout_gurax, "ForceDelayed
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -528,7 +508,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetTextCursor_gurax, "SetTextCursor")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cursor", VTYPE_wxCursor, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -553,7 +532,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetTextCursor_gurax, "GetTextCursor")
 	Declare(VTYPE_wxCursor, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -574,7 +552,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetURLCursor_gurax, "SetURLCursor")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cursor", VTYPE_wxCursor, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -599,7 +576,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetURLCursor_gurax, "GetURLCursor")
 	Declare(VTYPE_wxCursor, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -619,7 +595,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetCaretAtLineStart_gurax, "GetCaretAtL
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -640,7 +615,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetCaretAtLineStart_gurax, "SetCaretAtL
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("atStart", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -663,7 +637,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetDragging_gurax, "GetDragging")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -684,7 +657,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetDragging_gurax, "SetDragging")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dragging", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -707,7 +679,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetPreDrag_gurax, "GetPreDrag")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -728,7 +699,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetPreDrag_gurax, "SetPreDrag")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pd", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -752,7 +722,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetDragStartPoint_gurax, "GetDragStartP
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -773,7 +742,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetDragStartPoint_gurax, "SetDragStartP
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sp", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -798,7 +766,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetDragStartTime_gurax, "GetDragStartTi
 	Declare(VTYPE_wxDateTime, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -819,7 +786,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetDragStartTime_gurax, "SetDragStartTi
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("st", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -844,7 +810,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetContextMenu_gurax, "GetContextMenu")
 	Declare(VTYPE_wxMenu, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -865,7 +830,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetContextMenu_gurax, "SetContextMenu")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -889,7 +853,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetSelectionAnchor_gurax, "GetSelection
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -910,7 +873,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetSelectionAnchor_gurax, "SetSelection
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("anchor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -934,7 +896,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetSelectionAnchorObject_gurax, "GetSel
 	Declare(VTYPE_wxRichTextObject, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -955,7 +916,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetSelectionAnchorObject_gurax, "SetSel
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("anchor", VTYPE_wxRichTextObject, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -980,7 +940,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetFocusObject_gurax, "GetFocusObject")
 	Declare(VTYPE_wxRichTextParagraphLayoutBox, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1001,7 +960,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, StoreFocusObject_gurax, "StoreFocusObje
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("obj", VTYPE_wxRichTextParagraphLayoutBox, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1027,7 +985,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetFocusObject_gurax, "SetFocusObject")
 	DeclareArg("obj", VTYPE_wxRichTextParagraphLayoutBox, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("setCaretPosition", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1052,7 +1009,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Invalidate_gurax, "Invalidate")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1072,7 +1028,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1095,7 +1050,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Replace_gurax, "Replace")
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1122,7 +1076,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Remove_gurax, "Remove")
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1148,7 +1101,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, LoadFile_gurax, "LoadFile")
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1175,7 +1127,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, DoLoadFile_gurax, "DoLoadFile")
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fileType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1201,7 +1152,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SaveFile_gurax, "SaveFile")
 	DeclareArg("file", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1228,7 +1178,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, DoSaveFile_gurax, "DoSaveFile")
 	DeclareArg("file", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("fileType", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1254,7 +1203,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetHandlerFlags_gurax, "SetHandlerFlags
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1277,7 +1225,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetHandlerFlags_gurax, "GetHandlerFlags
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1297,7 +1244,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MarkDirty_gurax, "MarkDirty")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1317,7 +1263,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, DiscardEdits_gurax, "DiscardEdits")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1338,7 +1283,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetModified_gurax, "SetModified")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("modified", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1362,7 +1306,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetMaxLength_gurax, "SetMaxLength")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1386,7 +1329,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, WriteText_gurax, "WriteText")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1410,7 +1352,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, AppendText_gurax, "AppendText")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1436,7 +1377,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetStyle_gurax, "SetStyle")
 	DeclareArg("textAttr", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1467,7 +1407,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetStyleEx_gurax, "SetStyleEx")
 	DeclareArg("style", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1496,7 +1435,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetDefaultStyleEx_gurax, "GetDefaultSty
 	Declare(VTYPE_wxRichTextAttr, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1518,7 +1456,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ClearListStyle_gurax, "ClearListStyle")
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1547,7 +1484,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetProperties_gurax, "SetProperties")
 	DeclareArg("properties", VTYPE_wxRichTextProperties, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1576,7 +1512,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Delete_gurax, "Delete")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1602,7 +1537,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, XYToPosition_gurax, "XYToPosition")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1627,7 +1561,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ShowPosition_gurax, "ShowPosition")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1650,7 +1583,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Copy_gurax, "Copy")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1670,7 +1602,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Cut_gurax, "Cut")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1690,7 +1621,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Paste_gurax, "Paste")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1710,7 +1640,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, DeleteSelection_gurax, "DeleteSelection
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1730,7 +1659,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, CanCopy_gurax, "CanCopy")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1750,7 +1678,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, CanCut_gurax, "CanCut")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1770,7 +1697,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, CanPaste_gurax, "CanPaste")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1790,7 +1716,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, CanDeleteSelection_gurax, "CanDeleteSel
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1810,7 +1735,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Undo_gurax, "Undo")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1830,7 +1754,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Redo_gurax, "Redo")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1850,7 +1773,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, CanUndo_gurax, "CanUndo")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1870,7 +1792,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, CanRedo_gurax, "CanRedo")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1891,7 +1812,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetInsertionPoint_gurax, "SetInsertionP
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1914,7 +1834,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetInsertionPointEnd_gurax, "SetInserti
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1934,7 +1853,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetInsertionPoint_gurax, "GetInsertionP
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1954,7 +1872,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SelectAll_gurax, "SelectAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1975,7 +1892,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetEditable_gurax, "SetEditable")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("editable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1998,7 +1914,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, HasSelection_gurax, "HasSelection")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2018,7 +1933,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, HasUnfocusedSelection_gurax, "HasUnfocu
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2038,7 +1952,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Newline_gurax, "Newline")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2058,7 +1971,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, LineBreak_gurax, "LineBreak")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2079,7 +1991,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetBasicStyle_gurax, "SetBasicStyle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("style", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2104,7 +2015,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetBasicStyle_gurax, "GetBasicStyle")
 	Declare(VTYPE_wxRichTextAttr, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2125,7 +2035,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginStyle_gurax, "BeginStyle")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("style", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2149,7 +2058,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndStyle_gurax, "EndStyle")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2169,7 +2077,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndAllStyles_gurax, "EndAllStyles")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2189,7 +2096,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginBold_gurax, "BeginBold")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2209,7 +2115,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndBold_gurax, "EndBold")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2229,7 +2134,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginItalic_gurax, "BeginItalic")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2249,7 +2153,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndItalic_gurax, "EndItalic")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2269,7 +2172,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginUnderline_gurax, "BeginUnderline")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2289,7 +2191,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndUnderline_gurax, "EndUnderline")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2310,7 +2211,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginFontSize_gurax, "BeginFontSize")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pointSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2333,7 +2233,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndFontSize_gurax, "EndFontSize")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2354,7 +2253,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginFont_gurax, "BeginFont")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2378,7 +2276,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndFont_gurax, "EndFont")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2399,7 +2296,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginTextColour_gurax, "BeginTextColour
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2423,7 +2319,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndTextColour_gurax, "EndTextColour")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2444,7 +2339,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginAlignment_gurax, "BeginAlignment")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("alignment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2467,7 +2361,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndAlignment_gurax, "EndAlignment")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2489,7 +2382,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginLeftIndent_gurax, "BeginLeftIndent
 	DeclareArg("leftIndent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("leftSubIndent", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2514,7 +2406,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndLeftIndent_gurax, "EndLeftIndent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2535,7 +2426,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginRightIndent_gurax, "BeginRightInde
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("rightIndent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2558,7 +2448,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndRightIndent_gurax, "EndRightIndent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2580,7 +2469,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginParagraphSpacing_gurax, "BeginPara
 	DeclareArg("before", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("after", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2604,7 +2492,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndParagraphSpacing_gurax, "EndParagrap
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2625,7 +2512,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginLineSpacing_gurax, "BeginLineSpaci
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("lineSpacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2648,7 +2534,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndLineSpacing_gurax, "EndLineSpacing")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2672,7 +2557,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginNumberedBullet_gurax, "BeginNumber
 	DeclareArg("leftSubIndent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bulletStyle", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2699,7 +2583,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndNumberedBullet_gurax, "EndNumberedBu
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2723,7 +2606,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginSymbolBullet_gurax, "BeginSymbolBu
 	DeclareArg("leftSubIndent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bulletStyle", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2750,7 +2632,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndSymbolBullet_gurax, "EndSymbolBullet
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2774,7 +2655,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginStandardBullet_gurax, "BeginStanda
 	DeclareArg("leftSubIndent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bulletStyle", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2801,7 +2681,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndStandardBullet_gurax, "EndStandardBu
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2822,7 +2701,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginCharacterStyle_gurax, "BeginCharac
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("characterStyle", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2845,7 +2723,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndCharacterStyle_gurax, "EndCharacterS
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2866,7 +2743,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginParagraphStyle_gurax, "BeginParagr
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("paragraphStyle", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2889,7 +2765,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndParagraphStyle_gurax, "EndParagraphS
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2912,7 +2787,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginListStyle_gurax, "BeginListStyle")
 	DeclareArg("level", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("number", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2939,7 +2813,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndListStyle_gurax, "EndListStyle")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2961,7 +2834,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginURL_gurax, "BeginURL")
 	DeclareArg("url", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("characterStyle", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2985,7 +2857,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndURL_gurax, "EndURL")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3005,7 +2876,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetDefaultStyleToCursorStyle_gurax, "Se
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3025,7 +2895,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SelectNone_gurax, "SelectNone")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3046,7 +2915,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SelectWord_gurax, "SelectWord")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3070,7 +2938,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetSelectionRange_gurax, "GetSelectionR
 	Declare(VTYPE_wxRichTextRange, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3091,7 +2958,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetSelectionRange_gurax, "SetSelectionR
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3116,7 +2982,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetInternalSelectionRange_gurax, "GetIn
 	Declare(VTYPE_wxRichTextRange, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3137,7 +3002,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetInternalSelectionRange_gurax, "SetIn
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3163,7 +3027,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, AddParagraph_gurax, "AddParagraph")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3188,7 +3051,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, AddImage_gurax, "AddImage")
 	DeclareArg("image", VTYPE_wxImage, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3213,7 +3075,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, LayoutContent_gurax, "LayoutContent")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("onlyVisibleRect", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3239,7 +3100,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveCaret_gurax, "MoveCaret")
 	DeclareArg("showAtLineStart", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("container", VTYPE_wxRichTextParagraphLayoutBox, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3266,7 +3126,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveRight_gurax, "MoveRight")
 	DeclareArg("noPositions", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3294,7 +3153,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveLeft_gurax, "MoveLeft")
 	DeclareArg("noPositions", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3322,7 +3180,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveUp_gurax, "MoveUp")
 	DeclareArg("noLines", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3350,7 +3207,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveDown_gurax, "MoveDown")
 	DeclareArg("noLines", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3377,7 +3233,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveToLineEnd_gurax, "MoveToLineEnd")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3402,7 +3257,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveToLineStart_gurax, "MoveToLineStart
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3427,7 +3281,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveToParagraphEnd_gurax, "MoveToParagr
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3452,7 +3305,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveToParagraphStart_gurax, "MoveToPara
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3477,7 +3329,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveHome_gurax, "MoveHome")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3502,7 +3353,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveEnd_gurax, "MoveEnd")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3528,7 +3378,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PageUp_gurax, "PageUp")
 	DeclareArg("noPages", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3556,7 +3405,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PageDown_gurax, "PageDown")
 	DeclareArg("noPages", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3584,7 +3432,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, WordLeft_gurax, "WordLeft")
 	DeclareArg("noPages", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3612,7 +3459,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, WordRight_gurax, "WordRight")
 	DeclareArg("noPages", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3639,7 +3485,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginBatchUndo_gurax, "BeginBatchUndo")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("cmdName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3662,7 +3507,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndBatchUndo_gurax, "EndBatchUndo")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3682,7 +3526,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BatchingUndo_gurax, "BatchingUndo")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3702,7 +3545,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, BeginSuppressUndo_gurax, "BeginSuppress
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3722,7 +3564,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EndSuppressUndo_gurax, "EndSuppressUndo
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3742,7 +3583,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SuppressingUndo_gurax, "SuppressingUndo
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3764,7 +3604,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, HasCharacterAttributes_gurax, "HasChara
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3792,7 +3631,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, HasParagraphAttributes_gurax, "HasParag
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3818,7 +3656,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsSelectionBold_gurax, "IsSelectionBold
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3838,7 +3675,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsSelectionItalics_gurax, "IsSelectionI
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3858,7 +3694,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsSelectionUnderlined_gurax, "IsSelecti
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3879,7 +3714,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, DoesSelectionHaveTextEffectFlag_gurax, 
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3903,7 +3737,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsSelectionAligned_gurax, "IsSelectionA
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("alignment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3926,7 +3759,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ApplyBoldToSelection_gurax, "ApplyBoldT
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3946,7 +3778,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ApplyItalicToSelection_gurax, "ApplyIta
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3966,7 +3797,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ApplyUnderlineToSelection_gurax, "Apply
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -3987,7 +3817,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ApplyTextEffectToSelection_gurax, "Appl
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4011,7 +3840,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ApplyAlignmentToSelection_gurax, "Apply
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("alignment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4035,7 +3863,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ApplyStyle_gurax, "ApplyStyle")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("def", VTYPE_wxRichTextStyleDefinition, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4060,7 +3887,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetStyleSheet_gurax, "SetStyleSheet")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("styleSheet", VTYPE_wxRichTextStyleSheet, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4085,7 +3911,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetStyleSheet_gurax, "GetStyleSheet")
 	Declare(VTYPE_wxRichTextStyleSheet, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4106,7 +3931,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PushStyleSheet_gurax, "PushStyleSheet")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("styleSheet", VTYPE_wxRichTextStyleSheet, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4131,7 +3955,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PopStyleSheet_gurax, "PopStyleSheet")
 	Declare(VTYPE_wxRichTextStyleSheet, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4152,7 +3975,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ApplyStyleSheet_gurax, "ApplyStyleSheet
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("styleSheet", VTYPE_wxRichTextStyleSheet, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4178,7 +4000,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ShowContextMenu_gurax, "ShowContextMenu
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("addPropertyCommands", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4208,7 +4029,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PrepareContextMenu_gurax, "PrepareConte
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("addPropertyCommands", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4236,7 +4056,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, CanEditProperties_gurax, "CanEditProper
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("obj", VTYPE_wxRichTextObject, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4262,7 +4081,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EditProperties_gurax, "EditProperties")
 	DeclareArg("obj", VTYPE_wxRichTextObject, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4289,7 +4107,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetPropertiesMenuLabel_gurax, "GetPrope
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("obj", VTYPE_wxRichTextObject, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4314,7 +4131,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PrepareContent_gurax, "PrepareContent")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("container", VTYPE_wxRichTextParagraphLayoutBox, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4340,7 +4156,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, CanDeleteRange_gurax, "CanDeleteRange")
 	DeclareArg("container", VTYPE_wxRichTextParagraphLayoutBox, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4368,7 +4183,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, CanInsertContent_gurax, "CanInsertConte
 	DeclareArg("container", VTYPE_wxRichTextParagraphLayoutBox, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4394,7 +4208,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EnableVerticalScrollbar_gurax, "EnableV
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4417,7 +4230,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetVerticalScrollbarEnabled_gurax, "Get
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4439,7 +4251,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetFontScale_gurax, "SetFontScale")
 	DeclareArg("fontScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("refresh", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4463,7 +4274,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetFontScale_gurax, "GetFontScale")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4485,7 +4295,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetDimensionScale_gurax, "SetDimensionS
 	DeclareArg("dimScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("refresh", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4509,7 +4318,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetDimensionScale_gurax, "GetDimensionS
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4531,7 +4339,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetScale_gurax, "SetScale")
 	DeclareArg("scale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("refresh", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4555,7 +4362,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetScale_gurax, "GetScale")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4577,7 +4383,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetUnscaledPoint_gurax, "GetUnscaledPoi
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4603,7 +4408,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetScaledPoint_gurax, "GetScaledPoint")
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4629,7 +4433,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetUnscaledSize_gurax, "GetUnscaledSize
 	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4655,7 +4458,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetScaledSize_gurax, "GetScaledSize")
 	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4681,7 +4483,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetUnscaledRect_gurax, "GetUnscaledRect
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4707,7 +4508,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetScaledRect_gurax, "GetScaledRect")
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4731,7 +4531,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetVirtualAttributesEnabled_gurax, "Get
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4752,7 +4551,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, EnableVirtualAttributes_gurax, "EnableV
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("b", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4776,7 +4574,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, Command_gurax, "Command")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4801,7 +4598,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnDropFiles_gurax, "OnDropFiles")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxDropFilesEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4826,7 +4622,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnCaptureLost_gurax, "OnCaptureLost")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxMouseCaptureLostEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4851,7 +4646,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnSysColourChanged_gurax, "OnSysColourC
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxSysColourChangedEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4876,7 +4670,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnCut_gurax, "OnCut")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4901,7 +4694,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnCopy_gurax, "OnCopy")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4926,7 +4718,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnPaste_gurax, "OnPaste")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4951,7 +4742,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnUndo_gurax, "OnUndo")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -4976,7 +4766,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnRedo_gurax, "OnRedo")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5001,7 +4790,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnSelectAll_gurax, "OnSelectAll")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5026,7 +4814,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnProperties_gurax, "OnProperties")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5051,7 +4838,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnClear_gurax, "OnClear")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5076,7 +4862,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnUpdateCut_gurax, "OnUpdateCut")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxUpdateUIEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5101,7 +4886,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnUpdateCopy_gurax, "OnUpdateCopy")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxUpdateUIEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5126,7 +4910,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnUpdatePaste_gurax, "OnUpdatePaste")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxUpdateUIEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5151,7 +4934,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnUpdateUndo_gurax, "OnUpdateUndo")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxUpdateUIEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5176,7 +4958,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnUpdateRedo_gurax, "OnUpdateRedo")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxUpdateUIEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5201,7 +4982,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnUpdateSelectAll_gurax, "OnUpdateSelec
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxUpdateUIEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5226,7 +5006,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnUpdateProperties_gurax, "OnUpdateProp
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxUpdateUIEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5251,7 +5030,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnUpdateClear_gurax, "OnUpdateClear")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxUpdateUIEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5276,7 +5054,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnContextMenu_gurax, "OnContextMenu")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxContextMenuEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5301,7 +5078,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnPaint_gurax, "OnPaint")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxPaintEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5326,7 +5102,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnEraseBackground_gurax, "OnEraseBackgr
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxEraseEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5351,7 +5126,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnLeftClick_gurax, "OnLeftClick")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxMouseEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5376,7 +5150,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnLeftUp_gurax, "OnLeftUp")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxMouseEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5401,7 +5174,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnMoveMouse_gurax, "OnMoveMouse")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxMouseEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5426,7 +5198,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnLeftDClick_gurax, "OnLeftDClick")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxMouseEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5451,7 +5222,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnMiddleClick_gurax, "OnMiddleClick")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxMouseEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5476,7 +5246,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnRightClick_gurax, "OnRightClick")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxMouseEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5501,7 +5270,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnChar_gurax, "OnChar")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxKeyEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5526,7 +5294,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnSize_gurax, "OnSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxSizeEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5551,7 +5318,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnSetFocus_gurax, "OnSetFocus")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxFocusEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5576,7 +5342,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnKillFocus_gurax, "OnKillFocus")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxFocusEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5601,7 +5366,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnIdle_gurax, "OnIdle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxIdleEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5626,7 +5390,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, OnScroll_gurax, "OnScroll")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxScrollWinEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5651,7 +5414,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetFont_gurax, "SetFont")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5676,7 +5438,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetupScrollbars_gurax, "SetupScrollbars
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("atTop", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5701,7 +5462,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, KeyboardNavigate_gurax, "KeyboardNaviga
 	DeclareArg("keyCode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5726,7 +5486,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PaintBackground_gurax, "PaintBackground
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5751,7 +5510,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PaintAboveContent_gurax, "PaintAboveCon
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5777,7 +5535,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, DoWriteText_gurax, "DoWriteText")
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5802,7 +5559,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ShouldInheritColours_gurax, "ShouldInhe
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5823,7 +5579,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PositionCaret_gurax, "PositionCaret")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("container", VTYPE_wxRichTextParagraphLayoutBox, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5849,7 +5604,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ExtendSelection_gurax, "ExtendSelection
 	DeclareArg("newPosition", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5876,7 +5630,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ScrollIntoView_gurax, "ScrollIntoView")
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("keyCode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5902,7 +5655,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, RefreshForSelectionChange_gurax, "Refre
 	DeclareArg("oldSelection", VTYPE_wxRichTextSelection, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("newSelection", VTYPE_wxRichTextSelection, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5930,7 +5682,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetCaretPosition_gurax, "SetCaretPositi
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("showAtLineStart", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5954,7 +5705,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetCaretPosition_gurax, "GetCaretPositi
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5975,7 +5725,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetAdjustedCaretPosition_gurax, "GetAdj
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("caretPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -5999,7 +5748,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveCaretForward_gurax, "MoveCaretForwa
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("oldPosition", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6023,7 +5771,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, MoveCaretBack_gurax, "MoveCaretBack")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("oldPosition", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6049,7 +5796,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetCaretPositionForIndex_gurax, "GetCar
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("container", VTYPE_wxRichTextParagraphLayoutBox, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6077,7 +5823,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetVisibleLineForCaretPosition_gurax, "
 	DeclareArg("caretPosition", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6102,7 +5847,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetPhysicalPoint_gurax, "GetPhysicalPoi
 	DeclareArg("ptLogical", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6128,7 +5872,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetLogicalPoint_gurax, "GetLogicalPoint
 	DeclareArg("ptPhysical", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6153,7 +5896,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, FindNextWordPosition_gurax, "FindNextWo
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6178,7 +5920,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsPositionVisible_gurax, "IsPositionVis
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6201,7 +5942,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetFirstVisiblePosition_gurax, "GetFirs
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6221,7 +5961,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetCaretPositionForDefaultStyle_gurax, 
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6242,7 +5981,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetCaretPositionForDefaultStyle_gurax, 
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6265,7 +6003,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, IsDefaultStyleShowing_gurax, "IsDefault
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6286,7 +6023,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetAndShowDefaultStyle_gurax, "SetAndSh
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("attr", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6311,7 +6047,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetFirstVisiblePoint_gurax, "GetFirstVi
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6331,7 +6066,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6352,7 +6086,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetValue_gurax, "SetValue")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6377,7 +6110,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ProcessBackKey_gurax, "ProcessBackKey")
 	DeclareArg("event", VTYPE_wxKeyEvent, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6406,7 +6138,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetCaretPositionAfterClick_gurax, "SetC
 	DeclareArg("hitTestFlags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extendSelection", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6437,7 +6168,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, ProcessMouseMovement_gurax, "ProcessMou
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6466,7 +6196,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, DoGetValue_gurax, "DoGetValue")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6487,7 +6216,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetSelection_gurax, "GetSelection")
 	Declare(VTYPE_wxRichTextSelection, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6508,7 +6236,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetContextMenuPropertiesInfo_gurax, "Ge
 	Declare(VTYPE_wxRichTextContextMenuPropertiesInfo, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6530,7 +6257,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetStyle_gurax, "GetStyle")
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6557,7 +6283,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetStyleForRange_gurax, "GetStyleForRan
 	DeclareArg("range", VTYPE_wxRichTextRange, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6585,7 +6310,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, GetUncombinedStyle_gurax, "GetUncombine
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_wxRichTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6611,7 +6335,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetDefaultStyle_gurax, "SetDefaultStyle
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("style", VTYPE_wxTextAttr, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6640,7 +6363,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetListStyle_gurax, "SetListStyle")
 	DeclareArg("startFrom", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("specifiedLevel", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6677,7 +6399,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, NumberList_gurax, "NumberList")
 	DeclareArg("startFrom", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("specifiedLevel", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6713,7 +6434,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, PromoteList_gurax, "PromoteList")
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("specifiedLevel", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6745,7 +6465,6 @@ Gurax_DeclareMethodAlias(wxRichTextCtrl, SetSelection_gurax, "SetSelection")
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -6776,7 +6495,7 @@ VType_wxRichTextCtrl VTYPE_wxRichTextCtrl("RichTextCtrl");
 void VType_wxRichTextCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(RichTextCtrl_gurax));
 	// Assignment of method

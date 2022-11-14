@@ -75,7 +75,6 @@ Gurax_DeclareMethodAlias(wxChoice, GetColumns_gurax, "GetColumns")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -95,7 +94,6 @@ Gurax_DeclareMethodAlias(wxChoice, GetCurrentSelection_gurax, "GetCurrentSelecti
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -116,7 +114,6 @@ Gurax_DeclareMethodAlias(wxChoice, SetColumns_gurax, "SetColumns")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -140,7 +137,6 @@ Gurax_DeclareMethodAlias(wxChoice, IsSorted_gurax, "IsSorted")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -160,7 +156,6 @@ Gurax_DeclareMethodAlias(wxChoice, GetCount_gurax, "GetCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -180,7 +175,6 @@ Gurax_DeclareMethodAlias(wxChoice, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -201,7 +195,6 @@ Gurax_DeclareMethodAlias(wxChoice, SetSelection_gurax, "SetSelection")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -226,7 +219,6 @@ Gurax_DeclareMethodAlias(wxChoice, FindString_gurax, "FindString")
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bCase", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -251,7 +243,6 @@ Gurax_DeclareMethodAlias(wxChoice, GetString_gurax, "GetString")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -276,7 +267,6 @@ Gurax_DeclareMethodAlias(wxChoice, SetString_gurax, "SetString")
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -300,7 +290,6 @@ Gurax_DeclareMethodAlias(wxChoice, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -321,7 +310,6 @@ Gurax_DeclareMethodAlias(wxChoice, Delete_gurax, "Delete")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -344,7 +332,6 @@ Gurax_DeclareMethodAlias(wxChoice, HasClientData_gurax, "HasClientData")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -364,7 +351,6 @@ Gurax_DeclareMethodAlias(wxChoice, HasClientObjectData_gurax, "HasClientObjectDa
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -384,7 +370,6 @@ Gurax_DeclareMethodAlias(wxChoice, HasClientUntypedData_gurax, "HasClientUntyped
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -406,7 +391,6 @@ Gurax_DeclareMethodAlias(wxChoice, Append_gurax, "Append")
 	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -460,7 +444,6 @@ Gurax_DeclareMethodAlias(wxChoice, GetClientData_gurax, "GetClientData")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -485,7 +468,6 @@ Gurax_DeclareMethodAlias(wxChoice, GetClientObject_gurax, "GetClientObject")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -511,7 +493,6 @@ Gurax_DeclareMethodAlias(wxChoice, SetClientData_gurax, "SetClientData")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -537,7 +518,6 @@ Gurax_DeclareMethodAlias(wxChoice, SetClientObject_gurax, "SetClientObject")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -564,7 +544,6 @@ Gurax_DeclareMethodAlias(wxChoice, Insert_gurax, "Insert")
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -620,7 +599,6 @@ Gurax_DeclareMethodAlias(wxChoice, Set_gurax, "Set")
 	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -663,7 +641,7 @@ VType_wxChoice VTYPE_wxChoice("Choice");
 void VType_wxChoice::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Choice_gurax));
 	// Assignment of method

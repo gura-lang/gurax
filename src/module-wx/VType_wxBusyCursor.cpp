@@ -65,7 +65,7 @@ VType_wxBusyCursor VTYPE_wxBusyCursor("BusyCursor");
 void VType_wxBusyCursor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(BusyCursor_gurax));
 	// Assignment of method

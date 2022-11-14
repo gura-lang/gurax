@@ -56,7 +56,6 @@ Gurax_DeclareMethodAlias(wxApp, OnCmdLineError_gurax, "OnCmdLineError")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parser", VTYPE_wxCmdLineParser, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -81,7 +80,6 @@ Gurax_DeclareMethodAlias(wxApp, OnCmdLineHelp_gurax, "OnCmdLineHelp")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parser", VTYPE_wxCmdLineParser, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -106,7 +104,6 @@ Gurax_DeclareMethodAlias(wxApp, OnCmdLineParsed_gurax, "OnCmdLineParsed")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parser", VTYPE_wxCmdLineParser, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -130,7 +127,6 @@ Gurax_DeclareMethodAlias(wxApp, OnExceptionInMainLoop_gurax, "OnExceptionInMainL
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -150,7 +146,6 @@ Gurax_DeclareMethodAlias(wxApp, OnExit_gurax, "OnExit")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -170,7 +165,6 @@ Gurax_DeclareMethodAlias(wxApp, OnFatalException_gurax, "OnFatalException")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -190,7 +184,6 @@ Gurax_DeclareMethodAlias(wxApp, OnInit_gurax, "OnInit")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -210,7 +203,6 @@ Gurax_DeclareMethodAlias(wxApp, OnUnhandledException_gurax, "OnUnhandledExceptio
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -231,7 +223,6 @@ Gurax_DeclareClassMethodAlias(wxApp, SetInstance_gurax, "SetInstance")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("app", VTYPE_wxAppConsole, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -258,7 +249,7 @@ VType_wxApp VTYPE_wxApp("App");
 void VType_wxApp::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxAppConsole, Flag::Mutable, Gurax_CreateConstructor(App_gurax));
 	// Assignment of method

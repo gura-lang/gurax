@@ -80,7 +80,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -112,7 +111,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, SetArtProvider_gurax, "SetArtProvi
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("provider", VTYPE_wxAuiTabArt, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -137,7 +135,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, GetArtProvider_gurax, "GetArtProvi
 	Declare(VTYPE_wxAuiTabArt, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -158,7 +155,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, GetNotebook_gurax, "GetNotebook")
 	Declare(VTYPE_wxAuiNotebook, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -179,7 +175,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, GetWindowMenu_gurax, "GetWindowMen
 	Declare(VTYPE_wxMenu, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -200,7 +195,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, SetWindowMenu_gurax, "SetWindowMen
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pMenu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -225,7 +219,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, SetMenuBar_gurax, "SetMenuBar")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pMenuBar", VTYPE_wxMenuBar, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -250,7 +243,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, SetChildMenuBar_gurax, "SetChildMe
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pChild", VTYPE_wxAuiMDIChildFrame, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -275,7 +267,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, GetActiveChild_gurax, "GetActiveCh
 	Declare(VTYPE_wxAuiMDIChildFrame, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -296,7 +287,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, SetActiveChild_gurax, "SetActiveCh
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pChildFrame", VTYPE_wxAuiMDIChildFrame, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -321,7 +311,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, GetClientWindow_gurax, "GetClientW
 	Declare(VTYPE_wxAuiMDIClientWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -342,7 +331,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, OnCreateClient_gurax, "OnCreateCli
 	Declare(VTYPE_wxAuiMDIClientWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -362,7 +350,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, Cascade_gurax, "Cascade")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -383,7 +370,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, Tile_gurax, "Tile")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("orient", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -407,7 +393,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, ArrangeIcons_gurax, "ArrangeIcons"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -427,7 +412,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, ActivateNext_gurax, "ActivateNext"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -447,7 +431,6 @@ Gurax_DeclareMethodAlias(wxAuiMDIParentFrame, ActivatePrevious_gurax, "ActivateP
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -474,7 +457,7 @@ VType_wxAuiMDIParentFrame VTYPE_wxAuiMDIParentFrame("AuiMDIParentFrame");
 void VType_wxAuiMDIParentFrame::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxFrame, Flag::Mutable, Gurax_CreateConstructor(AuiMDIParentFrame_gurax));
 	// Assignment of method

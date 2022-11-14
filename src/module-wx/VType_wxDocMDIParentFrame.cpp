@@ -45,7 +45,7 @@ VType_wxDocMDIParentFrame VTYPE_wxDocMDIParentFrame("DocMDIParentFrame");
 void VType_wxDocMDIParentFrame::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxMDIParentFrame, Flag::Mutable);
 	// Assignment of method

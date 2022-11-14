@@ -60,7 +60,6 @@ Gurax_DeclareMethodAlias(wxEvtHandler, Bind_gurax, "Bind")
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("lastId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -99,7 +98,7 @@ VType_wxEvtHandler VTYPE_wxEvtHandler("EvtHandler");
 void VType_wxEvtHandler::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(EvtHandler_gurax));
 	// Assignment of method

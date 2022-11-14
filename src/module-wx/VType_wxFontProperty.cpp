@@ -61,7 +61,6 @@ Gurax_DeclareMethodAlias(wxFontProperty, OnSetValue_gurax, "OnSetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -83,7 +82,6 @@ Gurax_DeclareMethodAlias(wxFontProperty, ValueToString_gurax, "ValueToString")
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -112,7 +110,6 @@ Gurax_DeclareMethodAlias(wxFontProperty, OnEvent_gurax, "OnEvent")
 	DeclareArg("primary", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("event", VTYPE_wxEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -144,7 +141,6 @@ Gurax_DeclareMethodAlias(wxFontProperty, ChildChanged_gurax, "ChildChanged")
 	DeclareArg("childValue", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -171,7 +167,6 @@ Gurax_DeclareMethodAlias(wxFontProperty, RefreshChildren_gurax, "RefreshChildren
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -198,7 +193,7 @@ VType_wxFontProperty VTYPE_wxFontProperty("FontProperty");
 void VType_wxFontProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPGProperty, Flag::Mutable, Gurax_CreateConstructor(FontProperty_gurax));
 	// Assignment of method

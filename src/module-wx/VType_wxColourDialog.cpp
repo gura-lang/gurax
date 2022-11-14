@@ -64,7 +64,6 @@ Gurax_DeclareMethodAlias(wxColourDialog, Create_gurax, "Create")
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_wxColourData, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -90,7 +89,6 @@ Gurax_DeclareMethodAlias(wxColourDialog, GetColourData_gurax, "GetColourData")
 	Declare(VTYPE_wxColourData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -110,7 +108,6 @@ Gurax_DeclareMethodAlias(wxColourDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -137,7 +134,7 @@ VType_wxColourDialog VTYPE_wxColourDialog("ColourDialog");
 void VType_wxColourDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(ColourDialog_gurax));
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxClientDataContainer VTYPE_wxClientDataContainer("ClientDataContainer");
 void VType_wxClientDataContainer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

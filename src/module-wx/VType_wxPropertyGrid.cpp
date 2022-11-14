@@ -75,7 +75,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, AddActionTrigger_gurax, "AddActionTrigg
 	DeclareArg("keycode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("modifiers", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -102,7 +101,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, BeginLabelEdit_gurax, "BeginLabelEdit")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colIndex", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -127,7 +125,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, CenterSplitter_gurax, "CenterSplitter")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enableAutoResizing", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -150,7 +147,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -171,7 +167,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, ClearActionTriggers_gurax, "ClearAction
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("action", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -195,7 +190,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, CommitChangesFromEditor_gurax, "CommitC
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -225,7 +219,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -257,7 +250,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, DedicateKey_gurax, "DedicateKey")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("keycode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -281,7 +273,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, EnableCategories_gurax, "EnableCategori
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -305,7 +296,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, EndLabelEdit_gurax, "EndLabelEdit")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("commit", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -329,7 +319,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, FitColumns_gurax, "FitColumns")
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -350,7 +339,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetLabelEditor_gurax, "GetLabelEditor")
 	Declare(VTYPE_wxTextCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -371,7 +359,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetPanel_gurax, "GetPanel")
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -392,7 +379,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetCaptionBackgroundColour_gurax, "GetC
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -413,7 +399,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetCaptionFont_gurax, "GetCaptionFont")
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -434,7 +419,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetCaptionForegroundColour_gurax, "GetC
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -455,7 +439,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetCellBackgroundColour_gurax, "GetCell
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -476,7 +459,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetCellDisabledTextColour_gurax, "GetCe
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -497,7 +479,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetCellTextColour_gurax, "GetCellTextCo
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -517,7 +498,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetColumnCount_gurax, "GetColumnCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -538,7 +518,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetEmptySpaceColour_gurax, "GetEmptySpa
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -558,7 +537,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetFontHeight_gurax, "GetFontHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -579,7 +557,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetGrid_gurax, "GetGrid")
 	Declare(VTYPE_wxPropertyGrid, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -602,7 +579,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetImageRect_gurax, "GetImageRect")
 	DeclareArg("item", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -630,7 +606,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetImageSize_gurax, "GetImageSize")
 	DeclareArg("item", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -657,7 +632,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetLastItem_gurax, "GetLastItem")
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -682,7 +656,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetLineColour_gurax, "GetLineColour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -703,7 +676,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetMarginColour_gurax, "GetMarginColour
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -724,7 +696,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetRoot_gurax, "GetRoot")
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -744,7 +715,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetRowHeight_gurax, "GetRowHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -765,7 +735,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetSelectedProperty_gurax, "GetSelected
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -786,7 +755,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetSelection_gurax, "GetSelection")
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -807,7 +775,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetSelectionBackgroundColour_gurax, "Ge
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -828,7 +795,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetSelectionForegroundColour_gurax, "Ge
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -849,7 +815,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetSplitterPosition_gurax, "GetSplitter
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("splitterIndex", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -874,7 +839,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetEditorTextCtrl_gurax, "GetEditorText
 	Declare(VTYPE_wxTextCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -895,7 +859,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetUnspecifiedValueText_gurax, "GetUnsp
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -919,7 +882,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetVerticalSpacing_gurax, "GetVerticalS
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -939,7 +901,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, IsAnyModified_gurax, "IsAnyModified")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -959,7 +920,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, IsEditorFocused_gurax, "IsEditorFocused
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -979,7 +939,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, IsFrozen_gurax, "IsFrozen")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1001,7 +960,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, MakeColumnEditable_gurax, "MakeColumnEd
 	DeclareArg("column", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("editable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1026,7 +984,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, OnTLPChanging_gurax, "OnTLPChanging")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("newTLP", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1050,7 +1007,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, RefreshEditor_gurax, "RefreshEditor")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1071,7 +1027,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, RefreshProperty_gurax, "RefreshProperty
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_wxPGProperty, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1095,7 +1050,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, ResetColours_gurax, "ResetColours")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1116,7 +1070,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, ResetColumnSizes_gurax, "ResetColumnSiz
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enableAutoResizing", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1140,7 +1093,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetCaptionBackgroundColour_gurax, "SetC
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1165,7 +1117,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetCaptionTextColour_gurax, "SetCaption
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1190,7 +1141,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetCellBackgroundColour_gurax, "SetCell
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1215,7 +1165,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetCellDisabledTextColour_gurax, "SetCe
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1240,7 +1189,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetCellTextColour_gurax, "SetCellTextCo
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1265,7 +1213,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetColumnCount_gurax, "SetColumnCount")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colCount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1289,7 +1236,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetEmptySpaceColour_gurax, "SetEmptySpa
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1314,7 +1260,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetLineColour_gurax, "SetLineColour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1339,7 +1284,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetMarginColour_gurax, "SetMarginColour
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1364,7 +1308,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetSelectionBackgroundColour_gurax, "Se
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1389,7 +1332,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetSelectionTextColour_gurax, "SetSelec
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1415,7 +1357,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetSplitterPosition_gurax, "SetSplitter
 	DeclareArg("newxpos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1441,7 +1382,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetSplitterLeft_gurax, "SetSplitterLeft
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("privateChildrenToo", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1465,7 +1405,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, SetVerticalSpacing_gurax, "SetVerticalS
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("vspacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1489,7 +1428,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetStatusBar_gurax, "GetStatusBar")
 	Declare(VTYPE_wxStatusBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1509,7 +1447,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, EditorsValueWasModified_gurax, "Editors
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1529,7 +1466,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, EditorsValueWasNotModified_gurax, "Edit
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1550,7 +1486,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, GetUncommittedPropertyValue_gurax, "Get
 	Declare(VTYPE_wxVariant, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1570,7 +1505,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, IsEditorsValueModified_gurax, "IsEditor
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1590,7 +1524,6 @@ Gurax_DeclareMethodAlias(wxPropertyGrid, WasValueChangedInEvent_gurax, "WasValue
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1611,7 +1544,6 @@ Gurax_DeclareClassMethodAlias(wxPropertyGrid, AutoGetTranslation_gurax, "AutoGet
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1637,7 +1569,7 @@ VType_wxPropertyGrid VTYPE_wxPropertyGrid("PropertyGrid");
 void VType_wxPropertyGrid::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(PropertyGrid_gurax));
 	// Assignment of method

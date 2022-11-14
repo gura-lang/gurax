@@ -57,7 +57,6 @@ Gurax_DeclareMethodAlias(wxURL, GetError_gurax, "GetError")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -78,7 +77,6 @@ Gurax_DeclareMethodAlias(wxURL, GetInputStream_gurax, "GetInputStream")
 	Declare(VTYPE_wxInputStream, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -98,7 +96,6 @@ Gurax_DeclareMethodAlias(wxURL, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -119,7 +116,6 @@ Gurax_DeclareMethodAlias(wxURL, SetProxy_gurax, "SetProxy")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("url_proxy", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -143,7 +139,6 @@ Gurax_DeclareMethodAlias(wxURL, SetURL_gurax, "SetURL")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("url", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -173,7 +168,7 @@ VType_wxURL VTYPE_wxURL("URL");
 void VType_wxURL::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxURI, Flag::Mutable, Gurax_CreateConstructor(URL_gurax));
 	// Assignment of method

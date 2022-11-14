@@ -63,7 +63,6 @@ Gurax_DeclareMethodAlias(wxBoolProperty, ValueToString_gurax, "ValueToString")
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -92,7 +91,6 @@ Gurax_DeclareMethodAlias(wxBoolProperty, StringToValue_gurax, "StringToValue")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -122,7 +120,6 @@ Gurax_DeclareMethodAlias(wxBoolProperty, IntToValue_gurax, "IntToValue")
 	DeclareArg("number", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -151,7 +148,6 @@ Gurax_DeclareMethodAlias(wxBoolProperty, DoSetAttribute_gurax, "DoSetAttribute")
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -183,7 +179,7 @@ VType_wxBoolProperty VTYPE_wxBoolProperty("BoolProperty");
 void VType_wxBoolProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPGProperty, Flag::Mutable, Gurax_CreateConstructor(BoolProperty_gurax));
 	// Assignment of method

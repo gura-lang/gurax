@@ -68,7 +68,6 @@ Gurax_DeclareMethodAlias(wxVideoMode, Matches_gurax, "Matches")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("other", VTYPE_wxVideoMode, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -92,7 +91,6 @@ Gurax_DeclareMethodAlias(wxVideoMode, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -112,7 +110,6 @@ Gurax_DeclareMethodAlias(wxVideoMode, GetHeight_gurax, "GetHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -132,7 +129,6 @@ Gurax_DeclareMethodAlias(wxVideoMode, GetDepth_gurax, "GetDepth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -152,7 +148,6 @@ Gurax_DeclareMethodAlias(wxVideoMode, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -174,7 +169,6 @@ Gurax_DeclareProperty_RW(wxVideoMode, w)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -196,7 +190,6 @@ Gurax_DeclareProperty_RW(wxVideoMode, h)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -218,7 +211,6 @@ Gurax_DeclareProperty_RW(wxVideoMode, bpp)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -240,7 +232,6 @@ Gurax_DeclareProperty_RW(wxVideoMode, refresh)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -266,7 +257,7 @@ VType_wxVideoMode VTYPE_wxVideoMode("VideoMode");
 void VType_wxVideoMode::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(VideoMode_gurax));
 	// Assignment of method

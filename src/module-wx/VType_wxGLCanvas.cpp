@@ -77,7 +77,6 @@ Gurax_DeclareMethodAlias(wxGLCanvas, SetColour_gurax, "SetColour")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("colour", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -101,7 +100,6 @@ Gurax_DeclareMethodAlias(wxGLCanvas, SetCurrent_gurax, "SetCurrent")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("context", VTYPE_wxGLContext, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -125,7 +123,6 @@ Gurax_DeclareMethodAlias(wxGLCanvas, SwapBuffers_gurax, "SwapBuffers")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -146,7 +143,6 @@ Gurax_DeclareClassMethodAlias(wxGLCanvas, IsExtensionSupported_gurax, "IsExtensi
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("extension", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -172,7 +168,7 @@ VType_wxGLCanvas VTYPE_wxGLCanvas("GLCanvas");
 void VType_wxGLCanvas::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(GLCanvas_gurax));
 	// Assignment of method

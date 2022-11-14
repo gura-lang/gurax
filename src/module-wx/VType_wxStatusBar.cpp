@@ -72,7 +72,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -103,7 +102,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetFieldRect_gurax, "GetFieldRect")
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -128,7 +126,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetFieldsCount_gurax, "GetFieldsCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -150,7 +147,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetField_gurax, "GetField")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -174,7 +170,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetBorders_gurax, "GetBorders")
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -195,7 +190,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetStatusText_gurax, "GetStatusText")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -220,7 +214,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetStatusWidth_gurax, "GetStatusWidth")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -244,7 +237,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, GetStatusStyle_gurax, "GetStatusStyle")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -268,7 +260,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, PopStatusText_gurax, "PopStatusText")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("field", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -294,7 +285,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, PushStatusText_gurax, "PushStatusText")
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("field", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -320,7 +310,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetFieldsCount_gurax, "SetFieldsCount")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("widths", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -348,7 +337,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetMinHeight_gurax, "SetMinHeight")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -372,7 +360,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetStatusStyles_gurax, "SetStatusStyles")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("styles", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -397,7 +384,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetStatusText_gurax, "SetStatusText")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -423,7 +409,6 @@ Gurax_DeclareMethodAlias(wxStatusBar, SetStatusWidths_gurax, "SetStatusWidths")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("widths_field", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -453,7 +438,7 @@ VType_wxStatusBar VTYPE_wxStatusBar("StatusBar");
 void VType_wxStatusBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StatusBar_gurax));
 	// Assignment of method

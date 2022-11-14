@@ -38,7 +38,6 @@ Gurax_DeclareMethodAlias(wxQueryNewPaletteEvent, SetPaletteRealized_gurax, "SetP
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("realized", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -61,7 +60,6 @@ Gurax_DeclareMethodAlias(wxQueryNewPaletteEvent, GetPaletteRealized_gurax, "GetP
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -88,7 +86,7 @@ VType_wxQueryNewPaletteEvent VTYPE_wxQueryNewPaletteEvent("QueryNewPaletteEvent"
 void VType_wxQueryNewPaletteEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

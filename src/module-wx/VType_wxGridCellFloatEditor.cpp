@@ -65,7 +65,6 @@ Gurax_DeclareMethodAlias(wxGridCellFloatEditor, SetParameters_gurax, "SetParamet
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -95,7 +94,7 @@ VType_wxGridCellFloatEditor VTYPE_wxGridCellFloatEditor("GridCellFloatEditor");
 void VType_wxGridCellFloatEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellTextEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellFloatEditor_gurax));
 	// Assignment of method

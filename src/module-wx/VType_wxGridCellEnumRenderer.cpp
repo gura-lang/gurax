@@ -59,7 +59,6 @@ Gurax_DeclareMethodAlias(wxGridCellEnumRenderer, SetParameters_gurax, "SetParame
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -89,7 +88,7 @@ VType_wxGridCellEnumRenderer VTYPE_wxGridCellEnumRenderer("GridCellEnumRenderer"
 void VType_wxGridCellEnumRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellStringRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellEnumRenderer_gurax));
 	// Assignment of method

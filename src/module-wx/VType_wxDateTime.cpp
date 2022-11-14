@@ -53,7 +53,6 @@ Gurax_DeclareMethodAlias(wxDateTime, ResetTime_gurax, "ResetTime")
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -74,7 +73,6 @@ Gurax_DeclareMethodAlias(wxDateTime, SetDay_gurax, "SetDay")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("day", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -98,7 +96,6 @@ Gurax_DeclareMethodAlias(wxDateTime, SetFromDOS_gurax, "SetFromDOS")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("ddt", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -122,7 +119,6 @@ Gurax_DeclareMethodAlias(wxDateTime, SetHour_gurax, "SetHour")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("hour", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -146,7 +142,6 @@ Gurax_DeclareMethodAlias(wxDateTime, SetMillisecond_gurax, "SetMillisecond")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("millisecond", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -170,7 +165,6 @@ Gurax_DeclareMethodAlias(wxDateTime, SetMinute_gurax, "SetMinute")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("minute", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -194,7 +188,6 @@ Gurax_DeclareMethodAlias(wxDateTime, SetMonth_gurax, "SetMonth")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("month", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -218,7 +211,6 @@ Gurax_DeclareMethodAlias(wxDateTime, SetSecond_gurax, "SetSecond")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("second", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -241,7 +233,6 @@ Gurax_DeclareMethodAlias(wxDateTime, SetToCurrent_gurax, "SetToCurrent")
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -262,7 +253,6 @@ Gurax_DeclareMethodAlias(wxDateTime, SetYear_gurax, "SetYear")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("year", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -285,7 +275,6 @@ Gurax_DeclareMethodAlias(wxDateTime, GetAsDOS_gurax, "GetAsDOS")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -305,7 +294,6 @@ Gurax_DeclareMethodAlias(wxDateTime, IsValid_gurax, "IsValid")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -326,7 +314,6 @@ Gurax_DeclareMethodAlias(wxDateTime, IsWorkDay_gurax, "IsWorkDay")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("country", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -351,7 +338,6 @@ Gurax_DeclareMethodAlias(wxDateTime, IsEarlierThan_gurax, "IsEarlierThan")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("datetime", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -376,7 +362,6 @@ Gurax_DeclareMethodAlias(wxDateTime, IsEqualTo_gurax, "IsEqualTo")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("datetime", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -401,7 +386,6 @@ Gurax_DeclareMethodAlias(wxDateTime, IsLaterThan_gurax, "IsLaterThan")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("datetime", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -426,7 +410,6 @@ Gurax_DeclareMethodAlias(wxDateTime, IsSameDate_gurax, "IsSameDate")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -451,7 +434,6 @@ Gurax_DeclareMethodAlias(wxDateTime, IsSameTime_gurax, "IsSameTime")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -477,7 +459,6 @@ Gurax_DeclareMethodAlias(wxDateTime, IsStrictlyBetween_gurax, "IsStrictlyBetween
 	DeclareArg("t1", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t2", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -505,7 +486,6 @@ Gurax_DeclareMethodAlias(wxDateTime, IsBetween_gurax, "IsBetween")
 	DeclareArg("t1", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("t2", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -538,7 +518,7 @@ VType_wxDateTime VTYPE_wxDateTime("DateTime");
 void VType_wxDateTime::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(DateTime_gurax));
 	// Assignment of constant value

@@ -40,7 +40,6 @@ Gurax_DeclareProperty_R(wxPGPaintData, m_choiceItem)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -54,7 +53,6 @@ Gurax_DeclareProperty_R(wxPGPaintData, m_drawnWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -68,7 +66,6 @@ Gurax_DeclareProperty_R(wxPGPaintData, m_drawnHeight)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -86,7 +83,7 @@ VType_wxPGPaintData VTYPE_wxPGPaintData("PGPaintData");
 void VType_wxPGPaintData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

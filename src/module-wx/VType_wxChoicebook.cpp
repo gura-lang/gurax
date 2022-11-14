@@ -72,7 +72,6 @@ Gurax_DeclareMethodAlias(wxChoicebook, GetChoiceCtrl_gurax, "GetChoiceCtrl")
 	Declare(VTYPE_wxChoice, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -99,7 +98,7 @@ VType_wxChoicebook VTYPE_wxChoicebook("Choicebook");
 void VType_wxChoicebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Choicebook_gurax));
 	// Assignment of method

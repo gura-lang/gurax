@@ -67,7 +67,7 @@ VType_wxWindowDC VTYPE_wxWindowDC("WindowDC");
 void VType_wxWindowDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDC, Flag::Mutable, Gurax_CreateConstructor(WindowDC_gurax));
 	// Assignment of method

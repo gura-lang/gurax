@@ -61,7 +61,7 @@ VType_wxPrintData VTYPE_wxPrintData("PrintData");
 void VType_wxPrintData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(PrintData_gurax));
 	// Assignment of method

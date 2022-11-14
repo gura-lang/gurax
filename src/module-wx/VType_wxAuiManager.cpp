@@ -63,7 +63,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, DetachPane_gurax, "DetachPane")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -88,7 +87,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, GetArtProvider_gurax, "GetArtProvider")
 	Declare(VTYPE_wxAuiDockArt, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -108,7 +106,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, GetFlags_gurax, "GetFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -129,7 +126,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, GetManagedWindow_gurax, "GetManagedWindow
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -149,7 +145,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, HideHint_gurax, "HideHint")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -171,7 +166,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, LoadPerspective_gurax, "LoadPerspective")
 	DeclareArg("perspective", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("update", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -195,7 +189,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, SavePerspective_gurax, "SavePerspective")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -216,7 +209,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, SetArtProvider_gurax, "SetArtProvider")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("art_provider", VTYPE_wxAuiDockArt, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -242,7 +234,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, SetDockSizeConstraint_gurax, "SetDockSize
 	DeclareArg("widthpct", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("heightpct", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -267,7 +258,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, SetFlags_gurax, "SetFlags")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -291,7 +281,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, SetManagedWindow_gurax, "SetManagedWindow
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("managed_wnd", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -316,7 +305,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, ShowHint_gurax, "ShowHint")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -340,7 +328,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, UnInit_gurax, "UnInit")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -360,7 +347,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, Update_gurax, "Update")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -387,7 +373,7 @@ VType_wxAuiManager VTYPE_wxAuiManager("AuiManager");
 void VType_wxAuiManager::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(AuiManager_gurax));
 	// Assignment of method

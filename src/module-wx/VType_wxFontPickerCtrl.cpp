@@ -83,7 +83,6 @@ Gurax_DeclareMethodAlias(wxFontPickerCtrl, Create_gurax, "Create")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -115,7 +114,6 @@ Gurax_DeclareMethodAlias(wxFontPickerCtrl, GetMaxPointSize_gurax, "GetMaxPointSi
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -136,7 +134,6 @@ Gurax_DeclareMethodAlias(wxFontPickerCtrl, GetSelectedFont_gurax, "GetSelectedFo
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -157,7 +154,6 @@ Gurax_DeclareMethodAlias(wxFontPickerCtrl, SetMaxPointSize_gurax, "SetMaxPointSi
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("max", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -181,7 +177,6 @@ Gurax_DeclareMethodAlias(wxFontPickerCtrl, SetSelectedFont_gurax, "SetSelectedFo
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -212,7 +207,7 @@ VType_wxFontPickerCtrl VTYPE_wxFontPickerCtrl("FontPickerCtrl");
 void VType_wxFontPickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(FontPickerCtrl_gurax));
 	// Assignment of method

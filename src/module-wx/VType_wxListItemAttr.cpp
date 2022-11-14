@@ -79,7 +79,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, GetBackgroundColour_gurax, "GetBackgrou
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -100,7 +99,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, GetFont_gurax, "GetFont")
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -121,7 +119,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, GetTextColour_gurax, "GetTextColour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -141,7 +138,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, HasBackgroundColour_gurax, "HasBackgrou
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -161,7 +157,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, HasFont_gurax, "HasFont")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -181,7 +176,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, HasTextColour_gurax, "HasTextColour")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -202,7 +196,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, SetBackgroundColour_gurax, "SetBackgrou
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -227,7 +220,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, SetFont_gurax, "SetFont")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -252,7 +244,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, SetTextColour_gurax, "SetTextColour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -283,7 +274,7 @@ VType_wxListItemAttr VTYPE_wxListItemAttr("ListItemAttr");
 void VType_wxListItemAttr::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ListItemAttr_gurax));
 	// Assignment of method

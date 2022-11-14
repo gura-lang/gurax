@@ -45,7 +45,7 @@ VType_wxRibbonToolBar VTYPE_wxRibbonToolBar("RibbonToolBar");
 void VType_wxRibbonToolBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxRibbonControl, Flag::Mutable);
 	// Assignment of method

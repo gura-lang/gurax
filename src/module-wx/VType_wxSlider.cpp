@@ -79,7 +79,6 @@ Gurax_DeclareMethodAlias(wxSlider, ClearSel_gurax, "ClearSel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -99,7 +98,6 @@ Gurax_DeclareMethodAlias(wxSlider, ClearTicks_gurax, "ClearTicks")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -129,7 +127,6 @@ Gurax_DeclareMethodAlias(wxSlider, Create_gurax, "Create")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -163,7 +160,6 @@ Gurax_DeclareMethodAlias(wxSlider, GetLineSize_gurax, "GetLineSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -183,7 +179,6 @@ Gurax_DeclareMethodAlias(wxSlider, GetMax_gurax, "GetMax")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -203,7 +198,6 @@ Gurax_DeclareMethodAlias(wxSlider, GetMin_gurax, "GetMin")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -223,7 +217,6 @@ Gurax_DeclareMethodAlias(wxSlider, GetPageSize_gurax, "GetPageSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -243,7 +236,6 @@ Gurax_DeclareMethodAlias(wxSlider, GetSelEnd_gurax, "GetSelEnd")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -263,7 +255,6 @@ Gurax_DeclareMethodAlias(wxSlider, GetSelStart_gurax, "GetSelStart")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -283,7 +274,6 @@ Gurax_DeclareMethodAlias(wxSlider, GetThumbLength_gurax, "GetThumbLength")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -303,7 +293,6 @@ Gurax_DeclareMethodAlias(wxSlider, GetTickFreq_gurax, "GetTickFreq")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -323,7 +312,6 @@ Gurax_DeclareMethodAlias(wxSlider, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -344,7 +332,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetLineSize_gurax, "SetLineSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("lineSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -368,7 +355,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetMin_gurax, "SetMin")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("minValue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -392,7 +378,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetMax_gurax, "SetMax")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("maxValue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -416,7 +401,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetPageSize_gurax, "SetPageSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -441,7 +425,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetRange_gurax, "SetRange")
 	DeclareArg("minValue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxValue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -467,7 +450,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetSelection_gurax, "SetSelection")
 	DeclareArg("startPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("endPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -492,7 +474,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetThumbLength_gurax, "SetThumbLength")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -516,7 +497,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetTick_gurax, "SetTick")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tickPos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -540,7 +520,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetTickFreq_gurax, "SetTickFreq")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -564,7 +543,6 @@ Gurax_DeclareMethodAlias(wxSlider, SetValue_gurax, "SetValue")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -594,7 +572,7 @@ VType_wxSlider VTYPE_wxSlider("Slider");
 void VType_wxSlider::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Slider_gurax));
 	// Assignment of method

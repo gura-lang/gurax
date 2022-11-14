@@ -38,7 +38,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, DisplayBlock_gurax, "DisplayBlock
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("blockNo", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -61,7 +60,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, DisplayContents_gurax, "DisplayCo
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -82,7 +80,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, DisplayContextPopup_gurax, "Displ
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("contextId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -106,7 +103,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, DisplaySection_gurax, "DisplaySec
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("section", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -131,7 +127,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, DisplayTextPopup_gurax, "DisplayT
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -157,7 +152,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, GetParentWindow_gurax, "GetParent
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -179,7 +173,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, KeywordSearch_gurax, "KeywordSear
 	DeclareArg("keyWord", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -205,7 +198,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, LoadFile_gurax, "LoadFile")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -228,7 +220,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, OnQuit_gurax, "OnQuit")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -248,7 +239,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, Quit_gurax, "Quit")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -272,7 +262,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, SetFrameParameters_gurax, "SetFra
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("newFrameEachTime", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -300,7 +289,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, SetParentWindow_gurax, "SetParent
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("parentWindow", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -326,7 +314,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, SetViewer_gurax, "SetViewer")
 	DeclareArg("viewer", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -352,7 +339,6 @@ Gurax_DeclareMethodAlias(wxHelpControllerBase, Initialize_gurax, "Initialize")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -382,7 +368,7 @@ VType_wxHelpControllerBase VTYPE_wxHelpControllerBase("HelpControllerBase");
 void VType_wxHelpControllerBase::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

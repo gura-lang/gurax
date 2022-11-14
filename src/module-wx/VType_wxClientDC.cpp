@@ -67,7 +67,7 @@ VType_wxClientDC VTYPE_wxClientDC("ClientDC");
 void VType_wxClientDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindowDC, Flag::Mutable, Gurax_CreateConstructor(ClientDC_gurax));
 	// Assignment of method

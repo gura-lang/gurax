@@ -75,7 +75,6 @@ Gurax_DeclareMethodAlias(wxDirFilterListCtrl, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -105,7 +104,6 @@ Gurax_DeclareMethodAlias(wxDirFilterListCtrl, Init_gurax, "Init")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -127,7 +125,6 @@ Gurax_DeclareMethodAlias(wxDirFilterListCtrl, FillFilterList_gurax, "FillFilterL
 	DeclareArg("filter", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("defaultFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -158,7 +155,7 @@ VType_wxDirFilterListCtrl VTYPE_wxDirFilterListCtrl("DirFilterListCtrl");
 void VType_wxDirFilterListCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxChoice, Flag::Mutable, Gurax_CreateConstructor(DirFilterListCtrl_gurax));
 	// Assignment of method

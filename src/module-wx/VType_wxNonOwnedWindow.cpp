@@ -38,7 +38,6 @@ Gurax_DeclareMethodAlias(wxNonOwnedWindow, SetShape_gurax, "SetShape")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -98,7 +97,7 @@ VType_wxNonOwnedWindow VTYPE_wxNonOwnedWindow("NonOwnedWindow");
 void VType_wxNonOwnedWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable);
 	// Assignment of method

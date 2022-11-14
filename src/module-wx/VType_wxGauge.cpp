@@ -75,7 +75,6 @@ Gurax_DeclareMethodAlias(wxGauge, GetBezelFace_gurax, "GetBezelFace")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -95,7 +94,6 @@ Gurax_DeclareMethodAlias(wxGauge, GetRange_gurax, "GetRange")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -115,7 +113,6 @@ Gurax_DeclareMethodAlias(wxGauge, GetShadowWidth_gurax, "GetShadowWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -135,7 +132,6 @@ Gurax_DeclareMethodAlias(wxGauge, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -155,7 +151,6 @@ Gurax_DeclareMethodAlias(wxGauge, IsVertical_gurax, "IsVertical")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -175,7 +170,6 @@ Gurax_DeclareMethodAlias(wxGauge, Pulse_gurax, "Pulse")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -196,7 +190,6 @@ Gurax_DeclareMethodAlias(wxGauge, SetBezelFace_gurax, "SetBezelFace")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -220,7 +213,6 @@ Gurax_DeclareMethodAlias(wxGauge, SetRange_gurax, "SetRange")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -244,7 +236,6 @@ Gurax_DeclareMethodAlias(wxGauge, SetShadowWidth_gurax, "SetShadowWidth")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -268,7 +259,6 @@ Gurax_DeclareMethodAlias(wxGauge, SetValue_gurax, "SetValue")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -298,7 +288,7 @@ VType_wxGauge VTYPE_wxGauge("Gauge");
 void VType_wxGauge::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Gauge_gurax));
 	// Assignment of method

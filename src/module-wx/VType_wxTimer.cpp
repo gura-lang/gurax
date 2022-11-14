@@ -62,7 +62,6 @@ Gurax_DeclareMethodAlias(wxTimer, GetId_gurax, "GetId")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -82,7 +81,6 @@ Gurax_DeclareMethodAlias(wxTimer, GetInterval_gurax, "GetInterval")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -103,7 +101,6 @@ Gurax_DeclareMethodAlias(wxTimer, GetOwner_gurax, "GetOwner")
 	Declare(VTYPE_wxEvtHandler, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -123,7 +120,6 @@ Gurax_DeclareMethodAlias(wxTimer, IsOneShot_gurax, "IsOneShot")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -143,7 +139,6 @@ Gurax_DeclareMethodAlias(wxTimer, IsRunning_gurax, "IsRunning")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -163,7 +158,6 @@ Gurax_DeclareMethodAlias(wxTimer, Notify_gurax, "Notify")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -185,7 +179,6 @@ Gurax_DeclareMethodAlias(wxTimer, SetOwner_gurax, "SetOwner")
 	DeclareArg("owner", VTYPE_wxEvtHandler, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -213,7 +206,6 @@ Gurax_DeclareMethodAlias(wxTimer, Start_gurax, "Start")
 	DeclareArg("milliseconds", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("oneShot", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -239,7 +231,6 @@ Gurax_DeclareMethodAlias(wxTimer, StartOnce_gurax, "StartOnce")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("milliseconds", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -263,7 +254,6 @@ Gurax_DeclareMethodAlias(wxTimer, Stop_gurax, "Stop")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -290,7 +280,7 @@ VType_wxTimer VTYPE_wxTimer("Timer");
 void VType_wxTimer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Timer_gurax));
 	// Assignment of method

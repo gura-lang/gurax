@@ -61,7 +61,6 @@ Gurax_DeclareMethodAlias(wxGLContext, SetCurrent_gurax, "SetCurrent")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("win", VTYPE_wxGLCanvas, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -92,7 +91,7 @@ VType_wxGLContext VTYPE_wxGLContext("GLContext");
 void VType_wxGLContext::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(GLContext_gurax));
 	// Assignment of method

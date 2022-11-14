@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, GetKeyCode_gurax, "GetKeyCode")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -58,7 +57,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, IsKeyInCategory_gurax, "IsKeyInCategory")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("category", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -81,7 +79,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, GetRawKeyFlags_gurax, "GetRawKeyFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -101,7 +98,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, GetUnicodeKey_gurax, "GetUnicodeKey")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -121,7 +117,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, GetX_gurax, "GetX")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -141,7 +136,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, GetY_gurax, "GetY")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -161,7 +155,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, DoAllowNextEvent_gurax, "DoAllowNextEvent")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -181,7 +174,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, IsNextEventAllowed_gurax, "IsNextEventAllow
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -202,7 +194,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, GetPosition_gurax, "GetPosition")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -222,7 +213,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, GetPositionXY_gurax, "GetPositionXY")
 {
 	Declare(VTYPE_Tuple, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -243,7 +233,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, GetModifiers_gurax, "GetModifiers")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -263,7 +252,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, HasAnyModifiers_gurax, "HasAnyModifiers")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -283,7 +271,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, HasModifiers_gurax, "HasModifiers")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -303,7 +290,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, ControlDown_gurax, "ControlDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -323,7 +309,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, RawControlDown_gurax, "RawControlDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -343,7 +328,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, ShiftDown_gurax, "ShiftDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -363,7 +347,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, MetaDown_gurax, "MetaDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -383,7 +366,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, AltDown_gurax, "AltDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -403,7 +385,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, CmdDown_gurax, "CmdDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -424,7 +405,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetControlDown_gurax, "SetControlDown")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -448,7 +428,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetRawControlDown_gurax, "SetRawControlDown
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -472,7 +451,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetShiftDown_gurax, "SetShiftDown")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -496,7 +474,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetAltDown_gurax, "SetAltDown")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -520,7 +497,6 @@ Gurax_DeclareMethodAlias(wxKeyEvent, SetMetaDown_gurax, "SetMetaDown")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("down", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -550,7 +526,7 @@ VType_wxKeyEvent VTYPE_wxKeyEvent("KeyEvent");
 void VType_wxKeyEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

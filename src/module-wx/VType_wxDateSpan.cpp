@@ -69,7 +69,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, Add_gurax, "Add")
 	DeclareArg("other", VTYPE_wxDateSpan, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -93,7 +92,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, GetDays_gurax, "GetDays")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -113,7 +111,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, GetMonths_gurax, "GetMonths")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -133,7 +130,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, GetTotalMonths_gurax, "GetTotalMonths")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -153,7 +149,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, GetTotalDays_gurax, "GetTotalDays")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -173,7 +168,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, GetWeeks_gurax, "GetWeeks")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -193,7 +187,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, GetYears_gurax, "GetYears")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -215,7 +208,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, Multiply_gurax, "Multiply")
 	DeclareArg("factor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -239,7 +231,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, Neg_gurax, "Neg")
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -260,7 +251,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, Negate_gurax, "Negate")
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -282,7 +272,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, SetDays_gurax, "SetDays")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -307,7 +296,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, SetMonths_gurax, "SetMonths")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -332,7 +320,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, SetWeeks_gurax, "SetWeeks")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -357,7 +344,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, SetYears_gurax, "SetYears")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -382,7 +368,6 @@ Gurax_DeclareMethodAlias(wxDateSpan, Subtract_gurax, "Subtract")
 	DeclareArg("other", VTYPE_wxDateSpan, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -406,7 +391,6 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Day_gurax, "Day")
 {
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -423,7 +407,6 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Days_gurax, "Days")
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	DeclareArg("days", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -442,7 +425,6 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Month_gurax, "Month")
 {
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -459,7 +441,6 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Months_gurax, "Months")
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	DeclareArg("mon", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -478,7 +459,6 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Week_gurax, "Week")
 {
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -495,7 +475,6 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Weeks_gurax, "Weeks")
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	DeclareArg("weeks", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -514,7 +493,6 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Year_gurax, "Year")
 {
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -531,7 +509,6 @@ Gurax_DeclareClassMethodAlias(wxDateSpan, Years_gurax, "Years")
 	Declare(VTYPE_wxDateSpan, Flag::None);
 	DeclareArg("years", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -557,7 +534,7 @@ VType_wxDateSpan VTYPE_wxDateSpan("DateSpan");
 void VType_wxDateSpan::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(DateSpan_gurax));
 	// Assignment of method

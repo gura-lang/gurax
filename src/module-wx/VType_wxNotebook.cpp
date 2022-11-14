@@ -71,7 +71,6 @@ Gurax_DeclareMethodAlias(wxNotebook, GetRowCount_gurax, "GetRowCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -92,7 +91,6 @@ Gurax_DeclareMethodAlias(wxNotebook, GetThemeBackgroundColour_gurax, "GetThemeBa
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -113,7 +111,6 @@ Gurax_DeclareMethodAlias(wxNotebook, SetPadding_gurax, "SetPadding")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("padding", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -138,7 +135,6 @@ Gurax_DeclareMethodAlias(wxNotebook, GetPageImage_gurax, "GetPageImage")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("nPage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -163,7 +159,6 @@ Gurax_DeclareMethodAlias(wxNotebook, SetPageImage_gurax, "SetPageImage")
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -188,7 +183,6 @@ Gurax_DeclareMethodAlias(wxNotebook, GetPageText_gurax, "GetPageText")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("nPage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -213,7 +207,6 @@ Gurax_DeclareMethodAlias(wxNotebook, SetPageText_gurax, "SetPageText")
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -237,7 +230,6 @@ Gurax_DeclareMethodAlias(wxNotebook, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -258,7 +250,6 @@ Gurax_DeclareMethodAlias(wxNotebook, SetSelection_gurax, "SetSelection")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -282,7 +273,6 @@ Gurax_DeclareMethodAlias(wxNotebook, ChangeSelection_gurax, "ChangeSelection")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -310,7 +300,6 @@ Gurax_DeclareMethodAlias(wxNotebook, InsertPage_gurax, "InsertPage")
 	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -346,7 +335,7 @@ VType_wxNotebook VTYPE_wxNotebook("Notebook");
 void VType_wxNotebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Notebook_gurax));
 	// Assignment of method

@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxTimerEvent, GetInterval_gurax, "GetInterval")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -64,7 +63,7 @@ VType_wxTimerEvent VTYPE_wxTimerEvent("TimerEvent");
 void VType_wxTimerEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

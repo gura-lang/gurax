@@ -74,7 +74,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, InsertColumn_gurax, "InsertColumn")
 	DeclareArg("col", VTYPE_wxHeaderColumnSimple, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -100,7 +99,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, AppendColumn_gurax, "AppendColumn")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxHeaderColumnSimple, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -125,7 +123,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, DeleteColumn_gurax, "DeleteColumn")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -150,7 +147,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, ShowColumn_gurax, "ShowColumn")
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -175,7 +171,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, HideColumn_gurax, "HideColumn")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -200,7 +195,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, ShowSortIndicator_gurax, "ShowSortI
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sortOrder", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -224,7 +218,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, RemoveSortIndicator_gurax, "RemoveS
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -251,7 +244,7 @@ VType_wxHeaderCtrlSimple VTYPE_wxHeaderCtrlSimple("HeaderCtrlSimple");
 void VType_wxHeaderCtrlSimple::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxHeaderCtrl, Flag::Mutable, Gurax_CreateConstructor(HeaderCtrlSimple_gurax));
 	// Assignment of method

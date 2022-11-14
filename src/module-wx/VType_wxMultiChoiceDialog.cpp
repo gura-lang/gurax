@@ -71,7 +71,6 @@ Gurax_DeclareMethodAlias(wxMultiChoiceDialog, GetSelections_gurax, "GetSelection
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -92,7 +91,6 @@ Gurax_DeclareMethodAlias(wxMultiChoiceDialog, SetSelections_gurax, "SetSelection
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("selections", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -115,7 +113,6 @@ Gurax_DeclareMethodAlias(wxMultiChoiceDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -142,7 +139,7 @@ VType_wxMultiChoiceDialog VTYPE_wxMultiChoiceDialog("MultiChoiceDialog");
 void VType_wxMultiChoiceDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(MultiChoiceDialog_gurax));
 	// Assignment of method

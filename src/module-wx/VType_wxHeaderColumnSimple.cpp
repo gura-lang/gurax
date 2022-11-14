@@ -68,7 +68,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetTitle_gurax, "SetTitle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -91,7 +90,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetTitle_gurax, "GetTitle")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -112,7 +110,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetBitmap_gurax, "SetBitmap")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -137,7 +134,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetBitmap_gurax, "GetBitmap")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -158,7 +154,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetWidth_gurax, "SetWidth")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -181,7 +176,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -202,7 +196,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetMinWidth_gurax, "SetMinWidth")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("minWidth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -225,7 +218,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetMinWidth_gurax, "GetMinWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -246,7 +238,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetAlignment_gurax, "SetAlignment
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("align", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -269,7 +260,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetAlignment_gurax, "GetAlignment
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -290,7 +280,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetFlags_gurax, "SetFlags")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -313,7 +302,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetFlags_gurax, "GetFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -333,7 +321,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, IsSortKey_gurax, "IsSortKey")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -354,7 +341,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetSortOrder_gurax, "SetSortOrder
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("ascending", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -377,7 +363,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, IsSortOrderAscending_gurax, "IsSo
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -404,7 +389,7 @@ VType_wxHeaderColumnSimple VTYPE_wxHeaderColumnSimple("HeaderColumnSimple");
 void VType_wxHeaderColumnSimple::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSettableHeaderColumn, Flag::Mutable, Gurax_CreateConstructor(HeaderColumnSimple_gurax));
 	// Assignment of method

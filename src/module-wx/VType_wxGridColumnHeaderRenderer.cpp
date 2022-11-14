@@ -45,7 +45,7 @@ VType_wxGridColumnHeaderRenderer VTYPE_wxGridColumnHeaderRenderer("GridColumnHea
 void VType_wxGridColumnHeaderRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridHeaderLabelsRenderer, Flag::Mutable);
 	// Assignment of method

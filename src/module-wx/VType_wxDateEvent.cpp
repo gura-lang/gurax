@@ -38,7 +38,6 @@ Gurax_DeclareMethodAlias(wxDateEvent, GetDate_gurax, "GetDate")
 	Declare(VTYPE_wxDateTime, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -59,7 +58,6 @@ Gurax_DeclareMethodAlias(wxDateEvent, SetDate_gurax, "SetDate")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("date", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -90,7 +88,7 @@ VType_wxDateEvent VTYPE_wxDateEvent("DateEvent");
 void VType_wxDateEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

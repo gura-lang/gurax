@@ -60,7 +60,6 @@ Gurax_DeclareMethodAlias(wxHtmlLinkInfo, GetHref_gurax, "GetHref")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -81,7 +80,6 @@ Gurax_DeclareMethodAlias(wxHtmlLinkInfo, GetHtmlCell_gurax, "GetHtmlCell")
 	Declare(VTYPE_wxHtmlCell, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -101,7 +99,6 @@ Gurax_DeclareMethodAlias(wxHtmlLinkInfo, GetTarget_gurax, "GetTarget")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -128,7 +125,7 @@ VType_wxHtmlLinkInfo VTYPE_wxHtmlLinkInfo("HtmlLinkInfo");
 void VType_wxHtmlLinkInfo::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(HtmlLinkInfo_gurax));
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxGDIImageHandler VTYPE_wxGDIImageHandler("GDIImageHandler");
 void VType_wxGDIImageHandler::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

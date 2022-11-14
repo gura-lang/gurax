@@ -93,7 +93,6 @@ Gurax_DeclareMethodAlias(wxSpinCtrl, Create_gurax, "Create")
 	DeclareArg("initial", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -131,7 +130,6 @@ Gurax_DeclareMethodAlias(wxSpinCtrl, GetBase_gurax, "GetBase")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -151,7 +149,6 @@ Gurax_DeclareMethodAlias(wxSpinCtrl, GetMax_gurax, "GetMax")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -171,7 +168,6 @@ Gurax_DeclareMethodAlias(wxSpinCtrl, GetMin_gurax, "GetMin")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -191,7 +187,6 @@ Gurax_DeclareMethodAlias(wxSpinCtrl, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -212,7 +207,6 @@ Gurax_DeclareMethodAlias(wxSpinCtrl, SetBase_gurax, "SetBase")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("base", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -237,7 +231,6 @@ Gurax_DeclareMethodAlias(wxSpinCtrl, SetRange_gurax, "SetRange")
 	DeclareArg("minVal", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxVal", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -263,7 +256,6 @@ Gurax_DeclareMethodAlias(wxSpinCtrl, SetSelection_gurax, "SetSelection")
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -288,7 +280,6 @@ Gurax_DeclareMethodAlias(wxSpinCtrl, SetValue_gurax, "SetValue")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -318,7 +309,7 @@ VType_wxSpinCtrl VTYPE_wxSpinCtrl("SpinCtrl");
 void VType_wxSpinCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(SpinCtrl_gurax));
 	// Assignment of method

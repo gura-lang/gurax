@@ -45,7 +45,7 @@ VType_wxPoint2DDouble VTYPE_wxPoint2DDouble("Point2DDouble");
 void VType_wxPoint2DDouble::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

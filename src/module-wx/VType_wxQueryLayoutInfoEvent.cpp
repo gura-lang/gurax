@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, GetAlignment_gurax, "GetAlignme
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -57,7 +56,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, GetFlags_gurax, "GetFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -77,7 +75,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, GetOrientation_gurax, "GetOrien
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -97,7 +94,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, GetRequestedLength_gurax, "GetR
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -118,7 +114,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, GetSize_gurax, "GetSize")
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -139,7 +134,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, SetAlignment_gurax, "SetAlignme
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("alignment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -163,7 +157,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, SetFlags_gurax, "SetFlags")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -187,7 +180,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, SetOrientation_gurax, "SetOrien
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("orientation", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -211,7 +203,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, SetRequestedLength_gurax, "SetR
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -235,7 +226,6 @@ Gurax_DeclareMethodAlias(wxQueryLayoutInfoEvent, SetSize_gurax, "SetSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -266,7 +256,7 @@ VType_wxQueryLayoutInfoEvent VTYPE_wxQueryLayoutInfoEvent("QueryLayoutInfoEvent"
 void VType_wxQueryLayoutInfoEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxFileCtrlEvent, GetDirectory_gurax, "GetDirectory")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -57,7 +56,6 @@ Gurax_DeclareMethodAlias(wxFileCtrlEvent, GetFile_gurax, "GetFile")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -77,7 +75,6 @@ Gurax_DeclareMethodAlias(wxFileCtrlEvent, GetFiles_gurax, "GetFiles")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -97,7 +94,6 @@ Gurax_DeclareMethodAlias(wxFileCtrlEvent, GetFilterIndex_gurax, "GetFilterIndex"
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -118,7 +114,6 @@ Gurax_DeclareMethodAlias(wxFileCtrlEvent, SetFiles_gurax, "SetFiles")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("files", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -142,7 +137,6 @@ Gurax_DeclareMethodAlias(wxFileCtrlEvent, SetDirectory_gurax, "SetDirectory")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("directory", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -166,7 +160,6 @@ Gurax_DeclareMethodAlias(wxFileCtrlEvent, SetFilterIndex_gurax, "SetFilterIndex"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -196,7 +189,7 @@ VType_wxFileCtrlEvent VTYPE_wxFileCtrlEvent("FileCtrlEvent");
 void VType_wxFileCtrlEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

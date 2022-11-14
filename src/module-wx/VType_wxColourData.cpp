@@ -53,7 +53,6 @@ Gurax_DeclareMethodAlias(wxColourData, GetChooseFull_gurax, "GetChooseFull")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -74,7 +73,6 @@ Gurax_DeclareMethodAlias(wxColourData, GetColour_gurax, "GetColour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -96,7 +94,6 @@ Gurax_DeclareMethodAlias(wxColourData, GetCustomColour_gurax, "GetCustomColour")
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -120,7 +117,6 @@ Gurax_DeclareMethodAlias(wxColourData, SetChooseFull_gurax, "SetChooseFull")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -144,7 +140,6 @@ Gurax_DeclareMethodAlias(wxColourData, SetColour_gurax, "SetColour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -170,7 +165,6 @@ Gurax_DeclareMethodAlias(wxColourData, SetCustomColour_gurax, "SetCustomColour")
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -195,7 +189,6 @@ Gurax_DeclareMethodAlias(wxColourData, ToString_gurax, "ToString")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -216,7 +209,6 @@ Gurax_DeclareMethodAlias(wxColourData, FromString_gurax, "FromString")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -246,7 +238,7 @@ VType_wxColourData VTYPE_wxColourData("ColourData");
 void VType_wxColourData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ColourData_gurax));
 	// Assignment of method

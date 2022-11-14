@@ -63,7 +63,6 @@ Gurax_DeclareMethodAlias(wxFontDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -84,7 +83,6 @@ Gurax_DeclareMethodAlias(wxFontDialog, GetFontData_gurax, "GetFontData")
 	Declare(VTYPE_wxFontData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -111,7 +109,7 @@ VType_wxFontDialog VTYPE_wxFontDialog("FontDialog");
 void VType_wxFontDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(FontDialog_gurax));
 	// Assignment of method

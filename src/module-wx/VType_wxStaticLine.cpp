@@ -72,7 +72,6 @@ Gurax_DeclareMethodAlias(wxStaticLine, IsVertical_gurax, "IsVertical")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -92,7 +91,6 @@ Gurax_DeclareClassMethodAlias(wxStaticLine, GetDefaultSize_gurax, "GetDefaultSiz
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -115,7 +113,7 @@ VType_wxStaticLine VTYPE_wxStaticLine("StaticLine");
 void VType_wxStaticLine::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticLine_gurax));
 	// Assignment of method

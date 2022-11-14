@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxDropFilesEvent, GetNumberOfFiles_gurax, "GetNumberOfF
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -58,7 +57,6 @@ Gurax_DeclareMethodAlias(wxDropFilesEvent, GetPosition_gurax, "GetPosition")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -85,7 +83,7 @@ VType_wxDropFilesEvent VTYPE_wxDropFilesEvent("DropFilesEvent");
 void VType_wxDropFilesEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

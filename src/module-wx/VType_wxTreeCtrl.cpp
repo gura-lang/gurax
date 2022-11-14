@@ -79,7 +79,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, AddRoot_gurax, "AddRoot")
 	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -113,7 +112,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, AppendItem_gurax, "AppendItem")
 	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -144,7 +142,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, AssignImageList_gurax, "AssignImageList")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -169,7 +166,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, AssignStateImageList_gurax, "AssignStateIma
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -194,7 +190,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Collapse_gurax, "Collapse")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -218,7 +213,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, CollapseAll_gurax, "CollapseAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -239,7 +233,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, CollapseAllChildren_gurax, "CollapseAllChil
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -264,7 +257,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, CollapseAndReset_gurax, "CollapseAndReset")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -295,7 +287,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Create_gurax, "Create")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -328,7 +319,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Delete_gurax, "Delete")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -352,7 +342,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, DeleteAllItems_gurax, "DeleteAllItems")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -373,7 +362,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, DeleteChildren_gurax, "DeleteChildren")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -398,7 +386,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, EnableBellOnNoMatch_gurax, "EnableBellOnNoM
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("on", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -423,7 +410,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, EndEditLabel_gurax, "EndEditLabel")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("discardChanges", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -449,7 +435,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, EnsureVisible_gurax, "EnsureVisible")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -474,7 +459,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Expand_gurax, "Expand")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -498,7 +482,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ExpandAll_gurax, "ExpandAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -519,7 +502,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ExpandAllChildren_gurax, "ExpandAllChildren
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -546,7 +528,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetBoundingRect_gurax, "GetBoundingRect")
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textOnly", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -575,7 +556,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetChildrenCount_gurax, "GetChildrenCount")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("recursively", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -600,7 +580,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetCount_gurax, "GetCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -621,7 +600,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetEditControl_gurax, "GetEditControl")
 	Declare(VTYPE_wxTextCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -642,7 +620,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetFirstVisibleItem_gurax, "GetFirstVisible
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -663,7 +640,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetFocusedItem_gurax, "GetFocusedItem")
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -683,7 +659,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ClearFocusedItem_gurax, "ClearFocusedItem")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -704,7 +679,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetFocusedItem_gurax, "SetFocusedItem")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -729,7 +703,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetImageList_gurax, "GetImageList")
 	Declare(VTYPE_wxImageList, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -749,7 +722,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetIndent_gurax, "GetIndent")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -769,7 +741,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetSpacing_gurax, "GetSpacing")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -791,7 +762,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemBackgroundColour_gurax, "GetItemBack
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -816,7 +786,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemData_gurax, "GetItemData")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -843,7 +812,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemFont_gurax, "GetItemFont")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -869,7 +837,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemParent_gurax, "GetItemParent")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -894,7 +861,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemState_gurax, "GetItemState")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -919,7 +885,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemText_gurax, "GetItemText")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -945,7 +910,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemTextColour_gurax, "GetItemTextColour
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -971,7 +935,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetLastChild_gurax, "GetLastChild")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -997,7 +960,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetNextSibling_gurax, "GetNextSibling")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1023,7 +985,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetNextVisible_gurax, "GetNextVisible")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1049,7 +1010,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetPrevSibling_gurax, "GetPrevSibling")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1075,7 +1035,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetPrevVisible_gurax, "GetPrevVisible")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1099,7 +1058,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetQuickBestSize_gurax, "GetQuickBestSize")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1120,7 +1078,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetRootItem_gurax, "GetRootItem")
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1141,7 +1098,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetSelection_gurax, "GetSelection")
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1161,7 +1117,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetSelections_gurax, "GetSelections")
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1187,7 +1142,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetStateImageList_gurax, "GetStateImageList
 	Declare(VTYPE_wxImageList, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1208,7 +1162,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, HitTest_gurax, "HitTest")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1240,7 +1193,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, InsertItem_gurax, "InsertItem")
 	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1281,7 +1233,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, IsBold_gurax, "IsBold")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1305,7 +1256,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, IsEmpty_gurax, "IsEmpty")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1326,7 +1276,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, IsExpanded_gurax, "IsExpanded")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1351,7 +1300,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, IsSelected_gurax, "IsSelected")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1376,7 +1324,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, IsVisible_gurax, "IsVisible")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1401,7 +1348,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ItemHasChildren_gurax, "ItemHasChildren")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1427,7 +1373,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, OnCompareItems_gurax, "OnCompareItems")
 	DeclareArg("item1", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("item2", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1454,7 +1399,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ScrollTo_gurax, "ScrollTo")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1480,7 +1424,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SelectItem_gurax, "SelectItem")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1506,7 +1449,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetImageList_gurax, "SetImageList")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1531,7 +1473,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetIndent_gurax, "SetIndent")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("indent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1555,7 +1496,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetSpacing_gurax, "SetSpacing")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("spacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1580,7 +1520,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemBackgroundColour_gurax, "SetItemBack
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1608,7 +1547,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemBold_gurax, "SetItemBold")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bold", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1635,7 +1573,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemDropHighlight_gurax, "SetItemDropHig
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("highlight", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1662,7 +1599,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemFont_gurax, "SetItemFont")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1690,7 +1626,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemHasChildren_gurax, "SetItemHasChildr
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hasChildren", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1717,7 +1652,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemState_gurax, "SetItemState")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1744,7 +1678,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemText_gurax, "SetItemText")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1771,7 +1704,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemTextColour_gurax, "SetItemTextColour
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1798,7 +1730,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetQuickBestSize_gurax, "SetQuickBestSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("quickBestSize", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1822,7 +1753,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetStateImageList_gurax, "SetStateImageList
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1847,7 +1777,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetWindowStyle_gurax, "SetWindowStyle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("styles", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1871,7 +1800,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SortChildren_gurax, "SortChildren")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1896,7 +1824,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Toggle_gurax, "Toggle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1921,7 +1848,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ToggleItemSelection_gurax, "ToggleItemSelec
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1945,7 +1871,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Unselect_gurax, "Unselect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1965,7 +1890,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, UnselectAll_gurax, "UnselectAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1986,7 +1910,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, UnselectItem_gurax, "UnselectItem")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2011,7 +1934,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SelectChildren_gurax, "SelectChildren")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("parent", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -2042,7 +1964,7 @@ VType_wxTreeCtrl VTYPE_wxTreeCtrl("TreeCtrl");
 void VType_wxTreeCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(TreeCtrl_gurax));
 	// Assignment of method

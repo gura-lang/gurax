@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxCommandEvent, GetExtraLong_gurax, "GetExtraLong")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -57,7 +56,6 @@ Gurax_DeclareMethodAlias(wxCommandEvent, GetInt_gurax, "GetInt")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -77,7 +75,6 @@ Gurax_DeclareMethodAlias(wxCommandEvent, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -97,7 +94,6 @@ Gurax_DeclareMethodAlias(wxCommandEvent, GetString_gurax, "GetString")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -117,7 +113,6 @@ Gurax_DeclareMethodAlias(wxCommandEvent, IsChecked_gurax, "IsChecked")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -137,7 +132,6 @@ Gurax_DeclareMethodAlias(wxCommandEvent, IsSelection_gurax, "IsSelection")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -158,7 +152,6 @@ Gurax_DeclareMethodAlias(wxCommandEvent, SetExtraLong_gurax, "SetExtraLong")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("extraLong", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -182,7 +175,6 @@ Gurax_DeclareMethodAlias(wxCommandEvent, SetInt_gurax, "SetInt")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("intCommand", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -206,7 +198,6 @@ Gurax_DeclareMethodAlias(wxCommandEvent, SetString_gurax, "SetString")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -236,7 +227,7 @@ VType_wxCommandEvent VTYPE_wxCommandEvent("CommandEvent");
 void VType_wxCommandEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

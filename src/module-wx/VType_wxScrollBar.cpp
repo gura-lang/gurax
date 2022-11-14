@@ -80,7 +80,6 @@ Gurax_DeclareMethodAlias(wxScrollBar, Create_gurax, "Create")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -111,7 +110,6 @@ Gurax_DeclareMethodAlias(wxScrollBar, GetPageSize_gurax, "GetPageSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -131,7 +129,6 @@ Gurax_DeclareMethodAlias(wxScrollBar, GetRange_gurax, "GetRange")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -151,7 +148,6 @@ Gurax_DeclareMethodAlias(wxScrollBar, GetThumbPosition_gurax, "GetThumbPosition"
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -171,7 +167,6 @@ Gurax_DeclareMethodAlias(wxScrollBar, GetThumbSize_gurax, "GetThumbSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -196,7 +191,6 @@ Gurax_DeclareMethodAlias(wxScrollBar, SetScrollbar_gurax, "SetScrollbar")
 	DeclareArg("pageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("refresh", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -224,7 +218,6 @@ Gurax_DeclareMethodAlias(wxScrollBar, SetThumbPosition_gurax, "SetThumbPosition"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("viewStart", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -247,7 +240,6 @@ Gurax_DeclareMethodAlias(wxScrollBar, IsVertical_gurax, "IsVertical")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -274,7 +266,7 @@ VType_wxScrollBar VTYPE_wxScrollBar("ScrollBar");
 void VType_wxScrollBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ScrollBar_gurax));
 	// Assignment of method

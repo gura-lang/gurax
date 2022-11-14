@@ -70,7 +70,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, SetExtendedMessage_gurax, "SetExtended
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("extendedMessage", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -94,7 +93,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, SetMessage_gurax, "SetMessage")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -117,7 +115,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -137,7 +134,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetCaption_gurax, "GetCaption")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -157,7 +153,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetMessage_gurax, "GetMessage")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -177,7 +172,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetExtendedMessage_gurax, "GetExtended
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -197,7 +191,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetMessageDialogStyle_gurax, "GetMessa
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -217,7 +210,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, HasCustomLabels_gurax, "HasCustomLabel
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -237,7 +229,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetYesLabel_gurax, "GetYesLabel")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -257,7 +248,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetNoLabel_gurax, "GetNoLabel")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -277,7 +267,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetOKLabel_gurax, "GetOKLabel")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -297,7 +286,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetCancelLabel_gurax, "GetCancelLabel"
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -317,7 +305,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetHelpLabel_gurax, "GetHelpLabel")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -337,7 +324,6 @@ Gurax_DeclareMethodAlias(wxMessageDialog, GetEffectiveIcon_gurax, "GetEffectiveI
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -364,7 +350,7 @@ VType_wxMessageDialog VTYPE_wxMessageDialog("MessageDialog");
 void VType_wxMessageDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(MessageDialog_gurax));
 	// Assignment of method

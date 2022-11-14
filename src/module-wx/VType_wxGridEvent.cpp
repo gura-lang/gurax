@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxGridEvent, AltDown_gurax, "AltDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -57,7 +56,6 @@ Gurax_DeclareMethodAlias(wxGridEvent, ControlDown_gurax, "ControlDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -77,7 +75,6 @@ Gurax_DeclareMethodAlias(wxGridEvent, GetCol_gurax, "GetCol")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -98,7 +95,6 @@ Gurax_DeclareMethodAlias(wxGridEvent, GetPosition_gurax, "GetPosition")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -118,7 +114,6 @@ Gurax_DeclareMethodAlias(wxGridEvent, GetRow_gurax, "GetRow")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -138,7 +133,6 @@ Gurax_DeclareMethodAlias(wxGridEvent, MetaDown_gurax, "MetaDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -158,7 +152,6 @@ Gurax_DeclareMethodAlias(wxGridEvent, Selecting_gurax, "Selecting")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -178,7 +171,6 @@ Gurax_DeclareMethodAlias(wxGridEvent, ShiftDown_gurax, "ShiftDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -205,7 +197,7 @@ VType_wxGridEvent VTYPE_wxGridEvent("GridEvent");
 void VType_wxGridEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

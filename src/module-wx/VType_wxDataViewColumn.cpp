@@ -75,7 +75,6 @@ Gurax_DeclareMethodAlias(wxDataViewColumn, GetModelColumn_gurax, "GetModelColumn
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -96,7 +95,6 @@ Gurax_DeclareMethodAlias(wxDataViewColumn, GetOwner_gurax, "GetOwner")
 	Declare(VTYPE_wxDataViewCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -117,7 +115,6 @@ Gurax_DeclareMethodAlias(wxDataViewColumn, GetRenderer_gurax, "GetRenderer")
 	Declare(VTYPE_wxDataViewRenderer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -144,7 +141,7 @@ VType_wxDataViewColumn VTYPE_wxDataViewColumn("DataViewColumn");
 void VType_wxDataViewColumn::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSettableHeaderColumn, Flag::Mutable, Gurax_CreateConstructor(DataViewColumn_gurax));
 	// Assignment of method

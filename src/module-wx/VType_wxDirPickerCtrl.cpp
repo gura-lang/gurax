@@ -86,7 +86,6 @@ Gurax_DeclareMethodAlias(wxDirPickerCtrl, Create_gurax, "Create")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -120,7 +119,6 @@ Gurax_DeclareMethodAlias(wxDirPickerCtrl, GetDirName_gurax, "GetDirName")
 	Declare(VTYPE_wxFileName, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -140,7 +138,6 @@ Gurax_DeclareMethodAlias(wxDirPickerCtrl, GetPath_gurax, "GetPath")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -161,7 +158,6 @@ Gurax_DeclareMethodAlias(wxDirPickerCtrl, SetDirName_gurax, "SetDirName")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dirname", VTYPE_wxFileName, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -186,7 +182,6 @@ Gurax_DeclareMethodAlias(wxDirPickerCtrl, SetInitialDirectory_gurax, "SetInitial
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dir", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -210,7 +205,6 @@ Gurax_DeclareMethodAlias(wxDirPickerCtrl, SetPath_gurax, "SetPath")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dirname", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -240,7 +234,7 @@ VType_wxDirPickerCtrl VTYPE_wxDirPickerCtrl("DirPickerCtrl");
 void VType_wxDirPickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(DirPickerCtrl_gurax));
 	// Assignment of method

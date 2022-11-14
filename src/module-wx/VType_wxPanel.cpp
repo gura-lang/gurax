@@ -72,7 +72,6 @@ Gurax_DeclareMethodAlias(wxPanel, AcceptsFocus_gurax, "AcceptsFocus")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -98,7 +97,6 @@ Gurax_DeclareMethodAlias(wxPanel, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -129,7 +127,6 @@ Gurax_DeclareMethodAlias(wxPanel, InitDialog_gurax, "InitDialog")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -149,7 +146,6 @@ Gurax_DeclareMethodAlias(wxPanel, Layout_gurax, "Layout")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -170,7 +166,6 @@ Gurax_DeclareMethodAlias(wxPanel, OnSysColourChanged_gurax, "OnSysColourChanged"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxSysColourChangedEvent, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -194,7 +189,6 @@ Gurax_DeclareMethodAlias(wxPanel, SetFocus_gurax, "SetFocus")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -214,7 +208,6 @@ Gurax_DeclareMethodAlias(wxPanel, SetFocusIgnoringChildren_gurax, "SetFocusIgnor
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -241,7 +234,7 @@ VType_wxPanel VTYPE_wxPanel("Panel");
 void VType_wxPanel::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Panel_gurax));
 	// Assignment of method

@@ -77,7 +77,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -98,7 +97,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, Delete_gurax, "Delete")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -121,7 +119,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, HasClientData_gurax, "HasClientDat
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -141,7 +138,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, HasClientObjectData_gurax, "HasCli
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -161,7 +157,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, HasClientUntypedData_gurax, "HasCl
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -183,7 +178,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, Append_gurax, "Append")
 	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -237,7 +231,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, GetClientData_gurax, "GetClientDat
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -262,7 +255,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, GetClientObject_gurax, "GetClientO
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -288,7 +280,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, SetClientData_gurax, "SetClientDat
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -314,7 +305,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, SetClientObject_gurax, "SetClientO
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -341,7 +331,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, Insert_gurax, "Insert")
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -397,7 +386,6 @@ Gurax_DeclareMethodAlias(wxSimpleHtmlListBox, Set_gurax, "Set")
 	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -440,7 +428,7 @@ VType_wxSimpleHtmlListBox VTYPE_wxSimpleHtmlListBox("SimpleHtmlListBox");
 void VType_wxSimpleHtmlListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxHtmlListBox, Flag::Mutable, Gurax_CreateConstructor(SimpleHtmlListBox_gurax));
 	// Assignment of method

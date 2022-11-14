@@ -38,7 +38,6 @@ Gurax_DeclareMethodAlias(wxTipWindow, SetBoundingRect_gurax, "SetBoundingRect")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rectBound", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -69,7 +68,7 @@ VType_wxTipWindow VTYPE_wxTipWindow("TipWindow");
 void VType_wxTipWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable);
 	// Assignment of method

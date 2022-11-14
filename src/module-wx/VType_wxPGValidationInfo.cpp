@@ -45,7 +45,7 @@ VType_wxPGValidationInfo VTYPE_wxPGValidationInfo("PGValidationInfo");
 void VType_wxPGValidationInfo::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

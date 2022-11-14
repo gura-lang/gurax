@@ -81,7 +81,7 @@ VType_wxStaticBox VTYPE_wxStaticBox("StaticBox");
 void VType_wxStaticBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticBox_gurax));
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxFlagsProperty VTYPE_wxFlagsProperty("FlagsProperty");
 void VType_wxFlagsProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPGProperty, Flag::Mutable);
 	// Assignment of method

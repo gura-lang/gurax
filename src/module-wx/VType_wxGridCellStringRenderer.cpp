@@ -62,7 +62,7 @@ VType_wxGridCellStringRenderer VTYPE_wxGridCellStringRenderer("GridCellStringRen
 void VType_wxGridCellStringRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellStringRenderer_gurax));
 	// Assignment of method

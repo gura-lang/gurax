@@ -87,7 +87,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -121,7 +120,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, GetFontName_gurax, "GetFontName")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -141,7 +139,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, GetFromUnicode_gurax, "GetFromUni
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -161,7 +158,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, GetNormalTextFontName_gurax, "Get
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -181,7 +177,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, GetSymbol_gurax, "GetSymbol")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -201,7 +196,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, GetSymbolChar_gurax, "GetSymbolCh
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -221,7 +215,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, HasSelection_gurax, "HasSelection
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -242,7 +235,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, SetFontName_gurax, "SetFontName")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -266,7 +258,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, SetFromUnicode_gurax, "SetFromUni
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -290,7 +281,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, SetNormalTextFontName_gurax, "Set
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -314,7 +304,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, SetSymbol_gurax, "SetSymbol")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -338,7 +327,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, SetUnicodeMode_gurax, "SetUnicode
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("unicodeMode", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -361,7 +349,6 @@ Gurax_DeclareMethodAlias(wxSymbolPickerDialog, UseNormalFont_gurax, "UseNormalFo
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -388,7 +375,7 @@ VType_wxSymbolPickerDialog VTYPE_wxSymbolPickerDialog("SymbolPickerDialog");
 void VType_wxSymbolPickerDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(SymbolPickerDialog_gurax));
 	// Assignment of method

@@ -68,7 +68,6 @@ Gurax_DeclareMethodAlias(wxRect, Contains_gurax, "Contains")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -139,7 +138,6 @@ Gurax_DeclareMethodAlias(wxRect, GetBottom_gurax, "GetBottom")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -160,7 +158,6 @@ Gurax_DeclareMethodAlias(wxRect, GetBottomLeft_gurax, "GetBottomLeft")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -181,7 +178,6 @@ Gurax_DeclareMethodAlias(wxRect, GetBottomRight_gurax, "GetBottomRight")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -201,7 +197,6 @@ Gurax_DeclareMethodAlias(wxRect, GetHeight_gurax, "GetHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -221,7 +216,6 @@ Gurax_DeclareMethodAlias(wxRect, GetLeft_gurax, "GetLeft")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -242,7 +236,6 @@ Gurax_DeclareMethodAlias(wxRect, GetPosition_gurax, "GetPosition")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -262,7 +255,6 @@ Gurax_DeclareMethodAlias(wxRect, GetRight_gurax, "GetRight")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -283,7 +275,6 @@ Gurax_DeclareMethodAlias(wxRect, GetSize_gurax, "GetSize")
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -303,7 +294,6 @@ Gurax_DeclareMethodAlias(wxRect, GetTop_gurax, "GetTop")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -324,7 +314,6 @@ Gurax_DeclareMethodAlias(wxRect, GetTopLeft_gurax, "GetTopLeft")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -345,7 +334,6 @@ Gurax_DeclareMethodAlias(wxRect, GetTopRight_gurax, "GetTopRight")
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -365,7 +353,6 @@ Gurax_DeclareMethodAlias(wxRect, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -385,7 +372,6 @@ Gurax_DeclareMethodAlias(wxRect, GetX_gurax, "GetX")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -405,7 +391,6 @@ Gurax_DeclareMethodAlias(wxRect, GetY_gurax, "GetY")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -427,7 +412,6 @@ Gurax_DeclareMethodAlias(wxRect, Intersect_gurax, "Intersect")
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -451,7 +435,6 @@ Gurax_DeclareMethodAlias(wxRect, IsEmpty_gurax, "IsEmpty")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -472,7 +455,6 @@ Gurax_DeclareMethodAlias(wxRect, SetHeight_gurax, "SetHeight")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -496,7 +478,6 @@ Gurax_DeclareMethodAlias(wxRect, SetPosition_gurax, "SetPosition")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -521,7 +502,6 @@ Gurax_DeclareMethodAlias(wxRect, SetSize_gurax, "SetSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("s", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -546,7 +526,6 @@ Gurax_DeclareMethodAlias(wxRect, SetWidth_gurax, "SetWidth")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -570,7 +549,6 @@ Gurax_DeclareMethodAlias(wxRect, SetX_gurax, "SetX")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -594,7 +572,6 @@ Gurax_DeclareMethodAlias(wxRect, SetY_gurax, "SetY")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -618,7 +595,6 @@ Gurax_DeclareMethodAlias(wxRect, SetLeft_gurax, "SetLeft")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("left", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -642,7 +618,6 @@ Gurax_DeclareMethodAlias(wxRect, SetRight_gurax, "SetRight")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("right", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -666,7 +641,6 @@ Gurax_DeclareMethodAlias(wxRect, SetTop_gurax, "SetTop")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("top", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -690,7 +664,6 @@ Gurax_DeclareMethodAlias(wxRect, SetBottom_gurax, "SetBottom")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bottom", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -714,7 +687,6 @@ Gurax_DeclareMethodAlias(wxRect, SetTopLeft_gurax, "SetTopLeft")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -739,7 +711,6 @@ Gurax_DeclareMethodAlias(wxRect, SetBottomRight_gurax, "SetBottomRight")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -764,7 +735,6 @@ Gurax_DeclareMethodAlias(wxRect, SetTopRight_gurax, "SetTopRight")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -789,7 +759,6 @@ Gurax_DeclareMethodAlias(wxRect, SetBottomLeft_gurax, "SetBottomLeft")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("p", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -816,7 +785,6 @@ Gurax_DeclareMethodAlias(wxRect, CentreIn_gurax, "CentreIn")
 	DeclareArg("dir", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -845,7 +813,6 @@ Gurax_DeclareMethodAlias(wxRect, CenterIn_gurax, "CenterIn")
 	DeclareArg("dir", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -872,7 +839,6 @@ Gurax_DeclareMethodAlias(wxRect, Deflate_gurax, "Deflate")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -944,7 +910,6 @@ Gurax_DeclareMethodAlias(wxRect, Inflate_gurax, "Inflate")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1016,7 +981,6 @@ Gurax_DeclareMethodAlias(wxRect, Offset_gurax, "Offset")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1072,7 +1036,6 @@ Gurax_DeclareMethodAlias(wxRect, Union_gurax, "Union")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1098,7 +1061,6 @@ Gurax_DeclareProperty_RW(wxRect, width)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1120,7 +1082,6 @@ Gurax_DeclareProperty_RW(wxRect, height)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1142,7 +1103,6 @@ Gurax_DeclareProperty_RW(wxRect, x)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1164,7 +1124,6 @@ Gurax_DeclareProperty_RW(wxRect, y)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -1190,7 +1149,7 @@ VType_wxRect VTYPE_wxRect("Rect");
 void VType_wxRect::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Rect_gurax));
 	// Assignment of method

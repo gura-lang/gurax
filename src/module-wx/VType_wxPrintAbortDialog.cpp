@@ -75,7 +75,6 @@ Gurax_DeclareMethodAlias(wxPrintAbortDialog, SetProgress_gurax, "SetProgress")
 	DeclareArg("currentCopy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("totalCopies", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -108,7 +107,7 @@ VType_wxPrintAbortDialog VTYPE_wxPrintAbortDialog("PrintAbortDialog");
 void VType_wxPrintAbortDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(PrintAbortDialog_gurax));
 	// Assignment of method

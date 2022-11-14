@@ -54,7 +54,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, AddCharacterStyle_gurax, "AddChar
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("def", VTYPE_wxRichTextCharacterStyleDefinition, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -79,7 +78,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, AddListStyle_gurax, "AddListStyle
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("def", VTYPE_wxRichTextListStyleDefinition, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -104,7 +102,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, AddParagraphStyle_gurax, "AddPara
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("def", VTYPE_wxRichTextParagraphStyleDefinition, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -129,7 +126,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, AddStyle_gurax, "AddStyle")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("def", VTYPE_wxRichTextStyleDefinition, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -153,7 +149,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, DeleteStyles_gurax, "DeleteStyles
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -176,7 +171,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, FindCharacterStyle_gurax, "FindCh
 	DeclareArg("recurse", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -203,7 +197,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, FindListStyle_gurax, "FindListSty
 	DeclareArg("recurse", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -230,7 +223,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, FindParagraphStyle_gurax, "FindPa
 	DeclareArg("recurse", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -256,7 +248,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, FindStyle_gurax, "FindStyle")
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -281,7 +272,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, GetCharacterStyle_gurax, "GetChar
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -304,7 +294,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, GetCharacterStyleCount_gurax, "Ge
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -324,7 +313,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, GetDescription_gurax, "GetDescrip
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -346,7 +334,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, GetListStyle_gurax, "GetListStyle
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -369,7 +356,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, GetListStyleCount_gurax, "GetList
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -389,7 +375,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, GetName_gurax, "GetName")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -411,7 +396,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, GetParagraphStyle_gurax, "GetPara
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -434,7 +418,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, GetParagraphStyleCount_gurax, "Ge
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -456,7 +439,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, RemoveCharacterStyle_gurax, "Remo
 	DeclareArg("def", VTYPE_wxRichTextStyleDefinition, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("deleteStyle", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -483,7 +465,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, RemoveListStyle_gurax, "RemoveLis
 	DeclareArg("def", VTYPE_wxRichTextStyleDefinition, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("deleteStyle", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -510,7 +491,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, RemoveParagraphStyle_gurax, "Remo
 	DeclareArg("def", VTYPE_wxRichTextStyleDefinition, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("deleteStyle", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -537,7 +517,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, RemoveStyle_gurax, "RemoveStyle")
 	DeclareArg("def", VTYPE_wxRichTextStyleDefinition, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("deleteStyle", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -563,7 +542,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, SetDescription_gurax, "SetDescrip
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("descr", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -587,7 +565,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, SetName_gurax, "SetName")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -611,7 +588,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, GetProperties_gurax, "GetProperti
 	Declare(VTYPE_wxRichTextProperties, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -632,7 +608,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleSheet, SetProperties_gurax, "SetProperti
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("props", VTYPE_wxRichTextProperties, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -663,7 +638,7 @@ VType_wxRichTextStyleSheet VTYPE_wxRichTextStyleSheet("RichTextStyleSheet");
 void VType_wxRichTextStyleSheet::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(RichTextStyleSheet_gurax));
 	// Assignment of method

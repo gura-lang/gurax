@@ -79,7 +79,6 @@ Gurax_DeclareMethodAlias(wxIcon, CopyFromBitmap_gurax, "CopyFromBitmap")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -103,7 +102,6 @@ Gurax_DeclareMethodAlias(wxIcon, GetDepth_gurax, "GetDepth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -123,7 +121,6 @@ Gurax_DeclareMethodAlias(wxIcon, GetHeight_gurax, "GetHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -143,7 +140,6 @@ Gurax_DeclareMethodAlias(wxIcon, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -163,7 +159,6 @@ Gurax_DeclareMethodAlias(wxIcon, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -187,7 +182,6 @@ Gurax_DeclareMethodAlias(wxIcon, LoadFile_gurax, "LoadFile")
 	DeclareArg("desiredWidth", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("desiredHeight", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -217,7 +211,6 @@ Gurax_DeclareMethodAlias(wxIcon, SetDepth_gurax, "SetDepth")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -241,7 +234,6 @@ Gurax_DeclareMethodAlias(wxIcon, SetHeight_gurax, "SetHeight")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -265,7 +257,6 @@ Gurax_DeclareMethodAlias(wxIcon, SetWidth_gurax, "SetWidth")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -295,7 +286,7 @@ VType_wxIcon VTYPE_wxIcon("Icon");
 void VType_wxIcon::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Icon_gurax));
 	// Assignment of method

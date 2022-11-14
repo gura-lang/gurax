@@ -55,7 +55,6 @@ Gurax_DeclareMethodAlias(wxAppConsole, OnInit_gurax, "OnInit")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -82,7 +81,7 @@ VType_wxAppConsole VTYPE_wxAppConsole("AppConsole");
 void VType_wxAppConsole::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(AppConsole_gurax));
 	// Assignment of method

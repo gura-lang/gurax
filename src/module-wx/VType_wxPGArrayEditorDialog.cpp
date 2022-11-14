@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, Init_gurax, "Init")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -63,7 +62,6 @@ Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, Create_gurax, "Create")
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("sz", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -93,7 +91,6 @@ Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, EnableCustomNewAction_gurax, "En
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -114,7 +111,6 @@ Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, SetDialogValue_gurax, "SetDialog
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -139,7 +135,6 @@ Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, GetDialogValue_gurax, "GetDialog
 	Declare(VTYPE_wxVariant, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -159,7 +154,6 @@ Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, IsModified_gurax, "IsModified")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -179,7 +173,6 @@ Gurax_DeclareMethodAlias(wxPGArrayEditorDialog, GetSelection_gurax, "GetSelectio
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -206,7 +199,7 @@ VType_wxPGArrayEditorDialog VTYPE_wxPGArrayEditorDialog("PGArrayEditorDialog");
 void VType_wxPGArrayEditorDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable);
 	// Assignment of method

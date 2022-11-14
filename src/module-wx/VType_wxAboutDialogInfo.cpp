@@ -70,7 +70,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddArtist_gurax, "AddArtist")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("artist", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -94,7 +93,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddDeveloper_gurax, "AddDeveloper")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("developer", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -118,7 +116,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddDocWriter_gurax, "AddDocWriter")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("docwriter", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -142,7 +139,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddTranslator_gurax, "AddTranslator"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("translator", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -165,7 +161,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetName_gurax, "GetName")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -185,7 +180,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasDescription_gurax, "HasDescriptio
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -205,7 +199,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetDescription_gurax, "GetDescriptio
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -225,7 +218,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasCopyright_gurax, "HasCopyright")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -245,7 +237,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetCopyright_gurax, "GetCopyright")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -266,7 +257,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetArtists_gurax, "SetArtists")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("artists", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -290,7 +280,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetCopyright_gurax, "SetCopyright")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("copyright", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -314,7 +303,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetDescription_gurax, "SetDescriptio
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("desc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -338,7 +326,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetDevelopers_gurax, "SetDevelopers"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("developers", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -362,7 +349,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetDocWriters_gurax, "SetDocWriters"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("docwriters", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -385,7 +371,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasIcon_gurax, "HasIcon")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -406,7 +391,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetIcon_gurax, "GetIcon")
 	Declare(VTYPE_wxIcon, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -427,7 +411,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetIcon_gurax, "SetIcon")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icon", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -451,7 +434,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasLicence_gurax, "HasLicence")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -471,7 +453,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetLicence_gurax, "GetLicence")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -492,7 +473,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetLicence_gurax, "SetLicence")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("licence", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -516,7 +496,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetLicense_gurax, "SetLicense")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("licence", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -540,7 +519,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetName_gurax, "SetName")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -564,7 +542,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetTranslators_gurax, "SetTranslator
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("translators", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -589,7 +566,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetVersion_gurax, "SetVersion")
 	DeclareArg("version", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("longVersion", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -613,7 +589,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetVersion_gurax, "GetVersion")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -633,7 +608,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetLongVersion_gurax, "GetLongVersio
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -653,7 +627,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasWebSite_gurax, "HasWebSite")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -673,7 +646,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetWebSiteURL_gurax, "GetWebSiteURL"
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -693,7 +665,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetWebSiteDescription_gurax, "GetWeb
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -715,7 +686,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetWebSite_gurax, "SetWebSite")
 	DeclareArg("url", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("desc", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -739,7 +709,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasDevelopers_gurax, "HasDevelopers"
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -759,7 +728,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasDocWriters_gurax, "HasDocWriters"
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -779,7 +747,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasArtists_gurax, "HasArtists")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -799,7 +766,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasTranslators_gurax, "HasTranslator
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -826,7 +792,7 @@ VType_wxAboutDialogInfo VTYPE_wxAboutDialogInfo("AboutDialogInfo");
 void VType_wxAboutDialogInfo::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	AddHelp("ja", g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AboutDialogInfo_gurax));

@@ -78,7 +78,6 @@ Gurax_DeclareClassMethodAlias(wxBitmapButton, NewCloseButton_gurax, "NewCloseBut
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("winid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -106,7 +105,7 @@ VType_wxBitmapButton VTYPE_wxBitmapButton("BitmapButton");
 void VType_wxBitmapButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxButton, Flag::Mutable, Gurax_CreateConstructor(BitmapButton_gurax));
 	// Assignment of method

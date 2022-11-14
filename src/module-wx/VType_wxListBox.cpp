@@ -76,7 +76,6 @@ Gurax_DeclareMethodAlias(wxListBox, Deselect_gurax, "Deselect")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -100,7 +99,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetSelection_gurax, "SetSelection")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -123,7 +121,6 @@ Gurax_DeclareMethodAlias(wxListBox, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -145,7 +142,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetStringSelection_gurax, "SetStringSelectio
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -169,7 +165,6 @@ Gurax_DeclareMethodAlias(wxListBox, GetSelections_gurax, "GetSelections")
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -191,7 +186,6 @@ Gurax_DeclareMethodAlias(wxListBox, HitTest_gurax, "HitTest")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -248,7 +242,6 @@ Gurax_DeclareMethodAlias(wxListBox, InsertItems_gurax, "InsertItems")
 	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -273,7 +266,6 @@ Gurax_DeclareMethodAlias(wxListBox, IsSelected_gurax, "IsSelected")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -297,7 +289,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetFirstItem_gurax, "SetFirstItem")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -351,7 +342,6 @@ Gurax_DeclareMethodAlias(wxListBox, EnsureVisible_gurax, "EnsureVisible")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -374,7 +364,6 @@ Gurax_DeclareMethodAlias(wxListBox, IsSorted_gurax, "IsSorted")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -394,7 +383,6 @@ Gurax_DeclareMethodAlias(wxListBox, GetCount_gurax, "GetCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -415,7 +403,6 @@ Gurax_DeclareMethodAlias(wxListBox, GetString_gurax, "GetString")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -440,7 +427,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetString_gurax, "SetString")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -466,7 +452,6 @@ Gurax_DeclareMethodAlias(wxListBox, FindString_gurax, "FindString")
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bCase", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -498,7 +483,6 @@ Gurax_DeclareMethodAlias(wxListBox, Create_gurax, "Create")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -532,7 +516,6 @@ Gurax_DeclareMethodAlias(wxListBox, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -553,7 +536,6 @@ Gurax_DeclareMethodAlias(wxListBox, Delete_gurax, "Delete")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -576,7 +558,6 @@ Gurax_DeclareMethodAlias(wxListBox, HasClientData_gurax, "HasClientData")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -596,7 +577,6 @@ Gurax_DeclareMethodAlias(wxListBox, HasClientObjectData_gurax, "HasClientObjectD
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -616,7 +596,6 @@ Gurax_DeclareMethodAlias(wxListBox, HasClientUntypedData_gurax, "HasClientUntype
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -638,7 +617,6 @@ Gurax_DeclareMethodAlias(wxListBox, Append_gurax, "Append")
 	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -692,7 +670,6 @@ Gurax_DeclareMethodAlias(wxListBox, GetClientData_gurax, "GetClientData")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -717,7 +694,6 @@ Gurax_DeclareMethodAlias(wxListBox, GetClientObject_gurax, "GetClientObject")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -743,7 +719,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetClientData_gurax, "SetClientData")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -769,7 +744,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetClientObject_gurax, "SetClientObject")
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -796,7 +770,6 @@ Gurax_DeclareMethodAlias(wxListBox, Insert_gurax, "Insert")
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -852,7 +825,6 @@ Gurax_DeclareMethodAlias(wxListBox, Set_gurax, "Set")
 	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -895,7 +867,7 @@ VType_wxListBox VTYPE_wxListBox("ListBox");
 void VType_wxListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ListBox_gurax));
 	// Assignment of method

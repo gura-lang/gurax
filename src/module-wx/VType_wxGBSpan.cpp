@@ -61,7 +61,6 @@ Gurax_DeclareMethodAlias(wxGBSpan, GetColspan_gurax, "GetColspan")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -81,7 +80,6 @@ Gurax_DeclareMethodAlias(wxGBSpan, GetRowspan_gurax, "GetRowspan")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -102,7 +100,6 @@ Gurax_DeclareMethodAlias(wxGBSpan, SetColspan_gurax, "SetColspan")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -126,7 +123,6 @@ Gurax_DeclareMethodAlias(wxGBSpan, SetRowspan_gurax, "SetRowspan")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rowspan", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -156,7 +152,7 @@ VType_wxGBSpan VTYPE_wxGBSpan("GBSpan");
 void VType_wxGBSpan::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(GBSpan_gurax));
 	// Assignment of method

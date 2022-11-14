@@ -45,7 +45,7 @@ VType_wxDataViewIndexListModel VTYPE_wxDataViewIndexListModel("DataViewIndexList
 void VType_wxDataViewIndexListModel::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDataViewListModel, Flag::Mutable);
 	// Assignment of method

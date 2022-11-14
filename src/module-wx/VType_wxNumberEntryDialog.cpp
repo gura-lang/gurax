@@ -74,7 +74,6 @@ Gurax_DeclareMethodAlias(wxNumberEntryDialog, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -101,7 +100,7 @@ VType_wxNumberEntryDialog VTYPE_wxNumberEntryDialog("NumberEntryDialog");
 void VType_wxNumberEntryDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(NumberEntryDialog_gurax));
 	// Assignment of method

@@ -38,7 +38,6 @@ Gurax_DeclareClassMethodAlias(wxLog, AddTraceMask_gurax, "AddTraceMask")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -57,7 +56,6 @@ Gurax_DeclareClassMethodAlias(wxLog, ClearTraceMasks_gurax, "ClearTraceMasks")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -73,7 +71,6 @@ Gurax_DeclareClassMethodAlias(wxLog, GetTraceMasks_gurax, "GetTraceMasks")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -90,7 +87,6 @@ Gurax_DeclareClassMethodAlias(wxLog, IsAllowedTraceMask_gurax, "IsAllowedTraceMa
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("mask", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -110,7 +106,6 @@ Gurax_DeclareClassMethodAlias(wxLog, RemoveTraceMask_gurax, "RemoveTraceMask")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -129,7 +124,6 @@ Gurax_DeclareClassMethodAlias(wxLog, DontCreateOnDemand_gurax, "DontCreateOnDema
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -145,7 +139,6 @@ Gurax_DeclareClassMethodAlias(wxLog, GetActiveTarget_gurax, "GetActiveTarget")
 {
 	Declare(VTYPE_wxLog, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -162,7 +155,6 @@ Gurax_DeclareClassMethodAlias(wxLog, SetActiveTarget_gurax, "SetActiveTarget")
 	Declare(VTYPE_wxLog, Flag::None);
 	DeclareArg("logtarget", VTYPE_wxLog, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -183,7 +175,6 @@ Gurax_DeclareClassMethodAlias(wxLog, SetThreadActiveTarget_gurax, "SetThreadActi
 	Declare(VTYPE_wxLog, Flag::None);
 	DeclareArg("logger", VTYPE_wxLog, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -203,7 +194,6 @@ Gurax_DeclareClassMethodAlias(wxLog, FlushActive_gurax, "FlushActive")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -219,7 +209,6 @@ Gurax_DeclareClassMethodAlias(wxLog, Resume_gurax, "Resume")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -235,7 +224,6 @@ Gurax_DeclareClassMethodAlias(wxLog, Suspend_gurax, "Suspend")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -251,7 +239,6 @@ Gurax_DeclareClassMethodAlias(wxLog, GetLogLevel_gurax, "GetLogLevel")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -269,7 +256,6 @@ Gurax_DeclareClassMethodAlias(wxLog, IsLevelEnabled_gurax, "IsLevelEnabled")
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("component", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -291,7 +277,6 @@ Gurax_DeclareClassMethodAlias(wxLog, SetComponentLevel_gurax, "SetComponentLevel
 	DeclareArg("component", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -312,7 +297,6 @@ Gurax_DeclareClassMethodAlias(wxLog, SetLogLevel_gurax, "SetLogLevel")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("logLevel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -332,7 +316,6 @@ Gurax_DeclareClassMethodAlias(wxLog, EnableLogging_gurax, "EnableLogging")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -351,7 +334,6 @@ Gurax_DeclareClassMethodAlias(wxLog, IsEnabled_gurax, "IsEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -367,7 +349,6 @@ Gurax_DeclareClassMethodAlias(wxLog, GetRepetitionCounting_gurax, "GetRepetition
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -384,7 +365,6 @@ Gurax_DeclareClassMethodAlias(wxLog, SetRepetitionCounting_gurax, "SetRepetition
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("repetCounting", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -403,7 +383,6 @@ Gurax_DeclareClassMethodAlias(wxLog, GetTimestamp_gurax, "GetTimestamp")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -420,7 +399,6 @@ Gurax_DeclareClassMethodAlias(wxLog, SetTimestamp_gurax, "SetTimestamp")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -439,7 +417,6 @@ Gurax_DeclareClassMethodAlias(wxLog, DisableTimestamp_gurax, "DisableTimestamp")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -455,7 +432,6 @@ Gurax_DeclareClassMethodAlias(wxLog, GetVerbose_gurax, "GetVerbose")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -472,7 +448,6 @@ Gurax_DeclareClassMethodAlias(wxLog, SetVerbose_gurax, "SetVerbose")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("verbose", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -498,7 +473,7 @@ VType_wxLog VTYPE_wxLog("Log");
 void VType_wxLog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

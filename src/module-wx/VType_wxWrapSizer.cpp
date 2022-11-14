@@ -64,7 +64,6 @@ Gurax_DeclareMethodAlias(wxWrapSizer, InformFirstDirection_gurax, "InformFirstDi
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("availableOtherDir", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -89,7 +88,6 @@ Gurax_DeclareMethodAlias(wxWrapSizer, RecalcSizes_gurax, "RecalcSizes")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -110,7 +108,6 @@ Gurax_DeclareMethodAlias(wxWrapSizer, CalcMin_gurax, "CalcMin")
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -137,7 +134,7 @@ VType_wxWrapSizer VTYPE_wxWrapSizer("WrapSizer");
 void VType_wxWrapSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBoxSizer, Flag::Mutable, Gurax_CreateConstructor(WrapSizer_gurax));
 	// Assignment of method

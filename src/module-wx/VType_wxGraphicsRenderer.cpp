@@ -39,7 +39,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateBitmapFromImage_gurax, "Creat
 	DeclareArg("image", VTYPE_wxImage, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -65,7 +64,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateImageFromBitmap_gurax, "Creat
 	DeclareArg("bmp", VTYPE_wxGraphicsBitmap, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -91,7 +89,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateBitmapFromNativeBitmap_gurax,
 	DeclareArg("bitmap", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -120,7 +117,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateContext_gurax, "CreateContext
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -146,7 +142,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateContextFromImage_gurax, "Crea
 	DeclareArg("image", VTYPE_wxImage, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -172,7 +167,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateBrush_gurax, "CreateBrush")
 	DeclareArg("brush", VTYPE_wxBrush, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -198,7 +192,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateContextFromNativeContext_gura
 	DeclareArg("context", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -227,7 +220,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateContextFromNativeWindow_gurax
 	DeclareArg("window", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -255,7 +247,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateMeasuringContext_gurax, "Crea
 	Declare(VTYPE_wxGraphicsContext, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -278,7 +269,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateFont_gurax, "CreateFont")
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -309,7 +299,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateLinearGradientBrush_gurax, "C
 	DeclareArg("stops", VTYPE_wxGraphicsGradientStops, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -344,7 +333,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateMatrix_gurax, "CreateMatrix")
 	DeclareArg("ty", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -379,7 +367,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreatePath_gurax, "CreatePath")
 	Declare(VTYPE_wxGraphicsPath, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -406,7 +393,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateRadialGradientBrush_gurax, "C
 	DeclareArg("stops", VTYPE_wxGraphicsGradientStops, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -441,7 +427,6 @@ Gurax_DeclareMethodAlias(wxGraphicsRenderer, CreateSubBitmap_gurax, "CreateSubBi
 	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -469,7 +454,6 @@ Gurax_DeclareClassMethodAlias(wxGraphicsRenderer, GetDefaultRenderer_gurax, "Get
 {
 	Declare(VTYPE_wxGraphicsRenderer, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -485,7 +469,6 @@ Gurax_DeclareClassMethodAlias(wxGraphicsRenderer, GetCairoRenderer_gurax, "GetCa
 {
 	Declare(VTYPE_wxGraphicsRenderer, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -508,7 +491,7 @@ VType_wxGraphicsRenderer VTYPE_wxGraphicsRenderer("GraphicsRenderer");
 void VType_wxGraphicsRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxAuiNotebookEvent VTYPE_wxAuiNotebookEvent("AuiNotebookEvent");
 void VType_wxAuiNotebookEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlEvent, Flag::Mutable);
 	// Assignment of method

@@ -56,7 +56,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmap_gurax, "GetBitmap")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -77,7 +76,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapCurrent_gurax, "GetBitmapCurrent"
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -98,7 +96,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapDisabled_gurax, "GetBitmapDisable
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -119,7 +116,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapFocus_gurax, "GetBitmapFocus")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -140,7 +136,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapLabel_gurax, "GetBitmapLabel")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -161,7 +156,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapPressed_gurax, "GetBitmapPressed"
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -183,7 +177,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmap_gurax, "SetBitmap")
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dir", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -210,7 +203,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapCurrent_gurax, "SetBitmapCurrent"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -235,7 +227,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapDisabled_gurax, "SetBitmapDisable
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -260,7 +251,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapFocus_gurax, "SetBitmapFocus")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -285,7 +275,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapLabel_gurax, "SetBitmapLabel")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -310,7 +299,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapPressed_gurax, "SetBitmapPressed"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -335,7 +323,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, GetBitmapMargins_gurax, "GetBitmapMargins"
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -356,7 +343,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapPosition_gurax, "SetBitmapPositio
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dir", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -380,7 +366,6 @@ Gurax_DeclareMethodAlias(wxAnyButton, SetBitmapMargins_gurax, "SetBitmapMargins"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -442,7 +427,7 @@ VType_wxAnyButton VTYPE_wxAnyButton("AnyButton");
 void VType_wxAnyButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(AnyButton_gurax));
 	// Assignment of method

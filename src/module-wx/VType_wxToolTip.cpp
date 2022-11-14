@@ -57,7 +57,6 @@ Gurax_DeclareMethodAlias(wxToolTip, GetTip_gurax, "GetTip")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -78,7 +77,6 @@ Gurax_DeclareMethodAlias(wxToolTip, GetWindow_gurax, "GetWindow")
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -99,7 +97,6 @@ Gurax_DeclareMethodAlias(wxToolTip, SetTip_gurax, "SetTip")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tip", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -123,7 +120,6 @@ Gurax_DeclareClassMethodAlias(wxToolTip, Enable_gurax, "Enable")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -143,7 +139,6 @@ Gurax_DeclareClassMethodAlias(wxToolTip, SetAutoPop_gurax, "SetAutoPop")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("msecs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -163,7 +158,6 @@ Gurax_DeclareClassMethodAlias(wxToolTip, SetDelay_gurax, "SetDelay")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("msecs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -183,7 +177,6 @@ Gurax_DeclareClassMethodAlias(wxToolTip, SetMaxWidth_gurax, "SetMaxWidth")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -203,7 +196,6 @@ Gurax_DeclareClassMethodAlias(wxToolTip, SetReshow_gurax, "SetReshow")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("msecs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -229,7 +221,7 @@ VType_wxToolTip VTYPE_wxToolTip("ToolTip");
 void VType_wxToolTip::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(ToolTip_gurax));
 	// Assignment of method

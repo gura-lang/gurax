@@ -78,7 +78,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -109,7 +108,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetMinimumPaneSize_gurax, "GetMinimum
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -129,7 +127,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetSashGravity_gurax, "GetSashGravity
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -149,7 +146,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetSashPosition_gurax, "GetSashPositi
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -169,7 +165,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetSashSize_gurax, "GetSashSize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -189,7 +184,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetDefaultSashSize_gurax, "GetDefault
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -209,7 +203,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetSplitMode_gurax, "GetSplitMode")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -230,7 +223,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetWindow1_gurax, "GetWindow1")
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -251,7 +243,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetWindow2_gurax, "GetWindow2")
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -272,7 +263,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, Initialize_gurax, "Initialize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -296,7 +286,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, IsSashInvisible_gurax, "IsSashInvisib
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -316,7 +305,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, IsSplit_gurax, "IsSplit")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -338,7 +326,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, OnDoubleClickSash_gurax, "OnDoubleCli
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -363,7 +350,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, OnSashPositionChange_gurax, "OnSashPo
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("newSashPosition", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -387,7 +373,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, OnUnsplit_gurax, "OnUnsplit")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("removed", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -413,7 +398,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, ReplaceWindow_gurax, "ReplaceWindow")
 	DeclareArg("winOld", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("winNew", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -440,7 +424,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetMinimumPaneSize_gurax, "SetMinimum
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("paneSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -464,7 +447,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSashGravity_gurax, "SetSashGravity
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("gravity", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -489,7 +471,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSashPosition_gurax, "SetSashPositi
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("redraw", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -514,7 +495,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSashSize_gurax, "SetSashSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -538,7 +518,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSplitMode_gurax, "SetSplitMode")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -562,7 +541,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSashInvisible_gurax, "SetSashInvis
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("invisible", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -588,7 +566,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SplitHorizontally_gurax, "SplitHorizo
 	DeclareArg("window2", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sashPosition", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -619,7 +596,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SplitVertically_gurax, "SplitVertical
 	DeclareArg("window2", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sashPosition", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -648,7 +624,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, Unsplit_gurax, "Unsplit")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("toRemove", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -671,7 +646,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, UpdateSize_gurax, "UpdateSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -698,7 +672,7 @@ VType_wxSplitterWindow VTYPE_wxSplitterWindow("SplitterWindow");
 void VType_wxSplitterWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(SplitterWindow_gurax));
 	// Assignment of method

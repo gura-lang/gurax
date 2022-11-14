@@ -84,7 +84,7 @@ VType_wxBitmapToggleButton VTYPE_wxBitmapToggleButton("BitmapToggleButton");
 void VType_wxBitmapToggleButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxToggleButton, Flag::Mutable, Gurax_CreateConstructor(BitmapToggleButton_gurax));
 	// Assignment of method

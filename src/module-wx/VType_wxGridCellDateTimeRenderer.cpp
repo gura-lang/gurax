@@ -61,7 +61,6 @@ Gurax_DeclareMethodAlias(wxGridCellDateTimeRenderer, SetParameters_gurax, "SetPa
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -91,7 +90,7 @@ VType_wxGridCellDateTimeRenderer VTYPE_wxGridCellDateTimeRenderer("GridCellDateT
 void VType_wxGridCellDateTimeRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellDateRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellDateTimeRenderer_gurax));
 	// Assignment of method

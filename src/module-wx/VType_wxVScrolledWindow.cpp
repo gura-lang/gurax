@@ -37,7 +37,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, GetRowCount_gurax, "GetRowCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -57,7 +56,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, GetVisibleRowsBegin_gurax, "GetVisib
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -77,7 +75,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, GetVisibleRowsEnd_gurax, "GetVisible
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -98,7 +95,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, IsRowVisible_gurax, "IsRowVisible")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -122,7 +118,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, RefreshRow_gurax, "RefreshRow")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -147,7 +142,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, RefreshRows_gurax, "RefreshRows")
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -172,7 +166,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, ScrollRowPages_gurax, "ScrollRowPage
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pages", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -196,7 +189,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, ScrollRows_gurax, "ScrollRows")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("rows", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -220,7 +212,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, ScrollToRow_gurax, "ScrollToRow")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -244,7 +235,6 @@ Gurax_DeclareMethodAlias(wxVScrolledWindow, SetRowCount_gurax, "SetRowCount")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rowCount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -274,7 +264,7 @@ VType_wxVScrolledWindow VTYPE_wxVScrolledWindow("VScrolledWindow");
 void VType_wxVScrolledWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable);
 	// Assignment of method

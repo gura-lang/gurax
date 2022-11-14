@@ -38,7 +38,6 @@ Gurax_DeclareMethodAlias(wxGraphicsObject, GetRenderer_gurax, "GetRenderer")
 	Declare(VTYPE_wxGraphicsRenderer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -58,7 +57,6 @@ Gurax_DeclareMethodAlias(wxGraphicsObject, IsNull_gurax, "IsNull")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -85,7 +83,7 @@ VType_wxGraphicsObject VTYPE_wxGraphicsObject("GraphicsObject");
 void VType_wxGraphicsObject::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method

@@ -72,7 +72,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, CanSetTransparent_gurax, "CanSetTrans
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -93,7 +92,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, CenterOnScreen_gurax, "CenterOnScreen
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -118,7 +116,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, CentreOnScreen_gurax, "CentreOnScreen
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -143,7 +140,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, EnableCloseButton_gurax, "EnableClose
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -167,7 +163,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, GetDefaultItem_gurax, "GetDefaultItem
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -188,7 +183,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, GetIcon_gurax, "GetIcon")
 	Declare(VTYPE_wxIcon, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -209,7 +203,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, GetIcons_gurax, "GetIcons")
 	Declare(VTYPE_wxIconBundle, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -229,7 +222,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, GetTitle_gurax, "GetTitle")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -250,7 +242,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, Iconize_gurax, "Iconize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("iconize", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -273,7 +264,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, IsActive_gurax, "IsActive")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -293,7 +283,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, IsAlwaysMaximized_gurax, "IsAlwaysMax
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -313,7 +302,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, IsFullScreen_gurax, "IsFullScreen")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -333,7 +321,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, IsIconized_gurax, "IsIconized")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -353,7 +340,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, IsMaximized_gurax, "IsMaximized")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -373,7 +359,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, Layout_gurax, "Layout")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -394,7 +379,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, Maximize_gurax, "Maximize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("maximize", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -418,7 +402,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, MSWGetSystemMenu_gurax, "MSWGetSystem
 	Declare(VTYPE_wxMenu, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -439,7 +422,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, RequestUserAttention_gurax, "RequestU
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -463,7 +445,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, Restore_gurax, "Restore")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -485,7 +466,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetDefaultItem_gurax, "SetDefaultItem
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -511,7 +491,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetTmpDefaultItem_gurax, "SetTmpDefau
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -536,7 +515,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, GetTmpDefaultItem_gurax, "GetTmpDefau
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -557,7 +535,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetIcon_gurax, "SetIcon")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icon", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -582,7 +559,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetIcons_gurax, "SetIcons")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icons", VTYPE_wxIconBundle, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -607,7 +583,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetMaxSize_gurax, "SetMaxSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -632,7 +607,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetMinSize_gurax, "SetMinSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -662,7 +636,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetSizeHints_gurax, "SetSizeHints")
 	DeclareArg("incW", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("incH", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -695,7 +668,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetTitle_gurax, "SetTitle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -719,7 +691,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetTransparent_gurax, "SetTransparent
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -742,7 +713,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, ShouldPreventAppExit_gurax, "ShouldPr
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -763,7 +733,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, OSXSetModified_gurax, "OSXSetModified
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("modified", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -786,7 +755,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, OSXIsModified_gurax, "OSXIsModified")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -807,7 +775,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetRepresentedFilename_gurax, "SetRep
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -830,7 +797,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, ShowWithoutActivating_gurax, "ShowWit
 {
 	Declare(VTYPE_Nil, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -852,7 +818,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, ShowFullScreen_gurax, "ShowFullScreen
 	DeclareArg("show", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -884,7 +849,7 @@ VType_wxTopLevelWindow VTYPE_wxTopLevelWindow("TopLevelWindow");
 void VType_wxTopLevelWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNonOwnedWindow, Flag::Mutable, Gurax_CreateConstructor(TopLevelWindow_gurax));
 	// Assignment of method

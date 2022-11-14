@@ -73,7 +73,6 @@ Gurax_DeclareMethodAlias(wxDirDialog, GetMessage_gurax, "GetMessage")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -93,7 +92,6 @@ Gurax_DeclareMethodAlias(wxDirDialog, GetPath_gurax, "GetPath")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -114,7 +112,6 @@ Gurax_DeclareMethodAlias(wxDirDialog, SetMessage_gurax, "SetMessage")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -138,7 +135,6 @@ Gurax_DeclareMethodAlias(wxDirDialog, SetPath_gurax, "SetPath")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -161,7 +157,6 @@ Gurax_DeclareMethodAlias(wxDirDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
 )**");
 }
 
@@ -188,7 +183,7 @@ VType_wxDirDialog VTYPE_wxDirDialog("DirDialog");
 void VType_wxDirDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(DirDialog_gurax));
 	// Assignment of method

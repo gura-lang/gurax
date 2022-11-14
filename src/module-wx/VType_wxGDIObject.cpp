@@ -45,7 +45,7 @@ VType_wxGDIObject VTYPE_wxGDIObject("GDIObject");
 void VType_wxGDIObject::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp("en", g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method
