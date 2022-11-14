@@ -411,6 +411,10 @@ Gurax_DeclareFunction(ReadLines)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that reads each line from the `Stream` and returns it as a `String` instance.
+
+The argument `nLines` limits the number of lines to be read. If omitted, all the lines are read.
+
+If the attribute `:chop` is specified, the end-of-line character of each line is eliminated.
 )**");
 }
 

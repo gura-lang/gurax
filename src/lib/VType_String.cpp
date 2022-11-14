@@ -54,7 +54,7 @@ Gurax_DeclareConstructor(String)
 	DeclareArg("src", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates a `String` instance.
+Creates a `String` instance converted from `src`. If the argument is omitted, an empty string is created.
 )**");
 }
 
