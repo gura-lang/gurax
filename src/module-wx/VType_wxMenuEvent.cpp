@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxMenuEvent, GetMenu_gurax, "GetMenu")
 {
 	Declare(VTYPE_wxMenu, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_ImplementMethodEx(wxMenuEvent, GetMenu_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxMenuEvent, GetMenuId_gurax, "GetMenuId")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -77,7 +77,7 @@ Gurax_ImplementMethodEx(wxMenuEvent, GetMenuId_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMenuEvent, IsPopup_gurax, "IsPopup")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -105,7 +105,7 @@ VType_wxMenuEvent VTYPE_wxMenuEvent("MenuEvent");
 void VType_wxMenuEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

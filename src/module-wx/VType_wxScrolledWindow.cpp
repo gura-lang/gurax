@@ -39,7 +39,7 @@ Gurax_DeclareConstructorAlias(ScrolledWindow_gurax, "ScrolledWindow")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.ScrolledWindow.
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, CalcScrolledPositionXY_gurax, "CalcSc
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -100,7 +100,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, CalcScrolledPosition_gurax, "CalcScro
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -126,7 +126,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, CalcUnscrolledPositionXY_gurax, "Calc
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -153,7 +153,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, CalcUnscrolledPosition_gurax, "CalcUn
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -177,7 +177,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, CalcUnscrolledPosition_gurax, processo
 Gurax_DeclareMethodAlias(wxScrolledWindow, DisableKeyboardScrolling_gurax, "DisableKeyboardScrolling")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -198,7 +198,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, DoPrepareDC_gurax, "DoPrepareDC")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -224,7 +224,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, EnableScrolling_gurax, "EnableScrolli
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("xScrolling", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("yScrolling", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -250,7 +250,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, ShowScrollbars_gurax, "ShowScrollbars
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("horz", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("vert", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -274,7 +274,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, ShowScrollbars_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxScrolledWindow, GetScrollPixelsPerUnit_gurax, "GetScrollPixelsPerUnit")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -295,7 +295,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, GetScrollPixelsPerUnit_gurax, processo
 Gurax_DeclareMethodAlias(wxScrolledWindow, GetViewStartXY_gurax, "GetViewStartXY")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -317,7 +317,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, GetViewStart_gurax, "GetViewStart")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -337,7 +337,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, GetViewStart_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxScrolledWindow, GetVirtualSize_gurax, "GetVirtualSize")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -358,7 +358,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, GetVirtualSize_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxScrolledWindow, IsRetained_gurax, "IsRetained")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -379,7 +379,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, OnDraw_gurax, "OnDraw")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -404,7 +404,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, PrepareDC_gurax, "PrepareDC")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -430,7 +430,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, ScrollXY_gurax, "ScrollXY")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -455,7 +455,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, Scroll_gurax, "Scroll")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -481,7 +481,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, SetScrollRate_gurax, "SetScrollRate")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("xstep", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ystep", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -512,7 +512,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, SetScrollbars_gurax, "SetScrollbars")
 	DeclareArg("xPos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("yPos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("noRefresh", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -544,7 +544,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, SetTargetWindow_gurax, "SetTargetWind
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -569,7 +569,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, GetTargetWindow_gurax, "GetTargetWind
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -590,7 +590,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, SetTargetRect_gurax, "SetTargetRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -615,7 +615,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, GetTargetRect_gurax, "GetTargetRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -636,7 +636,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, GetScrollPageSize_gurax, "GetScrollPa
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("orient", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -661,7 +661,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, SetScrollPageSize_gurax, "SetScrollPa
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("orient", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -686,7 +686,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, GetScrollLines_gurax, "GetScrollLines
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("orient", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -711,7 +711,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, SetScale_gurax, "SetScale")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("xs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ys", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -735,7 +735,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, SetScale_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxScrolledWindow, GetScaleX_gurax, "GetScaleX")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -755,7 +755,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, GetScaleX_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxScrolledWindow, GetScaleY_gurax, "GetScaleY")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -775,7 +775,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, GetScaleY_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxScrolledWindow, AdjustScrollbars_gurax, "AdjustScrollbars")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -795,7 +795,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, AdjustScrollbars_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxScrolledWindow, IsAutoScrolling_gurax, "IsAutoScrolling")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -815,7 +815,7 @@ Gurax_ImplementMethodEx(wxScrolledWindow, IsAutoScrolling_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxScrolledWindow, StopAutoScrolling_gurax, "StopAutoScrolling")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -836,7 +836,7 @@ Gurax_DeclareMethodAlias(wxScrolledWindow, SendAutoScrollEvents_gurax, "SendAuto
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("event", VTYPE_wxScrollWinEvent, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -868,7 +868,7 @@ VType_wxScrolledWindow VTYPE_wxScrolledWindow("ScrolledWindow");
 void VType_wxScrolledWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(ScrolledWindow_gurax));
 	// Assignment of method

@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(IFD)
 	Declare(VTYPE_IFD, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `jpeg.IFD` instance.
 )**");
 }
@@ -56,7 +56,7 @@ Gurax_DeclareMethod(IFD, AddTag)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("tag", VTYPE_Tag, DeclArg::Occur::Once, DeclArg::Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Adds `Tag` instance to the IFD.
 )**");
 }
@@ -79,7 +79,7 @@ Gurax_DeclareMethod(IFD, CreateTag)
 	Declare(VTYPE_Tag, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Tag` instance in the IFD.
 )**");
 }
@@ -102,7 +102,7 @@ Gurax_DeclareMethod(IFD, DeleteTag)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Deletes `Tag` instance in the IFD.
 )**");
 }
@@ -124,7 +124,7 @@ Gurax_DeclareMethod(IFD, EachTag)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -145,7 +145,7 @@ Gurax_DeclareMethod(IFD, FindTag)
 	Declare(VTYPE_Tag, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Finds `Tag` instance in the IFD.
 )**");
 }
@@ -175,7 +175,7 @@ Gurax_ImplementMethod(IFD, FindTag)
 Gurax_DeclareProperty_R(IFD, symbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

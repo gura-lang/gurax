@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxCaret, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_ImplementMethodEx(wxCaret, GetWindow_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxCaret, Hide_gurax, "Hide")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -77,7 +77,7 @@ Gurax_ImplementMethodEx(wxCaret, Hide_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxCaret, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -97,7 +97,7 @@ Gurax_ImplementMethodEx(wxCaret, IsOk_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxCaret, IsVisible_gurax, "IsVisible")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -118,7 +118,7 @@ Gurax_DeclareMethodAlias(wxCaret, Show_gurax, "Show")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -149,7 +149,7 @@ VType_wxCaret VTYPE_wxCaret("Caret");
 void VType_wxCaret::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

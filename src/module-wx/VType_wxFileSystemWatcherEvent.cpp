@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxFileSystemWatcherEvent, GetPath_gurax, "GetPath")
 {
 	Declare(VTYPE_wxFileName, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -58,7 +58,7 @@ Gurax_DeclareMethodAlias(wxFileSystemWatcherEvent, GetNewPath_gurax, "GetNewPath
 {
 	Declare(VTYPE_wxFileName, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -78,7 +78,7 @@ Gurax_ImplementMethodEx(wxFileSystemWatcherEvent, GetNewPath_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxFileSystemWatcherEvent, GetChangeType_gurax, "GetChangeType")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -98,7 +98,7 @@ Gurax_ImplementMethodEx(wxFileSystemWatcherEvent, GetChangeType_gurax, processor
 Gurax_DeclareMethodAlias(wxFileSystemWatcherEvent, IsError_gurax, "IsError")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -118,7 +118,7 @@ Gurax_ImplementMethodEx(wxFileSystemWatcherEvent, IsError_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxFileSystemWatcherEvent, GetErrorDescription_gurax, "GetErrorDescription")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -138,7 +138,7 @@ Gurax_ImplementMethodEx(wxFileSystemWatcherEvent, GetErrorDescription_gurax, pro
 Gurax_DeclareMethodAlias(wxFileSystemWatcherEvent, GetWarningType_gurax, "GetWarningType")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -158,7 +158,7 @@ Gurax_ImplementMethodEx(wxFileSystemWatcherEvent, GetWarningType_gurax, processo
 Gurax_DeclareMethodAlias(wxFileSystemWatcherEvent, ToString_gurax, "ToString")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -186,7 +186,7 @@ VType_wxFileSystemWatcherEvent VTYPE_wxFileSystemWatcherEvent("FileSystemWatcher
 void VType_wxFileSystemWatcherEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

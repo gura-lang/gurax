@@ -33,7 +33,7 @@ Gurax_DeclareMethod(cairo_scaled_font_t, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_ImplementMethod(cairo_scaled_font_t, MethodSkeleton)
 Gurax_DeclareProperty_R(cairo_scaled_font_t, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

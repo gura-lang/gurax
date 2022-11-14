@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(curl_mime)
 {
 	Declare(VTYPE_curl_mime, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `curl.curl_mime` instance.
 )**");
 }
@@ -56,7 +56,7 @@ Gurax_DeclareMethod(curl_mime, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -80,7 +80,7 @@ Gurax_ImplementMethod(curl_mime, MethodSkeleton)
 Gurax_DeclareProperty_R(curl_mime, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

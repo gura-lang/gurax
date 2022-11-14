@@ -35,7 +35,7 @@ Gurax_DeclareConstructorAlias(Point_gurax, "Point")
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.Point.
 )**");
 }
@@ -63,7 +63,7 @@ Gurax_ImplementConstructorEx(Point_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareProperty_RW(wxPoint, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -85,7 +85,7 @@ Gurax_ImplementPropertySetter(wxPoint, x)
 Gurax_DeclareProperty_RW(wxPoint, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -112,7 +112,7 @@ VType_wxPoint VTYPE_wxPoint("Point");
 void VType_wxPoint::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Point_gurax));
 	// Assignment of method

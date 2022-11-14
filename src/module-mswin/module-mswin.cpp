@@ -14,7 +14,7 @@ Gurax_DeclareFunction(Test)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Adds up the given two numbers and returns the result.
 )**");
 }

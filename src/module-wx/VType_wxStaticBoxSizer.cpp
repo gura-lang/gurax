@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(StaticBoxSizer_gurax, "StaticBoxSizer")
 	Declare(VTYPE_wxStaticBoxSizer, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.StaticBoxSizer.
 )**");
 }
@@ -91,7 +91,7 @@ Gurax_DeclareMethodAlias(wxStaticBoxSizer, GetStaticBox_gurax, "GetStaticBox")
 {
 	Declare(VTYPE_wxStaticBox, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -112,7 +112,7 @@ Gurax_DeclareMethodAlias(wxStaticBoxSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -132,7 +132,7 @@ Gurax_ImplementMethodEx(wxStaticBoxSizer, CalcMin_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxStaticBoxSizer, RecalcSizes_gurax, "RecalcSizes")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -160,7 +160,7 @@ VType_wxStaticBoxSizer VTYPE_wxStaticBoxSizer("StaticBoxSizer");
 void VType_wxStaticBoxSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBoxSizer, Flag::Mutable, Gurax_CreateConstructor(StaticBoxSizer_gurax));
 	// Assignment of method

@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(Reader)
 	Declare(VTYPE_Reader, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `csv.Reader` instance.
 )**");
 }
@@ -58,7 +58,7 @@ Gurax_DeclareMethod(Reader, ReadLine)
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(asList));
 	DeclareAttrOpt(Gurax_Symbol(asTuple));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -84,7 +84,7 @@ Gurax_DeclareMethod(Reader, ReadLines)
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	DeclareAttrOpt(Gurax_Symbol(asList));
 	DeclareAttrOpt(Gurax_Symbol(asTuple));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }

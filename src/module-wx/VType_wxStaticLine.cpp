@@ -39,7 +39,7 @@ Gurax_DeclareConstructorAlias(StaticLine_gurax, "StaticLine")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.StaticLine.
 )**");
 }
@@ -71,7 +71,7 @@ Gurax_ImplementConstructorEx(StaticLine_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxStaticLine, IsVertical_gurax, "IsVertical")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -91,7 +91,7 @@ Gurax_ImplementMethodEx(wxStaticLine, IsVertical_gurax, processor_gurax, argumen
 Gurax_DeclareClassMethodAlias(wxStaticLine, GetDefaultSize_gurax, "GetDefaultSize")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -115,7 +115,7 @@ VType_wxStaticLine VTYPE_wxStaticLine("StaticLine");
 void VType_wxStaticLine::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticLine_gurax));
 	// Assignment of method

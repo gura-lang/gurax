@@ -35,7 +35,7 @@ Gurax_DeclareConstructor(Pattern)
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	DeclareAttrOpt(Gurax_Symbol(multiLine));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `re.pattern` instance from the given pattern string.
 
 Following attributes would customize some traits of the pattern:
@@ -69,7 +69,7 @@ Gurax_DeclareMethod(Pattern, Match)
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Applies a pattern matching to the given string and returns a `re.Match` instance
 if the matching successes. If not, it would return `nil`.
 
@@ -105,7 +105,7 @@ Gurax_DeclareMethod(Pattern, Sub)
 	DeclareArg("replace", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Substitutes strings that matches `pattern` with the specified replacer.
 
 The argument `replace` takes a `string` or `function`.
@@ -156,7 +156,7 @@ Gurax_DeclareMethod(Pattern, Split)
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cntMax", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that splits the source string with the specified pattern.
 
 The argument `cntMax` specifies the maximum number for splitting.
@@ -187,7 +187,7 @@ Gurax_DeclareMethod(Pattern, Scan)
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns strings that match the specified pattern.
 
 The argument `pos` specifies the starting position for matching process.

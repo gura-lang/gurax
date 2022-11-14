@@ -40,7 +40,7 @@ Gurax_DeclareConstructorAlias(RibbonControl_gurax, "RibbonControl")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.RibbonControl.
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_DeclareMethodAlias(wxRibbonControl, SetArtProvider_gurax, "SetArtProvider"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("art", VTYPE_wxRibbonArtProvider, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -98,7 +98,7 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetArtProvider_gurax, "GetArtProvider"
 {
 	Declare(VTYPE_wxRibbonArtProvider, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -118,7 +118,7 @@ Gurax_ImplementMethodEx(wxRibbonControl, GetArtProvider_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxRibbonControl, IsSizingContinuous_gurax, "IsSizingContinuous")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -140,7 +140,7 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetNextSmallerSize_gurax, "GetNextSmal
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -165,7 +165,7 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetNextLargerSize_gurax, "GetNextLarge
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -188,7 +188,7 @@ Gurax_ImplementMethodEx(wxRibbonControl, GetNextLargerSize_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxRibbonControl, Realize_gurax, "Realize")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -208,7 +208,7 @@ Gurax_ImplementMethodEx(wxRibbonControl, Realize_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxRibbonControl, Realise_gurax, "Realise")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -229,7 +229,7 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetAncestorRibbonBar_gurax, "GetAncest
 {
 	Declare(VTYPE_wxRibbonBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -251,7 +251,7 @@ Gurax_DeclareMethodAlias(wxRibbonControl, GetBestSizeForParentSize_gurax, "GetBe
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("parentSize", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -283,7 +283,7 @@ VType_wxRibbonControl VTYPE_wxRibbonControl("RibbonControl");
 void VType_wxRibbonControl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(RibbonControl_gurax));
 	// Assignment of method

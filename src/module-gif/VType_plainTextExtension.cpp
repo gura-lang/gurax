@@ -33,7 +33,7 @@ Gurax_DeclareMethod(PlainTextExtension, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_ImplementMethod(PlainTextExtension, MethodSkeleton)
 Gurax_DeclareProperty_R(PlainTextExtension, BlockSize)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -74,7 +74,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, BlockSize)
 Gurax_DeclareProperty_R(PlainTextExtension, TextGridLeftPosition)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -91,7 +91,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridLeftPosition)
 Gurax_DeclareProperty_R(PlainTextExtension, TextGridTopPosition)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -108,7 +108,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridTopPosition)
 Gurax_DeclareProperty_R(PlainTextExtension, TextGridWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -125,7 +125,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridWidth)
 Gurax_DeclareProperty_R(PlainTextExtension, TextGridHeight)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -142,7 +142,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, TextGridHeight)
 Gurax_DeclareProperty_R(PlainTextExtension, CharacterCellWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -159,7 +159,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, CharacterCellWidth)
 Gurax_DeclareProperty_R(PlainTextExtension, CharacterCellHeight)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -176,7 +176,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, CharacterCellHeight)
 Gurax_DeclareProperty_R(PlainTextExtension, TextForegroundColorIndex)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -193,7 +193,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, TextForegroundColorIndex)
 Gurax_DeclareProperty_R(PlainTextExtension, TextBackgroundColorIndex)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -210,7 +210,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, TextBackgroundColorIndex)
 Gurax_DeclareProperty_R(PlainTextExtension, PlainTextData)
 {
 	Declare(VTYPE_Binary, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -230,7 +230,7 @@ Gurax_ImplementPropertyGetter(PlainTextExtension, PlainTextData)
 Gurax_DeclareClassPropertyAlias_R(PlainTextExtension, default_, "default")
 {
 	Declare(VTYPE_PlainTextExtension, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

@@ -35,7 +35,7 @@ Gurax_DeclareConstructor(Diff)
 	DeclareArg("src2", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `diff.Diff` instance that includes difference information
 between two sources `src1` and `src2`. The source is one of the followings:
 
@@ -70,7 +70,7 @@ Gurax_DeclareMethod(Diff, EachEdit)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns stored edit information.
 )**");
 }
@@ -91,7 +91,7 @@ Gurax_DeclareMethod(Diff, EachHunk)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("nLinesCommon", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns stored hunk information.
 )**");
 }
@@ -115,7 +115,7 @@ Gurax_ImplementMethod(Diff, EachHunk)
 Gurax_DeclareProperty_R(Diff, distance)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Difference distance.
 )**");
 }

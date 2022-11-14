@@ -40,7 +40,7 @@ Gurax_DeclareConstructorAlias(StaticBitmap_gurax, "StaticBitmap")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.StaticBitmap.
 )**");
 }
@@ -80,7 +80,7 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -113,7 +113,7 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, GetBitmap_gurax, "GetBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -134,7 +134,7 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, GetIcon_gurax, "GetIcon")
 {
 	Declare(VTYPE_wxIcon, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -155,7 +155,7 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, SetBitmap_gurax, "SetBitmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -180,7 +180,7 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, SetIcon_gurax, "SetIcon")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -212,7 +212,7 @@ VType_wxStaticBitmap VTYPE_wxStaticBitmap("StaticBitmap");
 void VType_wxStaticBitmap::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticBitmap_gurax));
 	// Assignment of method

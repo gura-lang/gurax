@@ -34,7 +34,7 @@ Gurax_DeclareConstructor(Binary)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Binary` instance.
 )**");
 }
@@ -53,7 +53,7 @@ Gurax_ImplementConstructor(Binary)
 Gurax_DeclareMethod(Binary, Clear)
 {
 	Declare(VTYPE_Binary, Flag::Reduce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Clear the content of the Binary.
 )**");
 }
@@ -75,7 +75,7 @@ Gurax_DeclareMethod(Binary, Decode)
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Decodes the binary with the given `codec` and return the result as a `String`.
 )**");
 }
@@ -101,7 +101,7 @@ Gurax_DeclareMethod(Binary, Dump)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
 	DeclareArg("addrOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DumpStyle::DeclareAttrOpt(*this);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Prints a hexadecimal dump of the `Binary` to the standard output.
 If the argument `stream` is specified, the result would be output to the stream.
 
@@ -140,7 +140,7 @@ Gurax_DeclareMethod(Binary, Pointer)
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Pointer` instance that points memory in the `Binary`.
 )**");
 }
@@ -164,7 +164,7 @@ Gurax_DeclareMethod(Binary, Reader)
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Stream` instance that reads data from the `Binary`.
 )**");
 }
@@ -190,7 +190,7 @@ Gurax_DeclareMethod(Binary, Writer)
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Stream` instance that writes data into the `Binary`.
 )**");
 }
@@ -218,7 +218,7 @@ Gurax_ImplementMethod(Binary, Writer)
 Gurax_DeclareProperty_R(Binary, bytes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The binary's size in bytes.
 )**");
 }
@@ -234,7 +234,7 @@ Gurax_ImplementPropertyGetter(Binary, bytes)
 Gurax_DeclareProperty_R(Binary, p)
 {
 	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a `pointer` instance that accesses the binary.
 This result is equivalent to that of calling the method `binary#Pointer()`
 )**");
@@ -250,7 +250,7 @@ Gurax_ImplementPropertyGetter(Binary, p)
 Gurax_DeclareProperty_R(Binary, writable)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the binary data can be modified.
 )**");
 }

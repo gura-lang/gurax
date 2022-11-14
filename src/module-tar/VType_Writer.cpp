@@ -34,7 +34,7 @@ Gurax_DeclareConstructor(Writer)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("compression", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Writer` instance from the speicifed stream.
 )**");
 }
@@ -99,7 +99,7 @@ Gurax_DeclareMethod(Writer, Add)
 	DeclareArg("mtime", VTYPE_DateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("atime", VTYPE_DateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("ctime", VTYPE_DateTime, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads data from `stream` and adds it to the zip file with the specified file name.
 )**");
 }
@@ -133,7 +133,7 @@ Gurax_ImplementMethod(Writer, Add)
 Gurax_DeclareMethod(Writer, Close)
 {
 	Declare(VTYPE_Writer, Flag::Reduce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Close the tar.Writer instance.
 )**");
 }

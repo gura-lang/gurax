@@ -9,7 +9,7 @@ Gurax_BeginModule(curl)
 Gurax_DeclareFunction(Test)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

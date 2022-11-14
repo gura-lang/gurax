@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -59,7 +59,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, FindItemAtPoint_gurax, "FindItemAtPoint
 	Declare(VTYPE_wxGBSizerItem, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -85,7 +85,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, FindItemAtPosition_gurax, "FindItemAtPo
 	Declare(VTYPE_wxGBSizerItem, Flag::None);
 	DeclareArg("pos", VTYPE_wxGBPosition, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -111,7 +111,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, FindItemWithData_gurax, "FindItemWithDa
 	Declare(VTYPE_wxGBSizerItem, Flag::None);
 	DeclareArg("userData", VTYPE_wxObject, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -138,7 +138,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, GetCellSize_gurax, "GetCellSize")
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -163,7 +163,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, GetEmptyCellSize_gurax, "GetEmptyCellSi
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -183,7 +183,7 @@ Gurax_ImplementMethodEx(wxGridBagSizer, GetEmptyCellSize_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxGridBagSizer, RecalcSizes_gurax, "RecalcSizes")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -204,7 +204,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, SetEmptyCellSize_gurax, "SetEmptyCellSi
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sz", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -235,7 +235,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, Add_gurax, "Add")
 	DeclareArg("border", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("userData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -269,7 +269,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, CheckForIntersection_gurax, "CheckForIn
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxGBSizerItem, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("excludeItem", VTYPE_wxGBSizerItem, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -296,7 +296,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, FindItem_gurax, "FindItem")
 	Declare(VTYPE_wxGBSizerItem, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -322,7 +322,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, GetItemPosition_gurax, "GetItemPosition
 	Declare(VTYPE_wxGBPosition, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -348,7 +348,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, GetItemSpan_gurax, "GetItemSpan")
 	Declare(VTYPE_wxGBSpan, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -374,7 +374,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, SetItemPosition_gurax, "SetItemPosition
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxGBPosition, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -402,7 +402,7 @@ Gurax_DeclareMethodAlias(wxGridBagSizer, SetItemSpan_gurax, "SetItemSpan")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("span", VTYPE_wxGBSpan, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -436,7 +436,7 @@ VType_wxGridBagSizer VTYPE_wxGridBagSizer("GridBagSizer");
 void VType_wxGridBagSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxFlexGridSizer, Flag::Mutable);
 	// Assignment of method

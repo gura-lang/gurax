@@ -36,7 +36,7 @@ Gurax_DeclareConstructorAlias(FontProperty_gurax, "FontProperty")
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("value", VTYPE_wxFont, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.FontProperty.
 )**");
 }
@@ -60,7 +60,7 @@ Gurax_ImplementConstructorEx(FontProperty_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxFontProperty, OnSetValue_gurax, "OnSetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -82,7 +82,7 @@ Gurax_DeclareMethodAlias(wxFontProperty, ValueToString_gurax, "ValueToString")
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("argFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -111,7 +111,7 @@ Gurax_DeclareMethodAlias(wxFontProperty, OnEvent_gurax, "OnEvent")
 	DeclareArg("propgrid", VTYPE_wxPropertyGrid, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("primary", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("event", VTYPE_wxEvent, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -143,7 +143,7 @@ Gurax_DeclareMethodAlias(wxFontProperty, ChildChanged_gurax, "ChildChanged")
 	DeclareArg("childIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("childValue", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -170,7 +170,7 @@ Gurax_ImplementMethodEx(wxFontProperty, ChildChanged_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxFontProperty, RefreshChildren_gurax, "RefreshChildren")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -198,7 +198,7 @@ VType_wxFontProperty VTYPE_wxFontProperty("FontProperty");
 void VType_wxFontProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPGProperty, Flag::Mutable, Gurax_CreateConstructor(FontProperty_gurax));
 	// Assignment of method

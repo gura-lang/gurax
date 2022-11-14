@@ -45,7 +45,7 @@ VType_wxDocParentFrame VTYPE_wxDocParentFrame("DocParentFrame");
 void VType_wxDocParentFrame::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxFrame, Flag::Mutable);
 	// Assignment of method

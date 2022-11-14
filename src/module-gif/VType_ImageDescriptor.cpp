@@ -33,7 +33,7 @@ Gurax_DeclareMethod(ImageDescriptor, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_ImplementMethod(ImageDescriptor, MethodSkeleton)
 Gurax_DeclareProperty_R(ImageDescriptor, ImageLeftPosition)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_ImplementPropertyGetter(ImageDescriptor, ImageLeftPosition)
 Gurax_DeclareProperty_R(ImageDescriptor, ImageTopPosition)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -89,7 +89,7 @@ Gurax_ImplementPropertyGetter(ImageDescriptor, ImageTopPosition)
 Gurax_DeclareProperty_R(ImageDescriptor, ImageWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -105,7 +105,7 @@ Gurax_ImplementPropertyGetter(ImageDescriptor, ImageWidth)
 Gurax_DeclareProperty_R(ImageDescriptor, ImageHeight)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -121,7 +121,7 @@ Gurax_ImplementPropertyGetter(ImageDescriptor, ImageHeight)
 Gurax_DeclareProperty_R(ImageDescriptor, LocalColorTableFlag)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -137,7 +137,7 @@ Gurax_ImplementPropertyGetter(ImageDescriptor, LocalColorTableFlag)
 Gurax_DeclareProperty_R(ImageDescriptor, InterlaceFlag)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -153,7 +153,7 @@ Gurax_ImplementPropertyGetter(ImageDescriptor, InterlaceFlag)
 Gurax_DeclareProperty_R(ImageDescriptor, SortFlag)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -169,7 +169,7 @@ Gurax_ImplementPropertyGetter(ImageDescriptor, SortFlag)
 Gurax_DeclareProperty_R(ImageDescriptor, SizeOfLocalColorTable)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

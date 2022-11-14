@@ -37,7 +37,7 @@ Gurax_DeclareConstructorAlias(FindReplaceDialog_gurax, "FindReplaceDialog")
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.FindReplaceDialog.
 )**");
 }
@@ -71,7 +71,7 @@ Gurax_DeclareMethodAlias(wxFindReplaceDialog, Create_gurax, "Create")
 	DeclareArg("data", VTYPE_wxFindReplaceData, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -101,7 +101,7 @@ Gurax_DeclareMethodAlias(wxFindReplaceDialog, GetData_gurax, "GetData")
 {
 	Declare(VTYPE_wxFindReplaceData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -129,7 +129,7 @@ VType_wxFindReplaceDialog VTYPE_wxFindReplaceDialog("FindReplaceDialog");
 void VType_wxFindReplaceDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(FindReplaceDialog_gurax));
 	// Assignment of method

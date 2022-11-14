@@ -40,7 +40,7 @@ Gurax_DeclareConstructorAlias(PreviewControlBar_gurax, "PreviewControlBar")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.PreviewControlBar.
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_ImplementConstructorEx(PreviewControlBar_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxPreviewControlBar, CreateButtons_gurax, "CreateButtons")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -93,7 +93,7 @@ Gurax_ImplementMethodEx(wxPreviewControlBar, CreateButtons_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxPreviewControlBar, GetZoomControl_gurax, "GetZoomControl")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -114,7 +114,7 @@ Gurax_DeclareMethodAlias(wxPreviewControlBar, SetZoomControl_gurax, "SetZoomCont
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("percent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -145,7 +145,7 @@ VType_wxPreviewControlBar VTYPE_wxPreviewControlBar("PreviewControlBar");
 void VType_wxPreviewControlBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(PreviewControlBar_gurax));
 	// Assignment of method

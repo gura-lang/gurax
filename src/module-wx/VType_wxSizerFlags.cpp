@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(SizerFlags_gurax, "SizerFlags")
 	Declare(VTYPE_wxSizerFlags, Flag::None);
 	DeclareArg("proportion", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.SizerFlags.
 )**");
 }
@@ -58,7 +58,7 @@ Gurax_DeclareMethodAlias(wxSizerFlags, Align_gurax, "Align")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("alignment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -83,7 +83,7 @@ Gurax_DeclareMethodAlias(wxSizerFlags, Border_gurax, "Border")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("borderinpixels", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -109,7 +109,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, Border_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSizerFlags, Bottom_gurax, "Bottom")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -129,7 +129,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, Bottom_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSizerFlags, Center_gurax, "Center")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -149,7 +149,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, Center_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSizerFlags, Centre_gurax, "Centre")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -170,7 +170,7 @@ Gurax_DeclareMethodAlias(wxSizerFlags, DoubleBorder_gurax, "DoubleBorder")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -194,7 +194,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, DoubleBorder_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxSizerFlags, DoubleHorzBorder_gurax, "DoubleHorzBorder")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -214,7 +214,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, DoubleHorzBorder_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxSizerFlags, Expand_gurax, "Expand")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -234,7 +234,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, Expand_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSizerFlags, FixedMinSize_gurax, "FixedMinSize")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -254,7 +254,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, FixedMinSize_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxSizerFlags, ReserveSpaceEvenIfHidden_gurax, "ReserveSpaceEvenIfHidden")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -274,7 +274,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, ReserveSpaceEvenIfHidden_gurax, processor_
 Gurax_DeclareMethodAlias(wxSizerFlags, Left_gurax, "Left")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -295,7 +295,7 @@ Gurax_DeclareMethodAlias(wxSizerFlags, Proportion_gurax, "Proportion")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("proportion", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -318,7 +318,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, Proportion_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxSizerFlags, Right_gurax, "Right")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -338,7 +338,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, Right_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxSizerFlags, Shaped_gurax, "Shaped")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -358,7 +358,7 @@ Gurax_ImplementMethodEx(wxSizerFlags, Shaped_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSizerFlags, Top_gurax, "Top")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -379,7 +379,7 @@ Gurax_DeclareMethodAlias(wxSizerFlags, TripleBorder_gurax, "TripleBorder")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -411,7 +411,7 @@ VType_wxSizerFlags VTYPE_wxSizerFlags("SizerFlags");
 void VType_wxSizerFlags::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(SizerFlags_gurax));
 	// Assignment of method

@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxFontPickerEvent, GetFont_gurax, "GetFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -58,7 +58,7 @@ Gurax_DeclareMethodAlias(wxFontPickerEvent, SetFont_gurax, "SetFont")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("f", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -90,7 +90,7 @@ VType_wxFontPickerEvent VTYPE_wxFontPickerEvent("FontPickerEvent");
 void VType_wxFontPickerEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

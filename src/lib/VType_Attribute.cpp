@@ -32,7 +32,7 @@ Gurax_DeclareMethod(Attribute, Each)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns each symbol in the attribute.
 )**");
 }
@@ -53,7 +53,7 @@ Gurax_DeclareMethod(Attribute, EachOpt)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns each optional symbol in the attribute.
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_ImplementMethod(Attribute, EachOpt)
 Gurax_DeclareMethod(Attribute, IsEmpty)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the attribute is empty.
 )**");
 }
@@ -92,7 +92,7 @@ Gurax_DeclareMethod(Attribute, IsSet)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the specified symbol is set in the attribute.
 )**");
 }
@@ -114,7 +114,7 @@ Gurax_DeclareMethod(Attribute, IsSetOpt)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the specified symbol is set as an optional symbol in the attribute.
 )**");
 }

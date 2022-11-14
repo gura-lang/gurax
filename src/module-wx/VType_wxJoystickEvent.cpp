@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxJoystickEvent, ButtonDown_gurax, "ButtonDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("button", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -62,7 +62,7 @@ Gurax_DeclareMethodAlias(wxJoystickEvent, ButtonIsDown_gurax, "ButtonIsDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("button", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -87,7 +87,7 @@ Gurax_DeclareMethodAlias(wxJoystickEvent, ButtonUp_gurax, "ButtonUp")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("button", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -111,7 +111,7 @@ Gurax_ImplementMethodEx(wxJoystickEvent, ButtonUp_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxJoystickEvent, GetButtonChange_gurax, "GetButtonChange")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -131,7 +131,7 @@ Gurax_ImplementMethodEx(wxJoystickEvent, GetButtonChange_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxJoystickEvent, GetButtonState_gurax, "GetButtonState")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -151,7 +151,7 @@ Gurax_ImplementMethodEx(wxJoystickEvent, GetButtonState_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxJoystickEvent, GetJoystick_gurax, "GetJoystick")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -172,7 +172,7 @@ Gurax_DeclareMethodAlias(wxJoystickEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -192,7 +192,7 @@ Gurax_ImplementMethodEx(wxJoystickEvent, GetPosition_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxJoystickEvent, GetZPosition_gurax, "GetZPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -212,7 +212,7 @@ Gurax_ImplementMethodEx(wxJoystickEvent, GetZPosition_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxJoystickEvent, IsButton_gurax, "IsButton")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -232,7 +232,7 @@ Gurax_ImplementMethodEx(wxJoystickEvent, IsButton_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxJoystickEvent, IsMove_gurax, "IsMove")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -252,7 +252,7 @@ Gurax_ImplementMethodEx(wxJoystickEvent, IsMove_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxJoystickEvent, IsZMove_gurax, "IsZMove")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -280,7 +280,7 @@ VType_wxJoystickEvent VTYPE_wxJoystickEvent("JoystickEvent");
 void VType_wxJoystickEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

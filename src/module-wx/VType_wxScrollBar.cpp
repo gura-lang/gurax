@@ -40,7 +40,7 @@ Gurax_DeclareConstructorAlias(ScrollBar_gurax, "ScrollBar")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.ScrollBar.
 )**");
 }
@@ -79,7 +79,7 @@ Gurax_DeclareMethodAlias(wxScrollBar, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -110,7 +110,7 @@ Gurax_ImplementMethodEx(wxScrollBar, Create_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxScrollBar, GetPageSize_gurax, "GetPageSize")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -130,7 +130,7 @@ Gurax_ImplementMethodEx(wxScrollBar, GetPageSize_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxScrollBar, GetRange_gurax, "GetRange")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -150,7 +150,7 @@ Gurax_ImplementMethodEx(wxScrollBar, GetRange_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxScrollBar, GetThumbPosition_gurax, "GetThumbPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -170,7 +170,7 @@ Gurax_ImplementMethodEx(wxScrollBar, GetThumbPosition_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxScrollBar, GetThumbSize_gurax, "GetThumbSize")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -195,7 +195,7 @@ Gurax_DeclareMethodAlias(wxScrollBar, SetScrollbar_gurax, "SetScrollbar")
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pageSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("refresh", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -223,7 +223,7 @@ Gurax_DeclareMethodAlias(wxScrollBar, SetThumbPosition_gurax, "SetThumbPosition"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("viewStart", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -246,7 +246,7 @@ Gurax_ImplementMethodEx(wxScrollBar, SetThumbPosition_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxScrollBar, IsVertical_gurax, "IsVertical")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -274,7 +274,7 @@ VType_wxScrollBar VTYPE_wxScrollBar("ScrollBar");
 void VType_wxScrollBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ScrollBar_gurax));
 	// Assignment of method

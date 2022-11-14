@@ -33,7 +33,7 @@ Gurax_DeclareConstructorAlias(LayoutAlgorithm_gurax, "LayoutAlgorithm")
 {
 	Declare(VTYPE_wxLayoutAlgorithm, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.LayoutAlgorithm.
 )**");
 }
@@ -54,7 +54,7 @@ Gurax_DeclareMethodAlias(wxLayoutAlgorithm, LayoutFrame_gurax, "LayoutFrame")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("frame", VTYPE_wxFrame, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mainWindow", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -81,7 +81,7 @@ Gurax_DeclareMethodAlias(wxLayoutAlgorithm, LayoutMDIFrame_gurax, "LayoutMDIFram
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("frame", VTYPE_wxMDIParentFrame, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -108,7 +108,7 @@ Gurax_DeclareMethodAlias(wxLayoutAlgorithm, LayoutWindow_gurax, "LayoutWindow")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mainWindow", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -141,7 +141,7 @@ VType_wxLayoutAlgorithm VTYPE_wxLayoutAlgorithm("LayoutAlgorithm");
 void VType_wxLayoutAlgorithm::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(LayoutAlgorithm_gurax));
 	// Assignment of method

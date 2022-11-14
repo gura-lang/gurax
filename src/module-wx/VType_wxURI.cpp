@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(URI_gurax, "URI")
 	Declare(VTYPE_wxURI, Flag::None);
 	DeclareArg("uri", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.URI.
 )**");
 }
@@ -56,7 +56,7 @@ Gurax_ImplementConstructorEx(URI_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, BuildURI_gurax, "BuildURI")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementMethodEx(wxURI, BuildURI_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, BuildUnescapedURI_gurax, "BuildUnescapedURI")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -97,7 +97,7 @@ Gurax_DeclareMethodAlias(wxURI, Create_gurax, "Create")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("uri", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -120,7 +120,7 @@ Gurax_ImplementMethodEx(wxURI, Create_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, GetFragment_gurax, "GetFragment")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -140,7 +140,7 @@ Gurax_ImplementMethodEx(wxURI, GetFragment_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxURI, GetHostType_gurax, "GetHostType")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -160,7 +160,7 @@ Gurax_ImplementMethodEx(wxURI, GetHostType_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxURI, GetPassword_gurax, "GetPassword")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -180,7 +180,7 @@ Gurax_ImplementMethodEx(wxURI, GetPassword_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxURI, GetPath_gurax, "GetPath")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -200,7 +200,7 @@ Gurax_ImplementMethodEx(wxURI, GetPath_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, GetPort_gurax, "GetPort")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -220,7 +220,7 @@ Gurax_ImplementMethodEx(wxURI, GetPort_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, GetQuery_gurax, "GetQuery")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -240,7 +240,7 @@ Gurax_ImplementMethodEx(wxURI, GetQuery_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, GetScheme_gurax, "GetScheme")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -260,7 +260,7 @@ Gurax_ImplementMethodEx(wxURI, GetScheme_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, GetServer_gurax, "GetServer")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -280,7 +280,7 @@ Gurax_ImplementMethodEx(wxURI, GetServer_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, GetUser_gurax, "GetUser")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -300,7 +300,7 @@ Gurax_ImplementMethodEx(wxURI, GetUser_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, GetUserInfo_gurax, "GetUserInfo")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -320,7 +320,7 @@ Gurax_ImplementMethodEx(wxURI, GetUserInfo_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxURI, HasFragment_gurax, "HasFragment")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -340,7 +340,7 @@ Gurax_ImplementMethodEx(wxURI, HasFragment_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxURI, HasPath_gurax, "HasPath")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -360,7 +360,7 @@ Gurax_ImplementMethodEx(wxURI, HasPath_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, HasPort_gurax, "HasPort")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -380,7 +380,7 @@ Gurax_ImplementMethodEx(wxURI, HasPort_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, HasQuery_gurax, "HasQuery")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -400,7 +400,7 @@ Gurax_ImplementMethodEx(wxURI, HasQuery_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, HasScheme_gurax, "HasScheme")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -420,7 +420,7 @@ Gurax_ImplementMethodEx(wxURI, HasScheme_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, HasServer_gurax, "HasServer")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -440,7 +440,7 @@ Gurax_ImplementMethodEx(wxURI, HasServer_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxURI, HasUserInfo_gurax, "HasUserInfo")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -460,7 +460,7 @@ Gurax_ImplementMethodEx(wxURI, HasUserInfo_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxURI, IsReference_gurax, "IsReference")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -482,7 +482,7 @@ Gurax_DeclareMethodAlias(wxURI, Resolve_gurax, "Resolve")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("base", VTYPE_wxURI, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -516,7 +516,7 @@ VType_wxURI VTYPE_wxURI("URI");
 void VType_wxURI::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(URI_gurax));
 	// Assignment of method

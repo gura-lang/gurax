@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(Accessible_gurax, "Accessible")
 	Declare(VTYPE_wxAccessible, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.Accessible.
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_DeclareMethodAlias(wxAccessible, DoDefaultAction_gurax, "DoDefaultAction")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("childId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -82,7 +82,7 @@ Gurax_DeclareMethodAlias(wxAccessible, GetLocation_gurax, "GetLocation")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("elementId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -108,7 +108,7 @@ Gurax_DeclareMethodAlias(wxAccessible, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -130,7 +130,7 @@ Gurax_DeclareMethodAlias(wxAccessible, Select_gurax, "Select")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("childId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("selectFlags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -155,7 +155,7 @@ Gurax_DeclareMethodAlias(wxAccessible, SetWindow_gurax, "SetWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -187,7 +187,7 @@ VType_wxAccessible VTYPE_wxAccessible("Accessible");
 void VType_wxAccessible::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(Accessible_gurax));
 	// Assignment of method

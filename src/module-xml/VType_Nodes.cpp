@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(Nodes)
 {
 	Declare(VTYPE_Nodes, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `xml.Nodes` instance.
 )**");
 }
@@ -59,7 +59,7 @@ Gurax_DeclareMethod(Nodes, Each)
 	DeclareAttrOpt(Gurax_Symbol(element));
 	DeclareAttrOpt(Gurax_Symbol(text));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -84,7 +84,7 @@ Gurax_ImplementMethod(Nodes, Each)
 Gurax_DeclareProperty_R(Nodes, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

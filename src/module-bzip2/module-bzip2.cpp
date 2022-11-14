@@ -14,7 +14,7 @@ Gurax_DeclareFunction(Reader)
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Stream` instance that reads and uncompresses bzip2-encoded data stream.
 )**");
 }
@@ -37,7 +37,7 @@ Gurax_DeclareFunction(Writer)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("blockSize100k", VTYPE_Number, ArgOccur::ZeroOrOnce);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Stream` instance that compresses data into a bzip2-encoded data stream.
 The argument `blockSize100k` takes a number between 1 and 9
 that specifies the block size to be used for compression.

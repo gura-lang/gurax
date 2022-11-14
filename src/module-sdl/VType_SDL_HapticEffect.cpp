@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_HapticEffect, `en)}
 Gurax_DeclareProperty_R(SDL_HapticEffect, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

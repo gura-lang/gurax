@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_AudioCVT, `en)}
 Gurax_DeclareProperty_R(SDL_AudioCVT, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

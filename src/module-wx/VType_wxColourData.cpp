@@ -33,7 +33,7 @@ Gurax_DeclareConstructorAlias(ColourData_gurax, "ColourData")
 {
 	Declare(VTYPE_wxColourData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.ColourData.
 )**");
 }
@@ -52,7 +52,7 @@ Gurax_ImplementConstructorEx(ColourData_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxColourData, GetChooseFull_gurax, "GetChooseFull")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_DeclareMethodAlias(wxColourData, GetColour_gurax, "GetColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -95,7 +95,7 @@ Gurax_DeclareMethodAlias(wxColourData, GetCustomColour_gurax, "GetCustomColour")
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -119,7 +119,7 @@ Gurax_DeclareMethodAlias(wxColourData, SetChooseFull_gurax, "SetChooseFull")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -143,7 +143,7 @@ Gurax_DeclareMethodAlias(wxColourData, SetColour_gurax, "SetColour")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -169,7 +169,7 @@ Gurax_DeclareMethodAlias(wxColourData, SetCustomColour_gurax, "SetCustomColour")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("i", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -194,7 +194,7 @@ Gurax_ImplementMethodEx(wxColourData, SetCustomColour_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxColourData, ToString_gurax, "ToString")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -215,7 +215,7 @@ Gurax_DeclareMethodAlias(wxColourData, FromString_gurax, "FromString")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -246,7 +246,7 @@ VType_wxColourData VTYPE_wxColourData("ColourData");
 void VType_wxColourData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ColourData_gurax));
 	// Assignment of method

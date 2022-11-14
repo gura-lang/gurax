@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(MemoryPool, `en)}
 Gurax_DeclareHybridMethod(MemoryPool, CountBlocksAllocated)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns the number of allocated blocks.
 )**");
 }
@@ -59,7 +59,7 @@ Gurax_ImplementHybridMethod(MemoryPool, CountBlocksAllocated)
 Gurax_DeclareProperty_R(MemoryPool, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

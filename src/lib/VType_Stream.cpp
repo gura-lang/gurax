@@ -39,7 +39,7 @@ Gurax_DeclareConstructor(Stream)
 	DeclareArg("mode", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Stream` instance.
 )**");
 }
@@ -70,7 +70,7 @@ Gurax_DeclareClassMethod(Stream, Pipe)
 	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareAttrOpt(Gurax_Symbol(cooked));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads data from the `streamSrc` and writes it into `streamDst`.
 )**");
 }
@@ -104,7 +104,7 @@ Gurax_DeclareMethod(Stream, Addcr)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Indicates the stream to add carriage return code when putting strings.
 )**");
 }
@@ -127,7 +127,7 @@ Gurax_DeclareMethod(Stream, Delcr)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Indicates the stream to add carriage return code when putting strings.
 )**");
 }
@@ -149,7 +149,7 @@ Gurax_ImplementMethod(Stream, Delcr)
 Gurax_DeclareMethod(Stream, Flush)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Flush the stream.
 )**");
 }
@@ -170,7 +170,7 @@ Gurax_DeclareMethod(Stream, PipeFrom)
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("streamSrc", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareAttrOpt(Gurax_Symbol(cooked));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads data from the `streamSrc` and writes it into the target `Stream` instance.
 )**");
 }
@@ -204,7 +204,7 @@ Gurax_DeclareMethod(Stream, PipeTo)
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareAttrOpt(Gurax_Symbol(cooked));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads data from the target `Stream` instance and writes it into `streamDst`.
 )**");
 }
@@ -237,7 +237,7 @@ Gurax_DeclareMethod(Stream, Print)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Prints out `values` to the specified stream.
 )**");
 }
@@ -261,7 +261,7 @@ Gurax_DeclareMethod(Stream, Printf)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Prints out `values` to the specified stream according to formatter specifiers specified in `format`.
 
 For detail information about formatter specications,
@@ -288,7 +288,7 @@ Gurax_DeclareMethod(Stream, Println)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Prints out `values` and an end-of-line character to the specified stream.
 )**");
 }
@@ -311,7 +311,7 @@ Gurax_DeclareMethod(Stream, Read)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads data from the `Stream` and returns it as a `Binary` instance.
 )**");
 }
@@ -350,7 +350,7 @@ Gurax_DeclareMethod(Stream, ReadLine)
 	Declare(VTYPE_String, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads one line from the `Stream` and returns it as a `String` instance.
 )**");
 }
@@ -375,7 +375,7 @@ Gurax_DeclareMethod(Stream, ReadLines)
 	DeclareArg("nLines", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that reads each line from the `Stream` and returns it as a `String` instance.
 )**");
 }
@@ -399,7 +399,7 @@ Gurax_DeclareMethod(Stream, ReadText)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads whole text from the `Stream` and returns it as a `String` instance.
 )**");
 }
@@ -421,7 +421,7 @@ Gurax_DeclareMethod(Stream, Seek)
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("whence", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Seeks the current file position to the offset specified by the argument `offset`.
 
 The argument `whence` specifies the meaning of `offset` value as follows:
@@ -453,7 +453,7 @@ Gurax_ImplementMethod(Stream, Seek)
 Gurax_DeclareMethod(Stream, SkipLine)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skip one line.
 )**");
 }
@@ -472,7 +472,7 @@ Gurax_DeclareMethod(Stream, SkipLines)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("nLines", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skips by the specified number of lines.
 )**");
 }
@@ -496,7 +496,7 @@ Gurax_DeclareMethod(Stream, Write)
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bytes", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Writes data pointed by the specified `Pointer` instance to the `Stream`.
 )**");
 }
@@ -532,7 +532,7 @@ Gurax_ImplementMethod(Stream, Write)
 Gurax_DeclareProperty_RW(Stream, codec)
 {
 	Declare(VTYPE_Codec, Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -559,7 +559,7 @@ Gurax_ImplementPropertySetter(Stream, codec)
 Gurax_DeclareProperty_R(Stream, identifier)
 {
 	Declare(VTYPE_String, Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -575,7 +575,7 @@ Gurax_ImplementPropertyGetter(Stream, identifier)
 Gurax_DeclareProperty_R(Stream, stat)
 {
 	Declare(VTYPE_Stat, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 An instance that provides status information of the Stream.
 )**");
 }

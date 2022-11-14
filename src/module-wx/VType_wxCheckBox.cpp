@@ -41,7 +41,7 @@ Gurax_DeclareConstructorAlias(CheckBox_gurax, "CheckBox")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.CheckBox.
 )**");
 }
@@ -74,7 +74,7 @@ Gurax_ImplementConstructorEx(CheckBox_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxCheckBox, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -94,7 +94,7 @@ Gurax_ImplementMethodEx(wxCheckBox, GetValue_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxCheckBox, Get3StateValue_gurax, "Get3StateValue")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -114,7 +114,7 @@ Gurax_ImplementMethodEx(wxCheckBox, Get3StateValue_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxCheckBox, Is3State_gurax, "Is3State")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -134,7 +134,7 @@ Gurax_ImplementMethodEx(wxCheckBox, Is3State_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxCheckBox, Is3rdStateAllowedForUser_gurax, "Is3rdStateAllowedForUser")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -154,7 +154,7 @@ Gurax_ImplementMethodEx(wxCheckBox, Is3rdStateAllowedForUser_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxCheckBox, IsChecked_gurax, "IsChecked")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -175,7 +175,7 @@ Gurax_DeclareMethodAlias(wxCheckBox, SetValue_gurax, "SetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("state", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -199,7 +199,7 @@ Gurax_DeclareMethodAlias(wxCheckBox, Set3StateValue_gurax, "Set3StateValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -230,7 +230,7 @@ VType_wxCheckBox VTYPE_wxCheckBox("CheckBox");
 void VType_wxCheckBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CheckBox_gurax));
 	// Assignment of method

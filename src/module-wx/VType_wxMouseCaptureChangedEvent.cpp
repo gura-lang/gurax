@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxMouseCaptureChangedEvent, GetCapturedWindow_gurax, "G
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -65,7 +65,7 @@ VType_wxMouseCaptureChangedEvent VTYPE_wxMouseCaptureChangedEvent("MouseCaptureC
 void VType_wxMouseCaptureChangedEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

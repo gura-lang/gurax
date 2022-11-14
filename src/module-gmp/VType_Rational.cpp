@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(Rational)
 	Declare(VTYPE_Rational, Flag::None);
 	DeclareArg("num", VTYPE_Rational, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `gmp.Rational` instance.
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_DeclareMethod(Rational, set_str)
 	Declare(VTYPE_Nil, Flag::Reduce);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("base", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts to a string.
 )**");
 }
@@ -86,7 +86,7 @@ Gurax_ImplementMethod(Rational, set_str)
 Gurax_DeclareProperty_R(Rational, denom)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -101,7 +101,7 @@ Gurax_ImplementPropertyGetter(Rational, denom)
 Gurax_DeclareProperty_R(Rational, numer)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -116,7 +116,7 @@ Gurax_ImplementPropertyGetter(Rational, numer)
 Gurax_DeclareProperty_R(Rational, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

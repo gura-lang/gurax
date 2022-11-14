@@ -35,7 +35,7 @@ Gurax_DeclareConstructor(Number)
 	Declare(VTYPE_Color, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Number` instance.
 )**");
 }
@@ -62,7 +62,7 @@ Gurax_ImplementConstructor(Number)
 Gurax_DeclareClassProperty_R(Number, int8)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for int8.
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementClassPropertyGetter(Number, int8)
 Gurax_DeclareClassProperty_R(Number, uint8)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for uint8.
 )**");
 }
@@ -90,7 +90,7 @@ Gurax_ImplementClassPropertyGetter(Number, uint8)
 Gurax_DeclareClassProperty_R(Number, int16)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for int16.
 )**");
 }
@@ -104,7 +104,7 @@ Gurax_ImplementClassPropertyGetter(Number, int16)
 Gurax_DeclareClassProperty_R(Number, uint16)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for uint16.
 )**");
 }
@@ -118,7 +118,7 @@ Gurax_ImplementClassPropertyGetter(Number, uint16)
 Gurax_DeclareClassProperty_R(Number, int32)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for int32.
 )**");
 }
@@ -132,7 +132,7 @@ Gurax_ImplementClassPropertyGetter(Number, int32)
 Gurax_DeclareClassProperty_R(Number, uint32)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for uint32.
 )**");
 }
@@ -146,7 +146,7 @@ Gurax_ImplementClassPropertyGetter(Number, uint32)
 Gurax_DeclareClassProperty_R(Number, int64)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for int64.
 )**");
 }
@@ -160,7 +160,7 @@ Gurax_ImplementClassPropertyGetter(Number, int64)
 Gurax_DeclareClassProperty_R(Number, uint64)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for uint64.
 )**");
 }
@@ -174,7 +174,7 @@ Gurax_ImplementClassPropertyGetter(Number, uint64)
 Gurax_DeclareClassProperty_R(Number, half)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for half.
 )**");
 }
@@ -188,7 +188,7 @@ Gurax_ImplementClassPropertyGetter(Number, half)
 Gurax_DeclareClassPropertyAlias_R(Number, float_, "float")
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for float.
 )**");
 }
@@ -202,7 +202,7 @@ Gurax_ImplementClassPropertyGetter(Number, float_)
 Gurax_DeclareClassPropertyAlias_R(Number, double_, "double")
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Number trait for double.
 )**");
 }
@@ -219,7 +219,7 @@ Gurax_ImplementClassPropertyGetter(Number, double_)
 Gurax_DeclareProperty_R(Number, abs)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The absolute value of the number.
 )**");
 }
@@ -234,7 +234,7 @@ Gurax_ImplementPropertyGetter(Number, abs)
 Gurax_DeclareProperty_R(Number, arg)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The argument value of the number. Always returns zero.
 )**");
 }
@@ -248,7 +248,7 @@ Gurax_ImplementPropertyGetter(Number, arg)
 Gurax_DeclareProperty_R(Number, imag)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The imaginary part of the number. Always returns zero.
 )**");
 }
@@ -262,7 +262,7 @@ Gurax_ImplementPropertyGetter(Number, imag)
 Gurax_DeclareProperty_R(Number, norm)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The norm value of the number.
 )**");
 }
@@ -277,7 +277,7 @@ Gurax_ImplementPropertyGetter(Number, norm)
 Gurax_DeclareProperty_R(Number, real)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The real part of the number. Always returns the number itself.
 )**");
 }
@@ -292,7 +292,7 @@ Gurax_ImplementPropertyGetter(Number, real)
 Gurax_DeclareProperty_R(Number, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The sign of the number. Returns 0 for a zero, -1 for a minus, and +1 for a plus.
 )**");
 }
@@ -310,7 +310,7 @@ Gurax_ImplementPropertyGetter(Number, sign)
 Gurax_DeclareClassProperty_RW(Number, formatFloat)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Format string used to convert a floating number into a string.
 )**");
 }
@@ -332,7 +332,7 @@ Gurax_ImplementClassPropertySetter(Number, formatFloat)
 Gurax_DeclareClassProperty_RW(Number, formatInt)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Format string used to convert an integer number into a string.
 )**");
 }

@@ -39,7 +39,7 @@ Gurax_DeclareConstructorAlias(Treebook_gurax, "Treebook")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.Treebook.
 )**");
 }
@@ -74,7 +74,7 @@ Gurax_DeclareMethodAlias(wxTreebook, AddPage_gurax, "AddPage")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bSelect", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -106,7 +106,7 @@ Gurax_DeclareMethodAlias(wxTreebook, AddSubPage_gurax, "AddSubPage")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bSelect", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -135,7 +135,7 @@ Gurax_DeclareMethodAlias(wxTreebook, CollapseNode_gurax, "CollapseNode")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pageId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -159,7 +159,7 @@ Gurax_DeclareMethodAlias(wxTreebook, DeletePage_gurax, "DeletePage")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pagePos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -184,7 +184,7 @@ Gurax_DeclareMethodAlias(wxTreebook, ExpandNode_gurax, "ExpandNode")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pageId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("expand", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -209,7 +209,7 @@ Gurax_DeclareMethodAlias(wxTreebook, GetPageParent_gurax, "GetPageParent")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -232,7 +232,7 @@ Gurax_ImplementMethodEx(wxTreebook, GetPageParent_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxTreebook, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -257,7 +257,7 @@ Gurax_DeclareMethodAlias(wxTreebook, InsertPage_gurax, "InsertPage")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bSelect", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -291,7 +291,7 @@ Gurax_DeclareMethodAlias(wxTreebook, InsertSubPage_gurax, "InsertSubPage")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bSelect", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -321,7 +321,7 @@ Gurax_DeclareMethodAlias(wxTreebook, IsNodeExpanded_gurax, "IsNodeExpanded")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pageId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -352,7 +352,7 @@ VType_wxTreebook VTYPE_wxTreebook("Treebook");
 void VType_wxTreebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Treebook_gurax));
 	// Assignment of method

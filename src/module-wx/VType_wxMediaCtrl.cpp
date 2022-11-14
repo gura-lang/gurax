@@ -42,7 +42,7 @@ Gurax_DeclareConstructorAlias(MediaCtrl_gurax, "MediaCtrl")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.MediaCtrl.
 )**");
 }
@@ -85,7 +85,7 @@ Gurax_DeclareMethodAlias(wxMediaCtrl, Create_gurax, "Create")
 	DeclareArg("szBackend", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -119,7 +119,7 @@ Gurax_DeclareMethodAlias(wxMediaCtrl, GetBestSize_gurax, "GetBestSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -139,7 +139,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, GetBestSize_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxMediaCtrl, GetPlaybackRate_gurax, "GetPlaybackRate")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -159,7 +159,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, GetPlaybackRate_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxMediaCtrl, GetState_gurax, "GetState")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -179,7 +179,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, GetState_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxMediaCtrl, GetVolume_gurax, "GetVolume")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -199,7 +199,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, GetVolume_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxMediaCtrl, Length_gurax, "Length")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -220,7 +220,7 @@ Gurax_DeclareMethodAlias(wxMediaCtrl, Load_gurax, "Load")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("fileName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -244,7 +244,7 @@ Gurax_DeclareMethodAlias(wxMediaCtrl, LoadURI_gurax, "LoadURI")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("uri", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -269,7 +269,7 @@ Gurax_DeclareMethodAlias(wxMediaCtrl, LoadURIWithProxy_gurax, "LoadURIWithProxy"
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("uri", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("proxy", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -293,7 +293,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, LoadURIWithProxy_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxMediaCtrl, Pause_gurax, "Pause")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -313,7 +313,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, Pause_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxMediaCtrl, Play_gurax, "Play")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -335,7 +335,7 @@ Gurax_DeclareMethodAlias(wxMediaCtrl, Seek_gurax, "Seek")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("where", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -361,7 +361,7 @@ Gurax_DeclareMethodAlias(wxMediaCtrl, SetPlaybackRate_gurax, "SetPlaybackRate")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("dRate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -385,7 +385,7 @@ Gurax_DeclareMethodAlias(wxMediaCtrl, SetVolume_gurax, "SetVolume")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("dVolume", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -409,7 +409,7 @@ Gurax_DeclareMethodAlias(wxMediaCtrl, ShowPlayerControls_gurax, "ShowPlayerContr
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -433,7 +433,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, ShowPlayerControls_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxMediaCtrl, Stop_gurax, "Stop")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -453,7 +453,7 @@ Gurax_ImplementMethodEx(wxMediaCtrl, Stop_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxMediaCtrl, Tell_gurax, "Tell")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -481,7 +481,7 @@ VType_wxMediaCtrl VTYPE_wxMediaCtrl("MediaCtrl");
 void VType_wxMediaCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(MediaCtrl_gurax));
 	// Assignment of method

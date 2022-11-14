@@ -33,7 +33,7 @@ Gurax_DeclareConstructorAlias(Clipboard_gurax, "Clipboard")
 {
 	Declare(VTYPE_wxClipboard, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.Clipboard.
 )**");
 }
@@ -53,7 +53,7 @@ Gurax_DeclareMethodAlias(wxClipboard, AddData_gurax, "AddData")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("data", VTYPE_wxDataObject, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -77,7 +77,7 @@ Gurax_ImplementMethodEx(wxClipboard, AddData_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxClipboard, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -97,7 +97,7 @@ Gurax_ImplementMethodEx(wxClipboard, Clear_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxClipboard, Close_gurax, "Close")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -117,7 +117,7 @@ Gurax_ImplementMethodEx(wxClipboard, Close_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxClipboard, Flush_gurax, "Flush")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -138,7 +138,7 @@ Gurax_DeclareMethodAlias(wxClipboard, GetData_gurax, "GetData")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("data", VTYPE_wxDataObject, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -162,7 +162,7 @@ Gurax_ImplementMethodEx(wxClipboard, GetData_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxClipboard, IsOpened_gurax, "IsOpened")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -183,7 +183,7 @@ Gurax_DeclareMethodAlias(wxClipboard, IsSupported_gurax, "IsSupported")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("format", VTYPE_wxDataFormat, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -207,7 +207,7 @@ Gurax_ImplementMethodEx(wxClipboard, IsSupported_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxClipboard, IsUsingPrimarySelection_gurax, "IsUsingPrimarySelection")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -227,7 +227,7 @@ Gurax_ImplementMethodEx(wxClipboard, IsUsingPrimarySelection_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxClipboard, Open_gurax, "Open")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -248,7 +248,7 @@ Gurax_DeclareMethodAlias(wxClipboard, SetData_gurax, "SetData")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("data", VTYPE_wxDataObject, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -273,7 +273,7 @@ Gurax_DeclareMethodAlias(wxClipboard, UsePrimarySelection_gurax, "UsePrimarySele
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("primary", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -304,7 +304,7 @@ VType_wxClipboard VTYPE_wxClipboard("Clipboard");
 void VType_wxClipboard::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(Clipboard_gurax));
 	// Assignment of method

@@ -36,7 +36,7 @@ Gurax_DeclareConstructorAlias(GridCellFloatEditor_gurax, "GridCellFloatEditor")
 	DeclareArg("precision", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.GridCellFloatEditor.
 )**");
 }
@@ -64,7 +64,7 @@ Gurax_DeclareMethodAlias(wxGridCellFloatEditor, SetParameters_gurax, "SetParamet
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -95,7 +95,7 @@ VType_wxGridCellFloatEditor VTYPE_wxGridCellFloatEditor("GridCellFloatEditor");
 void VType_wxGridCellFloatEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellTextEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellFloatEditor_gurax));
 	// Assignment of method

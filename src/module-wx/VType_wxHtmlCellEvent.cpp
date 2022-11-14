@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxHtmlCellEvent, GetCell_gurax, "GetCell")
 {
 	Declare(VTYPE_wxHtmlCell, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_ImplementMethodEx(wxHtmlCellEvent, GetCell_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxHtmlCellEvent, GetLinkClicked_gurax, "GetLinkClicked")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -78,7 +78,7 @@ Gurax_DeclareMethodAlias(wxHtmlCellEvent, GetPoint_gurax, "GetPoint")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -99,7 +99,7 @@ Gurax_DeclareMethodAlias(wxHtmlCellEvent, SetLinkClicked_gurax, "SetLinkClicked"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("linkclicked", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -130,7 +130,7 @@ VType_wxHtmlCellEvent VTYPE_wxHtmlCellEvent("HtmlCellEvent");
 void VType_wxHtmlCellEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

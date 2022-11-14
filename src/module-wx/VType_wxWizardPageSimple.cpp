@@ -45,7 +45,7 @@ VType_wxWizardPageSimple VTYPE_wxWizardPageSimple("WizardPageSimple");
 void VType_wxWizardPageSimple::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWizardPage, Flag::Mutable);
 	// Assignment of method

@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(ProtocolLog_gurax, "ProtocolLog")
 	Declare(VTYPE_wxProtocolLog, Flag::None);
 	DeclareArg("traceMask", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.ProtocolLog.
 )**");
 }
@@ -58,7 +58,7 @@ Gurax_DeclareMethodAlias(wxProtocolLog, LogRequest_gurax, "LogRequest")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -82,7 +82,7 @@ Gurax_DeclareMethodAlias(wxProtocolLog, LogResponse_gurax, "LogResponse")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -113,7 +113,7 @@ VType_wxProtocolLog VTYPE_wxProtocolLog("ProtocolLog");
 void VType_wxProtocolLog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ProtocolLog_gurax));
 	// Assignment of method

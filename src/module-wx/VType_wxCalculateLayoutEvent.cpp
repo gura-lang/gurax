@@ -36,7 +36,7 @@ ${help.ComposeMethodHelp(wx.CalculateLayoutEvent, `en)}
 Gurax_DeclareMethodAlias(wxCalculateLayoutEvent, GetFlags_gurax, "GetFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_DeclareMethodAlias(wxCalculateLayoutEvent, GetRect_gurax, "GetRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -78,7 +78,7 @@ Gurax_DeclareMethodAlias(wxCalculateLayoutEvent, SetFlags_gurax, "SetFlags")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -102,7 +102,7 @@ Gurax_DeclareMethodAlias(wxCalculateLayoutEvent, SetRect_gurax, "SetRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -134,7 +134,7 @@ VType_wxCalculateLayoutEvent VTYPE_wxCalculateLayoutEvent("CalculateLayoutEvent"
 void VType_wxCalculateLayoutEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(SDL_AudioSpec)
 {
 	Declare(VTYPE_Color, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `SDL_AudioSpec` instance.
 )**");
 }
@@ -54,7 +54,7 @@ Gurax_ImplementConstructor(SDL_AudioSpec)
 Gurax_DeclareProperty_RW(SDL_AudioSpec, freq)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -75,7 +75,7 @@ Gurax_ImplementPropertySetter(SDL_AudioSpec, freq)
 Gurax_DeclareProperty_RW(SDL_AudioSpec, format)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -96,7 +96,7 @@ Gurax_ImplementPropertySetter(SDL_AudioSpec, format)
 Gurax_DeclareProperty_RW(SDL_AudioSpec, channels)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -117,7 +117,7 @@ Gurax_ImplementPropertySetter(SDL_AudioSpec, channels)
 Gurax_DeclareProperty_RW(SDL_AudioSpec, silence)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -138,7 +138,7 @@ Gurax_ImplementPropertySetter(SDL_AudioSpec, silence)
 Gurax_DeclareProperty_RW(SDL_AudioSpec, samples)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -159,7 +159,7 @@ Gurax_ImplementPropertySetter(SDL_AudioSpec, samples)
 Gurax_DeclareProperty_RW(SDL_AudioSpec, size)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -180,7 +180,7 @@ Gurax_ImplementPropertySetter(SDL_AudioSpec, size)
 Gurax_DeclareProperty_RW(SDL_AudioSpec, callback)
 {
 	Declare(VTYPE_Function, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -204,7 +204,7 @@ Gurax_ImplementPropertySetter(SDL_AudioSpec, callback)
 Gurax_DeclareProperty_RW(SDL_AudioSpec, userdata)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

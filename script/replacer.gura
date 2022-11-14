@@ -2,5 +2,5 @@
 import(sed)
 
 sed.Walk('', nil, '*.cpp', '*.h') {|line|
-	line.Sub('PATTERN', 'REPLACE')
+	line.Sub(r'PATTERN', r'REPLACE')
 }

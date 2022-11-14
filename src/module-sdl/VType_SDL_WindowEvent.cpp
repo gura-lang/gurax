@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_WindowEvent, `en)}
 Gurax_DeclareProperty_R(SDL_WindowEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(SDL_WindowEvent, type)
 Gurax_DeclareProperty_R(SDL_WindowEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_ImplementPropertyGetter(SDL_WindowEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_WindowEvent, windowID)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementPropertyGetter(SDL_WindowEvent, windowID)
 Gurax_DeclareProperty_R(SDL_WindowEvent, event)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -91,7 +91,7 @@ Gurax_ImplementPropertyGetter(SDL_WindowEvent, event)
 Gurax_DeclareProperty_R(SDL_WindowEvent, data1)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -106,7 +106,7 @@ Gurax_ImplementPropertyGetter(SDL_WindowEvent, data1)
 Gurax_DeclareProperty_R(SDL_WindowEvent, data2)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

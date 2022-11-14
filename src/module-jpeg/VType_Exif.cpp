@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(Exif)
 {
 	Declare(VTYPE_Content, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `jpeg.Exif` instance.
 )**");
 }
@@ -53,7 +53,7 @@ Gurax_ImplementConstructor(Exif)
 Gurax_DeclareProperty_RW(Exif, ifd0)
 {
 	Declare(VTYPE_IFD, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 IFD0 field in the Exif. Returns `nil` if not exist.
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementPropertySetter(Exif, ifd0)
 Gurax_DeclareProperty_RW(Exif, ifd1)
 {
 	Declare(VTYPE_IFD, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 IFD1 field in the Exif. Returns `nil` if not exist.
 )**");
 }

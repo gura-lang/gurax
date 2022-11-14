@@ -33,7 +33,7 @@ Gurax_DeclareConstructorAlias(Validator_gurax, "Validator")
 {
 	Declare(VTYPE_wxValidator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.Validator.
 )**");
 }
@@ -55,7 +55,7 @@ Gurax_DeclareMethodAlias(wxValidator, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_DeclareMethodAlias(wxValidator, SetWindow_gurax, "SetWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -100,7 +100,7 @@ Gurax_ImplementMethodEx(wxValidator, SetWindow_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxValidator, TransferFromWindow_gurax, "TransferFromWindow")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -120,7 +120,7 @@ Gurax_ImplementMethodEx(wxValidator, TransferFromWindow_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxValidator, TransferToWindow_gurax, "TransferToWindow")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -141,7 +141,7 @@ Gurax_DeclareMethodAlias(wxValidator, Validate_gurax, "Validate")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -173,7 +173,7 @@ VType_wxValidator VTYPE_wxValidator("Validator");
 void VType_wxValidator::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Validator_gurax));
 	// Assignment of method

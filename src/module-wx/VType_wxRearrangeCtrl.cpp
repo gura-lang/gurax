@@ -42,7 +42,7 @@ Gurax_DeclareConstructorAlias(RearrangeCtrl_gurax, "RearrangeCtrl")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.RearrangeCtrl.
 )**");
 }
@@ -87,7 +87,7 @@ Gurax_DeclareMethodAlias(wxRearrangeCtrl, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -123,7 +123,7 @@ Gurax_DeclareMethodAlias(wxRearrangeCtrl, GetList_gurax, "GetList")
 {
 	Declare(VTYPE_wxRearrangeList, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -151,7 +151,7 @@ VType_wxRearrangeCtrl VTYPE_wxRearrangeCtrl("RearrangeCtrl");
 void VType_wxRearrangeCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(RearrangeCtrl_gurax));
 	// Assignment of method

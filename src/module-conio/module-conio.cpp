@@ -15,7 +15,7 @@ Gurax_DeclareFunction(Clear)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("region", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Clears the screen.
 
 In default, it clears whole the screen.
@@ -44,7 +44,7 @@ Gurax_ImplementFunction(Clear)
 Gurax_DeclareFunction(Flush)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Flushes the pending request of drawing.
 )**");
 }
@@ -60,7 +60,7 @@ Gurax_ImplementFunction(Flush)
 Gurax_DeclareFunction(GetWinSize)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns the screen size as a tuple `(width, height)`.
 )**");
 }
@@ -80,7 +80,7 @@ Gurax_DeclareFunction(MoveTo)
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Moves cursor to the specified position.
 The most top-left position on the screen is represented as `0, 0`.
 
@@ -106,7 +106,7 @@ Gurax_DeclareFunction(ReadKey)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads a keyboard input and returns a character code number associated with the key
 without blocking.
 
@@ -149,7 +149,7 @@ Gurax_DeclareFunction(SetColor)
 	DeclareArg("fg", VTYPE_Symbol, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("bg", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Sets foreground and background color of text by specifying a color symbol.
 Available color symbols are listed below:
 
@@ -198,7 +198,7 @@ Gurax_DeclareFunction(WaitKey)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(raise));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Waits for a keyboard input and returns a character code number associated with the key.
 
 If `:raise` attribute is specified, hitting `Ctrl-C` issues a terminating signal

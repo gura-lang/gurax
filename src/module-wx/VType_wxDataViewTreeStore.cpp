@@ -45,7 +45,7 @@ VType_wxDataViewTreeStore VTYPE_wxDataViewTreeStore("DataViewTreeStore");
 void VType_wxDataViewTreeStore::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDataViewModel, Flag::Mutable);
 	// Assignment of method

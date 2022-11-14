@@ -36,7 +36,7 @@ Gurax_DeclareConstructor(SDL_Rect)
 	DeclareArg("w", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("h", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `SDL_Rect` instance.
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_ImplementConstructor(SDL_Rect)
 Gurax_DeclareProperty_RW(SDL_Rect, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -82,7 +82,7 @@ Gurax_ImplementPropertySetter(SDL_Rect, x)
 Gurax_DeclareProperty_RW(SDL_Rect, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -103,7 +103,7 @@ Gurax_ImplementPropertySetter(SDL_Rect, y)
 Gurax_DeclareProperty_RW(SDL_Rect, w)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -124,7 +124,7 @@ Gurax_ImplementPropertySetter(SDL_Rect, w)
 Gurax_DeclareProperty_RW(SDL_Rect, h)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(Element)
 	Declare(VTYPE_Element, Flag::None);
 	DeclareArg("name", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `xml.Element` instance.
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_DeclareMethod(Element, EachChild)
 	DeclareAttrOpt(Gurax_Symbol(element));
 	DeclareAttrOpt(Gurax_Symbol(text));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -85,7 +85,7 @@ Gurax_DeclareMethod(Element, GetAttr)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("index", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -108,7 +108,7 @@ Gurax_DeclareMethod(Element, GetAttrName)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("index", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -131,7 +131,7 @@ Gurax_DeclareMethod(Element, GetAttrValue)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareArg("index", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -154,7 +154,7 @@ Gurax_DeclareMethod(Element, Path)
 {
 	Declare(VTYPE_Element, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -176,7 +176,7 @@ Gurax_ImplementMethod(Element, Path)
 Gurax_DeclareMethod(Element, TextizeStart)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -193,7 +193,7 @@ Gurax_ImplementMethod(Element, TextizeStart)
 Gurax_DeclareMethod(Element, TextizeEnd)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -210,7 +210,7 @@ Gurax_ImplementMethod(Element, TextizeEnd)
 Gurax_DeclareMethod(Element, TextizeEmpty)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -233,7 +233,7 @@ Gurax_DeclareMethod(Element, WalkChild)
 	DeclareAttrOpt(Gurax_Symbol(element));
 	DeclareAttrOpt(Gurax_Symbol(text));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -259,7 +259,7 @@ Gurax_ImplementMethod(Element, WalkChild)
 Gurax_DeclareProperty_R(Element, attrs)
 {
 	Declare(VTYPE_Attrs, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -274,7 +274,7 @@ Gurax_ImplementPropertyGetter(Element, attrs)
 Gurax_DeclareProperty_R(Element, children)
 {
 	Declare(VTYPE_Nodes, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -289,7 +289,7 @@ Gurax_ImplementPropertyGetter(Element, children)
 Gurax_DeclareProperty_R(Element, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -304,7 +304,7 @@ Gurax_ImplementPropertyGetter(Element, name)
 Gurax_DeclareProperty_R(Element, text)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

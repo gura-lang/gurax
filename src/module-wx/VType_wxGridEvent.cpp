@@ -36,7 +36,7 @@ ${help.ComposeMethodHelp(wx.GridEvent, `en)}
 Gurax_DeclareMethodAlias(wxGridEvent, AltDown_gurax, "AltDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -56,7 +56,7 @@ Gurax_ImplementMethodEx(wxGridEvent, AltDown_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxGridEvent, ControlDown_gurax, "ControlDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementMethodEx(wxGridEvent, ControlDown_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxGridEvent, GetCol_gurax, "GetCol")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -97,7 +97,7 @@ Gurax_DeclareMethodAlias(wxGridEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -117,7 +117,7 @@ Gurax_ImplementMethodEx(wxGridEvent, GetPosition_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxGridEvent, GetRow_gurax, "GetRow")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -137,7 +137,7 @@ Gurax_ImplementMethodEx(wxGridEvent, GetRow_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxGridEvent, MetaDown_gurax, "MetaDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -157,7 +157,7 @@ Gurax_ImplementMethodEx(wxGridEvent, MetaDown_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxGridEvent, Selecting_gurax, "Selecting")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -177,7 +177,7 @@ Gurax_ImplementMethodEx(wxGridEvent, Selecting_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxGridEvent, ShiftDown_gurax, "ShiftDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -205,7 +205,7 @@ VType_wxGridEvent VTYPE_wxGridEvent("GridEvent");
 void VType_wxGridEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

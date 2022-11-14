@@ -39,7 +39,7 @@ Gurax_DeclareConstructorAlias(PropertyGridManager_gurax, "PropertyGridManager")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.PropertyGridManager.
 )**");
 }
@@ -75,7 +75,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, AddPage_gurax, "AddPage")
 	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pageObj", VTYPE_wxPropertyGridPage, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -100,7 +100,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, AddPage_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxPropertyGridManager, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -121,7 +121,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, ClearPage_gurax, "ClearPage")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -145,7 +145,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, CommitChangesFromEditor_gurax, "
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -175,7 +175,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -207,7 +207,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, EnableCategories_gurax, "EnableC
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -231,7 +231,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetColumnCount_gurax, "GetColumn
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -255,7 +255,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetColumnCount_gurax, processor_g
 Gurax_DeclareMethodAlias(wxPropertyGridManager, GetDescBoxHeight_gurax, "GetDescBoxHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -276,7 +276,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetGrid_gurax, "GetGrid")
 {
 	Declare(VTYPE_wxPropertyGrid, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -297,7 +297,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetCurrentPage_gurax, "GetCurren
 {
 	Declare(VTYPE_wxPropertyGridPage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -319,7 +319,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetPage_gurax, "GetPage")
 	Declare(VTYPE_wxPropertyGridPage, Flag::None);
 	DeclareArg("ind", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -343,7 +343,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetPageByName_gurax, "GetPageByN
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -366,7 +366,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetPageByName_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxPropertyGridManager, GetPageCount_gurax, "GetPageCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -387,7 +387,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetPageName_gurax, "GetPageName"
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -412,7 +412,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetPageRoot_gurax, "GetPageRoot"
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -435,7 +435,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, GetPageRoot_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxPropertyGridManager, GetSelectedPage_gurax, "GetSelectedPage")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -456,7 +456,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetSelectedProperty_gurax, "GetS
 {
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -477,7 +477,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetSelection_gurax, "GetSelectio
 {
 	Declare(VTYPE_wxPGProperty, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -498,7 +498,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, GetToolBar_gurax, "GetToolBar")
 {
 	Declare(VTYPE_wxToolBar, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -523,7 +523,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, InsertPage_gurax, "InsertPage")
 	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pageObj", VTYPE_wxPropertyGridPage, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -549,7 +549,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, InsertPage_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxPropertyGridManager, IsAnyModified_gurax, "IsAnyModified")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -569,7 +569,7 @@ Gurax_ImplementMethodEx(wxPropertyGridManager, IsAnyModified_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxPropertyGridManager, IsFrozen_gurax, "IsFrozen")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -590,7 +590,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, IsPageModified_gurax, "IsPageMod
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -614,7 +614,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, RemovePage_gurax, "RemovePage")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -638,7 +638,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, SelectPage_gurax, "SelectPage")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -663,7 +663,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, SetColumnCount_gurax, "SetColumn
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colCount", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -690,7 +690,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, SetColumnTitle_gurax, "SetColumn
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -716,7 +716,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, SetDescription_gurax, "SetDescri
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("content", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -742,7 +742,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, SetDescBoxHeight_gurax, "SetDesc
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("ht", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("refresh", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -768,7 +768,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, SetSplitterLeft_gurax, "SetSplit
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("subProps", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("allPages", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -794,7 +794,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, SetPageSplitterLeft_gurax, "SetP
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("subProps", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -821,7 +821,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, SetPageSplitterPosition_gurax, "
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("column", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -849,7 +849,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, SetSplitterPosition_gurax, "SetS
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("column", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -875,7 +875,7 @@ Gurax_DeclareMethodAlias(wxPropertyGridManager, ShowHeader_gurax, "ShowHeader")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -906,7 +906,7 @@ VType_wxPropertyGridManager VTYPE_wxPropertyGridManager("PropertyGridManager");
 void VType_wxPropertyGridManager::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(PropertyGridManager_gurax));
 	// Assignment of method

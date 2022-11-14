@@ -38,7 +38,7 @@ Gurax_DeclareConstructorAlias(ProgressDialog_gurax, "ProgressDialog")
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.ProgressDialog.
 )**");
 }
@@ -77,7 +77,7 @@ VType_wxProgressDialog VTYPE_wxProgressDialog("ProgressDialog");
 void VType_wxProgressDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGenericProgressDialog, Flag::Mutable, Gurax_CreateConstructor(ProgressDialog_gurax));
 	// Assignment of method

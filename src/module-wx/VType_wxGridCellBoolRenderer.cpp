@@ -33,7 +33,7 @@ Gurax_DeclareConstructorAlias(GridCellBoolRenderer_gurax, "GridCellBoolRenderer"
 {
 	Declare(VTYPE_wxGridCellBoolRenderer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.GridCellBoolRenderer.
 )**");
 }
@@ -62,7 +62,7 @@ VType_wxGridCellBoolRenderer VTYPE_wxGridCellBoolRenderer("GridCellBoolRenderer"
 void VType_wxGridCellBoolRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellBoolRenderer_gurax));
 	// Assignment of method

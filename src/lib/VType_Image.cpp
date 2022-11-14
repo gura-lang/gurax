@@ -36,7 +36,7 @@ Gurax_DeclareConstructor(Image)
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an `Image` instance. If the argument `stream` is specified, reads image data from the stream.
 If omitted, an image with empty data is created.
 
@@ -74,7 +74,7 @@ Gurax_DeclareClassMethod(Image, Create)
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an `Image` instance filled with the specified color.
 If the argument `color` is omitted, it will be filled with black.
 
@@ -115,7 +115,7 @@ Gurax_DeclareMethod(Image, Crop)
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Created a cropped image from the target.
 
 The attributes `rgb` and `rgba` specify the format of the image:
@@ -152,7 +152,7 @@ Gurax_DeclareMethod(Image, Fill)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
 	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -179,7 +179,7 @@ Gurax_DeclareMethod(Image, FillRect)
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -210,7 +210,7 @@ Gurax_DeclareMethod(Image, Flip)
 	Declare(VTYPE_Image, Flag::None);
 	DeclareArg("orient", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Flips the image in the orientation specified by `` `orient`` that takes one of the following symbols:
 
 - `` `horz`` .. left-to-right
@@ -251,7 +251,7 @@ Gurax_DeclareMethod(Image, GetPixel)
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a pixel color at the specified position.
 )**");
 }
@@ -277,7 +277,7 @@ Gurax_DeclareMethod(Image, GrayScale)
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Translates to a gray-scale image.
 
 The attributes `rgb` and `rgba` specify the format of the image:
@@ -308,7 +308,7 @@ Gurax_DeclareMethod(Image, MapAlphaLevel)
 	Declare(VTYPE_Image, Flag::None);
 	DeclareArg("mapA", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Translates each pixel's alpha element according to the mapping data pointed by the given pointer mapA
 that contains at least 256 bytes of data.
 )**");
@@ -345,7 +345,7 @@ Gurax_DeclareMethod(Image, MapColorLevel)
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Translates each pixel's RGB elements according to the mapping data pointed by the given pointers:
 `mapR`, `mapG` and `mapB`, which contain at least 256 bytes of data.
 
@@ -396,7 +396,7 @@ Gurax_DeclareMethod(Image, PutPixel)
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Puts a pixel color at the specified position.
 )**");
 }
@@ -429,7 +429,7 @@ Gurax_DeclareMethod(Image, Paste)
 	DeclareArg("ySrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Copies the image data of `imageSrc` into the target image at the specified position `[xDst, yDst]`.
 
 The optional argument `[xSrc, ySrc]` specifies the left-top position from where the image is copied.
@@ -469,7 +469,7 @@ Gurax_DeclareMethod(Image, Read)
 	Declare(VTYPE_Image, Flag::Map | Flag::Reduce);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("imgType", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads image data from a stream.
 
 The format of the image data is determined
@@ -500,7 +500,7 @@ Gurax_DeclareMethod(Image, ReduceColor)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("palette", VTYPE_Palette, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -532,7 +532,7 @@ Gurax_DeclareMethod(Image, Resize)
 	DeclareArg("htSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Created a resized image from the target.
 
 The arguments `wdDst` and `htDst` specify the size of the resized image.
@@ -594,7 +594,7 @@ Gurax_DeclareMethod(Image, ResizePaste)
 	DeclareArg("ySrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("wdSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("htSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -631,7 +631,7 @@ Gurax_DeclareMethod(Image, Rotate)
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an image that rotates the original image.
 
 The argument `angle` specifies the rotation angle in degree unit,
@@ -679,7 +679,7 @@ Gurax_DeclareMethod(Image, Scan)
 	DeclareArg("scanDir", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(pixel));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns `Color` instance including RGB color data in the image.
 When the attribute `:pixel` is speicified, the iterator returns `Pixel` instance
 that contains position information as well as color data.
@@ -731,7 +731,7 @@ Gurax_DeclareMethod(Image, Write)
 	Declare(VTYPE_Image, Flag::Map | Flag::Reduce);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("imgType", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Writes image data to a stream.
 
 The format of the image data is determined by the stream's file name.
@@ -763,7 +763,7 @@ Gurax_ImplementMethod(Image, Write)
 Gurax_DeclareProperty_RW(Image, alphaDefault)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The alpha value that is used when the source image doesn't have alpha element
 in operations like pasting.
 )**");
@@ -787,7 +787,7 @@ Gurax_ImplementPropertySetter(Image, alphaDefault)
 Gurax_DeclareProperty_R(Image, bytes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The image's size in bytes.
 )**");
 }
@@ -802,7 +802,7 @@ Gurax_ImplementPropertyGetter(Image, bytes)
 Gurax_DeclareProperty_R(Image, bytesPerLine)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The size per line in bytes.
 )**");
 }
@@ -817,7 +817,7 @@ Gurax_ImplementPropertyGetter(Image, bytesPerLine)
 Gurax_DeclareProperty_R(Image, bytesPerPixel)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The size per pixel in bytes.
 )**");
 }
@@ -832,7 +832,7 @@ Gurax_ImplementPropertyGetter(Image, bytesPerPixel)
 Gurax_DeclareProperty_R(Image, extra)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Additional information associated with the image.
 )**");
 }
@@ -847,7 +847,7 @@ Gurax_ImplementPropertyGetter(Image, extra)
 Gurax_DeclareProperty_R(Image, format)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A symbol that represents the image's format: `` `rgb`` or `` `rgba``.
 )**");
 }
@@ -862,7 +862,7 @@ Gurax_ImplementPropertyGetter(Image, format)
 Gurax_DeclareProperty_R(Image, height)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The image's height.
 )**");
 }
@@ -877,7 +877,7 @@ Gurax_ImplementPropertyGetter(Image, height)
 Gurax_DeclareProperty_R(Image, p)
 {
 	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A `Pointer` instance that points at the first address of the image buffer.
 )**");
 }
@@ -897,7 +897,7 @@ Gurax_ImplementPropertyGetter(Image, p)
 Gurax_DeclareProperty_RW(Image, palette)
 {
 	Declare(VTYPE_Palette, Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Set or get the image's palette. If the image doesn't own a palette, this returns `nil`.
 When you want to remove the palette, set `nil` value to this.
 )**");
@@ -920,7 +920,7 @@ Gurax_ImplementPropertySetter(Image, palette)
 Gurax_DeclareProperty_R(Image, width)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The image's width.
 )**");
 }

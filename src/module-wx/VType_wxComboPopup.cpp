@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxComboPopup, Create_gurax, "Create")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_ImplementMethodEx(wxComboPopup, Create_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxComboPopup, DestroyPopup_gurax, "DestroyPopup")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -81,7 +81,7 @@ Gurax_ImplementMethodEx(wxComboPopup, DestroyPopup_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxComboPopup, Dismiss_gurax, "Dismiss")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -102,7 +102,7 @@ Gurax_DeclareMethodAlias(wxComboPopup, FindItem_gurax, "FindItem")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -130,7 +130,7 @@ Gurax_DeclareMethodAlias(wxComboPopup, GetAdjustedSize_gurax, "GetAdjustedSize")
 	DeclareArg("prefHeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxHeight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -156,7 +156,7 @@ Gurax_DeclareMethodAlias(wxComboPopup, GetComboCtrl_gurax, "GetComboCtrl")
 {
 	Declare(VTYPE_wxComboCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -177,7 +177,7 @@ Gurax_DeclareMethodAlias(wxComboPopup, GetControl_gurax, "GetControl")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -197,7 +197,7 @@ Gurax_ImplementMethodEx(wxComboPopup, GetControl_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxComboPopup, GetStringValue_gurax, "GetStringValue")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -217,7 +217,7 @@ Gurax_ImplementMethodEx(wxComboPopup, GetStringValue_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxComboPopup, Init_gurax, "Init")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -237,7 +237,7 @@ Gurax_ImplementMethodEx(wxComboPopup, Init_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxComboPopup, IsCreated_gurax, "IsCreated")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -257,7 +257,7 @@ Gurax_ImplementMethodEx(wxComboPopup, IsCreated_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxComboPopup, LazyCreate_gurax, "LazyCreate")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -277,7 +277,7 @@ Gurax_ImplementMethodEx(wxComboPopup, LazyCreate_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxComboPopup, OnComboDoubleClick_gurax, "OnComboDoubleClick")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -298,7 +298,7 @@ Gurax_DeclareMethodAlias(wxComboPopup, OnComboKeyEvent_gurax, "OnComboKeyEvent")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxKeyEvent, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -322,7 +322,7 @@ Gurax_ImplementMethodEx(wxComboPopup, OnComboKeyEvent_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxComboPopup, OnDismiss_gurax, "OnDismiss")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -342,7 +342,7 @@ Gurax_ImplementMethodEx(wxComboPopup, OnDismiss_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxComboPopup, OnPopup_gurax, "OnPopup")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -364,7 +364,7 @@ Gurax_DeclareMethodAlias(wxComboPopup, PaintComboControl_gurax, "PaintComboContr
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -391,7 +391,7 @@ Gurax_DeclareMethodAlias(wxComboPopup, SetStringValue_gurax, "SetStringValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -422,7 +422,7 @@ VType_wxComboPopup VTYPE_wxComboPopup("ComboPopup");
 void VType_wxComboPopup::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

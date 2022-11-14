@@ -19,7 +19,7 @@ Gurax_DeclareFunction(Decode)
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads data formatted in a base-n format from stream `src` and decodes it into the stream `dst`.
 If `dst` is omitted, the result will be returned as `Binary` value.
 
@@ -77,7 +77,7 @@ Gurax_DeclareFunction(Encode)
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareAttrOpt(Gurax_Symbol(singleLine));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads data from stream `src` and encodes it in a base-n format into the stream `dst`.
 If `dst` is omitted, the result will be returned as `Binary` value.
 
@@ -143,7 +143,7 @@ Gurax_DeclareFunction(Reader)
 	DeclareAttrOpt(Gurax_Symbol(base32hex));
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a readable `Stream` instance that decodes a sequence of base-n format
 from the stream `src`.
 
@@ -183,7 +183,7 @@ Gurax_DeclareFunction(Writer)
 	DeclareAttrOpt(Gurax_Symbol(base64));
 	DeclareAttrOpt(Gurax_Symbol(singleLine));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a writable `Stream` instance that encodes written data into base-n format.
 The result is emitted to the stream `dst`.
 

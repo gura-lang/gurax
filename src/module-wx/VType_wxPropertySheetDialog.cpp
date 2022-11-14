@@ -40,7 +40,7 @@ Gurax_DeclareConstructorAlias(PropertySheetDialog_gurax, "PropertySheetDialog")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.PropertySheetDialog.
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, AddBookCtrl_gurax, "AddBookCtrl"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sizer", VTYPE_wxSizer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -104,7 +104,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -136,7 +136,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, CreateBookCtrl_gurax, "CreateBoo
 {
 	Declare(VTYPE_wxBookCtrlBase, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -157,7 +157,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, CreateButtons_gurax, "CreateButt
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -182,7 +182,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, GetBookCtrl_gurax, "GetBookCtrl"
 {
 	Declare(VTYPE_wxBookCtrlBase, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -203,7 +203,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, GetInnerSizer_gurax, "GetInnerSi
 {
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -224,7 +224,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, SetInnerSizer_gurax, "SetInnerSi
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sizer", VTYPE_wxSizer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -248,7 +248,7 @@ Gurax_ImplementMethodEx(wxPropertySheetDialog, SetInnerSizer_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxPropertySheetDialog, GetSheetStyle_gurax, "GetSheetStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -269,7 +269,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, LayoutDialog_gurax, "LayoutDialo
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("centreFlags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -294,7 +294,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, SetBookCtrl_gurax, "SetBookCtrl"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bookCtrl", VTYPE_wxBookCtrlBase, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -319,7 +319,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, SetSheetStyle_gurax, "SetSheetSt
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -343,7 +343,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, SetSheetOuterBorder_gurax, "SetS
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -366,7 +366,7 @@ Gurax_ImplementMethodEx(wxPropertySheetDialog, SetSheetOuterBorder_gurax, proces
 Gurax_DeclareMethodAlias(wxPropertySheetDialog, GetSheetOuterBorder_gurax, "GetSheetOuterBorder")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -387,7 +387,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, SetSheetInnerBorder_gurax, "SetS
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -410,7 +410,7 @@ Gurax_ImplementMethodEx(wxPropertySheetDialog, SetSheetInnerBorder_gurax, proces
 Gurax_DeclareMethodAlias(wxPropertySheetDialog, GetSheetInnerBorder_gurax, "GetSheetInnerBorder")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -431,7 +431,7 @@ Gurax_DeclareMethodAlias(wxPropertySheetDialog, GetContentWindow_gurax, "GetCont
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -459,7 +459,7 @@ VType_wxPropertySheetDialog VTYPE_wxPropertySheetDialog("PropertySheetDialog");
 void VType_wxPropertySheetDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(PropertySheetDialog_gurax));
 	// Assignment of method

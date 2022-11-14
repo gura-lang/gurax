@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(Int)
 	Declare(VTYPE_Rational, Flag::None);
 	DeclareArg("num", VTYPE_Int, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `gmp.Int` instance.
 )**");
 }
@@ -56,7 +56,7 @@ Gurax_DeclareMethod(Int, get_str)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("base", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts to a string.
 )**");
 }
@@ -78,7 +78,7 @@ Gurax_DeclareMethod(Int, set_str)
 	Declare(VTYPE_Nil, Flag::Reduce);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("base", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts to a string.
 )**");
 }
@@ -107,7 +107,7 @@ Gurax_ImplementMethod(Int, set_str)
 Gurax_DeclareProperty_R(Int, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

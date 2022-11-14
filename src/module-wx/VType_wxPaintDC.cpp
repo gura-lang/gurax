@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(PaintDC_gurax, "PaintDC")
 	Declare(VTYPE_wxPaintDC, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.PaintDC.
 )**");
 }
@@ -67,7 +67,7 @@ VType_wxPaintDC VTYPE_wxPaintDC("PaintDC");
 void VType_wxPaintDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxClientDC, Flag::Mutable, Gurax_CreateConstructor(PaintDC_gurax));
 	// Assignment of method

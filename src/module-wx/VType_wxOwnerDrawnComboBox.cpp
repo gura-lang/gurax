@@ -45,7 +45,7 @@ VType_wxOwnerDrawnComboBox VTYPE_wxOwnerDrawnComboBox("OwnerDrawnComboBox");
 void VType_wxOwnerDrawnComboBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxComboCtrl, Flag::Mutable);
 	// Assignment of method

@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(AcceleratorTable_gurax, "AcceleratorTable")
 	Declare(VTYPE_wxAcceleratorTable, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.AcceleratorTable.
 )**");
 }
@@ -87,7 +87,7 @@ Gurax_ImplementConstructorEx(AcceleratorTable_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxAcceleratorTable, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -115,7 +115,7 @@ VType_wxAcceleratorTable VTYPE_wxAcceleratorTable("AcceleratorTable");
 void VType_wxAcceleratorTable::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AcceleratorTable_gurax));
 	// Assignment of method

@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_JoyButtonEvent, `en)}
 Gurax_DeclareProperty_R(SDL_JoyButtonEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(SDL_JoyButtonEvent, type)
 Gurax_DeclareProperty_R(SDL_JoyButtonEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_ImplementPropertyGetter(SDL_JoyButtonEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_JoyButtonEvent, which)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementPropertyGetter(SDL_JoyButtonEvent, which)
 Gurax_DeclareProperty_R(SDL_JoyButtonEvent, button)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -91,7 +91,7 @@ Gurax_ImplementPropertyGetter(SDL_JoyButtonEvent, button)
 Gurax_DeclareProperty_R(SDL_JoyButtonEvent, state)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

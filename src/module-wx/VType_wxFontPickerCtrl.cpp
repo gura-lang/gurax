@@ -41,7 +41,7 @@ Gurax_DeclareConstructorAlias(FontPickerCtrl_gurax, "FontPickerCtrl")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.FontPickerCtrl.
 )**");
 }
@@ -82,7 +82,7 @@ Gurax_DeclareMethodAlias(wxFontPickerCtrl, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -114,7 +114,7 @@ Gurax_ImplementMethodEx(wxFontPickerCtrl, Create_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxFontPickerCtrl, GetMaxPointSize_gurax, "GetMaxPointSize")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -135,7 +135,7 @@ Gurax_DeclareMethodAlias(wxFontPickerCtrl, GetSelectedFont_gurax, "GetSelectedFo
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -156,7 +156,7 @@ Gurax_DeclareMethodAlias(wxFontPickerCtrl, SetMaxPointSize_gurax, "SetMaxPointSi
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("max", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -180,7 +180,7 @@ Gurax_DeclareMethodAlias(wxFontPickerCtrl, SetSelectedFont_gurax, "SetSelectedFo
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -212,7 +212,7 @@ VType_wxFontPickerCtrl VTYPE_wxFontPickerCtrl("FontPickerCtrl");
 void VType_wxFontPickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(FontPickerCtrl_gurax));
 	// Assignment of method

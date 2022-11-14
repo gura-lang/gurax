@@ -33,7 +33,7 @@ Gurax_DeclareConstructorAlias(PrintData_gurax, "PrintData")
 {
 	Declare(VTYPE_wxPrintData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.PrintData.
 )**");
 }
@@ -61,7 +61,7 @@ VType_wxPrintData VTYPE_wxPrintData("PrintData");
 void VType_wxPrintData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(PrintData_gurax));
 	// Assignment of method

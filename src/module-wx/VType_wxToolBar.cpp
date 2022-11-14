@@ -39,7 +39,7 @@ Gurax_DeclareConstructorAlias(ToolBar_gurax, "ToolBar")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.ToolBar.
 )**");
 }
@@ -78,7 +78,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddCheckTool_gurax, "AddCheckTool")
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -111,7 +111,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddControl_gurax, "AddControl")
 	DeclareArg("control", VTYPE_wxControl, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -144,7 +144,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddRadioTool_gurax, "AddRadioTool")
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -175,7 +175,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddSeparator_gurax, "AddSeparator")
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -196,7 +196,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddStretchableSpace_gurax, "AddStretchableSp
 {
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -216,7 +216,7 @@ Gurax_ImplementMethodEx(wxToolBar, AddStretchableSpace_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxToolBar, ClearTools_gurax, "ClearTools")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -237,7 +237,7 @@ Gurax_DeclareMethodAlias(wxToolBar, DeleteTool_gurax, "DeleteTool")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -261,7 +261,7 @@ Gurax_DeclareMethodAlias(wxToolBar, DeleteToolByPos_gurax, "DeleteToolByPos")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -286,7 +286,7 @@ Gurax_DeclareMethodAlias(wxToolBar, EnableTool_gurax, "EnableTool")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -312,7 +312,7 @@ Gurax_DeclareMethodAlias(wxToolBar, FindById_gurax, "FindById")
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -337,7 +337,7 @@ Gurax_DeclareMethodAlias(wxToolBar, FindControl_gurax, "FindControl")
 	Declare(VTYPE_wxControl, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -363,7 +363,7 @@ Gurax_DeclareMethodAlias(wxToolBar, FindToolForPosition_gurax, "FindToolForPosit
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -388,7 +388,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetMargins_gurax, "GetMargins")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -409,7 +409,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetToolBitmapSize_gurax, "GetToolBitmapSize"
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -431,7 +431,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetToolByPos_gurax, "GetToolByPos")
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -456,7 +456,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetToolClientData_gurax, "GetToolClientData"
 	Declare(VTYPE_wxObject, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -480,7 +480,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetToolEnabled_gurax, "GetToolEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -504,7 +504,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetToolLongHelp_gurax, "GetToolLongHelp")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -527,7 +527,7 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolLongHelp_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxToolBar, GetToolPacking_gurax, "GetToolPacking")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -548,7 +548,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetToolPos_gurax, "GetToolPos")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -571,7 +571,7 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolPos_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxToolBar, GetToolSeparation_gurax, "GetToolSeparation")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -592,7 +592,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetToolShortHelp_gurax, "GetToolShortHelp")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -616,7 +616,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetToolSize_gurax, "GetToolSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -637,7 +637,7 @@ Gurax_DeclareMethodAlias(wxToolBar, GetToolState_gurax, "GetToolState")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -660,7 +660,7 @@ Gurax_ImplementMethodEx(wxToolBar, GetToolState_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxToolBar, GetToolsCount_gurax, "GetToolsCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -684,7 +684,7 @@ Gurax_DeclareMethodAlias(wxToolBar, InsertControl_gurax, "InsertControl")
 	DeclareArg("control", VTYPE_wxControl, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -712,7 +712,7 @@ Gurax_DeclareMethodAlias(wxToolBar, InsertSeparator_gurax, "InsertSeparator")
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -737,7 +737,7 @@ Gurax_DeclareMethodAlias(wxToolBar, InsertStretchableSpace_gurax, "InsertStretch
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -762,7 +762,7 @@ Gurax_DeclareMethodAlias(wxToolBar, OnLeftClick_gurax, "OnLeftClick")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("toggleDown", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -787,7 +787,7 @@ Gurax_DeclareMethodAlias(wxToolBar, OnMouseEnter_gurax, "OnMouseEnter")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -813,7 +813,7 @@ Gurax_DeclareMethodAlias(wxToolBar, OnRightClick_gurax, "OnRightClick")
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -838,7 +838,7 @@ Gurax_ImplementMethodEx(wxToolBar, OnRightClick_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxToolBar, Realize_gurax, "Realize")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -860,7 +860,7 @@ Gurax_DeclareMethodAlias(wxToolBar, RemoveTool_gurax, "RemoveTool")
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -885,7 +885,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetDropdownMenu_gurax, "SetDropdownMenu")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -911,7 +911,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetToolBitmapSize_gurax, "SetToolBitmapSize"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -937,7 +937,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetToolClientData_gurax, "SetToolClientData"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -964,7 +964,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetToolDisabledBitmap_gurax, "SetToolDisable
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -991,7 +991,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetToolLongHelp_gurax, "SetToolLongHelp")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1017,7 +1017,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetToolNormalBitmap_gurax, "SetToolNormalBit
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1043,7 +1043,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetToolPacking_gurax, "SetToolPacking")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("packing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1067,7 +1067,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetToolSeparation_gurax, "SetToolSeparation"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("separation", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1092,7 +1092,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetToolShortHelp_gurax, "SetToolShortHelp")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1118,7 +1118,7 @@ Gurax_DeclareMethodAlias(wxToolBar, ToggleTool_gurax, "ToggleTool")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("toolId", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("toggle", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1151,7 +1151,7 @@ Gurax_DeclareMethodAlias(wxToolBar, CreateTool_gurax, "CreateTool")
 	DeclareArg("shortHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1185,7 +1185,7 @@ Gurax_DeclareMethodAlias(wxToolBar, AddTool_gurax, "AddTool")
 	Declare(VTYPE_wxToolBarToolBase, Flag::None);
 	DeclareArg("tool", VTYPE_wxToolBarToolBase, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1219,7 +1219,7 @@ Gurax_DeclareMethodAlias(wxToolBar, InsertTool_gurax, "InsertTool")
 	DeclareArg("longHelp", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_wxObject, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1254,7 +1254,7 @@ Gurax_DeclareMethodAlias(wxToolBar, SetMargins_gurax, "SetMargins")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1286,7 +1286,7 @@ VType_wxToolBar VTYPE_wxToolBar("ToolBar");
 void VType_wxToolBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ToolBar_gurax));
 	// Assignment of method

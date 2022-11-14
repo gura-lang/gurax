@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxNavigationKeyEvent, GetCurrentFocus_gurax, "GetCurren
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_ImplementMethodEx(wxNavigationKeyEvent, GetCurrentFocus_gurax, processor_g
 Gurax_DeclareMethodAlias(wxNavigationKeyEvent, GetDirection_gurax, "GetDirection")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -77,7 +77,7 @@ Gurax_ImplementMethodEx(wxNavigationKeyEvent, GetDirection_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxNavigationKeyEvent, IsFromTab_gurax, "IsFromTab")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -97,7 +97,7 @@ Gurax_ImplementMethodEx(wxNavigationKeyEvent, IsFromTab_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxNavigationKeyEvent, IsWindowChange_gurax, "IsWindowChange")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -118,7 +118,7 @@ Gurax_DeclareMethodAlias(wxNavigationKeyEvent, SetCurrentFocus_gurax, "SetCurren
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("currentFocus", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -143,7 +143,7 @@ Gurax_DeclareMethodAlias(wxNavigationKeyEvent, SetDirection_gurax, "SetDirection
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("direction", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -167,7 +167,7 @@ Gurax_DeclareMethodAlias(wxNavigationKeyEvent, SetFlags_gurax, "SetFlags")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -191,7 +191,7 @@ Gurax_DeclareMethodAlias(wxNavigationKeyEvent, SetFromTab_gurax, "SetFromTab")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("fromTab", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -215,7 +215,7 @@ Gurax_DeclareMethodAlias(wxNavigationKeyEvent, SetWindowChange_gurax, "SetWindow
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("windowChange", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -246,7 +246,7 @@ VType_wxNavigationKeyEvent VTYPE_wxNavigationKeyEvent("NavigationKeyEvent");
 void VType_wxNavigationKeyEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxRichTextCharacterStyleDefinition VTYPE_wxRichTextCharacterStyleDefinitio
 void VType_wxRichTextCharacterStyleDefinition::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxRichTextStyleDefinition, Flag::Mutable);
 	// Assignment of method

@@ -37,7 +37,7 @@ Gurax_DeclareMethodAlias(wxShowEvent, SetShow_gurax, "SetShow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -60,7 +60,7 @@ Gurax_ImplementMethodEx(wxShowEvent, SetShow_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxShowEvent, IsShown_gurax, "IsShown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -88,7 +88,7 @@ VType_wxShowEvent VTYPE_wxShowEvent("ShowEvent");
 void VType_wxShowEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

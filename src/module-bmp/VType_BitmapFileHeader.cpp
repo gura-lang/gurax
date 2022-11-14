@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(bmp.BitmapFileHeader, `en)}
 Gurax_DeclareProperty_R(BitmapFileHeader, bfType)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The value of bfType.
 )**");
 }
@@ -47,7 +47,7 @@ Gurax_ImplementPropertyGetter(BitmapFileHeader, bfType)
 Gurax_DeclareProperty_R(BitmapFileHeader, bfSize)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The value of bfSize.
 )**");
 }
@@ -63,7 +63,7 @@ Gurax_ImplementPropertyGetter(BitmapFileHeader, bfSize)
 Gurax_DeclareProperty_R(BitmapFileHeader, bfOffBits)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The value of bfOffBits.
 )**");
 }

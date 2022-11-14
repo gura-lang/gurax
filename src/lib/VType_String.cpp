@@ -181,7 +181,7 @@ Gurax_DeclareMethod(String, Chop)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(eol));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a string that removes a last character.
 
 If an attribute `:eol` is specified, only the end-of-line character shall be
@@ -205,7 +205,7 @@ Gurax_ImplementMethod(String, Chop)
 Gurax_DeclareMethod(String, DecodeURI)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a string in which percent-encoded characters are decoded.
 )**");
 }
@@ -226,7 +226,7 @@ Gurax_DeclareMethod(String, Each)
 	DeclareAttrOpt(Gurax_Symbol(utf8));
 	DeclareAttrOpt(Gurax_Symbol(utf32));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns each character in the string.
 )**");
 }
@@ -253,7 +253,7 @@ Gurax_DeclareMethod(String, EachLine)
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(chop));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns each line of the string.
 
 In default, end-of-line characters are included in the result.
@@ -278,7 +278,7 @@ Gurax_DeclareMethod(String, Encode)
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Encodes the string with the given `codec` and return the result as a `Binary`.
 )**");
 }
@@ -301,7 +301,7 @@ Gurax_ImplementMethod(String, Encode)
 Gurax_DeclareMethod(String, EncodeURI)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a string in which non-URIC characters are percent-encoded.
 )**");
 }
@@ -323,7 +323,7 @@ Gurax_DeclareMethod(String, EndsWith)
 	DeclareArg("posEnd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(rest));
 	DeclareAttrOpt(Gurax_Symbol(icase));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the string ends with the specified suffix `sub`.
 
 The optional argument `posEnd` specifies the bottom position of the string where the matching starts.
@@ -368,7 +368,7 @@ Gurax_DeclareMethod(String, Enquote)
 	DeclareAttrOpt(Gurax_Symbol(q));
 	DeclareAttrOpt(Gurax_Symbol(qq));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Surrounds the given string with quotation marks. Following attributes control
 what character is used as the mark:
 
@@ -397,7 +397,7 @@ Gurax_DeclareMethod(String, EscapeHTML)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(quote));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts some characters into HTML entity symbols.
 If attribute `:quote` is specified, a double-quotation character would be converted to
 an entity symbol \"&quot;\".
@@ -422,7 +422,7 @@ Gurax_DeclareMethod(String, Find)
 	DeclareArg("sub", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns the position where the specified sub-string is found in the string.
 In the case the sub-string is not found, it returns `nil`.
 
@@ -457,7 +457,7 @@ Gurax_DeclareMethod(String, Fold)
 	DeclareArg("step", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(neat));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that folds the source string by the specified length.
 
 The argument `step` specifies the length of advancement for the next folding point.
@@ -488,7 +488,7 @@ Gurax_DeclareMethod(String, Foldw)
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that folds the source string by the specified width.
 
 This method takes into account the character width based on the specification
@@ -514,7 +514,7 @@ Gurax_ImplementMethod(String, Foldw)
 Gurax_DeclareMethod(String, IsAlnum)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if all the characters in the string are alphabet and digit.
 )**");
 }
@@ -530,7 +530,7 @@ Gurax_ImplementMethod(String, IsAlnum)
 Gurax_DeclareMethod(String, IsAlpha)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if all the characters in the string are alphabet.
 )**");
 }
@@ -546,7 +546,7 @@ Gurax_ImplementMethod(String, IsAlpha)
 Gurax_DeclareMethod(String, IsDigit)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if all the characters in the string are digit.
 )**");
 }
@@ -562,7 +562,7 @@ Gurax_ImplementMethod(String, IsDigit)
 Gurax_DeclareMethod(String, IsEmpty)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the string is empty.
 )**");
 }
@@ -578,7 +578,7 @@ Gurax_ImplementMethod(String, IsEmpty)
 Gurax_DeclareMethod(String, IsSpace)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if all the characters in the string are space.
 )**");
 }
@@ -595,7 +595,7 @@ Gurax_DeclareMethod(String, Left)
 {
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("len", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Extracts the specified length of string from left of the source string.
 
 If the argument is omitted, it would return whole the source string.
@@ -621,7 +621,7 @@ Gurax_DeclareMethod(String, LJust)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Align the string to the left within the specified `width`
 and returns the result.
 
@@ -653,7 +653,7 @@ Gurax_ImplementMethod(String, LJust)
 Gurax_DeclareMethod(String, Lower)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts each alphabetical character to lower case.
 )**");
 }
@@ -674,7 +674,7 @@ Gurax_DeclareMethod(String, Mid)
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Extracts the specified length of string from the position `pos` and returns the result.
 
 If the argument `len` is omitted, it returns a string from `pos` to the end.
@@ -707,7 +707,7 @@ Gurax_DeclareMethod(String, Render)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Prints out the string to the specified `stream`.
 
 If the argument is omitted, it would be rendered to the standard output.
@@ -736,7 +736,7 @@ Gurax_DeclareMethod(String, Replace)
 	DeclareArg("count", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Replaces sub strings that matches the string `match` with a string specified by `sub`
 and returns the result.
 
@@ -779,7 +779,7 @@ Gurax_DeclareMethod(String, ReplaceM)
 	DeclareArg("count", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Replaces string parts according to a list of pairs of a matching and a substituting string
 and returns the result.
 
@@ -822,7 +822,7 @@ Gurax_DeclareMethod(String, Right)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("len", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Extracts the specified length of string from right of the source string.
 
 If the argument is omitted, it would return whole the source string.
@@ -848,7 +848,7 @@ Gurax_DeclareMethod(String, RJust)
 	Declare(VTYPE_String, Flag::Map);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("padding", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Align the string to the right within the specified `width`
 and returns the result.
 
@@ -884,7 +884,7 @@ Gurax_DeclareMethod(String, Split)
 	DeclareArg("count", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(icase));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator generating sub strings extracted from the original one
 separated by a specified string `sep`.
 With an attribute `:icase`, character cases are ignored while finding the separator.
@@ -921,7 +921,7 @@ Gurax_DeclareMethod(String, StartsWith)
 	DeclareArg("pos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(rest));
 	DeclareAttrOpt(Gurax_Symbol(icase));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the string starts with `sub`.
 
 If attribute `:rest` is specified,
@@ -956,7 +956,7 @@ Gurax_DeclareMethod(String, Strip)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a string that removes space characters on the both side.
 )**");
 }
@@ -975,7 +975,7 @@ Gurax_DeclareMethod(String, StripLeft)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a string that removes space characters on the left side.
 )**");
 }
@@ -994,7 +994,7 @@ Gurax_DeclareMethod(String, StripRight)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a string that removes space characters on the right side.
 )**");
 }
@@ -1015,7 +1015,7 @@ Gurax_DeclareMethod(String, Template)
 	DeclareAttrOpt(Gurax_Symbol(noIndent));
 	DeclareAttrOpt(Gurax_Symbol(lastEol));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Parses the content of the string as a text containing embedded scripts
 and returns a `Template` instance.
 )**");
@@ -1041,7 +1041,7 @@ Gurax_DeclareMethod(String, ToBinary)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts the string into `binary` instance.
 )**");
 }
@@ -1060,7 +1060,7 @@ Gurax_DeclareMethod(String, ToNumber)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts the string into `Number` instance.
 )**");
 }
@@ -1085,7 +1085,7 @@ Gurax_DeclareMethod(String, ToReader)
 {
 	Declare(VTYPE_Stream, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a `Stream` instance that reads the string content as a binary sequence.
 )**");
 }
@@ -1104,7 +1104,7 @@ Gurax_DeclareMethod(String, ToSymbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Convers the string into a symbol.
 )**");
 }
@@ -1126,7 +1126,7 @@ Gurax_DeclareClassMethod(String, Translator)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareBlock(BlkOccur::Once);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Register a procedure evaluated when a string literal
 appears with a suffix symbol \"`$`\",
 which is meant to translate the string into another language.
@@ -1155,7 +1155,7 @@ Gurax_ImplementClassMethod(String, Translator)
 Gurax_DeclareMethod(String, UnescapeHTML)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts escape sequences into readable characters.
 )**");
 }
@@ -1173,7 +1173,7 @@ Gurax_ImplementMethod(String, UnescapeHTML)
 Gurax_DeclareMethod(String, Upper)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts each alphabetical character to upper case.
 )**");
 }
@@ -1192,7 +1192,7 @@ Gurax_DeclareMethod(String, ZenToHan)
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts zenkaku to hankaku characters.
 )**");
 }
@@ -1218,7 +1218,7 @@ Gurax_ImplementMethod(String, ZenToHan)
 Gurax_DeclareProperty_R(String, bytes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The string's memory size in bytes.
 )**");
 }
@@ -1233,7 +1233,7 @@ Gurax_ImplementPropertyGetter(String, bytes)
 Gurax_DeclareProperty_R(String, first)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The first character in the string. Returns an empty string if the string is empty.
 )**");
 }
@@ -1249,7 +1249,7 @@ Gurax_ImplementPropertyGetter(String, first)
 Gurax_DeclareProperty_R(String, last)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The last character in the string. Returns an empty string if the string is empty.
 )**");
 }
@@ -1266,7 +1266,7 @@ Gurax_ImplementPropertyGetter(String, last)
 Gurax_DeclareProperty_R(String, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The number of characters in the string.
 )**");
 }
@@ -1281,7 +1281,7 @@ Gurax_ImplementPropertyGetter(String, len)
 Gurax_DeclareProperty_R(String, p)
 {
 	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a `pointer` instance that accesses the string.
 )**");
 }
@@ -1296,7 +1296,7 @@ Gurax_ImplementPropertyGetter(String, p)
 Gurax_DeclareProperty_R(String, width)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The string's width when displayed with a fixed-width font.
 )**");
 }

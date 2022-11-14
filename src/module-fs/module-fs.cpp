@@ -13,7 +13,7 @@ Gurax_DeclareFunction(ChangeDir)
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("dirName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Changes the current working directory to `pathname`.
 
 The block would be evaluated if specified, and the working directory would be changed
@@ -57,7 +57,7 @@ Gurax_DeclareFunction(ChangeMode)
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(followLink));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Changes the access mode of a file specified by `pathname`.
 
 There are two formats to specify the mode: one is by a number, and another in a string.
@@ -134,7 +134,7 @@ Gurax_DeclareFunction(Copy)
 	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(overwrite));
 	//DeclareAttrOpt(Gurax_Symbol(followLink));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Copies a file.
 
 An argument `src` needs to specify a path name of a file that is to be copied
@@ -169,7 +169,7 @@ Gurax_DeclareFunction(CopyDir)
 	DeclareArg("dirNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dirNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(tree));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Copies a directory.
 
 Arguments `src` and `dst` specify source directory and destination directory respectively.
@@ -198,7 +198,7 @@ Gurax_DeclareFunction(CreateDir)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("dirName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(tree));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a directory.
 
 If `pathname` consists of multiple sub directories and some of them still doesn't exist,
@@ -225,7 +225,7 @@ Gurax_DeclareFunction(CreateLink)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("pathNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Copies a symbolic link.
 )**");
 }
@@ -248,7 +248,7 @@ Gurax_DeclareFunction(Exists)
 {
 	Declare(VTYPE_Bool, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns true if the specified file exists in a file system.
 )**");
 }
@@ -267,7 +267,7 @@ Gurax_ImplementFunction(Exists)
 Gurax_DeclareFunction(GetCurDir)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns the current working directory.
 )**");
 }
@@ -283,7 +283,7 @@ Gurax_DeclareFunction(Remove)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Removes a file from the file system.
 )**");
 }
@@ -307,7 +307,7 @@ Gurax_DeclareFunction(RemoveDir)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("dirName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(tree));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Removes a directory.
 
 If the directory contains sub directories, an error occurs.
@@ -334,7 +334,7 @@ Gurax_DeclareFunction(Rename)
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("pathNameSrc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pathNameDst", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Renames a file or directory.
 )**");
 }

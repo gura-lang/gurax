@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_DollarGestureEvent, `en)}
 Gurax_DeclareProperty_R(SDL_DollarGestureEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(SDL_DollarGestureEvent, type)
 Gurax_DeclareProperty_R(SDL_DollarGestureEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_ImplementPropertyGetter(SDL_DollarGestureEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_DollarGestureEvent, touchId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementPropertyGetter(SDL_DollarGestureEvent, touchId)
 Gurax_DeclareProperty_R(SDL_DollarGestureEvent, gestureId)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -91,7 +91,7 @@ Gurax_ImplementPropertyGetter(SDL_DollarGestureEvent, gestureId)
 Gurax_DeclareProperty_R(SDL_DollarGestureEvent, numFingers)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -106,7 +106,7 @@ Gurax_ImplementPropertyGetter(SDL_DollarGestureEvent, numFingers)
 Gurax_DeclareProperty_R(SDL_DollarGestureEvent, error)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -121,7 +121,7 @@ Gurax_ImplementPropertyGetter(SDL_DollarGestureEvent, error)
 Gurax_DeclareProperty_R(SDL_DollarGestureEvent, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -136,7 +136,7 @@ Gurax_ImplementPropertyGetter(SDL_DollarGestureEvent, x)
 Gurax_DeclareProperty_R(SDL_DollarGestureEvent, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

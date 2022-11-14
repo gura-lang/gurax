@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(Attrs)
 {
 	Declare(VTYPE_Attrs, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `xml.Attrs` instance.
 )**");
 }
@@ -54,7 +54,7 @@ Gurax_DeclareMethod(Attrs, Each)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -75,7 +75,7 @@ Gurax_ImplementMethod(Attrs, Each)
 Gurax_DeclareProperty_R(Attrs, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

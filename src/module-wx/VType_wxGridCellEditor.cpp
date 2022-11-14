@@ -45,7 +45,7 @@ VType_wxGridCellEditor VTYPE_wxGridCellEditor("GridCellEditor");
 void VType_wxGridCellEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxClientDataContainer, Flag::Mutable);
 	// Assignment of method

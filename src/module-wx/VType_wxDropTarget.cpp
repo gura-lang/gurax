@@ -36,7 +36,7 @@ ${help.ComposeMethodHelp(wx.DropTarget, `en)}
 Gurax_DeclareMethodAlias(wxDropTarget, GetData_gurax, "GetData")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -59,7 +59,7 @@ Gurax_DeclareMethodAlias(wxDropTarget, OnData_gurax, "OnData")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("defResult", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -87,7 +87,7 @@ Gurax_DeclareMethodAlias(wxDropTarget, OnDragOver_gurax, "OnDragOver")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("defResult", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -114,7 +114,7 @@ Gurax_DeclareMethodAlias(wxDropTarget, OnDrop_gurax, "OnDrop")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -141,7 +141,7 @@ Gurax_DeclareMethodAlias(wxDropTarget, OnEnter_gurax, "OnEnter")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("defResult", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -166,7 +166,7 @@ Gurax_ImplementMethodEx(wxDropTarget, OnEnter_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxDropTarget, OnLeave_gurax, "OnLeave")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -187,7 +187,7 @@ Gurax_DeclareMethodAlias(wxDropTarget, GetDataObject_gurax, "GetDataObject")
 {
 	Declare(VTYPE_wxDataObject, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -208,7 +208,7 @@ Gurax_DeclareMethodAlias(wxDropTarget, SetDataObject_gurax, "SetDataObject")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("data", VTYPE_wxDataObject, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -233,7 +233,7 @@ Gurax_DeclareMethodAlias(wxDropTarget, SetDefaultAction_gurax, "SetDefaultAction
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("action", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -256,7 +256,7 @@ Gurax_ImplementMethodEx(wxDropTarget, SetDefaultAction_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxDropTarget, GetDefaultAction_gurax, "GetDefaultAction")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -284,7 +284,7 @@ VType_wxDropTarget VTYPE_wxDropTarget("DropTarget");
 void VType_wxDropTarget::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

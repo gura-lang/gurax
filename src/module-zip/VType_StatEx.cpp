@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(zip.StatEx, `en)}
 Gurax_DeclareMethod(StatEx, PrintCentralFileHeader)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Prints the field values in the Central File Header.
 )**");
 }
@@ -53,7 +53,7 @@ Gurax_ImplementMethod(StatEx, PrintCentralFileHeader)
 Gurax_DeclareProperty_R(StatEx, compressionMethod)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A symbol representing the compression method.
 )**");
 }
@@ -69,7 +69,7 @@ Gurax_ImplementPropertyGetter(StatEx, compressionMethod)
 Gurax_DeclareProperty_R(StatEx, fileComment)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 File comment.
 )**");
 }
@@ -85,7 +85,7 @@ Gurax_ImplementPropertyGetter(StatEx, fileComment)
 Gurax_DeclareProperty_R(StatEx, compressedSize)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Compressed size in bytes.
 )**");
 }
@@ -101,7 +101,7 @@ Gurax_ImplementPropertyGetter(StatEx, compressedSize)
 Gurax_DeclarePropertyAlias_R(StatEx, name_at_zip, "name@zip")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

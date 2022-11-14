@@ -45,7 +45,7 @@ VType_wxPaintEvent VTYPE_wxPaintEvent("PaintEvent");
 void VType_wxPaintEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

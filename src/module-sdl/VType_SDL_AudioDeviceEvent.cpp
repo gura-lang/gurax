@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_AudioDeviceEvent, `en)}
 Gurax_DeclareProperty_R(SDL_AudioDeviceEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(SDL_AudioDeviceEvent, type)
 Gurax_DeclareProperty_R(SDL_AudioDeviceEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_ImplementPropertyGetter(SDL_AudioDeviceEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_AudioDeviceEvent, which)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementPropertyGetter(SDL_AudioDeviceEvent, which)
 Gurax_DeclareProperty_R(SDL_AudioDeviceEvent, iscapture)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

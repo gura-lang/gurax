@@ -34,7 +34,7 @@ Gurax_DeclareConstructor(DateTime)
 	DeclareArg("str", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(utc));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `DateTime` instance.
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_DeclareClassMethod(DateTime, Create)
 	DeclareArg("usec", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("minsOff", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `DateTime` instance.
 )**");
 }
@@ -109,7 +109,7 @@ Gurax_DeclareClassMethod(DateTime, Now)
 	Declare(VTYPE_DateTime, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(utc));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -130,7 +130,7 @@ Gurax_DeclareClassMethod(DateTime, FromUnixTime)
 	DeclareArg("unixTime", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(utc));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -153,7 +153,7 @@ Gurax_ImplementClassMethod(DateTime, FromUnixTime)
 Gurax_DeclareProperty_RW(DateTime, year)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The year value of the date.
 )**");
 }
@@ -176,7 +176,7 @@ Gurax_ImplementPropertySetter(DateTime, year)
 Gurax_DeclareProperty_RW(DateTime, month)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A number between 1 and 12 that represents the month value of the date.
 )**");
 }
@@ -199,7 +199,7 @@ Gurax_ImplementPropertySetter(DateTime, month)
 Gurax_DeclareProperty_RW(DateTime, day)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A number between 1 and 31 that represents the day value of the date.
 )**");
 }
@@ -222,7 +222,7 @@ Gurax_ImplementPropertySetter(DateTime, day)
 Gurax_DeclareProperty_RW(DateTime, hour)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A number between 0 and 23 that represents the hour value the time.
 )**");
 }
@@ -245,7 +245,7 @@ Gurax_ImplementPropertySetter(DateTime, hour)
 Gurax_DeclareProperty_RW(DateTime, min)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A number between 0 and 59 that represents the minute value of the time.
 )**");
 }
@@ -268,7 +268,7 @@ Gurax_ImplementPropertySetter(DateTime, min)
 Gurax_DeclareProperty_RW(DateTime, sec)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A number between 0 and 59 that represents the second value of the time.
 )**");
 }
@@ -291,7 +291,7 @@ Gurax_ImplementPropertySetter(DateTime, sec)
 Gurax_DeclareProperty_RW(DateTime, msec)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A number between 0 and 999 that represents the milli-second value of the time.
 )**");
 }
@@ -314,7 +314,7 @@ Gurax_ImplementPropertySetter(DateTime, msec)
 Gurax_DeclareProperty_RW(DateTime, usec)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A number between 0 and 999 that represents the micro-second value of the time.
 )**");
 }
@@ -337,7 +337,7 @@ Gurax_ImplementPropertySetter(DateTime, usec)
 Gurax_DeclareProperty_RW(DateTime, minsOff)
 {
 	Declare(VTYPE_Number, Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The time-zone offset of the time in minute.
 Returns `nil` if the `DateTime` instance has no information about time offset. 
 )**");
@@ -365,7 +365,7 @@ Gurax_ImplementPropertySetter(DateTime, minsOff)
 Gurax_DeclareProperty_R(DateTime, wday)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A number from 0 to 6 that corresponds to the week of the date from Sunday to Saturday.
 )**");
 }
@@ -380,7 +380,7 @@ Gurax_ImplementPropertyGetter(DateTime, wday)
 Gurax_DeclareProperty_R(DateTime, week)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The symbol that represents the week of the date.
 )**");
 }
@@ -395,7 +395,7 @@ Gurax_ImplementPropertyGetter(DateTime, week)
 Gurax_DeclareProperty_R(DateTime, weekShort)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The short symbol that represents the week of the date.
 )**");
 }
@@ -410,7 +410,7 @@ Gurax_ImplementPropertyGetter(DateTime, weekShort)
 Gurax_DeclareProperty_R(DateTime, yday)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The day offset from the beginning of the year that starts from zero.
 )**");
 }
@@ -425,7 +425,7 @@ Gurax_ImplementPropertyGetter(DateTime, yday)
 Gurax_DeclareProperty_R(DateTime, utc)
 {
 	Declare(VTYPE_DateTime, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The `DateTime` instance that represents the UTC of the target.
 )**");
 }
@@ -440,7 +440,7 @@ Gurax_ImplementPropertyGetter(DateTime, utc)
 Gurax_DeclareProperty_R(DateTime, unixTime)
 {
 	Declare(VTYPE_DateTime, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The UNIX time of the date.
 )**");
 }
@@ -458,7 +458,7 @@ Gurax_ImplementPropertyGetter(DateTime, unixTime)
 Gurax_DeclareClassProperty_R(DateTime, tzOffset)
 {
 	Declare(VTYPE_TimeDelta, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Time zone offset in seconds.
 )**");
 }

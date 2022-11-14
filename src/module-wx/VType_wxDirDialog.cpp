@@ -40,7 +40,7 @@ Gurax_DeclareConstructorAlias(DirDialog_gurax, "DirDialog")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.DirDialog.
 )**");
 }
@@ -72,7 +72,7 @@ Gurax_ImplementConstructorEx(DirDialog_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDirDialog, GetMessage_gurax, "GetMessage")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -92,7 +92,7 @@ Gurax_ImplementMethodEx(wxDirDialog, GetMessage_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxDirDialog, GetPath_gurax, "GetPath")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -113,7 +113,7 @@ Gurax_DeclareMethodAlias(wxDirDialog, SetMessage_gurax, "SetMessage")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -137,7 +137,7 @@ Gurax_DeclareMethodAlias(wxDirDialog, SetPath_gurax, "SetPath")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -160,7 +160,7 @@ Gurax_ImplementMethodEx(wxDirDialog, SetPath_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxDirDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -188,7 +188,7 @@ VType_wxDirDialog VTYPE_wxDirDialog("DirDialog");
 void VType_wxDirDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(DirDialog_gurax));
 	// Assignment of method

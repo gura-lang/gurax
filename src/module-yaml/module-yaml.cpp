@@ -20,7 +20,7 @@ Gurax_DeclareFunction(Parse)
 	DeclareArg("text", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(multi));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -53,7 +53,7 @@ Gurax_DeclareFunction(Read)
 	DeclareArg("stream", VTYPE_Stream, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(multi));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -87,7 +87,7 @@ Gurax_DeclareFunction(Write)
 	DeclareArg("value", VTYPE_Any, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(multi));
 	DeclareAttrOpt(Gurax_Symbol(json));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

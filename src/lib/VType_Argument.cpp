@@ -32,7 +32,7 @@ Gurax_DeclareMethod(Argument, IsSet)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the argument has te specified symbol in its attribute list.
 )**");
 }

@@ -38,7 +38,7 @@ Gurax_DeclareConstructorAlias(ContextHelpButton_gurax, "ContextHelpButton")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.ContextHelpButton.
 )**");
 }
@@ -78,7 +78,7 @@ VType_wxContextHelpButton VTYPE_wxContextHelpButton("ContextHelpButton");
 void VType_wxContextHelpButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBitmapButton, Flag::Mutable, Gurax_CreateConstructor(ContextHelpButton_gurax));
 	// Assignment of method

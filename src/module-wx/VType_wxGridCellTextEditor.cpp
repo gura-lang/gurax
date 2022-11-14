@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(GridCellTextEditor_gurax, "GridCellTextEditor")
 	Declare(VTYPE_wxGridCellTextEditor, Flag::None);
 	DeclareArg("maxChars", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.GridCellTextEditor.
 )**");
 }
@@ -58,7 +58,7 @@ Gurax_DeclareMethodAlias(wxGridCellTextEditor, SetParameters_gurax, "SetParamete
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -82,7 +82,7 @@ Gurax_DeclareMethodAlias(wxGridCellTextEditor, SetValidator_gurax, "SetValidator
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -114,7 +114,7 @@ VType_wxGridCellTextEditor VTYPE_wxGridCellTextEditor("GridCellTextEditor");
 void VType_wxGridCellTextEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellTextEditor_gurax));
 	// Assignment of method

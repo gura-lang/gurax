@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_ControllerAxisEvent, `en)}
 Gurax_DeclareProperty_R(SDL_ControllerAxisEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(SDL_ControllerAxisEvent, type)
 Gurax_DeclareProperty_R(SDL_ControllerAxisEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_ImplementPropertyGetter(SDL_ControllerAxisEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_ControllerAxisEvent, which)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementPropertyGetter(SDL_ControllerAxisEvent, which)
 Gurax_DeclareProperty_R(SDL_ControllerAxisEvent, axis)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -91,7 +91,7 @@ Gurax_ImplementPropertyGetter(SDL_ControllerAxisEvent, axis)
 Gurax_DeclareProperty_R(SDL_ControllerAxisEvent, value)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(zip.gzip, `en)}
 Gurax_DeclareClassProperty_RW(gzip, level)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -50,7 +50,7 @@ Gurax_ImplementClassPropertySetter(gzip, level)
 Gurax_DeclareClassProperty_RW(gzip, windowBits)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -69,7 +69,7 @@ Gurax_ImplementClassPropertySetter(gzip, windowBits)
 Gurax_DeclareClassProperty_RW(gzip, memLevel)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -88,7 +88,7 @@ Gurax_ImplementClassPropertySetter(gzip, memLevel)
 Gurax_DeclareClassProperty_RW(gzip, strategy)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

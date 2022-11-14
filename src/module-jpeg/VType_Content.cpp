@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(Content)
 	Declare(VTYPE_Content, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Reads JPEG image data from `stream` and creates a `jpeg.Content` instance.
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_DeclareMethod(Content, AddSegment)
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("segment", VTYPE_Segment, DeclArg::Occur::Once, DeclArg::Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Adds a `segment` to the target content.
 )**");
 }
@@ -79,7 +79,7 @@ Gurax_DeclareMethod(Content, EachSegment)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns each `Segment` instance in the content.
 )**");
 }
@@ -99,7 +99,7 @@ Gurax_DeclareMethod(Content, GetBuffImage)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns an image data in `Binary`.
 )**");
 }
@@ -117,7 +117,7 @@ Gurax_ImplementMethod(Content, GetBuffImage)
 Gurax_DeclareMethod(Content, SetBuffImage)
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Sets an image data `buffImage`.
 )**");
 }
@@ -139,7 +139,7 @@ Gurax_DeclareMethod(Content, Write)
 {
 	Declare(VTYPE_Content, Flag::Reduce);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Writes the content data to the specified `stream`.
 )**");
 }
@@ -163,7 +163,7 @@ Gurax_ImplementMethod(Content, Write)
 Gurax_DeclareProperty_RW(Content, buffImage)
 {
 	Declare(VTYPE_Binary, Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Represents an image buffer in the content.
 )**");
 }
@@ -191,7 +191,7 @@ Gurax_ImplementPropertySetter(Content, buffImage)
 Gurax_DeclareProperty_R(Content, exif)
 {
 	Declare(VTYPE_Exif, Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `jpeg.Exif` instance if exists, and `nil` otherwise.
 )**");
 }
@@ -208,7 +208,7 @@ Gurax_ImplementPropertyGetter(Content, exif)
 Gurax_DeclareProperty_R(Content, jfif)
 {
 	Declare(VTYPE_Exif, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `jpeg.JFIF` instance if exists, and `nil` otherwise.
 )**");
 }

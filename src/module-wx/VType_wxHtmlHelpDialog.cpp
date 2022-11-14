@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(HtmlHelpDialog_gurax, "HtmlHelpDialog")
 	Declare(VTYPE_wxHtmlHelpDialog, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.HtmlHelpDialog.
 )**");
 }
@@ -94,7 +94,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpDialog, AddToolbarButtons_gurax, "AddToolbarB
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("toolBar", VTYPE_wxToolBar, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -123,7 +123,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpDialog, Create_gurax, "Create")
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -152,7 +152,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpDialog, GetController_gurax, "GetController")
 {
 	Declare(VTYPE_wxHtmlHelpController, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -173,7 +173,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpDialog, SetController_gurax, "SetController")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("controller", VTYPE_wxHtmlHelpController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -198,7 +198,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpDialog, SetTitleFormat_gurax, "SetTitleFormat
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -229,7 +229,7 @@ VType_wxHtmlHelpDialog VTYPE_wxHtmlHelpDialog("HtmlHelpDialog");
 void VType_wxHtmlHelpDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(HtmlHelpDialog_gurax));
 	// Assignment of method

@@ -35,7 +35,7 @@ Gurax_DeclareConstructor(Content)
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `gif.Content` instance.
 )**");
 }
@@ -65,7 +65,7 @@ Gurax_DeclareMethod(Content, AddImage)
 	DeclareArg("leftPos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("topPos", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("disposalMethod", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -103,7 +103,7 @@ Gurax_DeclareMethod(Content, EachImage)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns images stored in the GIF file.
 )**");
 }
@@ -123,7 +123,7 @@ Gurax_DeclareMethod(Content, Write)
 	Declare(VTYPE_Content, Flag::Reduce);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("colorBackground", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -150,7 +150,7 @@ Gurax_ImplementMethod(Content, Write)
 Gurax_DeclareProperty_R(Content, CommentExtension)
 {
 	Declare(VTYPE_CommentExtension, Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -167,7 +167,7 @@ Gurax_ImplementPropertyGetter(Content, CommentExtension)
 Gurax_DeclareProperty_R(Content, LogicalScreenDescriptor)
 {
 	Declare(VTYPE_LogicalScreenDescriptor, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -182,7 +182,7 @@ Gurax_ImplementPropertyGetter(Content, LogicalScreenDescriptor)
 Gurax_DeclareProperty_RW(Content, LoopCount)
 {
 	Declare(VTYPE_Number, Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -206,7 +206,7 @@ Gurax_ImplementPropertySetter(Content, LoopCount)
 Gurax_DeclareProperty_R(Content, PlainTextExtension)
 {
 	Declare(VTYPE_PlainTextExtension, Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

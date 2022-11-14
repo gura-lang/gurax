@@ -34,7 +34,7 @@ Gurax_DeclareConstructor(Document)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamR);
 	DeclareArg("headerOffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of `markdown.Document`.
 If the `stream` is specified, the the instance shall be created after parsing the stream.
 Otherwise, it creates an instance with blank data.
@@ -63,7 +63,7 @@ Gurax_DeclareMethod(Document, CountItem)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("type", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Count the number of items of the specified symbol of type.
 The symbols are: 
 `` `Root``, 
@@ -118,7 +118,7 @@ Gurax_DeclareMethod(Document, Parse)
 {
 	Declare(VTYPE_Document, Flag::Reduce);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Parses a Markdown text in a string.
 )**");
 }
@@ -140,7 +140,7 @@ Gurax_DeclareMethod(Document, Read)
 {
 	Declare(VTYPE_Document, Flag::Reduce);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Parses a Markdown text from a stream.
 )**");
 }
@@ -164,7 +164,7 @@ Gurax_ImplementMethod(Document, Read)
 Gurax_DeclareProperty_R(Document, refs)
 {
 	Declare(VTYPE_Iterator, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 An `iterator` that returns referee items typed as `markdown.Item`.
 )**");
 }
@@ -181,7 +181,7 @@ Gurax_ImplementPropertyGetter(Document, refs)
 Gurax_DeclareProperty_R(Document, root)
 {
 	Declare(VTYPE_Item, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The root item of the parsed Markdown document.
 )**");
 }

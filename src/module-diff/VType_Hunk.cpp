@@ -32,7 +32,7 @@ Gurax_DeclareMethod(Hunk, EachEdit)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that returns stored edit information.
 )**");
 }
@@ -54,7 +54,7 @@ Gurax_ImplementMethod(Hunk, EachEdit)
 Gurax_DeclareProperty_R(Hunk, lineNoOrg)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -69,7 +69,7 @@ Gurax_ImplementPropertyGetter(Hunk, lineNoOrg)
 Gurax_DeclareProperty_R(Hunk, lineNoNew)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -84,7 +84,7 @@ Gurax_ImplementPropertyGetter(Hunk, lineNoNew)
 Gurax_DeclareProperty_R(Hunk, nLinesNew)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -99,7 +99,7 @@ Gurax_ImplementPropertyGetter(Hunk, nLinesNew)
 Gurax_DeclareProperty_R(Hunk, nLinesOrg)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -114,7 +114,7 @@ Gurax_ImplementPropertyGetter(Hunk, nLinesOrg)
 Gurax_DeclareProperty_R(Hunk, range)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

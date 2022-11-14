@@ -36,7 +36,7 @@ ${help.ComposeMethodHelp(wx.IconizeEvent, `en)}
 Gurax_DeclareMethodAlias(wxIconizeEvent, IsIconized_gurax, "IsIconized")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -64,7 +64,7 @@ VType_wxIconizeEvent VTYPE_wxIconizeEvent("IconizeEvent");
 void VType_wxIconizeEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

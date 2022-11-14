@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(WindowDC_gurax, "WindowDC")
 	Declare(VTYPE_wxWindowDC, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.WindowDC.
 )**");
 }
@@ -67,7 +67,7 @@ VType_wxWindowDC VTYPE_wxWindowDC("WindowDC");
 void VType_wxWindowDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDC, Flag::Mutable, Gurax_CreateConstructor(WindowDC_gurax));
 	// Assignment of method

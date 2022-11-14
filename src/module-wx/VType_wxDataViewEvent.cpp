@@ -36,7 +36,7 @@ ${help.ComposeMethodHelp(wx.DataViewEvent, `en)}
 Gurax_DeclareMethodAlias(wxDataViewEvent, GetColumn_gurax, "GetColumn")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, GetDataViewColumn_gurax, "GetDataViewC
 {
 	Declare(VTYPE_wxDataViewColumn, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -78,7 +78,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, GetModel_gurax, "GetModel")
 {
 	Declare(VTYPE_wxDataViewModel, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -99,7 +99,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -120,7 +120,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_wxVariant, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -140,7 +140,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetValue_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxDataViewEvent, IsEditCancelled_gurax, "IsEditCancelled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -161,7 +161,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetColumn_gurax, "SetColumn")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -185,7 +185,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetDataViewColumn_gurax, "SetDataViewC
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxDataViewColumn, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -210,7 +210,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetModel_gurax, "SetModel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("model", VTYPE_wxDataViewModel, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -235,7 +235,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetValue_gurax, "SetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_wxVariant, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -260,7 +260,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetDataObject_gurax, "SetDataObject")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("obj", VTYPE_wxDataObject, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -285,7 +285,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, GetDataFormat_gurax, "GetDataFormat")
 {
 	Declare(VTYPE_wxDataFormat, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -305,7 +305,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetDataFormat_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxDataViewEvent, GetDataSize_gurax, "GetDataSize")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -326,7 +326,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetDragFlags_gurax, "SetDragFlags")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -349,7 +349,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, SetDragFlags_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxDataViewEvent, GetDropEffect_gurax, "GetDropEffect")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -369,7 +369,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetDropEffect_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxDataViewEvent, GetCacheFrom_gurax, "GetCacheFrom")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -389,7 +389,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, GetCacheFrom_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxDataViewEvent, GetCacheTo_gurax, "GetCacheTo")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -410,7 +410,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, GetItem_gurax, "GetItem")
 {
 	Declare(VTYPE_wxDataViewItem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -431,7 +431,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetItem_gurax, "SetItem")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxDataViewItem, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -457,7 +457,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetPosition_gurax, "SetPosition")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -483,7 +483,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetCache_gurax, "SetCache")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -508,7 +508,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, GetDataObject_gurax, "GetDataObject")
 {
 	Declare(VTYPE_wxDataObject, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -529,7 +529,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetDataFormat_gurax, "SetDataFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("format", VTYPE_wxDataFormat, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -554,7 +554,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetDataSize_gurax, "SetDataSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -578,7 +578,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetDataBuffer_gurax, "SetDataBuffer")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("buf", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -605,7 +605,7 @@ Gurax_ImplementMethodEx(wxDataViewEvent, SetDataBuffer_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxDataViewEvent, GetDragFlags_gurax, "GetDragFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -626,7 +626,7 @@ Gurax_DeclareMethodAlias(wxDataViewEvent, SetDropEffect_gurax, "SetDropEffect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -657,7 +657,7 @@ VType_wxDataViewEvent VTYPE_wxDataViewEvent("DataViewEvent");
 void VType_wxDataViewEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

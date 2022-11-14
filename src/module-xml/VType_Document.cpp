@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(Document)
 {
 	Declare(VTYPE_Document, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `xml.Document` instance.
 )**");
 }
@@ -54,7 +54,7 @@ Gurax_DeclareMethod(Document, Compose)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_DeclareMethod(Document, Path)
 {
 	Declare(VTYPE_Element, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -104,7 +104,7 @@ Gurax_DeclareMethod(Document, Walk)
 	DeclareAttrOpt(Gurax_Symbol(element));
 	DeclareAttrOpt(Gurax_Symbol(text));
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -130,7 +130,7 @@ Gurax_ImplementMethod(Document, Walk)
 Gurax_DeclareProperty_R(Document, root)
 {
 	Declare(VTYPE_Element, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -146,7 +146,7 @@ Gurax_ImplementPropertyGetter(Document, root)
 Gurax_DeclareProperty_R(Document, xmlDecl)
 {
 	Declare(VTYPE_Element, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

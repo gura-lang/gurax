@@ -10,7 +10,7 @@ Gurax_DeclareFunctionAlias(SDL_Init_gurax, "SDL_Init")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -30,7 +30,7 @@ Gurax_DeclareFunctionAlias(SDL_InitSubSystem_gurax, "SDL_InitSubSystem")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -50,7 +50,7 @@ Gurax_DeclareFunctionAlias(SDL_QuitSubSystem_gurax, "SDL_QuitSubSystem")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -70,7 +70,7 @@ Gurax_DeclareFunctionAlias(SDL_WasInit_gurax, "SDL_WasInit")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -89,7 +89,7 @@ Gurax_ImplementFunctionEx(SDL_WasInit_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_Quit_gurax, "SDL_Quit")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -108,7 +108,7 @@ Gurax_DeclareFunctionAlias(SDL_SetHintWithPriority_gurax, "SDL_SetHintWithPriori
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("priority", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -131,7 +131,7 @@ Gurax_DeclareFunctionAlias(SDL_SetHint_gurax, "SDL_SetHint")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -152,7 +152,7 @@ Gurax_DeclareFunctionAlias(SDL_GetHint_gurax, "SDL_GetHint")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -173,7 +173,7 @@ Gurax_DeclareFunctionAlias(SDL_GetHintBoolean_gurax, "SDL_GetHintBoolean")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("default_value", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -193,7 +193,7 @@ Gurax_ImplementFunctionEx(SDL_GetHintBoolean_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(SDL_ClearHints_gurax, "SDL_ClearHints")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -209,7 +209,7 @@ Gurax_ImplementFunctionEx(SDL_ClearHints_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetError_gurax, "SDL_GetError")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -225,7 +225,7 @@ Gurax_ImplementFunctionEx(SDL_GetError_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_ClearError_gurax, "SDL_ClearError")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -242,7 +242,7 @@ Gurax_DeclareFunctionAlias(SDL_Error_gurax, "SDL_Error")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -262,7 +262,7 @@ Gurax_DeclareFunctionAlias(SDL_LogSetAllPriority_gurax, "SDL_LogSetAllPriority")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("priority", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -283,7 +283,7 @@ Gurax_DeclareFunctionAlias(SDL_LogSetPriority_gurax, "SDL_LogSetPriority")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("category", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("priority", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -304,7 +304,7 @@ Gurax_DeclareFunctionAlias(SDL_LogGetPriority_gurax, "SDL_LogGetPriority")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("category", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -323,7 +323,7 @@ Gurax_ImplementFunctionEx(SDL_LogGetPriority_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(SDL_LogResetPriorities_gurax, "SDL_LogResetPriorities")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -339,7 +339,7 @@ Gurax_ImplementFunctionEx(SDL_LogResetPriorities_gurax, processor_gurax, argumen
 Gurax_DeclareFunctionAlias(SDL_ResetAssertionReport_gurax, "SDL_ResetAssertionReport")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -355,7 +355,7 @@ Gurax_ImplementFunctionEx(SDL_ResetAssertionReport_gurax, processor_gurax, argum
 Gurax_DeclareFunctionAlias(SDL_GetVersion_gurax, "SDL_GetVersion")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -372,7 +372,7 @@ Gurax_ImplementFunctionEx(SDL_GetVersion_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetRevision_gurax, "SDL_GetRevision")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -388,7 +388,7 @@ Gurax_ImplementFunctionEx(SDL_GetRevision_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(SDL_GetRevisionNumber_gurax, "SDL_GetRevisionNumber")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -404,7 +404,7 @@ Gurax_ImplementFunctionEx(SDL_GetRevisionNumber_gurax, processor_gurax, argument
 Gurax_DeclareFunctionAlias(SDL_GetNumVideoDrivers_gurax, "SDL_GetNumVideoDrivers")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -421,7 +421,7 @@ Gurax_DeclareFunctionAlias(SDL_GetVideoDriver_gurax, "SDL_GetVideoDriver")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -441,7 +441,7 @@ Gurax_DeclareFunctionAlias(SDL_VideoInit_gurax, "SDL_VideoInit")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("driver_name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -460,7 +460,7 @@ Gurax_ImplementFunctionEx(SDL_VideoInit_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_VideoQuit_gurax, "SDL_VideoQuit")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -476,7 +476,7 @@ Gurax_ImplementFunctionEx(SDL_VideoQuit_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetCurrentVideoDriver_gurax, "SDL_GetCurrentVideoDriver")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -492,7 +492,7 @@ Gurax_ImplementFunctionEx(SDL_GetCurrentVideoDriver_gurax, processor_gurax, argu
 Gurax_DeclareFunctionAlias(SDL_GetNumVideoDisplays_gurax, "SDL_GetNumVideoDisplays")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -509,7 +509,7 @@ Gurax_DeclareFunctionAlias(SDL_GetDisplayName_gurax, "SDL_GetDisplayName")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -529,7 +529,7 @@ Gurax_DeclareFunctionAlias(SDL_GetDisplayBounds_gurax, "SDL_GetDisplayBounds")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -550,7 +550,7 @@ Gurax_DeclareFunctionAlias(SDL_GetDisplayUsableBounds_gurax, "SDL_GetDisplayUsab
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -571,7 +571,7 @@ Gurax_DeclareFunctionAlias(SDL_GetDisplayDPI_gurax, "SDL_GetDisplayDPI")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -592,7 +592,7 @@ Gurax_DeclareFunctionAlias(SDL_GetDisplayOrientation_gurax, "SDL_GetDisplayOrien
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -612,7 +612,7 @@ Gurax_DeclareFunctionAlias(SDL_GetNumDisplayModes_gurax, "SDL_GetNumDisplayModes
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -633,7 +633,7 @@ Gurax_DeclareFunctionAlias(SDL_GetDisplayMode_gurax, "SDL_GetDisplayMode")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("modeIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -655,7 +655,7 @@ Gurax_DeclareFunctionAlias(SDL_GetDesktopDisplayMode_gurax, "SDL_GetDesktopDispl
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -676,7 +676,7 @@ Gurax_DeclareFunctionAlias(SDL_GetCurrentDisplayMode_gurax, "SDL_GetCurrentDispl
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("displayIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -697,7 +697,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowDisplayIndex_gurax, "SDL_GetWindowDispla
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -719,7 +719,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowDisplayMode_gurax, "SDL_SetWindowDisplay
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_SDL_DisplayMode, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -743,7 +743,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowDisplayMode_gurax, "SDL_GetWindowDisplay
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_SDL_DisplayMode, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -766,7 +766,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowPixelFormat_gurax, "SDL_GetWindowPixelFo
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -792,7 +792,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateWindow_gurax, "SDL_CreateWindow")
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -818,7 +818,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowID_gurax, "SDL_GetWindowID")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -839,7 +839,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowFromID_gurax, "SDL_GetWindowFromID")
 {
 	Declare(VTYPE_SDL_Window, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -860,7 +860,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowFlags_gurax, "SDL_GetWindowFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -882,7 +882,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowTitle_gurax, "SDL_SetWindowTitle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -904,7 +904,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowTitle_gurax, "SDL_GetWindowTitle")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -926,7 +926,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowIcon_gurax, "SDL_SetWindowIcon")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("icon", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -951,7 +951,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowPosition_gurax, "SDL_SetWindowPosition")
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -974,7 +974,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowPosition_gurax, "SDL_GetWindowPosition")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -998,7 +998,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowSize_gurax, "SDL_SetWindowSize")
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1021,7 +1021,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowSize_gurax, "SDL_GetWindowSize")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1043,7 +1043,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowBordersSize_gurax, "SDL_GetWindowBorders
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1067,7 +1067,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowMinimumSize_gurax, "SDL_SetWindowMinimum
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("min_w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("min_h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1090,7 +1090,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowMinimumSize_gurax, "SDL_GetWindowMinimum
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1114,7 +1114,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowMaximumSize_gurax, "SDL_SetWindowMaximum
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("max_w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("max_h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1137,7 +1137,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowMaximumSize_gurax, "SDL_GetWindowMaximum
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1160,7 +1160,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowBordered_gurax, "SDL_SetWindowBordered")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bordered", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1183,7 +1183,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowResizable_gurax, "SDL_SetWindowResizable
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("resizable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1205,7 +1205,7 @@ Gurax_DeclareFunctionAlias(SDL_ShowWindow_gurax, "SDL_ShowWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1226,7 +1226,7 @@ Gurax_DeclareFunctionAlias(SDL_HideWindow_gurax, "SDL_HideWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1247,7 +1247,7 @@ Gurax_DeclareFunctionAlias(SDL_RaiseWindow_gurax, "SDL_RaiseWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1268,7 +1268,7 @@ Gurax_DeclareFunctionAlias(SDL_MaximizeWindow_gurax, "SDL_MaximizeWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1289,7 +1289,7 @@ Gurax_DeclareFunctionAlias(SDL_MinimizeWindow_gurax, "SDL_MinimizeWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1310,7 +1310,7 @@ Gurax_DeclareFunctionAlias(SDL_RestoreWindow_gurax, "SDL_RestoreWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1332,7 +1332,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowFullscreen_gurax, "SDL_SetWindowFullscre
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1354,7 +1354,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowSurface_gurax, "SDL_GetWindowSurface")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1376,7 +1376,7 @@ Gurax_DeclareFunctionAlias(SDL_UpdateWindowSurface_gurax, "SDL_UpdateWindowSurfa
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1398,7 +1398,7 @@ Gurax_DeclareFunctionAlias(SDL_UpdateWindowSurfaceRects_gurax, "SDL_UpdateWindow
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1422,7 +1422,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowGrab_gurax, "SDL_SetWindowGrab")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("grabbed", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1444,7 +1444,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowGrab_gurax, "SDL_GetWindowGrab")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1464,7 +1464,7 @@ Gurax_ImplementFunctionEx(SDL_GetWindowGrab_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(SDL_GetGrabbedWindow_gurax, "SDL_GetGrabbedWindow")
 {
 	Declare(VTYPE_SDL_Window, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1483,7 +1483,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowBrightness_gurax, "SDL_SetWindowBrightne
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("brightness", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1505,7 +1505,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowBrightness_gurax, "SDL_GetWindowBrightne
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1527,7 +1527,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowOpacity_gurax, "SDL_SetWindowOpacity")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("opacity", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1549,7 +1549,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowOpacity_gurax, "SDL_GetWindowOpacity")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1572,7 +1572,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowModalFor_gurax, "SDL_SetWindowModalFor")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("modal_window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("parent_window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1595,7 +1595,7 @@ Gurax_DeclareFunctionAlias(SDL_SetWindowInputFocus_gurax, "SDL_SetWindowInputFoc
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1616,7 +1616,7 @@ Gurax_DeclareFunctionAlias(SDL_DestroyWindow_gurax, "SDL_DestroyWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1635,7 +1635,7 @@ Gurax_ImplementFunctionEx(SDL_DestroyWindow_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(SDL_IsScreenSaverEnabled_gurax, "SDL_IsScreenSaverEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1651,7 +1651,7 @@ Gurax_ImplementFunctionEx(SDL_IsScreenSaverEnabled_gurax, processor_gurax, argum
 Gurax_DeclareFunctionAlias(SDL_EnableScreenSaver_gurax, "SDL_EnableScreenSaver")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1667,7 +1667,7 @@ Gurax_ImplementFunctionEx(SDL_EnableScreenSaver_gurax, processor_gurax, argument
 Gurax_DeclareFunctionAlias(SDL_DisableScreenSaver_gurax, "SDL_DisableScreenSaver")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1684,7 +1684,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_LoadLibrary_gurax, "SDL_GL_LoadLibrary")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1703,7 +1703,7 @@ Gurax_ImplementFunctionEx(SDL_GL_LoadLibrary_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(SDL_GL_UnloadLibrary_gurax, "SDL_GL_UnloadLibrary")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1720,7 +1720,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_ExtensionSupported_gurax, "SDL_GL_ExtensionSup
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("extension", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1739,7 +1739,7 @@ Gurax_ImplementFunctionEx(SDL_GL_ExtensionSupported_gurax, processor_gurax, argu
 Gurax_DeclareFunctionAlias(SDL_GL_ResetAttributes_gurax, "SDL_GL_ResetAttributes")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1757,7 +1757,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_SetAttribute_gurax, "SDL_GL_SetAttribute")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("attr", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1778,7 +1778,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_GetAttribute_gurax, "SDL_GL_GetAttribute")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("attr", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1799,7 +1799,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_CreateContext_gurax, "SDL_GL_CreateContext")
 {
 	Declare(VTYPE_SDL_GLContext, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1822,7 +1822,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_MakeCurrent_gurax, "SDL_GL_MakeCurrent")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("context", VTYPE_SDL_GLContext, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1844,7 +1844,7 @@ Gurax_ImplementFunctionEx(SDL_GL_MakeCurrent_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(SDL_GL_GetCurrentWindow_gurax, "SDL_GL_GetCurrentWindow")
 {
 	Declare(VTYPE_SDL_Window, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1861,7 +1861,7 @@ Gurax_ImplementFunctionEx(SDL_GL_GetCurrentWindow_gurax, processor_gurax, argume
 Gurax_DeclareFunctionAlias(SDL_GL_GetCurrentContext_gurax, "SDL_GL_GetCurrentContext")
 {
 	Declare(VTYPE_SDL_GLContext, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1879,7 +1879,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_GetDrawableSize_gurax, "SDL_GL_GetDrawableSize
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1901,7 +1901,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_SetSwapInterval_gurax, "SDL_GL_SetSwapInterval
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("interval", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1920,7 +1920,7 @@ Gurax_ImplementFunctionEx(SDL_GL_SetSwapInterval_gurax, processor_gurax, argumen
 Gurax_DeclareFunctionAlias(SDL_GL_GetSwapInterval_gurax, "SDL_GL_GetSwapInterval")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1937,7 +1937,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_SwapWindow_gurax, "SDL_GL_SwapWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1958,7 +1958,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_DeleteContext_gurax, "SDL_GL_DeleteContext")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("context", VTYPE_SDL_GLContext, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1978,7 +1978,7 @@ Gurax_ImplementFunctionEx(SDL_GL_DeleteContext_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_GetNumRenderDrivers_gurax, "SDL_GetNumRenderDrivers")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1995,7 +1995,7 @@ Gurax_DeclareFunctionAlias(SDL_GetRenderDriverInfo_gurax, "SDL_GetRenderDriverIn
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2018,7 +2018,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateWindowAndRenderer_gurax, "SDL_CreateWindowA
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("window_flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2044,7 +2044,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateRenderer_gurax, "SDL_CreateRenderer")
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2068,7 +2068,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateSoftwareRenderer_gurax, "SDL_CreateSoftware
 {
 	Declare(VTYPE_SDL_Renderer, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2090,7 +2090,7 @@ Gurax_DeclareFunctionAlias(SDL_GetRenderer_gurax, "SDL_GetRenderer")
 {
 	Declare(VTYPE_SDL_Renderer, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2112,7 +2112,7 @@ Gurax_DeclareFunctionAlias(SDL_GetRendererInfo_gurax, "SDL_GetRendererInfo")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2134,7 +2134,7 @@ Gurax_DeclareFunctionAlias(SDL_GetRendererOutputSize_gurax, "SDL_GetRendererOutp
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2160,7 +2160,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateTexture_gurax, "SDL_CreateTexture")
 	DeclareArg("access", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2187,7 +2187,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateTextureFromSurface_gurax, "SDL_CreateTextur
 	Declare(VTYPE_SDL_Texture, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2211,7 +2211,7 @@ Gurax_DeclareFunctionAlias(SDL_QueryTexture_gurax, "SDL_QueryTexture")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2237,7 +2237,7 @@ Gurax_DeclareFunctionAlias(SDL_SetTextureColorMod_gurax, "SDL_SetTextureColorMod
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2261,7 +2261,7 @@ Gurax_DeclareFunctionAlias(SDL_GetTextureColorMod_gurax, "SDL_GetTextureColorMod
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2284,7 +2284,7 @@ Gurax_DeclareFunctionAlias(SDL_SetTextureAlphaMod_gurax, "SDL_SetTextureAlphaMod
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2306,7 +2306,7 @@ Gurax_DeclareFunctionAlias(SDL_GetTextureAlphaMod_gurax, "SDL_GetTextureAlphaMod
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2329,7 +2329,7 @@ Gurax_DeclareFunctionAlias(SDL_SetTextureBlendMode_gurax, "SDL_SetTextureBlendMo
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blendMode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2351,7 +2351,7 @@ Gurax_DeclareFunctionAlias(SDL_GetTextureBlendMode_gurax, "SDL_GetTextureBlendMo
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2374,7 +2374,7 @@ Gurax_DeclareFunctionAlias(SDL_SetTextureScaleMode_gurax, "SDL_SetTextureScaleMo
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("scaleMode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2396,7 +2396,7 @@ Gurax_DeclareFunctionAlias(SDL_GetTextureScaleMode_gurax, "SDL_GetTextureScaleMo
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2421,7 +2421,7 @@ Gurax_DeclareFunctionAlias(SDL_UpdateTexture_gurax, "SDL_UpdateTexture")
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2452,7 +2452,7 @@ Gurax_DeclareFunctionAlias(SDL_UpdateYUVTexture_gurax, "SDL_UpdateYUVTexture")
 	DeclareArg("Upitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Vplane", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Vpitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2481,7 +2481,7 @@ Gurax_DeclareFunctionAlias(SDL_LockTexture_gurax, "SDL_LockTexture")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2516,7 +2516,7 @@ Gurax_DeclareFunctionAlias(SDL_LockTextureToSurface_gurax, "SDL_LockTextureToSur
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2539,7 +2539,7 @@ Gurax_DeclareFunctionAlias(SDL_UnlockTexture_gurax, "SDL_UnlockTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2560,7 +2560,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderTargetSupported_gurax, "SDL_RenderTargetSup
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2582,7 +2582,7 @@ Gurax_DeclareFunctionAlias(SDL_SetRenderTarget_gurax, "SDL_SetRenderTarget")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2605,7 +2605,7 @@ Gurax_DeclareFunctionAlias(SDL_GetRenderTarget_gurax, "SDL_GetRenderTarget")
 {
 	Declare(VTYPE_SDL_Texture, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2629,7 +2629,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderSetLogicalSize_gurax, "SDL_RenderSetLogical
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("w", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2652,7 +2652,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderGetLogicalSize_gurax, "SDL_RenderGetLogical
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2675,7 +2675,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderSetIntegerScale_gurax, "SDL_RenderSetIntege
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2697,7 +2697,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderGetIntegerScale_gurax, "SDL_RenderGetIntege
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2719,7 +2719,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderSetViewport_gurax, "SDL_RenderSetViewport")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2741,7 +2741,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderGetViewport_gurax, "SDL_RenderGetViewport")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2764,7 +2764,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderSetClipRect_gurax, "SDL_RenderSetClipRect")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2786,7 +2786,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderGetClipRect_gurax, "SDL_RenderGetClipRect")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2808,7 +2808,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderIsClipEnabled_gurax, "SDL_RenderIsClipEnabl
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2831,7 +2831,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderSetScale_gurax, "SDL_RenderSetScale")
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("scaleX", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("scaleY", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2854,7 +2854,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderGetScale_gurax, "SDL_RenderGetScale")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2880,7 +2880,7 @@ Gurax_DeclareFunctionAlias(SDL_SetRenderDrawColor_gurax, "SDL_SetRenderDrawColor
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("a", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2905,7 +2905,7 @@ Gurax_DeclareFunctionAlias(SDL_GetRenderDrawColor_gurax, "SDL_GetRenderDrawColor
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2928,7 +2928,7 @@ Gurax_DeclareFunctionAlias(SDL_SetRenderDrawBlendMode_gurax, "SDL_SetRenderDrawB
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blendMode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2950,7 +2950,7 @@ Gurax_DeclareFunctionAlias(SDL_GetRenderDrawBlendMode_gurax, "SDL_GetRenderDrawB
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2972,7 +2972,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderClear_gurax, "SDL_RenderClear")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2995,7 +2995,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawPoint_gurax, "SDL_RenderDrawPoint")
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3019,7 +3019,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawPoints_gurax, "SDL_RenderDrawPoints")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("points", VTYPE_SDL_Point, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3046,7 +3046,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawLine_gurax, "SDL_RenderDrawLine")
 	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3072,7 +3072,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawLines_gurax, "SDL_RenderDrawLines")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("points", VTYPE_SDL_Point, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3096,7 +3096,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawRect_gurax, "SDL_RenderDrawRect")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3119,7 +3119,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawRects_gurax, "SDL_RenderDrawRects")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3143,7 +3143,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderFillRect_gurax, "SDL_RenderFillRect")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3166,7 +3166,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderFillRects_gurax, "SDL_RenderFillRects")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3192,7 +3192,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderCopy_gurax, "SDL_RenderCopy")
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3223,7 +3223,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderCopyEx_gurax, "SDL_RenderCopyEx")
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("center", VTYPE_SDL_Point, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("flip", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3253,7 +3253,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawPointF_gurax, "SDL_RenderDrawPointF")
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3278,7 +3278,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawPointsF_gurax, "SDL_RenderDrawPointsF")
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("points", VTYPE_SDL_FPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3306,7 +3306,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawLineF_gurax, "SDL_RenderDrawLineF")
 	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3332,7 +3332,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawLinesF_gurax, "SDL_RenderDrawLinesF")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("points", VTYPE_SDL_FPoint, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3356,7 +3356,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawRectF_gurax, "SDL_RenderDrawRectF")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_FRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3380,7 +3380,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderDrawRectsF_gurax, "SDL_RenderDrawRectsF")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rects", VTYPE_SDL_FRect, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3404,7 +3404,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderFillRectF_gurax, "SDL_RenderFillRectF")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_FRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3428,7 +3428,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderFillRectsF_gurax, "SDL_RenderFillRectsF")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rects", VTYPE_SDL_FRect, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3454,7 +3454,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderCopyF_gurax, "SDL_RenderCopyF")
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dstrect", VTYPE_SDL_FRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3484,7 +3484,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderReadPixels_gurax, "SDL_RenderReadPixels")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixels", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3513,7 +3513,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderPresent_gurax, "SDL_RenderPresent")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3534,7 +3534,7 @@ Gurax_DeclareFunctionAlias(SDL_DestroyTexture_gurax, "SDL_DestroyTexture")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3554,7 +3554,7 @@ Gurax_DeclareFunctionAlias(SDL_DestroyRenderer_gurax, "SDL_DestroyRenderer")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3574,7 +3574,7 @@ Gurax_DeclareFunctionAlias(SDL_RenderFlush_gurax, "SDL_RenderFlush")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("renderer", VTYPE_SDL_Renderer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3595,7 +3595,7 @@ Gurax_DeclareFunctionAlias(SDL_GL_UnbindTexture_gurax, "SDL_GL_UnbindTexture")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("texture", VTYPE_SDL_Texture, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3616,7 +3616,7 @@ Gurax_DeclareFunctionAlias(SDL_GetPixelFormatName_gurax, "SDL_GetPixelFormatName
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3640,7 +3640,7 @@ Gurax_DeclareFunctionAlias(SDL_MasksToPixelFormatEnum_gurax, "SDL_MasksToPixelFo
 	DeclareArg("Gmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Bmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Amask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3664,7 +3664,7 @@ Gurax_DeclareFunctionAlias(SDL_AllocFormat_gurax, "SDL_AllocFormat")
 {
 	Declare(VTYPE_SDL_PixelFormat, Flag::None);
 	DeclareArg("pixel_format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3685,7 +3685,7 @@ Gurax_DeclareFunctionAlias(SDL_FreeFormat_gurax, "SDL_FreeFormat")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3705,7 +3705,7 @@ Gurax_DeclareFunctionAlias(SDL_AllocPalette_gurax, "SDL_AllocPalette")
 {
 	Declare(VTYPE_SDL_Palette, Flag::None);
 	DeclareArg("ncolors", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3727,7 +3727,7 @@ Gurax_DeclareFunctionAlias(SDL_SetPixelFormatPalette_gurax, "SDL_SetPixelFormatP
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("palette", VTYPE_SDL_Palette, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3752,7 +3752,7 @@ Gurax_DeclareFunctionAlias(SDL_SetPaletteColors_gurax, "SDL_SetPaletteColors")
 	DeclareArg("palette", VTYPE_SDL_Palette, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("colors", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("firstcolor", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3776,7 +3776,7 @@ Gurax_DeclareFunctionAlias(SDL_FreePalette_gurax, "SDL_FreePalette")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("palette", VTYPE_SDL_Palette, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3799,7 +3799,7 @@ Gurax_DeclareFunctionAlias(SDL_MapRGB_gurax, "SDL_MapRGB")
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3827,7 +3827,7 @@ Gurax_DeclareFunctionAlias(SDL_MapRGBA_gurax, "SDL_MapRGBA")
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("a", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3853,7 +3853,7 @@ Gurax_DeclareFunctionAlias(SDL_GetRGB_gurax, "SDL_GetRGB")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("pixel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3877,7 +3877,7 @@ Gurax_DeclareFunctionAlias(SDL_GetRGBA_gurax, "SDL_GetRGBA")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("pixel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3901,7 +3901,7 @@ Gurax_DeclareFunctionAlias(SDL_HasIntersection_gurax, "SDL_HasIntersection")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("A", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("B", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3925,7 +3925,7 @@ Gurax_DeclareFunctionAlias(SDL_IntersectRect_gurax, "SDL_IntersectRect")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("A", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("B", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3950,7 +3950,7 @@ Gurax_DeclareFunctionAlias(SDL_UnionRect_gurax, "SDL_UnionRect")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("A", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("B", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3978,7 +3978,7 @@ Gurax_DeclareFunctionAlias(SDL_IntersectRectAndLine_gurax, "SDL_IntersectRectAnd
 	DeclareArg("Y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("X2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4010,7 +4010,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateRGBSurface_gurax, "SDL_CreateRGBSurface")
 	DeclareArg("Gmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Bmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Amask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4042,7 +4042,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateRGBSurfaceWithFormat_gurax, "SDL_CreateRGBS
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4075,7 +4075,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateRGBSurfaceFrom_gurax, "SDL_CreateRGBSurface
 	DeclareArg("Gmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Bmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("Amask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4113,7 +4113,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateRGBSurfaceWithFormatFrom_gurax, "SDL_Create
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4143,7 +4143,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateRGBSurfaceFromImage_gurax, "SDL_CreateRGBSu
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("image", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4162,7 +4162,7 @@ Gurax_DeclareFunctionAlias(SDL_FreeSurface_gurax, "SDL_FreeSurface")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4183,7 +4183,7 @@ Gurax_DeclareFunctionAlias(SDL_SetSurfacePalette_gurax, "SDL_SetSurfacePalette")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("palette", VTYPE_SDL_Palette, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4206,7 +4206,7 @@ Gurax_DeclareFunctionAlias(SDL_LockSurface_gurax, "SDL_LockSurface")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4227,7 +4227,7 @@ Gurax_DeclareFunctionAlias(SDL_UnlockSurface_gurax, "SDL_UnlockSurface")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4248,7 +4248,7 @@ Gurax_DeclareFunctionAlias(SDL_LoadBMP_gurax, "SDL_LoadBMP")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4270,7 +4270,7 @@ Gurax_DeclareFunctionAlias(SDL_LoadBMP_RW_gurax, "SDL_LoadBMP_RW")
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4294,7 +4294,7 @@ Gurax_DeclareFunctionAlias(SDL_SaveBMP_gurax, "SDL_SaveBMP")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4318,7 +4318,7 @@ Gurax_DeclareFunctionAlias(SDL_SaveBMP_RW_gurax, "SDL_SaveBMP_RW")
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dst", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("freedst", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4343,7 +4343,7 @@ Gurax_DeclareFunctionAlias(SDL_SetSurfaceRLE_gurax, "SDL_SetSurfaceRLE")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4367,7 +4367,7 @@ Gurax_DeclareFunctionAlias(SDL_SetColorKey_gurax, "SDL_SetColorKey")
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flag", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("key", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4390,7 +4390,7 @@ Gurax_DeclareFunctionAlias(SDL_HasColorKey_gurax, "SDL_HasColorKey")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4411,7 +4411,7 @@ Gurax_DeclareFunctionAlias(SDL_GetColorKey_gurax, "SDL_GetColorKey")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4436,7 +4436,7 @@ Gurax_DeclareFunctionAlias(SDL_SetSurfaceColorMod_gurax, "SDL_SetSurfaceColorMod
 	DeclareArg("r", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4460,7 +4460,7 @@ Gurax_DeclareFunctionAlias(SDL_GetSurfaceColorMod_gurax, "SDL_GetSurfaceColorMod
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4483,7 +4483,7 @@ Gurax_DeclareFunctionAlias(SDL_SetSurfaceAlphaMod_gurax, "SDL_SetSurfaceAlphaMod
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4505,7 +4505,7 @@ Gurax_DeclareFunctionAlias(SDL_GetSurfaceAlphaMod_gurax, "SDL_GetSurfaceAlphaMod
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4528,7 +4528,7 @@ Gurax_DeclareFunctionAlias(SDL_SetSurfaceBlendMode_gurax, "SDL_SetSurfaceBlendMo
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blendMode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4550,7 +4550,7 @@ Gurax_DeclareFunctionAlias(SDL_GetSurfaceBlendMode_gurax, "SDL_GetSurfaceBlendMo
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4573,7 +4573,7 @@ Gurax_DeclareFunctionAlias(SDL_SetClipRect_gurax, "SDL_SetClipRect")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4595,7 +4595,7 @@ Gurax_DeclareFunctionAlias(SDL_GetClipRect_gurax, "SDL_GetClipRect")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4617,7 +4617,7 @@ Gurax_DeclareFunctionAlias(SDL_DuplicateSurface_gurax, "SDL_DuplicateSurface")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4641,7 +4641,7 @@ Gurax_DeclareFunctionAlias(SDL_ConvertSurface_gurax, "SDL_ConvertSurface")
 	DeclareArg("src", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fmt", VTYPE_SDL_PixelFormat, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4668,7 +4668,7 @@ Gurax_DeclareFunctionAlias(SDL_ConvertSurfaceFormat_gurax, "SDL_ConvertSurfaceFo
 	DeclareArg("src", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pixel_format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4699,7 +4699,7 @@ Gurax_DeclareFunctionAlias(SDL_ConvertPixels_gurax, "SDL_ConvertPixels")
 	DeclareArg("dst_format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dst", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dst_pitch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4732,7 +4732,7 @@ Gurax_DeclareFunctionAlias(SDL_FillRect_gurax, "SDL_FillRect")
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("color", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4758,7 +4758,7 @@ Gurax_DeclareFunctionAlias(SDL_FillRects_gurax, "SDL_FillRects")
 	DeclareArg("rects", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4785,7 +4785,7 @@ Gurax_DeclareFunctionAlias(SDL_BlitSurface_gurax, "SDL_BlitSurface")
 	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4813,7 +4813,7 @@ Gurax_DeclareFunctionAlias(SDL_UpperBlit_gurax, "SDL_UpperBlit")
 	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4841,7 +4841,7 @@ Gurax_DeclareFunctionAlias(SDL_LowerBlit_gurax, "SDL_LowerBlit")
 	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4869,7 +4869,7 @@ Gurax_DeclareFunctionAlias(SDL_SoftStretch_gurax, "SDL_SoftStretch")
 	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4897,7 +4897,7 @@ Gurax_DeclareFunctionAlias(SDL_BlitScaled_gurax, "SDL_BlitScaled")
 	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4925,7 +4925,7 @@ Gurax_DeclareFunctionAlias(SDL_UpperBlitScaled_gurax, "SDL_UpperBlitScaled")
 	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4953,7 +4953,7 @@ Gurax_DeclareFunctionAlias(SDL_LowerBlitScaled_gurax, "SDL_LowerBlitScaled")
 	DeclareArg("srcrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("dst", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dstrect", VTYPE_SDL_Rect, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4978,7 +4978,7 @@ Gurax_DeclareFunctionAlias(SDL_SetYUVConversionMode_gurax, "SDL_SetYUVConversion
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4997,7 +4997,7 @@ Gurax_ImplementFunctionEx(SDL_SetYUVConversionMode_gurax, processor_gurax, argum
 Gurax_DeclareFunctionAlias(SDL_GetYUVConversionMode_gurax, "SDL_GetYUVConversionMode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5015,7 +5015,7 @@ Gurax_DeclareFunctionAlias(SDL_GetYUVConversionModeForResolution_gurax, "SDL_Get
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5036,7 +5036,7 @@ Gurax_DeclareFunctionAlias(SDL_GetWindowWMInfo_gurax, "SDL_GetWindowWMInfo")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5058,7 +5058,7 @@ Gurax_DeclareFunctionAlias(SDL_SetClipboardText_gurax, "SDL_SetClipboardText")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5077,7 +5077,7 @@ Gurax_ImplementFunctionEx(SDL_SetClipboardText_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_GetClipboardText_gurax, "SDL_GetClipboardText")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5095,7 +5095,7 @@ Gurax_ImplementFunctionEx(SDL_GetClipboardText_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_HasClipboardText_gurax, "SDL_HasClipboardText")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5111,7 +5111,7 @@ Gurax_ImplementFunctionEx(SDL_HasClipboardText_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_PumpEvents_gurax, "SDL_PumpEvents")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5132,7 +5132,7 @@ Gurax_DeclareFunctionAlias(SDL_PeepEvents_gurax, "SDL_PeepEvents")
 	DeclareArg("action", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("minType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5157,7 +5157,7 @@ Gurax_DeclareFunctionAlias(SDL_HasEvent_gurax, "SDL_HasEvent")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5178,7 +5178,7 @@ Gurax_DeclareFunctionAlias(SDL_HasEvents_gurax, "SDL_HasEvents")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("minType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5199,7 +5199,7 @@ Gurax_DeclareFunctionAlias(SDL_FlushEvent_gurax, "SDL_FlushEvent")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5220,7 +5220,7 @@ Gurax_DeclareFunctionAlias(SDL_FlushEvents_gurax, "SDL_FlushEvents")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("minType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxType", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5241,7 +5241,7 @@ Gurax_DeclareFunctionAlias(SDL_PollEvent_gurax, "SDL_PollEvent")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5262,7 +5262,7 @@ Gurax_DeclareFunctionAlias(SDL_WaitEvent_gurax, "SDL_WaitEvent")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5284,7 +5284,7 @@ Gurax_DeclareFunctionAlias(SDL_WaitEventTimeout_gurax, "SDL_WaitEventTimeout")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("timeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5306,7 +5306,7 @@ Gurax_DeclareFunctionAlias(SDL_PushEvent_gurax, "SDL_PushEvent")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("event", VTYPE_SDL_Event, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5328,7 +5328,7 @@ Gurax_DeclareFunctionAlias(SDL_EventState_gurax, "SDL_EventState")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5349,7 +5349,7 @@ Gurax_DeclareFunctionAlias(SDL_RegisterEvents_gurax, "SDL_RegisterEvents")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("numevents", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5368,7 +5368,7 @@ Gurax_ImplementFunctionEx(SDL_RegisterEvents_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(SDL_GetKeyboardFocus_gurax, "SDL_GetKeyboardFocus")
 {
 	Declare(VTYPE_SDL_Window, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5385,7 +5385,7 @@ Gurax_ImplementFunctionEx(SDL_GetKeyboardFocus_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_GetKeyboardState_gurax, "SDL_GetKeyboardState")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5404,7 +5404,7 @@ Gurax_ImplementFunctionEx(SDL_GetKeyboardState_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_GetModState_gurax, "SDL_GetModState")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5421,7 +5421,7 @@ Gurax_DeclareFunctionAlias(SDL_SetModState_gurax, "SDL_SetModState")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("modstate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5441,7 +5441,7 @@ Gurax_DeclareFunctionAlias(SDL_GetKeyFromScancode_gurax, "SDL_GetKeyFromScancode
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("scancode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5461,7 +5461,7 @@ Gurax_DeclareFunctionAlias(SDL_GetScancodeFromKey_gurax, "SDL_GetScancodeFromKey
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("key", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5481,7 +5481,7 @@ Gurax_DeclareFunctionAlias(SDL_GetScancodeName_gurax, "SDL_GetScancodeName")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("scancode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5501,7 +5501,7 @@ Gurax_DeclareFunctionAlias(SDL_GetScancodeFromName_gurax, "SDL_GetScancodeFromNa
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5521,7 +5521,7 @@ Gurax_DeclareFunctionAlias(SDL_GetKeyName_gurax, "SDL_GetKeyName")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("key", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5541,7 +5541,7 @@ Gurax_DeclareFunctionAlias(SDL_GetKeyFromName_gurax, "SDL_GetKeyFromName")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5560,7 +5560,7 @@ Gurax_ImplementFunctionEx(SDL_GetKeyFromName_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(SDL_StartTextInput_gurax, "SDL_StartTextInput")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5576,7 +5576,7 @@ Gurax_ImplementFunctionEx(SDL_StartTextInput_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(SDL_IsTextInputActive_gurax, "SDL_IsTextInputActive")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5592,7 +5592,7 @@ Gurax_ImplementFunctionEx(SDL_IsTextInputActive_gurax, processor_gurax, argument
 Gurax_DeclareFunctionAlias(SDL_StopTextInput_gurax, "SDL_StopTextInput")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5609,7 +5609,7 @@ Gurax_DeclareFunctionAlias(SDL_SetTextInputRect_gurax, "SDL_SetTextInputRect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_SDL_Rect, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5628,7 +5628,7 @@ Gurax_ImplementFunctionEx(SDL_SetTextInputRect_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_HasScreenKeyboardSupport_gurax, "SDL_HasScreenKeyboardSupport")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5645,7 +5645,7 @@ Gurax_DeclareFunctionAlias(SDL_IsScreenKeyboardShown_gurax, "SDL_IsScreenKeyboar
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5665,7 +5665,7 @@ Gurax_ImplementFunctionEx(SDL_IsScreenKeyboardShown_gurax, processor_gurax, argu
 Gurax_DeclareFunctionAlias(SDL_GetMouseFocus_gurax, "SDL_GetMouseFocus")
 {
 	Declare(VTYPE_SDL_Window, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5682,7 +5682,7 @@ Gurax_ImplementFunctionEx(SDL_GetMouseFocus_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(SDL_GetMouseState_gurax, "SDL_GetMouseState")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5699,7 +5699,7 @@ Gurax_ImplementFunctionEx(SDL_GetMouseState_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(SDL_GetGlobalMouseState_gurax, "SDL_GetGlobalMouseState")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5716,7 +5716,7 @@ Gurax_ImplementFunctionEx(SDL_GetGlobalMouseState_gurax, processor_gurax, argume
 Gurax_DeclareFunctionAlias(SDL_GetRelativeMouseState_gurax, "SDL_GetRelativeMouseState")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5736,7 +5736,7 @@ Gurax_DeclareFunctionAlias(SDL_WarpMouseInWindow_gurax, "SDL_WarpMouseInWindow")
 	DeclareArg("window", VTYPE_SDL_Window, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5760,7 +5760,7 @@ Gurax_DeclareFunctionAlias(SDL_WarpMouseGlobal_gurax, "SDL_WarpMouseGlobal")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5781,7 +5781,7 @@ Gurax_DeclareFunctionAlias(SDL_SetRelativeMouseMode_gurax, "SDL_SetRelativeMouse
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("enabled", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5801,7 +5801,7 @@ Gurax_DeclareFunctionAlias(SDL_CaptureMouse_gurax, "SDL_CaptureMouse")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("enabled", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5820,7 +5820,7 @@ Gurax_ImplementFunctionEx(SDL_CaptureMouse_gurax, processor_gurax, argument_gura
 Gurax_DeclareFunctionAlias(SDL_GetRelativeMouseMode_gurax, "SDL_GetRelativeMouseMode")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5842,7 +5842,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateCursor_gurax, "SDL_CreateCursor")
 	DeclareArg("h", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hot_x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hot_y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5870,7 +5870,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateColorCursor_gurax, "SDL_CreateColorCursor")
 	DeclareArg("surface", VTYPE_SDL_Surface, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hot_x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hot_y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5894,7 +5894,7 @@ Gurax_DeclareFunctionAlias(SDL_CreateSystemCursor_gurax, "SDL_CreateSystemCursor
 {
 	Declare(VTYPE_SDL_Cursor, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5915,7 +5915,7 @@ Gurax_DeclareFunctionAlias(SDL_SetCursor_gurax, "SDL_SetCursor")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cursor", VTYPE_SDL_Cursor, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5935,7 +5935,7 @@ Gurax_ImplementFunctionEx(SDL_SetCursor_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetCursor_gurax, "SDL_GetCursor")
 {
 	Declare(VTYPE_SDL_Cursor, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5952,7 +5952,7 @@ Gurax_ImplementFunctionEx(SDL_GetCursor_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetDefaultCursor_gurax, "SDL_GetDefaultCursor")
 {
 	Declare(VTYPE_SDL_Cursor, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5970,7 +5970,7 @@ Gurax_DeclareFunctionAlias(SDL_FreeCursor_gurax, "SDL_FreeCursor")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cursor", VTYPE_SDL_Cursor, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5990,7 +5990,7 @@ Gurax_DeclareFunctionAlias(SDL_ShowCursor_gurax, "SDL_ShowCursor")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("toggle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6009,7 +6009,7 @@ Gurax_ImplementFunctionEx(SDL_ShowCursor_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_LockJoysticks_gurax, "SDL_LockJoysticks")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6025,7 +6025,7 @@ Gurax_ImplementFunctionEx(SDL_LockJoysticks_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(SDL_UnlockJoysticks_gurax, "SDL_UnlockJoysticks")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6041,7 +6041,7 @@ Gurax_ImplementFunctionEx(SDL_UnlockJoysticks_gurax, processor_gurax, argument_g
 Gurax_DeclareFunctionAlias(SDL_NumJoysticks_gurax, "SDL_NumJoysticks")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6058,7 +6058,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickNameForIndex_gurax, "SDL_JoystickNameForI
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6078,7 +6078,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetDevicePlayerIndex_gurax, "SDL_Joystick
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6098,7 +6098,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceGUID_gurax, "SDL_JoystickGetDevi
 {
 	Declare(VTYPE_SDL_JoystickGUID, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6118,7 +6118,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceVendor_gurax, "SDL_JoystickGetDe
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6138,7 +6138,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceProduct_gurax, "SDL_JoystickGetD
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6158,7 +6158,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceProductVersion_gurax, "SDL_Joyst
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6178,7 +6178,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceType_gurax, "SDL_JoystickGetDevi
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6198,7 +6198,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetDeviceInstanceID_gurax, "SDL_JoystickG
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6218,7 +6218,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickOpen_gurax, "SDL_JoystickOpen")
 {
 	Declare(VTYPE_SDL_Joystick, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6239,7 +6239,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickFromInstanceID_gurax, "SDL_JoystickFromIn
 {
 	Declare(VTYPE_SDL_Joystick, Flag::None);
 	DeclareArg("instance_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6260,7 +6260,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickFromPlayerIndex_gurax, "SDL_JoystickFromP
 {
 	Declare(VTYPE_SDL_Joystick, Flag::None);
 	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6281,7 +6281,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickName_gurax, "SDL_JoystickName")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6302,7 +6302,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetPlayerIndex_gurax, "SDL_JoystickGetPla
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6324,7 +6324,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickSetPlayerIndex_gurax, "SDL_JoystickSetPla
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6346,7 +6346,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetGUID_gurax, "SDL_JoystickGetGUID")
 {
 	Declare(VTYPE_SDL_JoystickGUID, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6367,7 +6367,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetVendor_gurax, "SDL_JoystickGetVendor")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6388,7 +6388,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetProduct_gurax, "SDL_JoystickGetProduct
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6409,7 +6409,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetProductVersion_gurax, "SDL_JoystickGet
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6430,7 +6430,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetType_gurax, "SDL_JoystickGetType")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6451,7 +6451,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetGUIDString_gurax, "SDL_JoystickGetGUID
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("guid", VTYPE_SDL_JoystickGUID, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6473,7 +6473,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetGUIDFromString_gurax, "SDL_JoystickGet
 {
 	Declare(VTYPE_SDL_JoystickGUID, Flag::None);
 	DeclareArg("pchGUID", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6493,7 +6493,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetAttached_gurax, "SDL_JoystickGetAttach
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6514,7 +6514,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickInstanceID_gurax, "SDL_JoystickInstanceID
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6535,7 +6535,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickNumAxes_gurax, "SDL_JoystickNumAxes")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6556,7 +6556,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickNumBalls_gurax, "SDL_JoystickNumBalls")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6577,7 +6577,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickNumHats_gurax, "SDL_JoystickNumHats")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6598,7 +6598,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickNumButtons_gurax, "SDL_JoystickNumButtons
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6618,7 +6618,7 @@ Gurax_ImplementFunctionEx(SDL_JoystickNumButtons_gurax, processor_gurax, argumen
 Gurax_DeclareFunctionAlias(SDL_JoystickUpdate_gurax, "SDL_JoystickUpdate")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6635,7 +6635,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickEventState_gurax, "SDL_JoystickEventState
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6656,7 +6656,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetAxis_gurax, "SDL_JoystickGetAxis")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6679,7 +6679,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetHat_gurax, "SDL_JoystickGetHat")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hat", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6702,7 +6702,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetBall_gurax, "SDL_JoystickGetBall")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ball", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6726,7 +6726,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickGetButton_gurax, "SDL_JoystickGetButton")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6751,7 +6751,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickRumble_gurax, "SDL_JoystickRumble")
 	DeclareArg("low_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("high_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("duration_ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6775,7 +6775,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickClose_gurax, "SDL_JoystickClose")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6796,7 +6796,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickCurrentPowerLevel_gurax, "SDL_JoystickCur
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6818,7 +6818,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerAddMappingsFromRW_gurax, "SDL_GameC
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("rw", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("freerw", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6840,7 +6840,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerAddMapping_gurax, "SDL_GameControll
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("mappingString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6859,7 +6859,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerAddMapping_gurax, processor_gurax, a
 Gurax_DeclareFunctionAlias(SDL_GameControllerNumMappings_gurax, "SDL_GameControllerNumMappings")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6876,7 +6876,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerMappingForIndex_gurax, "SDL_GameCon
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("mapping_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6899,7 +6899,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerMappingForGUID_gurax, "SDL_GameCont
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("guid", VTYPE_SDL_JoystickGUID, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6923,7 +6923,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerMapping_gurax, "SDL_GameControllerM
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6947,7 +6947,7 @@ Gurax_DeclareFunctionAlias(SDL_IsGameController_gurax, "SDL_IsGameController")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6967,7 +6967,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerNameForIndex_gurax, "SDL_GameContro
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6987,7 +6987,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerTypeForIndex_gurax, "SDL_GameContro
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7007,7 +7007,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerMappingForDeviceIndex_gurax, "SDL_G
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7030,7 +7030,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerOpen_gurax, "SDL_GameControllerOpen
 {
 	Declare(VTYPE_SDL_GameController, Flag::None);
 	DeclareArg("joystick_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7051,7 +7051,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerFromInstanceID_gurax, "SDL_GameCont
 {
 	Declare(VTYPE_SDL_GameController, Flag::None);
 	DeclareArg("joyid", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7072,7 +7072,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerFromPlayerIndex_gurax, "SDL_GameCon
 {
 	Declare(VTYPE_SDL_GameController, Flag::None);
 	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7093,7 +7093,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerName_gurax, "SDL_GameControllerName
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7114,7 +7114,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetType_gurax, "SDL_GameControllerG
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7135,7 +7135,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetPlayerIndex_gurax, "SDL_GameCont
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7157,7 +7157,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerSetPlayerIndex_gurax, "SDL_GameCont
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("player_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7179,7 +7179,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetVendor_gurax, "SDL_GameControlle
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7200,7 +7200,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetProduct_gurax, "SDL_GameControll
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7221,7 +7221,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetProductVersion_gurax, "SDL_GameC
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7242,7 +7242,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetAttached_gurax, "SDL_GameControl
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7263,7 +7263,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetJoystick_gurax, "SDL_GameControl
 {
 	Declare(VTYPE_SDL_Joystick, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7285,7 +7285,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerEventState_gurax, "SDL_GameControll
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7304,7 +7304,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerEventState_gurax, processor_gurax, a
 Gurax_DeclareFunctionAlias(SDL_GameControllerUpdate_gurax, "SDL_GameControllerUpdate")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7321,7 +7321,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetAxisFromString_gurax, "SDL_GameC
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pchString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7341,7 +7341,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetStringForAxis_gurax, "SDL_GameCo
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7362,7 +7362,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetAxis_gurax, "SDL_GameControllerG
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("axis", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7384,7 +7384,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetButtonFromString_gurax, "SDL_Gam
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pchString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7404,7 +7404,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetStringForButton_gurax, "SDL_Game
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7425,7 +7425,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerGetButton_gurax, "SDL_GameControlle
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7450,7 +7450,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerRumble_gurax, "SDL_GameControllerRu
 	DeclareArg("low_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("high_frequency_rumble", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("duration_ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7474,7 +7474,7 @@ Gurax_DeclareFunctionAlias(SDL_GameControllerClose_gurax, "SDL_GameControllerClo
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("gamecontroller", VTYPE_SDL_GameController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7494,7 +7494,7 @@ Gurax_ImplementFunctionEx(SDL_GameControllerClose_gurax, processor_gurax, argume
 Gurax_DeclareFunctionAlias(SDL_NumSensors_gurax, "SDL_NumSensors")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7511,7 +7511,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceName_gurax, "SDL_SensorGetDeviceNa
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7531,7 +7531,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceType_gurax, "SDL_SensorGetDeviceTy
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7551,7 +7551,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceNonPortableType_gurax, "SDL_Sensor
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7571,7 +7571,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorGetDeviceInstanceID_gurax, "SDL_SensorGetDe
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7591,7 +7591,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorOpen_gurax, "SDL_SensorOpen")
 {
 	Declare(VTYPE_SDL_Sensor, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7612,7 +7612,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorFromInstanceID_gurax, "SDL_SensorFromInstan
 {
 	Declare(VTYPE_SDL_Sensor, Flag::None);
 	DeclareArg("instance_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7633,7 +7633,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorGetName_gurax, "SDL_SensorGetName")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7654,7 +7654,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorGetType_gurax, "SDL_SensorGetType")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7675,7 +7675,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorGetNonPortableType_gurax, "SDL_SensorGetNon
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7696,7 +7696,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorGetInstanceID_gurax, "SDL_SensorGetInstance
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7717,7 +7717,7 @@ Gurax_DeclareFunctionAlias(SDL_SensorClose_gurax, "SDL_SensorClose")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sensor", VTYPE_SDL_Sensor, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7737,7 +7737,7 @@ Gurax_ImplementFunctionEx(SDL_SensorClose_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(SDL_SensorUpdate_gurax, "SDL_SensorUpdate")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7753,7 +7753,7 @@ Gurax_ImplementFunctionEx(SDL_SensorUpdate_gurax, processor_gurax, argument_gura
 Gurax_DeclareFunctionAlias(SDL_NumHaptics_gurax, "SDL_NumHaptics")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7770,7 +7770,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticName_gurax, "SDL_HapticName")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7790,7 +7790,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticOpen_gurax, "SDL_HapticOpen")
 {
 	Declare(VTYPE_SDL_Haptic, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7811,7 +7811,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticOpened_gurax, "SDL_HapticOpened")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device_index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7831,7 +7831,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticIndex_gurax, "SDL_HapticIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7851,7 +7851,7 @@ Gurax_ImplementFunctionEx(SDL_HapticIndex_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(SDL_MouseIsHaptic_gurax, "SDL_MouseIsHaptic")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7867,7 +7867,7 @@ Gurax_ImplementFunctionEx(SDL_MouseIsHaptic_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(SDL_HapticOpenFromMouse_gurax, "SDL_HapticOpenFromMouse")
 {
 	Declare(VTYPE_SDL_Haptic, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7885,7 +7885,7 @@ Gurax_DeclareFunctionAlias(SDL_JoystickIsHaptic_gurax, "SDL_JoystickIsHaptic")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7906,7 +7906,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticOpenFromJoystick_gurax, "SDL_HapticOpenFrom
 {
 	Declare(VTYPE_SDL_Haptic, Flag::None);
 	DeclareArg("joystick", VTYPE_SDL_Joystick, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7928,7 +7928,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticClose_gurax, "SDL_HapticClose")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7949,7 +7949,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticNumEffects_gurax, "SDL_HapticNumEffects")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7970,7 +7970,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticNumEffectsPlaying_gurax, "SDL_HapticNumEffe
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7991,7 +7991,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticQuery_gurax, "SDL_HapticQuery")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8012,7 +8012,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticNumAxes_gurax, "SDL_HapticNumAxes")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8034,7 +8034,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticEffectSupported_gurax, "SDL_HapticEffectSup
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("effect", VTYPE_SDL_HapticEffect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8058,7 +8058,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticNewEffect_gurax, "SDL_HapticNewEffect")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("effect", VTYPE_SDL_HapticEffect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8083,7 +8083,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticUpdateEffect_gurax, "SDL_HapticUpdateEffect
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_SDL_HapticEffect, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8109,7 +8109,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticRunEffect_gurax, "SDL_HapticRunEffect")
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("iterations", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8133,7 +8133,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticStopEffect_gurax, "SDL_HapticStopEffect")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8156,7 +8156,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticDestroyEffect_gurax, "SDL_HapticDestroyEffe
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8179,7 +8179,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticGetEffectStatus_gurax, "SDL_HapticGetEffect
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8202,7 +8202,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticSetGain_gurax, "SDL_HapticSetGain")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("gain", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8225,7 +8225,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticSetAutocenter_gurax, "SDL_HapticSetAutocent
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("autocenter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8247,7 +8247,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticPause_gurax, "SDL_HapticPause")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8268,7 +8268,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticUnpause_gurax, "SDL_HapticUnpause")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8289,7 +8289,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticStopAll_gurax, "SDL_HapticStopAll")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8310,7 +8310,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticRumbleSupported_gurax, "SDL_HapticRumbleSup
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8331,7 +8331,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticRumbleInit_gurax, "SDL_HapticRumbleInit")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8354,7 +8354,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticRumblePlay_gurax, "SDL_HapticRumblePlay")
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("strength", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("length", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8377,7 +8377,7 @@ Gurax_DeclareFunctionAlias(SDL_HapticRumbleStop_gurax, "SDL_HapticRumbleStop")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("haptic", VTYPE_SDL_Haptic, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8397,7 +8397,7 @@ Gurax_ImplementFunctionEx(SDL_HapticRumbleStop_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_GetNumAudioDrivers_gurax, "SDL_GetNumAudioDrivers")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8414,7 +8414,7 @@ Gurax_DeclareFunctionAlias(SDL_GetAudioDriver_gurax, "SDL_GetAudioDriver")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8434,7 +8434,7 @@ Gurax_DeclareFunctionAlias(SDL_AUDIO_BITSIZE_gurax, "SDL_AUDIO_BITSIZE")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8454,7 +8454,7 @@ Gurax_DeclareFunctionAlias(SDL_AudioInit_gurax, "SDL_AudioInit")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("driver_name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8473,7 +8473,7 @@ Gurax_ImplementFunctionEx(SDL_AudioInit_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_AudioQuit_gurax, "SDL_AudioQuit")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8489,7 +8489,7 @@ Gurax_ImplementFunctionEx(SDL_AudioQuit_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetCurrentAudioDriver_gurax, "SDL_GetCurrentAudioDriver")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8507,7 +8507,7 @@ Gurax_DeclareFunctionAlias(SDL_OpenAudio_gurax, "SDL_OpenAudio")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("desired", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("obtained", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8530,7 +8530,7 @@ Gurax_DeclareFunctionAlias(SDL_GetNumAudioDevices_gurax, "SDL_GetNumAudioDevices
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("iscapture", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8551,7 +8551,7 @@ Gurax_DeclareFunctionAlias(SDL_GetAudioDeviceName_gurax, "SDL_GetAudioDeviceName
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("iscapture", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8576,7 +8576,7 @@ Gurax_DeclareFunctionAlias(SDL_OpenAudioDevice_gurax, "SDL_OpenAudioDevice")
 	DeclareArg("desired", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("obtained", VTYPE_SDL_AudioSpec, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("allowed_changes", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8603,7 +8603,7 @@ Gurax_ImplementFunctionEx(SDL_OpenAudioDevice_gurax, processor_gurax, argument_g
 Gurax_DeclareFunctionAlias(SDL_GetAudioStatus_gurax, "SDL_GetAudioStatus")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8620,7 +8620,7 @@ Gurax_DeclareFunctionAlias(SDL_GetAudioDeviceStatus_gurax, "SDL_GetAudioDeviceSt
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8640,7 +8640,7 @@ Gurax_DeclareFunctionAlias(SDL_PauseAudio_gurax, "SDL_PauseAudio")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pause_on", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8661,7 +8661,7 @@ Gurax_DeclareFunctionAlias(SDL_PauseAudioDevice_gurax, "SDL_PauseAudioDevice")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pause_on", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8688,7 +8688,7 @@ Gurax_DeclareFunctionAlias(SDL_BuildAudioCVT_gurax, "SDL_BuildAudioCVT")
 	DeclareArg("dst_format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dst_channels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dst_rate", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8715,7 +8715,7 @@ Gurax_DeclareFunctionAlias(SDL_ConvertAudio_gurax, "SDL_ConvertAudio")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cvt", VTYPE_SDL_AudioCVT, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8738,7 +8738,7 @@ Gurax_DeclareFunctionAlias(SDL_AudioStreamPut_gurax, "SDL_AudioStreamPut")
 	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buf", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8763,7 +8763,7 @@ Gurax_DeclareFunctionAlias(SDL_AudioStreamGet_gurax, "SDL_AudioStreamGet")
 	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("buf", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8790,7 +8790,7 @@ Gurax_DeclareFunctionAlias(SDL_AudioStreamAvailable_gurax, "SDL_AudioStreamAvail
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8811,7 +8811,7 @@ Gurax_DeclareFunctionAlias(SDL_AudioStreamFlush_gurax, "SDL_AudioStreamFlush")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8832,7 +8832,7 @@ Gurax_DeclareFunctionAlias(SDL_AudioStreamClear_gurax, "SDL_AudioStreamClear")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8853,7 +8853,7 @@ Gurax_DeclareFunctionAlias(SDL_FreeAudioStream_gurax, "SDL_FreeAudioStream")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("stream", VTYPE_SDL_AudioStream, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8875,7 +8875,7 @@ Gurax_DeclareFunctionAlias(SDL_QueueAudio_gurax, "SDL_QueueAudio")
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8899,7 +8899,7 @@ Gurax_DeclareFunctionAlias(SDL_DequeueAudio_gurax, "SDL_DequeueAudio")
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8925,7 +8925,7 @@ Gurax_DeclareFunctionAlias(SDL_GetQueuedAudioSize_gurax, "SDL_GetQueuedAudioSize
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8945,7 +8945,7 @@ Gurax_DeclareFunctionAlias(SDL_ClearQueuedAudio_gurax, "SDL_ClearQueuedAudio")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8964,7 +8964,7 @@ Gurax_ImplementFunctionEx(SDL_ClearQueuedAudio_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_LockAudio_gurax, "SDL_LockAudio")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -8981,7 +8981,7 @@ Gurax_DeclareFunctionAlias(SDL_LockAudioDevice_gurax, "SDL_LockAudioDevice")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9000,7 +9000,7 @@ Gurax_ImplementFunctionEx(SDL_LockAudioDevice_gurax, processor_gurax, argument_g
 Gurax_DeclareFunctionAlias(SDL_UnlockAudio_gurax, "SDL_UnlockAudio")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9017,7 +9017,7 @@ Gurax_DeclareFunctionAlias(SDL_UnlockAudioDevice_gurax, "SDL_UnlockAudioDevice")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9036,7 +9036,7 @@ Gurax_ImplementFunctionEx(SDL_UnlockAudioDevice_gurax, processor_gurax, argument
 Gurax_DeclareFunctionAlias(SDL_CloseAudio_gurax, "SDL_CloseAudio")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9053,7 +9053,7 @@ Gurax_DeclareFunctionAlias(SDL_CloseAudioDevice_gurax, "SDL_CloseAudioDevice")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dev", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9072,7 +9072,7 @@ Gurax_ImplementFunctionEx(SDL_CloseAudioDevice_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(SDL_GetTicks_gurax, "SDL_GetTicks")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9088,7 +9088,7 @@ Gurax_ImplementFunctionEx(SDL_GetTicks_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetPerformanceCounter_gurax, "SDL_GetPerformanceCounter")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9104,7 +9104,7 @@ Gurax_ImplementFunctionEx(SDL_GetPerformanceCounter_gurax, processor_gurax, argu
 Gurax_DeclareFunctionAlias(SDL_GetPerformanceFrequency_gurax, "SDL_GetPerformanceFrequency")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9121,7 +9121,7 @@ Gurax_DeclareFunctionAlias(SDL_Delay_gurax, "SDL_Delay")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9141,7 +9141,7 @@ Gurax_DeclareFunctionAlias(SDL_RemoveTimer_gurax, "SDL_RemoveTimer")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9162,7 +9162,7 @@ Gurax_DeclareFunctionAlias(SDL_RWFromFile_gurax, "SDL_RWFromFile")
 	Declare(VTYPE_SDL_RWops, Flag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9185,7 +9185,7 @@ Gurax_DeclareFunctionAlias(SDL_RWFromConstMem_gurax, "SDL_RWFromConstMem")
 	Declare(VTYPE_SDL_RWops, Flag::None);
 	DeclareArg("mem", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9206,7 +9206,7 @@ Gurax_ImplementFunctionEx(SDL_RWFromConstMem_gurax, processor_gurax, argument_gu
 Gurax_DeclareFunctionAlias(SDL_AllocRW_gurax, "SDL_AllocRW")
 {
 	Declare(VTYPE_SDL_RWops, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9224,7 +9224,7 @@ Gurax_DeclareFunctionAlias(SDL_FreeRW_gurax, "SDL_FreeRW")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("area", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9244,7 +9244,7 @@ Gurax_DeclareFunctionAlias(SDL_RWsize_gurax, "SDL_RWsize")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("context", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9267,7 +9267,7 @@ Gurax_DeclareFunctionAlias(SDL_RWseek_gurax, "SDL_RWseek")
 	DeclareArg("context", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("whence", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9290,7 +9290,7 @@ Gurax_DeclareFunctionAlias(SDL_RWtell_gurax, "SDL_RWtell")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("context", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9314,7 +9314,7 @@ Gurax_DeclareFunctionAlias(SDL_RWread_gurax, "SDL_RWread")
 	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("maxnum", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9345,7 +9345,7 @@ Gurax_DeclareFunctionAlias(SDL_RWwrite_gurax, "SDL_RWwrite")
 	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9369,7 +9369,7 @@ Gurax_DeclareFunctionAlias(SDL_RWclose_gurax, "SDL_RWclose")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("context", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9390,7 +9390,7 @@ Gurax_DeclareFunctionAlias(SDL_ReadU8_gurax, "SDL_ReadU8")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9411,7 +9411,7 @@ Gurax_DeclareFunctionAlias(SDL_ReadLE16_gurax, "SDL_ReadLE16")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9432,7 +9432,7 @@ Gurax_DeclareFunctionAlias(SDL_ReadBE16_gurax, "SDL_ReadBE16")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9453,7 +9453,7 @@ Gurax_DeclareFunctionAlias(SDL_ReadLE32_gurax, "SDL_ReadLE32")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9474,7 +9474,7 @@ Gurax_DeclareFunctionAlias(SDL_ReadBE32_gurax, "SDL_ReadBE32")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9495,7 +9495,7 @@ Gurax_DeclareFunctionAlias(SDL_ReadLE64_gurax, "SDL_ReadLE64")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9516,7 +9516,7 @@ Gurax_DeclareFunctionAlias(SDL_ReadBE64_gurax, "SDL_ReadBE64")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9538,7 +9538,7 @@ Gurax_DeclareFunctionAlias(SDL_WriteU8_gurax, "SDL_WriteU8")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9561,7 +9561,7 @@ Gurax_DeclareFunctionAlias(SDL_WriteLE16_gurax, "SDL_WriteLE16")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9584,7 +9584,7 @@ Gurax_DeclareFunctionAlias(SDL_WriteBE16_gurax, "SDL_WriteBE16")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9607,7 +9607,7 @@ Gurax_DeclareFunctionAlias(SDL_WriteLE32_gurax, "SDL_WriteLE32")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9630,7 +9630,7 @@ Gurax_DeclareFunctionAlias(SDL_WriteBE32_gurax, "SDL_WriteBE32")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9653,7 +9653,7 @@ Gurax_DeclareFunctionAlias(SDL_WriteLE64_gurax, "SDL_WriteLE64")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9676,7 +9676,7 @@ Gurax_DeclareFunctionAlias(SDL_WriteBE64_gurax, "SDL_WriteBE64")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9697,7 +9697,7 @@ Gurax_ImplementFunctionEx(SDL_WriteBE64_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetCPUCount_gurax, "SDL_GetCPUCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9713,7 +9713,7 @@ Gurax_ImplementFunctionEx(SDL_GetCPUCount_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(SDL_GetCPUCacheLineSize_gurax, "SDL_GetCPUCacheLineSize")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9729,7 +9729,7 @@ Gurax_ImplementFunctionEx(SDL_GetCPUCacheLineSize_gurax, processor_gurax, argume
 Gurax_DeclareFunctionAlias(SDL_HasRDTSC_gurax, "SDL_HasRDTSC")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9745,7 +9745,7 @@ Gurax_ImplementFunctionEx(SDL_HasRDTSC_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasAltiVec_gurax, "SDL_HasAltiVec")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9761,7 +9761,7 @@ Gurax_ImplementFunctionEx(SDL_HasAltiVec_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasMMX_gurax, "SDL_HasMMX")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9777,7 +9777,7 @@ Gurax_ImplementFunctionEx(SDL_HasMMX_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_Has3DNow_gurax, "SDL_Has3DNow")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9793,7 +9793,7 @@ Gurax_ImplementFunctionEx(SDL_Has3DNow_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasSSE_gurax, "SDL_HasSSE")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9809,7 +9809,7 @@ Gurax_ImplementFunctionEx(SDL_HasSSE_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasSSE2_gurax, "SDL_HasSSE2")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9825,7 +9825,7 @@ Gurax_ImplementFunctionEx(SDL_HasSSE2_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasSSE3_gurax, "SDL_HasSSE3")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9841,7 +9841,7 @@ Gurax_ImplementFunctionEx(SDL_HasSSE3_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasSSE41_gurax, "SDL_HasSSE41")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9857,7 +9857,7 @@ Gurax_ImplementFunctionEx(SDL_HasSSE41_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasSSE42_gurax, "SDL_HasSSE42")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9873,7 +9873,7 @@ Gurax_ImplementFunctionEx(SDL_HasSSE42_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasAVX_gurax, "SDL_HasAVX")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9889,7 +9889,7 @@ Gurax_ImplementFunctionEx(SDL_HasAVX_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasAVX2_gurax, "SDL_HasAVX2")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9905,7 +9905,7 @@ Gurax_ImplementFunctionEx(SDL_HasAVX2_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasAVX512F_gurax, "SDL_HasAVX512F")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9921,7 +9921,7 @@ Gurax_ImplementFunctionEx(SDL_HasAVX512F_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasARMSIMD_gurax, "SDL_HasARMSIMD")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9937,7 +9937,7 @@ Gurax_ImplementFunctionEx(SDL_HasARMSIMD_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_HasNEON_gurax, "SDL_HasNEON")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9953,7 +9953,7 @@ Gurax_ImplementFunctionEx(SDL_HasNEON_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetSystemRAM_gurax, "SDL_GetSystemRAM")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9969,7 +9969,7 @@ Gurax_ImplementFunctionEx(SDL_GetSystemRAM_gurax, processor_gurax, argument_gura
 Gurax_DeclareFunctionAlias(SDL_SIMDGetAlignment_gurax, "SDL_SIMDGetAlignment")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -9986,7 +9986,7 @@ Gurax_DeclareFunctionAlias(SDL_SIMDFree_gurax, "SDL_SIMDFree")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("ptr", VTYPE_Pointer, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10005,7 +10005,7 @@ Gurax_ImplementFunctionEx(SDL_SIMDFree_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(SDL_GetPowerInfo_gurax, "SDL_GetPowerInfo")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10022,7 +10022,7 @@ Gurax_ImplementFunctionEx(SDL_GetPowerInfo_gurax, processor_gurax, argument_gura
 Gurax_DeclareFunctionAlias(IMG_Linked_Version_gurax, "IMG_Linked_Version")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10039,7 +10039,7 @@ Gurax_DeclareFunctionAlias(IMG_Init_gurax, "IMG_Init")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10058,7 +10058,7 @@ Gurax_ImplementFunctionEx(IMG_Init_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(IMG_Quit_gurax, "IMG_Quit")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10074,7 +10074,7 @@ Gurax_ImplementFunctionEx(IMG_Quit_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(IMG_GetError_gurax, "IMG_GetError")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10091,7 +10091,7 @@ Gurax_DeclareFunctionAlias(IMG_Load_gurax, "IMG_Load")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10113,7 +10113,7 @@ Gurax_DeclareFunctionAlias(IMG_Load_RW_gurax, "IMG_Load_RW")
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10138,7 +10138,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadTyped_RW_gurax, "IMG_LoadTyped_RW")
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10162,7 +10162,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadCUR_RW_gurax, "IMG_LoadCUR_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10184,7 +10184,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadICO_RW_gurax, "IMG_LoadICO_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10206,7 +10206,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadBMP_RW_gurax, "IMG_LoadBMP_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10228,7 +10228,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadPNM_RW_gurax, "IMG_LoadPNM_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10250,7 +10250,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadXPM_RW_gurax, "IMG_LoadXPM_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10272,7 +10272,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadXCF_RW_gurax, "IMG_LoadXCF_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10294,7 +10294,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadPCX_RW_gurax, "IMG_LoadPCX_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10316,7 +10316,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadGIF_RW_gurax, "IMG_LoadGIF_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10338,7 +10338,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadJPG_RW_gurax, "IMG_LoadJPG_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10360,7 +10360,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadTIF_RW_gurax, "IMG_LoadTIF_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10382,7 +10382,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadPNG_RW_gurax, "IMG_LoadPNG_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10404,7 +10404,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadTGA_RW_gurax, "IMG_LoadTGA_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10426,7 +10426,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadLBM_RW_gurax, "IMG_LoadLBM_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10448,7 +10448,7 @@ Gurax_DeclareFunctionAlias(IMG_LoadXV_RW_gurax, "IMG_LoadXV_RW")
 {
 	Declare(VTYPE_SDL_Surface, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10470,7 +10470,7 @@ Gurax_DeclareFunctionAlias(IMG_isCUR_gurax, "IMG_isCUR")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10491,7 +10491,7 @@ Gurax_DeclareFunctionAlias(IMG_isICO_gurax, "IMG_isICO")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10512,7 +10512,7 @@ Gurax_DeclareFunctionAlias(IMG_isBMP_gurax, "IMG_isBMP")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10533,7 +10533,7 @@ Gurax_DeclareFunctionAlias(IMG_isPNM_gurax, "IMG_isPNM")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10554,7 +10554,7 @@ Gurax_DeclareFunctionAlias(IMG_isXPM_gurax, "IMG_isXPM")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10575,7 +10575,7 @@ Gurax_DeclareFunctionAlias(IMG_isXCF_gurax, "IMG_isXCF")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10596,7 +10596,7 @@ Gurax_DeclareFunctionAlias(IMG_isPCX_gurax, "IMG_isPCX")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10617,7 +10617,7 @@ Gurax_DeclareFunctionAlias(IMG_isGIF_gurax, "IMG_isGIF")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10638,7 +10638,7 @@ Gurax_DeclareFunctionAlias(IMG_isJPG_gurax, "IMG_isJPG")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10659,7 +10659,7 @@ Gurax_DeclareFunctionAlias(IMG_isTIF_gurax, "IMG_isTIF")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10680,7 +10680,7 @@ Gurax_DeclareFunctionAlias(IMG_isPNG_gurax, "IMG_isPNG")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10701,7 +10701,7 @@ Gurax_DeclareFunctionAlias(IMG_isLBM_gurax, "IMG_isLBM")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10722,7 +10722,7 @@ Gurax_DeclareFunctionAlias(IMG_isXV_gurax, "IMG_isXV")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10742,7 +10742,7 @@ Gurax_ImplementFunctionEx(IMG_isXV_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(Mix_Linked_Version_gurax, "Mix_Linked_Version")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10759,7 +10759,7 @@ Gurax_DeclareFunctionAlias(Mix_Init_gurax, "Mix_Init")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10778,7 +10778,7 @@ Gurax_ImplementFunctionEx(Mix_Init_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(Mix_Quit_gurax, "Mix_Quit")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10798,7 +10798,7 @@ Gurax_DeclareFunctionAlias(Mix_OpenAudio_gurax, "Mix_OpenAudio")
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("channels", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("chunksize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10826,7 +10826,7 @@ Gurax_DeclareFunctionAlias(Mix_OpenAudioDevice_gurax, "Mix_OpenAudioDevice")
 	DeclareArg("chunksize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("device", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("allowed_changes", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10851,7 +10851,7 @@ Gurax_DeclareFunctionAlias(Mix_AllocateChannels_gurax, "Mix_AllocateChannels")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("numchans", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10870,7 +10870,7 @@ Gurax_ImplementFunctionEx(Mix_AllocateChannels_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(Mix_GetError_gurax, "Mix_GetError")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10886,7 +10886,7 @@ Gurax_ImplementFunctionEx(Mix_GetError_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(Mix_QuerySpec_gurax, "Mix_QuerySpec")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10909,7 +10909,7 @@ Gurax_DeclareFunctionAlias(Mix_LoadWAV_gurax, "Mix_LoadWAV")
 {
 	Declare(VTYPE_Mix_Chunk, Flag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10931,7 +10931,7 @@ Gurax_DeclareFunctionAlias(Mix_LoadWAV_RW_gurax, "Mix_LoadWAV_RW")
 	Declare(VTYPE_Mix_Chunk, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10954,7 +10954,7 @@ Gurax_DeclareFunctionAlias(Mix_LoadMUS_gurax, "Mix_LoadMUS")
 {
 	Declare(VTYPE_Mix_Music, Flag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -10976,7 +10976,7 @@ Gurax_DeclareFunctionAlias(Mix_LoadMUS_RW_gurax, "Mix_LoadMUS_RW")
 	Declare(VTYPE_Mix_Music, Flag::None);
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11001,7 +11001,7 @@ Gurax_DeclareFunctionAlias(Mix_LoadMUSType_RW_gurax, "Mix_LoadMUSType_RW")
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11025,7 +11025,7 @@ Gurax_DeclareFunctionAlias(Mix_FreeChunk_gurax, "Mix_FreeChunk")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11045,7 +11045,7 @@ Gurax_DeclareFunctionAlias(Mix_FreeMusic_gurax, "Mix_FreeMusic")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11064,7 +11064,7 @@ Gurax_ImplementFunctionEx(Mix_FreeMusic_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(Mix_GetNumChunkDecoders_gurax, "Mix_GetNumChunkDecoders")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11081,7 +11081,7 @@ Gurax_DeclareFunctionAlias(Mix_GetChunkDecoder_gurax, "Mix_GetChunkDecoder")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11101,7 +11101,7 @@ Gurax_DeclareFunctionAlias(Mix_HasChunkDecoder_gurax, "Mix_HasChunkDecoder")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11120,7 +11120,7 @@ Gurax_ImplementFunctionEx(Mix_HasChunkDecoder_gurax, processor_gurax, argument_g
 Gurax_DeclareFunctionAlias(Mix_GetNumMusicDecoders_gurax, "Mix_GetNumMusicDecoders")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11137,7 +11137,7 @@ Gurax_DeclareFunctionAlias(Mix_GetMusicDecoder_gurax, "Mix_GetMusicDecoder")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11157,7 +11157,7 @@ Gurax_DeclareFunctionAlias(Mix_GetMusicType_gurax, "Mix_GetMusicType")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11178,7 +11178,7 @@ Gurax_DeclareFunctionAlias(Mix_UnregisterAllEffects_gurax, "Mix_UnregisterAllEff
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11200,7 +11200,7 @@ Gurax_DeclareFunctionAlias(Mix_SetPanning_gurax, "Mix_SetPanning")
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("left", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("right", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11224,7 +11224,7 @@ Gurax_DeclareFunctionAlias(Mix_SetPosition_gurax, "Mix_SetPosition")
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("distance", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11247,7 +11247,7 @@ Gurax_DeclareFunctionAlias(Mix_SetDistance_gurax, "Mix_SetDistance")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("distance", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11269,7 +11269,7 @@ Gurax_DeclareFunctionAlias(Mix_SetReverseStereo_gurax, "Mix_SetReverseStereo")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flip", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11290,7 +11290,7 @@ Gurax_DeclareFunctionAlias(Mix_ReserveChannels_gurax, "Mix_ReserveChannels")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11311,7 +11311,7 @@ Gurax_DeclareFunctionAlias(Mix_GroupChannel_gurax, "Mix_GroupChannel")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11334,7 +11334,7 @@ Gurax_DeclareFunctionAlias(Mix_GroupChannels_gurax, "Mix_GroupChannels")
 	DeclareArg("from", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("to", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11356,7 +11356,7 @@ Gurax_DeclareFunctionAlias(Mix_GroupAvailable_gurax, "Mix_GroupAvailable")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11376,7 +11376,7 @@ Gurax_DeclareFunctionAlias(Mix_GroupCount_gurax, "Mix_GroupCount")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11396,7 +11396,7 @@ Gurax_DeclareFunctionAlias(Mix_GroupOldest_gurax, "Mix_GroupOldest")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11416,7 +11416,7 @@ Gurax_DeclareFunctionAlias(Mix_GroupNewer_gurax, "Mix_GroupNewer")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11438,7 +11438,7 @@ Gurax_DeclareFunctionAlias(Mix_PlayChannel_gurax, "Mix_PlayChannel")
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11464,7 +11464,7 @@ Gurax_DeclareFunctionAlias(Mix_PlayChannelTimed_gurax, "Mix_PlayChannelTimed")
 	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ticks", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11489,7 +11489,7 @@ Gurax_DeclareFunctionAlias(Mix_PlayMusic_gurax, "Mix_PlayMusic")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11513,7 +11513,7 @@ Gurax_DeclareFunctionAlias(Mix_FadeInMusic_gurax, "Mix_FadeInMusic")
 	DeclareArg("music", VTYPE_Mix_Music, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11539,7 +11539,7 @@ Gurax_DeclareFunctionAlias(Mix_FadeInMusicPos_gurax, "Mix_FadeInMusicPos")
 	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11567,7 +11567,7 @@ Gurax_DeclareFunctionAlias(Mix_FadeInChannelTimed_gurax, "Mix_FadeInChannelTimed
 	DeclareArg("loops", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ticks", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11593,7 +11593,7 @@ Gurax_DeclareFunctionAlias(Mix_Volume_gurax, "Mix_Volume")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("volume", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11615,7 +11615,7 @@ Gurax_DeclareFunctionAlias(Mix_VolumeChunk_gurax, "Mix_VolumeChunk")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("chunk", VTYPE_Mix_Chunk, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("volume", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11637,7 +11637,7 @@ Gurax_DeclareFunctionAlias(Mix_VolumeMusic_gurax, "Mix_VolumeMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("volume", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11657,7 +11657,7 @@ Gurax_DeclareFunctionAlias(Mix_HaltChannel_gurax, "Mix_HaltChannel")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11677,7 +11677,7 @@ Gurax_DeclareFunctionAlias(Mix_HaltGroup_gurax, "Mix_HaltGroup")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11696,7 +11696,7 @@ Gurax_ImplementFunctionEx(Mix_HaltGroup_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(Mix_HaltMusic_gurax, "Mix_HaltMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11714,7 +11714,7 @@ Gurax_DeclareFunctionAlias(Mix_ExpireChannel_gurax, "Mix_ExpireChannel")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ticks", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11736,7 +11736,7 @@ Gurax_DeclareFunctionAlias(Mix_FadeOutChannel_gurax, "Mix_FadeOutChannel")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11758,7 +11758,7 @@ Gurax_DeclareFunctionAlias(Mix_FadeOutGroup_gurax, "Mix_FadeOutGroup")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("tag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11779,7 +11779,7 @@ Gurax_DeclareFunctionAlias(Mix_FadeOutMusic_gurax, "Mix_FadeOutMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("ms", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11798,7 +11798,7 @@ Gurax_ImplementFunctionEx(Mix_FadeOutMusic_gurax, processor_gurax, argument_gura
 Gurax_DeclareFunctionAlias(Mix_FadingMusic_gurax, "Mix_FadingMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11815,7 +11815,7 @@ Gurax_DeclareFunctionAlias(Mix_FadingChannel_gurax, "Mix_FadingChannel")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11835,7 +11835,7 @@ Gurax_DeclareFunctionAlias(Mix_Pause_gurax, "Mix_Pause")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11855,7 +11855,7 @@ Gurax_DeclareFunctionAlias(Mix_Resume_gurax, "Mix_Resume")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11875,7 +11875,7 @@ Gurax_DeclareFunctionAlias(Mix_Paused_gurax, "Mix_Paused")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11894,7 +11894,7 @@ Gurax_ImplementFunctionEx(Mix_Paused_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(Mix_PauseMusic_gurax, "Mix_PauseMusic")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11910,7 +11910,7 @@ Gurax_ImplementFunctionEx(Mix_PauseMusic_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(Mix_ResumeMusic_gurax, "Mix_ResumeMusic")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11926,7 +11926,7 @@ Gurax_ImplementFunctionEx(Mix_ResumeMusic_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(Mix_RewindMusic_gurax, "Mix_RewindMusic")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11942,7 +11942,7 @@ Gurax_ImplementFunctionEx(Mix_RewindMusic_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(Mix_PausedMusic_gurax, "Mix_PausedMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11959,7 +11959,7 @@ Gurax_DeclareFunctionAlias(Mix_SetMusicPosition_gurax, "Mix_SetMusicPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11979,7 +11979,7 @@ Gurax_DeclareFunctionAlias(Mix_Playing_gurax, "Mix_Playing")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -11998,7 +11998,7 @@ Gurax_ImplementFunctionEx(Mix_Playing_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(Mix_PlayingMusic_gurax, "Mix_PlayingMusic")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12015,7 +12015,7 @@ Gurax_DeclareFunctionAlias(Mix_SetMusicCMD_gurax, "Mix_SetMusicCMD")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("command", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12035,7 +12035,7 @@ Gurax_DeclareFunctionAlias(Mix_SetSynchroValue_gurax, "Mix_SetSynchroValue")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12054,7 +12054,7 @@ Gurax_ImplementFunctionEx(Mix_SetSynchroValue_gurax, processor_gurax, argument_g
 Gurax_DeclareFunctionAlias(Mix_GetSynchroValue_gurax, "Mix_GetSynchroValue")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12071,7 +12071,7 @@ Gurax_DeclareFunctionAlias(Mix_SetSoundFonts_gurax, "Mix_SetSoundFonts")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("paths", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12090,7 +12090,7 @@ Gurax_ImplementFunctionEx(Mix_SetSoundFonts_gurax, processor_gurax, argument_gur
 Gurax_DeclareFunctionAlias(Mix_GetSoundFonts_gurax, "Mix_GetSoundFonts")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12107,7 +12107,7 @@ Gurax_DeclareFunctionAlias(Mix_GetChunk_gurax, "Mix_GetChunk")
 {
 	Declare(VTYPE_Mix_Chunk, Flag::None);
 	DeclareArg("channel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12127,7 +12127,7 @@ Gurax_ImplementFunctionEx(Mix_GetChunk_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(Mix_CloseAudio_gurax, "Mix_CloseAudio")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12143,7 +12143,7 @@ Gurax_ImplementFunctionEx(Mix_CloseAudio_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(TTF_Linked_Version_gurax, "TTF_Linked_Version")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12160,7 +12160,7 @@ Gurax_DeclareFunctionAlias(TTF_ByteSwappedUNICODE_gurax, "TTF_ByteSwappedUNICODE
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("swapped", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12179,7 +12179,7 @@ Gurax_ImplementFunctionEx(TTF_ByteSwappedUNICODE_gurax, processor_gurax, argumen
 Gurax_DeclareFunctionAlias(TTF_Init_gurax, "TTF_Init")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12195,7 +12195,7 @@ Gurax_ImplementFunctionEx(TTF_Init_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(TTF_GetError_gurax, "TTF_GetError")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12213,7 +12213,7 @@ Gurax_DeclareFunctionAlias(TTF_OpenFont_gurax, "TTF_OpenFont")
 	Declare(VTYPE_TTF_Font, Flag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ptsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12237,7 +12237,7 @@ Gurax_DeclareFunctionAlias(TTF_OpenFontIndex_gurax, "TTF_OpenFontIndex")
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ptsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12262,7 +12262,7 @@ Gurax_DeclareFunctionAlias(TTF_OpenFontRW_gurax, "TTF_OpenFontRW")
 	DeclareArg("src", VTYPE_SDL_RWops, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ptsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12289,7 +12289,7 @@ Gurax_DeclareFunctionAlias(TTF_OpenFontIndexRW_gurax, "TTF_OpenFontIndexRW")
 	DeclareArg("freesrc", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ptsize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12314,7 +12314,7 @@ Gurax_DeclareFunctionAlias(TTF_GetFontStyle_gurax, "TTF_GetFontStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12336,7 +12336,7 @@ Gurax_DeclareFunctionAlias(TTF_SetFontStyle_gurax, "TTF_SetFontStyle")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12358,7 +12358,7 @@ Gurax_DeclareFunctionAlias(TTF_GetFontOutline_gurax, "TTF_GetFontOutline")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12380,7 +12380,7 @@ Gurax_DeclareFunctionAlias(TTF_SetFontOutline_gurax, "TTF_SetFontOutline")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("outline", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12402,7 +12402,7 @@ Gurax_DeclareFunctionAlias(TTF_GetFontHinting_gurax, "TTF_GetFontHinting")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12424,7 +12424,7 @@ Gurax_DeclareFunctionAlias(TTF_SetFontHinting_gurax, "TTF_SetFontHinting")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hinting", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12446,7 +12446,7 @@ Gurax_DeclareFunctionAlias(TTF_FontHeight_gurax, "TTF_FontHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12467,7 +12467,7 @@ Gurax_DeclareFunctionAlias(TTF_FontAscent_gurax, "TTF_FontAscent")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12488,7 +12488,7 @@ Gurax_DeclareFunctionAlias(TTF_FontDescent_gurax, "TTF_FontDescent")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12509,7 +12509,7 @@ Gurax_DeclareFunctionAlias(TTF_FontLineSkip_gurax, "TTF_FontLineSkip")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12530,7 +12530,7 @@ Gurax_DeclareFunctionAlias(TTF_GetFontKerning_gurax, "TTF_GetFontKerning")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12552,7 +12552,7 @@ Gurax_DeclareFunctionAlias(TTF_SetFontKerning_gurax, "TTF_SetFontKerning")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("allowed", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12574,7 +12574,7 @@ Gurax_DeclareFunctionAlias(TTF_FontFaces_gurax, "TTF_FontFaces")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12595,7 +12595,7 @@ Gurax_DeclareFunctionAlias(TTF_FontFaceIsFixedWidth_gurax, "TTF_FontFaceIsFixedW
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12617,7 +12617,7 @@ Gurax_DeclareFunctionAlias(TTF_GlyphIsProvided_gurax, "TTF_GlyphIsProvided")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12641,7 +12641,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderText_Solid_gurax, "TTF_RenderText_Solid")
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12668,7 +12668,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Solid_gurax, "TTF_RenderUTF8_Solid")
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12695,7 +12695,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderGlyph_Solid_gurax, "TTF_RenderGlyph_Solid")
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12723,7 +12723,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderText_Shaded_gurax, "TTF_RenderText_Shaded")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12753,7 +12753,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Shaded_gurax, "TTF_RenderUTF8_Shaded")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12783,7 +12783,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderGlyph_Shaded_gurax, "TTF_RenderGlyph_Shaded
 	DeclareArg("ch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12812,7 +12812,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderText_Blended_gurax, "TTF_RenderText_Blended
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12839,7 +12839,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Blended_gurax, "TTF_RenderUTF8_Blended
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12867,7 +12867,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderText_Blended_Wrapped_gurax, "TTF_RenderText
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("wrapLength", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12896,7 +12896,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderUTF8_Blended_Wrapped_gurax, "TTF_RenderUTF8
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("wrapLength", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12924,7 +12924,7 @@ Gurax_DeclareFunctionAlias(TTF_RenderGlyph_Blended_gurax, "TTF_RenderGlyph_Blend
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fg", VTYPE_SDL_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12949,7 +12949,7 @@ Gurax_DeclareFunctionAlias(TTF_CloseFont_gurax, "TTF_CloseFont")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_TTF_Font, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12969,7 +12969,7 @@ Gurax_ImplementFunctionEx(TTF_CloseFont_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(TTF_Quit_gurax, "TTF_Quit")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -12985,7 +12985,7 @@ Gurax_ImplementFunctionEx(TTF_Quit_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(TTF_WasInit_gurax, "TTF_WasInit")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

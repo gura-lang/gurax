@@ -71,7 +71,7 @@ Gurax_DeclareConstructor(Color)
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Color` instance from a color name specified by the argument `name`.
 The color names are defined by W3C (www.w3.org).
 The argument `alpha` specifies the alpha value between 0 and 255.
@@ -103,7 +103,7 @@ Gurax_DeclareClassMethod(Color, RGB)
 	DeclareArg("g", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Color` instance from the arguments `r` for red, `g` for green, and `b` for blue of color elements,
 each of which ranges between 0 and 255.
 )**");
@@ -130,7 +130,7 @@ Gurax_DeclareClassMethod(Color, RGBA)
 	DeclareArg("b", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("a", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Color` instance from the arguments `r` for red, `g` for green, `b` for blue, and `a` for alpha of color elements,
 each of which ranges between 0 and 255.
 )**");
@@ -157,7 +157,7 @@ Gurax_DeclareMethod(Color, GrayScale)
 {
 	Declare(VTYPE_Color, Flag::Map);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts the color to gray-scaled one.
 )**");
 }
@@ -177,7 +177,7 @@ Gurax_ImplementMethod(Color, GrayScale)
 Gurax_DeclareProperty_RW(Color, r)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The red element of the color ranging between 0 and 255.
 )**");
 }
@@ -200,7 +200,7 @@ Gurax_ImplementPropertySetter(Color, r)
 Gurax_DeclareProperty_RW(Color, g)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The green element of the color ranging between 0 and 255.
 )**");
 }
@@ -223,7 +223,7 @@ Gurax_ImplementPropertySetter(Color, g)
 Gurax_DeclareProperty_RW(Color, b)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The green element of the color ranging between 0 and 255.
 )**");
 }
@@ -246,7 +246,7 @@ Gurax_ImplementPropertySetter(Color, b)
 Gurax_DeclareProperty_RW(Color, a)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The alpha element of the color ranging between 0 and 255.
 )**");
 }
@@ -270,7 +270,7 @@ Gurax_ImplementPropertySetter(Color, a)
 Gurax_DeclareProperty_R(Color, grayScale)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The gray-scaled number the color ranging between 0 and 255.
 )**");
 }

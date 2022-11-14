@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(hash.Accumulator, `en)}
 Gurax_DeclareMethod(Accumulator, Initialize)
 {
 	Declare(VTYPE_Accumulator, Flag::Reduce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Initialize the state of the hash accumulator.
 )**");
 }
@@ -52,7 +52,7 @@ Gurax_ImplementMethod(Accumulator, Initialize)
 Gurax_DeclareProperty_R(Accumulator, digest)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -68,7 +68,7 @@ Gurax_ImplementPropertyGetter(Accumulator, digest)
 Gurax_DeclareProperty_R(Accumulator, digestHex)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -84,7 +84,7 @@ Gurax_ImplementPropertyGetter(Accumulator, digestHex)
 Gurax_DeclareProperty_R(Accumulator, number)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

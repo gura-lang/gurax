@@ -34,7 +34,7 @@ Gurax_DeclareConstructor(Attr)
 	DeclareArg("name", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareArg("value", VTYPE_String, DeclArg::Occur::Once, DeclArg::Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `xml.Attr` instance.
 )**");
 }
@@ -59,7 +59,7 @@ Gurax_DeclareMethod(Attr, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -83,7 +83,7 @@ Gurax_ImplementMethod(Attr, MethodSkeleton)
 Gurax_DeclareProperty_R(Attr, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

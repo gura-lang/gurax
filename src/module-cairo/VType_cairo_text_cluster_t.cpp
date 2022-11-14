@@ -33,7 +33,7 @@ Gurax_DeclareMethod(cairo_text_cluster_t, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_ImplementMethod(cairo_text_cluster_t, MethodSkeleton)
 Gurax_DeclareProperty_RW(cairo_text_cluster_t, num_bytes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -78,7 +78,7 @@ Gurax_ImplementPropertySetter(cairo_text_cluster_t, num_bytes)
 Gurax_DeclareProperty_RW(cairo_text_cluster_t, num_glyphs)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

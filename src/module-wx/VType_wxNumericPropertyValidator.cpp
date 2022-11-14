@@ -45,7 +45,7 @@ VType_wxNumericPropertyValidator VTYPE_wxNumericPropertyValidator("NumericProper
 void VType_wxNumericPropertyValidator::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxTextValidator, Flag::Mutable);
 	// Assignment of method

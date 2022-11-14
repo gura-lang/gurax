@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(Directory)
 	Declare(VTYPE_DateTime, Flag::Map);
 	DeclareArg("pathName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Stream` instance.
 )**");
 }
@@ -64,7 +64,7 @@ Gurax_DeclareMethod(Directory, Open)
 	DeclareArg("mode", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Stream` instance that reads a content stored under the target Directory.
 )**");
 }
@@ -100,7 +100,7 @@ Gurax_ImplementMethod(Directory, Open)
 Gurax_DeclareProperty_R(Directory, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The name of the directory.
 )**");
 }
@@ -115,7 +115,7 @@ Gurax_ImplementPropertyGetter(Directory, name)
 Gurax_DeclareProperty_R(Directory, parent)
 {
 	Declare(VTYPE_Directory, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The parent of the directory.
 )**");
 }
@@ -132,7 +132,7 @@ Gurax_ImplementPropertyGetter(Directory, parent)
 Gurax_DeclareProperty_R(Directory, type)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A symbol that represents the directory type:
 - `` `item` .. file or data entry
 - `` `container` .. directory or folder

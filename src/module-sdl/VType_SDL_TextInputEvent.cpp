@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_TextInputEvent, `en)}
 Gurax_DeclareProperty_R(SDL_TextInputEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(SDL_TextInputEvent, type)
 Gurax_DeclareProperty_R(SDL_TextInputEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_ImplementPropertyGetter(SDL_TextInputEvent, timestamp)
 Gurax_DeclareProperty_R(SDL_TextInputEvent, windowID)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementPropertyGetter(SDL_TextInputEvent, windowID)
 Gurax_DeclareProperty_R(SDL_TextInputEvent, text)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

@@ -9,7 +9,7 @@ Gurax_BeginModuleScope(curl)
 Gurax_DeclareFunctionAlias(curl_easy_init_gurax, "curl_easy_init")
 {
 	Declare(VTYPE_CURL, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -29,7 +29,7 @@ Gurax_DeclareFunctionAlias(curl_easy_setopt_gurax, "curl_easy_setopt")
 	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("option", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -53,7 +53,7 @@ Gurax_DeclareFunctionAlias(curl_easy_perform_gurax, "curl_easy_perform")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -74,7 +74,7 @@ Gurax_DeclareFunctionAlias(curl_easy_cleanup_gurax, "curl_easy_cleanup")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -96,7 +96,7 @@ Gurax_DeclareFunctionAlias(curl_easy_getinfo_gurax, "curl_easy_getinfo")
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("info", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -117,7 +117,7 @@ Gurax_DeclareFunctionAlias(curl_easy_duphandle_gurax, "curl_easy_duphandle")
 {
 	Declare(VTYPE_CURL, Flag::None);
 	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -139,7 +139,7 @@ Gurax_DeclareFunctionAlias(curl_easy_reset_gurax, "curl_easy_reset")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -160,7 +160,7 @@ Gurax_DeclareFunctionAlias(curl_easy_upkeep_gurax, "curl_easy_upkeep")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("curl", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -181,7 +181,7 @@ Gurax_DeclareFunctionAlias(curl_mime_init_gurax, "curl_mime_init")
 {
 	Declare(VTYPE_curl_mime, Flag::None);
 	DeclareArg("easy", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -203,7 +203,7 @@ Gurax_DeclareFunctionAlias(curl_mime_free_gurax, "curl_mime_free")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mime", VTYPE_curl_mime, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -224,7 +224,7 @@ Gurax_DeclareFunctionAlias(curl_mime_addpart_gurax, "curl_mime_addpart")
 {
 	Declare(VTYPE_curl_mimepart, Flag::None);
 	DeclareArg("mime", VTYPE_curl_mime, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -247,7 +247,7 @@ Gurax_DeclareFunctionAlias(curl_mime_name_gurax, "curl_mime_name")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -270,7 +270,7 @@ Gurax_DeclareFunctionAlias(curl_mime_filename_gurax, "curl_mime_filename")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -293,7 +293,7 @@ Gurax_DeclareFunctionAlias(curl_mime_type_gurax, "curl_mime_type")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mimetype", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -316,7 +316,7 @@ Gurax_DeclareFunctionAlias(curl_mime_encoder_gurax, "curl_mime_encoder")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("encoding", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -340,7 +340,7 @@ Gurax_DeclareFunctionAlias(curl_mime_data_gurax, "curl_mime_data")
 	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("datasize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -364,7 +364,7 @@ Gurax_DeclareFunctionAlias(curl_mime_filedata_gurax, "curl_mime_filedata")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -387,7 +387,7 @@ Gurax_DeclareFunctionAlias(curl_mime_subparts_gurax, "curl_mime_subparts")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("subparts", VTYPE_curl_mime, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -412,7 +412,7 @@ Gurax_DeclareFunctionAlias(curl_mime_headers_gurax, "curl_mime_headers")
 	DeclareArg("part", VTYPE_curl_mimepart, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("headers", VTYPE_curl_slist, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("take_ownership", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -436,7 +436,7 @@ Gurax_DeclareFunctionAlias(curl_free_gurax, "curl_free")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -455,7 +455,7 @@ Gurax_DeclareFunctionAlias(curl_global_init_gurax, "curl_global_init")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -474,7 +474,7 @@ Gurax_ImplementFunctionEx(curl_global_init_gurax, processor_gurax, argument_gura
 Gurax_DeclareFunctionAlias(curl_global_cleanup_gurax, "curl_global_cleanup")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -492,7 +492,7 @@ Gurax_DeclareFunctionAlias(curl_slist_append_gurax, "curl_slist_append")
 	Declare(VTYPE_curl_slist, Flag::None);
 	DeclareArg("slist", VTYPE_curl_slist, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -514,7 +514,7 @@ Gurax_DeclareFunctionAlias(curl_slist_free_all_gurax, "curl_slist_free_all")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("slist", VTYPE_curl_slist, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -535,7 +535,7 @@ Gurax_DeclareFunctionAlias(curl_easy_strerror_gurax, "curl_easy_strerror")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -555,7 +555,7 @@ Gurax_DeclareFunctionAlias(curl_share_strerror_gurax, "curl_share_strerror")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("code", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -576,7 +576,7 @@ Gurax_DeclareFunctionAlias(curl_easy_pause_gurax, "curl_easy_pause")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("handle", VTYPE_CURL, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bitmask", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -597,7 +597,7 @@ Gurax_ImplementFunctionEx(curl_easy_pause_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(curl_url_gurax, "curl_url")
 {
 	Declare(VTYPE_CURLU, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -615,7 +615,7 @@ Gurax_DeclareFunctionAlias(curl_url_cleanup_gurax, "curl_url_cleanup")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handle", VTYPE_CURLU, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -636,7 +636,7 @@ Gurax_DeclareFunctionAlias(curl_url_dup_gurax, "curl_url_dup")
 {
 	Declare(VTYPE_CURLU, Flag::None);
 	DeclareArg("inhandle", VTYPE_CURLU, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -660,7 +660,7 @@ Gurax_DeclareFunctionAlias(curl_url_get_gurax, "curl_url_get")
 	DeclareArg("url", VTYPE_CURLU, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("what", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -693,7 +693,7 @@ Gurax_DeclareFunctionAlias(curl_url_set_gurax, "curl_url_set")
 	DeclareArg("part", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("content", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

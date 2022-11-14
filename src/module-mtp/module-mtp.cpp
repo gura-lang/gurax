@@ -18,7 +18,7 @@ Gurax_DeclareFunction(Dir)
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that lists item names in the specified directory.
 If pathname is omitted, the current directory shall be listed.
 
@@ -56,7 +56,7 @@ Gurax_DeclareFunction(Glob)
 	DeclareArg("pattern", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator for item names that match with a pattern supporting
 UNIX shell-style wild cards. In default, case of characters is distinguished.
 
@@ -87,7 +87,7 @@ Gurax_DeclareFunction(EnumDevice)
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Enumerates MTP devices and returns a list of `mtp.Device` instances.
 )**");
 }
@@ -116,7 +116,7 @@ Gurax_DeclareFunction(Walk)
 	DeclareArg("pattern", VTYPE_String, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	Directory::WalkFlag::DeclareAttrOpt(*this);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that recursively lists item names under the specified directory.
 If `directory` is omitted, search starts at the current directory.
 

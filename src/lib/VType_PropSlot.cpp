@@ -29,7 +29,7 @@ Gurax_DeclareMethod(PropSlot, IsSet)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the property handler is declared with the flag specified by `symbol`.
 )**");
 }
@@ -56,7 +56,7 @@ Gurax_ImplementMethod(PropSlot, IsSet)
 Gurax_DeclareProperty_R(PropSlot, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The property's name.
 )**");
 }
@@ -71,7 +71,7 @@ Gurax_ImplementPropertyGetter(PropSlot, name)
 Gurax_DeclareProperty_R(PropSlot, symbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The property's symbol.
 )**");
 }
@@ -86,7 +86,7 @@ Gurax_ImplementPropertyGetter(PropSlot, symbol)
 Gurax_DeclareProperty_R(PropSlot, vtype)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The property's value type.
 )**");
 }
@@ -101,7 +101,7 @@ Gurax_ImplementPropertyGetter(PropSlot, vtype)
 Gurax_DeclareProperty_R(PropSlot, isOfClass)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the property belongs to a class.
 )**");
 }
@@ -116,7 +116,7 @@ Gurax_ImplementPropertyGetter(PropSlot, isOfClass)
 Gurax_DeclareProperty_R(PropSlot, isOfInstance)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the property belongs to an instance.
 )**");
 }

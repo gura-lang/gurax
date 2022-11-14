@@ -13,7 +13,7 @@ Gurax_DeclareFunction(IsInlineTag)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("tagName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the specified tag is an inlined one.
 )**");
 }

@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(Object)
 {
 	Declare(VTYPE_Color, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an `Object` instance.
 )**");
 }
@@ -50,7 +50,7 @@ Gurax_ImplementConstructor(Object)
 Gurax_DeclareMethod(Object, __clone__)
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a cloned object.
 )**");
 }
@@ -71,7 +71,7 @@ Gurax_DeclareMethod(Object, __instanceOf__)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("vtype", VTYPE_VType, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the object is an instance of the specified `vtype`.
 )**");
 }
@@ -93,7 +93,7 @@ Gurax_DeclareHybridMethod(Object, __prop__)
 	Declare(VTYPE_Bool, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns the value of the specified property.
 )**");
 }
@@ -116,7 +116,7 @@ Gurax_DeclareClassMethod(Object, __str__)
 {
 	Declare(VTYPE_String, Flag::None);
 	StringStyle::DeclareAttrOpt(*this);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Converts the object to a string.
 )**");
 }
@@ -138,7 +138,7 @@ Gurax_ImplementClassMethod(Object, __str__)
 Gurax_DeclareHybridProperty_R(Object, __id__)
 {
 	Declare(VTYPE_VType, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The object ID.
 )**");
 }
@@ -153,7 +153,7 @@ Gurax_ImplementHybridPropertyGetter(Object, __id__)
 Gurax_DeclareHybridProperty_R(Object, __vtype__)
 {
 	Declare(VTYPE_VType, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The value type of this object.
 )**");
 }
@@ -170,7 +170,7 @@ Gurax_ImplementHybridPropertyGetter(Object, __vtype__)
 Gurax_DeclareHybridProperty_R(Object, __vtypeInh__)
 {
 	Declare(VTYPE_VType, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The value type of this object's parent class.
 )**");
 }

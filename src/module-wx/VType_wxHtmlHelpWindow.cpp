@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(HtmlHelpWindow_gurax, "HtmlHelpWindow")
 	Declare(VTYPE_wxHtmlHelpWindow, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.HtmlHelpWindow.
 )**");
 }
@@ -102,7 +102,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpWindow, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("helpStyle", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -134,7 +134,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpWindow, Display_gurax, "Display")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -187,7 +187,7 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, Display_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxHtmlHelpWindow, DisplayContents_gurax, "DisplayContents")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -207,7 +207,7 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, DisplayContents_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxHtmlHelpWindow, DisplayIndex_gurax, "DisplayIndex")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -228,7 +228,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpWindow, GetData_gurax, "GetData")
 {
 	Declare(VTYPE_wxHtmlHelpData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -250,7 +250,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpWindow, KeywordSearch_gurax, "KeywordSearch")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("keyword", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -277,7 +277,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpWindow, ReadCustomization_gurax, "ReadCustomi
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cfg", VTYPE_wxConfigBase, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -304,7 +304,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpWindow, UseConfig_gurax, "UseConfig")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("config", VTYPE_wxConfigBase, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rootpath", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -331,7 +331,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpWindow, WriteCustomization_gurax, "WriteCusto
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cfg", VTYPE_wxConfigBase, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -356,7 +356,7 @@ Gurax_ImplementMethodEx(wxHtmlHelpWindow, WriteCustomization_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxHtmlHelpWindow, RefreshLists_gurax, "RefreshLists")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -377,7 +377,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpWindow, GetController_gurax, "GetController")
 {
 	Declare(VTYPE_wxHtmlHelpController, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -398,7 +398,7 @@ Gurax_DeclareMethodAlias(wxHtmlHelpWindow, SetController_gurax, "SetController")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("controller", VTYPE_wxHtmlHelpController, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -430,7 +430,7 @@ VType_wxHtmlHelpWindow VTYPE_wxHtmlHelpWindow("HtmlHelpWindow");
 void VType_wxHtmlHelpWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(HtmlHelpWindow_gurax));
 	// Assignment of method

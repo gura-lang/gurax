@@ -38,7 +38,7 @@ Gurax_DeclareConstructorAlias(GenericProgressDialog_gurax, "GenericProgressDialo
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.GenericProgressDialog.
 )**");
 }
@@ -68,7 +68,7 @@ Gurax_ImplementConstructorEx(GenericProgressDialog_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxGenericProgressDialog, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -88,7 +88,7 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, GetValue_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxGenericProgressDialog, GetRange_gurax, "GetRange")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -108,7 +108,7 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, GetRange_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxGenericProgressDialog, GetMessage_gurax, "GetMessage")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -128,7 +128,7 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, GetMessage_gurax, processor_gur
 Gurax_DeclareMethodAlias(wxGenericProgressDialog, Resume_gurax, "Resume")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -149,7 +149,7 @@ Gurax_DeclareMethodAlias(wxGenericProgressDialog, SetRange_gurax, "SetRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("maximum", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -172,7 +172,7 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, SetRange_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxGenericProgressDialog, WasCancelled_gurax, "WasCancelled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -192,7 +192,7 @@ Gurax_ImplementMethodEx(wxGenericProgressDialog, WasCancelled_gurax, processor_g
 Gurax_DeclareMethodAlias(wxGenericProgressDialog, WasSkipped_gurax, "WasSkipped")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -220,7 +220,7 @@ VType_wxGenericProgressDialog VTYPE_wxGenericProgressDialog("GenericProgressDial
 void VType_wxGenericProgressDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(GenericProgressDialog_gurax));
 	// Assignment of method

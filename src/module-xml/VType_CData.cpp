@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(CData)
 {
 	Declare(VTYPE_CData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `xml.CData` instance.
 )**");
 }
@@ -53,7 +53,7 @@ Gurax_ImplementConstructor(CData)
 Gurax_DeclareMethod(CData, Textize)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_ImplementMethod(CData, Textize)
 Gurax_DeclareProperty_R(CData, propSkeleton)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

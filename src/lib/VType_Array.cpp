@@ -34,7 +34,7 @@ Gurax_DeclareConstructor(Array)
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("init", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an `Array` instance.
 )**");
 }
@@ -72,7 +72,7 @@ Gurax_DeclareFunction(ConstructArray)
 	Declare(VTYPE_Array, Flag::None);
 	DeclareArg("init", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -109,7 +109,7 @@ Gurax_DeclareClassMethod(Array, Identity)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -139,7 +139,7 @@ Gurax_DeclareMethod(Array, Cast)
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("elemType", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a new Array that contains elements casted by the specified element type.
 )**");
 }
@@ -165,7 +165,7 @@ Gurax_DeclareMethod(Array, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -185,7 +185,7 @@ Gurax_DeclareMethod(Array, Inject)
 	Declare(VTYPE_Iterator, Flag::Reduce);
 	DeclareArg("values", VTYPE_Iterator, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Injects values from an Iterator.
 )**");
 }
@@ -208,7 +208,7 @@ Gurax_ImplementMethod(Array, Inject)
 Gurax_DeclareMethod(Array, ToList)
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Convets the Array to a List.
 )**");
 }
@@ -226,7 +226,7 @@ Gurax_DeclareMethod(Array, ToString)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("codec", VTYPE_Codec, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -252,7 +252,7 @@ Gurax_DeclareMethod(Array, Transpose)
 {
 	Declare(VTYPE_Array, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -273,7 +273,7 @@ Gurax_DeclareMethod(Array, VerifyShape)
 {
 	Declare(VTYPE_Bool, Flag::Reduce);
 	DeclareArg("dim", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Verifies the array's shape.
 )**");
 }
@@ -297,7 +297,7 @@ Gurax_ImplementMethod(Array, VerifyShape)
 Gurax_DeclareProperty_R(Array, bytes)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The `array`'s whole size in bytes.
 )**");
 }
@@ -313,7 +313,7 @@ Gurax_ImplementPropertyGetter(Array, bytes)
 Gurax_DeclareProperty_R(Array, bytesPerElem)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The `Array`'s element size in bytes.
 )**");
 }
@@ -328,7 +328,7 @@ Gurax_ImplementPropertyGetter(Array, bytesPerElem)
 Gurax_DeclareProperty_R(Array, elemType)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A symbol that represents the `Array`'s element type.
 )**");
 }
@@ -343,7 +343,7 @@ Gurax_ImplementPropertyGetter(Array, elemType)
 Gurax_DeclareProperty_R(Array, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The number of elements in the `Array`.
 )**");
 }
@@ -358,7 +358,7 @@ Gurax_ImplementPropertyGetter(Array, len)
 Gurax_DeclareProperty_R(Array, p)
 {
 	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A `Pointer` instance that points at the first address of the `Array`'s buffer.
 )**");
 }
@@ -374,7 +374,7 @@ Gurax_ImplementPropertyGetter(Array, p)
 Gurax_DeclareProperty_R(Array, shape)
 {
 	Declare(VTYPE_Pointer, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A list of dimension of the array.
 )**");
 }

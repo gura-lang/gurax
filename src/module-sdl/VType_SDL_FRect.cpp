@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_FRect, `en)}
 Gurax_DeclareProperty_RW(SDL_FRect, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -52,7 +52,7 @@ Gurax_ImplementPropertySetter(SDL_FRect, x)
 Gurax_DeclareProperty_RW(SDL_FRect, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -73,7 +73,7 @@ Gurax_ImplementPropertySetter(SDL_FRect, y)
 Gurax_DeclareProperty_RW(SDL_FRect, w)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -94,7 +94,7 @@ Gurax_ImplementPropertySetter(SDL_FRect, w)
 Gurax_DeclareProperty_RW(SDL_FRect, h)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

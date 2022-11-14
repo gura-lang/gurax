@@ -36,7 +36,7 @@ ${help.ComposeMethodHelp(wx.Protocol, `en)}
 Gurax_DeclareMethodAlias(wxProtocol, Abort_gurax, "Abort")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -56,7 +56,7 @@ Gurax_ImplementMethodEx(wxProtocol, Abort_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxProtocol, GetContentType_gurax, "GetContentType")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementMethodEx(wxProtocol, GetContentType_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxProtocol, GetError_gurax, "GetError")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -98,7 +98,7 @@ Gurax_DeclareMethodAlias(wxProtocol, GetInputStream_gurax, "GetInputStream")
 	Declare(VTYPE_wxInputStream, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -121,7 +121,7 @@ Gurax_ImplementMethodEx(wxProtocol, GetInputStream_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxProtocol, Reconnect_gurax, "Reconnect")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -142,7 +142,7 @@ Gurax_DeclareMethodAlias(wxProtocol, SetPassword_gurax, "SetPassword")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("user", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -166,7 +166,7 @@ Gurax_DeclareMethodAlias(wxProtocol, SetUser_gurax, "SetUser")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("user", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -190,7 +190,7 @@ Gurax_DeclareMethodAlias(wxProtocol, SetDefaultTimeout_gurax, "SetDefaultTimeout
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("Value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -214,7 +214,7 @@ Gurax_DeclareMethodAlias(wxProtocol, SetLog_gurax, "SetLog")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("log", VTYPE_wxProtocolLog, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -239,7 +239,7 @@ Gurax_DeclareMethodAlias(wxProtocol, GetLog_gurax, "GetLog")
 {
 	Declare(VTYPE_wxProtocolLog, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -260,7 +260,7 @@ Gurax_DeclareMethodAlias(wxProtocol, DetachLog_gurax, "DetachLog")
 {
 	Declare(VTYPE_wxProtocolLog, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -281,7 +281,7 @@ Gurax_DeclareMethodAlias(wxProtocol, LogRequest_gurax, "LogRequest")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -305,7 +305,7 @@ Gurax_DeclareMethodAlias(wxProtocol, LogResponse_gurax, "LogResponse")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -336,7 +336,7 @@ VType_wxProtocol VTYPE_wxProtocol("Protocol");
 void VType_wxProtocol::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSocketClient, Flag::Mutable);
 	// Assignment of method

@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(FontInfo_gurax, "FontInfo")
 	Declare(VTYPE_wxFontInfo, Flag::None);
 	DeclareArg("arg", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.FontInfo.
 )**");
 }
@@ -68,7 +68,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, Family_gurax, "Family")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("family", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -92,7 +92,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, FaceName_gurax, "FaceName")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("faceName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -116,7 +116,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, Bold_gurax, "Bold")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("bold", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -140,7 +140,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, Light_gurax, "Light")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("light", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -164,7 +164,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, Italic_gurax, "Italic")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("italic", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -188,7 +188,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, Slant_gurax, "Slant")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("slant", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -212,7 +212,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, AntiAliased_gurax, "AntiAliased")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("antiAliased", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -236,7 +236,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, Underlined_gurax, "Underlined")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("underlined", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -260,7 +260,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, Strikethrough_gurax, "Strikethrough")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("strikethrough", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -284,7 +284,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, Encoding_gurax, "Encoding")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("encoding", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -308,7 +308,7 @@ Gurax_DeclareMethodAlias(wxFontInfo, AllFlags_gurax, "AllFlags")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -339,7 +339,7 @@ VType_wxFontInfo VTYPE_wxFontInfo("FontInfo");
 void VType_wxFontInfo::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(FontInfo_gurax));
 	// Assignment of method

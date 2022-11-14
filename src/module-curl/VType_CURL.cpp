@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(CURL)
 {
 	Declare(VTYPE_CURL, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `curl.CURL` instance.
 )**");
 }
@@ -54,7 +54,7 @@ Gurax_ImplementConstructor(CURL)
 Gurax_DeclareProperty_R(CURL, info)
 {
 	Declare(VTYPE_Info, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -69,7 +69,7 @@ Gurax_ImplementPropertyGetter(CURL, info)
 Gurax_DeclareProperty_R(CURL, opt)
 {
 	Declare(VTYPE_Opt, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -84,7 +84,7 @@ Gurax_ImplementPropertyGetter(CURL, opt)
 Gurax_DeclareProperty_RW(CURL, streamSrc)
 {
 	Declare(VTYPE_Stream, Flag::StreamR);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -105,7 +105,7 @@ Gurax_ImplementPropertySetter(CURL, streamSrc)
 Gurax_DeclareProperty_RW(CURL, streamDst)
 {
 	Declare(VTYPE_Stream, Flag::StreamW | Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -127,7 +127,7 @@ Gurax_ImplementPropertySetter(CURL, streamDst)
 Gurax_DeclareProperty_RW(CURL, streamHeader)
 {
 	Declare(VTYPE_Stream, Flag::StreamW | Flag::Nil);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

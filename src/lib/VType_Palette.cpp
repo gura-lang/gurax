@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(Palette)
 	Declare(VTYPE_Expr, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an `Palette` instance with entries designated by the argument `symbol` that takes following values:
 
 - `` `basic`` .. 16 basic colors.
@@ -64,7 +64,7 @@ Gurax_DeclareClassMethod(Palette, Create)
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("color", VTYPE_Color, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an `Palette` instance filled with the specified color.
 If the argument `color` is omitted, it will be filled with black.
 )**");
@@ -91,7 +91,7 @@ Gurax_DeclareMethod(Palette, Each)
 {
 	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that iterates each element in the palette.
 )**");
 }
@@ -111,7 +111,7 @@ Gurax_DeclareMethod(Palette, Fill)
 {
 	Declare(VTYPE_Palette, Flag::Reduce);
 	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Fills the palette with the specified color.
 )**");
 }
@@ -135,7 +135,7 @@ Gurax_DeclareMethod(Palette, GetNearest)
 	Declare(VTYPE_Color, Flag::None);
 	DeclareArg("color", VTYPE_Color, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(index));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a `color` instance in the palette that is the nearest with the specified color.
 
 If the attribute `:index` is specified, it would return an index
@@ -168,7 +168,7 @@ Gurax_DeclareMethod(Palette, Shrink)
 {
 	Declare(VTYPE_Palette, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(align));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Shrinks the size of the palette to a number powered by two that is
 enough to contain unique entries. The ordef of existing entries will
 be kept intact.
@@ -192,7 +192,7 @@ Gurax_DeclareMethod(Palette, UpdateBy)
 	DeclareArg("image_or_palette", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(shrink));
 	DeclareAttrOpt(Gurax_Symbol(align));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Updates palette entries according to color data in an image or a palette.
 
 The order of existing entries will be kept intact. If attribute shrink is
@@ -237,7 +237,7 @@ Gurax_ImplementMethod(Palette, UpdateBy)
 Gurax_DeclareProperty_R(Palette, len)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 The number of elements in the palette.
 )**");
 }

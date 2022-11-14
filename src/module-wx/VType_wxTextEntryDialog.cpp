@@ -39,7 +39,7 @@ Gurax_DeclareConstructorAlias(TextEntryDialog_gurax, "TextEntryDialog")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.TextEntryDialog.
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_DeclareMethodAlias(wxTextEntryDialog, Create_gurax, "Create")
 	DeclareArg("value", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -106,7 +106,7 @@ Gurax_ImplementMethodEx(wxTextEntryDialog, Create_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxTextEntryDialog, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -127,7 +127,7 @@ Gurax_DeclareMethodAlias(wxTextEntryDialog, SetMaxLength_gurax, "SetMaxLength")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -151,7 +151,7 @@ Gurax_DeclareMethodAlias(wxTextEntryDialog, SetValue_gurax, "SetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -174,7 +174,7 @@ Gurax_ImplementMethodEx(wxTextEntryDialog, SetValue_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxTextEntryDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -195,7 +195,7 @@ Gurax_DeclareMethodAlias(wxTextEntryDialog, SetTextValidator_gurax, "SetTextVali
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -256,7 +256,7 @@ VType_wxTextEntryDialog VTYPE_wxTextEntryDialog("TextEntryDialog");
 void VType_wxTextEntryDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(TextEntryDialog_gurax));
 	// Assignment of method

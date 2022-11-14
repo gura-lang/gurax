@@ -135,7 +135,7 @@ Gurax_DeclareMethod(List, Grep)
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -162,7 +162,7 @@ Gurax_DeclareMethod(Iterator, Grep)
 	Declare(VTYPE_Iterator, Flag::Map);
 	DeclareArg("pattern", VTYPE_Pattern, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

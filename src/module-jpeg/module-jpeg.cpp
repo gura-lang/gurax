@@ -27,7 +27,7 @@ Gurax_DeclareFunction(Read)
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -52,7 +52,7 @@ Gurax_DeclareFunction(Write)
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamR);
 	DeclareArg("image", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -81,7 +81,7 @@ Gurax_ModulePrepare()
 	// Initialization of static data
 	TagInfo::Initialize();
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Assignment of VType
 	Assign(VTYPE_Content);
 	Assign(VTYPE_Exif);

@@ -33,7 +33,7 @@ Gurax_DeclareConstructor(Random)
 	Declare(VTYPE_Rational, Flag::None);
 	DeclareArg("seed", VTYPE_Int, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `gmp.Random` instance.
 )**");
 }
@@ -59,7 +59,7 @@ Gurax_DeclareHybridMethod(Random, Float)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("prec", VTYPE_Int, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Generates a random number as an instance of gmp.Float.
 )**");
 }
@@ -84,7 +84,7 @@ Gurax_DeclareHybridMethod(Random, FloatSeq)
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("prec", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that randomly generates real numbers in the range of `[0, 1)`
 for the specified times by `cnt`.
 If `cnt` is ommited, the iterator generates numbers indefinitely.
@@ -115,7 +115,7 @@ Gurax_DeclareHybridMethod(Random, Int)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("range", VTYPE_Int, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Generates a random number as an instance of gmp.Int.
 )**");
 }
@@ -138,7 +138,7 @@ Gurax_DeclareHybridMethod(Random, IntBits)
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("bits", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Generates a random number as an instance of gmp.Int.
 )**");
 }
@@ -163,7 +163,7 @@ Gurax_DeclareHybridMethod(Random, IntSeq)
 	DeclareArg("range", VTYPE_Int, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cnt", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an iterator that randomly generates integer numbers in the range of `[0, range)`
 for the specified times by `cnt`.
 If `cnt` is ommited, the iterator generates numbers indefinitely.
@@ -196,7 +196,7 @@ Gurax_ImplementHybridMethod(Random, IntSeq)
 Gurax_DeclareHybridProperty_W(Random, seed)
 {
 	Declare(VTYPE_Int, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

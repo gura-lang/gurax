@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_FPoint, `en)}
 Gurax_DeclareProperty_R(SDL_FPoint, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(SDL_FPoint, x)
 Gurax_DeclareProperty_R(SDL_FPoint, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

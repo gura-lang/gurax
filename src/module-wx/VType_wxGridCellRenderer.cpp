@@ -45,7 +45,7 @@ VType_wxGridCellRenderer VTYPE_wxGridCellRenderer("GridCellRenderer");
 void VType_wxGridCellRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxRefCounter, Flag::Mutable);
 	// Assignment of method

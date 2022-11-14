@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_SysWMEvent, `en)}
 Gurax_DeclareProperty_R(SDL_SysWMEvent, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(SDL_SysWMEvent, type)
 Gurax_DeclareProperty_R(SDL_SysWMEvent, timestamp)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

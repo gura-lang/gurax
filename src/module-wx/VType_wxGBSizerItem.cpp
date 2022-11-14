@@ -34,7 +34,7 @@ Gurax_DeclareConstructorAlias(GBSizerItem_gurax, "GBSizerItem")
 	Declare(VTYPE_wxGBSizerItem, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.GBSizerItem.
 )**");
 }
@@ -131,7 +131,7 @@ Gurax_ImplementConstructorEx(GBSizerItem_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxGBSizerItem, GetEndPos_gurax, "GetEndPos")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -154,7 +154,7 @@ Gurax_DeclareMethodAlias(wxGBSizerItem, Intersects_gurax, "Intersects")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pos", VTYPE_wxGBPosition, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("span", VTYPE_wxGBSpan, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -181,7 +181,7 @@ Gurax_DeclareMethodAlias(wxGBSizerItem, SetPos_gurax, "SetPos")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pos", VTYPE_wxGBPosition, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -206,7 +206,7 @@ Gurax_DeclareMethodAlias(wxGBSizerItem, SetSpan_gurax, "SetSpan")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("span", VTYPE_wxGBSpan, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -231,7 +231,7 @@ Gurax_DeclareMethodAlias(wxGBSizerItem, SetGBSizer_gurax, "SetGBSizer")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sizer", VTYPE_wxGridBagSizer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -256,7 +256,7 @@ Gurax_DeclareMethodAlias(wxGBSizerItem, GetPos_gurax, "GetPos")
 {
 	Declare(VTYPE_wxGBPosition, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -276,7 +276,7 @@ Gurax_ImplementMethodEx(wxGBSizerItem, GetPos_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxGBSizerItem, GetPosTuple_gurax, "GetPosTuple")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -305,7 +305,7 @@ VType_wxGBSizerItem VTYPE_wxGBSizerItem("GBSizerItem");
 void VType_wxGBSizerItem::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSizerItem, Flag::Mutable, Gurax_CreateConstructor(GBSizerItem_gurax));
 	// Assignment of method

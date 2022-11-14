@@ -39,7 +39,7 @@ ${help.ComposeMethodHelp(wx.PGPaintData, `en)}
 Gurax_DeclareProperty_R(wxPGPaintData, m_choiceItem)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -53,7 +53,7 @@ Gurax_ImplementPropertyGetter(wxPGPaintData, m_choiceItem)
 Gurax_DeclareProperty_R(wxPGPaintData, m_drawnWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -67,7 +67,7 @@ Gurax_ImplementPropertyGetter(wxPGPaintData, m_drawnWidth)
 Gurax_DeclareProperty_R(wxPGPaintData, m_drawnHeight)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -86,7 +86,7 @@ VType_wxPGPaintData VTYPE_wxPGPaintData("PGPaintData");
 void VType_wxPGPaintData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

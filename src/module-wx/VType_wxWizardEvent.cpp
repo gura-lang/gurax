@@ -36,7 +36,7 @@ ${help.ComposeMethodHelp(wx.WizardEvent, `en)}
 Gurax_DeclareMethodAlias(wxWizardEvent, GetDirection_gurax, "GetDirection")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -57,7 +57,7 @@ Gurax_DeclareMethodAlias(wxWizardEvent, GetPage_gurax, "GetPage")
 {
 	Declare(VTYPE_wxWizardPage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -85,7 +85,7 @@ VType_wxWizardEvent VTYPE_wxWizardEvent("WizardEvent");
 void VType_wxWizardEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(Pixel)
 {
 	Declare(VTYPE_Pixel, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Pixel` instance.
 )**");
 }
@@ -55,7 +55,7 @@ Gurax_DeclareMethod(Pixel, MethodSkeleton)
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -79,7 +79,7 @@ Gurax_ImplementMethod(Pixel, MethodSkeleton)
 Gurax_DeclareProperty_R(Pixel, color)
 {
 	Declare(VTYPE_Color, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 X-position.
 )**");
 }
@@ -94,7 +94,7 @@ Gurax_ImplementPropertyGetter(Pixel, color)
 Gurax_DeclareProperty_R(Pixel, x)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 X-position.
 )**");
 }
@@ -109,7 +109,7 @@ Gurax_ImplementPropertyGetter(Pixel, x)
 Gurax_DeclareProperty_R(Pixel, y)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Y-position.
 )**");
 }

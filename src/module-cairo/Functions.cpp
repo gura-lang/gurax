@@ -15,7 +15,7 @@ cairo_status_t write_func(void* closure, const unsigned char* data, unsigned int
 Gurax_DeclareFunctionAlias(cairo_version_gurax, "cairo_version")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -31,7 +31,7 @@ Gurax_ImplementFunctionEx(cairo_version_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(cairo_version_string_gurax, "cairo_version_string")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -48,7 +48,7 @@ Gurax_DeclareFunctionAlias(cairo_create_gurax, "cairo_create")
 {
 	Declare(VTYPE_cairo_t, Flag::None);
 	DeclareArg("target", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -70,7 +70,7 @@ Gurax_DeclareFunctionAlias(cairo_reference_gurax, "cairo_reference")
 {
 	Declare(VTYPE_cairo_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -92,7 +92,7 @@ Gurax_DeclareFunctionAlias(cairo_destroy_gurax, "cairo_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -113,7 +113,7 @@ Gurax_DeclareFunctionAlias(cairo_get_reference_count_gurax, "cairo_get_reference
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -134,7 +134,7 @@ Gurax_DeclareFunctionAlias(cairo_save_gurax, "cairo_save")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -155,7 +155,7 @@ Gurax_DeclareFunctionAlias(cairo_restore_gurax, "cairo_restore")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -176,7 +176,7 @@ Gurax_DeclareFunctionAlias(cairo_push_group_gurax, "cairo_push_group")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -198,7 +198,7 @@ Gurax_DeclareFunctionAlias(cairo_push_group_with_content_gurax, "cairo_push_grou
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("content", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -220,7 +220,7 @@ Gurax_DeclareFunctionAlias(cairo_pop_group_gurax, "cairo_pop_group")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -242,7 +242,7 @@ Gurax_DeclareFunctionAlias(cairo_pop_group_to_source_gurax, "cairo_pop_group_to_
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -264,7 +264,7 @@ Gurax_DeclareFunctionAlias(cairo_set_operator_gurax, "cairo_set_operator")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("op", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -287,7 +287,7 @@ Gurax_DeclareFunctionAlias(cairo_set_source_gurax, "cairo_set_source")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("source", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -313,7 +313,7 @@ Gurax_DeclareFunctionAlias(cairo_set_source_rgb_gurax, "cairo_set_source_rgb")
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -341,7 +341,7 @@ Gurax_DeclareFunctionAlias(cairo_set_source_rgba_gurax, "cairo_set_source_rgba")
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -369,7 +369,7 @@ Gurax_DeclareFunctionAlias(cairo_set_source_surface_gurax, "cairo_set_source_sur
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -395,7 +395,7 @@ Gurax_DeclareFunctionAlias(cairo_set_tolerance_gurax, "cairo_set_tolerance")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("tolerance", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -418,7 +418,7 @@ Gurax_DeclareFunctionAlias(cairo_set_antialias_gurax, "cairo_set_antialias")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("antialias", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -441,7 +441,7 @@ Gurax_DeclareFunctionAlias(cairo_set_fill_rule_gurax, "cairo_set_fill_rule")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("fill_rule", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -464,7 +464,7 @@ Gurax_DeclareFunctionAlias(cairo_set_line_width_gurax, "cairo_set_line_width")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -487,7 +487,7 @@ Gurax_DeclareFunctionAlias(cairo_set_line_cap_gurax, "cairo_set_line_cap")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("line_cap", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -510,7 +510,7 @@ Gurax_DeclareFunctionAlias(cairo_set_line_join_gurax, "cairo_set_line_join")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("line_join", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -534,7 +534,7 @@ Gurax_DeclareFunctionAlias(cairo_set_dash_gurax, "cairo_set_dash")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dashes", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -559,7 +559,7 @@ Gurax_DeclareFunctionAlias(cairo_set_miter_limit_gurax, "cairo_set_miter_limit")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("limit", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -583,7 +583,7 @@ Gurax_DeclareFunctionAlias(cairo_translate_gurax, "cairo_translate")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("tx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ty", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -608,7 +608,7 @@ Gurax_DeclareFunctionAlias(cairo_scale_gurax, "cairo_scale")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -632,7 +632,7 @@ Gurax_DeclareFunctionAlias(cairo_rotate_gurax, "cairo_rotate")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -655,7 +655,7 @@ Gurax_DeclareFunctionAlias(cairo_transform_gurax, "cairo_transform")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -679,7 +679,7 @@ Gurax_DeclareFunctionAlias(cairo_set_matrix_gurax, "cairo_set_matrix")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -702,7 +702,7 @@ Gurax_DeclareFunctionAlias(cairo_identity_matrix_gurax, "cairo_identity_matrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -725,7 +725,7 @@ Gurax_DeclareFunctionAlias(cairo_user_to_device_gurax, "cairo_user_to_device")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -750,7 +750,7 @@ Gurax_DeclareFunctionAlias(cairo_user_to_device_distance_gurax, "cairo_user_to_d
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -775,7 +775,7 @@ Gurax_DeclareFunctionAlias(cairo_device_to_user_gurax, "cairo_device_to_user")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -800,7 +800,7 @@ Gurax_DeclareFunctionAlias(cairo_device_to_user_distance_gurax, "cairo_device_to
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -823,7 +823,7 @@ Gurax_DeclareFunctionAlias(cairo_new_path_gurax, "cairo_new_path")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -846,7 +846,7 @@ Gurax_DeclareFunctionAlias(cairo_move_to_gurax, "cairo_move_to")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -869,7 +869,7 @@ Gurax_DeclareFunctionAlias(cairo_new_sub_path_gurax, "cairo_new_sub_path")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -892,7 +892,7 @@ Gurax_DeclareFunctionAlias(cairo_line_to_gurax, "cairo_line_to")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -921,7 +921,7 @@ Gurax_DeclareFunctionAlias(cairo_curve_to_gurax, "cairo_curve_to")
 	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -953,7 +953,7 @@ Gurax_DeclareFunctionAlias(cairo_arc_gurax, "cairo_arc")
 	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("angle1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("angle2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -984,7 +984,7 @@ Gurax_DeclareFunctionAlias(cairo_arc_negative_gurax, "cairo_arc_negative")
 	DeclareArg("radius", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("angle1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("angle2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1012,7 +1012,7 @@ Gurax_DeclareFunctionAlias(cairo_rel_move_to_gurax, "cairo_rel_move_to")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1037,7 +1037,7 @@ Gurax_DeclareFunctionAlias(cairo_rel_line_to_gurax, "cairo_rel_line_to")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1066,7 +1066,7 @@ Gurax_DeclareFunctionAlias(cairo_rel_curve_to_gurax, "cairo_rel_curve_to")
 	DeclareArg("dy2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dx3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dy3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1097,7 +1097,7 @@ Gurax_DeclareFunctionAlias(cairo_rectangle_gurax, "cairo_rectangle")
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1122,7 +1122,7 @@ Gurax_DeclareFunctionAlias(cairo_close_path_gurax, "cairo_close_path")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1143,7 +1143,7 @@ Gurax_DeclareFunctionAlias(cairo_path_extents_gurax, "cairo_path_extents")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1165,7 +1165,7 @@ Gurax_DeclareFunctionAlias(cairo_paint_gurax, "cairo_paint")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1187,7 +1187,7 @@ Gurax_DeclareFunctionAlias(cairo_paint_with_alpha_gurax, "cairo_paint_with_alpha
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1210,7 +1210,7 @@ Gurax_DeclareFunctionAlias(cairo_mask_gurax, "cairo_mask")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1236,7 +1236,7 @@ Gurax_DeclareFunctionAlias(cairo_mask_surface_gurax, "cairo_mask_surface")
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("surface_x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("surface_y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1261,7 +1261,7 @@ Gurax_DeclareFunctionAlias(cairo_stroke_gurax, "cairo_stroke")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1282,7 +1282,7 @@ Gurax_DeclareFunctionAlias(cairo_stroke_preserve_gurax, "cairo_stroke_preserve")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1303,7 +1303,7 @@ Gurax_DeclareFunctionAlias(cairo_fill_gurax, "cairo_fill")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1324,7 +1324,7 @@ Gurax_DeclareFunctionAlias(cairo_fill_preserve_gurax, "cairo_fill_preserve")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1345,7 +1345,7 @@ Gurax_DeclareFunctionAlias(cairo_copy_page_gurax, "cairo_copy_page")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1366,7 +1366,7 @@ Gurax_DeclareFunctionAlias(cairo_show_page_gurax, "cairo_show_page")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1389,7 +1389,7 @@ Gurax_DeclareFunctionAlias(cairo_in_stroke_gurax, "cairo_in_stroke")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1414,7 +1414,7 @@ Gurax_DeclareFunctionAlias(cairo_in_fill_gurax, "cairo_in_fill")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1439,7 +1439,7 @@ Gurax_DeclareFunctionAlias(cairo_in_clip_gurax, "cairo_in_clip")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1462,7 +1462,7 @@ Gurax_DeclareFunctionAlias(cairo_stroke_extents_gurax, "cairo_stroke_extents")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1484,7 +1484,7 @@ Gurax_DeclareFunctionAlias(cairo_fill_extents_gurax, "cairo_fill_extents")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1506,7 +1506,7 @@ Gurax_DeclareFunctionAlias(cairo_reset_clip_gurax, "cairo_reset_clip")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1527,7 +1527,7 @@ Gurax_DeclareFunctionAlias(cairo_clip_gurax, "cairo_clip")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1548,7 +1548,7 @@ Gurax_DeclareFunctionAlias(cairo_clip_preserve_gurax, "cairo_clip_preserve")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1569,7 +1569,7 @@ Gurax_DeclareFunctionAlias(cairo_clip_extents_gurax, "cairo_clip_extents")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1591,7 +1591,7 @@ Gurax_DeclareFunctionAlias(cairo_copy_clip_rectangle_list_gurax, "cairo_copy_cli
 {
 	Declare(VTYPE_cairo_rectangle_list_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1613,7 +1613,7 @@ Gurax_DeclareFunctionAlias(cairo_rectangle_list_destroy_gurax, "cairo_rectangle_
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rectangle_list", VTYPE_cairo_rectangle_list_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1636,7 +1636,7 @@ Gurax_DeclareFunctionAlias(cairo_tag_begin_gurax, "cairo_tag_begin")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("tag_name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("attributes", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1660,7 +1660,7 @@ Gurax_DeclareFunctionAlias(cairo_tag_end_gurax, "cairo_tag_end")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("tag_name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1682,7 +1682,7 @@ Gurax_DeclareFunctionAlias(cairo_glyph_allocate_gurax, "cairo_glyph_allocate")
 {
 	Declare(VTYPE_cairo_glyph_t, Flag::None);
 	DeclareArg("num_glyphs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1703,7 +1703,7 @@ Gurax_DeclareFunctionAlias(cairo_glyph_free_gurax, "cairo_glyph_free")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("glyphs", VTYPE_cairo_glyph_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1724,7 +1724,7 @@ Gurax_DeclareFunctionAlias(cairo_text_cluster_allocate_gurax, "cairo_text_cluste
 {
 	Declare(VTYPE_cairo_text_cluster_t, Flag::None);
 	DeclareArg("num_clusters", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1745,7 +1745,7 @@ Gurax_DeclareFunctionAlias(cairo_text_cluster_free_gurax, "cairo_text_cluster_fr
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("clusters", VTYPE_cairo_text_cluster_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1765,7 +1765,7 @@ Gurax_ImplementFunctionEx(cairo_text_cluster_free_gurax, processor_gurax, argume
 Gurax_DeclareFunctionAlias(cairo_font_options_create_gurax, "cairo_font_options_create")
 {
 	Declare(VTYPE_cairo_font_options_t, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1783,7 +1783,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_copy_gurax, "cairo_font_options_co
 {
 	Declare(VTYPE_cairo_font_options_t, Flag::None);
 	DeclareArg("original", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1805,7 +1805,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_destroy_gurax, "cairo_font_options
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1826,7 +1826,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_status_gurax, "cairo_font_options_
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1848,7 +1848,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_merge_gurax, "cairo_font_options_m
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("other", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1872,7 +1872,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_equal_gurax, "cairo_font_options_e
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("other", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1895,7 +1895,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_hash_gurax, "cairo_font_options_ha
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1917,7 +1917,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_set_antialias_gurax, "cairo_font_o
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("antialias", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1939,7 +1939,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_get_antialias_gurax, "cairo_font_o
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1961,7 +1961,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_set_subpixel_order_gurax, "cairo_f
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("subpixel_order", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -1983,7 +1983,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_get_subpixel_order_gurax, "cairo_f
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2005,7 +2005,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_set_hint_style_gurax, "cairo_font_
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hint_style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2027,7 +2027,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_get_hint_style_gurax, "cairo_font_
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2049,7 +2049,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_set_hint_metrics_gurax, "cairo_fon
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hint_metrics", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2071,7 +2071,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_get_hint_metrics_gurax, "cairo_fon
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2092,7 +2092,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_get_variations_gurax, "cairo_font_
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2114,7 +2114,7 @@ Gurax_DeclareFunctionAlias(cairo_font_options_set_variations_gurax, "cairo_font_
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("variations", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2139,7 +2139,7 @@ Gurax_DeclareFunctionAlias(cairo_select_font_face_gurax, "cairo_select_font_face
 	DeclareArg("family", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("slant", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2164,7 +2164,7 @@ Gurax_DeclareFunctionAlias(cairo_set_font_size_gurax, "cairo_set_font_size")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2187,7 +2187,7 @@ Gurax_DeclareFunctionAlias(cairo_set_font_matrix_gurax, "cairo_set_font_matrix")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2211,7 +2211,7 @@ Gurax_DeclareFunctionAlias(cairo_get_font_matrix_gurax, "cairo_get_font_matrix")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2235,7 +2235,7 @@ Gurax_DeclareFunctionAlias(cairo_set_font_options_gurax, "cairo_set_font_options
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2259,7 +2259,7 @@ Gurax_DeclareFunctionAlias(cairo_get_font_options_gurax, "cairo_get_font_options
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2283,7 +2283,7 @@ Gurax_DeclareFunctionAlias(cairo_set_font_face_gurax, "cairo_set_font_face")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2306,7 +2306,7 @@ Gurax_DeclareFunctionAlias(cairo_get_font_face_gurax, "cairo_get_font_face")
 {
 	Declare(VTYPE_cairo_font_face_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2329,7 +2329,7 @@ Gurax_DeclareFunctionAlias(cairo_set_scaled_font_gurax, "cairo_set_scaled_font")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2352,7 +2352,7 @@ Gurax_DeclareFunctionAlias(cairo_get_scaled_font_gurax, "cairo_get_scaled_font")
 {
 	Declare(VTYPE_cairo_scaled_font_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2375,7 +2375,7 @@ Gurax_DeclareFunctionAlias(cairo_show_text_gurax, "cairo_show_text")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2399,7 +2399,7 @@ Gurax_DeclareFunctionAlias(cairo_show_glyphs_gurax, "cairo_show_glyphs")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("glyphs", VTYPE_cairo_glyph_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num_glyphs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2430,7 +2430,7 @@ Gurax_DeclareFunctionAlias(cairo_show_text_glyphs_gurax, "cairo_show_text_glyphs
 	DeclareArg("clusters", VTYPE_cairo_text_cluster_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num_clusters", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cluster_flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2461,7 +2461,7 @@ Gurax_DeclareFunctionAlias(cairo_text_path_gurax, "cairo_text_path")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2485,7 +2485,7 @@ Gurax_DeclareFunctionAlias(cairo_glyph_path_gurax, "cairo_glyph_path")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("glyphs", VTYPE_cairo_glyph_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num_glyphs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2511,7 +2511,7 @@ Gurax_DeclareFunctionAlias(cairo_text_extents_gurax, "cairo_text_extents")
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_text_extents_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2538,7 +2538,7 @@ Gurax_DeclareFunctionAlias(cairo_glyph_extents_gurax, "cairo_glyph_extents")
 	DeclareArg("glyphs", VTYPE_cairo_glyph_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num_glyphs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_text_extents_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2565,7 +2565,7 @@ Gurax_DeclareFunctionAlias(cairo_font_extents_gurax, "cairo_font_extents")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_font_extents_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2588,7 +2588,7 @@ Gurax_DeclareFunctionAlias(cairo_font_face_reference_gurax, "cairo_font_face_ref
 {
 	Declare(VTYPE_cairo_font_face_t, Flag::None);
 	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2610,7 +2610,7 @@ Gurax_DeclareFunctionAlias(cairo_font_face_destroy_gurax, "cairo_font_face_destr
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2631,7 +2631,7 @@ Gurax_DeclareFunctionAlias(cairo_font_face_get_reference_count_gurax, "cairo_fon
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2652,7 +2652,7 @@ Gurax_DeclareFunctionAlias(cairo_font_face_status_gurax, "cairo_font_face_status
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2673,7 +2673,7 @@ Gurax_DeclareFunctionAlias(cairo_font_face_get_type_gurax, "cairo_font_face_get_
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2697,7 +2697,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_create_gurax, "cairo_scaled_font_cr
 	DeclareArg("font_matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ctm", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2725,7 +2725,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_reference_gurax, "cairo_scaled_font
 {
 	Declare(VTYPE_cairo_scaled_font_t, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2747,7 +2747,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_destroy_gurax, "cairo_scaled_font_d
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2768,7 +2768,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_get_reference_count_gurax, "cairo_s
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2789,7 +2789,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_status_gurax, "cairo_scaled_font_st
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2810,7 +2810,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_get_type_gurax, "cairo_scaled_font_
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2832,7 +2832,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_extents_gurax, "cairo_scaled_font_e
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_font_extents_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2857,7 +2857,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_text_extents_gurax, "cairo_scaled_f
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_text_extents_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2884,7 +2884,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_glyph_extents_gurax, "cairo_scaled_
 	DeclareArg("glyphs", VTYPE_cairo_glyph_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num_glyphs", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_text_extents_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2910,7 +2910,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_get_font_face_gurax, "cairo_scaled_
 {
 	Declare(VTYPE_cairo_font_face_t, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2933,7 +2933,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_get_font_matrix_gurax, "cairo_scale
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("font_matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2957,7 +2957,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_get_ctm_gurax, "cairo_scaled_font_g
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ctm", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -2981,7 +2981,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_get_scale_matrix_gurax, "cairo_scal
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("scale_matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3005,7 +3005,7 @@ Gurax_DeclareFunctionAlias(cairo_scaled_font_get_font_options_gurax, "cairo_scal
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("scaled_font", VTYPE_cairo_scaled_font_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3030,7 +3030,7 @@ Gurax_DeclareFunctionAlias(cairo_toy_font_face_create_gurax, "cairo_toy_font_fac
 	DeclareArg("family", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("slant", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("weight", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3053,7 +3053,7 @@ Gurax_DeclareFunctionAlias(cairo_toy_font_face_get_family_gurax, "cairo_toy_font
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3074,7 +3074,7 @@ Gurax_DeclareFunctionAlias(cairo_toy_font_face_get_slant_gurax, "cairo_toy_font_
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3095,7 +3095,7 @@ Gurax_DeclareFunctionAlias(cairo_toy_font_face_get_weight_gurax, "cairo_toy_font
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("font_face", VTYPE_cairo_font_face_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3115,7 +3115,7 @@ Gurax_ImplementFunctionEx(cairo_toy_font_face_get_weight_gurax, processor_gurax,
 Gurax_DeclareFunctionAlias(cairo_user_font_face_create_gurax, "cairo_user_font_face_create")
 {
 	Declare(VTYPE_cairo_font_face_t, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3133,7 +3133,7 @@ Gurax_DeclareFunctionAlias(cairo_get_operator_gurax, "cairo_get_operator")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3154,7 +3154,7 @@ Gurax_DeclareFunctionAlias(cairo_get_source_gurax, "cairo_get_source")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3176,7 +3176,7 @@ Gurax_DeclareFunctionAlias(cairo_get_tolerance_gurax, "cairo_get_tolerance")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3197,7 +3197,7 @@ Gurax_DeclareFunctionAlias(cairo_get_antialias_gurax, "cairo_get_antialias")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3218,7 +3218,7 @@ Gurax_DeclareFunctionAlias(cairo_has_current_point_gurax, "cairo_has_current_poi
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3239,7 +3239,7 @@ Gurax_DeclareFunctionAlias(cairo_get_current_point_gurax, "cairo_get_current_poi
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3261,7 +3261,7 @@ Gurax_DeclareFunctionAlias(cairo_get_fill_rule_gurax, "cairo_get_fill_rule")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3282,7 +3282,7 @@ Gurax_DeclareFunctionAlias(cairo_get_line_width_gurax, "cairo_get_line_width")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3303,7 +3303,7 @@ Gurax_DeclareFunctionAlias(cairo_get_line_cap_gurax, "cairo_get_line_cap")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3324,7 +3324,7 @@ Gurax_DeclareFunctionAlias(cairo_get_line_join_gurax, "cairo_get_line_join")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3345,7 +3345,7 @@ Gurax_DeclareFunctionAlias(cairo_get_miter_limit_gurax, "cairo_get_miter_limit")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3366,7 +3366,7 @@ Gurax_DeclareFunctionAlias(cairo_get_dash_count_gurax, "cairo_get_dash_count")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3387,7 +3387,7 @@ Gurax_DeclareFunctionAlias(cairo_get_dash_gurax, "cairo_get_dash")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3412,7 +3412,7 @@ Gurax_DeclareFunctionAlias(cairo_get_matrix_gurax, "cairo_get_matrix")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3435,7 +3435,7 @@ Gurax_DeclareFunctionAlias(cairo_get_target_gurax, "cairo_get_target")
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3457,7 +3457,7 @@ Gurax_DeclareFunctionAlias(cairo_get_group_target_gurax, "cairo_get_group_target
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3479,7 +3479,7 @@ Gurax_DeclareFunctionAlias(cairo_copy_path_gurax, "cairo_copy_path")
 {
 	Declare(VTYPE_cairo_path_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3501,7 +3501,7 @@ Gurax_DeclareFunctionAlias(cairo_copy_path_flat_gurax, "cairo_copy_path_flat")
 {
 	Declare(VTYPE_cairo_path_t, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3524,7 +3524,7 @@ Gurax_DeclareFunctionAlias(cairo_append_path_gurax, "cairo_append_path")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("path", VTYPE_cairo_path_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3547,7 +3547,7 @@ Gurax_DeclareFunctionAlias(cairo_path_destroy_gurax, "cairo_path_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("path", VTYPE_cairo_path_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3568,7 +3568,7 @@ Gurax_DeclareFunctionAlias(cairo_status_gurax, "cairo_status")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("cr", VTYPE_cairo_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3589,7 +3589,7 @@ Gurax_DeclareFunctionAlias(cairo_status_to_string_gurax, "cairo_status_to_string
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("status", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3609,7 +3609,7 @@ Gurax_DeclareFunctionAlias(cairo_device_reference_gurax, "cairo_device_reference
 {
 	Declare(VTYPE_cairo_device_t, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3631,7 +3631,7 @@ Gurax_DeclareFunctionAlias(cairo_device_get_type_gurax, "cairo_device_get_type")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3652,7 +3652,7 @@ Gurax_DeclareFunctionAlias(cairo_device_status_gurax, "cairo_device_status")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3673,7 +3673,7 @@ Gurax_DeclareFunctionAlias(cairo_device_acquire_gurax, "cairo_device_acquire")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3694,7 +3694,7 @@ Gurax_DeclareFunctionAlias(cairo_device_release_gurax, "cairo_device_release")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3715,7 +3715,7 @@ Gurax_DeclareFunctionAlias(cairo_device_flush_gurax, "cairo_device_flush")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3736,7 +3736,7 @@ Gurax_DeclareFunctionAlias(cairo_device_finish_gurax, "cairo_device_finish")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3757,7 +3757,7 @@ Gurax_DeclareFunctionAlias(cairo_device_destroy_gurax, "cairo_device_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3778,7 +3778,7 @@ Gurax_DeclareFunctionAlias(cairo_device_get_reference_count_gurax, "cairo_device
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3802,7 +3802,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_create_similar_gurax, "cairo_surface_cr
 	DeclareArg("content", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3830,7 +3830,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_create_similar_image_gurax, "cairo_surf
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3856,7 +3856,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_map_to_image_gurax, "cairo_surface_map_
 	Declare(VTYPE_cairo_surface_t, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3881,7 +3881,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_unmap_image_gurax, "cairo_surface_unmap
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3908,7 +3908,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_create_for_rectangle_gurax, "cairo_surf
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3935,7 +3935,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_create_observer_gurax, "cairo_surface_c
 	Declare(VTYPE_cairo_surface_t, Flag::None);
 	DeclareArg("target", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3958,7 +3958,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_observer_elapsed_gurax, "cairo_surface_
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -3979,7 +3979,7 @@ Gurax_DeclareFunctionAlias(cairo_device_observer_elapsed_gurax, "cairo_device_ob
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4000,7 +4000,7 @@ Gurax_DeclareFunctionAlias(cairo_device_observer_paint_elapsed_gurax, "cairo_dev
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4021,7 +4021,7 @@ Gurax_DeclareFunctionAlias(cairo_device_observer_mask_elapsed_gurax, "cairo_devi
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4042,7 +4042,7 @@ Gurax_DeclareFunctionAlias(cairo_device_observer_fill_elapsed_gurax, "cairo_devi
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4063,7 +4063,7 @@ Gurax_DeclareFunctionAlias(cairo_device_observer_stroke_elapsed_gurax, "cairo_de
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4084,7 +4084,7 @@ Gurax_DeclareFunctionAlias(cairo_device_observer_glyphs_elapsed_gurax, "cairo_de
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("device", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4105,7 +4105,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_reference_gurax, "cairo_surface_referen
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4127,7 +4127,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_finish_gurax, "cairo_surface_finish")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4148,7 +4148,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_destroy_gurax, "cairo_surface_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4169,7 +4169,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_get_device_gurax, "cairo_surface_get_de
 {
 	Declare(VTYPE_cairo_device_t, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4191,7 +4191,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_get_reference_count_gurax, "cairo_surfa
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4212,7 +4212,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_status_gurax, "cairo_surface_status")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4233,7 +4233,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_get_type_gurax, "cairo_surface_get_type
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4254,7 +4254,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_get_content_gurax, "cairo_surface_get_c
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4276,7 +4276,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_write_to_png_gurax, "cairo_surface_writ
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4299,7 +4299,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_write_to_png_stream_gurax, "cairo_surfa
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4322,7 +4322,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_get_mime_data_gurax, "cairo_surface_get
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mime_type", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4347,7 +4347,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_supports_mime_type_gurax, "cairo_surfac
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mime_type", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4370,7 +4370,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_get_font_options_gurax, "cairo_surface_
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("options", VTYPE_cairo_font_options_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4393,7 +4393,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_flush_gurax, "cairo_surface_flush")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4414,7 +4414,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_mark_dirty_gurax, "cairo_surface_mark_d
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4439,7 +4439,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_mark_dirty_rectangle_gurax, "cairo_surf
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4466,7 +4466,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_set_device_scale_gurax, "cairo_surface_
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x_scale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y_scale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4489,7 +4489,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_get_device_scale_gurax, "cairo_surface_
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4513,7 +4513,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_set_device_offset_gurax, "cairo_surface
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x_offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y_offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4536,7 +4536,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_get_device_offset_gurax, "cairo_surface
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4560,7 +4560,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_set_fallback_resolution_gurax, "cairo_s
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x_pixels_per_inch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y_pixels_per_inch", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4583,7 +4583,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_get_fallback_resolution_gurax, "cairo_s
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4605,7 +4605,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_copy_page_gurax, "cairo_surface_copy_pa
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4626,7 +4626,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_show_page_gurax, "cairo_surface_show_pa
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4647,7 +4647,7 @@ Gurax_DeclareFunctionAlias(cairo_surface_has_show_text_glyphs_gurax, "cairo_surf
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4670,7 +4670,7 @@ Gurax_DeclareFunctionAlias(cairo_image_surface_create_gurax, "cairo_image_surfac
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4694,7 +4694,7 @@ Gurax_DeclareFunctionAlias(cairo_format_stride_for_width_gurax, "cairo_format_st
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4715,7 +4715,7 @@ Gurax_DeclareFunctionAlias(cairo_image_surface_get_format_gurax, "cairo_image_su
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4736,7 +4736,7 @@ Gurax_DeclareFunctionAlias(cairo_image_surface_get_width_gurax, "cairo_image_sur
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4757,7 +4757,7 @@ Gurax_DeclareFunctionAlias(cairo_image_surface_get_height_gurax, "cairo_image_su
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4778,7 +4778,7 @@ Gurax_DeclareFunctionAlias(cairo_image_surface_get_stride_gurax, "cairo_image_su
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4799,7 +4799,7 @@ Gurax_DeclareFunctionAlias(cairo_image_surface_create_from_png_gurax, "cairo_ima
 {
 	Declare(VTYPE_cairo_surface_t, Flag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4821,7 +4821,7 @@ Gurax_DeclareFunctionAlias(cairo_recording_surface_create_gurax, "cairo_recordin
 	Declare(VTYPE_cairo_surface_t, Flag::None);
 	DeclareArg("content", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_rectangle_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4845,7 +4845,7 @@ Gurax_DeclareFunctionAlias(cairo_recording_surface_get_extents_gurax, "cairo_rec
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_rectangle_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4871,7 +4871,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_create_raster_source_gurax, "cairo_patt
 	DeclareArg("content", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4900,7 +4900,7 @@ Gurax_DeclareFunctionAlias(cairo_raster_source_pattern_set_callback_data_gurax, 
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4928,7 +4928,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_create_rgb_gurax, "cairo_pattern_create
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4954,7 +4954,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_create_rgba_gurax, "cairo_pattern_creat
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -4978,7 +4978,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_create_for_surface_gurax, "cairo_patter
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5003,7 +5003,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_create_linear_gurax, "cairo_pattern_cre
 	DeclareArg("y0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5032,7 +5032,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_create_radial_gurax, "cairo_pattern_cre
 	DeclareArg("cx1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cy1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("radius1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5057,7 +5057,7 @@ Gurax_ImplementFunctionEx(cairo_pattern_create_radial_gurax, processor_gurax, ar
 Gurax_DeclareFunctionAlias(cairo_pattern_create_mesh_gurax, "cairo_pattern_create_mesh")
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5075,7 +5075,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_reference_gurax, "cairo_pattern_referen
 {
 	Declare(VTYPE_cairo_pattern_t, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5097,7 +5097,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_destroy_gurax, "cairo_pattern_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5118,7 +5118,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_get_reference_count_gurax, "cairo_patte
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5139,7 +5139,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_status_gurax, "cairo_pattern_status")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5160,7 +5160,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_get_type_gurax, "cairo_pattern_get_type
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5185,7 +5185,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_add_color_stop_rgb_gurax, "cairo_patter
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5215,7 +5215,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_add_color_stop_rgba_gurax, "cairo_patte
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5241,7 +5241,7 @@ Gurax_DeclareFunctionAlias(cairo_mesh_pattern_begin_patch_gurax, "cairo_mesh_pat
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5262,7 +5262,7 @@ Gurax_DeclareFunctionAlias(cairo_mesh_pattern_end_patch_gurax, "cairo_mesh_patte
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5289,7 +5289,7 @@ Gurax_DeclareFunctionAlias(cairo_mesh_pattern_curve_to_gurax, "cairo_mesh_patter
 	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5318,7 +5318,7 @@ Gurax_DeclareFunctionAlias(cairo_mesh_pattern_line_to_gurax, "cairo_mesh_pattern
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5343,7 +5343,7 @@ Gurax_DeclareFunctionAlias(cairo_mesh_pattern_move_to_gurax, "cairo_mesh_pattern
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5369,7 +5369,7 @@ Gurax_DeclareFunctionAlias(cairo_mesh_pattern_set_control_point_gurax, "cairo_me
 	DeclareArg("point_num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5397,7 +5397,7 @@ Gurax_DeclareFunctionAlias(cairo_mesh_pattern_set_corner_color_rgb_gurax, "cairo
 	DeclareArg("red", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5427,7 +5427,7 @@ Gurax_DeclareFunctionAlias(cairo_mesh_pattern_set_corner_color_rgba_gurax, "cair
 	DeclareArg("green", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("blue", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5454,7 +5454,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_set_matrix_gurax, "cairo_pattern_set_ma
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5478,7 +5478,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_get_matrix_gurax, "cairo_pattern_get_ma
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5502,7 +5502,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_set_extend_gurax, "cairo_pattern_set_ex
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extend", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5524,7 +5524,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_get_extend_gurax, "cairo_pattern_get_ex
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5546,7 +5546,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_set_filter_gurax, "cairo_pattern_set_fi
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("filter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5568,7 +5568,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_get_filter_gurax, "cairo_pattern_get_fi
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5589,7 +5589,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_get_rgba_gurax, "cairo_pattern_get_rgba
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5612,7 +5612,7 @@ Gurax_DeclareFunctionAlias(cairo_pattern_get_color_stop_rgba_gurax, "cairo_patte
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("index", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5636,7 +5636,7 @@ Gurax_DeclareFunctionAlias(cairo_mesh_pattern_get_path_gurax, "cairo_mesh_patter
 	Declare(VTYPE_cairo_path_t, Flag::None);
 	DeclareArg("pattern", VTYPE_cairo_pattern_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("patch_num", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5665,7 +5665,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_init_gurax, "cairo_matrix_init")
 	DeclareArg("yy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y0", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5692,7 +5692,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_init_identity_gurax, "cairo_matrix_init_
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5715,7 +5715,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_init_translate_gurax, "cairo_matrix_init
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("tx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ty", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5740,7 +5740,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_init_scale_gurax, "cairo_matrix_init_sca
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5764,7 +5764,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_init_rotate_gurax, "cairo_matrix_init_ro
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("radians", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5788,7 +5788,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_translate_gurax, "cairo_matrix_translate
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("tx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ty", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5813,7 +5813,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_scale_gurax, "cairo_matrix_scale")
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5837,7 +5837,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_rotate_gurax, "cairo_matrix_rotate")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("radians", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5859,7 +5859,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_invert_gurax, "cairo_matrix_invert")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5882,7 +5882,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_multiply_gurax, "cairo_matrix_multiply")
 	DeclareArg("result", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("a", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5909,7 +5909,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_transform_distance_gurax, "cairo_matrix_
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5934,7 +5934,7 @@ Gurax_DeclareFunctionAlias(cairo_matrix_transform_point_gurax, "cairo_matrix_tra
 	DeclareArg("matrix", VTYPE_cairo_matrix_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5956,7 +5956,7 @@ Gurax_ImplementFunctionEx(cairo_matrix_transform_point_gurax, processor_gurax, a
 Gurax_DeclareFunctionAlias(cairo_region_create_gurax, "cairo_region_create")
 {
 	Declare(VTYPE_cairo_region_t, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5974,7 +5974,7 @@ Gurax_DeclareFunctionAlias(cairo_region_create_rectangle_gurax, "cairo_region_cr
 {
 	Declare(VTYPE_cairo_region_t, Flag::None);
 	DeclareArg("rectangle", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -5997,7 +5997,7 @@ Gurax_DeclareFunctionAlias(cairo_region_create_rectangles_gurax, "cairo_region_c
 	Declare(VTYPE_cairo_region_t, Flag::None);
 	DeclareArg("rects", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6020,7 +6020,7 @@ Gurax_DeclareFunctionAlias(cairo_region_copy_gurax, "cairo_region_copy")
 {
 	Declare(VTYPE_cairo_region_t, Flag::None);
 	DeclareArg("original", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6042,7 +6042,7 @@ Gurax_DeclareFunctionAlias(cairo_region_reference_gurax, "cairo_region_reference
 {
 	Declare(VTYPE_cairo_region_t, Flag::None);
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6064,7 +6064,7 @@ Gurax_DeclareFunctionAlias(cairo_region_destroy_gurax, "cairo_region_destroy")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6086,7 +6086,7 @@ Gurax_DeclareFunctionAlias(cairo_region_equal_gurax, "cairo_region_equal")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("a", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("b", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6109,7 +6109,7 @@ Gurax_DeclareFunctionAlias(cairo_region_status_gurax, "cairo_region_status")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6131,7 +6131,7 @@ Gurax_DeclareFunctionAlias(cairo_region_get_extents_gurax, "cairo_region_get_ext
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("extents", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6154,7 +6154,7 @@ Gurax_DeclareFunctionAlias(cairo_region_num_rectangles_gurax, "cairo_region_num_
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6177,7 +6177,7 @@ Gurax_DeclareFunctionAlias(cairo_region_get_rectangle_gurax, "cairo_region_get_r
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rectangle", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6201,7 +6201,7 @@ Gurax_DeclareFunctionAlias(cairo_region_is_empty_gurax, "cairo_region_is_empty")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6223,7 +6223,7 @@ Gurax_DeclareFunctionAlias(cairo_region_contains_rectangle_gurax, "cairo_region_
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rectangle", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6248,7 +6248,7 @@ Gurax_DeclareFunctionAlias(cairo_region_contains_point_gurax, "cairo_region_cont
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6273,7 +6273,7 @@ Gurax_DeclareFunctionAlias(cairo_region_translate_gurax, "cairo_region_translate
 	DeclareArg("region", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dy", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6297,7 +6297,7 @@ Gurax_DeclareFunctionAlias(cairo_region_subtract_gurax, "cairo_region_subtract")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("other", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6321,7 +6321,7 @@ Gurax_DeclareFunctionAlias(cairo_region_subtract_rectangle_gurax, "cairo_region_
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rectangle", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6345,7 +6345,7 @@ Gurax_DeclareFunctionAlias(cairo_region_intersect_gurax, "cairo_region_intersect
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("other", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6369,7 +6369,7 @@ Gurax_DeclareFunctionAlias(cairo_region_intersect_rectangle_gurax, "cairo_region
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rectangle", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6393,7 +6393,7 @@ Gurax_DeclareFunctionAlias(cairo_region_union_gurax, "cairo_region_union")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("other", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6417,7 +6417,7 @@ Gurax_DeclareFunctionAlias(cairo_region_union_rectangle_gurax, "cairo_region_uni
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rectangle", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6441,7 +6441,7 @@ Gurax_DeclareFunctionAlias(cairo_region_xor_gurax, "cairo_region_xor")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("other", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6465,7 +6465,7 @@ Gurax_DeclareFunctionAlias(cairo_region_xor_rectangle_gurax, "cairo_region_xor_r
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("dst", VTYPE_cairo_region_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rectangle", VTYPE_cairo_rectangle_int_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6487,7 +6487,7 @@ Gurax_ImplementFunctionEx(cairo_region_xor_rectangle_gurax, processor_gurax, arg
 Gurax_DeclareFunctionAlias(cairo_debug_reset_static_data_gurax, "cairo_debug_reset_static_data")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6506,7 +6506,7 @@ Gurax_DeclareFunctionAlias(cairo_pdf_surface_create_gurax, "cairo_pdf_surface_cr
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6531,7 +6531,7 @@ Gurax_DeclareFunctionAlias(cairo_pdf_surface_create_for_stream_gurax, "cairo_pdf
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6554,7 +6554,7 @@ Gurax_DeclareFunctionAlias(cairo_pdf_surface_restrict_to_version_gurax, "cairo_p
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("version", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6575,7 +6575,7 @@ Gurax_ImplementFunctionEx(cairo_pdf_surface_restrict_to_version_gurax, processor
 Gurax_DeclareFunctionAlias(cairo_pdf_get_versions_gurax, "cairo_pdf_get_versions")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6594,7 +6594,7 @@ Gurax_DeclareFunctionAlias(cairo_pdf_version_to_string_gurax, "cairo_pdf_version
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("version", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6616,7 +6616,7 @@ Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_size_gurax, "cairo_pdf_surface_
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6643,7 +6643,7 @@ Gurax_DeclareFunctionAlias(cairo_pdf_surface_add_outline_gurax, "cairo_pdf_surfa
 	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("link_attribs", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6670,7 +6670,7 @@ Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_metadata_gurax, "cairo_pdf_surf
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("metadata", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6694,7 +6694,7 @@ Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_page_label_gurax, "cairo_pdf_su
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("utf8", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6718,7 +6718,7 @@ Gurax_DeclareFunctionAlias(cairo_pdf_surface_set_thumbnail_size_gurax, "cairo_pd
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6743,7 +6743,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_surface_create_gurax, "cairo_ps_surface_crea
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6768,7 +6768,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_surface_create_for_stream_gurax, "cairo_ps_s
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6791,7 +6791,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_surface_restrict_to_level_gurax, "cairo_ps_s
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6813,7 +6813,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_level_to_string_gurax, "cairo_ps_level_to_st
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6834,7 +6834,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_surface_set_eps_gurax, "cairo_ps_surface_set
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("eps", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6856,7 +6856,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_surface_get_eps_gurax, "cairo_ps_surface_get
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6879,7 +6879,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_surface_set_size_gurax, "cairo_ps_surface_se
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6903,7 +6903,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_surface_dsc_comment_gurax, "cairo_ps_surface
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("comment", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6925,7 +6925,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_surface_dsc_begin_setup_gurax, "cairo_ps_sur
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6946,7 +6946,7 @@ Gurax_DeclareFunctionAlias(cairo_ps_surface_dsc_begin_page_setup_gurax, "cairo_p
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6967,7 +6967,7 @@ Gurax_DeclareFunctionAlias(cairo_script_create_gurax, "cairo_script_create")
 {
 	Declare(VTYPE_cairo_device_t, Flag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -6988,7 +6988,7 @@ Gurax_DeclareFunctionAlias(cairo_script_create_for_stream_gurax, "cairo_script_c
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7010,7 +7010,7 @@ Gurax_DeclareFunctionAlias(cairo_script_write_comment_gurax, "cairo_script_write
 	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("comment", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("len", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7034,7 +7034,7 @@ Gurax_DeclareFunctionAlias(cairo_script_set_mode_gurax, "cairo_script_set_mode")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7056,7 +7056,7 @@ Gurax_DeclareFunctionAlias(cairo_script_get_mode_gurax, "cairo_script_get_mode")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7080,7 +7080,7 @@ Gurax_DeclareFunctionAlias(cairo_script_surface_create_gurax, "cairo_script_surf
 	DeclareArg("content", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7106,7 +7106,7 @@ Gurax_DeclareFunctionAlias(cairo_script_surface_create_for_target_gurax, "cairo_
 	Declare(VTYPE_cairo_surface_t, Flag::None);
 	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("target", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7131,7 +7131,7 @@ Gurax_DeclareFunctionAlias(cairo_script_from_recording_surface_gurax, "cairo_scr
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("script", VTYPE_cairo_device_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("recording_surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7156,7 +7156,7 @@ Gurax_DeclareFunctionAlias(cairo_svg_surface_create_gurax, "cairo_svg_surface_cr
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7181,7 +7181,7 @@ Gurax_DeclareFunctionAlias(cairo_svg_surface_create_for_stream_gurax, "cairo_svg
 	DeclareArg("stream", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareArg("width_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height_in_points", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7204,7 +7204,7 @@ Gurax_DeclareFunctionAlias(cairo_svg_surface_restrict_to_version_gurax, "cairo_s
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("version", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7225,7 +7225,7 @@ Gurax_ImplementFunctionEx(cairo_svg_surface_restrict_to_version_gurax, processor
 Gurax_DeclareFunctionAlias(cairo_svg_get_versions_gurax, "cairo_svg_get_versions")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7244,7 +7244,7 @@ Gurax_DeclareFunctionAlias(cairo_svg_version_to_string_gurax, "cairo_svg_version
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("version", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7265,7 +7265,7 @@ Gurax_DeclareFunctionAlias(cairo_svg_surface_set_document_unit_gurax, "cairo_svg
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("unit", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -7287,7 +7287,7 @@ Gurax_DeclareFunctionAlias(cairo_svg_surface_get_document_unit_gurax, "cairo_svg
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("surface", VTYPE_cairo_surface_t, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

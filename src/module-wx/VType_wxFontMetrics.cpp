@@ -33,7 +33,7 @@ Gurax_DeclareConstructorAlias(FontMetrics_gurax, "FontMetrics")
 {
 	Declare(VTYPE_wxFontMetrics, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.FontMetrics.
 )**");
 }
@@ -55,7 +55,7 @@ Gurax_ImplementConstructorEx(FontMetrics_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareProperty_RW(wxFontMetrics, height)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -77,7 +77,7 @@ Gurax_ImplementPropertySetter(wxFontMetrics, height)
 Gurax_DeclareProperty_RW(wxFontMetrics, ascent)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -99,7 +99,7 @@ Gurax_ImplementPropertySetter(wxFontMetrics, ascent)
 Gurax_DeclareProperty_RW(wxFontMetrics, descent)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -121,7 +121,7 @@ Gurax_ImplementPropertySetter(wxFontMetrics, descent)
 Gurax_DeclareProperty_RW(wxFontMetrics, internalLeading)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -143,7 +143,7 @@ Gurax_ImplementPropertySetter(wxFontMetrics, internalLeading)
 Gurax_DeclareProperty_RW(wxFontMetrics, externalLeading)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -165,7 +165,7 @@ Gurax_ImplementPropertySetter(wxFontMetrics, externalLeading)
 Gurax_DeclareProperty_RW(wxFontMetrics, averageWidth)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -192,7 +192,7 @@ VType_wxFontMetrics VTYPE_wxFontMetrics("FontMetrics");
 void VType_wxFontMetrics::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(FontMetrics_gurax));
 	// Assignment of method

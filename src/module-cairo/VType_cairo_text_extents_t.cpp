@@ -32,7 +32,7 @@ Gurax_DeclareConstructor(cairo_text_extents_t)
 {
 	Declare(VTYPE_cairo_text_extents_t, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `cairo_text_extents_t` instance.
 )**");
 }
@@ -55,7 +55,7 @@ Gurax_DeclareMethod(cairo_text_extents_t, MethodSkeleton)
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -79,7 +79,7 @@ Gurax_ImplementMethod(cairo_text_extents_t, MethodSkeleton)
 Gurax_DeclareProperty_RW(cairo_text_extents_t, x_bearing)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -100,7 +100,7 @@ Gurax_ImplementPropertySetter(cairo_text_extents_t, x_bearing)
 Gurax_DeclareProperty_RW(cairo_text_extents_t, y_bearing)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -121,7 +121,7 @@ Gurax_ImplementPropertySetter(cairo_text_extents_t, y_bearing)
 Gurax_DeclareProperty_RW(cairo_text_extents_t, width)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -142,7 +142,7 @@ Gurax_ImplementPropertySetter(cairo_text_extents_t, width)
 Gurax_DeclareProperty_RW(cairo_text_extents_t, height)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -163,7 +163,7 @@ Gurax_ImplementPropertySetter(cairo_text_extents_t, height)
 Gurax_DeclareProperty_RW(cairo_text_extents_t, x_advance)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -184,7 +184,7 @@ Gurax_ImplementPropertySetter(cairo_text_extents_t, x_advance)
 Gurax_DeclareProperty_RW(cairo_text_extents_t, y_advance)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(sdl.SDL_Surface, `en)}
 Gurax_DeclareProperty_R(SDL_Surface, format)
 {
 	Declare(VTYPE_SDL_PixelFormat, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -46,7 +46,7 @@ Gurax_ImplementPropertyGetter(SDL_Surface, format)
 Gurax_DeclareProperty_R(SDL_Surface, w)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_ImplementPropertyGetter(SDL_Surface, w)
 Gurax_DeclareProperty_R(SDL_Surface, h)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementPropertyGetter(SDL_Surface, h)
 Gurax_DeclareProperty_R(SDL_Surface, pitch)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -91,7 +91,7 @@ Gurax_ImplementPropertyGetter(SDL_Surface, pitch)
 Gurax_DeclareProperty_R(SDL_Surface, pixels)
 {
 	Declare(VTYPE_Array, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -111,7 +111,7 @@ Gurax_ImplementPropertyGetter(SDL_Surface, pixels)
 Gurax_DeclareProperty_R(SDL_Surface, userdata)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -127,7 +127,7 @@ Gurax_ImplementPropertyGetter(SDL_Surface, userdata)
 Gurax_DeclareProperty_R(SDL_Surface, clip_rect)
 {
 	Declare(VTYPE_SDL_Rect, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -142,7 +142,7 @@ Gurax_ImplementPropertyGetter(SDL_Surface, clip_rect)
 Gurax_DeclareProperty_R(SDL_Surface, refcount)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

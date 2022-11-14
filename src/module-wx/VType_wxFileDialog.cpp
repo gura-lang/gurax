@@ -42,7 +42,7 @@ Gurax_DeclareConstructorAlias(FileDialog_gurax, "FileDialog")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.FileDialog.
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementConstructorEx(FileDialog_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxFileDialog, GetCurrentlySelectedFilename_gurax, "GetCurrentlySelectedFilename")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -96,7 +96,7 @@ Gurax_ImplementMethodEx(wxFileDialog, GetCurrentlySelectedFilename_gurax, proces
 Gurax_DeclareMethodAlias(wxFileDialog, GetDirectory_gurax, "GetDirectory")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -117,7 +117,7 @@ Gurax_DeclareMethodAlias(wxFileDialog, GetExtraControl_gurax, "GetExtraControl")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -137,7 +137,7 @@ Gurax_ImplementMethodEx(wxFileDialog, GetExtraControl_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxFileDialog, GetFilename_gurax, "GetFilename")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -157,7 +157,7 @@ Gurax_ImplementMethodEx(wxFileDialog, GetFilename_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxFileDialog, GetFilterIndex_gurax, "GetFilterIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -177,7 +177,7 @@ Gurax_ImplementMethodEx(wxFileDialog, GetFilterIndex_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxFileDialog, GetMessage_gurax, "GetMessage")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -197,7 +197,7 @@ Gurax_ImplementMethodEx(wxFileDialog, GetMessage_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxFileDialog, GetPath_gurax, "GetPath")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -217,7 +217,7 @@ Gurax_ImplementMethodEx(wxFileDialog, GetPath_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxFileDialog, GetPaths_gurax, "GetPaths")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -238,7 +238,7 @@ Gurax_ImplementMethodEx(wxFileDialog, GetPaths_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxFileDialog, GetWildcard_gurax, "GetWildcard")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -259,7 +259,7 @@ Gurax_DeclareMethodAlias(wxFileDialog, SetDirectory_gurax, "SetDirectory")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("directory", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -283,7 +283,7 @@ Gurax_DeclareMethodAlias(wxFileDialog, SetFilename_gurax, "SetFilename")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("setfilename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -307,7 +307,7 @@ Gurax_DeclareMethodAlias(wxFileDialog, SetFilterIndex_gurax, "SetFilterIndex")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("filterIndex", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -331,7 +331,7 @@ Gurax_DeclareMethodAlias(wxFileDialog, SetMessage_gurax, "SetMessage")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -355,7 +355,7 @@ Gurax_DeclareMethodAlias(wxFileDialog, SetPath_gurax, "SetPath")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("path", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -379,7 +379,7 @@ Gurax_DeclareMethodAlias(wxFileDialog, SetWildcard_gurax, "SetWildcard")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("wildCard", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -402,7 +402,7 @@ Gurax_ImplementMethodEx(wxFileDialog, SetWildcard_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxFileDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -430,7 +430,7 @@ VType_wxFileDialog VTYPE_wxFileDialog("FileDialog");
 void VType_wxFileDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(FileDialog_gurax));
 	// Assignment of method

@@ -33,7 +33,7 @@ Gurax_DeclareMethod(cairo_surface_t, ToImage)
 	Declare(VTYPE_Image, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(rgb));
 	DeclareAttrOpt(Gurax_Symbol(rgba));
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Skeleton.
 )**");
 }
@@ -60,7 +60,7 @@ Gurax_ImplementMethod(cairo_surface_t, ToImage)
 Gurax_DeclareProperty_R(cairo_surface_t, content)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -76,7 +76,7 @@ Gurax_ImplementPropertyGetter(cairo_surface_t, content)
 Gurax_DeclareProperty_R(cairo_surface_t, type)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -92,7 +92,7 @@ Gurax_ImplementPropertyGetter(cairo_surface_t, type)
 Gurax_DeclareProperty_R(cairo_surface_t, image_format)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -109,7 +109,7 @@ Gurax_ImplementPropertyGetter(cairo_surface_t, image_format)
 Gurax_DeclareProperty_R(cairo_surface_t, image_width)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -126,7 +126,7 @@ Gurax_ImplementPropertyGetter(cairo_surface_t, image_width)
 Gurax_DeclareProperty_R(cairo_surface_t, image_height)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -143,7 +143,7 @@ Gurax_ImplementPropertyGetter(cairo_surface_t, image_height)
 Gurax_DeclareProperty_R(cairo_surface_t, image_stride)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }

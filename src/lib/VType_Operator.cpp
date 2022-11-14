@@ -32,7 +32,7 @@ Gurax_DeclareClassMethod(Operator, Binary)
 {
 	Declare(VTYPE_Operator, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an Operator instance of binary one.
 )**");
 }
@@ -56,7 +56,7 @@ Gurax_DeclareClassMethod(Operator, Math)
 {
 	Declare(VTYPE_Operator, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an Operator instance of mathematical one.
 )**");
 }
@@ -80,7 +80,7 @@ Gurax_DeclareClassMethod(Operator, Unary)
 {
 	Declare(VTYPE_Operator, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an Operator instance of unary one.
 )**");
 }
@@ -104,7 +104,7 @@ Gurax_DeclareClassMethod(Operator, UnaryPost)
 {
 	Declare(VTYPE_Operator, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an Operator instance of unary-post one.
 )**");
 }
@@ -131,7 +131,7 @@ Gurax_DeclareMethod(Operator, Assign)
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -183,7 +183,7 @@ Gurax_ImplementMethod(Operator, Assign)
 Gurax_DeclareMethod(Operator, IsBinary)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the operator is a binary one.
 )**");
 }
@@ -201,7 +201,7 @@ Gurax_ImplementMethod(Operator, IsBinary)
 Gurax_DeclareMethod(Operator, IsUnary)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the operator is a unary one.
 )**");
 }
@@ -219,7 +219,7 @@ Gurax_ImplementMethod(Operator, IsUnary)
 Gurax_DeclareMethod(Operator, IsUnaryPost)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the operator is a unary-post one.
 )**");
 }
@@ -237,7 +237,7 @@ Gurax_ImplementMethod(Operator, IsUnaryPost)
 Gurax_DeclareMethod(Operator, IsMath)
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the operator is a mathematics one.
 )**");
 }
@@ -258,7 +258,7 @@ Gurax_ImplementMethod(Operator, IsMath)
 Gurax_DeclareProperty_R(Operator, name)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Name of the operator.
 )**");
 }
@@ -273,7 +273,7 @@ Gurax_ImplementPropertyGetter(Operator, name)
 Gurax_DeclareProperty_R(Operator, style)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 A symbol of the operator's style.
 )**");
 }
@@ -288,7 +288,7 @@ Gurax_ImplementPropertyGetter(Operator, style)
 Gurax_DeclareProperty_R(Operator, symbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Symbol of the operator.
 )**");
 }
@@ -303,7 +303,7 @@ Gurax_ImplementPropertyGetter(Operator, symbol)
 Gurax_DeclareProperty_R(Operator, typeId)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Type of the operator.
 )**");
 }

@@ -35,7 +35,7 @@ Gurax_DeclareConstructorAlias(GridCellNumberEditor_gurax, "GridCellNumberEditor"
 	DeclareArg("min", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("max", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an instance of wx.GridCellNumberEditor.
 )**");
 }
@@ -61,7 +61,7 @@ Gurax_DeclareMethodAlias(wxGridCellNumberEditor, SetParameters_gurax, "SetParame
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -92,7 +92,7 @@ VType_wxGridCellNumberEditor VTYPE_wxGridCellNumberEditor("GridCellNumberEditor"
 void VType_wxGridCellNumberEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellTextEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellNumberEditor_gurax));
 	// Assignment of method

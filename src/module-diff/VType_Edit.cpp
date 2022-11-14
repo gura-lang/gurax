@@ -31,7 +31,7 @@ ${help.ComposeMethodHelp(diff.Edit, `en)}
 Gurax_DeclareProperty_R(Edit, lineNoOrg)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -47,7 +47,7 @@ Gurax_ImplementPropertyGetter(Edit, lineNoOrg)
 Gurax_DeclareProperty_R(Edit, lineNoNew)
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -63,7 +63,7 @@ Gurax_ImplementPropertyGetter(Edit, lineNoNew)
 Gurax_DeclareProperty_R(Edit, source)
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -79,7 +79,7 @@ Gurax_ImplementPropertyGetter(Edit, source)
 Gurax_DeclareProperty_R(Edit, type)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
@@ -99,7 +99,7 @@ Gurax_ImplementPropertyGetter(Edit, type)
 Gurax_DeclareProperty_R(Edit, mark)
 {
 	Declare(VTYPE_Symbol, Flag::None);
-	AddHelp("en", u8R"**(
+	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
 }
