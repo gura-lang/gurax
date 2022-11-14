@@ -391,7 +391,7 @@ VType_Complex VTYPE_Complex("Complex");
 void VType_Complex::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Complex));
 	// Assignment of class property

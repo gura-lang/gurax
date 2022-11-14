@@ -193,7 +193,7 @@ VType_Object VTYPE_Object("Object");
 void VType_Object::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VType::Invalid, Flag::Immutable, Gurax_CreateConstructor(Object));
 	// Assignment of method

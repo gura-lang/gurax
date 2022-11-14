@@ -65,7 +65,7 @@ VType_SDL_CommonEvent VTYPE_SDL_CommonEvent("SDL_CommonEvent");
 void VType_SDL_CommonEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

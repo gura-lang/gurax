@@ -139,7 +139,7 @@ VType_Attribute VTYPE_Attribute("Attribute");
 void VType_Attribute::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaretion of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method

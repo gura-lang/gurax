@@ -558,7 +558,7 @@ VType_DateTime VTYPE_DateTime("DateTime");
 void VType_DateTime::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(DateTime));
 	// Assignment of class method

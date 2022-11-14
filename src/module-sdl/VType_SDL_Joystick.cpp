@@ -32,7 +32,7 @@ VType_SDL_Joystick VTYPE_SDL_Joystick("SDL_Joystick");
 void VType_SDL_Joystick::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 }

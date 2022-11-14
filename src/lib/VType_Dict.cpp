@@ -376,7 +376,7 @@ VType_Dict VTYPE_Dict("Dict");
 void VType_Dict::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of statement

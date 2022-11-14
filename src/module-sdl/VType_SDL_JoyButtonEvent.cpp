@@ -110,7 +110,7 @@ VType_SDL_JoyButtonEvent VTYPE_SDL_JoyButtonEvent("SDL_JoyButtonEvent");
 void VType_SDL_JoyButtonEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

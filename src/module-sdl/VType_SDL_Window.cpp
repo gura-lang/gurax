@@ -32,7 +32,7 @@ VType_SDL_Window VTYPE_SDL_Window("SDL_Window");
 void VType_SDL_Window::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 }

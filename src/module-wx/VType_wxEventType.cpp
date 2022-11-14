@@ -77,7 +77,7 @@ VType_wxEventType VTYPE_wxEventType("EventType");
 void VType_wxEventType::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	//Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(EventType));

@@ -137,7 +137,6 @@ public:
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, const char *doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
 	void AddHelp(const char* langCode, const char *doc) { _pHelpHolder->AddHelp(langCode, doc); }
-	void AddHelpTmpl(const Symbol* pLangCode, const char *doc) { _pHelpHolder->AddHelpTmpl(pLangCode, doc); }
 	Frame_Module& GetFrame() const { return *_pFrame; }
 	PropSlotMap& GetPropSlotMap() { return *_pPropSlotMap; }
 	const PropSlotMap& GetPropSlotMap() const { return *_pPropSlotMap; }

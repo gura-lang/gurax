@@ -80,7 +80,7 @@ VType_SDL_version VTYPE_SDL_version("SDL_version");
 void VType_SDL_version::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

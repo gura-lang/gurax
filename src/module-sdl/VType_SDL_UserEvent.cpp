@@ -127,7 +127,7 @@ VType_SDL_UserEvent VTYPE_SDL_UserEvent("SDL_UserEvent");
 void VType_SDL_UserEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

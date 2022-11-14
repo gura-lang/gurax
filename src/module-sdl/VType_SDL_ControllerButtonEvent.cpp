@@ -110,7 +110,7 @@ VType_SDL_ControllerButtonEvent VTYPE_SDL_ControllerButtonEvent("SDL_ControllerB
 void VType_SDL_ControllerButtonEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

@@ -338,7 +338,6 @@ public:
 	const HelpHolder& GetHelpHolder() const { return *_pHelpHolder; }
 	void AddHelp(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelp(pLangCode, doc); }
 	void AddHelp(const char* langCode, const char* doc) { _pHelpHolder->AddHelp(Symbol::Add(langCode), doc); }
-	void AddHelpTmpl(const Symbol* pLangCode, const char* doc) { _pHelpHolder->AddHelpTmpl(pLangCode, doc); }
 	const Symbol* GetSymbol() const { return _pSymbol; }
 	const char* GetName() const { return _pSymbol->GetName(); }
 	VType& GetVType() const { return *_pVType; }

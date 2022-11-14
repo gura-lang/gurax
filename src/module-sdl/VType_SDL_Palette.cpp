@@ -72,7 +72,7 @@ VType_SDL_Palette VTYPE_SDL_Palette("SDL_Palette");
 void VType_SDL_Palette::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

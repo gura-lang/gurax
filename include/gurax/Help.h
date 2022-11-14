@@ -54,7 +54,6 @@ public:
 	void AddHelp(const char* langCode, StringReferable* pDoc) { AddHelp(Symbol::Add(langCode), pDoc); }
 	void AddHelp(const Symbol* pLangCode, const char* doc);
 	void AddHelp(const char* langCode, const char* doc) { AddHelp(Symbol::Add(langCode), doc); }
-	void AddHelpTmpl(const Symbol* pLangCode, const char* doc);
 	const Help* GetDefault() const { return _helpOwner.empty()? nullptr : _helpOwner.front(); }
 	const Help* LookupLoose(const Symbol* pLangCode) const;
 	const HelpOwner& GetHelpOwner() const { return _helpOwner; }

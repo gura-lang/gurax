@@ -110,7 +110,7 @@ VType_curl_slist VTYPE_curl_slist("curl_slist");
 void VType_curl_slist::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(curl_slist));
 	// Assignment of method

@@ -219,7 +219,7 @@ void VType_Random::DoPrepare(Frame& frameOuter)
 	// Initialize global state
 	_pRandomGlobal.reset(new Random());
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Random));
 	// Assignment of method

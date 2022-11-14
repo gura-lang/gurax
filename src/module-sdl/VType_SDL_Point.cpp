@@ -103,7 +103,7 @@ VType_SDL_Point VTYPE_SDL_Point("SDL_Point");
 void VType_SDL_Point::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(SDL_Point));
 	// Assignment of property

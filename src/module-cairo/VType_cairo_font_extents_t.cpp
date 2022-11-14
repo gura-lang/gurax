@@ -188,7 +188,7 @@ VType_cairo_font_extents_t VTYPE_cairo_font_extents_t("cairo_font_extents_t");
 void VType_cairo_font_extents_t::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(cairo_font_extents_t));
 	// Assignment of method

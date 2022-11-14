@@ -124,7 +124,7 @@ VType_cairo_glyph_t VTYPE_cairo_glyph_t("cairo_glyph_t");
 void VType_cairo_glyph_t::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

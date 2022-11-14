@@ -125,7 +125,7 @@ VType_SDL_KeyboardEvent VTYPE_SDL_KeyboardEvent("SDL_KeyboardEvent");
 void VType_SDL_KeyboardEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

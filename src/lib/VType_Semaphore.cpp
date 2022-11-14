@@ -91,7 +91,7 @@ VType_Semaphore VTYPE_Semaphore("Semaphore");
 void VType_Semaphore::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(Semaphore));
 	// Assignment of method

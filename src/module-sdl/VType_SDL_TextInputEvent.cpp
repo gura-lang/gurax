@@ -95,7 +95,7 @@ VType_SDL_TextInputEvent VTYPE_SDL_TextInputEvent("SDL_TextInputEvent");
 void VType_SDL_TextInputEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

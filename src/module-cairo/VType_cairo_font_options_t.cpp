@@ -76,7 +76,7 @@ VType_cairo_font_options_t VTYPE_cairo_font_options_t("cairo_font_options_t");
 void VType_cairo_font_options_t::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

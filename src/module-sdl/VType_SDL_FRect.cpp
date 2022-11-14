@@ -119,7 +119,7 @@ VType_SDL_FRect VTYPE_SDL_FRect("SDL_FRect");
 void VType_SDL_FRect::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

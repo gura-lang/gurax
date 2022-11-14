@@ -65,7 +65,7 @@ VType_SDL_QuitEvent VTYPE_SDL_QuitEvent("SDL_QuitEvent");
 void VType_SDL_QuitEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

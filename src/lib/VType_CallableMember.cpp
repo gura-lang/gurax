@@ -32,7 +32,7 @@ VType_CallableMember VTYPE_CallableMember("CallableMember");
 void VType_CallableMember::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaretion of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 }

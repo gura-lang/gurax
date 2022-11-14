@@ -75,7 +75,7 @@ VType_CommentExtension VTYPE_CommentExtension("CommentExtension");
 void VType_CommentExtension::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 	// Assignment of method

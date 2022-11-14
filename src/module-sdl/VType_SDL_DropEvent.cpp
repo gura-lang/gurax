@@ -99,7 +99,7 @@ VType_SDL_DropEvent VTYPE_SDL_DropEvent("SDL_DropEvent");
 void VType_SDL_DropEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

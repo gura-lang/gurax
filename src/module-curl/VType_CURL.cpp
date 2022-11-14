@@ -153,7 +153,7 @@ VType_CURL VTYPE_CURL("CURL");
 void VType_CURL::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(CURL));
 	// Assignment of property

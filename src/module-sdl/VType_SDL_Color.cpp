@@ -149,7 +149,7 @@ VType_SDL_Color VTYPE_SDL_Color("SDL_Color");
 void VType_SDL_Color::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(SDL_Color));
 	// Assignment of property

@@ -50,7 +50,7 @@ VType_SDL_HapticEffect VTYPE_SDL_HapticEffect("SDL_HapticEffect");
 void VType_SDL_HapticEffect::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

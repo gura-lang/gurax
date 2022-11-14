@@ -103,7 +103,7 @@ VType_cairo_text_cluster_t VTYPE_cairo_text_cluster_t("cairo_text_cluster_t");
 void VType_cairo_text_cluster_t::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

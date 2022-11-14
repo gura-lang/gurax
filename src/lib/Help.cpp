@@ -96,12 +96,6 @@ void HelpHolder::AddHelp(const Symbol* pLangCode, const char* doc)
 	AddHelp(pLangCode, new StringReferable(doc));
 }
 
-void HelpHolder::AddHelpTmpl(const Symbol* pLangCode, const char* doc)
-{
-	while (String::IsSpace(*doc)) doc++;
-	AddHelp(pLangCode, new StringReferable(doc));
-}
-
 const Help* HelpHolder::LookupLoose(const Symbol* pLangCode) const
 {
 	const Help* pHelp = _helpOwner.Lookup(pLangCode);

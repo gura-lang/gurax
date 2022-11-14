@@ -76,7 +76,7 @@ VType_cairo_rectangle_list_t VTYPE_cairo_rectangle_list_t("cairo_rectangle_list_
 void VType_cairo_rectangle_list_t::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

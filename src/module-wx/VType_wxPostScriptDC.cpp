@@ -45,7 +45,7 @@ VType_wxPostScriptDC VTYPE_wxPostScriptDC("PostScriptDC");
 void VType_wxPostScriptDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDC, Flag::Mutable);
 	// Assignment of method

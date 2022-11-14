@@ -80,7 +80,7 @@ VType_SDL_Keysym VTYPE_SDL_Keysym("SDL_Keysym");
 void VType_SDL_Keysym::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

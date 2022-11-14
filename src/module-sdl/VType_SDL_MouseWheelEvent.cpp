@@ -140,7 +140,7 @@ VType_SDL_MouseWheelEvent VTYPE_SDL_MouseWheelEvent("SDL_MouseWheelEvent");
 void VType_SDL_MouseWheelEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of property

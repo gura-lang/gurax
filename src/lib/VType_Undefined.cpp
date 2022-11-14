@@ -51,7 +51,7 @@ VType_Undefined VTYPE_Undefined("Undefined");
 void VType_Undefined::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VType::Invalid, Flag::Immutable);
 	// Assignment of method

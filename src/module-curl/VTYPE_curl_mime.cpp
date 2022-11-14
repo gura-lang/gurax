@@ -99,7 +99,7 @@ VType_curl_mime VTYPE_curl_mime("curl_mime");
 void VType_curl_mime::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Immutable, Gurax_CreateConstructor(curl_mime));
 	// Assignment of method

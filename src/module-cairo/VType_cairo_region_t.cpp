@@ -76,7 +76,7 @@ VType_cairo_region_t VTYPE_cairo_region_t("cairo_region_t");
 void VType_cairo_region_t::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

@@ -103,7 +103,7 @@ VType_Exif VTYPE_Exif("Exif");
 void VType_Exif::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Segment, Flag::Immutable, Gurax_CreateConstructor(Exif));
 	// Assignment of property

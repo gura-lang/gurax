@@ -45,7 +45,7 @@ VType_wxSingoeChoiceDialog VTYPE_wxSingoeChoiceDialog("SingoeChoiceDialog");
 void VType_wxSingoeChoiceDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable);
 	// Assignment of method

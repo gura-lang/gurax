@@ -32,7 +32,7 @@ VType_ArgSlot VTYPE_ArgSlot("ArgSlot");
 void VType_ArgSlot::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelpTmpl(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaretion of VType
 	Declare(VTYPE_Object, Flag::Immutable);
 }
