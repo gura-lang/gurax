@@ -402,6 +402,8 @@ Gurax_DeclareSymbol(padding);
 Gurax_DeclareSymbol(palette);
 Gurax_DeclareSymbol(parent);
 Gurax_DeclareSymbol(parents);
+Gurax_DeclareSymbol(part);
+Gurax_DeclareSymbol(partly);
 Gurax_DeclareSymbol(password);
 Gurax_DeclareSymbol(path);
 Gurax_DeclareSymbol(pathname);

@@ -1055,13 +1055,16 @@ Gurax_ImplementMethod(String, ToBinary)
 	return new Value_Binary(Binary(str.data(), str.size()));
 }
 
-// String#ToNumber() as Number {block?}
+// String#ToNumber():[raise] as Number {block?}
 Gurax_DeclareMethod(String, ToNumber)
 {
 	Declare(VTYPE_Number, Flag::None);
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Converts the string into `Number` instance.
+Converts the target string into a number and returns it.
+
+If the string has a wrong format, the method returns `nil`. It issues an error if attribute `:raise` is specified.
 )**");
 }
 
@@ -1073,11 +1076,14 @@ Gurax_ImplementMethod(String, ToNumber)
 	const String& str = valueThis.GetStringSTL();
 	Bool successFlag;
 	Double num = str.ToDouble(&successFlag);
-	if (!successFlag) {
+	RefPtr<Value> pValueRtn(Value::nil());
+	if (successFlag) {
+		pValueRtn.reset(new Value_Number(num));
+	} else if (argument.IsSet(Gurax_Symbol(raise))) {
 		Error::Issue(ErrorType::FormatError, "invalid format of a number");
 		return Value::nil();
 	}
-	return new Value_Number(num);
+	return argument.ReturnValue(processor, pValueRtn.release());
 }
 
 // String#ToReader() as Stream {block?}

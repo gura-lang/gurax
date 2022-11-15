@@ -441,6 +441,17 @@ TestCase('String#ToBinary()') {
 	str.ToBinary().p.Dump()
 }
 
+TestCase('String#ToNumber()') {
+	Tester(`'0'.ToNumber())
+	Tester(`'1'.ToNumber())
+	Tester(`'3.14'.ToNumber())
+	Tester(`'.01'.ToNumber())
+	Tester(`'1e-3'.ToNumber())
+	Tester(`'123456789'.ToNumber())
+	Tester(`'abc'.ToNumber())
+	Tester(`'abc'.ToNumber():raise)
+}
+
 TestCase('String#ToReader()') {
 	str = 'abcdefghijklmnopqrstuvwxyz'
 	str.ToReader().Read().Dump()

@@ -399,6 +399,8 @@ Gurax_RealizeSymbol(padding);
 Gurax_RealizeSymbol(palette);
 Gurax_RealizeSymbol(parent);
 Gurax_RealizeSymbol(parents);
+Gurax_RealizeSymbol(part);
+Gurax_RealizeSymbol(partly);
 Gurax_RealizeSymbol(password);
 Gurax_RealizeSymbol(path);
 Gurax_RealizeSymbol(pathname);
