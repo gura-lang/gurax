@@ -59,7 +59,7 @@ Below is an example of creating a one-dimentional list containing a string:
 
 Below is an example of creating a two-dimentional list containing strings.
 
-    x = Dim(3, 2) {|i, j| format('%d-%d', i, j)}
+    x = Dim(3, 2) {|i, j| Format('%d-%d', i, j)}
                         // x is [['0-0', '0-1'], ['1-0', '1-1'], ['2-0', '2-1']]
 )**");
 }
@@ -115,7 +115,7 @@ Gurax_ImplementFunction(Dim)
 	return new Value_List(pValueTypedOwner.release());
 }
 
-// dir(value)
+// dir(value?)
 Gurax_DeclareFunction(dir)
 {
 	Declare(VTYPE_List, Flag::None);
