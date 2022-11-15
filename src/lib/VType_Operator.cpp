@@ -27,13 +27,19 @@ ${help.ComposeMethodHelp(Operator, `en)}
 //-----------------------------------------------------------------------------
 // Implementation of class method
 //-----------------------------------------------------------------------------
-// Operator.Binary(symbol:Symbol)
+// Operator.Binary(symbol as Symbol)
 Gurax_DeclareClassMethod(Operator, Binary)
 {
 	Declare(VTYPE_Operator, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an Operator instance of binary one.
+Creates the `Operator` instance of a binary operator specified by `symbol`,
+which is a symbol of an operator preceded by a back quote.
+
+```
+Operator.Binary(`+)    // Returns a binary Operator instance of addition.
+Operator.Binary(`*)    // Returns a binary Operator instance of multiplication.
+```
 )**");
 }
 
@@ -51,13 +57,19 @@ Gurax_ImplementClassMethod(Operator, Binary)
 	return new Value_Operator(pOp);
 }
 
-// Operator.Math(symbol:Symbol)
+// Operator.Math(symbol as Symbol)
 Gurax_DeclareClassMethod(Operator, Math)
 {
 	Declare(VTYPE_Operator, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an Operator instance of mathematical one.
+Creates the `Operator` instance of a binary operator specified by `symbol`,
+which is a name of a mathematical function preceded by a back quote.
+
+```
+Operator.Math(`Sin)    // Returns a math Operator instance of math.Sin().
+Operator.Math(`Atan2)  // Returns a math Operator instance of math.Atan2().
+```
 )**");
 }
 
@@ -75,13 +87,19 @@ Gurax_ImplementClassMethod(Operator, Math)
 	return new Value_Operator(pOp);
 }
 
-// Operator.Unary(symbol:Symbol)
+// Operator.Unary(symbol as Symbol)
 Gurax_DeclareClassMethod(Operator, Unary)
 {
 	Declare(VTYPE_Operator, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an Operator instance of unary one.
+Creates the `Operator` instance of a unary operator specified by `symbol`,
+which is a symbol of an operator preceded by a back quote.
+
+```
+Operator.Unary(`!)    // Returns an Unary operator instance of negation.
+Operator.Unary(`-)    // Returns an Unary operator instance of negative.
+```
 )**");
 }
 
@@ -99,13 +117,14 @@ Gurax_ImplementClassMethod(Operator, Unary)
 	return new Value_Operator(pOp);
 }
 
-// Operator.UnaryPost(symbol:Symbol)
+// Operator.UnaryPost(symbol as Symbol)
 Gurax_DeclareClassMethod(Operator, UnaryPost)
 {
 	Declare(VTYPE_Operator, Flag::None);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an Operator instance of unary-post one.
+Creates the `Operator` instance of a unary operator specified by `symbol`,
+which is a symbol of an operator preceded by a back quote.
 )**");
 }
 
@@ -184,7 +203,7 @@ Gurax_DeclareMethod(Operator, IsBinary)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Returns `true` if the operator is a binary one.
+Returns `true` if the target is a binary `Operator`.
 )**");
 }
 
@@ -202,7 +221,7 @@ Gurax_DeclareMethod(Operator, IsUnary)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Returns `true` if the operator is a unary one.
+Returns `true` if the target is a unary `Operator`.
 )**");
 }
 
@@ -220,7 +239,7 @@ Gurax_DeclareMethod(Operator, IsUnaryPost)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Returns `true` if the operator is a unary-post one.
+Returns `true` if the target is a unary-post `Operator`.
 )**");
 }
 
@@ -238,7 +257,7 @@ Gurax_DeclareMethod(Operator, IsMath)
 {
 	Declare(VTYPE_Bool, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Returns `true` if the operator is a mathematics one.
+Returns `true` if the target is a math `Operator`.
 )**");
 }
 
