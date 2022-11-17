@@ -16,7 +16,7 @@ Gurax_DeclareFunction(Chr)
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Coverts a UTF-32 character code `code` into a string and returns it.
 )**");
-	AddHelp("ja", u8R"**(
+	AddHelp(Gurax_Symbol(ja), u8R"**(
 UTF-32 キャラクタコード `code` を文字列に変換し、戻り値として返します。
 )**");
 }

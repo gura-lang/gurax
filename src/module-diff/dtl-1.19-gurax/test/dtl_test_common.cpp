@@ -1,4 +1,4 @@
-
+﻿
 #include "dtl_test_common.hpp"
 
 string create_path (const string& test_name, string diff_name, enum type_diff t, bool is_use_suffix) {

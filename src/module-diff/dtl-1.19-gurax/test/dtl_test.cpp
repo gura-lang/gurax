@@ -1,4 +1,4 @@
-/**
+﻿/**
  * It is necessary to use googletest to run tests.
  */
 

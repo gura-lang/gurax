@@ -1,4 +1,4 @@
-#include "dtl_test_common.hpp"
+﻿#include "dtl_test_common.hpp"
 #include "comparators.hpp"
 
 class Strdiff3test : public ::testing::Test

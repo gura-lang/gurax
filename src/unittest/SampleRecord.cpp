@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 const SampleRecord SampleRecord::tbl[] = {
 	{"Hayasaka Hiroko","hayasaka_hiroko@example.com","female",33,"1976/8/27","090-9134-30BF"},

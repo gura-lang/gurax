@@ -1,4 +1,4 @@
-//==============================================================================
+﻿//==============================================================================
 // VType_Operator.cpp
 //==============================================================================
 #include "stdafx.h"
@@ -278,7 +278,7 @@ Gurax_DeclareProperty_R(Operator, name)
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Name of the operator.
+The name of the operator.
 )**");
 }
 
@@ -293,7 +293,13 @@ Gurax_DeclareProperty_R(Operator, style)
 {
 	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-A symbol of the operator's style.
+Returns one of the following symbols that represents the operator's style:
+
+- `` `Unary`` .. Unary prefixed operator.
+- `` `UnaryPost`` .. Unary postfixed operator.
+- `` `Binary`` .. Binary operator.
+- `` `MathUnary`` .. Mathematical function that takes a single argument.
+- `` `MathBinary`` ..  Mathematical function that takes two arguments.
 )**");
 }
 
@@ -308,7 +314,7 @@ Gurax_DeclareProperty_R(Operator, symbol)
 {
 	Declare(VTYPE_Symbol, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Symbol of the operator.
+The symbol of the operator.
 )**");
 }
 
@@ -321,9 +327,9 @@ Gurax_ImplementPropertyGetter(Operator, symbol)
 // Operator#typeId
 Gurax_DeclareProperty_R(Operator, typeId)
 {
-	Declare(VTYPE_String, Flag::None);
+	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Type of the operator.
+The number that represents the operator's type identifier.
 )**");
 }
 

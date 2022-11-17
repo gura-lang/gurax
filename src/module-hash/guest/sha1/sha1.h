@@ -1,4 +1,4 @@
-#ifndef _SHA1_H
+﻿#ifndef _SHA1_H
 #define _SHA1_H
 
 #ifndef uint8

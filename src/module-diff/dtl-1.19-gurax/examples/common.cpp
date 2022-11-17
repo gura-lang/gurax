@@ -1,4 +1,4 @@
-
+﻿
 #include "common.hpp"
 
 bool isFileExist (string& fs) {
