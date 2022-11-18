@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.IdleEvent, `en)}
 Gurax_DeclareMethodAlias(wxIdleEvent, MoreRequested_gurax, "MoreRequested")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxIdleEvent, MoreRequested_gurax, processor_gurax, argument_gurax)
@@ -56,8 +54,6 @@ Gurax_DeclareMethodAlias(wxIdleEvent, RequestMore_gurax, "RequestMore")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("needMore", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxIdleEvent, RequestMore_gurax, processor_gurax, argument_gurax)
@@ -78,8 +74,6 @@ Gurax_ImplementMethodEx(wxIdleEvent, RequestMore_gurax, processor_gurax, argumen
 Gurax_DeclareClassMethodAlias(wxIdleEvent, GetMode_gurax, "GetMode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxIdleEvent, GetMode_gurax, processor_gurax, argument_gurax)
@@ -94,8 +88,6 @@ Gurax_DeclareClassMethodAlias(wxIdleEvent, SetMode_gurax, "SetMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxIdleEvent, SetMode_gurax, processor_gurax, argument_gurax)
@@ -120,7 +112,7 @@ VType_wxIdleEvent VTYPE_wxIdleEvent("IdleEvent");
 void VType_wxIdleEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

@@ -41,9 +41,6 @@ Gurax_DeclareConstructorAlias(ColourPickerCtrl_gurax, "ColourPickerCtrl")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.ColourPickerCtrl.
-)**");
 }
 
 Gurax_ImplementConstructorEx(ColourPickerCtrl_gurax, processor_gurax, argument_gurax)
@@ -82,8 +79,6 @@ Gurax_DeclareMethodAlias(wxColourPickerCtrl, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxColourPickerCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -114,8 +109,6 @@ Gurax_DeclareMethodAlias(wxColourPickerCtrl, GetColour_gurax, "GetColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxColourPickerCtrl, GetColour_gurax, processor_gurax, argument_gurax)
@@ -134,8 +127,6 @@ Gurax_DeclareMethodAlias(wxColourPickerCtrl, SetColour_gurax, "SetColour")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxColourPickerCtrl, SetColour_gurax, processor_gurax, argument_gurax)
@@ -165,7 +156,7 @@ VType_wxColourPickerCtrl VTYPE_wxColourPickerCtrl("ColourPickerCtrl");
 void VType_wxColourPickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(ColourPickerCtrl_gurax));
 	// Assignment of method

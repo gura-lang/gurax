@@ -45,7 +45,7 @@ VType_wxMiniFrame VTYPE_wxMiniFrame("MiniFrame");
 void VType_wxMiniFrame::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxFrame, Flag::Mutable);
 	// Assignment of method

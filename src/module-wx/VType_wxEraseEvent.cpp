@@ -37,8 +37,6 @@ Gurax_DeclareMethodAlias(wxEraseEvent, GetDC_gurax, "GetDC")
 {
 	Declare(VTYPE_wxDC, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEraseEvent, GetDC_gurax, processor_gurax, argument_gurax)
@@ -64,7 +62,7 @@ VType_wxEraseEvent VTYPE_wxEraseEvent("EraseEvent");
 void VType_wxEraseEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

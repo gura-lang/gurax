@@ -40,9 +40,6 @@ Gurax_DeclareConstructorAlias(Dialog_gurax, "Dialog")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Dialog.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Dialog_gurax, processor_gurax, argument_gurax)
@@ -73,8 +70,6 @@ Gurax_DeclareMethodAlias(wxDialog, AddMainButtonId_gurax, "AddMainButtonId")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, AddMainButtonId_gurax, processor_gurax, argument_gurax)
@@ -95,8 +90,6 @@ Gurax_ImplementMethodEx(wxDialog, AddMainButtonId_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxDialog, CanDoLayoutAdaptation_gurax, "CanDoLayoutAdaptation")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, CanDoLayoutAdaptation_gurax, processor_gurax, argument_gurax)
@@ -115,8 +108,6 @@ Gurax_DeclareMethodAlias(wxDialog, Centre_gurax, "Centre")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, Centre_gurax, processor_gurax, argument_gurax)
@@ -140,8 +131,6 @@ Gurax_DeclareMethodAlias(wxDialog, CreateButtonSizer_gurax, "CreateButtonSizer")
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, CreateButtonSizer_gurax, processor_gurax, argument_gurax)
@@ -164,8 +153,6 @@ Gurax_DeclareMethodAlias(wxDialog, CreateSeparatedButtonSizer_gurax, "CreateSepa
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, CreateSeparatedButtonSizer_gurax, processor_gurax, argument_gurax)
@@ -188,8 +175,6 @@ Gurax_DeclareMethodAlias(wxDialog, CreateSeparatedSizer_gurax, "CreateSeparatedS
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareArg("sizer", VTYPE_wxSizer, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, CreateSeparatedSizer_gurax, processor_gurax, argument_gurax)
@@ -213,8 +198,6 @@ Gurax_DeclareMethodAlias(wxDialog, CreateStdDialogButtonSizer_gurax, "CreateStdD
 	Declare(VTYPE_wxStdDialogButtonSizer, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, CreateStdDialogButtonSizer_gurax, processor_gurax, argument_gurax)
@@ -237,8 +220,6 @@ Gurax_DeclareMethodAlias(wxDialog, CreateTextSizer_gurax, "CreateTextSizer")
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, CreateTextSizer_gurax, processor_gurax, argument_gurax)
@@ -259,8 +240,6 @@ Gurax_ImplementMethodEx(wxDialog, CreateTextSizer_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxDialog, DoLayoutAdaptation_gurax, "DoLayoutAdaptation")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, DoLayoutAdaptation_gurax, processor_gurax, argument_gurax)
@@ -279,8 +258,6 @@ Gurax_DeclareMethodAlias(wxDialog, EndModal_gurax, "EndModal")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("retCode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, EndModal_gurax, processor_gurax, argument_gurax)
@@ -301,8 +278,6 @@ Gurax_ImplementMethodEx(wxDialog, EndModal_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxDialog, GetAffirmativeId_gurax, "GetAffirmativeId")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, GetAffirmativeId_gurax, processor_gurax, argument_gurax)
@@ -321,8 +296,6 @@ Gurax_DeclareMethodAlias(wxDialog, GetContentWindow_gurax, "GetContentWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, GetContentWindow_gurax, processor_gurax, argument_gurax)
@@ -340,8 +313,6 @@ Gurax_ImplementMethodEx(wxDialog, GetContentWindow_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxDialog, GetEscapeId_gurax, "GetEscapeId")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, GetEscapeId_gurax, processor_gurax, argument_gurax)
@@ -359,8 +330,6 @@ Gurax_ImplementMethodEx(wxDialog, GetEscapeId_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxDialog, GetLayoutAdaptationDone_gurax, "GetLayoutAdaptationDone")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, GetLayoutAdaptationDone_gurax, processor_gurax, argument_gurax)
@@ -378,8 +347,6 @@ Gurax_ImplementMethodEx(wxDialog, GetLayoutAdaptationDone_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxDialog, GetLayoutAdaptationLevel_gurax, "GetLayoutAdaptationLevel")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, GetLayoutAdaptationLevel_gurax, processor_gurax, argument_gurax)
@@ -397,8 +364,6 @@ Gurax_ImplementMethodEx(wxDialog, GetLayoutAdaptationLevel_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxDialog, GetLayoutAdaptationMode_gurax, "GetLayoutAdaptationMode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, GetLayoutAdaptationMode_gurax, processor_gurax, argument_gurax)
@@ -416,8 +381,6 @@ Gurax_ImplementMethodEx(wxDialog, GetLayoutAdaptationMode_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxDialog, GetMainButtonIds_gurax, "GetMainButtonIds")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, GetMainButtonIds_gurax, processor_gurax, argument_gurax)
@@ -435,8 +398,6 @@ Gurax_ImplementMethodEx(wxDialog, GetMainButtonIds_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxDialog, GetReturnCode_gurax, "GetReturnCode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, GetReturnCode_gurax, processor_gurax, argument_gurax)
@@ -455,8 +416,6 @@ Gurax_DeclareMethodAlias(wxDialog, Iconize_gurax, "Iconize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("iconize", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, Iconize_gurax, processor_gurax, argument_gurax)
@@ -477,8 +436,6 @@ Gurax_ImplementMethodEx(wxDialog, Iconize_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxDialog, IsIconized_gurax, "IsIconized")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, IsIconized_gurax, processor_gurax, argument_gurax)
@@ -497,8 +454,6 @@ Gurax_DeclareMethodAlias(wxDialog, IsMainButtonId_gurax, "IsMainButtonId")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, IsMainButtonId_gurax, processor_gurax, argument_gurax)
@@ -519,8 +474,6 @@ Gurax_ImplementMethodEx(wxDialog, IsMainButtonId_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxDialog, IsModal_gurax, "IsModal")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, IsModal_gurax, processor_gurax, argument_gurax)
@@ -539,8 +492,6 @@ Gurax_DeclareMethodAlias(wxDialog, SetAffirmativeId_gurax, "SetAffirmativeId")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, SetAffirmativeId_gurax, processor_gurax, argument_gurax)
@@ -562,8 +513,6 @@ Gurax_DeclareMethodAlias(wxDialog, SetEscapeId_gurax, "SetEscapeId")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, SetEscapeId_gurax, processor_gurax, argument_gurax)
@@ -585,8 +534,6 @@ Gurax_DeclareMethodAlias(wxDialog, SetIcon_gurax, "SetIcon")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icon", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, SetIcon_gurax, processor_gurax, argument_gurax)
@@ -609,8 +556,6 @@ Gurax_DeclareMethodAlias(wxDialog, SetIcons_gurax, "SetIcons")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icons", VTYPE_wxIconBundle, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, SetIcons_gurax, processor_gurax, argument_gurax)
@@ -633,8 +578,6 @@ Gurax_DeclareMethodAlias(wxDialog, SetLayoutAdaptationDone_gurax, "SetLayoutAdap
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("done", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, SetLayoutAdaptationDone_gurax, processor_gurax, argument_gurax)
@@ -656,8 +599,6 @@ Gurax_DeclareMethodAlias(wxDialog, SetLayoutAdaptationLevel_gurax, "SetLayoutAda
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("level", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, SetLayoutAdaptationLevel_gurax, processor_gurax, argument_gurax)
@@ -679,8 +620,6 @@ Gurax_DeclareMethodAlias(wxDialog, SetLayoutAdaptationMode_gurax, "SetLayoutAdap
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, SetLayoutAdaptationMode_gurax, processor_gurax, argument_gurax)
@@ -702,8 +641,6 @@ Gurax_DeclareMethodAlias(wxDialog, SetReturnCode_gurax, "SetReturnCode")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("retCode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, SetReturnCode_gurax, processor_gurax, argument_gurax)
@@ -725,8 +662,6 @@ Gurax_DeclareMethodAlias(wxDialog, Show_gurax, "Show")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, Show_gurax, processor_gurax, argument_gurax)
@@ -747,8 +682,6 @@ Gurax_ImplementMethodEx(wxDialog, Show_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, ShowModal_gurax, processor_gurax, argument_gurax)
@@ -766,8 +699,6 @@ Gurax_ImplementMethodEx(wxDialog, ShowModal_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxDialog, ShowWindowModal_gurax, "ShowWindowModal")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDialog, ShowWindowModal_gurax, processor_gurax, argument_gurax)
@@ -793,7 +724,7 @@ VType_wxDialog VTYPE_wxDialog("Dialog");
 void VType_wxDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxTopLevelWindow, Flag::Mutable, Gurax_CreateConstructor(Dialog_gurax));
 	// Assignment of method

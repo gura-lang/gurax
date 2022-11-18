@@ -33,9 +33,6 @@ Gurax_DeclareConstructorAlias(GridCellAttrProvider_gurax, "GridCellAttrProvider"
 {
 	Declare(VTYPE_wxGridCellAttrProvider, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.GridCellAttrProvider.
-)**");
 }
 
 Gurax_ImplementConstructorEx(GridCellAttrProvider_gurax, processor_gurax, argument_gurax)
@@ -55,8 +52,6 @@ Gurax_DeclareMethodAlias(wxGridCellAttrProvider, SetAttr_gurax, "SetAttr")
 	DeclareArg("attr", VTYPE_wxGridCellAttr, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttrProvider, SetAttr_gurax, processor_gurax, argument_gurax)
@@ -82,8 +77,6 @@ Gurax_DeclareMethodAlias(wxGridCellAttrProvider, SetRowAttr_gurax, "SetRowAttr")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("attr", VTYPE_wxGridCellAttr, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttrProvider, SetRowAttr_gurax, processor_gurax, argument_gurax)
@@ -108,8 +101,6 @@ Gurax_DeclareMethodAlias(wxGridCellAttrProvider, SetColAttr_gurax, "SetColAttr")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("attr", VTYPE_wxGridCellAttr, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttrProvider, SetColAttr_gurax, processor_gurax, argument_gurax)
@@ -133,8 +124,6 @@ Gurax_DeclareMethodAlias(wxGridCellAttrProvider, GetCornerRenderer_gurax, "GetCo
 {
 	Declare(VTYPE_wxGridCornerHeaderRenderer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellAttrProvider, GetCornerRenderer_gurax, processor_gurax, argument_gurax)
@@ -160,7 +149,7 @@ VType_wxGridCellAttrProvider VTYPE_wxGridCellAttrProvider("GridCellAttrProvider"
 void VType_wxGridCellAttrProvider::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxClientDataContainer, Flag::Mutable, Gurax_CreateConstructor(GridCellAttrProvider_gurax));
 	// Assignment of method

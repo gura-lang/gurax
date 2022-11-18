@@ -45,7 +45,7 @@ VType_wxRibbonBarEvent VTYPE_wxRibbonBarEvent("RibbonBarEvent");
 void VType_wxRibbonBarEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

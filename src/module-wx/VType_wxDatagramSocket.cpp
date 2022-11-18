@@ -45,7 +45,7 @@ VType_wxDatagramSocket VTYPE_wxDatagramSocket("DatagramSocket");
 void VType_wxDatagramSocket::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSocketBase, Flag::Mutable);
 	// Assignment of method

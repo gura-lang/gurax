@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.BookCtrlEvent, `en)}
 Gurax_DeclareMethodAlias(wxBookCtrlEvent, GetOldSelection_gurax, "GetOldSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBookCtrlEvent, GetOldSelection_gurax, processor_gurax, argument_gurax)
@@ -55,8 +53,6 @@ Gurax_ImplementMethodEx(wxBookCtrlEvent, GetOldSelection_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxBookCtrlEvent, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBookCtrlEvent, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -75,8 +71,6 @@ Gurax_DeclareMethodAlias(wxBookCtrlEvent, SetOldSelection_gurax, "SetOldSelectio
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBookCtrlEvent, SetOldSelection_gurax, processor_gurax, argument_gurax)
@@ -98,8 +92,6 @@ Gurax_DeclareMethodAlias(wxBookCtrlEvent, SetSelection_gurax, "SetSelection")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBookCtrlEvent, SetSelection_gurax, processor_gurax, argument_gurax)
@@ -128,7 +120,7 @@ VType_wxBookCtrlEvent VTYPE_wxBookCtrlEvent("BookCtrlEvent");
 void VType_wxBookCtrlEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

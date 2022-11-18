@@ -38,9 +38,6 @@ Gurax_DeclareConstructorAlias(DirFilterListCtrl_gurax, "DirFilterListCtrl")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.DirFilterListCtrl.
-)**");
 }
 
 Gurax_ImplementConstructorEx(DirFilterListCtrl_gurax, processor_gurax, argument_gurax)
@@ -74,8 +71,6 @@ Gurax_DeclareMethodAlias(wxDirFilterListCtrl, Create_gurax, "Create")
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDirFilterListCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -103,8 +98,6 @@ Gurax_ImplementMethodEx(wxDirFilterListCtrl, Create_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxDirFilterListCtrl, Init_gurax, "Init")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDirFilterListCtrl, Init_gurax, processor_gurax, argument_gurax)
@@ -124,8 +117,6 @@ Gurax_DeclareMethodAlias(wxDirFilterListCtrl, FillFilterList_gurax, "FillFilterL
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("filter", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("defaultFilter", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDirFilterListCtrl, FillFilterList_gurax, processor_gurax, argument_gurax)
@@ -155,7 +146,7 @@ VType_wxDirFilterListCtrl VTYPE_wxDirFilterListCtrl("DirFilterListCtrl");
 void VType_wxDirFilterListCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxChoice, Flag::Mutable, Gurax_CreateConstructor(DirFilterListCtrl_gurax));
 	// Assignment of method

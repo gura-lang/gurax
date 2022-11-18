@@ -37,9 +37,6 @@ Gurax_DeclareConstructorAlias(AcceleratorEntry_gurax, "AcceleratorEntry")
 	DeclareArg("cmd", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("item", VTYPE_wxMenuItem, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.AcceleratorEntry.
-)**");
 }
 
 Gurax_ImplementConstructorEx(AcceleratorEntry_gurax, processor_gurax, argument_gurax)
@@ -65,8 +62,6 @@ Gurax_ImplementConstructorEx(AcceleratorEntry_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxAcceleratorEntry, GetCommand_gurax, "GetCommand")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAcceleratorEntry, GetCommand_gurax, processor_gurax, argument_gurax)
@@ -84,8 +79,6 @@ Gurax_ImplementMethodEx(wxAcceleratorEntry, GetCommand_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxAcceleratorEntry, GetFlags_gurax, "GetFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAcceleratorEntry, GetFlags_gurax, processor_gurax, argument_gurax)
@@ -103,8 +96,6 @@ Gurax_ImplementMethodEx(wxAcceleratorEntry, GetFlags_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxAcceleratorEntry, GetKeyCode_gurax, "GetKeyCode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAcceleratorEntry, GetKeyCode_gurax, processor_gurax, argument_gurax)
@@ -123,8 +114,6 @@ Gurax_DeclareMethodAlias(wxAcceleratorEntry, GetMenuItem_gurax, "GetMenuItem")
 {
 	Declare(VTYPE_wxMenuItem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAcceleratorEntry, GetMenuItem_gurax, processor_gurax, argument_gurax)
@@ -146,8 +135,6 @@ Gurax_DeclareMethodAlias(wxAcceleratorEntry, Set_gurax, "Set")
 	DeclareArg("keyCode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("cmd", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("item", VTYPE_wxMenuItem, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAcceleratorEntry, Set_gurax, processor_gurax, argument_gurax)
@@ -171,8 +158,6 @@ Gurax_ImplementMethodEx(wxAcceleratorEntry, Set_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxAcceleratorEntry, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAcceleratorEntry, IsOk_gurax, processor_gurax, argument_gurax)
@@ -190,8 +175,6 @@ Gurax_ImplementMethodEx(wxAcceleratorEntry, IsOk_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxAcceleratorEntry, ToString_gurax, "ToString")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAcceleratorEntry, ToString_gurax, processor_gurax, argument_gurax)
@@ -209,8 +192,6 @@ Gurax_ImplementMethodEx(wxAcceleratorEntry, ToString_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxAcceleratorEntry, ToRawString_gurax, "ToRawString")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAcceleratorEntry, ToRawString_gurax, processor_gurax, argument_gurax)
@@ -229,8 +210,6 @@ Gurax_DeclareMethodAlias(wxAcceleratorEntry, FromString_gurax, "FromString")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAcceleratorEntry, FromString_gurax, processor_gurax, argument_gurax)
@@ -259,7 +238,7 @@ VType_wxAcceleratorEntry VTYPE_wxAcceleratorEntry("AcceleratorEntry");
 void VType_wxAcceleratorEntry::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AcceleratorEntry_gurax));
 	// Assignment of method

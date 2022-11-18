@@ -40,9 +40,6 @@ Gurax_DeclareConstructorAlias(TreeCtrl_gurax, "TreeCtrl")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.TreeCtrl.
-)**");
 }
 
 Gurax_ImplementConstructorEx(TreeCtrl_gurax, processor_gurax, argument_gurax)
@@ -78,8 +75,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, AddRoot_gurax, "AddRoot")
 	DeclareArg("selImage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, AddRoot_gurax, processor_gurax, argument_gurax)
@@ -111,8 +106,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, AppendItem_gurax, "AppendItem")
 	DeclareArg("selImage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, AppendItem_gurax, processor_gurax, argument_gurax)
@@ -141,8 +134,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, AssignImageList_gurax, "AssignImageList")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, AssignImageList_gurax, processor_gurax, argument_gurax)
@@ -165,8 +156,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, AssignStateImageList_gurax, "AssignStateIma
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, AssignStateImageList_gurax, processor_gurax, argument_gurax)
@@ -189,8 +178,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Collapse_gurax, "Collapse")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, Collapse_gurax, processor_gurax, argument_gurax)
@@ -212,8 +199,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, Collapse_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxTreeCtrl, CollapseAll_gurax, "CollapseAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, CollapseAll_gurax, processor_gurax, argument_gurax)
@@ -232,8 +217,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, CollapseAllChildren_gurax, "CollapseAllChil
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, CollapseAllChildren_gurax, processor_gurax, argument_gurax)
@@ -256,8 +239,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, CollapseAndReset_gurax, "CollapseAndReset")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, CollapseAndReset_gurax, processor_gurax, argument_gurax)
@@ -286,8 +267,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -318,8 +297,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Delete_gurax, "Delete")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, Delete_gurax, processor_gurax, argument_gurax)
@@ -341,8 +318,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, Delete_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxTreeCtrl, DeleteAllItems_gurax, "DeleteAllItems")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, DeleteAllItems_gurax, processor_gurax, argument_gurax)
@@ -361,8 +336,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, DeleteChildren_gurax, "DeleteChildren")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, DeleteChildren_gurax, processor_gurax, argument_gurax)
@@ -385,8 +358,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, EnableBellOnNoMatch_gurax, "EnableBellOnNoM
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("on", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, EnableBellOnNoMatch_gurax, processor_gurax, argument_gurax)
@@ -409,8 +380,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, EndEditLabel_gurax, "EndEditLabel")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("discardChanges", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, EndEditLabel_gurax, processor_gurax, argument_gurax)
@@ -434,8 +403,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, EnsureVisible_gurax, "EnsureVisible")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, EnsureVisible_gurax, processor_gurax, argument_gurax)
@@ -458,8 +425,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Expand_gurax, "Expand")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, Expand_gurax, processor_gurax, argument_gurax)
@@ -481,8 +446,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, Expand_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxTreeCtrl, ExpandAll_gurax, "ExpandAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, ExpandAll_gurax, processor_gurax, argument_gurax)
@@ -501,8 +464,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ExpandAllChildren_gurax, "ExpandAllChildren
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, ExpandAllChildren_gurax, processor_gurax, argument_gurax)
@@ -527,8 +488,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetBoundingRect_gurax, "GetBoundingRect")
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("textOnly", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetBoundingRect_gurax, processor_gurax, argument_gurax)
@@ -555,8 +514,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetChildrenCount_gurax, "GetChildrenCount")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("recursively", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetChildrenCount_gurax, processor_gurax, argument_gurax)
@@ -579,8 +536,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetChildrenCount_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxTreeCtrl, GetCount_gurax, "GetCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetCount_gurax, processor_gurax, argument_gurax)
@@ -599,8 +554,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetEditControl_gurax, "GetEditControl")
 {
 	Declare(VTYPE_wxTextCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetEditControl_gurax, processor_gurax, argument_gurax)
@@ -619,8 +572,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetFirstVisibleItem_gurax, "GetFirstVisible
 {
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetFirstVisibleItem_gurax, processor_gurax, argument_gurax)
@@ -639,8 +590,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetFocusedItem_gurax, "GetFocusedItem")
 {
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetFocusedItem_gurax, processor_gurax, argument_gurax)
@@ -658,8 +607,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetFocusedItem_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxTreeCtrl, ClearFocusedItem_gurax, "ClearFocusedItem")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, ClearFocusedItem_gurax, processor_gurax, argument_gurax)
@@ -678,8 +625,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetFocusedItem_gurax, "SetFocusedItem")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetFocusedItem_gurax, processor_gurax, argument_gurax)
@@ -702,8 +647,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetImageList_gurax, "GetImageList")
 {
 	Declare(VTYPE_wxImageList, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetImageList_gurax, processor_gurax, argument_gurax)
@@ -721,8 +664,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetImageList_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxTreeCtrl, GetIndent_gurax, "GetIndent")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetIndent_gurax, processor_gurax, argument_gurax)
@@ -740,8 +681,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetIndent_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxTreeCtrl, GetSpacing_gurax, "GetSpacing")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetSpacing_gurax, processor_gurax, argument_gurax)
@@ -761,8 +700,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemBackgroundColour_gurax, "GetItemBack
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetItemBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -785,8 +722,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemData_gurax, "GetItemData")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetItemData_gurax, processor_gurax, argument_gurax)
@@ -811,8 +746,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemFont_gurax, "GetItemFont")
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetItemFont_gurax, processor_gurax, argument_gurax)
@@ -836,8 +769,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemParent_gurax, "GetItemParent")
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetItemParent_gurax, processor_gurax, argument_gurax)
@@ -860,8 +791,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemState_gurax, "GetItemState")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetItemState_gurax, processor_gurax, argument_gurax)
@@ -884,8 +813,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemText_gurax, "GetItemText")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetItemText_gurax, processor_gurax, argument_gurax)
@@ -909,8 +836,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetItemTextColour_gurax, "GetItemTextColour
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetItemTextColour_gurax, processor_gurax, argument_gurax)
@@ -934,8 +859,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetLastChild_gurax, "GetLastChild")
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetLastChild_gurax, processor_gurax, argument_gurax)
@@ -959,8 +882,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetNextSibling_gurax, "GetNextSibling")
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetNextSibling_gurax, processor_gurax, argument_gurax)
@@ -984,8 +905,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetNextVisible_gurax, "GetNextVisible")
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetNextVisible_gurax, processor_gurax, argument_gurax)
@@ -1009,8 +928,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetPrevSibling_gurax, "GetPrevSibling")
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetPrevSibling_gurax, processor_gurax, argument_gurax)
@@ -1034,8 +951,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetPrevVisible_gurax, "GetPrevVisible")
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetPrevVisible_gurax, processor_gurax, argument_gurax)
@@ -1057,8 +972,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetPrevVisible_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxTreeCtrl, GetQuickBestSize_gurax, "GetQuickBestSize")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetQuickBestSize_gurax, processor_gurax, argument_gurax)
@@ -1077,8 +990,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetRootItem_gurax, "GetRootItem")
 {
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetRootItem_gurax, processor_gurax, argument_gurax)
@@ -1097,8 +1008,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -1116,8 +1025,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, GetSelection_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxTreeCtrl, GetSelections_gurax, "GetSelections")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetSelections_gurax, processor_gurax, argument_gurax)
@@ -1141,8 +1048,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, GetStateImageList_gurax, "GetStateImageList
 {
 	Declare(VTYPE_wxImageList, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, GetStateImageList_gurax, processor_gurax, argument_gurax)
@@ -1161,8 +1066,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, HitTest_gurax, "HitTest")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, HitTest_gurax, processor_gurax, argument_gurax)
@@ -1192,8 +1095,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, InsertItem_gurax, "InsertItem")
 	DeclareArg("selImage", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, InsertItem_gurax, processor_gurax, argument_gurax)
@@ -1232,8 +1133,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, IsBold_gurax, "IsBold")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, IsBold_gurax, processor_gurax, argument_gurax)
@@ -1255,8 +1154,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, IsBold_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxTreeCtrl, IsEmpty_gurax, "IsEmpty")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, IsEmpty_gurax, processor_gurax, argument_gurax)
@@ -1275,8 +1172,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, IsExpanded_gurax, "IsExpanded")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, IsExpanded_gurax, processor_gurax, argument_gurax)
@@ -1299,8 +1194,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, IsSelected_gurax, "IsSelected")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, IsSelected_gurax, processor_gurax, argument_gurax)
@@ -1323,8 +1216,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, IsVisible_gurax, "IsVisible")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, IsVisible_gurax, processor_gurax, argument_gurax)
@@ -1347,8 +1238,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ItemHasChildren_gurax, "ItemHasChildren")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, ItemHasChildren_gurax, processor_gurax, argument_gurax)
@@ -1372,8 +1261,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, OnCompareItems_gurax, "OnCompareItems")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("item1", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("item2", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, OnCompareItems_gurax, processor_gurax, argument_gurax)
@@ -1398,8 +1285,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ScrollTo_gurax, "ScrollTo")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, ScrollTo_gurax, processor_gurax, argument_gurax)
@@ -1423,8 +1308,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SelectItem_gurax, "SelectItem")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SelectItem_gurax, processor_gurax, argument_gurax)
@@ -1448,8 +1331,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetImageList_gurax, "SetImageList")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetImageList_gurax, processor_gurax, argument_gurax)
@@ -1472,8 +1353,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetIndent_gurax, "SetIndent")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("indent", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetIndent_gurax, processor_gurax, argument_gurax)
@@ -1495,8 +1374,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetSpacing_gurax, "SetSpacing")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("spacing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetSpacing_gurax, processor_gurax, argument_gurax)
@@ -1519,8 +1396,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemBackgroundColour_gurax, "SetItemBack
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetItemBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -1546,8 +1421,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemBold_gurax, "SetItemBold")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bold", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetItemBold_gurax, processor_gurax, argument_gurax)
@@ -1572,8 +1445,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemDropHighlight_gurax, "SetItemDropHig
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("highlight", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetItemDropHighlight_gurax, processor_gurax, argument_gurax)
@@ -1598,8 +1469,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemFont_gurax, "SetItemFont")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetItemFont_gurax, processor_gurax, argument_gurax)
@@ -1625,8 +1494,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemHasChildren_gurax, "SetItemHasChildr
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hasChildren", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetItemHasChildren_gurax, processor_gurax, argument_gurax)
@@ -1651,8 +1518,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemState_gurax, "SetItemState")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("state", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetItemState_gurax, processor_gurax, argument_gurax)
@@ -1677,8 +1542,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemText_gurax, "SetItemText")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetItemText_gurax, processor_gurax, argument_gurax)
@@ -1703,8 +1566,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetItemTextColour_gurax, "SetItemTextColour
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("col", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetItemTextColour_gurax, processor_gurax, argument_gurax)
@@ -1729,8 +1590,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetQuickBestSize_gurax, "SetQuickBestSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("quickBestSize", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetQuickBestSize_gurax, processor_gurax, argument_gurax)
@@ -1752,8 +1611,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetStateImageList_gurax, "SetStateImageList
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("imageList", VTYPE_wxImageList, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetStateImageList_gurax, processor_gurax, argument_gurax)
@@ -1776,8 +1633,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SetWindowStyle_gurax, "SetWindowStyle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("styles", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SetWindowStyle_gurax, processor_gurax, argument_gurax)
@@ -1799,8 +1654,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SortChildren_gurax, "SortChildren")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SortChildren_gurax, processor_gurax, argument_gurax)
@@ -1823,8 +1676,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, Toggle_gurax, "Toggle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, Toggle_gurax, processor_gurax, argument_gurax)
@@ -1847,8 +1698,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, ToggleItemSelection_gurax, "ToggleItemSelec
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, ToggleItemSelection_gurax, processor_gurax, argument_gurax)
@@ -1870,8 +1719,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, ToggleItemSelection_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxTreeCtrl, Unselect_gurax, "Unselect")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, Unselect_gurax, processor_gurax, argument_gurax)
@@ -1889,8 +1736,6 @@ Gurax_ImplementMethodEx(wxTreeCtrl, Unselect_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxTreeCtrl, UnselectAll_gurax, "UnselectAll")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, UnselectAll_gurax, processor_gurax, argument_gurax)
@@ -1909,8 +1754,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, UnselectItem_gurax, "UnselectItem")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("item", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, UnselectItem_gurax, processor_gurax, argument_gurax)
@@ -1933,8 +1776,6 @@ Gurax_DeclareMethodAlias(wxTreeCtrl, SelectChildren_gurax, "SelectChildren")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("parent", VTYPE_wxTreeItemId, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeCtrl, SelectChildren_gurax, processor_gurax, argument_gurax)
@@ -1964,7 +1805,7 @@ VType_wxTreeCtrl VTYPE_wxTreeCtrl("TreeCtrl");
 void VType_wxTreeCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(TreeCtrl_gurax));
 	// Assignment of method

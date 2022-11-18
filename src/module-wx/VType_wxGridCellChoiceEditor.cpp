@@ -35,9 +35,6 @@ Gurax_DeclareConstructorAlias(GridCellChoiceEditor_gurax, "GridCellChoiceEditor"
 	DeclareArg("choices", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("allowOthers", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.GridCellChoiceEditor.
-)**");
 }
 
 Gurax_ImplementConstructorEx(GridCellChoiceEditor_gurax, processor_gurax, argument_gurax)
@@ -59,8 +56,6 @@ Gurax_DeclareMethodAlias(wxGridCellChoiceEditor, SetParameters_gurax, "SetParame
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("params", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGridCellChoiceEditor, SetParameters_gurax, processor_gurax, argument_gurax)
@@ -89,7 +84,7 @@ VType_wxGridCellChoiceEditor VTYPE_wxGridCellChoiceEditor("GridCellChoiceEditor"
 void VType_wxGridCellChoiceEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellChoiceEditor_gurax));
 	// Assignment of method

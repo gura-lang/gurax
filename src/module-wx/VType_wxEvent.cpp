@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.Event, `en)}
 Gurax_DeclareMethodAlias(wxEvent, GetEventType_gurax, "GetEventType")
 {
 	Declare(VTYPE_wxEventType, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, GetEventType_gurax, processor_gurax, argument_gurax)
@@ -54,8 +52,6 @@ Gurax_ImplementMethodEx(wxEvent, GetEventType_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxEvent, GetEventCategory_gurax, "GetEventCategory")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, GetEventCategory_gurax, processor_gurax, argument_gurax)
@@ -73,8 +69,6 @@ Gurax_ImplementMethodEx(wxEvent, GetEventCategory_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxEvent, GetId_gurax, "GetId")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, GetId_gurax, processor_gurax, argument_gurax)
@@ -92,8 +86,6 @@ Gurax_ImplementMethodEx(wxEvent, GetId_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxEvent, GetEventUserData_gurax, "GetEventUserData")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, GetEventUserData_gurax, processor_gurax, argument_gurax)
@@ -110,8 +102,6 @@ Gurax_ImplementMethodEx(wxEvent, GetEventUserData_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxEvent, GetSkipped_gurax, "GetSkipped")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, GetSkipped_gurax, processor_gurax, argument_gurax)
@@ -129,8 +119,6 @@ Gurax_ImplementMethodEx(wxEvent, GetSkipped_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxEvent, GetTimestamp_gurax, "GetTimestamp")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, GetTimestamp_gurax, processor_gurax, argument_gurax)
@@ -148,8 +136,6 @@ Gurax_ImplementMethodEx(wxEvent, GetTimestamp_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxEvent, IsCommandEvent_gurax, "IsCommandEvent")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, IsCommandEvent_gurax, processor_gurax, argument_gurax)
@@ -168,8 +154,6 @@ Gurax_DeclareMethodAlias(wxEvent, ResumePropagation_gurax, "ResumePropagation")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("propagationLevel", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, ResumePropagation_gurax, processor_gurax, argument_gurax)
@@ -191,8 +175,6 @@ Gurax_DeclareMethodAlias(wxEvent, SetId_gurax, "SetId")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, SetId_gurax, processor_gurax, argument_gurax)
@@ -214,8 +196,6 @@ Gurax_DeclareMethodAlias(wxEvent, SetTimestamp_gurax, "SetTimestamp")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("timeStamp", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, SetTimestamp_gurax, processor_gurax, argument_gurax)
@@ -237,8 +217,6 @@ Gurax_ImplementMethodEx(wxEvent, SetTimestamp_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxEvent, ShouldPropagate_gurax, "ShouldPropagate")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, ShouldPropagate_gurax, processor_gurax, argument_gurax)
@@ -257,8 +235,6 @@ Gurax_DeclareMethodAlias(wxEvent, Skip_gurax, "Skip")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("skip", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, Skip_gurax, processor_gurax, argument_gurax)
@@ -279,8 +255,6 @@ Gurax_ImplementMethodEx(wxEvent, Skip_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxEvent, StopPropagation_gurax, "StopPropagation")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEvent, StopPropagation_gurax, processor_gurax, argument_gurax)
@@ -306,7 +280,7 @@ VType_wxEvent VTYPE_wxEvent("Event");
 void VType_wxEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

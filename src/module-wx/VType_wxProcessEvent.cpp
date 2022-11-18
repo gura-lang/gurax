@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.ProcessEvent, `en)}
 Gurax_DeclareMethodAlias(wxProcessEvent, GetExitCode_gurax, "GetExitCode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxProcessEvent, GetExitCode_gurax, processor_gurax, argument_gurax)
@@ -55,8 +53,6 @@ Gurax_ImplementMethodEx(wxProcessEvent, GetExitCode_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxProcessEvent, GetPid_gurax, "GetPid")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxProcessEvent, GetPid_gurax, processor_gurax, argument_gurax)
@@ -82,7 +78,7 @@ VType_wxProcessEvent VTYPE_wxProcessEvent("ProcessEvent");
 void VType_wxProcessEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

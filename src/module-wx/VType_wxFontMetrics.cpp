@@ -33,9 +33,6 @@ Gurax_DeclareConstructorAlias(FontMetrics_gurax, "FontMetrics")
 {
 	Declare(VTYPE_wxFontMetrics, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.FontMetrics.
-)**");
 }
 
 Gurax_ImplementConstructorEx(FontMetrics_gurax, processor_gurax, argument_gurax)
@@ -186,7 +183,7 @@ VType_wxFontMetrics VTYPE_wxFontMetrics("FontMetrics");
 void VType_wxFontMetrics::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(FontMetrics_gurax));
 	// Assignment of method

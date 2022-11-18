@@ -49,9 +49,6 @@ Gurax_DeclareConstructorAlias(AboutDialogInfo_gurax, "AboutDialogInfo")
 {
 	Declare(VTYPE_wxAboutDialogInfo, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.AboutDialogInfo.
-)**");
 }
 
 Gurax_ImplementConstructorEx(AboutDialogInfo_gurax, processor_gurax, argument_gurax)
@@ -70,6 +67,7 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddArtist_gurax, "AddArtist")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("artist", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
+Adds an artist name to be shown in the program credits.
 )**");
 }
 
@@ -93,6 +91,7 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddDeveloper_gurax, "AddDeveloper")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("developer", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
+Adds a developer name to be shown in the program credits.
 )**");
 }
 
@@ -116,6 +115,7 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddDocWriter_gurax, "AddDocWriter")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("docwriter", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
+Adds a documentation writer name to be shown in the program credits.
 )**");
 }
 
@@ -138,8 +138,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, AddTranslator_gurax, "AddTranslator"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("translator", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, AddTranslator_gurax, processor_gurax, argument_gurax)
@@ -160,8 +158,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, AddTranslator_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetName_gurax, "GetName")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, GetName_gurax, processor_gurax, argument_gurax)
@@ -179,8 +175,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetName_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasDescription_gurax, "HasDescription")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, HasDescription_gurax, processor_gurax, argument_gurax)
@@ -198,8 +192,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, HasDescription_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetDescription_gurax, "GetDescription")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, GetDescription_gurax, processor_gurax, argument_gurax)
@@ -217,8 +209,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetDescription_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasCopyright_gurax, "HasCopyright")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, HasCopyright_gurax, processor_gurax, argument_gurax)
@@ -236,8 +226,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, HasCopyright_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetCopyright_gurax, "GetCopyright")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, GetCopyright_gurax, processor_gurax, argument_gurax)
@@ -256,8 +244,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetArtists_gurax, "SetArtists")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("artists", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetArtists_gurax, processor_gurax, argument_gurax)
@@ -279,8 +265,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetCopyright_gurax, "SetCopyright")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("copyright", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetCopyright_gurax, processor_gurax, argument_gurax)
@@ -302,8 +286,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetDescription_gurax, "SetDescriptio
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("desc", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetDescription_gurax, processor_gurax, argument_gurax)
@@ -325,8 +307,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetDevelopers_gurax, "SetDevelopers"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("developers", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetDevelopers_gurax, processor_gurax, argument_gurax)
@@ -348,8 +328,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetDocWriters_gurax, "SetDocWriters"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("docwriters", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetDocWriters_gurax, processor_gurax, argument_gurax)
@@ -370,8 +348,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetDocWriters_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasIcon_gurax, "HasIcon")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, HasIcon_gurax, processor_gurax, argument_gurax)
@@ -390,8 +366,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetIcon_gurax, "GetIcon")
 {
 	Declare(VTYPE_wxIcon, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, GetIcon_gurax, processor_gurax, argument_gurax)
@@ -410,8 +384,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetIcon_gurax, "SetIcon")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icon", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetIcon_gurax, processor_gurax, argument_gurax)
@@ -433,8 +405,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetIcon_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasLicence_gurax, "HasLicence")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, HasLicence_gurax, processor_gurax, argument_gurax)
@@ -452,8 +422,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, HasLicence_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetLicence_gurax, "GetLicence")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, GetLicence_gurax, processor_gurax, argument_gurax)
@@ -472,8 +440,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetLicence_gurax, "SetLicence")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("licence", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetLicence_gurax, processor_gurax, argument_gurax)
@@ -495,8 +461,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetLicense_gurax, "SetLicense")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("licence", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetLicense_gurax, processor_gurax, argument_gurax)
@@ -518,8 +482,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetName_gurax, "SetName")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetName_gurax, processor_gurax, argument_gurax)
@@ -541,8 +503,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetTranslators_gurax, "SetTranslator
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("translators", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetTranslators_gurax, processor_gurax, argument_gurax)
@@ -565,8 +525,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetVersion_gurax, "SetVersion")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("version", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("longVersion", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetVersion_gurax, processor_gurax, argument_gurax)
@@ -588,8 +546,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetVersion_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetVersion_gurax, "GetVersion")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, GetVersion_gurax, processor_gurax, argument_gurax)
@@ -607,8 +563,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetVersion_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetLongVersion_gurax, "GetLongVersion")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, GetLongVersion_gurax, processor_gurax, argument_gurax)
@@ -626,8 +580,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetLongVersion_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasWebSite_gurax, "HasWebSite")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, HasWebSite_gurax, processor_gurax, argument_gurax)
@@ -645,8 +597,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, HasWebSite_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetWebSiteURL_gurax, "GetWebSiteURL")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, GetWebSiteURL_gurax, processor_gurax, argument_gurax)
@@ -664,8 +614,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, GetWebSiteURL_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, GetWebSiteDescription_gurax, "GetWebSiteDescription")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, GetWebSiteDescription_gurax, processor_gurax, argument_gurax)
@@ -685,8 +633,6 @@ Gurax_DeclareMethodAlias(wxAboutDialogInfo, SetWebSite_gurax, "SetWebSite")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("url", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("desc", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, SetWebSite_gurax, processor_gurax, argument_gurax)
@@ -708,8 +654,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, SetWebSite_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasDevelopers_gurax, "HasDevelopers")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, HasDevelopers_gurax, processor_gurax, argument_gurax)
@@ -727,8 +671,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, HasDevelopers_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasDocWriters_gurax, "HasDocWriters")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, HasDocWriters_gurax, processor_gurax, argument_gurax)
@@ -746,8 +688,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, HasDocWriters_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasArtists_gurax, "HasArtists")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, HasArtists_gurax, processor_gurax, argument_gurax)
@@ -765,8 +705,6 @@ Gurax_ImplementMethodEx(wxAboutDialogInfo, HasArtists_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxAboutDialogInfo, HasTranslators_gurax, "HasTranslators")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAboutDialogInfo, HasTranslators_gurax, processor_gurax, argument_gurax)
@@ -792,8 +730,8 @@ VType_wxAboutDialogInfo VTYPE_wxAboutDialogInfo("AboutDialogInfo");
 void VType_wxAboutDialogInfo::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
-	AddHelp("ja", g_docHelp_ja);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AboutDialogInfo_gurax));
 	// Assignment of method

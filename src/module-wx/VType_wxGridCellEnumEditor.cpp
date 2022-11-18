@@ -34,9 +34,6 @@ Gurax_DeclareConstructorAlias(GridCellEnumEditor_gurax, "GridCellEnumEditor")
 	Declare(VTYPE_wxGridCellEnumEditor, Flag::None);
 	DeclareArg("choices", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.GridCellEnumEditor.
-)**");
 }
 
 Gurax_ImplementConstructorEx(GridCellEnumEditor_gurax, processor_gurax, argument_gurax)
@@ -65,7 +62,7 @@ VType_wxGridCellEnumEditor VTYPE_wxGridCellEnumEditor("GridCellEnumEditor");
 void VType_wxGridCellEnumEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellChoiceEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellEnumEditor_gurax));
 	// Assignment of method

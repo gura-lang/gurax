@@ -35,9 +35,6 @@ Gurax_DeclareConstructorAlias(StatusBarPane_gurax, "StatusBarPane")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.StatusBarPane.
-)**");
 }
 
 Gurax_ImplementConstructorEx(StatusBarPane_gurax, processor_gurax, argument_gurax)
@@ -60,8 +57,6 @@ Gurax_ImplementConstructorEx(StatusBarPane_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxStatusBarPane, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBarPane, GetWidth_gurax, processor_gurax, argument_gurax)
@@ -79,8 +74,6 @@ Gurax_ImplementMethodEx(wxStatusBarPane, GetWidth_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxStatusBarPane, GetStyle_gurax, "GetStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBarPane, GetStyle_gurax, processor_gurax, argument_gurax)
@@ -98,8 +91,6 @@ Gurax_ImplementMethodEx(wxStatusBarPane, GetStyle_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxStatusBarPane, GetText_gurax, "GetText")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxStatusBarPane, GetText_gurax, processor_gurax, argument_gurax)
@@ -125,7 +116,7 @@ VType_wxStatusBarPane VTYPE_wxStatusBarPane("StatusBarPane");
 void VType_wxStatusBarPane::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(StatusBarPane_gurax));
 	// Assignment of method

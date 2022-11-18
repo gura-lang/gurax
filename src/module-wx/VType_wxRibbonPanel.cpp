@@ -45,7 +45,7 @@ VType_wxRibbonPanel VTYPE_wxRibbonPanel("RibbonPanel");
 void VType_wxRibbonPanel::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxRibbonControl, Flag::Mutable);
 	// Assignment of method

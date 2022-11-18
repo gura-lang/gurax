@@ -33,9 +33,6 @@ Gurax_DeclareConstructorAlias(Bitmap_gurax, "Bitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Bitmap.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Bitmap_gurax, processor_gurax, argument_gurax)
@@ -53,8 +50,6 @@ Gurax_DeclareMethodAlias(wxBitmap, ConvertToImage_gurax, "ConvertToImage")
 {
 	Declare(VTYPE_wxImage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, ConvertToImage_gurax, processor_gurax, argument_gurax)
@@ -73,8 +68,6 @@ Gurax_DeclareMethodAlias(wxBitmap, CopyFromIcon_gurax, "CopyFromIcon")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("icon", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, CopyFromIcon_gurax, processor_gurax, argument_gurax)
@@ -99,8 +92,6 @@ Gurax_DeclareMethodAlias(wxBitmap, Create_gurax, "Create")
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, Create_gurax, processor_gurax, argument_gurax)
@@ -124,8 +115,6 @@ Gurax_ImplementMethodEx(wxBitmap, Create_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxBitmap, GetDepth_gurax, "GetDepth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, GetDepth_gurax, processor_gurax, argument_gurax)
@@ -143,8 +132,6 @@ Gurax_ImplementMethodEx(wxBitmap, GetDepth_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxBitmap, GetHeight_gurax, "GetHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, GetHeight_gurax, processor_gurax, argument_gurax)
@@ -163,8 +150,6 @@ Gurax_DeclareMethodAlias(wxBitmap, GetMask_gurax, "GetMask")
 {
 	Declare(VTYPE_wxMask, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, GetMask_gurax, processor_gurax, argument_gurax)
@@ -183,8 +168,6 @@ Gurax_DeclareMethodAlias(wxBitmap, GetPalette_gurax, "GetPalette")
 {
 	Declare(VTYPE_wxPalette, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, GetPalette_gurax, processor_gurax, argument_gurax)
@@ -204,8 +187,6 @@ Gurax_DeclareMethodAlias(wxBitmap, GetSubBitmap_gurax, "GetSubBitmap")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, GetSubBitmap_gurax, processor_gurax, argument_gurax)
@@ -228,8 +209,6 @@ Gurax_DeclareMethodAlias(wxBitmap, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, GetSize_gurax, processor_gurax, argument_gurax)
@@ -249,8 +228,6 @@ Gurax_DeclareMethodAlias(wxBitmap, ConvertToDisabled_gurax, "ConvertToDisabled")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("brightness", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, ConvertToDisabled_gurax, processor_gurax, argument_gurax)
@@ -272,8 +249,6 @@ Gurax_ImplementMethodEx(wxBitmap, ConvertToDisabled_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxBitmap, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, GetWidth_gurax, processor_gurax, argument_gurax)
@@ -291,8 +266,6 @@ Gurax_ImplementMethodEx(wxBitmap, GetWidth_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxBitmap, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, IsOk_gurax, processor_gurax, argument_gurax)
@@ -312,8 +285,6 @@ Gurax_DeclareMethodAlias(wxBitmap, LoadFile_gurax, "LoadFile")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, LoadFile_gurax, processor_gurax, argument_gurax)
@@ -339,8 +310,6 @@ Gurax_DeclareMethodAlias(wxBitmap, SaveFile_gurax, "SaveFile")
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("palette", VTYPE_wxPalette, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, SaveFile_gurax, processor_gurax, argument_gurax)
@@ -364,8 +333,6 @@ Gurax_DeclareMethodAlias(wxBitmap, SetDepth_gurax, "SetDepth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("depth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, SetDepth_gurax, processor_gurax, argument_gurax)
@@ -387,8 +354,6 @@ Gurax_DeclareMethodAlias(wxBitmap, SetHeight_gurax, "SetHeight")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, SetHeight_gurax, processor_gurax, argument_gurax)
@@ -410,8 +375,6 @@ Gurax_DeclareMethodAlias(wxBitmap, SetMask_gurax, "SetMask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mask", VTYPE_wxMask, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, SetMask_gurax, processor_gurax, argument_gurax)
@@ -434,8 +397,6 @@ Gurax_DeclareMethodAlias(wxBitmap, SetPalette_gurax, "SetPalette")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("palette", VTYPE_wxPalette, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, SetPalette_gurax, processor_gurax, argument_gurax)
@@ -458,8 +419,6 @@ Gurax_DeclareMethodAlias(wxBitmap, SetWidth_gurax, "SetWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmap, SetWidth_gurax, processor_gurax, argument_gurax)
@@ -481,8 +440,6 @@ Gurax_DeclareClassMethodAlias(wxBitmap, AddHandler_gurax, "AddHandler")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxGDIImageHandler, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxBitmap, AddHandler_gurax, processor_gurax, argument_gurax)
@@ -500,8 +457,6 @@ Gurax_ImplementClassMethodEx(wxBitmap, AddHandler_gurax, processor_gurax, argume
 Gurax_DeclareClassMethodAlias(wxBitmap, CleanUpHandlers_gurax, "CleanUpHandlers")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxBitmap, CleanUpHandlers_gurax, processor_gurax, argument_gurax)
@@ -516,8 +471,6 @@ Gurax_DeclareClassMethodAlias(wxBitmap, FindHandler_gurax, "FindHandler")
 {
 	Declare(VTYPE_wxGDIImageHandler, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxBitmap, FindHandler_gurax, processor_gurax, argument_gurax)
@@ -534,8 +487,6 @@ Gurax_ImplementClassMethodEx(wxBitmap, FindHandler_gurax, processor_gurax, argum
 Gurax_DeclareClassMethodAlias(wxBitmap, InitStandardHandlers_gurax, "InitStandardHandlers")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxBitmap, InitStandardHandlers_gurax, processor_gurax, argument_gurax)
@@ -550,8 +501,6 @@ Gurax_DeclareClassMethodAlias(wxBitmap, InsertHandler_gurax, "InsertHandler")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("handler", VTYPE_wxGDIImageHandler, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxBitmap, InsertHandler_gurax, processor_gurax, argument_gurax)
@@ -570,8 +519,6 @@ Gurax_DeclareClassMethodAlias(wxBitmap, NewFrom_gurax, "NewFrom")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("image", VTYPE_Image, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxBitmap, NewFrom_gurax, processor_gurax, argument_gurax)
@@ -589,8 +536,6 @@ Gurax_DeclareClassMethodAlias(wxBitmap, NewFromPNGData_gurax, "NewFromPNGData")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxBitmap, NewFromPNGData_gurax, processor_gurax, argument_gurax)
@@ -610,8 +555,6 @@ Gurax_DeclareClassMethodAlias(wxBitmap, RemoveHandler_gurax, "RemoveHandler")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxBitmap, RemoveHandler_gurax, processor_gurax, argument_gurax)
@@ -636,7 +579,7 @@ VType_wxBitmap VTYPE_wxBitmap("Bitmap");
 void VType_wxBitmap::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Bitmap_gurax));
 	// Assignment of method

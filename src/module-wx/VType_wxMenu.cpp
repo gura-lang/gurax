@@ -33,9 +33,6 @@ Gurax_DeclareConstructorAlias(Menu_gurax, "Menu")
 {
 	Declare(VTYPE_wxMenu, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Menu.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Menu_gurax, processor_gurax, argument_gurax)
@@ -59,8 +56,6 @@ Gurax_DeclareMethodAlias(wxMenu, Append_gurax, "Append")
 	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("kind", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Append_gurax, processor_gurax, argument_gurax)
@@ -89,8 +84,6 @@ Gurax_DeclareMethodAlias(wxMenu, AppendCheckItem_gurax, "AppendCheckItem")
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("help", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, AppendCheckItem_gurax, processor_gurax, argument_gurax)
@@ -117,8 +110,6 @@ Gurax_DeclareMethodAlias(wxMenu, AppendRadioItem_gurax, "AppendRadioItem")
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("help", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, AppendRadioItem_gurax, processor_gurax, argument_gurax)
@@ -142,8 +133,6 @@ Gurax_DeclareMethodAlias(wxMenu, AppendSeparator_gurax, "AppendSeparator")
 {
 	Declare(VTYPE_wxMenuItem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, AppendSeparator_gurax, processor_gurax, argument_gurax)
@@ -165,8 +154,6 @@ Gurax_DeclareMethodAlias(wxMenu, AppendSubMenu_gurax, "AppendSubMenu")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("help", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, AppendSubMenu_gurax, processor_gurax, argument_gurax)
@@ -190,8 +177,6 @@ Gurax_ImplementMethodEx(wxMenu, AppendSubMenu_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxMenu, Break_gurax, "Break")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Break_gurax, processor_gurax, argument_gurax)
@@ -211,8 +196,6 @@ Gurax_DeclareMethodAlias(wxMenu, Check_gurax, "Check")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("check", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Check_gurax, processor_gurax, argument_gurax)
@@ -235,8 +218,6 @@ Gurax_DeclareMethodAlias(wxMenu, Delete_gurax, "Delete")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Delete_gurax, processor_gurax, argument_gurax)
@@ -258,8 +239,6 @@ Gurax_DeclareMethodAlias(wxMenu, Destroy_gurax, "Destroy")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Destroy_gurax, processor_gurax, argument_gurax)
@@ -282,8 +261,6 @@ Gurax_DeclareMethodAlias(wxMenu, Enable_gurax, "Enable")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Enable_gurax, processor_gurax, argument_gurax)
@@ -306,8 +283,6 @@ Gurax_DeclareMethodAlias(wxMenu, FindItem_gurax, "FindItem")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("itemString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, FindItem_gurax, processor_gurax, argument_gurax)
@@ -330,8 +305,6 @@ Gurax_DeclareMethodAlias(wxMenu, FindItemByPosition_gurax, "FindItemByPosition")
 	Declare(VTYPE_wxMenuItem, Flag::None);
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, FindItemByPosition_gurax, processor_gurax, argument_gurax)
@@ -353,8 +326,6 @@ Gurax_DeclareMethodAlias(wxMenu, GetHelpString_gurax, "GetHelpString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, GetHelpString_gurax, processor_gurax, argument_gurax)
@@ -376,8 +347,6 @@ Gurax_DeclareMethodAlias(wxMenu, GetLabel_gurax, "GetLabel")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, GetLabel_gurax, processor_gurax, argument_gurax)
@@ -399,8 +368,6 @@ Gurax_DeclareMethodAlias(wxMenu, GetLabelText_gurax, "GetLabelText")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, GetLabelText_gurax, processor_gurax, argument_gurax)
@@ -421,8 +388,6 @@ Gurax_ImplementMethodEx(wxMenu, GetLabelText_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxMenu, GetMenuItemCount_gurax, "GetMenuItemCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, GetMenuItemCount_gurax, processor_gurax, argument_gurax)
@@ -440,8 +405,6 @@ Gurax_ImplementMethodEx(wxMenu, GetMenuItemCount_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxMenu, GetTitle_gurax, "GetTitle")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, GetTitle_gurax, processor_gurax, argument_gurax)
@@ -462,8 +425,6 @@ Gurax_DeclareMethodAlias(wxMenu, Insert_gurax, "Insert")
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("menuItem", VTYPE_wxMenuItem, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Insert_gurax, processor_gurax, argument_gurax)
@@ -491,8 +452,6 @@ Gurax_DeclareMethodAlias(wxMenu, InsertCheckItem_gurax, "InsertCheckItem")
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, InsertCheckItem_gurax, processor_gurax, argument_gurax)
@@ -521,8 +480,6 @@ Gurax_DeclareMethodAlias(wxMenu, InsertRadioItem_gurax, "InsertRadioItem")
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, InsertRadioItem_gurax, processor_gurax, argument_gurax)
@@ -548,8 +505,6 @@ Gurax_DeclareMethodAlias(wxMenu, InsertSeparator_gurax, "InsertSeparator")
 	Declare(VTYPE_wxMenuItem, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, InsertSeparator_gurax, processor_gurax, argument_gurax)
@@ -571,8 +526,6 @@ Gurax_DeclareMethodAlias(wxMenu, IsChecked_gurax, "IsChecked")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, IsChecked_gurax, processor_gurax, argument_gurax)
@@ -594,8 +547,6 @@ Gurax_DeclareMethodAlias(wxMenu, IsEnabled_gurax, "IsEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, IsEnabled_gurax, processor_gurax, argument_gurax)
@@ -618,8 +569,6 @@ Gurax_DeclareMethodAlias(wxMenu, Prepend_gurax, "Prepend")
 	Declare(VTYPE_wxMenuItem, Flag::None);
 	DeclareArg("item", VTYPE_wxMenuItem, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Prepend_gurax, processor_gurax, argument_gurax)
@@ -645,8 +594,6 @@ Gurax_DeclareMethodAlias(wxMenu, PrependCheckItem_gurax, "PrependCheckItem")
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, PrependCheckItem_gurax, processor_gurax, argument_gurax)
@@ -673,8 +620,6 @@ Gurax_DeclareMethodAlias(wxMenu, PrependRadioItem_gurax, "PrependRadioItem")
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, PrependRadioItem_gurax, processor_gurax, argument_gurax)
@@ -698,8 +643,6 @@ Gurax_DeclareMethodAlias(wxMenu, PrependSeparator_gurax, "PrependSeparator")
 {
 	Declare(VTYPE_wxMenuItem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, PrependSeparator_gurax, processor_gurax, argument_gurax)
@@ -719,8 +662,6 @@ Gurax_DeclareMethodAlias(wxMenu, Remove_gurax, "Remove")
 	Declare(VTYPE_wxMenuItem, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Remove_gurax, processor_gurax, argument_gurax)
@@ -743,8 +684,6 @@ Gurax_DeclareMethodAlias(wxMenu, SetHelpString_gurax, "SetHelpString")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("helpString", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, SetHelpString_gurax, processor_gurax, argument_gurax)
@@ -768,8 +707,6 @@ Gurax_DeclareMethodAlias(wxMenu, SetLabel_gurax, "SetLabel")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, SetLabel_gurax, processor_gurax, argument_gurax)
@@ -792,8 +729,6 @@ Gurax_DeclareMethodAlias(wxMenu, SetTitle_gurax, "SetTitle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, SetTitle_gurax, processor_gurax, argument_gurax)
@@ -815,8 +750,6 @@ Gurax_DeclareMethodAlias(wxMenu, UpdateUI_gurax, "UpdateUI")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("source", VTYPE_wxEvtHandler, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, UpdateUI_gurax, processor_gurax, argument_gurax)
@@ -838,8 +771,6 @@ Gurax_DeclareMethodAlias(wxMenu, SetInvokingWindow_gurax, "SetInvokingWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, SetInvokingWindow_gurax, processor_gurax, argument_gurax)
@@ -862,8 +793,6 @@ Gurax_DeclareMethodAlias(wxMenu, GetInvokingWindow_gurax, "GetInvokingWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, GetInvokingWindow_gurax, processor_gurax, argument_gurax)
@@ -882,8 +811,6 @@ Gurax_DeclareMethodAlias(wxMenu, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, GetWindow_gurax, processor_gurax, argument_gurax)
@@ -901,8 +828,6 @@ Gurax_ImplementMethodEx(wxMenu, GetWindow_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxMenu, GetStyle_gurax, "GetStyle")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, GetStyle_gurax, processor_gurax, argument_gurax)
@@ -921,8 +846,6 @@ Gurax_DeclareMethodAlias(wxMenu, SetParent_gurax, "SetParent")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("parent", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, SetParent_gurax, processor_gurax, argument_gurax)
@@ -945,8 +868,6 @@ Gurax_DeclareMethodAlias(wxMenu, GetParent_gurax, "GetParent")
 {
 	Declare(VTYPE_wxMenu, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, GetParent_gurax, processor_gurax, argument_gurax)
@@ -965,8 +886,6 @@ Gurax_DeclareMethodAlias(wxMenu, Attach_gurax, "Attach")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("menubar", VTYPE_wxMenuBar, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Attach_gurax, processor_gurax, argument_gurax)
@@ -988,8 +907,6 @@ Gurax_ImplementMethodEx(wxMenu, Attach_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxMenu, Detach_gurax, "Detach")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, Detach_gurax, processor_gurax, argument_gurax)
@@ -1007,8 +924,6 @@ Gurax_ImplementMethodEx(wxMenu, Detach_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxMenu, IsAttached_gurax, "IsAttached")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxMenu, IsAttached_gurax, processor_gurax, argument_gurax)
@@ -1034,7 +949,7 @@ VType_wxMenu VTYPE_wxMenu("Menu");
 void VType_wxMenu::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Menu_gurax));
 	// Assignment of method

@@ -40,9 +40,6 @@ Gurax_DeclareConstructorAlias(TopLevelWindow_gurax, "TopLevelWindow")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.TopLevelWindow.
-)**");
 }
 
 Gurax_ImplementConstructorEx(TopLevelWindow_gurax, processor_gurax, argument_gurax)
@@ -71,8 +68,6 @@ Gurax_ImplementConstructorEx(TopLevelWindow_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxTopLevelWindow, CanSetTransparent_gurax, "CanSetTransparent")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, CanSetTransparent_gurax, processor_gurax, argument_gurax)
@@ -91,8 +86,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, CenterOnScreen_gurax, "CenterOnScreen
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, CenterOnScreen_gurax, processor_gurax, argument_gurax)
@@ -115,8 +108,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, CentreOnScreen_gurax, "CentreOnScreen
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, CentreOnScreen_gurax, processor_gurax, argument_gurax)
@@ -139,8 +130,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, EnableCloseButton_gurax, "EnableClose
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, EnableCloseButton_gurax, processor_gurax, argument_gurax)
@@ -162,8 +151,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, GetDefaultItem_gurax, "GetDefaultItem
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, GetDefaultItem_gurax, processor_gurax, argument_gurax)
@@ -182,8 +169,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, GetIcon_gurax, "GetIcon")
 {
 	Declare(VTYPE_wxIcon, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, GetIcon_gurax, processor_gurax, argument_gurax)
@@ -202,8 +187,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, GetIcons_gurax, "GetIcons")
 {
 	Declare(VTYPE_wxIconBundle, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, GetIcons_gurax, processor_gurax, argument_gurax)
@@ -221,8 +204,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, GetIcons_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxTopLevelWindow, GetTitle_gurax, "GetTitle")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, GetTitle_gurax, processor_gurax, argument_gurax)
@@ -241,8 +222,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, Iconize_gurax, "Iconize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("iconize", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, Iconize_gurax, processor_gurax, argument_gurax)
@@ -263,8 +242,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, Iconize_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxTopLevelWindow, IsActive_gurax, "IsActive")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, IsActive_gurax, processor_gurax, argument_gurax)
@@ -282,8 +259,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, IsActive_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxTopLevelWindow, IsAlwaysMaximized_gurax, "IsAlwaysMaximized")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, IsAlwaysMaximized_gurax, processor_gurax, argument_gurax)
@@ -301,8 +276,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, IsAlwaysMaximized_gurax, processor_gur
 Gurax_DeclareMethodAlias(wxTopLevelWindow, IsFullScreen_gurax, "IsFullScreen")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, IsFullScreen_gurax, processor_gurax, argument_gurax)
@@ -320,8 +293,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, IsFullScreen_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxTopLevelWindow, IsIconized_gurax, "IsIconized")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, IsIconized_gurax, processor_gurax, argument_gurax)
@@ -339,8 +310,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, IsIconized_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxTopLevelWindow, IsMaximized_gurax, "IsMaximized")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, IsMaximized_gurax, processor_gurax, argument_gurax)
@@ -358,8 +327,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, IsMaximized_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxTopLevelWindow, Layout_gurax, "Layout")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, Layout_gurax, processor_gurax, argument_gurax)
@@ -378,8 +345,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, Maximize_gurax, "Maximize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("maximize", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, Maximize_gurax, processor_gurax, argument_gurax)
@@ -401,8 +366,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, MSWGetSystemMenu_gurax, "MSWGetSystem
 {
 	Declare(VTYPE_wxMenu, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, MSWGetSystemMenu_gurax, processor_gurax, argument_gurax)
@@ -421,8 +384,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, RequestUserAttention_gurax, "RequestU
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, RequestUserAttention_gurax, processor_gurax, argument_gurax)
@@ -444,8 +405,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, RequestUserAttention_gurax, processor_
 Gurax_DeclareMethodAlias(wxTopLevelWindow, Restore_gurax, "Restore")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, Restore_gurax, processor_gurax, argument_gurax)
@@ -465,8 +424,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetDefaultItem_gurax, "SetDefaultItem
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetDefaultItem_gurax, processor_gurax, argument_gurax)
@@ -490,8 +447,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetTmpDefaultItem_gurax, "SetTmpDefau
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareArg("win", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetTmpDefaultItem_gurax, processor_gurax, argument_gurax)
@@ -514,8 +469,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, GetTmpDefaultItem_gurax, "GetTmpDefau
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, GetTmpDefaultItem_gurax, processor_gurax, argument_gurax)
@@ -534,8 +487,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetIcon_gurax, "SetIcon")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icon", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetIcon_gurax, processor_gurax, argument_gurax)
@@ -558,8 +509,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetIcons_gurax, "SetIcons")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("icons", VTYPE_wxIconBundle, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetIcons_gurax, processor_gurax, argument_gurax)
@@ -582,8 +531,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetMaxSize_gurax, "SetMaxSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetMaxSize_gurax, processor_gurax, argument_gurax)
@@ -606,8 +553,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetMinSize_gurax, "SetMinSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetMinSize_gurax, processor_gurax, argument_gurax)
@@ -635,8 +580,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetSizeHints_gurax, "SetSizeHints")
 	DeclareArg("maxH", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("incW", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("incH", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetSizeHints_gurax, processor_gurax, argument_gurax)
@@ -667,8 +610,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetTitle_gurax, "SetTitle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetTitle_gurax, processor_gurax, argument_gurax)
@@ -690,8 +631,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetTransparent_gurax, "SetTransparent
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("alpha", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetTransparent_gurax, processor_gurax, argument_gurax)
@@ -712,8 +651,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, SetTransparent_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxTopLevelWindow, ShouldPreventAppExit_gurax, "ShouldPreventAppExit")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, ShouldPreventAppExit_gurax, processor_gurax, argument_gurax)
@@ -732,8 +669,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, OSXSetModified_gurax, "OSXSetModified
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("modified", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, OSXSetModified_gurax, processor_gurax, argument_gurax)
@@ -754,8 +689,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, OSXSetModified_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxTopLevelWindow, OSXIsModified_gurax, "OSXIsModified")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, OSXIsModified_gurax, processor_gurax, argument_gurax)
@@ -774,8 +707,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, SetRepresentedFilename_gurax, "SetRep
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, SetRepresentedFilename_gurax, processor_gurax, argument_gurax)
@@ -796,8 +727,6 @@ Gurax_ImplementMethodEx(wxTopLevelWindow, SetRepresentedFilename_gurax, processo
 Gurax_DeclareMethodAlias(wxTopLevelWindow, ShowWithoutActivating_gurax, "ShowWithoutActivating")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, ShowWithoutActivating_gurax, processor_gurax, argument_gurax)
@@ -817,8 +746,6 @@ Gurax_DeclareMethodAlias(wxTopLevelWindow, ShowFullScreen_gurax, "ShowFullScreen
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTopLevelWindow, ShowFullScreen_gurax, processor_gurax, argument_gurax)
@@ -849,7 +776,7 @@ VType_wxTopLevelWindow VTYPE_wxTopLevelWindow("TopLevelWindow");
 void VType_wxTopLevelWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNonOwnedWindow, Flag::Mutable, Gurax_CreateConstructor(TopLevelWindow_gurax));
 	// Assignment of method

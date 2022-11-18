@@ -43,9 +43,6 @@ Gurax_DeclareConstructorAlias(FilePickerCtrl_gurax, "FilePickerCtrl")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.FilePickerCtrl.
-)**");
 }
 
 Gurax_ImplementConstructorEx(FilePickerCtrl_gurax, processor_gurax, argument_gurax)
@@ -88,8 +85,6 @@ Gurax_DeclareMethodAlias(wxFilePickerCtrl, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFilePickerCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -122,8 +117,6 @@ Gurax_DeclareMethodAlias(wxFilePickerCtrl, GetFileName_gurax, "GetFileName")
 {
 	Declare(VTYPE_wxFileName, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFilePickerCtrl, GetFileName_gurax, processor_gurax, argument_gurax)
@@ -141,8 +134,6 @@ Gurax_ImplementMethodEx(wxFilePickerCtrl, GetFileName_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxFilePickerCtrl, GetPath_gurax, "GetPath")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFilePickerCtrl, GetPath_gurax, processor_gurax, argument_gurax)
@@ -161,8 +152,6 @@ Gurax_DeclareMethodAlias(wxFilePickerCtrl, SetFileName_gurax, "SetFileName")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("filename", VTYPE_wxFileName, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFilePickerCtrl, SetFileName_gurax, processor_gurax, argument_gurax)
@@ -185,8 +174,6 @@ Gurax_DeclareMethodAlias(wxFilePickerCtrl, SetInitialDirectory_gurax, "SetInitia
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dir", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFilePickerCtrl, SetInitialDirectory_gurax, processor_gurax, argument_gurax)
@@ -208,8 +195,6 @@ Gurax_DeclareMethodAlias(wxFilePickerCtrl, SetPath_gurax, "SetPath")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("filename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFilePickerCtrl, SetPath_gurax, processor_gurax, argument_gurax)
@@ -238,7 +223,7 @@ VType_wxFilePickerCtrl VTYPE_wxFilePickerCtrl("FilePickerCtrl");
 void VType_wxFilePickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(FilePickerCtrl_gurax));
 	// Assignment of method

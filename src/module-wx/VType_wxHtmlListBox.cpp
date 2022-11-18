@@ -37,8 +37,6 @@ Gurax_DeclareMethodAlias(wxHtmlListBox, GetFileSystem_gurax, "GetFileSystem")
 {
 	Declare(VTYPE_wxFileSystem, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlListBox, GetFileSystem_gurax, processor_gurax, argument_gurax)
@@ -64,7 +62,7 @@ VType_wxHtmlListBox VTYPE_wxHtmlListBox("HtmlListBox");
 void VType_wxHtmlListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxVListBox, Flag::Mutable);
 	// Assignment of method

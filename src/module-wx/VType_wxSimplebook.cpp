@@ -39,9 +39,6 @@ Gurax_DeclareConstructorAlias(Simplebook_gurax, "Simplebook")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Simplebook.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Simplebook_gurax, processor_gurax, argument_gurax)
@@ -72,8 +69,6 @@ Gurax_DeclareMethodAlias(wxSimplebook, SetEffects_gurax, "SetEffects")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("showEffect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hideEffect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSimplebook, SetEffects_gurax, processor_gurax, argument_gurax)
@@ -96,8 +91,6 @@ Gurax_DeclareMethodAlias(wxSimplebook, SetEffect_gurax, "SetEffect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("effect", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSimplebook, SetEffect_gurax, processor_gurax, argument_gurax)
@@ -120,8 +113,6 @@ Gurax_DeclareMethodAlias(wxSimplebook, SetEffectsTimeouts_gurax, "SetEffectsTime
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("showTimeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("hideTimeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSimplebook, SetEffectsTimeouts_gurax, processor_gurax, argument_gurax)
@@ -144,8 +135,6 @@ Gurax_DeclareMethodAlias(wxSimplebook, SetEffectTimeout_gurax, "SetEffectTimeout
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("timeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSimplebook, SetEffectTimeout_gurax, processor_gurax, argument_gurax)
@@ -167,8 +156,6 @@ Gurax_DeclareMethodAlias(wxSimplebook, ShowNewPage_gurax, "ShowNewPage")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSimplebook, ShowNewPage_gurax, processor_gurax, argument_gurax)
@@ -198,7 +185,7 @@ VType_wxSimplebook VTYPE_wxSimplebook("Simplebook");
 void VType_wxSimplebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Simplebook_gurax));
 	// Assignment of method

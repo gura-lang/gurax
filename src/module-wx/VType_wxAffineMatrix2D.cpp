@@ -45,7 +45,7 @@ VType_wxAffineMatrix2D VTYPE_wxAffineMatrix2D("AffineMatrix2D");
 void VType_wxAffineMatrix2D::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

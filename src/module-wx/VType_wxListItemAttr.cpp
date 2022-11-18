@@ -34,9 +34,6 @@ Gurax_DeclareConstructorAlias(ListItemAttr_gurax, "ListItemAttr")
 	Declare(VTYPE_wxListItemAttr, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.ListItemAttr.
-)**");
 }
 
 Gurax_ImplementConstructorEx(ListItemAttr_gurax, processor_gurax, argument_gurax)
@@ -78,8 +75,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, GetBackgroundColour_gurax, "GetBackgrou
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListItemAttr, GetBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -98,8 +93,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, GetFont_gurax, "GetFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListItemAttr, GetFont_gurax, processor_gurax, argument_gurax)
@@ -118,8 +111,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, GetTextColour_gurax, "GetTextColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListItemAttr, GetTextColour_gurax, processor_gurax, argument_gurax)
@@ -137,8 +128,6 @@ Gurax_ImplementMethodEx(wxListItemAttr, GetTextColour_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxListItemAttr, HasBackgroundColour_gurax, "HasBackgroundColour")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListItemAttr, HasBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -156,8 +145,6 @@ Gurax_ImplementMethodEx(wxListItemAttr, HasBackgroundColour_gurax, processor_gur
 Gurax_DeclareMethodAlias(wxListItemAttr, HasFont_gurax, "HasFont")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListItemAttr, HasFont_gurax, processor_gurax, argument_gurax)
@@ -175,8 +162,6 @@ Gurax_ImplementMethodEx(wxListItemAttr, HasFont_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxListItemAttr, HasTextColour_gurax, "HasTextColour")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListItemAttr, HasTextColour_gurax, processor_gurax, argument_gurax)
@@ -195,8 +180,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, SetBackgroundColour_gurax, "SetBackgrou
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListItemAttr, SetBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -219,8 +202,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, SetFont_gurax, "SetFont")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListItemAttr, SetFont_gurax, processor_gurax, argument_gurax)
@@ -243,8 +224,6 @@ Gurax_DeclareMethodAlias(wxListItemAttr, SetTextColour_gurax, "SetTextColour")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListItemAttr, SetTextColour_gurax, processor_gurax, argument_gurax)
@@ -274,7 +253,7 @@ VType_wxListItemAttr VTYPE_wxListItemAttr("ListItemAttr");
 void VType_wxListItemAttr::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(ListItemAttr_gurax));
 	// Assignment of method

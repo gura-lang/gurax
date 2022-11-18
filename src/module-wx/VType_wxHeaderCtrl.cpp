@@ -42,8 +42,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrl, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -73,8 +71,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrl, SetColumnCount_gurax, "SetColumnCount")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("count", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, SetColumnCount_gurax, processor_gurax, argument_gurax)
@@ -95,8 +91,6 @@ Gurax_ImplementMethodEx(wxHeaderCtrl, SetColumnCount_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxHeaderCtrl, GetColumnCount_gurax, "GetColumnCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, GetColumnCount_gurax, processor_gurax, argument_gurax)
@@ -114,8 +108,6 @@ Gurax_ImplementMethodEx(wxHeaderCtrl, GetColumnCount_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxHeaderCtrl, IsEmpty_gurax, "IsEmpty")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, IsEmpty_gurax, processor_gurax, argument_gurax)
@@ -134,8 +126,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrl, UpdateColumn_gurax, "UpdateColumn")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, UpdateColumn_gurax, processor_gurax, argument_gurax)
@@ -157,8 +147,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrl, SetColumnsOrder_gurax, "SetColumnsOrder")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("order", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, SetColumnsOrder_gurax, processor_gurax, argument_gurax)
@@ -179,8 +167,6 @@ Gurax_ImplementMethodEx(wxHeaderCtrl, SetColumnsOrder_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxHeaderCtrl, GetColumnsOrder_gurax, "GetColumnsOrder")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, GetColumnsOrder_gurax, processor_gurax, argument_gurax)
@@ -199,8 +185,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrl, GetColumnAt_gurax, "GetColumnAt")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, GetColumnAt_gurax, processor_gurax, argument_gurax)
@@ -222,8 +206,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrl, GetColumnPos_gurax, "GetColumnPos")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, GetColumnPos_gurax, processor_gurax, argument_gurax)
@@ -244,8 +226,6 @@ Gurax_ImplementMethodEx(wxHeaderCtrl, GetColumnPos_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxHeaderCtrl, ResetColumnsOrder_gurax, "ResetColumnsOrder")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, ResetColumnsOrder_gurax, processor_gurax, argument_gurax)
@@ -265,8 +245,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrl, ShowColumnsMenu_gurax, "ShowColumnsMenu")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("pt", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, ShowColumnsMenu_gurax, processor_gurax, argument_gurax)
@@ -291,8 +269,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrl, AddColumnsItems_gurax, "AddColumnsItems")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("menu", VTYPE_wxMenu, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("idColumnsBase", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, AddColumnsItems_gurax, processor_gurax, argument_gurax)
@@ -316,8 +292,6 @@ Gurax_ImplementMethodEx(wxHeaderCtrl, AddColumnsItems_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxHeaderCtrl, ShowCustomizeDialog_gurax, "ShowCustomizeDialog")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, ShowCustomizeDialog_gurax, processor_gurax, argument_gurax)
@@ -336,8 +310,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrl, GetColumnTitleWidth_gurax, "GetColumnTitl
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("col", VTYPE_wxHeaderColumn, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrl, GetColumnTitleWidth_gurax, processor_gurax, argument_gurax)
@@ -367,7 +339,7 @@ VType_wxHeaderCtrl VTYPE_wxHeaderCtrl("HeaderCtrl");
 void VType_wxHeaderCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable);
 	// Assignment of method

@@ -38,9 +38,6 @@ Gurax_DeclareConstructorAlias(AuiNotebook_gurax, "AuiNotebook")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.AuiNotebook.
-)**");
 }
 
 Gurax_ImplementConstructorEx(AuiNotebook_gurax, processor_gurax, argument_gurax)
@@ -78,7 +75,7 @@ VType_wxAuiNotebook VTYPE_wxAuiNotebook("AuiNotebook");
 void VType_wxAuiNotebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(AuiNotebook_gurax));
 	// Assignment of method

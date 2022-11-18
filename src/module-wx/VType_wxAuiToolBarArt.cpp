@@ -45,7 +45,7 @@ VType_wxAuiToolBarArt VTYPE_wxAuiToolBarArt("AuiToolBarArt");
 void VType_wxAuiToolBarArt::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

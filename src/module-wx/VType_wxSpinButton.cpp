@@ -39,9 +39,6 @@ Gurax_DeclareConstructorAlias(SpinButton_gurax, "SpinButton")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.SpinButton.
-)**");
 }
 
 Gurax_ImplementConstructorEx(SpinButton_gurax, processor_gurax, argument_gurax)
@@ -71,8 +68,6 @@ Gurax_ImplementConstructorEx(SpinButton_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxSpinButton, GetMax_gurax, "GetMax")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSpinButton, GetMax_gurax, processor_gurax, argument_gurax)
@@ -90,8 +85,6 @@ Gurax_ImplementMethodEx(wxSpinButton, GetMax_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSpinButton, GetMin_gurax, "GetMin")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSpinButton, GetMin_gurax, processor_gurax, argument_gurax)
@@ -109,8 +102,6 @@ Gurax_ImplementMethodEx(wxSpinButton, GetMin_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSpinButton, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSpinButton, GetValue_gurax, processor_gurax, argument_gurax)
@@ -130,8 +121,6 @@ Gurax_DeclareMethodAlias(wxSpinButton, SetRange_gurax, "SetRange")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("max", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSpinButton, SetRange_gurax, processor_gurax, argument_gurax)
@@ -154,8 +143,6 @@ Gurax_DeclareMethodAlias(wxSpinButton, SetValue_gurax, "SetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSpinButton, SetValue_gurax, processor_gurax, argument_gurax)
@@ -184,7 +171,7 @@ VType_wxSpinButton VTYPE_wxSpinButton("SpinButton");
 void VType_wxSpinButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(SpinButton_gurax));
 	// Assignment of method

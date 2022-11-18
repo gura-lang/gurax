@@ -45,7 +45,7 @@ VType_wxHtmlHelpController VTYPE_wxHtmlHelpController("HtmlHelpController");
 void VType_wxHtmlHelpController::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxHelpControllerBase, Flag::Mutable);
 	// Assignment of method

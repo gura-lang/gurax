@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.CollapsiblePaneEvent, `en)}
 Gurax_DeclareMethodAlias(wxCollapsiblePaneEvent, GetCollapsed_gurax, "GetCollapsed")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxCollapsiblePaneEvent, GetCollapsed_gurax, processor_gurax, argument_gurax)
@@ -56,8 +54,6 @@ Gurax_DeclareMethodAlias(wxCollapsiblePaneEvent, SetCollapsed_gurax, "SetCollaps
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("collapsed", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxCollapsiblePaneEvent, SetCollapsed_gurax, processor_gurax, argument_gurax)
@@ -86,7 +82,7 @@ VType_wxCollapsiblePaneEvent VTYPE_wxCollapsiblePaneEvent("CollapsiblePaneEvent"
 void VType_wxCollapsiblePaneEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

@@ -39,9 +39,6 @@ Gurax_DeclareConstructorAlias(SplitterWindow_gurax, "SplitterWindow")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.SplitterWindow.
-)**");
 }
 
 Gurax_ImplementConstructorEx(SplitterWindow_gurax, processor_gurax, argument_gurax)
@@ -77,8 +74,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, Create_gurax, processor_gurax, argument_gurax)
@@ -107,8 +102,6 @@ Gurax_ImplementMethodEx(wxSplitterWindow, Create_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxSplitterWindow, GetMinimumPaneSize_gurax, "GetMinimumPaneSize")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, GetMinimumPaneSize_gurax, processor_gurax, argument_gurax)
@@ -126,8 +119,6 @@ Gurax_ImplementMethodEx(wxSplitterWindow, GetMinimumPaneSize_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxSplitterWindow, GetSashGravity_gurax, "GetSashGravity")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, GetSashGravity_gurax, processor_gurax, argument_gurax)
@@ -145,8 +136,6 @@ Gurax_ImplementMethodEx(wxSplitterWindow, GetSashGravity_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxSplitterWindow, GetSashPosition_gurax, "GetSashPosition")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, GetSashPosition_gurax, processor_gurax, argument_gurax)
@@ -164,8 +153,6 @@ Gurax_ImplementMethodEx(wxSplitterWindow, GetSashPosition_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxSplitterWindow, GetSashSize_gurax, "GetSashSize")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, GetSashSize_gurax, processor_gurax, argument_gurax)
@@ -183,8 +170,6 @@ Gurax_ImplementMethodEx(wxSplitterWindow, GetSashSize_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxSplitterWindow, GetDefaultSashSize_gurax, "GetDefaultSashSize")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, GetDefaultSashSize_gurax, processor_gurax, argument_gurax)
@@ -202,8 +187,6 @@ Gurax_ImplementMethodEx(wxSplitterWindow, GetDefaultSashSize_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxSplitterWindow, GetSplitMode_gurax, "GetSplitMode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, GetSplitMode_gurax, processor_gurax, argument_gurax)
@@ -222,8 +205,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetWindow1_gurax, "GetWindow1")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, GetWindow1_gurax, processor_gurax, argument_gurax)
@@ -242,8 +223,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, GetWindow2_gurax, "GetWindow2")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, GetWindow2_gurax, processor_gurax, argument_gurax)
@@ -262,8 +241,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, Initialize_gurax, "Initialize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, Initialize_gurax, processor_gurax, argument_gurax)
@@ -285,8 +262,6 @@ Gurax_ImplementMethodEx(wxSplitterWindow, Initialize_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxSplitterWindow, IsSashInvisible_gurax, "IsSashInvisible")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, IsSashInvisible_gurax, processor_gurax, argument_gurax)
@@ -304,8 +279,6 @@ Gurax_ImplementMethodEx(wxSplitterWindow, IsSashInvisible_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxSplitterWindow, IsSplit_gurax, "IsSplit")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, IsSplit_gurax, processor_gurax, argument_gurax)
@@ -325,8 +298,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, OnDoubleClickSash_gurax, "OnDoubleCli
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, OnDoubleClickSash_gurax, processor_gurax, argument_gurax)
@@ -349,8 +320,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, OnSashPositionChange_gurax, "OnSashPo
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("newSashPosition", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, OnSashPositionChange_gurax, processor_gurax, argument_gurax)
@@ -372,8 +341,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, OnUnsplit_gurax, "OnUnsplit")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("removed", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, OnUnsplit_gurax, processor_gurax, argument_gurax)
@@ -397,8 +364,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, ReplaceWindow_gurax, "ReplaceWindow")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("winOld", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("winNew", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, ReplaceWindow_gurax, processor_gurax, argument_gurax)
@@ -423,8 +388,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetMinimumPaneSize_gurax, "SetMinimum
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("paneSize", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, SetMinimumPaneSize_gurax, processor_gurax, argument_gurax)
@@ -446,8 +409,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSashGravity_gurax, "SetSashGravity
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("gravity", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, SetSashGravity_gurax, processor_gurax, argument_gurax)
@@ -470,8 +431,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSashPosition_gurax, "SetSashPositi
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("position", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("redraw", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, SetSashPosition_gurax, processor_gurax, argument_gurax)
@@ -494,8 +453,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSashSize_gurax, "SetSashSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, SetSashSize_gurax, processor_gurax, argument_gurax)
@@ -517,8 +474,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSplitMode_gurax, "SetSplitMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, SetSplitMode_gurax, processor_gurax, argument_gurax)
@@ -540,8 +495,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SetSashInvisible_gurax, "SetSashInvis
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("invisible", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, SetSashInvisible_gurax, processor_gurax, argument_gurax)
@@ -565,8 +518,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SplitHorizontally_gurax, "SplitHorizo
 	DeclareArg("window1", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("window2", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sashPosition", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, SplitHorizontally_gurax, processor_gurax, argument_gurax)
@@ -595,8 +546,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, SplitVertically_gurax, "SplitVertical
 	DeclareArg("window1", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("window2", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sashPosition", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, SplitVertically_gurax, processor_gurax, argument_gurax)
@@ -623,8 +572,6 @@ Gurax_DeclareMethodAlias(wxSplitterWindow, Unsplit_gurax, "Unsplit")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("toRemove", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, Unsplit_gurax, processor_gurax, argument_gurax)
@@ -645,8 +592,6 @@ Gurax_ImplementMethodEx(wxSplitterWindow, Unsplit_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxSplitterWindow, UpdateSize_gurax, "UpdateSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSplitterWindow, UpdateSize_gurax, processor_gurax, argument_gurax)
@@ -672,7 +617,7 @@ VType_wxSplitterWindow VTYPE_wxSplitterWindow("SplitterWindow");
 void VType_wxSplitterWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(SplitterWindow_gurax));
 	// Assignment of method

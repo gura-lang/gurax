@@ -33,9 +33,6 @@ Gurax_DeclareConstructorAlias(FontData_gurax, "FontData")
 {
 	Declare(VTYPE_wxFontData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.FontData.
-)**");
 }
 
 Gurax_ImplementConstructorEx(FontData_gurax, processor_gurax, argument_gurax)
@@ -53,8 +50,6 @@ Gurax_DeclareMethodAlias(wxFontData, EnableEffects_gurax, "EnableEffects")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("enable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, EnableEffects_gurax, processor_gurax, argument_gurax)
@@ -75,8 +70,6 @@ Gurax_ImplementMethodEx(wxFontData, EnableEffects_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxFontData, GetAllowSymbols_gurax, "GetAllowSymbols")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, GetAllowSymbols_gurax, processor_gurax, argument_gurax)
@@ -95,8 +88,6 @@ Gurax_DeclareMethodAlias(wxFontData, GetChosenFont_gurax, "GetChosenFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, GetChosenFont_gurax, processor_gurax, argument_gurax)
@@ -115,8 +106,6 @@ Gurax_DeclareMethodAlias(wxFontData, GetColour_gurax, "GetColour")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, GetColour_gurax, processor_gurax, argument_gurax)
@@ -134,8 +123,6 @@ Gurax_ImplementMethodEx(wxFontData, GetColour_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxFontData, GetEnableEffects_gurax, "GetEnableEffects")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, GetEnableEffects_gurax, processor_gurax, argument_gurax)
@@ -154,8 +141,6 @@ Gurax_DeclareMethodAlias(wxFontData, GetInitialFont_gurax, "GetInitialFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, GetInitialFont_gurax, processor_gurax, argument_gurax)
@@ -173,8 +158,6 @@ Gurax_ImplementMethodEx(wxFontData, GetInitialFont_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxFontData, GetShowHelp_gurax, "GetShowHelp")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, GetShowHelp_gurax, processor_gurax, argument_gurax)
@@ -193,8 +176,6 @@ Gurax_DeclareMethodAlias(wxFontData, SetAllowSymbols_gurax, "SetAllowSymbols")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("allowSymbols", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, SetAllowSymbols_gurax, processor_gurax, argument_gurax)
@@ -216,8 +197,6 @@ Gurax_DeclareMethodAlias(wxFontData, SetChosenFont_gurax, "SetChosenFont")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, SetChosenFont_gurax, processor_gurax, argument_gurax)
@@ -240,8 +219,6 @@ Gurax_DeclareMethodAlias(wxFontData, SetColour_gurax, "SetColour")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, SetColour_gurax, processor_gurax, argument_gurax)
@@ -264,8 +241,6 @@ Gurax_DeclareMethodAlias(wxFontData, SetInitialFont_gurax, "SetInitialFont")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, SetInitialFont_gurax, processor_gurax, argument_gurax)
@@ -289,8 +264,6 @@ Gurax_DeclareMethodAlias(wxFontData, SetRange_gurax, "SetRange")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("min", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("max", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, SetRange_gurax, processor_gurax, argument_gurax)
@@ -313,8 +286,6 @@ Gurax_DeclareMethodAlias(wxFontData, SetShowHelp_gurax, "SetShowHelp")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("showHelp", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontData, SetShowHelp_gurax, processor_gurax, argument_gurax)
@@ -343,7 +314,7 @@ VType_wxFontData VTYPE_wxFontData("FontData");
 void VType_wxFontData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(FontData_gurax));
 	// Assignment of method

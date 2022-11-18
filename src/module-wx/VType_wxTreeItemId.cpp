@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.TreeItemId, `en)}
 Gurax_DeclareMethodAlias(wxTreeItemId, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeItemId, IsOk_gurax, processor_gurax, argument_gurax)
@@ -55,8 +53,6 @@ Gurax_ImplementMethodEx(wxTreeItemId, IsOk_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxTreeItemId, Unset_gurax, "Unset")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeItemId, Unset_gurax, processor_gurax, argument_gurax)
@@ -82,7 +78,7 @@ VType_wxTreeItemId VTYPE_wxTreeItemId("TreeItemId");
 void VType_wxTreeItemId::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

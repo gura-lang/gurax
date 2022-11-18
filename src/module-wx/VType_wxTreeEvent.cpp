@@ -37,8 +37,6 @@ Gurax_DeclareMethodAlias(wxTreeEvent, GetItem_gurax, "GetItem")
 {
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeEvent, GetItem_gurax, processor_gurax, argument_gurax)
@@ -56,8 +54,6 @@ Gurax_ImplementMethodEx(wxTreeEvent, GetItem_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxTreeEvent, GetKeyCode_gurax, "GetKeyCode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeEvent, GetKeyCode_gurax, processor_gurax, argument_gurax)
@@ -75,8 +71,6 @@ Gurax_ImplementMethodEx(wxTreeEvent, GetKeyCode_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxTreeEvent, GetLabel_gurax, "GetLabel")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeEvent, GetLabel_gurax, processor_gurax, argument_gurax)
@@ -95,8 +89,6 @@ Gurax_DeclareMethodAlias(wxTreeEvent, GetOldItem_gurax, "GetOldItem")
 {
 	Declare(VTYPE_wxTreeItemId, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeEvent, GetOldItem_gurax, processor_gurax, argument_gurax)
@@ -115,8 +107,6 @@ Gurax_DeclareMethodAlias(wxTreeEvent, GetPoint_gurax, "GetPoint")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeEvent, GetPoint_gurax, processor_gurax, argument_gurax)
@@ -134,8 +124,6 @@ Gurax_ImplementMethodEx(wxTreeEvent, GetPoint_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxTreeEvent, IsEditCancelled_gurax, "IsEditCancelled")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeEvent, IsEditCancelled_gurax, processor_gurax, argument_gurax)
@@ -154,8 +142,6 @@ Gurax_DeclareMethodAlias(wxTreeEvent, SetToolTip_gurax, "SetToolTip")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tooltip", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxTreeEvent, SetToolTip_gurax, processor_gurax, argument_gurax)
@@ -184,7 +170,7 @@ VType_wxTreeEvent VTYPE_wxTreeEvent("TreeEvent");
 void VType_wxTreeEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

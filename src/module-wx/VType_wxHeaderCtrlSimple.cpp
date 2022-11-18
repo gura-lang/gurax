@@ -39,9 +39,6 @@ Gurax_DeclareConstructorAlias(HeaderCtrlSimple_gurax, "HeaderCtrlSimple")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.HeaderCtrlSimple.
-)**");
 }
 
 Gurax_ImplementConstructorEx(HeaderCtrlSimple_gurax, processor_gurax, argument_gurax)
@@ -73,8 +70,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, InsertColumn_gurax, "InsertColumn")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxHeaderColumnSimple, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrlSimple, InsertColumn_gurax, processor_gurax, argument_gurax)
@@ -98,8 +93,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, AppendColumn_gurax, "AppendColumn")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_wxHeaderColumnSimple, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrlSimple, AppendColumn_gurax, processor_gurax, argument_gurax)
@@ -122,8 +115,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, DeleteColumn_gurax, "DeleteColumn")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrlSimple, DeleteColumn_gurax, processor_gurax, argument_gurax)
@@ -146,8 +137,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, ShowColumn_gurax, "ShowColumn")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrlSimple, ShowColumn_gurax, processor_gurax, argument_gurax)
@@ -170,8 +159,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, HideColumn_gurax, "HideColumn")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrlSimple, HideColumn_gurax, processor_gurax, argument_gurax)
@@ -194,8 +181,6 @@ Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, ShowSortIndicator_gurax, "ShowSortI
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sortOrder", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrlSimple, ShowSortIndicator_gurax, processor_gurax, argument_gurax)
@@ -217,8 +202,6 @@ Gurax_ImplementMethodEx(wxHeaderCtrlSimple, ShowSortIndicator_gurax, processor_g
 Gurax_DeclareMethodAlias(wxHeaderCtrlSimple, RemoveSortIndicator_gurax, "RemoveSortIndicator")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderCtrlSimple, RemoveSortIndicator_gurax, processor_gurax, argument_gurax)
@@ -244,7 +227,7 @@ VType_wxHeaderCtrlSimple VTYPE_wxHeaderCtrlSimple("HeaderCtrlSimple");
 void VType_wxHeaderCtrlSimple::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxHeaderCtrl, Flag::Mutable, Gurax_CreateConstructor(HeaderCtrlSimple_gurax));
 	// Assignment of method

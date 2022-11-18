@@ -41,9 +41,6 @@ Gurax_DeclareConstructorAlias(ListBox_gurax, "ListBox")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.ListBox.
-)**");
 }
 
 Gurax_ImplementConstructorEx(ListBox_gurax, processor_gurax, argument_gurax)
@@ -75,8 +72,6 @@ Gurax_DeclareMethodAlias(wxListBox, Deselect_gurax, "Deselect")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, Deselect_gurax, processor_gurax, argument_gurax)
@@ -98,8 +93,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetSelection_gurax, "SetSelection")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, SetSelection_gurax, processor_gurax, argument_gurax)
@@ -120,8 +113,6 @@ Gurax_ImplementMethodEx(wxListBox, SetSelection_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxListBox, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -141,8 +132,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetStringSelection_gurax, "SetStringSelectio
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, SetStringSelection_gurax, processor_gurax, argument_gurax)
@@ -164,8 +153,6 @@ Gurax_ImplementMethodEx(wxListBox, SetStringSelection_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxListBox, GetSelections_gurax, "GetSelections")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, GetSelections_gurax, processor_gurax, argument_gurax)
@@ -185,8 +172,6 @@ Gurax_DeclareMethodAlias(wxListBox, HitTest_gurax, "HitTest")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, HitTest_gurax, processor_gurax, argument_gurax)
@@ -241,8 +226,6 @@ Gurax_DeclareMethodAlias(wxListBox, InsertItems_gurax, "InsertItems")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, InsertItems_gurax, processor_gurax, argument_gurax)
@@ -265,8 +248,6 @@ Gurax_DeclareMethodAlias(wxListBox, IsSelected_gurax, "IsSelected")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, IsSelected_gurax, processor_gurax, argument_gurax)
@@ -288,8 +269,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetFirstItem_gurax, "SetFirstItem")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, SetFirstItem_gurax, processor_gurax, argument_gurax)
@@ -341,8 +320,6 @@ Gurax_DeclareMethodAlias(wxListBox, EnsureVisible_gurax, "EnsureVisible")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, EnsureVisible_gurax, processor_gurax, argument_gurax)
@@ -363,8 +340,6 @@ Gurax_ImplementMethodEx(wxListBox, EnsureVisible_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxListBox, IsSorted_gurax, "IsSorted")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, IsSorted_gurax, processor_gurax, argument_gurax)
@@ -382,8 +357,6 @@ Gurax_ImplementMethodEx(wxListBox, IsSorted_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxListBox, GetCount_gurax, "GetCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, GetCount_gurax, processor_gurax, argument_gurax)
@@ -402,8 +375,6 @@ Gurax_DeclareMethodAlias(wxListBox, GetString_gurax, "GetString")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, GetString_gurax, processor_gurax, argument_gurax)
@@ -426,8 +397,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetString_gurax, "SetString")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, SetString_gurax, processor_gurax, argument_gurax)
@@ -451,8 +420,6 @@ Gurax_DeclareMethodAlias(wxListBox, FindString_gurax, "FindString")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("s", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bCase", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, FindString_gurax, processor_gurax, argument_gurax)
@@ -482,8 +449,6 @@ Gurax_DeclareMethodAlias(wxListBox, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, Create_gurax, processor_gurax, argument_gurax)
@@ -515,8 +480,6 @@ Gurax_ImplementMethodEx(wxListBox, Create_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxListBox, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, Clear_gurax, processor_gurax, argument_gurax)
@@ -535,8 +498,6 @@ Gurax_DeclareMethodAlias(wxListBox, Delete_gurax, "Delete")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, Delete_gurax, processor_gurax, argument_gurax)
@@ -557,8 +518,6 @@ Gurax_ImplementMethodEx(wxListBox, Delete_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxListBox, HasClientData_gurax, "HasClientData")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, HasClientData_gurax, processor_gurax, argument_gurax)
@@ -576,8 +535,6 @@ Gurax_ImplementMethodEx(wxListBox, HasClientData_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxListBox, HasClientObjectData_gurax, "HasClientObjectData")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, HasClientObjectData_gurax, processor_gurax, argument_gurax)
@@ -595,8 +552,6 @@ Gurax_ImplementMethodEx(wxListBox, HasClientObjectData_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxListBox, HasClientUntypedData_gurax, "HasClientUntypedData")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, HasClientUntypedData_gurax, processor_gurax, argument_gurax)
@@ -616,8 +571,6 @@ Gurax_DeclareMethodAlias(wxListBox, Append_gurax, "Append")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, Append_gurax, processor_gurax, argument_gurax)
@@ -669,8 +622,6 @@ Gurax_DeclareMethodAlias(wxListBox, GetClientData_gurax, "GetClientData")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, GetClientData_gurax, processor_gurax, argument_gurax)
@@ -693,8 +644,6 @@ Gurax_DeclareMethodAlias(wxListBox, GetClientObject_gurax, "GetClientObject")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, GetClientObject_gurax, processor_gurax, argument_gurax)
@@ -718,8 +667,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetClientData_gurax, "SetClientData")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, SetClientData_gurax, processor_gurax, argument_gurax)
@@ -743,8 +690,6 @@ Gurax_DeclareMethodAlias(wxListBox, SetClientObject_gurax, "SetClientObject")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, SetClientObject_gurax, processor_gurax, argument_gurax)
@@ -769,8 +714,6 @@ Gurax_DeclareMethodAlias(wxListBox, Insert_gurax, "Insert")
 	DeclareArg("item", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, Insert_gurax, processor_gurax, argument_gurax)
@@ -824,8 +767,6 @@ Gurax_DeclareMethodAlias(wxListBox, Set_gurax, "Set")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("items", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("clientData", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxListBox, Set_gurax, processor_gurax, argument_gurax)
@@ -867,7 +808,7 @@ VType_wxListBox VTYPE_wxListBox("ListBox");
 void VType_wxListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ListBox_gurax));
 	// Assignment of method

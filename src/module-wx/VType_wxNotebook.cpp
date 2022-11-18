@@ -39,9 +39,6 @@ Gurax_DeclareConstructorAlias(Notebook_gurax, "Notebook")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Notebook.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Notebook_gurax, processor_gurax, argument_gurax)
@@ -70,8 +67,6 @@ Gurax_ImplementConstructorEx(Notebook_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxNotebook, GetRowCount_gurax, "GetRowCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, GetRowCount_gurax, processor_gurax, argument_gurax)
@@ -90,8 +85,6 @@ Gurax_DeclareMethodAlias(wxNotebook, GetThemeBackgroundColour_gurax, "GetThemeBa
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, GetThemeBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -110,8 +103,6 @@ Gurax_DeclareMethodAlias(wxNotebook, SetPadding_gurax, "SetPadding")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("padding", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, SetPadding_gurax, processor_gurax, argument_gurax)
@@ -134,8 +125,6 @@ Gurax_DeclareMethodAlias(wxNotebook, GetPageImage_gurax, "GetPageImage")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("nPage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, GetPageImage_gurax, processor_gurax, argument_gurax)
@@ -158,8 +147,6 @@ Gurax_DeclareMethodAlias(wxNotebook, SetPageImage_gurax, "SetPageImage")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("image", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, SetPageImage_gurax, processor_gurax, argument_gurax)
@@ -182,8 +169,6 @@ Gurax_DeclareMethodAlias(wxNotebook, GetPageText_gurax, "GetPageText")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("nPage", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, GetPageText_gurax, processor_gurax, argument_gurax)
@@ -206,8 +191,6 @@ Gurax_DeclareMethodAlias(wxNotebook, SetPageText_gurax, "SetPageText")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, SetPageText_gurax, processor_gurax, argument_gurax)
@@ -229,8 +212,6 @@ Gurax_ImplementMethodEx(wxNotebook, SetPageText_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxNotebook, GetSelection_gurax, "GetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, GetSelection_gurax, processor_gurax, argument_gurax)
@@ -249,8 +230,6 @@ Gurax_DeclareMethodAlias(wxNotebook, SetSelection_gurax, "SetSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, SetSelection_gurax, processor_gurax, argument_gurax)
@@ -272,8 +251,6 @@ Gurax_DeclareMethodAlias(wxNotebook, ChangeSelection_gurax, "ChangeSelection")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("page", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, ChangeSelection_gurax, processor_gurax, argument_gurax)
@@ -299,8 +276,6 @@ Gurax_DeclareMethodAlias(wxNotebook, InsertPage_gurax, "InsertPage")
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("select", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("imageId", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxNotebook, InsertPage_gurax, processor_gurax, argument_gurax)
@@ -335,7 +310,7 @@ VType_wxNotebook VTYPE_wxNotebook("Notebook");
 void VType_wxNotebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Notebook_gurax));
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxHTTP VTYPE_wxHTTP("HTTP");
 void VType_wxHTTP::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxProtocol, Flag::Mutable);
 	// Assignment of method

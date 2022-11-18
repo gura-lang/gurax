@@ -33,9 +33,6 @@ Gurax_DeclareConstructorAlias(GridCellBoolEditor_gurax, "GridCellBoolEditor")
 {
 	Declare(VTYPE_wxGridCellBoolEditor, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.GridCellBoolEditor.
-)**");
 }
 
 Gurax_ImplementConstructorEx(GridCellBoolEditor_gurax, processor_gurax, argument_gurax)
@@ -53,8 +50,6 @@ Gurax_DeclareClassMethodAlias(wxGridCellBoolEditor, IsTrueValue_gurax, "IsTrueVa
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("value", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxGridCellBoolEditor, IsTrueValue_gurax, processor_gurax, argument_gurax)
@@ -73,8 +68,6 @@ Gurax_DeclareClassMethodAlias(wxGridCellBoolEditor, UseStringValues_gurax, "UseS
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("valueTrue", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("valueFalse", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxGridCellBoolEditor, UseStringValues_gurax, processor_gurax, argument_gurax)
@@ -100,7 +93,7 @@ VType_wxGridCellBoolEditor VTYPE_wxGridCellBoolEditor("GridCellBoolEditor");
 void VType_wxGridCellBoolEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellBoolEditor_gurax));
 	// Assignment of method

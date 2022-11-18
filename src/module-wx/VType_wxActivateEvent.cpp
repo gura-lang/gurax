@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.ActivateEvent, `en)}
 Gurax_DeclareMethodAlias(wxActivateEvent, GetActive_gurax, "GetActive")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxActivateEvent, GetActive_gurax, processor_gurax, argument_gurax)
@@ -63,7 +61,7 @@ VType_wxActivateEvent VTYPE_wxActivateEvent("ActivateEvent");
 void VType_wxActivateEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

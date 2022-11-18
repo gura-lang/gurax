@@ -37,8 +37,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, SetUmask_gurax, "SetUmask")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, SetUmask_gurax, processor_gurax, argument_gurax)
@@ -60,8 +58,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, SetPath_gurax, "SetPath")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("strPath", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, SetPath_gurax, processor_gurax, argument_gurax)
@@ -82,8 +78,6 @@ Gurax_ImplementMethodEx(wxFileConfig, SetPath_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxFileConfig, GetPath_gurax, "GetPath")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, GetPath_gurax, processor_gurax, argument_gurax)
@@ -102,8 +96,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, GetNumberOfEntries_gurax, "GetNumberOfEnt
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("bRecursive", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, GetNumberOfEntries_gurax, processor_gurax, argument_gurax)
@@ -125,8 +117,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, GetNumberOfGroups_gurax, "GetNumberOfGrou
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("bRecursive", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, GetNumberOfGroups_gurax, processor_gurax, argument_gurax)
@@ -148,8 +138,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, HasGroup_gurax, "HasGroup")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("strName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, HasGroup_gurax, processor_gurax, argument_gurax)
@@ -171,8 +159,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, HasEntry_gurax, "HasEntry")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("strName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, HasEntry_gurax, processor_gurax, argument_gurax)
@@ -194,8 +180,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, Flush_gurax, "Flush")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("bCurrentOnly", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, Flush_gurax, processor_gurax, argument_gurax)
@@ -218,8 +202,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, RenameEntry_gurax, "RenameEntry")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("oldName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("newName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, RenameEntry_gurax, processor_gurax, argument_gurax)
@@ -243,8 +225,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, RenameGroup_gurax, "RenameGroup")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("oldName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("newName", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, RenameGroup_gurax, processor_gurax, argument_gurax)
@@ -268,8 +248,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, DeleteEntry_gurax, "DeleteEntry")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("key", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bGroupIfEmptyAlso", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, DeleteEntry_gurax, processor_gurax, argument_gurax)
@@ -292,8 +270,6 @@ Gurax_DeclareMethodAlias(wxFileConfig, DeleteGroup_gurax, "DeleteGroup")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("szKey", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, DeleteGroup_gurax, processor_gurax, argument_gurax)
@@ -314,8 +290,6 @@ Gurax_ImplementMethodEx(wxFileConfig, DeleteGroup_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxFileConfig, DeleteAll_gurax, "DeleteAll")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFileConfig, DeleteAll_gurax, processor_gurax, argument_gurax)
@@ -334,8 +308,6 @@ Gurax_DeclareClassMethodAlias(wxFileConfig, GetGlobalFile_gurax, "GetGlobalFile"
 {
 	Declare(VTYPE_wxFileName, Flag::None);
 	DeclareArg("basename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxFileConfig, GetGlobalFile_gurax, processor_gurax, argument_gurax)
@@ -354,8 +326,6 @@ Gurax_DeclareClassMethodAlias(wxFileConfig, GetLocalFile_gurax, "GetLocalFile")
 	Declare(VTYPE_wxFileName, Flag::None);
 	DeclareArg("basename", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxFileConfig, GetLocalFile_gurax, processor_gurax, argument_gurax)
@@ -375,8 +345,6 @@ Gurax_DeclareClassMethodAlias(wxFileConfig, GetGlobalFileName_gurax, "GetGlobalF
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("szFile", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxFileConfig, GetGlobalFileName_gurax, processor_gurax, argument_gurax)
@@ -395,8 +363,6 @@ Gurax_DeclareClassMethodAlias(wxFileConfig, GetLocalFileName_gurax, "GetLocalFil
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("szFile", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementClassMethodEx(wxFileConfig, GetLocalFileName_gurax, processor_gurax, argument_gurax)
@@ -423,7 +389,7 @@ VType_wxFileConfig VTYPE_wxFileConfig("FileConfig");
 void VType_wxFileConfig::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxConfigBase, Flag::Mutable);
 	// Assignment of method

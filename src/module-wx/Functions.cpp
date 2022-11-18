@@ -13,8 +13,6 @@ Gurax_DeclareFunctionAlias(AboutBox_gurax, "AboutBox")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("info", VTYPE_wxAboutDialogInfo, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(AboutBox_gurax, processor_gurax, argument_gurax)
@@ -34,8 +32,6 @@ Gurax_DeclareFunctionAlias(BeginBusyCursor_gurax, "BeginBusyCursor")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("cursor", VTYPE_wxCursor, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(BeginBusyCursor_gurax, processor_gurax, argument_gurax)
@@ -52,8 +48,6 @@ Gurax_ImplementFunctionEx(BeginBusyCursor_gurax, processor_gurax, argument_gurax
 Gurax_DeclareFunctionAlias(Bell_gurax, "Bell")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(Bell_gurax, processor_gurax, argument_gurax)
@@ -72,8 +66,6 @@ Gurax_DeclareFunctionAlias(DirSelector_gurax, "DirSelector")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(DirSelector_gurax, processor_gurax, argument_gurax)
@@ -95,8 +87,6 @@ Gurax_ImplementFunctionEx(DirSelector_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(EndBusyCursor_gurax, "EndBusyCursor")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(EndBusyCursor_gurax, processor_gurax, argument_gurax)
@@ -119,8 +109,6 @@ Gurax_DeclareFunctionAlias(FileSelector_gurax, "FileSelector")
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(FileSelector_gurax, processor_gurax, argument_gurax)
@@ -153,8 +141,6 @@ Gurax_DeclareFunctionAlias(GetColourFromUser_gurax, "GetColourFromUser")
 	DeclareArg("caption", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("data", VTYPE_wxColourData, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(GetColourFromUser_gurax, processor_gurax, argument_gurax)
@@ -180,8 +166,6 @@ Gurax_DeclareFunctionAlias(GetFontFromUser_gurax, "GetFontFromUser")
 	DeclareArg("fontInit", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("caption", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(GetFontFromUser_gurax, processor_gurax, argument_gurax)
@@ -203,8 +187,6 @@ Gurax_DeclareFunctionAlias(GetKeyCodeName_gurax, "GetKeyCodeName")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("keyCode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(GetKeyCodeName_gurax, processor_gurax, argument_gurax)
@@ -228,8 +210,6 @@ Gurax_DeclareFunctionAlias(GetNumberFromUser_gurax, "GetNumberFromUser")
 	DeclareArg("max", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(GetNumberFromUser_gurax, processor_gurax, argument_gurax)
@@ -262,8 +242,6 @@ Gurax_DeclareFunctionAlias(GetPasswordFromUser_gurax, "GetPasswordFromUser")
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("centre", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(GetPasswordFromUser_gurax, processor_gurax, argument_gurax)
@@ -298,8 +276,6 @@ Gurax_DeclareFunctionAlias(GetSingleChoice_gurax, "GetSingleChoice")
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("initialSelection", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(GetSingleChoice_gurax, processor_gurax, argument_gurax)
@@ -340,8 +316,6 @@ Gurax_DeclareFunctionAlias(GetSingleChoiceIndex_gurax, "GetSingleChoiceIndex")
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("height", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("initialSelection", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(GetSingleChoiceIndex_gurax, processor_gurax, argument_gurax)
@@ -379,8 +353,6 @@ Gurax_DeclareFunctionAlias(GetTextFromUser_gurax, "GetTextFromUser")
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("centre", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(GetTextFromUser_gurax, processor_gurax, argument_gurax)
@@ -406,8 +378,6 @@ Gurax_DeclareFunctionAlias(ImplementApp_gurax, "ImplementApp")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("app", VTYPE_wxApp, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(ImplementApp_gurax, processor_gurax, argument_gurax)
@@ -429,8 +399,6 @@ Gurax_DeclareFunctionAlias(InfoMessageBox_gurax, "InfoMessageBox")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(InfoMessageBox_gurax, processor_gurax, argument_gurax)
@@ -448,8 +416,6 @@ Gurax_ImplementFunctionEx(InfoMessageBox_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareFunctionAlias(InitAllImageHandlers_gurax, "InitAllImageHandlers")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(InitAllImageHandlers_gurax, processor_gurax, argument_gurax)
@@ -463,8 +429,6 @@ Gurax_ImplementFunctionEx(InitAllImageHandlers_gurax, processor_gurax, argument_
 Gurax_DeclareFunctionAlias(IsBusy_gurax, "IsBusy")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(IsBusy_gurax, processor_gurax, argument_gurax)
@@ -482,8 +446,6 @@ Gurax_DeclareFunctionAlias(LoadFileSelector_gurax, "LoadFileSelector")
 	DeclareArg("extension", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("default_name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(LoadFileSelector_gurax, processor_gurax, argument_gurax)
@@ -509,8 +471,6 @@ Gurax_DeclareFunctionAlias(MessageBox_gurax, "MessageBox")
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(MessageBox_gurax, processor_gurax, argument_gurax)
@@ -539,8 +499,6 @@ Gurax_DeclareFunctionAlias(SaveFileSelector_gurax, "SaveFileSelector")
 	DeclareArg("extension", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("default_name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(SaveFileSelector_gurax, processor_gurax, argument_gurax)
@@ -561,8 +519,6 @@ Gurax_DeclareFunctionAlias(T_gurax, "T")
 {
 	Declare(VTYPE_Any, Flag::None);
 	DeclareArg("str", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementFunctionEx(T_gurax, processor_gurax, argument_gurax)

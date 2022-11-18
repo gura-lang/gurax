@@ -38,9 +38,6 @@ Gurax_DeclareConstructorAlias(RichTextStyleListCtrl_gurax, "RichTextStyleListCtr
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.RichTextStyleListCtrl.
-)**");
 }
 
 Gurax_ImplementConstructorEx(RichTextStyleListCtrl_gurax, processor_gurax, argument_gurax)
@@ -74,8 +71,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleListCtrl, Create_gurax, "Create")
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextStyleListCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -104,8 +99,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleListCtrl, GetRichTextCtrl_gurax, "GetRic
 {
 	Declare(VTYPE_wxRichTextCtrl, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextStyleListCtrl, GetRichTextCtrl_gurax, processor_gurax, argument_gurax)
@@ -124,8 +117,6 @@ Gurax_DeclareMethodAlias(wxRichTextStyleListCtrl, GetStyleChoice_gurax, "GetStyl
 {
 	Declare(VTYPE_wxChoice, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxRichTextStyleListCtrl, GetStyleChoice_gurax, processor_gurax, argument_gurax)
@@ -151,7 +142,7 @@ VType_wxRichTextStyleListCtrl VTYPE_wxRichTextStyleListCtrl("RichTextStyleListCt
 void VType_wxRichTextStyleListCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(RichTextStyleListCtrl_gurax));
 	// Assignment of method

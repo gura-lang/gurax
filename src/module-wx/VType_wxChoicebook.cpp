@@ -39,9 +39,6 @@ Gurax_DeclareConstructorAlias(Choicebook_gurax, "Choicebook")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Choicebook.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Choicebook_gurax, processor_gurax, argument_gurax)
@@ -71,8 +68,6 @@ Gurax_DeclareMethodAlias(wxChoicebook, GetChoiceCtrl_gurax, "GetChoiceCtrl")
 {
 	Declare(VTYPE_wxChoice, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxChoicebook, GetChoiceCtrl_gurax, processor_gurax, argument_gurax)
@@ -98,7 +93,7 @@ VType_wxChoicebook VTYPE_wxChoicebook("Choicebook");
 void VType_wxChoicebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Choicebook_gurax));
 	// Assignment of method

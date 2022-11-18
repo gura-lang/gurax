@@ -34,9 +34,6 @@ Gurax_DeclareConstructorAlias(FlexGridSizer_gurax, "FlexGridSizer")
 	Declare(VTYPE_wxFlexGridSizer, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.FlexGridSizer.
-)**");
 }
 
 Gurax_ImplementConstructorEx(FlexGridSizer_gurax, processor_gurax, argument_gurax)
@@ -132,8 +129,6 @@ Gurax_DeclareMethodAlias(wxFlexGridSizer, AddGrowableCol_gurax, "AddGrowableCol"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("proportion", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, AddGrowableCol_gurax, processor_gurax, argument_gurax)
@@ -158,8 +153,6 @@ Gurax_DeclareMethodAlias(wxFlexGridSizer, AddGrowableRow_gurax, "AddGrowableRow"
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("proportion", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, AddGrowableRow_gurax, processor_gurax, argument_gurax)
@@ -182,8 +175,6 @@ Gurax_ImplementMethodEx(wxFlexGridSizer, AddGrowableRow_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxFlexGridSizer, GetFlexibleDirection_gurax, "GetFlexibleDirection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, GetFlexibleDirection_gurax, processor_gurax, argument_gurax)
@@ -201,8 +192,6 @@ Gurax_ImplementMethodEx(wxFlexGridSizer, GetFlexibleDirection_gurax, processor_g
 Gurax_DeclareMethodAlias(wxFlexGridSizer, GetNonFlexibleGrowMode_gurax, "GetNonFlexibleGrowMode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, GetNonFlexibleGrowMode_gurax, processor_gurax, argument_gurax)
@@ -221,8 +210,6 @@ Gurax_DeclareMethodAlias(wxFlexGridSizer, IsColGrowable_gurax, "IsColGrowable")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, IsColGrowable_gurax, processor_gurax, argument_gurax)
@@ -244,8 +231,6 @@ Gurax_DeclareMethodAlias(wxFlexGridSizer, IsRowGrowable_gurax, "IsRowGrowable")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, IsRowGrowable_gurax, processor_gurax, argument_gurax)
@@ -267,8 +252,6 @@ Gurax_DeclareMethodAlias(wxFlexGridSizer, RemoveGrowableCol_gurax, "RemoveGrowab
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, RemoveGrowableCol_gurax, processor_gurax, argument_gurax)
@@ -290,8 +273,6 @@ Gurax_DeclareMethodAlias(wxFlexGridSizer, RemoveGrowableRow_gurax, "RemoveGrowab
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("idx", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, RemoveGrowableRow_gurax, processor_gurax, argument_gurax)
@@ -313,8 +294,6 @@ Gurax_DeclareMethodAlias(wxFlexGridSizer, SetFlexibleDirection_gurax, "SetFlexib
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("direction", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, SetFlexibleDirection_gurax, processor_gurax, argument_gurax)
@@ -336,8 +315,6 @@ Gurax_DeclareMethodAlias(wxFlexGridSizer, SetNonFlexibleGrowMode_gurax, "SetNonF
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, SetNonFlexibleGrowMode_gurax, processor_gurax, argument_gurax)
@@ -358,8 +335,6 @@ Gurax_ImplementMethodEx(wxFlexGridSizer, SetNonFlexibleGrowMode_gurax, processor
 Gurax_DeclareMethodAlias(wxFlexGridSizer, GetRowHeights_gurax, "GetRowHeights")
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, GetRowHeights_gurax, processor_gurax, argument_gurax)
@@ -380,8 +355,6 @@ Gurax_ImplementMethodEx(wxFlexGridSizer, GetRowHeights_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxFlexGridSizer, GetColWidths_gurax, "GetColWidths")
 {
 	Declare(VTYPE_List, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, GetColWidths_gurax, processor_gurax, argument_gurax)
@@ -402,8 +375,6 @@ Gurax_ImplementMethodEx(wxFlexGridSizer, GetColWidths_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxFlexGridSizer, RecalcSizes_gurax, "RecalcSizes")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, RecalcSizes_gurax, processor_gurax, argument_gurax)
@@ -422,8 +393,6 @@ Gurax_DeclareMethodAlias(wxFlexGridSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFlexGridSizer, CalcMin_gurax, processor_gurax, argument_gurax)
@@ -449,7 +418,7 @@ VType_wxFlexGridSizer VTYPE_wxFlexGridSizer("FlexGridSizer");
 void VType_wxFlexGridSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridSizer, Flag::Mutable, Gurax_CreateConstructor(FlexGridSizer_gurax));
 	// Assignment of method

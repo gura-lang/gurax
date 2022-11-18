@@ -35,9 +35,6 @@ Gurax_DeclareConstructorAlias(AuiMDIClientWindow_gurax, "AuiMDIClientWindow")
 	DeclareArg("parent", VTYPE_wxAuiMDIParentFrame, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.AuiMDIClientWindow.
-)**");
 }
 
 Gurax_ImplementConstructorEx(AuiMDIClientWindow_gurax, processor_gurax, argument_gurax)
@@ -71,7 +68,7 @@ VType_wxAuiMDIClientWindow VTYPE_wxAuiMDIClientWindow("AuiMDIClientWindow");
 void VType_wxAuiMDIClientWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxAuiNotebook, Flag::Mutable, Gurax_CreateConstructor(AuiMDIClientWindow_gurax));
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxCursor VTYPE_wxCursor("Cursor");
 void VType_wxCursor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable);
 	// Assignment of method

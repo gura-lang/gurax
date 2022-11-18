@@ -45,7 +45,7 @@ VType_wxTaskBarIconEvent VTYPE_wxTaskBarIconEvent("TaskBarIconEvent");
 void VType_wxTaskBarIconEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

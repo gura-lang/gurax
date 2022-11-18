@@ -39,9 +39,6 @@ Gurax_DeclareConstructorAlias(SashLayoutWindow_gurax, "SashLayoutWindow")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.SashLayoutWindow.
-)**");
 }
 
 Gurax_ImplementConstructorEx(SashLayoutWindow_gurax, processor_gurax, argument_gurax)
@@ -76,8 +73,6 @@ Gurax_DeclareMethodAlias(wxSashLayoutWindow, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSashLayoutWindow, Create_gurax, processor_gurax, argument_gurax)
@@ -106,8 +101,6 @@ Gurax_ImplementMethodEx(wxSashLayoutWindow, Create_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxSashLayoutWindow, GetAlignment_gurax, "GetAlignment")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSashLayoutWindow, GetAlignment_gurax, processor_gurax, argument_gurax)
@@ -125,8 +118,6 @@ Gurax_ImplementMethodEx(wxSashLayoutWindow, GetAlignment_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxSashLayoutWindow, GetOrientation_gurax, "GetOrientation")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSashLayoutWindow, GetOrientation_gurax, processor_gurax, argument_gurax)
@@ -145,8 +136,6 @@ Gurax_DeclareMethodAlias(wxSashLayoutWindow, OnCalculateLayout_gurax, "OnCalcula
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCalculateLayoutEvent, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSashLayoutWindow, OnCalculateLayout_gurax, processor_gurax, argument_gurax)
@@ -169,8 +158,6 @@ Gurax_DeclareMethodAlias(wxSashLayoutWindow, OnQueryLayoutInfo_gurax, "OnQueryLa
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxQueryLayoutInfoEvent, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSashLayoutWindow, OnQueryLayoutInfo_gurax, processor_gurax, argument_gurax)
@@ -193,8 +180,6 @@ Gurax_DeclareMethodAlias(wxSashLayoutWindow, SetAlignment_gurax, "SetAlignment")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("alignment", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSashLayoutWindow, SetAlignment_gurax, processor_gurax, argument_gurax)
@@ -216,8 +201,6 @@ Gurax_DeclareMethodAlias(wxSashLayoutWindow, SetDefaultSize_gurax, "SetDefaultSi
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSashLayoutWindow, SetDefaultSize_gurax, processor_gurax, argument_gurax)
@@ -240,8 +223,6 @@ Gurax_DeclareMethodAlias(wxSashLayoutWindow, SetOrientation_gurax, "SetOrientati
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("orientation", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSashLayoutWindow, SetOrientation_gurax, processor_gurax, argument_gurax)
@@ -270,7 +251,7 @@ VType_wxSashLayoutWindow VTYPE_wxSashLayoutWindow("SashLayoutWindow");
 void VType_wxSashLayoutWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSashWindow, Flag::Mutable, Gurax_CreateConstructor(SashLayoutWindow_gurax));
 	// Assignment of method

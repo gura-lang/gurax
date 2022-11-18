@@ -35,9 +35,6 @@ Gurax_DeclareConstructorAlias(GBPosition_gurax, "GBPosition")
 	DeclareArg("row", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.GBPosition.
-)**");
 }
 
 Gurax_ImplementConstructorEx(GBPosition_gurax, processor_gurax, argument_gurax)
@@ -60,8 +57,6 @@ Gurax_ImplementConstructorEx(GBPosition_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxGBPosition, GetCol_gurax, "GetCol")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGBPosition, GetCol_gurax, processor_gurax, argument_gurax)
@@ -79,8 +74,6 @@ Gurax_ImplementMethodEx(wxGBPosition, GetCol_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxGBPosition, GetRow_gurax, "GetRow")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGBPosition, GetRow_gurax, processor_gurax, argument_gurax)
@@ -99,8 +92,6 @@ Gurax_DeclareMethodAlias(wxGBPosition, SetCol_gurax, "SetCol")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("col", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGBPosition, SetCol_gurax, processor_gurax, argument_gurax)
@@ -122,8 +113,6 @@ Gurax_DeclareMethodAlias(wxGBPosition, SetRow_gurax, "SetRow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("row", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGBPosition, SetRow_gurax, processor_gurax, argument_gurax)
@@ -152,7 +141,7 @@ VType_wxGBPosition VTYPE_wxGBPosition("GBPosition");
 void VType_wxGBPosition::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(GBPosition_gurax));
 	// Assignment of method

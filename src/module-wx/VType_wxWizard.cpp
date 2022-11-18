@@ -39,9 +39,6 @@ Gurax_DeclareConstructorAlias(Wizard_gurax, "Wizard")
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Wizard.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Wizard_gurax, processor_gurax, argument_gurax)
@@ -77,8 +74,6 @@ Gurax_DeclareMethodAlias(wxWizard, Create_gurax, "Create")
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, Create_gurax, processor_gurax, argument_gurax)
@@ -108,8 +103,6 @@ Gurax_DeclareMethodAlias(wxWizard, FitToPage_gurax, "FitToPage")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("firstPage", VTYPE_wxWizardPage, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, FitToPage_gurax, processor_gurax, argument_gurax)
@@ -132,8 +125,6 @@ Gurax_DeclareMethodAlias(wxWizard, GetBitmap_gurax, "GetBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, GetBitmap_gurax, processor_gurax, argument_gurax)
@@ -152,8 +143,6 @@ Gurax_DeclareMethodAlias(wxWizard, GetBitmapBackgroundColour_gurax, "GetBitmapBa
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, GetBitmapBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -171,8 +160,6 @@ Gurax_ImplementMethodEx(wxWizard, GetBitmapBackgroundColour_gurax, processor_gur
 Gurax_DeclareMethodAlias(wxWizard, GetBitmapPlacement_gurax, "GetBitmapPlacement")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, GetBitmapPlacement_gurax, processor_gurax, argument_gurax)
@@ -191,8 +178,6 @@ Gurax_DeclareMethodAlias(wxWizard, GetCurrentPage_gurax, "GetCurrentPage")
 {
 	Declare(VTYPE_wxWizardPage, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, GetCurrentPage_gurax, processor_gurax, argument_gurax)
@@ -210,8 +195,6 @@ Gurax_ImplementMethodEx(wxWizard, GetCurrentPage_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxWizard, GetMinimumBitmapWidth_gurax, "GetMinimumBitmapWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, GetMinimumBitmapWidth_gurax, processor_gurax, argument_gurax)
@@ -230,8 +213,6 @@ Gurax_DeclareMethodAlias(wxWizard, GetPageAreaSizer_gurax, "GetPageAreaSizer")
 {
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, GetPageAreaSizer_gurax, processor_gurax, argument_gurax)
@@ -250,8 +231,6 @@ Gurax_DeclareMethodAlias(wxWizard, GetPageSize_gurax, "GetPageSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, GetPageSize_gurax, processor_gurax, argument_gurax)
@@ -270,8 +249,6 @@ Gurax_DeclareMethodAlias(wxWizard, HasNextPage_gurax, "HasNextPage")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_wxWizardPage, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, HasNextPage_gurax, processor_gurax, argument_gurax)
@@ -294,8 +271,6 @@ Gurax_DeclareMethodAlias(wxWizard, HasPrevPage_gurax, "HasPrevPage")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("page", VTYPE_wxWizardPage, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, HasPrevPage_gurax, processor_gurax, argument_gurax)
@@ -318,8 +293,6 @@ Gurax_DeclareMethodAlias(wxWizard, RunWizard_gurax, "RunWizard")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("firstPage", VTYPE_wxWizardPage, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, RunWizard_gurax, processor_gurax, argument_gurax)
@@ -342,8 +315,6 @@ Gurax_DeclareMethodAlias(wxWizard, SetBitmap_gurax, "SetBitmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, SetBitmap_gurax, processor_gurax, argument_gurax)
@@ -366,8 +337,6 @@ Gurax_DeclareMethodAlias(wxWizard, SetBitmapBackgroundColour_gurax, "SetBitmapBa
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, SetBitmapBackgroundColour_gurax, processor_gurax, argument_gurax)
@@ -390,8 +359,6 @@ Gurax_DeclareMethodAlias(wxWizard, SetBitmapPlacement_gurax, "SetBitmapPlacement
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("placement", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, SetBitmapPlacement_gurax, processor_gurax, argument_gurax)
@@ -413,8 +380,6 @@ Gurax_DeclareMethodAlias(wxWizard, SetBorder_gurax, "SetBorder")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, SetBorder_gurax, processor_gurax, argument_gurax)
@@ -436,8 +401,6 @@ Gurax_DeclareMethodAlias(wxWizard, SetMinimumBitmapWidth_gurax, "SetMinimumBitma
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, SetMinimumBitmapWidth_gurax, processor_gurax, argument_gurax)
@@ -459,8 +422,6 @@ Gurax_DeclareMethodAlias(wxWizard, SetPageSize_gurax, "SetPageSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sizePage", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxWizard, SetPageSize_gurax, processor_gurax, argument_gurax)
@@ -490,7 +451,7 @@ VType_wxWizard VTYPE_wxWizard("Wizard");
 void VType_wxWizard::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(Wizard_gurax));
 	// Assignment of method

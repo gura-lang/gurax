@@ -45,7 +45,7 @@ VType_wxRichTextBuffer VTYPE_wxRichTextBuffer("RichTextBuffer");
 void VType_wxRichTextBuffer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxRichTextParagraphLayoutBox, Flag::Mutable);
 	// Assignment of method

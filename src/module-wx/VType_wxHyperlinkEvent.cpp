@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.HyperlinkEvent, `en)}
 Gurax_DeclareMethodAlias(wxHyperlinkEvent, GetURL_gurax, "GetURL")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkEvent, GetURL_gurax, processor_gurax, argument_gurax)
@@ -56,8 +54,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkEvent, SetURL_gurax, "SetURL")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("url", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkEvent, SetURL_gurax, processor_gurax, argument_gurax)
@@ -86,7 +82,7 @@ VType_wxHyperlinkEvent VTYPE_wxHyperlinkEvent("HyperlinkEvent");
 void VType_wxHyperlinkEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

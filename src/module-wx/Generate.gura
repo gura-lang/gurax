@@ -476,7 +476,7 @@ void VType_wx${className}::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 ${helpInfoTbl.Each {|helpInfo|}}
-	AddHelp("${helpInfo.langCode}", g_docHelp_${helpInfo.langCode});
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), g_docHelp_${helpInfo.langCode});
 ${end}
 	// Declaration of VType
 ${if (classNameParent)}
@@ -600,8 +600,11 @@ Gurax_DeclareMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInfo.nam
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+${helpInfo.doc}
 )**");
+	${end}
 }
 
 Gurax_ImplementMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -639,8 +642,11 @@ Gurax_DeclareClassMethodAlias(wx${className}, ${funcInfo.name}_gurax, "${funcInf
 {
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+${helpInfo.doc}
 )**");
+	${end}
 }
 
 Gurax_ImplementClassMethodEx(wx${className}, ${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -753,8 +759,11 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+${helpInfo.doc}
 )**");
+	${end}
 }
 
 Gurax_ImplementFunctionEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -834,13 +843,11 @@ EvalTmplPropertyImplementation(className as String, propInfo as PropInfo):map = 
 	}
 }
 
-HelpInfo = struct { langCode as Symbol, doc as String }
-
 ClassInfo = class {
 	typeInfo as cbridge.TypeInfo
 	className as String
 	classNameParent:nil as String
-	helpInfoTbl[] as HelpInfo = []
+	helpInfoTbl[] as cbridge.HelpInfo = []
 	classInfoParent:nil as ClassInfo
 	funcInfoConstructor as cbridge.FuncInfo
 	funcInfoCast as cbridge.FuncInfo
@@ -949,9 +956,9 @@ path.Glob('metafile/*.gura').Each {|pathName|
 			while (exprBody.IsBinaryOp() && exprBody.operator.symbol == `%%) {
 				exprHelp = exprBody.right
 				if (exprHelp.IsString()) {
-					helpInfoTbl.Add(HelpInfo(`en, exprHelp.string))
+					helpInfoTbl.Add(cbridge.HelpInfo(`en, exprHelp.string))
 				} elsif (exprHelp.IsSuffixed()) {
-					helpInfoTbl.Add(HelpInfo(exprHelp.symbol, exprHelp.string))
+					helpInfoTbl.Add(cbridge.HelpInfo(exprHelp.symbol, exprHelp.string))
 				} else {
 					sys.cerr.Printf('invalid help format')
 					sys.Exit(1)
@@ -1091,9 +1098,11 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.${className}.
+	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+${helpInfo.doc}
 )**");
+	${end}
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -1120,9 +1129,11 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.${className}.
+	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+${helpInfo.doc}
 )**");
+	${end}
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -1151,9 +1162,11 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.${className}.
+	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+${helpInfo.doc}
 )**");
+	${end}
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
@@ -1181,9 +1194,11 @@ Gurax_DeclareConstructorAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	Declare(VTYPE_${funcInfo.GetTypeInfo().vtype}, ${funcInfo.GetFlags()});
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.${className}.
+	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+${helpInfo.doc}
 )**");
+	${end}
 }
 
 Gurax_ImplementConstructorEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)

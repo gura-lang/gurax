@@ -45,7 +45,7 @@ VType_wxHtmlCell VTYPE_wxHtmlCell("HtmlCell");
 void VType_wxHtmlCell::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method

@@ -37,8 +37,6 @@ Gurax_DeclareMethodAlias(wxDC, CopyAttributes_gurax, "CopyAttributes")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, CopyAttributes_gurax, processor_gurax, argument_gurax)
@@ -60,8 +58,6 @@ Gurax_ImplementMethodEx(wxDC, CopyAttributes_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxDC, GetDepth_gurax, "GetDepth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetDepth_gurax, processor_gurax, argument_gurax)
@@ -80,8 +76,6 @@ Gurax_DeclareMethodAlias(wxDC, GetDeviceOrigin_gurax, "GetDeviceOrigin")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetDeviceOrigin_gurax, processor_gurax, argument_gurax)
@@ -99,8 +93,6 @@ Gurax_ImplementMethodEx(wxDC, GetDeviceOrigin_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxDC, GetLogicalFunction_gurax, "GetLogicalFunction")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLogicalFunction_gurax, processor_gurax, argument_gurax)
@@ -118,8 +110,6 @@ Gurax_ImplementMethodEx(wxDC, GetLogicalFunction_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxDC, GetMapMode_gurax, "GetMapMode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetMapMode_gurax, processor_gurax, argument_gurax)
@@ -140,8 +130,6 @@ Gurax_DeclareMethodAlias(wxDC, GetPixel_gurax, "GetPixel")
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetPixel_gurax, processor_gurax, argument_gurax)
@@ -166,8 +154,6 @@ Gurax_DeclareMethodAlias(wxDC, GetPPI_gurax, "GetPPI")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetPPI_gurax, processor_gurax, argument_gurax)
@@ -186,8 +172,6 @@ Gurax_DeclareMethodAlias(wxDC, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetSize_gurax, processor_gurax, argument_gurax)
@@ -206,8 +190,6 @@ Gurax_DeclareMethodAlias(wxDC, GetSizeMM_gurax, "GetSizeMM")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetSizeMM_gurax, processor_gurax, argument_gurax)
@@ -225,8 +207,6 @@ Gurax_ImplementMethodEx(wxDC, GetSizeMM_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, GetUserScale_gurax, "GetUserScale")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gurax)
@@ -245,8 +225,6 @@ Gurax_ImplementMethodEx(wxDC, GetUserScale_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxDC, IsOk_gurax, "IsOk")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, IsOk_gurax, processor_gurax, argument_gurax)
@@ -266,8 +244,6 @@ Gurax_DeclareMethodAlias(wxDC, SetAxisOrientation_gurax, "SetAxisOrientation")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("xLeftRight", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("yBottomUp", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetAxisOrientation_gurax, processor_gurax, argument_gurax)
@@ -291,8 +267,6 @@ Gurax_DeclareMethodAlias(wxDC, SetDeviceOrigin_gurax, "SetDeviceOrigin")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetDeviceOrigin_gurax, processor_gurax, argument_gurax)
@@ -315,8 +289,6 @@ Gurax_DeclareMethodAlias(wxDC, SetLogicalFunction_gurax, "SetLogicalFunction")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("function", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetLogicalFunction_gurax, processor_gurax, argument_gurax)
@@ -338,8 +310,6 @@ Gurax_DeclareMethodAlias(wxDC, SetMapMode_gurax, "SetMapMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetMapMode_gurax, processor_gurax, argument_gurax)
@@ -361,8 +331,6 @@ Gurax_DeclareMethodAlias(wxDC, SetPalette_gurax, "SetPalette")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("palette", VTYPE_wxPalette, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetPalette_gurax, processor_gurax, argument_gurax)
@@ -386,8 +354,6 @@ Gurax_DeclareMethodAlias(wxDC, SetUserScale_gurax, "SetUserScale")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("xScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("yScale", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetUserScale_gurax, processor_gurax, argument_gurax)
@@ -411,8 +377,6 @@ Gurax_DeclareMethodAlias(wxDC, GetAsBitmap_gurax, "GetAsBitmap")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("subrect", VTYPE_wxRect, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetAsBitmap_gurax, processor_gurax, argument_gurax)
@@ -435,8 +399,6 @@ Gurax_DeclareMethodAlias(wxDC, SetLogicalScale_gurax, "SetLogicalScale")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetLogicalScale_gurax, processor_gurax, argument_gurax)
@@ -458,8 +420,6 @@ Gurax_ImplementMethodEx(wxDC, SetLogicalScale_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxDC, GetLogicalScale_gurax, "GetLogicalScale")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLogicalScale_gurax, processor_gurax, argument_gurax)
@@ -480,8 +440,6 @@ Gurax_DeclareMethodAlias(wxDC, SetLogicalOrigin_gurax, "SetLogicalOrigin")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetLogicalOrigin_gurax, processor_gurax, argument_gurax)
@@ -504,8 +462,6 @@ Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalX_gurax, "DeviceToLogicalX")
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DeviceToLogicalX_gurax, processor_gurax, argument_gurax)
@@ -527,8 +483,6 @@ Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalXRel_gurax, "DeviceToLogicalXRel")
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DeviceToLogicalXRel_gurax, processor_gurax, argument_gurax)
@@ -550,8 +504,6 @@ Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalY_gurax, "DeviceToLogicalY")
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DeviceToLogicalY_gurax, processor_gurax, argument_gurax)
@@ -573,8 +525,6 @@ Gurax_DeclareMethodAlias(wxDC, DeviceToLogicalYRel_gurax, "DeviceToLogicalYRel")
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DeviceToLogicalYRel_gurax, processor_gurax, argument_gurax)
@@ -596,8 +546,6 @@ Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceX_gurax, "LogicalToDeviceX")
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, LogicalToDeviceX_gurax, processor_gurax, argument_gurax)
@@ -619,8 +567,6 @@ Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceXRel_gurax, "LogicalToDeviceXRel")
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, LogicalToDeviceXRel_gurax, processor_gurax, argument_gurax)
@@ -642,8 +588,6 @@ Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceY_gurax, "LogicalToDeviceY")
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, LogicalToDeviceY_gurax, processor_gurax, argument_gurax)
@@ -665,8 +609,6 @@ Gurax_DeclareMethodAlias(wxDC, LogicalToDeviceYRel_gurax, "LogicalToDeviceYRel")
 {
 	Declare(VTYPE_Number, Flag::Map);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, LogicalToDeviceYRel_gurax, processor_gurax, argument_gurax)
@@ -687,8 +629,6 @@ Gurax_ImplementMethodEx(wxDC, LogicalToDeviceYRel_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxDC, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, Clear_gurax, processor_gurax, argument_gurax)
@@ -707,8 +647,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawArc_gurax, "DrawArc")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawArc_gurax, processor_gurax, argument_gurax)
@@ -774,8 +712,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawBitmap_gurax, "DrawBitmap")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawBitmap_gurax, processor_gurax, argument_gurax)
@@ -837,8 +773,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawCheckMark_gurax, "DrawCheckMark")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawCheckMark_gurax, processor_gurax, argument_gurax)
@@ -896,8 +830,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawCircle_gurax, "DrawCircle")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawCircle_gurax, processor_gurax, argument_gurax)
@@ -955,8 +887,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawEllipse_gurax, "DrawEllipse")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawEllipse_gurax, processor_gurax, argument_gurax)
@@ -1032,8 +962,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawEllipticArc_gurax, "DrawEllipticArc")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawEllipticArc_gurax, processor_gurax, argument_gurax)
@@ -1101,8 +1029,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawIcon_gurax, "DrawIcon")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawIcon_gurax, processor_gurax, argument_gurax)
@@ -1163,8 +1089,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawLabel_gurax, "DrawLabel")
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("alignment", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("indexAccel", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawLabel_gurax, processor_gurax, argument_gurax)
@@ -1192,8 +1116,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawLine_gurax, "DrawLine")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawLine_gurax, processor_gurax, argument_gurax)
@@ -1255,8 +1177,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawLines_gurax, "DrawLines")
 	DeclareArg("points", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("xoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("yoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawLines_gurax, processor_gurax, argument_gurax)
@@ -1282,8 +1202,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawPoint_gurax, "DrawPoint")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawPoint_gurax, processor_gurax, argument_gurax)
@@ -1340,8 +1258,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawPolygon_gurax, "DrawPolygon")
 	DeclareArg("xoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("yoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("fill_style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawPolygon_gurax, processor_gurax, argument_gurax)
@@ -1373,8 +1289,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawPolyPolygon_gurax, "DrawPolyPolygon")
 	DeclareArg("xoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("yoffset", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("fill_style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawPolyPolygon_gurax, processor_gurax, argument_gurax)
@@ -1417,8 +1331,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawRectangle_gurax, "DrawRectangle")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawRectangle_gurax, processor_gurax, argument_gurax)
@@ -1494,8 +1406,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawRotatedText_gurax, "DrawRotatedText")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawRotatedText_gurax, processor_gurax, argument_gurax)
@@ -1557,8 +1467,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawRoundedRectangle_gurax, "DrawRoundedRectangle
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawRoundedRectangle_gurax, processor_gurax, argument_gurax)
@@ -1640,8 +1548,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawSpline_gurax, "DrawSpline")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("points", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawSpline_gurax, processor_gurax, argument_gurax)
@@ -1668,8 +1574,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawSplineXY_gurax, "DrawSplineXY")
 	DeclareArg("y2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("x3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y3", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawSplineXY_gurax, processor_gurax, argument_gurax)
@@ -1696,8 +1600,6 @@ Gurax_DeclareMethodAlias(wxDC, DrawText_gurax, "DrawText")
 {
 	Declare(VTYPE_Nil, Flag::Map);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DrawText_gurax, processor_gurax, argument_gurax)
@@ -1758,8 +1660,6 @@ Gurax_DeclareMethodAlias(wxDC, GradientFillConcentric_gurax, "GradientFillConcen
 	DeclareArg("initialColour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("destColour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("circleCenter", VTYPE_wxPoint, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GradientFillConcentric_gurax, processor_gurax, argument_gurax)
@@ -1794,8 +1694,6 @@ Gurax_DeclareMethodAlias(wxDC, GradientFillLinear_gurax, "GradientFillLinear")
 	DeclareArg("initialColour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("destColour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("nDirection", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GradientFillLinear_gurax, processor_gurax, argument_gurax)
@@ -1824,8 +1722,6 @@ Gurax_DeclareMethodAlias(wxDC, FloodFill_gurax, "FloodFill")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, FloodFill_gurax, processor_gurax, argument_gurax)
@@ -1887,8 +1783,6 @@ Gurax_DeclareMethodAlias(wxDC, CrossHair_gurax, "CrossHair")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, CrossHair_gurax, processor_gurax, argument_gurax)
@@ -1941,8 +1835,6 @@ Gurax_ImplementMethodEx(wxDC, CrossHair_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, DestroyClippingRegion_gurax, "DestroyClippingRegion")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, DestroyClippingRegion_gurax, processor_gurax, argument_gurax)
@@ -1960,8 +1852,6 @@ Gurax_ImplementMethodEx(wxDC, DestroyClippingRegion_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxDC, GetClippingBox_gurax, "GetClippingBox")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetClippingBox_gurax, processor_gurax, argument_gurax)
@@ -1981,8 +1871,6 @@ Gurax_DeclareMethodAlias(wxDC, SetClippingRegion_gurax, "SetClippingRegion")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetClippingRegion_gurax, processor_gurax, argument_gurax)
@@ -2058,8 +1946,6 @@ Gurax_DeclareMethodAlias(wxDC, SetDeviceClippingRegion_gurax, "SetDeviceClipping
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("region", VTYPE_wxRegion, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetDeviceClippingRegion_gurax, processor_gurax, argument_gurax)
@@ -2081,8 +1967,6 @@ Gurax_ImplementMethodEx(wxDC, SetDeviceClippingRegion_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxDC, GetCharHeight_gurax, "GetCharHeight")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetCharHeight_gurax, processor_gurax, argument_gurax)
@@ -2100,8 +1984,6 @@ Gurax_ImplementMethodEx(wxDC, GetCharHeight_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxDC, GetCharWidth_gurax, "GetCharWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetCharWidth_gurax, processor_gurax, argument_gurax)
@@ -2120,8 +2002,6 @@ Gurax_DeclareMethodAlias(wxDC, GetFontMetrics_gurax, "GetFontMetrics")
 {
 	Declare(VTYPE_wxFontMetrics, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetFontMetrics_gurax, processor_gurax, argument_gurax)
@@ -2141,8 +2021,6 @@ Gurax_DeclareMethodAlias(wxDC, GetMultiLineTextExtent_gurax, "GetMultiLineTextEx
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetMultiLineTextExtent_gurax, processor_gurax, argument_gurax)
@@ -2165,8 +2043,6 @@ Gurax_DeclareMethodAlias(wxDC, GetTextExtent_gurax, "GetTextExtent")
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetTextExtent_gurax, processor_gurax, argument_gurax)
@@ -2187,8 +2063,6 @@ Gurax_ImplementMethodEx(wxDC, GetTextExtent_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxDC, GetBackgroundMode_gurax, "GetBackgroundMode")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetBackgroundMode_gurax, processor_gurax, argument_gurax)
@@ -2207,8 +2081,6 @@ Gurax_DeclareMethodAlias(wxDC, GetFont_gurax, "GetFont")
 {
 	Declare(VTYPE_wxFont, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetFont_gurax, processor_gurax, argument_gurax)
@@ -2226,8 +2098,6 @@ Gurax_ImplementMethodEx(wxDC, GetFont_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, GetLayoutDirection_gurax, "GetLayoutDirection")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLayoutDirection_gurax, processor_gurax, argument_gurax)
@@ -2246,8 +2116,6 @@ Gurax_DeclareMethodAlias(wxDC, GetTextBackground_gurax, "GetTextBackground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetTextBackground_gurax, processor_gurax, argument_gurax)
@@ -2266,8 +2134,6 @@ Gurax_DeclareMethodAlias(wxDC, GetTextForeground_gurax, "GetTextForeground")
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetTextForeground_gurax, processor_gurax, argument_gurax)
@@ -2286,8 +2152,6 @@ Gurax_DeclareMethodAlias(wxDC, SetBackgroundMode_gurax, "SetBackgroundMode")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("mode", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetBackgroundMode_gurax, processor_gurax, argument_gurax)
@@ -2309,8 +2173,6 @@ Gurax_DeclareMethodAlias(wxDC, SetFont_gurax, "SetFont")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetFont_gurax, processor_gurax, argument_gurax)
@@ -2333,8 +2195,6 @@ Gurax_DeclareMethodAlias(wxDC, SetTextBackground_gurax, "SetTextBackground")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetTextBackground_gurax, processor_gurax, argument_gurax)
@@ -2357,8 +2217,6 @@ Gurax_DeclareMethodAlias(wxDC, SetTextForeground_gurax, "SetTextForeground")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetTextForeground_gurax, processor_gurax, argument_gurax)
@@ -2381,8 +2239,6 @@ Gurax_DeclareMethodAlias(wxDC, SetLayoutDirection_gurax, "SetLayoutDirection")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dir", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetLayoutDirection_gurax, processor_gurax, argument_gurax)
@@ -2405,8 +2261,6 @@ Gurax_DeclareMethodAlias(wxDC, CalcBoundingBox_gurax, "CalcBoundingBox")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, CalcBoundingBox_gurax, processor_gurax, argument_gurax)
@@ -2428,8 +2282,6 @@ Gurax_ImplementMethodEx(wxDC, CalcBoundingBox_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxDC, MaxX_gurax, "MaxX")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, MaxX_gurax, processor_gurax, argument_gurax)
@@ -2447,8 +2299,6 @@ Gurax_ImplementMethodEx(wxDC, MaxX_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, MaxY_gurax, "MaxY")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, MaxY_gurax, processor_gurax, argument_gurax)
@@ -2466,8 +2316,6 @@ Gurax_ImplementMethodEx(wxDC, MaxY_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, MinX_gurax, "MinX")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, MinX_gurax, processor_gurax, argument_gurax)
@@ -2485,8 +2333,6 @@ Gurax_ImplementMethodEx(wxDC, MinX_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, MinY_gurax, "MinY")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, MinY_gurax, processor_gurax, argument_gurax)
@@ -2504,8 +2350,6 @@ Gurax_ImplementMethodEx(wxDC, MinY_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, ResetBoundingBox_gurax, "ResetBoundingBox")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, ResetBoundingBox_gurax, processor_gurax, argument_gurax)
@@ -2524,8 +2368,6 @@ Gurax_DeclareMethodAlias(wxDC, StartDoc_gurax, "StartDoc")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("message", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, StartDoc_gurax, processor_gurax, argument_gurax)
@@ -2546,8 +2388,6 @@ Gurax_ImplementMethodEx(wxDC, StartDoc_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, StartPage_gurax, "StartPage")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, StartPage_gurax, processor_gurax, argument_gurax)
@@ -2565,8 +2405,6 @@ Gurax_ImplementMethodEx(wxDC, StartPage_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, EndDoc_gurax, "EndDoc")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, EndDoc_gurax, processor_gurax, argument_gurax)
@@ -2584,8 +2422,6 @@ Gurax_ImplementMethodEx(wxDC, EndDoc_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, EndPage_gurax, "EndPage")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, EndPage_gurax, processor_gurax, argument_gurax)
@@ -2614,8 +2450,6 @@ Gurax_DeclareMethodAlias(wxDC, Blit_gurax, "Blit")
 	DeclareArg("useMask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("xsrcMask", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("ysrcMask", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, Blit_gurax, processor_gurax, argument_gurax)
@@ -2663,8 +2497,6 @@ Gurax_DeclareMethodAlias(wxDC, StretchBlit_gurax, "StretchBlit")
 	DeclareArg("useMask", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("xsrcMask", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("ysrcMask", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, StretchBlit_gurax, processor_gurax, argument_gurax)
@@ -2702,8 +2534,6 @@ Gurax_DeclareMethodAlias(wxDC, GetBackground_gurax, "GetBackground")
 {
 	Declare(VTYPE_wxBrush, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetBackground_gurax, processor_gurax, argument_gurax)
@@ -2722,8 +2552,6 @@ Gurax_DeclareMethodAlias(wxDC, GetBrush_gurax, "GetBrush")
 {
 	Declare(VTYPE_wxBrush, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetBrush_gurax, processor_gurax, argument_gurax)
@@ -2742,8 +2570,6 @@ Gurax_DeclareMethodAlias(wxDC, GetPen_gurax, "GetPen")
 {
 	Declare(VTYPE_wxPen, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetPen_gurax, processor_gurax, argument_gurax)
@@ -2762,8 +2588,6 @@ Gurax_DeclareMethodAlias(wxDC, SetBackground_gurax, "SetBackground")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("brush", VTYPE_wxBrush, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetBackground_gurax, processor_gurax, argument_gurax)
@@ -2786,8 +2610,6 @@ Gurax_DeclareMethodAlias(wxDC, SetBrush_gurax, "SetBrush")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("brush", VTYPE_wxBrush, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetBrush_gurax, processor_gurax, argument_gurax)
@@ -2810,8 +2632,6 @@ Gurax_DeclareMethodAlias(wxDC, SetPen_gurax, "SetPen")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pen", VTYPE_wxPen, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetPen_gurax, processor_gurax, argument_gurax)
@@ -2833,8 +2653,6 @@ Gurax_ImplementMethodEx(wxDC, SetPen_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxDC, CanUseTransformMatrix_gurax, "CanUseTransformMatrix")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, CanUseTransformMatrix_gurax, processor_gurax, argument_gurax)
@@ -2853,8 +2671,6 @@ Gurax_DeclareMethodAlias(wxDC, SetTransformMatrix_gurax, "SetTransformMatrix")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("matrix", VTYPE_wxAffineMatrix2D, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, SetTransformMatrix_gurax, processor_gurax, argument_gurax)
@@ -2877,8 +2693,6 @@ Gurax_DeclareMethodAlias(wxDC, GetTransformMatrix_gurax, "GetTransformMatrix")
 {
 	Declare(VTYPE_wxAffineMatrix2D, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetTransformMatrix_gurax, processor_gurax, argument_gurax)
@@ -2896,8 +2710,6 @@ Gurax_ImplementMethodEx(wxDC, GetTransformMatrix_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxDC, ResetTransformMatrix_gurax, "ResetTransformMatrix")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, ResetTransformMatrix_gurax, processor_gurax, argument_gurax)
@@ -2915,8 +2727,6 @@ Gurax_ImplementMethodEx(wxDC, ResetTransformMatrix_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxDC, CanDrawBitmap_gurax, "CanDrawBitmap")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, CanDrawBitmap_gurax, processor_gurax, argument_gurax)
@@ -2934,8 +2744,6 @@ Gurax_ImplementMethodEx(wxDC, CanDrawBitmap_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxDC, CanGetTextExtent_gurax, "CanGetTextExtent")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, CanGetTextExtent_gurax, processor_gurax, argument_gurax)
@@ -2953,8 +2761,6 @@ Gurax_ImplementMethodEx(wxDC, CanGetTextExtent_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxDC, GetLogicalOriginXY_gurax, "GetLogicalOriginXY")
 {
 	Declare(VTYPE_Tuple, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLogicalOriginXY_gurax, processor_gurax, argument_gurax)
@@ -2974,8 +2780,6 @@ Gurax_DeclareMethodAlias(wxDC, GetLogicalOrigin_gurax, "GetLogicalOrigin")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDC, GetLogicalOrigin_gurax, processor_gurax, argument_gurax)
@@ -3001,7 +2805,7 @@ VType_wxDC VTYPE_wxDC("DC");
 void VType_wxDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

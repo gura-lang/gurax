@@ -40,9 +40,6 @@ Gurax_DeclareConstructorAlias(EditableListBox_gurax, "EditableListBox")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.EditableListBox.
-)**");
 }
 
 Gurax_ImplementConstructorEx(EditableListBox_gurax, processor_gurax, argument_gurax)
@@ -79,8 +76,6 @@ Gurax_DeclareMethodAlias(wxEditableListBox, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEditableListBox, Create_gurax, processor_gurax, argument_gurax)
@@ -110,8 +105,6 @@ Gurax_DeclareMethodAlias(wxEditableListBox, SetStrings_gurax, "SetStrings")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("strings", VTYPE_String, ArgOccur::Once, ArgFlag::ListVar);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEditableListBox, SetStrings_gurax, processor_gurax, argument_gurax)
@@ -132,8 +125,6 @@ Gurax_ImplementMethodEx(wxEditableListBox, SetStrings_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxEditableListBox, GetStrings_gurax, "GetStrings")
 {
 	Declare(VTYPE_Any, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxEditableListBox, GetStrings_gurax, processor_gurax, argument_gurax)
@@ -160,7 +151,7 @@ VType_wxEditableListBox VTYPE_wxEditableListBox("EditableListBox");
 void VType_wxEditableListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(EditableListBox_gurax));
 	// Assignment of method

@@ -38,9 +38,6 @@ Gurax_DeclareConstructorAlias(AuiToolBar_gurax, "AuiToolBar")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.AuiToolBar.
-)**");
 }
 
 Gurax_ImplementConstructorEx(AuiToolBar_gurax, processor_gurax, argument_gurax)
@@ -70,8 +67,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetWindowStyleFlag_gurax, "SetWindowStyle
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetWindowStyleFlag_gurax, processor_gurax, argument_gurax)
@@ -92,8 +87,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetWindowStyleFlag_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxAuiToolBar, GetWindowStyleFlag_gurax, "GetWindowStyleFlag")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetWindowStyleFlag_gurax, processor_gurax, argument_gurax)
@@ -112,8 +105,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetArtProvider_gurax, "SetArtProvider")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("art", VTYPE_wxAuiToolBarArt, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetArtProvider_gurax, processor_gurax, argument_gurax)
@@ -136,8 +127,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetArtProvider_gurax, "GetArtProvider")
 {
 	Declare(VTYPE_wxAuiToolBarArt, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetArtProvider_gurax, processor_gurax, argument_gurax)
@@ -156,8 +145,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetFont_gurax, "SetFont")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("font", VTYPE_wxFont, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetFont_gurax, processor_gurax, argument_gurax)
@@ -181,8 +168,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, AddTool_gurax, "AddTool")
 	Declare(VTYPE_wxAuiToolBarItem, Flag::None);
 	DeclareArg("args", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, AddTool_gurax, processor_gurax, argument_gurax)
@@ -280,8 +265,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, AddLabel_gurax, "AddLabel")
 	DeclareArg("label", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, AddLabel_gurax, processor_gurax, argument_gurax)
@@ -305,8 +288,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, AddLabel_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxAuiToolBar, Realize_gurax, "Realize")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, Realize_gurax, processor_gurax, argument_gurax)
@@ -326,8 +307,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, FindControl_gurax, "FindControl")
 	Declare(VTYPE_wxControl, Flag::None);
 	DeclareArg("window_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, FindControl_gurax, processor_gurax, argument_gurax)
@@ -348,8 +327,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, FindControl_gurax, processor_gurax, argume
 Gurax_DeclareMethodAlias(wxAuiToolBar, ClearTools_gurax, "ClearTools")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, ClearTools_gurax, processor_gurax, argument_gurax)
@@ -367,8 +344,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, ClearTools_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxAuiToolBar, Clear_gurax, "Clear")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, Clear_gurax, processor_gurax, argument_gurax)
@@ -387,8 +362,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, DeleteTool_gurax, "DeleteTool")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, DeleteTool_gurax, processor_gurax, argument_gurax)
@@ -410,8 +383,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, DeleteByIndex_gurax, "DeleteByIndex")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, DeleteByIndex_gurax, processor_gurax, argument_gurax)
@@ -432,8 +403,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, DeleteByIndex_gurax, processor_gurax, argu
 Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolCount_gurax, "GetToolCount")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolCount_gurax, processor_gurax, argument_gurax)
@@ -452,8 +421,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolPos_gurax, "GetToolPos")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolPos_gurax, processor_gurax, argument_gurax)
@@ -475,8 +442,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolIndex_gurax, "GetToolIndex")
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolIndex_gurax, processor_gurax, argument_gurax)
@@ -498,8 +463,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolFits_gurax, "GetToolFits")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolFits_gurax, processor_gurax, argument_gurax)
@@ -522,8 +485,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolRect_gurax, "GetToolRect")
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolRect_gurax, processor_gurax, argument_gurax)
@@ -545,8 +506,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolFitsByIndex_gurax, "GetToolFitsByI
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolFitsByIndex_gurax, processor_gurax, argument_gurax)
@@ -567,8 +526,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetToolFitsByIndex_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolBarFits_gurax, "GetToolBarFits")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolBarFits_gurax, processor_gurax, argument_gurax)
@@ -587,8 +544,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetMargins_gurax, "SetMargins")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetMargins_gurax, processor_gurax, argument_gurax)
@@ -611,8 +566,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolBitmapSize_gurax, "SetToolBitmapSi
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolBitmapSize_gurax, processor_gurax, argument_gurax)
@@ -635,8 +588,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolBitmapSize_gurax, "GetToolBitmapSi
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolBitmapSize_gurax, processor_gurax, argument_gurax)
@@ -654,8 +605,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, GetToolBitmapSize_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxAuiToolBar, GetOverflowVisible_gurax, "GetOverflowVisible")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetOverflowVisible_gurax, processor_gurax, argument_gurax)
@@ -674,8 +623,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetOverflowVisible_gurax, "SetOverflowVis
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("visible", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetOverflowVisible_gurax, processor_gurax, argument_gurax)
@@ -696,8 +643,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetOverflowVisible_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxAuiToolBar, GetGripperVisible_gurax, "GetGripperVisible")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetGripperVisible_gurax, processor_gurax, argument_gurax)
@@ -716,8 +661,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetGripperVisible_gurax, "SetGripperVisib
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("visible", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetGripperVisible_gurax, processor_gurax, argument_gurax)
@@ -740,8 +683,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, ToggleTool_gurax, "ToggleTool")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("state", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, ToggleTool_gurax, processor_gurax, argument_gurax)
@@ -764,8 +705,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolToggled_gurax, "GetToolToggled")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolToggled_gurax, processor_gurax, argument_gurax)
@@ -788,8 +727,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, EnableTool_gurax, "EnableTool")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("state", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, EnableTool_gurax, processor_gurax, argument_gurax)
@@ -812,8 +749,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolEnabled_gurax, "GetToolEnabled")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolEnabled_gurax, processor_gurax, argument_gurax)
@@ -836,8 +771,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolDropDown_gurax, "SetToolDropDown")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dropdown", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolDropDown_gurax, processor_gurax, argument_gurax)
@@ -860,8 +793,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolDropDown_gurax, "GetToolDropDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolDropDown_gurax, processor_gurax, argument_gurax)
@@ -883,8 +814,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolBorderPadding_gurax, "SetToolBorde
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("padding", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolBorderPadding_gurax, processor_gurax, argument_gurax)
@@ -905,8 +834,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetToolBorderPadding_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolBorderPadding_gurax, "GetToolBorderPadding")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolBorderPadding_gurax, processor_gurax, argument_gurax)
@@ -925,8 +852,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolTextOrientation_gurax, "SetToolTex
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("orientation", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolTextOrientation_gurax, processor_gurax, argument_gurax)
@@ -947,8 +872,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetToolTextOrientation_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolTextOrientation_gurax, "GetToolTextOrientation")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolTextOrientation_gurax, processor_gurax, argument_gurax)
@@ -967,8 +890,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolPacking_gurax, "SetToolPacking")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("packing", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolPacking_gurax, processor_gurax, argument_gurax)
@@ -989,8 +910,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetToolPacking_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolPacking_gurax, "GetToolPacking")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolPacking_gurax, processor_gurax, argument_gurax)
@@ -1010,8 +929,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolProportion_gurax, "SetToolProporti
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("proportion", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolProportion_gurax, processor_gurax, argument_gurax)
@@ -1034,8 +951,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolProportion_gurax, "GetToolProporti
 {
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolProportion_gurax, processor_gurax, argument_gurax)
@@ -1057,8 +972,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolSeparation_gurax, "SetToolSeparati
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("separation", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolSeparation_gurax, processor_gurax, argument_gurax)
@@ -1079,8 +992,6 @@ Gurax_ImplementMethodEx(wxAuiToolBar, SetToolSeparation_gurax, processor_gurax, 
 Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolSeparation_gurax, "GetToolSeparation")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolSeparation_gurax, processor_gurax, argument_gurax)
@@ -1100,8 +1011,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolSticky_gurax, "SetToolSticky")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("sticky", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolSticky_gurax, processor_gurax, argument_gurax)
@@ -1124,8 +1033,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolSticky_gurax, "GetToolSticky")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolSticky_gurax, processor_gurax, argument_gurax)
@@ -1147,8 +1054,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolLabel_gurax, "GetToolLabel")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolLabel_gurax, processor_gurax, argument_gurax)
@@ -1171,8 +1076,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolLabel_gurax, "SetToolLabel")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolLabel_gurax, processor_gurax, argument_gurax)
@@ -1196,8 +1099,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolBitmap_gurax, "GetToolBitmap")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolBitmap_gurax, processor_gurax, argument_gurax)
@@ -1220,8 +1121,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolBitmap_gurax, "SetToolBitmap")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolBitmap_gurax, processor_gurax, argument_gurax)
@@ -1245,8 +1144,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolShortHelp_gurax, "GetToolShortHelp
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolShortHelp_gurax, processor_gurax, argument_gurax)
@@ -1269,8 +1166,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolShortHelp_gurax, "SetToolShortHelp
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("help_string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolShortHelp_gurax, processor_gurax, argument_gurax)
@@ -1293,8 +1188,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetToolLongHelp_gurax, "GetToolLongHelp")
 {
 	Declare(VTYPE_String, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetToolLongHelp_gurax, processor_gurax, argument_gurax)
@@ -1317,8 +1210,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, SetToolLongHelp_gurax, "SetToolLongHelp")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("tool_id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("help_string", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, SetToolLongHelp_gurax, processor_gurax, argument_gurax)
@@ -1342,8 +1233,6 @@ Gurax_DeclareMethodAlias(wxAuiToolBar, GetHintSize_gurax, "GetHintSize")
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("dock_direction", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiToolBar, GetHintSize_gurax, processor_gurax, argument_gurax)
@@ -1372,7 +1261,7 @@ VType_wxAuiToolBar VTYPE_wxAuiToolBar("AuiToolBar");
 void VType_wxAuiToolBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(AuiToolBar_gurax));
 	// Assignment of method

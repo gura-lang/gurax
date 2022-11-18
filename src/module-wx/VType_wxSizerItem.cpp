@@ -37,8 +37,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, AssignWindow_gurax, "AssignWindow")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, AssignWindow_gurax, processor_gurax, argument_gurax)
@@ -61,8 +59,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, AssignSizer_gurax, "AssignSizer")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sizer", VTYPE_wxSizer, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, AssignSizer_gurax, processor_gurax, argument_gurax)
@@ -85,8 +81,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, CalcMin_gurax, processor_gurax, argument_gurax)
@@ -104,8 +98,6 @@ Gurax_ImplementMethodEx(wxSizerItem, CalcMin_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSizerItem, DeleteWindows_gurax, "DeleteWindows")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, DeleteWindows_gurax, processor_gurax, argument_gurax)
@@ -123,8 +115,6 @@ Gurax_ImplementMethodEx(wxSizerItem, DeleteWindows_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxSizerItem, DetachSizer_gurax, "DetachSizer")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, DetachSizer_gurax, processor_gurax, argument_gurax)
@@ -142,8 +132,6 @@ Gurax_ImplementMethodEx(wxSizerItem, DetachSizer_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxSizerItem, GetBorder_gurax, "GetBorder")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetBorder_gurax, processor_gurax, argument_gurax)
@@ -161,8 +149,6 @@ Gurax_ImplementMethodEx(wxSizerItem, GetBorder_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxSizerItem, GetFlag_gurax, "GetFlag")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetFlag_gurax, processor_gurax, argument_gurax)
@@ -180,8 +166,6 @@ Gurax_ImplementMethodEx(wxSizerItem, GetFlag_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSizerItem, GetId_gurax, "GetId")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetId_gurax, processor_gurax, argument_gurax)
@@ -200,8 +184,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, GetMinSize_gurax, "GetMinSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetMinSize_gurax, processor_gurax, argument_gurax)
@@ -220,8 +202,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, SetMinSize_gurax, "SetMinSize")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetMinSize_gurax, processor_gurax, argument_gurax)
@@ -245,8 +225,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, SetMinSizeXY_gurax, "SetMinSizeXY")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetMinSizeXY_gurax, processor_gurax, argument_gurax)
@@ -269,8 +247,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -288,8 +264,6 @@ Gurax_ImplementMethodEx(wxSizerItem, GetPosition_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxSizerItem, GetProportion_gurax, "GetProportion")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetProportion_gurax, processor_gurax, argument_gurax)
@@ -307,8 +281,6 @@ Gurax_ImplementMethodEx(wxSizerItem, GetProportion_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxSizerItem, GetRatio_gurax, "GetRatio")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetRatio_gurax, processor_gurax, argument_gurax)
@@ -327,8 +299,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, GetRect_gurax, "GetRect")
 {
 	Declare(VTYPE_wxRect, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetRect_gurax, processor_gurax, argument_gurax)
@@ -347,8 +317,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, GetSize_gurax, "GetSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetSize_gurax, processor_gurax, argument_gurax)
@@ -367,8 +335,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, GetSizer_gurax, "GetSizer")
 {
 	Declare(VTYPE_wxSizer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetSizer_gurax, processor_gurax, argument_gurax)
@@ -387,8 +353,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, GetSpacer_gurax, "GetSpacer")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetSpacer_gurax, processor_gurax, argument_gurax)
@@ -407,8 +371,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, GetUserData_gurax, "GetUserData")
 {
 	Declare(VTYPE_wxObject, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetUserData_gurax, processor_gurax, argument_gurax)
@@ -427,8 +389,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, GetWindow_gurax, "GetWindow")
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, GetWindow_gurax, processor_gurax, argument_gurax)
@@ -446,8 +406,6 @@ Gurax_ImplementMethodEx(wxSizerItem, GetWindow_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxSizerItem, IsShown_gurax, "IsShown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, IsShown_gurax, processor_gurax, argument_gurax)
@@ -465,8 +423,6 @@ Gurax_ImplementMethodEx(wxSizerItem, IsShown_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSizerItem, IsSizer_gurax, "IsSizer")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, IsSizer_gurax, processor_gurax, argument_gurax)
@@ -484,8 +440,6 @@ Gurax_ImplementMethodEx(wxSizerItem, IsSizer_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxSizerItem, IsSpacer_gurax, "IsSpacer")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, IsSpacer_gurax, processor_gurax, argument_gurax)
@@ -503,8 +457,6 @@ Gurax_ImplementMethodEx(wxSizerItem, IsSpacer_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxSizerItem, IsWindow_gurax, "IsWindow")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, IsWindow_gurax, processor_gurax, argument_gurax)
@@ -523,8 +475,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, SetBorder_gurax, "SetBorder")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("border", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetBorder_gurax, processor_gurax, argument_gurax)
@@ -547,8 +497,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, SetDimension_gurax, "SetDimension")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetDimension_gurax, processor_gurax, argument_gurax)
@@ -573,8 +521,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, SetFlag_gurax, "SetFlag")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetFlag_gurax, processor_gurax, argument_gurax)
@@ -596,8 +542,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, SetId_gurax, "SetId")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("id", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetId_gurax, processor_gurax, argument_gurax)
@@ -620,8 +564,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, SetInitSize_gurax, "SetInitSize")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetInitSize_gurax, processor_gurax, argument_gurax)
@@ -644,8 +586,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, SetProportion_gurax, "SetProportion")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("proportion", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetProportion_gurax, processor_gurax, argument_gurax)
@@ -667,8 +607,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, SetUserData_gurax, "SetUserData")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("userData", VTYPE_wxObject, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, SetUserData_gurax, processor_gurax, argument_gurax)
@@ -691,8 +629,6 @@ Gurax_DeclareMethodAlias(wxSizerItem, Show_gurax, "Show")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("show", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSizerItem, Show_gurax, processor_gurax, argument_gurax)
@@ -721,7 +657,7 @@ VType_wxSizerItem VTYPE_wxSizerItem("SizerItem");
 void VType_wxSizerItem::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method

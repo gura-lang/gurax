@@ -45,7 +45,7 @@ VType_wxEditEnumProperty VTYPE_wxEditEnumProperty("EditEnumProperty");
 void VType_wxEditEnumProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEnumProperty, Flag::Mutable);
 	// Assignment of method

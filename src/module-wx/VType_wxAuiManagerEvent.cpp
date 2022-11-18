@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.AuiManagerEvent, `en)}
 Gurax_DeclareMethodAlias(wxAuiManagerEvent, CanVeto_gurax, "CanVeto")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, CanVeto_gurax, processor_gurax, argument_gurax)
@@ -55,8 +53,6 @@ Gurax_ImplementMethodEx(wxAuiManagerEvent, CanVeto_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxAuiManagerEvent, GetButton_gurax, "GetButton")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, GetButton_gurax, processor_gurax, argument_gurax)
@@ -75,8 +71,6 @@ Gurax_DeclareMethodAlias(wxAuiManagerEvent, GetDC_gurax, "GetDC")
 {
 	Declare(VTYPE_wxDC, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, GetDC_gurax, processor_gurax, argument_gurax)
@@ -94,8 +88,6 @@ Gurax_ImplementMethodEx(wxAuiManagerEvent, GetDC_gurax, processor_gurax, argumen
 Gurax_DeclareMethodAlias(wxAuiManagerEvent, GetVeto_gurax, "GetVeto")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, GetVeto_gurax, processor_gurax, argument_gurax)
@@ -114,8 +106,6 @@ Gurax_DeclareMethodAlias(wxAuiManagerEvent, GetManager_gurax, "GetManager")
 {
 	Declare(VTYPE_wxAuiManager, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, GetManager_gurax, processor_gurax, argument_gurax)
@@ -134,8 +124,6 @@ Gurax_DeclareMethodAlias(wxAuiManagerEvent, SetButton_gurax, "SetButton")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("button", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, SetButton_gurax, processor_gurax, argument_gurax)
@@ -157,8 +145,6 @@ Gurax_DeclareMethodAlias(wxAuiManagerEvent, SetCanVeto_gurax, "SetCanVeto")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("can_veto", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, SetCanVeto_gurax, processor_gurax, argument_gurax)
@@ -180,8 +166,6 @@ Gurax_DeclareMethodAlias(wxAuiManagerEvent, SetDC_gurax, "SetDC")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pdc", VTYPE_wxDC, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, SetDC_gurax, processor_gurax, argument_gurax)
@@ -204,8 +188,6 @@ Gurax_DeclareMethodAlias(wxAuiManagerEvent, SetManager_gurax, "SetManager")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("manager", VTYPE_wxAuiManager, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, SetManager_gurax, processor_gurax, argument_gurax)
@@ -228,8 +210,6 @@ Gurax_DeclareMethodAlias(wxAuiManagerEvent, Veto_gurax, "Veto")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("veto", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManagerEvent, Veto_gurax, processor_gurax, argument_gurax)
@@ -258,7 +238,7 @@ VType_wxAuiManagerEvent VTYPE_wxAuiManagerEvent("AuiManagerEvent");
 void VType_wxAuiManagerEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

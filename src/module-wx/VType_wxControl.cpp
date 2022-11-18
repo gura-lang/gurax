@@ -40,9 +40,6 @@ Gurax_DeclareConstructorAlias(Control_gurax, "Control")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Control.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Control_gurax, processor_gurax, argument_gurax)
@@ -72,8 +69,6 @@ Gurax_DeclareMethodAlias(wxControl, Command_gurax, "Command")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("event", VTYPE_wxCommandEvent, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxControl, Command_gurax, processor_gurax, argument_gurax)
@@ -95,8 +90,6 @@ Gurax_ImplementMethodEx(wxControl, Command_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxControl, GetLabel_gurax, "GetLabel")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxControl, GetLabel_gurax, processor_gurax, argument_gurax)
@@ -114,8 +107,6 @@ Gurax_ImplementMethodEx(wxControl, GetLabel_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxControl, GetLabelText_gurax, "GetLabelText")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxControl, GetLabelText_gurax, processor_gurax, argument_gurax)
@@ -136,8 +127,6 @@ Gurax_DeclareMethodAlias(wxControl, GetSizeFromTextSizeXY_gurax, "GetSizeFromTex
 	DeclareArg("xlen", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("ylen", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxControl, GetSizeFromTextSizeXY_gurax, processor_gurax, argument_gurax)
@@ -162,8 +151,6 @@ Gurax_DeclareMethodAlias(wxControl, GetSizeFromTextSize_gurax, "GetSizeFromTextS
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareArg("tsize", VTYPE_wxSize, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxControl, GetSizeFromTextSize_gurax, processor_gurax, argument_gurax)
@@ -186,8 +173,6 @@ Gurax_DeclareMethodAlias(wxControl, SetLabel_gurax, "SetLabel")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxControl, SetLabel_gurax, processor_gurax, argument_gurax)
@@ -209,8 +194,6 @@ Gurax_DeclareMethodAlias(wxControl, SetLabelText_gurax, "SetLabelText")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("text", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxControl, SetLabelText_gurax, processor_gurax, argument_gurax)
@@ -232,8 +215,6 @@ Gurax_DeclareMethodAlias(wxControl, SetLabelMarkup_gurax, "SetLabelMarkup")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("markup", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxControl, SetLabelMarkup_gurax, processor_gurax, argument_gurax)
@@ -262,7 +243,7 @@ VType_wxControl VTYPE_wxControl("Control");
 void VType_wxControl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Control_gurax));
 	// Assignment of method

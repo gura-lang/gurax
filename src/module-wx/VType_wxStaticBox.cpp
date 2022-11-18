@@ -40,9 +40,6 @@ Gurax_DeclareConstructorAlias(StaticBox_gurax, "StaticBox")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.StaticBox.
-)**");
 }
 
 Gurax_ImplementConstructorEx(StaticBox_gurax, processor_gurax, argument_gurax)
@@ -81,7 +78,7 @@ VType_wxStaticBox VTYPE_wxStaticBox("StaticBox");
 void VType_wxStaticBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticBox_gurax));
 	// Assignment of method

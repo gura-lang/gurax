@@ -41,9 +41,6 @@ Gurax_DeclareConstructorAlias(HyperlinkCtrl_gurax, "HyperlinkCtrl")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.HyperlinkCtrl.
-)**");
 }
 
 Gurax_ImplementConstructorEx(HyperlinkCtrl_gurax, processor_gurax, argument_gurax)
@@ -82,8 +79,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkCtrl, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -114,8 +109,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkCtrl, GetHoverColour_gurax, "GetHoverColour"
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetHoverColour_gurax, processor_gurax, argument_gurax)
@@ -134,8 +127,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkCtrl, GetNormalColour_gurax, "GetNormalColou
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetNormalColour_gurax, processor_gurax, argument_gurax)
@@ -153,8 +144,6 @@ Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetNormalColour_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxHyperlinkCtrl, GetURL_gurax, "GetURL")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetURL_gurax, processor_gurax, argument_gurax)
@@ -172,8 +161,6 @@ Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetURL_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxHyperlinkCtrl, GetVisited_gurax, "GetVisited")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetVisited_gurax, processor_gurax, argument_gurax)
@@ -192,8 +179,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkCtrl, GetVisitedColour_gurax, "GetVisitedCol
 {
 	Declare(VTYPE_wxColour, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, GetVisitedColour_gurax, processor_gurax, argument_gurax)
@@ -212,8 +197,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkCtrl, SetHoverColour_gurax, "SetHoverColour"
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, SetHoverColour_gurax, processor_gurax, argument_gurax)
@@ -236,8 +219,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkCtrl, SetNormalColour_gurax, "SetNormalColou
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, SetNormalColour_gurax, processor_gurax, argument_gurax)
@@ -260,8 +241,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkCtrl, SetURL_gurax, "SetURL")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("url", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, SetURL_gurax, processor_gurax, argument_gurax)
@@ -283,8 +262,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkCtrl, SetVisited_gurax, "SetVisited")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("visited", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, SetVisited_gurax, processor_gurax, argument_gurax)
@@ -306,8 +283,6 @@ Gurax_DeclareMethodAlias(wxHyperlinkCtrl, SetVisitedColour_gurax, "SetVisitedCol
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("colour", VTYPE_wxColour, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHyperlinkCtrl, SetVisitedColour_gurax, processor_gurax, argument_gurax)
@@ -337,7 +312,7 @@ VType_wxHyperlinkCtrl VTYPE_wxHyperlinkCtrl("HyperlinkCtrl");
 void VType_wxHyperlinkCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(HyperlinkCtrl_gurax));
 	// Assignment of method

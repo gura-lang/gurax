@@ -45,7 +45,7 @@ VType_wxRibbonButtonBar VTYPE_wxRibbonButtonBar("RibbonButtonBar");
 void VType_wxRibbonButtonBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxRibbonControl, Flag::Mutable);
 	// Assignment of method

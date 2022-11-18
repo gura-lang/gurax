@@ -41,9 +41,6 @@ Gurax_DeclareConstructorAlias(DatePickerCtrl_gurax, "DatePickerCtrl")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.DatePickerCtrl.
-)**");
 }
 
 Gurax_ImplementConstructorEx(DatePickerCtrl_gurax, processor_gurax, argument_gurax)
@@ -82,8 +79,6 @@ Gurax_DeclareMethodAlias(wxDatePickerCtrl, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDatePickerCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -115,8 +110,6 @@ Gurax_DeclareMethodAlias(wxDatePickerCtrl, GetRange_gurax, "GetRange")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("dt1", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dt2", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDatePickerCtrl, GetRange_gurax, processor_gurax, argument_gurax)
@@ -141,8 +134,6 @@ Gurax_DeclareMethodAlias(wxDatePickerCtrl, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_wxDateTime, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDatePickerCtrl, GetValue_gurax, processor_gurax, argument_gurax)
@@ -162,8 +153,6 @@ Gurax_DeclareMethodAlias(wxDatePickerCtrl, SetRange_gurax, "SetRange")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dt1", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("dt2", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDatePickerCtrl, SetRange_gurax, processor_gurax, argument_gurax)
@@ -188,8 +177,6 @@ Gurax_DeclareMethodAlias(wxDatePickerCtrl, SetValue_gurax, "SetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("dt", VTYPE_wxDateTime, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxDatePickerCtrl, SetValue_gurax, processor_gurax, argument_gurax)
@@ -219,7 +206,7 @@ VType_wxDatePickerCtrl VTYPE_wxDatePickerCtrl("DatePickerCtrl");
 void VType_wxDatePickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(DatePickerCtrl_gurax));
 	// Assignment of method

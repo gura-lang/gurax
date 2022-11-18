@@ -36,8 +36,6 @@ ${help.ComposeMethodHelp(wx.PowerEvent, `en)}
 Gurax_DeclareMethodAlias(wxPowerEvent, Veto_gurax, "Veto")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxPowerEvent, Veto_gurax, processor_gurax, argument_gurax)
@@ -55,8 +53,6 @@ Gurax_ImplementMethodEx(wxPowerEvent, Veto_gurax, processor_gurax, argument_gura
 Gurax_DeclareMethodAlias(wxPowerEvent, IsVetoed_gurax, "IsVetoed")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxPowerEvent, IsVetoed_gurax, processor_gurax, argument_gurax)
@@ -82,7 +78,7 @@ VType_wxPowerEvent VTYPE_wxPowerEvent("PowerEvent");
 void VType_wxPowerEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

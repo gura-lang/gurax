@@ -37,9 +37,6 @@ Gurax_DeclareConstructorAlias(HeaderColumnSimple_gurax, "HeaderColumnSimple")
 	DeclareArg("align", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.HeaderColumnSimple.
-)**");
 }
 
 Gurax_ImplementConstructorEx(HeaderColumnSimple_gurax, processor_gurax, argument_gurax)
@@ -67,8 +64,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetTitle_gurax, "SetTitle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetTitle_gurax, processor_gurax, argument_gurax)
@@ -89,8 +84,6 @@ Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetTitle_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetTitle_gurax, "GetTitle")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, GetTitle_gurax, processor_gurax, argument_gurax)
@@ -109,8 +102,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetBitmap_gurax, "SetBitmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetBitmap_gurax, processor_gurax, argument_gurax)
@@ -133,8 +124,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetBitmap_gurax, "GetBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, GetBitmap_gurax, processor_gurax, argument_gurax)
@@ -153,8 +142,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetWidth_gurax, "SetWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetWidth_gurax, processor_gurax, argument_gurax)
@@ -175,8 +162,6 @@ Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetWidth_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetWidth_gurax, "GetWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, GetWidth_gurax, processor_gurax, argument_gurax)
@@ -195,8 +180,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetMinWidth_gurax, "SetMinWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("minWidth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetMinWidth_gurax, processor_gurax, argument_gurax)
@@ -217,8 +200,6 @@ Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetMinWidth_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetMinWidth_gurax, "GetMinWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, GetMinWidth_gurax, processor_gurax, argument_gurax)
@@ -237,8 +218,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetAlignment_gurax, "SetAlignment
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("align", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetAlignment_gurax, processor_gurax, argument_gurax)
@@ -259,8 +238,6 @@ Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetAlignment_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetAlignment_gurax, "GetAlignment")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, GetAlignment_gurax, processor_gurax, argument_gurax)
@@ -279,8 +256,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetFlags_gurax, "SetFlags")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetFlags_gurax, processor_gurax, argument_gurax)
@@ -301,8 +276,6 @@ Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetFlags_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxHeaderColumnSimple, GetFlags_gurax, "GetFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, GetFlags_gurax, processor_gurax, argument_gurax)
@@ -320,8 +293,6 @@ Gurax_ImplementMethodEx(wxHeaderColumnSimple, GetFlags_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxHeaderColumnSimple, IsSortKey_gurax, "IsSortKey")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, IsSortKey_gurax, processor_gurax, argument_gurax)
@@ -340,8 +311,6 @@ Gurax_DeclareMethodAlias(wxHeaderColumnSimple, SetSortOrder_gurax, "SetSortOrder
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("ascending", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetSortOrder_gurax, processor_gurax, argument_gurax)
@@ -362,8 +331,6 @@ Gurax_ImplementMethodEx(wxHeaderColumnSimple, SetSortOrder_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxHeaderColumnSimple, IsSortOrderAscending_gurax, "IsSortOrderAscending")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHeaderColumnSimple, IsSortOrderAscending_gurax, processor_gurax, argument_gurax)
@@ -389,7 +356,7 @@ VType_wxHeaderColumnSimple VTYPE_wxHeaderColumnSimple("HeaderColumnSimple");
 void VType_wxHeaderColumnSimple::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSettableHeaderColumn, Flag::Mutable, Gurax_CreateConstructor(HeaderColumnSimple_gurax));
 	// Assignment of method

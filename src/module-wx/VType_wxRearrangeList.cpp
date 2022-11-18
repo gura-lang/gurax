@@ -42,9 +42,6 @@ Gurax_DeclareConstructorAlias(RearrangeList_gurax, "RearrangeList")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.RearrangeList.
-)**");
 }
 
 Gurax_ImplementConstructorEx(RearrangeList_gurax, processor_gurax, argument_gurax)
@@ -87,8 +84,6 @@ Gurax_DeclareMethodAlias(wxRearrangeList, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxRearrangeList, Create_gurax, processor_gurax, argument_gurax)
@@ -121,8 +116,6 @@ Gurax_ImplementMethodEx(wxRearrangeList, Create_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxRearrangeList, GetCurrentOrder_gurax, "GetCurrentOrder")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxRearrangeList, GetCurrentOrder_gurax, processor_gurax, argument_gurax)
@@ -140,8 +133,6 @@ Gurax_ImplementMethodEx(wxRearrangeList, GetCurrentOrder_gurax, processor_gurax,
 Gurax_DeclareMethodAlias(wxRearrangeList, CanMoveCurrentUp_gurax, "CanMoveCurrentUp")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxRearrangeList, CanMoveCurrentUp_gurax, processor_gurax, argument_gurax)
@@ -159,8 +150,6 @@ Gurax_ImplementMethodEx(wxRearrangeList, CanMoveCurrentUp_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxRearrangeList, CanMoveCurrentDown_gurax, "CanMoveCurrentDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxRearrangeList, CanMoveCurrentDown_gurax, processor_gurax, argument_gurax)
@@ -178,8 +167,6 @@ Gurax_ImplementMethodEx(wxRearrangeList, CanMoveCurrentDown_gurax, processor_gur
 Gurax_DeclareMethodAlias(wxRearrangeList, MoveCurrentUp_gurax, "MoveCurrentUp")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxRearrangeList, MoveCurrentUp_gurax, processor_gurax, argument_gurax)
@@ -197,8 +184,6 @@ Gurax_ImplementMethodEx(wxRearrangeList, MoveCurrentUp_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxRearrangeList, MoveCurrentDown_gurax, "MoveCurrentDown")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxRearrangeList, MoveCurrentDown_gurax, processor_gurax, argument_gurax)
@@ -224,7 +209,7 @@ VType_wxRearrangeList VTYPE_wxRearrangeList("RearrangeList");
 void VType_wxRearrangeList::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCheckListBox, Flag::Mutable, Gurax_CreateConstructor(RearrangeList_gurax));
 	// Assignment of method

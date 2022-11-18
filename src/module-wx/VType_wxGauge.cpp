@@ -41,9 +41,6 @@ Gurax_DeclareConstructorAlias(Gauge_gurax, "Gauge")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Gauge.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Gauge_gurax, processor_gurax, argument_gurax)
@@ -74,8 +71,6 @@ Gurax_ImplementConstructorEx(Gauge_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxGauge, GetBezelFace_gurax, "GetBezelFace")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, GetBezelFace_gurax, processor_gurax, argument_gurax)
@@ -93,8 +88,6 @@ Gurax_ImplementMethodEx(wxGauge, GetBezelFace_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxGauge, GetRange_gurax, "GetRange")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, GetRange_gurax, processor_gurax, argument_gurax)
@@ -112,8 +105,6 @@ Gurax_ImplementMethodEx(wxGauge, GetRange_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxGauge, GetShadowWidth_gurax, "GetShadowWidth")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, GetShadowWidth_gurax, processor_gurax, argument_gurax)
@@ -131,8 +122,6 @@ Gurax_ImplementMethodEx(wxGauge, GetShadowWidth_gurax, processor_gurax, argument
 Gurax_DeclareMethodAlias(wxGauge, GetValue_gurax, "GetValue")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, GetValue_gurax, processor_gurax, argument_gurax)
@@ -150,8 +139,6 @@ Gurax_ImplementMethodEx(wxGauge, GetValue_gurax, processor_gurax, argument_gurax
 Gurax_DeclareMethodAlias(wxGauge, IsVertical_gurax, "IsVertical")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, IsVertical_gurax, processor_gurax, argument_gurax)
@@ -169,8 +156,6 @@ Gurax_ImplementMethodEx(wxGauge, IsVertical_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxGauge, Pulse_gurax, "Pulse")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, Pulse_gurax, processor_gurax, argument_gurax)
@@ -189,8 +174,6 @@ Gurax_DeclareMethodAlias(wxGauge, SetBezelFace_gurax, "SetBezelFace")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, SetBezelFace_gurax, processor_gurax, argument_gurax)
@@ -212,8 +195,6 @@ Gurax_DeclareMethodAlias(wxGauge, SetRange_gurax, "SetRange")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("range", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, SetRange_gurax, processor_gurax, argument_gurax)
@@ -235,8 +216,6 @@ Gurax_DeclareMethodAlias(wxGauge, SetShadowWidth_gurax, "SetShadowWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, SetShadowWidth_gurax, processor_gurax, argument_gurax)
@@ -258,8 +237,6 @@ Gurax_DeclareMethodAlias(wxGauge, SetValue_gurax, "SetValue")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxGauge, SetValue_gurax, processor_gurax, argument_gurax)
@@ -288,7 +265,7 @@ VType_wxGauge VTYPE_wxGauge("Gauge");
 void VType_wxGauge::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Gauge_gurax));
 	// Assignment of method

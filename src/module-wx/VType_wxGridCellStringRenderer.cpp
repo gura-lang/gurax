@@ -33,9 +33,6 @@ Gurax_DeclareConstructorAlias(GridCellStringRenderer_gurax, "GridCellStringRende
 {
 	Declare(VTYPE_wxGridCellStringRenderer, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.GridCellStringRenderer.
-)**");
 }
 
 Gurax_ImplementConstructorEx(GridCellStringRenderer_gurax, processor_gurax, argument_gurax)
@@ -62,7 +59,7 @@ VType_wxGridCellStringRenderer VTYPE_wxGridCellStringRenderer("GridCellStringRen
 void VType_wxGridCellStringRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellStringRenderer_gurax));
 	// Assignment of method

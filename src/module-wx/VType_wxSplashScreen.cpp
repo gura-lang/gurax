@@ -45,7 +45,7 @@ VType_wxSplashScreen VTYPE_wxSplashScreen("SplashScreen");
 void VType_wxSplashScreen::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxFrame, Flag::Mutable);
 	// Assignment of method

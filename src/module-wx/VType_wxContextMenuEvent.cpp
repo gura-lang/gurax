@@ -37,8 +37,6 @@ Gurax_DeclareMethodAlias(wxContextMenuEvent, GetPosition_gurax, "GetPosition")
 {
 	Declare(VTYPE_wxPoint, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxContextMenuEvent, GetPosition_gurax, processor_gurax, argument_gurax)
@@ -57,8 +55,6 @@ Gurax_DeclareMethodAlias(wxContextMenuEvent, SetPosition_gurax, "SetPosition")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("point", VTYPE_wxPoint, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxContextMenuEvent, SetPosition_gurax, processor_gurax, argument_gurax)
@@ -88,7 +84,7 @@ VType_wxContextMenuEvent VTYPE_wxContextMenuEvent("ContextMenuEvent");
 void VType_wxContextMenuEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

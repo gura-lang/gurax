@@ -35,9 +35,6 @@ Gurax_DeclareConstructorAlias(AuiManager_gurax, "AuiManager")
 	DeclareArg("managed_wnd", VTYPE_wxWindow, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.AuiManager.
-)**");
 }
 
 Gurax_ImplementConstructorEx(AuiManager_gurax, processor_gurax, argument_gurax)
@@ -62,8 +59,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, DetachPane_gurax, "DetachPane")
 {
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("window", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, DetachPane_gurax, processor_gurax, argument_gurax)
@@ -86,8 +81,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, GetArtProvider_gurax, "GetArtProvider")
 {
 	Declare(VTYPE_wxAuiDockArt, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, GetArtProvider_gurax, processor_gurax, argument_gurax)
@@ -105,8 +98,6 @@ Gurax_ImplementMethodEx(wxAuiManager, GetArtProvider_gurax, processor_gurax, arg
 Gurax_DeclareMethodAlias(wxAuiManager, GetFlags_gurax, "GetFlags")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, GetFlags_gurax, processor_gurax, argument_gurax)
@@ -125,8 +116,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, GetManagedWindow_gurax, "GetManagedWindow
 {
 	Declare(VTYPE_wxWindow, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, GetManagedWindow_gurax, processor_gurax, argument_gurax)
@@ -144,8 +133,6 @@ Gurax_ImplementMethodEx(wxAuiManager, GetManagedWindow_gurax, processor_gurax, a
 Gurax_DeclareMethodAlias(wxAuiManager, HideHint_gurax, "HideHint")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, HideHint_gurax, processor_gurax, argument_gurax)
@@ -165,8 +152,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, LoadPerspective_gurax, "LoadPerspective")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("perspective", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("update", VTYPE_Bool, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, LoadPerspective_gurax, processor_gurax, argument_gurax)
@@ -188,8 +173,6 @@ Gurax_ImplementMethodEx(wxAuiManager, LoadPerspective_gurax, processor_gurax, ar
 Gurax_DeclareMethodAlias(wxAuiManager, SavePerspective_gurax, "SavePerspective")
 {
 	Declare(VTYPE_String, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, SavePerspective_gurax, processor_gurax, argument_gurax)
@@ -208,8 +191,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, SetArtProvider_gurax, "SetArtProvider")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("art_provider", VTYPE_wxAuiDockArt, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, SetArtProvider_gurax, processor_gurax, argument_gurax)
@@ -233,8 +214,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, SetDockSizeConstraint_gurax, "SetDockSize
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("widthpct", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("heightpct", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, SetDockSizeConstraint_gurax, processor_gurax, argument_gurax)
@@ -257,8 +236,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, SetFlags_gurax, "SetFlags")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, SetFlags_gurax, processor_gurax, argument_gurax)
@@ -280,8 +257,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, SetManagedWindow_gurax, "SetManagedWindow
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("managed_wnd", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, SetManagedWindow_gurax, processor_gurax, argument_gurax)
@@ -304,8 +279,6 @@ Gurax_DeclareMethodAlias(wxAuiManager, ShowHint_gurax, "ShowHint")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("rect", VTYPE_wxRect, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, ShowHint_gurax, processor_gurax, argument_gurax)
@@ -327,8 +300,6 @@ Gurax_ImplementMethodEx(wxAuiManager, ShowHint_gurax, processor_gurax, argument_
 Gurax_DeclareMethodAlias(wxAuiManager, UnInit_gurax, "UnInit")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, UnInit_gurax, processor_gurax, argument_gurax)
@@ -346,8 +317,6 @@ Gurax_ImplementMethodEx(wxAuiManager, UnInit_gurax, processor_gurax, argument_gu
 Gurax_DeclareMethodAlias(wxAuiManager, Update_gurax, "Update")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAuiManager, Update_gurax, processor_gurax, argument_gurax)
@@ -373,7 +342,7 @@ VType_wxAuiManager VTYPE_wxAuiManager("AuiManager");
 void VType_wxAuiManager::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(AuiManager_gurax));
 	// Assignment of method

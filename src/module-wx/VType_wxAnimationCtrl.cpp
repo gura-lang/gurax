@@ -40,9 +40,6 @@ Gurax_DeclareConstructorAlias(AnimationCtrl_gurax, "AnimationCtrl")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.AnimationCtrl.
-)**");
 }
 
 Gurax_ImplementConstructorEx(AnimationCtrl_gurax, processor_gurax, argument_gurax)
@@ -79,8 +76,6 @@ Gurax_DeclareMethodAlias(wxAnimationCtrl, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, Create_gurax, processor_gurax, argument_gurax)
@@ -110,8 +105,6 @@ Gurax_DeclareMethodAlias(wxAnimationCtrl, GetAnimation_gurax, "GetAnimation")
 {
 	Declare(VTYPE_wxAnimation, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, GetAnimation_gurax, processor_gurax, argument_gurax)
@@ -130,8 +123,6 @@ Gurax_DeclareMethodAlias(wxAnimationCtrl, GetInactiveBitmap_gurax, "GetInactiveB
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, GetInactiveBitmap_gurax, processor_gurax, argument_gurax)
@@ -149,8 +140,6 @@ Gurax_ImplementMethodEx(wxAnimationCtrl, GetInactiveBitmap_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxAnimationCtrl, IsPlaying_gurax, "IsPlaying")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, IsPlaying_gurax, processor_gurax, argument_gurax)
@@ -170,8 +159,6 @@ Gurax_DeclareMethodAlias(wxAnimationCtrl, LoadFile_gurax, "LoadFile")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("file", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("animType", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, LoadFile_gurax, processor_gurax, argument_gurax)
@@ -196,8 +183,6 @@ Gurax_DeclareMethodAlias(wxAnimationCtrl, Load_gurax, "Load")
 	Declare(VTYPE_Bool, Flag::None);
 	DeclareArg("file", VTYPE_wxInputStream, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("animType", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, Load_gurax, processor_gurax, argument_gurax)
@@ -221,8 +206,6 @@ Gurax_ImplementMethodEx(wxAnimationCtrl, Load_gurax, processor_gurax, argument_g
 Gurax_DeclareMethodAlias(wxAnimationCtrl, Play_gurax, "Play")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, Play_gurax, processor_gurax, argument_gurax)
@@ -241,8 +224,6 @@ Gurax_DeclareMethodAlias(wxAnimationCtrl, SetAnimation_gurax, "SetAnimation")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("anim", VTYPE_wxAnimation, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, SetAnimation_gurax, processor_gurax, argument_gurax)
@@ -265,8 +246,6 @@ Gurax_DeclareMethodAlias(wxAnimationCtrl, SetInactiveBitmap_gurax, "SetInactiveB
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bmp", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, SetInactiveBitmap_gurax, processor_gurax, argument_gurax)
@@ -288,8 +267,6 @@ Gurax_ImplementMethodEx(wxAnimationCtrl, SetInactiveBitmap_gurax, processor_gura
 Gurax_DeclareMethodAlias(wxAnimationCtrl, Stop_gurax, "Stop")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAnimationCtrl, Stop_gurax, processor_gurax, argument_gurax)
@@ -315,7 +292,7 @@ VType_wxAnimationCtrl VTYPE_wxAnimationCtrl("AnimationCtrl");
 void VType_wxAnimationCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(AnimationCtrl_gurax));
 	// Assignment of method

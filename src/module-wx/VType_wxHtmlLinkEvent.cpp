@@ -37,8 +37,6 @@ Gurax_DeclareMethodAlias(wxHtmlLinkEvent, GetLinkInfo_gurax, "GetLinkInfo")
 {
 	Declare(VTYPE_wxHtmlLinkInfo, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxHtmlLinkEvent, GetLinkInfo_gurax, processor_gurax, argument_gurax)
@@ -64,7 +62,7 @@ VType_wxHtmlLinkEvent VTYPE_wxHtmlLinkEvent("HtmlLinkEvent");
 void VType_wxHtmlLinkEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxCommandEvent, Flag::Mutable);
 	// Assignment of method

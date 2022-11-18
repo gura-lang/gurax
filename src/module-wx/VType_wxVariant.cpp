@@ -35,9 +35,6 @@ Gurax_DeclareConstructorAlias(Variant_gurax, "Variant")
 	DeclareArg("value", VTYPE_Any, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.Variant.
-)**");
 }
 
 Gurax_ImplementConstructorEx(Variant_gurax, processor_gurax, argument_gurax)
@@ -69,7 +66,7 @@ VType_wxVariant VTYPE_wxVariant("Variant");
 void VType_wxVariant::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Variant_gurax));
 	// Assignment of method

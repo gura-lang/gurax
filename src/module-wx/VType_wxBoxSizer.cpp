@@ -34,9 +34,6 @@ Gurax_DeclareConstructorAlias(BoxSizer_gurax, "BoxSizer")
 	Declare(VTYPE_wxBoxSizer, Flag::None);
 	DeclareArg("orient", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.BoxSizer.
-)**");
 }
 
 Gurax_ImplementConstructorEx(BoxSizer_gurax, processor_gurax, argument_gurax)
@@ -59,8 +56,6 @@ Gurax_DeclareMethodAlias(wxBoxSizer, AddSpacer_gurax, "AddSpacer")
 	Declare(VTYPE_wxSizerItem, Flag::None);
 	DeclareArg("size", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBoxSizer, AddSpacer_gurax, processor_gurax, argument_gurax)
@@ -82,8 +77,6 @@ Gurax_DeclareMethodAlias(wxBoxSizer, CalcMin_gurax, "CalcMin")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBoxSizer, CalcMin_gurax, processor_gurax, argument_gurax)
@@ -101,8 +94,6 @@ Gurax_ImplementMethodEx(wxBoxSizer, CalcMin_gurax, processor_gurax, argument_gur
 Gurax_DeclareMethodAlias(wxBoxSizer, GetOrientation_gurax, "GetOrientation")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBoxSizer, GetOrientation_gurax, processor_gurax, argument_gurax)
@@ -121,8 +112,6 @@ Gurax_DeclareMethodAlias(wxBoxSizer, SetOrientation_gurax, "SetOrientation")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("orient", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBoxSizer, SetOrientation_gurax, processor_gurax, argument_gurax)
@@ -143,8 +132,6 @@ Gurax_ImplementMethodEx(wxBoxSizer, SetOrientation_gurax, processor_gurax, argum
 Gurax_DeclareMethodAlias(wxBoxSizer, RecalcSizes_gurax, "RecalcSizes")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBoxSizer, RecalcSizes_gurax, processor_gurax, argument_gurax)
@@ -170,7 +157,7 @@ VType_wxBoxSizer VTYPE_wxBoxSizer("BoxSizer");
 void VType_wxBoxSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxSizer, Flag::Mutable, Gurax_CreateConstructor(BoxSizer_gurax));
 	// Assignment of method

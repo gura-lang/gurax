@@ -42,9 +42,6 @@ Gurax_DeclareConstructorAlias(BitmapComboBox_gurax, "BitmapComboBox")
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.BitmapComboBox.
-)**");
 }
 
 Gurax_ImplementConstructorEx(BitmapComboBox_gurax, processor_gurax, argument_gurax)
@@ -78,8 +75,6 @@ Gurax_DeclareMethodAlias(wxBitmapComboBox, Append_gurax, "Append")
 	Declare(VTYPE_Number, Flag::None);
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmapComboBox, Append_gurax, processor_gurax, argument_gurax)
@@ -110,8 +105,6 @@ Gurax_DeclareMethodAlias(wxBitmapComboBox, Create_gurax, "Create")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("validator", VTYPE_wxValidator, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmapComboBox, Create_gurax, processor_gurax, argument_gurax)
@@ -145,8 +138,6 @@ Gurax_DeclareMethodAlias(wxBitmapComboBox, GetBitmapSize_gurax, "GetBitmapSize")
 {
 	Declare(VTYPE_wxSize, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmapComboBox, GetBitmapSize_gurax, processor_gurax, argument_gurax)
@@ -166,8 +157,6 @@ Gurax_DeclareMethodAlias(wxBitmapComboBox, GetItemBitmap_gurax, "GetItemBitmap")
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmapComboBox, GetItemBitmap_gurax, processor_gurax, argument_gurax)
@@ -191,8 +180,6 @@ Gurax_DeclareMethodAlias(wxBitmapComboBox, Insert_gurax, "Insert")
 	DeclareArg("item", VTYPE_String, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmapComboBox, Insert_gurax, processor_gurax, argument_gurax)
@@ -218,8 +205,6 @@ Gurax_DeclareMethodAlias(wxBitmapComboBox, SetItemBitmap_gurax, "SetItemBitmap")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxBitmapComboBox, SetItemBitmap_gurax, processor_gurax, argument_gurax)
@@ -250,7 +235,7 @@ VType_wxBitmapComboBox VTYPE_wxBitmapComboBox("BitmapComboBox");
 void VType_wxBitmapComboBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxComboBox, Flag::Mutable, Gurax_CreateConstructor(BitmapComboBox_gurax));
 	// Assignment of method

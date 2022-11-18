@@ -35,9 +35,6 @@ Gurax_DeclareConstructorAlias(FontDialog_gurax, "FontDialog")
 	DeclareArg("parent", VTYPE_wxWindow, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("data", VTYPE_wxFontData, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.FontDialog.
-)**");
 }
 
 Gurax_ImplementConstructorEx(FontDialog_gurax, processor_gurax, argument_gurax)
@@ -62,8 +59,6 @@ Gurax_ImplementConstructorEx(FontDialog_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxFontDialog, ShowModal_gurax, "ShowModal")
 {
 	Declare(VTYPE_Number, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontDialog, ShowModal_gurax, processor_gurax, argument_gurax)
@@ -82,8 +77,6 @@ Gurax_DeclareMethodAlias(wxFontDialog, GetFontData_gurax, "GetFontData")
 {
 	Declare(VTYPE_wxFontData, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxFontDialog, GetFontData_gurax, processor_gurax, argument_gurax)
@@ -109,7 +102,7 @@ VType_wxFontDialog VTYPE_wxFontDialog("FontDialog");
 void VType_wxFontDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(FontDialog_gurax));
 	// Assignment of method

@@ -45,7 +45,7 @@ VType_wxPGChoices VTYPE_wxPGChoices("PGChoices");
 void VType_wxPGChoices::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

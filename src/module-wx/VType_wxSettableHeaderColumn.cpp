@@ -37,8 +37,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetTitle_gurax, "SetTitle")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("title", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetTitle_gurax, processor_gurax, argument_gurax)
@@ -60,8 +58,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetBitmap_gurax, "SetBitmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("bitmap", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetBitmap_gurax, processor_gurax, argument_gurax)
@@ -84,8 +80,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetWidth_gurax, "SetWidth")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetWidth_gurax, processor_gurax, argument_gurax)
@@ -107,8 +101,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetMinWidth_gurax, "SetMinWidth
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("minWidth", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetMinWidth_gurax, processor_gurax, argument_gurax)
@@ -130,8 +122,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetAlignment_gurax, "SetAlignme
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("align", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetAlignment_gurax, processor_gurax, argument_gurax)
@@ -153,8 +143,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetFlags_gurax, "SetFlags")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flags", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetFlags_gurax, processor_gurax, argument_gurax)
@@ -177,8 +165,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, ChangeFlag_gurax, "ChangeFlag")
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("set", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, ChangeFlag_gurax, processor_gurax, argument_gurax)
@@ -201,8 +187,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetFlag_gurax, "SetFlag")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetFlag_gurax, processor_gurax, argument_gurax)
@@ -224,8 +208,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, ClearFlag_gurax, "ClearFlag")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, ClearFlag_gurax, processor_gurax, argument_gurax)
@@ -247,8 +229,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, ToggleFlag_gurax, "ToggleFlag")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("flag", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, ToggleFlag_gurax, processor_gurax, argument_gurax)
@@ -270,8 +250,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetResizeable_gurax, "SetResize
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("resizable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetResizeable_gurax, processor_gurax, argument_gurax)
@@ -293,8 +271,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetSortable_gurax, "SetSortable
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("sortable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetSortable_gurax, processor_gurax, argument_gurax)
@@ -316,8 +292,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetReorderable_gurax, "SetReord
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("reorderable", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetReorderable_gurax, processor_gurax, argument_gurax)
@@ -339,8 +313,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetHidden_gurax, "SetHidden")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("hidden", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetHidden_gurax, processor_gurax, argument_gurax)
@@ -361,8 +333,6 @@ Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetHidden_gurax, processor_gurax
 Gurax_DeclareMethodAlias(wxSettableHeaderColumn, UnsetAsSortKey_gurax, "UnsetAsSortKey")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, UnsetAsSortKey_gurax, processor_gurax, argument_gurax)
@@ -381,8 +351,6 @@ Gurax_DeclareMethodAlias(wxSettableHeaderColumn, SetSortOrder_gurax, "SetSortOrd
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("ascending", VTYPE_Bool, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetSortOrder_gurax, processor_gurax, argument_gurax)
@@ -403,8 +371,6 @@ Gurax_ImplementMethodEx(wxSettableHeaderColumn, SetSortOrder_gurax, processor_gu
 Gurax_DeclareMethodAlias(wxSettableHeaderColumn, ToggleSortOrder_gurax, "ToggleSortOrder")
 {
 	Declare(VTYPE_Nil, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxSettableHeaderColumn, ToggleSortOrder_gurax, processor_gurax, argument_gurax)
@@ -430,7 +396,7 @@ VType_wxSettableHeaderColumn VTYPE_wxSettableHeaderColumn("SettableHeaderColumn"
 void VType_wxSettableHeaderColumn::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxHeaderColumn, Flag::Mutable);
 	// Assignment of method

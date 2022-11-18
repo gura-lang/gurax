@@ -45,7 +45,7 @@ VType_wxPalette VTYPE_wxPalette("Palette");
 void VType_wxPalette::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable);
 	// Assignment of method

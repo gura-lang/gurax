@@ -45,7 +45,7 @@ VType_wxTreeListCtrl VTYPE_wxTreeListCtrl("TreeListCtrl");
 void VType_wxTreeListCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable);
 	// Assignment of method

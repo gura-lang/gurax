@@ -33,9 +33,6 @@ Gurax_DeclareConstructorAlias(AppConsole_gurax, "AppConsole")
 {
 	Declare(VTYPE_wxAppConsole, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.AppConsole.
-)**");
 }
 
 Gurax_ImplementConstructorEx(AppConsole_gurax, processor_gurax, argument_gurax)
@@ -54,8 +51,6 @@ Gurax_ImplementConstructorEx(AppConsole_gurax, processor_gurax, argument_gurax)
 Gurax_DeclareMethodAlias(wxAppConsole, OnInit_gurax, "OnInit")
 {
 	Declare(VTYPE_Bool, Flag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxAppConsole, OnInit_gurax, processor_gurax, argument_gurax)
@@ -81,7 +76,7 @@ VType_wxAppConsole VTYPE_wxAppConsole("AppConsole");
 void VType_wxAppConsole::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(AppConsole_gurax));
 	// Assignment of method

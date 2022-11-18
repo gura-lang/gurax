@@ -40,9 +40,6 @@ Gurax_DeclareConstructorAlias(StaticBitmap_gurax, "StaticBitmap")
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates an instance of wx.StaticBitmap.
-)**");
 }
 
 Gurax_ImplementConstructorEx(StaticBitmap_gurax, processor_gurax, argument_gurax)
@@ -80,8 +77,6 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, Create_gurax, "Create")
 	DeclareArg("size", VTYPE_wxSize, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("style", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("name", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxStaticBitmap, Create_gurax, processor_gurax, argument_gurax)
@@ -112,8 +107,6 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, GetBitmap_gurax, "GetBitmap")
 {
 	Declare(VTYPE_wxBitmap, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxStaticBitmap, GetBitmap_gurax, processor_gurax, argument_gurax)
@@ -132,8 +125,6 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, GetIcon_gurax, "GetIcon")
 {
 	Declare(VTYPE_wxIcon, Flag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxStaticBitmap, GetIcon_gurax, processor_gurax, argument_gurax)
@@ -152,8 +143,6 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, SetBitmap_gurax, "SetBitmap")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_wxBitmap, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxStaticBitmap, SetBitmap_gurax, processor_gurax, argument_gurax)
@@ -176,8 +165,6 @@ Gurax_DeclareMethodAlias(wxStaticBitmap, SetIcon_gurax, "SetIcon")
 {
 	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("label", VTYPE_wxIcon, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-)**");
 }
 
 Gurax_ImplementMethodEx(wxStaticBitmap, SetIcon_gurax, processor_gurax, argument_gurax)
@@ -207,7 +194,7 @@ VType_wxStaticBitmap VTYPE_wxStaticBitmap("StaticBitmap");
 void VType_wxStaticBitmap::DoPrepare(Frame& frameOuter)
 {
 	// Add help
-	AddHelp("en", g_docHelp_en);
+	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StaticBitmap_gurax));
 	// Assignment of method
