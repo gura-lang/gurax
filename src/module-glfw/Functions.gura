@@ -639,4 +639,4 @@ void AssignFunctions(Frame& frame)
 }
 
 Gurax_EndModuleScope(glfw)
-'''.Render('Functions.cpp')
+'''.Render(Open('Functions.cpp', 'w').Write(Codec.bom@utf8))

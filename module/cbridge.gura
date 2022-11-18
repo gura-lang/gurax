@@ -249,16 +249,28 @@ FuncInfo = class {
 CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 	codeFunctionBody = nil
 	symbolNameOnCall = nil
+	exprsHelp = []
 	if (expr.IsAssign()) {
-		if (expr.right.IsString()) {
-			codeFunctionBody = expr.right.string
-		} elsif (expr.right.IsIdentifier()) {
-			symbolNameOnCall = expr.right.symbolName
+		exprAssigned = expr.right
+		while (exprAssigned.IsBinaryOp(`%%)) {
+			exprsHelp.Add(exprAssigned.right)
+			exprAssigned = exprAssigned.left
+		}
+		if (exprAssigned.IsString()) {
+			codeFunctionBody = exprAssigned.string
+		} elsif (exprAssigned.IsIdentifier()) {
+			symbolNameOnCall = exprAssigned.symbolName
 		} else {
-			ErrorDone(expr, 'assigned value must be a string')
+			ErrorDone(expr, 'assigned value must be a string or an identifier')
 		}
 		expr = expr.left
+	} else {
+		while (expr.IsBinaryOp(`%%)) {
+			exprsHelp.Add(expr.right)
+			expr = expr.left
+		}
 	}
+
 	typeName = 'any'
 	virtualFlag = false
 	returnThisFlag = false
@@ -343,6 +355,7 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	${end}
 	AddHelp(Gurax_Symbol(en), u8R"**(
+
 )**");
 }
 
