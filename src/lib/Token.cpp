@@ -26,6 +26,7 @@ const TokenType TokenType::AssignShr		{  2, "AssignShr",		">>=",		OpType::None	}
 const TokenType TokenType::Pair				{  2, "Pair",			"=>",		OpType::Pair	};
 const TokenType TokenType::OrOr				{  4, "OrOr",			"||",		OpType::OrOr	};	// ||
 const TokenType TokenType::AndAnd			{  5, "AndAnd",			"&&",		OpType::AndAnd	};	// &&
+const TokenType TokenType::ModMod			{  5, "ModMod",			"%%",		OpType::ModMod	};
 const TokenType TokenType::Not				{  6, "Not",			"!",		OpType::Not		};	// !
 const TokenType TokenType::As				{  7, "As",				"as",		OpType::As		};	// as
 const TokenType TokenType::Contains			{  7, "Contains",		"in",		OpType::Contains };	// in
@@ -47,7 +48,6 @@ const TokenType TokenType::Sub				{ 14, "Sub",			"-",		OpType::Sub		};
 const TokenType TokenType::Mul				{ 15, "Mul",			"*",		OpType::Mul		};	// *
 const TokenType TokenType::Div				{ 15, "Div",			"/",		OpType::Div		};
 const TokenType TokenType::Mod				{ 15, "Mod",			"%",		OpType::Mod		};
-const TokenType TokenType::ModMod			{ 15, "ModMod",			"%%",		OpType::ModMod	};
 const TokenType TokenType::Dot				{ 15, "Dot",			"|.|",		OpType::Dot		};
 const TokenType TokenType::Cross			{ 15, "Cross",			"|^|",		OpType::Cross	};
 const TokenType TokenType::Gear				{ 15, "Gear",			"|*|",		OpType::Gear	};
