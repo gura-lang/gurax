@@ -1428,6 +1428,9 @@ Gurax_DeclareProperty_R(List, len)
 	AddHelp(Gurax_Symbol(en), u8R"**(
 The number of elements in the list.
 )**");
+	AddHelp(Gurax_Symbol(ja), u8R"**(
+リスト中の要素数。
+)**");
 }
 
 Gurax_ImplementPropertyGetter(List, len)
@@ -1441,7 +1444,10 @@ Gurax_DeclareProperty_R(List, tuple)
 {
 	Declare(VTYPE_Tuple, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Converts into a Tuple instance.
+Converts into a `Tuple` instance.
+)**");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+`Tuple` インスタンスに変換。
 )**");
 }
 

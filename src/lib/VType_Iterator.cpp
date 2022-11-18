@@ -17,12 +17,6 @@ ${help.ComposePropertyHelp(Iterator, `en)}
 
 # Operator
 
-iterator[] .. converts the iterator into a list.
-
-Example:
-
-  `(1..3)[]` .. generates `[1, 2, 3]`
-
 # Cast Operation
 
 ${help.ComposeConstructorHelp(Iterator, `en)}
@@ -38,7 +32,10 @@ Gurax_DeclareMethod(Iterator, IsFinite)
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Returns `true` if the iterator is a finite one.
+Returns `true` if the iterator is finite.
+)**");
+	AddHelp(Gurax_Symbol(en), u8R"**(
+イテレータが有限のとき `true` を返します。
 )**");
 }
 
@@ -56,7 +53,10 @@ Gurax_DeclareMethod(Iterator, IsInfinite)
 {
 	Declare(VTYPE_Any, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Returns `true` if the iterator is a infinite one.
+Returns `true` if the iterator is infinite.
+)**");
+	AddHelp(Gurax_Symbol(ja), u8R"**(
+イテレータが無限のとき `true` を返します。
 )**");
 }
 
@@ -73,6 +73,12 @@ Gurax_ImplementMethod(Iterator, IsInfinite)
 Gurax_DeclareMethod(Iterator, NextValue)
 {
 	Declare(VTYPE_Iterator, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Returns the next element value of the iterator.
+)**");
+	AddHelp(Gurax_Symbol(ja), u8R"**(
+イテレータの次の要素を返します。
+)**");
 }
 
 Gurax_ImplementMethod(Iterator, NextValue)
