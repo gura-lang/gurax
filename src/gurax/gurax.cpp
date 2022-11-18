@@ -43,9 +43,11 @@ bool Main(int argc, char* argv[])
 		.OptBool("list",			'L')
 		.OptBool("quiet",			'q')
 		.OptBool("shared-script",	'S')
+		.OptBool("interactive",		't')
 		.OptString("template",		'T')
 		.OptBool("version",			'v');
 	if (!Initialize(argc, argv)) return false;
+	bool interactiveFlag = cmdLine.GetBool("interactive");
 	if (cmdLine.GetBool("help")) {
 		Stream::COut->Printf("%s", g_strHelp);
 		return true;
@@ -65,7 +67,7 @@ bool Main(int argc, char* argv[])
 		pTemplate->Render(processor, *Stream::COut);
 		return !Error::IsIssued();
 	} else if (cmdLine.argc < 2) {
-		if (!Basement::Inst.GetCommandDoneFlag()) RunREPL();
+		if (interactiveFlag || !Basement::Inst.GetCommandDoneFlag()) RunREPL();
 		return true;
 	} else {
 		const char* arg = cmdLine.argv[1];
@@ -86,7 +88,13 @@ bool Main(int argc, char* argv[])
 		}
 		Processor& processor = Basement::Inst.GetProcessor();
 		RefPtr<Value> pValue(pExprRoot->Eval(processor));
-		return !Error::IsIssued();
+		if (!interactiveFlag) return !Error::IsIssued();
+		if (Error::IsIssued()) {
+			Error::Print(*Stream::CErr);
+			processor.ClearValueStack();
+			processor.ClearError();
+		}
+		RunREPL();
 	}
 }
 
