@@ -9,6 +9,14 @@ ErrorDone(expr as Expr, msg as String) = {
 }
 
 //------------------------------------------------------------------------------
+// HelpInfo
+//------------------------------------------------------------------------------
+HelpInfo = struct {
+	langCode as Symbol
+	doc as String
+}
+
+//------------------------------------------------------------------------------
 // TypeInfo
 //------------------------------------------------------------------------------
 TypeInfo = class {
@@ -220,13 +228,14 @@ FuncInfo = class {
 	mapFlag as Bool
 	type as Symbol
 	operator as Operator
+	helpInfoTbl[] as HelpInfo
 	__init__(r as Renderer, moduleName as String, name as String, nameOnCall:nil as String, argInfoTbl[] as ArgInfo, typeName as String, codeFunctionBody:nil as String,
-			virtualFlag as Bool, returnThisFlag as Bool, returnNilFlag as Bool, constFlag as Bool, staticFlag as Bool, mapFlag as Bool, type as Symbol, operator? as Operator) = {
+			virtualFlag as Bool, returnThisFlag as Bool, returnNilFlag as Bool, constFlag as Bool, staticFlag as Bool, mapFlag as Bool, type as Symbol, operator? as Operator, helpInfoTbl[] as HelpInfo = []) = {
 		this.r = r, this.moduleName = moduleName, this.name = name, this.nameOnCall = nameOnCall
 		this.argInfoTbl = argInfoTbl, this.typeName = typeName
 		this.virtualFlag = virtualFlag, this.returnThisFlag = returnThisFlag, this.returnNilFlag = returnNilFlag, this.constFlag = constFlag
 		this.staticFlag = staticFlag, this.mapFlag = mapFlag
-		this.type = type, this.operator = operator
+		this.type = type, this.operator = operator, this.helpInfoTbl = helpInfoTbl
 		if (codeFunctionBody) { this.tmplFunctionBody = Template().Parse(codeFunctionBody) }
 	}
 	GetTypeInfo() = {
@@ -270,7 +279,14 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 			expr = expr.left
 		}
 	}
-
+	helpInfoTbl = []
+	exprsHelp.Reverse {|exprHelp|
+		if (exprHelp.IsString()) {
+			helpInfoTbl.Add(HelpInfo(`en, exprHelp.string))
+		} elsif (exprHelp.IsSuffixed()) {
+			helpInfoTbl.Add(HelpInfo(exprHelp.symbol, exprHelp.string))
+		}
+	}
 	typeName = 'any'
 	virtualFlag = false
 	returnThisFlag = false
@@ -342,7 +358,7 @@ CreateFuncInfo(r as Renderer, moduleName as String, expr as Expr) = {
 		ErrorDone(expr, 'Caller is expected')
 	}
 	FuncInfo(r, moduleName, symbolName, symbolNameOnCall, argInfoTbl, typeName, codeFunctionBody, virtualFlag, returnThisFlag, returnNilFlag, constFlag,
-		staticFlag, mapFlag, type, operator)
+		staticFlag, mapFlag, type, operator, helpInfoTbl)
 }
 
 tmplFunctionImplementation = tR'''
@@ -353,6 +369,11 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 	${funcInfo.argInfoTbl::ComposeDeclaration()}
 	${if (funcInfo.GetTypeInfo().blockOccurFlag)}
 	DeclareBlock(BlkOccur::ZeroOrOnce);
+	${end}
+	${funcInfo.helpInfoTbl.Each {|helpInfo|}}
+	AddHelp(Gurax_Symbol(${helpInfo.langCode}), u8R"**(
+${helpInfo.doc}
+)**");
 	${end}
 	AddHelp(Gurax_Symbol(en), u8R"**(
 
