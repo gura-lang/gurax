@@ -375,9 +375,6 @@ Gurax_DeclareFunctionAlias(${funcInfo.name}_gurax, "${funcInfo.name}")
 ${helpInfo.doc}
 )**");
 	${end}
-	AddHelp(Gurax_Symbol(en), u8R"**(
-
-)**");
 }
 
 Gurax_ImplementFunctionEx(${funcInfo.name}_gurax, processor_gurax, argument_gurax)
