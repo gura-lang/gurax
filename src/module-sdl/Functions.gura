@@ -2419,4 +2419,4 @@ void AssignFunctions(Frame& frame)
 }
 
 Gurax_EndModuleScope(sdl)
-'''.Render('Functions.cpp')
+'''.Render(Open('Functions.cpp', 'w').Write(Codec.bom@utf8))

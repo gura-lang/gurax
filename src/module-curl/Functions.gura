@@ -230,4 +230,4 @@ void AssignFunctions(Frame& frame)
 }
 
 Gurax_EndModuleScope(curl)
-'''.Render('Functions.cpp')
+'''.Render(Open('Functions.cpp', 'w').Write(Codec.bom@utf8))

@@ -1068,7 +1068,7 @@ void AssignFunctions(Frame& frame)
 }
 
 Gurax_EndModuleScope(cairo)
-'''.Render('Functions.cpp')
+'''.Render(Open('Functions.cpp', 'w').Write(Codec.bom@utf8))
 
 MakeFuncDecl(className as String, methodName as String, funcInfo as cbridge.FuncInfo) = {
 	Format('%s.%s(%s) = %s(this%s)', className, methodName,
@@ -1095,11 +1095,3 @@ funcDecls = r.funcInfoTbl.Each():xiter {|funcInfo|
 		MakeFuncDecl('cairo_pattern_t', funcInfo.name.Sub('^cairo_', ''), funcInfo)
 	}
 }
-
-/*
-tR'''
-#!/usr/bin/env gurax
-import(cairo) as binary {*}
-${'\n' + funcDecls + '\n'}
-'''.Render('cairo.gura')
-*/

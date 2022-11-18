@@ -41,7 +41,7 @@ Gurax_ImplementFunctionEx(curl_easy_setopt_gurax, processor_gurax, argument_gura
 	auto& value_curl = args_gurax.Pick<Value_CURL>();
 	CURL* curl = value_curl.GetEntityPtr();
 	CURLoption option = args_gurax.PickNumber<CURLoption>();
-	Gurax::Value& value = args_gurax.PickValue();
+	const Gurax::Value& value = args_gurax.PickValue();
 	// Function body
 	CURLcode code = CURLE_OK;
 	if (!value_curl.GetOpt().SetItem(option, value, &code)) return Value::nil();
@@ -445,7 +445,7 @@ Gurax_ImplementFunctionEx(curl_free_gurax, processor_gurax, argument_gurax)
 {
 	// Arguments
 	Gurax::ArgPicker args_gurax(argument_gurax);
-	Gurax::Value& value = args_gurax.PickValue();
+	const Gurax::Value& value = args_gurax.PickValue();
 	// Function body
 	return Value::nil();
 }
