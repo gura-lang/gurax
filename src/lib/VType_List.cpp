@@ -15,22 +15,23 @@ ${help.ComposePropertyHelp(List, `en)}
 
 # Operator
 
-`Any in List` ... 
+`Any in List` ... Returns `true` if the `List` instance contains the `Any` instance.
 
-`List |+| List` ...
+`List |+| List` ... Creates a `List` instance that combines the two `List` instances.
 
-`Any |+| List` ...
+`Any |+| List` ... Creates a `List` instance that appends `Any` instance at the beginning of the right-sided `List` instance.
 
-`List |+| Any` ...
+`List |+| Any` ... Creates a `List` instance that appends `Any` instance at the end of the left-sided `List` instance.
 
 
 # Cast Operation
 
-`Iterator` to `List` ... Creates a `List` instance that contains element values from the `Iterator`.
+`Iterator` to `List` ... Turns the `Iterator` into a `List`.
 
-`Array` to `List` ...
+`Array` to `List` ... Turns the `Array` into a `List`.
 
-`Tuple` to `List` ...
+`Tuple` to `List` ... Turns the `Tuple` into a `List`.
+
 
 ${help.ComposeConstructorHelp(List, `en)}
 
@@ -40,14 +41,48 @@ ${help.ComposeMethodHelp(List, `en)}
 //------------------------------------------------------------------------------
 // Implementation of statement
 //------------------------------------------------------------------------------
-// @(`callable?) {block}
+// @(callable?) {`block}
 Gurax_DeclareStatementAlias(_create_list_, "@")
 {
-	Declare(VTYPE_Dict, Flag::None);
+	Declare(VTYPE_List, Flag::None);
 	DeclareArg("callable", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
-	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
+	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::Quote);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates a `List` instance.
+Creates a `List` instance after evaculating `block` as an element list.
+
+```
+@{1, 2, 3, 4, 5}                // generates [1, 2, 3, 4, 5]
+@{'apple', 'orange', 'grape'}   // generates ['apple', 'orange', 'grape']
+```
+
+The element list can contain lists as follows:
+
+```
+@{[1, [2, 3]], [4, 5, 6]}       // generates [[1, [2, 3]], [4, 5, 6]]
+```
+
+You can also use brace brackets to specify inner lists.
+This enables you to describe nested lists in a similar manner with C and Java.
+
+```
+@{{1, {2, 3}}, {4, 5, 6}}       // generates [[1, [2, 3]], [4, 5, 6]]
+```
+
+The argument `callable` is a callable object that is evaluated with each element of the list as arguments.
+
+```
+@(math.Abs) {-1, 3, 1, -2}     // generates [1, 3, 1, 2]
+```
+
+```
+Person = struct { name as String, age as Number }
+```
+
+```
+@(Person) {('Taro', 23), ('Hanako', 22), ('Jiro', 25)}
+@{Person('Taro', 23), Person('Hanako', 22), Person('Jiro', 25)}
+
+```
 )**");
 }
 
