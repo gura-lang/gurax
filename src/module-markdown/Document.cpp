@@ -1070,7 +1070,8 @@ bool Document::FeedChar(char ch)
 			FlushText(Item::Type::Code, true, true);
 			_stat = Stat::DecorationPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
-			FlushText(Item::Type::Code, true, true);
+			_text.insert(0, "`");
+			FlushText(Item::Type::Text, true, true);
 			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
@@ -1082,7 +1083,8 @@ bool Document::FeedChar(char ch)
 		if (ch == '`') {
 			_stat = Stat::CodeEsc_Backquote;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
-			FlushText(Item::Type::Code, true, true);
+			_text.insert(0, "``");
+			FlushText(Item::Type::Text, true, true);
 			Gurax_PushbackEx(ch);
 			_stat = _statStack.Pop();
 		} else {
