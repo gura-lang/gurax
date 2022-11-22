@@ -42,7 +42,7 @@ ${help.ComposeMethodHelp(List, `en)}
 // Implementation of statement
 //------------------------------------------------------------------------------
 // @(callable?) {`block}
-Gurax_DeclareStatementAlias(_create_list_, "@")
+Gurax_DeclareStatementAlias(_at_, "@")
 {
 	Declare(VTYPE_List, Flag::None);
 	DeclareArg("callable", VTYPE_Any, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -74,19 +74,33 @@ The argument `callable` is a callable object that is evaluated with each element
 @(math.Abs) {-1, 3, 1, -2}     // generates [1, 3, 1, 2]
 ```
 
+This has the same effect with follows:
+
+```
+@{math.Abs(-1), math.Abs(3), math.Abs(1), math.Abs(-2)}
+```
+
+The list creation with the callable is useful to create a list of structures. Consider the following structure:
+
 ```
 Person = struct { name as String, age as Number }
 ```
 
+The following code is to create a list of the structure:
+
+```
+@{Person('Taro', 23), Person('Hanako', 22), Person('Jiro', 25)}
+```
+
+Using the list creation with callable, this can be written as follows:
+
 ```
 @(Person) {('Taro', 23), ('Hanako', 22), ('Jiro', 25)}
-@{Person('Taro', 23), Person('Hanako', 22), Person('Jiro', 25)}
-
 ```
 )**");
 }
 
-Gurax_ImplementStatement(_create_list_)
+Gurax_ImplementStatement(_at_)
 {
 	ExprLink& exprLinkElem = exprCaller.GetExprOfBlock()->GetExprLinkElem();
 	size_t nExprs = exprLinkElem.CountSequence();
@@ -144,7 +158,12 @@ Gurax_DeclareMethod(List, Add)
 	Declare(VTYPE_List, Flag::Reduce);
 	DeclareArg("value", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Adds values to the list.
+Adds values to `this` list.
+
+```
+[1, 2, 3].Add(4, 5, 6)        // generates [1, 2, 3, 4, 5, 6]
+[1, 2, 3].Add([4, 5], [6, 7]) // generates [1, 2, 3, [4, 5], [6, 7]]
+```
 )**");
 }
 
@@ -167,8 +186,13 @@ Gurax_DeclareMethod(List, Append)
 	Declare(VTYPE_List, Flag::Reduce);
 	DeclareArg("value", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Adds values to the list.
-If the value is a list of an iterator, elements they contain are added to the list.
+Adds values to `this` list.
+If the added value is a list or an iterator, elements in it are added to the list.
+
+```
+[1, 2, 3].Append(4, 5, 6)        // generates [1, 2, 3, 4, 5, 6]
+[1, 2, 3].Append([4, 5], [6, 7]) // generates [1, 2, 3, 4, 5, 6, 7]
+```
 )**");
 }
 
@@ -190,7 +214,7 @@ Gurax_DeclareMethod(List, Clear)
 {
 	Declare(VTYPE_List, Flag::Reduce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Clears the content of the list.
+Clears all the elements of `this` list.
 )**");
 }
 
@@ -1556,7 +1580,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of statement
-	frameOuter.Assign(Gurax_CreateStatement(_create_list_));
+	frameOuter.Assign(Gurax_CreateStatement(_at_));
 	// Assignment of method specific to List
 	Assign(Gurax_CreateMethod(List, Add));
 	Assign(Gurax_CreateMethod(List, Append));
