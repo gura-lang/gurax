@@ -123,6 +123,7 @@ void ValueTypedOwner::Add(const ValueTypedOwner& values)
 
 bool ValueTypedOwner::Add(Iterator& iterator)
 {
+	if (!iterator.MustBeFinite()) return false;
 	ValueOwner& valueOwner = GetValueOwnerToModify();
 	for (;;) {
 		RefPtr<Value> pValue(iterator.NextValue());
@@ -157,6 +158,7 @@ void ValueTypedOwner::AddX(const ValueTypedOwner& values)
 
 bool ValueTypedOwner::AddX(Iterator& iterator)
 {
+	if (!iterator.MustBeFinite()) return false;
 	ValueOwner& valueOwner = GetValueOwnerToModify();
 	for (;;) {
 		RefPtr<Value> pValue(iterator.NextValue());
@@ -211,6 +213,7 @@ bool ValueTypedOwner::Insert(Int pos, const ValueTypedOwner& values)
 
 bool ValueTypedOwner::Insert(Int pos, Iterator& iterator)
 {
+	if (!iterator.MustBeFinite()) return false;
 	ValueOwner& valueOwner = GetValueOwnerToModify();
 	if (valueOwner.size() == pos) return Add(iterator);
 	if (!valueOwner.FixPosition(&pos)) return false;

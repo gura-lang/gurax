@@ -19,6 +19,8 @@ ${help.ComposePropertyHelp(List, `en)}
 
 `List |+| List` ... Creates a `List` instance that combines the two `List` instances.
 
+`List |+| Iterator` ... Creates a `List` instance that appends elements of `Iterator` at the beginning of the left-sided `List` instance.
+
 `Any |+| List` ... Creates a `List` instance that appends `Any` instance at the beginning of the right-sided `List` instance.
 
 `List |+| Any` ... Creates a `List` instance that appends `Any` instance at the end of the left-sided `List` instance.
@@ -1550,6 +1552,15 @@ Gurax_ImplementOpBinary(Concat, List, List)
 	return new Value_List(pValues.release());
 }
 
+// List |+| Iterator
+Gurax_ImplementOpBinary(Concat, List, Iterator)
+{
+	RefPtr<ValueTypedOwner> pValues(Value_List::GetValueTypedOwner(valueL).Reference());
+	Iterator& iteratorR = Value_Iterator::GetIterator(valueR);
+	if (!pValues->Add(iteratorR)) return Value::nil();
+	return new Value_List(pValues.release());
+}
+
 // Any |+| List
 Gurax_ImplementOpBinary(Concat, Any, List)
 {
@@ -1655,6 +1666,7 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	// Assignment of operator
 	Gurax_AssignOpBinary(Contains, Any, List);
 	Gurax_AssignOpBinary(Concat, List, List);
+	Gurax_AssignOpBinary(Concat, List, Iterator);
 	Gurax_AssignOpBinary(Concat, Any, List);
 	Gurax_AssignOpBinary(Concat, List, Any);
 }
