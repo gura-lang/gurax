@@ -11,15 +11,16 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(Stream, `en)}
 
 # Operator
 
-- `Stream << Binary`
-- `Stream << Pointer`
-- `Stream << Stream`
+`Stream << Binary` ... Writes the content of `Binary` to the `Stream`.
+
+`Stream << Pointer` ... Writes the content pointed by `Pointer` to the `Stream`.
+
+`Stream << Stream` ... Writes the data read from the left-sided `Stream` into the right-sided `Stream`. 
+
 
 # Cast Operation
 
@@ -31,7 +32,7 @@ ${help.ComposeMethodHelp(Stream, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Stream(pathName:String, mode?:String, codec?:Codec) {block?}
+// Stream(pathName as String, mode? as String, codec? as Codec) {block?}
 Gurax_DeclareConstructor(Stream)
 {
 	Declare(VTYPE_DateTime, Flag::Map);
@@ -63,7 +64,7 @@ Gurax_ImplementConstructor(Stream)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Stream.Pipe(streamSrc:Stream:r, streamDst:Stream:w):void:[cooked]
+// Stream.Pipe(streamSrc:r as Stream, streamDst:w as Stream):void:[cooked]
 Gurax_DeclareClassMethod(Stream, Pipe)
 {
 	Declare(VTYPE_Nil, Flag::None);
@@ -164,7 +165,7 @@ Gurax_ImplementMethod(Stream, Flush)
 	return valueThis.Reference();
 }
 
-// Stream#PipeFrom(streamSrc:Stream):Stream:reduce:[cooked]
+// Stream#PipeFrom(streamSrc as Stream):reduce:[cooked] as Stream
 Gurax_DeclareMethod(Stream, PipeFrom)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
@@ -198,7 +199,7 @@ Gurax_ImplementMethod(Stream, PipeFrom)
 	return valueThis.Reference();
 }
 
-// Stream#PipeTo(streamDst:Stream:w):Stream:reduce:[cooked]
+// Stream#PipeTo(streamDst:w as Stream):reduce:[cooked] as Stream
 Gurax_DeclareMethod(Stream, PipeTo)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
@@ -255,7 +256,7 @@ Gurax_ImplementMethod(Stream, Print)
 	return Value::nil();
 }
 
-// Stream#Printf(format:String, values*):void:map
+// Stream#Printf(format as String, values*):void:map
 Gurax_DeclareMethod(Stream, Printf)
 {
 	Declare(VTYPE_Nil, Flag::Map);
