@@ -72,7 +72,7 @@ Gurax_DeclareClassMethod(Stream, Pipe)
 	DeclareArg("streamDst", VTYPE_Stream, ArgOccur::Once, ArgFlag::StreamW);
 	DeclareAttrOpt(Gurax_Symbol(cooked));
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Reads data from the `streamSrc` and writes it into `streamDst`.
+Writes data read from `streamSrc` into `streamDst`.
 )**");
 }
 
@@ -100,7 +100,7 @@ Gurax_ImplementClassMethod(Stream, Pipe)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Stream#Addcr(flag:Bool):reduce
+// Stream#Addcr(flag as Bool):reduce
 Gurax_DeclareMethod(Stream, Addcr)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
@@ -123,7 +123,7 @@ Gurax_ImplementMethod(Stream, Addcr)
 	return valueThis.Reference();
 }
 
-// Stream#Delcr(flag:Bool):reduce
+// Stream#Delcr(flag as Bool):reduce
 Gurax_DeclareMethod(Stream, Delcr)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
@@ -307,7 +307,7 @@ Gurax_ImplementMethod(Stream, Println)
 	return Value::nil();
 }
 
-// Stream#Read(bytes?:Number)
+// Stream#Read(bytes? as Number)
 Gurax_DeclareMethod(Stream, Read)
 {
 	Declare(VTYPE_Binary, Flag::None);
@@ -369,7 +369,7 @@ Gurax_ImplementMethod(Stream, ReadLine)
 	return argument.ReturnValue(processor, new Value_String(std::move(str)));
 }
 
-// Stream#ReadLines(nLines?:Number):[chop] {block?}
+// Stream#ReadLines(nLines? as Number):[chop] {block?}
 Gurax_DeclareMethod(Stream, ReadLines)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -416,21 +416,21 @@ Gurax_ImplementMethod(Stream, ReadText)
 	return argument.ReturnValue(processor, new Value_String(std::move(str)));
 }
 
-// Stream#Seek(offset:Number, whence?:Symbol):reduce
+// Stream#Seek(offset as Number, whence? as Symbol):reduce
 Gurax_DeclareMethod(Stream, Seek)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("offset", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("whence", VTYPE_Symbol, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Seeks the current file position to the offset specified by the argument `offset`.
+Seeks the current file position to the specified `offset`.
 
 The argument `whence` specifies the meaning of `offset` value as follows:
 
-- ``set` ... `offset` is an absolute offset from the begining of the stream.
-- ``cur` ... `offset` is a relative offset from the current position.
+- `` `set`` ... `offset` is an absolute offset from the begining of the stream.
+- `` `cur`` ... `offset` is a relative offset from the current position.
 
-This method returns the target stream instance itself.
+It returns `this` stream instance.
 )**");
 }
 
@@ -455,7 +455,9 @@ Gurax_DeclareMethod(Stream, SkipLine)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Skip one line.
+Reads a line and discards it.
+
+It returns `this` stream instance.
 )**");
 }
 
@@ -468,13 +470,15 @@ Gurax_ImplementMethod(Stream, SkipLine)
 	return valueThis.Reference();
 }
 
-// Stream#SkipLines(nLines:Number)
+// Stream#SkipLines(nLines as Number)
 Gurax_DeclareMethod(Stream, SkipLines)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);
 	DeclareArg("nLines", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Skips by the specified number of lines.
+Reads specified number of lines and discards them.
+
+It returns `this` stream instance.
 )**");
 }
 
@@ -491,7 +495,7 @@ Gurax_ImplementMethod(Stream, SkipLines)
 	return valueThis.Reference();
 }
 
-// Stream#Write(ptr:Pointer, bytes?:Number):reduce
+// Stream#Write(ptr as Pointer, bytes? as Number):reduce
 Gurax_DeclareMethod(Stream, Write)
 {
 	Declare(VTYPE_Stream, Flag::Reduce);

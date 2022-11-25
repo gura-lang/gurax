@@ -11,10 +11,6 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
-${help.ComposePropertyHelp(Pointer, `en)}
-
 - `p.int8 = 10` .. Writes data into the pointed memory and increments the address by 1 byte.
 - `p.int32 = 10` .. Writes data into the pointed memory and increments the address by 4 byte.
 - `x = p.int8` ..  Reads data from the pointed memory and increments the address by 1 byte.
@@ -22,9 +18,29 @@ ${help.ComposePropertyHelp(Pointer, `en)}
 
 - `p.int8:stay = 10` .. Writes data into the pointed memory and keeps the address intact.
 
+# Predefined Variable
+
+${help.ComposePropertyHelp(Pointer, `en)}
+
 # Operator
 
+`Pointer + Number`
+
+`Number + Pointer`
+
+`Pointer - Number`
+
+`Pointer - Pointer`
+
+
 # Cast Operation
+
+`Binary` to `Pointer`
+
+`Array` to `Pointer`
+
+`Image` to `Pointer`
+
 
 ${help.ComposeConstructorHelp(Pointer, `en)}
 

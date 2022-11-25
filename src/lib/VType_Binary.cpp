@@ -20,6 +20,15 @@ ${help.ComposePropertyHelp(Binary, `en)}
 
 # Operator
 
+`Binary + Binary` ... 
+
+`Binary * Number` ... 
+
+`Binary == Binary` ...
+
+`Binary != Binary` ... 
+
+
 # Cast Operation
 
 ${help.ComposeConstructorHelp(Binary, `en)}
