@@ -28,6 +28,7 @@ public:
 public:
 	// Virtual functions of Pointer
 	virtual Pointer* Clone() const override { return new Pointer_String(*this); }
+	virtual const char* GetName() const override { return "String"; }
 	virtual const void* GetPointerToTarget() const override { return _pString.get(); }
 	virtual const void* DoGetPointerC() const override;
 	virtual void* DoGetWritablePointerC() const override;
@@ -55,6 +56,7 @@ public:
 public:
 	// Virtual functions of Pointer
 	virtual Pointer* Clone() const override { return new Pointer_Binary(*this); }
+	virtual const char* GetName() const override { return "Binary"; }
 	virtual const void* GetPointerToTarget() const override { return _pBinary.get(); }
 	virtual const void* DoGetPointerC() const override;
 	virtual void* DoGetWritablePointerC() const override;
@@ -82,6 +84,7 @@ public:
 public:
 	// Virtual functions of Pointer
 	virtual Pointer* Clone() const override { return new Pointer_Memory(*this); }
+	virtual const char* GetName() const override { return "Memory"; }
 	virtual const void* GetPointerToTarget() const override { return _pMemory.get(); }
 	virtual const void* DoGetPointerC() const override;
 	virtual void* DoGetWritablePointerC() const override;

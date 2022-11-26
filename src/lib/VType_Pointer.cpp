@@ -24,13 +24,13 @@ ${help.ComposePropertyHelp(Pointer, `en)}
 
 # Operator
 
-`Pointer + Number`
+`Pointer + Number` ... Creates a `Pointer` that increases the left-sided `Pointer` by the right-sided `Number`.
 
-`Number + Pointer`
+`Number + Pointer` ... Creates a `Pointer` that increases the right-sided `Pointer` by the left-sided `Number`.
 
-`Pointer - Number`
+`Pointer - Number` ... Creates a `Pointer` that decreases the left-sided `Pointer` by the right-sided `Number`.
 
-`Pointer - Pointer`
+`Pointer - Pointer` ... Creates a `Number` of the difference between the left-sided `Pointer` and the right-sided `Pointer`.
 
 
 # Cast Operation

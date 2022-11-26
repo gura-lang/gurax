@@ -109,7 +109,7 @@ String Pointer::ToString(const StringStyle& ss) const
 {
 	String str;
 	size_t bytesEntire = GetBytesEntire();
-	str.Format("Pointer:%d", GetOffset());
+	str.Format("Pointer:%s:%d", GetName(), GetOffset());
 	if (bytesEntire != static_cast<size_t>(-1)) str.Format("/%d", bytesEntire);
 	return str;
 }

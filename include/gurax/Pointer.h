@@ -74,6 +74,7 @@ public:
 	}
 public:
 	virtual Pointer* Clone() const = 0;
+	virtual const char* GetName() const = 0;
 	virtual const void* GetPointerToTarget() const = 0;
 	virtual const void* DoGetPointerC() const = 0;
 	virtual void* DoGetWritablePointerC() const = 0;
