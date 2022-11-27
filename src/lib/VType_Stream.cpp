@@ -15,14 +15,21 @@ ${help.ComposePropertyHelp(Stream, `en)}
 
 # Operator
 
-`Stream << Binary` ... Writes the content of `Binary` to the `Stream`.
+The operator `<<` writes a value to the `Stream`.
+This works in the same way as `Stream#Print()` method if a `String` value is specified, and `Stream#Write()` method otherwise.
 
-`Stream << Pointer` ... Writes the content pointed by `Pointer` to the `Stream`.
-
-`Stream << Stream` ... Writes the data read from the left-sided `Stream` into the right-sided `Stream`. 
+- `Stream << String` ... Writes the content of the `String` to the `Stream`. 
+- `Stream << Binary` ... Writes the content of the `Binary` to the `Stream`.
+- `Stream << Pointer` ... Writes the content pointed by the `Pointer` to the `Stream`.
+- `Stream << Stream` ... Writes the data read from the left-sided `Stream` into the right-sided `Stream`. 
 
 
 # Cast Operation
+
+The following cast operations are prepared:
+
+- `String as Stream` ... Creates a `Stream` from a path name specified by the `String`.
+- `Binary as Stream` ... Creates a `Stream` that scans data on the `Binary`.
 
 ${help.ComposeConstructorHelp(Stream, `en)}
 

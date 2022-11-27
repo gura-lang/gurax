@@ -14,22 +14,20 @@ static const char* g_docHelp_en = u8R"**(
 - `b'...' .. read-only binary literal`
 - `B'...' .. writable binary literal`
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(Binary, `en)}
 
 # Operator
 
-`Binary + Binary` ... 
-
-`Binary * Number` ... 
-
-`Binary == Binary` ...
-
-`Binary != Binary` ... 
+- `Binary + Binary` ... 
+- `Binary * Number` ... 
+- `Binary == Binary` ...
+- `Binary != Binary` ... 
 
 
 # Cast Operation
+
+The following cast operations are prepared:
+
 
 ${help.ComposeConstructorHelp(Binary, `en)}
 

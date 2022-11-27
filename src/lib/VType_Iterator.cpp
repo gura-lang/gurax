@@ -17,7 +17,14 @@ ${help.ComposePropertyHelp(Iterator, `en)}
 
 # Operator
 
+- `Iterator[]` ... 
+
 # Cast Operation
+
+The following cast operations are prepared:
+
+- `Iterator as List` ... Create an `Iterator` that iterates elements of the `List`.
+
 
 ${help.ComposeConstructorHelp(Iterator, `en)}
 
@@ -1814,7 +1821,7 @@ void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 			for (;;) {
 				RefPtr<Value> pValue(GetIterator().NextValue());
 				if (!pValue) break;
-				pValue->Eval(processor, argument);
+				Value::Delete(pValue->Eval(processor, argument));
 			}
 		}
 	} else {

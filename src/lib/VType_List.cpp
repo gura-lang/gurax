@@ -11,28 +11,31 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
+
+
 ${help.ComposePropertyHelp(List, `en)}
 
 # Operator
 
-`Any in List` ... Returns `true` if the `List` instance contains the `Any` instance.
+The operator `in` checks if a specified value is contained in the `List`.
 
-`List |+| List` ... Creates a `List` instance that combines the two `List` instances.
+- `Any in List` ... Returns `true` if the `List` instance contains the `Any` instance.
 
-`List |+| Iterator` ... Creates a `List` instance that appends elements of `Iterator` at the beginning of the left-sided `List` instance.
+The operator `|+|` concats a `List` and another value. It works in the same way as `List#Append()` method.
 
-`Any |+| List` ... Creates a `List` instance that appends `Any` instance at the beginning of the right-sided `List` instance.
-
-`List |+| Any` ... Creates a `List` instance that appends `Any` instance at the end of the left-sided `List` instance.
+- `List |+| List` ... Creates a `List` instance that combines the two `List` instances.
+- `List |+| Iterator` ... Creates a `List` instance that appends elements of `Iterator` at the beginning of the left-sided `List` instance.
+- `Any |+| List` ... Creates a `List` instance that appends `Any` instance at the beginning of the right-sided `List` instance.
+- `List |+| Any` ... Creates a `List` instance that appends `Any` instance at the end of the left-sided `List` instance.
 
 
 # Cast Operation
 
-`Iterator` to `List` ... Turns the `Iterator` into a `List`.
+The following cast operations are prepared:
 
-`Array` to `List` ... Turns the `Array` into a `List`.
-
-`Tuple` to `List` ... Turns the `Tuple` into a `List`.
+- `Iterator as List` ... Turns the `Iterator` into a `List`.
+- `Array as List` ... Turns the `Array` into a `List`.
+- `Tuple as List` ... Turns the `Tuple` into a `List`.
 
 
 ${help.ComposeConstructorHelp(List, `en)}
