@@ -10,28 +10,53 @@ ComposeFunctionHelp(func, lang as Symbol = `en) = {
 
 ComposePropertyHelp(vtype as VType, lang as Symbol = `en) = {
 	str = ''
-	str += cond(lang == `ja, '# プロパティ\n\n', '# Property\n\n')
+	if (lang == `ja) {
+		str += eR'''
+		# プロパティ
+
+		`${vtype.__fullName__}` クラスのインスタンスは以下のプロパティを持ちます:
+
+		'''
+	} else {
+		str += eR'''
+		# Property
+
+		A instance of `${vtype.__fullName__}` class has the following properties:
+
+		'''
+	}
 	vtype.__propSlots__().Each {|propSlot|
 		doc = Help(propSlot, lang).doc
-		str += Format('__%s%s%s__ as `%s` (%s) ... %s', vtype.__fullName__,
+		str += Format('- `%s%s%s` as `%s` (%s) ... %s%s', vtype.__fullName__,
 			cond(propSlot.isOfClass, '.', '#'), propSlot.name, propSlot.vtype.__fullName__,
 			cond(propSlot.IsSet(`R) && !propSlot.IsSet(`W), 'read only',
 				cond(!propSlot.IsSet(`R) && propSlot.IsSet(`W), 'write only', 'read/write')),
-			doc)
-		str += cond(doc.EndsWith('\n'), '', '\n')
-		str += '\n'
+			doc, cond(doc.EndsWith('\n'), '', '\n'))
 	}
 	str
 }
 
 ComposeConstructorHelp(vtype as VType, lang as Symbol = `en) = {
-	if (vtype.__init__) {
-		str = ''
-		str += cond(lang == `ja, '# コンストラクタ\n\n', '# Constructor\n\n')
-		str += ComposeFunctionHelp(vtype.__init__, lang)
-		str += '\n'
-		str
+	!vtype.__init__ && return('')
+	str = ''
+	if (lang == `ja) {
+		str += eR'''
+		# コンストラクタ
+		
+		`${vtype.__fullName__}` クラスは以下のコンストラクタを持ちます:
+
+		'''
+	} else {
+		str += eR'''
+		# Constructor
+
+		`${vtype.__fullName__}` class has the following constructor:
+
+		'''
 	}
+	str += ComposeFunctionHelp(vtype.__init__, lang)
+	str += '\n'
+	str
 }
 
 ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
@@ -40,7 +65,21 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 	methodsHybrid = vtype.__methods__():hybrid:list
 	methodsInstance = vtype.__methods__():instance:list
 	if (!methodsClass.IsEmpty()) {
-		str += cond(lang == `ja, '# クラスメソッド\n\n', '# Class Method\n\n')
+		if (lang == `ja) {
+			str += eR'''
+			# クラスメソッド
+
+			`${vtype.__fullName__}` クラスは以下のクラスメソッドを持ちます:
+
+			'''
+		} else {
+			str += eR'''
+			# Class Method
+
+			`${vtype.__fullName__}` class has the following class methods:
+
+			'''
+		}
 		methodsClass.Each {|method|
 			str += ComposeFunctionHelp(method, lang)
 			str += '\n'
@@ -51,7 +90,21 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 		}
 	}
 	if (!methodsInstance.IsEmpty()) {
-		str += cond(lang == `ja, '# インスタンスメソッド\n\n', '# Instance Method\n\n')
+		if (lang == `ja) {
+			str += eR'''
+			# インスタンスメソッド
+
+			`${vtype.__fullName__}` クラスは以下のインスタンスメソッドを持ちます:
+
+			'''
+		} else {
+			str += eR'''
+			# Instance Method
+
+			`${vtype.__fullName__}` class has the following instance methods:
+
+			'''
+		}
 		methodsInstance.Each {|method|
 			str += ComposeFunctionHelp(method, lang)
 			str += '\n'
