@@ -21,7 +21,7 @@ ComposePropertyHelp(vtype as VType, lang as Symbol = `en) = {
 		str += eR'''
 		# Property
 
-		A instance of `${vtype.__fullName__}` class has the following properties:
+		The `${vtype.__fullName__}` class has the following properties:
 
 		'''
 	}
@@ -50,7 +50,7 @@ ComposeConstructorHelp(vtype as VType, lang as Symbol = `en) = {
 		str += eR'''
 		# Constructor
 
-		`${vtype.__fullName__}` class has the following constructor:
+		The `${vtype.__fullName__}` class has the following constructor:
 
 		'''
 	}
@@ -76,7 +76,7 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 			str += eR'''
 			# Class Method
 
-			`${vtype.__fullName__}` class has the following class methods:
+			The `${vtype.__fullName__}` class has the following class methods:
 
 			'''
 		}
@@ -85,7 +85,7 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 			str += '\n'
 		}
 	}
-	if (!methodsClass.IsEmpty()) {
+	if (!methodsHybrid.IsEmpty()) {
 		if (lang == `ja) {
 			str += eR'''
 			# ハイブリッドメソッド
@@ -95,9 +95,9 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 			'''
 		} else {
 			str += eR'''
-			# Class Method
+			# Hybrid Method
 
-			`${vtype.__fullName__}` class has the following hybrid methods, which can be called with a class or an instance :
+			The `${vtype.__fullName__}` class has the following hybrid methods, which can be called with a class or an instance:
 
 			'''
 		}
@@ -118,7 +118,7 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 			str += eR'''
 			# Instance Method
 
-			`${vtype.__fullName__}` class has the following instance methods:
+			The `${vtype.__fullName__}` class has the following instance methods:
 
 			'''
 		}
