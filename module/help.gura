@@ -14,7 +14,7 @@ ComposePropertyHelp(vtype as VType, lang as Symbol = `en) = {
 		str += eR'''
 		# プロパティ
 
-		`${vtype.__fullName__}` クラスのインスタンスは以下のプロパティを持ちます:
+		`${vtype.__fullName__}` クラスには以下のプロパティがあります:
 
 		'''
 	} else {
@@ -43,7 +43,7 @@ ComposeConstructorHelp(vtype as VType, lang as Symbol = `en) = {
 		str += eR'''
 		# コンストラクタ
 		
-		`${vtype.__fullName__}` クラスは以下のコンストラクタを持ちます:
+		`${vtype.__fullName__}` クラスには以下のコンストラクタがあります:
 
 		'''
 	} else {
@@ -69,7 +69,7 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 			str += eR'''
 			# クラスメソッド
 
-			`${vtype.__fullName__}` クラスは以下のクラスメソッドを持ちます:
+			`${vtype.__fullName__}` クラスには以下のクラスメソッドがあります:
 
 			'''
 		} else {
@@ -84,6 +84,23 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 			str += ComposeFunctionHelp(method, lang)
 			str += '\n'
 		}
+	}
+	if (!methodsClass.IsEmpty()) {
+		if (lang == `ja) {
+			str += eR'''
+			# ハイブリッドメソッド
+
+			`${vtype.__fullName__}` クラスには、以下のハイブリッドメソッド (クラスにもインスタンスにも呼び出せるメソッド) があります:
+
+			'''
+		} else {
+			str += eR'''
+			# Class Method
+
+			`${vtype.__fullName__}` class has the following hybrid methods, which can be called with a class or an instance :
+
+			'''
+		}
 		methodsHybrid.Each {|method|
 			str += ComposeFunctionHelp(method, lang)
 			str += '\n'
@@ -94,7 +111,7 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 			str += eR'''
 			# インスタンスメソッド
 
-			`${vtype.__fullName__}` クラスは以下のインスタンスメソッドを持ちます:
+			`${vtype.__fullName__}` クラスには以下のインスタンスメソッドがあります:
 
 			'''
 		} else {
