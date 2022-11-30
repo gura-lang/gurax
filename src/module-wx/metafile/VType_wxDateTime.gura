@@ -115,11 +115,15 @@ DateTime = Class {
 } %% R'''
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(wx.DateTime, `en)}
 
 # Operator
+
+- `DateTime + DateSpan` ... `DateTime`
+- `DateTime + TimeSpan` ... `DateTime`
+- `DateTime - DateSpan` ... `DateTime`
+- `DateTime - TimeSpan` ... `DateTime`
+- `DateTime - DateTime` ... `TimeSpan`
 
 # Cast Operation
 
@@ -127,9 +131,3 @@ ${help.ComposeConstructorHelp(wx.DateTime, `en)}
 
 ${help.ComposeMethodHelp(wx.DateTime, `en)}
 '''
-
-(const_DateTime_r + const_DateSpan_r) as DateTime
-(const_DateTime_r + const_TimeSpan_r) as DateTime
-(const_DateTime_r - const_DateSpan_r) as DateTime
-(const_DateTime_r - const_TimeSpan_r) as DateTime
-(const_DateTime_r - const_DateTime_r) as TimeSpan
