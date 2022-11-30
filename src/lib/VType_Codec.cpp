@@ -11,13 +11,11 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(Codec, `en)}
 
-# Operator
-
 # Cast Operation
+
+- `Codec` as `String` ... Creates a `Codec` of the name specified by `String`.
 
 ${help.ComposeConstructorHelp(Codec, `en)}
 

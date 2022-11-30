@@ -33,12 +33,12 @@ ${help.ComposePropertyHelp(Color, `en)}
 - `Color.teal` as `Color` (read only) ... The instance of `Color.RGBA(0, 0, 0, 255)`.
 - `Color.aqua` as `Color` (read only) ... The instance of `Color.RGBA(0, 0, 0, 255)`.
 
-
 # Cast Operation
+
+The following cast operations are prepared:
 
 - `String as Color` ... Creates a `Color` that has a name specified by `String`.
 - `Expr as Color` ... Creates a `Color` that has a name specified by `Expr`.
-
 
 ${help.ComposeConstructorHelp(Color, `en)}
 

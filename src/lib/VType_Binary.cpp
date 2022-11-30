@@ -12,7 +12,7 @@ static const char* g_docHelp_en = u8R"**(
 # Overview
 
 - `b'...' .. read-only binary literal`
-- `B'...' .. writable binary literal`
+- `B'...' .. modifiable binary literal`
 
 ${help.ComposePropertyHelp(Binary, `en)}
 
@@ -22,12 +22,6 @@ ${help.ComposePropertyHelp(Binary, `en)}
 - `Binary * Number` ... 
 - `Binary == Binary` ...
 - `Binary != Binary` ... 
-
-
-# Cast Operation
-
-The following cast operations are prepared:
-
 
 ${help.ComposeConstructorHelp(Binary, `en)}
 

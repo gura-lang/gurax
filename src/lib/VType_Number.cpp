@@ -21,6 +21,9 @@ Number.format
 
 # Cast Operation
 
+- `Rational` as `Number` ... 
+- `String` as `Number` ... `:stringCast`
+
 ${help.ComposeConstructorHelp(Number, `en)}
 
 ${help.ComposeMethodHelp(Number, `en)}

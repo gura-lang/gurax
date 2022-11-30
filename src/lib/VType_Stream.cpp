@@ -23,7 +23,6 @@ This works in the same way as `Stream#Print()` method if a `String` value is spe
 - `Stream << Pointer` ... Writes the content pointed by the `Pointer` to the `Stream`.
 - `Stream << Stream` ... Writes the data read from the left-sided `Stream` into the right-sided `Stream`. 
 
-
 # Cast Operation
 
 The following cast operations are prepared:
