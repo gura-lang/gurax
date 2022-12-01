@@ -19,7 +19,7 @@ img.bytes .. 6144
 img.bytesPerLine .. 192
 img.bytesPerPixel .. 4
 img.palette .. <Nil>
-img.p .. <Pointer:0/6144>
+img.p .. <Pointer:Memory:0/6144>
 Image.Create(48, 32):rgb .. <Image:rgb:48x32>
 img.format .. `rgb
 img.width .. 48
@@ -28,7 +28,7 @@ img.bytes .. 4608
 img.bytesPerLine .. 144
 img.bytesPerPixel .. 3
 img.palette .. <Nil>
-img.p .. <Pointer:0/4608>
+img.p .. <Pointer:Memory:0/4608>
 ======== Image#Fill() ========
 ======== Image#FillRect() ========
 ======== Image#Flip() ========
@@ -951,8 +951,8 @@ Image.Create(32, 24):rgb.format .. `rgb
 Image.Create(32, 24).height .. 24
 Image.Create(32, 24):rgb.height .. 24
 ======== Image#p ========
-Image.Create(32, 24).p .. <Pointer:0/3072>
-Image.Create(32, 24):rgb.p .. <Pointer:0/2304>
+Image.Create(32, 24).p .. <Pointer:Memory:0/3072>
+Image.Create(32, 24):rgb.p .. <Pointer:Memory:0/2304>
 Image().p .. the image buffer is not allocated
 ======== Image#palette ========
 Image.Create(32, 24).palette .. <Nil>

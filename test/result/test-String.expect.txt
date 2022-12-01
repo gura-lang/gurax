@@ -578,6 +578,7 @@ str.bytes .. 30
 'abcdefg' <=> 'abcdefg' .. 0
 'abcdefg' <=> 'hijklmn' .. -1
 'hijklmn' <=> 'abcdefg' .. 1
+'12345' as Number .. 12345
 ======== Indexing ========
 'abcdef'[0] .. a
 'abcdef'[1] .. b

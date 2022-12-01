@@ -30,12 +30,13 @@ public:
 		static const Flags NoMap		= 1 << 5;	// :noMap
 		static const Flags NoCast		= 1 << 6;	// :noCast
 		static const Flags StringCast	= 1 << 7;	// :stringCast
-		static const Flags OfClass		= 1 << 8;	// :static
-		static const Flags OfInstance	= 1 << 9;	// :instance
-		static const Flags Public		= 1 << 10;	// :public
-		static const Flags Private		= 1 << 11;	// :private
-		static const Flags Readable		= 1 << 12;	// :readable
-		static const Flags Writable		= 1 << 13;	// :writable
+		static const Flags ExplicitCast	= 1 << 8;	// :explicitCast
+		static const Flags OfClass		= 1 << 9;	// :static
+		static const Flags OfInstance	= 1 << 10;	// :instance
+		static const Flags Public		= 1 << 11;	// :public
+		static const Flags Private		= 1 << 12;	// :private
+		static const Flags Readable		= 1 << 13;	// :readable
+		static const Flags Writable		= 1 << 14;	// :writable
 	};
 	class GURAX_DLLDECLARE Occur {
 	private:

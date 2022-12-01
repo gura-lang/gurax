@@ -541,6 +541,7 @@ TestCase('Operator') {
 	Tester(`('abcdefg' <=> 'abcdefg'))
 	Tester(`('abcdefg' <=> 'hijklmn'))
 	Tester(`('hijklmn' <=> 'abcdefg'))
+	Tester(`('12345' as Number))
 }
 
 TestCase('Indexing') {

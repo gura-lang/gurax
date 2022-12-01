@@ -257,7 +257,7 @@ Gurax_ImplementHybridPropertyGetter(VType, __symbol__)
 Gurax_ImplementOpBinary(As, Any, VType)
 {
 	const VType& vtype = Value_VType::GetVTypeThis(valueR);
-	RefPtr<Value> pValueResult(vtype.Cast(valueL));
+	RefPtr<Value> pValueResult(vtype.Cast(valueL, nullptr, DeclArg::Flag::ExplicitCast));
 	if (!pValueResult) return Value::undefined();
 	return pValueResult.release();
 }

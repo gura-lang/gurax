@@ -21,6 +21,8 @@ Number.format
 
 # Cast Operation
 
+The following cast operations are prepared:
+
 - `Rational` as `Number` ... 
 - `String` as `Number` ... `:stringCast`
 
@@ -966,7 +968,7 @@ Value* VType_Number::DoCastFrom(const Value& value, DeclArg::Flags flags) const
 {
 	if (value.IsType(VTYPE_Rational)) {
 		return new Value_Number(Value_Rational::GetRational(value).ToDouble());
-	} else if (value.IsType(VTYPE_String) && ((flags & DeclArg::Flag::StringCast) != 0)) {
+	} else if (value.IsType(VTYPE_String) && ((flags & (DeclArg::Flag::StringCast | DeclArg::Flag::ExplicitCast)) != 0)) {
 		bool successFlag;
 		Double num = Value_String::GetStringSTL(value).ToDouble(&successFlag);
 		if (successFlag) return new Value_Number(num);
