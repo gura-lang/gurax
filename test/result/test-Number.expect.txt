@@ -4,8 +4,8 @@ Number
   #arg              Number       R
   .double           NumberTrait  R
   .float            NumberTrait  R
-  .formatFloat      String       R/W
-  .formatInt        String       R/W
+  .format@float     String       R/W
+  .format@int       String       R/W
   .half             NumberTrait  R
   #imag             Number       R
   .int16            NumberTrait  R
@@ -66,24 +66,24 @@ Number('-0x1234') .. -4660
 5 < 3 .. false
 3 * 5 .. 15
 3 - 5 .. -2
-======== Number.formatInt / Number.formatFloat ========
-Number.formatInt = '%lld' .. %lld
+======== Number.format@int / Number.format@float ========
+Number.format@int = '%lld' .. %lld
 1234567891234 .. 1234567891234
-Number.formatFloat = '%g' .. %g
+Number.format@float = '%g' .. %g
 123456789.123456789 .. 1.23457e+08
-Number.formatInt = '%llx' .. %llx
+Number.format@int = '%llx' .. %llx
 1234567891234 .. 11f71fb0922
-Number.formatFloat = '%f' .. %f
+Number.format@float = '%f' .. %f
 123456789.123456789 .. 123456789.123457
-Number.formatFloat = '%.3f' .. %.3f
+Number.format@float = '%.3f' .. %.3f
 123456789.123456789 .. 123456789.123
-Number.formatInt = '%d' .. invalid format specifier
-Number.formatInt = '%f' .. invalid format specifier
-Number.formatFloat = '%d' .. invalid format specifier
-Number.formatInt = '' .. too few format specifiers
-Number.formatFloat = '' .. too few format specifiers
-Number.formatInt = '%lld %lld' .. too many format specifiers
-Number.formatFloat = '%f %f' .. too many format specifiers
+Number.format@int = '%d' .. invalid format specifier
+Number.format@int = '%f' .. invalid format specifier
+Number.format@float = '%d' .. invalid format specifier
+Number.format@int = '' .. too few format specifiers
+Number.format@float = '' .. too few format specifiers
+Number.format@int = '%lld %lld' .. too many format specifiers
+Number.format@float = '%f %f' .. too many format specifiers
 ======== Suffx f ========
 0f .. 0
 1f .. 1

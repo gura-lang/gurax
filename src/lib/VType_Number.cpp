@@ -15,8 +15,6 @@ static const char* g_docHelp_en = u8R"**(
 
 ${help.ComposePropertyHelp(Number, `en)}
 
-Number.format
-
 # Operator
 
 # Cast Operation
@@ -34,7 +32,7 @@ ${help.ComposeMethodHelp(Number, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Number(str?:String) {block?}
+// Number(str? as String) {block?}
 Gurax_DeclareConstructor(Number)
 {
 	Declare(VTYPE_Color, Flag::None);
@@ -63,7 +61,7 @@ Gurax_ImplementConstructor(Number)
 //------------------------------------------------------------------------------
 // Implementation of class property
 //------------------------------------------------------------------------------
-// Number.int8
+// Number.int8 as NumberTrait
 Gurax_DeclareClassProperty_R(Number, int8)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -77,7 +75,7 @@ Gurax_ImplementClassPropertyGetter(Number, int8)
 	return VTYPE_NumberTrait.pValue_int8->Reference();
 }
 
-// Number.uint8
+// Number.uint8 as NumberTrait
 Gurax_DeclareClassProperty_R(Number, uint8)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -91,7 +89,7 @@ Gurax_ImplementClassPropertyGetter(Number, uint8)
 	return VTYPE_NumberTrait.pValue_uint8->Reference();
 }
 
-// Number.int16
+// Number.int16 as NumberTrait
 Gurax_DeclareClassProperty_R(Number, int16)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -105,7 +103,7 @@ Gurax_ImplementClassPropertyGetter(Number, int16)
 	return VTYPE_NumberTrait.pValue_int16->Reference();
 }
 
-// Number.uint16
+// Number.uint16 as NumberTrait
 Gurax_DeclareClassProperty_R(Number, uint16)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -119,7 +117,7 @@ Gurax_ImplementClassPropertyGetter(Number, uint16)
 	return VTYPE_NumberTrait.pValue_uint16->Reference();
 }
 
-// Number.int32
+// Number.int32 as NumberTrait
 Gurax_DeclareClassProperty_R(Number, int32)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -133,7 +131,7 @@ Gurax_ImplementClassPropertyGetter(Number, int32)
 	return VTYPE_NumberTrait.pValue_int32->Reference();
 }
 
-// Number.uint32
+// Number.uint32 as NumberTrait
 Gurax_DeclareClassProperty_R(Number, uint32)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -147,7 +145,7 @@ Gurax_ImplementClassPropertyGetter(Number, uint32)
 	return VTYPE_NumberTrait.pValue_uint32->Reference();
 }
 
-// Number.int64
+// Number.int64 as NumberTrait
 Gurax_DeclareClassProperty_R(Number, int64)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -161,7 +159,7 @@ Gurax_ImplementClassPropertyGetter(Number, int64)
 	return VTYPE_NumberTrait.pValue_int64->Reference();
 }
 
-// Number.uint64
+// Number.uint64 as NumberTrait
 Gurax_DeclareClassProperty_R(Number, uint64)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -175,7 +173,7 @@ Gurax_ImplementClassPropertyGetter(Number, uint64)
 	return VTYPE_NumberTrait.pValue_uint64->Reference();
 }
 
-// Number.half
+// Number.half as NumberTrait
 Gurax_DeclareClassProperty_R(Number, half)
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -189,7 +187,7 @@ Gurax_ImplementClassPropertyGetter(Number, half)
 	return VTYPE_NumberTrait.pValue_half->Reference();
 }
 
-// Number.float
+// Number.float as NumberTrait
 Gurax_DeclareClassPropertyAlias_R(Number, float_, "float")
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -203,7 +201,7 @@ Gurax_ImplementClassPropertyGetter(Number, float_)
 	return VTYPE_NumberTrait.pValue_float->Reference();
 }
 
-// Number.double
+// Number.double as NumberTrait
 Gurax_DeclareClassPropertyAlias_R(Number, double_, "double")
 {
 	Declare(VTYPE_NumberTrait, Flag::None);
@@ -220,7 +218,7 @@ Gurax_ImplementClassPropertyGetter(Number, double_)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// Number#abs
+// Number#abs as Number
 Gurax_DeclareProperty_R(Number, abs)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -235,12 +233,12 @@ Gurax_ImplementPropertyGetter(Number, abs)
 	return new Value_Number(std::abs(valueThis.GetNumber<Double>()));
 }
 
-// Number#arg
+// Number#arg as Number
 Gurax_DeclareProperty_R(Number, arg)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-The argument value of the number. Always returns zero.
+The argument value of the number. This property is prepared as a counterpart of `Complex#arg` and always returns zero.
 )**");
 }
 
@@ -254,7 +252,7 @@ Gurax_DeclareProperty_R(Number, imag)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-The imaginary part of the number. Always returns zero.
+The imaginary part of the number. This property is prepares as a counterpart of `Complex#imag` and always returns zero.
 )**");
 }
 
@@ -283,7 +281,7 @@ Gurax_DeclareProperty_R(Number, real)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-The real part of the number. Always returns the number itself.
+The real part of the number.  This property is prepares as a counterpart of `Complex#real`.
 )**");
 }
 
@@ -298,7 +296,7 @@ Gurax_DeclareProperty_R(Number, sign)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-The sign of the number. Returns 0 for a zero, -1 for a minus, and +1 for a plus.
+Returns 0 when the number equals to zero, -1 when it is less than zero, and +1 when it is greater than zero.
 )**");
 }
 
@@ -311,21 +309,21 @@ Gurax_ImplementPropertyGetter(Number, sign)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// Number.formatFloat:String
-Gurax_DeclareClassProperty_RW(Number, formatFloat)
+// Number.format@float as String
+Gurax_DeclareClassPropertyAlias_RW(Number, format_at_float, "format@float")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Format string used to convert a floating number into a string.
+A format string used to convert a floating number into a string.
 )**");
 }
 
-Gurax_ImplementClassPropertyGetter(Number, formatFloat)
+Gurax_ImplementClassPropertyGetter(Number, format_at_float)
 {
 	return new Value_String(NumberBase::GetFormatterFormat_Float());
 }
 
-Gurax_ImplementClassPropertySetter(Number, formatFloat)
+Gurax_ImplementClassPropertySetter(Number, format_at_float)
 {
 	const String& format = Value_String::GetStringSTL(value);
 	if (!Formatter().VerifyFormat(format.c_str(),
@@ -333,21 +331,21 @@ Gurax_ImplementClassPropertySetter(Number, formatFloat)
 	NumberBase::SetFormatterFormat_Float(format);
 }
 
-// Number.formatInt:String
-Gurax_DeclareClassProperty_RW(Number, formatInt)
+// Number.format@int as String
+Gurax_DeclareClassPropertyAlias_RW(Number, format_at_int, "format@int")
 {
 	Declare(VTYPE_String, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Format string used to convert an integer number into a string.
+A format string used to convert an integer number into a string.
 )**");
 }
 
-Gurax_ImplementClassPropertyGetter(Number, formatInt)
+Gurax_ImplementClassPropertyGetter(Number, format_at_int)
 {
 	return new Value_String(NumberBase::GetFormatterFormat_Int());
 }
 
-Gurax_ImplementClassPropertySetter(Number, formatInt)
+Gurax_ImplementClassPropertySetter(Number, format_at_int)
 {
 	const String& format = Value_String::GetStringSTL(value);
 	if (!Formatter().VerifyFormat(format.c_str(),
@@ -895,8 +893,8 @@ void VType_Number::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Number, real));
 	Assign(Gurax_CreateProperty(Number, sign));
 	// Assignment of class property
-	Assign(Gurax_CreateClassProperty(Number, formatFloat));
-	Assign(Gurax_CreateClassProperty(Number, formatInt));
+	Assign(Gurax_CreateClassProperty(Number, format_at_float));
+	Assign(Gurax_CreateClassProperty(Number, format_at_int));
 	// Assignment of operator
 	Gurax_AssignOpUnary(Inv,				Number);
 	Gurax_AssignOpUnary(Neg,				Number);

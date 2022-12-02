@@ -61,28 +61,28 @@ TestCase('Operator') {
 	Tester(`(3 - 5))
 }
 
-TestCase('Number.formatInt / Number.formatFloat') {
-	formatInt = Number.formatInt
-	formatFloat = Number.formatFloat
-	Tester(`(Number.formatInt = '%lld'))
+TestCase('Number.format@int / Number.format@float') {
+	format@int = Number.format@int
+	format@float = Number.format@float
+	Tester(`(Number.format@int = '%lld'))
 	Tester(`1234567891234)
-	Tester(`(Number.formatFloat = '%g'))
+	Tester(`(Number.format@float = '%g'))
 	Tester(`123456789.123456789)
-	Tester(`(Number.formatInt = '%llx'))
+	Tester(`(Number.format@int = '%llx'))
 	Tester(`1234567891234)
-	Tester(`(Number.formatFloat = '%f'))
+	Tester(`(Number.format@float = '%f'))
 	Tester(`123456789.123456789)
-	Tester(`(Number.formatFloat = '%.3f'))
+	Tester(`(Number.format@float = '%.3f'))
 	Tester(`123456789.123456789)
-	Tester(`(Number.formatInt = '%d'))
-	Tester(`(Number.formatInt = '%f'))
-	Tester(`(Number.formatFloat = '%d'))
-	Tester(`(Number.formatInt = ''))
-	Tester(`(Number.formatFloat = ''))
-	Tester(`(Number.formatInt = '%lld %lld'))
-	Tester(`(Number.formatFloat = '%f %f'))
-	Number.formatInt = formatInt
-	Number.formatFloat = formatFloat
+	Tester(`(Number.format@int = '%d'))
+	Tester(`(Number.format@int = '%f'))
+	Tester(`(Number.format@float = '%d'))
+	Tester(`(Number.format@int = ''))
+	Tester(`(Number.format@float = ''))
+	Tester(`(Number.format@int = '%lld %lld'))
+	Tester(`(Number.format@float = '%f %f'))
+	Number.format@int = format@int
+	Number.format@float = format@float
 }
 
 TestCase('Suffx f') {
