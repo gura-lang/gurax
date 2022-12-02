@@ -15,10 +15,6 @@ static const char* g_docHelp_en = u8R"**(
 
 ${help.ComposePropertyHelp(NumberTrait, `en)}
 
-# Operator
-
-# Cast Operation
-
 ${help.ComposeConstructorHelp(NumberTrait, `en)}
 
 ${help.ComposeMethodHelp(NumberTrait, `en)}

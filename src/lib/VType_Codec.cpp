@@ -15,7 +15,7 @@ ${help.ComposePropertyHelp(Codec, `en)}
 
 # Cast Operation
 
-- `Codec` as `String` ... Creates a `Codec` of the name specified by `String`.
+- `String` as `Codec` ... Creates a `Codec` of the name specified by `String`.
 
 ${help.ComposeConstructorHelp(Codec, `en)}
 
@@ -25,7 +25,7 @@ ${help.ComposeMethodHelp(Codec, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Codec(name:String, delcr?:Bool, addcr?:Bool):map {block?}
+// Codec(name as String, delcr? as Bool, addcr? as Bool):map {block?}
 Gurax_DeclareConstructor(Codec)
 {
 	Declare(VTYPE_Codec, Flag::Map);
@@ -59,7 +59,7 @@ Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf8, "bom@utf8")
 {
 	Declare(VTYPE_Binary, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
+BOM marker of a file coded in UTF-8.
 )**");
 }
 
@@ -75,7 +75,7 @@ Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf16be, "bom@utf16be")
 {
 	Declare(VTYPE_Binary, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
+BOM marker of a file coded in big-endian UTF-16.
 )**");
 }
 
@@ -91,7 +91,7 @@ Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf16le, "bom@utf16le")
 {
 	Declare(VTYPE_Binary, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
+BOM marker of a file coded in little-endian UTF-16.
 )**");
 }
 
@@ -107,7 +107,7 @@ Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf32be, "bom@utf32be")
 {
 	Declare(VTYPE_Binary, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
+BOM marker of a file coded in big-endian UTF-32.
 )**");
 }
 
@@ -123,7 +123,7 @@ Gurax_DeclareClassPropertyAlias_R(Codec, bom_at_utf32le, "bom@utf32le")
 {
 	Declare(VTYPE_Binary, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
+BOM marker of a file coded in little-endian UTF-32.
 )**");
 }
 
