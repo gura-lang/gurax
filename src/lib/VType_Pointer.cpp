@@ -18,8 +18,6 @@ static const char* g_docHelp_en = u8R"**(
 
 - `p.int8:stay = 10` .. Writes data into the pointed memory and keeps the address intact.
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(Pointer, `en)}
 
 # Operator
@@ -35,11 +33,11 @@ ${help.ComposePropertyHelp(Pointer, `en)}
 
 # Cast Operation
 
-`Binary` to `Pointer`
+`Binary` as `Pointer` ... Creates a `Pointer` that scans the data in `Binary`.
 
-`Array` to `Pointer`
+`Array` as `Pointer` ... Creates a `Pointer` that scans the data in `Array`.
 
-`Image` to `Pointer`
+`Image` as `Pointer` ... Creates a `Pointer` that scans the data in `Image`.
 
 
 ${help.ComposeConstructorHelp(Pointer, `en)}
