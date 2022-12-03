@@ -73,6 +73,9 @@ public:
 			GetVTypeCustom().IsLessThan(value.GetVTypeCustom());
 	}
 	virtual String ToString(const StringStyle& ss) const override;
+public:
+	// Virtual functions for runtime process
+	virtual void PresentHelp(Processor& processor, const Symbol* pLangCode) const override;
 };
 
 }

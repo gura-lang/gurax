@@ -181,4 +181,13 @@ String Value_Help::ToString(const StringStyle& ss) const
 	return ToStringGeneric(ss, GetHelp().ToString(ss));
 }
 
+void Value_Help::PresentHelp(Processor& processor, const Symbol* pLangCode) const
+{
+	String str;
+	const Help& help = Value_Help::GetHelp(*this);
+	str += help.GetDoc();
+	if (!str.EndsWith('\n')) str += '\n';
+	Basement::Inst.Present(processor, str.c_str());
+}
+
 }
