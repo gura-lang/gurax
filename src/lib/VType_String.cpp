@@ -15,19 +15,23 @@ ${help.ComposePropertyHelp(String, `en)}
 
 # Operator
 
-- `String + String` ...
-- `String + Any` ...
-- `Any + String` ...
+The following operators are prepared:
+
+- `String + String` ... Creates a `String` that combines the two strings.
+- `String + Any` ... Creates a `String` that combines the left-sided `String` and a string converted from the right-sided `Any`.
+- `Any + String` ... Creates a `String` that combines a string converted from the left-sided `Any` and the right-sided `String`.
 - `String == String` ... Returns `true` when the two `String` instances are the same.
 - `String >= String` ... Returns `true` when the left-sided `String` is larger than or equal to the right-sided `String`.
 - `String > String` ... Returns `true` when the left-sided `String` is larger than the right-sided `String`.
 - `String <= String` ... Returns `true` when the left-sided `String` is smaller than or equal to the right-sided `String`.
 - `String < String` ... Returns `true` when the left-sided `String` is smaller than the right-sided `String`.
 - `String <=> String` ... Returns -1, 0, or +1 after comparing the two `String` instances.
-- `String * Number` ... Creates a `String` that combines right-sided `Number` pieces of the left-sided `String`.
+- `String * Number` ... Creates a `String` that combines the left-sided `String` multiple times as specified by `Number`.
 - `String != String` ... Returns `true` when the two `String` instances are not the same.
 
 # Cast Operation
+
+Any objects can be casted to `String` in their specific manners.
 
 ${help.ComposeConstructorHelp(String, `en)}
 
