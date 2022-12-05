@@ -11,13 +11,27 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(DateTime, `en)}
 
 # Operator
 
+The folloing operators are prepared:
+
+`DateTime + TimeDelta` ... Creates a `DateTime` that adds the left-sided `DateTime` by the right-sided `TimeDelta`.
+`DateTime - TimeDelta` ... Creates a `DateTime` that subtracts the left-sided `DateTime` by the right-sided `TimeDelta`.
+`DateTime - DateTime` ... Creates a `TimeDelta` that calculates the distance of the two `DateTime` instances.
+`DateTime == DateTime` ... Returns `true` if the left-sided `DateTime` is equal to the right-sided `DateTime`
+`DateTime != DateTime` ... Returns `true` if the left-sided `DateTime` is not equal to the right-sided `DateTime`
+`DateTime < DateTime` ... Returns `true` if the left-sided `DateTime` is eariler than the right-sided `DateTime`
+`DateTime <= DateTime` ... Returns `true` if the left-sided `DateTime` is eariler than or equal to the right-sided `DateTime`
+`DateTime > DateTime` ... Returns `true` if the left-sided `DateTime` is later than the right-sided `DateTime`
+`DateTime >= DateTime` ... Returns `true` if the left-sided `DateTime` is later than or equal to the right-sided `DateTime`
+
 # Cast Operation
+
+The folloing cast operations are prepared:
+
+- `String` as `DateTime` ... Creates a `DateTime` instance from the date-time expression descibed in `String`.
 
 ${help.ComposeConstructorHelp(DateTime, `en)}
 
@@ -35,7 +49,15 @@ Gurax_DeclareConstructor(DateTime)
 	DeclareAttrOpt(Gurax_Symbol(utc));
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates a `DateTime` instance.
+Creates a `DateTime` instance from the date-time expression specified by `str`.
+
+capable of parsing the following formats
+
+- RFC1123 ... ex: `Sat, 06 Nov 2010 08:49:37 GMT`
+- RFC1036 ... ex: `Saturday, 06-Nov-10 08:49:37 GMT`
+- asctime() ... ex: `Sat Nov  6 08:49:37 2010`, `Sat Nov  6 08:49:37 +0000 2010`
+- W3C ... ex: `2010-11-06T08:49:37Z`
+- W3C without time ... ex: `2010-11-06`
 )**");
 }
 
