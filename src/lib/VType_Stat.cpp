@@ -16,10 +16,6 @@ The `Stat` class provides information such as file name, size and creation time 
 
 ${help.ComposePropertyHelp(Stat, `en)}
 
-# Operator
-
-# Cast Operation
-
 ${help.ComposeConstructorHelp(Stat, `en)}
 
 ${help.ComposeMethodHelp(Stat, `en)}

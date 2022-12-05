@@ -11,13 +11,36 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(Complex, `en)}
 
 # Operator
 
+- `-Complex` ... Calculates a negative value of `Complex`.
+- `+Complex` ... Calculates a positive value of `Complex`.
+- `Complex + Complex` ... Calculates 
+- `Complex + Number` ... Calculates 
+- `Number + Complex` ... Calculates 
+- `Complex / Complex` ... Calculates 
+- `Complex / Number` ... Calculates 
+- `Number / Complex` ... Calculates 
+- `Complex == Complex` ... Calculates 
+- `Complex == Number` ... Calculates 
+- `Number == Complex` ... Calculates 
+- `Complex * Complex` ... Calculates 
+- `Complex * Number` ... Calculates 
+- `Number * Complex` ... Calculates 
+- `Complex != Complex` ... Calculates 
+- `Complex != Number` ... Calculates 
+- `Number != Complex` ... Calculates 
+- `Complex - Complex` ... Calculates 
+- `Complex - Number` ... Calculates 
+- `Number - Complex` ... Calculates 
+
 # Cast Operation
+
+The following cast operations are prepared:
+
+^ `Number` as `Complex` ... Creates a `Complex` from the `Number`.
 
 ${help.ComposeConstructorHelp(Complex, `en)}
 

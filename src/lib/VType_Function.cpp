@@ -11,13 +11,7 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(Function, `en)}
-
-# Operator
-
-# Cast Operation
 
 ${help.ComposeConstructorHelp(Function, `en)}
 
