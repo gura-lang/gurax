@@ -15,26 +15,28 @@ ${help.ComposePropertyHelp(Complex, `en)}
 
 # Operator
 
+The following operations are prepared:
+
 - `-Complex` ... Calculates a negative value of `Complex`.
 - `+Complex` ... Calculates a positive value of `Complex`.
-- `Complex + Complex` ... Calculates 
-- `Complex + Number` ... Calculates 
-- `Number + Complex` ... Calculates 
-- `Complex / Complex` ... Calculates 
-- `Complex / Number` ... Calculates 
-- `Number / Complex` ... Calculates 
-- `Complex == Complex` ... Calculates 
-- `Complex == Number` ... Calculates 
-- `Number == Complex` ... Calculates 
-- `Complex * Complex` ... Calculates 
-- `Complex * Number` ... Calculates 
-- `Number * Complex` ... Calculates 
-- `Complex != Complex` ... Calculates 
-- `Complex != Number` ... Calculates 
-- `Number != Complex` ... Calculates 
-- `Complex - Complex` ... Calculates 
-- `Complex - Number` ... Calculates 
-- `Number - Complex` ... Calculates 
+- `Complex + Complex` ... Calculates the addition.
+- `Complex + Number` ... Calculates the addition.
+- `Number + Complex` ... Calculates the addition.
+- `Complex / Complex` ... Calculates the division.
+- `Complex / Number` ... Calculates the division.
+- `Number / Complex` ... Calculates the division.
+- `Complex == Complex` ... Returns `true` if the left-sided `Complex` is equal to the right-sided `Complex`. 
+- `Complex == Number` ... Returns `true` if the left-sided `Complex` is equal to the right-sided `Number`.
+- `Number == Complex` ... Returns `true` if the left-sided `Number` is equal to the right-sided `Complex`. 
+- `Complex * Complex` ... Calculates the multiplication.
+- `Complex * Number` ... Calculates the multiplication.
+- `Number * Complex` ... Calculates the multiplication.
+- `Complex != Complex` ... Returns `true` if the left-sided `Complex` is not equal to the right-sided `Complex`.
+- `Complex != Number` ... Returns `true` if the left-sided `Complex` is not equal to the right-sided `Number`.
+- `Number != Complex` ... Returns `true` if the left-sided `Number` is not equal to the right-sided `Complex`.
+- `Complex - Complex` ... Calculates the subtraction.
+- `Complex - Number` ... Calculates the subtraction.
+- `Number - Complex` ... Calculates the subtraction.
 
 # Cast Operation
 
@@ -50,11 +52,11 @@ ${help.ComposeMethodHelp(Complex, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Complex(real:Number, imag?:Number):map {block?}
+// Complex(real as Number, imag? as Number):map {block?}
 Gurax_DeclareConstructor(Complex)
 {
 	Declare(VTYPE_Complex, Flag::Map);
-	DeclareArg("real", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("real", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("imag", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
