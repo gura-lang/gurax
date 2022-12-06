@@ -76,6 +76,7 @@ if [ "$1" != "all" ]; then
 	cases="$1"
 	options="--detail"
 fi
+gurax -v
 if [ $# -eq 1 ]; then
 	for case in $cases
 	do

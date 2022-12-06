@@ -45,7 +45,7 @@ Gurax_ImplementConstructor(Frame)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Frame.GetCurrent():void
+// Frame.GetCurrent() as Frame
 Gurax_DeclareClassMethod(Frame, GetCurrent)
 {
 	Declare(VTYPE_Frame, Flag::None);
@@ -79,7 +79,7 @@ Gurax_ImplementClassMethod(Frame, PrintStack)
 	return Value::nil();
 }
 
-// Frame.Where(symbol:Symbol) {block?}
+// Frame.Where(symbol as Symbol) {block?}
 Gurax_DeclareClassMethod(Frame, Where)
 {
 	Declare(VTYPE_Frame, Flag::None);
