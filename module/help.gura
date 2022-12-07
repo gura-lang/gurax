@@ -1,6 +1,6 @@
 #!/usr/bin/env gurax
 
-ComposeFunctionHelp(func, lang as Symbol = `en) = {
+ComposeFunctionHelp(func, lang as Symbol = `en):map = {
 	doc = Help(func, lang).doc
 	str = '__' + func.__str__():unbracket + '__\n\n'
 	str += doc
