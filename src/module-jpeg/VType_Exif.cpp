@@ -11,13 +11,7 @@ Gurax_BeginModuleScope(jpeg)
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(jpeg.jpeg.Exif, `en)}
-
-# Operator
-
-# Cast Operation
 
 ${help.ComposeConstructorHelp(jpeg.jpeg.Exif, `en)}
 
