@@ -63,10 +63,10 @@ void Basement::PrepareValue()
 	Value::CreateConstant();
 	frame.Assign(Gurax_Symbol(__name__),	new Value_String("__main__"));
 	frame.Assign(Gurax_Symbol(__root__),	new Value_Frame(GetFrame().Reference()));
-	frame.Assign(Gurax_SymbolMark(Sub),		Value::nil());
-	frame.Assign(Gurax_Symbol(nil),			Value::nil());
-	frame.Assign(Gurax_Symbol(false_),		Value::false_());
-	frame.Assign(Gurax_Symbol(true_),		Value::true_());
+	frame.Assign(Gurax_SymbolMark(Sub),		Value::nil());   	// symbol '-'
+	frame.Assign(Gurax_Symbol(nil),			Value::nil());		// symbol 'nil'
+	frame.Assign(Gurax_Symbol(false_),		Value::false_());	// symbol 'false'
+	frame.Assign(Gurax_Symbol(true_),		Value::true_());	// symbol 'true'
 }
 
 void Basement::PreparePathList()

@@ -53,7 +53,7 @@ Gurax_ImplementConstructor(VType)
 // VType##__methodSymbols__():[class,hybrid,instance] {block?}
 Gurax_DeclareHybridMethod(VType, __methodSymbols__)
 {
-	Declare(VTYPE_Iterator, Flag::Map);
+	Declare(VTYPE_Iterator, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(class_));
 	DeclareAttrOpt(Gurax_Symbol(hybrid));
 	DeclareAttrOpt(Gurax_Symbol(instance));
@@ -94,7 +94,7 @@ Gurax_ImplementHybridMethod(VType, __methodSymbols__)
 // VType##__methods__():[class,hybrid,instance] {block?}
 Gurax_DeclareHybridMethod(VType, __methods__)
 {
-	Declare(VTYPE_Iterator, Flag::Map);
+	Declare(VTYPE_Iterator, Flag::None);
 	DeclareAttrOpt(Gurax_Symbol(class_));
 	DeclareAttrOpt(Gurax_Symbol(hybrid));
 	DeclareAttrOpt(Gurax_Symbol(instance));
@@ -140,7 +140,7 @@ Gurax_ImplementHybridMethod(VType, __methods__)
 // VType#__propSlots__() {block?}
 Gurax_DeclareClassMethod(VType, __propSlots__)
 {
-	Declare(VTYPE_Iterator, Flag::Map);
+	Declare(VTYPE_Iterator, Flag::None);
 	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 

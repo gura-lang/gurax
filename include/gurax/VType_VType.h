@@ -27,6 +27,11 @@ public:
 	Gurax_DeclareReferable(Value_VType);
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_VType");
+public:
+	class GURAX_DLLDECLARE GatherCriteria : public Frame::GatherCriteria {
+	public:
+		virtual bool IsEligible(const Value& value) const override { return value.IsType(VTYPE_VType); }
+	};
 protected:
 	VType* _pVTypeThis;
 public:

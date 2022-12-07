@@ -45,6 +45,90 @@ Gurax_ImplementConstructor(Frame)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
+// Frame##__functions__() {block?}
+Gurax_DeclareHybridMethod(Frame, __functions__)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+
+)**");
+}
+
+Gurax_ImplementHybridMethod(Frame, __functions__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	Frame& frame = valueThis.GetFrame();
+	SymbolList symbolList;
+	frame.GatherSymbolIf(symbolList, Value_Function::GatherCriteria_Function());
+	symbolList.Sort();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	for (const Symbol* pSymbol : symbolList) {
+		RefPtr<Value> pValue(frame.Retrieve(pSymbol));
+		if (pValue) pValueOwner->push_back(pValue.release());
+	}
+	RefPtr<Iterator> pIterator(new Iterator_Each(pValueOwner.release()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// Frame##__statements__() {block?}
+Gurax_DeclareHybridMethod(Frame, __statements__)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+
+)**");
+}
+
+Gurax_ImplementHybridMethod(Frame, __statements__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	Frame& frame = valueThis.GetFrame();
+	SymbolList symbolList;
+	frame.GatherSymbolIf(symbolList, Value_Function::GatherCriteria_Statement());
+	symbolList.Sort();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	for (const Symbol* pSymbol : symbolList) {
+		RefPtr<Value> pValue(frame.Retrieve(pSymbol));
+		if (pValue) pValueOwner->push_back(pValue.release());
+	}
+	RefPtr<Iterator> pIterator(new Iterator_Each(pValueOwner.release()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
+// Frame##__vtypes__() {block?}
+Gurax_DeclareHybridMethod(Frame, __vtypes__)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareBlock(DeclBlock::Occur::ZeroOrOnce);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+
+)**");
+}
+
+Gurax_ImplementHybridMethod(Frame, __vtypes__)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Function body
+	Frame& frame = valueThis.GetFrame();
+	SymbolList symbolList;
+	frame.GatherSymbolIf(symbolList, Value_VType::GatherCriteria());
+	symbolList.Sort();
+	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
+	for (const Symbol* pSymbol : symbolList) {
+		RefPtr<Value> pValue(frame.Retrieve(pSymbol));
+		if (pValue) pValueOwner->push_back(pValue.release());
+	}
+	RefPtr<Iterator> pIterator(new Iterator_Each(pValueOwner.release()));
+	return argument.ReturnIterator(processor, pIterator.release());
+}
+
 // Frame.GetCurrent() as Frame
 Gurax_DeclareClassMethod(Frame, GetCurrent)
 {
@@ -263,6 +347,9 @@ void VType_Frame::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateClassMethod(Frame, PrintStack));
 	Assign(Gurax_CreateClassMethod(Frame, Where));
 	// Assignment of method
+	Assign(Gurax_CreateMethod(Frame, __functions__));
+	Assign(Gurax_CreateMethod(Frame, __statements__));
+	Assign(Gurax_CreateMethod(Frame, __vtypes__));
 	Assign(Gurax_CreateMethod(Frame, Assign));
 	Assign(Gurax_CreateMethod(Frame, PrintTree));
 	// Assignment of property

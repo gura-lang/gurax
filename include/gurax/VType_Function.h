@@ -29,6 +29,18 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Function");
 public:
+	class GURAX_DLLDECLARE GatherCriteria_Statement : public Frame::GatherCriteria {
+	public:
+		virtual bool IsEligible(const Value& value) const override {
+			return value.IsType(VTYPE_Function) && dynamic_cast<const Value_Function&>(value).GetFunction().IsTypeStatement();
+		}
+	};
+	class GURAX_DLLDECLARE GatherCriteria_Function : public Frame::GatherCriteria {
+	public:
+		virtual bool IsEligible(const Value& value) const override {
+			return value.IsType(VTYPE_Function) && dynamic_cast<const Value_Function&>(value).GetFunction().IsTypeFunction();
+		}
+	};
 	class GURAX_DLLDECLARE GatherCriteria_Method : public Frame::GatherCriteria {
 	public:
 		virtual bool IsEligible(const Value& value) const override {
