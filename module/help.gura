@@ -1,10 +1,13 @@
 #!/usr/bin/env gurax
 
 ComposeFunctionHelp(func, lang as Symbol = `en):map = {
-	doc = Help(func, lang).doc
-	str = '__' + func.__str__():unbracket + '__\n\n'
-	str += doc
-	str += cond(doc.EndsWith('\n'), '', '\n')
+	str = '__' + func.__str__():unbracket.Replace('`', '') + '__\n\n'
+	help = Help(func, lang)
+	if (help) {
+	doc = help.doc
+		str += doc
+		str += cond(doc.EndsWith('\n'), '', '\n')
+	}
 	str
 }
 
@@ -130,13 +133,13 @@ ComposeMethodHelp(vtype as VType, lang as Symbol = `en) = {
 	str
 }
 
-Render@html(vtype as VType, lang as Symbol = `en, out?:w as Stream, headerOffset = 0) = {
+Render@html(vtype as VType, lang as Symbol = `en, out?:w as Stream, headerOffset as Number = 0) = {
 	out = out || sys.cout
 	out.Printf(cond(lang == `ja, '<h%d>%s クラス</h%d>\n\n', '<h%d>%s Class</h%d>\n\n'),
 		headerOffset + 1, vtype.__fullName__, headerOffset + 1)
 	markdown.Document(Help(vtype, lang):class.tmplDoc.Eval().ToReader(), headerOffset + 1).Render@html(out)
 }
 
-Render@console(vtype as VType, lang as Symbol = `en, colorFlag as Bool = true, headerOffset = 0) = {
+Render@console(vtype as VType, lang as Symbol = `en, colorFlag as Bool = true, headerOffset as Number = 0) = {
 	markdown.Document(Help(vtype, lang):class.tmplDoc.Eval().ToReader(), headerOffset + 1).Render@console(colorFlag)
 }
