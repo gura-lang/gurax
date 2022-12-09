@@ -1177,9 +1177,10 @@ bool Document::FeedChar(char ch)
 			_statStack.Push(_stat);
 			_stat = Stat::Escape;
 		} else if (ch == '`') {
-			FlushText(Item::Type::Text, false, false);
-			_statStack.Push(_stat);
-			_stat = Stat::Backquote;
+			//FlushText(Item::Type::Text, false, false);
+			//_statStack.Push(_stat);
+			//_stat = Stat::Backquote;
+			_text += ch;	// tentative implementation
 		} else if (ch == '*') {
 			EndDecoration();
 			_stat = Stat::DecorationPost;
@@ -1197,9 +1198,10 @@ bool Document::FeedChar(char ch)
 			_statStack.Push(_stat);
 			_stat = Stat::Escape;
 		} else if (ch == '`') {
-			FlushText(Item::Type::Text, false, false);
-			_statStack.Push(_stat);
-			_stat = Stat::Backquote;
+			//FlushText(Item::Type::Text, false, false);
+			//_statStack.Push(_stat);
+			//_stat = Stat::Backquote;
+			_text += ch;	// tentative implementation
 		} else if (ch == '*') {
 			_stat = Stat::AsteriskStrongEnd;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
@@ -1247,9 +1249,10 @@ bool Document::FeedChar(char ch)
 			_statStack.Push(_stat);
 			_stat = Stat::Escape;
 		} else if (ch == '`') {
-			FlushText(Item::Type::Text, false, false);
-			_statStack.Push(_stat);
-			_stat = Stat::Backquote;
+			//FlushText(Item::Type::Text, false, false);
+			//_statStack.Push(_stat);
+			//_stat = Stat::Backquote;
+			_text += ch;	// tentative implementation
 		} else if (ch == '_') {
 			_stat = Stat::UnderscoreEmphasisPost;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
@@ -1278,9 +1281,10 @@ bool Document::FeedChar(char ch)
 			_statStack.Push(_stat);
 			_stat = Stat::Escape;
 		} else if (ch == '`') {
-			FlushText(Item::Type::Text, false, false);
-			_statStack.Push(_stat);
-			_stat = Stat::Backquote;
+			//FlushText(Item::Type::Text, false, false);
+			//_statStack.Push(_stat);
+			//_stat = Stat::Backquote;
+			_text += ch;	// tentative implementation
 		} else if (ch == '_') {
 			_stat = Stat::UnderscoreStrongEnd;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
@@ -1336,9 +1340,10 @@ bool Document::FeedChar(char ch)
 			_statStack.Push(_stat);
 			_stat = Stat::Escape;
 		} else if (ch == '`') {
-			FlushText(Item::Type::Text, false, false);
-			_statStack.Push(_stat);
-			_stat = Stat::Backquote;
+			//FlushText(Item::Type::Text, false, false);
+			//_statStack.Push(_stat);
+			//_stat = Stat::Backquote;
+			_text += ch;	// tentative implementation
 		} else if (ch == '~') {
 			_stat = Stat::TildaStrikeEnd;
 		} else if (IsEOL(ch) || IsEOF(ch)) {
