@@ -11,20 +11,19 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(Iterator, `en)}
 
 # Operator
 
-- `Iterator[]` ... 
+The following operators are prepared:
+
+- `Iterator[]` ... Creates a `List` from the `Iterator`.
 
 # Cast Operation
 
 The following cast operations are prepared:
 
-- `Iterator as List` ... Create an `Iterator` that iterates elements of the `List`.
-
+- `Iterator` as `List` ... Create an `Iterator` that iterates elements of the `List`.
 
 ${help.ComposeConstructorHelp(Iterator, `en)}
 
@@ -41,7 +40,7 @@ Gurax_DeclareMethod(Iterator, IsFinite)
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns `true` if the iterator is finite.
 )**");
-	AddHelp(Gurax_Symbol(en), u8R"**(
+	AddHelp(Gurax_Symbol(ja), u8R"**(
 イテレータが有限のとき `true` を返します。
 )**");
 }
@@ -757,6 +756,16 @@ Gurax_DeclareMethod(Iterator, Join)
 	StringStyle::DeclareAttrOpt(*this);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 
+- `:bracket`
+- `:dquoteString`
+- `:unbracket`
+- `:quote`
+- `:quoteString`
+- `:quoteSymbol`
+- `:nilVisible:`
+- `:cram`
+- `:multiLine`
+- `:verbose`
 )**");
 }
 
