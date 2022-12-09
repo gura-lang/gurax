@@ -427,11 +427,9 @@ markdown.Item
     <em>
       <text>'strong'
     <em>
-      <code>'strong code'
+      <text>'`strong code`'
     <em>
-      <text>'normal and '
-      <code>'code'
-      <text>' in composition'
+      <text>'normal and `code` in composition'
   <p>
     <strong>
       <em>

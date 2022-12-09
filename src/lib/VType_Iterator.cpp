@@ -756,16 +756,6 @@ Gurax_DeclareMethod(Iterator, Join)
 	StringStyle::DeclareAttrOpt(*this);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 
-- `:bracket`
-- `:dquoteString`
-- `:unbracket`
-- `:quote`
-- `:quoteString`
-- `:quoteSymbol`
-- `:nilVisible:`
-- `:cram`
-- `:multiLine`
-- `:verbose`
 )**");
 }
 
