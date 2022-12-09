@@ -1,13 +1,12 @@
 #!/usr/bin/env gurax
 
 ComposeFunctionHelp(func, lang as Symbol = `en):map = {
-	str = '__' + func.__str__():unbracket.Replace('`', '\\`') + '__\n\n'
+	str = '##### ' + func.__str__():unbracket.Replace('`', '\\`') + '\n'
 	help = Help(func, lang)
-	if (help) {
-	doc = help.doc
-		str += doc
-		str += cond(doc.EndsWith('\n'), '', '\n')
-	}
+	doc = cond(help, help.doc, '')
+	if (doc.IsEmpty()) { doc = '(no help)' }
+	str += doc
+	str += cond(doc.EndsWith('\n'), '', '\n')
 	str
 }
 
