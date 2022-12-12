@@ -818,7 +818,9 @@ Gurax_ImplementMethod(List, Join)
 	const char* sep = args.IsValid()? args.PickString() : "";
 	StringStyle ss(StringStyle::ToFlags(argument));
 	// Function body
-	return new Value_String(pIteratorThis->Join(sep, ss));
+	String str;
+	pIteratorThis->Join(str, sep, ss);
+	return new Value_String(str);
 }
 
 // List#Joinb()
@@ -834,8 +836,9 @@ Gurax_ImplementMethod(List, Joinb)
 	auto& valueThis = GetValueThis(argument);
 	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-
-	return Value::nil();
+	Binary buff;
+	if (!pIteratorThis->Joinb(buff)) return Value::nil();
+	return new Value_Binary(buff);
 }
 
 // List#Map(func as Function) {block?}

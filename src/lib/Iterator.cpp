@@ -158,13 +158,12 @@ Value* Iterator::Each(Processor& processor, const Expr_Block& exprOfBlock, DeclC
 	return pValueRtn.release();
 }
 
-String Iterator::Join(const char* sep, const StringStyle& ss)
+void Iterator::Join(String& str, const char* sep, const StringStyle& ss)
 {
-	String str;
 	StringStyle ssMod(ss);
 	//ssMod.UnsetQuoteString();
 	RefPtr<Value> pValueElem(NextValue());
-	if (!pValueElem) return str;
+	if (!pValueElem) return;
 	str += pValueElem->ToString(ssMod);
 	for (;;) {
 		pValueElem.reset(NextValue());
@@ -172,7 +171,20 @@ String Iterator::Join(const char* sep, const StringStyle& ss)
 		str += sep;
 		str += pValueElem->ToString(ssMod);
 	}
-	return str;
+}
+
+bool Iterator::Joinb(Binary& buff)
+{
+	for (;;) {
+		RefPtr<Value> pValueElem(NextValue());
+		if (!pValueElem) break;
+		if (!pValueElem->IsType(VTYPE_Binary)) {
+			Error::Issue(ErrorType::TypeError, "element must be of `Binary`");
+			return false;
+		}
+		buff += Value_Binary::GetBinary(*pValueElem);
+	}
+	return true;
 }
 
 Value* Iterator::Mean(Processor& processor)

@@ -479,6 +479,11 @@ x.Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 1
 ['abc', 'def', 'ghi', 'jkl', 'mno'].Join(',') .. 'abc,def,ghi,jkl,mno'
 ['abc', 'def', nil, 'ghi', nil, 'jkl', 'mno'].Join():nilVisible .. 'abcdef<Nil>ghi<Nil>jklmno'
 ======== List#Joinb() ========
+[].Joinb() .. B''
+[b'abc'].Joinb() .. B'abc'
+[b'abc', b'def'].Joinb() .. B'abcdef'
+[b'abc', b'def', b'ghi', b'jkl', b'mno'].Joinb() .. B'abcdefghijklmno'
+[b'abc', b'def', 1, b'ghi', nil, b'jkl', b'mno'].Joinb() .. element must be of `Binary`
 ======== List#Map() ========
 ======== List#Max() ========
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Max() .. 9

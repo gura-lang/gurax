@@ -381,6 +381,11 @@ TestCase('Iterator#Join()') {
 }
 
 TestCase('Iterator#Joinb()') {
+	Tester(`[].Each().Joinb()):quote
+	Tester(`[b'abc'].Each().Joinb()):quote
+	Tester(`[b'abc', b'def'].Each().Joinb()):quote
+	Tester(`[b'abc', b'def', b'ghi', b'jkl', b'mno'].Each().Joinb()):quote
+	Tester(`[b'abc', b'def', 1, b'ghi', nil, b'jkl', b'mno'].Each().Joinb()):quote
 }
 
 TestCase('Iterator#Map()') {

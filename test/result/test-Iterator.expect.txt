@@ -289,6 +289,11 @@ x.Each().Fold(5, 5):neat.Join(', ') .. [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11
 ['abc', 'def', 'ghi', 'jkl', 'mno'].Each().Join(',') .. 'abc,def,ghi,jkl,mno'
 ['abc', 'def', nil, 'ghi', nil, 'jkl', 'mno'].Each().Join():nilVisible .. 'abcdef<Nil>ghi<Nil>jklmno'
 ======== Iterator#Joinb() ========
+[].Each().Joinb() .. B''
+[b'abc'].Each().Joinb() .. B'abc'
+[b'abc', b'def'].Each().Joinb() .. B'abcdef'
+[b'abc', b'def', b'ghi', b'jkl', b'mno'].Each().Joinb() .. B'abcdefghijklmno'
+[b'abc', b'def', 1, b'ghi', nil, b'jkl', b'mno'].Each().Joinb() .. element must be of `Binary`
 ======== Iterator#Map() ========
 ======== Iterator#Max() ========
 [1, 1, 7, 3, 8, 4, 9, 0, 1, 8, 0, 4, 4, 9, 9, 1, 7, 4, 1, 1, 6, 6, 2, 7, 2, 2, 9, 8, 0, 7].Each().Max() .. 9

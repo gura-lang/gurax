@@ -600,6 +600,11 @@ TestCase('List#Join()') {
 }
 
 TestCase('List#Joinb()') {
+	Tester(`[].Joinb()):quote
+	Tester(`[b'abc'].Joinb()):quote
+	Tester(`[b'abc', b'def'].Joinb()):quote
+	Tester(`[b'abc', b'def', b'ghi', b'jkl', b'mno'].Joinb()):quote
+	Tester(`[b'abc', b'def', 1, b'ghi', nil, b'jkl', b'mno'].Joinb()):quote
 }
 
 TestCase('List#Map()') {

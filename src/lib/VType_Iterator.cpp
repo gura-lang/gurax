@@ -755,7 +755,8 @@ Gurax_DeclareMethod(Iterator, Join)
 	DeclareArg("sep", VTYPE_String, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	StringStyle::DeclareAttrOpt(*this);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
+Creates a `String` that joins `String` elements from the iterable with a separator `sep`.
+Elements that are not `String` are converted to `String` before the jointing.
 )**");
 }
 
@@ -769,7 +770,9 @@ Gurax_ImplementMethod(Iterator, Join)
 	const char* sep = args.IsValid()? args.PickString() : "";
 	StringStyle ss(StringStyle::ToFlags(argument));
 	// Function body
-	return new Value_String(iteratorThis.Join(sep, ss));
+	String str;
+	iteratorThis.Join(str, sep, ss);
+	return new Value_String(str);
 }
 
 // Iterator#Joinb()
@@ -777,21 +780,22 @@ Gurax_DeclareMethod(Iterator, Joinb)
 {
 	Declare(VTYPE_Binary, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-
+Creates a `Binary` that joins `Binary` elements from the iterable.
+An error is issued if elements other than `Binary` are found.
 )**");
 }
 
 Gurax_ImplementMethod(Iterator, Joinb)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
+	Iterator& iteratorThis = valueThis.GetIterator();
 	// Arguments
 	ArgPicker args(argument);
 	// Function body
-#endif
-	return Value::nil();
+	Binary buff;
+	if (!iteratorThis.Joinb(buff)) return Value::nil();
+	return new Value_Binary(buff);
 }
 
 // Iterator#Map(func as Function) {block?}
