@@ -23,7 +23,8 @@ The following operators are prepared:
 
 The following cast operations are prepared:
 
-- `Iterator` as `List` ... Create an `Iterator` that iterates elements of the `List`.
+- `Iterator` as `List` ... Create a `List` from the `Iterator`.
+- `List` as `Iterator` ... Create an `Iterator` from the `List`.
 
 ${help.ComposeConstructorHelp(Iterator, `en)}
 
@@ -1685,14 +1686,16 @@ Gurax_DeclareProperty_R(Iterator, tuple)
 {
 	Declare(VTYPE_Tuple, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Converts into a Tuple instance.
+Creates a `Tuple` from the `Iterator`.
 )**");
 }
 
 Gurax_ImplementPropertyGetter(Iterator, tuple)
 {
 	auto& valueThis = GetValueThis(valueTarget);
-	RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(valueThis.GetIterator(), false));
+	Iterator& iterator = valueThis.GetIterator();
+	RefPtr<ValueOwner> pValueOwner(ValueOwner::CreateFromIterator(iterator, false));
+	if (Error::IsIssued()) return Value::nil();
 	return new Value_Tuple(pValueOwner.release());
 }
 
