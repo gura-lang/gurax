@@ -11,8 +11,6 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(Array, `en)}
 
 # Operator
@@ -27,7 +25,7 @@ ${help.ComposeMethodHelp(Array, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Array(elemType:Symbol, init*) {block?}
+// Array(elemType as Symbol, init*) {block?}
 Gurax_DeclareConstructor(Array)
 {
 	Declare(VTYPE_Array, Flag::None);
@@ -36,6 +34,34 @@ Gurax_DeclareConstructor(Array)
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates an `Array` instance.
+
+The argument `elemType` specifies the element data type from the symbols:
+`` `bool``, `` `char``, `` `uchar``, `` `short``, `` `ushort``, `` `int``, `` `uint``, `` `long``, `` `ulong``, `` `half``, `` `float``, `` `double``, `` `complex``,
+`` `int8``, `` `uint8``, `` `int16``, `` `uint16``, `` `int32``, `` `uint32``, `` `int64``, `` `uint64``.
+
+- ``Array(`bool, init*)`` ... `@bool(init*)`
+- ``Array(`char, init*)`` ... `@char(init*)`
+- ``Array(`uchar, init*)`` ... `@uchar(init*)`
+- ``Array(`short, init*)`` ... `@short(init*)`
+- ``Array(`ushort, init*)`` ... `@ushort(init*)`
+- ``Array(`int, init*)`` ... `@int(init*)`
+- ``Array(`uint, init*)`` ... `@uint(init*)`
+- ``Array(`long, init*)`` ... `@long(init*)`
+- ``Array(`ulong, init*)`` ... `@ulong(init*)`
+- ``Array(`half, init*)`` ... `@half(init*)`
+- ``Array(`float, init*)`` ... `@float(init*)`
+- ``Array(`double, init*)`` ... `@double(init*)`
+- ``Array(`complex, init*)`` ... `@complex(init*)`
+- ``Array(`int8, init*)`` ... `@int8(init*)`
+- ``Array(`uint8, init*)`` ... `@uint8(init*)`
+- ``Array(`int16, init*)`` ... `@int16(init*)`
+- ``Array(`uint16, init*)`` ... `@uint16(init*)`
+- ``Array(`int32, init*)`` ... `@int32(init*)`
+- ``Array(`uint32, init*)`` ... `@uint32(init*)`
+- ``Array(`int64, init*)`` ... `@int64(init*)`
+- ``Array(`uint64, init*)`` ... `@uint64(init*)`
+
+
 )**");
 }
 
