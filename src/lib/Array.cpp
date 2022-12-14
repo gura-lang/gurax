@@ -512,8 +512,9 @@ void Sub_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
 	using T_ElemRtn = T_ElemL;
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
-	//T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
+	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(static_cast<T_ElemRtn>(*pL) - numRCasted);
 	}
 }
 
@@ -523,8 +524,9 @@ void Sub_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
 	using T_ElemRtn = T_ElemR;
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
-	//T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
+	T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
 	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
+		*pRtn = static_cast<T_ElemRtn>(numLCasted - static_cast<T_ElemRtn>(*pR));
 	}
 }
 
@@ -535,6 +537,7 @@ void Sub_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(static_cast<T_ElemRtn>(*pL) - numR);
 	}
 }
 
@@ -545,6 +548,7 @@ void Sub_ComplexArray_T(void* pvRtn, const Complex& numL, const void* pvR, size_
 	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for (size_t i = 0; i < len; i++, pRtn++, pR++) {
+		*pRtn = static_cast<T_ElemRtn>(numL - static_cast<T_ElemRtn>(*pR));
 	}
 }
 
