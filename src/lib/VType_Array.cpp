@@ -39,8 +39,6 @@ The argument `elemType` specifies the element data type from the symbols:
 `` `bool``, `` `char``, `` `uchar``, `` `short``, `` `ushort``, `` `int``, `` `uint``, `` `long``, `` `ulong``, `` `half``, `` `float``, `` `double``, `` `complex``,
 `` `int8``, `` `uint8``, `` `int16``, `` `uint16``, `` `int32``, `` `uint32``, `` `int64``, `` `uint64``.
 
-
-
 - ``Array(`bool, init*)`` ... `@bool(init*)`
 - ``Array(`char, init*)`` ... `@char(init*)`
 - ``Array(`uchar, init*)`` ... `@uchar(init*)`
@@ -82,6 +80,8 @@ Gurax_ImplementConstructor(Array)
 		pArray.reset(Array::Create1d(elemType, 1));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
 		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
+	} else if (values.size() == 1 && values.front()->IsType(VTYPE_Tuple)) {
+		pArray.reset(Value_Tuple::GetValueOwner(*values.front()).CreateArray(elemType));
 	} else if (values.GetVTypeOfElems().IsIdentical(VTYPE_Number)) {
 		DimSizes dimSizes(values);
 		if (Error::IsIssued()) return Value::nil();
@@ -116,6 +116,8 @@ Gurax_ImplementFunction(ConstructArray)
 		pArray.reset(Array::Create1d(elemType, 1));
 	} else if (values.size() == 1 && values.front()->IsType(VTYPE_List)) {
 		pArray.reset(Value_List::GetValueOwner(*values.front()).CreateArray(elemType));
+	} else if (values.size() == 1 && values.front()->IsType(VTYPE_Tuple)) {
+		pArray.reset(Value_Tuple::GetValueOwner(*values.front()).CreateArray(elemType));
 	} else if (values.GetVTypeOfElems().IsIdentical(VTYPE_Number)) {
 		DimSizes dimSizes(values);
 		if (Error::IsIssued()) return Value::nil();

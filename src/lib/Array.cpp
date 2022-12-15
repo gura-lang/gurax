@@ -1311,7 +1311,7 @@ Array* Array::CreateCasted(ElemTypeT& elemType) const
 
 String Array::ToString(const StringStyle& ss) const
 {
-	return String().Format("Array:%s:[%s]",
+	return String().Format("Array:%s:dim=%s",
 		_elemType.pSymbol->GetName(), _dimSizes.ToString(StringStyle::Cram).c_str());
 }
 
@@ -1394,7 +1394,7 @@ String DimSizes::ToString(const StringStyle& ss) const
 {
 	String str;
 	for (size_t dimSize : *this) {
-		if (!str.empty()) str += ss.GetComma();
+		if (!str.empty()) str += 'x';
 		str.Format("%zu", dimSize);
 	}
 	return str;

@@ -177,6 +177,9 @@ bool ValueList::CreateArraySub(Array::ElemTypeT& elemType, void* p, size_t& idx,
 			if (pValue->IsType(VTYPE_List)) {
 				const ValueList& values = Value_List::GetValueOwner(*pValue);
 				values.CreateArraySub(elemType, p, idx, pDimSize + 1, pDimSizeEnd);
+			} else if (pValue->IsType(VTYPE_Tuple)) {
+				const ValueList& values = Value_Tuple::GetValueOwner(*pValue);
+				values.CreateArraySub(elemType, p, idx, pDimSize + 1, pDimSizeEnd);
 			} else {
 				Error::Issue(ErrorType::ValueError, "failed to create an array");
 				return false;
