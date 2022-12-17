@@ -141,8 +141,15 @@ DimSizes ValueList::GetShape() const
 	const ValueList* pValues = this;
 	while (pValues) {
 		dimSizes.push_back(pValues->size());
-		if (pValues->empty() || !pValues->front()->IsType(VTYPE_List)) break;
-		pValues = &Value_List::GetValueOwner(*pValues->front());
+		if (pValues->empty()) {
+			break;
+		} else if (pValues->front()->IsType(VTYPE_List)) {
+			pValues = &Value_List::GetValueOwner(*pValues->front());
+		} else if (pValues->front()->IsType(VTYPE_Tuple)) {
+			pValues = &Value_Tuple::GetValueOwner(*pValues->front());
+		} else {
+			break;
+		}
 	}
 	return dimSizes;
 }

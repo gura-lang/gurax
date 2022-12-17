@@ -78,6 +78,26 @@ TestCase('Array constructor (2)') {
 	Tester(`@uint([[1, 2, 3], [4, 5, 6]]))
 	Tester(`@long([[1, 2, 3], [4, 5, 6]]))
 	Tester(`@ulong([[1, 2, 3], [4, 5, 6]]))
+	Tester(`@int8(((1, 2, 3), (4, 5, 6))))
+	Tester(`@uint8(((1, 2, 3), (4, 5, 6))))
+	Tester(`@int16(((1, 2, 3), (4, 5, 6))))
+	Tester(`@uint16(((1, 2, 3), (4, 5, 6))))
+	Tester(`@int32(((1, 2, 3), (4, 5, 6))))
+	Tester(`@uint32(((1, 2, 3), (4, 5, 6))))
+	Tester(`@int64(((1, 2, 3), (4, 5, 6))))
+	Tester(`@uint64(((1, 2, 3), (4, 5, 6))))
+	Tester(`@half(((1, 2, 3), (4, 5, 6))))
+	Tester(`@float(((1, 2, 3), (4, 5, 6))))
+	Tester(`@double(((1, 2, 3), (4, 5, 6))))
+	Tester(`@complex(((1, 2, 3), (4, 5, 6))))
+	Tester(`@char(((1, 2, 3), (4, 5, 6))))
+	Tester(`@uchar(((1, 2, 3), (4, 5, 6))))
+	Tester(`@short(((1, 2, 3), (4, 5, 6))))
+	Tester(`@ushort(((1, 2, 3), (4, 5, 6))))
+	Tester(`@int(((1, 2, 3), (4, 5, 6))))
+	Tester(`@uint(((1, 2, 3), (4, 5, 6))))
+	Tester(`@long(((1, 2, 3), (4, 5, 6))))
+	Tester(`@ulong(((1, 2, 3), (4, 5, 6))))
 }
 
 TestCase('Array#bytes/bytesPerElem/elemType/len') {
@@ -97,7 +117,7 @@ TestCase('Array#p') {
 		Println('[int8]')
 		arr = Array(`int8, 0x100)
 		p = arr.p
-		repeat (0x100) {|i| p.int8 = i - 0x80}
+		repeat(0x100) {|i| p.int8 = i - 0x80}
 		arr.p.Dump()
 		Println(arr.Each().Join(', '))
 	}
@@ -105,7 +125,7 @@ TestCase('Array#p') {
 		Println('[uint8]')
 		arr = Array(`uint8, 0x100)
 		p = arr.p
-		repeat (0x100) {|i| p.uint8 = i }
+		repeat(0x100) {|i| p.uint8 = i }
 		arr.p.Dump()
 		Println(arr.Each().Join(', '))
 	}
@@ -113,10 +133,10 @@ TestCase('Array#p') {
 		Println('[int16]')
 		arr = Array(`int16, 512)
 		p = arr.p
-		repeat (0x80) {|i| p.int16 = i - 0x8000 }
-		repeat (0x80) {|i| p.int16 = i - 0x80 }
-		repeat (0x80) {|i| p.int16 = i }
-		repeat (0x80) {|i| p.int16 = i + 0x8000 - 0x80 }
+		repeat(0x80) {|i| p.int16 = i - 0x8000 }
+		repeat(0x80) {|i| p.int16 = i - 0x80 }
+		repeat(0x80) {|i| p.int16 = i }
+		repeat(0x80) {|i| p.int16 = i + 0x8000 - 0x80 }
 		arr.p.Dump()
 		Println(arr.Each().Join(', '))
 	}
@@ -124,8 +144,8 @@ TestCase('Array#p') {
 		Println('[uint16]')
 		arr = Array(`uint16, 512)
 		p = arr.p
-		repeat (0x100) {|i| p.uint16 = i }
-		repeat (0x100) {|i| p.uint16 = i + 0x10000 - 0x100 }
+		repeat(0x100) {|i| p.uint16 = i }
+		repeat(0x100) {|i| p.uint16 = i + 0x10000 - 0x100 }
 		arr.p.Dump()
 		Println(arr.Each().Join(', '))
 	}
@@ -133,10 +153,10 @@ TestCase('Array#p') {
 		Println('[int32]')
 		arr = Array(`int32, 512)
 		p = arr.p
-		repeat (0x80) {|i| p.int32 = i - 0x80000000 }
-		repeat (0x80) {|i| p.int32 = i - 0x80 }
-		repeat (0x80) {|i| p.int32 = i }
-		repeat (0x80) {|i| p.int32 = i + 0x80000000 - 0x80 }
+		repeat(0x80) {|i| p.int32 = i - 0x80000000 }
+		repeat(0x80) {|i| p.int32 = i - 0x80 }
+		repeat(0x80) {|i| p.int32 = i }
+		repeat(0x80) {|i| p.int32 = i + 0x80000000 - 0x80 }
 		arr.p.Dump()
 		Println(arr.Each().Join(', '))
 	}
@@ -144,8 +164,8 @@ TestCase('Array#p') {
 		Println('[uint32]')
 		arr = Array(`uint32, 512)
 		p = arr.p
-		repeat (0x100) {|i| p.uint32 = i }
-		repeat (0x100) {|i| p.uint32 = i + 0x100000000 - 256 }
+		repeat(0x100) {|i| p.uint32 = i }
+		repeat(0x100) {|i| p.uint32 = i + 0x100000000 - 256 }
 		arr.p.Dump()
 		Println(arr.Each().Join(', '))
 	}
@@ -153,10 +173,10 @@ TestCase('Array#p') {
 		Println('[int64]')
 		arr = Array(`int64, 512)
 		p = arr.p
-		repeat (0x80) {|i| p.int64 = i - 0x0010_0000_0000_0000 }
-		repeat (0x80) {|i| p.int64 = i - 0x80 }
-		repeat (0x80) {|i| p.int64 = i }
-		repeat (0x80) {|i| p.int64 = i + 0x0010_0000_0000_0000 - 0x80 }
+		repeat(0x80) {|i| p.int64 = i - 0x0010_0000_0000_0000 }
+		repeat(0x80) {|i| p.int64 = i - 0x80 }
+		repeat(0x80) {|i| p.int64 = i }
+		repeat(0x80) {|i| p.int64 = i + 0x0010_0000_0000_0000 - 0x80 }
 		arr.p.Dump()
 		Println(arr.Each().Join(', '))
 	}
@@ -164,8 +184,8 @@ TestCase('Array#p') {
 		Println('[uint64]')
 		arr = Array(`uint64, 512)
 		p = arr.p
-		repeat (0x100) {|i| p.uint64 = i }
-		repeat (0x100) {|i| p.uint64 = i + 0x0010_0000_0000_0000 - 256 }
+		repeat(0x100) {|i| p.uint64 = i }
+		repeat(0x100) {|i| p.uint64 = i + 0x0010_0000_0000_0000 - 256 }
 		arr.p.Dump()
 		Println(arr.Each().Join(', '))
 	}
@@ -191,12 +211,32 @@ TestCase('Array#Inject()') {
 }
 
 TestCase('Array#ToList()') {
+	Tester(`@int8([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint8([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@int16([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint16([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@int32([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint32([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@int64([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint64([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@half([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@float([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@double([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@complex([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@char([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uchar([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@short([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@ushort([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@int([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@long([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@ulong([[1, 2, 3], [4, 5, 6]]).ToList())
 }
 
 TestCase('Index access') {
 	Array(`int16, 32) {|arr|
-		repeat (32) {|i| arr[i] = i}
-		Println((repeat (32):iter {|i| arr[i]}).Join(', '))
+		repeat(32) {|i| arr[i] = i}
+		Println((repeat(32):iter {|i| arr[i]}).Join(', '))
 		Tester(`arr[0])
 		Tester(`arr[1])
 		Tester(`arr[2])
@@ -250,12 +290,6 @@ TestCase('Set boolean') {
 	@complex([false, true, false, true]) {|arr| arr.p.Dump()}
 }
 
-TestCase('array |.| array') {
-	Tester(`(@float([[1], [2], [3]]) |.| @float([[1, 2, 3]])).ToList())
-	Tester(`(@float([[1, 3, -2], [4, 0, -1]]) |.| @float([[1, 0, 4], [-1, 4, 0], [5, 3, 2]])).ToList())
-	Tester(`(@float([[1, 4], [2, 5], [3, 6]]) |.| @float([[1, 2, 3], [4, 5, 6]])).ToList())
-}
-
 TestCase('Rotation/translation matrix') {
 	angle = math.pi / 6
 	matRot = @float([[math.Cos(angle), -math.Sin(angle), 0], [math.Sin(angle), math.Cos(angle), 0], [0, 0, 1]])
@@ -290,7 +324,79 @@ TestCase('Array#VerifyShape()') {
 	Tester(`@float(3, 4, 5).VerifyShape(3, 3, 5))
 }
 
-TestCase('array |^| array') {
+TestCase('+Array') {
+}
+
+TestCase('-Array') {
+}
+
+TestCase('Array + Array') {
+}
+
+TestCase('Array + Number') {
+}
+
+TestCase('Number + Array') {
+}
+
+TestCase('Array + Complex') {
+}
+
+TestCase('Complex + Array') {
+}
+
+TestCase('Array - Array') {
+}
+
+TestCase('Array - Number') {
+}
+
+TestCase('Number - Array') {
+}
+
+TestCase('Array - Complex') {
+}
+
+TestCase('Complex - Array') {
+}
+
+TestCase('Array * Array') {
+}
+
+TestCase('Array * Number') {
+}
+
+TestCase('Number * Array') {
+}
+
+TestCase('Array * Complex') {
+}
+
+TestCase('Complex * Array') {
+}
+
+TestCase('Array / Array') {
+}
+
+TestCase('Array / Number') {
+}
+
+TestCase('Number / Array') {
+}
+
+TestCase('Array / Complex') {
+}
+
+TestCase('Complex / Array') {
+}
+
+TestCase('Array |.| Array') {
+	Tester(`(@float([[1], [2], [3]]) |.| @float([[1, 2, 3]])).ToList())
+	Tester(`(@float([[1, 3, -2], [4, 0, -1]]) |.| @float([[1, 0, 4], [-1, 4, 0], [5, 3, 2]])).ToList())
+	Tester(`(@float([[1, 4], [2, 5], [3, 6]]) |.| @float([[1, 2, 3], [4, 5, 6]])).ToList())
+}
+
+TestCase('Array |^| Array') {
 	Tester(`(@float([1, -4, -2]) |^| @float([2, 5, 1])).ToList())
 	Tester(`(@float([2, 5, 1]) |^| @float([1, -4, -2])).ToList())
 	Tester(`(@float([2, 4, -3]) |^| @float([3, 8, -5])).ToList())

@@ -304,7 +304,13 @@ Gurax_DeclareMethod(Array, VerifyShape)
 	Declare(VTYPE_Bool, Flag::Reduce);
 	DeclareArg("dim", VTYPE_Number, ArgOccur::OnceOrMore, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Verifies the array's shape.
+Returns `true` if `this` Array has the shape specified by the given arguments.
+
+```
+@float(5, 3).VerifyShape(5, 3) // true
+@float(5, 3).VerifyShape(4, 3) // false
+@float(5, 3).VerifyShape(5)    // false
+```
 )**");
 }
 
