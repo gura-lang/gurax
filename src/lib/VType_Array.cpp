@@ -428,6 +428,15 @@ Gurax_ImplementPropertyGetter(Array, shape)
 //------------------------------------------------------------------------------
 // Implementation of operator
 //------------------------------------------------------------------------------
+// -Array
+Gurax_ImplementOpUnary(Neg, Array)
+{
+	const Array& array = Value_Array::GetArray(value);
+	RefPtr<Array> pArrayRtn(Array::Neg(array));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
 // Array + Array
 Gurax_ImplementOpBinary(Add, Array, Array)
 {
@@ -699,6 +708,7 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Array, p));
 	Assign(Gurax_CreateProperty(Array, shape));
 	// Assignment of operator
+	Gurax_AssignOpUnary(Neg,	Array);
 	Gurax_AssignOpBinary(Add,	Array, Array);
 	Gurax_AssignOpBinary(Add,	Array, Number);
 	Gurax_AssignOpBinary(Add,	Number, Array);

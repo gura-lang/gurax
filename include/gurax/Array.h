@@ -66,9 +66,12 @@ public:
 		std::function<void (ValueOwner& values, const void* pv, size_t offset, size_t len)> ExtractToValueOwner;
 		std::function<void (void* pvDst, const void* pvSrc, size_t offset, size_t len)> 	CopyElems[ElemTypeIdMax];
 		std::function<void (void* pvDst, size_t nRows, size_t nCols, const void* pvSrc)>	Transpose[ElemTypeIdMax];
+		std::function<void (void* pvDst, const void* pvSrc, size_t len)> 					Neg_Array;
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Add_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Add_ArrayNumber;
 		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Add_ArrayComplex;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		And_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			And_ArrayNumber;
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Sub_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Sub_NumberArray;
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Sub_ArrayNumber;
@@ -82,6 +85,10 @@ public:
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Div_ArrayNumber;
 		std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>	Div_ComplexArray;
 		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Div_ArrayComplex;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Or_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			Or_ArrayNumber;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Xor_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			Xor_ArrayNumber;
 		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax];
 	public:
@@ -192,8 +199,14 @@ public:
 public:
 	Array* Transpose() const;
 public:
+	static Array* GenericOp(const Array& array,
+		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
 	static Array* GenericOp(const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
+	static Array* GenericOp(const Array& arrayL, UInt64 numR,
+		const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func);
+	static Array* GenericOp(UInt64 numL, const Array& arrayR,
+		const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func);
 	static Array* GenericOp(const Array& arrayL, Double numR,
 		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func);
 	static Array* GenericOp(Double numL, const Array& arrayR,
@@ -202,9 +215,12 @@ public:
 		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
 	static Array* GenericOp(const Complex& numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
+	static Array* Neg(const Array& array);
 	static Array* Add(const Array& arrayL, const Array& arrayR);
 	static Array* Add(const Array& arrayL, Double numR);
 	static Array* Add(const Array& arrayL, const Complex& numR);
+	static Array* And(const Array& arrayL, const Array& arrayR);
+	static Array* And(const Array& arrayL, UInt64 numR);
 	static Array* Sub(const Array& arrayL, const Array& arrayR);
 	static Array* Sub(const Array& arrayL, Double numR);
 	static Array* Sub(Double numL, const Array& arrayR);
@@ -218,6 +234,10 @@ public:
 	static Array* Div(Double numL, const Array& arrayR);
 	static Array* Div(const Array& arrayL, const Complex& numR);
 	static Array* Div(const Complex& numL, const Array& arrayR);
+	static Array* Or(const Array& arrayL, const Array& arrayR);
+	static Array* Or(const Array& arrayL, UInt64 numR);
+	static Array* Xor(const Array& arrayL, const Array& arrayR);
+	static Array* Xor(const Array& arrayL, UInt64 numR);
 	static Array* Dot(const Array& arrayL, const Array& arrayR);
 	static Array* Cross(const Array& arrayL, const Array& arrayR);
 public:

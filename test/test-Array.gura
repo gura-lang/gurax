@@ -325,15 +325,19 @@ TestCase('Array#VerifyShape()') {
 }
 
 TestCase('+Array') {
+	//Tester(`(+@float(3, 4, 5)))
 }
 
 TestCase('-Array') {
+	Tester(`(-@float([[1, 2, 3], [4, 5, 6]])).ToList())
 }
 
 TestCase('Array + Array') {
+	Tester(`(@float([[1, 2, 3], [4, 5, 6]]) + @float([[1, 2, 3], [4, 5, 6]])).ToList())
 }
 
 TestCase('Array + Number') {
+	Tester(`(@float([[1, 2, 3], [4, 5, 6]]) + 4).ToList())
 }
 
 TestCase('Number + Array') {
