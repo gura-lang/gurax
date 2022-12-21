@@ -747,6 +747,72 @@ void Xor_ArrayNumber_T(void* pvRtn, const void* pvL, UInt64 numR, size_t len)
 	}
 }
 
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void Eq_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL == *pR);
+	}
+}
+
+template<typename T_ElemL>
+void Eq_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL == numR);
+	}
+}
+
+template<typename T_ElemL>
+void Eq_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL == numR);
+	}
+}
+
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void Ne_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL != *pR);
+	}
+}
+
+template<typename T_ElemL>
+void Ne_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL != numR);
+	}
+}
+
+template<typename T_ElemL>
+void Ne_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL == numR);
+	}
+}
+
 // [m, n] = dot([m, l], [l, n])
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 void Dot_ArrayArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
@@ -1022,6 +1088,8 @@ void Array::Bootup()
 	SetFuncBurst3(Add_ArrayArray,		Add_ArrayArray_T);
 	SetFuncBurst(Add_ArrayNumber,		Add_ArrayNumber_T);
 	SetFuncBurst(Add_ArrayComplex,		Add_ArrayComplex_T);
+	SetFuncBurst3(And_ArrayArray,		And_ArrayArray_T);
+	SetFuncBurst(And_ArrayNumber,		And_ArrayNumber_T);
 	SetFuncBurst3(Sub_ArrayArray,		Sub_ArrayArray_T);
 	SetFuncBurst(Sub_ArrayNumber,		Sub_ArrayNumber_T);
 	SetFuncBurst(Sub_NumberArray,		Sub_NumberArray_T);
@@ -1035,6 +1103,10 @@ void Array::Bootup()
 	SetFuncBurst(Div_NumberArray,		Div_NumberArray_T);
 	SetFuncBurst(Div_ArrayComplex,		Div_ArrayComplex_T);
 	SetFuncBurst(Div_ComplexArray,		Div_ComplexArray_T);
+	SetFuncBurst3(Or_ArrayArray,		Or_ArrayArray_T);
+	SetFuncBurst(Or_ArrayNumber,		Or_ArrayNumber_T);
+	SetFuncBurst3(Xor_ArrayArray,		Xor_ArrayArray_T);
+	SetFuncBurst(Xor_ArrayNumber,		Xor_ArrayNumber_T);
 	SetFuncBurst3(Dot_ArrayArray,		Dot_ArrayArray_T);
 	SetFuncBurst3(Cross_ArrayArray,		Cross_ArrayArray_T);
 }
@@ -1331,6 +1403,76 @@ Array* Array::Div(const Array& arrayL, const Complex& numR)
 Array* Array::Div(const Complex& numL, const Array& arrayR)
 {
 	return GenericOp(numL, arrayR, arrayR.GetElemType().Div_ComplexArray);
+}
+
+Array* Array::Or(const Array& arrayL, const Array& arrayR)
+{
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Or_ArrayArray[arrayR.GetElemType().id]);
+}
+
+Array* Array::Or(const Array& arrayL, UInt64 numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Or_ArrayNumber);
+}
+
+Array* Array::Xor(const Array& arrayL, const Array& arrayR)
+{
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Xor_ArrayArray[arrayR.GetElemType().id]);
+}
+
+Array* Array::Xor(const Array& arrayL, UInt64 numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Xor_ArrayNumber);
+}
+
+Array* Array::Eq(const Array& arrayL, const Array& arrayR)
+{
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Eq_ArrayArray[arrayR.GetElemType().id]);
+}
+
+Array* Array::Eq(const Array& arrayL, Double numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Eq_ArrayNumber);
+}
+
+Array* Array::Eq(const Array& arrayL, const Complex& numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Eq_ArrayComplex);
+}
+
+Array* Array::Ne(const Array& arrayL, const Array& arrayR)
+{
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Ne_ArrayArray[arrayR.GetElemType().id]);
+}
+
+Array* Array::Ne(const Array& arrayL, Double numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Ne_ArrayNumber);
+}
+
+Array* Array::Ne(const Array& arrayL, const Complex& numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Ne_ArrayComplex);
+}
+
+Array* Array::Lt(const Array& arrayL, const Array& arrayR)
+{
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Lt_ArrayArray[arrayR.GetElemType().id]);
+}
+
+Array* Array::Lt(const Array& arrayL, Double numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Lt_ArrayNumber);
+}
+
+Array* Array::Le(const Array& arrayL, const Array& arrayR)
+{
+	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Le_ArrayArray[arrayR.GetElemType().id]);
+}
+
+Array* Array::Le(const Array& arrayL, Double numR)
+{
+	return GenericOp(arrayL, numR, arrayL.GetElemType().Le_ArrayNumber);
 }
 
 Array* Array::Dot(const Array& arrayL, const Array& arrayR)

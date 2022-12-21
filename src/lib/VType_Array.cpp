@@ -637,6 +637,96 @@ Gurax_ImplementOpBinary(Div, Complex, Array)
 	return new Value_Array(pArrayRtn.release());
 }
 
+// Array & Array
+Gurax_ImplementOpBinary(And, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::And(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array & Number
+Gurax_ImplementOpBinary(And, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::And(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number & Array
+Gurax_ImplementOpBinary(And, Number, Array)
+{
+	UInt64 numL = Value_Number::GetNumber<UInt64>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::And(arrayR, numL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array | Array
+Gurax_ImplementOpBinary(Or, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Or(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array | Number
+Gurax_ImplementOpBinary(Or, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::Or(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number | Array
+Gurax_ImplementOpBinary(Or, Number, Array)
+{
+	UInt64 numL = Value_Number::GetNumber<UInt64>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Or(arrayR, numL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array ^ Array
+Gurax_ImplementOpBinary(Xor, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Xor(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array ^ Number
+Gurax_ImplementOpBinary(Xor, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::Xor(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number ^ Array
+Gurax_ImplementOpBinary(Xor, Number, Array)
+{
+	UInt64 numL = Value_Number::GetNumber<UInt64>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Xor(arrayR, numL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
 // Array |.| Array
 Gurax_ImplementOpBinary(Dot, Array, Array)
 {
@@ -715,8 +805,29 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Add,	Array, Complex);
 	Gurax_AssignOpBinary(Add,	Complex, Array);
 	Gurax_AssignOpBinary(Sub,	Array, Array);
+	Gurax_AssignOpBinary(Sub,	Array, Number);
+	Gurax_AssignOpBinary(Sub,	Number, Array);
+	Gurax_AssignOpBinary(Sub,	Array, Complex);
+	Gurax_AssignOpBinary(Sub,	Complex, Array);
 	Gurax_AssignOpBinary(Mul,	Array, Array);
+	Gurax_AssignOpBinary(Mul,	Array, Number);
+	Gurax_AssignOpBinary(Mul,	Number, Array);
+	Gurax_AssignOpBinary(Mul,	Array, Complex);
+	Gurax_AssignOpBinary(Mul,	Complex, Array);
 	Gurax_AssignOpBinary(Div,	Array, Array);
+	Gurax_AssignOpBinary(Div,	Array, Number);
+	Gurax_AssignOpBinary(Div,	Number, Array);
+	Gurax_AssignOpBinary(Div,	Array, Complex);
+	Gurax_AssignOpBinary(Div,	Complex, Array);
+	Gurax_AssignOpBinary(And,	Array, Array);
+	Gurax_AssignOpBinary(And,	Array, Number);
+	Gurax_AssignOpBinary(And,	Number, Array);
+	Gurax_AssignOpBinary(Or,	Array, Array);
+	Gurax_AssignOpBinary(Or,	Array, Number);
+	Gurax_AssignOpBinary(Or,	Number, Array);
+	Gurax_AssignOpBinary(Xor,	Array, Array);
+	Gurax_AssignOpBinary(Xor,	Array, Number);
+	Gurax_AssignOpBinary(Xor,	Number, Array);
 	Gurax_AssignOpBinary(Dot,	Array, Array);
 	Gurax_AssignOpBinary(Cross,	Array, Array);
 }

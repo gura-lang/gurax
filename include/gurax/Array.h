@@ -89,6 +89,16 @@ public:
 		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			Or_ArrayNumber;
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Xor_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>			Xor_ArrayNumber;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Eq_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Eq_ArrayNumber;
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Eq_ArrayComplex;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Ne_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Ne_ArrayNumber;
+		std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>	Ne_ArrayComplex;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Lt_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Lt_ArrayNumber;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Le_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Le_ArrayNumber;
 		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax];
 	public:
@@ -238,6 +248,16 @@ public:
 	static Array* Or(const Array& arrayL, UInt64 numR);
 	static Array* Xor(const Array& arrayL, const Array& arrayR);
 	static Array* Xor(const Array& arrayL, UInt64 numR);
+	static Array* Eq(const Array& arrayL, const Array& arrayR);
+	static Array* Eq(const Array& arrayL, Double numR);
+	static Array* Eq(const Array& arrayL, const Complex& numR);
+	static Array* Ne(const Array& arrayL, const Array& arrayR);
+	static Array* Ne(const Array& arrayL, Double numR);
+	static Array* Ne(const Array& arrayL, const Complex& numR);
+	static Array* Lt(const Array& arrayL, const Array& arrayR);
+	static Array* Lt(const Array& arrayL, Double numR);
+	static Array* Le(const Array& arrayL, const Array& arrayR);
+	static Array* Le(const Array& arrayL, Double numR);
 	static Array* Dot(const Array& arrayL, const Array& arrayR);
 	static Array* Cross(const Array& arrayL, const Array& arrayR);
 public:
