@@ -1048,6 +1048,28 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Xor,	Array, Array);
 	Gurax_AssignOpBinary(Xor,	Array, Number);
 	Gurax_AssignOpBinary(Xor,	Number, Array);
+	Gurax_AssignOpBinary(Eq,	Array, Array);
+	Gurax_AssignOpBinary(Eq,	Array, Number);
+	Gurax_AssignOpBinary(Eq,	Number, Array);
+	Gurax_AssignOpBinary(Eq,	Array, Complex);
+	Gurax_AssignOpBinary(Eq,	Complex, Array);
+	Gurax_AssignOpBinary(Ne,	Array, Array);
+	Gurax_AssignOpBinary(Ne,	Array, Number);
+	Gurax_AssignOpBinary(Ne,	Number, Array);
+	Gurax_AssignOpBinary(Ne,	Array, Complex);
+	Gurax_AssignOpBinary(Ne,	Complex, Array);
+	Gurax_AssignOpBinary(Lt,	Array, Array);
+	Gurax_AssignOpBinary(Lt,	Array, Number);
+	Gurax_AssignOpBinary(Lt,	Number, Array);
+	Gurax_AssignOpBinary(Le,	Array, Array);
+	Gurax_AssignOpBinary(Le,	Array, Number);
+	Gurax_AssignOpBinary(Le,	Number, Array);
+	Gurax_AssignOpBinary(Gt,	Array, Array);
+	Gurax_AssignOpBinary(Gt,	Array, Number);
+	Gurax_AssignOpBinary(Gt,	Number, Array);
+	Gurax_AssignOpBinary(Ge,	Array, Array);
+	Gurax_AssignOpBinary(Ge,	Array, Number);
+	Gurax_AssignOpBinary(Ge,	Number, Array);
 	Gurax_AssignOpBinary(Dot,	Array, Array);
 	Gurax_AssignOpBinary(Cross,	Array, Array);
 }
