@@ -813,6 +813,72 @@ void Ne_ArrayComplex_T(void* pvRtn, const void* pvL, const Complex& numR, size_t
 	}
 }
 
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void Lt_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL < *pR);
+	}
+}
+
+template<typename T_ElemL>
+void Lt_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL < numR);
+	}
+}
+
+template<typename T_ElemR>
+void Lt_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
+{
+	using T_ElemRtn = T_ElemR;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(numL < *pR);
+	}
+}
+
+template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
+void Le_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+{
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL <= *pR);
+	}
+}
+
+template<typename T_ElemL>
+void Le_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
+{
+	using T_ElemRtn = T_ElemL;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(*pL <= numR);
+	}
+}
+
+template<typename T_ElemR>
+void Le_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
+{
+	using T_ElemRtn = T_ElemR;
+	T_ElemRtn* pRtn = reinterpret_cast<T_ElemRtn*>(pvRtn);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = static_cast<T_ElemRtn>(numL <= *pR);
+	}
+}
+
 // [m, n] = dot([m, l], [l, n])
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 void Dot_ArrayArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
@@ -1465,6 +1531,11 @@ Array* Array::Lt(const Array& arrayL, Double numR)
 	return GenericOp(arrayL, numR, arrayL.GetElemType().Lt_ArrayNumber);
 }
 
+Array* Array::Lt(Double numL, const Array& arrayR)
+{
+	return GenericOp(numL, arrayR, arrayR.GetElemType().Lt_NumberArray);
+}
+
 Array* Array::Le(const Array& arrayL, const Array& arrayR)
 {
 	return GenericOp(arrayL, arrayR, arrayL.GetElemType().Le_ArrayArray[arrayR.GetElemType().id]);
@@ -1473,6 +1544,11 @@ Array* Array::Le(const Array& arrayL, const Array& arrayR)
 Array* Array::Le(const Array& arrayL, Double numR)
 {
 	return GenericOp(arrayL, numR, arrayL.GetElemType().Le_ArrayNumber);
+}
+
+Array* Array::Le(Double numL, const Array& arrayR)
+{
+	return GenericOp(numL, arrayR, arrayR.GetElemType().Le_NumberArray);
 }
 
 Array* Array::Dot(const Array& arrayL, const Array& arrayR)

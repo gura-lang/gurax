@@ -651,7 +651,7 @@ Gurax_ImplementOpBinary(And, Array, Array)
 Gurax_ImplementOpBinary(And, Array, Number)
 {
 	const Array& arrayL = Value_Array::GetArray(valueL);
-	Double numR = Value_Number::GetNumber<Double>(valueR);
+	UInt64 numR = Value_Number::GetNumber<UInt64>(valueR);
 	RefPtr<Array> pArrayRtn(Array::And(arrayL, numR));
 	if (!pArrayRtn) return Value::nil();
 	return new Value_Array(pArrayRtn.release());
@@ -681,7 +681,7 @@ Gurax_ImplementOpBinary(Or, Array, Array)
 Gurax_ImplementOpBinary(Or, Array, Number)
 {
 	const Array& arrayL = Value_Array::GetArray(valueL);
-	Double numR = Value_Number::GetNumber<Double>(valueR);
+	UInt64 numR = Value_Number::GetNumber<UInt64>(valueR);
 	RefPtr<Array> pArrayRtn(Array::Or(arrayL, numR));
 	if (!pArrayRtn) return Value::nil();
 	return new Value_Array(pArrayRtn.release());
@@ -711,7 +711,7 @@ Gurax_ImplementOpBinary(Xor, Array, Array)
 Gurax_ImplementOpBinary(Xor, Array, Number)
 {
 	const Array& arrayL = Value_Array::GetArray(valueL);
-	Double numR = Value_Number::GetNumber<Double>(valueR);
+	UInt64 numR = Value_Number::GetNumber<UInt64>(valueR);
 	RefPtr<Array> pArrayRtn(Array::Xor(arrayL, numR));
 	if (!pArrayRtn) return Value::nil();
 	return new Value_Array(pArrayRtn.release());
@@ -723,6 +723,226 @@ Gurax_ImplementOpBinary(Xor, Number, Array)
 	UInt64 numL = Value_Number::GetNumber<UInt64>(valueL);
 	const Array& arrayR = Value_Array::GetArray(valueR);
 	RefPtr<Array> pArrayRtn(Array::Xor(arrayR, numL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array == Array
+Gurax_ImplementOpBinary(Eq, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Eq(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array == Number
+Gurax_ImplementOpBinary(Eq, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::Eq(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number == Array
+Gurax_ImplementOpBinary(Eq, Number, Array)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Eq(arrayR, numL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array == Complex
+Gurax_ImplementOpBinary(Eq, Array, Complex)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	RefPtr<Array> pArrayRtn(Array::Eq(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Complex == Array
+Gurax_ImplementOpBinary(Eq, Complex, Array)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Eq(arrayR, numL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array != Array
+Gurax_ImplementOpBinary(Ne, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Ne(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array != Number
+Gurax_ImplementOpBinary(Ne, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::Ne(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number != Array
+Gurax_ImplementOpBinary(Ne, Number, Array)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Ne(arrayR, numL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array != Complex
+Gurax_ImplementOpBinary(Ne, Array, Complex)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Complex& numR = Value_Complex::GetComplex(valueR);
+	RefPtr<Array> pArrayRtn(Array::Ne(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Complex != Array
+Gurax_ImplementOpBinary(Ne, Complex, Array)
+{
+	const Complex& numL = Value_Complex::GetComplex(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Ne(arrayR, numL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array < Array
+Gurax_ImplementOpBinary(Lt, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Lt(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array < Number
+Gurax_ImplementOpBinary(Lt, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::Lt(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number < Array
+Gurax_ImplementOpBinary(Lt, Number, Array)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Lt(numL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array <= Array
+Gurax_ImplementOpBinary(Le, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Le(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array <= Number
+Gurax_ImplementOpBinary(Le, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::Le(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number <= Array
+Gurax_ImplementOpBinary(Le, Number, Array)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Le(numL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array > Array
+Gurax_ImplementOpBinary(Gt, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Lt(arrayR, arrayL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array > Number
+Gurax_ImplementOpBinary(Gt, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::Lt(numR, arrayL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number > Array
+Gurax_ImplementOpBinary(Gt, Number, Array)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Lt(arrayR, numL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array >= Array
+Gurax_ImplementOpBinary(Ge, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Le(arrayR, arrayL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array >= Number
+Gurax_ImplementOpBinary(Ge, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::Le(numR, arrayL));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number >= Array
+Gurax_ImplementOpBinary(Ge, Number, Array)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Le(arrayR, numL));
 	if (!pArrayRtn) return Value::nil();
 	return new Value_Array(pArrayRtn.release());
 }
