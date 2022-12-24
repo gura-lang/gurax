@@ -211,21 +211,31 @@ public:
 public:
 	Array* Transpose() const;
 public:
-	static Array* GenericOp(const Array& array,
+	static Array* ArithmeticUnaryOp(const Array& array,
 		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
-	static Array* GenericOp(const Array& arrayL, const Array& arrayR,
+	static Array* ArithmeticBinaryOp(const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
-	static Array* GenericOp(const Array& arrayL, UInt64 numR,
+	static Array* ArithmeticBinaryOp(const Array& arrayL, UInt64 numR,
 		const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func);
-	static Array* GenericOp(UInt64 numL, const Array& arrayR,
+	static Array* ArithmeticBinaryOp(UInt64 numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func);
-	static Array* GenericOp(const Array& arrayL, Double numR,
+	static Array* ArithmeticBinaryOp(const Array& arrayL, Double numR,
 		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func);
-	static Array* GenericOp(Double numL, const Array& arrayR,
+	static Array* ArithmeticBinaryOp(Double numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func);
-	static Array* GenericOp(const Array& arrayL, const Complex& numR,
+	static Array* ArithmeticBinaryOp(const Array& arrayL, const Complex& numR,
 		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
-	static Array* GenericOp(const Complex& numL, const Array& arrayR,
+	static Array* ArithmeticBinaryOp(const Complex& numL, const Array& arrayR,
+		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
+	static Array* ComparatorOp(const Array& arrayL, const Array& arrayR,
+		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
+	static Array* ComparatorOp(const Array& arrayL, Double numR,
+		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func);
+	static Array* ComparatorOp(Double numL, const Array& arrayR,
+		const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func);
+	static Array* ComparatorOp(const Array& arrayL, const Complex& numR,
+		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
+	static Array* ComparatorOp(const Complex& numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
 	static Array* Neg(const Array& array);
 	static Array* Add(const Array& arrayL, const Array& arrayR);
