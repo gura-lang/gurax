@@ -103,6 +103,9 @@ public:
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Le_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Le_ArrayNumber;
 		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Le_NumberArray;
+		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>		Cmp_ArrayArray[ElemTypeIdMax];
+		std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>			Cmp_ArrayNumber;
+		std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>			Cmp_NumberArray;
 		std::function<void (void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)> Dot_ArrayArray[ElemTypeIdMax];
 		std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t n)>		Cross_ArrayArray[ElemTypeIdMax];
 	public:
@@ -213,31 +216,21 @@ public:
 public:
 	Array* Transpose() const;
 public:
-	static Array* ArithmeticUnaryOp(const Array& array,
+	static Array* GenericUnaryOp(const Array& array,
 		const std::function<void (void* pvRtn, const void* pv, size_t len)>& func);
-	static Array* ArithmeticBinaryOp(const Array& arrayL, const Array& arrayR,
+	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
-	static Array* ArithmeticBinaryOp(const Array& arrayL, UInt64 numR,
+	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, UInt64 numR,
 		const std::function<void (void* pvRtn, const void* pvL, UInt64 numR, size_t len)>& func);
-	static Array* ArithmeticBinaryOp(UInt64 numL, const Array& arrayR,
+	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, UInt64 numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, UInt64 numL, const void* pvR, size_t len)>& func);
-	static Array* ArithmeticBinaryOp(const Array& arrayL, Double numR,
+	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, Double numR,
 		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func);
-	static Array* ArithmeticBinaryOp(Double numL, const Array& arrayR,
+	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, Double numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func);
-	static Array* ArithmeticBinaryOp(const Array& arrayL, const Complex& numR,
+	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Array& arrayL, const Complex& numR,
 		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
-	static Array* ArithmeticBinaryOp(const Complex& numL, const Array& arrayR,
-		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
-	static Array* ComparatorOp(const Array& arrayL, const Array& arrayR,
-		const std::function<void (void* pvRtn, const void* pvL, const void* pvR, size_t len)>& func);
-	static Array* ComparatorOp(const Array& arrayL, Double numR,
-		const std::function<void (void* pvRtn, const void* pvL, Double numR, size_t len)>& func);
-	static Array* ComparatorOp(Double numL, const Array& arrayR,
-		const std::function<void (void* pvRtn, Double numL, const void* pvR, size_t len)>& func);
-	static Array* ComparatorOp(const Array& arrayL, const Complex& numR,
-		const std::function<void (void* pvRtn, const void* pvL, const Complex& numR, size_t len)>& func);
-	static Array* ComparatorOp(const Complex& numL, const Array& arrayR,
+	static Array* GenericBinaryOp(ElemTypeT& elemTypeRtn, const Complex& numL, const Array& arrayR,
 		const std::function<void (void* pvRtn, const Complex& numL, const void* pvR, size_t len)>& func);
 	static Array* Neg(const Array& array);
 	static Array* Add(const Array& arrayL, const Array& arrayR);
@@ -276,6 +269,7 @@ public:
 	static Array* Le(Double numL, const Array& arrayR);
 	static Array* Cmp(const Array& arrayL, const Array& arrayR);
 	static Array* Cmp(const Array& arrayL, Double numR);
+	static Array* Cmp(Double numL, const Array& arrayR);
 	static Array* Dot(const Array& arrayL, const Array& arrayR);
 	static Array* Cross(const Array& arrayL, const Array& arrayR);
 public:

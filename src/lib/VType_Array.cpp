@@ -947,6 +947,36 @@ Gurax_ImplementOpBinary(Ge, Number, Array)
 	return new Value_Array(pArrayRtn.release());
 }
 
+// Array <=> Array
+Gurax_ImplementOpBinary(Cmp, Array, Array)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Cmp(arrayL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Array <=> Number
+Gurax_ImplementOpBinary(Cmp, Array, Number)
+{
+	const Array& arrayL = Value_Array::GetArray(valueL);
+	Double numR = Value_Number::GetNumber<Double>(valueR);
+	RefPtr<Array> pArrayRtn(Array::Cmp(arrayL, numR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
+// Number <=> Array
+Gurax_ImplementOpBinary(Cmp, Number, Array)
+{
+	Double numL = Value_Number::GetNumber<Double>(valueL);
+	const Array& arrayR = Value_Array::GetArray(valueR);
+	RefPtr<Array> pArrayRtn(Array::Cmp(numL, arrayR));
+	if (!pArrayRtn) return Value::nil();
+	return new Value_Array(pArrayRtn.release());
+}
+
 // Array |.| Array
 Gurax_ImplementOpBinary(Dot, Array, Array)
 {
@@ -1070,6 +1100,9 @@ void VType_Array::DoPrepare(Frame& frameOuter)
 	Gurax_AssignOpBinary(Ge,	Array, Array);
 	Gurax_AssignOpBinary(Ge,	Array, Number);
 	Gurax_AssignOpBinary(Ge,	Number, Array);
+	Gurax_AssignOpBinary(Cmp,	Array, Array);
+	Gurax_AssignOpBinary(Cmp,	Array, Number);
+	Gurax_AssignOpBinary(Cmp,	Number, Array);
 	Gurax_AssignOpBinary(Dot,	Array, Array);
 	Gurax_AssignOpBinary(Cross,	Array, Array);
 }
