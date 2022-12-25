@@ -33,6 +33,8 @@ public:
 	DimSizes(const ValueList& values);
 public:
 	static size_t CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSizeEnd);
+	static const DimSizes* DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
+					size_t* pnUnits, size_t* pLenUnit, size_t* pLenFwdL, size_t* pLenFwdR);
 	size_t CalcLength() const { return CalcLength(begin(), end()); }
 	bool DoesMatch(const DimSizes& dimSizes, size_t offset = 0) const;
 	bool DoesMatchDot(const DimSizes& dimSizes, size_t offset = 0) const;
@@ -272,6 +274,8 @@ public:
 	static Array* Le(const Array& arrayL, const Array& arrayR);
 	static Array* Le(const Array& arrayL, Double numR);
 	static Array* Le(Double numL, const Array& arrayR);
+	static Array* Cmp(const Array& arrayL, const Array& arrayR);
+	static Array* Cmp(const Array& arrayL, Double numR);
 	static Array* Dot(const Array& arrayL, const Array& arrayR);
 	static Array* Cross(const Array& arrayL, const Array& arrayR);
 public:

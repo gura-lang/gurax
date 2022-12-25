@@ -1011,6 +1011,27 @@ void Le_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
 	}
 }
 
+template<typename T_ElemL, typename T_ElemR>
+void Cmp_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
+{
+	Int8* pRtn = reinterpret_cast<Int8*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++, pR++) {
+		*pRtn = (*pL < *pR)? -1 : (*pL > *pR)? + 1 : 0;
+	}
+}
+
+template<typename T_ElemL>
+void Cmp_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
+{
+	Int8* pRtn = reinterpret_cast<Int8*>(pvRtn);
+	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
+	for (size_t i = 0; i < len; i++, pRtn++, pL++) {
+		*pRtn = (*pL < numR)? -1 : (*pL > numR)? +1 : 0;
+	}
+}
+
 // [m, n] = dot([m, l], [l, n])
 template<typename T_ElemRtn, typename T_ElemL, typename T_ElemR>
 void Dot_ArrayArray_T(void* pvRtn, size_t m, size_t n, const void* pvL, const void* pvR, size_t l)
@@ -1418,29 +1439,8 @@ Array* Array::ArithmeticBinaryOp(const Array& arrayL, const Array& arrayR,
 	size_t nUnits = 1;
 	size_t lenUnit = 0;;
 	size_t lenFwdL = 0, lenFwdR = 0;
-	const DimSizes& dimSizesL = arrayL.GetDimSizes();
-	const DimSizes& dimSizesR = arrayR.GetDimSizes();
-	const DimSizes* pDimSizesRtn = nullptr;;
-	bool matchFlag = false;
-	if (dimSizesL.size() >= dimSizesR.size()) {
-		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
-		nUnits = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
-		lenUnit = dimSizesR.CalcLength();
-		lenFwdL = lenUnit, lenFwdR = 0;
-		pDimSizesRtn = &dimSizesL;
-		matchFlag = dimSizesR.DoesMatch(dimSizesL, nDimsHead);
-	} else {
-		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
-		nUnits = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
-		lenUnit = dimSizesL.CalcLength();
-		lenFwdL = 0, lenFwdR = lenUnit;
-		pDimSizesRtn = &dimSizesR;
-		matchFlag = dimSizesL.DoesMatch(dimSizesR, nDimsHead);
-	}
-	if (!matchFlag) {
-		Error::Issue(ErrorType::RangeError, "unmatched array size");
-		return nullptr;
-	}
+	const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nUnits, &lenUnit, &lenFwdL, &lenFwdR);
+	if (!pDimSizesRtn) return nullptr;
 	RefPtr<Array> pArrayRtn(Create(GetElemTypeRtn(arrayL, arrayR), *pDimSizesRtn));
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
@@ -1526,29 +1526,8 @@ Array* Array::ComparatorOp(const Array& arrayL, const Array& arrayR,
 	size_t nUnits = 1;
 	size_t lenUnit = 0;;
 	size_t lenFwdL = 0, lenFwdR = 0;
-	const DimSizes& dimSizesL = arrayL.GetDimSizes();
-	const DimSizes& dimSizesR = arrayR.GetDimSizes();
-	const DimSizes* pDimSizesRtn = nullptr;;
-	bool matchFlag = false;
-	if (dimSizesL.size() >= dimSizesR.size()) {
-		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
-		nUnits = DimSizes::CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
-		lenUnit = dimSizesR.CalcLength();
-		lenFwdL = lenUnit, lenFwdR = 0;
-		pDimSizesRtn = &dimSizesL;
-		matchFlag = dimSizesR.DoesMatch(dimSizesL, nDimsHead);
-	} else {
-		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
-		nUnits = DimSizes::CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
-		lenUnit = dimSizesL.CalcLength();
-		lenFwdL = 0, lenFwdR = lenUnit;
-		pDimSizesRtn = &dimSizesR;
-		matchFlag = dimSizesL.DoesMatch(dimSizesR, nDimsHead);
-	}
-	if (!matchFlag) {
-		Error::Issue(ErrorType::RangeError, "unmatched array size");
-		return nullptr;
-	}
+	const DimSizes* pDimSizesRtn = DimSizes::DetermineResult(arrayL.GetDimSizes(), arrayR.GetDimSizes(), &nUnits, &lenUnit, &lenFwdL, &lenFwdR);
+	if (!pDimSizesRtn) return nullptr;
 	RefPtr<Array> pArrayRtn(Create(ElemType::Bool, *pDimSizesRtn));
 	void* pvRtn = pArrayRtn->GetPointerC<void>();
 	const void* pvL = arrayL.GetPointerC<void>();
@@ -1781,6 +1760,16 @@ Array* Array::Le(Double numL, const Array& arrayR)
 	return ComparatorOp(numL, arrayR, arrayR.GetElemType().Le_NumberArray);
 }
 
+Array* Array::Cmp(const Array& arrayL, const Array& arrayR)
+{
+	return nullptr;
+}
+
+Array* Array::Cmp(const Array& arrayL, Double numR)
+{
+	return nullptr;
+}
+
 Array* Array::Dot(const Array& arrayL, const Array& arrayR)
 {
 #if 1
@@ -1924,6 +1913,33 @@ size_t DimSizes::CalcLength(const_iterator pDimSizeBegin, const_iterator pDimSiz
 	size_t len = 1;
 	for (auto pDimSize = pDimSizeBegin; pDimSize != pDimSizeEnd; pDimSize++) len *= *pDimSize;
 	return len;
+}
+
+const DimSizes* DimSizes::DetermineResult(const DimSizes& dimSizesL, const DimSizes& dimSizesR,
+					size_t* pnUnits, size_t* pLenUnit, size_t* pLenFwdL, size_t* pLenFwdR)
+{
+	const DimSizes* pDimSizesRtn = nullptr;
+	bool matchFlag = false;
+	if (dimSizesL.size() >= dimSizesR.size()) {
+		size_t nDimsHead = dimSizesL.size() - dimSizesR.size();
+		*pnUnits = CalcLength(dimSizesL.begin(), dimSizesL.begin() + nDimsHead);
+		*pLenFwdL = *pLenUnit = dimSizesR.CalcLength();
+		*pLenFwdR = 0;
+		pDimSizesRtn = &dimSizesL;
+		matchFlag = dimSizesR.DoesMatch(dimSizesL, nDimsHead);
+	} else {
+		size_t nDimsHead = dimSizesR.size() - dimSizesL.size();
+		*pnUnits = CalcLength(dimSizesR.begin(), dimSizesR.begin() + nDimsHead);
+		*pLenFwdR = *pLenUnit = dimSizesL.CalcLength();
+		*pLenFwdL = 0;
+		pDimSizesRtn = &dimSizesR;
+		matchFlag = dimSizesL.DoesMatch(dimSizesR, nDimsHead);
+	}
+	if (!matchFlag) {
+		Error::Issue(ErrorType::RangeError, "unmatched array size");
+		return nullptr;
+	}
+	return pDimSizesRtn;
 }
 
 bool DimSizes::DoesMatch(const DimSizes& dimSizes, size_t offset) const
