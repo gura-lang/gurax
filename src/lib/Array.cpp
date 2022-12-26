@@ -421,14 +421,15 @@ template<typename T_Elem> bool IndexSetValue_T(void* pv, size_t idx, const Value
 
 template<> bool IndexSetValue_T<Bool>(void* pv, size_t idx, const Value& value)
 {
-
-	*(reinterpret_cast<Bool*>(pv) + idx) = value.GetBool();
+	using T_Elem = Bool;
+	*(reinterpret_cast<T_Elem*>(pv) + idx) = value.GetBool();
 	return true;
 }
 
 template<> bool IndexSetValue_T<Complex>(void* pv, size_t idx, const Value& value)
 {
-	Complex* p = reinterpret_cast<Complex*>(pv) + idx;
+	using T_Elem = Complex;
+	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + idx;
 	if (value.IsType(VTYPE_Number)) {
 		*p = Complex(Value_Number::GetNumber<Double>(value));
 	} else if (value.IsType(VTYPE_Complex)) {
@@ -504,8 +505,9 @@ template<typename T_Elem> void InjectFromValueList_T(const ValueList& values, vo
 
 template<> void InjectFromValueList_T<Bool>(const ValueList& values, void* pv, size_t offset, size_t len)
 {
-	Bool* p = reinterpret_cast<Bool*>(pv) + offset;
-	Bool* pEnd = p + len;
+	using T_Elem = Bool;
+	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + offset;
+	T_Elem* pEnd = p + len;
 	auto ppValue = values.begin();
 	for ( ; p != pEnd; p++, ppValue++) {
 		*p = (*ppValue)->GetBool();
@@ -514,8 +516,9 @@ template<> void InjectFromValueList_T<Bool>(const ValueList& values, void* pv, s
 
 template<> void InjectFromValueList_T<Complex>(const ValueList& values, void* pv, size_t offset, size_t len)
 {
-	Complex* p = reinterpret_cast<Complex*>(pv) + offset;
-	Complex* pEnd = p + len;
+	using T_Elem = Complex;
+	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + offset;
+	T_Elem* pEnd = p + len;
 	auto ppValue = values.begin();
 	for ( ; p != pEnd; p++, ppValue++) {
 		*p = Value_Complex::GetComplexRobust(**ppValue);
@@ -540,8 +543,9 @@ template<typename T_Elem> bool InjectFromIterator_T(Iterator& iterator, void* pv
 
 template<> bool InjectFromIterator_T<Bool>(Iterator& iterator, void* pv, size_t offset, size_t len)
 {
-	Bool* p = reinterpret_cast<Bool*>(pv) + offset;
-	Bool* pEnd = p + len;
+	using T_Elem = Bool;
+	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + offset;
+	T_Elem* pEnd = p + len;
 	for ( ; p != pEnd; p++) {
 		RefPtr<Value> pValue(iterator.NextValue());
 		if (!pValue) break;
@@ -552,8 +556,9 @@ template<> bool InjectFromIterator_T<Bool>(Iterator& iterator, void* pv, size_t 
 
 template<> bool InjectFromIterator_T<Complex>(Iterator& iterator, void* pv, size_t offset, size_t len)
 {
-	Complex* p = reinterpret_cast<Complex*>(pv) + offset;
-	Complex* pEnd = p + len;
+	using T_Elem = Complex;
+	T_Elem* p = reinterpret_cast<T_Elem*>(pv) + offset;
+	T_Elem* pEnd = p + len;
 	for ( ; p != pEnd; p++) {
 		RefPtr<Value> pValue(iterator.NextValue());
 		if (!pValue) break;
@@ -578,15 +583,17 @@ template<typename T_Elem> void ExtractToValueOwner_T(ValueOwner& values, const v
 
 template<> void ExtractToValueOwner_T<Bool>(ValueOwner& values, const void* pv, size_t offset, size_t len)
 {
-	const Bool* p = reinterpret_cast<const Bool*>(pv) + offset;
-	const Bool* pEnd = p + len;
+	using T_Elem = Bool;
+	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv) + offset;
+	const T_Elem* pEnd = p + len;
 	for ( ; p != pEnd; p++) values.push_back(new Value_Bool(!!*p));
 }
 
 template<> void ExtractToValueOwner_T<Complex>(ValueOwner& values, const void* pv, size_t offset, size_t len)
 {
-	const Complex* p = reinterpret_cast<const Complex*>(pv) + offset;
-	const Complex* pEnd = p + len;
+	using T_Elem = Complex;
+	const T_Elem* p = reinterpret_cast<const T_Elem*>(pv) + offset;
+	const T_Elem* pEnd = p + len;
 	for ( ; p != pEnd; p++) values.push_back(new Value_Complex(*p));
 }
 
