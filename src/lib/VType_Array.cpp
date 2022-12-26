@@ -1138,7 +1138,9 @@ Value* Value_Array::DoIndexGet(const Index& index) const
 	const Array& array = GetArray();
 	const ValueList& valuesIndex = index.GetValueOwner();
 	const DimSizes& dimSizes = array.GetDimSizes();
-	if (valuesIndex.size() != dimSizes.size()) {
+	if (valuesIndex.empty()) {
+		return array.ToList();
+	} else if (valuesIndex.size() != dimSizes.size()) {
 		Error::Issue(ErrorType::IndexError, "invalid number of indices");
 		return Value::nil();
 	}
@@ -1199,6 +1201,12 @@ void Value_Array::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 		pDimSize++;
 	}
 	array.IndexSetValue(idx, *pValue);
+}
+
+bool Value_Array::DoEmptyIndexGet(Value** ppValue) const
+{
+	*ppValue = GetArray().ToList();
+	return true;
 }
 
 }

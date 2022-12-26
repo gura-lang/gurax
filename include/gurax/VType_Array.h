@@ -94,6 +94,7 @@ public:
 public:
 	virtual Value* DoIndexGet(const Index& index) const override;
 	virtual void DoIndexSet(const Index& index, RefPtr<Value> pValue) override;
+	virtual bool DoEmptyIndexGet(Value** ppValue) const override;
 };
 
 }
