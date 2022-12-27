@@ -100,6 +100,17 @@ TestCase('Array constructor (2)') {
 	Tester(`@ulong(((1, 2, 3), (4, 5, 6))))
 }
 
+TestCase('Range Test') {
+	Tester(`@int8([-0x80, 0x7f])[])
+	Tester(`@uint8([0x00, 0xff])[])
+	Tester(`@int16([-0x8000, 0x7fff])[])
+	Tester(`@uint16([0x0000, 0xffff])[])
+	Tester(`@int32([-0x80000000, 0x7fffffff])[])
+	Tester(`@uint32([0x00000000, 0xffffffff])[])
+	//Tester(`@int64([])[])
+	//Tester(`@uint64([])[])
+}
+
 TestCase('Array#bytes/bytesPerElem/elemType/len') {
 	elemTypes = [
 		`bool, `int8, `uint8, `int16, `uint16, `int32, `uint32, `int64, `uint64,
@@ -211,26 +222,26 @@ TestCase('Array#Inject()') {
 }
 
 TestCase('Array#ToList()') {
-	Tester(`@int8([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@uint8([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@int16([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@uint16([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@int32([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@uint32([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@int64([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@uint64([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@half([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@float([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@double([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@complex([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@char([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@uchar([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@short([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@ushort([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@int([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@uint([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@long([[1, 2, 3], [4, 5, 6]])[])
-	Tester(`@ulong([[1, 2, 3], [4, 5, 6]])[])
+	Tester(`@int8([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint8([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@int16([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint16([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@int32([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint32([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@int64([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint64([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@half([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@float([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@double([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@complex([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@char([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uchar([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@short([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@ushort([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@int([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@uint([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@long([[1, 2, 3], [4, 5, 6]]).ToList())
+	Tester(`@ulong([[1, 2, 3], [4, 5, 6]]).ToList())
 }
 
 TestCase('Index access') {
@@ -329,11 +340,25 @@ TestCase('+Array') {
 }
 
 TestCase('-Array') {
-	Tester(`(-@float([[1, 2, 3], [4, 5, 6]]))[])
+	Tester(`(-@int8([[1, -2, 3], [-4, 5, -6]]))[])
+	Tester(`(-@int16([[1, -2, 3], [-4, 5, -6]]))[])
+	Tester(`(-@int32([[1, -2, 3], [-4, 5, -6]]))[])
+	Tester(`(-@int64([[1, -2, 3], [-4, 5, -6]]))[])
+	Tester(`(-@half([[1, -2, 3], [-4, 5, -6]]))[])
+	Tester(`(-@float([[1, -2, 3], [-4, 5, -6]]))[])
+	Tester(`(-@double([[1, -2, 3], [-4, 5, -6]]))[])
+	Tester(`(-@complex([[1, -2, 3], [-4, 5, -6]]))[])
 }
 
 TestCase('Array + Array') {
-	Tester(`(@float([[1, 2, 3], [4, 5, 6]]) + @float([[1, 2, 3], [4, 5, 6]]))[])
+	Tester(`(@int8([[4, 2, 1], [6, 3, 9]]) + @int8([[6, 1, 4], [4, 3, 7]]))[])
+	Tester(`(@int16([[4, 2, 1], [6, 3, 9]]) + @int16([[6, 1, 4], [4, 3, 7]]))[])
+	Tester(`(@int32([[4, 2, 1], [6, 3, 9]]) + @int32([[6, 1, 4], [4, 3, 7]]))[])
+	Tester(`(@int64([[4, 2, 1], [6, 3, 9]]) + @int64([[6, 1, 4], [4, 3, 7]]))[])
+	Tester(`(@half([[4, 2, 1], [6, 3, 9]]) + @half([[6, 1, 4], [4, 3, 7]]))[])
+	Tester(`(@float([[4, 2, 1], [6, 3, 9]]) + @float([[6, 1, 4], [4, 3, 7]]))[])
+	Tester(`(@double([[4, 2, 1], [6, 3, 9]]) + @double([[6, 1, 4], [4, 3, 7]]))[])
+	Tester(`(@complex([[4, 2, 1], [6, 3, 9]]) + @complex([[6, 1, 4], [4, 3, 7]]))[])
 }
 
 TestCase('Array + Number') {
