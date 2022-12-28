@@ -798,7 +798,7 @@ bool Div_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for( ; pRtn != pRtnEnd; pRtn++, pL++, pR++) {
-		auto elemR = static_cast<T_ElemRtn>(*pR);
+		auto elemR = *pR;
 		if (elemR == 0) {
 			Error::Issue(ErrorType::DividedByZero, "divided by zero");
 			return false;
