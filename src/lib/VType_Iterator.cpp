@@ -696,7 +696,7 @@ Value* VType_Iterator::Method_Fold(Processor& processor, Argument& argument, Ite
 	bool neatFlag = argument.IsSet(Gurax_Symbol(neat));
 	// Function body
 	RefPtr<Iterator> pIterator(new Iterator_Fold(
-								   iteratorSrc.Reference(), nSize, nAdvance, itemAsIterFlag, neatFlag));
+								iteratorSrc.Reference(), nSize, nAdvance, itemAsIterFlag, neatFlag));
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
@@ -1060,7 +1060,7 @@ Value* VType_Iterator::Method_PingPong(
 	RefPtr<Iterator> pIterator;
 	if (valueTypedOwner.GetSize() >= 2) {
 		pIterator.reset(new Iterator_PingPong(valueTypedOwner.GetValueOwnerReference(), n,
-											  stickyFlagTop, stickyFlagBtm));
+											stickyFlagTop, stickyFlagBtm));
 	} else if (n < 0) {
 		pIterator.reset(new Iterator_Const(valueTypedOwner.GetValueOwner().front()->Reference()));
 	} else {
@@ -1841,7 +1841,7 @@ void Value_Iterator::DoCall(Processor& processor, Argument& argument)
 Value* Value_Iterator::DoEval(Processor& processor, Argument& argument) const
 {
 	RefPtr<Iterator> pIterator(new Iterator_IteratorEvaluator(
-								   processor.Reference(), GetIterator().Reference(), argument.Reference()));
+								processor.Reference(), GetIterator().Reference(), argument.Reference()));
 	return new Value_Iterator(pIterator.release());
 }
 
