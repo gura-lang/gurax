@@ -33,21 +33,25 @@ Gurax_DeclareStatementAlias(_create_dict_, "%")
 	Declare(VTYPE_Dict, Flag::None);
 	DeclareBlock(DeclBlock::Occur::Once, DeclBlock::Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Creates a `Dict` instance.
+Creates a `Dict` instance from key-value pairs described in the `block`.
+There are several acceptable manners to describe key-value pairs.
 
-The `block` contains a sequence of key-value pairs in the format below:
+1. Desribes a key-value pair concatenated with `=>` operator:
+   eg. ``%{key1 => value1, key2 => value2, key3 => value3}``
 
-- `{key1 => value1, key2 => value2, key3 => value3}`
-- `{{key1, value1}, {key2, value2}, {key3, value3}}``
-- `{key1, value1, key2, value2, key3, value3}`
+2. Desribes each key-value pair surrounded by brackets:
+   eg. ``%{{key1, value1}, {key2, value2}, {key3, value3}}``
 
-You can use `Number`, `String` or `Symbol` value for the dictionary keys.
+3. Describes keys and values alternatively:
+   eg. ``%{key1, value1, key2, value2, key3, value3}``
 
-Below is an example using a block:
+Value types that can be used as dictionary keys are `Number`, `String`, and `Symbol`.
 
-    d = %{
-        'apple' => 100, 'grape' => 200, 'banana' => 80
-    }
+```
+d1 = %{ 3 => 100, 5 => 200, 9 => 80 }
+d2 = %{ 'apple' => 100, 'grape' => 200, 'banana' => 80 }
+d3 = %{ `apple => 100, `grape => 200, `banana => 80 }
+```
 )**");
 }
 
@@ -67,7 +71,7 @@ Gurax_ImplementStatement(_create_dict_)
 			Expr_Block* pExprEx = dynamic_cast<Expr_Block*>(pExpr);
 			if (pExprEx->CountExprElem() != 2) {
 				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "block is expected to have a format of {key, value}");
+								"block is expected to have a format of {key, value}");
 				return;
 			}
 			Expr* pExprElem = pExprEx->GetExprElemFirst();
@@ -80,7 +84,7 @@ Gurax_ImplementStatement(_create_dict_)
 			pExpr = pExpr->GetExprNext();
 			if (!pExpr) {
 				Error::IssueWith(ErrorType::SyntaxError, exprCaller,
-								 "value is missing in the initialization list for dictionary");
+								"value is missing in the initialization list for dictionary");
 				return;
 			}
 			pExpr->ComposeOrNil(composer);										// [Dict Key Elem]
