@@ -27,10 +27,10 @@ ${help.ComposeMethodHelp(Operator, `en)}
 //-----------------------------------------------------------------------------
 // Implementation of class method
 //-----------------------------------------------------------------------------
-// Operator.Binary(symbol as Symbol)
+// Operator.Binary(symbol as Symbol):map
 Gurax_DeclareClassMethod(Operator, Binary)
 {
-	Declare(VTYPE_Operator, Flag::None);
+	Declare(VTYPE_Operator, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates the `Operator` instance of a binary operator specified by `symbol`,
@@ -57,10 +57,10 @@ Gurax_ImplementClassMethod(Operator, Binary)
 	return new Value_Operator(pOp);
 }
 
-// Operator.Math(symbol as Symbol)
+// Operator.Math(symbol as Symbol):map
 Gurax_DeclareClassMethod(Operator, Math)
 {
-	Declare(VTYPE_Operator, Flag::None);
+	Declare(VTYPE_Operator, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates the `Operator` instance of a binary operator specified by `symbol`,
@@ -87,10 +87,10 @@ Gurax_ImplementClassMethod(Operator, Math)
 	return new Value_Operator(pOp);
 }
 
-// Operator.Unary(symbol as Symbol)
+// Operator.Unary(symbol as Symbol):map
 Gurax_DeclareClassMethod(Operator, Unary)
 {
-	Declare(VTYPE_Operator, Flag::None);
+	Declare(VTYPE_Operator, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates the `Operator` instance of a unary operator specified by `symbol`,
@@ -117,10 +117,10 @@ Gurax_ImplementClassMethod(Operator, Unary)
 	return new Value_Operator(pOp);
 }
 
-// Operator.UnaryPost(symbol as Symbol)
+// Operator.UnaryPost(symbol as Symbol):map
 Gurax_DeclareClassMethod(Operator, UnaryPost)
 {
-	Declare(VTYPE_Operator, Flag::None);
+	Declare(VTYPE_Operator, Flag::Map);
 	DeclareArg("symbol", VTYPE_Symbol, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates the `Operator` instance of a unary operator specified by `symbol`,

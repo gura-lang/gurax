@@ -2,6 +2,10 @@
 #!/usr/bin/env gurax
 import(util.tester) {*}
 
+elemTypes = [
+	`int8,  `uint8,  `int16,  `uint16,  `int32,  `uint32,  `int64,  `uint64,  `half,  `float,  `double,  `complex
+]
+
 TestCase('Property') {
 	Array.PrintPropSlots()
 }
@@ -333,6 +337,20 @@ TestCase('Array#VerifyShape()') {
 	Tester(`@float(3, 4, 5).VerifyShape(3, 4, 5))
 	Tester(`@float(3, 4, 5).VerifyShape(3, 4, 5, 6))
 	Tester(`@float(3, 4, 5).VerifyShape(3, 3, 5))
+}
+
+TestCase('Operators') {
+	opTbl = Operator.Binary([`+, `-, `*, `/])
+	opTbl.Each {|op|
+		elemTypes.Each {|elemTypeL|
+			elemTypes.Each {|elemTypeR|
+				arrayL = Array(elemTypeL, [[4, 8, 8], [7, 5, 1], [3, 4, 5]])
+				arrayR = Array(elemTypeR, [[4, 1, 6], [6, 3, 2], [1, 5, 3]])
+				arrayRtn = op(arrayL, arrayR)
+				Printf('%-8s %s %-8s = %-8s %s\n', arrayL.elemType, op.symbol, arrayR.elemType, arrayRtn.elemType, arrayRtn[]):noMap
+			}
+		}
+	}
 }
 
 TestCase('+Array') {
