@@ -799,7 +799,7 @@ bool Div_ArrayArray_T(void* pvRtn, const void* pvL, const void* pvR, size_t len)
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for( ; pRtn != pRtnEnd; pRtn++, pL++, pR++) {
 		auto elemR = *pR;
-		if (elemR == 0) {
+		if (elemR == static_cast<T_ElemR>(0)) {
 			Error::Issue(ErrorType::DividedByZero, "divided by zero");
 			return false;
 		}
@@ -816,7 +816,7 @@ bool Div_ArrayNumber_T(void* pvRtn, const void* pvL, Double numR, size_t len)
 	T_ElemRtn* pRtnEnd = pRtn + len;
 	const T_ElemL* pL = reinterpret_cast<const T_ElemL*>(pvL);
 	T_ElemRtn numRCasted = static_cast<T_ElemRtn>(numR);
-	if (numRCasted == 0) {
+	if (numRCasted == 0.) {
 		Error::Issue(ErrorType::DividedByZero, "divided by zero");
 		return false;
 	}
@@ -836,7 +836,7 @@ bool Div_NumberArray_T(void* pvRtn, Double numL, const void* pvR, size_t len)
 	T_ElemRtn numLCasted = static_cast<T_ElemRtn>(numL);
 	for( ; pRtn != pRtnEnd; pRtn++, pR++) {
 		auto elemR = static_cast<T_ElemRtn>(*pR);
-		if (elemR == 0) {
+		if (elemR == static_cast<T_ElemR>(0)) {
 			Error::Issue(ErrorType::DividedByZero, "divided by zero");
 			return false;
 		}
@@ -870,12 +870,12 @@ bool Div_ComplexArray_T(void* pvRtn, const Complex& numL, const void* pvR, size_
 	T_ElemRtn* pRtnEnd = pRtn + len;
 	const T_ElemR* pR = reinterpret_cast<const T_ElemR*>(pvR);
 	for( ; pRtn != pRtnEnd; pRtn++, pR++) {
-		auto elemR = static_cast<T_ElemRtn>(*pR);
-		if (elemR == 0) {
+		auto elemR = *pR;
+		if (elemR == static_cast<T_ElemR>(0)) {
 			Error::Issue(ErrorType::DividedByZero, "divided by zero");
 			return false;
 		}
-		*pRtn = static_cast<T_ElemRtn>(numL - elemR);
+		*pRtn = static_cast<T_ElemRtn>(numL / elemR);
 	}
 	return true;
 }
