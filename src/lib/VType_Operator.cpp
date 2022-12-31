@@ -11,11 +11,34 @@ namespace Gurax {
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
+Instances of `Operator` class are associated with specified operators,
+which can be used to assign user-defined procedures to them.
+
+There are four types of operators:
+
+- Unary operator
+- Unary post operator
+- Binary operator
+- Math operator
+
+`Operator.Unary`, `Operator.UnaryPost`, `Operator.Binary`, `Operator.Math`
 
 ${help.ComposePropertyHelp(Operator, `en)}
 
 # Operator
+
+
+
+```
+op_Neg = Operator.Unary(`-)
+op_Neg(3)           // calculates -3
+
+op_Mul = Operator.Binary(`*)
+op_Mul(7, 8)        // calculates 7 * 8
+
+op_Sin = Operator.Math(`Sin)
+op_Sin(math.pi / 6) // calculates math.Sin(math.pi / 6)
+```
 
 # Cast Operation
 
