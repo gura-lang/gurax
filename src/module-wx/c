@@ -1,1 +1,0 @@
-		${funcInfo.ComposeCDecl('_')} { return wx${className}::${funcInfo.ComposeCaller()}; }
