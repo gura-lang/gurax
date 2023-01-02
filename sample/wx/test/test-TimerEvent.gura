@@ -30,6 +30,7 @@ PanelTop = class(wx.Panel) {
 	textCtrl as wx.TextCtrl
 	sliderCtrl as wx.Slider
 	timer as wx.Timer
+	progress as Iterator = Range(10):list {|i| '*' * i + '.' * (10 - i - 1)}.PingPong()
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
@@ -78,7 +79,7 @@ PanelTop = class(wx.Panel) {
 		this.timer.Stop()
 	}
 	OnTimer(event) = {
-		this.Printf('Interval: %dmsec\n', this.timer.GetInterval())
+		this.Printf('%s Interval: %dmsec\n', this.progress.NextValue(), this.timer.GetInterval())
 	}
 	Printf(format as String, args*) = this.textCtrl.WriteText(Format(format, args*))
 }
