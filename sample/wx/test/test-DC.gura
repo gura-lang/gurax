@@ -6,7 +6,7 @@ sample_xpm = xpm.XPMFile('sample.xpm').lines
 
 MyApp = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 800)).Show()
+		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(1000, 700)).Show()
 		true
 	}
 }
@@ -115,8 +115,6 @@ Page_Pen = class(wx.Panel) {
 			(wx.PENSTYLE_VERTICAL_HATCH,			'VERTICAL_HATCH') 	
 			//(wx.PENSTYLE_FIRST_HATCH,				'FIRST_HATCH') 	
 			//(wx.PENSTYLE_LAST_HATCH,				'LAST_HATCH') 	
-
-
 		]
 		penTupleTbl = [
 			(wx.NullPen,							'NullPen')
@@ -140,26 +138,28 @@ Page_Pen = class(wx.Panel) {
 		fontWidth.SetPointSize(6)
 		penStyleTupleTbl.Each {|tuple, i|
 			[penStyle, label] = tuple
-			y = 10 + i * 50
+			x = 10 + Int(i / 8) * 240
+			y = 10 + (i % 8) * 80
 			dc.SetFont(fontLabel)
-			dc.DrawText(label, 10 + 120 + 30, y)
+			dc.DrawText(label, x + 120 + 30, y)
 			dc.SetFont(fontWidth)
 			repeat (5) {|i|
-				dc.DrawText(Format('%d', i), 10 + 120 + 10, y - 6)
+				dc.DrawText(Format('%d', i), x + 120 + 10, y - 6)
 				dc.SetPen(wx.Pen('#ff8888', i, penStyle))
-				dc.DrawLine(10, y, 10 + 120, y)
-				y += 8
+				dc.DrawLine(x, y, x + 120, y)
+				y += 12
 			}
 		}		
 		dc.SetPen(wx.BLACK_PEN)
 		penTupleTbl.Each {|tuple, i|
 			[pen, label] = tuple
+			x = 550
 			y = 10 + i * 30
 			dc.SetPen(pen)
-			dc.DrawLine(300, y, 300 + 120, y)
+			dc.DrawLine(x, y, x + 120, y)
 			dc.SetFont(fontLabel)
-			dc.DrawText(label, 300 + 120 + 10, y - 10)
-		}		
+			dc.DrawText(label, x + 120 + 10, y - 10)
+		}
 		dc = nil
 	}
 }
