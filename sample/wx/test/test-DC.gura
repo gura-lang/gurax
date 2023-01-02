@@ -134,24 +134,22 @@ Page_Pen = class(wx.Panel) {
 			(wx.WHITE_PEN,							'WHITE_PEN')
 		]
 		dc.SetPen(this.pen)
-		font = dc.GetFont()
-		font.SetPointSize(10)
-		dc.SetFont(font)
+		fontLabel = dc.GetFont()
+		fontLabel.SetPointSize(10)
+		fontWidth = dc.GetFont()
+		fontWidth.SetPointSize(6)
 		penStyleTupleTbl.Each {|tuple, i|
 			[penStyle, label] = tuple
 			y = 10 + i * 50
-			dc.DrawText(label, 10 + 120 + 10, y)
-			dc.SetPen(wx.Pen('#ff8888', 0, penStyle))
-			dc.DrawLine(10, y, 10 + 120, y)
-			y += 8
-			dc.SetPen(wx.Pen('#ff8888', 1, penStyle))
-			dc.DrawLine(10, y, 10 + 120, y)
-			y += 8
-			dc.SetPen(wx.Pen('#ff8888', 2, penStyle))
-			dc.DrawLine(10, y, 10 + 120, y)
-			y += 8
-			dc.SetPen(wx.Pen('#ff8888', 4, penStyle))
-			dc.DrawLine(10, y, 10 + 120, y)
+			dc.SetFont(fontLabel)
+			dc.DrawText(label, 10 + 120 + 30, y)
+			dc.SetFont(fontWidth)
+			repeat (5) {|i|
+				dc.DrawText(Format('%d', i), 10 + 120 + 10, y - 6)
+				dc.SetPen(wx.Pen('#ff8888', i, penStyle))
+				dc.DrawLine(10, y, 10 + 120, y)
+				y += 8
+			}
 		}		
 		dc.SetPen(wx.BLACK_PEN)
 		penTupleTbl.Each {|tuple, i|
@@ -159,6 +157,7 @@ Page_Pen = class(wx.Panel) {
 			y = 10 + i * 30
 			dc.SetPen(pen)
 			dc.DrawLine(300, y, 300 + 120, y)
+			dc.SetFont(fontLabel)
 			dc.DrawText(label, 300 + 120 + 10, y - 10)
 		}		
 		dc = nil
