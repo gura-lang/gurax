@@ -18,7 +18,21 @@ ${help.ComposePropertyHelp(wx.MouseCaptureChangedEvent, `en)}
 ${help.ComposeConstructorHelp(wx.MouseCaptureChangedEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.MouseCaptureChangedEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MouseCaptureChangedEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MouseCaptureChangedEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.MouseCaptureChangedEvent, `ja)}
+'''ja
 
 @event {
 	EVT_MOUSE_CAPTURE_CHANGED >> MouseCaptureChangedEvent

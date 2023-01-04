@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.SysColourChangedEvent, `en)}
 ${help.ComposeMethodHelp(wx.SysColourChangedEvent, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SysColourChangedEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SysColourChangedEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.SysColourChangedEvent, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxSysColourChangedEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

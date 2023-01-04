@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.SpinEvent, `en)}
 ${help.ComposeMethodHelp(wx.SpinEvent, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SpinEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SpinEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.SpinEvent, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -83,6 +99,7 @@ void VType_wxSpinEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxNotifyEvent, Flag::Mutable);
 	// Assignment of method

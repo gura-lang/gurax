@@ -43,7 +43,21 @@ ${help.ComposePropertyHelp(wx.GenericDirCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.GenericDirCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.GenericDirCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GenericDirCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GenericDirCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.GenericDirCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	DIRCTRL_DIR_ONLY

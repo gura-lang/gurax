@@ -43,4 +43,18 @@ ${help.ComposePropertyHelp(wx.RichTextStyleSheet, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextStyleSheet, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextStyleSheet, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextStyleSheet, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextStyleSheet, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleSheet, `ja)}
+'''ja

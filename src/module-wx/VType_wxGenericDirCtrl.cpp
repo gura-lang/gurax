@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GenericDirCtrl, `en)}
 ${help.ComposeMethodHelp(wx.GenericDirCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GenericDirCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GenericDirCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.GenericDirCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -523,6 +539,7 @@ void VType_wxGenericDirCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(GenericDirCtrl_gurax));
 	// Assignment of method

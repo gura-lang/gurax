@@ -21,4 +21,18 @@ ${help.ComposePropertyHelp(wx.MultiChoiceDialog, `en)}
 ${help.ComposeConstructorHelp(wx.MultiChoiceDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.MultiChoiceDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MultiChoiceDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MultiChoiceDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.MultiChoiceDialog, `ja)}
+'''ja

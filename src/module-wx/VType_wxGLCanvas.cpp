@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GLCanvas, `en)}
 ${help.ComposeMethodHelp(wx.GLCanvas, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GLCanvas, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GLCanvas, `ja)}
+
+${help.ComposeMethodHelp(wx.GLCanvas, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -158,6 +174,7 @@ void VType_wxGLCanvas::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(GLCanvas_gurax));
 	// Assignment of method

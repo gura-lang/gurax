@@ -27,4 +27,18 @@ ${help.ComposePropertyHelp(wx.FileSystemWatcherEvent, `en)}
 ${help.ComposeConstructorHelp(wx.FileSystemWatcherEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.FileSystemWatcherEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FileSystemWatcherEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FileSystemWatcherEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.FileSystemWatcherEvent, `ja)}
+'''ja

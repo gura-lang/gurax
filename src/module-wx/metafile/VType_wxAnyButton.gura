@@ -69,4 +69,18 @@ ${help.ComposePropertyHelp(wx.AnyButton, `en)}
 ${help.ComposeConstructorHelp(wx.AnyButton, `en)}
 
 ${help.ComposeMethodHelp(wx.AnyButton, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AnyButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AnyButton, `ja)}
+
+${help.ComposeMethodHelp(wx.AnyButton, `ja)}
+'''ja

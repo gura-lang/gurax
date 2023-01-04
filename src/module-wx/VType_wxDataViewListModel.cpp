@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.DataViewListModel, `en)}
 ${help.ComposeMethodHelp(wx.DataViewListModel, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DataViewListModel, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DataViewListModel, `ja)}
+
+${help.ComposeMethodHelp(wx.DataViewListModel, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxDataViewListModel::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDataViewModel, Flag::Mutable);
 	// Assignment of method

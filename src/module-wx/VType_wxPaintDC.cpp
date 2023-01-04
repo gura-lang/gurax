@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PaintDC, `en)}
 ${help.ComposeMethodHelp(wx.PaintDC, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PaintDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PaintDC, `ja)}
+
+${help.ComposeMethodHelp(wx.PaintDC, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -65,6 +81,7 @@ void VType_wxPaintDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxClientDC, Flag::Mutable, Gurax_CreateConstructor(PaintDC_gurax));
 	// Assignment of method

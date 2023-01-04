@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.GraphicsFont, `en)}
 ${help.ComposeConstructorHelp(wx.GraphicsFont, `en)}
 
 ${help.ComposeMethodHelp(wx.GraphicsFont, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GraphicsFont, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GraphicsFont, `ja)}
+
+${help.ComposeMethodHelp(wx.GraphicsFont, `ja)}
+'''ja

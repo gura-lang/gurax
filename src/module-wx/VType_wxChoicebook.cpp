@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Choicebook, `en)}
 ${help.ComposeMethodHelp(wx.Choicebook, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Choicebook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Choicebook, `ja)}
+
+${help.ComposeMethodHelp(wx.Choicebook, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -94,6 +110,7 @@ void VType_wxChoicebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Choicebook_gurax));
 	// Assignment of method

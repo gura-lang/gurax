@@ -59,4 +59,18 @@ ${help.ComposePropertyHelp(wx.PropertyGridManager, `en)}
 ${help.ComposeConstructorHelp(wx.PropertyGridManager, `en)}
 
 ${help.ComposeMethodHelp(wx.PropertyGridManager, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PropertyGridManager, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PropertyGridManager, `ja)}
+
+${help.ComposeMethodHelp(wx.PropertyGridManager, `ja)}
+'''ja

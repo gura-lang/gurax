@@ -24,4 +24,18 @@ ${help.ComposePropertyHelp(wx.StdDialogButtonSizer, `en)}
 ${help.ComposeConstructorHelp(wx.StdDialogButtonSizer, `en)}
 
 ${help.ComposeMethodHelp(wx.StdDialogButtonSizer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StdDialogButtonSizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StdDialogButtonSizer, `ja)}
+
+${help.ComposeMethodHelp(wx.StdDialogButtonSizer, `ja)}
+'''ja

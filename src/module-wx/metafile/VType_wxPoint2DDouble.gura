@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.Point2DDouble, `en)}
 ${help.ComposeConstructorHelp(wx.Point2DDouble, `en)}
 
 ${help.ComposeMethodHelp(wx.Point2DDouble, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Point2DDouble, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Point2DDouble, `ja)}
+
+${help.ComposeMethodHelp(wx.Point2DDouble, `ja)}
+'''ja

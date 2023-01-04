@@ -45,4 +45,18 @@ ${help.ComposePropertyHelp(wx.GridBagSizer, `en)}
 ${help.ComposeConstructorHelp(wx.GridBagSizer, `en)}
 
 ${help.ComposeMethodHelp(wx.GridBagSizer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridBagSizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridBagSizer, `ja)}
+
+${help.ComposeMethodHelp(wx.GridBagSizer, `ja)}
+'''ja

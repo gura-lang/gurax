@@ -20,7 +20,21 @@ ${help.ComposePropertyHelp(wx.WizardEvent, `en)}
 ${help.ComposeConstructorHelp(wx.WizardEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.WizardEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.WizardEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.WizardEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.WizardEvent, `ja)}
+'''ja
 
 @event {
 	EVT_WIZARD_PAGE_CHANGED			>> WizardEvent

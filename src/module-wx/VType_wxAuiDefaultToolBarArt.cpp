@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.AuiDefaultToolBarArt, `en)}
 ${help.ComposeMethodHelp(wx.AuiDefaultToolBarArt, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiDefaultToolBarArt, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiDefaultToolBarArt, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiDefaultToolBarArt, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxAuiDefaultToolBarArt::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxAuiToolBarArt, Flag::Mutable);
 	// Assignment of method

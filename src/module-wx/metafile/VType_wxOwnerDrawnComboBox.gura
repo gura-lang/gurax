@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.OwnerDrawnComboBox, `en)}
 ${help.ComposeConstructorHelp(wx.OwnerDrawnComboBox, `en)}
 
 ${help.ComposeMethodHelp(wx.OwnerDrawnComboBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.OwnerDrawnComboBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.OwnerDrawnComboBox, `ja)}
+
+${help.ComposeMethodHelp(wx.OwnerDrawnComboBox, `ja)}
+'''ja

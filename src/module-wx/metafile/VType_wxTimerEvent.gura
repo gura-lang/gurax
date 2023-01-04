@@ -18,7 +18,21 @@ ${help.ComposePropertyHelp(wx.TimerEvent, `en)}
 ${help.ComposeConstructorHelp(wx.TimerEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.TimerEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TimerEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TimerEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.TimerEvent, `ja)}
+'''ja
 
 @event {
     EVT_TIMER >> TimerEvent

@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.CollapsiblePaneEvent, `en)}
 ${help.ComposeConstructorHelp(wx.CollapsiblePaneEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.CollapsiblePaneEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CollapsiblePaneEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CollapsiblePaneEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.CollapsiblePaneEvent, `ja)}
+'''ja
 
 @event {
 	EVT_COLLAPSIBLEPANE_CHANGED >> CollapsiblePaneEvent

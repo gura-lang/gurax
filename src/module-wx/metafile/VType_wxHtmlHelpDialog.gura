@@ -63,4 +63,18 @@ ${help.ComposePropertyHelp(wx.HtmlHelpDialog, `en)}
 ${help.ComposeConstructorHelp(wx.HtmlHelpDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.HtmlHelpDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlHelpDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlHelpDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpDialog, `ja)}
+'''ja

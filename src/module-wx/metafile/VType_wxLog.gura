@@ -44,4 +44,18 @@ ${help.ComposePropertyHelp(wx.Log, `en)}
 ${help.ComposeConstructorHelp(wx.Log, `en)}
 
 ${help.ComposeMethodHelp(wx.Log, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Log, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Log, `ja)}
+
+${help.ComposeMethodHelp(wx.Log, `ja)}
+'''ja

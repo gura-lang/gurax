@@ -18,4 +18,18 @@ ${help.ComposePropertyHelp(wx.BusyCursor, `en)}
 ${help.ComposeConstructorHelp(wx.BusyCursor, `en)}
 
 ${help.ComposeMethodHelp(wx.BusyCursor, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BusyCursor, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BusyCursor, `ja)}
+
+${help.ComposeMethodHelp(wx.BusyCursor, `ja)}
+'''ja

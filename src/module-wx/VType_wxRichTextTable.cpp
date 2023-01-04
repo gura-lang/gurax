@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RichTextTable, `en)}
 ${help.ComposeMethodHelp(wx.RichTextTable, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextTable, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextTable, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextTable, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxRichTextTable::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxRichTextBox, Flag::Mutable);
 	// Assignment of method

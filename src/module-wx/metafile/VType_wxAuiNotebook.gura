@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.AuiNotebook, `en)}
 ${help.ComposeConstructorHelp(wx.AuiNotebook, `en)}
 
 ${help.ComposeMethodHelp(wx.AuiNotebook, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiNotebook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiNotebook, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiNotebook, `ja)}
+'''ja
 
 @const { // Styles
 	AUI_NB_DEFAULT_STYLE

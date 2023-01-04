@@ -51,7 +51,21 @@ ${help.ComposePropertyHelp(wx.StatusBar, `en)}
 ${help.ComposeConstructorHelp(wx.StatusBar, `en)}
 
 ${help.ComposeMethodHelp(wx.StatusBar, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StatusBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StatusBar, `ja)}
+
+${help.ComposeMethodHelp(wx.StatusBar, `ja)}
+'''ja
 
 @const { // Styles
 	STB_SIZEGRIP

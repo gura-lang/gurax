@@ -27,7 +27,21 @@ ${help.ComposePropertyHelp(wx.GenericProgressDialog, `en)}
 ${help.ComposeConstructorHelp(wx.GenericProgressDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.GenericProgressDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GenericProgressDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GenericProgressDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.GenericProgressDialog, `ja)}
+'''ja
 
 @const {
 	PD_APP_MODAL

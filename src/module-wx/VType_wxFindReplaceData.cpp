@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.FindReplaceData, `en)}
 ${help.ComposeMethodHelp(wx.FindReplaceData, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FindReplaceData, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FindReplaceData, `ja)}
+
+${help.ComposeMethodHelp(wx.FindReplaceData, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -177,6 +193,7 @@ void VType_wxFindReplaceData::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(FindReplaceData_gurax));
 	// Assignment of method

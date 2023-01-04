@@ -33,7 +33,21 @@ ${help.ComposePropertyHelp(wx.HeaderCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.HeaderCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.HeaderCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HeaderCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HeaderCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.HeaderCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	HD_ALLOW_REORDER

@@ -108,7 +108,21 @@ ${help.ComposePropertyHelp(wx.HtmlHelpWindow, `en)}
 ${help.ComposeConstructorHelp(wx.HtmlHelpWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.HtmlHelpWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlHelpWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlHelpWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpWindow, `ja)}
+'''ja
 
 @const {
 	HF_TOOLBAR

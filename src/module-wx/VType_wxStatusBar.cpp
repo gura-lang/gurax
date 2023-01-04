@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.StatusBar, `en)}
 ${help.ComposeMethodHelp(wx.StatusBar, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StatusBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StatusBar, `ja)}
+
+${help.ComposeMethodHelp(wx.StatusBar, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -406,6 +422,7 @@ void VType_wxStatusBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(StatusBar_gurax));
 	// Assignment of method

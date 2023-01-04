@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.CalendarEvent, `en)}
 ${help.ComposeConstructorHelp(wx.CalendarEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.CalendarEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CalendarEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CalendarEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.CalendarEvent, `ja)}
+'''ja

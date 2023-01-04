@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.IconBundle, `en)}
 ${help.ComposeMethodHelp(wx.IconBundle, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.IconBundle, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.IconBundle, `ja)}
+
+${help.ComposeMethodHelp(wx.IconBundle, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxIconBundle::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable);
 	// Assignment of method

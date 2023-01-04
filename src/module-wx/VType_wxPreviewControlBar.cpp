@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PreviewControlBar, `en)}
 ${help.ComposeMethodHelp(wx.PreviewControlBar, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PreviewControlBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PreviewControlBar, `ja)}
+
+${help.ComposeMethodHelp(wx.PreviewControlBar, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -134,6 +150,7 @@ void VType_wxPreviewControlBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(PreviewControlBar_gurax));
 	// Assignment of method

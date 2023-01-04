@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.DateSpan, `en)}
 ${help.ComposeMethodHelp(wx.DateSpan, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DateSpan, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DateSpan, `ja)}
+
+${help.ComposeMethodHelp(wx.DateSpan, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -486,6 +502,7 @@ void VType_wxDateSpan::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(DateSpan_gurax));
 	// Assignment of method

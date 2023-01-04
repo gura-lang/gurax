@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.ColourPickerEvent, `en)}
 ${help.ComposeConstructorHelp(wx.ColourPickerEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.ColourPickerEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ColourPickerEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ColourPickerEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.ColourPickerEvent, `ja)}
+'''ja

@@ -16,7 +16,21 @@ ${help.ComposePropertyHelp(wx.HelpEvent, `en)}
 ${help.ComposeConstructorHelp(wx.HelpEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.HelpEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HelpEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HelpEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.HelpEvent, `ja)}
+'''ja
 
 @event {
 	EVT_HELP >> HelpEvent

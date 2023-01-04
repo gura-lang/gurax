@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.RichTextContextMenuPropertiesInfo, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextContextMenuPropertiesInfo, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextContextMenuPropertiesInfo, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextContextMenuPropertiesInfo, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextContextMenuPropertiesInfo, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextContextMenuPropertiesInfo, `ja)}
+'''ja

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.HyperlinkCtrl, `en)}
 ${help.ComposeMethodHelp(wx.HyperlinkCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HyperlinkCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HyperlinkCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.HyperlinkCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -313,6 +329,7 @@ void VType_wxHyperlinkCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(HyperlinkCtrl_gurax));
 	// Assignment of method

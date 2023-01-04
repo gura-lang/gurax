@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.MenuItem, `en)}
 ${help.ComposeConstructorHelp(wx.MenuItem, `en)}
 
 ${help.ComposeMethodHelp(wx.MenuItem, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MenuItem, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MenuItem, `ja)}
+
+${help.ComposeMethodHelp(wx.MenuItem, `ja)}
+'''ja

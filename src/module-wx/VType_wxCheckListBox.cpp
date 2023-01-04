@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.CheckListBox, `en)}
 ${help.ComposeMethodHelp(wx.CheckListBox, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CheckListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CheckListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.CheckListBox, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -183,6 +199,7 @@ void VType_wxCheckListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxListBox, Flag::Mutable, Gurax_CreateConstructor(CheckListBox_gurax));
 	// Assignment of method

@@ -35,7 +35,21 @@ ${help.ComposePropertyHelp(wx.RadioBox, `en)}
 ${help.ComposeConstructorHelp(wx.RadioBox, `en)}
 
 ${help.ComposeMethodHelp(wx.RadioBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RadioBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RadioBox, `ja)}
+
+${help.ComposeMethodHelp(wx.RadioBox, `ja)}
+'''ja
 
 @const { // Styles
 	RA_SPECIFY_ROWS

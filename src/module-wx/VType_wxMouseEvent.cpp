@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.MouseEvent, `en)}
 ${help.ComposeMethodHelp(wx.MouseEvent, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MouseEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MouseEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.MouseEvent, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -1213,6 +1229,7 @@ void VType_wxMouseEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

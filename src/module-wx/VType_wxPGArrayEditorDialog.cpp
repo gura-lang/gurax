@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PGArrayEditorDialog, `en)}
 ${help.ComposeMethodHelp(wx.PGArrayEditorDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PGArrayEditorDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PGArrayEditorDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.PGArrayEditorDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -186,6 +202,7 @@ void VType_wxPGArrayEditorDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable);
 	// Assignment of method

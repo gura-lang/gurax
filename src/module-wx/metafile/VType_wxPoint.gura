@@ -35,7 +35,21 @@ ${help.ComposePropertyHelp(wx.Point, `en)}
 ${help.ComposeConstructorHelp(wx.Point, `en)}
 
 ${help.ComposeMethodHelp(wx.Point, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Point, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Point, `ja)}
+
+${help.ComposeMethodHelp(wx.Point, `ja)}
+'''ja
 
 (const_Point_r == const_Point_r) as bool
 (const_Point_r != const_Point_r) as bool

@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.RichTextListStyleDefinition, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextListStyleDefinition, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextListStyleDefinition, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextListStyleDefinition, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextListStyleDefinition, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextListStyleDefinition, `ja)}
+'''ja

@@ -40,4 +40,18 @@ ${help.ComposePropertyHelp(wx.URI, `en)}
 ${help.ComposeConstructorHelp(wx.URI, `en)}
 
 ${help.ComposeMethodHelp(wx.URI, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.URI, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.URI, `ja)}
+
+${help.ComposeMethodHelp(wx.URI, `ja)}
+'''ja

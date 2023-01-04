@@ -23,7 +23,21 @@ ${help.ComposePropertyHelp(wx.DatePickerCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.DatePickerCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.DatePickerCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DatePickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DatePickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.DatePickerCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	DP_SPIN

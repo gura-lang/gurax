@@ -20,4 +20,18 @@ ${help.ComposePropertyHelp(wx.RearrangeCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.RearrangeCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.RearrangeCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RearrangeCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RearrangeCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.RearrangeCtrl, `ja)}
+'''ja

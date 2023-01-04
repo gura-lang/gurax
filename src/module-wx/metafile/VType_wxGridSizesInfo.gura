@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.GridSizesInfo, `en)}
 ${help.ComposeConstructorHelp(wx.GridSizesInfo, `en)}
 
 ${help.ComposeMethodHelp(wx.GridSizesInfo, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridSizesInfo, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridSizesInfo, `ja)}
+
+${help.ComposeMethodHelp(wx.GridSizesInfo, `ja)}
+'''ja

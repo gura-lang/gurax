@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.ContextHelpButton, `en)}
 ${help.ComposeConstructorHelp(wx.ContextHelpButton, `en)}
 
 ${help.ComposeMethodHelp(wx.ContextHelpButton, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ContextHelpButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ContextHelpButton, `ja)}
+
+${help.ComposeMethodHelp(wx.ContextHelpButton, `ja)}
+'''ja

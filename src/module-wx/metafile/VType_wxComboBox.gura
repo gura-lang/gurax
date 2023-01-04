@@ -37,7 +37,21 @@ ${help.ComposePropertyHelp(wx.ComboBox, `en)}
 ${help.ComposeConstructorHelp(wx.ComboBox, `en)}
 
 ${help.ComposeMethodHelp(wx.ComboBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ComboBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ComboBox, `ja)}
+
+${help.ComposeMethodHelp(wx.ComboBox, `ja)}
+'''ja
 
 @const { // Styles
 	CB_SIMPLE

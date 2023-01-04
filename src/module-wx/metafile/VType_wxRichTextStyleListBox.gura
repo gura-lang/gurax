@@ -33,4 +33,18 @@ ${help.ComposePropertyHelp(wx.RichTextStyleListBox, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextStyleListBox, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextStyleListBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextStyleListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextStyleListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleListBox, `ja)}
+'''ja

@@ -24,7 +24,21 @@ ${help.ComposePropertyHelp(wx.FilePickerCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.FilePickerCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.FilePickerCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FilePickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FilePickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.FilePickerCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	FLP_DEFAULT_STYLE

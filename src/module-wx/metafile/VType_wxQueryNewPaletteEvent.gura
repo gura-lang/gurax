@@ -20,4 +20,18 @@ ${help.ComposePropertyHelp(wx.QueryNewPaletteEvent, `en)}
 ${help.ComposeConstructorHelp(wx.QueryNewPaletteEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.QueryNewPaletteEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.QueryNewPaletteEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.QueryNewPaletteEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.QueryNewPaletteEvent, `ja)}
+'''ja

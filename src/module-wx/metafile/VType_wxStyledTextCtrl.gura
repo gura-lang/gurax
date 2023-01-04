@@ -676,7 +676,21 @@ ${help.ComposePropertyHelp(wx.StyledTextCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.StyledTextCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.StyledTextCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StyledTextCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StyledTextCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.StyledTextCtrl, `ja)}
+'''ja
 
 @event {
 	EVT_STC_CHANGE					>> StyledTextEvent

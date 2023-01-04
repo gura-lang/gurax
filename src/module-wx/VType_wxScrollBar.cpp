@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ScrollBar, `en)}
 ${help.ComposeMethodHelp(wx.ScrollBar, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ScrollBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ScrollBar, `ja)}
+
+${help.ComposeMethodHelp(wx.ScrollBar, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -248,6 +264,7 @@ void VType_wxScrollBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(ScrollBar_gurax));
 	// Assignment of method

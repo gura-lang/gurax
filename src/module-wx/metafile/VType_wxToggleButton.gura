@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.ToggleButton, `en)}
 ${help.ComposeConstructorHelp(wx.ToggleButton, `en)}
 
 ${help.ComposeMethodHelp(wx.ToggleButton, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ToggleButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ToggleButton, `ja)}
+
+${help.ComposeMethodHelp(wx.ToggleButton, `ja)}
+'''ja

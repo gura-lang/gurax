@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.ImageHandler, `en)}
 ${help.ComposeConstructorHelp(wx.ImageHandler, `en)}
 
 ${help.ComposeMethodHelp(wx.ImageHandler, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ImageHandler, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ImageHandler, `ja)}
+
+${help.ComposeMethodHelp(wx.ImageHandler, `ja)}
+'''ja

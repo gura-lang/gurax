@@ -28,7 +28,21 @@ ${help.ComposePropertyHelp(wx.AnimationCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.AnimationCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.AnimationCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AnimationCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AnimationCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.AnimationCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	AC_DEFAULT_STYLE

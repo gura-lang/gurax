@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Animation, `en)}
 ${help.ComposeMethodHelp(wx.Animation, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Animation, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Animation, `ja)}
+
+${help.ComposeMethodHelp(wx.Animation, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -209,6 +225,7 @@ void VType_wxAnimation::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(Animation_gurax));
 	// Assignment of method

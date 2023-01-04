@@ -24,7 +24,21 @@ ${help.ComposePropertyHelp(wx.DirPickerCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.DirPickerCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.DirPickerCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DirPickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DirPickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.DirPickerCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	DIRP_DEFAULT_STYLE

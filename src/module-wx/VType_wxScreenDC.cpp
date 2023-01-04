@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ScreenDC, `en)}
 ${help.ComposeMethodHelp(wx.ScreenDC, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ScreenDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ScreenDC, `ja)}
+
+${help.ComposeMethodHelp(wx.ScreenDC, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxScreenDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDC, Flag::Mutable);
 	// Assignment of method

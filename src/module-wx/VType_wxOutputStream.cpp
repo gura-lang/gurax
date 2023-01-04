@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.OutputStream, `en)}
 ${help.ComposeMethodHelp(wx.OutputStream, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.OutputStream, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.OutputStream, `ja)}
+
+${help.ComposeMethodHelp(wx.OutputStream, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxOutputStream::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxStreamBase, Flag::Mutable);
 	// Assignment of method

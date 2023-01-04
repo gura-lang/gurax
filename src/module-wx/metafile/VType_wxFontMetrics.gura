@@ -72,4 +72,18 @@ ${help.ComposePropertyHelp(wx.FontMetrics, `en)}
 ${help.ComposeConstructorHelp(wx.FontMetrics, `en)}
 
 ${help.ComposeMethodHelp(wx.FontMetrics, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FontMetrics, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FontMetrics, `ja)}
+
+${help.ComposeMethodHelp(wx.FontMetrics, `ja)}
+'''ja

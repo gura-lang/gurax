@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.CalendarCtrl, `en)}
 ${help.ComposeMethodHelp(wx.CalendarCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CalendarCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CalendarCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.CalendarCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -502,6 +518,7 @@ void VType_wxCalendarCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CalendarCtrl_gurax));
 	// Assignment of method

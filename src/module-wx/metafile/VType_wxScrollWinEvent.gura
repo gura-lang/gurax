@@ -22,7 +22,21 @@ ${help.ComposePropertyHelp(wx.ScrollWinEvent, `en)}
 ${help.ComposeConstructorHelp(wx.ScrollWinEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.ScrollWinEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ScrollWinEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ScrollWinEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.ScrollWinEvent, `ja)}
+'''ja
 
 @event {
 	EVT_SCROLLWIN_TOP			>> ScrollWinEvent

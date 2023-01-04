@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.BookCtrlBase, `en)}
 ${help.ComposeMethodHelp(wx.BookCtrlBase, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BookCtrlBase, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BookCtrlBase, `ja)}
+
+${help.ComposeMethodHelp(wx.BookCtrlBase, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -519,6 +535,7 @@ void VType_wxBookCtrlBase::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable);
 	// Assignment of method

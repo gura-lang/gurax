@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.CursorProperty, `en)}
 ${help.ComposeMethodHelp(wx.CursorProperty, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CursorProperty, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CursorProperty, `ja)}
+
+${help.ComposeMethodHelp(wx.CursorProperty, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -117,6 +133,7 @@ void VType_wxCursorProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxEnumProperty, Flag::Mutable, Gurax_CreateConstructor(CursorProperty_gurax));
 	// Assignment of method

@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.DatagramSocket, `en)}
 ${help.ComposeConstructorHelp(wx.DatagramSocket, `en)}
 
 ${help.ComposeMethodHelp(wx.DatagramSocket, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DatagramSocket, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DatagramSocket, `ja)}
+
+${help.ComposeMethodHelp(wx.DatagramSocket, `ja)}
+'''ja

@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.SplitterEvent, `en)}
 ${help.ComposeConstructorHelp(wx.SplitterEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.SplitterEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SplitterEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SplitterEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.SplitterEvent, `ja)}
+'''ja

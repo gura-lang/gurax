@@ -25,4 +25,18 @@ ${help.ComposePropertyHelp(wx.SashLayoutWindow, `en)}
 ${help.ComposeConstructorHelp(wx.SashLayoutWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.SashLayoutWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SashLayoutWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SashLayoutWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.SashLayoutWindow, `ja)}
+'''ja

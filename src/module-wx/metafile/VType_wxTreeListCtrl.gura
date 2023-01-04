@@ -17,7 +17,21 @@ ${help.ComposePropertyHelp(wx.TreeListCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.TreeListCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.TreeListCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TreeListCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TreeListCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.TreeListCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	TL_SINGLE

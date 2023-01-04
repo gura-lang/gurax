@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.RichTextParagraphLayoutBox, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextParagraphLayoutBox, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextParagraphLayoutBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextParagraphLayoutBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextParagraphLayoutBox, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextParagraphLayoutBox, `ja)}
+'''ja

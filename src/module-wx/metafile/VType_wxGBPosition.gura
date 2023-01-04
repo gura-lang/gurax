@@ -22,7 +22,21 @@ ${help.ComposePropertyHelp(wx.GBPosition, `en)}
 ${help.ComposeConstructorHelp(wx.GBPosition, `en)}
 
 ${help.ComposeMethodHelp(wx.GBPosition, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GBPosition, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GBPosition, `ja)}
+
+${help.ComposeMethodHelp(wx.GBPosition, `ja)}
+'''ja
 
 (const_GBPosition_r == const_GBPosition_r) as bool
 (const_GBPosition_r != const_GBPosition_r) as bool

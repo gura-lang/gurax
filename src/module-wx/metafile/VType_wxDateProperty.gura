@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.DateProperty, `en)}
 ${help.ComposeConstructorHelp(wx.DateProperty, `en)}
 
 ${help.ComposeMethodHelp(wx.DateProperty, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DateProperty, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DateProperty, `ja)}
+
+${help.ComposeMethodHelp(wx.DateProperty, `ja)}
+'''ja

@@ -47,4 +47,18 @@ ${help.ComposePropertyHelp(wx.DataViewEvent, `en)}
 ${help.ComposeConstructorHelp(wx.DataViewEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.DataViewEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DataViewEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DataViewEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.DataViewEvent, `ja)}
+'''ja

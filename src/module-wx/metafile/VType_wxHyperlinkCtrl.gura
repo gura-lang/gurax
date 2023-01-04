@@ -29,7 +29,21 @@ ${help.ComposePropertyHelp(wx.HyperlinkCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.HyperlinkCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.HyperlinkCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HyperlinkCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HyperlinkCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.HyperlinkCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	HL_ALIGN_LEFT

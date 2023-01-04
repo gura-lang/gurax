@@ -20,7 +20,21 @@ ${help.ComposePropertyHelp(wx.StaticText, `en)}
 ${help.ComposeConstructorHelp(wx.StaticText, `en)}
 
 ${help.ComposeMethodHelp(wx.StaticText, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StaticText, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StaticText, `ja)}
+
+${help.ComposeMethodHelp(wx.StaticText, `ja)}
+'''ja
 
 @const { // Styles
 	ALIGN_LEFT

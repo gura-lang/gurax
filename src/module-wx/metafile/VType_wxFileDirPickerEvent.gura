@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.FileDirPickerEvent, `en)}
 ${help.ComposeConstructorHelp(wx.FileDirPickerEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.FileDirPickerEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FileDirPickerEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FileDirPickerEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.FileDirPickerEvent, `ja)}
+'''ja

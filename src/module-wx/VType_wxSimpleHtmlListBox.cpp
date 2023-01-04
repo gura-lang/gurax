@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.SimpleHtmlListBox, `en)}
 ${help.ComposeMethodHelp(wx.SimpleHtmlListBox, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SimpleHtmlListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SimpleHtmlListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.SimpleHtmlListBox, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -402,6 +418,7 @@ void VType_wxSimpleHtmlListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxHtmlListBox, Flag::Mutable, Gurax_CreateConstructor(SimpleHtmlListBox_gurax));
 	// Assignment of method

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.SpinButton, `en)}
 ${help.ComposeMethodHelp(wx.SpinButton, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SpinButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SpinButton, `ja)}
+
+${help.ComposeMethodHelp(wx.SpinButton, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -172,6 +188,7 @@ void VType_wxSpinButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(SpinButton_gurax));
 	// Assignment of method

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RichTextStyleListBox, `en)}
 ${help.ComposeMethodHelp(wx.RichTextStyleListBox, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextStyleListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextStyleListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleListBox, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -353,6 +369,7 @@ void VType_wxRichTextStyleListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxHtmlListBox, Flag::Mutable, Gurax_CreateConstructor(RichTextStyleListBox_gurax));
 	// Assignment of method

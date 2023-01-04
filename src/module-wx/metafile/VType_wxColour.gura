@@ -107,7 +107,21 @@ ${help.ComposePropertyHelp(wx.Colour, `en)}
 ${help.ComposeConstructorHelp(wx.Colour, `en)}
 
 ${help.ComposeMethodHelp(wx.Colour, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Colour, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Colour, `ja)}
+
+${help.ComposeMethodHelp(wx.Colour, `ja)}
+'''ja
 
 @const {
 	ALPHA_OPAQUE

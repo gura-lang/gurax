@@ -20,7 +20,21 @@ ${help.ComposePropertyHelp(wx.ActivateEvent, `en)}
 ${help.ComposeConstructorHelp(wx.ActivateEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.ActivateEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ActivateEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ActivateEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.ActivateEvent, `ja)}
+'''ja
 
 @event {
 	EVT_ACTIVATE		>> ActivateEvent

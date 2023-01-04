@@ -23,7 +23,21 @@ ${help.ComposePropertyHelp(wx.FontPickerCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.FontPickerCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.FontPickerCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FontPickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FontPickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.FontPickerCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	FNTP_DEFAULT_STYLE

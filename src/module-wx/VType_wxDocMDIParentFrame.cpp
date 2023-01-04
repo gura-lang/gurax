@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.DocMDIParentFrame, `en)}
 ${help.ComposeMethodHelp(wx.DocMDIParentFrame, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DocMDIParentFrame, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DocMDIParentFrame, `ja)}
+
+${help.ComposeMethodHelp(wx.DocMDIParentFrame, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxDocMDIParentFrame::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxMDIParentFrame, Flag::Mutable);
 	// Assignment of method

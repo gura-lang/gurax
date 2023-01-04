@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PropertySheetDialog, `en)}
 ${help.ComposeMethodHelp(wx.PropertySheetDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PropertySheetDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PropertySheetDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.PropertySheetDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -409,6 +425,7 @@ void VType_wxPropertySheetDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(PropertySheetDialog_gurax));
 	// Assignment of method

@@ -24,7 +24,21 @@ ${help.ComposePropertyHelp(wx.CollapsiblePane, `en)}
 ${help.ComposeConstructorHelp(wx.CollapsiblePane, `en)}
 
 ${help.ComposeMethodHelp(wx.CollapsiblePane, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CollapsiblePane, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CollapsiblePane, `ja)}
+
+${help.ComposeMethodHelp(wx.CollapsiblePane, `ja)}
+'''ja
 
 @const { // Styles
 	CP_DEFAULT_STYLE

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.MoveEvent, `en)}
 ${help.ComposeMethodHelp(wx.MoveEvent, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MoveEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MoveEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.MoveEvent, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -125,6 +141,7 @@ void VType_wxMoveEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

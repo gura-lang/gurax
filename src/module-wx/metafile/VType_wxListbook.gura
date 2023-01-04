@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.Listbook, `en)}
 ${help.ComposeConstructorHelp(wx.Listbook, `en)}
 
 ${help.ComposeMethodHelp(wx.Listbook, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Listbook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Listbook, `ja)}
+
+${help.ComposeMethodHelp(wx.Listbook, `ja)}
+'''ja
 
 @const {
 	LB_DEFAULT

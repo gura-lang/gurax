@@ -79,7 +79,21 @@ ${help.ComposePropertyHelp(wx.CalendarDateAttr, `en)}
 ${help.ComposeConstructorHelp(wx.CalendarDateAttr, `en)}
 
 ${help.ComposeMethodHelp(wx.CalendarDateAttr, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CalendarDateAttr, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CalendarDateAttr, `ja)}
+
+${help.ComposeMethodHelp(wx.CalendarDateAttr, `ja)}
+'''ja
 
 @enum {
 	CalendarDateBorder {

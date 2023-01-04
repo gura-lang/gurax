@@ -30,4 +30,18 @@ ${help.ComposePropertyHelp(wx.KeyboardState, `en)}
 ${help.ComposeConstructorHelp(wx.KeyboardState, `en)}
 
 ${help.ComposeMethodHelp(wx.KeyboardState, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.KeyboardState, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.KeyboardState, `ja)}
+
+${help.ComposeMethodHelp(wx.KeyboardState, `ja)}
+'''ja

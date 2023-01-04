@@ -32,7 +32,21 @@ ${help.ComposePropertyHelp(wx.FileCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.FileCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.FileCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FileCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FileCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.FileCtrl, `ja)}
+'''ja
 
 @const {
 	FC_DEFAULT_STYLE

@@ -25,4 +25,18 @@ ${help.ComposePropertyHelp(wx.FileCtrlEvent, `en)}
 ${help.ComposeConstructorHelp(wx.FileCtrlEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.FileCtrlEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FileCtrlEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FileCtrlEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.FileCtrlEvent, `ja)}
+'''ja

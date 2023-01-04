@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.MemoryBuffer, `en)}
 ${help.ComposeConstructorHelp(wx.MemoryBuffer, `en)}
 
 ${help.ComposeMethodHelp(wx.MemoryBuffer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MemoryBuffer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MemoryBuffer, `ja)}
+
+${help.ComposeMethodHelp(wx.MemoryBuffer, `ja)}
+'''ja

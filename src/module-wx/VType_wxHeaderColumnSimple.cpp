@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.HeaderColumnSimple, `en)}
 ${help.ComposeMethodHelp(wx.HeaderColumnSimple, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HeaderColumnSimple, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HeaderColumnSimple, `ja)}
+
+${help.ComposeMethodHelp(wx.HeaderColumnSimple, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -357,6 +373,7 @@ void VType_wxHeaderColumnSimple::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxSettableHeaderColumn, Flag::Mutable, Gurax_CreateConstructor(HeaderColumnSimple_gurax));
 	// Assignment of method

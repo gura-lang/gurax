@@ -38,7 +38,21 @@ ${help.ComposePropertyHelp(wx.Accessible, `en)}
 ${help.ComposeConstructorHelp(wx.Accessible, `en)}
 
 ${help.ComposeMethodHelp(wx.Accessible, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Accessible, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Accessible, `ja)}
+
+${help.ComposeMethodHelp(wx.Accessible, `ja)}
+'''ja
 
 @enum {
 	AccRole {

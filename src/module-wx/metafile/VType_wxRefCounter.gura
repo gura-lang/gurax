@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.RefCounter, `en)}
 ${help.ComposeConstructorHelp(wx.RefCounter, `en)}
 
 ${help.ComposeMethodHelp(wx.RefCounter, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RefCounter, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RefCounter, `ja)}
+
+${help.ComposeMethodHelp(wx.RefCounter, `ja)}
+'''ja

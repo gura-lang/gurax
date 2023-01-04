@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.LayoutAlgorithm, `en)}
 ${help.ComposeMethodHelp(wx.LayoutAlgorithm, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.LayoutAlgorithm, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.LayoutAlgorithm, `ja)}
+
+${help.ComposeMethodHelp(wx.LayoutAlgorithm, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -130,6 +146,7 @@ void VType_wxLayoutAlgorithm::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(LayoutAlgorithm_gurax));
 	// Assignment of method

@@ -21,7 +21,21 @@ ${help.ComposePropertyHelp(wx.MoveEvent, `en)}
 ${help.ComposeConstructorHelp(wx.MoveEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.MoveEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MoveEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MoveEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.MoveEvent, `ja)}
+'''ja
 
 @event {
 	EVT_MOVE		>> MoveEvent

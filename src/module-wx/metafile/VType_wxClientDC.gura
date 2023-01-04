@@ -18,4 +18,18 @@ ${help.ComposePropertyHelp(wx.ClientDC, `en)}
 ${help.ComposeConstructorHelp(wx.ClientDC, `en)}
 
 ${help.ComposeMethodHelp(wx.ClientDC, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ClientDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ClientDC, `ja)}
+
+${help.ComposeMethodHelp(wx.ClientDC, `ja)}
+'''ja

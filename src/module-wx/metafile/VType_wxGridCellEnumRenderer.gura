@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.GridCellEnumRenderer, `en)}
 ${help.ComposeConstructorHelp(wx.GridCellEnumRenderer, `en)}
 
 ${help.ComposeMethodHelp(wx.GridCellEnumRenderer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridCellEnumRenderer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridCellEnumRenderer, `ja)}
+
+${help.ComposeMethodHelp(wx.GridCellEnumRenderer, `ja)}
+'''ja

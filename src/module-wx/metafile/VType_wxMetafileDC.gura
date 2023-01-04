@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.MetafileDC, `en)}
 ${help.ComposeConstructorHelp(wx.MetafileDC, `en)}
 
 ${help.ComposeMethodHelp(wx.MetafileDC, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MetafileDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MetafileDC, `ja)}
+
+${help.ComposeMethodHelp(wx.MetafileDC, `ja)}
+'''ja

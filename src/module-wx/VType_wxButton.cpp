@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Button, `en)}
 ${help.ComposeMethodHelp(wx.Button, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Button, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Button, `ja)}
+
+${help.ComposeMethodHelp(wx.Button, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -174,6 +190,7 @@ void VType_wxButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxAnyButton, Flag::Mutable, Gurax_CreateConstructor(Button_gurax));
 	// Assignment of method

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.HtmlCell, `en)}
 ${help.ComposeMethodHelp(wx.HtmlCell, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlCell, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlCell, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlCell, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxHtmlCell::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable);
 	// Assignment of method

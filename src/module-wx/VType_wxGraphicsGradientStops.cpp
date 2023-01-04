@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GraphicsGradientStops, `en)}
 ${help.ComposeMethodHelp(wx.GraphicsGradientStops, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GraphicsGradientStops, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GraphicsGradientStops, `ja)}
+
+${help.ComposeMethodHelp(wx.GraphicsGradientStops, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxGraphicsGradientStops::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

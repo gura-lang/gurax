@@ -31,7 +31,21 @@ ${help.ComposePropertyHelp(wx.Notebook, `en)}
 ${help.ComposeConstructorHelp(wx.Notebook, `en)}
 
 ${help.ComposeMethodHelp(wx.Notebook, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Notebook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Notebook, `ja)}
+
+${help.ComposeMethodHelp(wx.Notebook, `ja)}
+'''ja
 
 @const { // Styles
 	NB_TOP

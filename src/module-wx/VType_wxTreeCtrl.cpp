@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.TreeCtrl, `en)}
 ${help.ComposeMethodHelp(wx.TreeCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TreeCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TreeCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.TreeCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -1806,6 +1822,7 @@ void VType_wxTreeCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(TreeCtrl_gurax));
 	// Assignment of method

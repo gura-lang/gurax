@@ -23,4 +23,18 @@ ${help.ComposePropertyHelp(wx.HVScrolledWindow, `en)}
 ${help.ComposeConstructorHelp(wx.HVScrolledWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.HVScrolledWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HVScrolledWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HVScrolledWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.HVScrolledWindow, `ja)}
+'''ja

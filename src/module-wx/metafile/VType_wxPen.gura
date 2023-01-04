@@ -120,7 +120,21 @@ ${help.ComposePropertyHelp(wx.Pen, `en)}
 ${help.ComposeConstructorHelp(wx.Pen, `en)}
 
 ${help.ComposeMethodHelp(wx.Pen, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Pen, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Pen, `ja)}
+
+${help.ComposeMethodHelp(wx.Pen, `ja)}
+'''ja
 
 @enum {
 	PenCap {

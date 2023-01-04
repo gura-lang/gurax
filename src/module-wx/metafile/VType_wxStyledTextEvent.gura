@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.StyledTextEvent, `en)}
 ${help.ComposeConstructorHelp(wx.StyledTextEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.StyledTextEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StyledTextEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StyledTextEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.StyledTextEvent, `ja)}
+'''ja

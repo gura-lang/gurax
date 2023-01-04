@@ -34,4 +34,18 @@ ${help.ComposePropertyHelp(wx.HeaderColumnSimple, `en)}
 ${help.ComposeConstructorHelp(wx.HeaderColumnSimple, `en)}
 
 ${help.ComposeMethodHelp(wx.HeaderColumnSimple, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HeaderColumnSimple, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HeaderColumnSimple, `ja)}
+
+${help.ComposeMethodHelp(wx.HeaderColumnSimple, `ja)}
+'''ja

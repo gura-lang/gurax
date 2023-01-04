@@ -492,4 +492,18 @@ ${help.ComposePropertyHelp(wx.Region, `en)}
 ${help.ComposeConstructorHelp(wx.Region, `en)}
 
 ${help.ComposeMethodHelp(wx.Region, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Region, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Region, `ja)}
+
+${help.ComposeMethodHelp(wx.Region, `ja)}
+'''ja

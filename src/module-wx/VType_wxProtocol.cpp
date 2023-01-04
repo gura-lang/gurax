@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Protocol, `en)}
 ${help.ComposeMethodHelp(wx.Protocol, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Protocol, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Protocol, `ja)}
+
+${help.ComposeMethodHelp(wx.Protocol, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -298,6 +314,7 @@ void VType_wxProtocol::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxSocketClient, Flag::Mutable);
 	// Assignment of method

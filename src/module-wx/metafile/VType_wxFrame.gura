@@ -43,7 +43,21 @@ ${help.ComposePropertyHelp(wx.Frame, `en)}
 ${help.ComposeConstructorHelp(wx.Frame, `en)}
 
 ${help.ComposeMethodHelp(wx.Frame, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Frame, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Frame, `ja)}
+
+${help.ComposeMethodHelp(wx.Frame, `ja)}
+'''ja
 
 @const { // Styles
 	DEFAULT_FRAME_STYLE

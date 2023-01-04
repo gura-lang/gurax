@@ -24,7 +24,21 @@ ${help.ComposePropertyHelp(wx.Button, `en)}
 ${help.ComposeConstructorHelp(wx.Button, `en)}
 
 ${help.ComposeMethodHelp(wx.Button, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Button, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Button, `ja)}
+
+${help.ComposeMethodHelp(wx.Button, `ja)}
+'''ja
 
 @const { // Styles
 	BU_LEFT

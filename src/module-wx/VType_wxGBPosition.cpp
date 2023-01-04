@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GBPosition, `en)}
 ${help.ComposeMethodHelp(wx.GBPosition, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GBPosition, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GBPosition, `ja)}
+
+${help.ComposeMethodHelp(wx.GBPosition, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -142,6 +158,7 @@ void VType_wxGBPosition::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(GBPosition_gurax));
 	// Assignment of method

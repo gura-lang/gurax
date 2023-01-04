@@ -59,7 +59,21 @@ ${help.ComposePropertyHelp(wx.VideoMode, `en)}
 ${help.ComposeConstructorHelp(wx.VideoMode, `en)}
 
 ${help.ComposeMethodHelp(wx.VideoMode, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.VideoMode, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.VideoMode, `ja)}
+
+${help.ComposeMethodHelp(wx.VideoMode, `ja)}
+'''ja
 
 (const_VideoMode_r != const_VideoMode_r) as bool
 (const_VideoMode_r == const_VideoMode_r) as bool

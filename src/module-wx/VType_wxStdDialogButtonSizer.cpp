@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.StdDialogButtonSizer, `en)}
 ${help.ComposeMethodHelp(wx.StdDialogButtonSizer, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StdDialogButtonSizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StdDialogButtonSizer, `ja)}
+
+${help.ComposeMethodHelp(wx.StdDialogButtonSizer, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -199,6 +215,7 @@ void VType_wxStdDialogButtonSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxBoxSizer, Flag::Mutable, Gurax_CreateConstructor(StdDialogButtonSizer_gurax));
 	// Assignment of method

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RichTextCtrl, `en)}
 ${help.ComposeMethodHelp(wx.RichTextCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -5931,6 +5947,7 @@ void VType_wxRichTextCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(RichTextCtrl_gurax));
 	// Assignment of method

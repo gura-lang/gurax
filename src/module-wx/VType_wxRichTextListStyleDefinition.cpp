@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RichTextListStyleDefinition, `en)}
 ${help.ComposeMethodHelp(wx.RichTextListStyleDefinition, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextListStyleDefinition, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextListStyleDefinition, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextListStyleDefinition, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxRichTextListStyleDefinition::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxRichTextParagraphStyleDefinition, Flag::Mutable);
 	// Assignment of method

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.FlexGridSizer, `en)}
 ${help.ComposeMethodHelp(wx.FlexGridSizer, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FlexGridSizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FlexGridSizer, `ja)}
+
+${help.ComposeMethodHelp(wx.FlexGridSizer, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -419,6 +435,7 @@ void VType_wxFlexGridSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxGridSizer, Flag::Mutable, Gurax_CreateConstructor(FlexGridSizer_gurax));
 	// Assignment of method

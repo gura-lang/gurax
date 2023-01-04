@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.AuiMDIParentFrame, `en)}
 ${help.ComposeMethodHelp(wx.AuiMDIParentFrame, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiMDIParentFrame, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiMDIParentFrame, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiMDIParentFrame, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -421,6 +437,7 @@ void VType_wxAuiMDIParentFrame::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxFrame, Flag::Mutable, Gurax_CreateConstructor(AuiMDIParentFrame_gurax));
 	// Assignment of method

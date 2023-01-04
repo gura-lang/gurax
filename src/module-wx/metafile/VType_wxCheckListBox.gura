@@ -28,7 +28,21 @@ ${help.ComposePropertyHelp(wx.CheckListBox, `en)}
 ${help.ComposeConstructorHelp(wx.CheckListBox, `en)}
 
 ${help.ComposeMethodHelp(wx.CheckListBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CheckListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CheckListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.CheckListBox, `ja)}
+'''ja
 
 @event {
 	EVT_CHECKLISTBOX >> CommandEvent

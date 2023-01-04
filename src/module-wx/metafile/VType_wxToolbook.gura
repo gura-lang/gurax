@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.Toolbook, `en)}
 ${help.ComposeConstructorHelp(wx.Toolbook, `en)}
 
 ${help.ComposeMethodHelp(wx.Toolbook, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Toolbook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Toolbook, `ja)}
+
+${help.ComposeMethodHelp(wx.Toolbook, `ja)}
+'''ja
 
 @const {
 	TBK_BUTTONBAR

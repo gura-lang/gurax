@@ -21,4 +21,18 @@ ${help.ComposePropertyHelp(wx.DirFilterListCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.DirFilterListCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.DirFilterListCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DirFilterListCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DirFilterListCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.DirFilterListCtrl, `ja)}
+'''ja

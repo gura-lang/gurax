@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.SingleChoiceDialog, `en)}
 ${help.ComposeMethodHelp(wx.SingleChoiceDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SingleChoiceDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SingleChoiceDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.SingleChoiceDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -117,6 +133,7 @@ void VType_wxSingleChoiceDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable);
 	// Assignment of method

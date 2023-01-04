@@ -21,4 +21,18 @@ ${help.ComposePropertyHelp(wx.ColourDialog, `en)}
 ${help.ComposeConstructorHelp(wx.ColourDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.ColourDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ColourDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ColourDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.ColourDialog, `ja)}
+'''ja

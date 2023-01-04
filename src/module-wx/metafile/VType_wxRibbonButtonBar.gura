@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.RibbonButtonBar, `en)}
 ${help.ComposeConstructorHelp(wx.RibbonButtonBar, `en)}
 
 ${help.ComposeMethodHelp(wx.RibbonButtonBar, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonButtonBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonButtonBar, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonButtonBar, `ja)}
+'''ja

@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.GridCellDateTimeRenderer, `en)}
 ${help.ComposeConstructorHelp(wx.GridCellDateTimeRenderer, `en)}
 
 ${help.ComposeMethodHelp(wx.GridCellDateTimeRenderer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridCellDateTimeRenderer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridCellDateTimeRenderer, `ja)}
+
+${help.ComposeMethodHelp(wx.GridCellDateTimeRenderer, `ja)}
+'''ja

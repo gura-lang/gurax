@@ -30,7 +30,21 @@ ${help.ComposePropertyHelp(wx.Choice, `en)}
 ${help.ComposeConstructorHelp(wx.Choice, `en)}
 
 ${help.ComposeMethodHelp(wx.Choice, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Choice, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Choice, `ja)}
+
+${help.ComposeMethodHelp(wx.Choice, `ja)}
+'''ja
 
 @event {
 	EVT_CHOICE >> CommandEvent

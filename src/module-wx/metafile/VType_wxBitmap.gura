@@ -65,4 +65,18 @@ ${help.ComposePropertyHelp(wx.Bitmap, `en)}
 ${help.ComposeConstructorHelp(wx.Bitmap, `en)}
 
 ${help.ComposeMethodHelp(wx.Bitmap, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Bitmap, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Bitmap, `ja)}
+
+${help.ComposeMethodHelp(wx.Bitmap, `ja)}
+'''ja

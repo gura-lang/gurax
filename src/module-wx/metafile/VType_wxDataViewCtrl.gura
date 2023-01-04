@@ -82,7 +82,21 @@ ${help.ComposePropertyHelp(wx.DataViewCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.DataViewCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.DataViewCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DataViewCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DataViewCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.DataViewCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	DV_SINGLE

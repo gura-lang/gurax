@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.CalculateLayoutEvent, `en)}
 ${help.ComposeMethodHelp(wx.CalculateLayoutEvent, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CalculateLayoutEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CalculateLayoutEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.CalculateLayoutEvent, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -123,6 +139,7 @@ void VType_wxCalculateLayoutEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxEvent, Flag::Mutable);
 	// Assignment of method

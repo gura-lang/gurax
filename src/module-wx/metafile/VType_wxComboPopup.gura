@@ -40,4 +40,18 @@ ${help.ComposePropertyHelp(wx.ComboPopup, `en)}
 ${help.ComposeConstructorHelp(wx.ComboPopup, `en)}
 
 ${help.ComposeMethodHelp(wx.ComboPopup, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ComboPopup, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ComboPopup, `ja)}
+
+${help.ComposeMethodHelp(wx.ComboPopup, `ja)}
+'''ja

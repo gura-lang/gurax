@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GraphicsContext, `en)}
 ${help.ComposeMethodHelp(wx.GraphicsContext, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GraphicsContext, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GraphicsContext, `ja)}
+
+${help.ComposeMethodHelp(wx.GraphicsContext, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxGraphicsContext::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxGraphicsObject, Flag::Mutable);
 	// Assignment of method

@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.GDIObject, `en)}
 ${help.ComposeConstructorHelp(wx.GDIObject, `en)}
 
 ${help.ComposeMethodHelp(wx.GDIObject, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GDIObject, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GDIObject, `ja)}
+
+${help.ComposeMethodHelp(wx.GDIObject, `ja)}
+'''ja

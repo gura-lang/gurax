@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GridRowHeaderRendererDefault, `en)}
 ${help.ComposeMethodHelp(wx.GridRowHeaderRendererDefault, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridRowHeaderRendererDefault, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridRowHeaderRendererDefault, `ja)}
+
+${help.ComposeMethodHelp(wx.GridRowHeaderRendererDefault, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxGridRowHeaderRendererDefault::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxGridRowHeaderRenderer, Flag::Mutable);
 	// Assignment of method

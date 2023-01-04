@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ScrolledCanvas, `en)}
 ${help.ComposeMethodHelp(wx.ScrolledCanvas, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ScrolledCanvas, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ScrolledCanvas, `ja)}
+
+${help.ComposeMethodHelp(wx.ScrolledCanvas, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -767,6 +783,7 @@ void VType_wxScrolledCanvas::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(ScrolledCanvas_gurax));
 	// Assignment of method

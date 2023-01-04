@@ -41,7 +41,21 @@ ${help.ComposePropertyHelp(wx.FileDialog, `en)}
 ${help.ComposeConstructorHelp(wx.FileDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.FileDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FileDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FileDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.FileDialog, `ja)}
+'''ja
 
 @const { // Styles
 	FD_DEFAULT_STYLE

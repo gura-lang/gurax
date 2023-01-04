@@ -31,4 +31,18 @@ ${help.ComposePropertyHelp(wx.DataViewColumn, `en)}
 ${help.ComposeConstructorHelp(wx.DataViewColumn, `en)}
 
 ${help.ComposeMethodHelp(wx.DataViewColumn, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DataViewColumn, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DataViewColumn, `ja)}
+
+${help.ComposeMethodHelp(wx.DataViewColumn, `ja)}
+'''ja

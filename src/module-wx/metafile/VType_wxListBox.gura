@@ -113,7 +113,21 @@ ${help.ComposePropertyHelp(wx.ListBox, `en)}
 ${help.ComposeConstructorHelp(wx.ListBox, `en)}
 
 ${help.ComposeMethodHelp(wx.ListBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.ListBox, `ja)}
+'''ja
 
 @const { // Styles
 	LB_SINGLE

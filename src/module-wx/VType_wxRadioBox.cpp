@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RadioBox, `en)}
 ${help.ComposeMethodHelp(wx.RadioBox, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RadioBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RadioBox, `ja)}
+
+${help.ComposeMethodHelp(wx.RadioBox, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -440,6 +456,7 @@ void VType_wxRadioBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(RadioBox_gurax));
 	// Assignment of method

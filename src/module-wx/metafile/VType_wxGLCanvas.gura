@@ -25,4 +25,18 @@ ${help.ComposePropertyHelp(wx.GLCanvas, `en)}
 ${help.ComposeConstructorHelp(wx.GLCanvas, `en)}
 
 ${help.ComposeMethodHelp(wx.GLCanvas, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GLCanvas, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GLCanvas, `ja)}
+
+${help.ComposeMethodHelp(wx.GLCanvas, `ja)}
+'''ja

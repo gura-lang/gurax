@@ -21,7 +21,21 @@ ${help.ComposePropertyHelp(wx.SizeEvent, `en)}
 ${help.ComposeConstructorHelp(wx.SizeEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.SizeEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SizeEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SizeEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.SizeEvent, `ja)}
+'''ja
 
 @event {
 	EVT_SIZE >> SizeEvent

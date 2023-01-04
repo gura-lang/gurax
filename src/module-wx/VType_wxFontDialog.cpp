@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.FontDialog, `en)}
 ${help.ComposeMethodHelp(wx.FontDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FontDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FontDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.FontDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -103,6 +119,7 @@ void VType_wxFontDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(FontDialog_gurax));
 	// Assignment of method

@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.HtmlWordWithTabsCell, `en)}
 ${help.ComposeConstructorHelp(wx.HtmlWordWithTabsCell, `en)}
 
 ${help.ComposeMethodHelp(wx.HtmlWordWithTabsCell, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlWordWithTabsCell, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlWordWithTabsCell, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlWordWithTabsCell, `ja)}
+'''ja

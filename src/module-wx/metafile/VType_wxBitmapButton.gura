@@ -20,7 +20,21 @@ ${help.ComposePropertyHelp(wx.BitmapButton, `en)}
 ${help.ComposeConstructorHelp(wx.BitmapButton, `en)}
 
 ${help.ComposeMethodHelp(wx.BitmapButton, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BitmapButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BitmapButton, `ja)}
+
+${help.ComposeMethodHelp(wx.BitmapButton, `ja)}
+'''ja
 
 @const { // Styles
 	BU_AUTODRAW

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Colour, `en)}
 ${help.ComposeMethodHelp(wx.Colour, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Colour, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Colour, `ja)}
+
+${help.ComposeMethodHelp(wx.Colour, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -471,6 +487,7 @@ void VType_wxColour::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(Colour_gurax));
 	// Assignment of method

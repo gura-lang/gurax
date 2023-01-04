@@ -20,4 +20,18 @@ ${help.ComposePropertyHelp(wx.GridCellBoolEditor, `en)}
 ${help.ComposeConstructorHelp(wx.GridCellBoolEditor, `en)}
 
 ${help.ComposeMethodHelp(wx.GridCellBoolEditor, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridCellBoolEditor, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridCellBoolEditor, `ja)}
+
+${help.ComposeMethodHelp(wx.GridCellBoolEditor, `ja)}
+'''ja

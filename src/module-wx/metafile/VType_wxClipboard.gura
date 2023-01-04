@@ -29,4 +29,18 @@ ${help.ComposePropertyHelp(wx.Clipboard, `en)}
 ${help.ComposeConstructorHelp(wx.Clipboard, `en)}
 
 ${help.ComposeMethodHelp(wx.Clipboard, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Clipboard, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Clipboard, `ja)}
+
+${help.ComposeMethodHelp(wx.Clipboard, `ja)}
+'''ja

@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.PGArrayStringEditorDialog, `en)}
 ${help.ComposeConstructorHelp(wx.PGArrayStringEditorDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.PGArrayStringEditorDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PGArrayStringEditorDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PGArrayStringEditorDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.PGArrayStringEditorDialog, `ja)}
+'''ja

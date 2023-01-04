@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.VScrolledWindow, `en)}
 ${help.ComposeMethodHelp(wx.VScrolledWindow, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.VScrolledWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.VScrolledWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.VScrolledWindow, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -245,6 +261,7 @@ void VType_wxVScrolledWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable);
 	// Assignment of method

@@ -25,4 +25,18 @@ ${help.ComposePropertyHelp(wx.EvtHandler, `en)}
 ${help.ComposeConstructorHelp(wx.EvtHandler, `en)}
 
 ${help.ComposeMethodHelp(wx.EvtHandler, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.EvtHandler, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.EvtHandler, `ja)}
+
+${help.ComposeMethodHelp(wx.EvtHandler, `ja)}
+'''ja

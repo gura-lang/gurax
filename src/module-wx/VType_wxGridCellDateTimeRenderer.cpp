@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GridCellDateTimeRenderer, `en)}
 ${help.ComposeMethodHelp(wx.GridCellDateTimeRenderer, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridCellDateTimeRenderer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridCellDateTimeRenderer, `ja)}
+
+${help.ComposeMethodHelp(wx.GridCellDateTimeRenderer, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -86,6 +102,7 @@ void VType_wxGridCellDateTimeRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellDateRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellDateTimeRenderer_gurax));
 	// Assignment of method

@@ -20,4 +20,18 @@ ${help.ComposePropertyHelp(wx.StatusBarPane, `en)}
 ${help.ComposeConstructorHelp(wx.StatusBarPane, `en)}
 
 ${help.ComposeMethodHelp(wx.StatusBarPane, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StatusBarPane, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StatusBarPane, `ja)}
+
+${help.ComposeMethodHelp(wx.StatusBarPane, `ja)}
+'''ja

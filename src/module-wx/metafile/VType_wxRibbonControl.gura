@@ -29,4 +29,18 @@ ${help.ComposePropertyHelp(wx.RibbonControl, `en)}
 ${help.ComposeConstructorHelp(wx.RibbonControl, `en)}
 
 ${help.ComposeMethodHelp(wx.RibbonControl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonControl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonControl, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonControl, `ja)}
+'''ja

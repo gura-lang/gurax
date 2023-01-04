@@ -25,4 +25,18 @@ ${help.ComposePropertyHelp(wx.TreeEvent, `en)}
 ${help.ComposeConstructorHelp(wx.TreeEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.TreeEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TreeEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TreeEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.TreeEvent, `ja)}
+'''ja

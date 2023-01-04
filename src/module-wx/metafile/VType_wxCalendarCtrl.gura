@@ -41,7 +41,21 @@ ${help.ComposePropertyHelp(wx.CalendarCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.CalendarCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.CalendarCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CalendarCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CalendarCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.CalendarCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	CAL_SUNDAY_FIRST

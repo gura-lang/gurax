@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PasswordEntryDialog, `en)}
 ${help.ComposeMethodHelp(wx.PasswordEntryDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PasswordEntryDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PasswordEntryDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.PasswordEntryDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -77,6 +93,7 @@ void VType_wxPasswordEntryDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxTextEntryDialog, Flag::Mutable, Gurax_CreateConstructor(PasswordEntryDialog_gurax));
 	// Assignment of method

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Timer, `en)}
 ${help.ComposeMethodHelp(wx.Timer, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Timer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Timer, `ja)}
+
+${help.ComposeMethodHelp(wx.Timer, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -258,6 +274,7 @@ void VType_wxTimer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(Timer_gurax));
 	// Assignment of method

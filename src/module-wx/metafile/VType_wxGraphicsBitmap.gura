@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.GraphicsBitmap, `en)}
 ${help.ComposeConstructorHelp(wx.GraphicsBitmap, `en)}
 
 ${help.ComposeMethodHelp(wx.GraphicsBitmap, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GraphicsBitmap, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GraphicsBitmap, `ja)}
+
+${help.ComposeMethodHelp(wx.GraphicsBitmap, `ja)}
+'''ja

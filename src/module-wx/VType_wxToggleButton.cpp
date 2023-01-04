@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ToggleButton, `en)}
 ${help.ComposeMethodHelp(wx.ToggleButton, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ToggleButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ToggleButton, `ja)}
+
+${help.ComposeMethodHelp(wx.ToggleButton, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -81,6 +97,7 @@ void VType_wxToggleButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxAnyButton, Flag::Mutable, Gurax_CreateConstructor(ToggleButton_gurax));
 	// Assignment of method

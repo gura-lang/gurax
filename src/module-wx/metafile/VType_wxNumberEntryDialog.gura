@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.NumberEntryDialog, `en)}
 ${help.ComposeConstructorHelp(wx.NumberEntryDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.NumberEntryDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.NumberEntryDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.NumberEntryDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.NumberEntryDialog, `ja)}
+'''ja

@@ -35,4 +35,18 @@ ${help.ComposePropertyHelp(wx.AuiMDIParentFrame, `en)}
 ${help.ComposeConstructorHelp(wx.AuiMDIParentFrame, `en)}
 
 ${help.ComposeMethodHelp(wx.AuiMDIParentFrame, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiMDIParentFrame, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiMDIParentFrame, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiMDIParentFrame, `ja)}
+'''ja

@@ -17,7 +17,21 @@ ${help.ComposePropertyHelp(wx.ChildFocusEvent, `en)}
 ${help.ComposeConstructorHelp(wx.ChildFocusEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.ChildFocusEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ChildFocusEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ChildFocusEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.ChildFocusEvent, `ja)}
+'''ja
 
 @event {
 	EVT_CHILD_FOCUS >> ChildFocusEvent

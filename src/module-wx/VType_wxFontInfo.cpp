@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.FontInfo, `en)}
 ${help.ComposeMethodHelp(wx.FontInfo, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FontInfo, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FontInfo, `ja)}
+
+${help.ComposeMethodHelp(wx.FontInfo, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -304,6 +320,7 @@ void VType_wxFontInfo::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(FontInfo_gurax));
 	// Assignment of method

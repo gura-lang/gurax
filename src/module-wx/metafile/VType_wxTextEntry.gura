@@ -97,4 +97,18 @@ ${help.ComposePropertyHelp(wx.TextEntry, `en)}
 ${help.ComposeConstructorHelp(wx.TextEntry, `en)}
 
 ${help.ComposeMethodHelp(wx.TextEntry, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TextEntry, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TextEntry, `ja)}
+
+${help.ComposeMethodHelp(wx.TextEntry, `ja)}
+'''ja

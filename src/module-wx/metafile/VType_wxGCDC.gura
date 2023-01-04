@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.GCDC, `en)}
 ${help.ComposeConstructorHelp(wx.GCDC, `en)}
 
 ${help.ComposeMethodHelp(wx.GCDC, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GCDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GCDC, `ja)}
+
+${help.ComposeMethodHelp(wx.GCDC, `ja)}
+'''ja

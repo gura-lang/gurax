@@ -237,4 +237,18 @@ ${help.ComposePropertyHelp(wx.TextAttr, `en)}
 ${help.ComposeConstructorHelp(wx.TextAttr, `en)}
 
 ${help.ComposeMethodHelp(wx.TextAttr, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TextAttr, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TextAttr, `ja)}
+
+${help.ComposeMethodHelp(wx.TextAttr, `ja)}
+'''ja

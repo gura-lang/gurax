@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.BufferedDC, `en)}
 ${help.ComposeMethodHelp(wx.BufferedDC, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BufferedDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BufferedDC, `ja)}
+
+${help.ComposeMethodHelp(wx.BufferedDC, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -83,6 +99,7 @@ void VType_wxBufferedDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDC, Flag::Mutable);
 	// Assignment of method

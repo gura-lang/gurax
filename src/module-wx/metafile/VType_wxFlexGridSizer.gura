@@ -123,4 +123,18 @@ ${help.ComposePropertyHelp(wx.FlexGridSizer, `en)}
 ${help.ComposeConstructorHelp(wx.FlexGridSizer, `en)}
 
 ${help.ComposeMethodHelp(wx.FlexGridSizer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FlexGridSizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FlexGridSizer, `ja)}
+
+${help.ComposeMethodHelp(wx.FlexGridSizer, `ja)}
+'''ja

@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.SpinEvent, `en)}
 ${help.ComposeConstructorHelp(wx.SpinEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.SpinEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SpinEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SpinEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.SpinEvent, `ja)}
+'''ja
 
 @event {
 	EVT_SPIN		>> SpinEvent

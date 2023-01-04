@@ -33,4 +33,18 @@ ${help.ComposePropertyHelp(wx.Timer, `en)}
 ${help.ComposeConstructorHelp(wx.Timer, `en)}
 
 ${help.ComposeMethodHelp(wx.Timer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Timer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Timer, `ja)}
+
+${help.ComposeMethodHelp(wx.Timer, `ja)}
+'''ja

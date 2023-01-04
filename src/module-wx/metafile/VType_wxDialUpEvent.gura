@@ -17,7 +17,21 @@ ${help.ComposePropertyHelp(wx.DialUpEvent, `en)}
 ${help.ComposeConstructorHelp(wx.DialUpEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.DialUpEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DialUpEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DialUpEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.DialUpEvent, `ja)}
+'''ja
 
 @event {
 	EVT_DIALUP_CONNECTED	>> DialUpEvent

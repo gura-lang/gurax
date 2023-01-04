@@ -26,7 +26,21 @@ ${help.ComposePropertyHelp(wx.ScrollBar, `en)}
 ${help.ComposeConstructorHelp(wx.ScrollBar, `en)}
 
 ${help.ComposeMethodHelp(wx.ScrollBar, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ScrollBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ScrollBar, `ja)}
+
+${help.ComposeMethodHelp(wx.ScrollBar, `ja)}
+'''ja
 
 @const {
 	SB_HORIZONTAL

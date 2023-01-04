@@ -26,4 +26,18 @@ ${help.ComposePropertyHelp(wx.ColourData, `en)}
 ${help.ComposeConstructorHelp(wx.ColourData, `en)}
 
 ${help.ComposeMethodHelp(wx.ColourData, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ColourData, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ColourData, `ja)}
+
+${help.ComposeMethodHelp(wx.ColourData, `ja)}
+'''ja

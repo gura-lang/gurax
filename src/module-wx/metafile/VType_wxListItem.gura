@@ -45,7 +45,21 @@ ${help.ComposePropertyHelp(wx.ListItem, `en)}
 ${help.ComposeConstructorHelp(wx.ListItem, `en)}
 
 ${help.ComposeMethodHelp(wx.ListItem, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ListItem, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ListItem, `ja)}
+
+${help.ComposeMethodHelp(wx.ListItem, `ja)}
+'''ja
 
 @const {
 	LIST_FORMAT_LEFT

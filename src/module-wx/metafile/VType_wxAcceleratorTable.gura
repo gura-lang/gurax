@@ -54,4 +54,18 @@ ${help.ComposePropertyHelp(wx.AcceleratorTable, `en)}
 ${help.ComposeConstructorHelp(wx.AcceleratorTable, `en)}
 
 ${help.ComposeMethodHelp(wx.AcceleratorTable, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AcceleratorTable, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AcceleratorTable, `ja)}
+
+${help.ComposeMethodHelp(wx.AcceleratorTable, `ja)}
+'''ja

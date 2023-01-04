@@ -25,4 +25,18 @@ ${help.ComposePropertyHelp(wx.GridCellAttrProvider, `en)}
 ${help.ComposeConstructorHelp(wx.GridCellAttrProvider, `en)}
 
 ${help.ComposeMethodHelp(wx.GridCellAttrProvider, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridCellAttrProvider, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridCellAttrProvider, `ja)}
+
+${help.ComposeMethodHelp(wx.GridCellAttrProvider, `ja)}
+'''ja

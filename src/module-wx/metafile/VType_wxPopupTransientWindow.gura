@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.PopupTransientWindow, `en)}
 ${help.ComposeConstructorHelp(wx.PopupTransientWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.PopupTransientWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PopupTransientWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PopupTransientWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.PopupTransientWindow, `ja)}
+'''ja

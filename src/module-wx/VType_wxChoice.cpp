@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Choice, `en)}
 ${help.ComposeMethodHelp(wx.Choice, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Choice, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Choice, `ja)}
+
+${help.ComposeMethodHelp(wx.Choice, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -595,6 +611,7 @@ void VType_wxChoice::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Choice_gurax));
 	// Assignment of method

@@ -160,7 +160,21 @@ ${help.ComposePropertyHelp(wx.AuiToolBar, `en)}
 ${help.ComposeConstructorHelp(wx.AuiToolBar, `en)}
 
 ${help.ComposeMethodHelp(wx.AuiToolBar, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiToolBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiToolBar, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiToolBar, `ja)}
+'''ja
 
 @const { // Styles
 	AUI_TB_TEXT

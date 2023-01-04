@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Dialog, `en)}
 ${help.ComposeMethodHelp(wx.Dialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Dialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Dialog, `ja)}
+
+${help.ComposeMethodHelp(wx.Dialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -725,6 +741,7 @@ void VType_wxDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxTopLevelWindow, Flag::Mutable, Gurax_CreateConstructor(Dialog_gurax));
 	// Assignment of method

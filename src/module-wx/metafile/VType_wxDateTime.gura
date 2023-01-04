@@ -130,4 +130,24 @@ ${help.ComposePropertyHelp(wx.DateTime, `en)}
 ${help.ComposeConstructorHelp(wx.DateTime, `en)}
 
 ${help.ComposeMethodHelp(wx.DateTime, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DateTime, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DateTime, `ja)}
+
+${help.ComposeMethodHelp(wx.DateTime, `ja)}
+'''ja
+
+(const_DateTime_r + const_DateSpan_r) as DateTime
+(const_DateTime_r + const_TimeSpan_r) as DateTime
+(const_DateTime_r - const_DateSpan_r) as DateTime
+(const_DateTime_r - const_TimeSpan_r) as DateTime
+(const_DateTime_r - const_DateTime_r) as TimeSpan

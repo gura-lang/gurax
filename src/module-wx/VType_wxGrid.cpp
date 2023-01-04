@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Grid, `en)}
 ${help.ComposeMethodHelp(wx.Grid, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Grid, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Grid, `ja)}
+
+${help.ComposeMethodHelp(wx.Grid, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -5003,6 +5019,7 @@ void VType_wxGrid::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxScrolledCanvas, Flag::Mutable, Gurax_CreateConstructor(Grid_gurax));
 	// Assignment of constant value

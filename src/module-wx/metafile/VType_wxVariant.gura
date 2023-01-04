@@ -30,4 +30,18 @@ ${help.ComposePropertyHelp(wx.Variant, `en)}
 ${help.ComposeConstructorHelp(wx.Variant, `en)}
 
 ${help.ComposeMethodHelp(wx.Variant, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Variant, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Variant, `ja)}
+
+${help.ComposeMethodHelp(wx.Variant, `ja)}
+'''ja

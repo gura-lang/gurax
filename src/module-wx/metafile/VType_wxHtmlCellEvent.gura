@@ -22,4 +22,18 @@ ${help.ComposePropertyHelp(wx.HtmlCellEvent, `en)}
 ${help.ComposeConstructorHelp(wx.HtmlCellEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.HtmlCellEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlCellEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlCellEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlCellEvent, `ja)}
+'''ja

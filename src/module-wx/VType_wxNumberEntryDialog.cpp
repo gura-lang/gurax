@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.NumberEntryDialog, `en)}
 ${help.ComposeMethodHelp(wx.NumberEntryDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.NumberEntryDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.NumberEntryDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.NumberEntryDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -96,6 +112,7 @@ void VType_wxNumberEntryDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(NumberEntryDialog_gurax));
 	// Assignment of method

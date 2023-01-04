@@ -58,4 +58,18 @@ ${help.ComposePropertyHelp(wx.TextEntryDialog, `en)}
 ${help.ComposeConstructorHelp(wx.TextEntryDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.TextEntryDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TextEntryDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TextEntryDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.TextEntryDialog, `ja)}
+'''ja

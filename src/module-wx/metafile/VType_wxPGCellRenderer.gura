@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.PGCellRenderer, `en)}
 ${help.ComposeConstructorHelp(wx.PGCellRenderer, `en)}
 
 ${help.ComposeMethodHelp(wx.PGCellRenderer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PGCellRenderer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PGCellRenderer, `ja)}
+
+${help.ComposeMethodHelp(wx.PGCellRenderer, `ja)}
+'''ja

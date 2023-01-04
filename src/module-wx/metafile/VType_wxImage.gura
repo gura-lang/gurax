@@ -118,4 +118,18 @@ ${help.ComposePropertyHelp(wx.Image, `en)}
 ${help.ComposeConstructorHelp(wx.Image, `en)}
 
 ${help.ComposeMethodHelp(wx.Image, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Image, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Image, `ja)}
+
+${help.ComposeMethodHelp(wx.Image, `ja)}
+'''ja

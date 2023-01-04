@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.PrintAbortDialog, `en)}
 ${help.ComposeConstructorHelp(wx.PrintAbortDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.PrintAbortDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PrintAbortDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PrintAbortDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.PrintAbortDialog, `ja)}
+'''ja

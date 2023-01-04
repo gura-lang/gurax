@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.DataViewColumn, `en)}
 ${help.ComposeMethodHelp(wx.DataViewColumn, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DataViewColumn, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DataViewColumn, `ja)}
+
+${help.ComposeMethodHelp(wx.DataViewColumn, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -133,6 +149,7 @@ void VType_wxDataViewColumn::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxSettableHeaderColumn, Flag::Mutable, Gurax_CreateConstructor(DataViewColumn_gurax));
 	// Assignment of method

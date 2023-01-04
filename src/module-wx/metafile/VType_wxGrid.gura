@@ -317,5 +317,19 @@ ${help.ComposePropertyHelp(wx.Grid, `en)}
 ${help.ComposeConstructorHelp(wx.Grid, `en)}
 
 ${help.ComposeMethodHelp(wx.Grid, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Grid, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Grid, `ja)}
+
+${help.ComposeMethodHelp(wx.Grid, `ja)}
+'''ja
 

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GLContext, `en)}
 ${help.ComposeMethodHelp(wx.GLContext, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GLContext, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GLContext, `ja)}
+
+${help.ComposeMethodHelp(wx.GLContext, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -87,6 +103,7 @@ void VType_wxGLContext::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(GLContext_gurax));
 	// Assignment of method

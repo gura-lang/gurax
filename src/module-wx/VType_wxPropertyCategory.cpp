@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PropertyCategory, `en)}
 ${help.ComposeMethodHelp(wx.PropertyCategory, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PropertyCategory, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PropertyCategory, `ja)}
+
+${help.ComposeMethodHelp(wx.PropertyCategory, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxPropertyCategory::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPGProperty, Flag::Mutable);
 	// Assignment of method

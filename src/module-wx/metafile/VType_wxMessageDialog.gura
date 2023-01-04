@@ -38,7 +38,21 @@ ${help.ComposePropertyHelp(wx.MessageDialog, `en)}
 ${help.ComposeConstructorHelp(wx.MessageDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.MessageDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MessageDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MessageDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.MessageDialog, `ja)}
+'''ja
 
 @const { // Styles
 	OK

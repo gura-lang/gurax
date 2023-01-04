@@ -37,4 +37,18 @@ ${help.ComposePropertyHelp(wx.MediaCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.MediaCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.MediaCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MediaCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MediaCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.MediaCtrl, `ja)}
+'''ja

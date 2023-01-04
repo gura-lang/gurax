@@ -30,4 +30,18 @@ ${help.ComposePropertyHelp(wx.BitmapComboBox, `en)}
 ${help.ComposeConstructorHelp(wx.BitmapComboBox, `en)}
 
 ${help.ComposeMethodHelp(wx.BitmapComboBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BitmapComboBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BitmapComboBox, `ja)}
+
+${help.ComposeMethodHelp(wx.BitmapComboBox, `ja)}
+'''ja

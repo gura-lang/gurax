@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.DataViewItem, `en)}
 ${help.ComposeConstructorHelp(wx.DataViewItem, `en)}
 
 ${help.ComposeMethodHelp(wx.DataViewItem, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DataViewItem, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DataViewItem, `ja)}
+
+${help.ComposeMethodHelp(wx.DataViewItem, `ja)}
+'''ja

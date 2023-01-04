@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PNGHandler, `en)}
 ${help.ComposeMethodHelp(wx.PNGHandler, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PNGHandler, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PNGHandler, `ja)}
+
+${help.ComposeMethodHelp(wx.PNGHandler, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -59,6 +75,7 @@ void VType_wxPNGHandler::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxImageHandler, Flag::Mutable, Gurax_CreateConstructor(PNGHandler_gurax));
 	// Assignment of method

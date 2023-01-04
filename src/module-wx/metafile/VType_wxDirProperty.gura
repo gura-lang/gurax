@@ -21,4 +21,18 @@ ${help.ComposePropertyHelp(wx.PropertyGridEvent, `en)}
 ${help.ComposeConstructorHelp(wx.PropertyGridEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.PropertyGridEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DirProperty, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DirProperty, `ja)}
+
+${help.ComposeMethodHelp(wx.DirProperty, `ja)}
+'''ja

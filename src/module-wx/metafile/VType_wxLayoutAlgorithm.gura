@@ -20,4 +20,18 @@ ${help.ComposePropertyHelp(wx.LayoutAlgorithm, `en)}
 ${help.ComposeConstructorHelp(wx.LayoutAlgorithm, `en)}
 
 ${help.ComposeMethodHelp(wx.LayoutAlgorithm, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.LayoutAlgorithm, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.LayoutAlgorithm, `ja)}
+
+${help.ComposeMethodHelp(wx.LayoutAlgorithm, `ja)}
+'''ja

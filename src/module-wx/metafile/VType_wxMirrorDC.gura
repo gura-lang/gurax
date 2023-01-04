@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.MirrorDC, `en)}
 ${help.ComposeConstructorHelp(wx.MirrorDC, `en)}
 
 ${help.ComposeMethodHelp(wx.MirrorDC, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MirrorDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MirrorDC, `ja)}
+
+${help.ComposeMethodHelp(wx.MirrorDC, `ja)}
+'''ja

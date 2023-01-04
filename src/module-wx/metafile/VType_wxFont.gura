@@ -151,4 +151,18 @@ ${help.ComposePropertyHelp(wx.Font, `en)}
 ${help.ComposeConstructorHelp(wx.Font, `en)}
 
 ${help.ComposeMethodHelp(wx.Font, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Font, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Font, `ja)}
+
+${help.ComposeMethodHelp(wx.Font, `ja)}
+'''ja

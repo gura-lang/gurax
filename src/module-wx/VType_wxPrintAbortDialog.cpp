@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PrintAbortDialog, `en)}
 ${help.ComposeMethodHelp(wx.PrintAbortDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PrintAbortDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PrintAbortDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.PrintAbortDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -103,6 +119,7 @@ void VType_wxPrintAbortDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(PrintAbortDialog_gurax));
 	// Assignment of method

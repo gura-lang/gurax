@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.BoxSizer, `en)}
 ${help.ComposeMethodHelp(wx.BoxSizer, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BoxSizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BoxSizer, `ja)}
+
+${help.ComposeMethodHelp(wx.BoxSizer, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -158,6 +174,7 @@ void VType_wxBoxSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxSizer, Flag::Mutable, Gurax_CreateConstructor(BoxSizer_gurax));
 	// Assignment of method

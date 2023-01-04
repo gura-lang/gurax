@@ -24,7 +24,21 @@ ${help.ComposePropertyHelp(wx.GridEvent, `en)}
 ${help.ComposeConstructorHelp(wx.GridEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.GridEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.GridEvent, `ja)}
+'''ja
 
 @event {
 	EVT_GRID_CELL_CHANGING		>> GridEvent

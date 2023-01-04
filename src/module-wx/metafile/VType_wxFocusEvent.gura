@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.FocusEvent, `en)}
 ${help.ComposeConstructorHelp(wx.FocusEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.FocusEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FocusEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FocusEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.FocusEvent, `ja)}
+'''ja
 
 @event {
 	EVT_SET_FOCUS	>> FocusEvent

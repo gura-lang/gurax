@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.StaticBoxSizer, `en)}
 ${help.ComposeMethodHelp(wx.StaticBoxSizer, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StaticBoxSizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StaticBoxSizer, `ja)}
+
+${help.ComposeMethodHelp(wx.StaticBoxSizer, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -149,6 +165,7 @@ void VType_wxStaticBoxSizer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxBoxSizer, Flag::Mutable, Gurax_CreateConstructor(StaticBoxSizer_gurax));
 	// Assignment of method

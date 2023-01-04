@@ -55,7 +55,21 @@ ${help.ComposePropertyHelp(wx.Dialog, `en)}
 ${help.ComposeConstructorHelp(wx.Dialog, `en)}
 
 ${help.ComposeMethodHelp(wx.Dialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Dialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Dialog, `ja)}
+
+${help.ComposeMethodHelp(wx.Dialog, `ja)}
+'''ja
 
 @const { // Styles
 	CAPTION

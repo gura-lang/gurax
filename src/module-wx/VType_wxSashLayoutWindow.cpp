@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.SashLayoutWindow, `en)}
 ${help.ComposeMethodHelp(wx.SashLayoutWindow, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SashLayoutWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SashLayoutWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.SashLayoutWindow, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -252,6 +268,7 @@ void VType_wxSashLayoutWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxSashWindow, Flag::Mutable, Gurax_CreateConstructor(SashLayoutWindow_gurax));
 	// Assignment of method

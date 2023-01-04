@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.RibbonPanel, `en)}
 ${help.ComposeConstructorHelp(wx.RibbonPanel, `en)}
 
 ${help.ComposeMethodHelp(wx.RibbonPanel, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonPanel, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonPanel, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonPanel, `ja)}
+'''ja

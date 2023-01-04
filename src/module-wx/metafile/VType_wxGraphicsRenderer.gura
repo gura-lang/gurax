@@ -41,4 +41,18 @@ ${help.ComposePropertyHelp(wx.GraphicsRenderer, `en)}
 ${help.ComposeConstructorHelp(wx.GraphicsRenderer, `en)}
 
 ${help.ComposeMethodHelp(wx.GraphicsRenderer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GraphicsRenderer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GraphicsRenderer, `ja)}
+
+${help.ComposeMethodHelp(wx.GraphicsRenderer, `ja)}
+'''ja

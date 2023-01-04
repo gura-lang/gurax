@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GridCellNumberRenderer, `en)}
 ${help.ComposeMethodHelp(wx.GridCellNumberRenderer, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridCellNumberRenderer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridCellNumberRenderer, `ja)}
+
+${help.ComposeMethodHelp(wx.GridCellNumberRenderer, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -60,6 +76,7 @@ void VType_wxGridCellNumberRenderer::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellStringRenderer, Flag::Mutable, Gurax_CreateConstructor(GridCellNumberRenderer_gurax));
 	// Assignment of method

@@ -44,7 +44,21 @@ ${help.ComposePropertyHelp(wx.SplitterWindow, `en)}
 ${help.ComposeConstructorHelp(wx.SplitterWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.SplitterWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SplitterWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SplitterWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.SplitterWindow, `ja)}
+'''ja
 
 @enum {
 	SplitMode {

@@ -23,4 +23,18 @@ ${help.ComposePropertyHelp(wx.BoxSizer, `en)}
 ${help.ComposeConstructorHelp(wx.BoxSizer, `en)}
 
 ${help.ComposeMethodHelp(wx.BoxSizer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BoxSizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BoxSizer, `ja)}
+
+${help.ComposeMethodHelp(wx.BoxSizer, `ja)}
+'''ja

@@ -308,7 +308,21 @@ ${help.ComposePropertyHelp(wx.ListCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.ListCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.ListCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ListCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ListCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.ListCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	LC_LIST

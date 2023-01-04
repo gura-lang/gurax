@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.GridRowHeaderRendererDefault, `en)}
 ${help.ComposeConstructorHelp(wx.GridRowHeaderRendererDefault, `en)}
 
 ${help.ComposeMethodHelp(wx.GridRowHeaderRendererDefault, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridRowHeaderRendererDefault, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridRowHeaderRendererDefault, `ja)}
+
+${help.ComposeMethodHelp(wx.GridRowHeaderRendererDefault, `ja)}
+'''ja

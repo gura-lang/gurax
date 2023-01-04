@@ -22,7 +22,21 @@ ${help.ComposePropertyHelp(wx.SashEvent, `en)}
 ${help.ComposeConstructorHelp(wx.SashEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.SashEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SashEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SashEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.SashEvent, `ja)}
+'''ja
 
 @event {
 	EVT_SASH_DRAGGED >> SashEvent

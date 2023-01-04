@@ -18,7 +18,21 @@ ${help.ComposePropertyHelp(wx.MaximizeEvent, `en)}
 ${help.ComposeConstructorHelp(wx.MaximizeEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.MaximizeEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MaximizeEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MaximizeEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.MaximizeEvent, `ja)}
+'''ja
 
 @event {
 	EVT_MAXIMIZE >> MaximizeEvent

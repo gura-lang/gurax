@@ -20,4 +20,18 @@ ${help.ComposePropertyHelp(wx.ProtocolLog, `en)}
 ${help.ComposeConstructorHelp(wx.ProtocolLog, `en)}
 
 ${help.ComposeMethodHelp(wx.ProtocolLog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ProtocolLog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ProtocolLog, `ja)}
+
+${help.ComposeMethodHelp(wx.ProtocolLog, `ja)}
+'''ja

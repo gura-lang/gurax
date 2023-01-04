@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.FileSystem, `en)}
 ${help.ComposeConstructorHelp(wx.FileSystem, `en)}
 
 ${help.ComposeMethodHelp(wx.FileSystem, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FileSystem, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FileSystem, `ja)}
+
+${help.ComposeMethodHelp(wx.FileSystem, `ja)}
+'''ja

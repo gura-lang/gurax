@@ -38,4 +38,18 @@ ${help.ComposePropertyHelp(wx.RichTextFormattingDialog, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextFormattingDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextFormattingDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextFormattingDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextFormattingDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextFormattingDialog, `ja)}
+'''ja

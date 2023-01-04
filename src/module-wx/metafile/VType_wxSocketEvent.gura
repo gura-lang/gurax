@@ -21,7 +21,21 @@ ${help.ComposePropertyHelp(wx.SocketEvent, `en)}
 ${help.ComposeConstructorHelp(wx.SocketEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.SocketEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SocketEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SocketEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.SocketEvent, `ja)}
+'''ja
 
 @event {
 	EVT_SOCKET >> SocketEvent

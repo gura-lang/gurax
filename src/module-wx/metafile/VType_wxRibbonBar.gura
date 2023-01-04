@@ -40,7 +40,21 @@ ${help.ComposePropertyHelp(wx.RibbonBar, `en)}
 ${help.ComposeConstructorHelp(wx.RibbonBar, `en)}
 
 ${help.ComposeMethodHelp(wx.RibbonBar, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonBar, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonBar, `ja)}
+'''ja
 
 @const { // Styles
 	RIBBON_BAR_DEFAULT_STYLE

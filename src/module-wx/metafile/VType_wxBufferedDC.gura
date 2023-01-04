@@ -20,4 +20,18 @@ ${help.ComposePropertyHelp(wx.BufferedDC, `en)}
 ${help.ComposeConstructorHelp(wx.BufferedDC, `en)}
 
 ${help.ComposeMethodHelp(wx.BufferedDC, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BufferedDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BufferedDC, `ja)}
+
+${help.ComposeMethodHelp(wx.BufferedDC, `ja)}
+'''ja

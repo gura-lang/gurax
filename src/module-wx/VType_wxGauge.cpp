@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Gauge, `en)}
 ${help.ComposeMethodHelp(wx.Gauge, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Gauge, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Gauge, `ja)}
+
+${help.ComposeMethodHelp(wx.Gauge, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -266,6 +282,7 @@ void VType_wxGauge::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(Gauge_gurax));
 	// Assignment of method

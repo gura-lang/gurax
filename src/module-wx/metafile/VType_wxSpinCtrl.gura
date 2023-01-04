@@ -29,7 +29,21 @@ ${help.ComposePropertyHelp(wx.SpinCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.SpinCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.SpinCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SpinCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SpinCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.SpinCtrl, `ja)}
+'''ja
 
 @event {
 	EVT_SPINCTRL >> SpinEvent

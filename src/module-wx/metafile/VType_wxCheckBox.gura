@@ -26,7 +26,21 @@ ${help.ComposePropertyHelp(wx.CheckBox, `en)}
 ${help.ComposeConstructorHelp(wx.CheckBox, `en)}
 
 ${help.ComposeMethodHelp(wx.CheckBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CheckBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CheckBox, `ja)}
+
+${help.ComposeMethodHelp(wx.CheckBox, `ja)}
+'''ja
 
 @const { // Styles
 	CHK_2STATE

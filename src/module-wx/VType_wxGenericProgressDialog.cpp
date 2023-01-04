@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GenericProgressDialog, `en)}
 ${help.ComposeMethodHelp(wx.GenericProgressDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GenericProgressDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GenericProgressDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.GenericProgressDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -197,6 +213,7 @@ void VType_wxGenericProgressDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(GenericProgressDialog_gurax));
 	// Assignment of method

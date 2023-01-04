@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ToolTip, `en)}
 ${help.ComposeMethodHelp(wx.ToolTip, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ToolTip, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ToolTip, `ja)}
+
+${help.ComposeMethodHelp(wx.ToolTip, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -203,6 +219,7 @@ void VType_wxToolTip::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(ToolTip_gurax));
 	// Assignment of method

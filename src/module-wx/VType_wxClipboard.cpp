@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Clipboard, `en)}
 ${help.ComposeMethodHelp(wx.Clipboard, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Clipboard, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Clipboard, `ja)}
+
+${help.ComposeMethodHelp(wx.Clipboard, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -269,6 +285,7 @@ void VType_wxClipboard::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(Clipboard_gurax));
 	// Assignment of method

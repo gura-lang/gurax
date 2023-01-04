@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.FilePickerCtrl, `en)}
 ${help.ComposeMethodHelp(wx.FilePickerCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FilePickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FilePickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.FilePickerCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -224,6 +240,7 @@ void VType_wxFilePickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(FilePickerCtrl_gurax));
 	// Assignment of method

@@ -32,7 +32,21 @@ ${help.ComposePropertyHelp(wx.KeyEvent, `en)}
 ${help.ComposeConstructorHelp(wx.KeyEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.KeyEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.KeyEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.KeyEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.KeyEvent, `ja)}
+'''ja
 
 @event {
 	EVT_KEY_DOWN	>> KeyEvent

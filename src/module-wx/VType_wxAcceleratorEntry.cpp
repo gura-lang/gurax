@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.AcceleratorEntry, `en)}
 ${help.ComposeMethodHelp(wx.AcceleratorEntry, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AcceleratorEntry, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AcceleratorEntry, `ja)}
+
+${help.ComposeMethodHelp(wx.AcceleratorEntry, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -239,6 +255,7 @@ void VType_wxAcceleratorEntry::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(AcceleratorEntry_gurax));
 	// Assignment of method

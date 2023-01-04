@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RegConfig, `en)}
 ${help.ComposeMethodHelp(wx.RegConfig, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RegConfig, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RegConfig, `ja)}
+
+${help.ComposeMethodHelp(wx.RegConfig, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxRegConfig::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxConfigBase, Flag::Mutable);
 	// Assignment of method

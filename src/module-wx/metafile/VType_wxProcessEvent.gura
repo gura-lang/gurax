@@ -20,7 +20,21 @@ ${help.ComposePropertyHelp(wx.ProcessEvent, `en)}
 ${help.ComposeConstructorHelp(wx.ProcessEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.ProcessEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ProcessEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ProcessEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.ProcessEvent, `ja)}
+'''ja
 
 @event {
 	EVT_END_PROCESS >> ProcessEvent

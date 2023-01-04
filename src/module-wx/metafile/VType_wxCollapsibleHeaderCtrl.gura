@@ -21,7 +21,21 @@ ${help.ComposePropertyHelp(wx.CollapsibleHeaderCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.CollapsibleHeaderCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.CollapsibleHeaderCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CollapsibleHeaderCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CollapsibleHeaderCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.CollapsibleHeaderCtrl, `ja)}
+'''ja
 
 @event {
 	EVT_COLLAPSIBLEHEADER_CHANGED	>> CommandEvent

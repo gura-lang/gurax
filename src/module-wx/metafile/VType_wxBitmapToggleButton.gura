@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.BitmapToggleButton, `en)}
 ${help.ComposeConstructorHelp(wx.BitmapToggleButton, `en)}
 
 ${help.ComposeMethodHelp(wx.BitmapToggleButton, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BitmapToggleButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BitmapToggleButton, `ja)}
+
+${help.ComposeMethodHelp(wx.BitmapToggleButton, `ja)}
+'''ja

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.HtmlHelpWindow, `en)}
 ${help.ComposeMethodHelp(wx.HtmlHelpWindow, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlHelpWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlHelpWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlHelpWindow, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -392,6 +408,7 @@ void VType_wxHtmlHelpWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(HtmlHelpWindow_gurax));
 	// Assignment of method

@@ -28,7 +28,21 @@ ${help.ComposePropertyHelp(wx.Gauge, `en)}
 ${help.ComposeConstructorHelp(wx.Gauge, `en)}
 
 ${help.ComposeMethodHelp(wx.Gauge, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Gauge, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Gauge, `ja)}
+
+${help.ComposeMethodHelp(wx.Gauge, `ja)}
+'''ja
 
 @const { // Styles
 	GA_HORIZONTAL

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GridCellBoolEditor, `en)}
 ${help.ComposeMethodHelp(wx.GridCellBoolEditor, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridCellBoolEditor, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridCellBoolEditor, `ja)}
+
+${help.ComposeMethodHelp(wx.GridCellBoolEditor, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -94,6 +110,7 @@ void VType_wxGridCellBoolEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellBoolEditor_gurax));
 	// Assignment of method

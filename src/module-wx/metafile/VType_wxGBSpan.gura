@@ -22,4 +22,18 @@ ${help.ComposePropertyHelp(wx.GBSpan, `en)}
 ${help.ComposeConstructorHelp(wx.GBSpan, `en)}
 
 ${help.ComposeMethodHelp(wx.GBSpan, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GBSpan, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GBSpan, `ja)}
+
+${help.ComposeMethodHelp(wx.GBSpan, `ja)}
+'''ja

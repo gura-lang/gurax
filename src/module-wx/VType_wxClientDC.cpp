@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ClientDC, `en)}
 ${help.ComposeMethodHelp(wx.ClientDC, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ClientDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ClientDC, `ja)}
+
+${help.ComposeMethodHelp(wx.ClientDC, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -65,6 +81,7 @@ void VType_wxClientDC::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxWindowDC, Flag::Mutable, Gurax_CreateConstructor(ClientDC_gurax));
 	// Assignment of method

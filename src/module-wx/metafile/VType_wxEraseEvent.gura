@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.EraseEvent, `en)}
 ${help.ComposeConstructorHelp(wx.EraseEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.EraseEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.EraseEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.EraseEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.EraseEvent, `ja)}
+'''ja
 
 @event {
 	EVT_ERASE_BACKGROUND >> EraseEvent

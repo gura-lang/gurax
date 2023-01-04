@@ -25,7 +25,21 @@ ${help.ComposePropertyHelp(wx.NavigationKeyEvent, `en)}
 ${help.ComposeConstructorHelp(wx.NavigationKeyEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.NavigationKeyEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.NavigationKeyEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.NavigationKeyEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.NavigationKeyEvent, `ja)}
+'''ja
 
 @event {
 	EVT_NAVIGATION_KEY	>> NavigationKeyEvent

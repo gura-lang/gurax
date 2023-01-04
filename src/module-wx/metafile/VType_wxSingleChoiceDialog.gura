@@ -23,4 +23,18 @@ ${help.ComposePropertyHelp(wx.SingleChoiceDialog, `en)}
 ${help.ComposeConstructorHelp(wx.SingleChoiceDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.SingleChoiceDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SingleChoiceDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SingleChoiceDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.SingleChoiceDialog, `ja)}
+'''ja

@@ -28,7 +28,21 @@ ${help.ComposePropertyHelp(wx.UpdateUIEvent, `en)}
 ${help.ComposeConstructorHelp(wx.UpdateUIEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.UpdateUIEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.UpdateUIEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.UpdateUIEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.UpdateUIEvent, `ja)}
+'''ja
 
 @event {
 	EVT_UPDATE_UI	>> UpdateUIEvent

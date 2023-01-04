@@ -29,7 +29,21 @@ ${help.ComposePropertyHelp(wx.Treebook, `en)}
 ${help.ComposeConstructorHelp(wx.Treebook, `en)}
 
 ${help.ComposeMethodHelp(wx.Treebook, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Treebook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Treebook, `ja)}
+
+${help.ComposeMethodHelp(wx.Treebook, `ja)}
+'''ja
 
 @event {
 	EVT_TREEBOOK_PAGE_CHANGED	>> BookCtrlEvent

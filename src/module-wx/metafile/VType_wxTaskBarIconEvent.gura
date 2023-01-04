@@ -18,4 +18,18 @@ ${help.ComposePropertyHelp(wx.TaskBarIconEvent, `en)}
 ${help.ComposeConstructorHelp(wx.TaskBarIconEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.TaskBarIconEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TaskBarIconEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TaskBarIconEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.TaskBarIconEvent, `ja)}
+'''ja

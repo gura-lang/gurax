@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.ThreadEvent, `en)}
 ${help.ComposeConstructorHelp(wx.ThreadEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.ThreadEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ThreadEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ThreadEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.ThreadEvent, `ja)}
+'''ja

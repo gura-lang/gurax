@@ -48,4 +48,18 @@ ${help.ComposePropertyHelp(wx.MenuBar, `en)}
 ${help.ComposeConstructorHelp(wx.MenuBar, `en)}
 
 ${help.ComposeMethodHelp(wx.MenuBar, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MenuBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MenuBar, `ja)}
+
+${help.ComposeMethodHelp(wx.MenuBar, `ja)}
+'''ja

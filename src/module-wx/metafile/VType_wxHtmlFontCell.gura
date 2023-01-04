@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.HtmlFontCell, `en)}
 ${help.ComposeConstructorHelp(wx.HtmlFontCell, `en)}
 
 ${help.ComposeMethodHelp(wx.HtmlFontCell, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlFontCell, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlFontCell, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlFontCell, `ja)}
+'''ja

@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.ScrolledWindow, `en)}
 ${help.ComposeConstructorHelp(wx.ScrolledWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.ScrolledWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ScrolledWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ScrolledWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.ScrolledWindow, `ja)}
+'''ja

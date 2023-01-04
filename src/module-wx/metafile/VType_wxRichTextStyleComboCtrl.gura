@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.RichTextStyleComboCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextStyleComboCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextStyleComboCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextStyleComboCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextStyleComboCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleComboCtrl, `ja)}
+'''ja

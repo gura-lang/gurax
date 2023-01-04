@@ -35,4 +35,18 @@ ${help.ComposePropertyHelp(wx.HelpControllerBase, `en)}
 ${help.ComposeConstructorHelp(wx.HelpControllerBase, `en)}
 
 ${help.ComposeMethodHelp(wx.HelpControllerBase, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HelpControllerBase, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HelpControllerBase, `ja)}
+
+${help.ComposeMethodHelp(wx.HelpControllerBase, `ja)}
+'''ja

@@ -23,7 +23,21 @@ ${help.ComposePropertyHelp(wx.SetCursorEvent, `en)}
 ${help.ComposeConstructorHelp(wx.SetCursorEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.SetCursorEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SetCursorEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SetCursorEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.SetCursorEvent, `ja)}
+'''ja
 
 @event {
 	EVT_SET_CURSOR >> SetCursorEvent

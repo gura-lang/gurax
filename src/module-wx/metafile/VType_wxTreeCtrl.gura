@@ -134,7 +134,21 @@ ${help.ComposePropertyHelp(wx.TreeCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.TreeCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.TreeCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TreeCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TreeCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.TreeCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	TR_EDIT_LABELS

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.AuiNotebookEvent, `en)}
 ${help.ComposeMethodHelp(wx.AuiNotebookEvent, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiNotebookEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiNotebookEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiNotebookEvent, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxAuiNotebookEvent::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlEvent, Flag::Mutable);
 	// Assignment of method

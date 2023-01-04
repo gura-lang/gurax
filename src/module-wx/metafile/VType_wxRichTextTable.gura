@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.RichTextTable, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextTable, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextTable, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextTable, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextTable, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextTable, `ja)}
+'''ja

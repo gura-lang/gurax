@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.FindReplaceDialog, `en)}
 ${help.ComposeMethodHelp(wx.FindReplaceDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FindReplaceDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FindReplaceDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.FindReplaceDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -121,6 +137,7 @@ void VType_wxFindReplaceDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(FindReplaceDialog_gurax));
 	// Assignment of method

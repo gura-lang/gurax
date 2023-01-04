@@ -51,4 +51,18 @@ ${help.ComposePropertyHelp(wx.SizerItem, `en)}
 ${help.ComposeConstructorHelp(wx.SizerItem, `en)}
 
 ${help.ComposeMethodHelp(wx.SizerItem, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SizerItem, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SizerItem, `ja)}
+
+${help.ComposeMethodHelp(wx.SizerItem, `ja)}
+'''ja

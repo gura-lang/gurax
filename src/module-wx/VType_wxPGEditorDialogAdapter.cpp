@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PGEditorDialogAdapter, `en)}
 ${help.ComposeMethodHelp(wx.PGEditorDialogAdapter, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PGEditorDialogAdapter, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PGEditorDialogAdapter, `ja)}
+
+${help.ComposeMethodHelp(wx.PGEditorDialogAdapter, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxPGEditorDialogAdapter::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

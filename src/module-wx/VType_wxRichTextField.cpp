@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RichTextField, `en)}
 ${help.ComposeMethodHelp(wx.RichTextField, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextField, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextField, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextField, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxRichTextField::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxRichTextParagraphLayoutBox, Flag::Mutable);
 	// Assignment of method

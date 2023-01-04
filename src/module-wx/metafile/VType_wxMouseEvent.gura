@@ -51,7 +51,21 @@ ${help.ComposePropertyHelp(wx.MouseEvent, `en)}
 ${help.ComposeConstructorHelp(wx.MouseEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.MouseEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MouseEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MouseEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.MouseEvent, `ja)}
+'''ja
 
 @event {
 	EVT_LEFT_DOWN				>> MouseEvent

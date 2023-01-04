@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.SimpleHtmlListBox, `en)}
 ${help.ComposeConstructorHelp(wx.SimpleHtmlListBox, `en)}
 
 ${help.ComposeMethodHelp(wx.SimpleHtmlListBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SimpleHtmlListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SimpleHtmlListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.SimpleHtmlListBox, `ja)}
+'''ja
 
 @const { // Styles
 	HLB_DEFAULT_STYLE

@@ -264,7 +264,21 @@ ${help.ComposePropertyHelp(wx.Sizer, `en)}
 ${help.ComposeConstructorHelp(wx.Sizer, `en)}
 
 ${help.ComposeMethodHelp(wx.Sizer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Sizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Sizer, `ja)}
+
+${help.ComposeMethodHelp(wx.Sizer, `ja)}
+'''ja
 
 @const { // Flags
 	TOP

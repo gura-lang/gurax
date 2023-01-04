@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.AuiToolBarEvent, `en)}
 ${help.ComposeConstructorHelp(wx.AuiToolBarEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.AuiToolBarEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiToolBarEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiToolBarEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiToolBarEvent, `ja)}
+'''ja

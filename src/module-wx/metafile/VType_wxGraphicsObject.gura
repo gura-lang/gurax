@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.GraphicsObject, `en)}
 ${help.ComposeConstructorHelp(wx.GraphicsObject, `en)}
 
 ${help.ComposeMethodHelp(wx.GraphicsObject, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GraphicsObject, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GraphicsObject, `ja)}
+
+${help.ComposeMethodHelp(wx.GraphicsObject, `ja)}
+'''ja

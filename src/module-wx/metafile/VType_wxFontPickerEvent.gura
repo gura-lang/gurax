@@ -20,4 +20,18 @@ ${help.ComposePropertyHelp(wx.FontPickerEvent, `en)}
 ${help.ComposeConstructorHelp(wx.FontPickerEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.FontPickerEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FontPickerEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FontPickerEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.FontPickerEvent, `ja)}
+'''ja

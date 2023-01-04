@@ -31,4 +31,18 @@ ${help.ComposePropertyHelp(wx.FontData, `en)}
 ${help.ComposeConstructorHelp(wx.FontData, `en)}
 
 ${help.ComposeMethodHelp(wx.FontData, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FontData, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FontData, `ja)}
+
+${help.ComposeMethodHelp(wx.FontData, `ja)}
+'''ja

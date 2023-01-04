@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.AuiTabArt, `en)}
 ${help.ComposeConstructorHelp(wx.AuiTabArt, `en)}
 
 ${help.ComposeMethodHelp(wx.AuiTabArt, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiTabArt, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiTabArt, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiTabArt, `ja)}
+'''ja

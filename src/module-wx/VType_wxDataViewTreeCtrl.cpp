@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.DataViewTreeCtrl, `en)}
 ${help.ComposeMethodHelp(wx.DataViewTreeCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DataViewTreeCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DataViewTreeCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.DataViewTreeCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxDataViewTreeCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDataViewCtrl, Flag::Mutable);
 	// Assignment of method

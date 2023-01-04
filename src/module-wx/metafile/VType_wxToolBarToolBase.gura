@@ -51,4 +51,18 @@ ${help.ComposePropertyHelp(wx.ToolBarToolBase, `en)}
 ${help.ComposeConstructorHelp(wx.ToolBarToolBase, `en)}
 
 ${help.ComposeMethodHelp(wx.ToolBarToolBase, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ToolBarToolBase, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ToolBarToolBase, `ja)}
+
+${help.ComposeMethodHelp(wx.ToolBarToolBase, `ja)}
+'''ja

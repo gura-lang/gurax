@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.BoolProperty, `en)}
 ${help.ComposeMethodHelp(wx.BoolProperty, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BoolProperty, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BoolProperty, `ja)}
+
+${help.ComposeMethodHelp(wx.BoolProperty, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -169,6 +185,7 @@ void VType_wxBoolProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPGProperty, Flag::Mutable, Gurax_CreateConstructor(BoolProperty_gurax));
 	// Assignment of method

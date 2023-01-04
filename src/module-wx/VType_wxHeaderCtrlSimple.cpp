@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.HeaderCtrlSimple, `en)}
 ${help.ComposeMethodHelp(wx.HeaderCtrlSimple, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HeaderCtrlSimple, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HeaderCtrlSimple, `ja)}
+
+${help.ComposeMethodHelp(wx.HeaderCtrlSimple, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -228,6 +244,7 @@ void VType_wxHeaderCtrlSimple::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxHeaderCtrl, Flag::Mutable, Gurax_CreateConstructor(HeaderCtrlSimple_gurax));
 	// Assignment of method

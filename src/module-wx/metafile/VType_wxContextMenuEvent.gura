@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.ContextMenuEvent, `en)}
 ${help.ComposeConstructorHelp(wx.ContextMenuEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.ContextMenuEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ContextMenuEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ContextMenuEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.ContextMenuEvent, `ja)}
+'''ja
 
 @event {
 	EVT_CONTEXT_MENU >> ContextMenuEvent

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.HtmlListBox, `en)}
 ${help.ComposeMethodHelp(wx.HtmlListBox, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlListBox, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -63,6 +79,7 @@ void VType_wxHtmlListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxVListBox, Flag::Mutable);
 	// Assignment of method

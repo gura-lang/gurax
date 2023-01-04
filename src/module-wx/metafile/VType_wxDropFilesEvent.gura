@@ -20,7 +20,21 @@ ${help.ComposePropertyHelp(wx.DropFilesEvent, `en)}
 ${help.ComposeConstructorHelp(wx.DropFilesEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.DropFilesEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DropFilesEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DropFilesEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.DropFilesEvent, `ja)}
+'''ja
 
 @event {
 	EVT_DROP_FILES >> DropFilesEvent

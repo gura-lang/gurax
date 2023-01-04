@@ -73,7 +73,21 @@ ${help.ComposePropertyHelp(wx.ComboCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.ComboCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.ComboCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ComboCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ComboCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.ComboCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	CB_READONLY

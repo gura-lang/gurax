@@ -17,7 +17,21 @@ ${help.ComposePropertyHelp(wx.SysColourChangedEvent, `en)}
 ${help.ComposeConstructorHelp(wx.SysColourChangedEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.SysColourChangedEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SysColourChangedEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SysColourChangedEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.SysColourChangedEvent, `ja)}
+'''ja
 
 @event {
 	EVT_SYS_COLOUR_CHANGED >> SysColourChangedEvent

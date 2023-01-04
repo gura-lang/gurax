@@ -25,7 +25,21 @@ ${help.ComposePropertyHelp(wx.CommandEvent, `en)}
 ${help.ComposeConstructorHelp(wx.CommandEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.CommandEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CommandEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CommandEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.CommandEvent, `ja)}
+'''ja
 
 @event {
 	EVT_BUTTON						>> CommandEvent

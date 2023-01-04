@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.CheckBox, `en)}
 ${help.ComposeMethodHelp(wx.CheckBox, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CheckBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CheckBox, `ja)}
+
+${help.ComposeMethodHelp(wx.CheckBox, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -207,6 +223,7 @@ void VType_wxCheckBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CheckBox_gurax));
 	// Assignment of method

@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.CmdLineParser, `en)}
 ${help.ComposeConstructorHelp(wx.CmdLineParser, `en)}
 
 ${help.ComposeMethodHelp(wx.CmdLineParser, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CmdLineParser, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CmdLineParser, `ja)}
+
+${help.ComposeMethodHelp(wx.CmdLineParser, `ja)}
+'''ja

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.CommandLinkButton, `en)}
 ${help.ComposeMethodHelp(wx.CommandLinkButton, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CommandLinkButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CommandLinkButton, `ja)}
+
+${help.ComposeMethodHelp(wx.CommandLinkButton, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -83,6 +99,7 @@ void VType_wxCommandLinkButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxButton, Flag::Mutable, Gurax_CreateConstructor(CommandLinkButton_gurax));
 	// Assignment of method

@@ -8,7 +8,7 @@ project(GURAX
 	HOMEPAGE_URL	http://www.gura-lang.org/
 	LANGUAGES		CXX)
 
-set(GURAX_COPYRIGHT "Copyright (C) 2011-2022 ypsitau")
+set(GURAX_COPYRIGHT "Copyright (C) 2011-2023 ypsitau")
 
 configure_file(
 	${PROJECT_SOURCE_DIR}/include/gurax/Version.h.in

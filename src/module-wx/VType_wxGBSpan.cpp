@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GBSpan, `en)}
 ${help.ComposeMethodHelp(wx.GBSpan, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GBSpan, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GBSpan, `ja)}
+
+${help.ComposeMethodHelp(wx.GBSpan, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -142,6 +158,7 @@ void VType_wxGBSpan::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(GBSpan_gurax));
 	// Assignment of method

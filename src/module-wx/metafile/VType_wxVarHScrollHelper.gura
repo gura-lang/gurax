@@ -28,4 +28,18 @@ ${help.ComposePropertyHelp(wx.VarHScrollHelper, `en)}
 ${help.ComposeConstructorHelp(wx.VarHScrollHelper, `en)}
 
 ${help.ComposeMethodHelp(wx.VarHScrollHelper, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.VarHScrollHelper, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.VarHScrollHelper, `ja)}
+
+${help.ComposeMethodHelp(wx.VarHScrollHelper, `ja)}
+'''ja

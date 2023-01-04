@@ -71,7 +71,21 @@ ${help.ComposePropertyHelp(wx.ToolBar, `en)}
 ${help.ComposeConstructorHelp(wx.ToolBar, `en)}
 
 ${help.ComposeMethodHelp(wx.ToolBar, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ToolBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ToolBar, `ja)}
+
+${help.ComposeMethodHelp(wx.ToolBar, `ja)}
+'''ja
 
 @const { // Styles
 	TB_FLAT

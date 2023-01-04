@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GBSizerItem, `en)}
 ${help.ComposeMethodHelp(wx.GBSizerItem, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GBSizerItem, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GBSizerItem, `ja)}
+
+${help.ComposeMethodHelp(wx.GBSizerItem, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -282,6 +298,7 @@ void VType_wxGBSizerItem::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxSizerItem, Flag::Mutable, Gurax_CreateConstructor(GBSizerItem_gurax));
 	// Assignment of method

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.AuiManager, `en)}
 ${help.ComposeMethodHelp(wx.AuiManager, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiManager, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiManager, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiManager, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -343,6 +359,7 @@ void VType_wxAuiManager::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(AuiManager_gurax));
 	// Assignment of method

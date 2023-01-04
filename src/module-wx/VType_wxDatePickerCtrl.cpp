@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.DatePickerCtrl, `en)}
 ${help.ComposeMethodHelp(wx.DatePickerCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DatePickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DatePickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.DatePickerCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -207,6 +223,7 @@ void VType_wxDatePickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(DatePickerCtrl_gurax));
 	// Assignment of method

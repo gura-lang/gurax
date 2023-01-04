@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.HtmlWordWithTabsCell, `en)}
 ${help.ComposeMethodHelp(wx.HtmlWordWithTabsCell, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlWordWithTabsCell, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlWordWithTabsCell, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlWordWithTabsCell, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxHtmlWordWithTabsCell::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxHtmlWordCell, Flag::Mutable);
 	// Assignment of method

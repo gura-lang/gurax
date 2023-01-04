@@ -25,7 +25,21 @@ ${help.ComposePropertyHelp(wx.HtmlListBox, `en)}
 ${help.ComposeConstructorHelp(wx.HtmlListBox, `en)}
 
 ${help.ComposeMethodHelp(wx.HtmlListBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlListBox, `ja)}
+'''ja
 
 @event {
 	EVT_HTML_CELL_CLICKED	>> HtmlCellEvent

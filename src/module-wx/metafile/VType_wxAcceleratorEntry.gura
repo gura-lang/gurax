@@ -27,4 +27,18 @@ ${help.ComposePropertyHelp(wx.AcceleratorEntry, `en)}
 ${help.ComposeConstructorHelp(wx.AcceleratorEntry, `en)}
 
 ${help.ComposeMethodHelp(wx.AcceleratorEntry, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AcceleratorEntry, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AcceleratorEntry, `ja)}
+
+${help.ComposeMethodHelp(wx.AcceleratorEntry, `ja)}
+'''ja

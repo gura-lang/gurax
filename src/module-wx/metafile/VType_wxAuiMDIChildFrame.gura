@@ -50,4 +50,18 @@ ${help.ComposePropertyHelp(wx.AuiMDIChildFrame, `en)}
 ${help.ComposeConstructorHelp(wx.AuiMDIChildFrame, `en)}
 
 ${help.ComposeMethodHelp(wx.AuiMDIChildFrame, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiMDIChildFrame, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiMDIChildFrame, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiMDIChildFrame, `ja)}
+'''ja

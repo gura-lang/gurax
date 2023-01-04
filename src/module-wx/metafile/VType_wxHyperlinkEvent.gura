@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.HyperlinkEvent, `en)}
 ${help.ComposeConstructorHelp(wx.HyperlinkEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.HyperlinkEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HyperlinkEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HyperlinkEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.HyperlinkEvent, `ja)}
+'''ja

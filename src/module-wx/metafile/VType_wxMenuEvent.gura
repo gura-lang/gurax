@@ -21,7 +21,21 @@ ${help.ComposePropertyHelp(wx.MenuEvent, `en)}
 ${help.ComposeConstructorHelp(wx.MenuEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.MenuEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MenuEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MenuEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.MenuEvent, `ja)}
+'''ja
 
 @event {
 	EVT_MENU_OPEN			>> MenuEvent

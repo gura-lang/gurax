@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.AuiNotebookEvent, `en)}
 ${help.ComposeConstructorHelp(wx.AuiNotebookEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.AuiNotebookEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiNotebookEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiNotebookEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiNotebookEvent, `ja)}
+'''ja

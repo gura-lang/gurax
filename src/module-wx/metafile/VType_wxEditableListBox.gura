@@ -27,7 +27,21 @@ ${help.ComposePropertyHelp(wx.EditableListBox, `en)}
 ${help.ComposeConstructorHelp(wx.EditableListBox, `en)}
 
 ${help.ComposeMethodHelp(wx.EditableListBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.EditableListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.EditableListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.EditableListBox, `ja)}
+'''ja
 
 @const { // Styles
 	EL_ALLOW_NEW

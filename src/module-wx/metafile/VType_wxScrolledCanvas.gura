@@ -19,7 +19,21 @@ ${help.ComposePropertyHelp(wx.ScrolledCanvas, `en)}
 ${help.ComposeConstructorHelp(wx.ScrolledCanvas, `en)}
 
 ${help.ComposeMethodHelp(wx.ScrolledCanvas, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ScrolledCanvas, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ScrolledCanvas, `ja)}
+
+${help.ComposeMethodHelp(wx.ScrolledCanvas, `ja)}
+'''ja
 
 @const { // Styles
 	HSCROLL

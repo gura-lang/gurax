@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.AffineMatrix2D, `en)}
 ${help.ComposeConstructorHelp(wx.AffineMatrix2D, `en)}
 
 ${help.ComposeMethodHelp(wx.AffineMatrix2D, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AffineMatrix2D, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AffineMatrix2D, `ja)}
+
+${help.ComposeMethodHelp(wx.AffineMatrix2D, `ja)}
+'''ja

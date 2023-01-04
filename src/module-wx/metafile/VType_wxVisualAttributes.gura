@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.VisualAttributes, `en)}
 ${help.ComposeConstructorHelp(wx.VisualAttributes, `en)}
 
 ${help.ComposeMethodHelp(wx.VisualAttributes, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.VisualAttributes, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.VisualAttributes, `ja)}
+
+${help.ComposeMethodHelp(wx.VisualAttributes, `ja)}
+'''ja

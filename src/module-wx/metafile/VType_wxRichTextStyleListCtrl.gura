@@ -28,7 +28,21 @@ ${help.ComposePropertyHelp(wx.RichTextStyleListCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextStyleListCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextStyleListCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextStyleListCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextStyleListCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextStyleListCtrl, `ja)}
+'''ja
 
 @const {
 	RICHTEXTSTYLELIST_HIDE_TYPE_SELECTOR

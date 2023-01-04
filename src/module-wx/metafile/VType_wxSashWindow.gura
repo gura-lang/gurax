@@ -36,7 +36,21 @@ ${help.ComposePropertyHelp(wx.SashWindow, `en)}
 ${help.ComposeConstructorHelp(wx.SashWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.SashWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SashWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SashWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.SashWindow, `ja)}
+'''ja
 
 @enum {
 	SashDragStatus {

@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.ListView, `en)}
 ${help.ComposeConstructorHelp(wx.ListView, `en)}
 
 ${help.ComposeMethodHelp(wx.ListView, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ListView, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ListView, `ja)}
+
+${help.ComposeMethodHelp(wx.ListView, `ja)}
+'''ja

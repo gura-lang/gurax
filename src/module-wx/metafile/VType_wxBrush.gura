@@ -63,7 +63,21 @@ ${help.ComposePropertyHelp(wx.Brush, `en)}
 ${help.ComposeConstructorHelp(wx.Brush, `en)}
 
 ${help.ComposeMethodHelp(wx.Brush, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Brush, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Brush, `ja)}
+
+${help.ComposeMethodHelp(wx.Brush, `ja)}
+'''ja
 
 @enum {
 	BrushStyle {

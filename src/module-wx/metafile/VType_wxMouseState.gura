@@ -41,4 +41,18 @@ ${help.ComposePropertyHelp(wx.MouseState, `en)}
 ${help.ComposeConstructorHelp(wx.MouseState, `en)}
 
 ${help.ComposeMethodHelp(wx.MouseState, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MouseState, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MouseState, `ja)}
+
+${help.ComposeMethodHelp(wx.MouseState, `ja)}
+'''ja

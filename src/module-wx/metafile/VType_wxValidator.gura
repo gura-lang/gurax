@@ -23,4 +23,18 @@ ${help.ComposePropertyHelp(wx.Validator, `en)}
 ${help.ComposeConstructorHelp(wx.Validator, `en)}
 
 ${help.ComposeMethodHelp(wx.Validator, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Validator, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Validator, `ja)}
+
+${help.ComposeMethodHelp(wx.Validator, `ja)}
+'''ja

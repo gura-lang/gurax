@@ -948,6 +948,7 @@ eventInfoTbl = []
 
 path.Glob('metafile/*.gura').Each {|pathName|
 	fileName = path.FileName(pathName)
+	Println(fileName)
 	(fileName in ['VType_wxEventType.gura']) && continue
 	Expr(pathName).EachElem {|expr|
 		if (expr.IsAssign() && expr.left.IsIdentifier()) {

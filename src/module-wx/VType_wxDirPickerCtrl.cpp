@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.DirPickerCtrl, `en)}
 ${help.ComposeMethodHelp(wx.DirPickerCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DirPickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DirPickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.DirPickerCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -220,6 +236,7 @@ void VType_wxDirPickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(DirPickerCtrl_gurax));
 	// Assignment of method

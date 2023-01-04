@@ -20,7 +20,21 @@ ${help.ComposePropertyHelp(wx.Choicebook, `en)}
 ${help.ComposeConstructorHelp(wx.Choicebook, `en)}
 
 ${help.ComposeMethodHelp(wx.Choicebook, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Choicebook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Choicebook, `ja)}
+
+${help.ComposeMethodHelp(wx.Choicebook, `ja)}
+'''ja
 
 @const { // Styles
 	CHB_DEFAULT

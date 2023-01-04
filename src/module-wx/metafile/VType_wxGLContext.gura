@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.GLContext, `en)}
 ${help.ComposeConstructorHelp(wx.GLContext, `en)}
 
 ${help.ComposeMethodHelp(wx.GLContext, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GLContext, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GLContext, `ja)}
+
+${help.ComposeMethodHelp(wx.GLContext, `ja)}
+'''ja

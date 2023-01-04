@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.DateEvent, `en)}
 ${help.ComposeConstructorHelp(wx.DateEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.DateEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DateEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DateEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.DateEvent, `ja)}
+'''ja

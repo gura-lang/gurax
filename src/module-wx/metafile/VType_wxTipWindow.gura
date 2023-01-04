@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.TipWindow, `en)}
 ${help.ComposeConstructorHelp(wx.TipWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.TipWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TipWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TipWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.TipWindow, `ja)}
+'''ja

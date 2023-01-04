@@ -25,4 +25,18 @@ ${help.ComposePropertyHelp(wx.ToolTip, `en)}
 ${help.ComposeConstructorHelp(wx.ToolTip, `en)}
 
 ${help.ComposeMethodHelp(wx.ToolTip, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ToolTip, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ToolTip, `ja)}
+
+${help.ComposeMethodHelp(wx.ToolTip, `ja)}
+'''ja

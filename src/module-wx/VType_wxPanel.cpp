@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Panel, `en)}
 ${help.ComposeMethodHelp(wx.Panel, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Panel, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Panel, `ja)}
+
+${help.ComposeMethodHelp(wx.Panel, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -218,6 +234,7 @@ void VType_wxPanel::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(Panel_gurax));
 	// Assignment of method

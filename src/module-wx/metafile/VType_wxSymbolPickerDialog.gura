@@ -31,4 +31,18 @@ ${help.ComposePropertyHelp(wx.SymbolPickerDialog, `en)}
 ${help.ComposeConstructorHelp(wx.SymbolPickerDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.SymbolPickerDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SymbolPickerDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SymbolPickerDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.SymbolPickerDialog, `ja)}
+'''ja

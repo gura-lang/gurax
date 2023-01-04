@@ -157,4 +157,18 @@ ${help.ComposePropertyHelp(wx.ItemContainer, `en)}
 ${help.ComposeConstructorHelp(wx.ItemContainer, `en)}
 
 ${help.ComposeMethodHelp(wx.ItemContainer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ItemContainer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ItemContainer, `ja)}
+
+${help.ComposeMethodHelp(wx.ItemContainer, `ja)}
+'''ja

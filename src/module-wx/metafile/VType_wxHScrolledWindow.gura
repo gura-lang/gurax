@@ -20,4 +20,18 @@ ${help.ComposePropertyHelp(wx.HScrolledWindow, `en)}
 ${help.ComposeConstructorHelp(wx.HScrolledWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.HScrolledWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HScrolledWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HScrolledWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.HScrolledWindow, `ja)}
+'''ja

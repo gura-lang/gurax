@@ -21,4 +21,18 @@ ${help.ComposePropertyHelp(wx.BookCtrlEvent, `en)}
 ${help.ComposeConstructorHelp(wx.BookCtrlEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.BookCtrlEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BookCtrlEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BookCtrlEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.BookCtrlEvent, `ja)}
+'''ja

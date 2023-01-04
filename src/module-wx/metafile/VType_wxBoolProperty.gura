@@ -22,4 +22,18 @@ ${help.ComposePropertyHelp(wx.BoolProperty, `en)}
 ${help.ComposeConstructorHelp(wx.BoolProperty, `en)}
 
 ${help.ComposeMethodHelp(wx.BoolProperty, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BoolProperty, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BoolProperty, `ja)}
+
+${help.ComposeMethodHelp(wx.BoolProperty, `ja)}
+'''ja

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.MenuBar, `en)}
 ${help.ComposeMethodHelp(wx.MenuBar, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MenuBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MenuBar, `ja)}
+
+${help.ComposeMethodHelp(wx.MenuBar, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -629,6 +645,7 @@ void VType_wxMenuBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(MenuBar_gurax));
 	// Assignment of method

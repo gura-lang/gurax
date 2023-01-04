@@ -34,4 +34,18 @@ ${help.ComposePropertyHelp(wx.PropertySheetDialog, `en)}
 ${help.ComposeConstructorHelp(wx.PropertySheetDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.PropertySheetDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PropertySheetDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PropertySheetDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.PropertySheetDialog, `ja)}
+'''ja

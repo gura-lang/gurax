@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.ImageHistogram, `en)}
 ${help.ComposeConstructorHelp(wx.ImageHistogram, `en)}
 
 ${help.ComposeMethodHelp(wx.ImageHistogram, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ImageHistogram, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ImageHistogram, `ja)}
+
+${help.ComposeMethodHelp(wx.ImageHistogram, `ja)}
+'''ja

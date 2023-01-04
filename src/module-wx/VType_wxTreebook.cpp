@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Treebook, `en)}
 ${help.ComposeMethodHelp(wx.Treebook, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Treebook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Treebook, `ja)}
+
+${help.ComposeMethodHelp(wx.Treebook, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -320,6 +336,7 @@ void VType_wxTreebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Treebook_gurax));
 	// Assignment of method

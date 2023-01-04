@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.FTP, `en)}
 ${help.ComposeConstructorHelp(wx.FTP, `en)}
 
 ${help.ComposeMethodHelp(wx.FTP, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FTP, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FTP, `ja)}
+
+${help.ComposeMethodHelp(wx.FTP, `ja)}
+'''ja

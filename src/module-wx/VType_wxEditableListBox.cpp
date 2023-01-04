@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.EditableListBox, `en)}
 ${help.ComposeMethodHelp(wx.EditableListBox, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.EditableListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.EditableListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.EditableListBox, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -152,6 +168,7 @@ void VType_wxEditableListBox::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(EditableListBox_gurax));
 	// Assignment of method

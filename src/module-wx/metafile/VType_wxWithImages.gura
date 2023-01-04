@@ -19,4 +19,18 @@ ${help.ComposePropertyHelp(wx.WithImages, `en)}
 ${help.ComposeConstructorHelp(wx.WithImages, `en)}
 
 ${help.ComposeMethodHelp(wx.WithImages, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.WithImages, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.WithImages, `ja)}
+
+${help.ComposeMethodHelp(wx.WithImages, `ja)}
+'''ja

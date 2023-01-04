@@ -60,4 +60,18 @@ ${help.ComposePropertyHelp(wx.TopLevelWindow, `en)}
 ${help.ComposeConstructorHelp(wx.TopLevelWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.TopLevelWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TopLevelWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TopLevelWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.TopLevelWindow, `ja)}
+'''ja

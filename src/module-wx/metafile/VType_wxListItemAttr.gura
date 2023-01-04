@@ -52,4 +52,18 @@ ${help.ComposePropertyHelp(wx.ListItemAttr, `en)}
 ${help.ComposeConstructorHelp(wx.ListItemAttr, `en)}
 
 ${help.ComposeMethodHelp(wx.ListItemAttr, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ListItemAttr, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ListItemAttr, `ja)}
+
+${help.ComposeMethodHelp(wx.ListItemAttr, `ja)}
+'''ja

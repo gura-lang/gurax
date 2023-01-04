@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Bitmap, `en)}
 ${help.ComposeMethodHelp(wx.Bitmap, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Bitmap, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Bitmap, `ja)}
+
+${help.ComposeMethodHelp(wx.Bitmap, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -580,6 +596,7 @@ void VType_wxBitmap::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxGDIObject, Flag::Mutable, Gurax_CreateConstructor(Bitmap_gurax));
 	// Assignment of method

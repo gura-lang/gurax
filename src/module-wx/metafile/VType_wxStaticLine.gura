@@ -21,7 +21,21 @@ ${help.ComposePropertyHelp(wx.StaticLine, `en)}
 ${help.ComposeConstructorHelp(wx.StaticLine, `en)}
 
 ${help.ComposeMethodHelp(wx.StaticLine, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StaticLine, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StaticLine, `ja)}
+
+${help.ComposeMethodHelp(wx.StaticLine, `ja)}
+'''ja
 
 @const { // Styles
 	LI_HORIZONTAL

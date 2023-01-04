@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.PNGHandler, `en)}
 ${help.ComposeConstructorHelp(wx.PNGHandler, `en)}
 
 ${help.ComposeMethodHelp(wx.PNGHandler, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PNGHandler, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PNGHandler, `ja)}
+
+${help.ComposeMethodHelp(wx.PNGHandler, `ja)}
+'''ja

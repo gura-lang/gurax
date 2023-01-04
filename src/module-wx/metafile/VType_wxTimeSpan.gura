@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.TimeSpan, `en)}
 ${help.ComposeConstructorHelp(wx.TimeSpan, `en)}
 
 ${help.ComposeMethodHelp(wx.TimeSpan, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TimeSpan, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TimeSpan, `ja)}
+
+${help.ComposeMethodHelp(wx.TimeSpan, `ja)}
+'''ja

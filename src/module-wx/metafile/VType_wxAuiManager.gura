@@ -42,4 +42,18 @@ ${help.ComposePropertyHelp(wx.AuiManager, `en)}
 ${help.ComposeConstructorHelp(wx.AuiManager, `en)}
 
 ${help.ComposeMethodHelp(wx.AuiManager, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiManager, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiManager, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiManager, `ja)}
+'''ja

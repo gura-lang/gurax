@@ -22,7 +22,21 @@ ${help.ComposePropertyHelp(wx.RadioButton, `en)}
 ${help.ComposeConstructorHelp(wx.RadioButton, `en)}
 
 ${help.ComposeMethodHelp(wx.RadioButton, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RadioButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RadioButton, `ja)}
+
+${help.ComposeMethodHelp(wx.RadioButton, `ja)}
+'''ja
 
 @const { // Styles
 	RB_GROUP

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Simplebook, `en)}
 ${help.ComposeMethodHelp(wx.Simplebook, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Simplebook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Simplebook, `ja)}
+
+${help.ComposeMethodHelp(wx.Simplebook, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -186,6 +202,7 @@ void VType_wxSimplebook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Simplebook_gurax));
 	// Assignment of method

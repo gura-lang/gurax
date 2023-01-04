@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.AuiMDIClientWindow, `en)}
 ${help.ComposeMethodHelp(wx.AuiMDIClientWindow, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AuiMDIClientWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AuiMDIClientWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.AuiMDIClientWindow, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -69,6 +85,7 @@ void VType_wxAuiMDIClientWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxAuiNotebook, Flag::Mutable, Gurax_CreateConstructor(AuiMDIClientWindow_gurax));
 	// Assignment of method

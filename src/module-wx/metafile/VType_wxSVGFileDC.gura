@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.SVGFileDC, `en)}
 ${help.ComposeConstructorHelp(wx.SVGFileDC, `en)}
 
 ${help.ComposeMethodHelp(wx.SVGFileDC, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SVGFileDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SVGFileDC, `ja)}
+
+${help.ComposeMethodHelp(wx.SVGFileDC, `ja)}
+'''ja

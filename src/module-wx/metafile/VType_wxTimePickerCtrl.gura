@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.TimePickerCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.TimePickerCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.TimePickerCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TimePickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TimePickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.TimePickerCtrl, `ja)}
+'''ja

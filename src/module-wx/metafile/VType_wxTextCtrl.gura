@@ -57,7 +57,21 @@ ${help.ComposePropertyHelp(wx.TextCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.TextCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.TextCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.TextCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.TextCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.TextCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	TE_PROCESS_ENTER

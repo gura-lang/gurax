@@ -336,7 +336,21 @@ ${help.ComposePropertyHelp(wx.RichTextCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.RichTextCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.RichTextCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RichTextCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RichTextCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.RichTextCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	RE_CENTRE_CARET

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RibbonButtonBar, `en)}
 ${help.ComposeMethodHelp(wx.RibbonButtonBar, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RibbonButtonBar, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RibbonButtonBar, `ja)}
+
+${help.ComposeMethodHelp(wx.RibbonButtonBar, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxRibbonButtonBar::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxRibbonControl, Flag::Mutable);
 	// Assignment of method

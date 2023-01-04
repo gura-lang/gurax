@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ColourDialog, `en)}
 ${help.ComposeMethodHelp(wx.ColourDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ColourDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ColourDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.ColourDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -126,6 +142,7 @@ void VType_wxColourDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(ColourDialog_gurax));
 	// Assignment of method

@@ -58,4 +58,18 @@ ${help.ComposePropertyHelp(wx.StaticBoxSizer, `en)}
 ${help.ComposeConstructorHelp(wx.StaticBoxSizer, `en)}
 
 ${help.ComposeMethodHelp(wx.StaticBoxSizer, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StaticBoxSizer, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StaticBoxSizer, `ja)}
+
+${help.ComposeMethodHelp(wx.StaticBoxSizer, `ja)}
+'''ja

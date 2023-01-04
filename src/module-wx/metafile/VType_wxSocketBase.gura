@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.SocketBase, `en)}
 ${help.ComposeConstructorHelp(wx.SocketBase, `en)}
 
 ${help.ComposeMethodHelp(wx.SocketBase, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SocketBase, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SocketBase, `ja)}
+
+${help.ComposeMethodHelp(wx.SocketBase, `ja)}
+'''ja

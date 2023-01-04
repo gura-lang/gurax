@@ -21,7 +21,21 @@ ${help.ComposePropertyHelp(wx.ShowEvent, `en)}
 ${help.ComposeConstructorHelp(wx.ShowEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.ShowEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ShowEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ShowEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.ShowEvent, `ja)}
+'''ja
 
 @event {
 	EVT_SHOW >> ShowEvent

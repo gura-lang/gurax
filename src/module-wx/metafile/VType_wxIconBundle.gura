@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.IconBundle, `en)}
 ${help.ComposeConstructorHelp(wx.IconBundle, `en)}
 
 ${help.ComposeMethodHelp(wx.IconBundle, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.IconBundle, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.IconBundle, `ja)}
+
+${help.ComposeMethodHelp(wx.IconBundle, `ja)}
+'''ja

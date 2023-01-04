@@ -24,7 +24,21 @@ ${help.ComposePropertyHelp(wx.CloseEvent, `en)}
 ${help.ComposeConstructorHelp(wx.CloseEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.CloseEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CloseEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CloseEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.CloseEvent, `ja)}
+'''ja
 
 @event {
 	EVT_QUERY_END_SESSION	>> CloseEvent

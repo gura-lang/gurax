@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.EventLoopBase, `en)}
 ${help.ComposeMethodHelp(wx.EventLoopBase, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.EventLoopBase, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.EventLoopBase, `ja)}
+
+${help.ComposeMethodHelp(wx.EventLoopBase, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -374,6 +390,7 @@ void VType_wxEventLoopBase::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable);
 	// Assignment of method

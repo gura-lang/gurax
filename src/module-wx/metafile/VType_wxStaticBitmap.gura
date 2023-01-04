@@ -24,4 +24,18 @@ ${help.ComposePropertyHelp(wx.StaticBitmap, `en)}
 ${help.ComposeConstructorHelp(wx.StaticBitmap, `en)}
 
 ${help.ComposeMethodHelp(wx.StaticBitmap, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StaticBitmap, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StaticBitmap, `ja)}
+
+${help.ComposeMethodHelp(wx.StaticBitmap, `ja)}
+'''ja

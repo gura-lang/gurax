@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.MemoryDC, `en)}
 ${help.ComposeConstructorHelp(wx.MemoryDC, `en)}
 
 ${help.ComposeMethodHelp(wx.MemoryDC, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MemoryDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MemoryDC, `ja)}
+
+${help.ComposeMethodHelp(wx.MemoryDC, `ja)}
+'''ja

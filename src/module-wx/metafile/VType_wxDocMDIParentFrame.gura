@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.DocMDIParentFrame, `en)}
 ${help.ComposeConstructorHelp(wx.DocMDIParentFrame, `en)}
 
 ${help.ComposeMethodHelp(wx.DocMDIParentFrame, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DocMDIParentFrame, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DocMDIParentFrame, `ja)}
+
+${help.ComposeMethodHelp(wx.DocMDIParentFrame, `ja)}
+'''ja

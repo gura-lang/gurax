@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.BufferedPaintDC, `en)}
 ${help.ComposeConstructorHelp(wx.BufferedPaintDC, `en)}
 
 ${help.ComposeMethodHelp(wx.BufferedPaintDC, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BufferedPaintDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BufferedPaintDC, `ja)}
+
+${help.ComposeMethodHelp(wx.BufferedPaintDC, `ja)}
+'''ja

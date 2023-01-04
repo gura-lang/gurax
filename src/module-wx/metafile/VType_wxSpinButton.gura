@@ -24,7 +24,21 @@ ${help.ComposePropertyHelp(wx.SpinButton, `en)}
 ${help.ComposeConstructorHelp(wx.SpinButton, `en)}
 
 ${help.ComposeMethodHelp(wx.SpinButton, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SpinButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SpinButton, `ja)}
+
+${help.ComposeMethodHelp(wx.SpinButton, `ja)}
+'''ja
 
 @event {
 	EVT_SPIN >> SpinEvent

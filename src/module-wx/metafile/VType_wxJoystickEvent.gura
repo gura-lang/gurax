@@ -29,7 +29,21 @@ ${help.ComposePropertyHelp(wx.JoystickEvent, `en)}
 ${help.ComposeConstructorHelp(wx.JoystickEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.JoystickEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.JoystickEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.JoystickEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.JoystickEvent, `ja)}
+'''ja
 
 @event {
 	EVT_JOY_BUTTON_DOWN	>> JoystickEvent

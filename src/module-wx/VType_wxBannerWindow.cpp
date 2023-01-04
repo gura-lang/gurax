@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.BannerWindow, `en)}
 ${help.ComposeMethodHelp(wx.BannerWindow, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BannerWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BannerWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.BannerWindow, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -210,6 +226,7 @@ void VType_wxBannerWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(BannerWindow_gurax));
 	// Assignment of method

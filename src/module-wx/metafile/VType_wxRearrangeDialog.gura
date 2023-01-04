@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.RearrangeDialog, `en)}
 ${help.ComposeConstructorHelp(wx.RearrangeDialog, `en)}
 
 ${help.ComposeMethodHelp(wx.RearrangeDialog, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RearrangeDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RearrangeDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.RearrangeDialog, `ja)}
+'''ja

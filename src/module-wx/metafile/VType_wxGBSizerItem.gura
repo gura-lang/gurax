@@ -117,4 +117,18 @@ ${help.ComposePropertyHelp(wx.GBSizerItem, `en)}
 ${help.ComposeConstructorHelp(wx.GBSizerItem, `en)}
 
 ${help.ComposeMethodHelp(wx.GBSizerItem, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GBSizerItem, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GBSizerItem, `ja)}
+
+${help.ComposeMethodHelp(wx.GBSizerItem, `ja)}
+'''ja

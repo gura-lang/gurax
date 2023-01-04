@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ContextHelpButton, `en)}
 ${help.ComposeMethodHelp(wx.ContextHelpButton, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ContextHelpButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ContextHelpButton, `ja)}
+
+${help.ComposeMethodHelp(wx.ContextHelpButton, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -76,6 +92,7 @@ void VType_wxContextHelpButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxBitmapButton, Flag::Mutable, Gurax_CreateConstructor(ContextHelpButton_gurax));
 	// Assignment of method

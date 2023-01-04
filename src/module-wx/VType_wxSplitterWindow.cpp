@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.SplitterWindow, `en)}
 ${help.ComposeMethodHelp(wx.SplitterWindow, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.SplitterWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.SplitterWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.SplitterWindow, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -618,6 +634,7 @@ void VType_wxSplitterWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable, Gurax_CreateConstructor(SplitterWindow_gurax));
 	// Assignment of method

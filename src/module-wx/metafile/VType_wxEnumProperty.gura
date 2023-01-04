@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.EnumProperty, `en)}
 ${help.ComposeConstructorHelp(wx.EnumProperty, `en)}
 
 ${help.ComposeMethodHelp(wx.EnumProperty, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.EnumProperty, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.EnumProperty, `ja)}
+
+${help.ComposeMethodHelp(wx.EnumProperty, `ja)}
+'''ja

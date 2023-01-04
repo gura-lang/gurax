@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ColourPickerCtrl, `en)}
 ${help.ComposeMethodHelp(wx.ColourPickerCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ColourPickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ColourPickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.ColourPickerCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -157,6 +173,7 @@ void VType_wxColourPickerCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPickerBase, Flag::Mutable, Gurax_CreateConstructor(ColourPickerCtrl_gurax));
 	// Assignment of method

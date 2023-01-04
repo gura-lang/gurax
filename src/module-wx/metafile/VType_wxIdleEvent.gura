@@ -21,7 +21,21 @@ ${help.ComposePropertyHelp(wx.IdleEvent, `en)}
 ${help.ComposeConstructorHelp(wx.IdleEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.IdleEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.IdleEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.IdleEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.IdleEvent, `ja)}
+'''ja
 
 @event {
 	EVT_IDLE >> IdleEvent

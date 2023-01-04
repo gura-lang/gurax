@@ -33,4 +33,18 @@ ${help.ComposePropertyHelp(wx.VarHVScrollHelper, `en)}
 ${help.ComposeConstructorHelp(wx.VarHVScrollHelper, `en)}
 
 ${help.ComposeMethodHelp(wx.VarHVScrollHelper, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.VarHVScrollHelper, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.VarHVScrollHelper, `ja)}
+
+${help.ComposeMethodHelp(wx.VarHVScrollHelper, `ja)}
+'''ja

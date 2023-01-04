@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.NonOwnedWindow, `en)}
 ${help.ComposeMethodHelp(wx.NonOwnedWindow, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.NonOwnedWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.NonOwnedWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.NonOwnedWindow, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -96,6 +112,7 @@ void VType_wxNonOwnedWindow::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxWindow, Flag::Mutable);
 	// Assignment of method

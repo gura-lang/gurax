@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.ImageFileProperty, `en)}
 ${help.ComposeMethodHelp(wx.ImageFileProperty, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ImageFileProperty, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ImageFileProperty, `ja)}
+
+${help.ComposeMethodHelp(wx.ImageFileProperty, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -46,6 +62,7 @@ void VType_wxImageFileProperty::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxFileProperty, Flag::Mutable);
 	// Assignment of method

@@ -36,4 +36,18 @@ ${help.ComposePropertyHelp(wx.EventLoopBase, `en)}
 ${help.ComposeConstructorHelp(wx.EventLoopBase, `en)}
 
 ${help.ComposeMethodHelp(wx.EventLoopBase, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.EventLoopBase, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.EventLoopBase, `ja)}
+
+${help.ComposeMethodHelp(wx.EventLoopBase, `ja)}
+'''ja

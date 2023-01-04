@@ -103,7 +103,21 @@ ${help.ComposePropertyHelp(wx.PropertyGrid, `en)}
 ${help.ComposeConstructorHelp(wx.PropertyGrid, `en)}
 
 ${help.ComposeMethodHelp(wx.PropertyGrid, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PropertyGrid, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PropertyGrid, `ja)}
+
+${help.ComposeMethodHelp(wx.PropertyGrid, `ja)}
+'''ja
 
 @event {
 	EVT_PG_SELECTED				>> PropertyGridEvent

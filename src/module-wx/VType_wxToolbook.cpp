@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.Toolbook, `en)}
 ${help.ComposeMethodHelp(wx.Toolbook, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Toolbook, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Toolbook, `ja)}
+
+${help.ComposeMethodHelp(wx.Toolbook, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -77,6 +93,7 @@ void VType_wxToolbook::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxBookCtrlBase, Flag::Mutable, Gurax_CreateConstructor(Toolbook_gurax));
 	// Assignment of method

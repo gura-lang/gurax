@@ -20,7 +20,21 @@ ${help.ComposePropertyHelp(wx.IconizeEvent, `en)}
 ${help.ComposeConstructorHelp(wx.IconizeEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.IconizeEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.IconizeEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.IconizeEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.IconizeEvent, `ja)}
+'''ja
 
 @event {
 	EVT_ICONIZE >> IconizeEvent

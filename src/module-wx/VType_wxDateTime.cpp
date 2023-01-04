@@ -12,17 +12,37 @@ Gurax_BeginModuleScope(wx)
 static const char* g_docHelp_en = u8R"**(
 # Overview
 
-# Predefined Variable
-
 ${help.ComposePropertyHelp(wx.DateTime, `en)}
 
 # Operator
+
+- `DateTime + DateSpan` ... `DateTime`
+- `DateTime + TimeSpan` ... `DateTime`
+- `DateTime - DateSpan` ... `DateTime`
+- `DateTime - TimeSpan` ... `DateTime`
+- `DateTime - DateTime` ... `TimeSpan`
 
 # Cast Operation
 
 ${help.ComposeConstructorHelp(wx.DateTime, `en)}
 
 ${help.ComposeMethodHelp(wx.DateTime, `en)}
+)**";
+
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DateTime, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DateTime, `ja)}
+
+${help.ComposeMethodHelp(wx.DateTime, `ja)}
 )**";
 
 //------------------------------------------------------------------------------
@@ -476,6 +496,7 @@ void VType_wxDateTime::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(DateTime_gurax));
 	// Assignment of constant value

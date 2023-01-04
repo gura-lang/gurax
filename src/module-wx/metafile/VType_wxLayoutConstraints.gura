@@ -16,4 +16,18 @@ ${help.ComposePropertyHelp(wx.LayoutConstraints, `en)}
 ${help.ComposeConstructorHelp(wx.LayoutConstraints, `en)}
 
 ${help.ComposeMethodHelp(wx.LayoutConstraints, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.LayoutConstraints, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.LayoutConstraints, `ja)}
+
+${help.ComposeMethodHelp(wx.LayoutConstraints, `ja)}
+'''ja

@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RearrangeList, `en)}
 ${help.ComposeMethodHelp(wx.RearrangeList, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RearrangeList, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RearrangeList, `ja)}
+
+${help.ComposeMethodHelp(wx.RearrangeList, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -210,6 +226,7 @@ void VType_wxRearrangeList::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxCheckListBox, Flag::Mutable, Gurax_CreateConstructor(RearrangeList_gurax));
 	// Assignment of method

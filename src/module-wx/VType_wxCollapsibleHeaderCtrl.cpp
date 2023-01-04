@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.CollapsibleHeaderCtrl, `en)}
 ${help.ComposeMethodHelp(wx.CollapsibleHeaderCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CollapsibleHeaderCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CollapsibleHeaderCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.CollapsibleHeaderCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -118,6 +134,7 @@ void VType_wxCollapsibleHeaderCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable, Gurax_CreateConstructor(CollapsibleHeaderCtrl_gurax));
 	// Assignment of method

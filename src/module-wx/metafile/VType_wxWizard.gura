@@ -36,7 +36,21 @@ ${help.ComposePropertyHelp(wx.Wizard, `en)}
 ${help.ComposeConstructorHelp(wx.Wizard, `en)}
 
 ${help.ComposeMethodHelp(wx.Wizard, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Wizard, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Wizard, `ja)}
+
+${help.ComposeMethodHelp(wx.Wizard, `ja)}
+'''ja
 
 @const { // Extra Styles
 	WIZARD_EX_HELPBUTTON

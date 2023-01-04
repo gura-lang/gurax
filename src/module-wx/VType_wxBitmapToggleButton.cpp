@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.BitmapToggleButton, `en)}
 ${help.ComposeMethodHelp(wx.BitmapToggleButton, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BitmapToggleButton, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BitmapToggleButton, `ja)}
+
+${help.ComposeMethodHelp(wx.BitmapToggleButton, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -82,6 +98,7 @@ void VType_wxBitmapToggleButton::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxToggleButton, Flag::Mutable, Gurax_CreateConstructor(BitmapToggleButton_gurax));
 	// Assignment of method

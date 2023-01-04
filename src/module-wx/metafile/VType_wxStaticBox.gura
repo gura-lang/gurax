@@ -18,4 +18,18 @@ ${help.ComposePropertyHelp(wx.StaticBox, `en)}
 ${help.ComposeConstructorHelp(wx.StaticBox, `en)}
 
 ${help.ComposeMethodHelp(wx.StaticBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.StaticBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.StaticBox, `ja)}
+
+${help.ComposeMethodHelp(wx.StaticBox, `ja)}
+'''ja

@@ -18,4 +18,18 @@ ${help.ComposePropertyHelp(wx.InitDialogEvent, `en)}
 ${help.ComposeConstructorHelp(wx.InitDialogEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.InitDialogEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.InitDialogEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.InitDialogEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.InitDialogEvent, `ja)}
+'''ja

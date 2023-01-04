@@ -33,4 +33,18 @@ ${help.ComposePropertyHelp(wx.PGPaintData, `en)}
 ${help.ComposeConstructorHelp(wx.PGPaintData, `en)}
 
 ${help.ComposeMethodHelp(wx.PGPaintData, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PGPaintData, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PGPaintData, `ja)}
+
+${help.ComposeMethodHelp(wx.PGPaintData, `ja)}
+'''ja

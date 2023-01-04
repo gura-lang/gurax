@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.DirDialog, `en)}
 ${help.ComposeMethodHelp(wx.DirDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DirDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DirDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.DirDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -171,6 +187,7 @@ void VType_wxDirDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(DirDialog_gurax));
 	// Assignment of method

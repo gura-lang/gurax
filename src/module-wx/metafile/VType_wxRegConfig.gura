@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.RegConfig, `en)}
 ${help.ComposeConstructorHelp(wx.RegConfig, `en)}
 
 ${help.ComposeMethodHelp(wx.RegConfig, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RegConfig, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RegConfig, `ja)}
+
+${help.ComposeMethodHelp(wx.RegConfig, `ja)}
+'''ja

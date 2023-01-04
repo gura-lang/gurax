@@ -40,7 +40,21 @@ ${help.ComposePropertyHelp(wx.Slider, `en)}
 ${help.ComposeConstructorHelp(wx.Slider, `en)}
 
 ${help.ComposeMethodHelp(wx.Slider, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Slider, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Slider, `ja)}
+
+${help.ComposeMethodHelp(wx.Slider, `ja)}
+'''ja
 
 @const { // Styles
 	SL_HORIZONTAL

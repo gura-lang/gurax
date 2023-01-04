@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.GridCellEnumEditor, `en)}
 ${help.ComposeMethodHelp(wx.GridCellEnumEditor, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GridCellEnumEditor, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GridCellEnumEditor, `ja)}
+
+${help.ComposeMethodHelp(wx.GridCellEnumEditor, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -63,6 +79,7 @@ void VType_wxGridCellEnumEditor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxGridCellChoiceEditor, Flag::Mutable, Gurax_CreateConstructor(GridCellEnumEditor_gurax));
 	// Assignment of method

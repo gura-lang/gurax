@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.HeaderCtrl, `en)}
 ${help.ComposeMethodHelp(wx.HeaderCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HeaderCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HeaderCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.HeaderCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -340,6 +356,7 @@ void VType_wxHeaderCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxControl, Flag::Mutable);
 	// Assignment of method

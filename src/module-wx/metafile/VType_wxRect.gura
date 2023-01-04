@@ -284,7 +284,21 @@ ${help.ComposePropertyHelp(wx.Rect, `en)}
 ${help.ComposeConstructorHelp(wx.Rect, `en)}
 
 ${help.ComposeMethodHelp(wx.Rect, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Rect, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Rect, `ja)}
+
+${help.ComposeMethodHelp(wx.Rect, `ja)}
+'''ja
 
 (const_Rect_r != const_Rect_r) as bool
 (const_Rect_r == const_Rect_r) as bool

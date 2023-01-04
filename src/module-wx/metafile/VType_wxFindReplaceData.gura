@@ -24,4 +24,18 @@ ${help.ComposePropertyHelp(wx.FindReplaceData, `en)}
 ${help.ComposeConstructorHelp(wx.FindReplaceData, `en)}
 
 ${help.ComposeMethodHelp(wx.FindReplaceData, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.FindReplaceData, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.FindReplaceData, `ja)}
+
+${help.ComposeMethodHelp(wx.FindReplaceData, `ja)}
+'''ja

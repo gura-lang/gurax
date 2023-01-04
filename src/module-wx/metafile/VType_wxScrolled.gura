@@ -80,4 +80,18 @@ ${help.ComposePropertyHelp(wx.Scrolled, `en)}
 ${help.ComposeConstructorHelp(wx.Scrolled, `en)}
 
 ${help.ComposeMethodHelp(wx.Scrolled, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Scrolled, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Scrolled, `ja)}
+
+${help.ComposeMethodHelp(wx.Scrolled, `ja)}
+'''ja

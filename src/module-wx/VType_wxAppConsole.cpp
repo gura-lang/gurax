@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.AppConsole, `en)}
 ${help.ComposeMethodHelp(wx.AppConsole, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.AppConsole, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.AppConsole, `ja)}
+
+${help.ComposeMethodHelp(wx.AppConsole, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -77,6 +93,7 @@ void VType_wxAppConsole::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxEvtHandler, Flag::Mutable, Gurax_CreateConstructor(AppConsole_gurax));
 	// Assignment of method

@@ -21,7 +21,21 @@ ${help.ComposePropertyHelp(wx.ScrollEvent, `en)}
 ${help.ComposeConstructorHelp(wx.ScrollEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.ScrollEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ScrollEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ScrollEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.ScrollEvent, `ja)}
+'''ja
 
 @event {
 	//EVT_SCROLL						>> ScrollEvent

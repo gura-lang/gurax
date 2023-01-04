@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.RearrangeCtrl, `en)}
 ${help.ComposeMethodHelp(wx.RearrangeCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.RearrangeCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.RearrangeCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.RearrangeCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -143,6 +159,7 @@ void VType_wxRearrangeCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(RearrangeCtrl_gurax));
 	// Assignment of method

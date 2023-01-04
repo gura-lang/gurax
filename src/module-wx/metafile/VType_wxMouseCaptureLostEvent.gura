@@ -17,7 +17,21 @@ ${help.ComposePropertyHelp(wx.MouseCaptureLostEvent, `en)}
 ${help.ComposeConstructorHelp(wx.MouseCaptureLostEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.MouseCaptureLostEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MouseCaptureLostEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MouseCaptureLostEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.MouseCaptureLostEvent, `ja)}
+'''ja
 
 @event {
 	EVT_MOUSE_CAPTURE_LOST >> MouseCaptureLostEvent

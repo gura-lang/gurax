@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.PropertyGridManager, `en)}
 ${help.ComposeMethodHelp(wx.PropertyGridManager, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PropertyGridManager, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PropertyGridManager, `ja)}
+
+${help.ComposeMethodHelp(wx.PropertyGridManager, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -802,6 +818,7 @@ void VType_wxPropertyGridManager::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxPanel, Flag::Mutable, Gurax_CreateConstructor(PropertyGridManager_gurax));
 	// Assignment of method

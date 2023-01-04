@@ -22,7 +22,21 @@ ${help.ComposePropertyHelp(wx.CalculateLayoutEvent, `en)}
 ${help.ComposeConstructorHelp(wx.CalculateLayoutEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.CalculateLayoutEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.CalculateLayoutEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.CalculateLayoutEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.CalculateLayoutEvent, `ja)}
+'''ja
 
 @event {
 	EVT_CALCULATE_LAYOUT >> CalculateLayoutEvent

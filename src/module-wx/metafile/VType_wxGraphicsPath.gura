@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.GraphicsPath, `en)}
 ${help.ComposeConstructorHelp(wx.GraphicsPath, `en)}
 
 ${help.ComposeMethodHelp(wx.GraphicsPath, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GraphicsPath, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GraphicsPath, `ja)}
+
+${help.ComposeMethodHelp(wx.GraphicsPath, `ja)}
+'''ja

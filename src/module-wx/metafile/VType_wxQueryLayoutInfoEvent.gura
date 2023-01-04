@@ -26,7 +26,21 @@ ${help.ComposePropertyHelp(wx.QueryLayoutInfoEvent, `en)}
 ${help.ComposeConstructorHelp(wx.QueryLayoutInfoEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.QueryLayoutInfoEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.QueryLayoutInfoEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.QueryLayoutInfoEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.QueryLayoutInfoEvent, `ja)}
+'''ja
 
 @event {
 	EVT_QUERY_LAYOUT_INFO > QueryLayoutInfoEvent

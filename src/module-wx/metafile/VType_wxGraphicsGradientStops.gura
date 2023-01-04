@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.GraphicsGradientStops, `en)}
 ${help.ComposeConstructorHelp(wx.GraphicsGradientStops, `en)}
 
 ${help.ComposeMethodHelp(wx.GraphicsGradientStops, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.GraphicsGradientStops, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.GraphicsGradientStops, `ja)}
+
+${help.ComposeMethodHelp(wx.GraphicsGradientStops, `ja)}
+'''ja

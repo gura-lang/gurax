@@ -22,7 +22,21 @@ ${help.ComposePropertyHelp(wx.ColourPickerCtrl, `en)}
 ${help.ComposeConstructorHelp(wx.ColourPickerCtrl, `en)}
 
 ${help.ComposeMethodHelp(wx.ColourPickerCtrl, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.ColourPickerCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.ColourPickerCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.ColourPickerCtrl, `ja)}
+'''ja
 
 @const { // Styles
 	CLRP_DEFAULT_STYLE

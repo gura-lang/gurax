@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.BusyCursor, `en)}
 ${help.ComposeMethodHelp(wx.BusyCursor, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.BusyCursor, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.BusyCursor, `ja)}
+
+${help.ComposeMethodHelp(wx.BusyCursor, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -63,6 +79,7 @@ void VType_wxBusyCursor::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(BusyCursor_gurax));
 	// Assignment of method

@@ -51,4 +51,18 @@ ${help.ComposePropertyHelp(wx.VListBox, `en)}
 ${help.ComposeConstructorHelp(wx.VListBox, `en)}
 
 ${help.ComposeMethodHelp(wx.VListBox, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.VListBox, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.VListBox, `ja)}
+
+${help.ComposeMethodHelp(wx.VListBox, `ja)}
+'''ja

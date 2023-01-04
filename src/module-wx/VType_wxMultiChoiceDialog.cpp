@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.MultiChoiceDialog, `en)}
 ${help.ComposeMethodHelp(wx.MultiChoiceDialog, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.MultiChoiceDialog, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.MultiChoiceDialog, `ja)}
+
+${help.ComposeMethodHelp(wx.MultiChoiceDialog, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -131,6 +147,7 @@ void VType_wxMultiChoiceDialog::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxDialog, Flag::Mutable, Gurax_CreateConstructor(MultiChoiceDialog_gurax));
 	// Assignment of method

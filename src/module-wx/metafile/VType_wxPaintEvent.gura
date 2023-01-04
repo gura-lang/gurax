@@ -17,7 +17,21 @@ ${help.ComposePropertyHelp(wx.PaintEvent, `en)}
 ${help.ComposeConstructorHelp(wx.PaintEvent, `en)}
 
 ${help.ComposeMethodHelp(wx.PaintEvent, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PaintEvent, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PaintEvent, `ja)}
+
+${help.ComposeMethodHelp(wx.PaintEvent, `ja)}
+'''ja
 
 @event {
 	EVT_PAINT >> PaintEvent

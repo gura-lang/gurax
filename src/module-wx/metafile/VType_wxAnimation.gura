@@ -25,4 +25,18 @@ ${help.ComposePropertyHelp(wx.Animation, `en)}
 ${help.ComposeConstructorHelp(wx.Animation, `en)}
 
 ${help.ComposeMethodHelp(wx.Animation, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Animation, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Animation, `ja)}
+
+${help.ComposeMethodHelp(wx.Animation, `ja)}
+'''ja

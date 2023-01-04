@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.HtmlColourCell, `en)}
 ${help.ComposeConstructorHelp(wx.HtmlColourCell, `en)}
 
 ${help.ComposeMethodHelp(wx.HtmlColourCell, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlColourCell, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlColourCell, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlColourCell, `ja)}
+'''ja

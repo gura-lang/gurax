@@ -51,4 +51,18 @@ ${help.ComposePropertyHelp(wx.NonOwnedWindow, `en)}
 ${help.ComposeConstructorHelp(wx.NonOwnedWindow, `en)}
 
 ${help.ComposeMethodHelp(wx.NonOwnedWindow, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.NonOwnedWindow, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.NonOwnedWindow, `ja)}
+
+${help.ComposeMethodHelp(wx.NonOwnedWindow, `ja)}
+'''ja

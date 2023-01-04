@@ -35,7 +35,21 @@ ${help.ComposePropertyHelp(wx.PickerBase, `en)}
 ${help.ComposeConstructorHelp(wx.PickerBase, `en)}
 
 ${help.ComposeMethodHelp(wx.PickerBase, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PickerBase, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PickerBase, `ja)}
+
+${help.ComposeMethodHelp(wx.PickerBase, `ja)}
+'''ja
 
 @const { // Styles
 	PB_USE_TEXTCTRL

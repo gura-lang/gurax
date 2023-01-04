@@ -70,4 +70,18 @@ ${help.ComposePropertyHelp(wx.Menu, `en)}
 ${help.ComposeConstructorHelp(wx.Menu, `en)}
 
 ${help.ComposeMethodHelp(wx.Menu, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.Menu, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.Menu, `ja)}
+
+${help.ComposeMethodHelp(wx.Menu, `ja)}
+'''ja

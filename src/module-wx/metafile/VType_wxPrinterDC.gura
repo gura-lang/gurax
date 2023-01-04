@@ -17,4 +17,18 @@ ${help.ComposePropertyHelp(wx.PrinterDC, `en)}
 ${help.ComposeConstructorHelp(wx.PrinterDC, `en)}
 
 ${help.ComposeMethodHelp(wx.PrinterDC, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PrinterDC, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PrinterDC, `ja)}
+
+${help.ComposeMethodHelp(wx.PrinterDC, `ja)}
+'''ja

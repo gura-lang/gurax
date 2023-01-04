@@ -22,4 +22,18 @@ ${help.ComposePropertyHelp(wx.HtmlLinkInfo, `en)}
 ${help.ComposeConstructorHelp(wx.HtmlLinkInfo, `en)}
 
 ${help.ComposeMethodHelp(wx.HtmlLinkInfo, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.HtmlLinkInfo, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.HtmlLinkInfo, `ja)}
+
+${help.ComposeMethodHelp(wx.HtmlLinkInfo, `ja)}
+'''ja

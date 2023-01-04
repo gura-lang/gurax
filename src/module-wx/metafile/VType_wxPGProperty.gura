@@ -135,4 +135,18 @@ ${help.ComposePropertyHelp(wx.PGProperty, `en)}
 ${help.ComposeConstructorHelp(wx.PGProperty, `en)}
 
 ${help.ComposeMethodHelp(wx.PGProperty, `en)}
-'''
+''' %% R'''
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.PGProperty, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.PGProperty, `ja)}
+
+${help.ComposeMethodHelp(wx.PGProperty, `ja)}
+'''ja

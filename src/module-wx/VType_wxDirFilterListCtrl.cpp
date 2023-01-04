@@ -25,6 +25,22 @@ ${help.ComposeConstructorHelp(wx.DirFilterListCtrl, `en)}
 ${help.ComposeMethodHelp(wx.DirFilterListCtrl, `en)}
 )**";
 
+static const char* g_docHelp_ja = u8R"**(
+# 概要
+
+# 定数
+
+${help.ComposePropertyHelp(wx.DirFilterListCtrl, `ja)}
+
+# オペレータ
+
+# キャスト
+
+${help.ComposeConstructorHelp(wx.DirFilterListCtrl, `ja)}
+
+${help.ComposeMethodHelp(wx.DirFilterListCtrl, `ja)}
+)**";
+
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
@@ -147,6 +163,7 @@ void VType_wxDirFilterListCtrl::DoPrepare(Frame& frameOuter)
 {
 	// Add help
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
+	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
 	Declare(VTYPE_wxChoice, Flag::Mutable, Gurax_CreateConstructor(DirFilterListCtrl_gurax));
 	// Assignment of method
