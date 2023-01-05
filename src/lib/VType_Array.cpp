@@ -39,6 +39,27 @@ The argument `elemType` specifies the element data type from the symbols:
 `` `bool``, `` `char``, `` `uchar``, `` `short``, `` `ushort``, `` `int``, `` `uint``, `` `long``, `` `ulong``, `` `half``, `` `float``, `` `double``, `` `complex``,
 `` `int8``, `` `uint8``, `` `int16``, `` `uint16``, `` `int32``, `` `uint32``, `` `int64``, `` `uint64``.
 
+- `bool`
+- `char`, `int8`
+- `uchar`, `uint8`
+- `short`, `int16`
+- `ushort`, `uint16`
+- `int`, `int32`
+- `uint`, `uint32`
+- `long`, `int64`
+- `ulong`, `uint64`
+
+``Array(`float)``
+
+``Array(`float, 10)``
+``Array(`float, 3, 4)``
+
+``Array(`float, [1, 2, 3, 4])``
+``Array(`float, [[1, 2, 3], [4, 5, 6]])``
+
+``Array(`float, (1, 2, 3, 4))``
+``Array(`float, ((1, 2, 3), (4, 5, 6)))``
+
 - ``Array(`bool, init*)`` ... `@bool(init*)`
 - ``Array(`char, init*)`` ... `@char(init*)`
 - ``Array(`uchar, init*)`` ... `@uchar(init*)`
