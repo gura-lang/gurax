@@ -23,8 +23,8 @@ The following operators are prepared:
 
 The following cast operations are prepared:
 
-- `Iterator` as `List` ... Create a `List` from the `Iterator`.
-- `List` as `Iterator` ... Create an `Iterator` from the `List`.
+- `List as Iterator` ... Turns a `List` into an `Iterator`.
+- `Tuple as Iterator` ... Turns a `Tuple` into an `Iterator`.
 
 ${help.ComposeConstructorHelp(Iterator, `en)}
 
@@ -1776,6 +1776,8 @@ Value* VType_Iterator::DoCastFrom(const Value& value, DeclArg::Flags flags) cons
 {
 	if (value.IsType(VTYPE_List)) {
 		return new Value_Iterator(Value_List::GetValueTypedOwner(value).GenerateIterator());
+	} else if (value.IsType(VTYPE_Tuple)) {
+		return new Value_Iterator(new Iterator_Each(Value_Tuple::GetValueOwner(value).Reference()));
 	}
 	return nullptr;
 }

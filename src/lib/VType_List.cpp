@@ -33,9 +33,9 @@ The operator `|+|` concats a `List` and another value. It works in the same way 
 
 The following cast operations are prepared:
 
-- `Iterator as List` ... Turns the `Iterator` into a `List`.
-- `Array as List` ... Turns the `Array` into a `List`.
-- `Tuple as List` ... Turns the `Tuple` into a `List`.
+- `Iterator as List` ... Turns an `Iterator` into a `List`.
+- `Array as List` ... Turns an `Array` into a `List`.
+- `Tuple as List` ... Turns a `Tuple` into a `List`.
 
 
 ${help.ComposeConstructorHelp(List, `en)}
