@@ -17,9 +17,11 @@ public:
 	Gurax_DeclareReferable(PathMgr);
 public:
 	enum class Existence { None, Exist, MayBe };
+private:
+	String _name;
 public:
 	// Constructor
-	PathMgr() {}
+	PathMgr(String name) : _name(name) {}
 	// Copy constructor/operator
 	PathMgr(const PathMgr& src) = delete;
 	PathMgr& operator=(const PathMgr& src) = delete;
@@ -34,6 +36,7 @@ public:
 	static Directory* OpenDirectory(const char* pathName, Directory::Type typeWouldBe = Directory::Type::None);
 	static Existence CheckExistence(const char* pathName);
 public:
+	const char* GetName() const { return _name.c_str(); }
 	Directory* OpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) {
 		return DoOpenDirectory(pDirectoryParent, pPathName, typeWouldBe);
 	}
@@ -42,8 +45,7 @@ public:
 	}
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) = 0;
 protected:
-	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName,
-									   Directory::Type typeWouldBe) = 0;
+	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) = 0;
 	virtual Existence DoCheckExistence(Directory* pDirectoryParent, const char** pPathName) = 0;
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }

@@ -39,15 +39,19 @@ The argument `elemType` specifies the element data type from the symbols:
 `` `bool``, `` `char``, `` `uchar``, `` `short``, `` `ushort``, `` `int``, `` `uint``, `` `long``, `` `ulong``, `` `half``, `` `float``, `` `double``, `` `complex``,
 `` `int8``, `` `uint8``, `` `int16``, `` `uint16``, `` `int32``, `` `uint32``, `` `int64``, `` `uint64``.
 
-- `bool`
-- `char`, `int8`
-- `uchar`, `uint8`
-- `short`, `int16`
-- `ushort`, `uint16`
-- `int`, `int32`
-- `uint`, `uint32`
-- `long`, `int64`
-- `ulong`, `uint64`
+- `bool` ... 8-bit number value that takes zero or one. 
+- `char`, `int8` ... 8-bit number value that ranges between -128 and 127.
+- `uchar`, `uint8` ... 8-bit number value that ranges between 0 and 255.
+- `short`, `int16` ... 16-bit number value that ranges between -32768 and 32767.
+- `ushort`, `uint16` ... 16-bit number value that ranges between 0 and 65535.
+- `int`, `int32` ... 32-bit number value that ranges between -2147483648 and 2147483647.
+- `uint`, `uint32` ... 32-bit number value that ranges between 0 and 4294967295.
+- `long`, `int64` ... 64-bit number value.
+- `ulong`, `uint64` ... 64-bit number value.
+- `half` ... 16-bit floating point number.
+- `float` ... 32-bit floating point number.
+- `double` ... 64-bit floating point number.
+- `complex` ... Complex number.
 
 ``Array(`float)``
 

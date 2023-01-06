@@ -774,62 +774,6 @@ public:
 class CentralFileHeaderList : public ListBase<CentralFileHeader*> {
 };
 
-//-----------------------------------------------------------------------------
-// Object_Reader
-//-----------------------------------------------------------------------------
-Gurax_DeclareUserClass(Reader);
-
-class Object_reader : public Object {
-private:
-	AutoPtr<Stream> _pStreamSrc;
-	CentralFileHeaderList _hdrList;
-public:
-	Gurax_DeclareObjectAccessor(reader)
-public:
-	Object_reader(Stream* pStreamSrc);
-	CentralFileHeaderList& GetHeaderList() { return _hdrList; }
-	virtual ~Object_reader();
-	virtual Object* Clone() const;
-	virtual String ToString(bool exprFlag);
-	Stream* GetStreamSrc() { return _pStreamSrc.get(); }
-	bool ReadDirectory();
-};
-
-//-----------------------------------------------------------------------------
-// Object_writer
-//-----------------------------------------------------------------------------
-Gurax_DeclareUserClass(writer);
-
-class Object_writer : public Object {
-private:
-	AutoPtr<Stream> _pStreamDst;
-	UInt16 _compressionMethod;
-	CentralFileHeaderList _hdrList;
-public:
-	Gurax_DeclareObjectAccessor(writer)
-public:
-	Object_writer(Stream* pStreamDst, UInt16 compressionMethod);
-	CentralFileHeaderList& GetHeaderList() { return _hdrList; }
-	virtual ~Object_writer();
-	virtual Object* Clone() const;
-	virtual String ToString(bool exprFlag);
-	Stream* GetStreamDst() { return _pStreamDst.get(); }
-	bool Add(Stream& streamSrc,
-					const char* fileName, UInt16 compressionMethod);
-	bool Finish();
-	UInt16 GetCompressionMethod() const { return _compressionMethod; }
-};
-
-//-----------------------------------------------------------------------------
-// PathMgr_ZIP
-//-----------------------------------------------------------------------------
-class PathMgr_ZIP : public PathMgr {
-public:
-	virtual bool IsResponsible(const Directory* pParent, const char* pathName);
-	virtual Directory* DoOpenDirectory(
-		Directory* pParent, const char** pPathName, NotFoundMode notFoundMode);
-};
-
 #endif
 
 Gurax_EndModuleScope(zip)

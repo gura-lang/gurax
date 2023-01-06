@@ -59,7 +59,7 @@ PathMgr::Existence PathMgr::CheckExistence(const char* pathName)
 
 String PathMgr::ToString(const StringStyle& ss) const
 {
-	return "";
+	return GetName();
 }
 
 //------------------------------------------------------------------------------

@@ -13,6 +13,7 @@ Gurax_BeginModuleScope(tar)
 //------------------------------------------------------------------------------
 class PathMgrEx : public PathMgr {
 public:
+	PathMgrEx() : PathMgr("tar") {}
 	virtual bool IsResponsible(Directory* pDirectoryParent, const char* pathName) override;
 protected:
 	virtual Directory* DoOpenDirectory(Directory* pDirectoryParent, const char** pPathName, Directory::Type typeWouldBe) override;
