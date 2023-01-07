@@ -93,8 +93,7 @@ Module* Module::ImportHierarchy(Processor& processor, const DottedSymbol& dotted
 	return Import(processor, dottedSymbol, binaryFlag, overwriteFlag);
 }
 
-Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol,
-					   bool binaryFlag, bool overwriteFlag)
+Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol, bool binaryFlag, bool overwriteFlag)
 {
 	enum class Type { None, Script, Binary, Compressed } type = Type::None;
 	String fileName = dottedSymbol.ToString();
@@ -125,7 +124,7 @@ Module* Module::Import(Processor& processor, const DottedSymbol& dottedSymbol,
 	}
 	if (type == Type::None) {
 		Error::Issue(ErrorType::ImportError,
-					 "can't find a module named '%s'", dottedSymbol.ToString().c_str());
+					"can't find a module named '%s'", dottedSymbol.ToString().c_str());
 		return nullptr;
 	}
 	do {

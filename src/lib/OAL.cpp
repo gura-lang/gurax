@@ -736,11 +736,7 @@ OAL::DynamicLibrary::DynamicLibrary() : _hLibrary(nullptr)
 bool OAL::DynamicLibrary::Open(const char* pathName)
 {
 	_hLibrary = ::LoadLibrary(ToNativeString(pathName).c_str());
-	if (!_hLibrary) {
-		Error::Issue(ErrorType::ImportError, "can't open module file '%s'", pathName);
-		return false;
-	}
-	return true;
+	return !!_hLibrary;
 }
 
 void* OAL::DynamicLibrary::GetEntry(const char* funcName)
