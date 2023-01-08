@@ -1,0 +1,18 @@
+#!/usr/bin/env gurax
+import(sdl) {*}
+
+if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+	Printf("SDL_Error: %s\n", SDL_GetError());
+	sys.Exit()
+}
+repeat (SDL_GetNumVideoDisplays()) {|i|
+	dispMode = SDL_GetCurrentDisplayMode(i)
+	if (!dispMode) {
+		// In case of error...
+		Printf('Display #%d: %s\n', SDL_GetError());
+	} else {
+		// On success, print the current display mode.
+		Printf('Display #%d: current display mode is %dx%dpx @ %dHz.\n', i, dispMode.w, dispMode.h, dispMode.refresh_rate)
+	}
+}
+SDL_Quit()
