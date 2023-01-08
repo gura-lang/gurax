@@ -1,6 +1,19 @@
 #!/usr/bin/env gurax
 import(sdl) {*}
+import(jpeg)
 import(gif)
+
+Texture = class {
+	entity as SDL_Texture
+	w as Number
+	h as Number
+	__init__(renderer as SDL_Renderer, surface as SDL_Surface):map = {
+		this.entity = SDL_CreateTextureFromSurface(renderer, surface)
+		this.w = surface.w
+		this.h = surface.h
+		SDL_FreeSurface(surface)
+	}
+}
 
 LTexture = class {
 	//Initializes variables
@@ -138,13 +151,13 @@ SDL_Init(SDL_INIT_EVERYTHING)
 [wdScreen, htScreen] = [800, 600]
 window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wdScreen, htScreen, 0)
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
-texture = LTexture()
-IMG_Init(IMG_INIT_PNG)
+textureBg = Texture(renderer, Image('seashore.jpg'))
+//texturesChicken = Texture(renderer, gif.Content('chicken-anim.gif'):rgba.EachImage()).Cycle()
+texturesChicken = Texture(renderer, gif.Content('chicken-anim.gif'):rgba.EachImage()::Flip(`horz)).Cycle()
 event = SDL_Event()
-texture.loadFromFile(renderer, 'chicken256.bmp')
 x = 0, y = 0
 repeat {
-	SDL_WaitEventTimeout(event, 10) // msec
+	SDL_WaitEventTimeout(event, 100) // msec
 	if (!event) {
 		// nothing to do
 	} elsif (event.type == SDL_QUIT) {
@@ -155,8 +168,8 @@ repeat {
 		//dir = choose(event.button, `left, `left, `right, `right)
 		//chickens.add(Chicken(event.x, event.y, dir))
 	}
-	SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff)
-	SDL_RenderClear(renderer)
+	//SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff)
+	//SDL_RenderClear(renderer)
 	//SDL_Rect {|rc|
 	//	rc.x = x
 	//	rc.y = y
@@ -165,9 +178,12 @@ repeat {
 	//	SDL_SetRenderDrawColor(renderer, 0xff, 0x00, 0x00, 0xff)
 	//	SDL_RenderDrawRect(renderer, rc)
 	//}
-	texture.render(renderer, x, 0)
+	SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
+	texture = texturesChicken.NextValue()
+	SDL_RenderCopy(renderer, texture.entity, nil, SDL_Rect(x, 200 - texture.h, texture.w, texture.h))
+	//texture.render(renderer, x, 0)
 	SDL_RenderPresent(renderer)
-	x += 1
+	x += 4
 }
 SDL_DestroyRenderer(renderer)
 SDL_DestroyWindow(window)
