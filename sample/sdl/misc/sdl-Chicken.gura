@@ -153,7 +153,15 @@ window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SD
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 textureBg = Texture(renderer, Image('seashore.jpg'))
 //texturesChicken = Texture(renderer, gif.Content('chicken-anim.gif'):rgba.EachImage()).Cycle()
-texturesChicken = Texture(renderer, gif.Content('chicken-anim.gif'):rgba.EachImage()::Flip(`horz)).Cycle()
+//texturesChicken = Texture(renderer, gif.Content('chicken-anim.gif'):rgba.EachImage()::Flip(`horz)).Cycle()
+texturesChicken = []
+//images = gif.Content('chicken-anim.gif').EachImage():list
+images = [Image('chicken256.bmp')]
+images.Each {|img|
+	//texturesChicken.Add(Texture(renderer, img.Flip(`horz)))
+	texturesChicken.Add(Texture(renderer, img.Flip(`horz)))
+}
+texturesChicken = texturesChicken.Cycle()
 event = SDL_Event()
 x = 0, y = 0
 repeat {
