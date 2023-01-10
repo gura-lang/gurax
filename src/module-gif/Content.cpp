@@ -21,7 +21,7 @@ Gurax_BeginModuleScope(gif)
 //------------------------------------------------------------------------------
 Content::Extensions Content::extensionsDefault;
 
-bool Content::Read(Stream& stream, Image::Format format)
+bool Content::Read(Stream& stream, const Image::Format& format)
 {
 	if (!ReadBuff(stream, &_header, 6)) return false;
 	if (::memcmp(_header.Signature, "GIF", 3) != 0) {

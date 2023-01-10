@@ -277,7 +277,7 @@ public:
 protected:
 	~Content() = default;
 public:
-	bool Read(Stream& stream, Image::Format format);
+	bool Read(Stream& stream, const Image::Format& format);
 	bool Write(Stream& stream, const Color& colorBackground, bool validBackgroundFlag);
 	bool ReadColorTable(Stream& stream, Palette& palette);
 	bool WriteColorTable(Stream& stream, const Palette& palette);

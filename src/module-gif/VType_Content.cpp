@@ -45,8 +45,7 @@ Gurax_ImplementConstructor(Content)
 	// Arguments
 	ArgPicker args(argument);
 	Stream* pStream = args.IsValid()? &args.PickStream() : nullptr;
-	const Image::Format& format =
-		argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
+	const Image::Format& format = argument.IsSet(Gurax_Symbol(rgb))? Image::Format::RGB : Image::Format::RGBA;
 	// Function body
 	RefPtr<Content> pContent(new Content());
 	if (pStream && !pContent->Read(*pStream, format)) return Value::nil();
