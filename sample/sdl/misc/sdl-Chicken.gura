@@ -60,8 +60,8 @@ repeat {
 	} elsif (event.type == SDL_KEYDOWN) {
 		(event.key.keysym.sym == SDLK_ESCAPE) && break
 	} elsif (event.type == SDL_MOUSEBUTTONDOWN) {
-		//dir = choose(event.button, `left, `left, `right, `right)
-		//chickens.add(Chicken(event.x, event.y, dir))
+		dir = `right
+		chickens.add(Chicken(wd, event.x, event.y, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
 	}
 	SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
 	chickens:*Render(renderer)
