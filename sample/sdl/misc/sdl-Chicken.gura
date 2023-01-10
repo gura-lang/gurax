@@ -7,12 +7,22 @@ Chicken = struct {
 	wd as Number
 	x as Number
 	y as Number
+	xStep as Number
 	dir as Symbol
-	textures as Iterator
+	texturesL as Iterator
+	texturesR as Iterator
 	Render(renderer as SDL_Renderer):void = {
-		texture = this.textures.NextValue()
+		texture = cond(this.dir == `left, this.texturesL, this.texturesR).NextValue()
 		ht = texture.ht * this.wd / texture.wd
 		SDL_RenderCopy(renderer, texture.entity, nil, SDL_Rect(this.x, 200 - ht, this.wd, ht))
+	}
+	Move(wdScreen as Number):void = {
+		this.x += cond(this.dir == `left, -this.xStep, this.xStep)
+		if (this.x + this.wd > wdScreen) {
+			this.dir = `left
+		} elsif (this.x <= 0) {
+			this.dir = `right
+		}
 	}
 }
 
@@ -37,9 +47,10 @@ textureBg = Texture(renderer, Image('seashore.jpg'))
 event = SDL_Event()
 x = 0, y = 0
 wd = 100
-xStep = wd / 10
-texturesChicken = Texture(renderer, gif.Content('chicken-anim.gif').EachImage():*Flip(`horz))
-chickens = [Chicken(wd, 10, 100, `left, texturesChicken.Cycle())]
+images = gif.Content('chicken-anim.gif').EachImage():list
+texturesChickenL = Texture(renderer, images)
+texturesChickenR = Texture(renderer, images:*Flip(`horz))
+chickens = [Chicken(wd, 10, 100, wd / 10, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle())]
 repeat {
 	SDL_WaitEventTimeout(event, 100) // msec
 	if (!event) {
@@ -54,8 +65,8 @@ repeat {
 	}
 	SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
 	chickens:*Render(renderer)
+	chickens:*Move(wdScreen)
 	SDL_RenderPresent(renderer)
-	x += xStep
 }
 SDL_DestroyRenderer(renderer)
 SDL_DestroyWindow(window)
