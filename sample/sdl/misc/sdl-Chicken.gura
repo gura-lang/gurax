@@ -14,7 +14,7 @@ Chicken = struct {
 	Render(renderer as SDL_Renderer):void = {
 		texture = cond(this.dir == `left, this.texturesL, this.texturesR).NextValue()
 		ht = texture.ht * this.wd / texture.wd
-		SDL_RenderCopy(renderer, texture.entity, nil, SDL_Rect(this.x, 200 - ht, this.wd, ht))
+		SDL_RenderCopy(renderer, texture.entity, nil, SDL_Rect(this.x, this.y - ht, this.wd, ht))
 	}
 	Move(wdScreen as Number):void = {
 		this.x += cond(this.dir == `left, -this.xStep, this.xStep)
@@ -44,8 +44,8 @@ window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SD
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 textureBg = Texture(renderer, Image('seashore.jpg'))
 imgs = gif.Content('chicken-anim.gif'):*EachImage():list
-texturesChickenL = Texture(renderer, imgs)
-texturesChickenR = Texture(renderer, imgs:*Flip(`horz))
+texturesChickenL = Texture(renderer, imgs):list
+texturesChickenR = Texture(renderer, imgs:*Flip(`horz)):list
 event = SDL_Event()
 x = 0, y = 0
 wd = 100
@@ -60,7 +60,7 @@ repeat {
 		(event.key.keysym.sym == SDLK_ESCAPE) && break
 	} elsif (event.type == SDL_MOUSEBUTTONDOWN) {
 		dir = `right
-		chickens.Add(Chicken(wd, event.mouse.x, event.mouse.y, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
+		chickens.Add(Chicken(wd, event.button.x, event.button.y, 20, dir, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
 	}
 	SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
 	chickens:*Render(renderer)
