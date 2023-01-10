@@ -519,13 +519,13 @@ Gurax_ImplementMethod(Image, ReduceColor)
 	return new Value_Image(pImageRtn.release());
 }
 
-// Image#Resize(wdDst:Number, htDst:Number, xSrc?:Number, ySrc?:Number,
-//              wdSrc?:Number, htSrc?:Number):[rgb,rgba]
+// Image#Resize(wdDst:nil as Number, htDst:nil as Number, xSrc? as Number, ySrc? as Number,
+//              wdSrc? as Number, htSrc? as Number):[rgb,rgba]
 Gurax_DeclareMethod(Image, Resize)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
-	DeclareArg("wdDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("htDst", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("wdDst", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil);
+	DeclareArg("htDst", VTYPE_Number, ArgOccur::Once, ArgFlag::Nil);
 	DeclareArg("xSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("ySrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareArg("wdSrc", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
@@ -555,8 +555,8 @@ Gurax_ImplementMethod(Image, Resize)
 	Image& imageSrc = valueThis.GetImage();
 	// Argument
 	ArgPicker args(argument);
-	int wdDst = args.PickNumber<int>();
-	int htDst = args.PickNumber<int>();
+	int wdDst = args.IsValid()? args.PickNumber<int>() : 0;
+	int htDst = args.IsValid()? args.PickNumber<int>() : 0;
 	int xSrc = args.IsValid()? args.PickNumber<int>() : 0;
 	int ySrc = args.IsValid()? args.PickNumber<int>() : 0;
 	int wdSrc = args.IsValid()? args.PickNumber<int>() : imageSrc.GetWidth() - xSrc;
@@ -566,9 +566,13 @@ Gurax_ImplementMethod(Image, Resize)
 		argument.IsSet(Gurax_Symbol(rgba))? Image::Format::RGBA :
 		imageSrc.GetFormat();
 	// Function body
-	if (wdDst <= 0 || htDst <= 0) {
+	if (wdDst <= 0 && htDst <= 0) {
 		Error::Issue(ErrorType::RangeError, "invalid value for wdDst and htDst.");
 		return Value::nil();
+	} else if (wdDst <= 0) {
+		wdDst = wdSrc * htDst / htSrc;
+	} else if (htDst <= 0) {
+		htDst = htSrc * wdDst / wdSrc;
 	}
 	if (!imageSrc.CheckArea(xSrc, ySrc, wdSrc, htSrc)) return Value::nil();
 	RefPtr<Image> pImage(new Image(format, imageSrc.GetAlphaDefault()));
