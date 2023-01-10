@@ -3,158 +3,43 @@ import(sdl) {*}
 import(jpeg)
 import(gif)
 
+Chicken = struct {
+	wd as Number
+	x as Number
+	y as Number
+	dir as Symbol
+	textures as Iterator
+	Render(renderer as SDL_Renderer):void = {
+		texture = this.textures.NextValue()
+		ht = texture.ht * this.wd / texture.wd
+		SDL_RenderCopy(renderer, texture.entity, nil, SDL_Rect(this.x, 200 - ht, this.wd, ht))
+	}
+}
+
 Texture = class {
 	entity as SDL_Texture
-	w as Number
-	h as Number
+	wd as Number
+	ht as Number
 	__init__(renderer as SDL_Renderer, surface as SDL_Surface):map = {
 		this.entity = SDL_CreateTextureFromSurface(renderer, surface)
-		this.w = surface.w
-		this.h = surface.h
+		this.wd = surface.w
+		this.ht = surface.h
 		SDL_FreeSurface(surface)
 	}
 }
 
-LTexture = class {
-	//Initializes variables
-	__init__() = {
-		//Initialize
-		this.mTexture = nil;
-		this.mWidth = 0;
-		this.mHeight = 0;
-	}
-
-	//Deallocates memory
-	__del__() = {
-		this.free()
-	};
-
-	//Loads image at specified path
-	loadFromFile(renderer as SDL_Renderer, path as String) = {
-		//Get rid of preexisting texture
-		this.free();
-
-		//The final texture
-		newTexture = nil;
-
-		//Load image at specified path
-		loadedSurface = IMG_Load(path);
-		if (!loadedSurface) {
-			Printf("Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError());
-		} else {
-			//Color key image
-			SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface.format, 0, 0xFF, 0xFF));
-
-			//Create texture from surface pixels
-			newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-			if (!newTexture) {
-				Printf("Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError());
-			} else {
-				//Get image dimensions
-				this.mWidth = loadedSurface.w;
-				this.mHeight = loadedSurface.h;
-			}
-
-			//Get rid of old loaded surface
-			SDL_FreeSurface(loadedSurface);
-		}
-
-		//Return success
-		this.mTexture = newTexture;
-		this.mTexture != nil;
-	}
-
-	//Creates image from font string
-	loadFromRenderedText(renderer as SDL_Renderer, textureText as String, textColor as SDL_Color) = {
-		//Get rid of preexisting texture
-		this.free();
-
-		//Render text surface
-		textSurface = TTF_RenderText_Solid(gFont, textureText, textColor);
-		if (!textSurface) {
-			Printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
-		} else {
-			//Create texture from surface pixels
-			this.mTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-			if (!this.mTexture) {
-				Printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
-			} else {
-				//Get image dimensions
-				this.mWidth = textSurface.w;
-				this.mHeight = textSurface.h;
-			}
-
-			//Get rid of old surface
-			SDL_FreeSurface(textSurface);
-		}
-		
-		//Return success
-		this.mTexture != nil;
-	}
-
-	//Deallocates texture
-	free() = {
-		if (this.mTexture) {
-			SDL_DestroyTexture(this.mTexture);
-			this.mTexture = nil;
-			this.mWidth = 0;
-			this.mHeight = 0;
-		}
-	}
-
-	//Set color modulation
-	setColor(red as Number, green as Number, blue as Number) = {
-		//Modulate texture
-		SDL_SetTextureColorMod(this.mTexture, red, green, blue);
-	}
-
-	//Set blending
-	setBlendMode(blending as Number) = {
-		//Set blending function
-		SDL_SetTextureBlendMode(this.mTexture, blending);
-	}
-			
-	//Set alpha modulation
-	setAlpha(alpha as Number) = {
-		//Modulate texture alpha
-		SDL_SetTextureAlphaMod(this.mTexture, alpha);
-	}
-
-	//Renders texture at given point
-	render(renderer as SDL_Renderer, x as Number, y as Number, clip? as SDL_Rect, angle as Number = 0.0, center? as SDL_Point, flip as Number = SDL_FLIP_NONE) = {
-		//Set rendering space and render to screen
-		renderQuad = SDL_Rect(x, y, this.mWidth, this.mHeight);
-
-		//Set clip rendering dimensions
-		if (clip) {
-			renderQuad.w = clip.w;
-			renderQuad.h = clip.h;
-		}
-
-		//Render to screen
-		SDL_RenderCopyEx(renderer, this.mTexture, clip, renderQuad, angle, center, flip);
-	}
-
-	//Gets image dimensions
-	getWidth() = this.mWidth;
-	getHeight() = this.mHeight;
-
-	//The actual hardware texture
-	mTexture as SDL_Texture;
-
-	//Image dimensions
-	mWidth as Number;
-	mHeight as Number;
-};
 
 SDL_Init(SDL_INIT_EVERYTHING)
 [wdScreen, htScreen] = [800, 600]
 window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wdScreen, htScreen, 0)
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 textureBg = Texture(renderer, Image('seashore.jpg'))
-texturesChicken = Texture(renderer, gif.Content('chicken-anim.gif').EachImage():*Flip(`horz)).Cycle()
 event = SDL_Event()
 x = 0, y = 0
+wd = 100
+xStep = wd / 10
+texturesChicken = Texture(renderer, gif.Content('chicken-anim.gif').EachImage():*Flip(`horz))
+chickens = [Chicken(wd, 10, 100, `left, texturesChicken.Cycle())]
 repeat {
 	SDL_WaitEventTimeout(event, 100) // msec
 	if (!event) {
@@ -167,22 +52,10 @@ repeat {
 		//dir = choose(event.button, `left, `left, `right, `right)
 		//chickens.add(Chicken(event.x, event.y, dir))
 	}
-	//SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff)
-	//SDL_RenderClear(renderer)
-	//SDL_Rect {|rc|
-	//	rc.x = x
-	//	rc.y = y
-	//	rc.w = 40
-	//	rc.h = 60
-	//	SDL_SetRenderDrawColor(renderer, 0xff, 0x00, 0x00, 0xff)
-	//	SDL_RenderDrawRect(renderer, rc)
-	//}
 	SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
-	texture = texturesChicken.NextValue()
-	SDL_RenderCopy(renderer, texture.entity, nil, SDL_Rect(x, 200 - texture.h, texture.w, texture.h))
-	//texture.render(renderer, x, 0)
+	chickens:*Render(renderer)
 	SDL_RenderPresent(renderer)
-	x += 4
+	x += xStep
 }
 SDL_DestroyRenderer(renderer)
 SDL_DestroyWindow(window)
