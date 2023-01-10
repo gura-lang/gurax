@@ -7,8 +7,8 @@ Chicken = struct {
 	wd as Number
 	x as Number
 	y as Number
-	xStep as Number
-	dir as Symbol
+	xStep:nil as Number
+	dir:nil as Symbol
 	texturesL as Iterator
 	texturesR as Iterator
 	Render(renderer as SDL_Renderer):void = {
@@ -38,19 +38,18 @@ Texture = class {
 	}
 }
 
-
 SDL_Init(SDL_INIT_EVERYTHING)
 [wdScreen, htScreen] = [800, 600]
 window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wdScreen, htScreen, 0)
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
 textureBg = Texture(renderer, Image('seashore.jpg'))
+imgs = gif.Content('chicken-anim.gif'):*EachImage():list
+texturesChickenL = Texture(renderer, imgs)
+texturesChickenR = Texture(renderer, imgs:*Flip(`horz))
 event = SDL_Event()
 x = 0, y = 0
 wd = 100
-images = gif.Content('chicken-anim.gif').EachImage():list
-texturesChickenL = Texture(renderer, images)
-texturesChickenR = Texture(renderer, images:*Flip(`horz))
-chickens = [Chicken(wd, 10, 100, wd / 10, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle())]
+chickens = [Chicken(wd, 10, 100, 20, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle())]
 repeat {
 	SDL_WaitEventTimeout(event, 100) // msec
 	if (!event) {
@@ -61,7 +60,7 @@ repeat {
 		(event.key.keysym.sym == SDLK_ESCAPE) && break
 	} elsif (event.type == SDL_MOUSEBUTTONDOWN) {
 		dir = `right
-		chickens.add(Chicken(wd, event.x, event.y, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
+		chickens.Add(Chicken(wd, event.mouse.x, event.mouse.y, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
 	}
 	SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
 	chickens:*Render(renderer)
