@@ -212,6 +212,18 @@ TestCase('List#Erase()') {
 }
 
 TestCase('List#Get()') {
+	tbl = [0..19]
+	Tester(`tbl.Get(0))
+	Tester(`tbl.Get(5))
+	Tester(`tbl.Get(19))
+	Tester(`tbl.Get(20))
+	Tester(`tbl.Get(21))
+	Tester(`tbl.Get(20):raise)
+	Tester(`tbl.Get(-1))
+	Tester(`tbl.Get(-20))
+	Tester(`tbl.Get(-21))
+	Tester(`tbl.Get(-22))
+	Tester(`tbl.Get(-21):raise)
 }
 
 TestCase('List#Insert()') {
