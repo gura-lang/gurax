@@ -42,16 +42,25 @@ SDL_Init(SDL_INIT_EVERYTHING)
 [wdScreen, htScreen] = [800, 600]
 window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wdScreen, htScreen, 0)
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
-textureBg = Texture(renderer, Image('seashore.jpg'))
-imgs = gif.Content('chicken-anim.gif'):*EachImage():list
+textureBg = Texture(renderer, Image('data/seashore.jpg'))
+imgs = gif.Content('data/chicken-anim.gif'):*EachImage():list
 texturesChickenL = Texture(renderer, imgs):list
 texturesChickenR = Texture(renderer, imgs:*Flip(`horz)):list
 event = SDL_Event()
 x = 0, y = 0
 wd = 100
 chickens = [Chicken(wd, 10, 100, 20, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle())]
+timePrev = SDL_GetTicks()
 repeat {
-	SDL_WaitEventTimeout(event, 100) // msec
+	timeCur = SDL_GetTicks()
+	if (timePrev > timeCur || timeCur > timePrev + 100) {
+		SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
+		chickens:*Render(renderer)
+		chickens:*Move(wdScreen)
+		SDL_RenderPresent(renderer)
+		timePrev = timeCur
+	}
+	SDL_WaitEventTimeout(event, 10) // 10msec
 	if (!event) {
 		// nothing to do
 	} elsif (event.type == SDL_QUIT) {
@@ -59,13 +68,10 @@ repeat {
 	} elsif (event.type == SDL_KEYDOWN) {
 		(event.key.keysym.sym == SDLK_ESCAPE) && break
 	} elsif (event.type == SDL_MOUSEBUTTONDOWN) {
+		//dir = cond(event.button == `right
 		dir = `right
 		chickens.Add(Chicken(wd, event.button.x, event.button.y, 20, dir, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
 	}
-	SDL_RenderCopy(renderer, textureBg.entity, nil, nil)
-	chickens:*Render(renderer)
-	chickens:*Move(wdScreen)
-	SDL_RenderPresent(renderer)
 }
 SDL_DestroyRenderer(renderer)
 SDL_DestroyWindow(window)
