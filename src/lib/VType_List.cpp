@@ -260,11 +260,12 @@ Gurax_ImplementMethod(List, Erase)
 	return argument.GetValueThis().Reference();
 }
 
-// List#Get(pos as Number):map:flat
+// List#Get(pos as Number):map:flat:[raise]
 Gurax_DeclareMethod(List, Get)
 {
 	Declare(VTYPE_Any, Flag::Map | Flag::Flat);
 	DeclareArg("pos", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(raise));
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Returns a value stored at the specified index in the list.
 An error occurs when the index is out of range.
@@ -280,8 +281,9 @@ Gurax_ImplementMethod(List, Get)
 	ArgPicker args(argument);
 	Int pos = args.PickNumber<Int>();
 	if (Error::IsIssued()) return Value::nil();
+	bool raiseFlag = argument.IsSet(Gurax_Symbol(raise));
 	// Function body
-	if (!valueOwner.FixPosition(&pos)) return Value::nil();
+	if (!valueOwner.FixPosition(&pos, raiseFlag)) return Value::nil();
 	return valueOwner.Get(pos).Reference();
 }
 

@@ -31,9 +31,9 @@ public:
 	VType& GetVTypeOfElems() const;
 	VType& GetVTypeOfElemsQuick() const;
 	void IncCntRefOfEach() const;
-	bool CheckPosition(Int pos, Int posRaw) const;
-	bool CheckPosition(Int pos) const { return CheckPosition(pos, pos); }
-	bool FixPosition(Int* pPos) const;
+	bool CheckPosition(Int pos, Int posRaw, bool raiseFlag) const;
+	bool CheckPosition(Int pos, bool raiseFlag) const { return CheckPosition(pos, pos, raiseFlag); }
+	bool FixPosition(Int* pPos, bool raiseFlag) const;
 	bool Contains(const Value& value) const;
 	size_t Count(const Value& value) const;
 	size_t CountFalse() const;

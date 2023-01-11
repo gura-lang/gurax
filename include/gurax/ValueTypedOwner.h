@@ -99,8 +99,8 @@ public:
 	ValueOwner* GetValueOwnerReference() const { return _pValueOwner->Reference(); }
 	VType& GetVTypeOfElems() const { return *_pVTypeOfElems; }
 	VType& RefreshVTypeOfElems();
-	bool CheckPosition(Int pos) const { return GetValueOwner().CheckPosition(pos); }
-	bool FixPosition(Int* pPos) const { return GetValueOwner().FixPosition(pPos); }
+	bool CheckPosition(Int pos, bool raiseFlag) const { return GetValueOwner().CheckPosition(pos, raiseFlag); }
+	bool FixPosition(Int* pPos, bool raiseFlag) const { return GetValueOwner().FixPosition(pPos, raiseFlag); }
 	bool HasDeterminedVTypeOfElems() const;
 	Iterator* GenerateIterator() const;
 };

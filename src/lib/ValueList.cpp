@@ -72,18 +72,18 @@ void ValueList::IncCntRefOfEach() const
 	for (Value* pValue : *this) pValue->IncCntRef();
 }
 
-bool ValueList::CheckPosition(Int pos, Int posRaw) const
+bool ValueList::CheckPosition(Int pos, Int posRaw, bool raiseFlag) const
 {
 	if (0 <= pos && static_cast<size_t>(pos) < size()) return true;
-	IssueError_IndexOutOfRange(posRaw);
+	if (raiseFlag) IssueError_IndexOutOfRange(posRaw);
 	return false;
 }
 
-bool ValueList::FixPosition(Int* pPos) const
+bool ValueList::FixPosition(Int* pPos, bool raiseFlag) const
 {
 	Int posRaw = *pPos;
 	if (*pPos < 0) *pPos += size();
-	return CheckPosition(*pPos, posRaw);
+	return CheckPosition(*pPos, posRaw, raiseFlag);
 }
 
 bool ValueList::Contains(const Value& value) const

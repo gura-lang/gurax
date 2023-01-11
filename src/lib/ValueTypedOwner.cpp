@@ -23,7 +23,7 @@ void ValueTypedOwner::Clear()
 bool ValueTypedOwner::Set(Int pos, Value* pValue)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
-	if (!valueOwner.FixPosition(&pos)) return false;
+	if (!valueOwner.FixPosition(&pos, true)) return false;
 	UpdateVTypeOfElems(*pValue);
 	valueOwner.Set(pos, pValue);
 	return true;
@@ -192,7 +192,7 @@ bool ValueTypedOwner::Insert(Int pos, const ValueList& values)
 		Add(values);
 		return true;
 	}
-	if (!valueOwner.FixPosition(&pos)) return false;
+	if (!valueOwner.FixPosition(&pos, true)) return false;
 	UpdateVTypeOfElems(values.GetVTypeOfElems());
 	valueOwner.Insert(pos, values);
 	return true;
@@ -205,7 +205,7 @@ bool ValueTypedOwner::Insert(Int pos, const ValueTypedOwner& values)
 		Add(values);
 		return true;
 	}
-	if (!valueOwner.FixPosition(&pos)) return false;
+	if (!valueOwner.FixPosition(&pos, true)) return false;
 	UpdateVTypeOfElems(values.GetVTypeOfElems());
 	valueOwner.Add(values.GetValueOwner());
 	return true;
@@ -216,7 +216,7 @@ bool ValueTypedOwner::Insert(Int pos, Iterator& iterator)
 	if (!iterator.MustBeFinite()) return false;
 	ValueOwner& valueOwner = GetValueOwnerToModify();
 	if (valueOwner.size() == pos) return Add(iterator);
-	if (!valueOwner.FixPosition(&pos)) return false;
+	if (!valueOwner.FixPosition(&pos, true)) return false;
 	for (;;) {
 		RefPtr<Value> pValue(iterator.NextValue());
 		if (!pValue) break;
@@ -230,7 +230,7 @@ bool ValueTypedOwner::Insert(Int pos, Iterator& iterator)
 bool ValueTypedOwner::Erase(Int pos)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
-	if (!valueOwner.FixPosition(&pos)) return false;
+	if (!valueOwner.FixPosition(&pos, true)) return false;
 	ValueOwner::iterator ppValue = valueOwner.begin() + pos;
 	Value::Delete(*ppValue);
 	valueOwner.erase(ppValue);
@@ -242,7 +242,7 @@ bool ValueTypedOwner::Erase(const NumList<Int>& posList)
 {
 	ValueOwner& valueOwner = GetValueOwnerToModify();
 	for (Int pos : posList) {
-		if (!valueOwner.CheckPosition(pos)) return false;
+		if (!valueOwner.CheckPosition(pos, true)) return false;
 		ValueOwner::iterator ppValue = valueOwner.begin() + pos;
 		Value::Delete(*ppValue);
 		valueOwner.erase(ppValue);
