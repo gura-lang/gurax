@@ -482,31 +482,35 @@ void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 	UInt8* pLineDst = pixelDst.GetPointerC();
 	const UInt8* pLineSrc = pixelSrc.GetPointerC();
 	size_t htAccum = 0;
-	for (size_t ySrc = 0; ySrc < htSrc; ySrc++) {
-		const UInt8* pSrc = pLineSrc;
-		size_t wdAccum = 0;
-		size_t xDst = 0;
-		for (size_t xSrc = 0; xSrc < wdSrc; xSrc++) {
-			accumulator.Store<T_PixelSrc>(xDst, pSrc);
-			wdAccum += wdDst;
-			if (wdAccum >= wdSrc) {
-				wdAccum -= wdSrc;
-				xDst++;
+	if (wdDst == wdSrc && htDst == htSrc) {
+		Pixel::Paste(pixelDst, pixelSrc, wdDst, htDst);
+	} else if (wdDst < wdSrc && htDst < htSrc) {
+		for (size_t ySrc = 0; ySrc < htSrc; ySrc++) {
+			const UInt8* pSrc = pLineSrc;
+			size_t wdAccum = 0;
+			size_t xDst = 0;
+			for (size_t xSrc = 0; xSrc < wdSrc; xSrc++) {
+				accumulator.Store<T_PixelSrc>(xDst, pSrc);
+				wdAccum += wdDst;
+				if (wdAccum >= wdSrc) {
+					wdAccum -= wdSrc;
+					xDst++;
+				}
+				pSrc += T_PixelSrc::bytesPerPixel;
 			}
-			pSrc += T_PixelSrc::bytesPerPixel;
-		}
-		htAccum += htDst;
-		if (htAccum >= htSrc) {
-			UInt8* pDst = pLineDst;
-			for (size_t xDst = 0; xDst < wdDst; xDst++) {
-				accumulator.Extract<T_PixelDst>(xDst, pDst);
-				pDst += T_PixelDst::bytesPerPixel;
+			htAccum += htDst;
+			if (htAccum >= htSrc) {
+				UInt8* pDst = pLineDst;
+				for (size_t xDst = 0; xDst < wdDst; xDst++) {
+					accumulator.Extract<T_PixelDst>(xDst, pDst);
+					pDst += T_PixelDst::bytesPerPixel;
+				}
+				htAccum -= htSrc;
+				pLineDst += pixelDst.GetBytesPerLine();
+				accumulator.Clear();
 			}
-			htAccum -= htSrc;
-			pLineDst += pixelDst.GetBytesPerLine();
-			accumulator.Clear();
+			pLineSrc += pixelSrc.GetBytesPerLine();
 		}
-		pLineSrc += pixelSrc.GetBytesPerLine();
 	}
 }
 
