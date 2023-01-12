@@ -496,12 +496,12 @@ public:
 	void Fill(const Color& color);
 	void FillRect(size_t x, size_t y, size_t width, size_t height, const Color& color);
 	void Paste(size_t xDst, size_t yDst, const Image& imageSrc,
-			   size_t xSrc, size_t ySrc, size_t width, size_t height);
+				size_t xSrc, size_t ySrc, size_t width, size_t height);
 	template<typename T_PixelDst, typename T_PixelSrc>
 	static void ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
-							 const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
+							const T_PixelSrc& pixelSrc, size_t wdSrc, size_t htSrc);
 	void ResizePaste(size_t xDst, size_t yDst, size_t wdDst, size_t htDst, const Image& imageSrc,
-					 size_t xSrc, size_t ySrc, size_t width, size_t height);
+					size_t xSrc, size_t ySrc, size_t width, size_t height);
 	Image* Crop(const Format& format, size_t x, size_t y, size_t width, size_t height) const;
 	Image* Crop(size_t x, size_t y, size_t width, size_t height) const {
 		return Crop(GetFormat(), x, y, width, height);
@@ -523,7 +523,7 @@ public:
 	Image* GrayScale() const { return GrayScale(GetFormat()); }
 	template<typename T_PixelDst, typename T_PixelSrc>
 	static void MapColorLevelT(T_PixelDst& pixelDst, T_PixelSrc& pixelSrc,
-							   const UInt8* mapR, const UInt8* mapG, const UInt8* mapB);
+							const UInt8* mapR, const UInt8* mapG, const UInt8* mapB);
 	Image* MapColorLevel(const Format& format, const UInt8* mapR, const UInt8* mapG, const UInt8* mapB) const;
 	Image* MapColorLevel(const UInt8* mapR, const UInt8* mapG, const UInt8* mapB) const {
 		return MapColorLevel(GetFormat(), mapR, mapG, mapB);

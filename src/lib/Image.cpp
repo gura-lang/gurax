@@ -514,26 +514,24 @@ void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 	} else if (wdDst > wdSrc && htDst > htSrc) {
 		size_t yAccum = 0, yOffset = 0;
 		for (size_t yDst = 0; yDst < htDst; yDst++) {
+			size_t xAccum = 0;
 			const UInt8* pSrc = pLineSrc;
-			size_t xAccum = 0, xOffset = 0;
-			
+			const UInt8* pDst = pLineDst;
 			for (size_t xDst = 0; xDst < wdDst; xDst++) {
 				
-				xAccum += wdSrc, xOffset++;
+				xAccum += wdSrc;
 				if (xAccum >= wdDst) {
 					pSrc++;
 					xAccum -= wdDst;
-					xOffset = 0;
-
 				}
 			}
-			yAccum += htSrc, yOffset++;
+			yAccum += htSrc;
 			if (yAccum >= htDst) {
 				pLineSrc += pixelSrc.GetBytesPerLine();
 				yAccum -= htDst;
-				yOffset = 0;
 
 			}
+			pLineDst += pixelDst.GetBytesPerLine();
 		}
 	}
 }
