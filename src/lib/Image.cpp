@@ -517,11 +517,11 @@ void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 			size_t xAccum = 0;
 			UInt8* pDst = pLineDst;
 			const UInt8* pSrc = pLineSrc;
-			for (size_t xDst = 0; xDst < wdDst; xDst++) {
+			for (size_t xDst = 0; xDst < wdDst; xDst++, pDst += T_PixelDst::bytesPerPixel) {
 				PutPixel<T_PixelDst, T_PixelSrc>(pDst, pSrc);
 				xAccum += wdSrc;
 				if (xAccum >= wdDst) {
-					pSrc++;
+					pSrc += T_PixelSrc::bytesPerPixel;
 					xAccum -= wdDst;
 				}
 			}
