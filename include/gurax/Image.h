@@ -414,7 +414,7 @@ public:
 		bool IsEmpty() const { return _nCols == 0 || _nRows == 0; }
 		size_t GetLength() const { return _nCols * _nRows; }
 	public:
-		template<typename T_PixelDst, typename T_PixelSrc> void PutPixel(const UInt8* p) {}
+		template<typename T_PixelDst, typename T_PixelSrc> void PutPixel(const UInt8* pSrc) {}
 		template<typename T_PixelDst, typename T_PixelSrc>
 		static void PasteT(Scanner& scannerDst, Scanner& scannerSrc);
 		static void Paste(Scanner& scannerDst, Scanner& scannerSrc);
@@ -534,6 +534,7 @@ public:
 		return IsFormat(Format::RGB)? MakePixel<PixelRGB>(x, y).GetColor() :
 			IsFormat(Format::RGBA)? MakePixel<PixelRGBA>(x, y).GetColor() : Color::zero;
 	}
+	template<typename T_PixelDst, typename T_PixelSrc> static void PutPixel(UInt8* pDst, const UInt8* pSrc) {}
 	void PutPixelColor(size_t x, size_t y, const Color& color) const {
 		if (IsFormat(Format::RGB)) { MakePixel<PixelRGB>(x, y).SetColor(color); }
 		else if (IsFormat(Format::RGBA)) { MakePixel<PixelRGBA>(x, y).SetColor(color); }
@@ -557,6 +558,30 @@ public:
 	bool IsLessThan(const Image& image) const { return this < &image; }
 	String ToString(const StringStyle& ss = StringStyle::Empty) const;
 };
+
+template<>
+inline void Image::PutPixel<Image::PixelRGB, Image::PixelRGB>(UInt8* pDst, const UInt8* pSrc)
+{
+	::memcpy(pDst, pSrc, PixelRGB::bytesPerPixel);
+}
+
+template<>
+inline void Image::PutPixel<Image::PixelRGB, Image::PixelRGBA>(UInt8* pDst, const UInt8* pSrc)
+{
+	PixelRGB::SetRGB(pDst, Pixel::GetR(pSrc), Pixel::GetG(pSrc), Pixel::GetB(pSrc));
+}
+
+template<>
+inline void Image::PutPixel<Image::PixelRGBA, Image::PixelRGB>(UInt8* pDst, const UInt8* pSrc)
+{
+	PixelRGBA::SetRGBA(pDst, Pixel::GetR(pSrc), Pixel::GetG(pSrc), Pixel::GetB(pSrc), 0xff);
+}
+
+template<>
+inline void Image::PutPixel<Image::PixelRGBA, Image::PixelRGBA>(UInt8* pDst, const UInt8* pSrc)
+{
+	PixelRGBA::SetPacked(pDst, PixelRGBA::GetPacked(pSrc));
+}
 
 template<> inline void Image::PixelRGBA::PutPixel<Image::PixelRGB>(const UInt8* p)
 {

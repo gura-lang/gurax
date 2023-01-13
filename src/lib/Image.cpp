@@ -161,28 +161,28 @@ Image::Scanner Image::Scanner::RightBottomVert(const Image& image, size_t x, siz
 }
 
 template<>
-void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGB>(const UInt8* p)
+void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGB>(const UInt8* pSrc)
 {
-	::memcpy(GetPointerC(), p, PixelRGB::bytesPerPixel);
+	::memcpy(GetPointerC(), pSrc, PixelRGB::bytesPerPixel);
 }
 
 template<>
-void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGBA>(const UInt8* p)
+void Image::Scanner::PutPixel<Image::PixelRGB, Image::PixelRGBA>(const UInt8* pSrc)
 {
-	PixelRGB::SetRGB(GetPointerC(), Pixel::GetR(p), Pixel::GetG(p), Pixel::GetB(p));
+	PixelRGB::SetRGB(GetPointerC(), Pixel::GetR(pSrc), Pixel::GetG(pSrc), Pixel::GetB(pSrc));
 }
 
 template<>
-void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGB>(const UInt8* p)
+void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGB>(const UInt8* pSrc)
 {
-	PixelRGBA::SetRGBA(GetPointerC(), Pixel::GetR(p), Pixel::GetG(p), Pixel::GetB(p),
+	PixelRGBA::SetRGBA(GetPointerC(), Pixel::GetR(pSrc), Pixel::GetG(pSrc), Pixel::GetB(pSrc),
 						GetMetrics().alphaDefault);
 }
 
 template<>
-void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGBA>(const UInt8* p)
+void Image::Scanner::PutPixel<Image::PixelRGBA, Image::PixelRGBA>(const UInt8* pSrc)
 {
-	PixelRGBA::SetPacked(GetPointerC(), PixelRGBA::GetPacked(p));
+	PixelRGBA::SetPacked(GetPointerC(), PixelRGBA::GetPacked(pSrc));
 }
 
 template<typename T_PixelDst, typename T_PixelSrc>
@@ -515,10 +515,10 @@ void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 		size_t yAccum = 0, yOffset = 0;
 		for (size_t yDst = 0; yDst < htDst; yDst++) {
 			size_t xAccum = 0;
+			UInt8* pDst = pLineDst;
 			const UInt8* pSrc = pLineSrc;
-			const UInt8* pDst = pLineDst;
 			for (size_t xDst = 0; xDst < wdDst; xDst++) {
-				
+				PutPixel<T_PixelDst, T_PixelSrc>(pDst, pSrc);
 				xAccum += wdSrc;
 				if (xAccum >= wdDst) {
 					pSrc++;
@@ -529,7 +529,6 @@ void Image::ResizePasteT(T_PixelDst& pixelDst, size_t wdDst, size_t htDst,
 			if (yAccum >= htDst) {
 				pLineSrc += pixelSrc.GetBytesPerLine();
 				yAccum -= htDst;
-
 			}
 			pLineDst += pixelDst.GetBytesPerLine();
 		}
