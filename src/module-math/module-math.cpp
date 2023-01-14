@@ -82,7 +82,7 @@ void Function_Binary::DoCompose(Composer& composer, Expr_Caller& exprCaller) con
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
-// math.e:Number
+// math.e as Number
 Gurax_DeclareModuleProperty_R(e)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -95,7 +95,7 @@ Gurax_ImplementModulePropertyGetter(e)
 	return pValue->Reference();
 }
 
-// math.pi:Number
+// math.pi as Number
 Gurax_DeclareModuleProperty_R(pi)
 {
 	Declare(VTYPE_Number, Flag::None);

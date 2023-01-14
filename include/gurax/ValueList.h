@@ -40,6 +40,10 @@ public:
 	size_t CountTrue() const;
 	size_t CountIf(Processor& processor, const Function& function) const;
 	Value& Get(Int pos) const { return *at(pos); }
+	const Value& Max() const;
+	const Value& Min() const;
+	const Value& Max(size_t* pIdx) const;
+	const Value& Min(size_t* pIdx) const;
 	//bool IndexGet(const Value& valueIndex, Value** ppValue, bool tupleResultFlag) const;
 	template<typename T_Num>
 	NumList<T_Num> ToNumList() const { return Value_Number::GetNumList<T_Num>(*this); }

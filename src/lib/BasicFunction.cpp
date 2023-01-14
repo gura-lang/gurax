@@ -65,7 +65,7 @@ Below is an example of creating a two-dimentional list containing strings.
 }
 
 ValueTypedOwner* DimSub(Processor& processor, NumList<Int>& cntList, NumList<Int>::iterator pCnt,
-   NumList<Int>& idxList, NumList<Int>::iterator pIdx, const Expr_Block* pExprOfBlock, Argument* pArgSub)
+	NumList<Int>& idxList, NumList<Int>::iterator pIdx, const Expr_Block* pExprOfBlock, Argument* pArgSub)
 {
 	RefPtr<ValueOwner> pValueOwner(new ValueOwner());
 	if (pCnt + 1 != cntList.end()) {
@@ -177,7 +177,7 @@ The `flags` takes one of the following characters.
 - `-` .. Adjust a string to left.
 - `[SPC]` .. Appends a space character before a positive number.
 - `#` .. Appends a prefix before a numbers "`0b`" for a binary,
-         "`0`" for an octal and "`0x`" for a hexadecimal number.
+        "`0`" for an octal and "`0x`" for a hexadecimal number.
 - `0` .. Fills lacking columns with "`0`" instead of space characters.`
 
 The `width` is a decimal number that specifies a minimum character.
@@ -259,6 +259,54 @@ Gurax_ImplementFunction(Int)
 	}
 	Error::Issue(ErrorType::TypeError, "Number or String must be specified");
 	return Value::nil();
+}
+
+// Max(values+):[index]
+Gurax_DeclareFunction(Max)
+{
+	Declare(VTYPE_Nil, Flag::Map);
+	DeclareArg("values", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(index));
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
+}
+
+Gurax_ImplementFunction(Max)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& valueList = args.PickList();
+	// Function body
+	if (argument.IsSet(Gurax_Symbol(index))) {
+		size_t idx = 0;
+		valueList.Max(&idx);
+		return new Value_Number(idx);
+	}
+	return valueList.Max().Reference();
+}
+
+// Min(values+):[index]
+Gurax_DeclareFunction(Min)
+{
+	Declare(VTYPE_Nil, Flag::Map);
+	DeclareArg("values", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
+	DeclareAttrOpt(Gurax_Symbol(index));
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
+}
+
+Gurax_ImplementFunction(Min)
+{
+	// Arguments
+	ArgPicker args(argument);
+	const ValueList& valueList = args.PickList();
+	// Function body
+	if (argument.IsSet(Gurax_Symbol(index))) {
+		size_t idx = 0;
+		valueList.Min(&idx);
+		return new Value_Number(idx);
+	}
+	return valueList.Min().Reference();
 }
 
 // Ord(str as String):map
@@ -477,6 +525,8 @@ void BasicFunction::Prepare(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(dir));
 	frame.Assign(Gurax_CreateFunction(Format));
 	frame.Assign(Gurax_CreateFunction(Int));
+	frame.Assign(Gurax_CreateFunction(Max));
+	frame.Assign(Gurax_CreateFunction(Min));
 	frame.Assign(Gurax_CreateFunction(Ord));
 	frame.Assign(Gurax_CreateFunction(Print));
 	frame.Assign(Gurax_CreateFunction(Printf));

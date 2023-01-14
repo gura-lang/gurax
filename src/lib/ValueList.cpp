@@ -135,6 +135,62 @@ size_t ValueList::CountIf(Processor& processor, const Function& function) const
 	return cnt;
 }
 
+const Value& ValueList::Max() const
+{
+	if (empty()) return Value::C_nil();
+	ValueList::const_iterator ppValue = begin();
+	const Value* pValueRtn = *ppValue++;
+	for ( ; ppValue != end(); ppValue++) {
+		const Value* pValue = *ppValue;
+		if (pValueRtn->IsLessThan(*pValue)) pValueRtn = pValue;
+	}
+	return *pValueRtn;
+}
+
+const Value& ValueList::Min() const
+{
+	if (empty()) return Value::C_nil();
+	ValueList::const_iterator ppValue = begin();
+	const Value* pValueRtn = *ppValue++;
+	for ( ; ppValue != end(); ppValue++) {
+		const Value* pValue = *ppValue;
+		if (pValue->IsLessThan(*pValueRtn)) pValueRtn = pValue;
+	}
+	return *pValueRtn;
+}
+
+const Value& ValueList::Max(size_t* pIdx) const
+{
+	*pIdx = 0;
+	if (empty()) return Value::C_nil();
+	ValueList::const_iterator ppValue = begin();
+	const Value* pValueRtn = *ppValue++;
+	for (size_t idx = 1; ppValue != end(); ppValue++, idx++) {
+		const Value* pValue = *ppValue;
+		if (pValueRtn->IsLessThan(*pValue)) {
+			pValueRtn = pValue;
+			*pIdx = idx;
+		}
+	}
+	return *pValueRtn;
+}
+
+const Value& ValueList::Min(size_t* pIdx) const
+{
+	*pIdx = 0;
+	if (empty()) return Value::C_nil();
+	ValueList::const_iterator ppValue = begin();
+	const Value* pValueRtn = *ppValue++;
+	for (size_t idx = 1; ppValue != end(); ppValue++, idx++) {
+		const Value* pValue = *ppValue;
+		if (pValue->IsLessThan(*pValueRtn)) {
+			pValueRtn = pValue;
+			*pIdx = idx;
+		}
+	}
+	return *pValueRtn;
+}
+
 DimSizes ValueList::GetShape() const
 {
 	DimSizes dimSizes;

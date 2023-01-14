@@ -37,6 +37,32 @@ TestCase('Int()') {
 	Tester(`Int('-12345.678'))
 }
 
+TestCase('Max()') {
+	Tester(`Max(3))
+	Tester(`Max(3, 1))
+	Tester(`Max(3, 1, 4))
+	Tester(`Max(3, 1, 4, 1))
+	Tester(`Max(3, 1, 4, 1, 5))
+	Tester(`Max(3):index)
+	Tester(`Max(3, 1):index)
+	Tester(`Max(3, 1, 4):index)
+	Tester(`Max(3, 1, 4, 1):index)
+	Tester(`Max(3, 1, 4, 1, 5):index)
+}
+
+TestCase('Min()') {
+	Tester(`Min(-3))
+	Tester(`Min(-3, -1))
+	Tester(`Min(-3, -1, -4))
+	Tester(`Min(-3, -1, -4, -1))
+	Tester(`Min(-3, -1, -4, -1, -5))
+	Tester(`Min(-3):index)
+	Tester(`Min(-3, -1):index)
+	Tester(`Min(-3, -1, -4):index)
+	Tester(`Min(-3, -1, -4, -1):index)
+	Tester(`Min(-3, -1, -4, -1, -5):index)
+}
+
 TestCase('Ord()') {
 	str = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
 	str.Each {|ch| Printf('\'%s\' .. 0x%02x\n', ch, Ord(ch))}

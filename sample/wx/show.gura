@@ -19,7 +19,7 @@ AppMain = class(wx.App) {
 // FrameMain
 //-----------------------------------------------------------------------------
 FrameMain = class(wx.Frame) {
-	panelMain as PanelMain
+	canvas as Canvas
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {
 			|nil, wx.ID_ANY, title, pos, size|
 		menuBar = wx.MenuBar()
@@ -33,35 +33,14 @@ FrameMain = class(wx.Frame) {
 		wx.Panel(this) {|panel|
 			wx.BoxSizer(wx.VERTICAL) {|vbox|
 				panel.SetSizer(vbox)
-				this.panelMain = PanelMain(panel)
-				vbox.Add(this.panelMain, wx.SizerFlags(2).Expand())
+				this.canvas = Canvas(panel)
+				vbox.Add(this.canvas, wx.SizerFlags(2).Expand())
 			}
 		}
 		this.Bind(wx.EVT_MENU, this.OnSave, wx.ID_SAVE)
 		this.Bind(wx.EVT_MENU, this.OnExit, wx.ID_EXIT)
-		/*
-		menuFile = wx.Menu()
-		menuFile.Append(ID_Hello, '&Hello...\tCtrl-H',
-						'Help string shown in status bar for this menu item')
-		menuFile.AppendSeparator()
-		menuFile.Append(wx.ID_EXIT)
-		
-		menuHelp = wx.Menu()
-		menuHelp.Append(wx.ID_ABOUT)
-		
-		menuBar = wx.MenuBar()
-		menuBar.Append(menuFile, '&File')
-		menuBar.Append(menuHelp, '&Help')
-		
-		this.SetMenuBar(menuBar)
-		
 		this.CreateStatusBar()
 		this.SetStatusText('Welcome to wxWidgets!')
-		
-		this.Bind(wx.EVT_MENU, this.OnHello, ID_Hello)
-		this.Bind(wx.EVT_MENU, this.OnExit, wx.ID_EXIT)
-		this.Bind(wx.EVT_MENU, this.OnAbout, wx.ID_ABOUT)
-		*/
 	}
 	OnSave(event as wx.CommandEvent) = {
 		dlg = wx.FileDialog(this, 'Save image file', wx.EmptyString, 'image.png',
@@ -81,30 +60,42 @@ FrameMain = class(wx.Frame) {
 }
 
 //-----------------------------------------------------------------------------
-// PanelMain
+// Canvas
 //-----------------------------------------------------------------------------
-PanelMain = class(wx.ScrolledWindow) {
+Canvas = class(wx.ScrolledWindow) {
+	imageFrame as Image
 	imageToShow as Image
 	__init__(parent as wx.Window) = {|parent, style = (wx.BORDER_SUNKEN | wx.HSCROLL | wx.VSCROLL)|
 		vbox = wx.BoxSizer(wx.VERTICAL)
 		this.imageToShow = Image('seashore.jpg')
 		this.SetSizer(vbox)
 		this.SetScrollRate(10, 10)
-		//this.SetVirtualSizeWH(this.img.width, this.img.height)
 		this.Bind(wx.EVT_ERASE_BACKGROUND, this.OnEraseBackground)
+		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnEraseBackground(event as wx.EraseEvent) = {} // nothing to do
+	OnSize(event as wx.SizeEvent) = {
+		size = event.GetSize()
+		if (this.imageToShow.width < size.GetWidth() || this.imageToShow.height < size.GetHeight()) {
+			wdFrame = Max(this.imageToShow.width, size.GetWidth())
+			htFrame = Max(this.imageToShow.height, size.GetHeight())
+			this.imageFrame = Image.Create(wdFrame, htFrame, Color.gray)
+			this.imageFrame.Paste((wdFrame - this.imageToShow.width) / 2, (htFrame - this.imageToShow.height) / 2, this.imageToShow)
+		} else {
+			this.imageFrame = this.imageToShow
+		}
+		this.SetVirtualSize(this.imageFrame.width, this.imageFrame.height)
+		this.Refresh()
+	}
 	OnPaint(event as wx.PaintEvent) = {
 		try {
 			dc = wx.PaintDC(this)
-			// panel.PrepareDC(dc)
 			size = this.GetClientSize()
-			dc.DrawRectangle(10, 10, 100, 100)
-			this.imageToShow && dc.DrawBitmap(this.imageToShow, 0, 0, false)
+			this.imageFrame && dc.DrawBitmap(this.imageFrame, 0, 0, false)
 			dc = nil
 		} catch {|e|
-			println(e)
+			Println(e)
 		}
 	}
 }
