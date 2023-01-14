@@ -48,8 +48,8 @@ texturesChickenL = Texture(renderer, imgs):list
 texturesChickenR = Texture(renderer, imgs:*Flip(`horz)):list
 event = SDL_Event()
 x = 0, y = 0
-wd = 100
-chickens = [Chicken(wd, 10, 100, 20, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle())]
+wdChicken = 200
+chickens = [Chicken(wdChicken, 10, 100, 20, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle())]
 timePrev = SDL_GetTicks()
 repeat {
 	timeCur = SDL_GetTicks()
@@ -60,17 +60,16 @@ repeat {
 		SDL_RenderPresent(renderer)
 		timePrev = timeCur
 	}
-	SDL_WaitEventTimeout(event, 10) // 10msec
-	if (!event) {
+	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
+	if (rtn == 0) {
 		// nothing to do
 	} elsif (event.type == SDL_QUIT) {
 		break
 	} elsif (event.type == SDL_KEYDOWN) {
 		(event.key.keysym.sym == SDLK_ESCAPE) && break
 	} elsif (event.type == SDL_MOUSEBUTTONDOWN) {
-		//dir = cond(event.button == `right
 		dir = `right
-		chickens.Add(Chicken(wd, event.button.x, event.button.y, 20, dir, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
+		chickens.Add(Chicken(wdChicken, event.button.x, event.button.y, 20, dir, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
 	}
 }
 SDL_DestroyRenderer(renderer)
