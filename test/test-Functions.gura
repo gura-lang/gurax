@@ -43,11 +43,13 @@ TestCase('Max()') {
 	Tester(`Max(3, 1, 4))
 	Tester(`Max(3, 1, 4, 1))
 	Tester(`Max(3, 1, 4, 1, 5))
+	Tester(`Max([3, 1, 4, 1, 5], 2))
 	Tester(`Max(3):index)
 	Tester(`Max(3, 1):index)
 	Tester(`Max(3, 1, 4):index)
 	Tester(`Max(3, 1, 4, 1):index)
 	Tester(`Max(3, 1, 4, 1, 5):index)
+	Tester(`Max([3, 1, 4, 1, 5], 2):index)
 }
 
 TestCase('Min()') {
@@ -56,11 +58,13 @@ TestCase('Min()') {
 	Tester(`Min(-3, -1, -4))
 	Tester(`Min(-3, -1, -4, -1))
 	Tester(`Min(-3, -1, -4, -1, -5))
+	Tester(`Min([-3, -1, -4, -1, -5], -2))
 	Tester(`Min(-3):index)
 	Tester(`Min(-3, -1):index)
 	Tester(`Min(-3, -1, -4):index)
 	Tester(`Min(-3, -1, -4, -1):index)
 	Tester(`Min(-3, -1, -4, -1, -5):index)
+	Tester(`Min([-3, -1, -4, -1, -5], -2):index)
 }
 
 TestCase('Ord()') {

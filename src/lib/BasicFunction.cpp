@@ -261,10 +261,10 @@ Gurax_ImplementFunction(Int)
 	return Value::nil();
 }
 
-// Max(values+):[index]
+// Max(values+):map:[index]
 Gurax_DeclareFunction(Max)
 {
-	Declare(VTYPE_Nil, Flag::Map);
+	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(index));
 	AddHelp(Gurax_Symbol(en), u8R"**(
@@ -285,10 +285,10 @@ Gurax_ImplementFunction(Max)
 	return valueList.Max().Reference();
 }
 
-// Min(values+):[index]
+// Min(values+):map:[index]
 Gurax_DeclareFunction(Min)
 {
-	Declare(VTYPE_Nil, Flag::Map);
+	Declare(VTYPE_Any, Flag::Map);
 	DeclareArg("values", VTYPE_Any, ArgOccur::OnceOrMore, ArgFlag::None);
 	DeclareAttrOpt(Gurax_Symbol(index));
 	AddHelp(Gurax_Symbol(en), u8R"**(
