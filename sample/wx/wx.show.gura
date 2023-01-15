@@ -1,0 +1,112 @@
+#!/usr/bin/env gurax
+// wxWidgets "Hello world" Program
+import(wx)
+import(png)
+import(jpeg)
+
+//-----------------------------------------------------------------------------
+// AppMain
+//-----------------------------------------------------------------------------
+AppMain = class(wx.App) {
+	width as Number
+	height as Number
+	imageToShow as Image
+	__init__(width as Number, height as Number, imageToShow as Image) = {
+		this.width = width
+		this.height = height
+		this.imageToShow = imageToShow
+	}
+	OnInit() = {
+		frame = FrameMain('Image Viewer', wx.DefaultPosition, wx.Size(this.width, this.height), this.imageToShow)
+		frame.Show(true)
+		true
+	}
+}
+
+//-----------------------------------------------------------------------------
+// FrameMain
+//-----------------------------------------------------------------------------
+FrameMain = class(wx.Frame) {
+	canvas as Canvas
+	__init__(title as String, pos as wx.Point, size as wx.Size, imageToShow as Image) = {
+			|nil, wx.ID_ANY, title, pos, size|
+		menuBar = wx.MenuBar()
+		this.SetMenuBar(menuBar)
+		wx.Menu {|menu|
+			menuBar.Append(menu, '&File')
+			menu.Append(wx.ID_SAVE, '&Save\tCtrl-S', 'Save as image file')
+			menu.AppendSeparator()
+			menu.Append(wx.ID_EXIT, 'E&xit\tAlt-X', 'Quit viewer')
+		}
+		wx.Panel(this) {|panel|
+			wx.BoxSizer(wx.VERTICAL) {|vbox|
+				panel.SetSizer(vbox)
+				this.canvas = Canvas(panel, imageToShow)
+				vbox.Add(this.canvas, wx.SizerFlags(2).Expand())
+			}
+		}
+		this.Bind(wx.EVT_MENU, this.OnSave, wx.ID_SAVE)
+		this.Bind(wx.EVT_MENU, this.OnExit, wx.ID_EXIT)
+		this.CreateStatusBar()
+		this.SetStatusText('Welcome to wxWidgets!')
+	}
+	OnSave(event as wx.CommandEvent) = {
+		dlg = wx.FileDialog(this, 'Save image file', wx.EmptyString, 'image.png',
+					'PNG files (*.png)|*.png|JPEG files (*.jpg)|*.jpg|BMP files (*.bmp)|*.bmp',
+					wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
+		if (dlg.ShowModal() == wx.ID_OK) {
+			//this.panel.SaveImage(dlg.GetPath())
+		}
+	}
+	OnExit(event as wx.CommandEvent) = {
+		this.Close(true)
+	}
+	OnAbout(event as wx.CommandEvent) = {
+		wx.MessageBox("This is a wxWidgets' Hello world sample",
+					'About Hello World', wx.OK | wx.ICON_INFORMATION)
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Canvas
+//-----------------------------------------------------------------------------
+Canvas = class(wx.ScrolledWindow) {
+	imageFrame as Image
+	imageToShow as Image
+	__init__(parent as wx.Window, imageToShow as Image) = {
+							|parent, style = (wx.BORDER_SUNKEN | wx.HSCROLL | wx.VSCROLL)|
+		this.imageToShow = imageToShow
+		this.SetScrollRate(10, 10)
+		this.Bind(wx.EVT_ERASE_BACKGROUND, this.OnEraseBackground)
+		this.Bind(wx.EVT_SIZE, this.OnSize)
+	}
+	SetImage(imageToShow as Image) = {
+		this.imageToShow = imageToShow
+		this.UpdateDimension()
+	}
+	UpdateDimension() = {
+		size = this.GetClientSize()
+		if (this.imageToShow.width < size.GetWidth() || this.imageToShow.height < size.GetHeight()) {
+			wdFrame = Max(this.imageToShow.width, size.GetWidth())
+			htFrame = Max(this.imageToShow.height, size.GetHeight())
+			this.imageFrame = Image.Create(wdFrame, htFrame, Color.gray)
+			this.imageFrame.Paste((wdFrame - this.imageToShow.width) / 2, (htFrame - this.imageToShow.height) / 2, this.imageToShow)
+		} else {
+			this.imageFrame = this.imageToShow
+		}
+		this.SetVirtualSize(this.imageFrame.width, this.imageFrame.height)
+		this.Refresh()
+	}
+	OnEraseBackground(event as wx.EraseEvent) = {} // nothing to do
+	OnSize(event as wx.SizeEvent) = {
+		this.UpdateDimension()
+	}
+	OnDraw(dc as wx.DC) = {
+		size = this.GetClientSize()
+		this.imageFrame && dc.DrawBitmap(this.imageFrame, 0, 0, false)
+	}
+}
+
+Image.Show(width as Number, height as Number) = {
+	wx.ImplementApp(AppMain(width, height, this))
+}
