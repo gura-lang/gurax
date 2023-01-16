@@ -34,9 +34,9 @@ FrameMain = class(wx.Frame) {
 		this.SetMenuBar(menuBar)
 		wx.Menu {|menu|
 			menuBar.Append(menu, '&File')
-			menu.Append(wx.ID_SAVE, '&Save\tCtrl-S')
+			menu.Append(wx.ID_SAVE, '&Save\tCtrl-S', 'Save Image Data to File')
 			menu.AppendSeparator()
-			menu.Append(wx.ID_EXIT, 'E&xit\tESC')
+			menu.Append(wx.ID_EXIT, 'E&xit\tESC', 'Exit This Viewer')
 		}
 		wx.Panel(this) {|panel|
 			wx.BoxSizer(wx.VERTICAL) {|vbox|
@@ -47,8 +47,9 @@ FrameMain = class(wx.Frame) {
 		}
 		this.Bind(wx.EVT_MENU, this.OnSave, id = wx.ID_SAVE)
 		this.Bind(wx.EVT_MENU, this.OnExit, id = wx.ID_EXIT)
-		this.CreateStatusBar()
-		this.SetStatusText(Format('%s: %d x %d', imageToShow.format, imageToShow.width, imageToShow.height))
+		this.CreateStatusBar(2)
+		this.SetStatusWidths([-1, 150])
+		this.SetStatusText(Format('%s: %d x %d', imageToShow.format, imageToShow.width, imageToShow.height), 1)
 	}
 	OnSave(event) = {
 		dlg = wx.FileDialog(this, 'Save image file', wx.EmptyString, 'image.png',
