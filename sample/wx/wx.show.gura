@@ -107,6 +107,6 @@ Canvas = class(wx.ScrolledWindow) {
 	}
 }
 
-Image.Show(width as Number, height as Number) = {
+Image.Show(width as Number = 800, height as Number = 600) = {
 	wx.ImplementApp(AppMain(width, height, this))
 }
