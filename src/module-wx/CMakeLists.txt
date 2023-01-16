@@ -110,3 +110,6 @@ target_link_libraries(wx.gurd PRIVATE guraxcore
 # Install
 #-------------------------------------------------------------------------------
 install(TARGETS wx.gurd RUNTIME DESTINATION module/site)
+install(PROGRAMS
+	script/wx.show.gura
+	DESTINATION module/site)
