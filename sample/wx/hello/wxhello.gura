@@ -31,9 +31,9 @@ MyFrame = class(wx.Frame) {
 		this.CreateStatusBar()
 		this.SetStatusText('Welcome to wxWidgets!')
 		
-		this.Bind(wx.EVT_MENU, this.OnHello, ID_Hello)
-		this.Bind(wx.EVT_MENU, this.OnExit, wx.ID_EXIT)
-		this.Bind(wx.EVT_MENU, this.OnAbout, wx.ID_ABOUT)
+		this.Bind(wx.EVT_MENU, this.OnHello, id = ID_Hello)
+		this.Bind(wx.EVT_MENU, this.OnExit, id = wx.ID_EXIT)
+		this.Bind(wx.EVT_MENU, this.OnAbout, id = wx.ID_ABOUT)
 	}
 	OnHello(event as wx.CommandEvent) = {
 		Println('Hello world from wxWidgets!')

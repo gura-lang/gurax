@@ -34,9 +34,9 @@ FrameMain = class(wx.Frame) {
 		this.SetMenuBar(menuBar)
 		wx.Menu {|menu|
 			menuBar.Append(menu, '&File')
-			menu.Append(wx.ID_SAVE, '&Save\tCtrl-S', 'Save as image file')
+			menu.Append(wx.ID_SAVE, '&Save\tCtrl-S')
 			menu.AppendSeparator()
-			menu.Append(wx.ID_EXIT, 'E&xit\tAlt-X', 'Quit viewer')
+			menu.Append(wx.ID_EXIT, 'E&xit\tESC')
 		}
 		wx.Panel(this) {|panel|
 			wx.BoxSizer(wx.VERTICAL) {|vbox|
@@ -45,25 +45,21 @@ FrameMain = class(wx.Frame) {
 				vbox.Add(this.canvas, wx.SizerFlags(2).Expand())
 			}
 		}
-		this.Bind(wx.EVT_MENU, this.OnSave, wx.ID_SAVE)
-		this.Bind(wx.EVT_MENU, this.OnExit, wx.ID_EXIT)
+		this.Bind(wx.EVT_MENU, this.OnSave, id = wx.ID_SAVE)
+		this.Bind(wx.EVT_MENU, this.OnExit, id = wx.ID_EXIT)
 		this.CreateStatusBar()
-		this.SetStatusText('Welcome to wxWidgets!')
+		this.SetStatusText(Format('%s: %d x %d', imageToShow.format, imageToShow.width, imageToShow.height))
 	}
-	OnSave(event as wx.CommandEvent) = {
+	OnSave(event) = {
 		dlg = wx.FileDialog(this, 'Save image file', wx.EmptyString, 'image.png',
 					'PNG files (*.png)|*.png|JPEG files (*.jpg)|*.jpg|BMP files (*.bmp)|*.bmp',
 					wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
 		if (dlg.ShowModal() == wx.ID_OK) {
-			//this.panel.SaveImage(dlg.GetPath())
+			this.canvas.SaveImage(dlg.GetPath())
 		}
 	}
 	OnExit(event as wx.CommandEvent) = {
 		this.Close(true)
-	}
-	OnAbout(event as wx.CommandEvent) = {
-		wx.MessageBox("This is a wxWidgets' Hello world sample",
-					'About Hello World', wx.OK | wx.ICON_INFORMATION)
 	}
 }
 
@@ -83,6 +79,9 @@ Canvas = class(wx.ScrolledWindow) {
 	SetImage(imageToShow as Image) = {
 		this.imageToShow = imageToShow
 		this.UpdateDimension()
+	}
+	SaveImage(pathName as String) = {
+		this.imageToShow.Write(pathName)
 	}
 	UpdateDimension() = {
 		size = this.GetClientSize()
