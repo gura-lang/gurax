@@ -1,8 +1,9 @@
 #!/usr/bin/env gurax
 // wxWidgets "Hello world" Program
 import(wx)
-import(png)
+import(gif)
 import(jpeg)
+import(png)
 
 //-----------------------------------------------------------------------------
 // AppMain
