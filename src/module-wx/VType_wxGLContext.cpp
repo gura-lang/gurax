@@ -105,7 +105,7 @@ void VType_wxGLContext::DoPrepare(Frame& frameOuter)
 	AddHelp(Gurax_Symbol(en), g_docHelp_en);
 	AddHelp(Gurax_Symbol(ja), g_docHelp_ja);
 	// Declaration of VType
-	Declare(VTYPE_wxObject, Flag::Mutable, Gurax_CreateConstructor(GLContext_gurax));
+	Declare(VTYPE_Object, Flag::Mutable, Gurax_CreateConstructor(GLContext_gurax));
 	// Assignment of method
 	Assign(Gurax_CreateMethod(wxGLContext, SetCurrent_gurax));
 }

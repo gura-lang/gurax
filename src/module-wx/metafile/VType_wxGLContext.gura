@@ -1,7 +1,7 @@
 //==============================================================================
 // VType_wxGLContext.gura
 //==============================================================================
-GLContext = Class(Object) {
+GLContext = Class {
 	@include['wx/glcanvas.h']
 	__init__(win as GLCanvas_p, other? as GLContext_p)
 	SetCurrent(win as const_GLCanvas_r) as bool

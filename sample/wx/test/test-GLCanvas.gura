@@ -2,6 +2,8 @@
 import(wx)
 import(opengl) {*}
 
+glewInit()
+
 MyApp = class(wx.App) {
 	OnInit() = {
 		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
@@ -22,13 +24,10 @@ GLCanvas = class(wx.GLCanvas) {
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	OnPaint(event as wx.PaintEvent) = {
-		glEnable(GL_DEPTH_TEST)
-		glEnable(GL_LIGHTING)
-		glEnable(GL_LIGHT0)
 		dc = wx.PaintDC(this)
-		this.m_context.SetCurrent(this)
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		this.SetCurrent(this.m_context)
+		glClearColor(1.0, 1.0, 0.0, 1.0)
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		glFlush()
 		this.SwapBuffers()
 		dc = nil
