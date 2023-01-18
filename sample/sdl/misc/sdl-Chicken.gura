@@ -3,11 +3,12 @@ import(sdl) {*}
 import(jpeg)
 import(gif)
 
+I(fileName as String) = path.Join('../../resource', fileName)
+
 Chicken = struct {
-	wd as Number
 	x as Number
 	y as Number
-	xStep:nil as Number
+	wd as Number
 	dir:nil as Symbol
 	texturesL as Iterator
 	texturesR as Iterator
@@ -17,7 +18,8 @@ Chicken = struct {
 		SDL_RenderCopy(renderer, texture.entity, nil, SDL_Rect(this.x, this.y - ht, this.wd, ht))
 	}
 	Move(wdScreen as Number):void = {
-		this.x += cond(this.dir == `left, -this.xStep, this.xStep)
+		xStep = this.wd * .2
+		this.x += cond(this.dir == `left, -xStep, xStep)
 		if (this.x + this.wd > wdScreen) {
 			this.dir = `left
 		} elsif (this.x <= 0) {
@@ -38,19 +40,22 @@ Texture = class {
 	}
 }
 
+AddChicken(x as Number, y as Number, wd as Number, dir as Symbol) = {
+	chickens.Add(Chicken(x, y, wd, dir, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
+}
+
 SDL_Init(SDL_INIT_EVERYTHING)
 [wdScreen, htScreen] = [800, 600]
 window = SDL_CreateWindow(path.FileName(sys.argv[0]), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, wdScreen, htScreen, 0)
 renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
-textureBg = Texture(renderer, Image('data/seashore.jpg'))
-imgs = gif.Content('data/chicken-anim.gif'):*EachImage():list
+textureBg = Texture(renderer, Image(I('seashore.jpg')))
+imgs = gif.Content(I('chicken-anim.gif')):*EachImage():list
 texturesChickenL = Texture(renderer, imgs):list
 texturesChickenR = Texture(renderer, imgs:*Flip(`horz)):list
-event = SDL_Event()
-x = 0, y = 0
-wdChicken = 200
-chickens = [Chicken(wdChicken, 10, 100, 20, `left, texturesChickenL.Cycle(), texturesChickenR.Cycle())]
+chickens = []
+AddChicken(10, 100, 80, `left)
 timePrev = SDL_GetTicks()
+event = SDL_Event()
 repeat {
 	timeCur = SDL_GetTicks()
 	if (timePrev > timeCur || timeCur > timePrev + 100) {
@@ -68,8 +73,11 @@ repeat {
 	} elsif (event.type == SDL_KEYDOWN) {
 		(event.key.keysym.sym == SDLK_ESCAPE) && break
 	} elsif (event.type == SDL_MOUSEBUTTONDOWN) {
+		timeButtonDown = timeCur
+	} elsif (event.type == SDL_MOUSEBUTTONUP) {
 		dir = `right
-		chickens.Add(Chicken(wdChicken, event.button.x, event.button.y, 20, dir, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
+		wd = Min((timeCur - timeButtonDown) / 10 + 40, 200)
+		AddChicken(event.button.x, event.button.y, wd, dir)
 	}
 }
 SDL_DestroyRenderer(renderer)
