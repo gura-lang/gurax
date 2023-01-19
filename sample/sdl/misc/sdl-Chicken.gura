@@ -10,6 +10,7 @@ Chicken = struct {
 	y as Number
 	wd as Number
 	dir:nil as Symbol
+	moveFlag as Bool
 	texturesL as Iterator
 	texturesR as Iterator
 	Render(renderer as SDL_Renderer):void = {
@@ -19,11 +20,13 @@ Chicken = struct {
 	}
 	Move(wdScreen as Number):void = {
 		xStep = this.wd * .2
-		this.x += cond(this.dir == `left, -xStep, xStep)
-		if (this.x + this.wd > wdScreen) {
-			this.dir = `left
-		} elsif (this.x <= 0) {
-			this.dir = `right
+		if (this.moveFlag) {
+			this.x += cond(this.dir == `left, -xStep, xStep)
+			if (this.x + this.wd > wdScreen) {
+				this.dir = `left
+			} elsif (this.x <= 0) {
+				this.dir = `right
+			}
 		}
 	}
 }
@@ -40,8 +43,8 @@ Texture = class {
 	}
 }
 
-AddChicken(x as Number, y as Number, wd as Number, dir as Symbol) = {
-	chickens.Add(Chicken(x, y, wd, dir, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
+AddChicken(x as Number, y as Number, wd as Number, dir as Symbol = `right, moveFlag as Bool = false) = {
+	chickens.Add(Chicken(x, y, wd, dir, moveFlag, texturesChickenL.Cycle(), texturesChickenR.Cycle()))
 }
 
 SDL_Init(SDL_INIT_EVERYTHING)
@@ -52,8 +55,9 @@ textureBg = Texture(renderer, Image(I('seashore.jpg')))
 imgs = gif.Content(I('chicken-anim.gif')):*EachImage():list
 texturesChickenL = Texture(renderer, imgs):list
 texturesChickenR = Texture(renderer, imgs:*Flip(`horz)):list
+wdInit = 40
 chickens = []
-AddChicken(10, 100, 80, `left)
+AddChicken(10, 100, 80, `right, true)
 timePrev = SDL_GetTicks()
 event = SDL_Event()
 repeat {
@@ -63,9 +67,13 @@ repeat {
 		chickens:*Render(renderer)
 		chickens:*Move(wdScreen)
 		SDL_RenderPresent(renderer)
+		if (!chickenLast.moveFlag) {
+			chickenLast.wd = Min((timeCur - timeButtonDown) / 10 + wdInit, 200)
+		}
 		timePrev = timeCur
 	}
 	rtn = SDL_WaitEventTimeout(event, 10) // 10msec
+	chickenLast = chickens.last
 	if (rtn == 0) {
 		// nothing to do
 	} elsif (event.type == SDL_QUIT) {
@@ -73,11 +81,14 @@ repeat {
 	} elsif (event.type == SDL_KEYDOWN) {
 		(event.key.keysym.sym == SDLK_ESCAPE) && break
 	} elsif (event.type == SDL_MOUSEBUTTONDOWN) {
+		//Println('down')
 		timeButtonDown = timeCur
+		AddChicken(event.button.x, event.button.y, wdInit)
 	} elsif (event.type == SDL_MOUSEBUTTONUP) {
-		dir = `right
-		wd = Min((timeCur - timeButtonDown) / 10 + 40, 200)
-		AddChicken(event.button.x, event.button.y, wd, dir)
+		//Println('up')
+		if (!chickenLast.moveFlag) {
+			chickenLast.moveFlag = true
+		}
 	}
 }
 SDL_DestroyRenderer(renderer)
