@@ -68,7 +68,7 @@ repeat {
 		chickens:*Move(wdScreen)
 		SDL_RenderPresent(renderer)
 		if (!chickenLast.moveFlag) {
-			chickenLast.wd = Min((timeCur - timeButtonDown) / 10 + wdInit, 200)
+			chickenLast.wd = Min((timeCur - timeButtonDown) / 10 + wdInit, 400)
 		}
 		timePrev = timeCur
 	}
@@ -83,7 +83,11 @@ repeat {
 	} elsif (event.type == SDL_MOUSEBUTTONDOWN) {
 		//Println('down')
 		timeButtonDown = timeCur
-		AddChicken(event.button.x, event.button.y, wdInit)
+		if (event.button.button == SDL_BUTTON_LEFT) {
+			AddChicken(event.button.x, event.button.y, wdInit, `left)
+		} elsif (event.button.button == SDL_BUTTON_RIGHT) {
+			AddChicken(event.button.x, event.button.y, wdInit, `right)
+		}
 	} elsif (event.type == SDL_MOUSEBUTTONUP) {
 		//Println('up')
 		if (!chickenLast.moveFlag) {

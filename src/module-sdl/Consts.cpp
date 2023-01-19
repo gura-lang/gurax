@@ -949,6 +949,12 @@ void AssignConsts(Frame& frame)
 	AssignConst(MIX_MAX_VOLUME);
 	AssignConst(MIX_CHANNEL_POST);
 	AssignConst(MIX_EFFECTSMAXSPEED);
+	// SDL_MouseButtonEvent
+	AssignConst(SDL_BUTTON_LEFT);
+	AssignConst(SDL_BUTTON_MIDDLE);
+	AssignConst(SDL_BUTTON_RIGHT);
+	AssignConst(SDL_BUTTON_X1);
+	AssignConst(SDL_BUTTON_X2);
 }
 
 Gurax_EndModuleScope(sdl)
