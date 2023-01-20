@@ -60,6 +60,7 @@ chickens = []
 AddChicken(10, 100, 80, `right, true)
 timePrev = SDL_GetTicks()
 event = SDL_Event()
+iSize = 0
 repeat {
 	timeCur = SDL_GetTicks()
 	if (timePrev > timeCur || timeCur > timePrev + 100) {
@@ -68,7 +69,8 @@ repeat {
 		chickens:*Move(wdScreen)
 		SDL_RenderPresent(renderer)
 		if (!chickenLast.moveFlag) {
-			chickenLast.wd = Min((timeCur - timeButtonDown) / 10 + wdInit, 400)
+			chickenLast.wd = Min(iSize * 10 + wdInit, 400)
+			iSize += 1
 		}
 		timePrev = timeCur
 	}
@@ -82,7 +84,7 @@ repeat {
 		(event.key.keysym.sym == SDLK_ESCAPE) && break
 	} elsif (event.type == SDL_MOUSEBUTTONDOWN) {
 		//Println('down')
-		timeButtonDown = timeCur
+		iSize = 0
 		if (event.button.button == SDL_BUTTON_LEFT) {
 			AddChicken(event.button.x, event.button.y, wdInit, `left)
 		} elsif (event.button.button == SDL_BUTTON_RIGHT) {
