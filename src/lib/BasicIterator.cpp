@@ -248,7 +248,7 @@ Value* Iterator_for::DoNextValue()
 		auto ppDeclArg = GetDeclArgOwner().begin();
 		auto ppIterator = GetIteratorOwner().rbegin();
 		for ( ; ppDeclArg != GetDeclArgOwner().end() && ppIterator != GetIteratorOwner().rend();
-			  ppDeclArg++, ppIterator++) {
+				ppDeclArg++, ppIterator++) {
 			DeclArg& declArg = **ppDeclArg;
 			Iterator& iterator = **ppIterator;
 			RefPtr<Value> pValue(iterator.NextValue());
@@ -546,6 +546,41 @@ Value* Iterator_Uniq::DoNextValue()
 String Iterator_Uniq::ToString(const StringStyle& ss) const
 {
 	return String().Format("Uniq");
+}
+
+//------------------------------------------------------------------------------
+// Iterator_RunLength
+//------------------------------------------------------------------------------
+Value* Iterator_RunLength::DoNextValue()
+{
+	if (_doneFlag) return nullptr;
+	RefPtr<Value> pValueRtn;
+	for (;;) {
+		RefPtr<Value> pValueElem(GetIteratorSrc().NextValue());
+		if (!pValueElem) {
+			if (_cnt > 0) {
+				pValueRtn.reset(Value_Tuple::Create(new Value_Number(_cnt), _pValuePrev.release()));
+			}
+			_doneFlag = true;
+			break;
+		} else if (!_pValuePrev) {
+			_cnt = 1;
+			_pValuePrev.reset(pValueElem.Reference());
+		} else if (pValueElem->IsEqualTo(*_pValuePrev)) {
+			_cnt++;
+		} else {
+			pValueRtn.reset(Value_Tuple::Create(new Value_Number(_cnt), _pValuePrev.release()));
+			_cnt = 1;
+			_pValuePrev.reset(pValueElem.Reference());
+			break;
+		}
+	}
+	return pValueRtn.release();
+}
+
+String Iterator_RunLength::ToString(const StringStyle& ss) const
+{
+	return String().Format("RunLength");
 }
 
 //------------------------------------------------------------------------------

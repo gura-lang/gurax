@@ -27,7 +27,7 @@ ${help.ComposeMethodHelp(Random, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Random(seed?:Number):map {block?}
+// Random(seed? as Number):map {block?}
 Gurax_DeclareConstructor(Random)
 {
 	Declare(VTYPE_Random, Flag::Map);
@@ -77,7 +77,7 @@ Gurax_ImplementHybridMethod(Random, Bool)
 	return new Value_Bool(random.GenBool());
 }
 
-// Random##BoolSeq(cnt?:Number) {block?}
+// Random##BoolSeq(cnt? as Number) {block?}
 Gurax_DeclareHybridMethod(Random, BoolSeq)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -130,7 +130,7 @@ Gurax_ImplementHybridMethod(Random, Float)
 	return new Value_Number(random.GenFloat<Double>());
 }
 
-// Random##FloatSeq(cnt?:Number) {block?}
+// Random##FloatSeq(cnt? as Number) {block?}
 Gurax_DeclareHybridMethod(Random, FloatSeq)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -161,7 +161,7 @@ Gurax_ImplementHybridMethod(Random, FloatSeq)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Random##Int(range:Number)
+// Random##Int(range as Number)
 Gurax_DeclareHybridMethod(Random, Int)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -188,7 +188,7 @@ Gurax_ImplementHybridMethod(Random, Int)
 	return new Value_Number(random.GenInt<Int>(range));
 }
 
-// Random##IntSeq(range:Number, cnt?:Number) {block?}
+// Random##IntSeq(range as Number, cnt? as Number) {block?}
 Gurax_DeclareHybridMethod(Random, IntSeq)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -221,7 +221,7 @@ Gurax_ImplementHybridMethod(Random, IntSeq)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Random##Normal(mean?:Number, stddev?:Number)
+// Random##Normal(mean? as Number, stddev? as Number)
 Gurax_DeclareHybridMethod(Random, Normal)
 {
 	Declare(VTYPE_Number, Flag::None);
@@ -251,7 +251,7 @@ Gurax_ImplementHybridMethod(Random, Normal)
 	return new Value_Number(random.GenNormal<Double>(mean, stddev));
 }
 
-// Random##NormalSeq(mean?:Number, stddev?:Number, cnt?:Number) {block?}
+// Random##NormalSeq(mean? as Number, stddev? as Number, cnt? as Number) {block?}
 Gurax_DeclareHybridMethod(Random, NormalSeq)
 {
 	Declare(VTYPE_Number, Flag::None);

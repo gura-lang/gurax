@@ -27,7 +27,7 @@ ${help.ComposeMethodHelp(Palette, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Palette(symbol:Symbol):map {block?}
+// Palette(symbol as Symbol):map {block?}
 Gurax_DeclareConstructor(Palette)
 {
 	Declare(VTYPE_Expr, Flag::Map);
@@ -57,7 +57,7 @@ Gurax_ImplementConstructor(Palette)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Palette.Create(n:Number, color?:Color) {block?}
+// Palette.Create(n as Number, color? as Color) {block?}
 Gurax_DeclareClassMethod(Palette, Create)
 {
 	Declare(VTYPE_Image, Flag::None);
@@ -106,7 +106,7 @@ Gurax_ImplementMethod(Palette, Each)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Palette#Fill(color:Color):reduce
+// Palette#Fill(color as Color):reduce
 Gurax_DeclareMethod(Palette, Fill)
 {
 	Declare(VTYPE_Palette, Flag::Reduce);
@@ -129,7 +129,7 @@ Gurax_ImplementMethod(Palette, Fill)
 	return valueThis.Reference();
 }
 
-// Palette#GetNearest(Color:color):map:[index]
+// Palette#GetNearest(color as Color):map:[index]
 Gurax_DeclareMethod(Palette, GetNearest)
 {
 	Declare(VTYPE_Color, Flag::None);
@@ -185,7 +185,7 @@ Gurax_ImplementMethod(Palette, Shrink)
 	return Value::nil();
 }
 
-// Palette#UpdateBy(image_or_palette):reduce:[shrink,align]
+// Palette#UpdateBy(image_or_palette as Any):reduce:[shrink,align]
 Gurax_DeclareMethod(Palette, UpdateBy)
 {
 	Declare(VTYPE_Palette, Flag::Reduce);

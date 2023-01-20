@@ -96,7 +96,7 @@ Gurax_ImplementStatement(_create_dict_)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Dict#Append(dict:Dict):Dict:reduce:[overwrite,strict,timid]
+// Dict#Append(dict as Dict):Dict:reduce:[overwrite,strict,timid]
 Gurax_DeclareMethod(Dict, Append)
 {
 	Declare(VTYPE_Dict, Flag::Reduce);
@@ -210,7 +210,7 @@ Gurax_ImplementMethod(Dict, EachValue)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Dict#Erase(key):map
+// Dict#Erase(key as Any):map
 Gurax_DeclareMethod(Dict, Erase)
 {
 	Declare(VTYPE_Dict, Flag::Reduce);
@@ -232,7 +232,7 @@ Gurax_ImplementMethod(Dict, Erase)
 	return argument.GetValueThis().Reference();
 }
 
-// Dict#Get(key, default?:noMap):map:[raise]
+// Dict#Get(key as Any, default?:noMap as Any):map:[raise]
 Gurax_DeclareMethod(Dict, Get)
 {
 	Declare(VTYPE_Any, Flag::Map);
@@ -277,7 +277,7 @@ Gurax_ImplementMethod(Dict, Get)
 	}
 }
 
-// Dict#HasKey(key):map
+// Dict#HasKey(key as Any):map
 Gurax_DeclareMethod(Dict, HasKey)
 {
 	Declare(VTYPE_Bool, Flag::Map);
@@ -316,7 +316,7 @@ Gurax_ImplementMethod(Dict, IsEmpty)
 	return new Value_Bool(valueThis.GetValueDict().GetMap().empty());
 }
 
-// Dict#Put(key, value):map:reduce:[overwrite,strict,timid]
+// Dict#Put(key as Any, value as Any):map:reduce:[overwrite,strict,timid]
 Gurax_DeclareMethod(Dict, Put)
 {
 	Declare(VTYPE_Any, Flag::Map);

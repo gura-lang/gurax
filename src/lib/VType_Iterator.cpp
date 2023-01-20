@@ -1295,15 +1295,12 @@ Gurax_DeclareMethod(Iterator, RunLength)
 
 Gurax_ImplementMethod(Iterator, RunLength)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	Iterator& iteratorSrc = valueThis.GetIterator();
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_RunLength(iteratorSrc.Reference()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
 // Iterator#Since(criteria) {block?}

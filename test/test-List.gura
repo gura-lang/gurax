@@ -726,6 +726,15 @@ TestCase('List#RoundOff()') {
 }
 
 TestCase('List#RunLength()') {
+	Tester(`[].RunLength():list)
+	Tester(`['A'].RunLength():list)
+	Tester(`['A', 'A'].RunLength():list)
+	Tester(`['A', 'A', 'A'].RunLength():list)
+	Tester(`['A', 'A', 'A', 'A'].RunLength():list)
+	Tester(`['A', 'B'].RunLength():list)
+	Tester(`['A', 'B', 'C'].RunLength():list)
+	Tester(`['A', 'B', 'C', 'D'].RunLength():list)
+	Tester(`['A', 'A', 'A', 'B', 'B', 'C', 'D', 'D', 'D', 'D', 'D'].RunLength():list)
 }
 
 TestCase('List#Since()') {

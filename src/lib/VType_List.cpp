@@ -5,6 +5,7 @@
 
 namespace Gurax {
 
+
 //------------------------------------------------------------------------------
 // Help
 //------------------------------------------------------------------------------
@@ -1238,18 +1239,15 @@ Gurax_DeclareMethod(List, RunLength)
 
 Gurax_ImplementMethod(List, RunLength)
 {
-#if 0
 	// Target
 	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
+	RefPtr<Iterator> pIteratorThis(valueThis.GetValueTypedOwner().GenerateIterator());
 	// Function body
-#endif
-	return Value::nil();
+	RefPtr<Iterator> pIterator(new Iterator_RunLength(pIteratorThis.release()));
+	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// List#Since(criteria) {block?}
+// List#Since(criteria as Any) {block?}
 Gurax_DeclareMethod(List, Since)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -1307,7 +1305,7 @@ Gurax_ImplementMethod(List, SkipNil)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// List#Sort(directive?, keys[]?):[stable] {block?}
+// List#Sort(directive? as Any, keys[]? as Any):[stable] {block?}
 Gurax_DeclareMethod(List, Sort)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -1400,7 +1398,7 @@ Gurax_ImplementMethod(List, Uniq)
 	return argument.ReturnIterator(processor, new Iterator_Uniq(pIteratorThis.release()));
 }
 
-// List#Until(criteria) {block?}
+// List#Until(criteria as Any) {block?}
 Gurax_DeclareMethod(List, Until)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -1746,7 +1744,7 @@ Value* Value_List::DoEval(Processor& processor, Argument& argument) const
 	for (Value* pValueElem : GetValueOwner()) {
 		if (!argument.GetDeclCallable().IsIdentical(pValueElem->GetDeclCallable())) {
 			Error::Issue(ErrorType::ValueError,
-						 "member mapping cannot be applied to a list that contains different type of values");
+						"member mapping cannot be applied to a list that contains different type of values");
 			return Value::nil();
 		}
 		RefPtr<Value> pValueRtn(pValueElem->Eval(processor, argument));
