@@ -96,6 +96,13 @@ public:
 		if (!_pValuePeeked) _pValuePeeked.reset(DoNextValue());
 		return _pValuePeeked.Reference();
 	}
+	bool Skip(size_t n) {
+		for (size_t i = 0; i < n; i++) {
+			RefPtr<Value> pValue(NextValue());
+			if (!pValue) return false;
+		}
+		return true;
+	}
 	void Rewind() {
 		_idxCur = 0, _idxNext = -1;
 		_pValuePeeked.reset();

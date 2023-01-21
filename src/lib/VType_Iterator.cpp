@@ -627,6 +627,28 @@ Value* VType_Iterator::Method_Find(Processor& processor, Argument& argument, Ite
 	return pValueRtn.release();
 }
 
+// Iterator#Skip(n as Number)
+Gurax_DeclareMethod(Iterator, Skip)
+{
+	Declare(VTYPE_Iterator, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+
+)**");
+}
+
+Gurax_ImplementMethod(Iterator, Skip)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iterThis = valueThis.GetIterator();
+	// Arguments
+	ArgPicker args(argument);
+	// Function body
+
+	return Value::nil();
+}
+
 // Iterator#Flatten():[dfs,bfs] {block?}
 Gurax_DeclareMethod(Iterator, Flatten)
 {
@@ -1337,37 +1359,13 @@ Value* VType_Iterator::Method_Since(Processor& processor, Argument& argument,
 				processor.Reference(), Value_Function::GetFunction(*pValue).Reference(),
 				iteratorSrc.Reference(), includeFirstFlag));
 	} else if (pValue->IsIterable()) {
-		pIterator.reset(
+			pIterator.reset(
 			new Iterator_SinceWithIter(pValue->GenIterator(), iteratorSrc.Reference(), includeFirstFlag));
 	} else {
 		Error::Issue(ErrorType::ValueError, "function or iterable must be specified");
 		return Value::nil();
 	}
 	return argument.ReturnIterator(processor, pIterator.release());
-}
-
-// Iterator#Skip(n as Number):map {block?}
-Gurax_DeclareMethod(Iterator, Skip)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-
-)**");
-}
-
-Gurax_ImplementMethod(Iterator, Skip)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
 }
 
 // Iterator#SkipNil() {block?}

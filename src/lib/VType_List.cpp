@@ -1265,28 +1265,6 @@ Gurax_ImplementMethod(List, Since)
 	return VType_Iterator::Method_Since(processor, argument, *pIteratorSrc, true);
 }
 
-// List#Skip(n as Number):map {block?}
-Gurax_DeclareMethod(List, Skip)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
-}
-
-Gurax_ImplementMethod(List, Skip)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
-}
-
 // List#SkipNil() {block?}
 Gurax_DeclareMethod(List, SkipNil)
 {
@@ -1653,7 +1631,6 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, RoundOff));
 	Assign(Gurax_CreateMethod(List, RunLength));
 	Assign(Gurax_CreateMethod(List, Since));
-	Assign(Gurax_CreateMethod(List, Skip));
 	Assign(Gurax_CreateMethod(List, SkipNil));
 	Assign(Gurax_CreateMethod(List, Sort));
 	Assign(Gurax_CreateMethod(List, Std));
