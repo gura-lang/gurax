@@ -20,6 +20,17 @@ Range(10).tuple .. (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 8
 9
 10
+======== Iterator#Skip() ========
+x.NextValue() .. 1
+x.NextValue() .. 2
+x.NextValue() .. 3
+x.NextValue() .. 4
+x.Skip(1) .. <Nil>
+x.NextValue() .. 6
+x.Skip(2) .. <Nil>
+x.NextValue() .. 9
+x.Skip(0) .. <Nil>
+x.NextValue() .. 10
 ======== Iterator#After() ========
 x.Each().After(& {$i < 0}):list .. [4, 4, 4, 0]
 x.Each().After(x < 0):list .. [4, 4, 4, 0]
@@ -365,13 +376,21 @@ tbl.Each().Offset(-1)[] .. negative value is not acceptable
 ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].Each().Reverse():list .. ['ten', 'nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two', 'one', 'zero']
 ======== Iterator#RoundOff() ========
 ======== Iterator#RunLength() ========
+[].Each().RunLength():list .. []
+['A'].Each().RunLength():list .. [(1, 'A')]
+['A', 'A'].Each().RunLength():list .. [(2, 'A')]
+['A', 'A', 'A'].Each().RunLength():list .. [(3, 'A')]
+['A', 'A', 'A', 'A'].Each().RunLength():list .. [(4, 'A')]
+['A', 'B'].Each().RunLength():list .. [(1, 'A'), (1, 'B')]
+['A', 'B', 'C'].Each().RunLength():list .. [(1, 'A'), (1, 'B'), (1, 'C')]
+['A', 'B', 'C', 'D'].Each().RunLength():list .. [(1, 'A'), (1, 'B'), (1, 'C'), (1, 'D')]
+['A', 'A', 'A', 'B', 'B', 'C', 'D', 'D', 'D', 'D', 'D'].Each().RunLength():list .. [(3, 'A'), (2, 'B'), (1, 'C'), (5, 'D')]
 ======== Iterator#Since() ========
 x.Each().Since(& {$i < 0}):list .. [-1, 4, 4, 4, 0]
 x.Each().Since(x < 0):list .. [-1, 4, 4, 4, 0]
 x.Each().Since(& {$i < 0}).Offset(1):list .. [4, 4, 4, 0]
 x.Each().Since(x < 0).Offset(1):list .. [4, 4, 4, 0]
 x.Each().Since(& {$i < 0}).Offset(1).While(& {$i >= 0}):list .. [3, 1, 2, 3, 4]
-======== Iterator#Skip() ========
 ======== Iterator#SkipNil() ========
 x .. [false, 52, 23, 62, <Nil>, 75, 46, false, 10, <Nil>, 86, 80, 19, 34, false]
 x.Each().SkipNil():list .. [false, 52, 23, 62, 75, 46, false, 10, 86, 80, 19, 34, false]

@@ -98,6 +98,30 @@ Gurax_ImplementMethod(Iterator, NextValue)
 	return pValue? pValue.release() : Value::nil();
 }
 
+// Iterator#Skip(n as Number):void
+Gurax_DeclareMethod(Iterator, Skip)
+{
+	Declare(VTYPE_Bool, Flag::None);
+	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+
+)**");
+}
+
+Gurax_ImplementMethod(Iterator, Skip)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	Iterator& iterThis = valueThis.GetIterator();
+	// Arguments
+	ArgPicker args(argument);
+	size_t n = args.PickNumberNonNeg<size_t>();
+	// Function body
+	if (iterThis.Skip(n)) return Value::nil();
+
+	return Value::nil();
+}
+
 //-----------------------------------------------------------------------------
 // Implementation of method common to both Iterator and List
 //-----------------------------------------------------------------------------
@@ -117,7 +141,7 @@ starting from zero. It is supposed to return a `Bool` value by determining wheth
 
 ```
 [3, 1, 4, 1, 5, 9].After(Function(value) {value >= 4}):list // Returns [1, 5, 9]
-```
+```d
 
 An iterable as the criteria is a sequence of `Bool` values that is scanned along with the target iterable.
 
@@ -625,28 +649,6 @@ Value* VType_Iterator::Method_Find(Processor& processor, Argument& argument, Ite
 		return Value::nil();
 	}
 	return pValueRtn.release();
-}
-
-// Iterator#Skip(n as Number)
-Gurax_DeclareMethod(Iterator, Skip)
-{
-	Declare(VTYPE_Iterator, Flag::None);
-	DeclareArg("n", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-
-)**");
-}
-
-Gurax_ImplementMethod(Iterator, Skip)
-{
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	Iterator& iterThis = valueThis.GetIterator();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-
-	return Value::nil();
 }
 
 // Iterator#Flatten():[dfs,bfs] {block?}
@@ -1709,6 +1711,7 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, IsFinite));
 	Assign(Gurax_CreateMethod(Iterator, IsInfinite));
 	Assign(Gurax_CreateMethod(Iterator, NextValue));
+	Assign(Gurax_CreateMethod(Iterator, Skip));
 	// Assignment of method common to both Iterator and List
 	Assign(Gurax_CreateMethod(Iterator, After));
 	Assign(Gurax_CreateMethod(Iterator, Align));
@@ -1753,7 +1756,6 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, RoundOff));
 	Assign(Gurax_CreateMethod(Iterator, RunLength));
 	Assign(Gurax_CreateMethod(Iterator, Since));
-	Assign(Gurax_CreateMethod(Iterator, Skip));
 	Assign(Gurax_CreateMethod(Iterator, SkipNil));
 	Assign(Gurax_CreateMethod(Iterator, Sort));
 	Assign(Gurax_CreateMethod(Iterator, Std));

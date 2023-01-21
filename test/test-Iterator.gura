@@ -40,7 +40,17 @@ TestCase('Iterator#NextValue()') {
 }
 
 TestCase('Iterator#Skip()') {
-
+	x = 1..
+	Tester(`x.NextValue())
+	Tester(`x.NextValue())
+	Tester(`x.NextValue())
+	Tester(`x.NextValue())
+	Tester(`x.Skip(1))
+	Tester(`x.NextValue())
+	Tester(`x.Skip(2))
+	Tester(`x.NextValue())
+	Tester(`x.Skip(0))
+	Tester(`x.NextValue())
 }
 
 TestCase('Iterator#After()') {
