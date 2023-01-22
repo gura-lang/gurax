@@ -33,7 +33,7 @@ VType.PrintPropSlots(stream as Stream = sys.cout):void:static  = {
 
 VType.PrintMethods(stream as Stream = sys.cout):void:static = {
 	funcs = this.__prop__(this.__methodSymbols__())
-	stream.Println(funcs:*__str__():unbracket)
+	stream.Println(funcs:*declaration)
 }
 
 DetectMemoryLeak():dynamicScope {`block} = {

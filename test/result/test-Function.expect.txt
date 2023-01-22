@@ -142,6 +142,7 @@ f(a = 1, b = 2, c = 3, d = 4, e = 5)
   ##17 Call(cont=##18)
 ======== Property ========
 Function
+  #declaration      String       R
   #expr             Expr         R
   #name             String       R
   #symbol           Symbol       R

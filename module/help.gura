@@ -1,7 +1,7 @@
 #!/usr/bin/env gurax
 
 ComposeFunctionHelp(func as Function, lang as Symbol = `en):map = {
-	str = '##### ' + func.__str__():unbracket.Replace('`', '\\`') + '\n'
+	str = '##### ' + func.declaration.Replace('`', '\\`') + '\n'
 	help = Help(func, lang)
 	doc = cond(help, help.doc, '')
 	if (doc.IsEmpty()) { doc = '(no help)' }

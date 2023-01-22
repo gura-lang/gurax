@@ -89,6 +89,20 @@ Gurax_ImplementConstructor(Function)
 //------------------------------------------------------------------------------
 // Implementation of property
 //------------------------------------------------------------------------------
+// Function#declaration
+Gurax_DeclareProperty_R(Function, declaration)
+{
+	Declare(VTYPE_String, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Function, declaration)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_String(valueThis.GetFunction().ToString(StringStyle::Unbracket));
+}
+
 // Function#expr
 Gurax_DeclareProperty_R(Function, expr)
 {
@@ -256,6 +270,7 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 	// Assignment of function
 	frameOuter.Assign(Gurax_CreateFunction(_function_));
 	// Assignment of property
+	Assign(Gurax_CreateProperty(Function, declaration));
 	Assign(Gurax_CreateProperty(Function, expr));
 	Assign(Gurax_CreateProperty(Function, name));
 	Assign(Gurax_CreateProperty(Function, symbol));
@@ -277,7 +292,7 @@ Value* VType_Function::DoCastFrom(const Value& value, DeclArg::Flags flags) cons
 		const Constructor& constructor = vtype.GetConstructor();
 		if (constructor.IsEmpty()) {
 			Error::Issue(ErrorType::ValueError,
-				 "value type %s does not have a constructor", vtype.MakeFullName().c_str());
+				"value type %s does not have a constructor", vtype.MakeFullName().c_str());
 			return nullptr;
 		}
 		return new Value_Function(constructor.Reference());
