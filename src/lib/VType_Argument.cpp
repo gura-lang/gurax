@@ -27,7 +27,7 @@ ${help.ComposeMethodHelp(Argument, `en)}
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Argument#IsSet(symbol:Symbol):Bool
+// Argument#IsSet(symbol as Symbol):Bool
 Gurax_DeclareMethod(Argument, IsSet)
 {
 	Declare(VTYPE_Bool, Flag::None);
@@ -70,8 +70,7 @@ VType& Value_Argument::vtype = VTYPE_Argument;
 
 String Value_Argument::ToString(const StringStyle& ss) const
 {
-	return ToStringGeneric(ss, GetArgument().ToString(
-							ss.IsUnbracket()? ss : StringStyle::Cram));
+	return ToStringGeneric(ss, GetArgument().ToString(ss.IsUnbracket()? ss : StringStyle::Cram));
 }
 
 }

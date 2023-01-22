@@ -32,14 +32,12 @@ VType.PrintPropSlots(stream as Stream = sys.cout):void:static  = {
 }
 
 VType.PrintMethods(stream as Stream = sys.cout):void:static = {
-	funcs = this.__prop__(this.__methodSymbols__())
-	stream.Println(funcs:*declaration)
+	stream.Println(this.__methods__():*declaration)
 }
 
 DetectMemoryLeak():dynamicScope {`block} = {
 	nBlocksPrev = MemoryPool.CountBlocksAllocated() + 1
 	block.Eval()
 	nBlocksLeaked = MemoryPool.CountBlocksAllocated() - nBlocksPrev
-	(nBlocksLeaked > 0) && Error.Raise(Error.MemoryError,
-					'failed to release %s blocks', nBlocksLeaked)
+	(nBlocksLeaked > 0) && Error.Raise(Error.MemoryError, 'failed to release %s blocks', nBlocksLeaked)
 }
