@@ -214,17 +214,6 @@ Gurax_ImplementOpBinary(Mul, Function, Tuple)
 	return func.Eval(processor, *pArgument);
 }
 
-// CallableMember * Tuple
-Gurax_ImplementOpBinary(Mul, CallableMember, Tuple)
-{
-	const DeclCallable* pDeclCallable = valueL.GetDeclCallableWithError();
-	if (!pDeclCallable) return Value::nil();
-	ValueOwner& values = Value_Tuple::GetValueOwner(valueR);
-	RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference(), DeclCallable::Flag::None));
-	pArgument->FeedValues(processor.GetFrameCur(), values);
-	return valueL.Eval(processor, *pArgument);
-}
-
 // CallableMember * Any
 Gurax_ImplementOpBinary(Mul, CallableMember, Any)
 {
@@ -235,8 +224,8 @@ Gurax_ImplementOpBinary(Mul, CallableMember, Any)
 	return valueL.Eval(processor, *pArgument);
 }
 
-// VType * Tuple
-Gurax_ImplementOpBinary(Mul, VType, Tuple)
+// CallableMember * Tuple
+Gurax_ImplementOpBinary(Mul, CallableMember, Tuple)
 {
 	const DeclCallable* pDeclCallable = valueL.GetDeclCallableWithError();
 	if (!pDeclCallable) return Value::nil();
@@ -253,6 +242,17 @@ Gurax_ImplementOpBinary(Mul, VType, Any)
 	if (!pDeclCallable) return Value::nil();
 	RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference(), DeclCallable::Flag::None));
 	pArgument->FeedValue(processor.GetFrameCur(), valueR.Reference());
+	return valueL.Eval(processor, *pArgument);
+}
+
+// VType * Tuple
+Gurax_ImplementOpBinary(Mul, VType, Tuple)
+{
+	const DeclCallable* pDeclCallable = valueL.GetDeclCallableWithError();
+	if (!pDeclCallable) return Value::nil();
+	ValueOwner& values = Value_Tuple::GetValueOwner(valueR);
+	RefPtr<Argument> pArgument(new Argument(processor, pDeclCallable->Reference(), DeclCallable::Flag::None));
+	pArgument->FeedValues(processor.GetFrameCur(), values);
 	return valueL.Eval(processor, *pArgument);
 }
 
@@ -277,12 +277,12 @@ void VType_Function::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateProperty(Function, type));
 	Assign(Gurax_CreateProperty(Function, vtypeResult));
 	// Assignment of operator
-	Gurax_AssignOpBinary(Mul, Function, Tuple);
 	Gurax_AssignOpBinary(Mul, Function, Any);
-	Gurax_AssignOpBinary(Mul, CallableMember, Tuple);
+	Gurax_AssignOpBinary(Mul, Function, Tuple);
 	Gurax_AssignOpBinary(Mul, CallableMember, Any);
-	Gurax_AssignOpBinary(Mul, VType, Tuple);
+	Gurax_AssignOpBinary(Mul, CallableMember, Tuple);
 	Gurax_AssignOpBinary(Mul, VType, Any);
+	Gurax_AssignOpBinary(Mul, VType, Tuple);
 }
 
 Value* VType_Function::DoCastFrom(const Value& value, DeclArg::Flags flags) const
