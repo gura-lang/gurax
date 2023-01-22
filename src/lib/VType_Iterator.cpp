@@ -724,30 +724,6 @@ Value* VType_Iterator::Method_Fold(Processor& processor, Argument& argument, Ite
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Iterator#Format(format as String):map {block?}
-Gurax_DeclareMethod(Iterator, Format)
-{
-	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-
-)**");
-}
-
-Gurax_ImplementMethod(Iterator, Format)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
-}
-
 // Iterator#Head(n as Number):map {block?}
 Gurax_DeclareMethod(Iterator, Head)
 {
@@ -1091,76 +1067,6 @@ Value* VType_Iterator::Method_PingPong(
 		pIterator.reset(new Iterator_ConstN(valueTypedOwner.GetValueOwner().front()->Reference(), n));
 	}
 	return argument.ReturnIterator(processor, pIterator.release());
-}
-
-// Iterator#Print(stream?:w as Stream):void
-Gurax_DeclareMethod(Iterator, Print)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-
-)**");
-}
-
-Gurax_ImplementMethod(Iterator, Print)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
-}
-
-// Iterator#Printf(format as String, stream?:w as Stream):void
-Gurax_DeclareMethod(Iterator, Printf)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-
-)**");
-}
-
-Gurax_ImplementMethod(Iterator, Printf)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
-}
-
-// Iterator#Println(stream?:w as Stream):void
-Gurax_DeclareMethod(Iterator, Println)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	AddHelp(Gurax_Symbol(en), u8R"**(
-
-)**");
-}
-
-Gurax_ImplementMethod(Iterator, Println)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
 }
 
 // Iterator#Prod()
@@ -1731,7 +1637,6 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, Find));
 	Assign(Gurax_CreateMethod(Iterator, Flatten));
 	Assign(Gurax_CreateMethod(Iterator, Fold));
-	Assign(Gurax_CreateMethod(Iterator, Format));
 	Assign(Gurax_CreateMethod(Iterator, Head));
 	Assign(Gurax_CreateMethod(Iterator, Join));
 	Assign(Gurax_CreateMethod(Iterator, Joinb));
@@ -1745,9 +1650,6 @@ void VType_Iterator::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(Iterator, Pack));
 	Assign(Gurax_CreateMethod(Iterator, Permutation));
 	Assign(Gurax_CreateMethod(Iterator, PingPong));
-	Assign(Gurax_CreateMethod(Iterator, Print));
-	Assign(Gurax_CreateMethod(Iterator, Printf));
-	Assign(Gurax_CreateMethod(Iterator, Println));
 	Assign(Gurax_CreateMethod(Iterator, Prod));
 	Assign(Gurax_CreateMethod(Iterator, Rank));
 	Assign(Gurax_CreateMethod(Iterator, Reduce));

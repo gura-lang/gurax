@@ -755,28 +755,6 @@ Gurax_ImplementMethod(List, Fold)
 	return VType_Iterator::Method_Fold(processor, argument, *pIteratorSrc);
 }
 
-// List#Format(format as String):map {block?}
-Gurax_DeclareMethod(List, Format)
-{
-	Declare(VTYPE_String, Flag::Map);
-	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
-}
-
-Gurax_ImplementMethod(List, Format)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
-}
-
 // List#Head(n as number):map {block?}
 Gurax_DeclareMethod(List, Head)
 {
@@ -1043,70 +1021,6 @@ Gurax_ImplementMethod(List, PingPong)
 	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
 	// Function body
 	return VType_Iterator::Method_PingPong(processor, argument, valueTypedOwner);
-}
-
-// List#Print(stream?:w as Stream):void
-Gurax_DeclareMethod(List, Print)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
-}
-
-Gurax_ImplementMethod(List, Print)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
-}
-
-// List#Printf(format as String, stream?:w as Stream):void
-Gurax_DeclareMethod(List, Printf)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("format", VTYPE_String, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
-}
-
-Gurax_ImplementMethod(List, Printf)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
-}
-
-// List#Println(stream?:w as Stream):void
-Gurax_DeclareMethod(List, Println)
-{
-	Declare(VTYPE_Nil, Flag::None);
-	DeclareArg("stream", VTYPE_Stream, ArgOccur::ZeroOrOnce, ArgFlag::StreamW);
-	LinkHelp(VTYPE_Iterator, GetSymbol());
-}
-
-Gurax_ImplementMethod(List, Println)
-{
-#if 0
-	// Target
-	auto& valueThis = GetValueThis(argument);
-	ValueTypedOwner& valueTypedOwner = valueThis.GetValueTypedOwner();
-	// Arguments
-	ArgPicker args(argument);
-	// Function body
-#endif
-	return Value::nil();
 }
 
 // List#Prod()
@@ -1606,7 +1520,6 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Find));
 	Assign(Gurax_CreateMethod(List, Flatten));
 	Assign(Gurax_CreateMethod(List, Fold));
-	Assign(Gurax_CreateMethod(List, Format));
 	Assign(Gurax_CreateMethod(List, Head));
 	Assign(Gurax_CreateMethod(List, Join));
 	Assign(Gurax_CreateMethod(List, Joinb));
@@ -1620,9 +1533,6 @@ void VType_List::DoPrepare(Frame& frameOuter)
 	Assign(Gurax_CreateMethod(List, Pack));
 	Assign(Gurax_CreateMethod(List, Permutation));
 	Assign(Gurax_CreateMethod(List, PingPong));
-	Assign(Gurax_CreateMethod(List, Print));
-	Assign(Gurax_CreateMethod(List, Printf));
-	Assign(Gurax_CreateMethod(List, Println));
 	Assign(Gurax_CreateMethod(List, Prod));
 	Assign(Gurax_CreateMethod(List, Rank));
 	Assign(Gurax_CreateMethod(List, Reduce));
