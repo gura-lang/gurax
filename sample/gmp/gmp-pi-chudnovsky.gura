@@ -24,10 +24,9 @@ ComputePQT(n1 as Number, n2 as Number) = {
 	PQT(P, Q, T)
 }
 
-main() = {
+main(fileNameOut as String, digits as Number) = {
 	blockCols = 5
 	blockRows = 20
-	digits = 10000;
 	gmp.Float.default_prec = Int(digits * math.Log(10) / math.Log(2))
 	n = Int(digits / 14)
 	A:extern = 13591409L
@@ -38,13 +37,14 @@ main() = {
 	pi = math.Sqrt(gmp.Float(C));
 	pi *= C * PQT.Q;
 	pi /= (PQT.T + A * PQT.Q) * 12;
-	fileNameOut = path.BaseName(path.FileName(sys.argv[0])) + '.txt'
 	Open(fileNameOut, 'w') {|f|
 		f.Println('3')
 		f.Print(Format('%.*f', digits, pi).Mid(2).\
 			Fold(10).Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
 	}
-	Println(fileNameOut, ' was created.')
 }
 
-main()
+fileNameOut = path.BaseName(path.FileName(sys.argv[0])) + '.txt'
+digits = cond(sys.argv.len < 2, 10000, Int(sys.argv[1]))
+main(fileNameOut, digits)
+Printf('%d digits of pi was written in %s.\n', digits, fileNameOut)

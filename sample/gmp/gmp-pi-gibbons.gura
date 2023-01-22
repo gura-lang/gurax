@@ -17,17 +17,17 @@ GeneratePI() = {
 	}
 }
 
-main() = {
+main(fileNameOut as String, digits as Number) = {
 	blockCols = 5
 	blockRows = 20
-	digits = 10000
-	fileNameOut = path.BaseName(path.FileName(sys.argv[0])) + '.txt'
 	Open(fileNameOut, 'w') {|f|
 		f.Println('3')
 		f.Print(Format('%d', GeneratePI().Offset(1).Head(digits)).\
 			Fold(10):*Join().Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
 	}
-	Println(fileNameOut, ' was created.')
 }
 
-main()
+fileNameOut = path.BaseName(path.FileName(sys.argv[0])) + '.txt'
+digits = cond(sys.argv.len < 2, 10000, Int(sys.argv[1]))
+main(fileNameOut, digits)
+Printf('%d digits of pi was written in %s.\n', digits, fileNameOut)
