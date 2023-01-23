@@ -4,17 +4,28 @@ import(opengl) {*}
 
 glewInit()
 
-MyApp = class(wx.App) {
+AppMain = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
 		true
 	}
 }
 
-MyFrame = class(wx.Frame) {
+FrameMain = class(wx.Frame) {
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
-		PanelTop(this)
+		GLCanvas(this)
 	}
+}
+
+Display() = {
+	glClearColor(0.3, 0.4, 0.6, 1.0)
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+	glBegin(GL_POLYGON)
+		glColor3f(1, 0, 0); glVertex3f(-0.6, -0.75, 0.5)
+		glColor3f(0, 1, 0); glVertex3f(0.6, -0.75, 0)
+		glColor3f(0, 0, 1); glVertex3f(0, 0.75, 0)
+	glEnd()
+	glFlush()
 }
 
 GLCanvas = class(wx.GLCanvas) {
@@ -26,29 +37,10 @@ GLCanvas = class(wx.GLCanvas) {
 	OnPaint(event as wx.PaintEvent) = {
 		dc = wx.PaintDC(this)
 		this.SetCurrent(this.m_context)
-		glClearColor(0.3, 0.4, 0.6, 1.0)
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
-  glBegin(GL_POLYGON);
-    glColor3f(1, 0, 0); glVertex3f(-0.6, -0.75, 0.5);
-    glColor3f(0, 1, 0); glVertex3f(0.6, -0.75, 0);
-    glColor3f(0, 0, 1); glVertex3f(0, 0.75, 0);
-  glEnd();
-
-		glFlush()
+		Display()
 		this.SwapBuffers()
 		dc = nil
 	}
 }
 
-PanelTop = class(wx.Panel) {
-	__init__(parent as wx.Window) = {|parent|
-		sizerTop = wx.BoxSizer(wx.HORIZONTAL)
-		this.SetSizer(sizerTop)
-		GLCanvas(this) {|canvas|
-			sizerTop.Add(canvas, wx.SizerFlags(1).Expand())
-		}
-	}
-}
-
-wx.ImplementApp(MyApp())
+wx.ImplementApp(AppMain())
