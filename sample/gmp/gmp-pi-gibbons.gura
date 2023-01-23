@@ -4,7 +4,7 @@ import(gmp)
 
 GeneratePI() = {
 	[q, r, t, i] = [1L, 180L, 60L, 2L]
-	repeat ():iter {
+	repeat():iter {
 		u = 3 * (3 * i + 1) * (3 * i + 2)
 		y = (q * (27 * i - 12) + 5 * r) / (5 * t)
 		[q, r] = [
@@ -17,14 +17,12 @@ GeneratePI() = {
 	}
 }
 
-main(fileNameOut as String, digits as Number) = {
+main(streamOut:w as Stream, digits as Number) = {
 	blockCols = 5
 	blockRows = 20
-	Open(fileNameOut, 'w') {|f|
-		f.Println('3')
-		f.Print(Format('%d', GeneratePI().Offset(1).Head(digits)).\
+	streamOut.Println('3')
+	streamOut.Print(Format('%d', GeneratePI().Offset(1).Head(digits)).\
 			Fold(10):*Join().Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
-	}
 }
 
 fileNameOut = path.BaseName(path.FileName(sys.argv[0])) + '.txt'

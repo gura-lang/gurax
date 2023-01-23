@@ -24,7 +24,7 @@ ComputePQT(n1 as Number, n2 as Number) = {
 	PQT(P, Q, T)
 }
 
-main(fileNameOut as String, digits as Number) = {
+main(streamOut:w as Stream, digits as Number) = {
 	blockCols = 5
 	blockRows = 20
 	gmp.Float.default_prec = Int(digits * math.Log(10) / math.Log(2))
@@ -37,11 +37,9 @@ main(fileNameOut as String, digits as Number) = {
 	pi = math.Sqrt(gmp.Float(C));
 	pi *= C * PQT.Q;
 	pi /= (PQT.T + A * PQT.Q) * 12;
-	Open(fileNameOut, 'w') {|f|
-		f.Println('3')
-		f.Print(Format('%.*f', digits, pi).Mid(2).\
-			Fold(10).Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
-	}
+	streamOut.Println('3')
+	streamOut.Print(Format('%.*f', digits, pi).Mid(2).Fold(10).\
+			Fold(blockCols):*Join(' ').Fold(blockRows):*Join('\n'), '\n\n')
 }
 
 fileNameOut = path.BaseName(path.FileName(sys.argv[0])) + '.txt'
