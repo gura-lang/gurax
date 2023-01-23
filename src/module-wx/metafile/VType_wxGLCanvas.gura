@@ -7,7 +7,7 @@ GLCanvas = Class(Window) {
 		pos as const_Point_r = wxDefaultPosition, size as const_Size_r = wxDefaultSize, style as long = 0,
 		name as const_String_r = "GLCanvas", palette as const_Palette_r = wxNullPalette)
 	SetColour(colour as const_String_r) as bool
-	SetCurrent(context as const_GLContext_r) as bool;
+	SetCurrent(context as const_GLContext_r) as bool
 	SwapBuffers() as bool
 	//IsDisplaySupported(const int *attribList):static as bool
 	IsExtensionSupported(extension as const_char_p):static as bool

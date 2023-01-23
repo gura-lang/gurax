@@ -61,8 +61,9 @@ Gurax_ImplementConstructorEx(GLContext_gurax, processor_gurax, argument_gurax)
 	wxGLCanvas* win = value_win.GetEntityPtr();
 	wxGLContext* other = args_gurax.IsValid()? args_gurax.Pick<Value_wxGLContext>().GetEntityPtr() : nullptr;
 	// Function body
-	return argument_gurax.ReturnValue(processor_gurax, new Value_wxGLContext(
-		wxGLContext(win, other)));
+	auto pEntity_gurax = new wxGLContext(win, other);
+	RefPtr<Value_wxGLContext> pValue_gurax(new Value_wxGLContext(pEntity_gurax));
+	return argument_gurax.ReturnValue(processor_gurax, pValue_gurax.release());
 }
 
 //-----------------------------------------------------------------------------
