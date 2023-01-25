@@ -1,0 +1,172 @@
+#!/usr/bin/env gurax
+import(cbridge)
+
+r = cbridge.Renderer()
+
+//------------------------------------------------------------------------------
+// Type Information
+//------------------------------------------------------------------------------
+r.DeclareType_Number('GLenum')
+r.DeclareType_Number('GLbitfield')
+r.DeclareType_Number('GLuint')
+r.DeclareType_Number('GLint')
+r.DeclareType_Number('GLsizei')
+r.DeclareType_Number('GLbyte')
+r.DeclareType_Number('GLshort')
+r.DeclareType_Number('GLubyte')
+r.DeclareType_Number('GLushort')
+r.DeclareType_Number('GLulong')
+r.DeclareType_Number('GLfloat')
+r.DeclareType_Number('GLclampf')
+r.DeclareType_Number('GLdouble')
+r.DeclareType_Number('GLclampd')
+r.DeclareType_Number('GLint64')
+r.DeclareType_Number('GLuint64')
+r.DeclareType_Number('GLsync')
+r.DeclareType_Number('GLchar')
+r.DeclareType_Number('GLintptr')
+r.DeclareType_Number('GLsizeiptr')
+r.DeclareType_Number('GLint64EXT')
+r.DeclareType_Number('GLuint64EXT')
+//r.DeclareType(GLvoid)
+r.DeclareType('GLboolean', 'GLboolean', 'Bool',
+	codePicker = R'''
+	${this.cType} ${varName} = static_cast<GLboolean>(args_gurax.PickBool());
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? static_cast<GLboolean>(args_gurax.PickBool()) : GL_FALSE;
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<GLboolean>([](Gurax::Value& value) {
+		return value.GetBool()? GL_TRUE : GL_FALSE;
+	});
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_Bool(!!rtn);
+	''')
+
+r.DeclareType('String_const_GLchar_p', 'const GLchar*', 'String',
+	codePicker = R'''
+	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args_gurax.PickString());
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? reinterpret_cast<${this.cType}>(args_gurax.PickString()) : nullptr;
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
+		return reinterpret_cast<${this.cType}>(Gurax::Value_String::GetString(value));
+	});
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
+	''')
+
+r.DeclareType('Number_const_void_p', 'const void*', 'Number',
+	codePicker = R'''
+	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args_gurax.PickNumber<size_t>());
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? reinterpret_cast<${this.cType}>(args_gurax.PickNumber<size_t>()) : nullptr;
+	''')
+
+r.DeclareType('Return_void_p', 'void*', 'Pointer',
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_Pointer(new Pointer_Memory(new MemorySloth(rtn)));
+	''')
+
+r.DeclareType('String_const_GLubyte_p', 'const GLubyte*', 'String',
+	codePicker = R'''
+	${this.cType} ${varName} = reinterpret_cast<${this.cType}>(args_gurax.PickString());
+	'''
+	codePickerValidation = R'''
+	${this.cType} ${varName} = args_gurax.IsValid()? reinterpret_cast<${this.cType}>(args_gurax.PickString()) : nullptr;
+	'''
+	codePickerVec = R'''
+	auto ${varName} = args_gurax.PickListT<${this.cType}>([](Gurax::Value& value) {
+		return reinterpret_cast<${this.cType}>(Gurax::Value_String::GetString(value));
+	});
+	'''
+	codeFunctionBody = R'''
+	${this.cType} rtn = ${caller};
+	return new Gurax::Value_String(reinterpret_cast<const char*>(rtn));
+	''')
+
+r.DeclareType_Pointer('const_GLboolean_p', 'const GLboolean*')
+r.DeclareType_Pointer('const_GLenum_p', 'const GLenum*')
+r.DeclareType_Pointer('const_GLbitfield_p', 'const GLbitfield*')
+r.DeclareType_Pointer('const_GLuint_p', 'const GLuint*')
+r.DeclareType_Pointer('const_GLint_p', 'const GLint*')
+r.DeclareType_Pointer('const_GLsizei_p', 'const GLsizei*')
+r.DeclareType_Pointer('const_GLbyte_p', 'const GLbyte*')
+r.DeclareType_Pointer('const_GLshort_p', 'const GLshort*')
+r.DeclareType_Pointer('const_GLubyte_p', 'const GLubyte*')
+r.DeclareType_Pointer('const_GLushort_p', 'const GLushort*')
+r.DeclareType_Pointer('const_GLulong_p', 'const GLulong*')
+r.DeclareType_Pointer('const_GLfloat_p', 'const GLfloat*')
+r.DeclareType_Pointer('const_GLclampf_p', 'const GLclampf*')
+r.DeclareType_Pointer('const_GLdouble_p', 'const GLdouble*')
+r.DeclareType_Pointer('const_GLclampd_p', 'const GLclampd*')
+r.DeclareType_Pointer('const_GLint64_p', 'const GLint64*')
+r.DeclareType_Pointer('const_GLuint64_p', 'const GLuint64*')
+r.DeclareType_Pointer('const_GLsync_p', 'const GLsync*')
+r.DeclareType_Pointer('const_GLchar_p', 'const GLchar*')
+r.DeclareType_Pointer('const_GLintptr_p', 'const GLintptr*')
+r.DeclareType_Pointer('const_GLsizeiptr_p', 'const GLsizeiptr*')
+r.DeclareType_Pointer('const_GLvoid_p', 'const GLvoid*')
+r.DeclareType_Pointer('const_GLint64EXT_p', 'const GLint64EXT*')
+r.DeclareType_Pointer('const_GLuint64EXT_p', 'const GLuint64EXT*')
+
+r.DeclareType_WritablePointer('GLboolean_p', 'GLboolean*')
+r.DeclareType_WritablePointer('GLenum_p', 'GLenum*')
+r.DeclareType_WritablePointer('GLbitfield_p', 'GLbitfield*')
+r.DeclareType_WritablePointer('GLuint_p', 'GLuint*')
+r.DeclareType_WritablePointer('GLint_p', 'GLint*')
+r.DeclareType_WritablePointer('GLsizei_p', 'GLsizei*')
+r.DeclareType_WritablePointer('GLbyte_p', 'GLbyte*')
+r.DeclareType_WritablePointer('GLshort_p', 'GLshort*')
+r.DeclareType_WritablePointer('GLubyte_p', 'GLubyte*')
+r.DeclareType_WritablePointer('GLushort_p', 'GLushort*')
+r.DeclareType_WritablePointer('GLulong_p', 'GLulong*')
+r.DeclareType_WritablePointer('GLfloat_p', 'GLfloat*')
+r.DeclareType_WritablePointer('GLclampf_p', 'GLclampf*')
+r.DeclareType_WritablePointer('GLdouble_p', 'GLdouble*')
+r.DeclareType_WritablePointer('GLclampd_p', 'GLclampd*')
+r.DeclareType_WritablePointer('GLint64_p', 'GLint64*')
+r.DeclareType_WritablePointer('GLuint64_p', 'GLuint64*')
+r.DeclareType_WritablePointer('GLsync_p', 'GLsync*')
+r.DeclareType_WritablePointer('GLchar_p', 'GLchar*')
+r.DeclareType_WritablePointer('GLintptr_p', 'GLintptr*')
+r.DeclareType_WritablePointer('GLsizeiptr_p', 'GLsizeiptr*')
+r.DeclareType_WritablePointer('GLvoid_p', 'GLvoid*')
+r.DeclareType_Pointer('GLint64EXT_p', 'GLint64EXT*')
+r.DeclareType_Pointer('GLuint64EXT_p', 'GLuint64EXT*')
+
+//------------------------------------------------------------------------------
+// Function Registration: Context
+//------------------------------------------------------------------------------
+r.Register('glu') {
+
+gluErrorString(errCode as GLenum) as String_const_GLubyte_p
+
+}
+
+tR'''
+//==============================================================================
+// Functions.cpp
+//==============================================================================
+#include "stdafx.h"
+
+Gurax_BeginModuleScope(glu)
+
+${r.ComposeFunctionImplementation()}
+
+void AssignFunctions(Frame& frame)
+{
+	${r.ComposeFunctionAssignment('frame.')}
+}
+
+Gurax_EndModuleScope(glu)
+'''.Render(Open('Functions.cpp', 'w').Write(Codec.bom@utf8))

@@ -1,6 +1,6 @@
 #!/usr/bin/env gurax
 import(opengl) {*}
-import(glu) {*}
+//import(glu) {*}
 
 samples = []
 
