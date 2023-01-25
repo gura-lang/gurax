@@ -150,6 +150,8 @@ r.DeclareType_Pointer('GLuint64EXT_p', 'GLuint64EXT*')
 r.Register('glu') {
 
 gluErrorString(errCode as GLenum) as String_const_GLubyte_p
+//gluErrorUnicodeStringEXT(errCode as GLenum) as String_const_wchar_t_p;
+gluGetString(name as GLenum) as String_const_GLubyte_p
 
 }
 

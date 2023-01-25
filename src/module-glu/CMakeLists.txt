@@ -37,7 +37,10 @@ target_compile_definitions(glu.gurd PRIVATE GURAX_MODULE_SEPARATED
 target_sources(glu.gurd PRIVATE
 	module-glu.cpp
 	Util.cpp
-	Functions.cpp)
+	Functions.cpp
+	#VType_GLUnurbs.cpp
+	#VType_GLUquadric.cpp
+	VType_GLUtesselator.cpp)
 #-------------------------------------------------------------------------------
 # Link
 #-------------------------------------------------------------------------------
