@@ -7,8 +7,8 @@
 #include <GL/GLU.h>
 #include "Util.h"
 #include "Functions.h"
-//#include "VType_GLUnurbs.h"
-//#include "VType_GLUquadric.h"
+#include "VType_GLUnurbs.h"
+#include "VType_GLUquadric.h"
 #include "VType_GLUtesselator.h"
 
 Gurax_BeginModuleHeader(glu)
