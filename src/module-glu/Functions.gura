@@ -153,6 +153,89 @@ gluErrorString(errCode as GLenum) as String_const_GLubyte_p
 //gluErrorUnicodeStringEXT(errCode as GLenum) as String_const_wchar_t_p;
 gluGetString(name as GLenum) as String_const_GLubyte_p
 
+gluOrtho2D (
+    left as GLdouble, 
+    right as GLdouble, 
+    bottom as GLdouble, 
+    top as GLdouble) as void
+
+gluPerspective (
+    fovy as GLdouble, 
+    aspect as GLdouble, 
+    zNear as GLdouble, 
+    zFar as GLdouble) as void
+
+/*
+gluPickMatrix (
+    x as GLdouble, 
+    y as GLdouble, 
+    width as GLdouble, 
+    height as GLdouble, 
+    viewport[4] as GLint) as void
+*/
+
+gluLookAt (
+    eyex as GLdouble, 
+    eyey as GLdouble, 
+    eyez as GLdouble, 
+    centerx as GLdouble, 
+    centery as GLdouble, 
+    centerz as GLdouble, 
+    upx as GLdouble, 
+    upy as GLdouble, 
+    upz as GLdouble) as void
+
+/*
+gluProject (
+    GLdouble        objx, 
+    GLdouble        objy, 
+    GLdouble        objz,  
+    const GLdouble  modelMatrix[16], 
+    const GLdouble  projMatrix[16], 
+    const GLint     viewport[4], 
+    GLdouble        *winx, 
+    GLdouble        *winy, 
+    GLdouble        *winz) as int
+
+gluUnProject (
+    GLdouble       winx, 
+    GLdouble       winy, 
+    GLdouble       winz, 
+    const GLdouble modelMatrix[16], 
+    const GLdouble projMatrix[16], 
+    const GLint    viewport[4], 
+    GLdouble       *objx, 
+    GLdouble       *objy, 
+    GLdouble       *objz) as int
+
+gluScaleImage (
+    GLenum      format, 
+    GLint       widthin, 
+    GLint       heightin, 
+    GLenum      typein, 
+    const void  *datain, 
+    GLint       widthout, 
+    GLint       heightout, 
+    GLenum      typeout, 
+    void        *dataout) as int
+
+gluBuild1DMipmaps (
+    GLenum      target, 
+    GLint       components, 
+    GLint       width, 
+    GLenum      format, 
+    GLenum      type, 
+    const void  *data) as int
+
+gluBuild2DMipmaps (
+    GLenum      target, 
+    GLint       components, 
+    GLint       width, 
+    GLint       height, 
+    GLenum      format, 
+    GLenum      type, 
+    const void  *data) as int
+*/
 }
 
 tR'''
