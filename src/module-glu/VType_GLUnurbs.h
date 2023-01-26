@@ -48,17 +48,11 @@ protected:
 	// Destructor
 	~Value_GLUnurbs() = default;
 public:
-	GLUnurbs& GetGLUnurbs() { return *_pGLUnurbs; }
-	const GLUnurbs& GetGLUnurbs() const { return *_pGLUnurbs; }
+	GLUnurbs* GetEntityPtr() { return _pGLUnurbs; }
+	const GLUnurbs* GetEntityPtr() const { return _pGLUnurbs; }
 public:
-	static GLUnurbs& GetGLUnurbs(Value& value) {
-		return dynamic_cast<Value_GLUnurbs&>(value).GetGLUnurbs();
-	}
-	static const GLUnurbs& GetGLUnurbs(const Value& value) {
-		return dynamic_cast<const Value_GLUnurbs&>(value).GetGLUnurbs();
-	}
-	static GLUnurbs* GetEntityPtr(Value& value) { return &GetGLUnurbs(value); }
-	static const GLUnurbs* GetEntityPtr(const Value& value) { return &GetGLUnurbs(value); }
+	static GLUnurbs* GetEntityPtr(Value& value) { return dynamic_cast<Value_GLUnurbs&>(value).GetEntityPtr(); }
+	static const GLUnurbs* GetEntityPtr(const Value& value) { return dynamic_cast<const Value_GLUnurbs&>(value).GetEntityPtr(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

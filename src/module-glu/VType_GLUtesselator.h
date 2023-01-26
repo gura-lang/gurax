@@ -48,17 +48,11 @@ protected:
 	// Destructor
 	~Value_GLUtesselator() = default;
 public:
-	GLUtesselator& GetGLUtesselator() { return *_pGLUtesselator; }
-	const GLUtesselator& GetGLUtesselator() const { return *_pGLUtesselator; }
+	GLUtesselator* GetEntityPtr() { return _pGLUtesselator; }
+	const GLUtesselator* GetEntityPtr() const { return _pGLUtesselator; }
 public:
-	static GLUtesselator& GetGLUtesselator(Value& value) {
-		return dynamic_cast<Value_GLUtesselator&>(value).GetGLUtesselator();
-	}
-	static const GLUtesselator& GetGLUtesselator(const Value& value) {
-		return dynamic_cast<const Value_GLUtesselator&>(value).GetGLUtesselator();
-	}
-	static GLUtesselator* GetEntityPtr(Value& value) { return &GetGLUtesselator(value); }
-	static const GLUtesselator* GetEntityPtr(const Value& value) { return &GetGLUtesselator(value); }
+	static GLUtesselator* GetEntityPtr(Value& value) { return dynamic_cast<Value_GLUtesselator&>(value).GetEntityPtr(); }
+	static const GLUtesselator* GetEntityPtr(const Value& value) { return dynamic_cast<const Value_GLUtesselator&>(value).GetEntityPtr(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }

@@ -48,17 +48,11 @@ protected:
 	// Destructor
 	~Value_GLUquadric() = default;
 public:
-	GLUquadric& GetGLUquadric() { return *_pGLUquadric; }
-	const GLUquadric& GetGLUquadric() const { return *_pGLUquadric; }
+	GLUquadric* GetEntityPtr() { return _pGLUquadric; }
+	const GLUquadric* GetEntityPtr() const { return _pGLUquadric; }
 public:
-	static GLUquadric& GetGLUquadric(Value& value) {
-		return dynamic_cast<Value_GLUquadric&>(value).GetGLUquadric();
-	}
-	static const GLUquadric& GetGLUquadric(const Value& value) {
-		return dynamic_cast<const Value_GLUquadric&>(value).GetGLUquadric();
-	}
-	static GLUquadric* GetEntityPtr(Value& value) { return &GetGLUquadric(value); }
-	static const GLUquadric* GetEntityPtr(const Value& value) { return &GetGLUquadric(value); }
+	static GLUquadric* GetEntityPtr(Value& value) { return dynamic_cast<Value_GLUquadric&>(value).GetEntityPtr(); }
+	static const GLUquadric* GetEntityPtr(const Value& value) { return dynamic_cast<const Value_GLUquadric&>(value).GetEntityPtr(); }
 public:
 	// Virtual functions of Value
 	virtual Value* Clone() const override { return Reference(); }
