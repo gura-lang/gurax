@@ -173,273 +173,279 @@ gluErrorString(errCode as GLenum) as String_const_GLubyte_p
 gluGetString(name as GLenum) as String_const_GLubyte_p
 
 gluOrtho2D (
-    left as GLdouble, 
-    right as GLdouble, 
-    bottom as GLdouble, 
-    top as GLdouble) as void
+	left as GLdouble, 
+	right as GLdouble, 
+	bottom as GLdouble, 
+	top as GLdouble) as void
 
 gluPerspective (
-    fovy as GLdouble, 
-    aspect as GLdouble, 
-    zNear as GLdouble, 
-    zFar as GLdouble) as void
+	fovy as GLdouble, 
+	aspect as GLdouble, 
+	zNear as GLdouble, 
+	zFar as GLdouble) as void
 
-/*
 gluPickMatrix (
-    x as GLdouble, 
-    y as GLdouble, 
-    width as GLdouble, 
-    height as GLdouble, 
-    viewport[4] as GLint) as void
-*/
+	x as GLdouble, 
+	y as GLdouble, 
+	width as GLdouble, 
+	height as GLdouble, 
+	viewport[4] as GLint) as void = \
+	R'''
+	if (viewport.size() != 4) {
+		Error::Issue(ErrorType::RangeError, "the argument viewport must be a list of four elements");
+		return Value::nil();
+	}
+	gluPickMatrix(x, y, width, height, const_cast<GLint*>(viewport.data()));
+	return Gurax::Value::nil();
+	'''
 
 gluLookAt (
-    eyex as GLdouble, 
-    eyey as GLdouble, 
-    eyez as GLdouble, 
-    centerx as GLdouble, 
-    centery as GLdouble, 
-    centerz as GLdouble, 
-    upx as GLdouble, 
-    upy as GLdouble, 
-    upz as GLdouble) as void
+	eyex as GLdouble, 
+	eyey as GLdouble, 
+	eyez as GLdouble, 
+	centerx as GLdouble, 
+	centery as GLdouble, 
+	centerz as GLdouble, 
+	upx as GLdouble, 
+	upy as GLdouble, 
+	upz as GLdouble) as void
 
 /*
 gluProject (
-    GLdouble        objx, 
-    GLdouble        objy, 
-    GLdouble        objz,  
-    const GLdouble  modelMatrix[16], 
-    const GLdouble  projMatrix[16], 
-    const GLint     viewport[4], 
-    GLdouble        *winx, 
-    GLdouble        *winy, 
-    GLdouble        *winz) as int
+	GLdouble        objx, 
+	GLdouble        objy, 
+	GLdouble        objz,  
+	const GLdouble  modelMatrix[16], 
+	const GLdouble  projMatrix[16], 
+	const GLint     viewport[4], 
+	GLdouble        *winx, 
+	GLdouble        *winy, 
+	GLdouble        *winz) as int
 
 gluUnProject (
-    GLdouble       winx, 
-    GLdouble       winy, 
-    GLdouble       winz, 
-    const GLdouble modelMatrix[16], 
-    const GLdouble projMatrix[16], 
-    const GLint    viewport[4], 
-    GLdouble       *objx, 
-    GLdouble       *objy, 
-    GLdouble       *objz) as int
+	GLdouble       winx, 
+	GLdouble       winy, 
+	GLdouble       winz, 
+	const GLdouble modelMatrix[16], 
+	const GLdouble projMatrix[16], 
+	const GLint    viewport[4], 
+	GLdouble       *objx, 
+	GLdouble       *objy, 
+	GLdouble       *objz) as int
 
 gluScaleImage (
-    GLenum      format, 
-    GLint       widthin, 
-    GLint       heightin, 
-    GLenum      typein, 
-    const void  *datain, 
-    GLint       widthout, 
-    GLint       heightout, 
-    GLenum      typeout, 
-    void        *dataout) as int
+	GLenum      format, 
+	GLint       widthin, 
+	GLint       heightin, 
+	GLenum      typein, 
+	const void  *datain, 
+	GLint       widthout, 
+	GLint       heightout, 
+	GLenum      typeout, 
+	void        *dataout) as int
 
 gluBuild1DMipmaps (
-    GLenum      target, 
-    GLint       components, 
-    GLint       width, 
-    GLenum      format, 
-    GLenum      type, 
-    const void  *data) as int
+	GLenum      target, 
+	GLint       components, 
+	GLint       width, 
+	GLenum      format, 
+	GLenum      type, 
+	const void  *data) as int
 
 gluBuild2DMipmaps (
-    GLenum      target, 
-    GLint       components, 
-    GLint       width, 
-    GLint       height, 
-    GLenum      format, 
-    GLenum      type, 
-    const void  *data) as int
+	GLenum      target, 
+	GLint       components, 
+	GLint       width, 
+	GLint       height, 
+	GLenum      format, 
+	GLenum      type, 
+	const void  *data) as int
 */
 
 gluNewQuadric() as GLUquadric_p
 
 gluDeleteQuadric (
-    quadObject as GLUquadric_p):void
+	quadObject as GLUquadric_p):void
 
 gluQuadricNormals (
-    quadObject as GLUquadric_p, 
-    normals as GLenum):void
+	quadObject as GLUquadric_p, 
+	normals as GLenum):void
 
 gluQuadricTexture (
-    quadObject as GLUquadric_p, 
-    textureCoords as GLboolean):void
+	quadObject as GLUquadric_p, 
+	textureCoords as GLboolean):void
 
 gluQuadricOrientation (
-    quadObject as GLUquadric_p, 
-    orientation as GLenum):void
+	quadObject as GLUquadric_p, 
+	orientation as GLenum):void
 
 gluQuadricDrawStyle (
-    quadObject as GLUquadric_p, 
-    drawStyle as GLenum):void
+	quadObject as GLUquadric_p, 
+	drawStyle as GLenum):void
 
 gluCylinder (
-    quadObject as GLUquadric_p, 
-    baseRadius as GLdouble, 
-    topRadius as GLdouble, 
-    height as GLdouble, 
-    slices as GLint, 
-    stacks as GLint):void
+	quadObject as GLUquadric_p, 
+	baseRadius as GLdouble, 
+	topRadius as GLdouble, 
+	height as GLdouble, 
+	slices as GLint, 
+	stacks as GLint):void
 
 gluDisk (
-    quadObject as GLUquadric_p,
-    innerRadius as GLdouble, 
-    outerRadius as GLdouble, 
-    slices as GLint, 
-    loops as GLint):void
+	quadObject as GLUquadric_p,
+	innerRadius as GLdouble, 
+	outerRadius as GLdouble, 
+	slices as GLint, 
+	loops as GLint):void
 
 gluPartialDisk (
-    quadObject as GLUquadric_p,
-    innerRadius as GLdouble, 
-    outerRadius as GLdouble, 
-    slices as GLint, 
-    loops as GLint, 
-    startAngle as GLdouble, 
-    sweepAngle as GLdouble):void
+	quadObject as GLUquadric_p,
+	innerRadius as GLdouble, 
+	outerRadius as GLdouble, 
+	slices as GLint, 
+	loops as GLint, 
+	startAngle as GLdouble, 
+	sweepAngle as GLdouble):void
 
 gluSphere (
-    quadObject as GLUquadric_p,
-    radius as GLdouble, 
-    slices as GLint, 
-    stacks as GLint):void
+	quadObject as GLUquadric_p,
+	radius as GLdouble, 
+	slices as GLint, 
+	stacks as GLint):void
 
 /*
 void APIENTRY gluQuadricCallback (
-    GLUquadric          *qobj, 
-    GLenum              which, 
-    void                (CALLBACK* fn)());
+	GLUquadric          *qobj, 
+	GLenum              which, 
+	void                (CALLBACK* fn)());
 */
 
 gluNewTess() as GLUtesselator_p          
 
 gluDeleteTess(       
-    tess as GLUtesselator_p ):void
+	tess as GLUtesselator_p ):void
 
 /*
 gluTessBeginPolygon( 
-    tess as GLUtesselator_p,
-    void                *polygon_data ):void
+	tess as GLUtesselator_p,
+	void                *polygon_data ):void
 */
 
 gluTessBeginContour( 
-    tess as GLUtesselator_p ):void
+	tess as GLUtesselator_p ):void
 
 /*
 gluTessVertex(       
-    tess as GLUtesselator_p,
-    GLdouble            coords[3], 
-    void                *data ):void
+	tess as GLUtesselator_p,
+	GLdouble            coords[3], 
+	void                *data ):void
 */
 
 gluTessEndContour(   
-    tess as GLUtesselator_p):void
+	tess as GLUtesselator_p):void
 
 gluTessEndPolygon(   
-    tess as GLUtesselator_p):void
+	tess as GLUtesselator_p):void
 
 gluTessProperty(     
-    tess as GLUtesselator_p,
-    which as GLenum, 
-    value as GLdouble):void
+	tess as GLUtesselator_p,
+	which as GLenum, 
+	value as GLdouble):void
  
 gluTessNormal(       
-    tess as GLUtesselator_p, 
-    x as GLdouble,
-    y as GLdouble, 
-    z as GLdouble):void
+	tess as GLUtesselator_p, 
+	x as GLdouble,
+	y as GLdouble, 
+	z as GLdouble):void
 
 /*
 gluTessCallback(     
-    tess as GLUtesselator_p,
-    GLenum              which, 
-    void                (CALLBACK *fn)()):void
+	tess as GLUtesselator_p,
+	GLenum              which, 
+	void                (CALLBACK *fn)()):void
 
 gluGetTessProperty(  
-    tess as GLUtesselator_p,
-    GLenum              which, 
-    GLdouble            *value ):void
+	tess as GLUtesselator_p,
+	GLenum              which, 
+	GLdouble            *value ):void
 */
 
 gluNewNurbsRenderer () as GLUnurbs_p;
 
 gluDeleteNurbsRenderer (
-    nobj as GLUnurbs_p):void
+	nobj as GLUnurbs_p):void
 
 gluBeginSurface (
-    nobj as GLUnurbs_p):void
+	nobj as GLUnurbs_p):void
 
 gluBeginCurve (
-    nobj as GLUnurbs_p):void
+	nobj as GLUnurbs_p):void
 
 gluEndCurve (
-    nobj as GLUnurbs_p):void
+	nobj as GLUnurbs_p):void
 
 gluEndSurface (
-    nobj as GLUnurbs_p):void
+	nobj as GLUnurbs_p):void
 
 gluBeginTrim (
-    nobj as GLUnurbs_p):void
+	nobj as GLUnurbs_p):void
 
 gluEndTrim (
-    nobj as GLUnurbs_p):void
+	nobj as GLUnurbs_p):void
 
 gluPwlCurve (
-    nobj as GLUnurbs_p, 
-    array[] as GLfloat, 
-    stride as GLint, 
-    type as GLenum) = \
-    R'''
-    gluPwlCurve(nobj, array.sizeT<GLint>(), const_cast<GLfloat*>(array.data()), stride, type);
-    return Value::nil();
-    '''
+	nobj as GLUnurbs_p, 
+	array[] as GLfloat, 
+	stride as GLint, 
+	type as GLenum) = \
+	R'''
+	gluPwlCurve(nobj, array.sizeT<GLint>(), const_cast<GLfloat*>(array.data()), stride, type);
+	return Value::nil();
+	'''
 
 /*
 gluNurbsCurve (
-    nobj as GLUnurbs_p, 
-    GLint               nknots, 
-    GLfloat             *knot, 
-    GLint               stride, 
-    GLfloat             *ctlarray, 
-    GLint               order, 
-    GLenum              type);
+	nobj as GLUnurbs_p, 
+	GLint               nknots, 
+	GLfloat             *knot, 
+	GLint               stride, 
+	GLfloat             *ctlarray, 
+	GLint               order, 
+	GLenum              type);
 
 gluNurbsSurface(     
-    nobj as GLUnurbs_p, 
-    GLint               sknot_count, 
-    float               *sknot, 
-    GLint               tknot_count, 
-    GLfloat             *tknot, 
-    GLint               s_stride, 
-    GLint               t_stride, 
-    GLfloat             *ctlarray, 
-    GLint               sorder, 
-    GLint               torder, 
-    GLenum              type);
+	nobj as GLUnurbs_p, 
+	GLint               sknot_count, 
+	float               *sknot, 
+	GLint               tknot_count, 
+	GLfloat             *tknot, 
+	GLint               s_stride, 
+	GLint               t_stride, 
+	GLfloat             *ctlarray, 
+	GLint               sorder, 
+	GLint               torder, 
+	GLenum              type);
 
 gluLoadSamplingMatrices (
-    nobj as GLUnurbs_p, 
-    const GLfloat       modelMatrix[16], 
-    const GLfloat       projMatrix[16], 
-    const GLint         viewport[4] );
+	nobj as GLUnurbs_p, 
+	const GLfloat       modelMatrix[16], 
+	const GLfloat       projMatrix[16], 
+	const GLint         viewport[4] );
 
 gluNurbsProperty (
-    nobj as GLUnurbs_p, 
-    GLenum              property, 
-    GLfloat             value );
+	nobj as GLUnurbs_p, 
+	GLenum              property, 
+	GLfloat             value );
 
 gluGetNurbsProperty (
-    nobj as GLUnurbs_p, 
-    GLenum              property, 
-    GLfloat             *value );
+	nobj as GLUnurbs_p, 
+	GLenum              property, 
+	GLfloat             *value );
 
 gluNurbsCallback (
-    nobj as GLUnurbs_p, 
-    GLenum              which, 
-    void                (CALLBACK* fn)() );
+	nobj as GLUnurbs_p, 
+	GLenum              which, 
+	void                (CALLBACK* fn)() );
 */
 }
 

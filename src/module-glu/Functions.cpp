@@ -85,6 +85,35 @@ Gurax_ImplementFunctionEx(gluPerspective_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// glu.gluPickMatrix(x as Number, y as Number, width as Number, height as Number, viewport[] as Number)
+Gurax_DeclareFunctionAlias(gluPickMatrix_gurax, "gluPickMatrix")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("viewport", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+}
+
+Gurax_ImplementFunctionEx(gluPickMatrix_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLdouble x = args_gurax.PickNumber<GLdouble>();
+	GLdouble y = args_gurax.PickNumber<GLdouble>();
+	GLdouble width = args_gurax.PickNumber<GLdouble>();
+	GLdouble height = args_gurax.PickNumber<GLdouble>();
+	auto viewport = args_gurax.PickNumList<GLint>();
+	// Function body
+	if (viewport.size() != 4) {
+		Error::Issue(ErrorType::RangeError, "the argument viewport must be a list of four elements");
+		return Value::nil();
+	}
+	gluPickMatrix(x, y, width, height, const_cast<GLint*>(viewport.data()));
+	return Gurax::Value::nil();
+}
+
 // glu.gluLookAt(eyex as Number, eyey as Number, eyez as Number, centerx as Number, centery as Number, centerz as Number, upx as Number, upy as Number, upz as Number)
 Gurax_DeclareFunctionAlias(gluLookAt_gurax, "gluLookAt")
 {
@@ -640,6 +669,7 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(gluGetString_gurax));
 	frame.Assign(Gurax_CreateFunction(gluOrtho2D_gurax));
 	frame.Assign(Gurax_CreateFunction(gluPerspective_gurax));
+	frame.Assign(Gurax_CreateFunction(gluPickMatrix_gurax));
 	frame.Assign(Gurax_CreateFunction(gluLookAt_gurax));
 	frame.Assign(Gurax_CreateFunction(gluNewQuadric_gurax));
 	frame.Assign(Gurax_CreateFunction(gluDeleteQuadric_gurax));

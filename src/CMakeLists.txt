@@ -22,6 +22,7 @@ add_subdirectory(module-diff)
 #add_subdirectory(module-fs)				# built-in module
 add_subdirectory(module-gif)
 add_subdirectory(module-glfw)
+add_subdirectory(module-glu)
 add_subdirectory(module-gmp)
 add_subdirectory(module-gzip)
 add_subdirectory(module-hash)
