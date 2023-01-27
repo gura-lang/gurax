@@ -212,9 +212,9 @@ gluLookAt (
 
 /*
 gluProject (
-	GLdouble        objx, 
-	GLdouble        objy, 
-	GLdouble        objz,  
+	objx as GLdouble, 
+	objy as GLdouble, 
+	objz as GLdouble,  
 	const GLdouble  modelMatrix[16], 
 	const GLdouble  projMatrix[16], 
 	const GLint     viewport[4], 
@@ -223,44 +223,44 @@ gluProject (
 	GLdouble        *winz) as int
 
 gluUnProject (
-	GLdouble       winx, 
-	GLdouble       winy, 
-	GLdouble       winz, 
+	winx as GLdouble, 
+	winy as GLdouble, 
+	winz as GLdouble, 
 	const GLdouble modelMatrix[16], 
 	const GLdouble projMatrix[16], 
 	const GLint    viewport[4], 
 	GLdouble       *objx, 
 	GLdouble       *objy, 
 	GLdouble       *objz) as int
+*/
 
 gluScaleImage (
-	GLenum      format, 
-	GLint       widthin, 
-	GLint       heightin, 
-	GLenum      typein, 
-	const void  *datain, 
-	GLint       widthout, 
-	GLint       heightout, 
-	GLenum      typeout, 
-	void        *dataout) as int
+	format as GLenum, 
+	widthin as GLint, 
+	heightin as GLint, 
+	typein as GLenum, 
+	datain as const_void_p, 
+	widthout as GLint, 
+	heightout as GLint, 
+	typeout as GLenum, 
+	dataout as void_p) as int
 
 gluBuild1DMipmaps (
-	GLenum      target, 
-	GLint       components, 
-	GLint       width, 
-	GLenum      format, 
-	GLenum      type, 
-	const void  *data) as int
+	target as GLenum, 
+	components as GLint, 
+	width as GLint, 
+	format as GLenum, 
+	type as GLenum, 
+	data as const_void_p) as int
 
 gluBuild2DMipmaps (
-	GLenum      target, 
-	GLint       components, 
-	GLint       width, 
-	GLint       height, 
-	GLenum      format, 
-	GLenum      type, 
-	const void  *data) as int
-*/
+	target as GLenum, 
+	components as GLint, 
+	width as GLint, 
+	height as GLint, 
+	format as GLenum, 
+	type as GLenum, 
+	data as const_void_p) as int
 
 gluNewQuadric() as GLUquadric_p
 
@@ -315,9 +315,9 @@ gluSphere (
 
 /*
 void APIENTRY gluQuadricCallback (
-	GLUquadric          *qobj, 
-	GLenum              which, 
-	void                (CALLBACK* fn)());
+	quadObject as GLUquadric_p, 
+	which as GLenum, 
+	void (CALLBACK* fn)());
 */
 
 gluNewTess() as GLUtesselator_p          
@@ -325,11 +325,9 @@ gluNewTess() as GLUtesselator_p
 gluDeleteTess(       
 	tess as GLUtesselator_p ):void
 
-/*
 gluTessBeginPolygon( 
 	tess as GLUtesselator_p,
-	void                *polygon_data ):void
-*/
+	polygon_data as void_p):void
 
 gluTessBeginContour( 
 	tess as GLUtesselator_p ):void
@@ -337,8 +335,8 @@ gluTessBeginContour(
 /*
 gluTessVertex(       
 	tess as GLUtesselator_p,
-	GLdouble            coords[3], 
-	void                *data ):void
+	GLdouble coords[3], 
+	void *data ):void
 */
 
 gluTessEndContour(   
@@ -361,16 +359,16 @@ gluTessNormal(
 /*
 gluTessCallback(     
 	tess as GLUtesselator_p,
-	GLenum              which, 
-	void                (CALLBACK *fn)()):void
+	which as GLenum, 
+	void (CALLBACK *fn)()):void
+*/
 
 gluGetTessProperty(  
 	tess as GLUtesselator_p,
-	GLenum              which, 
-	GLdouble            *value ):void
-*/
+	which as GLenum, 
+	value as GLdouble_p):void
 
-gluNewNurbsRenderer () as GLUnurbs_p;
+gluNewNurbsRenderer () as GLUnurbs_p
 
 gluDeleteNurbsRenderer (
 	nobj as GLUnurbs_p):void
@@ -397,55 +395,65 @@ gluPwlCurve (
 	nobj as GLUnurbs_p, 
 	array[] as GLfloat, 
 	stride as GLint, 
-	type as GLenum) = \
+	type as GLenum):void = \
 	R'''
 	gluPwlCurve(nobj, array.sizeT<GLint>(), const_cast<GLfloat*>(array.data()), stride, type);
 	return Value::nil();
 	'''
 
-/*
 gluNurbsCurve (
 	nobj as GLUnurbs_p, 
-	GLint               nknots, 
-	GLfloat             *knot, 
-	GLint               stride, 
-	GLfloat             *ctlarray, 
-	GLint               order, 
-	GLenum              type);
+	knot[] as GLfloat, 
+	stride as GLint, 
+	ctlarray[] as GLfloat, 
+	order as GLint, 
+	type as GLenum):void = \
+	R'''
+	gluNurbsCurve(nobj, knot.sizeT<GLint>(), const_cast<GLfloat*>(knot.data()), stride,
+		const_cast<GLfloat*>(ctlarray.data()), order, type);
+	return Value::nil();
+	'''
 
 gluNurbsSurface(     
 	nobj as GLUnurbs_p, 
-	GLint               sknot_count, 
-	float               *sknot, 
-	GLint               tknot_count, 
-	GLfloat             *tknot, 
-	GLint               s_stride, 
-	GLint               t_stride, 
-	GLfloat             *ctlarray, 
-	GLint               sorder, 
-	GLint               torder, 
-	GLenum              type);
+	sknot[] as float, 
+	tknot[] as GLfloat, 
+	s_stride as GLint, 
+	t_stride as GLint, 
+	ctlarray[] as GLfloat, 
+	sorder as GLint, 
+	torder as GLint,
+	type as GLenum):void = \
+	R'''
+	gluNurbsSurface(nobj, sknot.sizeT<GLint>(), const_cast<GLfloat*>(sknot.data()),
+		tknot.sizeT<GLint>(), const_cast<GLfloat*>(tknot.data()),
+		s_stride, t_stride, const_cast<GLfloat*>(ctlarray.data()), sorder, torder, type);
+	return Value::nil();
+	'''
 
+/*
 gluLoadSamplingMatrices (
 	nobj as GLUnurbs_p, 
-	const GLfloat       modelMatrix[16], 
-	const GLfloat       projMatrix[16], 
-	const GLint         viewport[4] );
+	const GLfloat modelMatrix[16], 
+	const GLfloat projMatrix[16], 
+	const GLint viewport[4] ):void
+*/
 
 gluNurbsProperty (
 	nobj as GLUnurbs_p, 
-	GLenum              property, 
-	GLfloat             value );
+	property as GLenum, 
+	value as GLfloat):void
 
 gluGetNurbsProperty (
 	nobj as GLUnurbs_p, 
-	GLenum              property, 
-	GLfloat             *value );
+	property as GLenum, 
+	value as GLfloat_p):void
 
+/*
 gluNurbsCallback (
 	nobj as GLUnurbs_p, 
-	GLenum              which, 
-	void                (CALLBACK* fn)() );
+	which as GLenum, 
+	void (CALLBACK* fn)() ):void
 */
 }
 

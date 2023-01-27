@@ -147,6 +147,99 @@ Gurax_ImplementFunctionEx(gluLookAt_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// glu.gluScaleImage(format as Number, widthin as Number, heightin as Number, typein as Number, datain as Pointer, widthout as Number, heightout as Number, typeout as Number, dataout as Pointer)
+Gurax_DeclareFunctionAlias(gluScaleImage_gurax, "gluScaleImage")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("widthin", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("heightin", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("typein", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("datain", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("widthout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("heightout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("typeout", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("dataout", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(gluScaleImage_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLint widthin = args_gurax.PickNumber<GLint>();
+	GLint heightin = args_gurax.PickNumber<GLint>();
+	GLenum typein = args_gurax.PickNumber<GLenum>();
+	const void* datain = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
+	GLint widthout = args_gurax.PickNumber<GLint>();
+	GLint heightout = args_gurax.PickNumber<GLint>();
+	GLenum typeout = args_gurax.PickNumber<GLenum>();
+	void* dataout = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!dataout) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	int rtn = gluScaleImage(format, widthin, heightin, typein, datain, widthout, heightout, typeout, dataout);
+	return new Gurax::Value_Number(rtn);
+}
+
+// glu.gluBuild1DMipmaps(target as Number, components as Number, width as Number, format as Number, type as Number, data as Pointer)
+Gurax_DeclareFunctionAlias(gluBuild1DMipmaps_gurax, "gluBuild1DMipmaps")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("components", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(gluBuild1DMipmaps_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint components = args_gurax.PickNumber<GLint>();
+	GLint width = args_gurax.PickNumber<GLint>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
+	// Function body
+	int rtn = gluBuild1DMipmaps(target, components, width, format, type, data);
+	return new Gurax::Value_Number(rtn);
+}
+
+// glu.gluBuild2DMipmaps(target as Number, components as Number, width as Number, height as Number, format as Number, type as Number, data as Pointer)
+Gurax_DeclareFunctionAlias(gluBuild2DMipmaps_gurax, "gluBuild2DMipmaps")
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("target", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("components", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("width", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("height", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("format", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(gluBuild2DMipmaps_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	GLenum target = args_gurax.PickNumber<GLenum>();
+	GLint components = args_gurax.PickNumber<GLint>();
+	GLint width = args_gurax.PickNumber<GLint>();
+	GLint height = args_gurax.PickNumber<GLint>();
+	GLenum format = args_gurax.PickNumber<GLenum>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	const void* data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetPointerC<void>();
+	// Function body
+	int rtn = gluBuild2DMipmaps(target, components, width, height, format, type, data);
+	return new Gurax::Value_Number(rtn);
+}
+
 // glu.gluNewQuadric()
 Gurax_DeclareFunctionAlias(gluNewQuadric_gurax, "gluNewQuadric")
 {
@@ -399,6 +492,30 @@ Gurax_ImplementFunctionEx(gluDeleteTess_gurax, processor_gurax, argument_gurax)
 	return Gurax::Value::nil();
 }
 
+// glu.gluTessBeginPolygon(tess as GLUtesselator, polygon_data as Pointer)
+Gurax_DeclareFunctionAlias(gluTessBeginPolygon_gurax, "gluTessBeginPolygon")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("tess", VTYPE_GLUtesselator, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("polygon_data", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(gluTessBeginPolygon_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_tess = args_gurax.Pick<Value_GLUtesselator>();
+	GLUtesselator* tess = value_tess.GetEntityPtr();
+	void* polygon_data = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<void>();
+	if (!polygon_data) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	gluTessBeginPolygon(tess, polygon_data);
+	return Gurax::Value::nil();
+}
+
 // glu.gluTessBeginContour(tess as GLUtesselator)
 Gurax_DeclareFunctionAlias(gluTessBeginContour_gurax, "gluTessBeginContour")
 {
@@ -496,6 +613,32 @@ Gurax_ImplementFunctionEx(gluTessNormal_gurax, processor_gurax, argument_gurax)
 	GLdouble z = args_gurax.PickNumber<GLdouble>();
 	// Function body
 	gluTessNormal(tess, x, y, z);
+	return Gurax::Value::nil();
+}
+
+// glu.gluGetTessProperty(tess as GLUtesselator, which as Number, value as Pointer)
+Gurax_DeclareFunctionAlias(gluGetTessProperty_gurax, "gluGetTessProperty")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("tess", VTYPE_GLUtesselator, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("which", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(gluGetTessProperty_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_tess = args_gurax.Pick<Value_GLUtesselator>();
+	GLUtesselator* tess = value_tess.GetEntityPtr();
+	GLenum which = args_gurax.PickNumber<GLenum>();
+	GLdouble* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLdouble>();
+	if (!value) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	gluGetTessProperty(tess, which, value);
 	return Gurax::Value::nil();
 }
 
@@ -642,7 +785,7 @@ Gurax_ImplementFunctionEx(gluEndTrim_gurax, processor_gurax, argument_gurax)
 // glu.gluPwlCurve(nobj as GLUnurbs, array[] as Number, stride as Number, type as Number)
 Gurax_DeclareFunctionAlias(gluPwlCurve_gurax, "gluPwlCurve")
 {
-	Declare(VTYPE_Any, Flag::None);
+	Declare(VTYPE_Nil, Flag::None);
 	DeclareArg("nobj", VTYPE_GLUnurbs, ArgOccur::Once, ArgFlag::None);
 	DeclareArg("array", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
 	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
@@ -663,6 +806,119 @@ Gurax_ImplementFunctionEx(gluPwlCurve_gurax, processor_gurax, argument_gurax)
 	return Value::nil();
 }
 
+// glu.gluNurbsCurve(nobj as GLUnurbs, knot[] as Number, stride as Number, ctlarray[] as Number, order as Number, type as Number)
+Gurax_DeclareFunctionAlias(gluNurbsCurve_gurax, "gluNurbsCurve")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("nobj", VTYPE_GLUnurbs, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("knot", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ctlarray", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("order", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(gluNurbsCurve_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_nobj = args_gurax.Pick<Value_GLUnurbs>();
+	GLUnurbs* nobj = value_nobj.GetEntityPtr();
+	auto knot = args_gurax.PickNumList<GLfloat>();
+	GLint stride = args_gurax.PickNumber<GLint>();
+	auto ctlarray = args_gurax.PickNumList<GLfloat>();
+	GLint order = args_gurax.PickNumber<GLint>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	// Function body
+	gluNurbsCurve(nobj, knot.sizeT<GLint>(), const_cast<GLfloat*>(knot.data()), stride,
+		const_cast<GLfloat*>(ctlarray.data()), order, type);
+	return Value::nil();
+}
+
+// glu.gluNurbsSurface(nobj as GLUnurbs, sknot[] as Number, tknot[] as Number, s_stride as Number, t_stride as Number, ctlarray[] as Number, sorder as Number, torder as Number, type as Number)
+Gurax_DeclareFunctionAlias(gluNurbsSurface_gurax, "gluNurbsSurface")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("nobj", VTYPE_GLUnurbs, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("sknot", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("tknot", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("s_stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("t_stride", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("ctlarray", VTYPE_Number, ArgOccur::Once, ArgFlag::ListVar);
+	DeclareArg("sorder", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("torder", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("type", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(gluNurbsSurface_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_nobj = args_gurax.Pick<Value_GLUnurbs>();
+	GLUnurbs* nobj = value_nobj.GetEntityPtr();
+	auto sknot = args_gurax.PickNumList<float>();
+	auto tknot = args_gurax.PickNumList<GLfloat>();
+	GLint s_stride = args_gurax.PickNumber<GLint>();
+	GLint t_stride = args_gurax.PickNumber<GLint>();
+	auto ctlarray = args_gurax.PickNumList<GLfloat>();
+	GLint sorder = args_gurax.PickNumber<GLint>();
+	GLint torder = args_gurax.PickNumber<GLint>();
+	GLenum type = args_gurax.PickNumber<GLenum>();
+	// Function body
+	gluNurbsSurface(nobj, sknot.sizeT<GLint>(), const_cast<GLfloat*>(sknot.data()),
+		tknot.sizeT<GLint>(), const_cast<GLfloat*>(tknot.data()),
+		s_stride, t_stride, const_cast<GLfloat*>(ctlarray.data()), sorder, torder, type);
+	return Value::nil();
+}
+
+// glu.gluNurbsProperty(nobj as GLUnurbs, property as Number, value as Number)
+Gurax_DeclareFunctionAlias(gluNurbsProperty_gurax, "gluNurbsProperty")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("nobj", VTYPE_GLUnurbs, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("property", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(gluNurbsProperty_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_nobj = args_gurax.Pick<Value_GLUnurbs>();
+	GLUnurbs* nobj = value_nobj.GetEntityPtr();
+	GLenum property = args_gurax.PickNumber<GLenum>();
+	GLfloat value = args_gurax.PickNumber<GLfloat>();
+	// Function body
+	gluNurbsProperty(nobj, property, value);
+	return Gurax::Value::nil();
+}
+
+// glu.gluGetNurbsProperty(nobj as GLUnurbs, property as Number, value as Pointer)
+Gurax_DeclareFunctionAlias(gluGetNurbsProperty_gurax, "gluGetNurbsProperty")
+{
+	Declare(VTYPE_Nil, Flag::None);
+	DeclareArg("nobj", VTYPE_GLUnurbs, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("property", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("value", VTYPE_Pointer, ArgOccur::Once, ArgFlag::None);
+}
+
+Gurax_ImplementFunctionEx(gluGetNurbsProperty_gurax, processor_gurax, argument_gurax)
+{
+	// Arguments
+	Gurax::ArgPicker args_gurax(argument_gurax);
+	auto& value_nobj = args_gurax.Pick<Value_GLUnurbs>();
+	GLUnurbs* nobj = value_nobj.GetEntityPtr();
+	GLenum property = args_gurax.PickNumber<GLenum>();
+	GLfloat* value = args_gurax.Pick<Gurax::Value_Pointer>().GetPointer().GetWritablePointerC<GLfloat>();
+	if (!value) {
+		Error::Issue(ErrorType::MemoryError, "the pointer is not writable");
+		return Value::nil();
+	}
+	// Function body
+	gluGetNurbsProperty(nobj, property, value);
+	return Gurax::Value::nil();
+}
+
 void AssignFunctions(Frame& frame)
 {
 	frame.Assign(Gurax_CreateFunction(gluErrorString_gurax));
@@ -671,6 +927,9 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(gluPerspective_gurax));
 	frame.Assign(Gurax_CreateFunction(gluPickMatrix_gurax));
 	frame.Assign(Gurax_CreateFunction(gluLookAt_gurax));
+	frame.Assign(Gurax_CreateFunction(gluScaleImage_gurax));
+	frame.Assign(Gurax_CreateFunction(gluBuild1DMipmaps_gurax));
+	frame.Assign(Gurax_CreateFunction(gluBuild2DMipmaps_gurax));
 	frame.Assign(Gurax_CreateFunction(gluNewQuadric_gurax));
 	frame.Assign(Gurax_CreateFunction(gluDeleteQuadric_gurax));
 	frame.Assign(Gurax_CreateFunction(gluQuadricNormals_gurax));
@@ -683,11 +942,13 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(gluSphere_gurax));
 	frame.Assign(Gurax_CreateFunction(gluNewTess_gurax));
 	frame.Assign(Gurax_CreateFunction(gluDeleteTess_gurax));
+	frame.Assign(Gurax_CreateFunction(gluTessBeginPolygon_gurax));
 	frame.Assign(Gurax_CreateFunction(gluTessBeginContour_gurax));
 	frame.Assign(Gurax_CreateFunction(gluTessEndContour_gurax));
 	frame.Assign(Gurax_CreateFunction(gluTessEndPolygon_gurax));
 	frame.Assign(Gurax_CreateFunction(gluTessProperty_gurax));
 	frame.Assign(Gurax_CreateFunction(gluTessNormal_gurax));
+	frame.Assign(Gurax_CreateFunction(gluGetTessProperty_gurax));
 	frame.Assign(Gurax_CreateFunction(gluNewNurbsRenderer_gurax));
 	frame.Assign(Gurax_CreateFunction(gluDeleteNurbsRenderer_gurax));
 	frame.Assign(Gurax_CreateFunction(gluBeginSurface_gurax));
@@ -697,6 +958,10 @@ void AssignFunctions(Frame& frame)
 	frame.Assign(Gurax_CreateFunction(gluBeginTrim_gurax));
 	frame.Assign(Gurax_CreateFunction(gluEndTrim_gurax));
 	frame.Assign(Gurax_CreateFunction(gluPwlCurve_gurax));
+	frame.Assign(Gurax_CreateFunction(gluNurbsCurve_gurax));
+	frame.Assign(Gurax_CreateFunction(gluNurbsSurface_gurax));
+	frame.Assign(Gurax_CreateFunction(gluNurbsProperty_gurax));
+	frame.Assign(Gurax_CreateFunction(gluGetNurbsProperty_gurax));
 }
 
 Gurax_EndModuleScope(glu)

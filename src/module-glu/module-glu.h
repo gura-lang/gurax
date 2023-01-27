@@ -4,8 +4,9 @@
 #ifndef GURAX_MODULE_GLU_H
 #define GURAX_MODULE_GLU_H
 #include <gurax.h>
-#include <GL/GLU.h>
+#include <gl/GLU.h>
 #include "Util.h"
+#include "Consts.h"
 #include "Functions.h"
 #include "VType_GLUnurbs.h"
 #include "VType_GLUquadric.h"
