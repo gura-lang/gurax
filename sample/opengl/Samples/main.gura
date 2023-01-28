@@ -3,14 +3,14 @@ import(wx)
 import(opengl) {*}
 import(Samples)
 
-MyApp = class(wx.App) {
+AppMain = class(wx.App) {
 	OnInit() = {
-		MyFrame(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
 		true
 	}
 }
 
-MyFrame = class(wx.Frame) {
+FrameMain = class(wx.Frame) {
 	canvas as Canvas
 	__init__(title as String, pos as wx.Point, size as wx.Size) = {|nil, wx.ID_ANY, title, pos, size|
 		PanelTop(this)
@@ -19,7 +19,9 @@ MyFrame = class(wx.Frame) {
 
 PanelTop = class(wx.Panel) {
 	canvas as Canvas
-	textCtrl as wx.TextCtrl
+	textCtrl_Init as wx.TextCtrl
+	textCtrl_Reshape as wx.TextCtrl
+	textCtrl_Display as wx.TextCtrl
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
@@ -37,10 +39,24 @@ PanelTop = class(wx.Panel) {
 					vbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTER))
 					this.canvas = ctrl
 				}
-				wx.TextCtrl(this, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-					vbox.Add(ctrl, wx.SizerFlags(1).Expand().Border(wx.TOP, 4))
-					ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-					this.textCtrl = ctrl
+				wx.Notebook(this, wx.ID_ANY, style = wx.NB_FIXEDWIDTH) {|book|
+					vbox.Add(book, wx.SizerFlags(1).Expand().Border(wx.TOP, 4))
+					wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+						book.AddPage(ctrl, 'Init')
+						ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+						this.textCtrl_Init = ctrl
+					}
+					wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+						book.AddPage(ctrl, 'Reshape')
+						ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+						this.textCtrl_Reshape = ctrl
+					}
+					wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
+						book.AddPage(ctrl, 'Display')
+						ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+						this.textCtrl_Display = ctrl
+					}
+					book.SetSelection(2)
 				}
 			}
 		}
@@ -49,7 +65,9 @@ PanelTop = class(wx.Panel) {
 	EvalSample(sample as VType) = {
 		this.canvas.EvalSample(sample)
 		this.canvas.Refresh()
-		this.textCtrl.SetValue(sample.Draw.expr.EachElem():*Textize('    ').Join('\n'))
+		this.textCtrl_Init.SetValue(sample.Init.expr.EachElem():*Textize('    ').Join('\n'))
+		this.textCtrl_Reshape.SetValue(sample.Reshape.expr.EachElem():*Textize('    ').Join('\n'))
+		this.textCtrl_Display.SetValue(sample.Display.expr.EachElem():*Textize('    ').Join('\n'))
 	}
 	OnListBox(event as wx.CommandEvent) = {
 		sample = Samples.samples[event.GetSelection()]
@@ -72,10 +90,10 @@ Canvas = class(wx.GLCanvas) {
 	OnPaint(event as wx.PaintEvent) = {
 		dc = wx.PaintDC(this)
 		this.SetCurrent(this.m_context)
-		this.m_sample && this.m_sample.Draw()
+		this.m_sample && this.m_sample.Display()
 		this.SwapBuffers()
 		dc = nil
 	}
 }
 
-wx.ImplementApp(MyApp())
+wx.ImplementApp(AppMain())
