@@ -329,7 +329,7 @@ bool Parser::ReduceTwoTokens()
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> '%%' Expr(Block)\n"));
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(Mod)));
-				pExprCaller->SetExprOfBlock(dynamic_cast<Expr_Block *>(pToken2->GetExpr()->Reference()));
+				pExprCaller->SetExprOfBlock(dynamic_cast<Expr_Block*>(pToken2->GetExpr()->Reference()));
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%' Expr\n"));
@@ -340,7 +340,7 @@ bool Parser::ReduceTwoTokens()
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> '%%%%' Expr(Block)\n"));
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(ModMod)));
-				pExprCaller->SetExprOfBlock(dynamic_cast<Expr_Block *>(pToken2->GetExpr()->Reference()));
+				pExprCaller->SetExprOfBlock(dynamic_cast<Expr_Block*>(pToken2->GetExpr()->Reference()));
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '%%%%' Expr\n"));
@@ -351,7 +351,7 @@ bool Parser::ReduceTwoTokens()
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr(Block)\n"));
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 				pExprCaller->SetExprCar(new Expr_Identifier(Gurax_SymbolMark(And)));
-				pExprCaller->SetExprOfBlock(dynamic_cast<Expr_Block *>(pToken2->GetExpr()->Reference()));
+				pExprCaller->SetExprOfBlock(dynamic_cast<Expr_Block*>(pToken2->GetExpr()->Reference()));
 				pExprGen.reset(pExprCaller.release());
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(UnaryOp) -> '&' Expr\n"));
@@ -555,7 +555,7 @@ bool Parser::ReduceThreeTokens()
 				return false;
 			}
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr . Expr(Identifier)\n"));
-			RefPtr<Expr_Identifier> pExprEx(dynamic_cast<Expr_Identifier *>(pExprRight.release()));
+			RefPtr<Expr_Identifier> pExprEx(dynamic_cast<Expr_Identifier*>(pExprRight.release()));
 			pExprGen.reset(new Expr_Member(pExprLeft.release(), pExprEx->GetSymbol(),
 											pExprEx->GetAttr().Reference(), memberMode));
 		} else if (pToken2->IsType(TokenType::Colon) || pToken2->IsType(TokenType::ColonAfterSuffix)) {
@@ -665,7 +665,7 @@ bool Parser::ReduceThreeTokens()
 		if (pToken3->IsType(TokenType::RBrace)) {
 			if (pToken1->GetExpr()->IsType<Expr_Caller>()) {
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) '{' '}'\n"));
-				Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
+				Expr_Caller* pExprCaller = dynamic_cast<Expr_Caller*>(pToken1->GetExpr());
 				pExprCaller->GetExprTrailerLast().SetExprOfBlock(CreateExprOfBlock(pToken2));
 				tokenStack.Push(pToken1->Reference());
 				return true;
@@ -770,7 +770,7 @@ bool Parser::ReduceFourTokens()
 				return false;
 			}
 			DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) Expr '(' ')'\n"));
-			Expr_Caller* pExprLeader = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
+			Expr_Caller* pExprLeader = dynamic_cast<Expr_Caller*>(pToken1->GetExpr());
 			RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
 			pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
 			pExprCaller->SetExprLinkParam(exprLink.Reference());
@@ -795,10 +795,10 @@ bool Parser::ReduceFourTokens()
 				return false;
 			}
 			DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) Expr '{' '}'\n"));
-			Expr_Caller* pExprLeader = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
+			Expr_Caller* pExprLeader = dynamic_cast<Expr_Caller*>(pToken1->GetExpr());
 			RefPtr<Expr_Caller> pExprCaller;
 			if (pToken2->GetExpr()->IsType<Expr_Caller>()) {
-				pExprCaller.reset(dynamic_cast<Expr_Caller *>(pToken2->GetExpr()->Reference()));
+				pExprCaller.reset(dynamic_cast<Expr_Caller*>(pToken2->GetExpr()->Reference()));
 			} else {
 				pExprCaller.reset(new Expr_Caller());
 				pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
@@ -844,7 +844,7 @@ bool Parser::ReduceFourTokens()
 			DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr '{' Expr '}'\n"));
 			RefPtr<Expr_Caller> pExprCaller;
 			if (pToken1->GetExpr()->IsType<Expr_Caller>()) {
-				pExprCaller.reset(dynamic_cast<Expr_Caller *>(pToken1->GetExpr()->Reference()));
+				pExprCaller.reset(dynamic_cast<Expr_Caller*>(pToken1->GetExpr()->Reference()));
 			} else {
 				pExprCaller.reset(new Expr_Caller());
 				pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
@@ -934,10 +934,10 @@ bool Parser::ReduceFiveTokens()
 				return false;
 			}
 			DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr(Caller) Expr '{' Expr '}'\n"));
-			Expr_Caller* pExprLeader = dynamic_cast<Expr_Caller *>(pToken1->GetExpr());
+			Expr_Caller* pExprLeader = dynamic_cast<Expr_Caller*>(pToken1->GetExpr());
 			RefPtr<Expr_Caller> pExprCaller;
 			if (pToken2->GetExpr()->IsType<Expr_Caller>()) {
-				pExprCaller.reset(dynamic_cast<Expr_Caller *>(pToken2->GetExpr()->Reference()));
+				pExprCaller.reset(dynamic_cast<Expr_Caller*>(pToken2->GetExpr()->Reference()));
 			} else {
 				pExprCaller.reset(new Expr_Caller());
 				pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
