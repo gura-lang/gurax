@@ -42,7 +42,7 @@ PanelTop = class(wx.Panel) {
 				wx.Notebook(this, wx.ID_ANY, style = wx.NB_FIXEDWIDTH) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand().Border(wx.TOP, 4))
 					[this.textCtrl_Init, this.textCtrl_Reshape, this.textCtrl_Display] = \
-					['Init', 'Reshape', 'Display'].Each():list {|label|
+					['Init', 'Reshape', 'Display'].Each:list {|label|
 						ctrl = wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE)
 						book.AddPage(ctrl, label)
 						ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))

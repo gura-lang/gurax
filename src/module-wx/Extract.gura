@@ -23,7 +23,7 @@ ReadLines(sys.argv[1]) {|line, iLine|
 			typeRtn = m[1]
 		}
 		typeRtn = typeRtn.Sub(r'^virtual\s+', '').Sub(r'^const\s+', '').Sub(r'^wx', '').Sub(r'([ &\*])wx', r'\1').Sub(r'\s*&', '').Sub(r'\s*\*', '_p').Sub(r'\s+', '_')
-		argsMod = args.Each():xiter {|arg|
+		argsMod = args.Each:xiter {|arg|
 			arg.IsEmpty() && continue
 			fields = arg.Split('='):list
 			m = fields[0].Strip().Match(r'^(.+[^\w])(\w+)$')

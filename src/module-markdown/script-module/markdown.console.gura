@@ -167,10 +167,10 @@ Renderer = class {
 		}
 	}
 	RenderTable(item as Item) = {
-		rows = item.children.Each():xlist {|item|
+		rows = item.children.Each:xlist {|item|
 			(item.type != `tag || item.text.Lower() != 'tr') && continue
 			headerFlag = false
-			cols = item.children.Each():xlist {|item|
+			cols = item.children.Each:xlist {|item|
 				(item.type != `tag) && continue
 				tagName = item.text.Lower()
 				if (tagName == 'th') {
@@ -200,7 +200,7 @@ Renderer = class {
 			if (wdRest < 0) {
 				widthsWk = int(widths * wdAvailable / wdSum)
 			} else {
-				widthsWk = widths.Each():list {|width|
+				widthsWk = widths.Each:list {|width|
 					if (width < wdThreshold) {
 						width
 					} else {
@@ -214,7 +214,7 @@ Renderer = class {
 		}
 		separator = ('-' * widths).Join('+')
 		rows.Each {|row|
-			textsFolded = row.cols:*text.Each():list {|text, i|
+			textsFolded = row.cols:*text.Each:list {|text, i|
 				text.Split('\n'):*Foldw(widths[i]).Flatten().Each()
 			}
 			while ((texts = textsFolded::NextValue()).Or()) {|i|

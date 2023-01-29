@@ -210,106 +210,106 @@ TestCase('Iterator#Each()') {
 	Tester(`tbl.Each().Each { continue })
 }
 
-TestCase('Iterator#Each():list') {
+TestCase('Iterator#Each:list') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
-	Tester(`tbl.Each().Each():list {|x| x})
-	Tester(`tbl.Each().Each():xlist {|x|
+	Tester(`tbl.Each().Each:list {|x| x})
+	Tester(`tbl.Each().Each:xlist {|x|
 		if (x.StartsWith('t')) { x }
 	})
-	Tester(`tbl.Each().Each():list {|x|
+	Tester(`tbl.Each().Each:list {|x|
 		if (x.StartsWith('t')) { break }
 		x
 	})
-	Tester(`tbl.Each().Each():list {|x|
+	Tester(`tbl.Each().Each:list {|x|
 		if (x.StartsWith('t')) { break('end') }
 		x
 	})
-	Tester(`tbl.Each().Each():list {|x|
+	Tester(`tbl.Each().Each:list {|x|
 		if (x.StartsWith('t')) { continue }
 		x
 	})
-	Tester(`tbl.Each().Each():list {|x|
+	Tester(`tbl.Each().Each:list {|x|
 		if (x.StartsWith('t')) { continue('x') }
 		x
 	})
-	Tester(`tbl.Each().Each():xlist {|x, i|
+	Tester(`tbl.Each().Each:xlist {|x, i|
 		if (x.StartsWith('t')) { Format('%d-%s', i, x) }
 	})
-	Tester(`tbl.Each().Each():list {|x, i|
+	Tester(`tbl.Each().Each:list {|x, i|
 		if (x.StartsWith('t')) { break }
 		Format('%d-%s', i, x)
 	})
-	Tester(`tbl.Each().Each():list {|x, i|
+	Tester(`tbl.Each().Each:list {|x, i|
 		if (x.StartsWith('t')) { break('end') }
 		Format('%d-%s', i, x)
 	})
-	Tester(`tbl.Each().Each():list {|x, i|
+	Tester(`tbl.Each().Each:list {|x, i|
 		if (x.StartsWith('t')) { continue }
 		Format('%d-%s', i, x)
 	})
-	Tester(`tbl.Each().Each():list {|x, i|
+	Tester(`tbl.Each().Each:list {|x, i|
 		if (x.StartsWith('t')) { continue('x') }
 		Format('%d-%s', i, x)
 	})
-	Tester(`tbl.Each().Each():list { break })
-	Tester(`tbl.Each().Each():list { break(nil) })
-	Tester(`tbl.Each().Each():list { continue })
-	Tester(`tbl.Each().Each():list { continue(nil) })
-	Tester(`tbl.Each().Each():xlist { break })
-	Tester(`tbl.Each().Each():xlist { break(nil) })
-	Tester(`tbl.Each().Each():xlist { continue })
-	Tester(`tbl.Each().Each():xlist { continue(nil) })
+	Tester(`tbl.Each().Each:list { break })
+	Tester(`tbl.Each().Each:list { break(nil) })
+	Tester(`tbl.Each().Each:list { continue })
+	Tester(`tbl.Each().Each:list { continue(nil) })
+	Tester(`tbl.Each().Each:xlist { break })
+	Tester(`tbl.Each().Each:xlist { break(nil) })
+	Tester(`tbl.Each().Each:xlist { continue })
+	Tester(`tbl.Each().Each:xlist { continue(nil) })
 }
 
-TestCase('Iterator#Each():iter') {
+TestCase('Iterator#Each:iter') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
-	Tester(`tbl.Each().Each():iter {|x| x}[])
-	Tester(`tbl.Each().Each():xiter {|x|
+	Tester(`tbl.Each().Each:iter {|x| x}[])
+	Tester(`tbl.Each().Each:xiter {|x|
 		if (x.StartsWith('t')) { x }
 	}[])
-	Tester(`tbl.Each().Each():iter {|x|
+	Tester(`tbl.Each().Each:iter {|x|
 		if (x.StartsWith('t')) { break }
 		x
 	}[])
-	Tester(`tbl.Each().Each():iter {|x|
+	Tester(`tbl.Each().Each:iter {|x|
 		if (x.StartsWith('t')) { break('end') }
 		x
 	}[])
-	Tester(`tbl.Each().Each():iter {|x|
+	Tester(`tbl.Each().Each:iter {|x|
 		if (x.StartsWith('t')) { continue }
 		x
 	}[])
-	Tester(`tbl.Each().Each():iter {|x|
+	Tester(`tbl.Each().Each:iter {|x|
 		if (x.StartsWith('t')) { continue('x') }
 		x
 	}[])
-	Tester(`tbl.Each().Each():xiter {|x, i|
+	Tester(`tbl.Each().Each:xiter {|x, i|
 		if (x.StartsWith('t')) { Format('%d-%s', i, x) }
 	}[])
-	Tester(`tbl.Each().Each():iter {|x, i|
+	Tester(`tbl.Each().Each:iter {|x, i|
 		if (x.StartsWith('t')) { break }
 		Format('%d-%s', i, x)
 	}[])
-	Tester(`tbl.Each().Each():iter {|x, i|
+	Tester(`tbl.Each().Each:iter {|x, i|
 		if (x.StartsWith('t')) { break('end') }
 		Format('%d-%s', i, x)
 	}[])
-	Tester(`tbl.Each().Each():iter {|x, i|
+	Tester(`tbl.Each().Each:iter {|x, i|
 		if (x.StartsWith('t')) { continue }
 		Format('%d-%s', i, x)
 	}[])
-	Tester(`tbl.Each().Each():iter {|x, i|
+	Tester(`tbl.Each().Each:iter {|x, i|
 		if (x.StartsWith('t')) { continue('x') }
 		Format('%d-%s', i, x)
 	}[])
-	Tester(`tbl.Each().Each():iter { break }[])
-	Tester(`tbl.Each().Each():iter { break(nil) }[])
-	Tester(`tbl.Each().Each():iter { continue }[])
-	Tester(`tbl.Each().Each():iter { continue(nil) }[])
-	Tester(`tbl.Each().Each():xiter { break }[])
-	Tester(`tbl.Each().Each():xiter { break(nil) }[])
-	Tester(`tbl.Each().Each():xiter { continue }[])
-	Tester(`tbl.Each().Each():xiter { continue(nil) }[])
+	Tester(`tbl.Each().Each:iter { break }[])
+	Tester(`tbl.Each().Each:iter { break(nil) }[])
+	Tester(`tbl.Each().Each:iter { continue }[])
+	Tester(`tbl.Each().Each:iter { continue(nil) }[])
+	Tester(`tbl.Each().Each:xiter { break }[])
+	Tester(`tbl.Each().Each:xiter { break(nil) }[])
+	Tester(`tbl.Each().Each:xiter { continue }[])
+	Tester(`tbl.Each().Each:xiter { continue(nil) }[])
 }
 
 TestCase('Iterator#Filter()') {
