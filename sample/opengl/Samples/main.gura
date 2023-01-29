@@ -41,20 +41,12 @@ PanelTop = class(wx.Panel) {
 				}
 				wx.Notebook(this, wx.ID_ANY, style = wx.NB_FIXEDWIDTH) {|book|
 					vbox.Add(book, wx.SizerFlags(1).Expand().Border(wx.TOP, 4))
-					wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-						book.AddPage(ctrl, 'Init')
+					[this.textCtrl_Init, this.textCtrl_Reshape, this.textCtrl_Display] = \
+					['Init', 'Reshape', 'Display'].Each():list {|label|
+						ctrl = wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE)
+						book.AddPage(ctrl, label)
 						ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-						this.textCtrl_Init = ctrl
-					}
-					wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-						book.AddPage(ctrl, 'Reshape')
-						ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-						this.textCtrl_Reshape = ctrl
-					}
-					wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE) {|ctrl|
-						book.AddPage(ctrl, 'Display')
-						ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-						this.textCtrl_Display = ctrl
+						ctrl
 					}
 					book.SetSelection(2)
 				}
