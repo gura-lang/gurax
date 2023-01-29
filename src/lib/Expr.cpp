@@ -372,7 +372,7 @@ void Expr_Member::ComposeWithinValueAssignment(Composer& composer, Operator* pOp
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "operator can not be applied in lister assigment");
+						"operator can not be applied in lister assigment");
 		return;
 	}
 	switch (GetMemberMode()) {
@@ -530,7 +530,7 @@ void Expr_Identifier::ComposeWithinValueAssignment(Composer& composer, Operator*
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "operator can not be applied in lister assigment");
+						"operator can not be applied in lister assigment");
 		return;
 	}
 	bool externFlag = false;
@@ -566,7 +566,7 @@ void Expr_Identifier::ComposeWithinAssignmentInClass(
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "operator can not be applied in property assigment");
+						"operator can not be applied in property assigment");
 		return;
 	}
 	PropSlot::Flags flags = publicFlag? PropSlot::Flag::Public : 0;
@@ -627,7 +627,7 @@ bool Expr_Identifier::ParseAttr(bool* pExternFlag) const
 			*pExternFlag = true;
 		} else {
 			Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "invalid attribute for assignment");
+						"invalid attribute for assignment");
 			return false;
 		}
 	}
@@ -928,7 +928,7 @@ void Expr_Assign::ComposeWithinArgSlot(Composer& composer)
 	}
 	if (GetOperator() || !pExprLeft->IsType<Expr_Identifier>()) {
 		Error::IssueWith(ErrorType::ArgumentError, *this,
-						 "invalid declaration of named argument");
+						"invalid declaration of named argument");
 		return;
 	}
 	const Symbol* pSymbol = dynamic_cast<const Expr_Identifier*>(pExprLeft)->GetSymbol();
@@ -1277,7 +1277,7 @@ void Expr_Indexer::ComposeWithinClass(Composer& composer, RefPtr<DottedSymbol> p
 {
 	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprParam()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "invalid format of property declaration");
+						"invalid format of property declaration");
 		return;
 	}
 	PropSlot::Flags flags = PropSlot::Flag::ListVar | (publicFlag? PropSlot::Flag::Public : 0);
@@ -1291,12 +1291,12 @@ void Expr_Indexer::ComposeWithinAssignmentInClass(
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "operator can not be applied in property assigment");
+						"operator can not be applied in property assigment");
 		return;
 	}
 	if (!GetExprCar().IsType<Expr_Identifier>() || HasExprParam()) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "invalid format of property declaration");
+						"invalid format of property declaration");
 		return;
 	}
 	PropSlot::Flags flags = PropSlot::Flag::ListVar | (publicFlag? PropSlot::Flag::Public : 0);
@@ -1353,12 +1353,11 @@ void Expr_Caller::Compose(Composer& composer)
 		pPUnitOfBranch->SetPUnitCont(composer.PeekPUnitCont());
 		if (pExprOfBlock->IsDelegation()) {
 			// Block-delegation format: f() {{block}}
-			//pExprOfBlock->GetExprParamFirst()->ComposeOrNil(composer);		// [Any]
 			pExprOfBlock->GetExprElemFirst()->ComposeOrNil(composer);			// [Any]
 			composer.Add_ArgumentDelegation(GetAttr().Reference(), *this);		// [Argument]
 		} else {
 			composer.Add_Argument(GetAttr().Reference(),
-								  pExprOfBlock->Reference(), false, *this);		// [Argument]
+								 pExprOfBlock->Reference(), false, *this);		// [Argument]
 		}
 	} else {
 		composer.Add_Argument(GetAttr().Reference(), nullptr, false, *this);	// [Argument]
@@ -1388,7 +1387,7 @@ void Expr_Caller::ComposeWithinAssignment(
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "operator can not be applied in function assigment");
+						"operator can not be applied in function assigment");
 		return;
 	}
 	if (GetExprCar().IsType<Expr_Member>()) {
@@ -1415,7 +1414,7 @@ void Expr_Caller::ComposeWithinAssignmentInClass(
 {
 	if (pOp) {
 		Error::IssueWith(ErrorType::SyntaxError, *this,
-						 "operator can not be applied in function assigment");
+						"operator can not be applied in function assigment");
 		return;
 	}
 	RefPtr<Function> pFunction(GenerateFunction(composer, Function::Type::Method, exprAssigned, pDottedSymbol.release()));
