@@ -62,7 +62,7 @@ PanelTop = class(wx.Panel) {
 		}
 		this.EvalSample(Samples.samples[0])
 	}
-	EvalSample(sample as VType) = {
+	EvalSample(sample as Samples.SampleBase) = {
 		this.canvas.EvalSample(sample)
 		this.canvas.Refresh()
 		this.textCtrl_Init.SetValue(sample.Init.expr.EachElem():*Textize('    ').Join('\n'))
@@ -82,7 +82,7 @@ Canvas = class(wx.GLCanvas) {
 		this.m_context = wx.GLContext(this)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
-	EvalSample(sample as VType) = {
+	EvalSample(sample as Samples.SampleBase) = {
 		this.m_sample = sample
 		this.m_sample.Init()
 		this.Refresh()

@@ -4,13 +4,15 @@ import(glu) {*}
 
 samples = []
 
-Sample_triangle = class {
-	name:static = "triangle"
-	Init():static = {
+SampleBase = class {}
+
+Sample_triangle = class(SampleBase) {
+	name = "triangle"
+	Init() = {
 	}
-	Reshape(width as Number, height as Number):static = {
+	Reshape(width as Number, height as Number) = {
 	}
-	Display():static = {
+	Display() = {
 		glClearColor(0.3, 0.4, 0.6, 1.0)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 		glBegin(GL_POLYGON)
@@ -21,11 +23,11 @@ Sample_triangle = class {
 		glFlush()
 	}
 }
-samples.Add(Sample_triangle)
+samples.Add(Sample_triangle())
 
-Sample_tetrahedron = class {
-	name:static = "tetrahedron"
-	Init():static = {
+Sample_tetrahedron = class(SampleBase) {
+	name = "tetrahedron"
+	Init() = {
 		// Set the current clear color to sky blue and the current drawing color to
 		// white.
 		glClearColor(0.1, 0.39, 0.88, 1.0);
@@ -59,9 +61,9 @@ Sample_tetrahedron = class {
 		glRotatef(50, 1, 0, 0);
 		glRotatef(70, 0, 1, 0);
 	}
-	Reshape(width as Number, height as Number):static = {
+	Reshape(width as Number, height as Number) = {
 	}
-	Display():static = {
+	Display() = {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw a white grid "floor" for the tetrahedron to sit on.
@@ -89,4 +91,4 @@ Sample_tetrahedron = class {
 		glFlush();
 	}
 }
-samples.Add(Sample_tetrahedron)
+samples.Add(Sample_tetrahedron())
