@@ -285,7 +285,7 @@ bool Parser::ReduceTwoTokens()
 		ExprLink& exprLink = pToken1->GetExprLink();
 		if (pToken2->IsType(TokenType::RBlockParam)) {
 			DBGPARSER(::printf("do (Reduce: (none) -> '|' '|') "
-							   "and then attach the Expr owner to the preceeding LBrace\n"));
+							"and then attach the Expr owner to the preceeding LBrace\n"));
 			Token* pTokenPrev = tokenStack.Peek(0);
 			if (pTokenPrev->IsType(TokenType::LBrace)) {
 				pTokenPrev->SetExprLinkEx(exprLink.Reference());
@@ -551,7 +551,7 @@ bool Parser::ReduceThreeTokens()
 					MemberMode::None) != MemberMode::None) {
 			if (!pExprRight->IsType<Expr_Identifier>()) {
 				IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-						   "identifier is expected as a member selector", __LINE__);
+						"identifier is expected as a member selector", __LINE__);
 				return false;
 			}
 			DBGPARSER(::printf("Reduce: Expr(Member) -> Expr . Expr(Identifier)\n"));
@@ -570,7 +570,7 @@ bool Parser::ReduceThreeTokens()
 				Attribute* pAttrDst = pExprDst->GetAttrToAppend();
 				if (!pAttrDst) {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-							   "attributes can only be specified for identifier, caller and indexer", __LINE__);
+							"attributes can only be specified for identifier, caller and indexer", __LINE__);
 					return false;
 				}
 				pAttrDst->AddSymbol(dynamic_cast<Expr_Identifier*>(pExprRight.get())->GetSymbol());
@@ -580,20 +580,20 @@ bool Parser::ReduceThreeTokens()
 				Attribute* pAttrDst = pExprDst->GetAttrToAppend();
 				if (!pAttrDst) {
 					IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-							   "optional attributes can only be specified for identifier, caller and indexer", __LINE__);
+							"optional attributes can only be specified for identifier, caller and indexer", __LINE__);
 					return false;
 				}
 				const Expr* pExprElem = dynamic_cast<Expr_Lister*>(pExprRight.get())->GetExprElemFirst();
 				for ( ; pExprElem; pExprElem = pExprElem->GetExprNext()) {
 					if (!pExprElem->IsType<Expr_Identifier>()) {
 						IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-								   "list of optional attributes can only contain identifiers");
+								"list of optional attributes can only contain identifiers");
 						return false;
 					}
 					const Expr_Identifier* pExprIdentifier = dynamic_cast<const Expr_Identifier*>(pExprElem);
 					if (pExprIdentifier->HasAttr()) {
 						IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-								   "optional attributes must be separated with comma");
+								"optional attributes must be separated with comma");
 						return false;
 					}
 					pAttrDst->AddSymbolOpt(pExprIdentifier->GetSymbol());
@@ -605,7 +605,7 @@ bool Parser::ReduceThreeTokens()
 			}
 		} else {
 			IssueError(ErrorType::SyntaxError, pToken1, pToken3,
-					   "unexpected token for binary operator: %s", pToken2->GetSymbol());
+					"unexpected token for binary operator: %s", pToken2->GetSymbol());
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::LParenthesis) && pToken2->IsType(TokenType::Expr)) {
@@ -733,7 +733,7 @@ bool Parser::ReduceThreeTokens()
 			}
 			return true;
 		} else if (pToken3->IsType(TokenType::Comma) ||
-				   pToken3->IsType(TokenType::Semicolon) || pToken3->IsType(TokenType::EndOfLine)) {
+				pToken3->IsType(TokenType::Semicolon) || pToken3->IsType(TokenType::EndOfLine)) {
 			DBGPARSER(::printf("Reduce: '|' -> '|' Expr ','\n"));
 			exprLink.AddExpr(pToken2->GetExpr()->Reference());
 			tokenStack.Push(pToken1->Reference());
@@ -788,7 +788,7 @@ bool Parser::ReduceFourTokens()
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::Expr) &&
-			   pToken3->IsType(TokenType::LBrace)) {
+			pToken3->IsType(TokenType::LBrace)) {
 		if (pToken4->IsType(TokenType::RBrace)) {
 			if (!pToken1->GetExpr()->IsType<Expr_Caller>()) {
 				IssueError(ErrorType::SyntaxError, pToken1, pToken4, "trailer must follow after caller");
@@ -818,7 +818,7 @@ bool Parser::ReduceFourTokens()
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr) &&
-			   pToken2->IsType(TokenType::LParenthesis) && pToken3->IsType(TokenType::Expr)) {
+			pToken2->IsType(TokenType::LParenthesis) && pToken3->IsType(TokenType::Expr)) {
 		ExprLink& exprLink = pToken2->GetExprLink();
 		exprLink.AddExpr(pToken3->GetExpr()->Reference());
 		if (pToken4->IsType(TokenType::RParenthesis)) {
@@ -837,7 +837,7 @@ bool Parser::ReduceFourTokens()
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr) &&
-			   pToken2->IsType(TokenType::LBrace) && pToken3->IsType(TokenType::Expr)) {
+			pToken2->IsType(TokenType::LBrace) && pToken3->IsType(TokenType::Expr)) {
 		ExprLink& exprLink = pToken2->GetExprLink();
 		exprLink.AddExpr(pToken3->GetExpr()->Reference());
 		if (pToken4->IsType(TokenType::RBrace)) {
@@ -862,7 +862,7 @@ bool Parser::ReduceFourTokens()
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr) &&
-			   pToken2->IsType(TokenType::LBracket) && pToken3->IsType(TokenType::Expr)) {
+			pToken2->IsType(TokenType::LBracket) && pToken3->IsType(TokenType::Expr)) {
 		ExprLink& exprLink = pToken2->GetExprLink();
 		exprLink.AddExpr(pToken3->GetExpr()->Reference());
 		if (pToken4->IsType(TokenType::RBracket)) {
@@ -925,7 +925,7 @@ bool Parser::ReduceFiveTokens()
 			return false;
 		}
 	} else if (pToken1->IsType(TokenType::Expr) && pToken2->IsType(TokenType::Expr) &&
-			   pToken3->IsType(TokenType::LBrace) && pToken4->IsType(TokenType::Expr)) {
+			pToken3->IsType(TokenType::LBrace) && pToken4->IsType(TokenType::Expr)) {
 		ExprLink& exprLink = pToken3->GetExprLink();
 		exprLink.AddExpr(pToken4->GetExpr()->Reference());
 		if (pToken5->IsType(TokenType::RBrace)) {
