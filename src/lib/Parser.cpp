@@ -671,8 +671,9 @@ bool Parser::ReduceThreeTokens()
 				return true;
 			} else {
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr '{' '}'\n"));
-				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller());
-				pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
+				Expr* pExpr = pToken1->GetExpr();
+				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller(Attribute::Reference(pExpr->GetAttrToAppend())));
+				pExprCaller->SetExprCar(pExpr->Reference());
 				pExprCaller->SetExprOfBlock(CreateExprOfBlock(pToken2));
 				pExprGen.reset(pExprCaller.release());
 			}
@@ -800,8 +801,9 @@ bool Parser::ReduceFourTokens()
 			if (pToken2->GetExpr()->IsType<Expr_Caller>()) {
 				pExprCaller.reset(dynamic_cast<Expr_Caller*>(pToken2->GetExpr()->Reference()));
 			} else {
-				pExprCaller.reset(new Expr_Caller());
-				pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
+				Expr* pExpr = pToken2->GetExpr();
+				pExprCaller.reset(new Expr_Caller(Attribute::Reference(pExpr->GetAttrToAppend())));
+				pExprCaller->SetExprCar(pExpr->Reference());
 			}
 			pExprCaller->GetExprTrailerLast().SetExprOfBlock(CreateExprOfBlock(pToken3));
 			pExprLeader->GetExprTrailerLast().SetExprTrailer(pExprCaller.release());
@@ -846,8 +848,9 @@ bool Parser::ReduceFourTokens()
 			if (pToken1->GetExpr()->IsType<Expr_Caller>()) {
 				pExprCaller.reset(dynamic_cast<Expr_Caller*>(pToken1->GetExpr()->Reference()));
 			} else {
-				pExprCaller.reset(new Expr_Caller());
-				pExprCaller->SetExprCar(pToken1->GetExpr()->Reference());
+				Expr* pExpr = pToken1->GetExpr();
+				pExprCaller.reset(new Expr_Caller(Attribute::Reference(pExpr->GetAttrToAppend())));
+				pExprCaller->SetExprCar(pExpr->Reference());
 			}
 			pExprCaller->GetExprTrailerLast().SetExprOfBlock(CreateExprOfBlock(pToken2));
 			pExprGen.reset(pExprCaller.release());
@@ -939,8 +942,9 @@ bool Parser::ReduceFiveTokens()
 			if (pToken2->GetExpr()->IsType<Expr_Caller>()) {
 				pExprCaller.reset(dynamic_cast<Expr_Caller*>(pToken2->GetExpr()->Reference()));
 			} else {
-				pExprCaller.reset(new Expr_Caller());
-				pExprCaller->SetExprCar(pToken2->GetExpr()->Reference());
+				Expr* pExpr = pToken2->GetExpr();
+				pExprCaller.reset(new Expr_Caller(Attribute::Reference(pExpr->GetAttrToAppend())));
+				pExprCaller->SetExprCar(pExpr->Reference());
 			}
 			pExprCaller->SetExprOfBlock(CreateExprOfBlock(pToken3));
 			pExprLeader->GetExprTrailerLast().SetExprTrailer(pExprCaller.release());

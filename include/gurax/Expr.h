@@ -462,6 +462,8 @@ protected:
 public:
 	Expr_Composite(const TypeInfo& typeInfo) :
 		Expr(typeInfo), _pExprLinkParam(new ExprLink()), _pAttr(new Attribute()) {}
+	Expr_Composite(const TypeInfo& typeInfo, Attribute* pAttr) :
+		Expr(typeInfo), _pExprLinkParam(new ExprLink()), _pAttr(pAttr? pAttr : new Attribute()) {}
 	void SetExprCar(Expr* pExprCar) {
 		_pExprCar.reset(pExprCar);
 		_pExprCar->SetExprParent(this);
@@ -519,6 +521,7 @@ public:
 	Expr& GetExprTarget() { return *_pExprTarget; }
 	const Expr& GetExprTarget() const { return *_pExprTarget; }
 	const Symbol* GetSymbol() const { return _pSymbol; }
+	Attribute& GetAttr() { return *_pAttr; }
 	const Attribute& GetAttr() const { return *_pAttr; }
 	MemberMode GetMemberMode() const { return _memberMode; }
 	const Symbol* GetMemberModeAsSymbol() const;
@@ -529,6 +532,7 @@ public:
 		if (!_pExprTarget->Traverse(visitor)) return false;
 		return true;
 	}
+	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
 	virtual void ComposeWithinAssignment(
@@ -900,6 +904,7 @@ public:
 	static const TypeInfo typeInfo;
 public:
 	Expr_Indexer() : Expr_Composite(typeInfo) {}
+	Expr_Indexer(Attribute* pAttr) : Expr_Composite(typeInfo, pAttr) {}
 public:
 	// Virtual functions of Expr
 	virtual void Compose(Composer& composer) override;
@@ -929,6 +934,7 @@ protected:
 	RefPtr<Expr_Caller> _pExprTrailer;	// this may be nullptr
 public:
 	Expr_Caller() : Expr_Composite(typeInfo), _pDeclCallable(new DeclCallable()) {}
+	Expr_Caller(Attribute* pAttr) : Expr_Composite(typeInfo, pAttr), _pDeclCallable(new DeclCallable()) {}
 public:
 	bool PrepareDeclCallable() {
 		return _pDeclCallable->Prepare(GetExprLinkParam(), GetAttr(), GetExprOfBlock());
