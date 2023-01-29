@@ -428,7 +428,7 @@ TestCase('List#Each()') {
 	Tester(`tbl.Each { continue })
 }
 
-TestCase('List#Each:list') {
+TestCase('List#Each():list') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl.Each:list {|x| x})
 	Tester(`tbl.Each:xlist {|x|
@@ -479,7 +479,7 @@ TestCase('List#Each:list') {
 	Tester(`tbl.Each:xlist { continue(nil) })
 }
 
-TestCase('List#Each:iter') {
+TestCase('List#Each():iter') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl.Each:iter {|x| x}[])
 	Tester(`tbl.Each:xiter {|x|

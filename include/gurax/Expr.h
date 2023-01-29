@@ -218,6 +218,7 @@ public:
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag);
 	virtual void ComposeWithinArgSlot(Composer& composer);
 	virtual Attribute* GetAttrToAppend() { return nullptr; }
+	virtual void ResetAttrToAppend() {}
 	virtual bool DoPrepare() { return true; }
 public:
 	// Virtual functions for structure inspecting
@@ -492,6 +493,7 @@ public:
 		return true;
 	}
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
+	virtual void ResetAttrToAppend() { _pAttr.reset(new Attribute()); }
 public:
 	// Virtual functions for structure inspecting
 	virtual const Expr* InspectCar() const override { return &GetExprCar(); }
@@ -533,6 +535,7 @@ public:
 		return true;
 	}
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
+	virtual void ResetAttrToAppend() { _pAttr.reset(new Attribute()); }
 	virtual void Compose(Composer& composer) override;
 	virtual void ComposeWithinValueAssignment(Composer& composer, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol) override;
 	virtual void ComposeWithinAssignment(
@@ -615,6 +618,7 @@ public:
 	virtual void ComposeWithinArgSlot(Composer& composer) override;
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override { return ToString(ss, ""); }
 	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
+	virtual void ResetAttrToAppend() { _pAttr.reset(new Attribute()); }
 public:
 	virtual size_t CalcHash() const override;
 	virtual bool IsEqualTo(const Expr& expr) const override;
@@ -916,7 +920,6 @@ public:
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override { return ToString(ss, "", indentLevel); }
 	String ToString(const StringStyle& ss, const char* strInsert, int indentLevel = 0) const;
-	virtual Attribute* GetAttrToAppend() override { return &GetAttr(); }
 };
 
 //------------------------------------------------------------------------------
@@ -974,6 +977,7 @@ public:
 	virtual void ComposeWithinAssignmentInClass(
 		Composer& composer, Expr& exprAssigned, Operator* pOp, RefPtr<DottedSymbol> pDottedSymbol, bool publicFlag) override;
 	virtual Attribute* GetAttrToAppend() override { return &GetExprTrailerLast().GetAttr(); }
+	virtual void ResetAttrToAppend() { GetExprTrailerLast().ResetAttrToAppend(); }
 	virtual String ToString(const StringStyle& ss, int indentLevel) const override;
 public:
 	// Virtual functions for structure inspecting

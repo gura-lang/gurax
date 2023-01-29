@@ -210,7 +210,7 @@ TestCase('Iterator#Each()') {
 	Tester(`tbl.Each().Each { continue })
 }
 
-TestCase('Iterator#Each:list') {
+TestCase('Iterator#Each():list') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl.Each().Each:list {|x| x})
 	Tester(`tbl.Each().Each:xlist {|x|
@@ -261,7 +261,7 @@ TestCase('Iterator#Each:list') {
 	Tester(`tbl.Each().Each:xlist { continue(nil) })
 }
 
-TestCase('Iterator#Each:iter') {
+TestCase('Iterator#Each():iter') {
 	tbl = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
 	Tester(`tbl.Each().Each:iter {|x| x}[])
 	Tester(`tbl.Each().Each:xiter {|x|

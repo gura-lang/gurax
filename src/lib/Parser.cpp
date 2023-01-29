@@ -673,6 +673,7 @@ bool Parser::ReduceThreeTokens()
 				DBGPARSER(::printf("Reduce: Expr(Caller) -> Expr '{' '}'\n"));
 				Expr* pExpr = pToken1->GetExpr();
 				RefPtr<Expr_Caller> pExprCaller(new Expr_Caller(Attribute::Reference(pExpr->GetAttrToAppend())));
+				pExpr->ResetAttrToAppend();
 				pExprCaller->SetExprCar(pExpr->Reference());
 				pExprCaller->SetExprOfBlock(CreateExprOfBlock(pToken2));
 				pExprGen.reset(pExprCaller.release());
@@ -803,6 +804,7 @@ bool Parser::ReduceFourTokens()
 			} else {
 				Expr* pExpr = pToken2->GetExpr();
 				pExprCaller.reset(new Expr_Caller(Attribute::Reference(pExpr->GetAttrToAppend())));
+				pExpr->ResetAttrToAppend();
 				pExprCaller->SetExprCar(pExpr->Reference());
 			}
 			pExprCaller->GetExprTrailerLast().SetExprOfBlock(CreateExprOfBlock(pToken3));
@@ -850,6 +852,7 @@ bool Parser::ReduceFourTokens()
 			} else {
 				Expr* pExpr = pToken1->GetExpr();
 				pExprCaller.reset(new Expr_Caller(Attribute::Reference(pExpr->GetAttrToAppend())));
+				pExpr->ResetAttrToAppend();
 				pExprCaller->SetExprCar(pExpr->Reference());
 			}
 			pExprCaller->GetExprTrailerLast().SetExprOfBlock(CreateExprOfBlock(pToken2));
@@ -944,6 +947,7 @@ bool Parser::ReduceFiveTokens()
 			} else {
 				Expr* pExpr = pToken2->GetExpr();
 				pExprCaller.reset(new Expr_Caller(Attribute::Reference(pExpr->GetAttrToAppend())));
+				pExpr->ResetAttrToAppend();
 				pExprCaller->SetExprCar(pExpr->Reference());
 			}
 			pExprCaller->SetExprOfBlock(CreateExprOfBlock(pToken3));
