@@ -76,9 +76,9 @@ Canvas = class(wx.GLCanvas) {
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
 	SetSample(sample as Samples.SampleBase) = {
+		size = this.GetClientSize()
 		this.m_sample = sample
 		this.m_sample.Init()
-		size = this.GetClientSize()
 		this.m_sample.Reshape(size.GetWidth(), size.GetHeight())
 		this.Refresh()
 	}
