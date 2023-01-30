@@ -4,14 +4,16 @@ import(glu) {*}
 
 samples = []
 
-SampleBase = class {}
+SampleBase = class {
+	Init() = {}
+	Reshape(width as Number, height as Number) = {}
+	Diplay() = {}
+}
 
 Sample_triangle = class(SampleBase) {
 	name = "triangle"
-	Init() = {
-	}
-	Reshape(width as Number, height as Number) = {
-	}
+	Init() = {}
+	Reshape(width as Number, height as Number) = {}
 	Display() = {
 		glClearColor(0.3, 0.4, 0.6, 1.0)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)

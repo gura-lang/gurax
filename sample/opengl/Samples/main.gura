@@ -52,10 +52,10 @@ PanelTop = class(wx.Panel) {
 				}
 			}
 		}
-		this.EvalSample(Samples.samples[0])
+		this.SetSample(Samples.samples[0])
 	}
-	EvalSample(sample as Samples.SampleBase) = {
-		this.canvas.EvalSample(sample)
+	SetSample(sample as Samples.SampleBase) = {
+		this.canvas.SetSample(sample)
 		this.canvas.Refresh()
 		this.textCtrl_Init.SetValue(sample.Init.expr.EachElem():*Textize('    ').Join('\n'))
 		this.textCtrl_Reshape.SetValue(sample.Reshape.expr.EachElem():*Textize('    ').Join('\n'))
@@ -63,7 +63,7 @@ PanelTop = class(wx.Panel) {
 	}
 	OnListBox(event as wx.CommandEvent) = {
 		sample = Samples.samples[event.GetSelection()]
-		this.EvalSample(sample)
+		this.SetSample(sample)
 	}
 }
 
@@ -72,12 +72,19 @@ Canvas = class(wx.GLCanvas) {
 	m_sample as Sample
 	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, size = wx.Size(400, 300)|
 		this.m_context = wx.GLContext(this)
+		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
-	EvalSample(sample as Samples.SampleBase) = {
+	SetSample(sample as Samples.SampleBase) = {
 		this.m_sample = sample
 		this.m_sample.Init()
+		size = this.GetClientSize()
+		this.m_sample.Reshape(size.GetWidth(), size.GetHeight())
 		this.Refresh()
+	}
+	OnSize(event as wx.SizeEvent) = {
+		size = event.GetSize()
+		this.m_sample && this.m_sample.Reshape(size.GetWidth(), size.GetHeight())
 	}
 	OnPaint(event as wx.PaintEvent) = {
 		dc = wx.PaintDC(this)
