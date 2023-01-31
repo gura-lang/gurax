@@ -3,6 +3,13 @@ import(wx)
 import(opengl) {*}
 import(Samples)
 
+Pack = struct {
+	sample as Samples.Sample
+	context as wx.GLContext
+	initializedFlag as Bool = false
+}
+
+
 AppMain = class(wx.App) {
 	OnInit() = {
 		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
@@ -22,6 +29,7 @@ PanelTop = class(wx.Panel) {
 	textCtrl_Init as wx.TextCtrl
 	textCtrl_Reshape as wx.TextCtrl
 	textCtrl_Display as wx.TextCtrl
+	packs[] as Pack
 	__init__(parent as wx.Window) = {|parent|
 		sizerTop = wx.BoxSizer(wx.VERTICAL)
 		this.SetSizer(sizerTop)
@@ -52,44 +60,48 @@ PanelTop = class(wx.Panel) {
 				}
 			}
 		}
-		this.SetSample(Samples.samples[0])
+		this.packs = Samples.samples.Each:list {|sample| Pack(sample, wx.GLContext(this.canvas))}
+		this.SetPack(this.packs[0])
 	}
-	SetSample(sample as Samples.SampleBase) = {
-		this.canvas.SetSample(sample)
+	SetPack(pack as Pack) = {
+		this.canvas.SetPack(pack)
 		this.canvas.Refresh()
-		this.textCtrl_Init.SetValue(sample.Init.expr.EachElem():*Textize('    ').Join('\n'))
-		this.textCtrl_Reshape.SetValue(sample.Reshape.expr.EachElem():*Textize('    ').Join('\n'))
-		this.textCtrl_Display.SetValue(sample.Display.expr.EachElem():*Textize('    ').Join('\n'))
+		this.textCtrl_Init.SetValue(pack.sample.Init.expr.EachElem():*Textize('    ').Join('\n'))
+		this.textCtrl_Reshape.SetValue(pack.sample.Reshape.expr.EachElem():*Textize('    ').Join('\n'))
+		this.textCtrl_Display.SetValue(pack.sample.Display.expr.EachElem():*Textize('    ').Join('\n'))
 	}
 	OnListBox(event as wx.CommandEvent) = {
-		sample = Samples.samples[event.GetSelection()]
-		this.SetSample(sample)
+		this.SetPack(this.packs[event.GetSelection()])
 	}
 }
 
 Canvas = class(wx.GLCanvas) {
-	m_context as wx.GLContext
-	m_sample as Sample
+	pack as Pack
 	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, size = wx.Size(400, 300)|
-		this.m_context = wx.GLContext(this)
 		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
-	SetSample(sample as Samples.SampleBase) = {
+	SetPack(pack as Pack) = {
 		size = this.GetClientSize()
-		this.m_sample = sample
-		this.m_sample.Init()
-		this.m_sample.Reshape(size.GetWidth(), size.GetHeight())
+		this.SetCurrent(pack.context)
+		if (!pack.initializedFlag) {
+			pack.sample.Init()
+			pack.initializedFlag = true
+		}
+		pack.sample.Reshape(size.GetWidth(), size.GetHeight())
+		this.pack = pack
 		this.Refresh()
 	}
 	OnSize(event as wx.SizeEvent) = {
 		size = event.GetSize()
-		this.m_sample && this.m_sample.Reshape(size.GetWidth(), size.GetHeight())
+		this.pack && this.pack.sample.Reshape(size.GetWidth(), size.GetHeight())
 	}
 	OnPaint(event as wx.PaintEvent) = {
 		dc = wx.PaintDC(this)
-		this.SetCurrent(this.m_context)
-		this.m_sample && this.m_sample.Display()
+		if (this.pack) {
+			this.SetCurrent(this.pack.context)
+			this.pack.sample.Display()
+		}
 		this.SwapBuffers()
 		dc = nil
 	}
