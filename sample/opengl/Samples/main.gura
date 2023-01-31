@@ -101,8 +101,8 @@ Canvas = class(wx.GLCanvas) {
 		if (this.pack) {
 			this.SetCurrent(this.pack.context)
 			this.pack.sample.Display()
+			this.SwapBuffers()
 		}
-		this.SwapBuffers()
 		dc = nil
 	}
 }
