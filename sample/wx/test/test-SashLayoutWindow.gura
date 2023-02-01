@@ -20,10 +20,10 @@ PanelTop = class(wx.Panel) {
 	sash2 as wx.SashLayoutWindow
 	__init__(parent as wx.Window) = {|parent|
 		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
-			sash.SetDefaultSize(wx.Size(1000, 100));
-			sash.SetOrientation(wx.LAYOUT_HORIZONTAL);
-			sash.SetAlignment(wx.LAYOUT_TOP);
-			sash.SetSashVisible(wx.SASH_BOTTOM, true);
+			sash.SetDefaultSize(wx.Size(100, 1000));
+			sash.SetOrientation(wx.LAYOUT_VERTICAL);
+			sash.SetAlignment(wx.LAYOUT_LEFT);
+			sash.SetSashVisible(wx.SASH_RIGHT, true);
 			this.sash1 = sash
 		}
 		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
@@ -49,11 +49,11 @@ PanelTop = class(wx.Panel) {
 		if (event.GetDragStatus() != wx.SASH_STATUS_OUT_OF_RANGE) {
 			id = event.GetId()
 			if (id == this.sash1.GetId()) {
-				htSashTop = event.GetDragRect().GetHeight() + 2
-				this.sash1.SetDefaultSize(wx.Size(1000, htSashTop))
+				wdSash = event.GetDragRect().GetWidth() + 2
+				this.sash1.SetDefaultSize(wx.Size(wdSash, 1000))
 			} elsif (id == this.sash2.GetId()) {
-				htSashTop = event.GetDragRect().GetHeight() + 2
-				this.sash2.SetDefaultSize(wx.Size(1000, htSashTop))
+				htSash = event.GetDragRect().GetHeight() + 2
+				this.sash2.SetDefaultSize(wx.Size(1000, htSash))
 			}
 			wx.LayoutAlgorithm().LayoutWindow(this, this.panel)
 			this.panel.Refresh()

@@ -12,7 +12,7 @@ Pack = struct {
 
 AppMain = class(wx.App) {
 	OnInit() = {
-		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(800, 600)).Show()
+		FrameMain(path.BaseName(path.FileName(sys.argv[0])), wx.Point(50, 50), wx.Size(900, 700)).Show()
 		true
 	}
 }
@@ -26,42 +26,51 @@ FrameMain = class(wx.Frame) {
 
 PanelTop = class(wx.Panel) {
 	canvas as Canvas
+	sashVert as wx.SashLayoutWindow
+	sashHorz as wx.SashLayoutWindow
+	sashRest as wx.Window
 	textCtrl_Init as wx.TextCtrl
 	textCtrl_Reshape as wx.TextCtrl
 	textCtrl_Display as wx.TextCtrl
 	packs[] as Pack
 	__init__(parent as wx.Window) = {|parent|
-		sizerTop = wx.BoxSizer(wx.VERTICAL)
-		this.SetSizer(sizerTop)
-		wx.BoxSizer(wx.HORIZONTAL) {|hbox|
-			sizerTop.Add(hbox, wx.SizerFlags(1).Expand())
-			choices = Samples.samples:*name
-			wx.ListBox(this, wx.ID_ANY, choices = choices) {|ctrl|
-				hbox.Add(ctrl, wx.SizerFlags(1).Expand())
-				wx.EVT_LISTBOX(ctrl, this.OnListBox)
-				ctrl.SetSelection(0)
+		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
+			sash.SetDefaultSize(wx.Size(200, 1000));
+			sash.SetOrientation(wx.LAYOUT_VERTICAL);
+			sash.SetAlignment(wx.LAYOUT_LEFT);
+			sash.SetSashVisible(wx.SASH_RIGHT, true);
+			this.sashVert = sash
+		}
+		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
+			sash.SetDefaultSize(wx.Size(1000, 300));
+			sash.SetOrientation(wx.LAYOUT_HORIZONTAL);
+			sash.SetAlignment(wx.LAYOUT_BOTTOM);
+			sash.SetSashVisible(wx.SASH_TOP, true);
+			this.sashHorz = sash
+		}
+		choices = Samples.samples:*name
+		wx.ListBox(this.sashVert, wx.ID_ANY, choices = choices, style = wx.BORDER_SUNKEN) {|ctrl|
+			wx.EVT_LISTBOX(ctrl, this.OnListBox)
+			ctrl.SetSelection(0)
+		}
+		Canvas(this) {|ctrl|
+			this.canvas = ctrl
+			this.sashRest = ctrl
+		}
+		wx.Notebook(this.sashHorz, wx.ID_ANY, style = wx.NB_FIXEDWIDTH) {|book|
+			[this.textCtrl_Init, this.textCtrl_Reshape, this.textCtrl_Display] = \
+			['Init', 'Reshape', 'Display'].Each:list {|label|
+				ctrl = wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE)
+				book.AddPage(ctrl, label)
+				ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+				ctrl
 			}
-			wx.BoxSizer(wx.VERTICAL) {|vbox|
-				hbox.Add(vbox, wx.SizerFlags(3).Expand())
-				Canvas(this) {|ctrl|
-					vbox.Add(ctrl, wx.SizerFlags().Align(wx.CENTER))
-					this.canvas = ctrl
-				}
-				wx.Notebook(this, wx.ID_ANY, style = wx.NB_FIXEDWIDTH) {|book|
-					vbox.Add(book, wx.SizerFlags(1).Expand().Border(wx.TOP, 4))
-					[this.textCtrl_Init, this.textCtrl_Reshape, this.textCtrl_Display] = \
-					['Init', 'Reshape', 'Display'].Each:list {|label|
-						ctrl = wx.TextCtrl(book, wx.ID_ANY, style = wx.TE_MULTILINE)
-						book.AddPage(ctrl, label)
-						ctrl.SetFont(wx.Font(12, wx.FONTFAMILY_TELETYPE,  wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
-						ctrl
-					}
-					book.SetSelection(2)
-				}
-			}
+			book.SetSelection(2)
 		}
 		this.packs = Samples.samples.Each:list {|sample| Pack(sample, wx.GLContext(this.canvas))}
 		this.SetPack(this.packs[0])
+		wx.EVT_SIZE(this, this.OnSize)
+		wx.EVT_SASH_DRAGGED(this, this.OnSashDragged)
 	}
 	SetPack(pack as Pack) = {
 		this.canvas.SetPack(pack)
@@ -70,6 +79,24 @@ PanelTop = class(wx.Panel) {
 		this.textCtrl_Reshape.SetValue(pack.sample.Reshape.expr.EachElem():*Textize('    ').Join('\n'))
 		this.textCtrl_Display.SetValue(pack.sample.Display.expr.EachElem():*Textize('    ').Join('\n'))
 	}
+	OnSize(event) = {
+		wx.LayoutAlgorithm().LayoutWindow(this, this.sashRest)
+		event.Skip()
+	}
+	OnSashDragged(event) = {
+		if (event.GetDragStatus() != wx.SASH_STATUS_OUT_OF_RANGE) {
+			id = event.GetId()
+			if (id == this.sashVert.GetId()) {
+				wdSash = event.GetDragRect().GetWidth() + 2
+				this.sashVert.SetDefaultSize(wx.Size(wdSash, 1000))
+			} elsif (id == this.sashHorz.GetId()) {
+				htSash = event.GetDragRect().GetHeight() + 2
+				this.sashHorz.SetDefaultSize(wx.Size(1000, htSash))
+			}
+			wx.LayoutAlgorithm().LayoutWindow(this, this.sashRest)
+			this.sashRest.Refresh()
+		}
+	}
 	OnListBox(event as wx.CommandEvent) = {
 		this.SetPack(this.packs[event.GetSelection()])
 	}
@@ -77,7 +104,7 @@ PanelTop = class(wx.Panel) {
 
 Canvas = class(wx.GLCanvas) {
 	pack as Pack
-	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, size = wx.Size(400, 300)|
+	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, size = wx.Size(400, 300), style = wx.BORDER_SUNKEN|
 		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 	}
