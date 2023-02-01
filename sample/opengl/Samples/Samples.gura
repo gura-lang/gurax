@@ -10,6 +10,49 @@ SampleBase = class {
 	Diplay() = {}
 }
 
+Sample_cube = class(SampleBase) {
+	name = "cube"
+	degree = 0
+	vertex = @(@double) {
+		[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]
+		[0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]
+	}
+	Init() = {
+		glEnable(GL_DEPTH_TEST)
+		glEnable(GL_CULL_FACE)
+		glEnable(GL_LIGHTING)
+		glEnable(GL_LIGHT0)
+		glEnable(GL_LIGHT1)
+		glCullFace(GL_FRONT)
+	}
+	Reshape(width as Number, height as Number) = {
+		glViewport(0, 0, width, height)
+		glMatrixMode(GL_PROJECTION)
+		glLoadIdentity()
+		gluPerspective(30, width / height, 1, 100)
+	}
+	Display() = {
+		glClearColor(1, 1, 1, 1)
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+		glMatrixMode(GL_MODELVIEW)
+		glLoadIdentity()
+		gluLookAt(3, 4, 5, 0, 0, 0, 0, 1, 0)
+		glRotated(this.degree, 1, 1, 0)
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, @float([0.8, 0.2, 0.2, 1]))
+		glBegin(GL_QUADS)
+			glNormal3dv(@double([ 0,  0, -1])), this.vertex[0, 1, 2, 3].Each {|v| glVertex3dv(v)}
+			glNormal3dv(@double([ 1,  0,  0])), this.vertex[1, 5, 6, 2].Each {|v| glVertex3dv(v)}
+			glNormal3dv(@double([ 0,  0,  1])), this.vertex[5, 4, 7, 6].Each {|v| glVertex3dv(v)}
+			glNormal3dv(@double([-1,  0,  0])), this.vertex[4, 0, 3, 7].Each {|v| glVertex3dv(v)}
+			glNormal3dv(@double([ 0, -1,  0])), this.vertex[4, 5, 1, 0].Each {|v| glVertex3dv(v)}
+			glNormal3dv(@double([ 0,  1,  0])), this.vertex[3, 2, 6, 7].Each {|v| glVertex3dv(v)}
+		glEnd()
+		glFlush()
+		this.degree += 10
+	}
+}
+samples.Add(Sample_cube())
+
 Sample_triangle = class(SampleBase) {
 	name = "triangle"
 	Init() = {}
@@ -94,20 +137,3 @@ Sample_tetrahedron = class(SampleBase) {
 	}
 }
 samples.Add(Sample_tetrahedron())
-
-Sample_triangle2 = class(SampleBase) {
-	name = "triangle"
-	Init() = {}
-	Reshape(width as Number, height as Number) = {}
-	Display() = {
-		glClearColor(0.1, 0.1, 0.1, 1.0)
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-		glBegin(GL_POLYGON)
-			glColor3f(1, 0, 1); glVertex3f(-0.6, -0.75, 0.5)
-			glColor3f(0, 1, 0); glVertex3f(0.6, -0.75, 0)
-			glColor3f(0, 1, 1); glVertex3f(0, 0.75, 0)
-		glEnd()
-		glFlush()
-	}
-}
-samples.Add(Sample_triangle2())
