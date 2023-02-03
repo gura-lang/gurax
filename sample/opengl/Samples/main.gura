@@ -105,9 +105,15 @@ PanelTop = class(wx.Panel) {
 
 Canvas = class(wx.GLCanvas) {
 	pack as Pack
+	posStart as wx.Point
+	posCur as wx.Point
 	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, size = wx.Size(400, 300), style = wx.BORDER_SUNKEN|
+		posCur = wx.Point(0, 0)
 		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
+		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
+		this.Bind(wx.EVT_LEFT_UP, this.OnLeftUp)
+		this.Bind(wx.EVT_MOTION, this.OnMotion)
 	}
 	SetPack(pack as Pack) = {
 		size = this.GetClientSize()
@@ -132,6 +138,19 @@ Canvas = class(wx.GLCanvas) {
 			this.SwapBuffers()
 		}
 		dc = nil
+	}
+	OnLeftDown(event as wx.MouseEvent) = {
+		this.posStart = event.GetPosition()
+	}
+	OnLeftUp(event as wx.MouseEvent) = {
+		this.posStart = nil
+	}
+	OnMotion(event as wx.MouseEvent) = {
+		!this.posStart && return
+		pos = event.GetPosition()
+		x = this.posCur.x + pos.x - this.posStart.x
+		y = this.posCur.y + pos.y - this.posStart.y
+		Printf('%d, %d\n', x, y)
 	}
 }
 

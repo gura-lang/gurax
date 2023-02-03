@@ -3,6 +3,9 @@
 //==============================================================================
 Position = Class {
 	@include['wx/position.h']
+	GetCol() as int
+	GetColumn() as int
+	GetRow() as int
 } %% R'''
 # Overview
 
