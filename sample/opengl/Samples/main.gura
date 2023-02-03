@@ -52,6 +52,7 @@ PanelTop = class(wx.Panel) {
 		wx.ListBox(this.sashVert, wx.ID_ANY, choices = choices, style = wx.BORDER_SUNKEN) {|ctrl|
 			wx.EVT_LISTBOX(ctrl, this.OnListBox)
 			ctrl.SetSelection(0)
+			ctrl.SetFocus()
 		}
 		Canvas(this) {|ctrl|
 			this.canvas = ctrl
