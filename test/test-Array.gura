@@ -280,29 +280,29 @@ TestCase('Index access') {
 
 TestCase('Set boolean') {
 	Println('int8')
-	@int8([false, true, false, true]) {|arr| arr.p.Dump()}
+	@int8([false, true, false, true]).p.Dump()
 	Println('uint8')
-	@uint8([false, true, false, true]) {|arr| arr.p.Dump()}
+	@uint8([false, true, false, true]).p.Dump()
 	Println('int16')
-	@int16([false, true, false, true]) {|arr| arr.p.Dump()}
+	@int16([false, true, false, true]).p.Dump()
 	Println('uint16')
-	@uint16([false, true, false, true]) {|arr| arr.p.Dump()}
+	@uint16([false, true, false, true]).p.Dump()
 	Println('int32')
-	@int32([false, true, false, true]) {|arr| arr.p.Dump()}
+	@int32([false, true, false, true]).p.Dump()
 	Println('uint32')
-	@uint32([false, true, false, true]) {|arr| arr.p.Dump()}
+	@uint32([false, true, false, true]).p.Dump()
 	Println('int64')
-	@int64([false, true, false, true]) {|arr| arr.p.Dump()}
+	@int64([false, true, false, true]).p.Dump()
 	Println('uint64')
-	@uint64([false, true, false, true]) {|arr| arr.p.Dump()}
+	@uint64([false, true, false, true]).p.Dump()
 	Println('half')
-	@half([false, true, false, true]) {|arr| arr.p.Dump()}
+	@half([false, true, false, true]).p.Dump()
 	Println('float')
-	@float([false, true, false, true]) {|arr| arr.p.Dump()}
+	@float([false, true, false, true]).p.Dump()
 	Println('double')
-	@double([false, true, false, true]) {|arr| arr.p.Dump()}
+	@double([false, true, false, true]).p.Dump()
 	Println('complex')
-	@complex([false, true, false, true]) {|arr| arr.p.Dump()}
+	@complex([false, true, false, true]).p.Dump()
 }
 
 TestCase('Rotation/translation matrix') {

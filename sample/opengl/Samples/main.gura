@@ -145,9 +145,7 @@ Canvas = class(wx.GLCanvas) {
 	OnLeftUp(event as wx.MouseEvent) = {
 		!this.posStart && return
 		if (this.pack) {
-			pos = event.GetPosition()
-			this.posCur.x += pos.x - this.posStart.x
-			this.posCur.y += pos.y - this.posStart.y
+			this.posCur += event.GetPosition() - this.posStart
 			this.pack.sample.TrackEnd(this.posCur.x, this.posCur.y) && this.Refresh()
 		}
 		this.posStart = nil
@@ -155,10 +153,8 @@ Canvas = class(wx.GLCanvas) {
 	OnMotion(event as wx.MouseEvent) = {
 		!this.posStart && return
 		if (this.pack) {
-			pos = event.GetPosition()
-			x = this.posCur.x + pos.x - this.posStart.x
-			y = this.posCur.y + pos.y - this.posStart.y
-			this.pack.sample.Track(x, y) && this.Refresh()
+			pt = this.posCur + event.GetPosition() - this.posStart
+			this.pack.sample.Track(pt.x, pt.y) && this.Refresh()
 		}
 	}
 }

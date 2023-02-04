@@ -119,12 +119,11 @@ Gurax_ImplementConstructor(Array)
 	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
 }
 
-// ConstructArray(init*) {block?}
+// ConstructArray(init*)
 Gurax_DeclareFunction(ConstructArray)
 {
 	Declare(VTYPE_Array, Flag::None);
 	DeclareArg("init", VTYPE_Any, ArgOccur::ZeroOrMore, ArgFlag::None);
-	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 
 )**");
@@ -152,7 +151,7 @@ Gurax_ImplementFunction(ConstructArray)
 	}
 	if (!pArray) return Value::nil();
 	// Function body
-	return argument.ReturnValue(processor, new Value_Array(pArray.release()));
+	return new Value_Array(pArray.release());
 }
 
 //-----------------------------------------------------------------------------
