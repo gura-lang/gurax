@@ -108,7 +108,7 @@ Canvas = class(wx.GLCanvas) {
 	posStart as wx.Point
 	posCur as wx.Point
 	__init__(parent as wx.Window) = {|parent, wx.ID_ANY, size = wx.Size(400, 300), style = wx.BORDER_SUNKEN|
-		posCur = wx.Point(0, 0)
+		this.posCur = wx.Point(0, 0)
 		this.Bind(wx.EVT_SIZE, this.OnSize)
 		this.Bind(wx.EVT_PAINT, this.OnPaint)
 		this.Bind(wx.EVT_LEFT_DOWN, this.OnLeftDown)
@@ -143,14 +143,23 @@ Canvas = class(wx.GLCanvas) {
 		this.posStart = event.GetPosition()
 	}
 	OnLeftUp(event as wx.MouseEvent) = {
+		!this.posStart && return
+		if (this.pack) {
+			pos = event.GetPosition()
+			this.posCur.x += pos.x - this.posStart.x
+			this.posCur.y += pos.y - this.posStart.y
+			this.pack.sample.TrackEnd(this.posCur.x, this.posCur.y) && this.Refresh()
+		}
 		this.posStart = nil
 	}
 	OnMotion(event as wx.MouseEvent) = {
 		!this.posStart && return
-		pos = event.GetPosition()
-		x = this.posCur.x + pos.x - this.posStart.x
-		y = this.posCur.y + pos.y - this.posStart.y
-		Printf('%d, %d\n', x, y)
+		if (this.pack) {
+			pos = event.GetPosition()
+			x = this.posCur.x + pos.x - this.posStart.x
+			y = this.posCur.y + pos.y - this.posStart.y
+			this.pack.sample.Track(x, y) && this.Refresh()
+		}
 	}
 }
 
