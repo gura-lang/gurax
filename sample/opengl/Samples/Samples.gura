@@ -12,8 +12,218 @@ SampleBase = class {
 	TrackEnd(x as Number, y as Number) = nil
 }
 
+S_NUMPOINTS = 13
+S_ORDER     = 3   
+S_NUMKNOTS  = (S_NUMPOINTS + S_ORDER)
+T_NUMPOINTS = 3
+T_ORDER     = 3
+T_NUMKNOTS  = (T_NUMPOINTS + T_ORDER)
+SQRT_TWO    = 1.41421356237309504880
+
+Sample_nurb = class {
+	name = 'Nurb'
+	rotX = 0
+	rotY = 0
+	sknots = @{
+		-1.0, -1.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0,
+		4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 9.0, 9.0
+	}
+	glutnots = @{
+		1.0, 1.0, 1.0, 2.0, 2.0, 2.0
+	}
+	ctlpoints = @{
+		{
+		{
+			4.0, 2.0, 2.0, 1.0
+		},
+		{
+			4.0, 1.6, 2.5, 1.0
+		},
+		{
+			4.0, 2.0, 3.0, 1.0
+		}
+		},
+		{
+		{
+			5.0, 4.0, 2.0, 1.0
+		},
+		{
+			5.0, 4.0, 2.5, 1.0
+		},
+		{
+			5.0, 4.0, 3.0, 1.0
+		}
+		},
+		{
+		{
+			6.0, 5.0, 2.0, 1.0
+		},
+		{
+			6.0, 5.0, 2.5, 1.0
+		},
+		{
+			6.0, 5.0, 3.0, 1.0
+		}
+		},
+		{
+		{
+			SQRT_TWO*6.0, SQRT_TWO*6.0, SQRT_TWO*2.0, SQRT_TWO
+		},
+		{
+			SQRT_TWO*6.0, SQRT_TWO*6.0, SQRT_TWO*2.5, SQRT_TWO
+		},
+		{
+			SQRT_TWO*6.0, SQRT_TWO*6.0, SQRT_TWO*3.0, SQRT_TWO
+		}  
+		},
+		{
+		{
+			5.2, 6.7, 2.0, 1.0
+		},
+		{
+			5.2, 6.7, 2.5, 1.0
+		},
+		{
+			5.2, 6.7, 3.0, 1.0
+		}
+		},
+		{
+		{
+			SQRT_TWO*4.0, SQRT_TWO*6.0, SQRT_TWO*2.0, SQRT_TWO
+		},
+		{
+			SQRT_TWO*4.0, SQRT_TWO*6.0, SQRT_TWO*2.5, SQRT_TWO
+		}, 
+		{
+			SQRT_TWO*4.0, SQRT_TWO*6.0, SQRT_TWO*3.0, SQRT_TWO
+		}  
+		}, 
+		{
+		{
+			4.0, 5.2, 2.0, 1.0
+		},
+		{
+			4.0, 4.6, 2.5, 1.0
+		},
+		{
+			4.0, 5.2, 3.0, 1.0
+		}  
+		},
+		{
+		{
+			SQRT_TWO*4.0, SQRT_TWO*6.0, SQRT_TWO*2.0, SQRT_TWO
+		},
+		{
+			SQRT_TWO*4.0, SQRT_TWO*6.0, SQRT_TWO*2.5, SQRT_TWO
+		},
+		{
+			SQRT_TWO*4.0, SQRT_TWO*6.0, SQRT_TWO*3.0, SQRT_TWO
+		}  
+		},
+		{
+		{
+			2.8, 6.7, 2.0, 1.0
+		},
+		{
+			2.8, 6.7, 2.5, 1.0
+		},
+		{
+			2.8, 6.7, 3.0, 1.0
+		}   
+		},
+		{
+		{
+			SQRT_TWO*2.0, SQRT_TWO*6.0, SQRT_TWO*2.0, SQRT_TWO
+		},
+		{
+			SQRT_TWO*2.0, SQRT_TWO*6.0, SQRT_TWO*2.5, SQRT_TWO
+		},
+		{
+			SQRT_TWO*2.0, SQRT_TWO*6.0, SQRT_TWO*3.0, SQRT_TWO
+		}  
+		},
+		{
+		{
+			2.0, 5.0, 2.0, 1.0
+		},
+		{
+			2.0, 5.0, 2.5, 1.0
+		},
+		{
+			2.0, 5.0, 3.0, 1.0
+		} 
+		},
+		{
+		{
+			3.0, 4.0, 2.0, 1.0
+		},
+		{
+			3.0, 4.0, 2.5, 1.0
+		},
+		{
+			3.0, 4.0, 3.0, 1.0
+		} 
+		},
+		{
+		{
+			4.0, 2.0, 2.0, 1.0
+		},
+		{
+			4.0, 1.6, 2.5, 1.0
+		},
+		{
+			4.0, 2.0, 3.0, 1.0
+		}	
+		}
+	}
+	theNurbs as GLUNurbs
+	Init() = {
+		//this.theNurbs = gluNewNurbsRenderer()
+		/*
+		//gluNurbsCallback(this.theNurbs, GLU_ERROR, ErrorCallback)
+		gluNurbsProperty(this.theNurbs, GLU_SAMPLING_TOLERANCE, 15.0)
+		gluNurbsProperty(this.theNurbs, GLU_DISPLAY_MODE, GLU_OUTLINE_PATCH)
+		expectedError = GLU_INVALID_ENUM
+		gluNurbsProperty(this.theNurbs, ~0, 15.0)
+		expectedError = GLU_NURBS_ERROR13
+		gluEndSurface(this.theNurbs)
+		expectedError = 0
+		glColor3f(1.0, 1.0, 1.0)
+		*/
+	}
+	Reshape(width as Number, height as Number) = {
+		/*
+		glViewport(0, 0, width, height)
+		glMatrixMode(GL_PROJECTION)
+		glLoadIdentity()
+		glFrustum(-2.0, 2.0, -2.0, 2.0, 0.8, 10.0)
+		gluLookAt(7.0, 4.5, 4.0, 4.5, 4.5, 2.5, 6.0, -3.0, 2.0)
+		glMatrixMode(GL_MODELVIEW)
+		*/
+	}
+	Display() = {
+		/*
+		glClear(GL_COLOR_BUFFER_BIT)
+		glPushMatrix()
+			glTranslatef(4.0, 4.5, 2.5)
+			glRotatef(this.rotY, 1, 0, 0)
+			glRotatef(this.rotX, 0, 1, 0)
+			glTranslatef(-4.0, -4.5, -2.5)
+			gluBeginSurface(theNurbs)
+				gluNurbsSurface(this.theNurbs, sknots, glutnots, 4 * T_NUMPOINTS, 4,
+						ctlpoints.Flatten():list, S_ORDER, T_ORDER, GL_MAP2_VERTEX_4)
+			gluEndSurface(theNurbs)
+		glPopMatrix()
+		glFlush()
+		*/
+	}
+	Track(x as Number, y as Number) = nil
+	TrackEnd(x as Number, y as Number) = nil
+}
+samples.Add(Sample_nurb())
+
 Sample_teapot = class(SampleBase) {
-	name = 'teapot'
+	name = 'Teapot'
 	listTeapot as Number
 	rotX = 0
 	rotY = 0
@@ -161,7 +371,7 @@ Sample_teapot = class(SampleBase) {
 samples.Add(Sample_teapot())
 
 Sample_cube = class(SampleBase) {
-	name = "cube"
+	name = "Cube"
 	rotX = 0
 	rotY = 0
 	vertex = @(@double) {
@@ -211,7 +421,7 @@ Sample_cube = class(SampleBase) {
 samples.Add(Sample_cube())
 
 Sample_triangle = class(SampleBase) {
-	name = "triangle"
+	name = "Triangle"
 	Init() = {}
 	Reshape(width as Number, height as Number) = {}
 	Display() = {
@@ -228,7 +438,7 @@ Sample_triangle = class(SampleBase) {
 samples.Add(Sample_triangle())
 
 Sample_tetrahedron = class(SampleBase) {
-	name = "tetrahedron"
+	name = "Tetrahedron"
 	rotX = 0
 	rotY = 0
 	Init() = {

@@ -35,20 +35,20 @@ PanelTop = class(wx.Panel) {
 	packs[] as Pack
 	__init__(parent as wx.Window) = {|parent|
 		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
-			sash.SetDefaultSize(wx.Size(200, 1000));
-			sash.SetOrientation(wx.LAYOUT_VERTICAL);
-			sash.SetAlignment(wx.LAYOUT_LEFT);
-			sash.SetSashVisible(wx.SASH_RIGHT, true);
-			this.sashVert = sash
-		}
-		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
 			sash.SetDefaultSize(wx.Size(1000, 300));
 			sash.SetOrientation(wx.LAYOUT_HORIZONTAL);
 			sash.SetAlignment(wx.LAYOUT_BOTTOM);
 			sash.SetSashVisible(wx.SASH_TOP, true);
 			this.sashHorz = sash
 		}
-		choices = Samples.samples:*name
+		wx.SashLayoutWindow(this, wx.ID_ANY, style = wx.CLIP_CHILDREN) {|sash|
+			sash.SetDefaultSize(wx.Size(200, 1000));
+			sash.SetOrientation(wx.LAYOUT_VERTICAL);
+			sash.SetAlignment(wx.LAYOUT_LEFT);
+			sash.SetSashVisible(wx.SASH_RIGHT, true);
+			this.sashVert = sash
+		}
+		choices = Samples.samples::name
 		wx.ListBox(this.sashVert, wx.ID_ANY, choices = choices, style = wx.BORDER_SUNKEN) {|ctrl|
 			wx.EVT_LISTBOX(ctrl, this.OnListBox)
 			ctrl.SetSelection(0)
