@@ -15,8 +15,8 @@ SampleBase = class {
 Sample_teapot = class(SampleBase) {
 	name = 'teapot'
 	listTeapot as Number
-	rotX as Number = 0
-	rotY as Number = 0
+	rotX = 0
+	rotY = 0
 	Teapot(grid as Number) = {
 		patchData = @(@float) {
 			[102,103,104,105, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -266,8 +266,8 @@ Sample_tetrahedron = class(SampleBase) {
 	Display() = {
 		glLoadIdentity();
 		glTranslatef(0, 0, -4.5);
-		glRotatef(this.rotY, 1, 0, 0);
 		glRotatef(this.rotX, 0, 1, 0);
+		glRotatef(this.rotY, 1, 0, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw a white grid "floor" for the tetrahedron to sit on.
