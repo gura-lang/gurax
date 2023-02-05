@@ -4,11 +4,10 @@ import(opengl) {*}
 import(Samples)
 
 Pack = struct {
-	sample as Samples.Sample
+	sample as Samples.SampleBase
 	context as wx.GLContext
 	initializedFlag as Bool = false
 }
-
 
 AppMain = class(wx.App) {
 	OnInit() = {

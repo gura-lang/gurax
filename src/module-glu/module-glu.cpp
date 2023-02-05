@@ -18,6 +18,10 @@ Gurax_ModuleValidate()
 Gurax_ModulePrepare()
 {
 	Frame& frame = GetFrame();
+	// Assignment of VType
+	Assign(VTYPE_GLUnurbs);
+	Assign(VTYPE_GLUquadric);
+	Assign(VTYPE_GLUtesselator);
 	// Assignment of constant
 	AssignConsts(frame);
 	// Assignment of function
