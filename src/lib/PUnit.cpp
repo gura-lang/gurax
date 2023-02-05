@@ -27,7 +27,7 @@ void PUnit::Print(const StringStyle& ss, int seqIdOffset) const
 {
 	Stream& stream = *Stream::COut;
 	stream.Printf("%s%s %s\n", ss.GetMargin(),
-				  MakeSeqIdString(seqIdOffset).c_str(), ToString(ss, seqIdOffset).c_str());
+				MakeSeqIdString(seqIdOffset).c_str(), ToString(ss, seqIdOffset).c_str());
 }
 
 void PUnit::Print(const PUnit* pPUnit, const PUnit* pPUnitSentinel, const StringStyle& ss, int seqIdOffset)
@@ -306,8 +306,8 @@ String PUnit_AssignFunction<discardValueFlag>::ToString(const StringStyle& ss, i
 {
 	String str;
 	str.Format("AssignFunction(%s,cont=%s)",
-			   GetFunction().ToString(StringStyle().SetCram()).c_str(),
-			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+			GetFunction().ToString(StringStyle().SetCram()).c_str(),
+			MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -347,8 +347,8 @@ String PUnit_AssignMethod<discardValueFlag, keepTargetFlag>::ToString(const Stri
 {
 	String str;
 	str.Format("AssignMethod(%s,cont=%s)",
-			   GetFunction().ToString(StringStyle().SetCram()).c_str(),
-			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+			GetFunction().ToString(StringStyle().SetCram()).c_str(),
+			MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -410,8 +410,8 @@ String PUnit_AssignPropSlot<discardValueFlag, initializerFlag>::ToString(const S
 {
 	String str;
 	str.Format("AssignPropSlot(%s,cont=%s,initializer=%s)",
-			   GetSymbol()->GetName(),
-			   MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(), initializerFlag? "true" : "false");
+			GetSymbol()->GetName(),
+			MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(), initializerFlag? "true" : "false");
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -631,7 +631,7 @@ void PUnit_GenIterator_for<discardValueFlag>::Exec(Processor& processor) const
 	}
 	RefPtr<Iterator> pIterator(
 		new Iterator_for(processor.Reference(), GetExprOfBlock().Reference(),
-						 GetDeclArgOwner().Reference(), pIteratorOwner.release(), GetSkipNilFlag()));
+						GetDeclArgOwner().Reference(), pIteratorOwner.release(), GetSkipNilFlag()));
 	if constexpr (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetPUnitCur(_GetPUnitCont());
 }
@@ -666,8 +666,8 @@ template<bool discardValueFlag>
 void PUnit_GenIterator_while<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Iterator> pIterator(new Iterator_while(
-								   processor.Reference(), GetExprCriteria().Reference(),
-								   GetExprOfBlock().Reference(), GetSkipNilFlag()));
+								processor.Reference(), GetExprCriteria().Reference(),
+								GetExprOfBlock().Reference(), GetSkipNilFlag()));
 	if constexpr (!discardValueFlag) processor.PushValue(new Value_Iterator(pIterator.release()));
 	processor.SetPUnitCur(_GetPUnitCont());
 }
@@ -764,7 +764,7 @@ String PUnit_EvalIterator<discardValueFlag>::ToString(const StringStyle& ss, int
 {
 	String str;
 	str.Format("EvalIterator(offsetToIterator=%zu,branchDest=%s)", GetOffset(),
-			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+			MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -806,8 +806,8 @@ String PUnit_ForEach<discardValueFlag>::ToString(const StringStyle& ss, int seqI
 {
 	String str;
 	str.Format("ForEach(offsetToIterator=%zu,branchDest=%s, decls=[%s])", GetOffset(),
-			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
-			   GetDeclArgOwner().ToString(StringStyle().SetQuoteSymbol().SetCram()).c_str());
+			MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str(),
+			GetDeclArgOwner().ToString(StringStyle().SetQuoteSymbol().SetCram()).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -908,7 +908,7 @@ template<bool discardValueFlag>
 void PUnit_Import<discardValueFlag>::Exec(Processor& processor) const
 {
 	RefPtr<Module> pModule(Module::ImportHierarchy(
-				   processor, GetDottedSymbol(), GetBinaryFlag(), GetOverwriteFlag()));
+				processor, GetDottedSymbol(), GetBinaryFlag(), GetOverwriteFlag()));
 	if (!pModule) {
 		processor.ErrorDone();
 		return;
@@ -1017,12 +1017,12 @@ void PUnit_CompleteStruct<discardValueFlag>::Exec(Processor& processor) const
 		PropSlot::Flags flags = pPropSlot->GetFlags();
 		const DeclArg::Occur& occur = DeclArg::Occur::ZeroOrOnce;
 		flags &= ~(PropSlot::Flag::Nil | PropSlot::Flag::OfClass | PropSlot::Flag::OfInstance |
-				   PropSlot::Flag::Public | PropSlot::Flag::Readable | PropSlot::Flag::Writable);
+				PropSlot::Flag::Public | PropSlot::Flag::Readable | PropSlot::Flag::Writable);
 		pDeclCallable->GetDeclArgOwner().push_back(
 			new DeclArg(pPropSlot->GetSymbol(), pPropSlot->GetVType(), occur, flags, nullptr));
 	}
 	vtypeCustom.SetConstructor(new VTypeCustom::ConstructorStruct(
-								   vtypeCustom, pDeclCallable.release(), pPropSlotOwner.release()));
+								vtypeCustom, pDeclCallable.release(), pPropSlotOwner.release()));
 	if (Error::IsIssued()) {
 		processor.ErrorDone();
 		return;
@@ -1925,8 +1925,8 @@ void PUnit_MemberGet_MapAlong<discardValueFlag>::Exec(Processor& processor) cons
 	if (pValueTarget->IsIterable()) {
 		RefPtr<Iterator> pIteratorTarget(pValueTarget->GenIterator());
 		RefPtr<Iterator> pIterator(new Iterator_Member_MapAlong(
-									   processor.Reference(), pIteratorTarget.release(),
-									   GetSymbol(), GetAttr().Reference()));
+									processor.Reference(), pIteratorTarget.release(),
+									GetSymbol(), GetAttr().Reference()));
 		if constexpr (!discardValueFlag) processor.PushValue(new Value_ArgMapper(pIterator.release()));
 	} else {
 		RefPtr<Value> pValueProp(pValueTarget->GetProperty(GetSymbol(), GetAttr(), true));
@@ -2102,8 +2102,8 @@ void PUnit_Argument<discardValueFlag, keepCarFlag>::Exec(Processor& processor) c
 	}
 	RefPtr<Argument> pArgument(
 		new Argument(processor, pValueCar.release(), pDeclCallable->Reference(),
-					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::undefined(),
-					 Expr_Block::Reference(GetExprOfBlock())));
+					GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::undefined(),
+					Expr_Block::Reference(GetExprOfBlock())));
 	if constexpr (!discardValueFlag) processor.PushValue(new Value_Argument(pArgument.release()));
 	processor.SetPUnitCur(_GetPUnitCont());
 }
@@ -2184,8 +2184,8 @@ void PUnit_ArgumentDelegation<discardValueFlag>::Exec(Processor& processor) cons
 	}
 	RefPtr<Argument> pArgument(
 		new Argument(processor, pValueCar.release(), pDeclCallable->Reference(),
-					 GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::undefined(),
-					 pExprOfBlock.release()));
+					GetAttr().Reference(), pDeclCallable->GetFlags() | GetFlags(), Value::undefined(),
+					pExprOfBlock.release()));
 	if constexpr (!discardValueFlag) processor.PushValue(new Value_Argument(pArgument.release()));
 	processor.SetPUnitCur(_GetPUnitCont());
 }
@@ -2381,8 +2381,8 @@ String PUnit_ArgSlotBegin<discardValueFlag>::ToString(const StringStyle& ss, int
 		str.Format(":%s", MakeSeqIdString(GetExprSrc().GetPUnitFirst(), seqIdOffset).c_str());
 	}
 	str.Format(",sentinel=%s,branchDest=%s)",
-			   MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
-			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+			MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
+			MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
@@ -2514,9 +2514,9 @@ String PUnit_NamedArgSlotBegin<discardValueFlag>::ToString(const StringStyle& ss
 {
 	String str;
 	str.Format("NamedArgSlotBegin(`%s,symbol=%s,sentinel=%s,branchDest=%s)",
-			   GetExprSrc().ToString(StringStyle().SetCram()).c_str(), GetSymbol()->GetName(),
-			   MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
-			   MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
+			GetExprSrc().ToString(StringStyle().SetCram()).c_str(), GetSymbol()->GetName(),
+			MakeSeqIdString(GetPUnitSentinel(), seqIdOffset).c_str(),
+			MakeSeqIdString(GetPUnitBranchDest(), seqIdOffset).c_str());
 	AppendInfoToString(str, ss);
 	return str;
 }
