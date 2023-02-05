@@ -952,14 +952,14 @@ PUnit* PUnitFactory_Import::Create(bool discardValueFlag)
 }
 
 //------------------------------------------------------------------------------
-// PUnit_CreateVType
+// PUnit_VTypeBegin
 // Stack View: inheritFlag=false .. []         -> [VType] (continue)
 //                                             -> []      (discard)
 //             inheritFlag=true ..  [VTypeInh] -> [VType] (continue)
 //                                  [VTypeInh] -> []      (discard)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag, bool inheritFlag>
-void PUnit_CreateVType<discardValueFlag, inheritFlag>::Exec(Processor& processor) const
+void PUnit_VTypeBegin<discardValueFlag, inheritFlag>::Exec(Processor& processor) const
 {
 	VType* pVTypeInh = &VTYPE_Object;
 	if constexpr (inheritFlag) {
@@ -974,38 +974,67 @@ void PUnit_CreateVType<discardValueFlag, inheritFlag>::Exec(Processor& processor
 }
 
 template<bool discardValueFlag, bool inheritFlag>
-String PUnit_CreateVType<discardValueFlag, inheritFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_VTypeBegin<discardValueFlag, inheritFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("CreateVType(inheritFlag=%d)", inheritFlag);
+	str.Format("VTypeBegin(inheritFlag=%d)", inheritFlag);
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_CreateVType::Create(bool discardValueFlag)
+PUnit* PUnitFactory_VTypeBegin::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
 		if (_inheritFlag) {
-			_pPUnitCreated = new PUnit_CreateVType<true, true>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_VTypeBegin<true, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_CreateVType<true, false>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_VTypeBegin<true, false>(_pExprSrc.Reference());
 		}
 	} else {
 		if (_inheritFlag) {
-			_pPUnitCreated = new PUnit_CreateVType<false, true>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_VTypeBegin<false, true>(_pExprSrc.Reference());
 		} else {
-			_pPUnitCreated = new PUnit_CreateVType<false, false>(_pExprSrc.Reference());
+			_pPUnitCreated = new PUnit_VTypeBegin<false, false>(_pExprSrc.Reference());
 		}
 	}
 	return _pPUnitCreated;
 }
 
 //------------------------------------------------------------------------------
-// PUnit_CompleteStruct
+// PUnit_VTypeEnd_Class
 // Stack View: [VType] -> [VType] (continue)
 //------------------------------------------------------------------------------
 template<bool discardValueFlag>
-void PUnit_CompleteStruct<discardValueFlag>::Exec(Processor& processor) const
+void PUnit_VTypeEnd_Class<discardValueFlag>::Exec(Processor& processor) const
+{
+	processor.SetPUnitCur(_GetPUnitCont());
+}
+
+template<bool discardValueFlag>
+String PUnit_VTypeEnd_Class<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+{
+	String str;
+	str += "VTypeEnd_Class()";
+	AppendInfoToString(str, ss);
+	return str;
+}
+
+PUnit* PUnitFactory_VTypeEnd_Class::Create(bool discardValueFlag)
+{
+	if (discardValueFlag) {
+		_pPUnitCreated = new PUnit_VTypeEnd_Class<true>(_pExprSrc.Reference());
+	} else {
+		_pPUnitCreated = new PUnit_VTypeEnd_Class<false>(_pExprSrc.Reference());
+	}
+	return _pPUnitCreated;
+}
+
+//------------------------------------------------------------------------------
+// PUnit_VTypeEnd_Struct
+// Stack View: [VType] -> [VType] (continue)
+//------------------------------------------------------------------------------
+template<bool discardValueFlag>
+void PUnit_VTypeEnd_Struct<discardValueFlag>::Exec(Processor& processor) const
 {
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
 	RefPtr<PropSlotOwner> pPropSlotOwner(new PropSlotOwner());
@@ -1031,20 +1060,20 @@ void PUnit_CompleteStruct<discardValueFlag>::Exec(Processor& processor) const
 }
 
 template<bool discardValueFlag>
-String PUnit_CompleteStruct<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
+String PUnit_VTypeEnd_Struct<discardValueFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str += "CompleteStruct()";
+	str += "VTypeEnd_Struct()";
 	AppendInfoToString(str, ss);
 	return str;
 }
 
-PUnit* PUnitFactory_CompleteStruct::Create(bool discardValueFlag)
+PUnit* PUnitFactory_VTypeEnd_Struct::Create(bool discardValueFlag)
 {
 	if (discardValueFlag) {
-		_pPUnitCreated = new PUnit_CompleteStruct<true>(_pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_VTypeEnd_Struct<true>(_pExprSrc.Reference());
 	} else {
-		_pPUnitCreated = new PUnit_CompleteStruct<false>(_pExprSrc.Reference());
+		_pPUnitCreated = new PUnit_VTypeEnd_Struct<false>(_pExprSrc.Reference());
 	}
 	return _pPUnitCreated;
 }

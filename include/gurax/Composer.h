@@ -51,7 +51,7 @@ public:
 		// Constructor
 		RepeaterInfo() = delete;
 		RepeaterInfo(const PUnit* pPUnitOfLoop, const PUnit* pPUnitOfBranch,
-					 const PUnit* pPUnitOfBreak) :
+					const PUnit* pPUnitOfBreak) :
 			_pPUnitOfLoop(pPUnitOfLoop), _pPUnitOfBranch(pPUnitOfBranch),
 			_pPUnitOfBreak(pPUnitOfBreak) {}
 		// Copy constructor/operator
@@ -139,7 +139,7 @@ public:
 		SetFactory(new PUnitFactory_Lookup(pSymbol, exprSrc.Reference()));
 	}
 	void Add_Suffixed(StringReferable* pStrSegment, SuffixMgr::Mode mode, const Symbol* pSymbol,
-					  const Expr& exprSrc) {
+					const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Suffixed(pStrSegment, mode, pSymbol, exprSrc.Reference()));
 	}
 	void Add_AssignToSymbol(const Symbol* pSymbol, bool externFlag, const Expr& exprSrc) {
@@ -155,7 +155,7 @@ public:
 		SetFactory(new PUnitFactory_AssignMethod(pFunction, keepTargetFlag, exprSrc.Reference()));
 	}
 	void Add_AssignPropSlot(const Symbol* pSymbol, RefPtr<DottedSymbol> pDottedSymbol, PropSlot::Flags flags,
-							   const Attribute& attr, bool initializerFlag, const Expr& exprSrc);
+							const Attribute& attr, bool initializerFlag, const Expr& exprSrc);
 	void Add_Cast(const VType& vtype, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Cast(vtype, DeclArg::Flag::None, exprSrc.Reference()));
 	}
@@ -200,14 +200,17 @@ public:
 	void Add_Import(DottedSymbol* pDottedSymbol, SymbolList* pSymbolList,
 					bool binaryFlag, bool mixInFlag, bool overwriteFlag, bool symbolForModuleFlag, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_Import(pDottedSymbol, pSymbolList,
-										   binaryFlag, mixInFlag, overwriteFlag, symbolForModuleFlag,
-										   exprSrc.Reference()));
+										binaryFlag, mixInFlag, overwriteFlag, symbolForModuleFlag,
+										exprSrc.Reference()));
 	}
-	void Add_CreateVType(bool inheritFlag, const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_CreateVType(inheritFlag, exprSrc.Reference()));
+	void Add_VTypeBegin(bool inheritFlag, const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_VTypeBegin(inheritFlag, exprSrc.Reference()));
 	}
-	void Add_CompleteStruct(const Expr& exprSrc) {
-		SetFactory(new PUnitFactory_CompleteStruct(exprSrc.Reference()));
+	void Add_VTypeEnd_Class(const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_VTypeEnd_Class(exprSrc.Reference()));
+	}
+	void Add_VTypeEnd_Struct(const Expr& exprSrc) {
+		SetFactory(new PUnitFactory_VTypeEnd_Struct(exprSrc.Reference()));
 	}
 	void Add_CreateList(size_t sizeReserve, const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_CreateList(sizeReserve, exprSrc.Reference()));
@@ -291,7 +294,7 @@ public:
 	void Add_NamedArgSlotBegin(const Symbol* pSymbol, Expr* pExprAssigned, const Expr& exprSrc) {
 		const PUnit* pPUnitBranchDest = nullptr;
 		SetFactory(new PUnitFactory_NamedArgSlotBegin(
-					   pSymbol, pExprAssigned, pPUnitBranchDest, exprSrc.Reference()));
+					pSymbol, pExprAssigned, pPUnitBranchDest, exprSrc.Reference()));
 	}
 	void Add_NamedArgSlotEnd(const Expr& exprSrc) {
 		SetFactory(new PUnitFactory_NamedArgSlotEnd(exprSrc.Reference()));

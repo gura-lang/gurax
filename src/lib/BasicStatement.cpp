@@ -1018,11 +1018,12 @@ Gurax_ImplementStatement(class_)
 	if (pExprParam) {
 		pExprParam->ComposeOrNil(composer);										// [Any]
 		composer.Add_Cast(VTYPE_VType, exprCaller);								// [VTypeInh]
-		composer.Add_CreateVType(true, exprCaller);								// [VType]
+		composer.Add_VTypeBegin(true, exprCaller);								// [VType]
 	} else {
-		composer.Add_CreateVType(false, exprCaller);							// [VType]
+		composer.Add_VTypeBegin(false, exprCaller);								// [VType]
 	}
 	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, nullptr, false); // [VType]
+	composer.Add_VTypeEnd_Class(exprCaller);									// [VType]
 }
 
 // struct {`block}
@@ -1037,9 +1038,9 @@ Gurax_DeclareStatementAlias(struct_, "struct")
 
 Gurax_ImplementStatement(struct_)
 {
-	composer.Add_CreateVType(false, exprCaller);								// [VType]
+	composer.Add_VTypeBegin(false, exprCaller);									// [VType]
 	exprCaller.GetExprOfBlock()->GetExprLinkElem().ComposeWithinClass(composer, nullptr, true); // [VType]
-	composer.Add_CompleteStruct(exprCaller);									// [VType]
+	composer.Add_VTypeEnd_Struct(exprCaller);									// [VType]
 }
 
 void BasicStatement::Prepare(Frame& frame)
