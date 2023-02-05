@@ -346,9 +346,9 @@ template<bool discardValueFlag, bool keepTargetFlag>
 String PUnit_AssignMethod<discardValueFlag, keepTargetFlag>::ToString(const StringStyle& ss, int seqIdOffset) const
 {
 	String str;
-	str.Format("AssignMethod(%s,cont=%s)",
+	str.Format("AssignMethod(%s,cont=%s,keepTarget=%s)",
 			GetFunction().ToString(StringStyle().SetCram()).c_str(),
-			MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str());
+			MakeSeqIdString(_GetPUnitCont(), seqIdOffset).c_str(), keepTargetFlag? "true" : "false");
 	AppendInfoToString(str, ss);
 	return str;
 }
