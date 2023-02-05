@@ -9,7 +9,7 @@ namespace Gurax {
 // FunctionCustom
 //------------------------------------------------------------------------------
 FunctionCustom::FunctionCustom(Type type, const Symbol* pSymbol, DeclCallable* pDeclCallable,
-							   Expr* pExprBody, HelpHolder* pHelpHolder) :
+							Expr* pExprBody, HelpHolder* pHelpHolder) :
 	Function(type, pSymbol, pDeclCallable, pHelpHolder),
 	_pExprBody(pExprBody), _pPUnitBody(pExprBody->GetPUnitFirst())
 {
