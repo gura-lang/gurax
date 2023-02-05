@@ -9,7 +9,7 @@ namespace Gurax {
 // Argument
 //------------------------------------------------------------------------------
 Argument::Argument(Processor& processor, Value* pValueCar, DeclCallable* pDeclCallable, Attribute* pAttr,
-				   DeclCallable::Flags flags, Value* pValueThis, Expr_Block* pExprOfBlock) :
+				DeclCallable::Flags flags, Value* pValueThis, Expr_Block* pExprOfBlock) :
 	_pValueCar(pValueCar), _pFrameForVType(pValueCar->GetFrameForVType(processor)), _pDeclCallable(pDeclCallable), _pAttr(pAttr), _flags(flags),
 	_pValueThis(pValueThis), _pExprOfBlock(pExprOfBlock), _pArgSlotToFeed(nullptr),
 	_mapMode(MapMode::None)
@@ -101,7 +101,7 @@ bool Argument::CompleteFeedValue(Processor& processor)
 			pArgSlot->FeedValue(*this, processor.GetFrameCur(), pValue.release());
 		} else {
 			Error::Issue(ErrorType::ArgumentError, "lacking value for argument '%s'",
-						 pArgSlot->GetDeclArg().GetSymbol()->GetName());
+						pArgSlot->GetDeclArg().GetSymbol()->GetName());
 			return false;
 		}
 	}
@@ -144,7 +144,7 @@ void Argument::AssignToFrame(Frame& frame, Frame& frameOuter) const
 	if (GetValueThis().IsValid()) {
 		// assign to symbol "this"
 		AssignThisToFrame(frame, _pValueThis->PickValue());
-	} while (0);
+	}
 	do {
 		// assign to symbol declared as dict%
 		const Symbol* pSymbol = GetDeclCallable().GetSymbolOfDict();

@@ -146,7 +146,7 @@ const DeclCallable* Value::GetDeclCallableWithError()
 	const DeclCallable* pDeclCallable = GetDeclCallable();
 	if (pDeclCallable) return pDeclCallable;
 	Error::Issue(ErrorType::ValueError,
-				 "value type '%s' can not be called", GetVTypeCustom().MakeFullName().c_str());
+				"value type '%s' can not be called", GetVTypeCustom().MakeFullName().c_str());
 	return nullptr;
 }
 
@@ -220,28 +220,28 @@ void Value::DoIndexSet(const Index& index, RefPtr<Value> pValue)
 bool Value::DoEmptyIndexGet(Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError,
-				 "value type %s can not be accessed by indexing", GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be accessed by indexing", GetVTypeCustom().MakeFullName().c_str());
 	return Value::undefined();
 }
 
 bool Value::DoEmptyIndexSet(RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError,
-				 "value type %s can not be accessed by indexing", GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be accessed by indexing", GetVTypeCustom().MakeFullName().c_str());
 	return false;
 }
 
 bool Value::DoSingleIndexGet(const Value& valueIndex, Value** ppValue) const
 {
 	Error::Issue(ErrorType::IndexError,
-				 "value type %s can not be accessed by indexing", GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be accessed by indexing", GetVTypeCustom().MakeFullName().c_str());
 	return Value::undefined();
 }
 
 bool Value::DoSingleIndexSet(const Value& valueIndex, RefPtr<Value> pValue)
 {
 	Error::Issue(ErrorType::IndexError,
-				 "value type %s can not be accessed by indexing", GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be accessed by indexing", GetVTypeCustom().MakeFullName().c_str());
 	return false;
 }
 
@@ -261,8 +261,8 @@ Value* Value::DoGetProperty(const Symbol* pSymbol, const Attribute& attr, bool n
 	if (pValue) return pValue.release();
 	if (notFoundErrorFlag) {
 		Error::Issue(ErrorType::PropertyError,
-					 "value type '%s' doesn't have a property '%s'",
-					 vtype.MakeFullName().c_str(), pSymbol->GetName());
+					"value type '%s' doesn't have a property '%s'",
+					vtype.MakeFullName().c_str(), pSymbol->GetName());
 	}
 	return nullptr;
 }
@@ -273,7 +273,7 @@ bool Value::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Att
 	const PropSlot* pPropSlot = vtype.LookupPropSlot(pSymbol);
 	if (!pPropSlot) {
 		Error::Issue(ErrorType::PropertyError,
-			 "value type '%s' doesn't have a property '%s'", vtype.MakeFullName().c_str(), pSymbol->GetName());
+			"value type '%s' doesn't have a property '%s'", vtype.MakeFullName().c_str(), pSymbol->GetName());
 		return false;
 	}
 	if (!pPropSlot->CheckValidAttribute(attr)) return false;
@@ -287,62 +287,62 @@ bool Value::DoSetProperty(const Symbol* pSymbol, RefPtr<Value> pValue, const Att
 bool Value::DoAssignCustomMethod(RefPtr<Function> pFunction)
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s doesn't accept method assignment", GetVTypeCustom().MakeFullName().c_str());
+				"value type %s doesn't accept method assignment", GetVTypeCustom().MakeFullName().c_str());
 	return false;
 }
 
 Iterator* Value::DoGenIterator() const
 {
 	Error::Issue(ErrorType::IteratorError,
-				 "value type %s can not generate iterator", GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not generate iterator", GetVTypeCustom().MakeFullName().c_str());
 	return nullptr;
 }
 
 bool Value::Format_d(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be formatted with %%d qualifier",
-				 GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be formatted with %%d qualifier",
+				GetVTypeCustom().MakeFullName().c_str());
 	return false;
 }
 
 bool Value::Format_u(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be formatted with %%u qualifier",
-				 GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be formatted with %%u qualifier",
+				GetVTypeCustom().MakeFullName().c_str());
 	return false;
 }
 
 bool Value::Format_b(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be formatted with %%b qualifier",
-				 GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be formatted with %%b qualifier",
+				GetVTypeCustom().MakeFullName().c_str());
 	return false;
 }
 
 bool Value::Format_o(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be formatted with %%o qualifier",
-				 GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be formatted with %%o qualifier",
+				GetVTypeCustom().MakeFullName().c_str());
 	return false;
 }
 
 bool Value::Format_x(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be formatted with %%x qualifier",
-				 GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be formatted with %%x qualifier",
+				GetVTypeCustom().MakeFullName().c_str());
 	return false;
 }
 
 bool Value::Format_e(Formatter& formatter, FormatterFlags& formatterFlags) const
 {
 	Error::Issue(ErrorType::ValueError,
-				 "value type %s can not be formatted with %%e qualifier",
-				 GetVTypeCustom().MakeFullName().c_str());
+				"value type %s can not be formatted with %%e qualifier",
+				GetVTypeCustom().MakeFullName().c_str());
 	return false;
 }
 
