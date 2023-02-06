@@ -136,6 +136,8 @@ public:
 // FrameList
 //------------------------------------------------------------------------------
 class GURAX_DLLDECLARE FrameList : public ListBase<Frame*> {
+public:
+	void Print(Stream& stream) const;
 };
 
 //------------------------------------------------------------------------------

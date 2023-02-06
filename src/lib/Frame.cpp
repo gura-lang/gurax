@@ -148,6 +148,13 @@ String Frame::ToString(const StringStyle& ss) const
 //------------------------------------------------------------------------------
 // FrameList
 //------------------------------------------------------------------------------
+void FrameList::Print(Stream& stream) const
+{
+	for (const Frame* pFrame : *this) {
+		const Frame& frame = *pFrame;
+		stream.Printf("%s:%s\n", frame.GetTypeName(), frame.MakeId().c_str());
+	}
+}
 
 //------------------------------------------------------------------------------
 // FrameOwner
@@ -398,9 +405,9 @@ void Frame_Module::GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& 
 //------------------------------------------------------------------------------
 const char* Frame_Scope::name = "Scope";
 
-Frame_Scope::Frame_Scope(Frame* pFrameOuter, Frame* pFrameLocal) :
-									Frame_Branch(pFrameOuter, pFrameLocal)
+Frame_Scope::Frame_Scope(Frame* pFrameOuter, Frame* pFrameLocal) : Frame_Branch(pFrameOuter, pFrameLocal)
 {
+	//::printf("Frame_Scope %p %p\n", this, _pFrameOuter.get());
 }
 
 void Frame_Scope::DoAssign(const Symbol* pSymbol, Value* pValue)
@@ -421,6 +428,7 @@ Value* Frame_Scope::DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc)
 		RefPtr<Value> pValue(_pFrameLocal->DoRetrieve(pSymbol, ppFrameSrc));
 		if (pValue) return pValue.release();
 	}
+	//::printf("DoRetrieve %p %p\n", this, _pFrameOuter.get());
 	return _pFrameOuter? _pFrameOuter->DoRetrieve(pSymbol, ppFrameSrc) : nullptr;
 }
 
@@ -445,8 +453,7 @@ void Frame_Scope::GatherSymbolIf(SymbolList& symbolList, const GatherCriteria& g
 //------------------------------------------------------------------------------
 const char* Frame_Function::name = "Function";
 
-Frame_Function::Frame_Function(Frame* pFrameOuter, Frame* pFrameLocal) :
-									Frame_Scope(pFrameOuter, pFrameLocal)
+Frame_Function::Frame_Function(Frame* pFrameOuter, Frame* pFrameLocal) : Frame_Scope(pFrameOuter, pFrameLocal)
 {
 }
 

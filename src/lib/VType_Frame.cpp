@@ -154,12 +154,7 @@ Gurax_DeclareClassMethod(Frame, PrintStack)
 
 Gurax_ImplementClassMethod(Frame, PrintStack)
 {
-	Stream& stream = Basement::Inst.GetStreamCOut();
-	const FrameStack& frameStack = processor.GetFrameStack();
-	for (const Frame* pFrame : frameStack) {
-		const Frame& frame = *pFrame;
-		stream.Printf("%s:%s\n", frame.GetTypeName(), frame.MakeId().c_str());
-	}
+	processor.GetFrameStack().Print(Basement::Inst.GetStreamCOut());
 	return Value::nil();
 }
 
