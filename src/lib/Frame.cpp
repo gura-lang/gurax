@@ -428,7 +428,7 @@ Value* Frame_Scope::DoRetrieve(const Symbol* pSymbol, Frame** ppFrameSrc)
 		RefPtr<Value> pValue(_pFrameLocal->DoRetrieve(pSymbol, ppFrameSrc));
 		if (pValue) return pValue.release();
 	}
-	//::printf("DoRetrieve %p %p\n", this, _pFrameOuter.get());
+	//::printf("DoRetrieve %p %p %s\n", this, _pFrameOuter.get(), pSymbol->GetName());
 	return _pFrameOuter? _pFrameOuter->DoRetrieve(pSymbol, ppFrameSrc) : nullptr;
 }
 

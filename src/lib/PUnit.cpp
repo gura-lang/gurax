@@ -970,14 +970,9 @@ void PUnit_VTypeBegin<discardValueFlag, inheritFlag>::Exec(Processor& processor)
 	pVType->Declare(*pVTypeInh, VType::Flag::Mutable);
 	pVType->Inherit();
 	if constexpr (!discardValueFlag) processor.PushValue(new Value_VType(*pVType));
-	//Frame* pFrameOuter = processor.GetFrameCur().Reference();
-	//::printf("-----\n");
-	//::printf("%p\n", pFrameOuter);
-	//processor.PushFrame(new Frame_Scope(pFrameOuter, pVType->GetFrameOfMember().Reference()));
-	//processor.PushFrame(new Frame_Scope(processor.GetFrameCur().Reference(), processor.GetFrameCur().Reference()));
-	processor.PushFrame(processor.GetFrameCur().Reference());
-	//::printf("---\n");
-	//processor.GetFrameStack().Print(Basement::Inst.GetStreamCOut());
+	//Frame* pFrame = new Frame_Scope(processor.GetFrameCur().Reference(), pVType->GetFrameOfMember().Reference());
+	//pFrame->IncCntRef();
+	//processor.PushFrame(pFrame);
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 
@@ -1015,7 +1010,7 @@ PUnit* PUnitFactory_VTypeBegin::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_VTypeEnd_Class<discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.PopFrame();
+	//processor.PopFrame();
 	processor.SetPUnitCur(_GetPUnitCont());
 }
 
@@ -1045,7 +1040,7 @@ PUnit* PUnitFactory_VTypeEnd_Class::Create(bool discardValueFlag)
 template<bool discardValueFlag>
 void PUnit_VTypeEnd_Struct<discardValueFlag>::Exec(Processor& processor) const
 {
-	processor.PopFrame();
+	//processor.PopFrame();
 	VTypeCustom& vtypeCustom = dynamic_cast<VTypeCustom&>(Value_VType::GetVTypeThis(processor.PeekValue(0)));
 	RefPtr<PropSlotOwner> pPropSlotOwner(new PropSlotOwner());
 	vtypeCustom.GetPropSlotMap().GatherPropSlotOfInstance(*pPropSlotOwner);
