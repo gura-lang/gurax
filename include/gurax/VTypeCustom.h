@@ -73,9 +73,9 @@ public:
 	ValueOwner& GetValuesPropOfClass() { return *_pValuesPropOfClass; }
 	const ValueOwner& GetValuesPropOfClass() const { return *_pValuesPropOfClass; }
 	bool AssignPropSlot(Processor& processor, const Symbol* pSymbol, VType* pVType,
-						   PropSlot::Flags flags, RefPtr<Value> pValueInit);
+						PropSlot::Flags flags, RefPtr<Value> pValueInit);
 	bool AssignPropSlot(Processor& processor, const Symbol* pSymbol, const DottedSymbol& dottedSymbol,
-						   PropSlot::Flags flags, RefPtr<Value> pValueInit);
+						PropSlot::Flags flags, RefPtr<Value> pValueInit);
 	void SetCustomPropOfClass(size_t iProp, Value* pValue);
 	Value* GetCustomPropOfClass(size_t iProp) { return GetValuesPropOfClass()[iProp]->Reference(); }
 public:

@@ -27,15 +27,6 @@ Value* PropSlotCustom_Class::DoGetValue(Value& valueTarget, const Attribute& att
 		dynamic_cast<VTypeCustom&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis()) :
 		dynamic_cast<VTypeCustom&>(valueTarget.GetVTypeCustom());
 	return vtype.GetCustomPropOfClass(_iProp);
-#if 0
-	if (valueTarget.IsType(VTYPE_VType)) {
-		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis());
-		return vtype.GetCustomPropOfClass(_iProp);
-	} else {
-		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(valueTarget.GetVTypeCustom());
-		return vtype.GetCustomPropOfClass(_iProp);
-	}
-#endif
 }
 
 void PropSlotCustom_Class::DoSetValue(Value& valueTarget, const Value& value, const Attribute& attr) const
@@ -44,15 +35,6 @@ void PropSlotCustom_Class::DoSetValue(Value& valueTarget, const Value& value, co
 		dynamic_cast<VTypeCustom&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis()) :
 		dynamic_cast<VTypeCustom&>(valueTarget.GetVTypeCustom());
 	vtype.SetCustomPropOfClass(_iProp, value.Reference());
-#if 0
-	if (valueTarget.IsType(VTYPE_VType)) {
-		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(dynamic_cast<Value_VType&>(valueTarget).GetVTypeThis());
-		vtype.SetCustomPropOfClass(_iProp, value.Reference());
-	} else {
-		VTypeCustom& vtype = dynamic_cast<VTypeCustom&>(valueTarget.GetVTypeCustom());
-		vtype.SetCustomPropOfClass(_iProp, value.Reference());
-	}
-#endif
 }
 
 }
