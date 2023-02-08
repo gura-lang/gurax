@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-model_obj.gura
+//==============================================================================
+import(util.tester) {*}
+import(model.obj)
+
+TestCase('Basic test') {
+	Println(model.obj.Test('hello', 4))
+}

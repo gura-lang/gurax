@@ -1,0 +1,10 @@
+#!/usr/bin/env gurax
+//==============================================================================
+// test-model_stl.gura
+//==============================================================================
+import(util.tester) {*}
+import(model.stl)
+
+TestCase('Basic test') {
+	Println(model.stl.Test('hello', 4))
+}
