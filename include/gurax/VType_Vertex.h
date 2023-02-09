@@ -29,17 +29,17 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("Value_Vertex");
 protected:
-	RefPtr<Vertex> _pVertex;
+	Vertex _vertex;
 public:
 	static VType& vtype;
 public:
 	// Constructor
 	Value_Vertex() = delete;
-	explicit Value_Vertex(Vertex* pVertex, VType& vtype = VTYPE_Vertex) :
-		Value_Object(vtype), _pVertex(pVertex) {}
+	explicit Value_Vertex(Vertex vertex, VType& vtype = VTYPE_Vertex) :
+		Value_Object(vtype), _vertex(vertex) {}
 	// Copy constructor/operator
 	Value_Vertex(const Value_Vertex& src) :
-		Value_Object(src), _pVertex(src._pVertex->Reference()) {}
+		Value_Object(src), _vertex(src._vertex) {}
 	Value_Vertex& operator=(const Value_Vertex& src) = delete;
 	// Move constructor/operator
 	Value_Vertex(Value_Vertex&& src) noexcept = delete;
@@ -48,8 +48,8 @@ protected:
 	// Destructor
 	~Value_Vertex() = default;
 public:
-	Vertex& GetVertex() { return *_pVertex; }
-	const Vertex& GetVertex() const { return *_pVertex; }
+	Vertex& GetVertex() { return _vertex; }
+	const Vertex& GetVertex() const { return _vertex; }
 public:
 	static Vertex& GetVertex(Value& value) {
 		return dynamic_cast<Value_Vertex&>(value).GetVertex();

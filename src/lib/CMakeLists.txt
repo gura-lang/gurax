@@ -109,6 +109,7 @@ target_sources(guraxcore PRIVATE
 	ValueOwner.cpp
 	ValueTypedOwner.cpp
 	Version.cpp
+	Vertex.cpp
 	VType.cpp
 	VTypeCustom.cpp
 	VType_Any.cpp
@@ -168,6 +169,7 @@ target_sources(guraxcore PRIVATE
 	VType_TimeDelta.cpp
 	VType_Tuple.cpp
 	VType_Undefined.cpp
+	VType_Vertex.cpp
 	VType_VType.cpp
 )
 #-------------------------------------------------------------------------------

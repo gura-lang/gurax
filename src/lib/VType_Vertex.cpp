@@ -27,10 +27,13 @@ ${help.ComposeMethodHelp(Vertex, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Vertex() {block?}
+// Vertex(x? as Number, y? as Number, z? as Number) {block?}
 Gurax_DeclareConstructor(Vertex)
 {
 	Declare(VTYPE_Vertex, Flag::None);
+	DeclareArg("x", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("y", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
+	DeclareArg("z", VTYPE_Number, ArgOccur::ZeroOrOnce, ArgFlag::None);
 	DeclareBlock(BlkOccur::ZeroOrOnce);
 	AddHelp(Gurax_Symbol(en), u8R"**(
 Creates a `Vertex` instance.
@@ -40,10 +43,12 @@ Creates a `Vertex` instance.
 Gurax_ImplementConstructor(Vertex)
 {
 	// Arguments
-	//ArgPicker args(argument);
+	ArgPicker args(argument);
+	Double x = args.IsValid()? args.PickNumber<Double>() : 0;
+	Double y = args.IsValid()? args.PickNumber<Double>() : 0;
+	Double z = args.IsValid()? args.PickNumber<Double>() : 0;
 	// Function body
-	RefPtr<Vertex> pVertex(new Vertex());
-	return argument.ReturnValue(processor, new Value_Vertex(pVertex.release()));
+	return argument.ReturnValue(processor, new Value_Vertex(Vertex(x, y, z)));
 }
 
 //-----------------------------------------------------------------------------
@@ -75,8 +80,8 @@ Gurax_ImplementMethod(Vertex, MethodSkeleton)
 //-----------------------------------------------------------------------------
 // Implementation of property
 //-----------------------------------------------------------------------------
-// Vertex#propSkeleton
-Gurax_DeclareProperty_R(Vertex, propSkeleton)
+// Vertex#x
+Gurax_DeclareProperty_RW(Vertex, x)
 {
 	Declare(VTYPE_Number, Flag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
@@ -84,10 +89,58 @@ Skeleton.
 )**");
 }
 
-Gurax_ImplementPropertyGetter(Vertex, propSkeleton)
+Gurax_ImplementPropertyGetter(Vertex, x)
 {
-	//auto& valueThis = GetValueThis(valueTarget);
-	return new Value_Number(3);
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex().x);
+}
+
+Gurax_ImplementPropertySetter(Vertex, x)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetVertex().x = Value_Number::GetNumber<Double>(value);
+}
+
+// Vertex#y
+Gurax_DeclareProperty_RW(Vertex, y)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Vertex, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex().y);
+}
+
+Gurax_ImplementPropertySetter(Vertex, y)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetVertex().y = Value_Number::GetNumber<Double>(value);
+}
+
+// Vertex#z
+Gurax_DeclareProperty_RW(Vertex, z)
+{
+	Declare(VTYPE_Number, Flag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+Skeleton.
+)**");
+}
+
+Gurax_ImplementPropertyGetter(Vertex, z)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	return new Value_Number(valueThis.GetVertex().z);
+}
+
+Gurax_ImplementPropertySetter(Vertex, z)
+{
+	auto& valueThis = GetValueThis(valueTarget);
+	valueThis.GetVertex().z = Value_Number::GetNumber<Double>(value);
 }
 
 //------------------------------------------------------------------------------
@@ -104,7 +157,9 @@ void VType_Vertex::DoPrepare(Frame& frameOuter)
 	// Assignment of method
 	Assign(Gurax_CreateMethod(Vertex, MethodSkeleton));
 	// Assignment of property
-	Assign(Gurax_CreateProperty(Vertex, propSkeleton));
+	Assign(Gurax_CreateProperty(Vertex, x));
+	Assign(Gurax_CreateProperty(Vertex, y));
+	Assign(Gurax_CreateProperty(Vertex, z));
 }
 
 //------------------------------------------------------------------------------

@@ -67,6 +67,7 @@ void BasicVType::Prepare(Frame& frame)
 	frame.Assign(VTYPE_TimeDelta);
 	frame.Assign(VTYPE_Tuple);
 	frame.Assign(VTYPE_Undefined);
+	frame.Assign(VTYPE_Vertex);
 }
 
 }
