@@ -17,8 +17,16 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.stl.Tokenizer");
 public:
+	enum class TokenId { None, EndOfLine, EndOfFile, Field };
+	enum class Stat { LineTop, Field, SkipWhite, FileEnd };
+private:
+	Stat _stat;
+	size_t _iChar;
+	char _field[128];
+	TokenId _tokenIdPending;
+public:
 	// Constructor
-	Tokenizer() {}
+	Tokenizer() : _stat(Stat::LineTop), _iChar(0), _tokenIdPending(TokenId::None) {}
 	// Copy constructor/operator
 	Tokenizer(const Tokenizer& src) = delete;
 	Tokenizer& operator=(const Tokenizer& src) = delete;
@@ -27,6 +35,9 @@ public:
 	Tokenizer& operator=(Tokenizer&& src) noexcept = delete;
 protected:
 	~Tokenizer() = default;
+public:
+	TokenId Tokenize(Stream& stream);
+	const char* GetField() const { return _field; }
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Tokenizer& other) const { return this == &other; }

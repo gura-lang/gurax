@@ -17,6 +17,19 @@ public:
 	// Uses MemoryPool allocator
 	Gurax_MemoryPoolAllocator("model.stl.Face");
 public:
+	struct Packed {
+		enum { Size = sizeof(float) * 3 * 4 + sizeof(Uint16) };
+		float normal[3];
+		float vertex1[3];
+		float vertex2[3];
+		float vertex3[3];
+		UInt16 attr;
+	};
+private:
+	RefPtr<VertexRef> _pNormal;
+	VertexRef* _pVertexes[3];
+	UInt16 _attr;
+public:
 	// Constructor
 	Face() {}
 	// Copy constructor/operator
