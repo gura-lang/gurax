@@ -134,7 +134,7 @@ Gurax_ImplementClassMethod(Color, RGBA)
 }
 
 //-----------------------------------------------------------------------------
-// Implementation of properties
+// Implementation of method
 //-----------------------------------------------------------------------------
 // Color#GrayScale() {block?}
 Gurax_DeclareMethod(Color, GrayScale)

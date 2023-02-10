@@ -35,6 +35,7 @@ public:
 	~Vertex() = default;
 public:
 	bool IsZero() const { return x == 0. && y == 0. && z == 0.; }
+public:
 	static Vertex Translate(const Vertex& v, Double tx, Double ty, Double tz);
 	static Vertex RotateX(const Vertex& v, Double rad);
 	static Vertex RotateY(const Vertex& v, Double rad);

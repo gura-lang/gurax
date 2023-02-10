@@ -95,7 +95,7 @@ Vertex Vertex::CreateFromValues(const ValueList& valList)
 
 String Vertex::ToString(const StringStyle& ss) const
 {
-	return String().Format("Vertex");
+	return String().Format("Vertex:%g,%g,%g", x, y, z);
 }
 
 }
