@@ -82,27 +82,64 @@ Gurax_ImplementClassMethod(Vertex, Normal)
 //-----------------------------------------------------------------------------
 // Implementation of method
 //-----------------------------------------------------------------------------
-// Vertex#MethodSkeleton(num1 as Number, num2 as Number)
-Gurax_DeclareMethod(Vertex, MethodSkeleton)
+// Vertex#RotateX(angle as Number)
+Gurax_DeclareMethod(Vertex, RotateX)
 {
 	Declare(VTYPE_Number, Flag::None);
-	DeclareArg("num1", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
-	DeclareArg("num2", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
 	AddHelp(Gurax_Symbol(en), u8R"**(
-Skeleton.
 )**");
 }
 
-Gurax_ImplementMethod(Vertex, MethodSkeleton)
+Gurax_ImplementMethod(Vertex, RotateX)
 {
 	// Target
-	//auto& valueThis = GetValueThis(argument);
+	auto& valueThis = GetValueThis(argument);
 	// Arguments
 	ArgPicker args(argument);
-	Double num1 = args.PickNumber<Double>();
-	Double num2 = args.PickNumber<Double>();
+	Double angle = args.PickNumber<Double>();
 	// Function body
-	return new Value_Number(num1 + num2);
+	return new Value_Vertex(Vertex::RotateX(valueThis.GetVertex(), angle));
+}
+
+// Vertex#RotateY(angle as Number)
+Gurax_DeclareMethod(Vertex, RotateY)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
+}
+
+Gurax_ImplementMethod(Vertex, RotateY)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Double angle = args.PickNumber<Double>();
+	// Function body
+	return new Value_Vertex(Vertex::RotateY(valueThis.GetVertex(), angle));
+}
+
+// Vertex#RotateZ(angle as Number)
+Gurax_DeclareMethod(Vertex, RotateZ)
+{
+	Declare(VTYPE_Number, Flag::None);
+	DeclareArg("angle", VTYPE_Number, ArgOccur::Once, ArgFlag::None);
+	AddHelp(Gurax_Symbol(en), u8R"**(
+)**");
+}
+
+Gurax_ImplementMethod(Vertex, RotateZ)
+{
+	// Target
+	auto& valueThis = GetValueThis(argument);
+	// Arguments
+	ArgPicker args(argument);
+	Double angle = args.PickNumber<Double>();
+	// Function body
+	return new Value_Vertex(Vertex::RotateZ(valueThis.GetVertex(), angle));
 }
 
 //-----------------------------------------------------------------------------
@@ -252,7 +289,9 @@ void VType_Vertex::DoPrepare(Frame& frameOuter)
 	// Assignment of class method
 	Assign(Gurax_CreateMethod(Vertex, Normal));
 	// Assignment of method
-	Assign(Gurax_CreateMethod(Vertex, MethodSkeleton));
+	Assign(Gurax_CreateMethod(Vertex, RotateX));
+	Assign(Gurax_CreateMethod(Vertex, RotateY));
+	Assign(Gurax_CreateMethod(Vertex, RotateZ));
 	// Assignment of property
 	Assign(Gurax_CreateProperty(Vertex, x));
 	Assign(Gurax_CreateProperty(Vertex, y));

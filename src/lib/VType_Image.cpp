@@ -27,7 +27,7 @@ ${help.ComposeMethodHelp(Image, `en)}
 //------------------------------------------------------------------------------
 // Implementation of constructor
 //------------------------------------------------------------------------------
-// Image(stream?:Stream:r, imgType?:String):map:[rgb,rgba] {block?}
+// Image(stream:r? as Stream, imgType? as String):map:[rgb,rgba] {block?}
 Gurax_DeclareConstructor(Image)
 {
 	Declare(VTYPE_Expr, Flag::Map);
@@ -64,7 +64,7 @@ Gurax_ImplementConstructor(Image)
 //------------------------------------------------------------------------------
 // Implementation of class method
 //------------------------------------------------------------------------------
-// Image.Create(width:Number, height:Number, color?:Color):[rgb,rgba] {block?}
+// Image.Create(width as Number, height as Number, color? as Color):[rgb,rgba] {block?}
 Gurax_DeclareClassMethod(Image, Create)
 {
 	Declare(VTYPE_Image, Flag::None);
@@ -105,7 +105,7 @@ Gurax_ImplementClassMethod(Image, Create)
 //------------------------------------------------------------------------------
 // Implementation of method
 //------------------------------------------------------------------------------
-// Image#Crop(x:Number, y:Number, width:Number, height:Number):map:[rgb,rgba]
+// Image#Crop(x as Number, y as Number, width as Number, height as Number):map:[rgb,rgba]
 Gurax_DeclareMethod(Image, Crop)
 {
 	Declare(VTYPE_Image, Flag::Map);
@@ -147,7 +147,7 @@ Gurax_ImplementMethod(Image, Crop)
 	return new Value_Image(pImage.release());
 }
 
-// Image#Fill(color:Color):reduce
+// Image#Fill(color as Color):reduce
 Gurax_DeclareMethod(Image, Fill)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -170,7 +170,7 @@ Gurax_ImplementMethod(Image, Fill)
 	return valueThis.Reference();
 }
 
-// Image#FillRect(x:Number, y:Number, width:Number, height:Number, color:Color):reduce
+// Image#FillRect(x as Number, y as Number, width as Number, height as Number, color as Color):reduce
 Gurax_DeclareMethod(Image, FillRect)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -204,7 +204,7 @@ Gurax_ImplementMethod(Image, FillRect)
 	return valueThis.Reference();
 }
 
-// Image#Flip(orient:Symbol) {block?}
+// Image#Flip(orient as Symbol) {block?}
 Gurax_DeclareMethod(Image, Flip)
 {
 	Declare(VTYPE_Image, Flag::None);
@@ -244,7 +244,7 @@ Gurax_ImplementMethod(Image, Flip)
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
-// Image#GetPixel(x:Number, y:Number):map {block?}
+// Image#GetPixel(x as Number, y as Number):map {block?}
 Gurax_DeclareMethod(Image, GetPixel)
 {
 	Declare(VTYPE_Image, Flag::Map);
@@ -302,7 +302,7 @@ Gurax_ImplementMethod(Image, GrayScale)
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
-// Image#MapAlphaLevel(mapA:Pointer) {block?}
+// Image#MapAlphaLevel(mapA as Pointer) {block?}
 Gurax_DeclareMethod(Image, MapAlphaLevel)
 {
 	Declare(VTYPE_Image, Flag::None);
@@ -335,7 +335,7 @@ Gurax_ImplementMethod(Image, MapAlphaLevel)
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
-// Image#MapColorLevel(mapR:Pointer, mapG:Pointer, mapB:Pointer):[rgb,rgba] {block?}
+// Image#MapColorLevel(mapR as Pointer, mapG as Pointer, mapB as Pointer):[rgb,rgba] {block?}
 Gurax_DeclareMethod(Image, MapColorLevel)
 {
 	Declare(VTYPE_Image, Flag::None);
@@ -384,11 +384,11 @@ Gurax_ImplementMethod(Image, MapColorLevel)
 	}
 	// Function body
 	RefPtr<Image> pImage(image.MapColorLevel(format, ptrR.GetPointerC<UInt8>(),
-											 ptrG.GetPointerC<UInt8>(), ptrB.GetPointerC<UInt8>()));
+											ptrG.GetPointerC<UInt8>(), ptrB.GetPointerC<UInt8>()));
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
-// Image#PutPixel(x:Number, y:Number, color:Color):map:reduce
+// Image#PutPixel(x as Number, y as Number, color as Color):map:reduce
 Gurax_DeclareMethod(Image, PutPixel)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -417,8 +417,8 @@ Gurax_ImplementMethod(Image, PutPixel)
 	return valueThis.Reference();
 }
 
-// Image#Paste(xDst:Number, yDst:Number, imageSrc:Image,
-//             xSrc?:Number, ySrc?:Number, width?:Number, height?:Number):reduce
+// Image#Paste(xDst as Number, yDst as Number, imageSrc as Image,
+//             xSrc? as Number, ySrc? as Number, width? as Number, height? as Number):reduce
 Gurax_DeclareMethod(Image, Paste)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -463,7 +463,7 @@ Gurax_ImplementMethod(Image, Paste)
 	return valueThis.Reference();
 }
 
-// Image#Read(stream:Stream:r, imgType?:String):map:reduce
+// Image#Read(stream:r as Stream, imgType? as String):map:reduce
 Gurax_DeclareMethod(Image, Read)
 {
 	Declare(VTYPE_Image, Flag::Map | Flag::Reduce);
@@ -584,8 +584,8 @@ Gurax_ImplementMethod(Image, Resize)
 	return new Value_Image(pImage.release());
 }
 
-// Image#ResizePaste(xDst:Number, yDst:Number, wdDst:Number, htDst:Number,
-//                   imageSrc:Image, xSrc?:Number, ySrc?:Number, wdSrc?:Number, htSrc?:Number):reduce
+// Image#ResizePaste(xDst as Number, yDst as Number, wdDst as Number, htDst as Number,
+//                   imageSrc as Image, xSrc? as Number, ySrc? as Number, wdSrc? as Number, htSrc? as Number):reduce
 Gurax_DeclareMethod(Image, ResizePaste)
 {
 	Declare(VTYPE_Image, Flag::Reduce);
@@ -626,7 +626,7 @@ Gurax_ImplementMethod(Image, ResizePaste)
 	return valueThis.Reference();
 }
 
-// Image#Rotate(angle:Number, colorBg?:Color):map:[rgb,rgba] {block?}
+// Image#Rotate(angle as Number, colorBg? as Color):map:[rgb,rgba] {block?}
 Gurax_DeclareMethod(Image, Rotate)
 {
 	Declare(VTYPE_Image, Flag::Map);
@@ -672,7 +672,7 @@ Gurax_ImplementMethod(Image, Rotate)
 	return argument.ReturnValue(processor, new Value_Image(pImage.release()));
 }
 
-// Image#Scan(x:Number, y:Number, width:Number, height:Numbrer, scanDir?:Symbol):[pixel] {block?}
+// Image#Scan(x as Number, y as Number, width as Number, height as Number, scanDir? as Symbol):[pixel] {block?}
 Gurax_DeclareMethod(Image, Scan)
 {
 	Declare(VTYPE_Iterator, Flag::None);
@@ -729,7 +729,7 @@ Gurax_ImplementMethod(Image, Scan)
 	return argument.ReturnIterator(processor, pIterator.release());
 }
 
-// Image#Write(stream:Stream:w, imgType?:String):map:reduce
+// Image#Write(stream:w as Stream, imgType? as String):map:reduce
 Gurax_DeclareMethod(Image, Write)
 {
 	Declare(VTYPE_Image, Flag::Map | Flag::Reduce);
