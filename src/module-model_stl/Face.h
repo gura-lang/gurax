@@ -33,13 +33,21 @@ public:
 	// Constructor
 	Face() {}
 	// Copy constructor/operator
-	Face(const Face& src) = delete;
+	Face(const Face& src);
 	Face& operator=(const Face& src) = delete;
 	// Move constructor/operator
 	Face(Face&& src) noexcept = delete;
 	Face& operator=(Face&& src) noexcept = delete;
 protected:
 	~Face() = default;
+public:
+	void SetNormal(Vertex& normal) { _normal = normal; }
+	void SetVertex(size_t idx, const Vertex& vertex) { _vertexes[idx] = vertex; }
+	void SetAttr(UShort attr) { _attr = attr; }
+	const Vertex &GetNormal() const { return _normal; }
+	const Vertex &GetVertex(size_t idx) const { return _vertexes[idx]; }
+	UInt16 GetAttr() const { return _attr; }
+	void UpdateNormal();
 public:
 	size_t CalcHash() const { return reinterpret_cast<size_t>(this); }
 	bool IsIdentical(const Face& other) const { return this == &other; }
